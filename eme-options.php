@@ -1041,26 +1041,35 @@ function eme_options_register() {
 			break;
 	}
 
-	//$allow_js_arr=array('eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html');
+	$allow_js_arr=array('eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html');
 	foreach ( $options as $opt ) {
-		register_setting( 'eme-options', $opt, 'eme_sanitize_options' );
+		if (!is_array($opt)) {
+			if (in_array($opt,$allow_js_arr))
+				register_setting ( 'eme-options', $opt );
+			else
+				register_setting ( 'eme-options', $opt, 'eme_sanitize_options' );
+		} else {
+			register_setting ( 'eme-options', $opt, 'eme_sanitize_options' );
+		}
 	}
 }
 
 function eme_sanitize_options( $input ) {
 	// allow js only in very specific header settings
-	//$allow_js_arr=array('eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html');
+	$allow_js_arr=array('eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html');
 	if ( is_array( $input ) ) {
 		$output = array();
-		foreach ( $input as $key => $value ) {
-			$output[ $key ] = eme_kses( $value );
+		foreach ($input as $key=>$value) {
+			if (in_array($key,$allow_js_arr))
+				$output[$key]=$value;
+			else
+				$output[$key]=eme_kses($value);
 		}
 	} else {
 		$output = eme_kses( $input );
 	}
 	return $output;
 }
-
 
 function eme_admin_tabs( $current = 'homepage' ) {
 	$tabs = array(

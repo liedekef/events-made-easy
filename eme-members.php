@@ -2570,7 +2570,7 @@ function eme_manage_members_layout( $message ) {
 				echo $nonce_field;
 				echo eme_ui_select_key_value( '', 'membership_id', $memberships, 'membership_id', 'name' );
 				?>
-			<input type="submit" class="button-primary" name="submit" value="<?php esc_attr__e( 'Add member', 'events-made-easy' ); ?>">
+			<input type="submit" class="button-primary" name="submit" value="<?php esc_attr_e( 'Add member', 'events-made-easy' ); ?>">
 		</form>
 		</div>
 				<?php

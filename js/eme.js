@@ -298,7 +298,7 @@ jQuery(document).ready( function($) {
 		// now calculate the price, but only do it if we have a "full" form
 		if ($('#'+form_id).find('span#eme_calc_bookingprice').length) {
 			alldata.append('eme_override_eventAction', 'calc_bookingprice');
-			alldata.append('eme_frontend_nonce:', 'emebasic.translate_frontendnonce');
+			alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 			$('#'+form_id).find('span#eme_calc_bookingprice').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
 		        $.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
@@ -314,7 +314,7 @@ jQuery(document).ready( function($) {
 		if ($('#'+form_id).find('div#eme_dyndata').length) {
 			$('#'+form_id).find('div#eme_dyndata').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
 			alldata.append('eme_override_eventAction', 'dynbookingdata');
-			alldata.append('eme_frontend_nonce:', 'emebasic.translate_frontendnonce');
+			alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 		        $.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
 				$('#'+form_id).find('div#eme_dyndata').html(data.Result);
@@ -375,7 +375,7 @@ jQuery(document).ready( function($) {
 		if ($('#'+form_id).find('span#eme_calc_memberprice').length) {
 			$('#'+form_id).find('span#eme_calc_memberprice').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
 			alldata.append('eme_override_eventAction', 'calc_memberprice');
-			alldata.append('eme_frontend_nonce:', 'emebasic.translate_frontendnonce');
+			alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 		        $.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
 				$('#'+form_id).find('span#eme_calc_memberprice').html(data.total);
@@ -391,7 +391,7 @@ jQuery(document).ready( function($) {
 		if ($('#'+form_id).find('div#eme_dyndata_family').length) {
 			$('#'+form_id).find('div#eme_dyndata_family').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
 			alldata.append('eme_override_eventAction', 'dynfamilymemberdata');
-			alldata.append('eme_frontend_nonce:', 'emebasic.translate_frontendnonce');
+			alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 			$.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
 				$('#'+form_id).find('div#eme_dyndata_family').html(data.Result);
@@ -447,7 +447,7 @@ jQuery(document).ready( function($) {
 		if ($('#'+form_id).find('div#eme_dyndata').length) {
 			$('#'+form_id).find('div#eme_dyndata').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
 			alldata.append('eme_override_eventAction', 'dynmemberdata');
-			alldata.append('eme_frontend_nonce:', 'emebasic.translate_frontendnonce');
+			alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 			$.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
 				$('#'+form_id).find('div#eme_dyndata').html(data.Result);

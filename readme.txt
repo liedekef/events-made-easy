@@ -49,11 +49,11 @@ For more information, documentation and support forum visit the [Official site](
 
 Always take a backup of your db before doing the upgrade, just in case ...  
 === For existing wordpress users that have version 2.3.14 or older ===
-1. Download first an intermediate version here: [zip file](https://www.e-dynamics.be/wordpress/)
+1. Download first an intermediate version (2.3.20) here: [zip file](https://www.e-dynamics.be/events-made-easy.zip)
 2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
 3. Select the zip you downloaded, this will upload the zip and replace the existing installation without losing data
    If the file is too big for uploading, use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory
-4. After that, update again the plugin (as usual)
+4. After that, updating the plugin will be as usual in the backend
 
 === For new users ===
 1. Download the latest release from github

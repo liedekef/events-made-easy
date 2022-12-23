@@ -7,9 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 function eme_load_textdomain() {
 	// WordPress loads the site locale by default
 	// If the user profile is set to something else besides the site locale, we do something here, so we check for logged in users
-	if ( ! is_user_logged_in() ) {
-		return;
-	}
+//	if ( ! is_user_logged_in() ) {
+//		return;
+//	}
 
 	$language = eme_detect_lang();
 	// make sure no textdomain is loaded if the locale is en (since nobody has translated EME into English)

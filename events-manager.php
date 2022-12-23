@@ -6,9 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 Plugin Name: Events Made Easy
-Version: 2.3.17
+Version: 2.3.18
 Plugin URI: https://www.e-dynamics.be/wordpress
-Update URI: https://wordpress.org/plugins/events-made-easy/
+Update URI: https://github.com/liedekef/events-made-easy/
 Description: Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, 2Checkout and others.
 Author: Franky Van Liedekerke
 Author URI: https://www.e-dynamics.be/
@@ -35,7 +35,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 // Setting constants
-define( 'EME_VERSION', '2.3.17' );
+define( 'EME_VERSION', '2.3.18' );
 define( 'EME_DB_VERSION', 362 );
 define( 'EVENTS_TBNAME', 'eme_events' );
 define( 'EVENTS_CF_TBNAME', 'eme_events_cf' );
@@ -341,7 +341,19 @@ require_once 'eme-gdpr.php';
 require_once 'eme-tasks.php';
 require_once 'eme-translate.php';
 
-require_once 'class-expressiveDate.php';
+require_once 'class-expressivedate.php';
+
+require 'plugin-update-checker/plugin-update-checker.php';
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+$myUpdateChecker = PucFactory::buildUpdateChecker(
+	'https://github.com/liedekef/events-made-easy/',
+	__FILE__,
+	'events-made-easy'
+);
+
+//Set the branch that contains the stable release.
+$myUpdateChecker->setBranch('main');
 
 // now some extra global vars
 $eme_plugin_url = eme_plugin_url();

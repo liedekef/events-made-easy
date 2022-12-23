@@ -1,0 +1,72 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "cec9021934c8dea84ee979768d6b712c",
+    "packages": [
+        {
+            "name": "sumup/sumup-ecom-php-sdk",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sumup/sumup-ecom-php-sdk.git",
+                "reference": "0d9aa0d22c83bcf17f6f76518a5a42b45c7d6579"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sumup/sumup-ecom-php-sdk/zipball/0d9aa0d22c83bcf17f6f76518a5a42b45c7d6579",
+                "reference": "0d9aa0d22c83bcf17f6f76518a5a42b45c7d6579",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6|^7.0|^8.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SumUp\\": "src/SumUp/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "SumUp",
+                    "email": "integration@sumup.com",
+                    "homepage": "https://github.com/sumup"
+                }
+            ],
+            "description": "SumUp eCom SDK for PHP",
+            "homepage": "https://developer.sumup.com",
+            "keywords": [
+                "checkout",
+                "ecommerce",
+                "payment",
+                "payment processing",
+                "sdk",
+                "sumup"
+            ],
+            "support": {
+                "issues": "https://github.com/sumup/sumup-ecom-php-sdk/issues",
+                "source": "https://github.com/sumup/sumup-ecom-php-sdk/tree/1.1.0"
+            },
+            "time": "2022-03-03T15:55:29+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
+}

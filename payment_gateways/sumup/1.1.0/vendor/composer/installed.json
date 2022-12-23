@@ -1,0 +1,62 @@
+{
+    "packages": [
+        {
+            "name": "sumup/sumup-ecom-php-sdk",
+            "version": "1.1.0",
+            "version_normalized": "1.1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sumup/sumup-ecom-php-sdk.git",
+                "reference": "0d9aa0d22c83bcf17f6f76518a5a42b45c7d6579"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sumup/sumup-ecom-php-sdk/zipball/0d9aa0d22c83bcf17f6f76518a5a42b45c7d6579",
+                "reference": "0d9aa0d22c83bcf17f6f76518a5a42b45c7d6579",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^5.6|^7.0|^8.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client"
+            },
+            "time": "2022-03-03T15:55:29+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "SumUp\\": "src/SumUp/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "SumUp",
+                    "email": "integration@sumup.com",
+                    "homepage": "https://github.com/sumup"
+                }
+            ],
+            "description": "SumUp eCom SDK for PHP",
+            "homepage": "https://developer.sumup.com",
+            "keywords": [
+                "checkout",
+                "ecommerce",
+                "payment",
+                "payment processing",
+                "sdk",
+                "sumup"
+            ],
+            "support": {
+                "issues": "https://github.com/sumup/sumup-ecom-php-sdk/issues",
+                "source": "https://github.com/sumup/sumup-ecom-php-sdk/tree/1.1.0"
+            },
+            "install-path": "../sumup/sumup-ecom-php-sdk"
+        }
+    ],
+    "dev": true,
+    "dev-package-names": []
+}

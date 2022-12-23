@@ -1,0 +1,6 @@
+mkdir 2.4.9
+cd 2.4.9
+composer require "mercadopago/dx-php:2.4.9"
+cd vendor/mercadopago/dx-php
+rm -rf phpDocumentor.phar phpunit.* docs .phpdoc .git* .travis.yml
+

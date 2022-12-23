@@ -48,9 +48,20 @@ For more information, documentation and support forum visit the [Official site](
 == Installation ==
 
 Always take a backup of your db before doing the upgrade, just in case ...  
-1. Upload the `events-made-easy` folder to the `/wp-content/plugins/` directory  
-2. Activate the plugin through the 'Plugins' menu in WordPress (make sure your configured database user has the right to create/modify tables and columns) 
-3. Add events list or calendars following the instructions in the Usage section.  
+=== For existing wordpress users that have version 2.3.14 or older ===
+1. Download first an intermediate version here: [zip file](https://www.e-dynamics.be/wordpress/)
+2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
+3. Select the zip you downloaded, this will upload the zip and replace the existing installation without losing data
+   If the file is too big for uploading, use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory
+4. After that, update again the plugin (as usual)
+
+=== For new users ===
+1. Download the latest release from github
+2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
+3. Select the zip you downloaded
+   If the file is too big for uploading, use your favorite upload tool to upload the `events-made-easy` folder (inside the zip file) to the `/wp-content/plugins/` directory  
+4. Activate the plugin through the 'Plugins' menu in WordPress (make sure your configured database user has the right to create/modify tables and columns) 
+5. Add events list or calendars following the instructions in the Usage section.  
 
 = Usage =
 
@@ -85,6 +96,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
+= 2.3.19 (2022/12/23) =
+* First github-based release
+
 = 2.3.17 (2022/12/22) =
 * First PhpSniffer pass fixes
 

@@ -172,7 +172,7 @@ function eme_plugin_row_meta( $links, $file ) {
 	if ( strpos( $file, 'events-manager.php' ) !== false ) {
 		$new_links = array(
 			'donate'  => '<a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurring=0&currency_code=EUR">Donate</a>',
-			'Support' => '<a href="https://www.e-dynamics.be/wordpress">Support</a>',
+			'Support' => '<a href="https://github.com/liedekef/events-made-easy">Support</a>',
 		);
 		$links     = array_merge( $links, $new_links );
 	}

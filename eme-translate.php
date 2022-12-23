@@ -23,7 +23,7 @@ function eme_load_textdomain() {
 		// This is the case if the site locale is English (so no textdomain gets loaded by default since nobody has translated EME into English)
 		// but the user profile is set to something else besides English
 		if ( ! is_textdomain_loaded( 'events-made-easy' ) ) {
-			load_plugin_textdomain( 'events-made-easy' );
+			load_plugin_textdomain( 'events-made-easy', false, basename(eme_plugin_dir()).'/langs' );
 		}
 	}
 }

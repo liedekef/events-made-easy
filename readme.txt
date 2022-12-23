@@ -96,6 +96,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
+= 2.3.20 (2022/12/23) =
+* Second github-based release
+
 = 2.3.19 (2022/12/23) =
 * First github-based release
 

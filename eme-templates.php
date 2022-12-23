@@ -512,6 +512,9 @@ function eme_ajax_templates_list() {
 }
 function eme_ajax_manage_templates() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( !current_user_can( get_option( 'eme_cap_templates' ) ) ) {
+		wp_die();
+	}
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
@@ -535,6 +538,11 @@ function eme_ajax_manage_templates() {
 //}
 
 function eme_ajax_get_template() {
+	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	// only used when sending mail, so limit to that
+	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+		wp_die();
+	}
 	$return = array();
 	if ( isset( $_REQUEST['template_id'] ) && intval( $_REQUEST['template_id'] ) > 0 ) {
 		$return['htmlmessage'] = eme_get_template_format( $_REQUEST['template_id'] );

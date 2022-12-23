@@ -62,6 +62,7 @@ jQuery(document).ready( function($) {
 		holiday_chosen = (typeof template_chosen == 'undefined')? 0 : holiday_chosen;
 		weekdays = (typeof weekdays == 'undefined')? '' : weekdays;
 		$.post(emebasic.translate_ajax_url, {
+			eme_frontend_nonce: emebasic.translate_frontendnonce,
 			action: 'eme_calendar',
 			calmonth: parseInt(month,10),
 			calyear: parseInt(year,10),

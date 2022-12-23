@@ -949,6 +949,9 @@ function eme_ajax_manage_countries() {
 }
 function eme_ajax_manage_states() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
+		wp_die();
+	}
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {

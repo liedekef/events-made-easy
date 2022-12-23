@@ -19,6 +19,7 @@ jQuery(document).ready( function($) {
             source: function(request, response) {
                          $.post(ajaxurl,
                                   { q: request.term,
+				    'eme_admin_nonce': emeadmin.translate_adminnonce,
                                     action: 'eme_autocomplete_people',
                                     eme_searchlimit: 'people'
                                   },
@@ -79,6 +80,7 @@ jQuery(document).ready( function($) {
             source: function(request, response) {
                          $.post(ajaxurl,
                                   { q: request.term,
+				    'eme_admin_nonce': emeadmin.translate_adminnonce,
                                     action: 'eme_autocomplete_people',
                                     eme_searchlimit: 'people'
                                   },
@@ -313,6 +315,7 @@ jQuery(document).ready( function($) {
           e.preventDefault();
 	  $.post(ajaxurl,
 		  { action: 'eme_get_template',
+		   'eme_admin_nonce': emeadmin.translate_adminnonce,
 		    template_id: $('select#event_subject_template').val(),
 		  },
 		  function(data){
@@ -326,6 +329,7 @@ jQuery(document).ready( function($) {
           e.preventDefault();
 	  $.post(ajaxurl,
 		  { action: 'eme_get_template',
+		   'eme_admin_nonce': emeadmin.translate_adminnonce,
 		    template_id: $('select#event_message_template').val(),
 		  },
 		  function(data){
@@ -346,6 +350,7 @@ jQuery(document).ready( function($) {
    //       e.preventDefault();
 //	  $.post(ajaxurl,
 //		  { action: 'eme_get_template',
+//		   'eme_admin_nonce': emeadmin.translate_adminnonce,
 //		    template_id: $('select#generic_subject_template').val(),
 //		  },
 //		  function(data){
@@ -358,6 +363,7 @@ jQuery(document).ready( function($) {
           e.preventDefault();
 	  $.post(ajaxurl,
 		  { action: 'eme_get_template',
+		   'eme_admin_nonce': emeadmin.translate_adminnonce,
 		    template_id: $('select#generic_message_template').val(),
 		  },
 		  function(data){

@@ -1695,6 +1695,9 @@ function eme_ajax_discounts_select2() {
 	global $wpdb,$eme_db_prefix;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
+		wp_die();
+	}
 	$table        = $eme_db_prefix . DISCOUNTS_TBNAME;
 	$jTableResult = array();
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( $_REQUEST['q'] ) : '';
@@ -1728,6 +1731,9 @@ function eme_ajax_dgroups_select2() {
 	global $wpdb,$eme_db_prefix;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
+		wp_die();
+	}
 	$table        = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
 	$jTableResult = array();
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( $_REQUEST['q'] ) : '';
@@ -1760,6 +1766,9 @@ function eme_ajax_dgroups_select2() {
 
 function eme_ajax_manage_discounts() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
+		wp_die();
+	}
 	$ajaxResult           = array();
 	$ajaxResult['Result'] = 'OK';
 	if ( isset( $_REQUEST['do_action'] ) ) {
@@ -1817,6 +1826,9 @@ function eme_ajax_manage_discounts() {
 }
 function eme_ajax_manage_discountgroups() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
+		wp_die();
+	}
 	$ajaxResult           = array();
 	$ajaxResult['Result'] = 'OK';
 	if ( isset( $_REQUEST['do_action'] ) ) {

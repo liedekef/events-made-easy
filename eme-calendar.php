@@ -652,6 +652,7 @@ function eme_get_calendar( $args = '' ) {
 add_action( 'wp_ajax_eme_calendar', 'eme_calendar_ajax' );
 add_action( 'wp_ajax_nopriv_eme_calendar', 'eme_calendar_ajax' );
 function eme_calendar_ajax() {
+	check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 	( ! empty( $_POST['full'] ) ) ? $full                     = 1 : $full = 0;
 	( ! empty( $_POST['htmltable'] ) ) ? $htmltable           = 1 : $htmltable = 0;
 	( ! empty( $_POST['htmldiv'] ) ) ? $htmldiv               = 1 : $htmldiv = 0;

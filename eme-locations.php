@@ -2783,20 +2783,25 @@ function eme_locations_search_ajax() {
 }
 
 function eme_locations_autocomplete_ajax( $no_wp_die = 0 ) {
-		$res = array();
+	$res = array();
 	if ( ! isset( $_REQUEST['q'] ) ) {
 		echo wp_json_encode( $res );
 		return;
 	}
 
-		$locations = eme_search_locations( $_REQUEST['q'] );
-		// change null to empty
-		$locations = array_map(
-			function( $v ) {
-				return ( is_null( $v ) ) ? '' : $v;
-			},
-			$locations
-		);
+	if ( ! $no_wp_die ) {
+		if ( ! current_user_can( get_option( 'eme_cap_list_locations' ) ) ) {
+			wp_die();
+		}
+	}
+	$locations = eme_search_locations( $_REQUEST['q'] );
+	// change null to empty
+	$locations = array_map(
+		function( $v ) {
+			return ( is_null( $v ) ) ? '' : $v;
+		},
+		$locations
+	);
 
 	foreach ( $locations as $item ) {
 		$record                = array();
@@ -2812,7 +2817,7 @@ function eme_locations_autocomplete_ajax( $no_wp_die = 0 ) {
 		$record['longitude']   = eme_trans_esc_html( $item['location_longitude'] );
 		$res[]                 = $record;
 	}
-		echo wp_json_encode( $res );
+	echo wp_json_encode( $res );
 	if ( ! $no_wp_die ) {
 		wp_die();
 	}

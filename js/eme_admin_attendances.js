@@ -84,6 +84,7 @@ jQuery(document).ready( function($) {
 				$.post(ajaxurl,
 					{ q: request.term,
 						action: 'eme_autocomplete_people',
+						'eme_admin_nonce': emeattendances.translate_adminnonce,
 						eme_searchlimit: 'people'
 					},
 					function(data){

@@ -5410,6 +5410,10 @@ function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
 	$people_table  = $eme_db_prefix . PEOPLE_TBNAME;
 	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
 
+	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
+		wp_die();
+	}
 	$return = array();
 	$q      = '';
 	if ( isset( $_REQUEST['lastname'] ) ) {
@@ -5477,6 +5481,10 @@ function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
 }
 
 function eme_member_main_account_autocomplete_ajax() {
+	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
+		wp_die();
+	}
 	$return        = array();
 	$q             = '';
 	$membership_id = 0;
@@ -5772,6 +5780,13 @@ function eme_ajax_members_select2() {
 	global $wpdb,$eme_db_prefix;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
+			$ajaxResult 		   = array();
+			$ajaxResult['Result']      = 'Error';
+			$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+			print wp_json_encode( $ajaxResult );
+			wp_die();
+	}
 
 	$table             = $eme_db_prefix . MEMBERS_TBNAME;
 	$people_table      = $eme_db_prefix . PEOPLE_TBNAME;
@@ -5816,6 +5831,9 @@ function eme_ajax_members_select2() {
 
 function eme_ajax_store_members_query() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
+		wp_die();
+	}
 	if ( ! empty( $_POST['dynamicgroupname'] ) ) {
 		eme_ajax_members_list( $_POST['dynamicgroupname'] );
 		$jTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
@@ -5833,7 +5851,7 @@ function eme_ajax_manage_members() {
 		$send_mail    = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 1;
 		$trash_person = ( isset( $_POST['trash_person'] ) ) ? intval( $_POST['trash_person'] ) : 0;
 
-		$ids     = $_POST['member_id'];
+		$ids     = eme_sanitize_request($_POST['member_id']);
 		$ids_arr = explode( ',', $ids );
 		if ( ! eme_array_integers( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 			$jTableResult['Result']      = 'Error';
@@ -5904,7 +5922,7 @@ function eme_ajax_manage_memberships() {
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 
-		$ids     = $_POST['membership_id'];
+		$ids     = eme_sanitize_request($_POST['membership_id']);
 		$ids_arr = explode( ',', $ids );
 		if ( ! eme_array_integers( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 			$ajaxResult['Result']      = 'Error';

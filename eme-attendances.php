@@ -248,6 +248,9 @@ function eme_ajax_attendances_list() {
 
 function eme_ajax_manage_attendances() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_list_attendances' ) ) ) {
+		wp_die();
+	}
 	$ajaxResult = array();
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );

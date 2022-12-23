@@ -47,7 +47,7 @@ function eme_gdpr_url( $email ) {
 add_action( 'wp_ajax_eme_gdpr', 'eme_gdpr_ajax' );
 add_action( 'wp_ajax_nopriv_eme_gdpr', 'eme_gdpr_ajax' );
 function eme_gdpr_ajax() {
-		// check for spammers as early as possible
+	// check for spammers as early as possible
 	if ( get_option( 'eme_honeypot_for_forms' ) ) {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 				$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
@@ -71,10 +71,10 @@ function eme_gdpr_ajax() {
 			wp_die();
 	}
 
-		$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
-		// send email to client if it exists, otherwise do nothing, but always return the same message
-		$email = eme_sanitize_email( $_POST['eme_email'] );
-		// check if email is found, if so: send the gdpr url
+	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	// send email to client if it exists, otherwise do nothing, but always return the same message
+	$email = eme_sanitize_email( $_POST['eme_email'] );
+	// check if email is found, if so: send the gdpr url
 	if ( eme_count_persons_by_email( $email ) > 0 ) {
 		$contact_email = get_option( 'eme_mail_sender_address' );
 		$contact_name  = get_option( 'eme_mail_sender_name' );
@@ -90,14 +90,14 @@ function eme_gdpr_ajax() {
 		$gdpr_body    = eme_replace_generic_placeholders( $gdpr_body, $mail_text_html );
 		eme_queue_fastmail( $gdpr_subject, $gdpr_body, $contact_email, $contact_name, $email, '', $contact_email, $contact_name );
 	}
-		$form_html = __( 'Thank you for your request, an email will be sent with further info', 'events-made-easy' );
-		echo wp_json_encode(
-			array(
-				'Result'      => 'OK',
-				'htmlmessage' => $form_html,
-			)
-		);
-		wp_die();
+	$form_html = __( 'Thank you for your request, an email will be sent with further info', 'events-made-easy' );
+	echo wp_json_encode(
+		array(
+			'Result'      => 'OK',
+			'htmlmessage' => $form_html,
+		)
+	);
+	wp_die();
 }
 
 function eme_rpi_shortcode( $atts ) {
@@ -110,12 +110,12 @@ function eme_rpi_shortcode( $atts ) {
 	}
 
 	extract( shortcode_atts( array( 'show_info_if_logged_in' => 0 ), $atts ) );
-		$show_info_if_logged_in = filter_var( $show_info_if_logged_in, FILTER_VALIDATE_BOOLEAN );
+	$show_info_if_logged_in = filter_var( $show_info_if_logged_in, FILTER_VALIDATE_BOOLEAN );
 
-		// for logged in users that are linked to an EME user, immediately show the info
+	// for logged in users that are linked to an EME user, immediately show the info
 	if ( $show_info_if_logged_in && is_user_logged_in() ) {
-			$current_userid = get_current_user_id();
-			$person         = eme_get_person_by_wp_id( $current_userid );
+		$current_userid = get_current_user_id();
+		$person         = eme_get_person_by_wp_id( $current_userid );
 		if ( ! empty( $person ) ) {
 			return eme_show_personal_info( $person['email'] );
 		}

@@ -9776,6 +9776,9 @@ add_action( 'wp_ajax_eme_wpuser_select2', 'eme_ajax_wpuser_select2' );
 function eme_ajax_wpuser_select2() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
+	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+		wp_die();
+	}
 	$jTableResult = array();
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( $_REQUEST['q'] ) : '';
 	$pagesize     = intval( $_REQUEST['pagesize'] );
@@ -10341,6 +10344,12 @@ function eme_ajax_events_select2() {
 	global $wpdb,$eme_db_prefix, $eme_timezone;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+		$jTableResult['Result']  = 'Error';
+		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $jTableResult );
+		wp_die();
+	}
 	$current_userid = get_current_user_id();
 	$q              = isset( $_REQUEST['q'] ) ? strtolower( $_REQUEST['q'] ) : '';
 	$search_all     = isset( $_REQUEST['search_all'] ) ? intval( $_REQUEST['search_all'] ) : 0;

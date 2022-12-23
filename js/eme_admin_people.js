@@ -508,6 +508,7 @@ jQuery(document).ready(function ($) {
             source: function(request, response) {
                          $.post(ajaxurl,
                                   { q: request.term,
+				    'eme_admin_nonce': eme.translate_adminnonce,
                                     action: 'eme_autocomplete_people',
                                     eme_searchlimit: 'people'
                                   },
@@ -584,6 +585,7 @@ jQuery(document).ready(function ($) {
 			  $.post(ajaxurl,
 				  { q: request.term,
 					  action: 'eme_autocomplete_people',
+					  'eme_admin_nonce': eme.translate_adminnonce,
 					  eme_searchlimit: 'people',
 					  'exclude_personids': idsjoined
 				  },

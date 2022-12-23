@@ -4835,29 +4835,30 @@ function eme_ajax_formfields_list() {
 
 function eme_ajax_manage_formfields() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	$jTableResult=array();
+	if (! current_user_can( get_option( 'eme_cap_forms' ) ) || !isset( $_POST['field_id'] ) ) {
+		$jTableResult['Result']      = 'Error';
+		$jTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
+		$jTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+	}
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteFormfield':
-				if ( current_user_can( get_option( 'eme_cap_forms' ) ) && isset( $_POST['field_id'] ) ) {
-						eme_delete_formfields( array( $_POST['field_id'] ) );
-						$jTableResult['Result']      = 'OK';
-						$jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
-				} else {
-						$jTableResult['Result']      = 'Error';
-						$jTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
-						$jTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
-				}
+				// validation happens in the eme_delete_formfields function
+				eme_delete_formfields( array( intval($_POST['field_id']) ) );
+				$jTableResult['Result']      = 'OK';
+				$jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
 				print wp_json_encode( $jTableResult );
 				wp_die();
 				break;
 			case 'deleteFormfields':
-				if ( current_user_can( get_option( 'eme_cap_forms' ) ) && isset( $_POST['field_id'] ) ) {
-						$field_ids = explode( ',', $_POST['field_id'] );
-						// validation happens in the eme_delete_formfields function
-						eme_delete_formfields( $field_ids );
-						$jTableResult['Result']      = 'OK';
-						$jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
+				$field_ids = explode( ',', $_POST['field_id'] );
+				if (eme_array_integers( $field_ids)) {
+					// validation happens in the eme_delete_formfields function
+					eme_delete_formfields( $field_ids );
+					$jTableResult['Result']      = 'OK';
+					$jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
 				} else {
 					$jTableResult['Result']      = 'Error';
 					$jTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );

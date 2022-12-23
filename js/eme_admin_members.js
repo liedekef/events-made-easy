@@ -529,6 +529,7 @@ jQuery(document).ready(function ($) {
 					{ q: request.term,
 					  'member_id': $('#member_id').val(),
 					  'membership_id': $('#membership_id').val(),
+					  'eme_admin_nonce': eme.translate_adminnonce,
 					  action: 'wp_ajax_eme_autocomplete_membermainaccount'
 					},
 					function(data){
@@ -592,6 +593,7 @@ jQuery(document).ready(function ($) {
 			source: function(request, response) {
 				$.post(ajaxurl,
 					{ q: request.term,
+					  'eme_admin_nonce': eme.translate_adminnonce,
 					  action: 'eme_autocomplete_people',
 					  eme_searchlimit: 'people'
 					},
@@ -668,6 +670,7 @@ jQuery(document).ready(function ($) {
 			source: function(request, response) {
 				$.post(ajaxurl,
 					{ 'q': request.term,
+					  'eme_admin_nonce': eme.translate_adminnonce,
 					  'action': 'eme_autocomplete_memberperson',
 					  'exclude_personid': $('input[name=person_id]').val(),
 					  'membership_id': $('#membership_id').val(),

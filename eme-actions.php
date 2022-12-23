@@ -714,13 +714,19 @@ function eme_dismiss_admin_notice() {
 	}
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	update_option( $option_name, $dismissible_length );
+	if ( current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+		update_option( $option_name, $dismissible_length );
+	}
 	wp_die();
 }
 
 add_action( 'wp_ajax_eme_del_upload', 'eme_del_upload_ajax' );
 function eme_del_upload_ajax() {
-		check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_edit_people' ) ) || current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+		wp_die();
+	}
+
 	if ( isset( $_POST['id'] ) && isset( $_POST['name'] ) && isset( $_POST['type'] ) && isset( $_POST['random_id'] ) && isset( $_POST['field_id'] ) && isset( $_POST['extra_id'] ) ) {
 			$id        = intval( $_POST['id'] );
 			$type      = eme_sanitize_request( $_POST['type'] );
@@ -753,7 +759,7 @@ function eme_del_upload_ajax() {
 			eme_delete_uploaded_file( $fname, $id, $type );
 		}
 	}
-		wp_die();
+	wp_die();
 }
 
 add_action( 'send_headers', 'eme_frontend_nocache_headers' );

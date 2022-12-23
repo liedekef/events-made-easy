@@ -4594,6 +4594,9 @@ function eme_store_family_answers( $person_id, $familymember ) {
 }
 
 function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required = 0 ) {
+	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
+		wp_die();
+	}
 	$return = array();
 	$q      = '';
 	if ( isset( $_REQUEST['lastname'] ) ) {
@@ -4903,6 +4906,12 @@ function eme_ajax_people_select2() {
 	global $wpdb,$eme_db_prefix;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
+		$ajaxResult['Result']  = 'Error';
+		$ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $ajaxResult );
+		wp_die();
+	}
 
 	$table = $eme_db_prefix . PEOPLE_TBNAME;
 
@@ -4936,6 +4945,12 @@ function eme_ajax_people_select2() {
 
 function eme_ajax_store_people_query() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
+		$ajaxResult['Result']  = 'Error';
+		$ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $ajaxResult );
+		wp_die();
+	}
 	if ( ! empty( $_POST['dynamicgroupname'] ) ) {
 		eme_ajax_people_list( $_POST['dynamicgroupname'] );
 		$jTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';

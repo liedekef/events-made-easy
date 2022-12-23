@@ -1205,32 +1205,30 @@ add_action( 'wp_ajax_eme_searchmail', 'eme_send_mails_ajax_action_searchmail' );
 add_action( 'wp_ajax_eme_eventmail', 'eme_send_mails_ajax_action_eventmail' );
 
 function eme_send_mails_ajax_action_searchmail() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	eme_send_mails_ajax_actions( 'searchmail' );
 }
 function eme_send_mails_ajax_action_testmail() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	eme_send_mails_ajax_actions( 'testmail' );
 }
 function eme_send_mails_ajax_action_eventmail() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	eme_send_mails_ajax_actions( 'eventmail' );
 }
 function eme_send_mails_ajax_action_genericmail() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	eme_send_mails_ajax_actions( 'genericmail' );
 }
 function eme_send_mails_ajax_action_previewmail() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	eme_send_mails_ajax_actions( 'previewmail' );
 }
 function eme_send_mails_ajax_action_previeweventmail() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	eme_send_mails_ajax_actions( 'previeweventmail' );
 }
 
 function eme_send_mails_ajax_actions( $action ) {
 	global $wpdb,$eme_db_prefix, $eme_timezone;
+	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+		wp_die();
+	}
 	$event_ids        = isset( $_POST['event_ids'] ) ? $_POST['event_ids'] : 0;
 	$ajaxResult       = array();
 	$conditions       = array();

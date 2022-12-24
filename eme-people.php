@@ -1795,7 +1795,7 @@ function eme_manage_people_layout( $message = '' ) {
 <?php endif; ?>
 
 	<h1><?php esc_html_e( 'Manage people', 'events-made-easy' ); ?></h1>
-	<?php echo sprintf( esc_html__( "Click <a href='%s'>here</a> to verify the integrity of EME people", 'events-made-easy' ), admin_url( "admin.php?page=$plugin_page&eme_admin_action=verify_people" ) ); ?><br>
+	<?php echo sprintf( __( "Click <a href='%s'>here</a> to verify the integrity of EME people", 'events-made-easy' ), admin_url( "admin.php?page=$plugin_page&eme_admin_action=verify_people" ) ); ?><br>
 
 	<?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?> 
 		<a href="<?php echo admin_url( "admin.php?page=$plugin_page&trash=0" ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>

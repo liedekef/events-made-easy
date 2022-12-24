@@ -6376,7 +6376,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 							$eme_wp_user_arr = array();
 							if ( $event_author > 0 ) {
 								$user_info                        = get_userdata( $event_author );
-								$eme_wp_user_arr[ $event_author ] = $user_info->display_name;
+								if ($user_info !== false)
+									$eme_wp_user_arr[ $event_author ] = $user_info->display_name;
 							}
 							echo eme_ui_select( $event_author, 'event_author', $eme_wp_user_arr, '', 0, 'eme_select2_wpuser_class' );
 							?>
@@ -6396,7 +6397,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 							#$eme_wp_user_arr[-1]=__ ( "Event author", 'events-made-easy');
 							if ( $event['event_contactperson_id'] > 0 ) {
 								$user_info = get_userdata( $event['event_contactperson_id'] );
-								$eme_wp_user_arr[ $event['event_contactperson_id'] ] = $user_info->display_name;
+								if ($user_info !== false)
+									$eme_wp_user_arr[ $event['event_contactperson_id'] ] = $user_info->display_name;
 							}
 							echo eme_ui_select( $event['event_contactperson_id'], 'event_contactperson_id', $eme_wp_user_arr, '', 0, 'eme_select2_wpuser_class' );
 							// if it is not a new event and there's no contact person defined, then the event author becomes contact person
@@ -6861,19 +6863,9 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 		<div id="div_event_date">
 		<b><?php esc_html_e( 'Event date', 'events-made-easy' ); ?></b>
 		<input id="start-date-to-submit" type="hidden" name="event_start_date" value="">
-		<input id="localized-start-date" type="text" name="localized_event_start_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='
-		<?php
-		if ( ! eme_is_empty_datetime( $event['event_start'] ) ) {
-			echo eme_js_datetime( $event['event_start'] );}
-		?>
-		' data-alt-field='start-date-to-submit' class='eme_formfield_fdate' required="required">
+		<input id="localized-start-date" type="text" name="localized_event_start_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo eme_js_datetime( $event['event_start'] );} ?>' data-alt-field='start-date-to-submit' class='eme_formfield_fdate' required="required">
 		<input id="end-date-to-submit" type="hidden" name="event_end_date" value="">
-		<input id="localized-end-date" type="text" name="localized_event_end_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='
-		<?php
-		if ( ! eme_is_empty_datetime( $event['event_end'] ) ) {
-			echo eme_js_datetime( $event['event_end'] );}
-		?>
-		' data-alt-field='end-date-to-submit' class='eme_formfield_fdate'>
+		<input id="localized-end-date" type="text" name="localized_event_end_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo eme_js_datetime( $event['event_end'] );} ?>' data-alt-field='end-date-to-submit' class='eme_formfield_fdate'>
 		<p class="eme_smaller">
 		<?php esc_html_e( 'The event beginning and end date.', 'events-made-easy' ); ?>
 		</p>
@@ -6886,19 +6878,9 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 		<?php
 		echo '<b>' . __( 'Event time', 'events-made-easy' ) . '</b>';
 		?>
-		<input id="localized_start_time" type="text" size="8" name="localized_start_time" value="
-		<?php
-		if ( ! eme_is_empty_datetime( $event['event_start'] ) ) {
-			echo $start_date_obj->format( $eme_wp_time_format );}
-		?>
-		" class='eme_formfield_timepicker' >
+		<input id="localized_start_time" type="text" size="8" name="localized_start_time" value="<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo $start_date_obj->format( $eme_wp_time_format );} ?>" class='eme_formfield_timepicker' >
 		-
-		<input id="localized_end_time" type="text" size="8" name="localized_end_time" value="
-		<?php
-		if ( ! eme_is_empty_datetime( $event['event_end'] ) ) {
-			echo $end_date_obj->format( $eme_wp_time_format );}
-		?>
-		" class='eme_formfield_timepicker' >
+		<input id="localized_end_time" type="text" size="8" name="localized_end_time" value="<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo $end_date_obj->format( $eme_wp_time_format );} ?>" class='eme_formfield_timepicker' >
 		<p class="eme_smaller">
 		<?php esc_html_e( 'The time of the event beginning and end', 'events-made-easy' ); ?>
 		</p>

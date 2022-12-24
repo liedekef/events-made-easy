@@ -3316,7 +3316,10 @@ function eme_create_wp_user( $person ) {
 
 	// let's do everything in one go
 	$userdata['user_pass']  = $user_pass;
-	$userdata['user_login'] = wp_slash( $username );
+	if (!isset($userdata['user_login']))
+		$userdata['user_login'] = wp_slash( $username );
+	else
+		$userdata['user_login'] = wp_slash( $userdata['user_login'] );
 	$userdata['user_email'] = wp_slash( $person['email'] );
 	$userdata['last_name']  = $person['lastname'];
 	$userdata['first_name'] = $person['firstname'];

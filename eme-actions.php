@@ -194,10 +194,10 @@ function eme_actions_init() {
 		// the price stuff can be dependant on user functions (for discounts), so we put them also in eme_actions_init and not eme_actions_preinit
 		switch ( $_POST['eme_override_eventAction'] ) {
 			case 'calc_memberprice':
-					eme_calc_memberprice_ajax();
+				eme_calc_memberprice_ajax();
 				break;
 			case 'dynmemberdata':
-					eme_dyndata_member_ajax();
+				eme_dyndata_member_ajax();
 				break;
 			case 'dynfamilymemberdata':
 				eme_dyndata_familymember_ajax();

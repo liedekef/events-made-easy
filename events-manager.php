@@ -354,6 +354,7 @@ $myUpdateChecker = PucFactory::buildUpdateChecker(
 
 //Set the branch that contains the stable release.
 $myUpdateChecker->setBranch('main');
+$myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
 
 // now some extra global vars
 $eme_plugin_url = eme_plugin_url();

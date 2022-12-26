@@ -3529,8 +3529,9 @@ function eme_extra_event_headers( $event ) {
 }
 
 function eme_isjson( $data ) {
-    $decoded_data = json_decode($data);
-    return (json_last_error() == JSON_ERROR_NONE);
+	if (!is_string($data)) return false;
+	$decoded_data = json_decode($data);
+	return (json_last_error() == JSON_ERROR_NONE);
 }
 
 function eme_is_serialized( $data ) {

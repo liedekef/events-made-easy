@@ -3542,7 +3542,7 @@ function eme_serialize( $data ) {
 	if ( !eme_is_serialized( $data )) {
 		return json_encode( $data );
 	} elseif (is_serialized( $data )) {
-		$data = unserialize( $data );
+		$data = unserialize( $data,  ['allowed_classes' => false] );
 		return json_encode( $data );
 	} else {
 		return $data;
@@ -3551,7 +3551,7 @@ function eme_serialize( $data ) {
 
 function eme_unserialize( $data ) {
 	if ( is_serialized( $data ) ) {
-		return unserialize( $data );
+		return unserialize( $data, ['allowed_classes' => false] );
 	} elseif (eme_isjson($data)) {
 		return json_decode ($data);
 	} else {

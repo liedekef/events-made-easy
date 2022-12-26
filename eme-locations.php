@@ -1368,8 +1368,8 @@ function eme_update_location( $line, $location_id ) {
 	// we need to do this since this function is also called for csv import
 	$keys                            = array_intersect_key( $line, $location );
 	$new_line                        = array_merge( $location, $keys );
-	$new_line['location_attributes'] = eme_maybe_serialize( $new_line['location_attributes'] );
-	$new_line['location_properties'] = eme_maybe_serialize( $new_line['location_properties'] );
+	$new_line['location_attributes'] = eme_serialize( $new_line['location_attributes'] );
+	$new_line['location_properties'] = eme_serialize( $new_line['location_properties'] );
 
 	$wpdb->show_errors( true );
 	$where = array( 'location_id' => $location_id );
@@ -1406,8 +1406,8 @@ function eme_insert_location( $line, $force = 0 ) {
 	if ( has_filter( 'eme_insert_location_filter' ) ) {
 		$new_line = apply_filters( 'eme_insert_location_filter', $new_line );
 	}
-	$new_line['location_attributes'] = eme_maybe_serialize( $new_line['location_attributes'] );
-	$new_line['location_properties'] = eme_maybe_serialize( $new_line['location_properties'] );
+	$new_line['location_attributes'] = eme_serialize( $new_line['location_attributes'] );
+	$new_line['location_properties'] = eme_serialize( $new_line['location_properties'] );
 
 	if ( current_user_can( get_option( 'eme_cap_add_locations' ) ) || $force ) {
 		$wpdb->show_errors( true );

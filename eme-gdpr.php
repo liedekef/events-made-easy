@@ -109,8 +109,8 @@ function eme_rpi_shortcode( $atts ) {
 		$email = '';
 	}
 
-	extract( shortcode_atts( array( 'show_info_if_logged_in' => 0 ), $atts ) );
-	$show_info_if_logged_in = filter_var( $show_info_if_logged_in, FILTER_VALIDATE_BOOLEAN );
+	$atts = shortcode_atts( array( 'show_info_if_logged_in' => 0 ), $atts );
+	$show_info_if_logged_in = filter_var( $atts['show_info_if_logged_in'], FILTER_VALIDATE_BOOLEAN );
 
 	// for logged in users that are linked to an EME user, immediately show the info
 	if ( $show_info_if_logged_in && is_user_logged_in() ) {
@@ -311,8 +311,8 @@ function eme_cpi_shortcode( $atts ) {
 		$email = '';
 	}
 
-	extract( shortcode_atts( array( 'show_form_if_logged_in' => 0 ), $atts ) );
-	$show_form_if_logged_in = filter_var( $show_form_if_logged_in, FILTER_VALIDATE_BOOLEAN );
+	$atts = shortcode_atts( array( 'show_form_if_logged_in' => 0 ), $atts );
+	$show_form_if_logged_in = filter_var( $atts['show_form_if_logged_in'], FILTER_VALIDATE_BOOLEAN );
 
 	// for logged in users that are linked to an EME user, immediately show the form
 	if ( $show_form_if_logged_in && is_user_logged_in() ) {

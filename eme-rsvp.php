@@ -1580,13 +1580,13 @@ function eme_get_booking( $booking_id ) {
 	$sql            = $wpdb->prepare( "SELECT * FROM $bookings_table WHERE booking_id = %d", $booking_id );
 	$booking        = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $booking !== false ) {
-		if ( is_serialized( $booking['dcodes_used'] ) ) {
-			$booking['dcodes_used'] = unserialize( $booking['dcodes_used'] );
+		if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
+			$booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
 		} else {
 			$booking['dcodes_used'] = array();
 		}
-		if ( is_serialized( $booking['dcodes_entered'] ) ) {
-			$booking['dcodes_entered'] = unserialize( $booking['dcodes_entered'] );
+		if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
+			$booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
 		} else {
 			$booking['dcodes_entered'] = array();
 		}
@@ -1637,13 +1637,13 @@ function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_stat
 	$bookings = $wpdb->get_results( $sql, ARRAY_A );
 	if ( ! empty( $bookings ) ) {
 		foreach ( $bookings as $key => $booking ) {
-			if ( is_serialized( $booking['dcodes_used'] ) ) {
-				$booking['dcodes_used'] = unserialize( $booking['dcodes_used'] );
+			if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
+				$booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
 			} else {
 				$booking['dcodes_used'] = array();
 			}
-			if ( is_serialized( $booking['dcodes_entered'] ) ) {
-				$booking['dcodes_entered'] = unserialize( $booking['dcodes_entered'] );
+			if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
+				$booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
 			} else {
 				$booking['dcodes_entered'] = array();
 			}
@@ -1816,9 +1816,9 @@ function eme_db_insert_booking( $event, $booker, $booking ) {
 		$booking['status'] = EME_RSVP_STATUS_APPROVED;
 	}
 
-	// serialize if needed
-	$booking['dcodes_entered'] = maybe_serialize( $booking['dcodes_entered'] );
-	$booking['dcodes_used']    = maybe_serialize( $booking['dcodes_used'] );
+	// eme_serialize if needed
+	$booking['dcodes_entered'] = eme_serialize( $booking['dcodes_entered'] );
+	$booking['dcodes_used']    = eme_serialize( $booking['dcodes_used'] );
 
 	if ( empty( $booking['creation_date'] ) || ! ( eme_is_date( $booking['creation_date'] ) || eme_is_datetime( $booking['creation_date'] ) ) ) {
 		$booking['creation_date'] = current_time( 'mysql', false );
@@ -2797,13 +2797,13 @@ function eme_get_bookings_by_paymentid( $payment_id ) {
 	$sql      = $wpdb->prepare( "SELECT * FROM $bookings_table WHERE status IN (%d,%d,%d) AND payment_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $payment_id );
 	$bookings = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $bookings as $key => $booking ) {
-		if ( is_serialized( $booking['dcodes_used'] ) ) {
-				$booking['dcodes_used'] = unserialize( $booking['dcodes_used'] );
+		if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
+				$booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
 		} else {
 			$booking['dcodes_used'] = array();
 		}
-		if ( is_serialized( $booking['dcodes_entered'] ) ) {
-				$booking['dcodes_entered'] = unserialize( $booking['dcodes_entered'] );
+		if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
+				$booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
 		} else {
 			$booking['dcodes_entered'] = array();
 		}
@@ -5425,8 +5425,8 @@ function eme_ajax_bookings_list() {
 		$line['eventprice'] = eme_convert_multi2br( eme_localized_price( eme_get_booking_event_price( $booking ), $event['currency'] ) );
 		$line['totalprice'] = eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'] );
 		$line['discount']   = eme_localized_price( $booking['discount'], $event['currency'] );
-		// dcodes_used is still serialized here
-		$line['dcodes_used']  = eme_esc_html( unserialize( $booking['dcodes_used'] ) );
+		// dcodes_used is still eme_serialized here
+		$line['dcodes_used']  = eme_esc_html( eme_unserialize( $booking['dcodes_used'] ) );
 		$line['unique_nbr']   = "<span title='" . sprintf( __( 'This is based on the payment ID of the booking: %d', 'events-made-easy' ), $booking ['payment_id'] ) . "'>" . eme_esc_html( eme_unique_nbr_formatted( $booking['unique_nbr'] ) ) . '</span>';
 		$line['booking_paid'] = $booking['booking_paid'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 		if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {

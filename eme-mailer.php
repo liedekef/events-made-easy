@@ -52,17 +52,14 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 	);
 	$mail_options = apply_filters( 'eme_filter_mail_options', $mail_options );
 
-	// now extract all elements as variables, with eme prefix
-	extract( $mail_options, EXTR_PREFIX_ALL, 'mailoption' );
-
-	if ( empty( $mailoption_smtp_host ) ) {
-		$mailoption_smtp_host = 'localhost';
+	if ( empty( $mailoptions['smtp_host'] ) ) {
+		$mailoptions['smtp_host'] = 'localhost';
 	}
-	if ( empty( $mailoption_smtp_port ) ) {
-		$mailoption_smtp_port = 25;
+	if ( empty( $mailoptions['smtp_port'] ) ) {
+		$mailoptions['smtp_port'] = 25;
 	}
 
-	$bcc_addresses = preg_split( '/,|;/', $mailoption_bcc_addresses );
+	$bcc_addresses = preg_split( '/,|;/', $mailoptions['bcc_addresses'] );
 
 	// allow either an array of file paths or of attachment ids
 	$attachment_paths_arr = array();
@@ -82,19 +79,21 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		}
 	}
 
-	if ( ! in_array( $mailoption_mail_send_method, array( 'smtp', 'mail', 'sendmail', 'qmail', 'wp_mail' ) ) ) {
-		$mailoption_mail_send_method = 'wp_mail';
+	if ( ! in_array( $mailoptions['mail_send_method'], array( 'smtp', 'mail', 'sendmail', 'qmail', 'wp_mail' ) ) ) {
+		$mailoptions['mail_send_method'] = 'wp_mail';
 	}
 
-	if ( $mailoption_mail_send_method == 'wp_mail' ) {
+	if ( $mailoptions['mail_send_method'] == 'wp_mail' ) {
 		// Set the correct mail headers
-		$headers[] = "From: $mailoption_fromName <$mailoption_fromMail>";
-		if ( $mailoption_replytoMail != '' ) {
-			$headers[] = "Reply-To: $mailoption_replytoName <$mailoption_replytoMail>";
+		$headers[] = 'From: '.$mailoptions['fromName'].' <'.$mailoptions['fromMail'].'>';
+		if ( !empty($mailoptions['replytoMail']) && eme_is_email($mailoptions['replytoMail'])) {
+			$headers[] = 'Reply-To: '.$mailoptions['replytoName'].' <'.$mailoptions['replytoMail'].'>';
 		}
-		if ( ! empty( $mailoption_bcc_addresses ) ) {
+		if ( ! empty( $mailoptions['bcc_addresses'] ) ) {
 			foreach ( $bcc_addresses as $bcc_address ) {
-				$headers[] = 'Bcc: ' . trim( $bcc_address );
+				if (eme_is_email($bcc_address)) {
+					$headers[] = 'Bcc: ' . trim( $bcc_address );
+				}
 			}
 		}
 		if ( ! empty( $custom_headers ) ) {
@@ -104,14 +103,14 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		}
 
 		// set the correct content type
-		if ( $mailoption_send_html ) {
+		if ( $mailoptions['send_html'] ) {
 			$body = eme_nl2br_save_html( $body );
 			add_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
 		}
 
 		// now send it
-		if ( ! empty( $mailoption_toMail ) ) {
-			$res = wp_mail( $mailoption_toMail, $subject, $body, $headers, $attachment_paths_arr );
+		if ( ! empty( $mailoptions['toMail'] ) ) {
+			$res = wp_mail( $mailoptions['toMail'], $subject, $body, $headers, $attachment_paths_arr );
 			if ( ! $res ) {
 				$message = __( 'There were some problems while sending mail.', 'events-made-easy' );
 			}
@@ -121,7 +120,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		}
 
 		// Reset content-type to avoid conflicts -- http://core.trac.wordpress.org/ticket/23578
-		if ( $mailoption_send_html ) {
+		if ( $mailoptions['send_html'] ) {
 			remove_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
 		}
 	} else {
@@ -154,28 +153,28 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		$mail->SetLanguage( 'en', __DIR__ . '/' );
 		$mail->PluginDir = __DIR__ . '/';
 
-		if ( $mailoption_mail_send_method == 'qmail' ) {
+		if ( $mailoptions['mail_send_method'] == 'qmail' ) {
 			$mail->IsQmail();
 		} else {
-			$mail->Mailer = $mailoption_mail_send_method;
+			$mail->Mailer = $mailoptions['mail_send_method'];
 		}
 
-		if ( $mailoption_mail_send_method == 'smtp' ) {
+		if ( $mailoptions['mail_send_method'] == 'smtp' ) {
 			// let us keep a normal smtp timeout ...
 			$mail->Timeout = 10;
-			$mail->Host    = $mailoption_smtp_host;
+			$mail->Host    = $mailoptions['smtp_host'];
 
 			// we set optional encryption and port settings
 			// but if the Host contains ssl://, tls:// or port info, it will take precedence over these anyway
 			// so it is not bad at all :-)
-			if ( $mailoption_smtp_encryption == 'tls' || $mailoption_smtp_encryption == 'ssl' ) {
-				$mail->SMTPSecure = $mailoption_smtp_encryption;
+			if ( $mailoptions['smtp_encryption'] == 'tls' || $mailoptions['smtp_encryption'] == 'ssl' ) {
+				$mail->SMTPSecure = $mailoptions['smtp_encryption'];
 			} else {
 				// if we don't want encryption, let's disable autotls too, since that might be a problem
 				$mail->SMTPAutoTLS = false;
 			}
 
-			if ( ! $mailoption_smtp_verify_cert ) {
+			if ( ! $mailoptions['smtp_verify_cert'] ) {
 				// let's disable certificate verification, but only for reserved ranges
 				// weirdly the private range filter doesn't contain 127.0.0.0/8, so we use reserved
 				//    range which is still internal
@@ -220,14 +219,14 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 				}
 			}
 
-			$mail->Port = intval( $mailoption_smtp_port );
+			$mail->Port = intval( $mailoptions['smtp_port'] );
 
-			if ( $mailoption_smtp_auth ) {
+			if ( $mailoptions['smtp_auth'] ) {
 				$mail->SMTPAuth = true;
-				$mail->Username = $mailoption_smtp_username;
-				$mail->Password = $mailoption_smtp_password;
+				$mail->Username = $mailoptions['smtp_username'];
+				$mail->Password = $mailoptions['smtp_password'];
 			}
-			if ( $mailoption_smtp_debug ) {
+			if ( $mailoptions['smtp_debug'] ) {
 				$mail->SMTPDebug           = 2;
 				$GLOBALS['eme_smtp_debug'] = '';
 				$mail->Debugoutput         = function( $str, $level ) {
@@ -235,9 +234,9 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 				};
 			}
 		}
-		$mail->setFrom( $mailoption_fromMail, $mailoption_fromName );
+		$mail->setFrom( $mailoptions['fromMail'], $mailoptions['fromName'] );
 		$altbody = eme_replacelinks( $body );
-		if ( $mailoption_send_html ) {
+		if ( $mailoptions['send_html'] ) {
 			$mail->isHTML( true );
 			// Convert all message body line breaks to CRLF, makes quoted-printable encoding work much better
 			$mail->AltBody = $mail->normalizeBreaks( $mail->html2text( $altbody ) );
@@ -246,12 +245,13 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 			$mail->Body = $mail->normalizeBreaks( $altbody );
 		}
 		$mail->Subject = $subject;
-		if ( ! empty( $mailoption_replytoMail ) ) {
-			$mail->addReplyTo( $mailoption_replytoMail, $mailoption_replytoName );
+		if ( ! empty( $mailoptions['replytoMail'] ) && eme_is_email($mailoptions['replytoMail'] ) ) {
+			$mail->addReplyTo( $mailoptions['replytoMail'], $mailoptions['replytoName'] );
 		}
-		if ( ! empty( $mailoption_bcc_addresses ) ) {
+		if ( ! empty( $mailoptions['bcc_addresses'] ) ) {
 			foreach ( $bcc_addresses as $bcc_address ) {
-				$mail->addBCC( trim( $bcc_address ) );
+				if (eme_is_email($bcc_address)) {
+					$mail->addBCC( trim( $bcc_address ) );
 			}
 		}
 
@@ -261,8 +261,8 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 			}
 		}
 
-		if ( ! empty( $mailoption_toMail ) ) {
-			$mail->addAddress( $mailoption_toMail, $mailoption_toName );
+		if ( ! empty( $mailoptions['toMail'] ) ) {
+			$mail->addAddress( $mailoptions['toMail'], $mailoptions['toName'] );
 			if ( ! $mail->send() ) {
 				$res     = false;
 				$message = $mail->ErrorInfo;
@@ -295,7 +295,7 @@ function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromema
 		'replytoname'    => mb_substr( $replytoname, 0, 255 ),
 		'mail_text_html' => $mail_text_html,
 		'creation_date'  => $now,
-		'conditions'     => serialize( $conditions ),
+		'conditions'     => eme_serialize( $conditions ),
 	);
 	if ( $wpdb->insert( $mailing_table, $mailing ) === false ) {
 		return false;
@@ -320,7 +320,7 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 		'replytoname'    => mb_substr( $replytoname, 0, 255 ),
 		'mail_text_html' => $mail_text_html,
 		'creation_date'  => $now,
-		'conditions'     => serialize( $conditions ),
+		'conditions'     => eme_serialize( $conditions ),
 	);
 	if ( $wpdb->insert( $mailing_table, $mailing ) === false ) {
 		return false;
@@ -374,7 +374,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		'mailing_id'    => $mailing_id,
 		'person_id'     => $person_id,
 		'member_id'     => $member_id,
-		'attachments'   => serialize( $atts ),
+		'attachments'   => eme_serialize( $atts ),
 		'creation_date' => $now,
 		'random_id'     => $random_id,
 	);
@@ -517,7 +517,7 @@ function eme_send_queued() {
 			continue; // the continue-statement continues the higher foreach-loop
 		}
 		$body = $mail['body'];
-		$atts = unserialize( $mail['attachments'] );
+		$atts = eme_unserialize( $mail['attachments'] );
 		if ( $add_tracking && ! empty( $mail['random_id'] ) ) {
 				$track_url  = eme_tracker_url( $mail['random_id'] );
 				$track_html = "<img src='$track_url' alt=''>";
@@ -595,7 +595,7 @@ function eme_mark_mailing_completed( $mailing_id ) {
 	global $wpdb,$eme_db_prefix;
 	$stats          = eme_get_mailing_stats( $mailing_id );
 	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
-	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='completed', stats=%s where id=%d", serialize( $stats ), $mailing_id );
+	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='completed', stats=%s where id=%d", eme_serialize( $stats ), $mailing_id );
 		$wpdb->query( $sql );
 	if ( $stats['failed'] > 0 ) {
 		$mailing        = eme_get_mailing( $mailing_id );
@@ -612,7 +612,7 @@ function eme_archive_mailing( $mailing_id ) {
 		return;
 	}
 	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
-	$stats          = serialize( eme_get_mailing_stats( $mailing_id ) );
+	$stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='archived', stats=%s WHERE id=%d", $stats, $mailing_id );
 		$wpdb->query( $sql );
 	$queue_table = $eme_db_prefix . MQUEUE_TBNAME;
@@ -657,7 +657,7 @@ function eme_cancel_mailing( $mailing_id ) {
 	$queue_table = $eme_db_prefix . MQUEUE_TBNAME;
 	$sql         = $wpdb->prepare( "UPDATE $queue_table SET status=3 WHERE status=0 AND mailing_id=%d", $mailing_id );
 		$wpdb->query( $sql );
-	$stats          = serialize( eme_get_mailing_stats( $mailing_id ) );
+	$stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
 	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='cancelled', stats=%s WHERE id=%d", $stats, $mailing_id );
 		$wpdb->query( $sql );
@@ -825,7 +825,7 @@ function eme_check_mailing_receivers( $mailing_id ) {
 	if ( $eme_date_obj_created->getDifferenceInMinutes( $eme_date_obj_now ) <= 5 ) {
 		return;
 	}
-	$conditions = unserialize( $mailing['conditions'] );
+	$conditions = eme_unserialize( $mailing['conditions'] );
 	// we delete all planned mails for the mailing and enter the mails anew, this allows us to have all mails with the latest content and receivers
 	eme_delete_mailing_mails( $mailing_id );
 	eme_update_mailing_receivers( $mailing['subject'], $mailing['body'], $mailing['fromemail'], $mailing['fromname'], $mailing['replytoemail'], $mailing['replytoname'], $mailing['mail_text_html'], $conditions, $mailing_id );
@@ -1844,7 +1844,7 @@ function eme_emails_page() {
 			}
 			// reuse the attachments too
 			if ( ! empty( $mail['attachments'] ) ) {
-				$attachment_ids_arr = unserialize( $mail['attachments'] );
+				$attachment_ids_arr = eme_unserialize( $mail['attachments'] );
 				foreach ( $attachment_ids_arr as $attachment_id ) {
 					$attach_link = eme_get_attachment_link( $attachment_id );
 					if ( ! empty( $attach_link ) ) {
@@ -1864,7 +1864,7 @@ function eme_emails_page() {
 		$id      = intval( $_GET['id'] );
 		$mailing = eme_get_mailing( $id );
 		if ( $mailing ) {
-			$conditions = unserialize( $mailing['conditions'] );
+			$conditions = eme_unserialize( $mailing['conditions'] );
 			if ( ! empty( $conditions['ignore_massmail_setting'] ) ) {
 				$ignore_massmail_setting = "checked='checked'";
 			}
@@ -2449,7 +2449,7 @@ function eme_ajax_mailings_div() {
 		$id = $mailing['id'];
 		if ( $mailing['status'] == 'cancelled' ) {
 			$status = __( 'Cancelled', 'events-made-easy' );
-			$stats  = unserialize( $mailing['stats'] );
+			$stats  = eme_unserialize( $mailing['stats'] );
 			$extra  = sprintf( __( '%1$d mails sent, %2$d mails failed, %3$d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
 			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a> <a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=archive_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Archive', 'events-made-easy' ) . '</a>';
 		} elseif ( $mailing['status'] == 'initial' ) {
@@ -2469,7 +2469,7 @@ function eme_ajax_mailings_div() {
 			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
 		} elseif ( $mailing['status'] == 'completed' || $mailing['status'] == '' ) {
 			$status = __( 'Completed', 'events-made-easy' );
-			$stats  = unserialize( $mailing['stats'] );
+			$stats  = eme_unserialize( $mailing['stats'] );
 			$extra  = sprintf( __( '%1$d mails sent, %2$d mails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
 			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a> <a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=archive_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Archive', 'events-made-easy' ) . '</a>';
 		}
@@ -2531,7 +2531,7 @@ function eme_ajax_mail_archive_div() {
 	print '</tr></thead><tbody>';
 	foreach ( $mailings as $mailing ) {
 		$id     = $mailing['id'];
-		$stats  = unserialize( $mailing['stats'] );
+		$stats  = eme_unserialize( $mailing['stats'] );
 		$extra  = sprintf( __( '%1$d mails sent, %2$d mails failed, %3$d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
 		$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . '</a>';
 		if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {

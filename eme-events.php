@@ -1714,8 +1714,8 @@ function eme_template_redir() {
 		$custom_values = @get_post_custom( $post->ID );
 		if ( is_array( $custom_values ) ) {
 			$eme_memberships = isset( $custom_values['eme_membershipids'] ) ? $custom_values['eme_membershipids'][0] : '';
-			if ( is_serialized( $eme_memberships ) ) {
-				$page_membershipids = unserialize( $eme_memberships );
+			if ( eme_is_serialized( $eme_memberships ) ) {
+				$page_membershipids = eme_unserialize( $eme_memberships );
 			} else {
 				$page_membershipids = array();
 			}
@@ -5999,7 +5999,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		$action        = '';
 		$recurrence_ID = '';
 	}
-	// some checks and unserialize if needed
+	// some checks and eme_unserialize if needed
 	$event = eme_get_extra_event_data( $event );
 
 	$form_destination = 'admin.php?page=eme-manager';
@@ -9023,8 +9023,8 @@ function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_diff
 		$new_line = apply_filters( 'eme_insert_event_filter', $new_line );
 	}
 
-	$new_line['event_attributes'] = eme_maybe_serialize( $new_line['event_attributes'] );
-	$new_line['event_properties'] = eme_maybe_serialize( $new_line['event_properties'] );
+	$new_line['event_attributes'] = eme_serialize( $new_line['event_attributes'] );
+	$new_line['event_properties'] = eme_serialize( $new_line['event_properties'] );
 
 	if ( empty( $new_line['creation_date'] ) || ! ( eme_is_date( $new_line['creation_date'] ) || eme_is_datetime( $new_line['creation_date'] ) ) ) {
 		$new_line['creation_date'] = current_time( 'mysql', false );
@@ -9087,8 +9087,8 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 	// we need to do this since this function is also called for csv import
 	$keys                         = array_intersect_key( $line, $event );
 	$new_line                     = array_merge( $event, $keys );
-	$new_line['event_attributes'] = eme_maybe_serialize( $new_line['event_attributes'] );
-	$new_line['event_properties'] = eme_maybe_serialize( $new_line['event_properties'] );
+	$new_line['event_attributes'] = eme_serialize( $new_line['event_attributes'] );
+	$new_line['event_properties'] = eme_serialize( $new_line['event_properties'] );
 
 	$new_line['modif_date'] = current_time( 'mysql', false );
 

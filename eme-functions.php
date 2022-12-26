@@ -130,7 +130,7 @@ function eme_client_clock_ajax() {
 	}
 
 	// client cookie lifetime = 0 (the session)
-	// the cookie is stored using wp_json_encode and not serialize, to avoid for Object Injection
+	// the cookie is stored using wp_json_encode and not eme_serialize, to avoid for Object Injection
 	// See https://www.owasp.org/index.php/PHP_Object_Injection
 	setcookie( 'eme_client_time', wp_json_encode( $client_timeinfo ), 0, COOKIEPATH, COOKIE_DOMAIN );
 	echo $ret;
@@ -3528,9 +3528,32 @@ function eme_extra_event_headers( $event ) {
 	return $header . wp_json_encode( $content, JSON_UNESCAPED_SLASHES ) . $footer;
 }
 
-function eme_maybe_serialize( $data ) {
-	if ( ! is_serialized( $data ) ) {
-		return serialize( $data );
+function eme_isjson( $data ) {
+    $decoded_data = json_decode($data);
+    return (json_last_error() == JSON_ERROR_NONE);
+}
+
+function eme_is_serialized( $data ) {
+	return ( eme_isjson($data) || eme_is_serialized( $data ) );
+}
+
+// the function is called serialize, but in fact prefers to do json_encde for security
+function eme_serialize( $data ) {
+	if ( !eme_is_serialized( $data ) {
+		return json_encode( $data );
+	} elseif (is_serialized( $data )) {
+		$data = unserialize( $data );
+		return json_encode( $data );
+	} else {
+		return $data;
+	}
+}
+
+function eme_unserialize( $data ) {
+	if ( is_serialized( $data ) ) {
+		return unserialize( $data );
+	} elseif (eme_isjson($data)) {
+		return json_decode ($data);
 	} else {
 		return $data;
 	}
@@ -3628,13 +3651,13 @@ function eme_check_access( $post_id ) {
 				$eme_drip_counter  = ! empty( $custom_values['eme_drip_counter'] ) ? intval( $custom_values['eme_drip_counter'][0] ) : 0;
 				$eme_membershipids = isset( $custom_values['eme_membershipids'] ) ? $custom_values['eme_membershipids'][0] : '';
 				$eme_groupids      = isset( $custom_values['eme_groupids'] ) ? $custom_values['eme_groupids'][0] : '';
-			if ( is_serialized( $eme_membershipids ) ) {
-				$page_membershipids = unserialize( $eme_membershipids );
+			if ( eme_is_serialized( $eme_membershipids ) ) {
+				$page_membershipids = eme_unserialize( $eme_membershipids );
 			} else {
 				$page_membershipids = array();
 			}
-			if ( is_serialized( $eme_groupids ) ) {
-				$page_groupids = unserialize( $eme_groupids );
+			if ( eme_is_serialized( $eme_groupids ) ) {
+				$page_groupids = eme_unserialize( $eme_groupids );
 			} else {
 				$page_groupids = array();
 			}

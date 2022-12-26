@@ -526,7 +526,7 @@ function eme_ajax_recurrences_list() {
 
 	$rows = array();
 	foreach ( $recurrences as $recurrence ) {
-		// due to our select with natural join, $recurrence contains everything for an event too (except unserialized properties
+		// due to our select with natural join, $recurrence contains everything for an event too (except eme_unserialized properties
 		// for ease of code, we'll set $event=$recurrence and use $event where logical
 		if ( empty( $search_name ) ) {
 			$event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence['recurrence_id'] ) );

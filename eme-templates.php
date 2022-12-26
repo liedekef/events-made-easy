@@ -113,7 +113,7 @@ function eme_templates_page() {
 			if ( ! isset( $properties['nl2br'] ) ) {
 				$properties['nl2br'] = 0;
 			}
-			$template['properties'] = serialize( eme_init_template_props( $properties ) );
+			$template['properties'] = eme_serialize( eme_init_template_props( $properties ) );
 
 			$template_id = 0;
 			if ( $properties['pdf_size'] == 'custom' && ( empty( $properties['pdf_width'] ) || empty( $properties['pdf_height'] ) ) ) {
@@ -220,8 +220,8 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 	global $plugin_page;
 
 	if ( ! empty( $template ) ) {
-		if ( is_serialized( $template['properties'] ) ) {
-			$template['properties'] = eme_init_template_props( unserialize( $template['properties'] ) );
+		if ( eme_is_serialized( $template['properties'] ) ) {
+			$template['properties'] = eme_init_template_props( eme_unserialize( $template['properties'] ) );
 		}
 	}
 	if ( $template_id ) {

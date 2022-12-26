@@ -744,7 +744,7 @@ function eme_update_booking_discount( $booking ) {
 		$where['booking_id']   = $booking['booking_id'];
 		$fields['discount']    = $calc_discount['discount'];
 		$fields['discountids'] = $calc_discount['discountids'];
-		$fields['dcodes_used'] = maybe_serialize( $calc_discount['dcodes_used'] );
+		$fields['dcodes_used'] = eme_serialize( $calc_discount['dcodes_used'] );
 		$fields['dgroupid']    = $calc_discount['dgroupid'];
 	if ( $calc_discount['discount'] != $booking['discount'] ) {
 		// if the discount is not equal to the original, the $calc_discount['discountids'] value will be empty
@@ -769,7 +769,7 @@ function eme_update_member_discount( $member ) {
 		$where['member_id']    = $member['member_id'];
 		$fields['discount']    = $calc_discount['discount'];
 		$fields['discountids'] = $calc_discount['discountids'];
-		$fields['dcodes_used'] = maybe_serialize( $calc_discount['dcodes_used'] );
+		$fields['dcodes_used'] = eme_serialize( $calc_discount['dcodes_used'] );
 		$fields['dgroupid']    = $calc_discount['dgroupid'];
 	if ( $calc_discount != $member['discount'] ) {
 		// if the discount is not equal to the original, the $calc_discount['discountids'] value will be empty
@@ -1022,7 +1022,7 @@ function eme_get_discounts( $extra_search = '' ) {
 	}
 	$rows = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $rows as $key => $discount ) {
-			$discount['properties'] = eme_init_discount_props( unserialize( $discount['properties'] ) );
+			$discount['properties'] = eme_init_discount_props( eme_unserialize( $discount['properties'] ) );
 			$rows[ $key ]           = $discount;
 	}
 	return $rows;
@@ -1050,8 +1050,8 @@ function eme_db_insert_discount( $line ) {
 				$new_line = apply_filters( 'eme_insert_discount_filter', $new_line );
 	}
 
-	if ( ! is_serialized( $new_line['properties'] ) ) {
-			$new_line['properties'] = serialize( $new_line['properties'] );
+	if ( ! eme_is_serialized( $new_line['properties'] ) ) {
+			$new_line['properties'] = eme_serialize( $new_line['properties'] );
 	}
 
 	if ( $wpdb->insert( $table, $new_line ) === false ) {
@@ -1069,8 +1069,8 @@ function eme_db_update_discount( $id, $line ) {
 		// we only want the columns that interest us
 		$keys     = array_intersect_key( $line, $discount );
 		$new_line = array_merge( $discount, $keys );
-	if ( ! is_serialized( $new_line['properties'] ) ) {
-			$new_line['properties'] = serialize( $new_line['properties'] );
+	if ( ! eme_is_serialized( $new_line['properties'] ) ) {
+			$new_line['properties'] = eme_serialize( $new_line['properties'] );
 	}
 		$where = array( 'id' => $id );
 	if ( isset( $new_line['id'] ) ) {
@@ -1270,7 +1270,7 @@ function eme_get_discount( $id ) {
 	$sql      = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
 	$discount = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $discount ) {
-			$discount['properties'] = eme_init_discount_props( unserialize( $discount['properties'] ) );
+			$discount['properties'] = eme_init_discount_props( eme_unserialize( $discount['properties'] ) );
 			return $discount;
 	} else {
 			return false;
@@ -1295,7 +1295,7 @@ function eme_get_discount_by_name( $name ) {
 	$sql      = $wpdb->prepare( "SELECT * FROM $table WHERE name = %s", $name );
 	$discount = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $discount ) {
-			$discount['properties'] = eme_init_discount_props( unserialize( $discount['properties'] ) );
+			$discount['properties'] = eme_init_discount_props( eme_unserialize( $discount['properties'] ) );
 			return $discount;
 	} else {
 			return false;

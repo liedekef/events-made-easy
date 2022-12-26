@@ -252,6 +252,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 			foreach ( $bcc_addresses as $bcc_address ) {
 				if (eme_is_email($bcc_address)) {
 					$mail->addBCC( trim( $bcc_address ) );
+				}
 			}
 		}
 

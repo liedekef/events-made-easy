@@ -3534,12 +3534,12 @@ function eme_isjson( $data ) {
 }
 
 function eme_is_serialized( $data ) {
-	return ( eme_isjson($data) || eme_is_serialized( $data ) );
+	return ( eme_isjson($data) || is_serialized( $data ) );
 }
 
 // the function is called serialize, but in fact prefers to do json_encde for security
 function eme_serialize( $data ) {
-	if ( !eme_is_serialized( $data ) {
+	if ( !eme_is_serialized( $data )) {
 		return json_encode( $data );
 	} elseif (is_serialized( $data )) {
 		$data = unserialize( $data );

@@ -3293,8 +3293,8 @@ function eme_excerpt( $text, $cache_id = '' ) {
 	return $excerpt;
 }
 
-function eme_generate_unique_wp_username( $lastname, $firstname ) {
-	$basic_username = preg_replace( '/\s+/', '', $lastname . $firstname );
+function eme_generate_unique_wp_username( $name ) {
+	$basic_username = preg_replace( '/\s+/', '', $name );
 	$username       = sanitize_user( $basic_username );
 	while ( username_exists( $username ) ) {
 		$rnd_str  = sprintf( '%0d', mt_rand( 1, 999999 ) );
@@ -3304,7 +3304,7 @@ function eme_generate_unique_wp_username( $lastname, $firstname ) {
 }
 
 function eme_create_wp_user( $person ) {
-	$username = eme_generate_unique_wp_username( $person['lastname'], $person['firstname'] );
+	$username = eme_generate_unique_wp_username( $person['lastname'] . $person['firstname'] );
 	// use register_new_user so the person gets a mail
 	// $user_id = register_new_user( $username, $person['email'] ) ;
 	$user_pass = wp_generate_password( 12, false );

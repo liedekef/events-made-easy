@@ -517,16 +517,18 @@ function eme_delete_formfields( $formfields ) {
 	global $wpdb,$eme_db_prefix;
 	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
 	if ( ! empty( $formfields ) && eme_array_integers( $formfields ) ) {
-		$validation_result = $wpdb->query( "DELETE FROM $formfields_table WHERE field_id IN (" . implode( ',', $formfields ) . ')' );
+		$ids_arr = explode( ',', $formfields );
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$validation_result = $wpdb->query( $wpdb->prepare("DELETE FROM $formfields_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
 		if ( $validation_result !== false ) {
 			$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
-			$wpdb->query( "DELETE FROM $answers_table WHERE field_id IN (" . implode( ',', $formfields ) . ')' );
+			$wpdb->query( $wpdb->prepare("DELETE FROM $answers_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
 			$events_customfields_table = $eme_db_prefix . EVENTS_CF_TBNAME;
-			$wpdb->query( "DELETE FROM $events_customfields_table WHERE field_id IN (" . implode( ',', $formfields ) . ')' );
+			$wpdb->query( $wpdb->prepare("DELETE FROM $events_customfields_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
 			$locations_customfields_table = $eme_db_prefix . LOCATIONS_CF_TBNAME;
-			$wpdb->query( "DELETE FROM $locations_customfields_table WHERE field_id IN (" . implode( ',', $formfields ) . ')' );
+			$wpdb->query( $wpdb->prepare("DELETE FROM $locations_customfields_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
 			$memberships_customfields_table = $eme_db_prefix . MEMBERSHIPS_CF_TBNAME;
-			$wpdb->query( "DELETE FROM $memberships_customfields_table WHERE field_id IN (" . implode( ',', $formfields ) . ')' );
+			$wpdb->query( $wpdb->prepare("DELETE FROM $memberships_customfields_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
 			return true;
 		} else {
 			return false;
@@ -4594,11 +4596,12 @@ function eme_convert_answer_price( $answer ) {
 	}
 }
 
-function eme_get_answer_fieldids( $booking_ids ) {
+function eme_get_answer_fieldids( $booking_ids_arr ) {
 	global $wpdb,$eme_db_prefix;
 	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
-	$sql = "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN (" . join( ',', $booking_ids ) . ') ORDER BY field_id';
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($booking_ids_arr), '%d'));
+	$sql = $wpdb->prepare("SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($commaDelimitedPlaceholders) ORDER BY field_id",$booking_ids_arr);
 	return $wpdb->get_col( $sql );
 }
 

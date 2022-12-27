@@ -339,12 +339,12 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
 	$memberships_table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
 	$lines             = array();
 	if ( ! empty( $member_ids ) && eme_array_integers( $member_ids ) ) {
-		$tmp_ids = join( ',', $member_ids );
-		$sql     = "SELECT members.*, people.lastname, people.firstname, people.email, memberships.name AS membership_name
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($member_ids), '%d'));
+		$sql     = $wpdb->prepare("SELECT members.*, people.lastname, people.firstname, people.email, memberships.name AS membership_name
               FROM $members_table AS members
               LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
               LEFT JOIN $people_table AS people ON members.person_id=people.person_id
-              WHERE members.member_id IN ($tmp_ids)";
+              WHERE members.member_id IN ($commaDelimitedPlaceholders)",$member_ids);
 		if ( ! empty( $extra_search ) ) {
 			$sql .= " AND $extra_search";
 		}
@@ -1082,8 +1082,8 @@ function eme_membership_exists( $id ) {
 function eme_memberships_exists( $ids_arr ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
-	$ids   = join( ',', $ids_arr );
-	$sql   = "SELECT DISTINCT membership_id FROM $table WHERE membership_id IN ($ids)";
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql   = $wpdb->prepare( "SELECT DISTINCT membership_id FROM $table WHERE membership_id IN ($commaDelimitedPlaceholders)", $ids_arr);
 	return $wpdb->get_col( $sql );
 }
 

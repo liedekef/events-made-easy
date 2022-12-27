@@ -97,9 +97,5 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
-= 2.3.24 (2022/12/27) =
-* Security: avoid the use of serialize/unserialize (with backwards compat for existing setups)
-* More nonce-checking added (not 100% done) to protect even functions that might get included via other plugins
-
-= 2.3.23 (2022/12/26) =
-* Allow user_login to be set in eme_wp_userdata_filter
+= 2.3.26 (2022/12/27) =
+* SQL code rewriting (not vulnerable, but more in line with what is expected by wp, not 100% done)

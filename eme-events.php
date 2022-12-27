@@ -10171,8 +10171,10 @@ function eme_ajax_action_events_status( $ids_arr, $status ) {
 function eme_ajax_action_events_addcat( $ids, $category_id ) {
 	global $wpdb,$eme_db_prefix;
 	$table_name = $eme_db_prefix . EVENTS_TBNAME;
-	$sql        = "UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,$category_id)
-	   WHERE event_id IN ($ids) AND (NOT FIND_IN_SET($category_id,event_category_ids) OR event_category_ids IS NULL)";
+	$ids_arr = explode( ',', $ids );
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql        = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,$category_id)
+	   WHERE event_id IN ($commaDelimitedPlaceholders) AND (NOT FIND_IN_SET($category_id,event_category_ids) OR event_category_ids IS NULL)",$ids_arr);
 	$wpdb->query( $sql );
 	$ajaxResult['Result']  = 'OK';
 	$ajaxResult['Message'] = __( 'Events added to category', 'events-made-easy' );
@@ -10183,7 +10185,9 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 	global $wpdb,$eme_db_prefix;
 	$table_name     = $eme_db_prefix . EVENTS_TBNAME;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$sql            = "UPDATE $table_name SET recurrence_id = 0, event_status = " . EME_EVENT_STATUS_TRASH . " WHERE event_id IN ($ids)";
+	$ids_arr = explode( ',', $ids );
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql            = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($commaDelimitedPlaceholders)",EME_EVENT_STATUS_TRASH,$ids_arr);
 	$wpdb->query( $sql );
 
 	if ( $send_trashmails ) {
@@ -10208,7 +10212,9 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 function eme_untrash_events( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$table_name = $eme_db_prefix . EVENTS_TBNAME;
-	$sql        = "UPDATE $table_name SET event_status = " . EME_EVENT_STATUS_DRAFT . " WHERE event_id IN ($ids)";
+	$ids_arr = explode( ',', $ids );
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql        = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($commaDelimitedPlaceholders)" ,EME_EVENT_STATUS_DRAFT,$ids_arr;
 	$wpdb->query( $sql );
 }
 

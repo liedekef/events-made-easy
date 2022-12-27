@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.25
+Stable tag: 2.3.26
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,7 +52,7 @@ For existing wordpress users that have version 2.3.17 or older:
 1. Download the zip "events-made-easy.zip" from the latest release from github
 2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
 3. Select the zip you downloaded, this will upload the zip and replace the existing installation without losing data
-   If the file is too big for uploading, use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory
+   If the file is too big for uploading, use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory (remove the old files first)
 4. After that, updating the plugin will be as usual in the backend
 
 For new users:

@@ -1595,7 +1595,7 @@ function eme_render_people_searchfields( $group = array() ) {
 	$value = '';
 	if ( ! empty( $group ) ) {
 		$edit_group   = 1;
-		$search_terms = maybe_unserialize( $group['search_terms'] );
+		$search_terms = eme_unserialize( $group['search_terms'] );
 	} else {
 		$edit_group = 0;
 	}
@@ -3258,7 +3258,7 @@ function eme_db_insert_person( $line ) {
 	}
 
 	// some properties validation: only image_id as int is allowed
-	$props                  = maybe_unserialize( $new_line['properties'] );
+	$props                  = eme_unserialize( $new_line['properties'] );
 	$new_line['properties'] = array();
 	foreach ( $props as $key => $val ) {
 		if ( $key == 'image_id' ) {
@@ -3325,7 +3325,7 @@ function eme_db_update_person( $person_id, $line ) {
 	$new_line['properties'] = eme_serialize( $new_line['properties'] );
 
 	// some properties validation: only image_id as int is allowed
-	$props                  = maybe_unserialize( $new_line['properties'] );
+	$props                  = eme_unserialize( $new_line['properties'] );
 	$new_line['properties'] = array();
 	foreach ( $props as $key => $val ) {
 		if ( $key == 'image_id' ) {

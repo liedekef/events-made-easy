@@ -2373,7 +2373,7 @@ function eme_render_members_searchfields( $group = array() ) {
 	$value                   = '';
 	if ( ! empty( $group ) ) {
 		$edit_group   = 1;
-		$search_terms = maybe_unserialize( $group['search_terms'] );
+		$search_terms = eme_unserialize( $group['search_terms'] );
 	} else {
 		$edit_group = 0;
 	}

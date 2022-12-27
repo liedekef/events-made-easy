@@ -5484,10 +5484,10 @@ function eme_get_extra_event_data( $event ) {
 		$event['event_end'] = $event['event_start'];
 	}
 
-	$event['event_attributes'] = maybe_unserialize( $event['event_attributes'] );
+	$event['event_attributes'] = eme_unserialize( $event['event_attributes'] );
 	$event['event_attributes'] = ( ! is_array( $event['event_attributes'] ) ) ? array() : $event['event_attributes'];
 
-	$event['event_properties'] = maybe_unserialize( $event['event_properties'] );
+	$event['event_properties'] = eme_unserialize( $event['event_properties'] );
 	$event['event_properties'] = ( ! is_array( $event['event_properties'] ) ) ? array() : $event['event_properties'];
 	$event['event_properties'] = eme_init_event_props( $event['event_properties'] );
 

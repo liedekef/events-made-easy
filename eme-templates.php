@@ -403,7 +403,7 @@ function eme_get_template( $template_id ) {
 			if ( empty( $template['properties'] ) ) {
 				$template['properties'] = array();
 			}
-			$template['properties'] = eme_init_template_props( maybe_unserialize( $template['properties'] ) );
+			$template['properties'] = eme_init_template_props( eme_unserialize( $template['properties'] ) );
 			wp_cache_add( "eme_template $template_id", $template, '', 10 );
 		}
 	}

@@ -185,8 +185,8 @@ function eme_locations_page() {
 			} else {
 				// validation failed, show why and return to the edit
 				$message                         = $validation_result;
-				$location['location_attributes'] = maybe_unserialize( $location_attributes );
-				$location['location_properties'] = maybe_unserialize( $location_properties );
+				$location['location_attributes'] = eme_unserialize( $location_attributes );
+				$location['location_properties'] = eme_unserialize( $location_properties );
 				eme_locations_edit_layout( $location, $message );
 			}
 		}
@@ -1218,10 +1218,10 @@ function eme_get_extra_location_data( $location ) {
 			$location[ $key ] = '';
 		}
 	}
-	$location['location_attributes'] = maybe_unserialize( $location['location_attributes'] );
+	$location['location_attributes'] = eme_unserialize( $location['location_attributes'] );
 	$location['location_attributes'] = ( ! is_array( $location['location_attributes'] ) ) ? array() : $location['location_attributes'];
 
-	$location['location_properties'] = maybe_unserialize( $location['location_properties'] );
+	$location['location_properties'] = eme_unserialize( $location['location_properties'] );
 	$location['location_properties'] = ( ! is_array( $location['location_properties'] ) ) ? array() : $location['location_properties'];
 	$location['location_properties'] = eme_init_location_props( $location['location_properties'] );
 

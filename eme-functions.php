@@ -3554,7 +3554,8 @@ function eme_unserialize( $data ) {
 	if ( is_serialized( $data ) ) {
 		return unserialize( $data, ['allowed_classes' => false] );
 	} elseif (eme_isjson($data)) {
-		return json_decode ($data);
+		// add TRUE to make sure the return is an array
+		return json_decode ($data,TRUE);
 	} else {
 		return $data;
 	}

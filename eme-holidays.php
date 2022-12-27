@@ -152,7 +152,7 @@ function eme_holidays_table_layout( $message = '' ) {
    
                      <div class='tablenav'>
                         <div class='alignleft actions'>
-                        <input class='button-primary action' type='submit' name='doaction' value='$delete_button_text' onclick="return areyousure('$delete_text');">
+                        <input class='button-primary action' type='submit' name='doaction' value='$delete_button_text' onclick=\"return areyousure('$delete_text');\">
                         <br class='clear'>
                         </div>
                         <br class='clear'>

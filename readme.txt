@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.23
+Stable tag: 2.3.24
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,8 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
-= 2.3.24 (2022/12/26) =
+= 2.3.24 (2022/12/27) =
 * Security: avoid the use of serialize/unserialize (with backwards compat for existing setups)
+* More nonce-checking added (not 100% done) to protect even functions that might get included via other plugins
 
 = 2.3.23 (2022/12/26) =
 * Allow user_login to be set in eme_wp_userdata_filter

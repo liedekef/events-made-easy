@@ -3576,7 +3576,7 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
                 ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
                         return array(
                                 0 => 0,
-                                1 => esc_html__( 'Access denied!', 'events-made-easy' );
+                                1 => esc_html__( 'Access denied!', 'events-made-easy' )
                         );
         }
 
@@ -3700,7 +3700,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
                 ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
                         return array(
                                 0 => 0,
-                                1 => esc_html__( 'Access denied!', 'events-made-easy' );
+                                1 => esc_html__( 'Access denied!', 'events-made-easy' )
                         );
         }
 

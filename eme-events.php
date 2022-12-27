@@ -2292,7 +2292,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
 				$url = admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] );
 				if ( $target == 'html' ) {
-						$url = esc_url( $url );
+					$url = esc_url( $url );
 				}
 				$replacement = "<a href='$url'>" . __( 'Edit', 'events-made-easy' ) . '</a>';
 			}
@@ -2301,7 +2301,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
 				$replacement = admin_url( 'admin.php?page=eme-manager&eme_admin_action=edit_event&event_id=' . $event['event_id'] );
 				if ( $target == 'html' ) {
-							$replacement = esc_url( $replacement );
+					$replacement = esc_url( $replacement );
 				}
 			}
 		} elseif ( $event && preg_match( '/#_EVENTPRINTBOOKINGSLINK/', $result ) ) {
@@ -2309,7 +2309,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
 				$url = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] );
 				if ( $target == 'html' ) {
-							$url = esc_url( $url );
+					$url = esc_url( $url );
 				}
 				$replacement = "<a href='$url'>" . __( 'Printable view of bookings', 'events-made-easy' ) . '</a>';
 			}
@@ -2318,7 +2318,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
 				$replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] );
 				if ( $target == 'html' ) {
-							$replacement = esc_url( $replacement );
+					$replacement = esc_url( $replacement );
 				}
 			}
 		} elseif ( $event && preg_match( '/#_EVENTCSVBOOKINGSLINK/', $result ) ) {
@@ -2326,7 +2326,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
 				$url = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] );
 				if ( $target == 'html' ) {
-							$url = esc_url( $url );
+					$url = esc_url( $url );
 				}
 				$replacement = "<a href='$url'>" . __( 'CSV view of bookings', 'events-made-easy' ) . '</a>';
 			}
@@ -2335,11 +2335,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
 				$replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] );
 				if ( $target == 'html' ) {
-							$replacement = esc_url( $replacement );
+					$replacement = esc_url( $replacement );
 				}
 			}
 		} elseif ( preg_match( '/#_STARTDATETIME_8601/', $result ) ) {
-					$replacement = eme_localized_date( $event['event_start'], $eme_timezone, 'c' );
+			$replacement = eme_localized_date( $event['event_start'], $eme_timezone, 'c' );
 		} elseif ( preg_match( '/#_ENDDATETIME_8601/', $result ) ) {
 			$replacement = eme_localized_date( $event['event_end'], $eme_timezone, 'c' );
 		} elseif ( preg_match( '/#_STARTDATE(\{(.+?)\})?$/', $result, $matches ) ) {
@@ -2383,7 +2383,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = 'eme-past-event';
 			}
 		} elseif ( $event && preg_match( '/#_12HSTARTTIME$/', $result ) ) {
-					$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . $eme_timezone )->format( 'h:i A' );
+			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . $eme_timezone )->format( 'h:i A' );
 
 		} elseif ( $event && preg_match( '/#_12HENDTIME$/', $result ) ) {
 			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . $eme_timezone )->format( 'h:i A' );
@@ -2395,7 +2395,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = str_replace( ':0', ':', $replacement );
 			}
 		} elseif ( $event && preg_match( '/#_12HENDTIME_NOLEADINGZERO/', $result ) ) {
-					$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . $eme_timezone )->format( 'g:i A' );
+			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . $eme_timezone )->format( 'g:i A' );
 			if ( get_option( 'eme_time_remove_leading_zeros' ) ) {
 				$replacement = str_replace( ':00', '', $replacement );
 				$replacement = str_replace( ':0', ':', $replacement );
@@ -2427,8 +2427,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$show_form = 0;
 				foreach ( $caps_arr as $cap ) {
 					if ( current_user_can( $cap ) ) {
-							$show_form = 1;
-							break;
+						$show_form = 1;
+						break;
 					}
 				}
 				if ( $show_form ) {
@@ -2436,15 +2436,15 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/^#_ADDBOOKINGFORM_IF_USER_HAS_ROLE\{(.+?)\}$/', $result, $matches ) ) {
-					$roles = $matches[1];
+			$roles = $matches[1];
 			if ( is_user_logged_in() && $target == 'html' ) {
 				$wp_user   = wp_get_current_user();
 				$roles_arr = explode( ',', $roles );
 				$show_form = 0;
 				foreach ( $roles_arr as $role ) {
 					if ( in_array( $role, (array) $wp_user->roles ) ) {
-							$show_form = 1;
-							break;
+						$show_form = 1;
+						break;
 					}
 				}
 				if ( $show_form ) {
@@ -2459,11 +2459,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$show_form  = 0;
 				foreach ( $groups_arr as $group ) {
 					if ( is_numeric( $group ) ) {
-							$group = eme_get_group_name( $group );
+						$group = eme_get_group_name( $group );
 					}
 					if ( in_array( $group, eme_get_persongroup_names( 0, $wp_id ) ) ) {
-							$show_form = 1;
-							break;
+						$show_form = 1;
+						break;
 					}
 				}
 				if ( $show_form ) {
@@ -2471,7 +2471,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/^#_ADDBOOKINGFORM_IF_USER_IS_MEMBER_OF\{(.+?)\}$/', $result, $matches ) ) {
-					$memberships = $matches[1];
+			$memberships = $matches[1];
 			if ( is_user_logged_in() && $target == 'html' ) {
 				$wp_id           = get_current_user_id();
 				$memberships_arr = explode( ',', $memberships );
@@ -2501,9 +2501,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			} else {
 				// when the booking just happened and the user needs to pay, we don't show the remove booking form
 				if ( isset( $_POST['eme_eventAction'] ) && eme_sanitize_request( $_POST['eme_eventAction']) == 'pay_bookings' && isset( $_POST['eme_message'] ) && isset( $_POST['eme_payment_id'] ) ) {
-								$replacement = '';
+					$replacement = '';
 				} else {
-						$replacement = eme_cancel_bookings_form( $event['event_id'] );
+					$replacement = eme_cancel_bookings_form( $event['event_id'] );
 				}
 			}
 		} elseif ( $event && preg_match( '/#_REMOVEBOOKINGFORM_IF_REGISTERED|#_DELBOOKINGFORM_IF_REGISTERED|#_DELETEBOOKINGFORM_IF_REGISTERED|#_CANCELBOOKINGFORM_IF_REGISTERED|#_CANCEL_ALL_BOOKINGS_FORM_IF_REGISTERED/', $result ) ) {
@@ -2513,7 +2513,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				// when the booking just happened and the user needs to pay, we don't show the remove booking form
 				// also show the form if a delete-message needs to be shown (that will actuallyonly shown the message anyway)
 				if ( isset( $_POST['eme_eventAction'] ) && eme_sanitize_request( $_POST['eme_eventAction']) == 'pay_bookings' && isset( $_POST['eme_message'] ) && isset( $_POST['eme_payment_id'] ) ) {
-								$replacement = '';
+					$replacement = '';
 				} elseif ( isset( $_POST['eme_eventAction'] ) && eme_sanitize_request( $_POST['eme_eventAction']) == 'delmessage' ) {
 						$replacement = eme_cancel_bookings_form( $event['event_id'] );
 				} elseif ( $event && eme_get_booking_ids_by_wp_event_id( $current_userid, $event['event_id'] ) ) {
@@ -2521,9 +2521,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_WAITING_LIST_ACTIVATED$/', $result ) ) {
-				$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
-				// check for avail seats excluding waiting list
-				$avail_seats = eme_get_available_seats( $event['event_id'], 1 );
+			$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
+			// check for avail seats excluding waiting list
+			$avail_seats = eme_get_available_seats( $event['event_id'], 1 );
 			if ( $waitinglist_seats > 0 && $avail_seats <= 0 && ! eme_is_multi( $event['event_seats'] ) ) {
 				$replacement = 1;
 			} else {
@@ -2533,7 +2533,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
 			$avail_seats       = eme_get_available_seats( $event['event_id'] );
 			if ( $waitinglist_seats > 0 && $avail_seats <= 0 && ! eme_is_multi( $event['event_seats'] ) ) {
-					$replacement = 1;
+				$replacement = 1;
 			} else {
 				$replacement = 0;
 			}
@@ -2542,7 +2542,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 
 		} elseif ( $event && preg_match( '/#_AVAILABLEWAITINGLISTSEATS$/', $result ) ) {
 			if ( $total_seats == 0 || eme_is_multi( $event['event_seats'] ) ) {
-					$replacement = 0;
+				$replacement = 0;
 			} else {
 				$waitinglist_seats   = intval( $event['event_properties']['waitinglist_seats'] );
 				$booked_seats        = eme_get_booked_waitinglistseats( $event['event_id'] );
@@ -2563,9 +2563,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
 				$booked_seats      = eme_get_booked_waitinglistseats( $event['event_id'] );
 				if ( $waitinglist_seats > 0 ) {
-								$replacement = $booked_seats;
+					$replacement = $booked_seats;
 				} else {
-							$replacement = 0;
+					$replacement = 0;
 				}
 			}
 		} elseif ( $event && preg_match( '/#_(AVAILABLESPACES|AVAILABLESEATS)$/', $result ) ) {
@@ -2586,7 +2586,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = 0;
 				$seats       = eme_get_available_multiseats( $event['event_id'], 1 ); // this is without the waiting list seats
 				if ( array_key_exists( $field_id, $seats ) ) {
-									$replacement = $seats[ $field_id ];
+					$replacement = $seats[ $field_id ];
 				}
 			}
 		} elseif ( $event && preg_match( '/#_(TOTALSPACES|TOTALSEATS)$/', $result ) ) {
@@ -2616,18 +2616,18 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = 0;
 				$seats       = eme_convert_multi2array( $event['event_seats'] );
 				if ( array_key_exists( $field_id, $seats ) ) {
-									$replacement = $seats[ $field_id ];
+					$replacement = $seats[ $field_id ];
 				}
 			}
 		} elseif ( $event && preg_match( '/#_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)$/', $result ) ) {
-					$replacement = eme_get_booked_seats( $event['event_id'] );
+			$replacement = eme_get_booked_seats( $event['event_id'] );
 
 		} elseif ( $event && preg_match( '/#_(RESERVEDSPACES|BOOKEDSEATS|RESERVEDSEATS)\{(\d+)\}$/', $result, $matches ) ) {
 			$field_id    = intval( $matches[2] ) - 1;
 			$replacement = 0;
 			$seats       = eme_get_booked_multiseats( $event['event_id'] );
 			if ( array_key_exists( $field_id, $seats ) ) {
-					$replacement = $seats[ $field_id ];
+				$replacement = $seats[ $field_id ];
 			}
 		} elseif ( $event && preg_match( '/#_(PAIDSPACES|PAIDSEATS)$/', $result ) ) {
 			$replacement = eme_get_paid_seats( $event['event_id'] );
@@ -2637,7 +2637,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$replacement = 0;
 			$seats       = eme_get_paid_multiseats( $event['event_id'] );
 			if ( array_key_exists( $field_id, $seats ) ) {
-					$replacement = $seats[ $field_id ];
+				$replacement = $seats[ $field_id ];
 			}
 		} elseif ( $event && preg_match( '/#_(YOUNGPENDINGSPACES|YOUNGPENDINGSEATS)$/', $result ) ) {
 			$replacement = eme_get_young_pending_seats( $event['event_id'] );
@@ -2647,7 +2647,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$replacement = 0;
 			$seats       = eme_get_young_pending_multiseats( $event['event_id'] );
 			if ( array_key_exists( $field_id, $seats ) ) {
-					$replacement = $seats[ $field_id ];
+				$replacement = $seats[ $field_id ];
 			}
 		} elseif ( $event && preg_match( '/#_(PENDINGSPACES|PENDINGSEATS)$/', $result ) ) {
 			$replacement = eme_get_pending_seats( $event['event_id'] );
@@ -2657,7 +2657,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$replacement = 0;
 			$seats       = eme_get_pending_multiseats( $event['event_id'] );
 			if ( array_key_exists( $field_id, $seats ) ) {
-					$replacement = $seats[ $field_id ];
+				$replacement = $seats[ $field_id ];
 			}
 		} elseif ( $event && preg_match( '/#_(APPROVEDSPACES|APPROVEDSEATS)$/', $result ) ) {
 			$replacement = eme_get_approved_seats( $event['event_id'] );
@@ -2681,8 +2681,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				} else {
 					$open_tasks_found = 0;
 					foreach ( $tasks as $task ) {
-							$used_spaces = eme_count_task_signups( $task['task_id'] );
-							$free_spaces = $task['spaces'] - $used_spaces;
+						$used_spaces = eme_count_task_signups( $task['task_id'] );
+						$free_spaces = $task['spaces'] - $used_spaces;
 						if ( $free_spaces == 0 && $skip_full ) {
 							// skip full option, so check the free spaces for that task, if 0: set $skip=1
 							$skip = 1;
@@ -2695,8 +2695,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_LINKEDNAME/', $result ) ) {
-					$event_link = eme_event_url( $event, $lang );
-				// if the url is externnal, we'll open a new window/tab
+			$event_link = eme_event_url( $event, $lang );
+			// if the url is externnal, we'll open a new window/tab
 			if ( $event_link == $event['event_url'] ) {
 				$linktarget = "target='_blank'";
 			} else {
@@ -2853,7 +2853,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( preg_match( '/#_EVENTDBFIELD\{(.+?)\}$/', $result, $matches ) ) {
-					$tmp_attkey = $matches[1];
+			$tmp_attkey = $matches[1];
 			if ( isset( $event[ $tmp_attkey ] ) && ! is_array( $event[ $tmp_attkey ] ) ) {
 				$replacement = $event[ $tmp_attkey ];
 				if ( $target == 'html' ) {
@@ -2868,9 +2868,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_EVENTATT\{(.+?)\}\{(.+?)\}$/', $result, $matches ) ) {
-					$tmp_event_id     = intval( $matches[1] );
-					$tmp_event_attkey = $matches[2];
-					$tmp_event        = eme_get_event( $tmp_event_id );
+			$tmp_event_id     = intval( $matches[1] );
+			$tmp_event_attkey = $matches[2];
+			$tmp_event        = eme_get_event( $tmp_event_id );
 			if ( ! empty( $tmp_event ) && isset( $tmp_event['event_attributes'][ $tmp_event_attkey ] ) ) {
 				$replacement = $tmp_event['event_attributes'][ $tmp_event_attkey ];
 				if ( $target == 'html' ) {
@@ -2885,8 +2885,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+?)\}$/', $result, $matches ) ) {
-					$field_key = $matches[1];
-					$formfield = eme_get_formfield( $field_key );
+			$field_key = $matches[1];
+			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'events' ) {
 				if ( $target == 'html' ) {
 					$replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
@@ -2909,9 +2909,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			}
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'events' ) {
-					$field_id      = $formfield['field_id'];
-					$field_replace = '';
-					$answers       = eme_get_event_answers( $event['event_id'] );
+				$field_id      = $formfield['field_id'];
+				$field_replace = '';
+				$answers       = eme_get_event_answers( $event['event_id'] );
 				foreach ( $answers as $answer ) {
 					if ( $answer['field_id'] == $field_id ) {
 						if ( $matches[1] == 'VALUE' ) {
@@ -2961,24 +2961,24 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( $event && preg_match( '/#_EVENTID/', $result ) ) {
-					$field       = 'event_id';
-					$replacement = intval( $event[ $field ] );
+			$field       = 'event_id';
+			$replacement = intval( $event[ $field ] );
 
 		} elseif ( $event && preg_match( '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)$/', $result, $matches ) ) {
 			if ( $matches[2] == 'START' ) {
-					$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+				$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
 			} else {
 				$eme_date_obj = new ExpressiveDate( $event['event_end'], $eme_timezone );
 			}
 			$diff = $eme_date_obj_now->diff( $eme_date_obj )->format( '%r1:%y:%m:%a:%h:%i:%s' );
 			list($pos_neg,$years, $months,$days,$hours,$mins,$secs) = explode( ':', $diff );
 			if ( $matches[1] == 'TILL' && $pos_neg < 0 ) {
-					$replacement = 0;
+				$replacement = 0;
 			} elseif ( $matches[1] == 'FROM' && $pos_neg > 0 ) {
 				$replacement = 0;
 			} else {
-					// let's produce a nice string but not add something like "0 years 0 months" to it
-					$replacement = sprintf( _n( '%d second', '%d seconds', $secs, 'events-made-easy' ), $secs );
+				// let's produce a nice string but not add something like "0 years 0 months" to it
+				$replacement = sprintf( _n( '%d second', '%d seconds', $secs, 'events-made-easy' ), $secs );
 				if ( $years || $months || $days || $hours || $mins ) {
 					$replacement = sprintf( _n( '%d minute', '%d minutes', $mins, 'events-made-easy' ), $mins ) . ' ' . $replacement;
 				}

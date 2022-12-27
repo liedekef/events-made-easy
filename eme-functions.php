@@ -3175,9 +3175,9 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
 
 	if ( current_user_can( get_option( $cap ) ) && isset( $_POST[ $postvar ] ) ) {
 		// check the POST var
-		$ids_arr = explode( ',', $_POST[ $postvar ] );
+		$ids_arr = explode( ',', eme_sanitize_request($_POST[ $postvar ]) );
 		if ( eme_array_integers( $ids_arr ) ) {
-			$wpdb->query( "DELETE FROM $table WHERE $postvar in ( " . $_POST[ $postvar ] . ')' );
+			$wpdb->query( "DELETE FROM $table WHERE $postvar IN ( " . eme_sanitize_request($_POST[ $postvar ]) . ')' );
 		}
 		$jTableResult['Result']      = 'OK';
 		$jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );

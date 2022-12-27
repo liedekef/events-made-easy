@@ -4856,7 +4856,7 @@ function eme_ajax_manage_formfields() {
 				wp_die();
 				break;
 			case 'deleteFormfields':
-				$field_ids = explode( ',', $_POST['field_id'] );
+				$field_ids = explode( ',', eme_sanitize_request($_POST['field_id']) );
 				if (eme_array_integers( $field_ids)) {
 					// validation happens in the eme_delete_formfields function
 					eme_delete_formfields( $field_ids );

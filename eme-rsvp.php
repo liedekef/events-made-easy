@@ -1622,7 +1622,7 @@ function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_stat
 	$persons_table   = $eme_db_prefix . PEOPLE_TBNAME;
 	$extra_condition = '';
 	if ( $rsvp_status ) {
-		$extra_condition .= " bookings.status=$rsvp_status";
+		$extra_condition .= " bookings.status=".intval($rsvp_status);
 	} else {
 		$extra_condition .= ' bookings.status!=' . EME_RSVP_STATUS_TRASH;
 	}
@@ -1639,11 +1639,11 @@ function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_stat
 	if ( $scope == 1 || $scope == 'future' ) {
 		$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
 		$now          = $eme_date_obj->getDateTime();
-		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$persons_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start>'$now' ORDER BY events.event_start ASC", $wp_id );
+		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$persons_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start>%s ORDER BY events.event_start ASC", $wp_id, $now );
 	} elseif ( $scope == 'past' ) {
 		$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
 		$now          = $eme_date_obj->getDateTime();
-		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$persons_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start<='$now' ORDER BY events.event_start ASC", $wp_id );
+		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$persons_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start<=%s ORDER BY events.event_start ASC", $wp_id, $now );
 	} elseif ( $scope == 0 || $scope == 'all' ) {
 		$sql = $wpdb->prepare( "SELECT * FROM $bookings_table AS bookings,$events_table AS events,$persons_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id ORDER BY events.event_start ASC", $wp_id );
 	}
@@ -5088,8 +5088,8 @@ function eme_ajax_bookings_list() {
 	}
 
 	// The toolbar search input
-	$q         = isset( $_REQUEST['q'] ) ? $_REQUEST['q'] : '';
-	$opt       = isset( $_REQUEST['opt'] ) ? $_REQUEST['opt'] : '';
+	$q         = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
+	$opt       = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
 	$where     = '';
 	$where_arr = array();
 
@@ -5179,7 +5179,7 @@ function eme_ajax_bookings_list() {
 	}
 	if ( ! empty( $_REQUEST['search_customfields'] ) ) {
 		$answers_table       = $eme_db_prefix . ANSWERS_TBNAME;
-		$search_customfields = esc_sql( $wpdb->esc_like( $_REQUEST['search_customfields'] ) );
+		$search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_customfields']) ) );
 		$sql                 = "SELECT related_id FROM $answers_table WHERE answer LIKE '%$search_customfields%' AND type='booking' GROUP BY related_id";
 		$booking_ids         = $wpdb->get_col( $sql );
 		if ( ! empty( $booking_ids ) ) {

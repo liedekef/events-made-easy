@@ -2796,7 +2796,7 @@ function eme_locations_autocomplete_ajax( $no_wp_die = 0 ) {
 			wp_die();
 		}
 	}
-	$locations = eme_search_locations( $_REQUEST['q'] );
+	$locations = eme_search_locations( eme_sanitize_request($_REQUEST['q']) );
 	// change null to empty
 	$locations = array_map(
 		function( $v ) {
@@ -2966,7 +2966,7 @@ function eme_ajax_manage_locations() {
 		$do_action = eme_sanitize_request( $_POST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteLocations':
-				$ids_arr = explode( ',', $_POST['location_id'] );
+				$ids_arr = explode( ',', eme_sanitize_request($_POST['location_id']) );
 				$to_id   = intval( $_POST['transferto_id'] );
 				foreach ( $ids_arr as $location_id ) {
 					$location = eme_get_location( intval( $location_id ) );

@@ -1816,7 +1816,7 @@ function eme_ajax_manage_task_signups() {
 	}
 
 	if ( isset( $_REQUEST['do_action'] ) ) {
-		$ids_arr   = explode( ',', $_POST['id'] );
+		$ids_arr   = explode( ',', eme_sanitize_request($_POST['id']) );
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteTaskSignups':

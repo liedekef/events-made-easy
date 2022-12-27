@@ -968,7 +968,7 @@ function eme_ajax_country_delete() {
 	$states_table    = $eme_db_prefix . STATES_TBNAME;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$ids_arr = explode( ',', $_POST['id'] );
+	$ids_arr = explode( ',', eme_sanitize_request($_POST['id']) );
 	if ( eme_array_integers( $ids_arr ) ) {
 		$wpdb->query( "DELETE FROM $countries_table WHERE id in ( " . $_POST['id'] . ')' );
 		$wpdb->query( "UPDATE $states_table SET country_id=0 where country_id in ( " . $_POST['id'] . ')' );

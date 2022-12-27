@@ -37,7 +37,7 @@ For more information, documentation and support forum visit the [Official site](
 
 Always take a backup of your db before doing the upgrade, just in case ...  
 
-For existing wordpress users that have version 2.3.14 or older:
+For existing wordpress users that have version 2.3.17 or older:
 
 1. Download the zip "events-made-easy.zip" from the latest release from github
 2. Go in the Wordpress 'Plugins' menu, and click on "Add new"

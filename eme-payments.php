@@ -2205,7 +2205,7 @@ function eme_charge_paypal() {
 	// $notification_link = add_query_arg(array('eme_eventAction'=>'paypal_notification'),$events_page_link);
 
 	// no cheating
-	if ( ! wp_verify_nonce( $_POST['eme_paypal_nonce'], "$price$cur" ) ) {
+	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_paypal_nonce']), "$price$cur" ) ) {
 		header( "Location: $fail_link" );
 		exit;
 	}
@@ -2292,7 +2292,7 @@ function eme_charge_stripe() {
 	$fail_link        = eme_payment_return_url( $payment, 1 );
 
 	// no cheating
-	if ( ! wp_verify_nonce( $_POST['eme_stripe_nonce'], "$price$cur" ) ) {
+	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_stripe_nonce']), "$price$cur" ) ) {
 		header( "Location: $fail_link" );
 		exit;
 	}
@@ -2466,7 +2466,7 @@ function eme_charge_instamojo() {
 	$notification_link = add_query_arg( array( 'eme_eventAction' => 'instamojo_notification' ), $events_page_link );
 
 	// no cheating
-	if ( ! wp_verify_nonce( $_POST['eme_instamojo_nonce'], $price ) ) {
+	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_instamojo_nonce']), $price ) ) {
 		header( "Location: $fail_link" );
 		exit;
 	}
@@ -2566,7 +2566,7 @@ function eme_charge_fondy() {
 	$success_link      = eme_payment_return_url( $payment, 0 );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 
-	if ( ! wp_verify_nonce( $_POST[ "eme_${gateway}_nonce" ], "$price$cur" ) ) {
+	if ( ! wp_verify_nonce( eme_sanitize_request($_POST[ "eme_${gateway}_nonce" ]), "$price$cur" ) ) {
 		header( "Location: $fail_link" );
 		exit;
 	}
@@ -2794,7 +2794,7 @@ function eme_charge_mollie() {
 	$notification_link = add_query_arg( array( 'eme_eventAction' => 'mollie_notification' ), $events_page_link );
 
 	// no cheating
-	if ( ! wp_verify_nonce( $_POST['eme_mollie_nonce'], "$price$cur" ) ) {
+	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_mollie_nonce']), "$price$cur" ) ) {
 		header( "Location: $fail_link" );
 		exit;
 	}
@@ -2887,7 +2887,7 @@ function eme_charge_payconiq() {
 	$notification_link = add_query_arg( array( 'eme_eventAction' => 'payconiq_notification' ), $events_page_link );
 
 	// no cheating
-	if ( ! wp_verify_nonce( $_POST['eme_payconiq_nonce'], "$price$cur" ) ) {
+	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_payconiq_nonce']), "$price$cur" ) ) {
 		header( "Location: $fail_link" );
 		exit;
 	}
@@ -3596,7 +3596,7 @@ function eme_cancel_payment_ajax() {
 			wp_die();
 		}
 	}
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], "cancel payment $payment_randomid" ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), "cancel payment $payment_randomid" ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			array(

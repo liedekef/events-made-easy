@@ -1755,7 +1755,7 @@ function eme_emails_page() {
 		$data_forced_tab = 'data-showtab=1';
 		if ( isset( $_POST['tasksignup_ids'] ) ) {
 			// when editing, select2 needs a populated list of selected items
-			$tasksignup_ids = $_POST['tasksignup_ids'];
+			$tasksignup_ids = eme_sanitize_request($_POST['tasksignup_ids']);
 			$person_ids     = eme_get_tasksignup_personids( $tasksignup_ids );
 			$persons        = eme_get_persons( $person_ids );
 			foreach ( $persons as $person ) {
@@ -1764,7 +1764,7 @@ function eme_emails_page() {
 		}
 		if ( isset( $_POST['booking_ids'] ) ) {
 			// when editing, select2 needs a populated list of selected items
-			$booking_ids = $_POST['booking_ids'];
+			$booking_ids = eme_sanitize_request($_POST['booking_ids']);
 			$person_ids  = eme_get_booking_personids( $booking_ids );
 			$persons     = eme_get_persons( $person_ids );
 			foreach ( $persons as $person ) {
@@ -1773,7 +1773,7 @@ function eme_emails_page() {
 		}
 		if ( isset( $_POST['person_ids'] ) ) {
 			// when editing, select2 needs a populated list of selected items
-			$person_ids = explode( ',', $_POST['person_ids'] );
+			$person_ids = explode( ',', eme_sanitize_request($_POST['person_ids'] ));
 			$persons    = eme_get_persons( $person_ids );
 			foreach ( $persons as $person ) {
 				$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
@@ -1781,7 +1781,7 @@ function eme_emails_page() {
 		}
 		if ( isset( $_POST['member_ids'] ) ) {
 			// when editing, select2 needs a populated list of selected items
-			$member_ids = explode( ',', $_POST['member_ids'] );
+			$member_ids = explode( ',', eme_sanitize_request($_POST['member_ids'] ));
 			$members    = eme_get_members( $member_ids );
 			foreach ( $members as $member ) {
 				$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'] );

@@ -150,9 +150,9 @@ function eme_categories_table_layout( $message = '' ) {
                            </tr>
                         ';
 		}
-						$delete_text        = esc_html__( 'Are you sure you want to delete these categories?', 'events-made-easy' );
-						$delete_button_text = esc_html__( 'Delete', 'events-made-easy' );
-						$table             .= <<<EOT
+		$delete_text        = esc_html__( 'Are you sure you want to delete these categories?', 'events-made-easy' );
+		$delete_button_text = esc_html__( 'Delete', 'events-made-easy' );
+		$table             .= "
                         </tbody>
                      </table>
    
@@ -163,7 +163,7 @@ function eme_categories_table_layout( $message = '' ) {
                         </div>
                         <br class='clear'>
                      </div>
-EOT;
+		";
 	} else {
 			$table .= '<p>' . __( 'No categories defined.', 'events-made-easy' );
 	}
@@ -178,17 +178,17 @@ function eme_categories_edit_layout( $message = '' ) {
 	global $plugin_page;
 
 	if ( ! empty( $_GET['category_id'] ) ) {
-			$category_id   = intval( $_GET['category_id'] );
-		$category          = eme_get_category( $category_id );
-			$h1_string     = __( 'Edit category', 'events-made-easy' );
-			$action_string = __( 'Update category', 'events-made-easy' );
+		$category_id   = intval( $_GET['category_id'] );
+		$category      = eme_get_category( $category_id );
+		$h1_string     = __( 'Edit category', 'events-made-easy' );
+		$action_string = __( 'Update category', 'events-made-easy' );
 		$permalink_string  = __( 'Permalink: ', 'events-made-easy' );
 		$action            = 'edit';
 	} else {
-			$category_id   = 0;
-			$category      = eme_new_category();
-			$h1_string     = __( 'Create category', 'events-made-easy' );
-			$action_string = __( 'Add category', 'events-made-easy' );
+		$category_id   = 0;
+		$category      = eme_new_category();
+		$h1_string     = __( 'Create category', 'events-made-easy' );
+		$action_string = __( 'Add category', 'events-made-easy' );
 		$permalink_string  = __( 'Permalink prefix: ', 'events-made-easy' );
 		$action            = 'add';
 	}

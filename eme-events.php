@@ -2500,7 +2500,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = '';
 			} else {
 				// when the booking just happened and the user needs to pay, we don't show the remove booking form
-				if ( isset( $_POST['eme_eventAction'] ) && $_POST['eme_eventAction'] == 'pay_bookings' && isset( $_POST['eme_message'] ) && isset( $_POST['eme_payment_id'] ) ) {
+				if ( isset( $_POST['eme_eventAction'] ) && eme_sanitize_request( $_POST['eme_eventAction']) == 'pay_bookings' && isset( $_POST['eme_message'] ) && isset( $_POST['eme_payment_id'] ) ) {
 								$replacement = '';
 				} else {
 						$replacement = eme_cancel_bookings_form( $event['event_id'] );
@@ -2512,9 +2512,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			} elseif ( is_user_logged_in() ) {
 				// when the booking just happened and the user needs to pay, we don't show the remove booking form
 				// also show the form if a delete-message needs to be shown (that will actuallyonly shown the message anyway)
-				if ( isset( $_POST['eme_eventAction'] ) && $_POST['eme_eventAction'] == 'pay_bookings' && isset( $_POST['eme_message'] ) && isset( $_POST['eme_payment_id'] ) ) {
+				if ( isset( $_POST['eme_eventAction'] ) && eme_sanitize_request( $_POST['eme_eventAction']) == 'pay_bookings' && isset( $_POST['eme_message'] ) && isset( $_POST['eme_payment_id'] ) ) {
 								$replacement = '';
-				} elseif ( isset( $_POST['eme_eventAction'] ) && $_POST['eme_eventAction'] == 'delmessage' ) {
+				} elseif ( isset( $_POST['eme_eventAction'] ) && eme_sanitize_request( $_POST['eme_eventAction']) == 'delmessage' ) {
 						$replacement = eme_cancel_bookings_form( $event['event_id'] );
 				} elseif ( $event && eme_get_booking_ids_by_wp_event_id( $current_userid, $event['event_id'] ) ) {
 					$replacement = eme_cancel_bookings_form( $event['event_id'] );
@@ -4164,10 +4164,13 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		$eme_filters['eme_contact_filter'] = 1;
 		$eme_filters['eme_author_filter']  = 1;
 		foreach ( $_REQUEST as $key => $item ) {
+			$key = eme_sanitize_request( $key );
+			$item = eme_sanitize_request( $item );
+
 			if ( isset( $eme_filters[ $key ] ) ) {
 				# if you selected multiple items, $item is an array, but rawurlencode needs a string
 				if ( is_array( $item ) ) {
-					$item = join( ',', eme_sanitize_request( $item ) );
+					$item = join( ',', $item );
 				}
 				if ( ! empty( $item ) ) {
 						$this_page_url = add_query_arg( array( $key => $item ), $this_page_url );
@@ -4215,10 +4218,12 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		$eme_filters['eme_contact_filter'] = 1;
 		$eme_filters['eme_author_filter']  = 1;
 		foreach ( $_REQUEST as $key => $item ) {
+			$key = eme_sanitize_request( $key );
+			$item = eme_sanitize_request( $item );
 			if ( isset( $eme_filters[ $key ] ) ) {
 				# if you selected multiple items, $item is an array, but rawurlencode needs a string
 				if ( is_array( $item ) ) {
-					$item = join( ',', eme_sanitize_request( $item ) );
+					$item = join( ',', $item );
 				}
 				if ( ! empty( $item ) ) {
 						$this_page_url = add_query_arg( array( $key => $item ), $this_page_url );
@@ -4414,7 +4419,7 @@ function eme_get_events_list_shortcode( $atts ) {
 	$location_id_arr = array();
 
 	// the filter list overrides the settings
-	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && $_REQUEST['eme_eventAction'] == 'filter' ) {
+	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
 		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
 			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
 		}
@@ -4472,13 +4477,15 @@ function eme_get_events_list_shortcode( $atts ) {
 			}
 		}
 		foreach ( $_REQUEST as $key => $value ) {
-			if ( preg_match( '/eme_customfield_filter(\d+)/', eme_sanitize_request( $key ), $matches ) ) {
+			$key = eme_sanitize_request( $key );
+			$value = eme_sanitize_request( $value );
+			if ( preg_match( '/eme_customfield_filter(\d+)/', $key, $matches ) ) {
 				$field_id  = intval( $matches[1] );
 				$formfield = eme_get_formfield( $field_id );
 				if ( ! empty( $formfield ) ) {
 					$is_multi = eme_is_multifield( $formfield['field_type'] );
 					if ( $formfield['field_purpose'] == 'events' ) {
-						$tmp_ids = eme_get_cf_event_ids( eme_sanitize_request( $value ), $field_id, $is_multi );
+						$tmp_ids = eme_get_cf_event_ids( $value, $field_id, $is_multi );
 						if ( empty( $event_id_arr ) ) {
 							$event_id_arr = $tmp_ids;
 						} else {
@@ -4489,7 +4496,7 @@ function eme_get_events_list_shortcode( $atts ) {
 						}
 					}
 					if ( $formfield['field_purpose'] == 'locations' ) {
-						$tmp_ids = eme_get_cf_location_ids( eme_sanitize_request( $value ), $field_id, $is_multi );
+						$tmp_ids = eme_get_cf_location_ids( $value, $field_id, $is_multi );
 						if ( empty( $location_id_arr ) ) {
 							$location_id_arr = $tmp_ids;
 						} else {
@@ -5761,7 +5768,7 @@ function eme_events_table( $message = '' ) {
 		if ( $key == 'future' ) {
 			$selected = "selected='selected'";
 		}
-		echo "<option value='$key' $selected>$value</option>  ";
+		echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
 	}
 	?>
 	</select>
@@ -5770,7 +5777,7 @@ function eme_events_table( $message = '' ) {
 	<option value='none'><?php esc_html_e( 'Events without category', 'events-made-easy' ); ?></option>
 	<?php
 	foreach ( $categories as $category ) {
-		echo "<option value='" . $category['category_id'] . "'>" . $category['category_name'] . '</option>';
+		echo "<option value='" . esc_attr($category['category_id']) . "'>" . esc_html($category['category_name']) . '</option>';
 	}
 	?>
 	</select>
@@ -5790,7 +5797,7 @@ function eme_events_table( $message = '' ) {
 			$get_status = 0;
 		}
 		foreach ( $event_status_array as $event_status_key => $event_status_value ) {
-			echo "<option value='$event_status_key' " . selected( $get_status, $event_status_key ) . "> $event_status_value</option>";
+			echo "<option value='" . esc_attr($event_status_key)."' " . selected( $get_status, $event_status_key ) . "> ".esc_html($event_status_value)."</option>";
 		}
 		?>
 	</select>
@@ -5919,7 +5926,7 @@ function eme_recurrences_table( $message = '' ) {
 		if ( $key == 'ongoing' ) {
 			$selected = "selected='selected'";
 		}
-		echo "<option value='$key' $selected>$value</option>  ";
+		echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
 	}
 	?>
 	</select>
@@ -6316,7 +6323,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 										__( '(opens in a new tab)' )
 								);
 							?>
-					<a class="button-primary" href="<?php echo eme_event_url( $event ); ?>" target="wp-view-<?php echo $event['event_id']; ?>" id="event-view"><?php echo $view_button; ?></a>
+					<a class="button-primary" href="<?php echo eme_event_url( $event ); ?>" target="wp-view-<?php echo intval($event['event_id']); ?>" id="event-view"><?php echo $view_button; ?></a>
 
 			<br><?php esc_html_e( 'If pressing save or update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
 					<?php } ?> 
@@ -6346,7 +6353,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 							} else {
 								$selected = '';
 							}
-								echo "<option value='$key' $selected>$value</option>";
+							echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
 						}
 						?>
 						</select><br>
@@ -8453,7 +8460,7 @@ function eme_meta_box_div_event_rsvp( $event ) {
 									} else {
 										$selected = '';
 									}
-									echo "<option value='$key' $selected>$value</option>";
+									echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
 								}
 								?>
 					</select>
@@ -9728,7 +9735,7 @@ function eme_ajax_events_search() {
 
 	$return = array();
 	if ( isset( $_REQUEST['q'] ) ) {
-		$q = isset( $_REQUEST['q'] ) ? strtolower( $_REQUEST['q'] ) : '';
+		$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	}
 	if ( empty( $q ) ) {
 		echo wp_json_encode( $return );
@@ -9762,7 +9769,7 @@ function eme_ajax_wpuser_select2() {
 		wp_die();
 	}
 	$jTableResult = array();
-	$q            = isset( $_REQUEST['q'] ) ? strtolower( $_REQUEST['q'] ) : '';
+	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	$pagesize     = intval( $_REQUEST['pagesize'] );
 	$start        = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) * $pagesize : 0;
 
@@ -10005,7 +10012,7 @@ function eme_ajax_events_list() {
 				$page = 'eme-registration-seats';
 			}
 
-			$record['rsvp'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=newBooking&amp;event_id=" . $event['event_id'] ), 'eme_admin ' . $event['event_id'], 'eme_admin_nonce' ) . "' title='" . __( 'Add booking for this event', 'events-made-easy' ) . "'>" . __( 'RSVP', 'events-made-easy' ) . '</a>';
+			$record['rsvp'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=newBooking&amp;event_id=" . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . __( 'Add booking for this event', 'events-made-easy' ) . "'>" . __( 'RSVP', 'events-made-easy' ) . '</a>';
 			if ( ! empty( $event['event_properties']['rsvp_password'] ) ) {
 					$record['rsvp'] .= '<br>(' . __( 'Password protected', 'events-made-easy' ) . ')';
 			}
@@ -10333,7 +10340,7 @@ function eme_ajax_events_select2() {
 		wp_die();
 	}
 	$current_userid = get_current_user_id();
-	$q              = isset( $_REQUEST['q'] ) ? strtolower( $_REQUEST['q'] ) : '';
+	$q              = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	$search_all     = isset( $_REQUEST['search_all'] ) ? intval( $_REQUEST['search_all'] ) : 0;
 	if ( $search_all ) {
 		$scope = 'all';

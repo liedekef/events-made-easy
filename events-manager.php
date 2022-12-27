@@ -1969,7 +1969,7 @@ function eme_delete_events_page() {
 // Create the Manage Events and the Options submenus
 add_action( 'admin_menu', 'eme_create_events_submenu' );
 function eme_create_events_submenu() {
-	global $eme_plugin_url;
+	global $eme_plugin_url, $plugin_page;
 	# just in case: make sure the Settings page can be reached if something is not correct with the security settings
 	if ( get_option( 'eme_cap_settings' ) == '' ) {
 		$cap_settings = DEFAULT_CAP_SETTINGS;
@@ -2000,7 +2000,7 @@ function eme_create_events_submenu() {
 		$pending_count          = $pending_bookings_count + $pending_members_count;
 		$pending_bookings_title = esc_attr( sprintf( __( '%d pending bookings', 'events-made-easy' ), $pending_bookings_count ) );
 		$pending_members_title  = esc_attr( sprintf( __( '%d pending members', 'events-made-easy' ), $pending_members_count ) );
-		if ( isset( $_GET['page'] ) && preg_match( '/^eme-/', $_GET['page'] ) ) {
+		if ( preg_match( '/^eme-/', $plugin_page ) ) {
 			$main_menu_label = '';
 		} else {
 			// show the count on the main menu if we're not in the EME menu

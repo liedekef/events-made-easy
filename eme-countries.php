@@ -860,8 +860,8 @@ function eme_ajax_countries_list() {
 	$table        = $eme_db_prefix . COUNTRIES_TBNAME;
 	$jTableResult = array();
 	// The toolbar search input
-	$q           = isset( $_REQUEST['q'] ) ? $_REQUEST['q'] : '';
-	$opt         = isset( $_REQUEST['opt'] ) ? $_REQUEST['opt'] : '';
+	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
+	$opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
 	$where       = '';
 	$where_array = array();
 	if ( $q ) {

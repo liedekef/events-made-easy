@@ -965,7 +965,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 	$location_id_arr = array();
 	$location_id     = '';
 	// the filter list overrides the settings
-	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && $_REQUEST['eme_eventAction'] == 'filter' ) {
+	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
 		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
 			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
 		}
@@ -1017,12 +1017,14 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 			}
 		}
 		foreach ( $_REQUEST as $key => $value ) {
+			$key = eme_sanitize_request( $key );
+			$value = eme_sanitize_request( $value );
 			if ( preg_match( '/eme_customfield_filter(\d+)/', $key, $matches ) ) {
 					$field_id  = intval( $matches[1] );
 					$formfield = eme_get_formfield( $field_id );
 				if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
 					$is_multi    = eme_is_multifield( $formfield['field_type'] );
-						$tmp_ids = eme_get_cf_location_ids( eme_sanitize_request( $value ), $field_id, $is_multi );
+						$tmp_ids = eme_get_cf_location_ids( $value, $field_id, $is_multi );
 					if ( empty( $location_id_arr ) ) {
 						$location_id_arr = $tmp_ids;
 					} else {

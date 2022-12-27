@@ -61,7 +61,7 @@ function eme_get_calendar_shortcode( $atts ) {
 
 	$location_id_arr = array();
 	// the filter list overrides the settings
-	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && $_REQUEST['eme_eventAction'] == 'filter' ) {
+	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
 		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
 			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
 			if ( preg_match( '/^([0-9]{4})-([0-9]{2})-[0-9]{2}--[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $scope, $matches ) ) {

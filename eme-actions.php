@@ -89,7 +89,7 @@ function eme_actions_early_init() {
 		$no_wp_die = 1;
 		if ( is_user_logged_in() && isset( $_POST['eme_event_ids'] ) ) {
 			if ( ! isset( $_POST['eme_frontend_nonce'] ) ||
-			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
+			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
 				header( 'Content-type: application/json; charset=utf-8' );
 				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
 			}
@@ -111,7 +111,7 @@ function eme_actions_early_init() {
 			$event_id = intval( $_POST['event_id'] );
 			$event    = eme_get_event( $event_id );
 			if ( empty( $event ) || ! isset( $_POST['eme_admin_nonce'] ) ||
-			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_POST['eme_admin_nonce'], "eme_admin $event_id" ) ) ) {
+			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), "eme_admin" ) ) ) {
 				header( 'Content-type: application/json; charset=utf-8' );
 				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
 			}
@@ -121,15 +121,15 @@ function eme_actions_early_init() {
 			$booking_id = intval( $_POST['booking_id'] );
 			$event      = eme_get_event_by_booking_id( $booking_id );
 			if ( empty( $event ) || ! isset( $_POST['eme_admin_nonce'] ) ||
-			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_POST['eme_admin_nonce'], "eme_admin $booking_id" ) ) ) {
+			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), "eme_admin" ) ) ) {
 				header( 'Content-type: application/json; charset=utf-8' );
 				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
 			}
 			eme_people_autocomplete_ajax( $no_wp_die, $event['registration_wp_users_only'] );
 		} elseif ( isset( $_POST['membership_id'] ) && is_user_logged_in() ) {
 			if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
-			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_POST['eme_admin_nonce'], 'eme_admin' ) ) ||
-			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
+			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
+			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
 				header( 'Content-type: application/json; charset=utf-8' );
 				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
 			}
@@ -139,7 +139,7 @@ function eme_actions_early_init() {
 			}
 		} elseif ( is_user_logged_in() && isset( $_POST['eme_event_ids'] ) ) {
 			if ( ! isset( $_POST['eme_frontend_nonce'] ) ||
-			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
+			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
 				header( 'Content-type: application/json; charset=utf-8' );
 				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
 			}

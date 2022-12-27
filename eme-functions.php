@@ -1967,7 +1967,7 @@ function eme_random_id() {
 // API function so people can call this from their theme's search.php
 function eme_wordpress_search_locations() {
 	if ( isset( $_REQUEST['s'] ) ) {
-		return eme_search_locations( $_REQUEST['s'] );
+		return eme_search_locations( eme_sanitize_request($_REQUEST['s']) );
 	}
 }
 
@@ -1977,7 +1977,7 @@ function eme_wordpress_search( $scope = 'future' ) {
 }
 function eme_wordpress_search_events( $scope = 'future' ) {
 	if ( isset( $_REQUEST['s'] ) ) {
-		return eme_search_events( $_REQUEST['s'], $scope );
+		return eme_search_events( eme_sanitize_request($_REQUEST['s']), $scope );
 	}
 }
 
@@ -2080,7 +2080,7 @@ function eme_calc_bookingprice_ajax() {
 	// in the admin interface, we have a booking id, so we use the currently applied discount
 	if ( ! empty( $_POST['booking_id'] ) ) {
 			$booking_id = intval( $_POST['booking_id'] );
-			check_admin_referer( "eme_admin $booking_id", 'eme_admin_nonce' );
+			check_admin_referer( "eme_admin", 'eme_admin_nonce' );
 	}
 
 	foreach ( $event_ids as $event_id ) {
@@ -2198,7 +2198,7 @@ function eme_dyndata_rsvp_ajax() {
 	if ( ! empty( $_POST['booking_id'] ) ) {
 		// the case when editing a booking in the backend
 		$booking_id = intval( $_POST['booking_id'] );
-		check_admin_referer( "eme_admin $booking_id", 'eme_admin_nonce' );
+		check_admin_referer( "eme_admin", 'eme_admin_nonce' );
 		$booking   = eme_get_booking( $booking_id );
 		$event_ids = array( 0 => $booking['event_id'] );
 	} else {
@@ -3130,8 +3130,8 @@ function eme_ajax_record_list( $tablename, $cap ) {
 	$table        = $eme_db_prefix . $tablename;
 	$jTableResult = array();
 	// The toolbar search input
-	$q           = isset( $_REQUEST['q'] ) ? $_REQUEST['q'] : '';
-	$opt         = isset( $_REQUEST['opt'] ) ? $_REQUEST['opt'] : '';
+	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
+	$opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
 	$where       = '';
 	$where_array = array();
 	if ( $q ) {

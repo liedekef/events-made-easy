@@ -61,7 +61,7 @@ function eme_holidays_page() {
 			}
 		} elseif ( $_POST['eme_admin_action'] == 'do_deleteholidays' && isset( $_POST['holidays'] ) ) {
 			// Delete holidays
-			$holidays = $_POST['holidays'];
+			$holidays = eme_sanitize_request($_POST['holidays']);
 			if ( is_array( $holidays ) && eme_array_integers( $holidays ) ) {
 				//Run the query if we have an array of holidays ids
 				if ( count( $holidays > 0 ) ) {
@@ -144,9 +144,9 @@ function eme_holidays_table_layout( $message = '' ) {
                            </tr>
                         ';
 		}
-						$delete_text        = esc_html__( 'Are you sure you want to delete these holiday lists?', 'events-made-easy' );
-						$delete_button_text = esc_html__( 'Delete', 'events-made-easy' );
-						$table             .= <<<EOT
+		$delete_text        = esc_html__( 'Are you sure you want to delete these holiday lists?', 'events-made-easy' );
+		$delete_button_text = esc_html__( 'Delete', 'events-made-easy' );
+		$table             .= "
                         </tbody>
                      </table>
    
@@ -157,7 +157,7 @@ function eme_holidays_table_layout( $message = '' ) {
                         </div>
                         <br class='clear'>
                      </div>
-EOT;
+		";
 	} else {
 			$table .= '<p>' . __( 'No holiday lists have been inserted yet!', 'events-made-easy' );
 	}

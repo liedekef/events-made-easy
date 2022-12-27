@@ -60,7 +60,7 @@ function eme_gdpr_ajax() {
 				wp_die();
 		}
 	}
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 			$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
 				array(
@@ -151,7 +151,7 @@ function eme_gdpr_approve_ajax() {
 				wp_die();
 		}
 	}
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 			$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
 				array(
@@ -229,7 +229,7 @@ function eme_cpi_request_ajax() {
 				wp_die();
 		}
 	}
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 			$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
 				array(
@@ -364,7 +364,7 @@ function eme_cpi_ajax() {
 		wp_die();
 	}
 	$person_id = intval( $_POST['person_id'] );
-	if ( ! isset( $_POST['eme_cpi_nonce'] ) || ! wp_verify_nonce( $_POST['eme_cpi_nonce'], "eme_cpi $person_id" ) ) {
+	if ( ! isset( $_POST['eme_cpi_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_cpi_nonce']), "eme_cpi $person_id" ) ) {
 		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			array(

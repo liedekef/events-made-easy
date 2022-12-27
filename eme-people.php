@@ -58,17 +58,17 @@ function eme_people_page() {
 
 	$current_userid = get_current_user_id();
 
-	if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'import_people' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
+	if ( isset( $_POST['eme_admin_action'] ))
+		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'import_people' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 		// eme_cap_cleanup is used for cleanup, cron and imports (should more be something like 'eme_cap_actions')
 		if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
-			check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 			$message = eme_import_csv_people();
 		} else {
 			$message = esc_html__( 'You have no right to update people!', 'events-made-easy' );
 		}
-	} elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_addperson' ) {
+	} elseif ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'do_addperson' ) {
 		if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
-			check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 			list($add_update_message,$person_id) = eme_add_update_person_from_backend();
 			if ( $person_id ) {
 				$message = esc_html__( 'Person added', 'events-made-easy' );
@@ -85,11 +85,10 @@ function eme_people_page() {
 		} else {
 			$message = esc_html__( 'You have no right to update people!', 'events-made-easy' );
 		}
-	} elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_editperson' ) {
+	} elseif ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'do_editperson' ) {
 		$person_id = intval( $_POST['person_id'] );
 		$wp_id     = eme_get_wpid_by_personid( $person_id );
 		if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) || ( current_user_can( get_option( 'eme_cap_author_person' ) ) && $wp_id == $current_userid ) ) {
-			check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 			list($add_update_message,$person_id) = eme_add_update_person_from_backend( $person_id );
 			if ( $person_id ) {
 				$message = esc_html__( 'Person updated', 'events-made-easy' );
@@ -104,15 +103,14 @@ function eme_people_page() {
 		} else {
 			$message = esc_html__( 'You have no right to update this person!', 'events-made-easy' );
 		}
-	} elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_person' ) {
-		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+	} elseif ( isset( $_POST['eme_admin_action'] ) && eme_sanitize_request($_POST['eme_admin_action']) == 'add_person' ) {
 		if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
 			eme_person_edit_layout();
 			return;
 		} else {
 			$message = esc_html__( 'You have no right to add people!', 'events-made-easy' );
 		}
-	} elseif ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'edit_person' ) {
+	} elseif ( isset( $_GET['eme_admin_action'] ) && eme_sanitize_request($_GET['eme_admin_action']) == 'edit_person' ) {
 		$person_id = intval( $_GET['person_id'] );
 		$wp_id     = eme_get_wpid_by_personid( $person_id );
 		if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) || ( current_user_can( get_option( 'eme_cap_author_person' ) ) && $wp_id == $current_userid ) ) {
@@ -121,7 +119,7 @@ function eme_people_page() {
 		} else {
 			$message = esc_html__( 'You have no right to update this person!', 'events-made-easy' );
 		}
-	} elseif ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'verify_people' ) {
+	} elseif ( isset( $_GET['eme_admin_action'] ) && eme_sanitize_request($_GET['eme_admin_action']) == 'verify_people' ) {
 		if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
 			eme_person_verify_layout();
 			return;
@@ -192,7 +190,7 @@ function eme_person_shortcode( $atts ) {
 	);
 	$person = array();
 	// the GET param prid (person randomid) overrides person_id if present
-	if ( isset( $_GET['prid'] ) ) {
+	if ( isset( $_GET['prid'] ) && isset( $_GET['eme_frontend_nonce'] ) && wp_verify_nonce( eme_sanitize_request($_GET['eme_frontend_nonce']), 'eme_frontend' ) ) {
 		$random_id = eme_sanitize_request( $_GET['prid'] );
 		$person    = eme_get_person_by_randomid( $random_id );
 	} elseif ( !empty($atts['person_id']) ) {
@@ -683,7 +681,8 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 				$person['random_id'] = eme_random_id();
 				$person_id           = eme_db_update_person( $person['person_id'], $person );
 			}
-			$replacement = $person['random_id'];
+			$my_nonce = wp_create_nonce( 'eme_frontend' );
+			$replacement = $person['random_id']."&eme_frontend_nonce=$my_nonce";
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
 				$replacement = apply_filters( 'eme_general', $replacement );
@@ -2379,24 +2378,24 @@ function eme_person_image_div( $person, $relative_div = 0 ) {
 		$div_class         = 'div_person_image';
 		$person_image_bold = "<b>$person_image</b>";
 	}
-	$output = <<<EOT
-<div id="{$div_class}">
+	$output = "
+<div id='{$div_class}'>
       <br>{$person_image_bold}</b>
-   <div id="eme_person_no_image" class="postarea">
+   <div id='eme_person_no_image' class='postarea'>
       {$no_image}
    </div>
-   <div id="eme_person_current_image" class="postarea">
+   <div id='eme_person_current_image' class='postarea'>
    <img id='eme_person_image_example' alt='{$person_image}' title='{$person_image}' src='$image_url'>
    <input type='hidden' name='properties[image_id]' id='eme_person_image_id' value='{$person['properties']['image_id']}'>
    </div>
    <br>
 
-   <div class="uploader">
-   <input type="button" name="image_button" id="eme_person_image_button" value="{$set_image}" class="button-secondary">
-   <input type="button" id="eme_person_remove_old_image" name="remove_old_image" value="{$unset_image}" class="button-secondary">
+   <div class='uploader'>
+   <input type='button' name='image_button' id='eme_person_image_button' value='{$set_image}' class='button-secondary'>
+   <input type='button' id='eme_person_remove_old_image' name='remove_old_image' value='{$unset_image}' class='button-secondary'>
    </div>
 </div>
-EOT;
+";
 	return $output;
 }
 
@@ -3377,6 +3376,7 @@ function eme_db_update_group( $group_id, $line ) {
 }
 
 function eme_add_update_person_from_backend( $person_id = 0 ) {
+	check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 	$person = array();
 	if ( isset( $_POST['lastname'] ) ) {
 		$person['lastname'] = eme_sanitize_request( $_POST['lastname'] );
@@ -3508,6 +3508,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
 
 function eme_add_update_group( $group_id = 0 ) {
 	global $wpdb,$eme_db_prefix;
+	check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 	$table = $eme_db_prefix . GROUPS_TBNAME;
 	$group = array();
 	if ( isset( $_POST['name'] ) ) {
@@ -3569,6 +3570,15 @@ function eme_add_update_group( $group_id = 0 ) {
 
 function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
 	$person = array();
+
+	if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
+                ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
+                ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
+                        return array(
+                                0 => 0,
+                                1 => esc_html__( 'Access denied!', 'events-made-easy' );
+                        );
+        }
 
 	// lang detection
 	$lang = eme_detect_lang();
@@ -3684,6 +3694,15 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
 
 function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname = '', $email = '', $wp_id = 0, $create_wp_user = 0, $return_fake_person = 0 ) {
 	$person = array();
+
+	if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
+                ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
+                ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
+                        return array(
+                                0 => 0,
+                                1 => esc_html__( 'Access denied!', 'events-made-easy' );
+                        );
+        }
 
 	if ( ! $return_fake_person && ! empty( $email ) && ! eme_is_email( $email, 1 ) ) {
 		return array(
@@ -4121,7 +4140,7 @@ function eme_subscribe_ajax() {
 			wp_die();
 		}
 	}
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 			$message = esc_html__( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			array(
@@ -4241,7 +4260,7 @@ function eme_unsubscribe_ajax() {
 		}
 	}
 		// check for spammers as early as possible
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 			$message = esc_html__( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			array(
@@ -4592,6 +4611,11 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
 		wp_die();
 	}
+        if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
+                ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
+                ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
+		wp_die();
+        }
 	$return = array();
 	$q      = '';
 	if ( isset( $_REQUEST['lastname'] ) ) {
@@ -4911,7 +4935,7 @@ function eme_ajax_people_select2() {
 	$table = $eme_db_prefix . PEOPLE_TBNAME;
 
 	$jTableResult = array();
-	$q            = isset( $_REQUEST['q'] ) ? strtolower( $_REQUEST['q'] ) : '';
+	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
 		$where = "(lastname LIKE '%" . esc_sql( $q ) . "%' OR firstname LIKE '%" . esc_sql( $q ) . "%')";
 	} else {

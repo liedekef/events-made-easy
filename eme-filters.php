@@ -42,7 +42,9 @@ function eme_filter_form_shortcode( $atts ) {
 	$form  = "<form id='eme_filter_form' name='eme_filter_form' action='' method='POST'>";
 	$form .= "<input type='hidden' name='eme_eventAction' value='filter'>";
 	#   foreach ($_REQUEST as $key => $item) {
-	#      $form .= "<input type='hidden' name='$key' value='$item'>";
+	#      $key = esc_html(eme_sanitize_request( $key ));
+        #      $item = esc_html(eme_sanitize_request( $item ));
+        #      $form .= "<input type='hidden' name='$key' value='$item'>";
 	#   }
 	$form .= $content;
 	if ( $submit_to_added ) {

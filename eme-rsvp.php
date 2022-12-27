@@ -743,7 +743,7 @@ function eme_add_bookings_ajax() {
 		}
 	}
 
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			array(
@@ -763,16 +763,19 @@ function eme_add_bookings_ajax() {
 		);
 		wp_die();
 	}
-	$events = eme_get_event_arr( $_POST['eme_event_ids'] );
-	if ( empty( $events ) ) {
-		$form_html = __( 'Please select at least one event.', 'events-made-easy' );
-		echo wp_json_encode(
-			array(
-				'Result'      => 'NOK',
-				'htmlmessage' => $form_html,
-			)
-		);
-		wp_die();
+
+	if ( !empty( $_POST['eme_event_ids'] ) && eme_array_integers( $_POST['eme_event_ids'] ) ) {
+		$events = eme_get_event_arr( $_POST['eme_event_ids'] );
+		if ( empty( $events ) ) {
+			$form_html = __( 'Please select at least one event.', 'events-made-easy' );
+			echo wp_json_encode(
+				array(
+					'Result'      => 'NOK',
+					'htmlmessage' => $form_html,
+				)
+			);
+			wp_die();
+		}
 	}
 
 	$event       = $events[0];
@@ -850,7 +853,7 @@ function eme_add_bookings_ajax() {
 			$booking_res = eme_multibook_seats( $events, $send_mail, '', $is_multibooking, $simple );
 		} elseif ( $is_multibooking ) {
 			if ( isset( $_POST['eme_multibooking_tpl_id'] ) ) {
-				$tpl_id = $_POST['eme_multibooking_tpl_id'];
+				$tpl_id = intval($_POST['eme_multibooking_tpl_id']);
 			} else {
 				$tpl_id = 0;
 			}
@@ -1019,7 +1022,7 @@ function eme_cancel_bookings_ajax() {
 		}
 	}
 
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			array(
@@ -1157,6 +1160,16 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 		$allow_overbooking = 0;
 	}
 
+	if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
+                ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
+                ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
+                        $form_html = __( 'Access denied!', 'events-made-easy' );
+                        return array(
+                                0 => $form_html,
+                                1 => $booking_ids,
+                        );
+        }
+
 	$event = $events[0];
 	if ( ! eme_is_empty_string( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request ) {
 		if ( ! isset( $_POST['rsvp_password'] ) ) {
@@ -1165,7 +1178,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 				0 => $form_html,
 				1 => $booking_ids,
 			);
-		} elseif ( $_POST['rsvp_password'] != $event['event_properties']['rsvp_password'] ) {
+		} elseif ( eme_sanitize_request($_POST['rsvp_password']) != $event['event_properties']['rsvp_password'] ) {
 			$form_html = __( 'Incorrect password given', 'events-made-easy' );
 			return array(
 				0 => $form_html,
@@ -2782,9 +2795,13 @@ function eme_get_booking_personids( $booking_ids ) {
 	if ( is_array( $booking_ids ) ) {
 		$booking_ids = join( ',', $booking_ids );
 	}
-
-	$sql = "SELECT DISTINCT person_id FROM $bookings_table WHERE booking_id IN ($booking_ids)";
-	return $wpdb->get_col( $sql );
+	$ids_arr = explode(',', $booking_ids );
+	if (eme_array_integers($ids_arr)) {
+		$sql = "SELECT DISTINCT person_id FROM $bookings_table WHERE booking_id IN ($booking_ids)";
+		return $wpdb->get_col( $sql );
+	} else {
+		return false;
+	}
 }
 
 function eme_get_bookings_by_paymentid( $payment_id ) {
@@ -4189,7 +4206,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 	// do the actions if required
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'newBooking' && isset( $_GET['event_id'] ) ) {
 		$event_id = intval( $_GET['event_id'] );
-		check_admin_referer( "eme_admin $event_id", 'eme_admin_nonce' );
+		check_admin_referer( "eme_admin", 'eme_admin_nonce' );
 		$event = eme_get_event( $event_id );
 		if ( empty( $event ) ) {
 			print "<div id='message' class='error'><p>" . __( 'Access denied!', 'events-made-easy' ) . '</p></div>';
@@ -4204,7 +4221,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 		}
 		// we need to set the action url, otherwise the GET parameters stay and we will fall in this if-statement all over again
 		$action_url  = admin_url( "admin.php?page=$plugin_page" );
-		$nonce_field = wp_nonce_field( "eme_admin $event_id", 'eme_admin_nonce', false, false );
+		$nonce_field = wp_nonce_field( "eme_admin", 'eme_admin_nonce', false, false );
 		$ret_string  = '<h1>' . __( 'Add booking', 'events-made-easy' ) . '</h1>';
 		if ( get_option( 'eme_rsvp_admin_allow_overbooking' ) ) {
 			$ret_string .= "<div class='eme-message-success eme-rsvp-message-success'>" . __( 'Be aware: the overbooking option is set.', 'events-made-easy' ) . '</div>';
@@ -4225,7 +4242,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 		return;
 	} elseif ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'editBooking' && isset( $_GET['booking_id'] ) ) {
 		$booking_id = intval( $_GET['booking_id'] );
-		check_admin_referer( "eme_admin $booking_id", 'eme_admin_nonce' );
+		check_admin_referer( "eme_admin", 'eme_admin_nonce' );
 		$booking  = eme_get_booking( $booking_id );
 		$event_id = $booking['event_id'];
 		$event    = eme_get_event( $event_id );
@@ -4243,7 +4260,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 
 		// we need to set the action url, otherwise the GET parameters stay and we will fall in this if-statement all over again
 		$action_url  = admin_url( "admin.php?page=$plugin_page" );
-		$nonce_field = wp_nonce_field( "eme_admin $booking_id", 'eme_admin_nonce', false, false );
+		$nonce_field = wp_nonce_field( "eme_admin", 'eme_admin_nonce', false, false );
 		$ret_string  = '<h1>' . __( 'Edit booking', 'events-made-easy' ) . '</h1>';
 		$ret_string .= "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $booking['person_id'] ) . "' title='" . __( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . "'>" . __( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . '</a><br><br>';
 
@@ -4282,7 +4299,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 		$send_mail = isset( $_POST ['send_mail'] ) ? intval( $_POST ['send_mail'] ) : 1;
 		if ( $action == 'addBooking' ) {
 			$event_id = intval( $_POST['event_id'] );
-			check_admin_referer( "eme_admin $event_id", 'eme_admin_nonce' );
+			check_admin_referer( "eme_admin", 'eme_admin_nonce' );
 			$event = eme_get_event( $event_id );
 			if ( empty( $event ) ) {
 				print "<div id='message' class='error'><p>" . __( 'Access denied!', 'events-made-easy' ) . '</p></div>';
@@ -4298,7 +4315,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 			}
 		} elseif ( $action == 'updateBooking' ) {
 			$booking_id = intval( $_POST['booking_id'] );
-			check_admin_referer( "eme_admin $booking_id", 'eme_admin_nonce' );
+			check_admin_referer( "eme_admin", 'eme_admin_nonce' );
 			$transferto_id = isset( $_POST ['transferto_id'] ) ? intval( $_POST ['transferto_id'] ) : 0;
 			$person_id     = isset( $_POST ['person_id'] ) ? intval( $_POST ['person_id'] ) : 0;
 			$booking       = eme_get_booking( $booking_id );
@@ -4701,7 +4718,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 			if ( $key == 'future' ) {
 				$selected = "selected='selected'";
 			}
-			echo "<option value='$key' $selected>$value</option>  ";
+			echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>  ";
 		}
 		?>
 		</select>
@@ -4710,7 +4727,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 		<option value='none'><?php esc_html_e( 'Events without category', 'events-made-easy' ); ?></option>
 		<?php
 		foreach ( $categories as $category ) {
-			echo "<option value='" . $category['category_id'] . "'>" . $category['category_name'] . '</option>';
+			echo "<option value='" . esc_attr($category['category_id']) . "'>" . esc_html($category['category_name']) . '</option>';
 		}
 		?>
 		</select>
@@ -5295,7 +5312,7 @@ function eme_ajax_bookings_list() {
 		if ( $trash ) {
 			$line['edit_link'] = '';
 		} else {
-			$line['edit_link'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=editBooking&amp;booking_id=" . $booking ['booking_id'] ), 'eme_admin ' . $booking ['booking_id'], 'eme_admin_nonce' ) . "' title='" . esc_attr__( 'Click here to see and/or edit the details of the booking.', 'events-made-easy' ) . "'>" . "<img src='" . esc_url($eme_plugin_url) . "images/edit.png' alt='" . __( 'Edit', 'events-made-easy' ) . "'> " . '</a>';
+			$line['edit_link'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=editBooking&amp;booking_id=" . $booking ['booking_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . esc_attr__( 'Click here to see and/or edit the details of the booking.', 'events-made-easy' ) . "'>" . "<img src='" . esc_url($eme_plugin_url) . "images/edit.png' alt='" . __( 'Edit', 'events-made-easy' ) . "'> " . '</a>';
 		}
 		if ( ! isset( $event_name_info[ $booking_event_id ] ) ) {
 			$event_name_info[ $booking_event_id ] = '';
@@ -5375,7 +5392,7 @@ function eme_ajax_bookings_list() {
 				$page = 'eme-registration-seats';
 			}
 
-			$line['rsvp'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=newBooking&amp;event_id=" . $event['event_id'] ), 'eme_admin ' . $event['event_id'], 'eme_admin_nonce' ) . "' title='" . esc_attr__( 'Add booking for this event', 'events-made-easy' ) . "'>" . esc_html__( 'RSVP', 'events-made-easy' ) . '</a>';
+			$line['rsvp'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=newBooking&amp;event_id=" . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . esc_attr__( 'Add booking for this event', 'events-made-easy' ) . "'>" . esc_html__( 'RSVP', 'events-made-easy' ) . '</a>';
 			if ( ! empty( $event['event_properties']['rsvp_password'] ) ) {
 				$line['rsvp'] .= '<br>(' . esc_html__( 'Password protected', 'events-made-easy' ) . ')';
 			}

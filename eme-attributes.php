@@ -107,7 +107,7 @@ function eme_attributes_form( $eme_array ) {
 						<select name="eme_attr_<?php echo eme_esc_html( $count ); ?>_ref">
 							<?php
 							if ( ! in_array( $name, $attributes ) ) {
-								echo "<option value='$name'>$name (" . __( 'Not defined in templates', 'events-made-easy' ) . ')</option>';
+								echo "<option value='".esc_attr($name)."'>".esc_html($name)." (" . __( 'Not defined in templates', 'events-made-easy' ) . ')</option>';
 							}
 							foreach ( $attributes as $attribute ) {
 								if ( $attribute == $name ) {

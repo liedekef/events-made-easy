@@ -4084,7 +4084,7 @@ function eme_access_meta_box_save( $post_id ) {
 	}
 
 	// if our nonce isn't there, or we can't verify it, bail
-	if ( ! isset( $_POST['eme_meta_box_nonce'] ) || ! wp_verify_nonce( $_POST['eme_meta_box_nonce'], 'eme_meta_box' ) ) {
+	if ( ! isset( $_POST['eme_meta_box_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_meta_box_nonce']), 'eme_meta_box' ) ) {
 		return;
 	}
 
@@ -4133,7 +4133,7 @@ function eme_add_member_ajax() {
 		}
 	}
 
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			array(
@@ -5793,7 +5793,7 @@ function eme_ajax_members_select2() {
 	$members_table     = $eme_db_prefix . MEMBERS_TBNAME;
 	$memberships_table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
 	$jTableResult      = array();
-	$q                 = isset( $_REQUEST['q'] ) ? strtolower( $_REQUEST['q'] ) : '';
+	$q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
 			$where = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
 	} else {

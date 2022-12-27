@@ -863,7 +863,7 @@ function eme_options_postsave_actions() {
 		update_option( 'eme_hcaptcha_for_forms', 0 );
 	}
 
-	$tab = isset( $_GET['tab'] ) ? esc_attr( $_GET['tab'] ) : 'general';
+	$tab = isset( $_GET['tab'] ) ? eme_sanitize_request( $_GET['tab'] ) : 'general';
 	// if we saved settings on the payments tab, certain webhooks need to be created
 	if ( $tab == 'payments' ) {
 		eme_stripe_webhook();
@@ -989,7 +989,7 @@ function eme_options_register() {
 		return;
 	}
 	$options = array();
-	$tab     = isset( $_POST['tab'] ) ? esc_attr( $_POST['tab'] ) : 'general';
+	$tab     = isset( $_POST['tab'] ) ? eme_sanitize_request( $_POST['tab'] ) : 'general';
 	switch ( $tab ) {
 		case 'general':
 				$options = array( 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_honeypot_for_forms', 'eme_frontend_nocache', 'eme_use_is_page_for_title' );
@@ -1206,7 +1206,7 @@ function eme_explain_slug_conflict( $conflict_found ) {
 function eme_options_page() {
 	global $eme_timezone;
 
-	$tab = isset( $_GET['tab'] ) ? esc_attr( $_GET['tab'] ) : 'general';
+	$tab = isset( $_GET['tab'] ) ? eme_sanitize_request( $_GET['tab'] ) : 'general';
 	eme_admin_tabs( $tab );
 	$conflict_found = eme_check_conflicting_slug();
 	if ( ! empty( $conflict_found ) ) {

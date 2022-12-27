@@ -278,8 +278,12 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
 function eme_get_tasksignup_personids( $signup_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$sql   = "SELECT DISTINCT person_id FROM $table WHERE id IN ($signup_ids)";
-	return $wpdb->get_col( $sql );
+	if (eme_array_integers($ids_arr)) {
+		$sql   = "SELECT DISTINCT person_id FROM $table WHERE id IN ($signup_ids)";
+		return $wpdb->get_col( $sql );
+	} else {
+		return false;
+	}
 }
 
 function eme_count_event_task_signups( $event_id ) {
@@ -431,7 +435,7 @@ function eme_task_signups_table_layout( $message = '' ) {
 		if ( $key == 'future' ) {
 			$selected = "selected='selected'";
 		}
-		echo "<option value='$key' $selected>$value</option>  ";
+		echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
 	}
 	?>
 	</select>
@@ -886,7 +890,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 	}
 
 	// the filter list overrides the settings
-	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && $_REQUEST['eme_eventAction'] == 'filter' ) {
+	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
 		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
 			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
 		}
@@ -944,13 +948,15 @@ function eme_tasks_signups_shortcode( $atts ) {
 			}
 		}
 		foreach ( $_REQUEST as $key => $value ) {
-			if ( preg_match( '/eme_customfield_filter(\d+)/', eme_sanitize_request( $key ), $matches ) ) {
+			$key = eme_sanitize_request( $key );
+			$value = eme_sanitize_request( $value );
+			if ( preg_match( '/eme_customfield_filter(\d+)/', $key, $matches ) ) {
 				$field_id  = intval( $matches[1] );
 				$formfield = eme_get_formfield( $field_id );
 				if ( ! empty( $formfield ) ) {
 					$is_multi = eme_is_multifield( $formfield['field_type'] );
 					if ( $formfield['field_purpose'] == 'events' ) {
-						$tmp_ids = eme_get_cf_event_ids( eme_sanitize_request( $value ), $field_id, $is_multi );
+						$tmp_ids = eme_get_cf_event_ids( $value, $field_id, $is_multi );
 						if ( empty( $event_id_arr ) ) {
 							$event_id_arr = $tmp_ids;
 						} else {
@@ -961,7 +967,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 						}
 					}
 					if ( $formfield['field_purpose'] == 'locations' ) {
-						$tmp_ids = eme_get_cf_location_ids( eme_sanitize_request( $value ), $field_id, $is_multi );
+						$tmp_ids = eme_get_cf_location_ids( $value, $field_id, $is_multi );
 						if ( empty( $location_id_arr ) ) {
 							$location_id_arr = $tmp_ids;
 						} else {
@@ -1055,7 +1061,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 	$result          = '';
 
 	// the filter list overrides the settings
-	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && $_REQUEST['eme_eventAction'] == 'filter' ) {
+	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
 		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
 			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
 		}
@@ -1113,13 +1119,15 @@ function eme_tasks_signupform_shortcode( $atts ) {
 			}
 		}
 		foreach ( $_REQUEST as $key => $value ) {
-			if ( preg_match( '/eme_customfield_filter(\d+)/', eme_sanitize_request( $key ), $matches ) ) {
+			$key = eme_sanitize_request( $key );
+			$value = eme_sanitize_request( $value );
+			if ( preg_match( '/eme_customfield_filter(\d+)/', $key, $matches ) ) {
 				$field_id  = intval( $matches[1] );
 				$formfield = eme_get_formfield( $field_id );
 				if ( ! empty( $formfield ) ) {
 					$is_multi = eme_is_multifield( $formfield['field_type'] );
 					if ( $formfield['field_purpose'] == 'events' ) {
-						$tmp_ids = eme_get_cf_event_ids( eme_sanitize_request( $value ), $field_id, $is_multi );
+						$tmp_ids = eme_get_cf_event_ids( $value, $field_id, $is_multi );
 						if ( empty( $event_id_arr ) ) {
 							$event_id_arr = $tmp_ids;
 						} else {
@@ -1130,7 +1138,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 						}
 					}
 					if ( $formfield['field_purpose'] == 'locations' ) {
-						$tmp_ids = eme_get_cf_location_ids( eme_sanitize_request( $value ), $field_id, $is_multi );
+						$tmp_ids = eme_get_cf_location_ids( $value, $field_id, $is_multi );
 						if ( empty( $location_id_arr ) ) {
 							$location_id_arr = $tmp_ids;
 						} else {
@@ -1526,7 +1534,7 @@ function eme_tasks_ajax() {
 			wp_die();
 		}
 	}
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 				$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			array(

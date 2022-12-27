@@ -10214,7 +10214,7 @@ function eme_untrash_events( $ids ) {
 	$table_name = $eme_db_prefix . EVENTS_TBNAME;
 	$ids_arr = explode( ',', $ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql        = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($commaDelimitedPlaceholders)" ,EME_EVENT_STATUS_DRAFT,$ids_arr;
+	$sql        = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($commaDelimitedPlaceholders)" ,EME_EVENT_STATUS_DRAFT,$ids_arr);
 	$wpdb->query( $sql );
 }
 

@@ -31,16 +31,13 @@ function eme_get_calendar_shortcode( $atts ) {
 		)
 	);
 
-	$echo        = ( $echo === 'true' || $echo === '1' ) ? true : $echo;
-	$full        = ( $full === 'true' || $full === '1' ) ? true : $full;
-	$long_events = ( $long_events === 'true' || $long_events === '1' ) ? true : $long_events;
-	$echo        = ( $echo === 'false' || $echo === '0' ) ? false : $echo;
-	$full        = ( $full === 'false' || $full === '0' ) ? false : $full;
-	$long_events = ( $long_events === 'false' || $long_events === '0' ) ? false : $long_events;
+	$echo        = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
+        $full        = filter_var( $full, FILTER_VALIDATE_BOOLEAN );
+        $long_events = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
 
 	// this allows people to use specific months/years to show the calendar on
 	if ( isset( $_GET['calmonth'] ) && $_GET['calmonth'] != '' ) {
-		$month = $_GET['calmonth'];
+		$month = eme_sanitize_request($_GET['calmonth']);
 	}
 	if ( $month != 'this_month' && $month != 'next_month' ) {
 		$month = intval( $month );
@@ -51,7 +48,7 @@ function eme_get_calendar_shortcode( $atts ) {
 		$month = $eme_date_obj_tmp->format( 'm' );
 	}
 	if ( isset( $_GET['calyear'] ) && $_GET['calyear'] != '' ) {
-		$year = $_GET['calyear'];
+		$year = intval($_GET['calyear']);
 	}
 	$year = intval( $year );
 	// if a year was specified but not a month, show the first month of that year
@@ -150,12 +147,9 @@ function eme_get_calendar( $args = '' ) {
 	);
 	$r        = wp_parse_args( $args, $defaults );
 	extract( $r );
-	$echo        = ( $echo === 'true' || $echo === '1' ) ? true : $echo;
-	$full        = ( $full === 'true' || $full === '1' ) ? true : $full;
-	$long_events = ( $long_events === 'true' || $long_events === '1' ) ? true : $long_events;
-	$echo        = ( $echo === 'false' || $echo === '0' ) ? false : $echo;
-	$full        = ( $full === 'false' || $full === '0' ) ? false : $full;
-	$long_events = ( $long_events === 'false' || $long_events === '0' ) ? false : $long_events;
+	$echo        = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
+        $full        = filter_var( $full, FILTER_VALIDATE_BOOLEAN );
+        $long_events = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
 
 	if ( ! empty( $weekdays ) ) {
 		$weekday_arr = explode( ',', $weekdays );

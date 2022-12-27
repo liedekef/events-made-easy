@@ -139,11 +139,13 @@ function eme_delete_event_old_tasks( $event_id, $ids_arr ) {
 	if ( empty( $ids_arr ) || ! eme_array_integers( $ids_arr ) ) {
 		return;
 	}
-	$task_ids = join( ',', $ids_arr );
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
 	$table    = $eme_db_prefix . TASKS_TBNAME;
-	$wpdb->query( "DELETE FROM $table WHERE event_id=$event_id AND task_id NOT IN (" . $task_ids . ')' );
+	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $commaDelimitedPlaceholders )", $event_id, $ids_arr);
+	$wpdb->query( $sql);
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$wpdb->query( "DELETE FROM $table WHERE event_id=$event_id AND task_id NOT IN (" . $task_ids . ')' );
+	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $commaDelimitedPlaceholders )", $event_id, $ids_arr);
+	$wpdb->query( $sql);
 }
 
 function eme_cancel_task_signup( $signup_randomid ) {
@@ -181,7 +183,9 @@ function eme_db_update_task_signup( $line ) {
 function eme_transfer_person_task_signups( $person_ids, $to_person_id ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$sql   = "UPDATE $table SET person_id = $to_person_id WHERE person_id IN ($person_ids)";
+	$ids_arr = explode(',',$person_ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+        $sql = $wpdb->prepare( "UPDATE $table SET person_id = %d WHERE person_id ( $commaDelimitedPlaceholders )", $to_person_id, $ids_arr);
 	return $wpdb->query( $sql );
 }
 
@@ -278,12 +282,10 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
 function eme_get_tasksignup_personids( $signup_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	if (eme_array_integers($ids_arr)) {
-		$sql   = "SELECT DISTINCT person_id FROM $table WHERE id IN ($signup_ids)";
-		return $wpdb->get_col( $sql );
-	} else {
-		return false;
-	}
+	$ids_arr = explode(',',$signup_ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+        $sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $table WHERE id IN ( $commaDelimitedPlaceholders )", $ids_arr);
+	return $wpdb->get_col( $sql );
 }
 
 function eme_count_event_task_signups( $event_id ) {
@@ -359,7 +361,7 @@ function eme_tasks_remove_old_signups() {
 	$old_date     = $eme_date_obj->minusDays( $remove_old_signups_days )->getDateTime();
 
 	// we don't remove old bookings, just anonymize them
-	$sql = "DELETE FROM $table WHERE event_id IN (SELECT event_id FROM $events_table WHERE $events_table.event_end < '$old_date')";
+	$sql = $wpdb->prepare("DELETE FROM $table WHERE event_id IN (SELECT event_id FROM $events_table WHERE $events_table.event_end < %s)", $old_date);
 	$wpdb->query( $sql );
 }
 
@@ -382,7 +384,9 @@ function eme_task_signups_page() {
 			// Delete template or multiple
 			$task_signups = $_POST['task_signups'];
 			if ( ! empty( $task_signups ) && eme_array_integers( $task_signups ) ) {
-				$validation_result = $wpdb->query( "DELETE FROM $table WHERE id IN (" . implode( ',', $task_signups ) . ')' );
+				$commaDelimitedPlaceholders = implode(',', array_fill(0, count($task_signups), '%d'));
+				$sql = $wpdb->prepare( "DELETE FROM $table WHERE id IN ( $commaDelimitedPlaceholders )", $task_signups);
+				$validation_result = $wpdb->query( $sql );
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully deleted the selected task signups.', 'events-made-easy' );
 				} else {

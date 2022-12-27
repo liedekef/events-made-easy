@@ -146,7 +146,9 @@ function eme_templates_page() {
 					// Delete template or multiple
 					$templates = $_POST['templates'];
 			if ( ! empty( $templates ) && eme_array_integers( $templates ) ) {
-				$validation_result = $wpdb->query( "DELETE FROM $templates_table WHERE id IN (" . implode( ',', $templates ) . ')' );
+				$commaDelimitedPlaceholders = implode(',', array_fill(0, count($templates), '%d'));
+                                $sql = $wpdb->prepare( "DELETE FROM $templates_table WHERE id IN ( $commaDelimitedPlaceholders )", $templates);
+                                $validation_result = $wpdb->query( $sql );
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully deleted the selected template(s).', 'events-made-easy' );
 				} else {

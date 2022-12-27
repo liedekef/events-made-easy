@@ -135,10 +135,8 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 		$r = wp_parse_args( $justurl, $defaults );
 		extract( $r );
 	}
-	$echo    = ( $echo === 'true' || $echo === '1' ) ? true : $echo;
-	$justurl = ( $justurl === 'true' || $justurl === '1' ) ? true : $justurl;
-	$echo    = ( $echo === 'false' || $echo === '0' ) ? false : $echo;
-	$justurl = ( $justurl === 'false' || $justurl === '0' ) ? false : $justurl;
+	$echo    = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
+	$justurl = filter_var( $justurl, FILTER_VALIDATE_BOOLEAN );
 
 	if ( $text == '' ) {
 		$text = 'ICAL';
@@ -197,8 +195,7 @@ function eme_ical_link_shortcode( $atts ) {
 		)
 	);
 
-	$justurl = ( $justurl === 'true' || $justurl === '1' ) ? true : $justurl;
-	$justurl = ( $justurl === 'false' || $justurl === '0' ) ? false : $justurl;
+	$justurl = filter_var( $justurl, FILTER_VALIDATE_BOOLEAN );
 	$result  = eme_ical_link( $justurl, 0, $text, $category, $location_id, $scope, $author, $contact_person, $notcategory );
 	return $result;
 }

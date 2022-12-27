@@ -20,8 +20,7 @@ function eme_filter_form_shortcode( $atts ) {
 			$atts
 		)
 	);
-	$multiple = ( $multiple === 'true' || $multiple === '1' ) ? true : $multiple;
-	$multiple = ( $multiple === 'false' || $multiple === '0' ) ? false : $multiple;
+	$multiple = filter_var( $multiple, FILTER_VALIDATE_BOOLEAN );
 
 	if ( $template_id ) {
 		// when using a template, don't bother with fields, the template should contain the things needed

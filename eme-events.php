@@ -9682,7 +9682,7 @@ function eme_admin_enqueue_js() {
 	}
 
 	if ( preg_match( '/^eme-/', $plugin_page ) ) {
-		wp_enqueue_style( 'eme_textsec', $eme_plugin_url . 'css/text-security/text-security-disc.css' );
+		wp_enqueue_style( 'eme_textsec', $eme_plugin_url . 'css/text-security/text-security-disc.css', array(), EME_VERSION );
 		wp_enqueue_style( 'eme_stylesheet' );
 		wp_enqueue_style( 'eme_stylesheet_extra' );
 	}

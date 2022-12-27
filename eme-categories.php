@@ -74,7 +74,9 @@ function eme_categories_page() {
 			// Delete category or multiple
 			$categories = $_POST['categories'];
 			if ( ! empty( $categories ) && eme_array_integers( $categories ) ) {
-				$validation_result = $wpdb->query( "DELETE FROM $categories_table WHERE category_id IN ( " . implode( ',', $categories ) . ')' );
+				$commaDelimitedPlaceholders = implode(',', array_fill(0, count($categories), '%d'));
+				$sql = $wpdb->prepare( "DELETE FROM $categories_table WHERE category_id IN ( $commaDelimitedPlaceholders )", $categories);
+				$validation_result = $wpdb->query( $sql );
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully deleted the selected categories.', 'events-made-easy' );
 				} else {
@@ -305,7 +307,9 @@ function eme_get_categories( $eventful = false, $scope = 'future', $extra_condit
 			if ( $extra_conditions != '' ) {
 				$extra_conditions = " AND ($extra_conditions)";
 			}
-			$result = $wpdb->get_results( "SELECT * FROM $categories_table WHERE category_id IN ($event_cats) $extra_conditions $order_by", ARRAY_A );
+			$commaDelimitedPlaceholders = implode(',', array_fill(0, count($categories), '%d'));
+			$sql = $wpdb->prepare( "SELECT * FROM $categories_table WHERE category_id IN ( $commaDelimitedPlaceholders ) $extra_conditions $order_by", $categories);
+			$result = $wpdb->get_results( $sql, ARRAY_A );
 		}
 	} else {
 		if ( $extra_conditions != '' ) {
@@ -471,8 +475,7 @@ function eme_get_categories_shortcode( $atts ) {
 			$atts
 		)
 	);
-	$eventful = ( $eventful === 'true' || $eventful === '1' ) ? true : $eventful;
-	$eventful = ( $eventful === 'false' || $eventful === '0' ) ? false : $eventful;
+	$eventful = filter_var( $eventful, FILTER_VALIDATE_BOOLEAN );
 
 	if ( $event_id ) {
 		$categories = eme_get_event_categories( $event_id );

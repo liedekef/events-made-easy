@@ -6218,11 +6218,11 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 	}
 
 	$dompdf->setPaper( $pagesize, $orientation );
-		$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url($eme_plugin_url) . "css/eme.css' type='text/css' media='all'>";
-		$eme_css_name = get_stylesheet_directory() . '/eme.css';
+	$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url($eme_plugin_url) . "css/eme.css' type='text/css' media='all'>";
+	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
-			$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
-			$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
+		$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
+		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
 	$html = "<html>
 <head>

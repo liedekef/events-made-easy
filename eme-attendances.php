@@ -43,28 +43,32 @@ function eme_delete_old_attendances() {
 function eme_delete_attendances( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$sql               = "DELETE FROM $attendances_table WHERE id IN ($person_ids)";
+	$ids_arr = explode(',',$ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE id IN ( $commaDelimitedPlaceholders )", $ids_arr);
 	$wpdb->query( $sql );
 }
 
-function eme_delete_person_attendances( $person_ids ) {
+function eme_delete_person_attendances( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$sql               = "DELETE FROM $attendances_table WHERE person_id IN ($person_ids)";
+	$ids_arr = explode(',',$ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE person_id IN ( $commaDelimitedPlaceholders )", $ids_arr);
 	$wpdb->query( $sql );
 }
 
 function eme_delete_event_attendances( $event_id ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$sql               = "DELETE FROM $attendances_table WHERE type='event' AND related_id=$event_id";
+	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='event' AND related_id=%d",$event_id);
 	$wpdb->query( $sql );
 }
 
 function eme_delete_membership_attendances( $membership_id ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$sql               = "DELETE FROM $attendances_table WHERE type='membership' AND related_id=$membership_id";
+	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='membership' AND related_id=%d",$membership_id);
 	$wpdb->query( $sql );
 }
 

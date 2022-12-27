@@ -65,7 +65,9 @@ function eme_holidays_page() {
 			if ( is_array( $holidays ) && eme_array_integers( $holidays ) ) {
 				//Run the query if we have an array of holidays ids
 				if ( count( $holidays > 0 ) ) {
-					$validation_result = $wpdb->query( "DELETE FROM $holidays_table WHERE id IN ( " . implode( ',', $holidays ) . ')' );
+					$commaDelimitedPlaceholders = implode(',', array_fill(0, count($holidays), '%d'));
+					$sql = $wpdb->prepare( "DELETE FROM $holidays_table WHERE id IN ( $commaDelimitedPlaceholders )", $holidays);
+					$validation_result = $wpdb->query( $sql );
 					if ( $validation_result !== false ) {
 						$message = __( 'Successfully deleted the selected holiday lists.', 'events-made-easy' );
 					} else {

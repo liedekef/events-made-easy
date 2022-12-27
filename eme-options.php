@@ -844,13 +844,9 @@ function eme_metabox_options_delete() {
 			$keys[] = "'{$option}_{$screen}'";
 		}
 	}
-	$keys = '( ' . implode( ', ', $keys ) . ' )';
-	$wpdb->query(
-		"
-         DELETE FROM {$wpdb->usermeta}
-         WHERE meta_key IN {$keys}
-         "
-	);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($keys), '%s'));
+	$sql = $wpdb->prepare( "DELETE FROM {$wpdb->usermeta} WHERE meta_key IN ( $commaDelimitedPlaceholders )", $keys);
+	$wpdb->query($sq);
 }
 
 function eme_options_postsave_actions() {

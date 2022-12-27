@@ -1695,13 +1695,17 @@ function eme_get_booking_ids_by_wp_event_id( $wp_id, $event_id ) {
 function eme_get_pending_booking_ids_by_bookingids( $booking_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$sql            = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($booking_ids) AND status IN (%d,%d)", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING );
+	$ids_arr = explode(',', $booking_ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql            = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders) AND status IN (%d,%d)", $ids_arr, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING );
 	return $wpdb->get_col( $sql );
 }
 function eme_get_unpaid_booking_ids_by_bookingids( $booking_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$sql            = "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($booking_ids) AND booking_paid=0";
+	$ids_arr = explode(',', $booking_ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+        $sql = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ( $commaDelimitedPlaceholders ) AND booking_paid=0", $ids_arr);
 	return $wpdb->get_col( $sql );
 }
 
@@ -2089,8 +2093,10 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
 	$bookings_table   = $eme_db_prefix . BOOKINGS_TBNAME;
 	$events_table     = $eme_db_prefix . EVENTS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
-		$today        = $eme_date_obj_now->getDateTime();
-	$sql              = "UPDATE $bookings_table SET status = " . EME_RSVP_STATUS_TRASH . " WHERE person_id IN ($person_ids) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= '$today')";
+	$today        = $eme_date_obj_now->getDateTime();
+	$ids_arr = explode(',', $person_ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($commaDelimitedPlaceholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", EME_RSVP_STATUS_TRASH, $ids_arr, $today);
 	$wpdb->query( $sql );
 }
 
@@ -2098,23 +2104,29 @@ function eme_delete_person_bookings( $person_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$answers_table  = $eme_db_prefix . ANSWERS_TBNAME;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$sql            = "DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE person_id IN ($person_ids))";
+	$ids_arr = explode(',', $person_ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql = $wpdb->prepare("DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE person_id IN ($commaDelimitedPlaceholders))",$ids_arr);
 	$wpdb->query( $sql );
-	$sql = "DELETE FROM $bookings_table WHERE person_id IN ($person_ids)";
+	$sql = $wpdb->prepare("DELETE FROM $bookings_table WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
 	$wpdb->query( $sql );
 }
 
 function eme_transfer_person_bookings( $person_ids, $to_person_id ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$sql            = "UPDATE $bookings_table SET person_id = $to_person_id WHERE person_id IN ($person_ids)";
+	$ids_arr = explode(',', $person_ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql = $wpdb->prepare("UPDATE $bookings_table SET person_id = %d WHERE person_id IN ($commaDelimitedPlaceholders)",$to_person_id,$ids_arr);
 	return $wpdb->query( $sql );
 }
 
 function eme_trash_bookings_for_event_ids( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$sql            = "UPDATE $bookings_table SET status = " . EME_RSVP_STATUS_TRASH . " WHERE event_id IN ($ids)";
+	$ids_arr = explode(',', $ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($commaDelimitedPlaceholders)",EME_RSVP_STATUS_TRASH,$ids_arr);
 	$wpdb->query( $sql );
 }
 
@@ -2332,7 +2344,9 @@ function eme_move_on_waitinglist( $booking_id ) {
 function eme_mark_booking_userconfirm( $booking_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$sql            = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($booking_ids)", EME_RSVP_STATUS_USERPENDING );
+	$ids_arr = explode(',', $booking_ids);
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql            = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($commaDelimitedPlaceholders)", EME_RSVP_STATUS_USERPENDING, $ids_arr );
 	$wpdb->query( $sql );
 }
 
@@ -2796,12 +2810,9 @@ function eme_get_booking_personids( $booking_ids ) {
 		$booking_ids = join( ',', $booking_ids );
 	}
 	$ids_arr = explode(',', $booking_ids );
-	if (eme_array_integers($ids_arr)) {
-		$sql = "SELECT DISTINCT person_id FROM $bookings_table WHERE booking_id IN ($booking_ids)";
-		return $wpdb->get_col( $sql );
-	} else {
-		return false;
-	}
+	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+	$sql = $wpdb->prepare("SELECT DISTINCT person_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders)",$ids_arr);
+	return $wpdb->get_col( $sql );
 }
 
 function eme_get_bookings_by_paymentid( $payment_id ) {
@@ -2859,7 +2870,8 @@ function eme_get_attendee_ids( $event_id, $rsvp_status = 0, $paid_status = 0, $o
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$people_table   = $eme_db_prefix . PEOPLE_TBNAME;
 	if ( is_array( $event_id ) && eme_array_integers( $event_id ) ) {
-		$sql = "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN (" . join( ',', $event_id ) . ') AND bookings.person_id>0';
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($event_id), '%d'));
+		$sql = $wpdb->prepare("SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($commaDelimitedPlaceholders) AND bookings.person_id>0", $event_id);
 	} else {
 		$sql = $wpdb->prepare( "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id = %d AND bookings.person_id>0", $event_id );
 	}
@@ -2891,7 +2903,8 @@ function eme_get_attendees( $event_id, $rsvp_status = 0, $paid_status = 0 ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	if ( is_array( $event_id ) && eme_array_integers( $event_id ) ) {
-		$sql = "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN (" . join( ',', $event_id ) . ')';
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($event_id), '%d'));
+		$sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN ($commaDelimitedPlaceholders)", $event_id);
 	} else {
 		$sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id = %d", $event_id );
 	}
@@ -6076,31 +6089,31 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 	global $eme_plugin_url;
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
-		$format = eme_get_template_format( $template_id );
+	$format = eme_get_template_format( $template_id );
 
 	require_once 'dompdf/2.0.1/vendor/autoload.php';
-		// instantiate and use the dompdf class
+	// instantiate and use the dompdf class
 	$options = new Dompdf\Options();
 	$options->set( 'isRemoteEnabled', true );
-		$options->set( 'isHtml5ParserEnabled', true );
-		$dompdf      = new Dompdf\Dompdf( $options );
-		$margin_info = 'margin: ' . $template['properties']['pdf_margins'];
+	$options->set( 'isHtml5ParserEnabled', true );
+	$dompdf      = new Dompdf\Dompdf( $options );
+	$margin_info = 'margin: ' . $template['properties']['pdf_margins'];
 	$font_info       = 'font-family: ' . get_option( 'eme_pdf_font' );
-		$orientation = $template['properties']['pdf_orientation'];
-		$pagesize    = $template['properties']['pdf_size'];
+	$orientation = $template['properties']['pdf_orientation'];
+	$pagesize    = $template['properties']['pdf_size'];
 	if ( $pagesize == 'custom' ) {
-			$pagesize = array( 0, 0, $template['properties']['pdf_width'], $template['properties']['pdf_height'] );
+		$pagesize = array( 0, 0, $template['properties']['pdf_width'], $template['properties']['pdf_height'] );
 	}
 
-		$dompdf->setPaper( $pagesize, $orientation );
-	$css              = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url($eme_plugin_url) . "css/eme.css' type='text/css' media='all'>";
-		$eme_css_name = get_stylesheet_directory() . '/eme.css';
+	$dompdf->setPaper( $pagesize, $orientation );
+	$css = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url($eme_plugin_url) . "css/eme.css' type='text/css' media='all'>";
+	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
-			$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
-			$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
+		$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
+		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
 
-		$html = "<html>
+	$html = "<html>
 <head>
 <style>
     @page { $margin_info; }
@@ -6116,16 +6129,16 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 	$format = str_replace( '#_BOOKINGPDF_URL', '', $format );
 
 	$html     .= eme_replace_booking_placeholders( $format, $event, $booking );
-		$html .= '</body></html>';
-		$dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
-		$dompdf->render();
+	$html .= '</body></html>';
+	$dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
+	$dompdf->render();
 	// now we know where to store it, so create the dir
-		$targetPath = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
+	$targetPath = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
 	if ( ! is_dir( $targetPath ) ) {
 		wp_mkdir_p( $targetPath );
 	}
 	if ( ! is_file( $targetPath . '/index.html' ) ) {
-				touch( $targetPath . '/index.html' );
+		touch( $targetPath . '/index.html' );
 	}
 	// unlink old pdf
 	array_map( 'wp_delete_file', glob( "$targetPath/ticket-$template_id-*.pdf" ) );
@@ -6139,26 +6152,26 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
 	global $eme_plugin_url;
 	$template   = eme_get_template( $template_id );
-		$header = eme_get_template_format( $template_id_header );
-		$footer = eme_get_template_format( $template_id_footer );
+	$header = eme_get_template_format( $template_id_header );
+	$footer = eme_get_template_format( $template_id_footer );
 	// the template format needs br-handling, so lets use a handy function
-		$format = eme_get_template_format( $template_id );
+	$format = eme_get_template_format( $template_id );
 
 	require_once 'dompdf/2.0.1/vendor/autoload.php';
-		// instantiate and use the dompdf class
+	// instantiate and use the dompdf class
 	$options = new Dompdf\Options();
-		$options->set( 'isRemoteEnabled', true );
-		$options->set( 'isHtml5ParserEnabled', true );
-		$dompdf      = new Dompdf\Dompdf( $options );
-		$margin_info = 'margin: ' . $template['properties']['pdf_margins'];
+	$options->set( 'isRemoteEnabled', true );
+	$options->set( 'isHtml5ParserEnabled', true );
+	$dompdf      = new Dompdf\Dompdf( $options );
+	$margin_info = 'margin: ' . $template['properties']['pdf_margins'];
 	$font_info       = 'font-family: ' . get_option( 'eme_pdf_font' );
-		$orientation = $template['properties']['pdf_orientation'];
-		$pagesize    = $template['properties']['pdf_size'];
+	$orientation = $template['properties']['pdf_orientation'];
+	$pagesize    = $template['properties']['pdf_size'];
 	if ( $pagesize == 'custom' ) {
-			$pagesize = array( 0, 0, $template['properties']['pdf_width'], $template['properties']['pdf_height'] );
+		$pagesize = array( 0, 0, $template['properties']['pdf_width'], $template['properties']['pdf_height'] );
 	}
 
-		$dompdf->setPaper( $pagesize, $orientation );
+	$dompdf->setPaper( $pagesize, $orientation );
 	$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url($eme_plugin_url) . "css/eme.css' type='text/css' media='all'>";
 	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
@@ -6166,7 +6179,7 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
 		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
 
-		$html  = "<html>
+	$html  = "<html>
 <head>
 <style>
     @page { $margin_info; }
@@ -6179,47 +6192,47 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
 <body>
 $header
 ";
-		$total = count( $ids_arr );
-		$i     = 1;
+	$total = count( $ids_arr );
+	$i     = 1;
 	foreach ( $ids_arr as $booking_id ) {
-			$booking = eme_get_booking( $booking_id );
+		$booking = eme_get_booking( $booking_id );
 		$event       = eme_get_event( $booking['event_id'] );
 		if ( ! empty( $event ) ) {
 			$html .= eme_replace_booking_placeholders( $format, $event, $booking );
 		}
 		if ( $i < $total ) {
-				// dompdf uses a style to detect forced page breaks
-				$html .= '<div class="page-break"></div>';
-				++$i;
+			// dompdf uses a style to detect forced page breaks
+			$html .= '<div class="page-break"></div>';
+			++$i;
 		}
 	}
-		$html .= "$footer</body></html>";
+	$html .= "$footer</body></html>";
 
-		$dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
-		$dompdf->render();
-		$dompdf->stream();
+	$dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
+	$dompdf->render();
+	$dompdf->stream();
 }
 
 function eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
 	$format     = eme_get_template_format( $template_id );
-		$header = eme_get_template_format( $template_id_header );
-		$footer = eme_get_template_format( $template_id_footer );
-		$html   = "<html><body>$header";
-		$total  = count( $ids_arr );
-		$i      = 1;
+	$header = eme_get_template_format( $template_id_header );
+	$footer = eme_get_template_format( $template_id_footer );
+	$html   = "<html><body>$header";
+	$total  = count( $ids_arr );
+	$i      = 1;
 	foreach ( $ids_arr as $booking_id ) {
-			$booking = eme_get_booking( $booking_id );
+		$booking = eme_get_booking( $booking_id );
 		$event       = eme_get_event( $booking['event_id'] );
 		if ( ! empty( $event ) ) {
 			$html .= eme_replace_booking_placeholders( $format, $event, $booking );
 		}
 		if ( $i < $total ) {
-				// dompdf uses a style to detect forced page breaks
-				$html .= '<div class="page-break"></div>';
-				++$i;
+			// dompdf uses a style to detect forced page breaks
+			$html .= '<div class="page-break"></div>';
+			++$i;
 		}
 	}
-		$html .= "$footer</body></html>";
+	$html .= "$footer</body></html>";
 	print $html;
 }
 
@@ -6231,18 +6244,18 @@ function eme_rsvp_send_pending_reminders() {
 	$events = eme_get_events( 'extra_conditions=' . urlencode( 'event_rsvp=1' ) );
 	foreach ( $events as $event ) {
 		if ( eme_is_empty_string( $event['event_properties']['rsvp_pending_reminder_days'] ) ) {
-					continue;
+			continue;
 		}
-			$reminder_days = explode( ',', $event['event_properties']['rsvp_pending_reminder_days'] );
+		$reminder_days = explode( ',', $event['event_properties']['rsvp_pending_reminder_days'] );
 		if ( ! eme_array_integers( $reminder_days ) ) {
-				continue;
+			continue;
 		}
 		$bookings     = eme_get_bookings_for( $event['event_id'], EME_RSVP_STATUS_PENDING );
 		$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
 		$days_diff    = intval( $eme_date_obj_now->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() ) );
 		foreach ( $bookings as $booking ) {
 			foreach ( $task_reminder_days as $reminder_day ) {
-					$reminder_day = intval( $reminder_day );
+				$reminder_day = intval( $reminder_day );
 				if ( $days_diff == $reminder_day ) {
 					eme_email_booking_action( $booking, 'reminderPendingBooking' );
 					eme_set_booking_reminder( $booking['booking_id'] );
@@ -6258,18 +6271,18 @@ function eme_rsvp_send_approved_reminders() {
 	$events = eme_get_events( 'extra_conditions=' . urlencode( 'event_rsvp=1' ) );
 	foreach ( $events as $event ) {
 		if ( eme_is_empty_string( $event['event_properties']['rsvp_approved_reminder_days'] ) ) {
-					continue;
+			continue;
 		}
-			$reminder_days = explode( ',', $event['event_properties']['rsvp_approved_reminder_days'] );
+		$reminder_days = explode( ',', $event['event_properties']['rsvp_approved_reminder_days'] );
 		if ( ! eme_array_integers( $reminder_days ) ) {
-				continue;
+			continue;
 		}
 		$bookings     = eme_get_bookings_for( $event['event_id'], EME_RSVP_STATUS_APPROVED );
 		$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
 		$days_diff    = intval( $eme_date_obj_now->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() ) );
 		foreach ( $bookings as $booking ) {
 			foreach ( $reminder_days as $reminder_day ) {
-					$reminder_day = intval( $reminder_day );
+				$reminder_day = intval( $reminder_day );
 				if ( $days_diff == $reminder_day ) {
 					eme_email_booking_action( $booking, 'reminderBooking' );
 					eme_set_booking_reminder( $booking['booking_id'] );
@@ -6296,18 +6309,18 @@ function eme_rsvp_anonymize_old_bookings() {
 	$old_date     = $eme_date_obj->minusDays( $anonymize_old_bookings_days )->getDateTime();
 
 	// we don't remove old bookings, just anonymize them
-	$sql = "UPDATE $bookings_table SET person_id=0 WHERE creation_date < '$old_date' AND event_id IN (SELECT event_id FROM $events_table WHERE $events_table.event_end < '$now')";
+	$sql = $wpdb->prepare("UPDATE $bookings_table SET person_id=0 WHERE creation_date < %s AND event_id IN (SELECT event_id FROM $events_table WHERE $events_table.event_end < %s)", $old_date, $now);
 	$wpdb->query( $sql );
 }
 
 function eme_count_pending_bookings() {
-		global $wpdb,$eme_db_prefix, $eme_timezone;
-		$events_table     = $eme_db_prefix . EVENTS_TBNAME;
-		$bookings_table   = $eme_db_prefix . BOOKINGS_TBNAME;
-		$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
-		$now              = $eme_date_obj_now->getDateTime();
-	$sql                  = $wpdb->prepare( "SELECT count(bookings.booking_id) FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id WHERE bookings.status IN (%d,%d) AND events.event_end >= %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $now );
-		return $wpdb->get_var( $sql );
+	global $wpdb,$eme_db_prefix, $eme_timezone;
+	$events_table     = $eme_db_prefix . EVENTS_TBNAME;
+	$bookings_table   = $eme_db_prefix . BOOKINGS_TBNAME;
+	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$now              = $eme_date_obj_now->getDateTime();
+	$sql              = $wpdb->prepare( "SELECT count(bookings.booking_id) FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id WHERE bookings.status IN (%d,%d) AND events.event_end >= %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $now );
+	return $wpdb->get_var( $sql );
 }
 
 function eme_manage_waitinglist( $event, $send_mail = 1 ) {

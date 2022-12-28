@@ -1802,7 +1802,7 @@ function eme_notification_mercadopago() {
 	if ( isset( $_GET['topic'] ) && isset( $_GET['id'] ) && is_numeric( $_GET['id'] ) ) {
 		switch ( $_GET['topic'] ) {
 			case 'payment':
-					$mercadopago_paymentid = $_GET['id'];
+					$mercadopago_paymentid = eme_sanitize_request( $_GET['id'] );
 					$mercadopago_payment   = MercadoPago\Payment::find_by_id( $mercadopago_paymentid );
 					// Get the payment and the corresponding merchant_order reported by the IPN.
 					$merchant_order = MercadoPago\MerchantOrder::find_by_id( $mercadopago_payment->order->id );
@@ -1845,7 +1845,7 @@ function eme_notification_mercadopago() {
 
 	// in sandbox, this can arrive too
 	if ( get_option( 'eme_mercadopago_demo' ) == 1 && isset( $_GET['type'] ) && $_GET['type'] == 'payment' && isset( $_GET['data_id'] ) && is_numeric( $_GET['data_id'] ) ) {
-		$mercadopago_paymentid = $_GET['data_id'];
+		$mercadopago_paymentid = eme_sanitize_request( $_GET['data_id'] );
 		$mercadopago_payment   = MercadoPago\Payment::find_by_id( $mercadopago_paymentid );
 		if ( $mercadopago_payment->status == 'approved' ) {
 			$paid_amount = $mercadopago_payment->transaction_amount;

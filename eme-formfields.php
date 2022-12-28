@@ -78,7 +78,7 @@ function eme_formfields_page() {
 			// condition can be null if there was a group assigned and the group got deleted, so let's check for that too
 			// we also remove group:0 from the array in case other groups are choosen too
 			if ( ! empty( $_POST['field_condition'] ) && is_array( $_POST['field_condition'] ) ) {
-					$condition_arr = $_POST['field_condition'];
+					$condition_arr = eme_sanitize_request( $_POST['field_condition'] );
 					//Remove element by value using unset()
 				if ( ( $key = array_search( 'group:0', $condition_arr ) ) !== false ) {
 					unset( $condition_arr[ $key ] );
@@ -519,16 +519,16 @@ function eme_delete_formfields( $formfields ) {
 	if ( ! empty( $formfields ) && eme_array_integers( $formfields ) ) {
 		$ids_arr = explode( ',', $formfields );
 		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-		$validation_result = $wpdb->query( $wpdb->prepare("DELETE FROM $formfields_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
+		$validation_result = $wpdb->query( $wpdb->prepare("DELETE FROM $formfields_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
 		if ( $validation_result !== false ) {
 			$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $answers_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
+			$wpdb->query( $wpdb->prepare("DELETE FROM $answers_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
 			$events_customfields_table = $eme_db_prefix . EVENTS_CF_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $events_customfields_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
+			$wpdb->query( $wpdb->prepare("DELETE FROM $events_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
 			$locations_customfields_table = $eme_db_prefix . LOCATIONS_CF_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $locations_customfields_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
+			$wpdb->query( $wpdb->prepare("DELETE FROM $locations_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
 			$memberships_customfields_table = $eme_db_prefix . MEMBERSHIPS_CF_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $memberships_customfields_table WHERE field_id IN ($formfields)",$commaDelimitedPlaceholders ));
+			$wpdb->query( $wpdb->prepare("DELETE FROM $memberships_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
 			return true;
 		} else {
 			return false;

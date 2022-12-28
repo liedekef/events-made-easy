@@ -1810,14 +1810,14 @@ function eme_emails_page() {
 
 	if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'archiveMailings' && isset( $_POST['mailing_ids'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-		$mailing_ids = $_POST['mailing_ids'];
+		$mailing_ids = eme_sanitize_request( $_POST['mailing_ids'] );
 		foreach ( $mailing_ids as $mailing_id ) {
 			eme_archive_mailing( $mailing_id );
 		}
 	}
 	if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'deleteMailings' && isset( $_POST['mailing_ids'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-		$mailing_ids = $_POST['mailing_ids'];
+		$mailing_ids = eme_sanitize_request( $_POST['mailing_ids'] );
 		foreach ( $mailing_ids as $mailing_id ) {
 			eme_delete_mailing( $mailing_id );
 		}

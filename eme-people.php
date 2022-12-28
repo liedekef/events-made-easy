@@ -2525,7 +2525,7 @@ function eme_get_people_by_ids( $ids ) {
 	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode(',',$ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE person_id IN ($commaDelimitedPlaceholders) AND status= %d ORDER BY person_id",$ids_arr,EME_PEOPLE_STATUS_ACTIVE);
+	$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE person_id IN ($commaDelimitedPlaceholders) AND status= ".EME_PEOPLE_STATUS_ACTIVE." ORDER BY person_id",$ids_arr);
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
@@ -2534,7 +2534,7 @@ function eme_get_people_by_wp_ids( $wp_ids ) {
 	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode(',',$wp_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE wp_id IN ($commaDelimitedPlaceholders) AND status= %d ORDER BY wp_id",$ids_arr,EME_PEOPLE_STATUS_ACTIVE);
+	$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE wp_id IN ($commaDelimitedPlaceholders) AND status= ".EME_PEOPLE_STATUS_ACTIVE." ORDER BY wp_id",$ids_arr);
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
@@ -2632,7 +2632,7 @@ function eme_trash_people( $person_ids ) {
 	eme_delete_person_groups( $person_ids );
 	$modif_date = current_time( 'mysql', false );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("UPDATE $people_table SET status=" . EME_PEOPLE_STATUS_TRASH . ", modif_date=%s, wp_id=0 WHERE person_id IN ($commaDelimitedPlaceholders)",$modif_date,$ids_arr);
+	$sql = $wpdb->prepare("UPDATE $people_table SET status=" . EME_PEOPLE_STATUS_TRASH . ", modif_date='$modif_date', wp_id=0 WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
 	$wpdb->query( $sql );
 	// break the family relationship
 	$sql = $wpdb->prepare("UPDATE $people_table SET related_person_id=0 WHERE related_person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
@@ -2728,7 +2728,7 @@ function eme_untrash_people( $person_ids ) {
 	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare( "UPDATE $people_table SET status=%d WHERE person_id IN ($commaDelimitedPlaceholders)",EME_PEOPLE_STATUS_ACTIVE,$ids_arr);
+	$sql = $wpdb->prepare( "UPDATE $people_table SET status=".EME_PEOPLE_STATUS_ACTIVE." WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
 	$wpdb->query( $sql );
 }
 
@@ -2943,7 +2943,7 @@ function eme_get_person_by_email_in_groups( $email, $group_ids ) {
 	} else {
 		$ids_arr = explode( ',', $group_ids );
 		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-		$sql = $wpdb->prepare( "SELECT p.person_id FROM $people_table p LEFT JOIN $usergroups_table u ON u.person_id=p.person_id WHERE p.email=%s AND u.group_id IN ($commaDelimitedPlaceholders) LIMIT 1", $email,$ids_arr );
+		$sql = $wpdb->prepare( "SELECT p.person_id FROM $people_table p LEFT JOIN $usergroups_table u ON u.person_id=p.person_id WHERE p.email='".esc_sql($email)."' AND u.group_id IN ($commaDelimitedPlaceholders) LIMIT 1", $ids_arr );
 	}
 	$person_id = $wpdb->get_var( $sql );
 
@@ -3133,7 +3133,7 @@ function eme_get_groups_person_massemails( $group_ids ) {
 	$res = array();
 	if ( ! empty( $static_groupids ) ) {
 		$commaDelimitedPlaceholders2 = implode(',', array_fill(0, count($static_groupids), '%d'));
-		$sql = $wpdb->prepare("SELECT people.lastname, people.firstname, people.email FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=%d AND people.massmail=1 AND people.email<>'' AND ugroups.group_id IN ($commaDelimitedPlaceholders2) GROUP BY people.email", EME_PEOPLE_STATUS_ACTIVE, $static_groupids);
+		$sql = $wpdb->prepare("SELECT people.lastname, people.firstname, people.email FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=".EME_PEOPLE_STATUS_ACTIVE." AND people.massmail=1 AND people.email<>'' AND ugroups.group_id IN ($commaDelimitedPlaceholders2) GROUP BY people.email", $static_groupids);
 		$res     = $wpdb->get_results( $sql, ARRAY_A );
 	}
 	$emails_seen = array();
@@ -3195,9 +3195,9 @@ function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
 		$extra_sql = ' AND ' . $extra_sql;
 	}
 
-	if ( ! empty( $static_groupids ) ) {
+	if ( ! empty( $static_groupids ) && eme_array_integers($static_groupids)) {
 		$commaDelimitedPlaceholders2 = implode(',', array_fill(0, count($static_groupids), '%d'));
-		$sql = $wpdb->prepare( "SELECT people.person_id FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=%d AND ugroups.group_id IN ($commaDelimitedPlaceholders2) $extra_sql", EME_PEOPLE_STATUS_ACTIVE, static_groupids);
+		$sql = $wpdb->prepare( "SELECT people.person_id FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=".EME_PEOPLE_STATUS_ACTIVE." AND ugroups.group_id IN ($commaDelimitedPlaceholders2) $extra_sql", $static_groupids);
 		$res = $wpdb->get_col( $sql );
 	} else {
 		$res = array();
@@ -3260,7 +3260,7 @@ function eme_get_memberships_member_ids( $membership_ids ) {
 	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
 	$ids_arr = explode( ',', $membership_ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("SELECT members.member_id FROM $people_table AS people LEFT JOIN $members_table AS members ON people.person_id=members.person_id WHERE people.status=%d AND members.status IN (%d,%d) AND members.membership_id IN ($commaDelimitedPlaceholders) GROUP BY people.email",EME_PEOPLE_STATUS_ACTIVE,EME_MEMBER_STATUS_ACTIVE,EME_MEMBER_STATUS_GRACE,$ids_arr);
+	$sql = $wpdb->prepare("SELECT members.member_id FROM $people_table AS people LEFT JOIN $members_table AS members ON people.person_id=members.person_id WHERE people.status=".EME_PEOPLE_STATUS_ACTIVE." AND members.status IN (".EME_MEMBER_STATUS_ACTIVE.",".EME_MEMBER_STATUS_GRACE.") AND members.membership_id IN ($commaDelimitedPlaceholders) GROUP BY people.email",$ids_arr);
 	return $wpdb->get_col( $sql );
 }
 
@@ -3468,7 +3468,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
 		$person['gdpr'] = 0;
 	}
 	if ( isset( $_POST['groups'] ) ) {
-		$groups = $_POST['groups'];
+		$groups = eme_sanitize_request( $_POST['groups'] );
 	} else {
 		$groups = array();
 	}
@@ -3568,7 +3568,7 @@ function eme_add_update_group( $group_id = 0 ) {
 		$res = eme_db_update_group( $group_id, $group );
 		if ( $res ) {
 			if ( isset( $_POST['persons'] ) ) {
-				$persons = $_POST['persons'];
+				$persons = eme_sanitize_request( $_POST['persons'] );
 			} else {
 				$persons = array();
 			}
@@ -3579,7 +3579,7 @@ function eme_add_update_group( $group_id = 0 ) {
 		$group_id = eme_db_insert_group( $group );
 		if ( $group_id ) {
 			if ( isset( $_POST['persons'] ) ) {
-				$persons = $_POST['persons'];
+				$persons = eme_sanitize_request( $_POST['persons'] );
 			} else {
 				$persons = array();
 			}
@@ -4066,7 +4066,7 @@ function eme_update_people_gdpr( $person_ids, $gdpr = 1 ) {
 	$gdpr_date = current_time( 'mysql', false );
 	$ids_arr = explode( ',', $person_ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql       = $wpdb->prepare("UPDATE $table SET gdpr=%d, gdpr_date=%s WHERE person_id IN ($commaDelimitedPlaceholders)", $gdpr, $gdpr_date, $ids_arr);
+	$sql       = $wpdb->prepare("UPDATE $table SET gdpr=".intval($gdpr).", gdpr_date='".esc_sql($gdpr_date)."' WHERE person_id IN ($commaDelimitedPlaceholders)", $ids_arr);
 	$wpdb->query( $sql );
 }
 
@@ -4082,7 +4082,7 @@ function eme_update_people_massmail( $person_ids, $massmail = 1 ) {
 	$table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql   = $wpdb->prepare( "UPDATE $table SET massmail=%d WHERE person_id IN ($commaDelimitedPlaceholders)", $massmail, $ids_arr);
+	$sql   = $wpdb->prepare( "UPDATE $table SET massmail=".intval($massmail)." WHERE person_id IN ($commaDelimitedPlaceholders)", $ids_arr);
 	$wpdb->query( $sql );
 }
 
@@ -4091,7 +4091,7 @@ function eme_update_people_bdemail( $person_ids, $bd_email = 1 ) {
 	$table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql   = $wpdb->prepare( "UPDATE $table SET bd_email=%d WHERE person_id IN ($commaDelimitedPlaceholders)", $bd_email, $ids_arr);
+	$sql   = $wpdb->prepare( "UPDATE $table SET bd_email=".intval($bd_email)." WHERE person_id IN ($commaDelimitedPlaceholders)", $ids_arr);
 	$wpdb->query( $sql );
 }
 
@@ -4100,7 +4100,7 @@ function eme_update_people_language( $person_ids, $lang ) {
 	$table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql   = $wpdb->prepare( "UPDATE $table SET lang=%s WHERE person_id IN ($commaDelimitedPlaceholders)", $lang, $ids_arr);
+	$sql   = $wpdb->prepare( "UPDATE $table SET lang='".esc_sql($lang)."' WHERE person_id IN ($commaDelimitedPlaceholders)", $ids_arr);
 	$wpdb->query( $sql );
 }
 
@@ -4224,7 +4224,7 @@ function eme_subscribe_ajax() {
 		if ( isset( $_POST['email_groups'] ) && eme_array_integers( $_POST['email_groups'] ) ) {
 			$eme_email_groups = join( ',', $_POST['email_groups'] );
 		} elseif ( isset( $_POST['email_group'] ) && is_numeric( $_POST['email_group'] ) ) {
-			$eme_email_groups = $_POST['email_group'];
+			$eme_email_groups = eme_sanitize_request( $_POST['email_group'] );
 		} else {
 			$eme_email_groups = '';
 		}
@@ -4341,7 +4341,7 @@ function eme_unsubscribe_ajax() {
 		if ( isset( $_POST['email_groups'] ) && eme_array_integers( $_POST['email_groups'] ) ) {
 			$eme_email_groups = join( ',', $_POST['email_groups'] );
 		} elseif ( isset( $_POST['email_group'] ) && is_numeric( $_POST['email_group'] ) ) {
-			$eme_email_groups = $_POST['email_group'];
+			$eme_email_groups = eme_sanitize_request( $_POST['email_group'] );
 		} else {
 			$eme_email_groups = '';
 		}
@@ -5020,7 +5020,7 @@ function eme_ajax_manage_people() {
 	$ajaxResult = array();
 	if ( isset( $_POST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_POST['do_action'] );
-		$ids       = $_POST['person_id'];
+		$ids       = eme_sanitize_request( $_POST['person_id'] );
 		$ids_arr   = explode( ',', $ids );
 		if ( ! eme_array_integers( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
 			$jTableResult['Result']  = 'Error';
@@ -5034,7 +5034,12 @@ function eme_ajax_manage_people() {
 				eme_ajax_action_untrash_people( $ids );
 				break;
 			case 'trashPeople':
-				eme_ajax_action_trash_people( $ids );
+				if (!empty( $_POST['transferto_id'] ) ) {
+					$to_person_id = intval( $_POST['transferto_id'] );
+				} else {
+					$to_person_id = 0;
+				}
+				eme_ajax_action_trash_people( $ids, $to_person_id );
 				break;
 			case 'gdprPeople':
 				eme_ajax_action_gdpr_trash_people( $ids );
@@ -5096,7 +5101,7 @@ function eme_ajax_manage_groups() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
-		$ids       = $_POST['group_id'];
+		$ids       = eme_sanitize_request( $_POST['group_id'] );
 		$ids_arr   = explode( ',', $ids );
 		if ( ! eme_array_integers( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
 			$ajaxResult            = array();
@@ -5122,12 +5127,11 @@ function eme_ajax_action_untrash_people( $ids ) {
 	print wp_json_encode( $ajaxResult );
 }
 
-function eme_ajax_action_trash_people( $ids ) {
+function eme_ajax_action_trash_people( $ids, $transferto_id=0 ) {
 	$ajaxResult = array();
-	if ( ! empty( $_POST['transferto_id'] ) ) {
-		$to_person_id = intval( $_POST['transferto_id'] );
-		eme_transfer_person_bookings( $ids, $to_person_id );
-		eme_transfer_person_task_signups( $ids, $to_person_id );
+	if ( ! empty( $transferto_id ) ) {
+		eme_transfer_person_bookings( $ids, $transferto_id );
+		eme_transfer_person_task_signups( $ids, $transferto_id );
 	}
 	eme_trash_people( $ids );
 	$ajaxResult['Result']      = 'OK';

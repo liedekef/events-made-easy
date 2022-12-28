@@ -1697,7 +1697,7 @@ function eme_get_pending_booking_ids_by_bookingids( $booking_ids ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode(',', $booking_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql            = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders) AND status IN (%d,%d)", $ids_arr, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING );
+	$sql            = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders) AND status IN (".EME_RSVP_STATUS_PENDING.",".EME_RSVP_STATUS_USERPENDING.")", $ids_arr);
 	return $wpdb->get_col( $sql );
 }
 function eme_get_unpaid_booking_ids_by_bookingids( $booking_ids ) {
@@ -2096,7 +2096,7 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
 	$today        = $eme_date_obj_now->getDateTime();
 	$ids_arr = explode(',', $person_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($commaDelimitedPlaceholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", EME_RSVP_STATUS_TRASH, $ids_arr, $today);
+	$sql = $wpdb->prepare( "UPDATE $bookings_table SET status = ".EME_RSVP_STATUS_TRASH." WHERE person_id IN ($commaDelimitedPlaceholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= '$today')", $ids_arr);
 	$wpdb->query( $sql );
 }
 
@@ -2117,7 +2117,7 @@ function eme_transfer_person_bookings( $person_ids, $to_person_id ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode(',', $person_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("UPDATE $bookings_table SET person_id = %d WHERE person_id IN ($commaDelimitedPlaceholders)",$to_person_id,$ids_arr);
+	$sql = $wpdb->prepare("UPDATE $bookings_table SET person_id = ".intval($to_person_id)." WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
 	return $wpdb->query( $sql );
 }
 
@@ -2126,7 +2126,7 @@ function eme_trash_bookings_for_event_ids( $ids ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode(',', $ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($commaDelimitedPlaceholders)",EME_RSVP_STATUS_TRASH,$ids_arr);
+	$sql = $wpdb->prepare("UPDATE $bookings_table SET status = ".EME_RSVP_STATUS_TRASH." WHERE event_id IN ($commaDelimitedPlaceholders)",$ids_arr);
 	$wpdb->query( $sql );
 }
 
@@ -2346,7 +2346,7 @@ function eme_mark_booking_userconfirm( $booking_ids ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode(',', $booking_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql            = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($commaDelimitedPlaceholders)", EME_RSVP_STATUS_USERPENDING, $ids_arr );
+	$sql            = $wpdb->prepare( "UPDATE $bookings_table SET status=".EME_RSVP_STATUS_USERPENDING." WHERE booking_id IN ($commaDelimitedPlaceholders)", $ids_arr );
 	$wpdb->query( $sql );
 }
 
@@ -4339,7 +4339,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 				// move all data from the original event in $_POST to the new event id too, so other booking code (like eme_get_booking_post_answer) can work as expected with the new event id
 				foreach ( $_POST as $key => $val ) {
 					if ( is_array( $_POST[ $key ] ) && isset( $_POST[ $key ][ $orig_event_id ] ) ) {
-						$_POST[ $key ][ $transferto_id ] = $_POST[ $key ][ $orig_event_id ];
+						$_POST[ $key ][ $transferto_id ] = eme_sanitize_request( $_POST[ $key ][ $orig_event_id ] );
 					}
 				}
 			} else {
@@ -5515,7 +5515,7 @@ function eme_ajax_manage_bookings() {
 	}
 
 	if ( isset( $_POST['do_action'] ) ) {
-		$booking_ids = $_POST['booking_ids'];
+		$booking_ids = eme_sanitize_request( $_POST['booking_ids'] );
 		$ids_arr     = explode( ',', $booking_ids );
 		$do_action   = eme_sanitize_request( $_POST['do_action'] );
 		$send_mail   = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 1;

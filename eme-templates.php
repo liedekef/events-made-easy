@@ -143,8 +143,8 @@ function eme_templates_page() {
 				return;
 			}
 		} elseif ( $_POST['eme_admin_action'] == 'do_deletetemplate' && isset( $_POST['templates'] ) ) {
-					// Delete template or multiple
-					$templates = $_POST['templates'];
+			// Delete template or multiple
+			$templates = eme_sanitize_request( $_POST['templates'] );
 			if ( ! empty( $templates ) && eme_array_integers( $templates ) ) {
 				$commaDelimitedPlaceholders = implode(',', array_fill(0, count($templates), '%d'));
                                 $sql = $wpdb->prepare( "DELETE FROM $templates_table WHERE id IN ( $commaDelimitedPlaceholders )", $templates);

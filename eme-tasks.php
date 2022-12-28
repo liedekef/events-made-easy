@@ -141,10 +141,10 @@ function eme_delete_event_old_tasks( $event_id, $ids_arr ) {
 	}
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
 	$table    = $eme_db_prefix . TASKS_TBNAME;
-	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $commaDelimitedPlaceholders )", $event_id, $ids_arr);
+	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=".intval($event_id)." AND task_id NOT IN ( $commaDelimitedPlaceholders )", $ids_arr);
 	$wpdb->query( $sql);
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $commaDelimitedPlaceholders )", $event_id, $ids_arr);
+	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=".intval($event_id)." AND task_id NOT IN ( $commaDelimitedPlaceholders )", $ids_arr);
 	$wpdb->query( $sql);
 }
 
@@ -185,7 +185,7 @@ function eme_transfer_person_task_signups( $person_ids, $to_person_id ) {
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
 	$ids_arr = explode(',',$person_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-        $sql = $wpdb->prepare( "UPDATE $table SET person_id = %d WHERE person_id ( $commaDelimitedPlaceholders )", $to_person_id, $ids_arr);
+        $sql = $wpdb->prepare( "UPDATE $table SET person_id = ".intval($to_person_id)."  WHERE person_id ( $commaDelimitedPlaceholders )", $ids_arr);
 	return $wpdb->query( $sql );
 }
 
@@ -382,7 +382,7 @@ function eme_task_signups_page() {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		if ( $_POST['eme_admin_action'] == 'do_delete_signup' && isset( $_POST['task_signups'] ) ) {
 			// Delete template or multiple
-			$task_signups = $_POST['task_signups'];
+			$task_signups = eme_sanitize_request( $_POST['task_signups'] );
 			if ( ! empty( $task_signups ) && eme_array_integers( $task_signups ) ) {
 				$commaDelimitedPlaceholders = implode(',', array_fill(0, count($task_signups), '%d'));
 				$sql = $wpdb->prepare( "DELETE FROM $table WHERE id IN ( $commaDelimitedPlaceholders )", $task_signups);

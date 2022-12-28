@@ -72,7 +72,7 @@ function eme_categories_page() {
 			}
 		} elseif ( $_POST['eme_admin_action'] == 'do_deletecategory' && isset( $_POST['categories'] ) ) {
 			// Delete category or multiple
-			$categories = $_POST['categories'];
+			$categories = eme_sanitize_request( $_POST['categories']);
 			if ( ! empty( $categories ) && eme_array_integers( $categories ) ) {
 				$commaDelimitedPlaceholders = implode(',', array_fill(0, count($categories), '%d'));
 				$sql = $wpdb->prepare( "DELETE FROM $categories_table WHERE category_id IN ( $commaDelimitedPlaceholders )", $categories);

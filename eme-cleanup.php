@@ -174,7 +174,7 @@ function eme_cleanup_page() {
 			check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 			if ( $_POST['eme_admin_action'] == 'eme_cleanup_events' && isset( $_POST['eme_number'] ) && isset( $_POST['eme_period'] ) ) {
 				$eme_number = intval( $_POST['eme_number'] );
-				$eme_period = $_POST['eme_period'];
+				$eme_period = eme_sanitize_request( $_POST['eme_period'] );
 				if ( ! in_array( $eme_period, array( 'day', 'week', 'month' ) ) ) {
 					$eme_period = 'month';
 				}

@@ -245,11 +245,11 @@ function eme_events_page() {
 	$press_back       = __( 'Press the back-button in your browser to return to the previous screen and correct your errors', 'events-made-easy' );
 	$extra_conditions = array();
 	if ( isset( $_POST['eme_admin_action'] ) ) {
-		$action        = $_POST['eme_admin_action'];
+		$action        = eme_sanitize_request( $_POST['eme_admin_action'] );
 		$event_ID      = isset( $_POST['event_id'] ) ? eme_sanitize_request( $_POST['event_id'] ) : 0;
 		$recurrence_ID = isset( $_POST['recurrence_id'] ) ? intval( $_POST['recurrence_id'] ) : 0;
 	} elseif ( isset( $_GET['eme_admin_action'] ) ) {
-		$action        = $_GET['eme_admin_action'];
+		$action        = eme_sanitize_request( $_GET['eme_admin_action'] );
 		$event_ID      = isset( $_GET['event_id'] ) ? eme_sanitize_request( $_GET['event_id'] ) : 0;
 		$recurrence_ID = isset( $_GET['recurrence_id'] ) ? intval( $_GET['recurrence_id'] ) : 0;
 	} else {
@@ -534,9 +534,9 @@ function eme_events_page() {
 
 		// validation successful
 		if ( isset( $_POST['location-select-id'] ) && $_POST['location-select-id'] != '' ) {
-			$event['location_id'] = $_POST['location-select-id'];
+			$event['location_id'] = intval( $_POST['location-select-id'] );
 		} elseif ( isset( $_POST['location_id'] ) && intval( $_POST['location_id'] ) > 0 ) {
-					$event['location_id'] = intval( $_POST['location_id'] );
+			$event['location_id'] = intval( $_POST['location_id'] );
 		} elseif ( empty( $location['location_name'] ) && empty( $location['location_address1'] ) && empty( $location['location_city'] ) ) {
 			$event['location_id'] = 0;
 		} else {
@@ -4072,7 +4072,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		$scope_offset = 0;
 		$scope_text   = '';
 		if ( isset( $_GET['eme_offset'] ) ) {
-			$scope_offset = $_GET['eme_offset'];
+			$scope_offset = eme_sanitize_request( $_GET['eme_offset'] );
 		}
 		$prev_offset = $scope_offset - 1;
 		$next_offset = $scope_offset + 1;
@@ -5997,7 +5997,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	}
 
 	if ( ! empty( $_GET['eme_admin_action'] ) ) {
-			$action        = $_GET['eme_admin_action'];
+			$action        = eme_sanitize_request( $_GET['eme_admin_action'] );
 			$recurrence_ID = isset( $_GET['recurrence_id'] ) ? intval( $_GET['recurrence_id'] ) : 0;
 	} else {
 		$action        = '';
@@ -10184,7 +10184,7 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode( ',', $ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql            = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($commaDelimitedPlaceholders)",EME_EVENT_STATUS_TRASH,$ids_arr);
+	$sql            = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = ".EME_EVENT_STATUS_TRASH." WHERE event_id IN ($commaDelimitedPlaceholders)",$ids_arr);
 	$wpdb->query( $sql );
 
 	if ( $send_trashmails ) {
@@ -10211,7 +10211,7 @@ function eme_untrash_events( $ids ) {
 	$table_name = $eme_db_prefix . EVENTS_TBNAME;
 	$ids_arr = explode( ',', $ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql        = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($commaDelimitedPlaceholders)" ,EME_EVENT_STATUS_DRAFT,$ids_arr);
+	$sql        = $wpdb->prepare("UPDATE $table_name SET event_status = ".EME_EVENT_STATUS_DRAFT." WHERE event_id IN ($commaDelimitedPlaceholders)" ,$ids_arr);
 	$wpdb->query( $sql );
 }
 

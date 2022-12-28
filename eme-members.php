@@ -752,7 +752,7 @@ function eme_add_update_member( $member_id = 0 ) {
 		// move all data from the original membership in $_POST to the new membership id too, so other membership code (like eme_store_member_answers) can work as expected with the new membership id
 		foreach ( $_POST as $key => $val ) {
 			if ( is_array( $_POST[ $key ] ) && isset( $_POST[ $key ][ $orig_membership_id ] ) ) {
-				$_POST[ $key ][ $membership_id ] = $_POST[ $key ][ $orig_membership_id ];
+				$_POST[ $key ][ $membership_id ] = eme_sanitize_request( $_POST[ $key ][ $orig_membership_id ] );
 			}
 		}
 		$transfer = 1;
@@ -777,7 +777,7 @@ function eme_add_update_member( $member_id = 0 ) {
 			$membership         = eme_get_membership( $membership_id );
 			$member['end_date'] = eme_get_next_end_date( $membership, $member['start_date'] );
 		} elseif ( eme_is_date( $_POST['end_date'] ) ) {
-				$member['end_date'] = $_POST['end_date'];
+				$member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
 		} else {
 			$member['end_date'] = eme_get_next_end_date( $membership, $member['start_date'] );
 		}
@@ -785,7 +785,7 @@ function eme_add_update_member( $member_id = 0 ) {
 			$member['paid'] = intval( $_POST['paid'] );
 		}
 		if ( eme_is_datetime( $_POST['payment_date'] ) ) {
-			$member['payment_date'] = $_POST['payment_date'];
+			$member['payment_date'] = eme_sanitize_request( $_POST['payment_date'] );
 		}
 		if ( empty( $membership['properties']['family_membership'] ) ) {
 			$member['related_member_id'] = 0;
@@ -1112,7 +1112,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	}
 
 	if ( isset( $_POST['start_date'] ) && eme_is_date( $_POST['start_date'] ) ) {
-		$membership['start_date'] = $_POST['start_date'];
+		$membership['start_date'] = eme_sanitize_request( $_POST['start_date'] );
 	} else {
 		$membership['start_date'] = '';
 	}

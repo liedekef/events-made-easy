@@ -2117,7 +2117,7 @@ function eme_dyndata_people_ajax() {
 	}
 
 	if ( isset( $_POST['groups'] ) && eme_array_integers( $_POST['groups'] ) ) {
-		$groups = $_POST['groups'];
+		$groups = eme_sanitize_request( $_POST['groups'] );
 	} else {
 		$groups = array();
 	}

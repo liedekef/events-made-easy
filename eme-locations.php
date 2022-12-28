@@ -91,7 +91,7 @@ function eme_locations_page() {
 		}
 	} elseif ( isset( $_POST['eme_admin_action'] ) && ( $_POST['eme_admin_action'] == 'do_editlocation' || $_POST['eme_admin_action'] == 'do_addlocation' ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-		$action = $_POST['eme_admin_action'];
+		$action = eme_sanitize_request( $_POST['eme_admin_action'] );
 		if ( $action == 'do_editlocation' ) {
 			$location_id = intval( $_POST['location_id'] );
 			$location    = eme_get_location( $location_id );
@@ -1564,7 +1564,7 @@ function eme_global_map_shortcode( $atts ) {
 			$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
 
 			if ( isset( $_GET['eme_offset'] ) ) {
-				$scope_offset = $_GET['eme_offset'];
+				$scope_offset = eme_sanitize_request( $_GET['eme_offset'] );
 			}
 			$prev_offset = $scope_offset - 1;
 			$next_offset = $scope_offset + 1;

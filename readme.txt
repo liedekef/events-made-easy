@@ -49,7 +49,7 @@ Always take a backup of your db before doing the upgrade, just in case ...
 
 For existing wordpress users that have version 2.3.17 or older:
 
-1. Download the zip "events-made-easy.zip" from the latest release from github
+1. Download the zip "events-made-easy.zip" from the [latest release on github](https://github.com/liedekef/events-made-easy/releases)
 2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
 3. Select the zip you downloaded, this will upload the zip and replace the existing installation without losing data
    If the file is too big for uploading, use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory (remove the old files first)
@@ -57,7 +57,7 @@ For existing wordpress users that have version 2.3.17 or older:
 
 For new users:
 
-1. Download the zip "events-made-easy.zip" from the latest release from github
+1. Download the zip "events-made-easy.zip" from the [latest release on github](https://github.com/liedekef/events-made-easy/releases)
 2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
 3. Select the zip you downloaded
    If the file is too big for uploading, use your favorite upload tool to upload the `events-made-easy` folder (inside the zip file) to the `/wp-content/plugins/` directory  

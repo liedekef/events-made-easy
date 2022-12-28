@@ -1816,7 +1816,7 @@ function eme_array_integers( $only_integers ) {
 function eme_is_list_of_int( $text ) {
 	if ( strstr( $text, ',' ) ) {
 		$id_arr = explode( ',', $text );
-		return eme_array_integers( $id_arr ) ) {
+		return eme_array_integers( $id_arr );
 	} elseif ( ! is_numeric( $text ) ) {
 		return false;
 	}

@@ -2096,7 +2096,7 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
 	$today        = $eme_date_obj_now->getDateTime();
 	$ids_arr = explode(',', $person_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($commaDelimitedPlaceholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", array_merge(array(EME_RSVP_STATUS_TRASH),$ids_arr,array($today));
+	$sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($commaDelimitedPlaceholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", array_merge(array(EME_RSVP_STATUS_TRASH),$ids_arr,array($today)));
 	$wpdb->query( $sql );
 }
 

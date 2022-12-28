@@ -4972,7 +4972,7 @@ function eme_ajax_people_select2() {
 	$jTableResult = array();
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
-		$where = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like(($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
+		$where = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
 	} else {
 		$where = '(1=1)';
 	}

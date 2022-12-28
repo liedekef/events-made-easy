@@ -31,7 +31,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 
 	// get all mail options, put them in an array and apply filter
 	// if you change this array, don't forget to update the doc
-	$mail_options = array(
+	$mailoptions = array(
 		'fromMail'         => $fromemail,
 		'fromName'         => $fromname,
 		'toMail'           => $receiveremail,
@@ -50,7 +50,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		'smtp_password'    => get_option( 'eme_smtp_password', '' ),
 		'smtp_debug'       => get_option( 'eme_smtp_debug' ),  // true or false
 	);
-	$mail_options = apply_filters( 'eme_filter_mail_options', $mail_options );
+	$mailoptions = apply_filters( 'eme_filter_mail_options', $mailoptions );
 
 	if ( empty( $mailoptions['smtp_host'] ) ) {
 		$mailoptions['smtp_host'] = 'localhost';

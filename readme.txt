@@ -97,5 +97,8 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
+= 2.3.27 (2022/12/28) =
+* Fix sending mail
+
 = 2.3.26 (2022/12/27) =
 * SQL code rewriting (not vulnerable, but more in line with what is expected by wp, not 100% done)

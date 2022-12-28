@@ -37,44 +37,44 @@ function eme_delete_old_attendances() {
 	}
 
 	$old_date = $eme_date_obj->minusDays( $remove_old_attendances_days )->getDateTime();
-	$wpdb->query( "DELETE FROM $table_name WHERE creation_date<'$old_date'" );
+	$wpdb->query( $wpdb->prepare("DELETE FROM $table_name WHERE creation_date<%s",$old_date) );
 }
 
 function eme_delete_attendances( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$ids_arr = explode(',',$ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE id IN ( $commaDelimitedPlaceholders )", $ids_arr);
-	$wpdb->query( $sql );
+	if (eme_is_list_of_int($ids) ) {
+		$safe_list = eme_implode_list_of_int($ids);
+		// needs to be rewritten even uglier, see https://github.com/WordPress/WordPress-Coding-Standards/blob/dc2f21771cb2b5336a7e6bb6616abcdfa691d7de/WordPress/Tests/DB/PreparedSQLPlaceholdersUnitTest.inc#L70-L124
+		$wpdb->query( "DELETE FROM $attendances_table WHERE id IN ( $safe_list )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	}
 }
 
 function eme_delete_person_attendances( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$ids_arr = explode(',',$ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE person_id IN ( $commaDelimitedPlaceholders )", $ids_arr);
-	$wpdb->query( $sql );
+	if (eme_is_list_of_int($ids) ) {
+		$safe_list = eme_implode_list_of_int($ids);
+		$wpdb->query( "DELETE FROM $attendances_table WHERE person_id IN ( $safe_list )"); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	}
 }
 
 function eme_delete_event_attendances( $event_id ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
 	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='event' AND related_id=%d",$event_id);
-	$wpdb->query( $sql );
+	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_delete_membership_attendances( $membership_id ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
 	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='membership' AND related_id=%d",$membership_id);
-	$wpdb->query( $sql );
+	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_attendances_page() {
 	global $wpdb,$eme_db_prefix;
-
 	eme_attendances_table_layout();
 }
 
@@ -109,18 +109,18 @@ function eme_attendances_table_layout( $message = '' ) {
          <div id='icon-edit' class='icon32'>
             <br>
          </div>
-         <h1>" . __( 'Manually add an attendance record', 'events-made-easy' ) . "</h1>
+         <h1>" . esc_html__( 'Manually add an attendance record', 'events-made-easy' ) . "</h1>
 	 <form action='#' method='post'>$nonce_field
          <input type='hidden' name='eme_admin_action' value='add_attendance'>
          <input type='hidden' name='person_id' value=''>
-         <input type='text' id='chooseperson' name='chooseperson' placeholder='" . __( 'Start typing a name', 'events-made-easy' ) . "'>
-         " . __( 'Optional attendance date and time: ', 'events-made-easy' ) . "
+         <input type='text' id='chooseperson' name='chooseperson' placeholder='" . esc_html__( 'Start typing a name', 'events-made-easy' ) . "'>
+         " . esc_html__( 'Optional attendance date and time: ', 'events-made-easy' ) . "
          <input type='hidden' name='attendance_actualdate' id='attendance_actualdate' value=''>
          <input type='text' readonly='readonly' name='attendance_date' id='attendance_date' data-date='' data-alt-field='attendance_actualdate' data-multiple-dates='false' style='background: #FCFFAA;' class='eme_formfield_fdatetime'><br>
-         <input type='submit' class='button-primary' name='submit' value='" . __( 'Add attendance', 'events-made-easy' ) . "'>
+         <input type='submit' class='button-primary' name='submit' value='" . esc_attr__( 'Add attendance', 'events-made-easy' ) . "'>
          </form>
-         <h1>" . __( 'Consult attendances', 'events-made-easy' ) . '</h1>
-         <p>' . __( 'If a RSVP or member QRCODE is scanned by someone with sufficent rights, an attendance record will be added in this table.', 'events-made-easy' ) . '</p>';
+         <h1>" . esc_html__( 'Consult attendances', 'events-made-easy' ) . '</h1>
+         <p>' . esc_html__( 'If a RSVP or member QRCODE is scanned by someone with sufficent rights, an attendance record will be added in this table.', 'events-made-easy' ) . '</p>';
 
 	if ( $message != '' ) {
 			echo "
@@ -197,7 +197,7 @@ function eme_ajax_attendances_list() {
 		$pagesize    = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
 		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql(eme_sanitize_sql_orderby($_REQUEST['jtSorting'])) : '';
 		$sql         = "SELECT * FROM $table $where $sorting LIMIT $start,$pagesize";
-		$rows        = $wpdb->get_results( $sql, ARRAY_A );
+		$rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		foreach ( $rows as $key => $row ) {
 				$rows[ $key ]['type']      = $att_types[ $row['type'] ];
 			$rows[ $key ]['creation_date'] = eme_localized_datetime( $row['creation_date'], $eme_timezone, 1 );

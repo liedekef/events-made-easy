@@ -2278,15 +2278,15 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				}
 			}
 		} elseif ( preg_match( '/^#_LOCATIONCATEGORIES\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
-					$include_cats         = $matches[1];
-					$exclude_cats         = $matches[2];
-					$extra_conditions_arr = array();
-					$order_by             = '';
-			if ( ! empty( $include_cats ) ) {
+			$include_cats         = $matches[1];
+			$exclude_cats         = $matches[2];
+			$extra_conditions_arr = array();
+			$order_by             = '';
+			if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
 				$order_by = "FIELD(category_id,$include_cats)";
 			}
-			if ( ! empty( $exclude_cats ) ) {
+			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
 				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
 			}
 			$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -2312,15 +2312,15 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/^#_LOCATIONCATEGORIES_CSS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
-					$include_cats         = $matches[1];
-					$exclude_cats         = $matches[2];
-					$extra_conditions_arr = array();
-					$order_by             = '';
-			if ( ! empty( $include_cats ) ) {
+			$include_cats         = $matches[1];
+			$exclude_cats         = $matches[2];
+			$extra_conditions_arr = array();
+			$order_by             = '';
+			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
 				$order_by = "FIELD(category_id,$include_cats)";
 			}
-			if ( ! empty( $exclude_cats ) ) {
+			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
 				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
 			}
 			$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -2336,15 +2336,15 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_LOCATIONCATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
-					$include_cats         = $matches[1];
-					$exclude_cats         = $matches[2];
-					$extra_conditions_arr = array();
-					$order_by             = '';
-			if ( ! empty( $include_cats ) ) {
+			$include_cats         = $matches[1];
+			$exclude_cats         = $matches[2];
+			$extra_conditions_arr = array();
+			$order_by             = '';
+			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
 				$order_by = "FIELD(category_id,$include_cats)";
 			}
-			if ( ! empty( $exclude_cats ) ) {
+			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
 				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
 			}
 			$extra_conditions = join( ' AND ', $extra_conditions_arr );

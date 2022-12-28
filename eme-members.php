@@ -2502,7 +2502,7 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 		} else {
 			$field_ids = join( ',', $field_ids_arr );
 		}
-		$search_customfields = esc_sql( $search_terms['search_customfields'] );
+		$search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
 		$sql_join            = "
 		   JOIN (SELECT $group_concat_sql related_id FROM $answers_table
 			 WHERE answer LIKE '%$search_customfields%' AND related_id>0 AND field_id IN ($field_ids) AND type='member'

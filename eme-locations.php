@@ -913,12 +913,9 @@ function eme_locations_table( $message = '' ) {
 function eme_search_locations( $name ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . LOCATIONS_TBNAME;
-	// the LIKE needs "%", but for prepare to work, we need to escape % using %%
-	// and then the prepare is a sprintf, so we need %s for the search string too
-	// This results in 3 %-signs, but it is what it is :-)
-	$query = "SELECT * FROM $table WHERE (location_name LIKE '%%%s%%') OR
-           (location_description LIKE '%%%s%%') ORDER BY location_name";
-	$sql   = $wpdb->prepare( $query, $name, $name );
+	$query = "SELECT * FROM $table WHERE (location_name LIKE %s) OR
+           (location_description LIKE %s) ORDER BY location_name";
+	$sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 

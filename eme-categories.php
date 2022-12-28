@@ -122,7 +122,7 @@ function eme_categories_table_layout( $message = '' ) {
          
                 <form id='categories-form' method='post' action='$destination'>
                   <input type='hidden' name='eme_admin_action' value='do_deletecategory'>";
-					$table .= $nonce_field;
+	$table .= $nonce_field;
 	if ( count( $categories ) > 0 ) {
 		$table .= "<table class='widefat'>
                         <thead>
@@ -144,7 +144,7 @@ function eme_categories_table_layout( $message = '' ) {
 			if ( empty( $this_category['category_name'] ) ) {
 				$this_category['category_name'] = __( 'No name', 'events-made-easy' );
 			}
-						$table .= "    
+			$table .= "    
                            <tr>
                            <td><input type='checkbox' class ='row-selector' value='" . $this_category['category_id'] . "' name='categories[]'></td>
                            <td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-categories&amp;eme_admin_action=edit_category&amp;category_id=' . $this_category['category_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $this_category['category_id'] . "</a></td>
@@ -167,9 +167,9 @@ function eme_categories_table_layout( $message = '' ) {
                      </div>
 		";
 	} else {
-			$table .= '<p>' . __( 'No categories defined.', 'events-made-easy' );
+		$table .= '<p>' . __( 'No categories defined.', 'events-made-easy' );
 	}
-					$table .= '
+	$table .= '
                   </form>
          </div>
    </div>';
@@ -246,15 +246,15 @@ function eme_categories_edit_layout( $message = '' ) {
 					$extra_prefix = '';
 				}
 				if ( preg_match( '/,/', $categories_prefixes ) ) {
-						$categories_prefixes     = explode( ',', $categories_prefixes );
-						$categories_prefixes_arr = array();
+					$categories_prefixes     = explode( ',', $categories_prefixes );
+					$categories_prefixes_arr = array();
 					foreach ( $categories_prefixes as $categories_prefix ) {
-							$categories_prefixes_arr[ $categories_prefix ] = eme_permalink_convert( $categories_prefix );
+						$categories_prefixes_arr[ $categories_prefix ] = eme_permalink_convert( $categories_prefix );
 					}
-						$prefix = $category['category_prefix'] ? $category['category_prefix'] : '';
-						echo eme_ui_select( $prefix, 'category_prefix', $categories_prefixes_arr );
+					$prefix = $category['category_prefix'] ? $category['category_prefix'] : '';
+					echo eme_ui_select( $prefix, 'category_prefix', $categories_prefixes_arr );
 				} else {
-						echo eme_permalink_convert( $categories_prefixes );
+					echo eme_permalink_convert( $categories_prefixes );
 				}
 				echo $extra_prefix;
 				if ( $action == 'edit' ) {

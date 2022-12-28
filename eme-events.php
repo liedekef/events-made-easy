@@ -4613,9 +4613,6 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 	$start_of_week = get_option( 'start_of_week' );
 	$eme_date_obj->setWeekStartDay( $start_of_week );
 	$now = $eme_date_obj->getDateTime();
-	// the LIKE needs "%", but for prepare to work, we need to escape % using %%
-	// and then the prepare is a sprintf, so we need %s for the search string too
-	// This results in 3 %-signs, but it is what it is :-)
 	$where = array();
 	if ( $scope == 'past' ) {
 		$where[] = "event_start < '$now'";
@@ -4636,12 +4633,12 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 
 	if ( ! empty( $name ) ) {
 		if ( $name_only ) {
-			$query = "SELECT * FROM $table WHERE event_name LIKE '%%%s%%' $condition ORDER BY event_start";
-			$sql   = $wpdb->prepare( $query, $name );
+			$query = "SELECT * FROM $table WHERE event_name LIKE %s $condition ORDER BY event_start";
+			$sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%' );
 		} else {
-			$query = "SELECT * FROM $table WHERE ((event_name LIKE '%%%s%%') OR
-		   (event_notes LIKE '%%%s%%')) $condition ORDER BY event_start";
-			$sql   = $wpdb->prepare( $query, $name, $name );
+			$query = "SELECT * FROM $table WHERE ((event_name LIKE %s) OR
+		   (event_notes LIKE %s)) $condition ORDER BY event_start";
+			$sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' );
 		}
 	} else {
 		$sql = "SELECT * FROM $table WHERE (1=1) $condition ORDER BY event_start";
@@ -5285,7 +5282,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 			$field_id = $formfield['field_id'];
 		}
 		if ( $search_customfields != '' ) {
-			$search_customfields = esc_sql( $search_customfields );
+			$search_customfields = esc_sql( $wpdb->esc_like($search_customfields) );
 			$sql_join            = "
 		   JOIN (SELECT related_id FROM $answers_table
 			 WHERE answer LIKE '%$search_customfields%' AND field_id IN ($search_customfieldids) AND type='event'

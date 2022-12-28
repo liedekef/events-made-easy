@@ -5179,8 +5179,8 @@ function eme_ajax_bookings_list() {
 	}
 	if ( ! empty( $_REQUEST['search_customfields'] ) ) {
 		$answers_table       = $eme_db_prefix . ANSWERS_TBNAME;
-		$search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_customfields']) ) );
-		$sql                 = "SELECT related_id FROM $answers_table WHERE answer LIKE '%$search_customfields%' AND type='booking' GROUP BY related_id";
+		$search_customfields = $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_customfields']) );
+		$sql                 = $wpdb->prepare("SELECT related_id FROM $answers_table WHERE answer LIKE %s AND type='booking' GROUP BY related_id", "%$search_customfields%");
 		$booking_ids         = $wpdb->get_col( $sql );
 		if ( ! empty( $booking_ids ) ) {
 			$where_arr[] = '(bookings.booking_id IN (' . join( ',', $booking_ids ) . '))';

@@ -1814,24 +1814,13 @@ function eme_array_integers( $only_integers ) {
 }
 
 function eme_is_list_of_int( $text ) {
-	$is_ok = true;
 	if ( strstr( $text, ',' ) ) {
 		$id_arr = explode( ',', $text );
-		if ( ! eme_array_integers( $id_arr ) ) {
-					$is_ok = false;
-		}
+		return eme_array_integers( $id_arr ) ) {
 	} elseif ( ! is_numeric( $text ) ) {
-				$is_ok = false;
+		return false;
 	}
-	return $is_ok;
-}
-
-function eme_implode_array_of_int( $ids_arr) {
-	return sprintf("%s",  implode( ',', array_map( 'intval', $ids_arr ) ) );
-}
-function eme_implode_list_of_int( $text) {
-	$ids_arr = explode( ',', $text );
-	return eme_implode_array_of_int( $ids_arr );
+	return true;
 }
 
 function eme_array_remove_empty_elements( $arr ) {

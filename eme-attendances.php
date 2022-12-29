@@ -77,7 +77,6 @@ function eme_delete_membership_attendances( $membership_id ) {
 }
 
 function eme_attendances_page() {
-	global $wpdb,$eme_db_prefix;
 	eme_attendances_table_layout();
 }
 

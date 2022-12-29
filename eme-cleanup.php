@@ -162,7 +162,7 @@ function eme_cleanup_all_event_related_data( $other_data ) {
 		$tables  = array_merge( $tables, $tables2 );
 	}
 	foreach ( $tables as $table ) {
-		$wpdb->query( 'DELETE FROM ' . $eme_db_prefix . $table );
+		$wpdb->query( 'DELETE FROM ' . esc_sql( $eme_db_prefix . $table ) );
 	}
 }
 

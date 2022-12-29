@@ -1,36 +1,36 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 function eme_cron_schedules( $schedules ) {
-	if ( ! isset( $schedules['1min'] ) ) {
-		$schedules['1min'] = array(
+	if ( ! isset( $schedules['eme_1min'] ) ) {
+		$schedules['eme_1min'] = array(
 			'interval' => 60,
 			'display'  => __( 'Once every minute (EME schedule)', 'events-made-easy' ),
 		);
 	}
-	if ( ! isset( $schedules['5min'] ) ) {
-		$schedules['5min'] = array(
+	if ( ! isset( $schedules['eme_5min'] ) ) {
+		$schedules['eme_5min'] = array(
 			'interval' => 5 * 60,
 			'display'  => __( 'Once every 5 minutes (EME schedule)', 'events-made-easy' ),
 		);
 	}
-	if ( ! isset( $schedules['15min'] ) ) {
-		$schedules['15min'] = array(
+	if ( ! isset( $schedules['eme_15min'] ) ) {
+		$schedules['eme_15min'] = array(
 			'interval' => 15 * 60,
 			'display'  => __( 'Once every 15 minutes (EME schedule)', 'events-made-easy' ),
 		);
 	}
-	if ( ! isset( $schedules['30min'] ) ) {
-		$schedules['30min'] = array(
+	if ( ! isset( $schedules['eme_30min'] ) ) {
+		$schedules['eme_30min'] = array(
 			'interval' => 30 * 60,
 			'display'  => __( 'Once every 30 minutes (EME schedule)', 'events-made-easy' ),
 		);
 	}
-	if ( ! isset( $schedules['4weeks'] ) ) {
-		$schedules['4weeks'] = array(
+	if ( ! isset( $schedules['eme_4weeks'] ) ) {
+		$schedules['eme_4weeks'] = array(
 			'interval' => 60 * 60 * 24 * 28,
 			'display'  => __( 'Once every 4 weeks (EME schedule)', 'events-made-easy' ),
 		);
@@ -44,25 +44,25 @@ function eme_plan_queue_mails() {
 		$schedules = wp_get_schedules();
 		// we stored the choosen schedule in the option with the same name eme_cron_send_queued
 		// and take hourly as sensible default if empty
-			$schedule = get_option( 'eme_cron_send_queued' );
+		$schedule = get_option( 'eme_cron_send_queued' );
 		if ( empty( $schedule ) || ! isset( $schedules[ $schedule ] ) ) {
 			$schedule = 'hourly';
-					update_option( 'eme_cron_send_queued', $schedule );
+			update_option( 'eme_cron_send_queued', $schedule );
 		}
 		if ( ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
-				wp_schedule_event( time(), $schedule, 'eme_cron_send_queued' );
+			wp_schedule_event( time(), $schedule, 'eme_cron_send_queued' );
 		} else {
 			$current_schedule = wp_get_schedule( 'eme_cron_send_queued' );
 			if ( $current_schedule != $schedule ) {
-						wp_unschedule_hook( 'eme_cron_send_queued' );
-						wp_schedule_event( time(), $schedule, 'eme_cron_send_queued' );
+				wp_unschedule_hook( 'eme_cron_send_queued' );
+				wp_schedule_event( time(), $schedule, 'eme_cron_send_queued' );
 			}
 		}
 		if ( ! get_option( 'eme_cron_queue_count' ) ) {
-				update_option( 'eme_cron_queue_count', 50 );
+			update_option( 'eme_cron_queue_count', 50 );
 		}
 	} elseif ( wp_next_scheduled( 'eme_cron_send_queued' ) ) {
-				wp_unschedule_hook( 'eme_cron_send_queued' );
+		wp_unschedule_hook( 'eme_cron_send_queued' );
 	}
 }
 
@@ -138,7 +138,7 @@ function eme_cron_cleanup_function() {
 	if ( get_option( 'eme_captcha_for_forms' ) ) {
 		$tmp_dir = get_temp_dir();
 		foreach ( glob( $tmp_dir . 'eme_captcha_*' ) as $file ) {
-				// delete captcha files older than 1 hour
+			// delete captcha files older than 1 hour
 			if ( time() - filemtime( $file ) > 3600 ) {
 				wp_delete_file( $file );
 			}
@@ -214,8 +214,8 @@ function eme_cron_page() {
 			if ( $_POST['eme_admin_action'] == 'eme_cron_cleanup_unpaid' ) {
 				$eme_cron_cleanup_unpaid_minutes = intval( $_POST['eme_cron_cleanup_unpaid_minutes'] );
 				if ( $eme_cron_cleanup_unpaid_minutes >= 5 ) {
-						update_option( 'eme_cron_cleanup_unpaid_minutes', $eme_cron_cleanup_unpaid_minutes );
-						$message = sprintf( __( 'Scheduled the cleanup of unpaid pending bookings older than %d minutes', 'events-made-easy' ), $eme_cron_cleanup_unpaid_minutes );
+					update_option( 'eme_cron_cleanup_unpaid_minutes', $eme_cron_cleanup_unpaid_minutes );
+					$message = sprintf( __( 'Scheduled the cleanup of unpaid pending bookings older than %d minutes', 'events-made-easy' ), $eme_cron_cleanup_unpaid_minutes );
 				} else {
 					update_option( 'eme_cron_cleanup_unpaid_minutes', 0 );
 					$message = __( 'No automatic cleanup of unpaid pending bookings will be done.', 'events-made-easy' );
@@ -240,6 +240,7 @@ function eme_cron_page() {
 					$schedule = wp_get_schedule( 'eme_cron_send_new_events' );
 					if ( $schedule != $eme_cron_new_events_schedule ) {
 						wp_unschedule_hook( 'eme_cron_send_new_events' );
+						delete_option( 'eme_cron_send_new_events' );
 					}
 				}
 				if ( $eme_cron_new_events_days > 0 ) {
@@ -250,6 +251,7 @@ function eme_cron_page() {
 							if ( ! wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
 								wp_schedule_event( time(), $eme_cron_new_events_schedule, 'eme_cron_send_new_events' );
 							}
+							update_option( 'eme_cron_send_new_events', $eme_cron_new_events_schedule );
 							update_option( 'eme_cron_new_events_days', $eme_cron_new_events_days );
 							update_option( 'eme_cron_new_events_subject', $eme_cron_new_events_subject );
 							update_option( 'eme_cron_new_events_header', $eme_cron_new_events_header );
@@ -409,8 +411,8 @@ function eme_cron_form( $message = '' ) {
 		<?php
 		$scheduled = wp_get_schedule( 'eme_cron_send_new_events' );
 		foreach ( $schedules as $key => $schedule ) {
-				$selected = ( $key == $scheduled ) ? 'selected="selected"' : '';
-				print "<option $selected value='$key'>" . $schedule['display'] . '</option>';
+			$selected = ( $key == $scheduled ) ? 'selected="selected"' : '';
+			print "<option $selected value='$key'>" . $schedule['display'] . '</option>';
 		}
 		?>
 	</select>

@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // Setting constants
 define( 'EME_VERSION', '2.3.28' );
-define( 'EME_DB_VERSION', 362 );
+define( 'EME_DB_VERSION', 363 );
 define( 'EVENTS_TBNAME', 'eme_events' );
 define( 'EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -448,7 +448,7 @@ function _eme_install() {
 		$res = wp_schedule_event( $timestamp + 600, 'daily', 'eme_cron_daily_actions' );
 	}
 	if ( ! wp_next_scheduled( 'eme_cron_cleanup_actions' ) ) {
-		$res = wp_schedule_event( time(), '5min', 'eme_cron_cleanup_actions' );
+		$res = wp_schedule_event( time(), 'eme_5min', 'eme_cron_cleanup_actions' );
 	}
 
 	// now cleanup old crons
@@ -463,7 +463,15 @@ function _eme_install() {
 	$cron_actions = array( 'eme_cron_send_new_events', 'eme_cron_send_queued' );
 	foreach ( $cron_actions as $cron_action ) {
 		$schedule = get_option( $cron_action );
-			// if the action is planned, keep the planning in an option (if we're not clearing all data) and then clear the planning
+		// old schedule names are renamed to eme_*
+		if (preg_match( '/^(1min|5min|15min|30min|4weeks)$/', $schedule, $matches ) ) {
+			$res = $matches[0];
+			$schedule = "eme_".$res;
+			update_option($cron_action,$schedule);
+			wp_unschedule_hook( $cron_action );
+		}
+
+		// if the action is planned, keep the planning in an option (if we're not clearing all data) and then clear the planning
 		if ( ! empty( $schedule ) && ! wp_next_scheduled( $cron_action ) ) {
 			wp_schedule_event( time(), $schedule, $cron_action );
 		}

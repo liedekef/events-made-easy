@@ -4643,6 +4643,7 @@ function eme_store_family_answers( $person_id, $familymember ) {
 }
 
 function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required = 0 ) {
+	global $wpdb;
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
 		wp_die();
 	}

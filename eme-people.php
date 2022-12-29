@@ -2524,18 +2524,24 @@ function eme_get_people_by_ids( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode(',',$ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE person_id IN ($commaDelimitedPlaceholders) AND status= %d ORDER BY person_id",array_merge($ids_arr,array(EME_PEOPLE_STATUS_ACTIVE)));
-	return $wpdb->get_results( $sql, ARRAY_A );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE person_id IN ($commaDelimitedPlaceholders) AND status= %d ORDER BY person_id",array_merge($ids_arr,array(EME_PEOPLE_STATUS_ACTIVE)));
+		return $wpdb->get_results( $sql, ARRAY_A );
+	} else {
+		return false;
+	}
 }
 
 function eme_get_people_by_wp_ids( $wp_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode(',',$wp_ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE wp_id IN ($commaDelimitedPlaceholders) AND status= %d ORDER BY wp_id",array_merge($ids_arr,array(EME_PEOPLE_STATUS_ACTIVE)));
-	return $wpdb->get_results( $sql, ARRAY_A );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE wp_id IN ($commaDelimitedPlaceholders) AND status= %d ORDER BY wp_id",array_merge($ids_arr,array(EME_PEOPLE_STATUS_ACTIVE)));
+		return $wpdb->get_results( $sql, ARRAY_A );
+	}
 }
 
 function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
@@ -2621,6 +2627,9 @@ function eme_trash_people( $person_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
+	if ( ! eme_array_integers( $ids_arr ) ) {
+		return;
+	}
 	if ( has_action( 'eme_trash_person_action' ) ) {
 		foreach ( $ids_arr as $person_id ) {
 			$person = eme_get_person( $person_id );
@@ -2727,9 +2736,11 @@ function eme_untrash_people( $person_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare( "UPDATE $people_table SET status=%d WHERE person_id IN ($commaDelimitedPlaceholders)",array_merge(array(EME_PEOPLE_STATUS_ACTIVE),$ids_arr));
-	$wpdb->query( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql = $wpdb->prepare( "UPDATE $people_table SET status=%d WHERE person_id IN ($commaDelimitedPlaceholders)",array_merge(array(EME_PEOPLE_STATUS_ACTIVE),$ids_arr));
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_add_personid_to_newsletter( $person_id ) {
@@ -2767,11 +2778,13 @@ function eme_delete_people( $person_ids ) {
 	eme_delete_person_attendances( $person_ids );
 	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare( "DELETE FROM $people_table WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
-	$wpdb->query( $sql );
-	foreach ( $ids_arr as $person_id ) {
-		eme_delete_uploaded_files( $person_id, 'people' );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql = $wpdb->prepare( "DELETE FROM $people_table WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
+		$wpdb->query( $sql );
+		foreach ( $ids_arr as $person_id ) {
+			eme_delete_uploaded_files( $person_id, 'people' );
+		}
 	}
 }
 
@@ -2817,8 +2830,12 @@ function eme_get_public_groups( $group_ids = '' ) {
 	$table = $eme_db_prefix . GROUPS_TBNAME;
 	if ( ! empty( $group_ids ) ) {
 		$ids_arr = explode( ',', $group_ids );
-		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-		$sql = $wpdb->prepare( "SELECT * FROM $table WHERE public=1 AND type='static' AND group_id IN ($commaDelimitedPlaceholders) ORDER BY name",$ids_arr);
+		if ( eme_array_integers( $ids_arr ) ) {
+			$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+			$sql = $wpdb->prepare( "SELECT * FROM $table WHERE public=1 AND type='static' AND group_id IN ($commaDelimitedPlaceholders) ORDER BY name",$ids_arr);
+		} else {
+			return false;
+		}
 	} else {
 		$sql = "SELECT * FROM $table WHERE public=1 AND type='static' ORDER BY name";
 	}
@@ -2847,9 +2864,13 @@ function eme_get_static_groups() {
 function eme_groups_exists( $ids_arr ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . GROUPS_TBNAME;
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql   = $wpdb->prepare( "SELECT DISTINCT group_id FROM $table WHERE group_id IN ($commaDelimitedPlaceholders)",$ids_arr);
-	return $wpdb->get_col( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql   = $wpdb->prepare( "SELECT DISTINCT group_id FROM $table WHERE group_id IN ($commaDelimitedPlaceholders)",$ids_arr);
+		return $wpdb->get_col( $sql );
+	} else {
+		return false;
+	}
 }
 
 function eme_get_persongroup_ids( $person_id, $wp_id = 0 ) {
@@ -2942,8 +2963,12 @@ function eme_get_person_by_email_in_groups( $email, $group_ids ) {
 		$sql = $wpdb->prepare( "SELECT p.person_id FROM $people_table p WHERE p.email=%s LIMIT 1", $email );
 	} else {
 		$ids_arr = explode( ',', $group_ids );
-		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-		$sql = $wpdb->prepare( "SELECT p.person_id FROM $people_table p LEFT JOIN $usergroups_table u ON u.person_id=p.person_id WHERE p.email=%s AND u.group_id IN ($commaDelimitedPlaceholders) LIMIT 1", array_merge(array($email),$ids_arr) );
+		if ( eme_array_integers( $ids_arr ) ) {
+			$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+			$sql = $wpdb->prepare( "SELECT p.person_id FROM $people_table p LEFT JOIN $usergroups_table u ON u.person_id=p.person_id WHERE p.email=%s AND u.group_id IN ($commaDelimitedPlaceholders) LIMIT 1", array_merge(array($email),$ids_arr) );
+		} else {
+			return 0;
+		}
 	}
 	$person_id = $wpdb->get_var( $sql );
 
@@ -3008,11 +3033,13 @@ function eme_delete_groups( $group_ids ) {
 	$groups_table     = $eme_db_prefix . GROUPS_TBNAME;
 	$usergroups_table = $eme_db_prefix . USERGROUPS_TBNAME;
 	$ids_arr = explode( ',', $group_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("DELETE FROM $groups_table WHERE group_id IN ($commaDelimitedPlaceholders)",$ids_arr);
-	$wpdb->query( $sql );
-	$sql = $wpdb->prepare("DELETE FROM $usergroups_table WHERE group_id IN ($commaDelimitedPlaceholders)",$ids_arr);
-	$wpdb->query( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql = $wpdb->prepare("DELETE FROM $groups_table WHERE group_id IN ($commaDelimitedPlaceholders)",$ids_arr);
+		$wpdb->query( $sql );
+		$sql = $wpdb->prepare("DELETE FROM $usergroups_table WHERE group_id IN ($commaDelimitedPlaceholders)",$ids_arr);
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $order = 'ASC' ) {
@@ -3125,13 +3152,16 @@ function eme_get_groups_person_massemails( $group_ids ) {
 	$usergroups_table = $eme_db_prefix . USERGROUPS_TBNAME;
 	$groups_table     = $eme_db_prefix . GROUPS_TBNAME;
 	$ids_arr = explode( ',', $group_ids );
+	if ( ! eme_array_integers( $ids_arr ) ) {
+		return;
+	}
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
 	$sql              = $wpdb->prepare("SELECT group_id FROM $groups_table WHERE group_id IN ($commaDelimitedPlaceholders) AND type = 'static'", $ids_arr);
 	$static_groupids  = $wpdb->get_col( $sql );
 
 	// for static groups we look at the massmail option, for dynamic groups not
 	$res = array();
-	if ( ! empty( $static_groupids ) ) {
+	if ( ! empty( $static_groupids ) && eme_array_integers( $static_groupids ) ) {
 		$commaDelimitedPlaceholders2 = implode(',', array_fill(0, count($static_groupids), '%d'));
 		$sql = $wpdb->prepare("SELECT people.lastname, people.firstname, people.email FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=%d AND people.massmail=1 AND people.email<>'' AND ugroups.group_id IN ($commaDelimitedPlaceholders2) GROUP BY people.email", array_merge(array(EME_PEOPLE_STATUS_ACTIVE),$static_groupids));
 		$res     = $wpdb->get_results( $sql, ARRAY_A );
@@ -3237,6 +3267,9 @@ function eme_get_groups_member_ids( $group_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$groups_table   = $eme_db_prefix . GROUPS_TBNAME;
 	$ids_arr = explode( ',', $group_ids );
+	if ( ! eme_array_integers( $ids_arr ) ) {
+		return false;
+	}
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
 	$sql            = $wpdb->prepare("SELECT * FROM $groups_table WHERE group_id IN ($commaDelimitedPlaceholders) AND type = 'dynamic_members'",$ids_arr);
 	$dynamic_groups = $wpdb->get_results( $sql, ARRAY_A );
@@ -3259,6 +3292,9 @@ function eme_get_memberships_member_ids( $membership_ids ) {
 	$people_table  = $eme_db_prefix . PEOPLE_TBNAME;
 	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
 	$ids_arr = explode( ',', $membership_ids );
+	if ( ! eme_array_integers( $ids_arr ) ) {
+		return false;
+	}
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
 	$sql = $wpdb->prepare("SELECT members.member_id FROM $people_table AS people LEFT JOIN $members_table AS members ON people.person_id=members.person_id WHERE people.status=%d.AND members.status IN (%d,%d) AND members.membership_id IN ($commaDelimitedPlaceholders) GROUP BY people.email",array_merge(array(EME_PEOPLE_STATUS_ACTIVE,EME_MEMBER_STATUS_ACTIVE,EME_MEMBER_STATUS_GRACE),$ids_arr));
 	return $wpdb->get_col( $sql );
@@ -4065,9 +4101,11 @@ function eme_update_people_gdpr( $person_ids, $gdpr = 1 ) {
 	$table     = $eme_db_prefix . PEOPLE_TBNAME;
 	$gdpr_date = current_time( 'mysql', false );
 	$ids_arr = explode( ',', $person_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql       = $wpdb->prepare("UPDATE $table SET gdpr=%d, gdpr_date=%s WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge(array($gdpr,$gdpr_date),$ids_arr));
-	$wpdb->query( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql       = $wpdb->prepare("UPDATE $table SET gdpr=%d, gdpr_date=%s WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge(array($gdpr,$gdpr_date),$ids_arr));
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_update_email_massmail( $email, $massmail ) {
@@ -4081,27 +4119,33 @@ function eme_update_people_massmail( $person_ids, $massmail = 1 ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql   = $wpdb->prepare( "UPDATE $table SET massmail=%d WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge(array($massmail),$ids_arr));
-	$wpdb->query( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql   = $wpdb->prepare( "UPDATE $table SET massmail=%d WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge(array($massmail),$ids_arr));
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_update_people_bdemail( $person_ids, $bd_email = 1 ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql   = $wpdb->prepare( "UPDATE $table SET bd_mail=%d WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge(array($bd_mail),$ids_arr));
-	$wpdb->query( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql   = $wpdb->prepare( "UPDATE $table SET bd_mail=%d WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge(array($bd_mail),$ids_arr));
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_update_people_language( $person_ids, $lang ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . PEOPLE_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql   = $wpdb->prepare( "UPDATE $table SET lang=%s WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge(array($lang),$ids_arr));
-	$wpdb->query( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql   = $wpdb->prepare( "UPDATE $table SET lang=%s WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge(array($lang),$ids_arr));
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_get_indexed_users() {
@@ -4511,18 +4555,22 @@ function eme_delete_person_groups( $person_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$usergroups_table = $eme_db_prefix . USERGROUPS_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql              = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
-	$wpdb->query( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql              = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_delete_person_answers( $person_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id IN ($commaDelimitedPlaceholders) AND type='person'",$ids_arr);
-	$wpdb->query( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id IN ($commaDelimitedPlaceholders) AND type='person'",$ids_arr);
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_delete_person_memberships( $person_ids ) {
@@ -4530,11 +4578,13 @@ function eme_delete_person_memberships( $person_ids ) {
 	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
 	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
 	$ids_arr = explode( ',', $person_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE type='member' AND related_id IN (SELECT member_id FROM $members_table WHERE person_id IN ($commaDelimitedPlaceholders))",$ids_arr);
-	$wpdb->query( $sql );
-	$sql = $wpdb->prepare( "DELETE FROM $members_table WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
-	$wpdb->query( $sql );
+	if ( eme_array_integers( $ids_arr ) ) {
+		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
+		$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE type='member' AND related_id IN (SELECT member_id FROM $members_table WHERE person_id IN ($commaDelimitedPlaceholders))",$ids_arr);
+		$wpdb->query( $sql );
+		$sql = $wpdb->prepare( "DELETE FROM $members_table WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_people_answers( $person_id, $new_person = 0 ) {

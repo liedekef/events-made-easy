@@ -103,6 +103,7 @@ See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpr
 * Update cron schedules to prefix them with "eme_".
     After update, verify your EME Email setting "Send out queued mails in batches of" (if mail queuing is activated) and the Newsletter setting in the menu "Scheduled actions"
     (the Newsletter setting will probably need to be set again)
+* Fix autocomplete people
 
 = 2.3.28 (2022/12/28) =
 * Fix several sql statements (prepare statement only works with arrays as argument if that is the only one ...)

@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 function eme_new_person() {
@@ -1716,7 +1716,7 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
 
 	if ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfields'] ) && $search_terms['search_customfields'] != '' ) {
 		if ( ! empty( $search_terms['search_customfieldids'] ) && eme_array_integers( $search_terms['search_customfieldids'] ) ) {
-					$field_ids = join( ',', $search_terms['search_customfieldids'] );
+			$field_ids = join( ',', $search_terms['search_customfieldids'] );
 		} else {
 			$field_ids = join( ',', $field_ids_arr );
 		}
@@ -2804,10 +2804,11 @@ function eme_get_group_by_name( $name ) {
 	$sql          = $wpdb->prepare( "SELECT * FROM $groups_table WHERE name = %s LIMIT 1", $name );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
+
 function eme_get_group_by_email( $email ) {
 	global $wpdb,$eme_db_prefix;
 	$groups_table = $eme_db_prefix . GROUPS_TBNAME;
-	$sql          = $wpdb->prepare( "SELECT * FROM $groups_table WHERE email = %s LIMIT 1", eme_sanitize_email( $email ) );
+	$sql          = $wpdb->prepare( "SELECT * FROM $groups_table WHERE email = %s LIMIT 1", $email );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
@@ -3179,10 +3180,10 @@ function eme_get_groups_person_massemails( $group_ids ) {
 	foreach ( $dynamic_groups as $dynamic_group ) {
 		if ( ! empty( $dynamic_group['search_terms'] ) ) {
 			if ( $dynamic_group['type'] == 'dynamic_members' ) {
-					$sql = eme_get_sql_members_searchfields( $dynamic_group['search_terms'], 0, 0, '', 0, 0, 0, 1 );
+				$sql = eme_get_sql_members_searchfields( $dynamic_group['search_terms'], 0, 0, '', 0, 0, 0, 1 );
 			}
 			if ( $dynamic_group['type'] == 'dynamic_people' ) {
-					$sql = eme_get_sql_people_searchfields( $dynamic_group['search_terms'], 0, 0, '', 0, 0, 1 );
+				$sql = eme_get_sql_people_searchfields( $dynamic_group['search_terms'], 0, 0, '', 0, 0, 1 );
 			}
 		} else {
 			$sql = 'SELECT people.lastname, people.firstname, people.email ' . $dynamic_group['stored_sql'] . ' AND people.massmail=1';
@@ -4996,7 +4997,7 @@ function eme_ajax_groups_list() {
 				}
 			}
 		} else {
-			$record['groupcount'] = isset( $groupcount[ $group['group_id'] ] ) ? $groupcount[ $group['group_id'] ] : 0;
+			$record['groupcount'] = isset( $groupcount[ $group['group_id'] ] ) ? intval($groupcount[ $group['group_id'] ]) : 0;
 		}
 		$records[] = $record;
 	}

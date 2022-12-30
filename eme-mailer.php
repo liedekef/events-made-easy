@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 function eme_set_wpmail_html_content_type() {
@@ -1230,7 +1230,7 @@ function eme_send_mails_ajax_actions( $action ) {
 	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
 		wp_die();
 	}
-	$event_ids        = isset( $_POST['event_ids'] ) ? $_POST['event_ids'] : 0;
+	$event_ids        = isset( $_POST['event_ids'] ) ? wp_parse_id_list($_POST['event_ids']) : 0;
 	$ajaxResult       = array();
 	$conditions       = array();
 	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
@@ -1643,7 +1643,7 @@ function eme_send_mails_ajax_actions( $action ) {
 			if ( ! empty( $_POST['eme_eventmail_send_memberships'] ) && eme_array_integers( $_POST['eme_eventmail_send_memberships'] ) ) {
 				$conditions['eme_eventmail_send_memberships'] = join( ',', $_POST['eme_eventmail_send_memberships'] );
 			}
-			$eme_mail_type = isset( $_POST ['eme_mail_type'] ) ? $_POST ['eme_mail_type'] : 'attendees';
+			$eme_mail_type = isset( $_POST ['eme_mail_type'] ) ? eme_sanitize_request($_POST ['eme_mail_type']) : 'attendees';
 			if ( empty( $eme_mail_type ) ) {
 				$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select the type of mail to be sent.', 'events-made-easy' ) . '</p></div>';
 				$ajaxResult['Result']      = 'ERROR';

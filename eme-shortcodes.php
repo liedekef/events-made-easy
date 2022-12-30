@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 add_shortcode( 'eme_calendar', 'eme_get_calendar_shortcode' );

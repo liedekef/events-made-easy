@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 function eme_attributes_form( $eme_array ) {
@@ -102,9 +102,9 @@ function eme_attributes_form( $eme_array ) {
 			if ( is_array( $eme_data ) and count( $eme_data ) > 0 ) {
 				foreach ( $eme_data as $name => $value ) {
 					?>
-					<tr id="eme_attr_<?php echo eme_esc_html( $count ); ?>">
+					<tr id="eme_attr_<?php echo $count; ?>">
 					<td>
-						<select name="eme_attr_<?php echo eme_esc_html( $count ); ?>_ref">
+						<select name="eme_attr_<?php echo $count; ?>_ref">
 							<?php
 							if ( ! in_array( $name, $attributes ) ) {
 								echo "<option value='".esc_attr($name)."'>".esc_html($name)." (" . __( 'Not defined in templates', 'events-made-easy' ) . ')</option>';
@@ -121,7 +121,7 @@ function eme_attributes_form( $eme_array ) {
 						<a href="#"><?php esc_html_e( 'Remove', 'events-made-easy' ); ?></a>
 					</td>
 					<td>
-			<textarea rows="2" cols="40" id="eme_attr_<?php echo eme_esc_html( $count ); ?>_id" name="eme_attr_<?php echo eme_esc_html( $count ); ?>_name"><?php echo eme_esc_html( $value ); ?></textarea>
+			<textarea rows="2" cols="40" id="eme_attr_<?php echo $count; ?>_id" name="eme_attr_<?php echo $count; ?>_name"><?php echo eme_esc_html( $value ); ?></textarea>
 					</td>
 					</tr>
 					<?php
@@ -129,9 +129,9 @@ function eme_attributes_form( $eme_array ) {
 				}
 			} else {
 				?>
-					<tr id="eme_attr_<?php echo eme_esc_html( $count ); ?>">
+					<tr id="eme_attr_<?php echo $count; ?>">
 					<td>
-						<select name="eme_attr_<?php echo eme_esc_html( $count ); ?>_ref">
+						<select name="eme_attr_<?php echo $count; ?>_ref">
 							<?php
 							foreach ( $attributes as $attribute ) {
 								echo '<option>' . eme_esc_html( $attribute ) . '</option>';
@@ -141,7 +141,7 @@ function eme_attributes_form( $eme_array ) {
 						<a href="#"><?php esc_html_e( 'Remove', 'events-made-easy' ); ?></a>
 					</td>
 					<td>
-			<textarea rows="2" cols="40" id="eme_attr_<?php echo eme_esc_html( $count ); ?>_id" name="eme_attr_<?php echo eme_esc_html( $count ); ?>_name"></textarea>
+			<textarea rows="2" cols="40" id="eme_attr_<?php echo $count; ?>_id" name="eme_attr_<?php echo $count; ?>_name"></textarea>
 					</td>
 					</tr>
 					<?php

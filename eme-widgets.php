@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 // enable shortcodes in widgets, if wanted
@@ -28,7 +28,7 @@ class WP_Widget_eme_list extends WP_Widget {
 		$limit                = isset( $instance['limit'] ) ? intval( $instance['limit'] ) : 5;
 		$scope                = empty( $instance['scope'] ) ? 'future' : urlencode( $instance['scope'] );
 		$showperiod           = empty( $instance['showperiod'] ) ? '' : $instance['showperiod'];
-		$show_ongoing         = isset( $instance['show_ongoing'] ) ? $instance['show_ongoing'] : true;
+		$show_ongoing         = empty( $instance['show_ongoing'] ) ? false : true;
 		$order                = empty( $instance['order'] ) ? 'ASC' : $instance['order'];
 		$header               = empty( $instance['header'] ) ? '<ul>' : $instance['header'];
 		$footer               = empty( $instance['footer'] ) ? '</ul>' : $instance['footer'];
@@ -263,7 +263,7 @@ class WP_Widget_eme_calendar extends WP_Widget {
 			$instance['authorid'] = -1;
 		}
 		$title       = apply_filters( 'widget_title', $instance['title'] );
-		$long_events = isset( $instance['long_events'] ) ? $instance['long_events'] : false;
+		$long_events = empty( $instance['long_events'] ) ? false : true;
 		$category    = empty( $instance['category'] ) ? '' : $instance['category'];
 		$notcategory = empty( $instance['notcategory'] ) ? '' : $instance['notcategory'];
 		$holiday_id  = empty( $instance['holiday_id'] ) ? 0 : $instance['holiday_id'];

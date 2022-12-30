@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 function eme_new_event() {
@@ -3984,7 +3984,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 			'long_events'                => $long_events,
 			'event_ids'                  => $event_ids,
 			'location_id'                => $location_id,
-			'show_ongoing'               => $show_ongoing = 1,
+			'show_ongoing'               => $show_ongoing,
 			'user_registered_only'       => $user_registered_only,
 			'link_showperiod'            => $link_showperiod,
 			'notcategory'                => $notcategory,

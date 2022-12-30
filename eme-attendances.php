@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 function eme_db_insert_attendance( $type, $person_id, $attendance_date = '', $related_id = 0 ) {
@@ -18,9 +18,9 @@ function eme_db_insert_attendance( $type, $person_id, $attendance_date = '', $re
 	}
 	$line['related_id'] = intval( $related_id );
 	if ( $wpdb->insert( $table_name, $line ) ) {
-				return true;
+		return true;
 	} else {
-			return false;
+		return false;
 	}
 }
 
@@ -31,7 +31,7 @@ function eme_delete_old_attendances() {
 	$eme_date_obj                = new ExpressiveDate( 'now', $eme_timezone );
 	$remove_old_attendances_days = get_option( 'eme_gdpr_remove_old_attendances_days' );
 	if ( empty( $remove_old_attendances_days ) ) {
-			return;
+		return;
 	} else {
 		$remove_old_attendances_days = abs( $remove_old_attendances_days );
 	}

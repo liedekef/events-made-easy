@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 function eme_new_recurrence() {
@@ -37,7 +37,7 @@ function eme_get_recurrence_days( $recurrence ) {
 		$specific_days = explode( ',', $recurrence['recurrence_specific_days'] );
 		asort( $specific_days );
 		foreach ( $specific_days as $day ) {
-				array_push( $matching_days, $day );
+			array_push( $matching_days, $day );
 		}
 		return $matching_days;
 	}

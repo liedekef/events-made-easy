@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-		exit; // Exit if accessed directly.
+	exit; // Exit if accessed directly.
 }
 
 function eme_new_country() {
@@ -80,7 +80,7 @@ function eme_countries_page() {
 									++$inserted;
 								} else {
 									++$errors;
-									$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
+									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
 							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
@@ -139,7 +139,7 @@ function eme_countries_page() {
 									++$inserted;
 								} else {
 									++$errors;
-									$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
+									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
 							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
@@ -508,12 +508,12 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
       <table class='form-table'>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='name'>" . __( 'State name', 'events-made-easy' ) . "</label></th>
-               <td><input name='name' id='name' required='required' type='text' value='" . eme_esc_html( $state['name'] ) . "' size='40'><br>
+               <td><input name='name' id='name' required='required' type='text' value='" . esc_html( $state['name'] ) . "' size='40'><br>
                  " . __( 'The name of the state', 'events-made-easy' ) . "</td>
             </tr>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='value'>" . __( 'Code', 'events-made-easy' ) . "</label></th>
-	       <td><input name='code' id='code' type='text' value='" . eme_esc_html( $state['code'] ) . "' size='40'>
+	       <td><input name='code' id='code' type='text' value='" . esc_html( $state['code'] ) . "' size='40'>
                <br>" . sprintf( __( 'See <a href="%s">here</a> for more info on state codes', 'events-made-easy' ), 'https://wikipedia.org/wiki/ISO_3166-2' ) . '
                <br>' . __( 'The code should consist of 2 letters. An example would be the code "WA" for "Washington, US"', 'events-made-easy' ) . "
                </td>
@@ -571,29 +571,29 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
 
       <form name='edit_countries' id='edit_countries' method='post' action='" . admin_url( "admin.php?page=$plugin_page" ) . "'>
       <input type='hidden' name='eme_admin_action' value='do_editcountry'>
-      <input type='hidden' name='id' value='" . $country_id . "'>
+      <input type='hidden' name='id' value='" . esc_attr( $country_id ) . "'>
       $nonce_field
       <table class='form-table'>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='name'>" . __( 'Country name', 'events-made-easy' ) . "</label></th>
-               <td><input name='name' id='name' required='required' type='text' value='" . eme_esc_html( $country['name'] ) . "' size='40'><br>
+               <td><input name='name' id='name' required='required' type='text' value='" . esc_attr( $country['name'] ) . "' size='40'><br>
                  " . __( 'The name of the country', 'events-made-easy' ) . "</td>
             </tr>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='alpha_2'>" . __( 'Alpha-2', 'events-made-easy' ) . "</label></th>
-               <td><input name='alpha_2' id='alpha_2' required='required' type='text' value='" . eme_esc_html( $country['alpha_2'] ) . "' size='40'></td>
+               <td><input name='alpha_2' id='alpha_2' required='required' type='text' value='" . esc_attr( $country['alpha_2'] ) . "' size='40'></td>
             </tr>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='alpha_3'>" . __( 'Alpha-3', 'events-made-easy' ) . "</label></th>
-               <td><input name='alpha_3' id='alpha_3' required='required' type='text' value='" . eme_esc_html( $country['alpha_3'] ) . "' size='40'></td>
+               <td><input name='alpha_3' id='alpha_3' required='required' type='text' value='" . esc_attr( $country['alpha_3'] ) . "' size='40'></td>
             </tr>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='num_3'>" . __( 'Num-3', 'events-made-easy' ) . "</label></th>
-               <td><input name='num_3' id='num_3' required='required' type='text' value='" . eme_esc_html( $country['num_3'] ) . "' size='40'></td>
+               <td><input name='num_3' id='num_3' required='required' type='text' value='" . esc_attr( $country['num_3'] ) . "' size='40'></td>
             </tr>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='lang'>" . __( 'Language', 'events-made-easy' ) . "</label></th>
-	       <td><input name='language' id='language' type='text' value='" . eme_esc_html( $country['lang'] ) . "' size='40'>
+	       <td><input name='language' id='language' type='text' value='" . _esc_attr( $country['lang'] ) . "' size='40'>
                <br>" . __( 'The language should correspond to one of the WordPress languages you want to support, or leave it empty as a default or fallback. Some examples are: nl, fr, en, de', 'events-made-easy' ) . '
                </td>
             </tr>

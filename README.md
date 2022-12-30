@@ -84,6 +84,18 @@ After the installation, Events Made Easy add a top level "Events" menu to your W
 
 Events list and calendars can be added to your blogs through widgets, shortcodes and placeholders. See the full documentation at the [Events Made Easy Support Page](https://www.e-dynamics.be/wordpress/).
  
+## Translations and how to translate
+
+You can find the latest versions of language files [here](https://github.com/liedekef/events-made-easy/tree/main/langs)
+
+Here is how to translate any string in a language of your choice:
+
+First, download and install poedit (or any language editor that can handle ".po" files). Then open the .po language file of choice, and open as “template file” the events-made-easy.pot file. Then you’ll see all strings not correctly translated. It’s very easy. Once you press save (after you finished editing), poedit created (compiles) the .mo file for you, so you can then send me the .po and .mo file. Or create a pull request on github with the new files.
+
+See also [locazing a WP plugin using poedit](http://weblogtoolscollection.com/archives/2007/08/27/localizing-a-wordpress-plugin-using-poedit/)
+
+I always forget to update the events-made-easy.pot (template translation) file, so mail me when you think it is out of date 🙂
+
 ## Frequently Asked Questions
 
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).

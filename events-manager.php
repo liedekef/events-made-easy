@@ -511,6 +511,7 @@ function eme_uninstall( $networkwide ) {
 }
 
 function _eme_uninstall( $force_drop = 0 ) {
+	global $wpdb;
 	$drop_data     = get_option( 'eme_uninstall_drop_data' );
 	$drop_settings = get_option( 'eme_uninstall_drop_settings' );
 
@@ -537,8 +538,8 @@ function _eme_uninstall( $force_drop = 0 ) {
 	}
 
 	if ( $drop_data || $force_drop ) {
-		// during uninstall, the prefix changes per blog, so get it here
-		$db_prefix = eme_get_db_prefix();
+		// during uninstall, we only take the prefix per blog (not based on the settings "is_multisite() && get_option( 'eme_multisite_active' )" in the function  eme_get_db_prefix)
+		$db_prefix = $wpdb->prefix;
 		eme_drop_table( $db_prefix . EVENTS_TBNAME );
 		eme_drop_table( $db_prefix . RECURRENCE_TBNAME );
 		eme_drop_table( $db_prefix . LOCATIONS_TBNAME );

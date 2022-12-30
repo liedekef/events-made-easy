@@ -681,15 +681,15 @@ function eme_admin_notices() {
 			_e( 'If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!', 'events-made-easy' );
 			?>
 	<br><br>
-<a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurring=0&currency_code=EUR"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!"></a>
+PayPal: <a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurring=0&currency_code=EUR"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!"></a>
+	<br><br>
+Liberapay: <a href="https://liberapay.com/frankyvl/donate"><img alt="Donate using Liberapay" src="https://liberapay.com/assets/widgets/donate.svg"></a>
+	<br><br>
 			<?php
 			echo sprintf( __( '<a href="%s" title="I already donated">I already donated.</a>', 'events-made-easy' ), add_query_arg( array( 'eme_notice_ignore' => 'donate' ), remove_query_arg( 'eme_notice_ignore' ) ) );
 			?>
-</form>
-
 	</div>
 </div>
-
 			<?php
 		}
 	}

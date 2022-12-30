@@ -5,13 +5,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_template() {
-	$template               = array(
+	$template               = [
 		'name'        => '',
 		'description' => '',
 		'format'      => '',
 		'type'        => '',
-		'properties'  => array(),
-	);
+		'properties'  => [],
+	];
 	$template['properties'] = eme_init_template_props( $template['properties'] );
 	return $template;
 }
@@ -39,7 +39,7 @@ function eme_init_template_props( $props ) {
 }
 
 function eme_template_types() {
-	$arr = array(
+	$arr = [
 		''               => __( 'All', 'events-made-easy' ),
 		'event'          => __( 'Event', 'events-made-easy' ),
 		'rsvpform'       => __( 'RSVP form', 'events-made-easy' ),
@@ -50,7 +50,7 @@ function eme_template_types() {
 		'shortcodes'     => __( 'Only used in shortcodes', 'events-made-easy' ),
 		'pdf'            => __( 'PDF output template', 'events-made-easy' ),
 		'html'           => __( 'HTML output template', 'events-made-easy' ),
-	);
+	];
 	return $arr;
 }
 
@@ -100,8 +100,8 @@ function eme_templates_page() {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		if ( $_POST['eme_admin_action'] == 'do_edittemplate' && isset( $_POST['description'] ) && isset( $_POST['template_format'] ) ) {
 			// template update required
-			$template                = array();
-			$properties              = array();
+			$template                = [];
+			$properties              = [];
 			$template['name']        = eme_sanitize_request( $_POST['name'] );
 			$template['description'] = eme_sanitize_request( $_POST['description'] );
 			$template['type']        = eme_sanitize_request( $_POST['type'] );
@@ -121,7 +121,7 @@ function eme_templates_page() {
 				$message           = __( "When choosing 'custom' as PDF size, please specify width and height.", 'events-made-easy' );
 			} elseif ( isset( $_POST['template_id'] ) && intval( $_POST['template_id'] ) > 0 ) {
 				$template_id       = intval( $_POST['template_id'] );
-				$validation_result = $wpdb->update( $templates_table, $template, array( 'id' => $template_id ) );
+				$validation_result = $wpdb->update( $templates_table, $template, [ 'id' => $template_id ] );
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully edited the template.', 'events-made-easy' );
 				} else {
@@ -242,12 +242,12 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 	$template_types      = eme_template_types();
 	$nonce_field         = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	$eme_editor_settings = eme_get_editor_settings();
-	$orientation_array   = array(
+	$orientation_array   = [
 		'portrait'  => __( 'Portrait', 'events-made-easy' ),
 		'landscape' => __( 'Landscape', 'events-made-easy' ),
-	);
+	];
 
-	$size_array = array( 'custom' => __( 'Custom', 'events-made-easy' ) );
+	$size_array = [ 'custom' => __( 'Custom', 'events-made-easy' ) ];
 	require_once 'dompdf/2.0.1/vendor/autoload.php';
 	foreach ( Dompdf\Adapter\CPDF::$PAPER_SIZES as $key => $val ) {
 		$size_array[ $key ] = strtoupper( $key );
@@ -380,7 +380,7 @@ function eme_get_templates_name_id( $type = '', $strict = 0 ) {
 
 function eme_get_templates_array_by_id( $type = '' ) {
 	$templates       = eme_get_templates_name_id( $type );
-	$templates_by_id = array();
+	$templates_by_id = [];
 	if ( is_array( $templates ) && count( $templates ) > 0 ) {
 		$templates_by_id[0] = '&nbsp;';
 	} else {
@@ -403,7 +403,7 @@ function eme_get_template( $template_id ) {
 		$template        = $wpdb->get_row( $sql, ARRAY_A );
 		if ( $template !== false ) {
 			if ( empty( $template['properties'] ) ) {
-				$template['properties'] = array();
+				$template['properties'] = [];
 			}
 			$template['properties'] = eme_init_template_props( eme_unserialize( $template['properties'] ) );
 			wp_cache_add( "eme_template $template_id", $template, '', 10 );
@@ -469,12 +469,12 @@ function eme_ajax_templates_list() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$table          = $eme_db_prefix . TEMPLATES_TBNAME;
 	$template_types = eme_template_types();
-	$jTableResult   = array();
+	$jTableResult   = [];
 	$search_type    = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';
 	$search_name    = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 
 	$where     = '';
-	$where_arr = array();
+	$where_arr = [];
 	if ( ! empty( $search_name ) ) {
 		$where_arr[] = "name like '%" . $search_name . "%'";
 	}
@@ -545,7 +545,7 @@ function eme_ajax_get_template() {
 	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
 		wp_die();
 	}
-	$return = array();
+	$return = [];
 	if ( isset( $_REQUEST['template_id'] ) && intval( $_REQUEST['template_id'] ) > 0 ) {
 		$return['htmlmessage'] = eme_get_template_format( $_REQUEST['template_id'] );
 	} else {

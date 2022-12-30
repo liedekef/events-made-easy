@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_payment_gateways() {
-	$pgs = array(
+	$pgs = [
 		'paypal'       => __( 'Paypal', 'events-made-easy' ),
 		'legacypaypal' => __( 'Legacy Paypal', 'events-made-easy' ),
 		'2co'          => __( '2Checkout', 'events-made-easy' ),
@@ -22,7 +22,7 @@ function eme_payment_gateways() {
 		'mercadopago'  => __( 'Mercado Pago', 'events-made-easy' ),
 		'fondy'        => __( 'Fondy', 'events-made-easy' ),
 		'offline'      => __( 'Offline', 'events-made-easy' ),
-	);
+	];
 
 	// allow people to change the sequence or (in the future) even add their own payment gateway
 	if ( has_filter( 'eme_payment_gateways' ) ) {
@@ -32,9 +32,9 @@ function eme_payment_gateways() {
 }
 
 function eme_is_offline_pg( $pg ) {
-	$pgs = array(
+	$pgs = [
 		'offline',
-	);
+	];
 	if ( has_filter( 'eme_offline_payment_gateways' ) ) {
 		$pgs = apply_filters( 'eme_offline_payment_gateways', $pgs );
 	}
@@ -88,7 +88,7 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	// if the booking was userpending, confirm it and set a message
 	if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
 		// we arrive here, so: mark all the bookings as confirmed by the user and continue
-		$booking_ids = array();
+		$booking_ids = [];
 		foreach ( $bookings as $booking ) {
 			$booking_ids[] = $booking['booking_id'];
 		}
@@ -444,7 +444,7 @@ function eme_webmoney_form( $item_name, $payment, $baseprice, $cur, $multi_booki
 	$payment_id        = $payment['id'];
 	$success_link      = eme_payment_return_url( $payment, 0 );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'webmoney_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'webmoney_notification' ], $events_page_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -578,7 +578,7 @@ function eme_worldpay_form( $item_name, $payment, $baseprice, $cur, $multi_booki
 	$payment_id       = $payment['id'];
 	// $success_link = eme_payment_return_url($payment,0);
 	// $fail_link = eme_payment_return_url($payment,1);
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'worldpay_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'worldpay_notification' ], $events_page_link );
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
 		$filtername  = 'eme_member_paymentform_description_filter';
@@ -656,8 +656,8 @@ function eme_opayo_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 	$fail_link        = eme_payment_return_url( $payment, 1 );
 	// opayo doesn't use a notification url, but sends the status along as part of the return url
 	// so we add the notification info to it too, so we can process paid info as usual
-	$success_link = add_query_arg( array( 'eme_eventAction' => 'opayo_notification' ), $success_link );
-	$fail_link    = add_query_arg( array( 'eme_eventAction' => 'opayo_notification' ), $fail_link );
+	$success_link = add_query_arg( [ 'eme_eventAction' => 'opayo_notification' ], $success_link );
+	$fail_link    = add_query_arg( [ 'eme_eventAction' => 'opayo_notification' ], $fail_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -692,7 +692,7 @@ function eme_opayo_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 	$button_below   = get_option( 'eme_' . $gateway . '_button_below' );
 	$button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
-	$person = array();
+	$person = [];
 	if ( $payment['target'] == 'member' ) {
 			$member = eme_get_member_by_paymentid( $payment_id );
 		if ( $member ) {
@@ -709,7 +709,7 @@ function eme_opayo_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 			$person = eme_new_person();
 	}
 
-	$query = array(
+	$query = [
 		'VendorTxCode'       => $payment_id,
 		'Amount'             => number_format( $price, 2, '.', '' ),
 		'Currency'           => $cur,
@@ -730,7 +730,7 @@ function eme_opayo_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 		'DeliveryPostCode'   => $person['zip'],
 		'DeliveryState'      => $person['state_code'],
 		'DeliveryCountry'    => $person['country_code'],
-	);
+	];
 
 	require_once 'payment_gateways/opayo/eme-opayo-util.php';
 	$crypt = SagepayUtil::encryptAes( SagepayUtil::arrayToQueryString( $query ), $opayo_pwd );
@@ -763,12 +763,12 @@ function eme_braintree_form( $item_name, $payment, $baseprice, $cur, $multi_book
 
 	require_once 'payment_gateways/braintree/braintree-php-6.9.0/lib/Braintree.php';
 	$braintree_gateway = new Braintree\Gateway(
-		array(
+	    [
 			'environment' => $eme_braintree_env,
 			'merchantId'  => $eme_braintree_merchant_id,
 			'publicKey'   => $eme_braintree_public_key,
 			'privateKey'  => $eme_braintree_private_key,
-		)
+		]
 	);
 	$clientToken       = $braintree_gateway->clientToken()->generate();
 
@@ -847,7 +847,7 @@ function eme_sumup_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 	$events_page_link  = eme_get_events_page();
 	$payment_id        = $payment['id'];
 	$return_link       = eme_payment_return_url( $payment, 'sumup' );
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'sumup_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'sumup_notification' ], $events_page_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -878,12 +878,12 @@ function eme_sumup_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 	require_once 'payment_gateways/sumup/1.1.0/vendor/autoload.php';
 	try {
 		$sumup       = new \SumUp\SumUp(
-			array(
+		    [
 				'app_id'     => get_option( 'eme_sumup_app_id' ),
 				'app_secret' => get_option( 'eme_sumup_app_secret' ),
 				'grant_type' => 'client_credentials',
-				'scopes'     => array( 'payments' ),
-			)
+				'scopes'     => [ 'payments' ],
+			]
 		);
 		$accessToken = $sumup->getAccessToken();
 		$value       = $accessToken->getValue();
@@ -1091,7 +1091,7 @@ function eme_instamojo_form( $item_name, $payment, $baseprice, $cur, $multi_book
 	$events_page_link  = eme_get_events_page();
 	$payment_id        = $payment['id'];
 	$return_link       = eme_payment_return_url( $payment, 'instamojo' );
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'instamojo_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'instamojo_notification' ], $events_page_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -1326,7 +1326,7 @@ function eme_legacypaypal_form( $item_name, $payment, $baseprice, $cur, $multi_b
 	$payment_id        = $payment['id'];
 	$success_link      = eme_payment_return_url( $payment, 0 );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'legacypaypal_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'legacypaypal_notification' ], $events_page_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -1419,7 +1419,7 @@ function eme_mercadopago_form( $item_name, $payment, $baseprice, $cur, $multi_bo
 	$events_page_link  = eme_get_events_page();
 	$success_link      = eme_payment_return_url( $payment, 0 );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'mercadopago_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'mercadopago_notification' ], $events_page_link );
 
 	require_once 'payment_gateways/mercadopago/2.4.9/vendor/autoload.php';
 	MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
@@ -1493,7 +1493,7 @@ function eme_mercadopago_form( $item_name, $payment, $baseprice, $cur, $multi_bo
 	$item->quantity    = 1;
 	$item->currency_id = $cur;
 	$item->unit_price  = $price;
-	$preference->items = array( $item );
+	$preference->items = [ $item ];
 
 	$preference->external_reference = $payment_id;
 	$preference->notification_url   = $notification_link;
@@ -1620,13 +1620,13 @@ function eme_complete_sumup_transaction( $payment ) {
 	require_once 'payment_gateways/sumup/1.1.0/vendor/autoload.php';
 	try {
 			$sumup = new \SumUp\SumUp(
-				array(
+			    [
 					'app_id'     => $eme_sumup_app_id,
 					'app_secret' => $eme_sumup_app_secret,
 					'grant_type' => 'client_credentials',
-					'scopes'     => array( 'payments', 'transactions.history' ),
+					'scopes'     => [ 'payments', 'transactions.history' ],
 					//'scopes'      => ['transactions.history']
-				)
+				]
 			);
 			$accessToken = $sumup->getAccessToken();
 			$value       = $accessToken->getValue();
@@ -1734,9 +1734,9 @@ function eme_complete_fondy_transaction( $payment ) {
 	\Cloudipsp\Configuration::setSecretKey( $eme_fondy_secret_key );
 
 	$order_id = "ep-{$payment['id']}";
-	$data     = array(
+	$data     = [
 		'order_id' => $order_id,
-	);
+	];
 
 	$orderStatus = \Cloudipsp\Order::status( $data );
 	$order       = $orderStatus->getData();
@@ -1926,9 +1926,9 @@ function eme_notification_2co() {
 
 	if ( $_POST['message_type'] == 'ORDER_CREATED'
 		|| $_POST['message_type'] == 'INVOICE_STATUS_CHANGED' ) {
-		$insMessage = array();
+		$insMessage = [];
 		foreach ( $_POST as $k => $v ) {
-			$insMessage[ $k ] = $v;
+			$insMessage[ eme_sanitize_request($k) ] = eme_sanitize_request($v);
 		}
 
 		$hashSid = $insMessage['vendor_id'];
@@ -2039,12 +2039,12 @@ function eme_notification_sumup() {
 	require_once 'payment_gateways/sumup/1.1.0/vendor/autoload.php';
 	try {
 			$sumup       = new \SumUp\SumUp(
-				array(
+			    [
 					'app_id'     => $eme_sumup_app_id,
 					'app_secret' => $eme_sumup_app_secret,
 					'grant_type' => 'client_credentials',
-					'scopes'     => array( 'payments', 'transactions.history' ),
-				)
+					'scopes'     => [ 'payments', 'transactions.history' ],
+				]
 			);
 			$accessToken = $sumup->getAccessToken();
 			$value       = $accessToken->getValue();
@@ -2085,9 +2085,9 @@ function eme_notification_stripe() {
 	// verify the signature
 	try {
 		$event = \Stripe\Webhook::constructEvent(
-			$payload,
-			$sig_header,
-			$webhook_secret
+		    $payload,
+		    $sig_header,
+		    $webhook_secret
 		);
 	} catch ( \UnexpectedValueException $e ) {
 		// Invalid payload
@@ -2114,8 +2114,8 @@ function eme_notification_fondy() {
 
 	$gateway = 'fondy';
 
-	$merchant_id = get_option( "eme_${gateway}_merchant_id" );
-	$secret_key  = get_option( "eme_${gateway}_secret_key" );
+	$merchant_id = get_option( "eme_{$gateway}_merchant_id" );
+	$secret_key  = get_option( "eme_{$gateway}_secret_key" );
 	if ( ! $merchant_id || ! $secret_key ) {
 		http_response_code( 500 );
 		exit;
@@ -2150,7 +2150,7 @@ function eme_stripe_webhook() {
 	}
 	// do nothing if the events page is on localhost
 	$events_page_link  = eme_get_events_page();
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'stripe_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'stripe_notification' ], $events_page_link );
 	if ( strstr( $events_page_link, 'localhost' ) ) {
 		update_option( 'eme_stripe_webhook_error', __( 'since this is a site running on localhost, no webhook will be created', 'events-made-easy' ) );
 		return;
@@ -2162,7 +2162,7 @@ function eme_stripe_webhook() {
 	// first check all webhooks, delete the one matching our url and recreate it, otherwise we can't get the secret
 	$webhooks = null;
 	try {
-		$webhooks = \Stripe\WebhookEndpoint::all( array( 'limit' => 100 ) );
+		$webhooks = \Stripe\WebhookEndpoint::all( [ 'limit' => 100 ] );
 		if ( ! empty( $webhooks ) ) {
 			foreach ( $webhooks->data as $webhook ) {
 				$endpoint_id = $webhook->id;
@@ -2180,10 +2180,10 @@ function eme_stripe_webhook() {
 	update_option( 'eme_stripe_webhook_secret', '' );
 	try {
 		$endpoint = \Stripe\WebhookEndpoint::create(
-			array(
+		    [
 				'url'            => $notification_link,
-				'enabled_events' => array( 'checkout.session.completed' ),
-			)
+				'enabled_events' => [ 'checkout.session.completed' ],
+			]
 		);
 	} catch ( \Stripe\Exception\InvalidRequestException $e ) {
 			update_option( 'eme_stripe_webhook_error', $e->getMessage() );
@@ -2224,40 +2224,40 @@ function eme_charge_paypal() {
 	// although mentioning items is not obligated, you need it or on the paypal window the amount and description won't show
 	$request = new \PayPalCheckoutSdk\Orders\OrdersCreateRequest();
 	$request->prefer( 'return=representation' );
-	$request->body = array(
+	$request->body = [
 		'intent'              => 'CAPTURE',
-		'purchase_units'      => array(
-			array(
+		'purchase_units'      => [
+			[
 				'reference_id' => $payment_id,
 				'description'  => "$description",
-				'amount'       => array(
+				'amount'       => [
 					'value'         => "$price",
 					'currency_code' => "$cur",
-					'breakdown'     => array(
-						'item_total' => array(
+					'breakdown'     => [
+						'item_total' => [
 							'value'         => "$price",
 							'currency_code' => "$cur",
-						),
-					),
-				),
-				'items'        => array(
-					array(
+						],
+					],
+				],
+				'items'        => [
+					[
 						'name'        => "$description",
 						'description' => "$description",
-						'unit_amount' => array(
+						'unit_amount' => [
 							'value'         => "$price",
 							'currency_code' => "$cur",
-						),
+						],
 						'quantity'    => '1',
-					),
-				),
-			),
-		),
-		'application_context' => array(
+					],
+				],
+			],
+		],
+		'application_context' => [
 			'cancel_url' => $fail_link,
 			'return_url' => $success_link,
-		),
-	);
+		],
+	];
 
 	$url = '';
 	try {
@@ -2318,27 +2318,27 @@ function eme_charge_stripe() {
 		$payment_methods_arr = $payment_methods;
 	}
 	$stripe_session = \Stripe\Checkout\Session::create(
-		array(
+	    [
 			'payment_method_types' => $payment_methods_arr,
-			'payment_intent_data'  => array( 'description' => $description ),
-			'line_items'           => array(
-				array(
-					'price_data' => array(
+			'payment_intent_data'  => [ 'description' => $description ],
+			'line_items'           => [
+				[
+					'price_data' => [
 						'currency'     => strtolower( $cur ),
 						'unit_amount'  => $price,
-						'product_data' => array(
+						'product_data' => [
 							'name'        => $item_name,
 							'description' => $description,
-						),
-					),
+						],
+					],
 					'quantity'   => 1,
-				),
-			),
+				],
+			],
 			'mode'                 => 'payment',
 			'client_reference_id'  => $payment_id,
 			'success_url'          => $success_link,
 			'cancel_url'           => $fail_link,
-		)
+		]
 	);
 
 	$stripe_session_id = $stripe_session->id;
@@ -2421,19 +2421,19 @@ function eme_charge_braintree() {
 		die( 'The nonce was not generated correctly' );
 	}
 	$braintree_gateway = new Braintree\Gateway(
-		array(
+	    [
 			'environment' => $eme_braintree_env,
 			'merchantId'  => $eme_braintree_merchant_id,
 			'publicKey'   => $eme_braintree_public_key,
 			'privateKey'  => $eme_braintree_private_key,
-		)
+		]
 	);
 	$result            = $braintree_gateway->transaction()->sale(
-		array(
+	    [
 			'amount'             => $price,
 			'paymentMethodNonce' => $_POST['braintree_nonce'],
 			'orderId'            => $payment_id,
-		)
+		]
 	);
 	if ( $result->success ) {
 		$transaction = $result->transaction;
@@ -2463,7 +2463,7 @@ function eme_charge_instamojo() {
 
 	$return_link       = eme_payment_return_url( $payment, 'instamojo' );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'instamojo_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'instamojo_notification' ], $events_page_link );
 
 	// no cheating
 	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_instamojo_nonce']), $price ) ) {
@@ -2480,13 +2480,13 @@ function eme_charge_instamojo() {
 	}
 	try {
 		$instamojo_payment = $api->paymentRequestCreate(
-			array(
+		    [
 				'purpose'      => $description,
 				'amount'       => "$price",
 				'redirect_url' => $return_link,
 				'webhook'      => $notification_link,
 
-			)
+			]
 		);
 		$url = $instamojo_payment['longurl'];
 	} catch ( Exception $e ) {
@@ -2522,9 +2522,9 @@ function eme_charge_mercadopago() {
 
 	require_once 'payment_gateways/mercadopago/2.4.9/vendor/autoload.php';
 	MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
-	$filter               = array(
+	$filter               = [
 		'external_reference' => $payment_id,
-	);
+	];
 	$paid_amount          = 0;
 	$mercadopago_payments = MercadoPago\Payment::search( $filter );
 	foreach ( $mercadopago_payments as $mercadopago_payment ) {
@@ -2548,8 +2548,8 @@ function eme_charge_mercadopago() {
 function eme_charge_fondy() {
 	$gateway = 'fondy';
 
-	$merchant_id = get_option( "eme_${gateway}_merchant_id" );
-	$secret_key  = get_option( "eme_${gateway}_secret_key" );
+	$merchant_id = get_option( "eme_{$gateway}_merchant_id" );
+	$secret_key  = get_option( "eme_{$gateway}_secret_key" );
 	if ( ! $merchant_id || ! $secret_key ) {
 		return;
 	}
@@ -2562,11 +2562,11 @@ function eme_charge_fondy() {
 	$payment = eme_get_payment( $payment_id );
 
 	$events_page_link  = eme_get_events_page();
-	$notification_link = add_query_arg( array( 'eme_eventAction' => "${gateway}_notification" ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 	$success_link      = eme_payment_return_url( $payment, 0 );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 
-	if ( ! wp_verify_nonce( eme_sanitize_request($_POST[ "eme_${gateway}_nonce" ]), "$price$cur" ) ) {
+	if ( ! wp_verify_nonce( eme_sanitize_request($_POST[ "eme_{$gateway}_nonce" ]), "$price$cur" ) ) {
 		header( "Location: $fail_link" );
 		exit;
 	}
@@ -2575,16 +2575,16 @@ function eme_charge_fondy() {
 	\Cloudipsp\Configuration::setMerchantId( $merchant_id );
 	\Cloudipsp\Configuration::setSecretKey( $secret_key );
 
-	$data = array(
+	$data = [
 		'order_desc'          => $description,
 		'amount'              => $price,
 		'currency'            => $cur,
 		'server_callback_url' => $notification_link,
 		'response_url'        => $success_link,
-		'merchant_data'       => array(
+		'merchant_data'       => [
 			'payment_id' => $payment_id,
-		),
-	);
+		],
+	];
 
 	try {
 		$response = \Cloudipsp\Checkout::url( $data );
@@ -2617,13 +2617,13 @@ function eme_refund_booking_paypal( $booking ) {
 	if ( ! empty( $event ) ) {
 		$cur           = $event['currency'];
 		$request       = new \PayPalCheckoutSdk\Payments\CapturesRefundRequest( $booking['pg_pid'] );
-		$request->body = array(
+		$request->body = [
 			'amount' =>
-			array(
+			[
 				'value'         => $price,
 				'currency_code' => $cur,
-			),
-		);
+			],
+		];
 		try {
 			$response = $client->execute( $request );
 			return true;
@@ -2680,11 +2680,11 @@ function eme_refund_booking_instamojo( $booking ) {
 	}
 	try {
 		$response = $api->refundCreate(
-			array(
+		    [
 				'payment_id' => $booking['pg_pid'],
 				'type'       => 'QFL',
 				'body'       => __( 'Booking refunded', 'events-made-easy' ),
-			)
+			]
 		);
 		return true;
 	} catch ( Exception $e ) {
@@ -2696,8 +2696,8 @@ function eme_refund_booking_instamojo( $booking ) {
 function eme_refund_booking_fondy( $booking ) {
 	$gateway = 'fondy';
 
-	$merchant_id = get_option( "eme_${gateway}_merchant_id" );
-	$secret_key  = get_option( "eme_${gateway}_secret_key" );
+	$merchant_id = get_option( "eme_{$gateway}_merchant_id" );
+	$secret_key  = get_option( "eme_{$gateway}_secret_key" );
 	if ( ! $merchant_id || ! $secret_key ) {
 		return;
 	}
@@ -2707,17 +2707,17 @@ function eme_refund_booking_fondy( $booking ) {
 	\Cloudipsp\Configuration::setSecretKey( $secret_key );
 
 	try {
-		$order_data  = array(
+		$order_data  = [
 			'order_id' => $booking['pg_pid'],
-		);
+		];
 		$orderStatus = \Cloudipsp\Order::status( $order_data );
 		$order       = $orderStatus->getData();
 
-		$refund_data = array(
+		$refund_data = [
 			'order_id' => $booking['pg_pid'],
 			'amount'   => $order['amount'],
 			'currency' => $order['currency'],
-		);
+		];
 		$response    = \Cloudipsp\Order::reverse( $refund_data );
 		return $response->isReversed();
 	} catch ( \Exception $e ) {
@@ -2744,9 +2744,9 @@ function eme_refund_booking_stripe( $booking ) {
 		return;
 	}
 	$re = \Stripe\Refund::create(
-		array(
+	    [
 			'payment_intent' => $stripe_pi_id,
-		)
+		]
 	);
 	return true;
 }
@@ -2764,12 +2764,12 @@ function eme_refund_booking_braintree( $booking ) {
 
 	require_once 'payment_gateways/braintree/braintree-php-6.9.0/lib/Braintree.php';
 	$braintree_gateway = new Braintree\Gateway(
-		array(
+	    [
 			'environment' => $eme_braintree_env,
 			'merchantId'  => $eme_braintree_merchant_id,
 			'publicKey'   => $eme_braintree_public_key,
 			'privateKey'  => $eme_braintree_private_key,
-		)
+		]
 	);
 	$transaction_id    = $booking['pg_pid'];
 	$result            = $braintree_gateway->transaction()->refund( $transaction_id );
@@ -2791,7 +2791,7 @@ function eme_charge_mollie() {
 
 	$return_link       = eme_payment_return_url( $payment, 'mollie' );
 	$fail_link         = eme_payment_return_url( $payment, 'mollie' );
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'mollie_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'mollie_notification' ], $events_page_link );
 
 	// no cheating
 	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_mollie_nonce']), "$price$cur" ) ) {
@@ -2809,18 +2809,18 @@ function eme_charge_mollie() {
 	try {
 		$mollie->setApiKey( $api_key );
 		$mollie_payment = $mollie->payments->create(
-			array(
-				'amount'      => array(
+		    [
+				'amount'      => [
 					'currency' => $cur,
 					'value'    => sprintf( '%01.2f', $price ),
-				),
+				],
 				'description' => $description,
 				'redirectUrl' => $return_link,
 				'webhookUrl'  => $notification_link,
-				'metadata'    => array(
+				'metadata'    => [
 					'payment_id' => $payment_id,
-				),
-			)
+				],
+			]
 		);
 		$url            = $mollie_payment->getCheckoutUrl();
 	} catch ( \Mollie\Api\Exceptions\ApiException $e ) {
@@ -2877,14 +2877,14 @@ function eme_charge_payconiq() {
 	$payment          = eme_get_payment( $payment_id );
 
 	$gateway = 'payconiq';
-	$api_key = get_option( "eme_${gateway}_api_key" );
+	$api_key = get_option( "eme_{$gateway}_api_key" );
 	if ( ! $api_key ) {
 		return;
 	}
 
 	$return_link       = eme_payment_return_url( $payment, $gateway );
 	$fail_link         = eme_payment_return_url( $payment, $gateway );
-	$notification_link = add_query_arg( array( 'eme_eventAction' => 'payconiq_notification' ), $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => 'payconiq_notification' ], $events_page_link );
 
 	// no cheating
 	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_payconiq_nonce']), "$price$cur" ) ) {
@@ -2922,8 +2922,8 @@ function eme_charge_payconiq() {
 
 function eme_notification_payconiq( $payconiq_paymentid = 0 ) {
 	$gateway     = 'payconiq';
-	$api_key     = get_option( "eme_${gateway}_api_key" );
-	$merchant_id = get_option( "eme_${gateway}_merchant_id" );
+	$api_key     = get_option( "eme_{$gateway}_api_key" );
+	$merchant_id = get_option( "eme_{$gateway}_merchant_id" );
 	if ( ! $api_key ) {
 		return;
 	}
@@ -3001,12 +3001,12 @@ function eme_refund_booking_mollie( $booking ) {
 		$cur = $event['currency'];
 		if ( $mollie_payment->canBeRefunded() && $mollie_payment->amountRemaining->currency === $cur && $mollie_payment->amountRemaining->value >= $price ) {
 			$refund = $mollie_payment->refund(
-				array(
-					'amount' => array(
+			    [
+					'amount' => [
 						'currency' => "$cur",
 						'value'    => "$price",
-					),
-				)
+					],
+				]
 			);
 			return true;
 		} else {
@@ -3060,7 +3060,7 @@ function eme_notification_opayo() {
 }
 
 function eme_get_configured_pgs() {
-	$pgs = array();
+	$pgs = [];
 	if ( ! empty( get_option( 'eme_paypal_clientid' ) ) ) {
 		$pgs[] = 'paypal';
 	}
@@ -3198,7 +3198,7 @@ function eme_create_member_payment( $member_id ) {
 	$payments_table           = $eme_db_prefix . PAYMENTS_TBNAME;
 	$members_table            = $eme_db_prefix . MEMBERS_TBNAME;
 	$payment_id               = false;
-	$payment                  = array();
+	$payment                  = [];
 	$payment['random_id']     = eme_random_id();
 	$payment['target']        = 'member';
 	$payment['creation_date'] = current_time( 'mysql', false );
@@ -3223,7 +3223,7 @@ function eme_create_payment( $booking_ids ) {
 	}
 
 	$payment_id               = false;
-	$payment                  = array();
+	$payment                  = [];
 	$payment['random_id']     = eme_random_id();
 	$payment['target']        = 'booking';
 	$payment['creation_date'] = current_time( 'mysql', false );
@@ -3231,8 +3231,8 @@ function eme_create_payment( $booking_ids ) {
 		$payment_id      = $wpdb->insert_id;
 		$booking_ids_arr = explode( ',', $booking_ids );
 		foreach ( $booking_ids_arr as $booking_id ) {
-			$where                = array();
-			$fields               = array();
+			$where                = [];
+			$fields               = [];
 			$where['booking_id']  = $booking_id;
 			$fields['unique_nbr'] = eme_unique_nbr( $payment_id );
 			$fields['payment_id'] = $payment_id;
@@ -3588,10 +3588,10 @@ function eme_cancel_payment_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 			$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -3599,10 +3599,10 @@ function eme_cancel_payment_ajax() {
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), "cancel payment $payment_randomid" ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
-			)
+			]
 		);
 		wp_die();
 	}
@@ -3611,10 +3611,10 @@ function eme_cancel_payment_ajax() {
 		if ( ! eme_check_hcaptcha() ) {
 			$form_html = __( 'Please check the hCaptcha box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -3622,10 +3622,10 @@ function eme_cancel_payment_ajax() {
 		if ( ! eme_check_recaptcha() ) {
 			$form_html = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -3633,10 +3633,10 @@ function eme_cancel_payment_ajax() {
 		if ( ! eme_check_captcha( 1 ) ) {
 			$form_html = __( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -3654,10 +3654,10 @@ function eme_cancel_payment_ajax() {
 			$form_html = __( 'Booking already cancelled', 'events-made-easy' );
 		}
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
-			)
+			]
 		);
 		wp_die();
 	}
@@ -3703,10 +3703,10 @@ function eme_cancel_payment_ajax() {
 	// don't delete the linked payment, since the booking is in trash and can still be restored
 	// eme_delete_payment($booking['payment_id']);
 	echo wp_json_encode(
-		array(
+	    [
 			'Result'      => 'OK',
 			'htmlmessage' => $form_html,
-		)
+		]
 	);
 	wp_die();
 }

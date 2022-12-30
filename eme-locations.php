@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_location() {
-	$location = array(
+	$location = [
 		'location_name'         => '',
 		'location_address1'     => '',
 		'location_address2'     => '',
@@ -24,14 +24,14 @@ function eme_new_location() {
 		'location_external_ref' => '',
 		'location_image_id'     => 0,
 		'location_author'       => 0,
-		'location_attributes'   => array(),
-	);
+		'location_attributes'   => [],
+	];
 
 	$location['location_properties'] = eme_init_location_props();
 	return $location;
 }
 
-function eme_init_location_props( $props = array() ) {
+function eme_init_location_props( $props = [] ) {
 	if ( ! isset( $props['map_icon'] ) ) {
 		$props['map_icon'] = '';
 	}
@@ -112,7 +112,7 @@ function eme_locations_page() {
 			$message = __( 'You have no right to edit this location!', 'events-made-easy' );
 			eme_locations_table( $message );
 		} else {
-			$post_vars = array( 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_url', 'location_image_url', 'location_image_id', 'location_prefix', 'location_slug', 'location_latitude', 'location_longitude', 'location_author' );
+			$post_vars = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_url', 'location_image_url', 'location_image_id', 'location_prefix', 'location_slug', 'location_latitude', 'location_longitude', 'location_author' ];
 			foreach ( $post_vars as $post_var ) {
 				if ( isset( $_POST[ $post_var ] ) ) {
 					$location[ $post_var ] = eme_sanitize_request( $_POST[ $post_var ] );
@@ -127,7 +127,7 @@ function eme_locations_page() {
 				$location ['location_category_ids'] = '';
 			}
 
-			$location_attributes = array();
+			$location_attributes = [];
 			for ( $i = 1; isset( $_POST[ "eme_attr_{$i}_ref" ] ) && trim( $_POST[ "eme_attr_{$i}_ref" ] ) != ''; $i++ ) {
 				if ( trim( $_POST[ "eme_attr_{$i}_name" ] ) != '' ) {
 					$location_attributes[ $_POST[ "eme_attr_{$i}_ref" ] ] = eme_kses( $_POST[ "eme_attr_{$i}_name" ] );
@@ -135,10 +135,10 @@ function eme_locations_page() {
 			}
 			$location['location_attributes'] = $location_attributes;
 
-			$location_properties = array();
+			$location_properties = [];
 			$location_properties = eme_init_location_props( $location_properties );
 			// now for the select boxes, we need to set to 0 if not in the _POST
-			$select_location_post_vars = array( 'online_only' );
+			$select_location_post_vars = [ 'online_only' ];
 			foreach ( $select_location_post_vars as $post_var ) {
 				if ( ! isset( $_POST[ 'eme_loc_prop_' . $post_var ] ) ) {
 					$location_properties[ $post_var ] = 0;
@@ -201,7 +201,7 @@ function eme_import_csv_locations() {
 	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
 
 	//validate whether uploaded file is a csv file
-	$csvMimes = array( 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' );
+	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
 	if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
 		return sprintf( __( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 	}
@@ -244,7 +244,7 @@ function eme_import_csv_locations() {
 	if ( ! in_array( 'location_name', $headers ) || ! in_array( 'location_address1', $headers ) ) {
 		$result = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
-		$empty_props         = array();
+		$empty_props         = [];
 				$empty_props = eme_init_location_props( $empty_props );
 		// now loop over the rest
 		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
@@ -258,7 +258,7 @@ function eme_import_csv_locations() {
 					if ( preg_match( '/^att_(.*)$/', $key, $matches ) ) {
 										$att = $matches[1];
 						if ( ! isset( $line['location_attributes'] ) ) {
-							$line['location_attributes'] = array();
+							$line['location_attributes'] = [];
 						}
 										$line['location_attributes'][ $att ] = $value;
 					}
@@ -269,7 +269,7 @@ function eme_import_csv_locations() {
 					if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
 										$prop = $matches[1];
 						if ( ! isset( $line['location_properties'] ) ) {
-							$line['location_properties'] = array();
+							$line['location_properties'] = [];
 						}
 						if ( array_key_exists( $prop, $empty_props ) ) {
 							$line['location_properties'][ $prop ] = $value;
@@ -435,11 +435,11 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 						<p><?php esc_html_e( 'Author of this location: ', 'events-made-easy' ); ?>
 							<?php
 							wp_dropdown_users(
-								array(
+					    [
 									'name'     => 'location_author',
 									'selected' => $location_author,
-								)
-							);
+								]
+					);
 							?>
 						</p>
 					</div>
@@ -505,7 +505,7 @@ function eme_meta_box_div_location_name( $location ) {
 	$locations_prefixes = get_option( 'eme_permalink_locations_prefix', 'locations' );
 	if ( preg_match( '/,/', $locations_prefixes ) ) {
 			$locations_prefixes     = explode( ',', $locations_prefixes );
-			$locations_prefixes_arr = array();
+			$locations_prefixes_arr = [];
 		foreach ( $locations_prefixes as $locations_prefix ) {
 				$locations_prefixes_arr[ $locations_prefix ] = eme_permalink_convert( $locations_prefix );
 		}
@@ -765,7 +765,7 @@ function eme_meta_box_div_location_customfields( $location ) {
 	} elseif ( ! empty( $location['location_id'] ) ) {
 				$answers = eme_get_location_answers( $location['location_id'] );
 	} else {
-			$answers = array();
+			$answers = [];
 	}
 
 	foreach ( $formfields as $formfield ) {
@@ -889,9 +889,9 @@ function eme_locations_table( $message = '' ) {
 	</span>
 	<?php
 	$formfields               = eme_get_formfields( '', 'locations' );
-	$extrafields_arr          = array();
-	$extrafieldnames_arr      = array();
-	$extrafieldsearchable_arr = array();
+	$extrafields_arr          = [];
+	$extrafieldnames_arr      = [];
+	$extrafieldsearchable_arr = [];
 	foreach ( $formfields as $formfield ) {
 			$extrafields_arr[]          = $formfield['field_id'];
 			$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
@@ -957,9 +957,9 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 	global $wpdb,$eme_db_prefix;
 	$locations_table = $eme_db_prefix . LOCATIONS_TBNAME;
 	$events_table    = $eme_db_prefix . EVENTS_TBNAME;
-	$locations       = array();
+	$locations       = [];
 
-	$location_id_arr = array();
+	$location_id_arr = [];
 	$location_id     = '';
 	// the filter list overrides the settings
 	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
@@ -1060,7 +1060,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 			ksort( $locations );
 		}
 	} else {
-		$conditions = array();
+		$conditions = [];
 		if ( get_option( 'eme_categories_enabled' ) ) {
 			if ( is_numeric( $category ) ) {
 				if ( $category > 0 ) {
@@ -1070,7 +1070,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 					$conditions [] = "location_category_ids=''";
 			} elseif ( preg_match( '/,/', $category ) ) {
 				$category            = explode( ',', $category );
-				$category_conditions = array();
+				$category_conditions = [];
 				foreach ( $category as $cat ) {
 					if ( is_numeric( $cat ) && $cat > 0 ) {
 						$category_conditions[] = " FIND_IN_SET($cat,location_category_ids)";
@@ -1081,7 +1081,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 					$conditions [] = '(' . implode( ' OR', $category_conditions ) . ')';
 			} elseif ( preg_match( '/\+/', $category ) ) {
 					$category            = explode( '+', $category );
-					$category_conditions = array();
+					$category_conditions = [];
 				foreach ( $category as $cat ) {
 					if ( is_numeric( $cat ) && $cat > 0 ) {
 						$category_conditions[] = " FIND_IN_SET($cat,location_category_ids)";
@@ -1098,7 +1098,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 				$conditions[] = "location_category_ids != ''";
 			} elseif ( preg_match( '/,/', $notcategory ) ) {
 				$notcategory         = explode( ',', $notcategory );
-				$category_conditions = array();
+				$category_conditions = [];
 				foreach ( $notcategory as $cat ) {
 					if ( is_numeric( $cat ) && $cat > 0 ) {
 						$category_conditions[] = "(NOT FIND_IN_SET($cat,location_category_ids) OR location_category_ids IS NULL)";
@@ -1110,7 +1110,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 			} elseif ( preg_match( '/\+| /', $notcategory ) ) {
 				// url decoding of '+' is ' '
 				$notcategory         = preg_split( '/\+| /', $notcategory, 0, PREG_SPLIT_NO_EMPTY );
-				$category_conditions = array();
+				$category_conditions = [];
 				foreach ( $notcategory as $cat ) {
 					if ( is_numeric( $cat ) && $cat > 0 ) {
 						$category_conditions[] = "(NOT FIND_IN_SET($cat,location_category_ids) OR location_category_ids IS NULL)";
@@ -1216,10 +1216,10 @@ function eme_get_extra_location_data( $location ) {
 		}
 	}
 	$location['location_attributes'] = eme_unserialize( $location['location_attributes'] );
-	$location['location_attributes'] = ( ! is_array( $location['location_attributes'] ) ) ? array() : $location['location_attributes'];
+	$location['location_attributes'] = ( ! is_array( $location['location_attributes'] ) ) ? [] : $location['location_attributes'];
 
 	$location['location_properties'] = eme_unserialize( $location['location_properties'] );
-	$location['location_properties'] = ( ! is_array( $location['location_properties'] ) ) ? array() : $location['location_properties'];
+	$location['location_properties'] = ( ! is_array( $location['location_properties'] ) ) ? [] : $location['location_properties'];
 	$location['location_properties'] = eme_init_location_props( $location['location_properties'] );
 
 	if ( has_filter( 'eme_location_filter' ) ) {
@@ -1232,10 +1232,10 @@ function eme_get_extra_location_data( $location ) {
 function eme_get_city_location_ids( $cities ) {
 	global $wpdb,$eme_db_prefix;
 	$locations_table = $eme_db_prefix . LOCATIONS_TBNAME;
-	$location_ids    = array();
+	$location_ids    = [];
 	$conditions      = '';
 	if ( is_array( $cities ) ) {
-		$city_conditions = array();
+		$city_conditions = [];
 		foreach ( $cities as $city ) {
 			$city_conditions[] = " location_city = '" . esc_sql( $city ) . "'";
 		}
@@ -1253,10 +1253,10 @@ function eme_get_city_location_ids( $cities ) {
 function eme_get_country_location_ids( $countries ) {
 	global $wpdb,$eme_db_prefix;
 	$locations_table = $eme_db_prefix . LOCATIONS_TBNAME;
-	$location_ids    = array();
+	$location_ids    = [];
 	$conditions      = '';
 	if ( is_array( $countries ) ) {
-		$country_conditions = array();
+		$country_conditions = [];
 		foreach ( $countries as $country ) {
 			$country_conditions[] = " location_country = '" . esc_sql( $country ) . "'";
 		}
@@ -1285,7 +1285,7 @@ function eme_sanitize_location( $location ) {
 	}
 
 	// check all variables that need to be urls
-	$url_vars = array( 'location_url', 'location_image_url' );
+	$url_vars = [ 'location_url', 'location_image_url' ];
 	foreach ( $url_vars as $url_var ) {
 		if ( ! empty( $location[ $url_var ] ) ) {
 			//make sure url's have a correct prefix
@@ -1313,7 +1313,7 @@ function eme_sanitize_location( $location ) {
 	}
 
 	// some things just need to be integers, let's brute-force them
-	$int_vars = array( 'location_image_id', 'location_author' );
+	$int_vars = [ 'location_image_id', 'location_author' ];
 	foreach ( $int_vars as $int_var ) {
 		if ( isset( $location[ $int_var ] ) ) {
 			$location[ $int_var ] = intval( $location[ $int_var ] );
@@ -1324,11 +1324,11 @@ function eme_sanitize_location( $location ) {
 }
 
 function eme_validate_location( $location ) {
-	$location_required_fields = array(
+	$location_required_fields = [
 		'location_name'     => __( 'The location name', 'events-made-easy' ),
 		'location_address1' => __( 'The location address', 'events-made-easy' ),
 		'location_city'     => __( 'The location city', 'events-made-easy' ),
-	);
+	];
 	$troubles                 = '';
 	if ( empty( $location['location_name'] ) ) {
 		$troubles .= '<li>' . sprintf( __( '%s is missing!', 'events-made-easy' ), $location_required_fields['location_name'] ) . '</li>';
@@ -1371,7 +1371,7 @@ function eme_update_location( $line, $location_id ) {
 	$new_line['location_properties'] = eme_serialize( $new_line['location_properties'] );
 
 	$wpdb->show_errors( true );
-	$where = array( 'location_id' => $location_id );
+	$where = [ 'location_id' => $location_id ];
 	if ( $wpdb->update( $table_name, $new_line, $where ) === false ) {
 		$wpdb->print_error();
 		$wpdb->show_errors( false );
@@ -1514,8 +1514,8 @@ function eme_global_map_shortcode( $atts ) {
 		// the locations shortcode has been deteced, so we indicate
 		// that we want the javascript in the footer as well
 		extract(
-			shortcode_atts(
-				array(
+		    shortcode_atts(
+			    [
 					'show_locations'    => true,
 					'letter_icons'      => true,
 					'show_events'       => false,
@@ -1531,8 +1531,8 @@ function eme_global_map_shortcode( $atts ) {
 					'width'             => 450,
 					'height'            => 300,
 					'list_location'     => 'after',
-				),
-				$atts
+				],
+			    $atts
 			)
 		);
 		$eventful          = filter_var( $eventful, FILTER_VALIDATE_BOOLEAN );
@@ -1659,10 +1659,10 @@ function eme_global_map_shortcode( $atts ) {
 			// remove the offset info
 			$this_page_url = remove_query_arg( 'eme_offset', $this_page_url );
 			if ( $prev_text != '' ) {
-				$pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( array( 'eme_offset' => $prev_offset ), $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
+				$pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
 			}
 			if ( $next_text != '' ) {
-				$pagination_top .= "<a class='eme_nav_right' href='" . add_query_arg( array( 'eme_offset' => $next_offset ), $this_page_url ) . "'>$next_text &gt;&gt;</a>";
+				$pagination_top .= "<a class='eme_nav_right' href='" . add_query_arg( [ 'eme_offset' => $next_offset ], $this_page_url ) . "'>$next_text &gt;&gt;</a>";
 			}
 			$pagination_top   .= "<span class='eme_nav_center'>$scope_text</span>";
 			$pagination_top   .= '</div>';
@@ -1722,14 +1722,14 @@ function eme_global_map_shortcode( $atts ) {
 function eme_single_location_map_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'id'     => '',
 				'width'  => 0,
 				'height' => 0,
 				'zoom'   => get_option( 'eme_indiv_zoom_factor' ),
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$location = eme_get_location( $id );
@@ -1764,13 +1764,13 @@ function eme_display_single_location( $location_id, $template_id = 0, $ignore_ur
 function eme_get_location_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'id'          => '',
 				'template_id' => 0,
 				'ignore_url'  => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$ignore_url = filter_var( $ignore_url, FILTER_VALIDATE_BOOLEAN );
@@ -1780,8 +1780,8 @@ function eme_get_location_shortcode( $atts ) {
 function eme_get_locations_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'eventful'           => false,
 				'ignore_filter'      => false,
 				'random_order'       => false,
@@ -1794,8 +1794,8 @@ function eme_get_locations_shortcode( $atts ) {
 				'template_id'        => 0,
 				'template_id_header' => 0,
 				'template_id_footer' => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$eventful      = filter_var( $eventful, FILTER_VALIDATE_BOOLEAN );
@@ -2105,7 +2105,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			}
 		} elseif ( preg_match( '/#_LOCATIONIMAGE$/', $result ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $location['location_image_id'], 'full', 0, array( 'class' => 'eme_location_image' ) );
+				$replacement = wp_get_attachment_image( $location['location_image_id'], 'full', 0, [ 'class' => 'eme_location_image' ] );
 			} elseif ( ! empty( $location['location_image_url'] ) ) {
 				$url = $location['location_image_url'];
 				if ( $target == 'html' ) {
@@ -2133,7 +2133,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			}
 		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB$/', $result ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $location['location_image_id'], get_option( 'eme_thumbnail_size' ), 0, array( 'class' => 'eme_location_image' ) );
+				$replacement = wp_get_attachment_image( $location['location_image_id'], get_option( 'eme_thumbnail_size' ), 0, [ 'class' => 'eme_location_image' ] );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -2144,7 +2144,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			}
 		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB\{(.+?)\}/', $result, $matches ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $location['location_image_id'], $matches[1], 0, array( 'class' => 'eme_location_image' ) );
+				$replacement = wp_get_attachment_image( $location['location_image_id'], $matches[1], 0, [ 'class' => 'eme_location_image' ] );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -2280,7 +2280,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 		} elseif ( preg_match( '/^#_LOCATIONCATEGORIES\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
 			$include_cats         = $matches[1];
 			$exclude_cats         = $matches[2];
-			$extra_conditions_arr = array();
+			$extra_conditions_arr = [];
 			$order_by             = '';
 			if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
@@ -2291,7 +2291,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			}
 			$extra_conditions = join( ' AND ', $extra_conditions_arr );
 			$categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
-			$cat_names        = array();
+			$cat_names        = [];
 			foreach ( $categories as $cat_name ) {
 				if ( $target == 'html' ) {
 					array_push( $cat_names, eme_trans_esc_html( $cat_name, $lang ) );
@@ -2314,7 +2314,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 		} elseif ( preg_match( '/^#_LOCATIONCATEGORIES_CSS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
 			$include_cats         = $matches[1];
 			$exclude_cats         = $matches[2];
-			$extra_conditions_arr = array();
+			$extra_conditions_arr = [];
 			$order_by             = '';
 			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
@@ -2338,7 +2338,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 		} elseif ( preg_match( '/#_LOCATIONCATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
 			$include_cats         = $matches[1];
 			$exclude_cats         = $matches[2];
-			$extra_conditions_arr = array();
+			$extra_conditions_arr = [];
 			$order_by             = '';
 			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
@@ -2630,9 +2630,9 @@ function eme_add_directions_form( $location ) {
 }
 
 function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
-	$json_locations = array();
+	$json_locations = [];
 	foreach ( $locations as $location ) {
-		$json_location = array();
+		$json_location = [];
 
 		// we need lat and long, otherwise it fails
 		if ( empty( $location['location_latitude'] ) || empty( $location['location_longitude'] ) ) {
@@ -2662,14 +2662,14 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
 
 	$marker_clustering_val = ( $marker_clustering ) ? 'true' : 'false';
 
-	$json = array(
+	$json = [
 		'locations'         => $json_locations,
 		'enable_zooming'    => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
 		'default_map_icon'  => get_option( 'eme_location_map_icon' ),
 		'letter_icons'      => $letter_icons ? 'true' : 'false',
 		'marker_clustering' => $marker_clustering_val,
 		'gestures'          => get_option( 'eme_map_gesture_handling' ) ? 'true' : 'false',
-	);
+	];
 	return wp_json_encode( $json );
 }
 
@@ -2757,7 +2757,7 @@ function eme_locations_search_ajax() {
 	header( 'Content-type: application/json; charset=utf-8' );
 	if ( isset( $_GET['id'] ) && $_GET['id'] != '' ) {
 		$item   = eme_get_location( intval( $_GET['id'] ) );
-		$record = array();
+		$record = [];
 		if ( empty( $item ) ) {
 			echo wp_json_encode( $record );
 			return;
@@ -2782,7 +2782,7 @@ function eme_locations_search_ajax() {
 }
 
 function eme_locations_autocomplete_ajax( $no_wp_die = 0 ) {
-	$res = array();
+	$res = [];
 	if ( ! isset( $_REQUEST['q'] ) ) {
 		echo wp_json_encode( $res );
 		return;
@@ -2796,14 +2796,14 @@ function eme_locations_autocomplete_ajax( $no_wp_die = 0 ) {
 	$locations = eme_search_locations( eme_sanitize_request($_REQUEST['q']) );
 	// change null to empty
 	$locations = array_map(
-		function( $v ) {
+	    function( $v ) {
 			return ( is_null( $v ) ) ? '' : $v;
 		},
-		$locations
+	    $locations
 	);
 
 	foreach ( $locations as $item ) {
-		$record                = array();
+		$record                = [];
 		$record['location_id'] = $item['location_id'];
 		$record['name']        = eme_trans_esc_html( $item['location_name'] );
 		$record['address1']    = eme_trans_esc_html( $item['location_address1'] );
@@ -2840,7 +2840,7 @@ function eme_ajax_locations_list() {
 	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
 	$search_name   = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$where         = '';
-	$where_arr     = array();
+	$where_arr     = [];
 	if ( ! empty( $search_name ) ) {
 		$where_arr[] = "(locations.location_name like '%" . $search_name . "%')";
 	}
@@ -2851,7 +2851,7 @@ function eme_ajax_locations_list() {
 		if ( ! $wp_id ) {
 			$ajaxResult['Result']               = 'OK';
 				$ajaxResult['TotalRecordCount'] = 0;
-				$ajaxResult['Records']          = array();
+				$ajaxResult['Records']          = [];
 				print wp_json_encode( $ajaxResult );
 				wp_die();
 		}
@@ -2865,7 +2865,7 @@ function eme_ajax_locations_list() {
 	$formfields_searchable = eme_get_searchable_formfields( 'locations' );
 	$formfields            = eme_get_formfields( '', 'locations' );
 
-	$jTableResult = array();
+	$jTableResult = [];
 	$start        = intval( $_REQUEST['jtStartIndex'] );
 	$pagesize     = intval( $_REQUEST['jtPageSize'] );
 	$sorting      = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( eme_sanitize_sql_orderby($_REQUEST['jtSorting'] )) : '';
@@ -2874,7 +2874,7 @@ function eme_ajax_locations_list() {
 			$count_sql = "SELECT COUNT(*) FROM $table AS locations $where";
 		$sql           = "SELECT locations.* FROM $table AS locations $where $sorting LIMIT $start,$pagesize";
 	} else {
-			$field_ids_arr = array();
+			$field_ids_arr = [];
 		foreach ( $formfields_searchable as $formfield ) {
 				$field_ids_arr[] = $formfield['field_id'];
 		}
@@ -2904,13 +2904,13 @@ function eme_ajax_locations_list() {
 
 	$recordCount = $wpdb->get_var( $count_sql );
 	$rows        = $wpdb->get_results( $sql, ARRAY_A );
-	$records     = array();
+	$records     = [];
 	foreach ( $rows as $item ) {
 		$item = eme_get_extra_location_data( $item );
 		if ( empty( $item['location_name'] ) ) {
 			$item['location_name'] = __( 'No name', 'events-made-easy' );
 		}
-		$record                  = array();
+		$record                  = [];
 		$record['location_id']   = $item['location_id'];
 		$record['location_name'] = "<a href='" . admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $item['location_id'] ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $item['location_name'] ) . '</a>';
 		if ( ! $item['location_latitude'] && ! $item['location_longitude'] && get_option( 'eme_map_is_active' ) && ! $item['location_properties']['online_only'] ) {
@@ -2958,7 +2958,7 @@ function eme_ajax_manage_locations() {
 	$current_userid = get_current_user_id();
 	$table          = $eme_db_prefix . LOCATIONS_TBNAME;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$jTableResult = array();
+	$jTableResult = [];
 	if ( isset( $_POST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_POST['do_action'] );
 		switch ( $do_action ) {
@@ -2981,9 +2981,9 @@ function eme_ajax_manage_locations() {
 }
 
 function eme_get_location_post_cfs() {
-	$answers = array();
+	$answers = [];
 	foreach ( $_POST as $key => $value ) {
-		if ( preg_match( '/^FIELD(\d+)$/', $key, $matches ) ) {
+		if ( preg_match( '/^FIELD(\d+)$/', eme_sanitize_request( $key ), $matches ) ) {
 			$field_id  = intval( $matches[1] );
 			$formfield = eme_get_formfield( $field_id );
 			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
@@ -2994,12 +2994,12 @@ function eme_get_location_post_cfs() {
 				if ( is_array( $value ) ) {
 					$value = eme_convert_array2multi( $value );
 				}
-				$answer    = array(
+				$answer    = [
 					'field_name'   => $formfield['field_name'],
 					'field_id'     => $field_id,
 					'extra_charge' => $formfield['extra_charge'],
 					'answer'       => $value,
-				);
+				];
 				$answers[] = $answer;
 			}
 		}
@@ -3024,7 +3024,7 @@ function eme_get_location_answers( $location_id ) {
 }
 
 function eme_location_store_cf_answers( $location_id ) {
-	$answer_ids_seen = array();
+	$answer_ids_seen = [];
 
 	$all_answers   = eme_get_location_answers( $location_id );
 	$found_answers = eme_get_location_post_cfs();
@@ -3053,7 +3053,7 @@ function eme_location_store_cf_answers( $location_id ) {
 function eme_get_cf_location_ids( $val, $field_id, $is_multi = 0 ) {
 	global $wpdb,$eme_db_prefix;
 	$table      = $eme_db_prefix . ANSWERS_TBNAME;
-	$conditions = array();
+	$conditions = [];
 	$val        = eme_kses( $val );
 
 	if ( is_array( $val ) ) {

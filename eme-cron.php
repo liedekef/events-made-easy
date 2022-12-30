@@ -6,34 +6,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function eme_cron_schedules( $schedules ) {
 	if ( ! isset( $schedules['eme_1min'] ) ) {
-		$schedules['eme_1min'] = array(
+		$schedules['eme_1min'] = [
 			'interval' => 60,
 			'display'  => __( 'Once every minute (EME schedule)', 'events-made-easy' ),
-		);
+		];
 	}
 	if ( ! isset( $schedules['eme_5min'] ) ) {
-		$schedules['eme_5min'] = array(
+		$schedules['eme_5min'] = [
 			'interval' => 5 * 60,
 			'display'  => __( 'Once every 5 minutes (EME schedule)', 'events-made-easy' ),
-		);
+		];
 	}
 	if ( ! isset( $schedules['eme_15min'] ) ) {
-		$schedules['eme_15min'] = array(
+		$schedules['eme_15min'] = [
 			'interval' => 15 * 60,
 			'display'  => __( 'Once every 15 minutes (EME schedule)', 'events-made-easy' ),
-		);
+		];
 	}
 	if ( ! isset( $schedules['eme_30min'] ) ) {
-		$schedules['eme_30min'] = array(
+		$schedules['eme_30min'] = [
 			'interval' => 30 * 60,
 			'display'  => __( 'Once every 30 minutes (EME schedule)', 'events-made-easy' ),
-		);
+		];
 	}
 	if ( ! isset( $schedules['eme_4weeks'] ) ) {
-		$schedules['eme_4weeks'] = array(
+		$schedules['eme_4weeks'] = [
 			'interval' => 60 * 60 * 24 * 28,
 			'display'  => __( 'Once every 4 weeks (EME schedule)', 'events-made-easy' ),
-		);
+		];
 	}
 	return $schedules;
 }

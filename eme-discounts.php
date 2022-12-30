@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_discount() {
-	$discount = array(
+	$discount = [
 		'name'         => '',
 		'description'  => '',
 		'type'         => EME_DISCOUNT_TYPE_FIXED,
@@ -14,23 +14,23 @@ function eme_new_discount() {
 		'dgroup'       => '',
 		'valid_from'   => '',
 		'valid_to'     => '',
-		'properties'   => array(),
+		'properties'   => [],
 		'use_per_seat' => 0,
 		'strcase'      => 1,
 		'count'        => 0,
 		'maxcount'     => 0,
-	);
+	];
 
 	$discount['properties'] = eme_init_discount_props( $discount['properties'] );
 	return $discount;
 }
 
 function eme_new_discountgroup() {
-	$discountgroup = array(
+	$discountgroup = [
 		'name'         => '',
 		'description'  => '',
 		'maxdiscounts' => 0,
-	);
+	];
 
 	return $discountgroup;
 }
@@ -43,10 +43,10 @@ function eme_init_discount_props( $props ) {
 		$props['wp_role'] = '';
 	}
 	if ( ! isset( $props['group_ids'] ) ) {
-		$props['group_ids'] = array();
+		$props['group_ids'] = [];
 	}
 	if ( ! isset( $props['membership_ids'] ) ) {
-		$props['membership_ids'] = array();
+		$props['membership_ids'] = [];
 	}
 	return $props;
 }
@@ -61,7 +61,7 @@ function eme_discounts_page() {
 	}
 
 	$message  = '';
-	$csvMimes = array( 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' );
+	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
 
 	// handle possible ations
 	if ( isset( $_POST['eme_admin_action'] ) ) {
@@ -102,7 +102,7 @@ function eme_discounts_page() {
 						if ( ! in_array( 'name', $headers ) || ! in_array( 'type', $headers ) || ! in_array( 'coupon', $headers ) || ! in_array( 'value', $headers ) ) {
 							$message = __( 'Not all required fields present.', 'events-made-easy' );
 						} else {
-							$empty_props = array();
+							$empty_props = [];
 							$empty_props = eme_init_discount_props( $empty_props );
 							while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
 								$line = array_combine( $headers, $row );
@@ -111,7 +111,7 @@ function eme_discounts_page() {
 									if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
 										$prop = $matches[1];
 										if ( ! isset( $line['properties'] ) ) {
-											$line['properties'] = array();
+											$line['properties'] = [];
 										}
 										if ( array_key_exists( $prop, $empty_props ) ) {
 											$line['properties'][ $prop ] = $value;
@@ -124,7 +124,7 @@ function eme_discounts_page() {
 									$dgroups    = $line['group'];
 									$dgroup_arr = explode( ',', $dgroups );
 									if ( ! eme_array_integers( $dgroup_arr ) ) {
-										$selected_dgroup_arr = array();
+										$selected_dgroup_arr = [];
 										foreach ( $dgroup_arr as $dgroup_name ) {
 											$dgroup = eme_get_discountgroup_by_name( $dgroup_name );
 											// take the case where the group no longer exists into account
@@ -550,7 +550,7 @@ function eme_booking_discount( $event, $booking ) {
 	if ( ! empty( $booking['discountids'] ) ) {
 		$applied_discountids = explode( ',', $booking['discountids'] );
 	} else {
-		$applied_discountids = array();
+		$applied_discountids = [];
 	}
 
 	if ( eme_is_admin_request() ) {
@@ -558,9 +558,9 @@ function eme_booking_discount( $event, $booking ) {
 			$total_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
 			if ( $total_discount != $booking['discount'] ) {
-					$applied_discountids    = array();
+					$applied_discountids    = [];
 					$discountgroup_id       = 0;
-					$booking['dcodes_used'] = array();
+					$booking['dcodes_used'] = [];
 			}
 		}
 	} elseif ( ! empty( $event['event_properties']['rsvp_discountgroup'] ) ) {
@@ -578,7 +578,7 @@ function eme_booking_discount( $event, $booking ) {
 		$group_count   = 0;
 		$max_discounts = $discount_group['maxdiscounts'];
 
-		$booking['dcodes_used'] = array();
+		$booking['dcodes_used'] = [];
 		foreach ( $discount_ids as $id ) {
 			// a discount can only be applied once
 			if ( in_array( $id, $applied_discountids ) ) {
@@ -621,18 +621,18 @@ function eme_booking_discount( $event, $booking ) {
 			if ( ! empty( $calc_result[1] ) ) {
 					$booking['dcodes_used'] = $calc_result[1];
 			} else {
-				$booking['dcodes_used'] = array();
+				$booking['dcodes_used'] = [];
 			}
 		}
 	}
 
 	$discountids = join( ',', array_unique( $applied_discountids ) );
-	return array(
+	return [
 		'discount'    => $total_discount,
 		'discountids' => $discountids,
 		'dgroupid'    => $discountgroup_id,
 		'dcodes_used' => $booking['dcodes_used'],
-	);
+	];
 }
 
 function eme_member_discount( $membership, $member ) {
@@ -644,7 +644,7 @@ function eme_member_discount( $membership, $member ) {
 	if ( ! empty( $member['discountids'] ) ) {
 		$applied_discountids = explode( ',', $member['discountids'] );
 	} else {
-		$applied_discountids = array();
+		$applied_discountids = [];
 	}
 
 	if ( eme_is_admin_request() ) {
@@ -652,9 +652,9 @@ function eme_member_discount( $membership, $member ) {
 			$total_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
 			if ( $total_discount != $member['discount'] ) {
-					$applied_discountids   = array();
+					$applied_discountids   = [];
 					$discountgroup_id      = 0;
-					$member['dcodes_used'] = array();
+					$member['dcodes_used'] = [];
 			}
 		}
 	} elseif ( ! empty( $membership['properties']['discountgroup'] ) ) {
@@ -672,7 +672,7 @@ function eme_member_discount( $membership, $member ) {
 		$group_count   = 0;
 		$max_discounts = $discount_group['maxdiscounts'];
 
-		$member['dcodes_used'] = array();
+		$member['dcodes_used'] = [];
 		foreach ( $discount_ids as $id ) {
 			// a discount can only be applied once
 			if ( in_array( $id, $applied_discountids ) ) {
@@ -715,18 +715,18 @@ function eme_member_discount( $membership, $member ) {
 			if ( ! empty( $calc_result[1] ) ) {
 					$member['dcodes_used'] = $calc_result[1];
 			} else {
-				$member['dcodes_used'] = array();
+				$member['dcodes_used'] = [];
 			}
 		}
 	}
 
 	$discountids = join( ',', array_unique( $applied_discountids ) );
-	return array(
+	return [
 		'discount'    => $total_discount,
 		'discountids' => $discountids,
 		'dgroupid'    => $discountgroup_id,
 		'dcodes_used' => $member['dcodes_used'],
-	);
+	];
 }
 
 function eme_update_booking_discount( $booking ) {
@@ -739,8 +739,8 @@ function eme_update_booking_discount( $booking ) {
 		$calc_discount = eme_booking_discount( $event, $booking );
 
 		$bookings_table        = $eme_db_prefix . BOOKINGS_TBNAME;
-		$where                 = array();
-		$fields                = array();
+		$where                 = [];
+		$fields                = [];
 		$where['booking_id']   = $booking['booking_id'];
 		$fields['discount']    = $calc_discount['discount'];
 		$fields['discountids'] = $calc_discount['discountids'];
@@ -764,8 +764,8 @@ function eme_update_member_discount( $member ) {
 		$calc_discount = eme_member_discount( $membership, $member );
 
 		$members_table         = $eme_db_prefix . MEMBERS_TBNAME;
-		$where                 = array();
-		$fields                = array();
+		$where                 = [];
+		$fields                = [];
 		$where['member_id']    = $member['member_id'];
 		$fields['discount']    = $calc_discount['discount'];
 		$fields['discountids'] = $calc_discount['discountids'];
@@ -785,7 +785,7 @@ function eme_update_member_discount( $member ) {
 function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 	global $plugin_page;
 
-	$selected_dgroup_arr = array();
+	$selected_dgroup_arr = [];
 	if ( $discount_id ) {
 		$discount        = eme_get_discount( $discount_id );
 		$selected_dgroup = $discount['dgroup'];
@@ -796,9 +796,9 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 				$dgroup = eme_get_discountgroup_by_name( $selected_dgroup );
 				// take the case where the group no longer exists into account
 				if ( ! empty( $dgroup ) ) {
-					$selected_dgroup_arr = array( $dgroup['id'] );
+					$selected_dgroup_arr = [ $dgroup['id'] ];
 				} else {
-					$selected_dgroup_arr = array();
+					$selected_dgroup_arr = [];
 				}
 			}
 		}
@@ -1072,7 +1072,7 @@ function eme_db_update_discount( $id, $line ) {
 	if ( ! eme_is_serialized( $new_line['properties'] ) ) {
 			$new_line['properties'] = eme_serialize( $new_line['properties'] );
 	}
-		$where = array( 'id' => $id );
+		$where = [ 'id' => $id ];
 	if ( isset( $new_line['id'] ) ) {
 		unset( $new_line['id'] );
 	}
@@ -1106,7 +1106,7 @@ function eme_db_update_dgroup( $id, $line ) {
 		// we only want the columns that interest us
 		$keys     = array_intersect_key( $line, $discountgroup );
 		$new_line = array_merge( $discountgroup, $keys );
-		$where    = array( 'id' => $id );
+		$where    = [ 'id' => $id ];
 	if ( isset( $new_line['id'] ) ) {
 		unset( $new_line['id'] );
 	}
@@ -1396,7 +1396,7 @@ function eme_calc_booking_discount( $discount, $booking ) {
 			}
 		}
 	}
-	return array( $discount_calculated, $dcodes_used );
+	return [ $discount_calculated, $dcodes_used ];
 }
 
 function eme_calc_booking_single_discount( $discount, $booking, $coupon = '' ) {
@@ -1524,7 +1524,7 @@ function eme_calc_member_discount( $discount, $member ) {
 			}
 		}
 	}
-	return array( $discount_calculated, $dcodes_used );
+	return [ $discount_calculated, $dcodes_used ];
 }
 
 function eme_calc_member_single_discount( $discount, $member, $coupon = '' ) {
@@ -1546,12 +1546,12 @@ function eme_calc_member_single_discount( $discount, $member, $coupon = '' ) {
 }
 
 function eme_get_discounttypes() {
-	$types = array(
+	$types = [
 		EME_DISCOUNT_TYPE_FIXED          => __( 'Fixed', 'events-made-easy' ),
 		EME_DISCOUNT_TYPE_PCT            => __( 'Percentage', 'events-made-easy' ),
 		EME_DISCOUNT_TYPE_CODE           => __( 'Code', 'events-made-easy' ),
 		EME_DISCOUNT_TYPE_FIXED_PER_SEAT => __( 'Fixed per seat', 'events-made-easy' ),
-	);
+	];
 	return $types;
 }
 
@@ -1573,12 +1573,12 @@ function eme_ajax_discounts_list() {
 	global $wpdb,$eme_db_prefix, $eme_timezone;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$table        = $eme_db_prefix . DISCOUNTS_TBNAME;
-	$jTableResult = array();
+	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
 	$opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
 	$where       = '';
-	$where_array = array();
+	$where_array = [];
 	if ( $q ) {
 		for ( $i = 0; $i < count( $opt ); $i++ ) {
 				$fld           = esc_sql( $opt[ $i ] );
@@ -1603,7 +1603,7 @@ function eme_ajax_discounts_list() {
 			$selected_dgroup = $row['dgroup'];
 			// let's see if the dgroup is an csv of integers, if so: convert to names
 			$selected_dgroup_arr = explode( ',', $selected_dgroup );
-			$res_arr             = array();
+			$res_arr             = [];
 			if ( eme_array_integers( $selected_dgroup_arr ) ) {
 				foreach ( $selected_dgroup_arr as $dgroup_id ) {
 					$dgroup = eme_get_discountgroup( $dgroup_id );
@@ -1652,12 +1652,12 @@ function eme_ajax_discountgroups_list() {
 	global $wpdb,$eme_db_prefix;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$table        = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
-	$jTableResult = array();
+	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
 	$opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
 	$where       = '';
-	$where_array = array();
+	$where_array = [];
 	if ( $q ) {
 		for ( $i = 0; $i < count( $opt ); $i++ ) {
 				$fld           = esc_sql( $opt[ $i ] );
@@ -1699,7 +1699,7 @@ function eme_ajax_discounts_select2() {
 		wp_die();
 	}
 	$table        = $eme_db_prefix . DISCOUNTS_TBNAME;
-	$jTableResult = array();
+	$jTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
 			$where = "(name LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
@@ -1713,10 +1713,10 @@ function eme_ajax_discounts_select2() {
 	$recordCount = $wpdb->get_var( $count_sql );
 	$search      = "$where ORDER BY name LIMIT $start,$pagesize";
 
-	$records   = array();
+	$records   = [];
 	$discounts = eme_get_discounts( '', $search );
 	foreach ( $discounts as $discount ) {
-		$record       = array();
+		$record       = [];
 		$record['id'] = $discount['id'];
 		// no eme_esc_html here, select2 does it own escaping upon arrival
 		$record['text'] = $discount['name'];
@@ -1735,7 +1735,7 @@ function eme_ajax_dgroups_select2() {
 		wp_die();
 	}
 	$table        = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
-	$jTableResult = array();
+	$jTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
 			$where = "(name LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
@@ -1749,10 +1749,10 @@ function eme_ajax_dgroups_select2() {
 	$recordCount = $wpdb->get_var( $count_sql );
 	$search      = "$where ORDER BY name LIMIT $start,$pagesize";
 
-	$records = array();
+	$records = [];
 	$dgroups = eme_get_dgroups( '', $search );
 	foreach ( $dgroups as $dgroup ) {
-		$record       = array();
+		$record       = [];
 		$record['id'] = $dgroup['id'];
 		// no eme_esc_html here, select2 does it own escaping upon arrival
 		$record['text'] = $dgroup['name'];
@@ -1769,7 +1769,7 @@ function eme_ajax_manage_discounts() {
 	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		wp_die();
 	}
-	$ajaxResult           = array();
+	$ajaxResult           = [];
 	$ajaxResult['Result'] = 'OK';
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
@@ -1829,7 +1829,7 @@ function eme_ajax_manage_discountgroups() {
 	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		wp_die();
 	}
-	$ajaxResult           = array();
+	$ajaxResult           = [];
 	$ajaxResult['Result'] = 'OK';
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );

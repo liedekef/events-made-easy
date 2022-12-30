@@ -195,7 +195,7 @@ function eme_options_multiselect( $title, $name, $list, $description, $option_va
 	}
 	if ( ! empty( $option_value ) && ! is_array( $option_value ) && strstr( $option_value, ',' ) ) {
 		$tmp_arr          = explode( ',', $option_value );
-		$option_value_arr = array();
+		$option_value_arr = [];
 		foreach ( $tmp_arr as $val ) {
 			$option_value_arr[ $val ] = $val;
 		}
@@ -390,7 +390,7 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
 		$extra_attributes .= ' aria-label="' . $name . '"';
 	}
 
-	$val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='${name}[]' id='${name}' size='$size'>";
+	$val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='{$name}[]' id='{$name}' size='$size'>";
 	if ( $add_empty_first != '' ) {
 		$val .= "<option value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
 	}
@@ -436,7 +436,7 @@ function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value
 		$extra_attributes .= ' aria-label="' . $name . '"';
 	}
 
-	$val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='${name}[]' id='${name}' size='$size'>";
+	$val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='{$name}[]' id='{$name}' size='$size'>";
 	if ( ! empty( $add_empty_first ) ) {
 		$val .= "<option value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
 	}
@@ -487,7 +487,7 @@ function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $require
 			$t_value = $value;
 		}
 		"$t_key" == $option_value ? $selected = "checked='checked' " : $selected = '';
-		$val                                 .= "<input $required_att type='radio' id='${name}_${counter}' name='$name' $class_att value='" . eme_esc_html( $t_key ) . "' $selected $extra_attributes> <label for='${name}_${counter}'>" . eme_esc_html( $t_value ) . '</label>';
+		$val                                 .= "<input $required_att type='radio' id='{$name}_{$counter}' name='$name' $class_att value='" . eme_esc_html( $t_key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . eme_esc_html( $t_value ) . '</label>';
 		if ( ! $horizontal ) {
 			$val .= "<br>\n";
 		}
@@ -516,9 +516,9 @@ function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 
 	}
 
 	$name = wp_strip_all_tags( $name );
-	$val  = "<input $required_att type='checkbox' name='${name}' id='${name}' $class_att value='1' $selected $extra_attributes>";
+	$val  = "<input $required_att type='checkbox' name='{$name}' id='{$name}' $class_att value='1' $selected $extra_attributes>";
 	if ( ! empty( $label ) ) {
-		$val .= "<label for='${name}'>" . eme_esc_html( $label ) . '</label>';
+		$val .= "<label for='{$name}'>" . eme_esc_html( $label ) . '</label>';
 	}
 	return $val;
 }
@@ -550,7 +550,7 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
 		} else {
 			"$key" == $option_value ? $selected = "checked='checked' " : $selected = '';
 		}
-		$val .= "<input $required_att type='checkbox' name='${name}[]' id='${name}_${counter}' $class_att value='" . eme_esc_html( $key ) . "' $selected $extra_attributes> <label for='${name}_${counter}'>" . eme_esc_html( $value ) . '</label>';
+		$val .= "<input $required_att type='checkbox' name='{$name}[]' id='{$name}_{$counter}' $class_att value='" . eme_esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . eme_esc_html( $value ) . '</label>';
 		if ( ! $horizontal ) {
 			$val .= "<br>\n";
 		}
@@ -561,6 +561,6 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
 
 function eme_ui_number( $option_value, $name ) {
 	$name = wp_strip_all_tags( $name );
-	return "<input type='number' name='${name}' id='${name}' value='$option_value'>";
+	return "<input type='number' name='{$name}' id='{$name}' value='$option_value'>";
 }
 ?>

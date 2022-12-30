@@ -11,11 +11,11 @@ if ( get_option( 'eme_shortcodes_in_widgets' ) ) {
 
 class WP_Widget_eme_list extends WP_Widget {
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct(
-			'eme_list', // Base ID
+		    'eme_list', // Base ID
 			__( 'Events Made Easy List of events', 'events-made-easy' ), // Name
-			array( 'description' => __( 'Events Made Easy List of events', 'events-made-easy' ) ) // Args
+			[ 'description' => __( 'Events Made Easy List of events', 'events-made-easy' ) ] // Args
 		);
 	}
 
@@ -90,10 +90,10 @@ class WP_Widget_eme_list extends WP_Widget {
 		$instance          = array_merge( $old_instance, $new_instance );
 		$instance['title'] = wp_strip_all_tags( $instance['title'] );
 		$instance['limit'] = intval( $instance['limit'] );
-		if ( ! in_array( $instance['showperiod'], array( 'daily', 'monthly', 'yearly' ) ) ) {
+		if ( ! in_array( $instance['showperiod'], [ 'daily', 'monthly', 'yearly' ] ) ) {
 			$instance['showperiod'] = '';
 		}
-		if ( ! in_array( $instance['order'], array( 'ASC', 'DESC' ) ) ) {
+		if ( ! in_array( $instance['order'], [ 'ASC', 'DESC' ] ) ) {
 			$instance['order'] = 'ASC';
 		}
 		return $instance;
@@ -102,8 +102,8 @@ class WP_Widget_eme_list extends WP_Widget {
 	public function form( $instance ) {
 		//Defaults
 		$instance   = wp_parse_args(
-			(array) $instance,
-			array(
+		    (array) $instance,
+		    [
 				'limit'        => 5,
 				'scope'        => 'future',
 				'order'        => 'ASC',
@@ -111,7 +111,7 @@ class WP_Widget_eme_list extends WP_Widget {
 				'format_tpl'   => 0,
 				'authorid'     => '',
 				'show_ongoing' => 1,
-			)
+			]
 		);
 		$title      = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
 		$format_tpl = isset( $instance['format_tpl'] ) ? intval( $instance['format_tpl'] ) : 0;
@@ -131,7 +131,7 @@ class WP_Widget_eme_list extends WP_Widget {
 		$recurrence_only_once = empty( $instance['recurrence_only_once'] ) ? '' : eme_esc_html( $instance['recurrence_only_once'] );
 		$authorid             = empty( $instance['authorid'] ) ? '' : eme_esc_html( $instance['authorid'] );
 		$categories           = eme_get_categories();
-		$option_categories    = array();
+		$option_categories    = [];
 		foreach ( $categories as $cat ) {
 			$id                       = $cat['category_id'];
 			$option_categories[ $id ] = $cat['category_name'];
@@ -208,12 +208,12 @@ class WP_Widget_eme_list extends WP_Widget {
 	<label for="<?php echo esc_attr( $this->get_field_id( 'authorid' ) ); ?>"><?php esc_html_e( 'Author', 'events-made-easy' ); ?>:</label><br>
 		<?php
 		wp_dropdown_users(
-			array(
+		    [
 				'id'               => esc_attr( $this->get_field_id( 'authorid' ) ),
 				'name'             => esc_attr( $this->get_field_name( 'authorid' ) ),
 				'show_option_none' => __( 'Select...', 'events-made-easy' ),
 				'selected'         => $authorid,
-			)
+			]
 		);
 		?>
 	</p>
@@ -242,11 +242,11 @@ class WP_Widget_eme_list extends WP_Widget {
 
 class WP_Widget_eme_calendar extends WP_Widget {
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct(
-			'eme_calendar', // Base ID
+		    'eme_calendar', // Base ID
 			__( 'Events Made Easy Calendar', 'events-made-easy' ), // Name
-			array( 'description' => __( 'Events Made Easy Calendar', 'events-made-easy' ) ) // Args
+			[ 'description' => __( 'Events Made Easy Calendar', 'events-made-easy' ) ] // Args
 		);
 	}
 
@@ -281,7 +281,7 @@ class WP_Widget_eme_calendar extends WP_Widget {
 			$notcategory = implode( '+', $notcategory );
 		}
 
-		$options                = array();
+		$options                = [];
 		$options['title']       = $title;
 		$options['long_events'] = $long_events;
 		$options['category']    = $category;
@@ -324,7 +324,7 @@ class WP_Widget_eme_calendar extends WP_Widget {
 
 	public function form( $instance ) {
 		//Defaults
-		$instance             = wp_parse_args( (array) $instance, array( 'long_events' => 0 ) );
+		$instance             = wp_parse_args( (array) $instance, [ 'long_events' => 0 ] );
 		$title                = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
 		$category             = empty( $instance['category'] ) ? '' : eme_esc_html( $instance['category'] );
 		$notcategory          = empty( $instance['notcategory'] ) ? '' : eme_esc_html( $instance['notcategory'] );
@@ -333,7 +333,7 @@ class WP_Widget_eme_calendar extends WP_Widget {
 		$holiday_id           = isset( $instance['holiday_id'] ) ? intval( $instance['holiday_id'] ) : 0;
 		$categories           = eme_get_categories();
 		$holidays_array_by_id = eme_get_holidays_array_by_id();
-		$option_categories    = array();
+		$option_categories    = [];
 		foreach ( $categories as $cat ) {
 			$id                       = $cat['category_id'];
 			$option_categories[ $id ] = $cat['category_name'];
@@ -381,12 +381,12 @@ class WP_Widget_eme_calendar extends WP_Widget {
 	<label for="<?php echo esc_attr( $this->get_field_id( 'authorid' ) ); ?>"><?php esc_html_e( 'Author', 'events-made-easy' ); ?>:</label><br>
 		<?php
 		wp_dropdown_users(
-			array(
+		    [
 				'id'               => esc_attr( $this->get_field_id( 'authorid' ) ),
 				'name'             => esc_attr( $this->get_field_name( 'authorid' ) ),
 				'show_option_none' => __( 'Select...', 'events-made-easy' ),
 				'selected'         => $authorid,
-			)
+			]
 		);
 		?>
 	</p>

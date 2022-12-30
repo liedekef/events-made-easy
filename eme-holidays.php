@@ -5,10 +5,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_holidays() {
-	$hol = array(
+	$hol = [
 		'name' => '',
 		'list' => '',
-	);
+	];
 	return $hol;
 }
 
@@ -41,11 +41,11 @@ function eme_holidays_page() {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		if ( $_POST['eme_admin_action'] == 'do_editholidays' ) {
 			// holidays update required
-			$holidays         = array();
+			$holidays         = [];
 			$holidays['name'] = eme_sanitize_request( $_POST['name'] );
 			$holidays['list'] = eme_sanitize_textarea( $_POST['list'] );
 			if ( ! empty( $_POST['id'] ) ) {
-				$validation_result = $wpdb->update( $holidays_table, $holidays, array( 'id' => intval( $_POST['id'] ) ) );
+				$validation_result = $wpdb->update( $holidays_table, $holidays, [ 'id' => intval( $_POST['id'] ) ] );
 				if ( $validation_result !== false ) {
 						$message = __( 'Successfully edited the list of holidays', 'events-made-easy' );
 				} else {
@@ -241,11 +241,11 @@ function eme_get_holiday_list( $id ) {
 
 function eme_get_holiday_listinfo( $id ) {
 	$holiday_list = eme_get_holiday_list( $id );
-	$res_days     = array();
+	$res_days     = [];
 	$days         = explode( "\n", str_replace( "\r", "\n", $holiday_list['list'] ) );
 	foreach ( $days as $day_info ) {
 		//$info=explode(',',$day_info);
-		list($date_info,$name,$class,$link) = array_pad( explode( ',', $day_info ), 4, '' );
+		[$date_info, $name, $class, $link] = array_pad( explode( ',', $day_info ), 4, '' );
 		if ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $date_info, $matches ) ) {
 			$start = $matches[1];
 			$end   = $matches[2];
@@ -269,7 +269,7 @@ function eme_get_holiday_listinfo( $id ) {
 
 function eme_get_holidays_array_by_id() {
 	$holidays       = eme_get_holiday_lists();
-	$holidays_by_id = array();
+	$holidays_by_id = [];
 	if ( ! empty( $holidays ) ) {
 		$holidays_by_id[] = '';
 		foreach ( $holidays as $holiday_list ) {
@@ -284,12 +284,12 @@ function eme_holidays_shortcode( $atts ) {
 	global $eme_timezone;
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'id'    => '',
 				'scope' => 'all',
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 
@@ -304,7 +304,7 @@ function eme_holidays_shortcode( $atts ) {
 	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
 	print '<div id="eme_holidays_list">';
 	foreach ( $days as $day_info ) {
-		list($day,$name,$class) = array_pad( explode( ',', $day_info ), 3, '' );
+		[$day, $name, $class] = array_pad( explode( ',', $day_info ), 3, '' );
 		if ( empty( $day ) ) {
 			continue;
 		}

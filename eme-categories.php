@@ -5,12 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_category() {
-	$category = array(
+	$category = [
 		'category_name'   => '',
 		'category_slug'   => '',
 		'category_prefix' => '',
 		'description'     => '',
-	);
+	];
 	return $category;
 }
 
@@ -44,7 +44,7 @@ function eme_categories_page() {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		if ( $_POST['eme_admin_action'] == 'do_editcategory' ) {
 			// category update required
-			$category                  = array();
+			$category                  = [];
 			$category['category_name'] = eme_sanitize_request( $_POST['category_name'] );
 			$category['description']   = eme_kses( $_POST['description'] );
 			if ( ! empty( $_POST['category_prefix'] ) ) {
@@ -56,7 +56,7 @@ function eme_categories_page() {
 				$category['category_slug'] = eme_permalink_convert_noslash( $category['category_name'] );
 			}
 			if ( isset( $_POST['category_id'] ) && intval( $_POST['category_id'] ) > 0 ) {
-				$validation_result = $wpdb->update( $categories_table, $category, array( 'category_id' => intval( $_POST['category_id'] ) ) );
+				$validation_result = $wpdb->update( $categories_table, $category, [ 'category_id' => intval( $_POST['category_id'] ) ] );
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully edited the category', 'events-made-easy' );
 				} else {
@@ -247,7 +247,7 @@ function eme_categories_edit_layout( $message = '' ) {
 				}
 				if ( preg_match( '/,/', $categories_prefixes ) ) {
 					$categories_prefixes     = explode( ',', $categories_prefixes );
-					$categories_prefixes_arr = array();
+					$categories_prefixes_arr = [];
 					foreach ( $categories_prefixes as $categories_prefix ) {
 						$categories_prefixes_arr[ $categories_prefix ] = eme_permalink_convert( $categories_prefix );
 					}
@@ -286,7 +286,7 @@ function eme_get_cached_categories() {
 function eme_get_categories( $eventful = false, $scope = 'future', $extra_conditions = '' ) {
 	global $wpdb,$eme_db_prefix;
 	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
-	$categories       = array();
+	$categories       = [];
 	$order_by         = ' ORDER BY category_name ASC';
 	if ( $eventful ) {
 		$events = eme_get_events( 0, $scope, 'ASC' );
@@ -325,7 +325,7 @@ function eme_get_categories( $eventful = false, $scope = 'future', $extra_condit
 
 function eme_get_categories_filtered( $category_ids, $categories ) {
 	$cat_id_arr = explode( ',', $category_ids );
-	$new_arr    = array();
+	$new_arr    = [];
 	foreach ( $categories as $cat ) {
 		if ( in_array( $cat['category_id'], $cat_id_arr ) ) {
 			$new_arr[] = $cat;
@@ -395,7 +395,7 @@ function eme_get_category_eventids( $category_id, $future_only = 1 ) {
 		$extra_condition = "AND event_start > '$today'";
 	}
 	$cat_ids   = explode( ',', $category_id );
-	$event_ids = array();
+	$event_ids = [];
 	foreach ( $cat_ids as $cat_id ) {
 		$sql = $wpdb->prepare( "SELECT event_id FROM $events_table WHERE FIND_IN_SET(%d,event_category_ids) $extra_condition ORDER BY event_start ASC, event_name ASC", $cat_id );
 		if ( empty( $event_ids ) ) {
@@ -452,7 +452,7 @@ function eme_get_location_category_descriptions( $location_id, $extra_conditions
 function eme_get_category_ids( $cat_slug ) {
 	global $wpdb,$eme_db_prefix;
 	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
-	$cat_ids          = array();
+	$cat_ids          = [];
 	if ( ! empty( $cat_slug ) ) {
 		$sql     = $wpdb->prepare( "SELECT DISTINCT category_id FROM $categories_table WHERE category_slug = %s", $cat_slug );
 		$cat_ids = $wpdb->get_col( $sql );
@@ -463,16 +463,16 @@ function eme_get_category_ids( $cat_slug ) {
 function eme_get_categories_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'event_id'           => 0,
 				'eventful'           => false,
 				'scope'              => 'all',
 				'template_id'        => 0,
 				'template_id_header' => 0,
 				'template_id_footer' => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$eventful = filter_var( $eventful, FILTER_VALIDATE_BOOLEAN );

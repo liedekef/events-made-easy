@@ -120,7 +120,7 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 
 	if ( strpos( $justurl, '=' ) ) {
 		// allows the use of arguments without breaking the legacy code
-		$defaults = array(
+		$defaults = [
 			'justurl'        => 0,
 			'echo'           => $echo,
 			'text'           => $text,
@@ -130,7 +130,7 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 			'contact_person' => $contact_person,
 			'location_id'    => $location_id,
 			'notcategory'    => $notcategory,
-		);
+		];
 
 		$r = wp_parse_args( $justurl, $defaults );
 		extract( $r );
@@ -143,25 +143,25 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 	}
 	$url = site_url( '/?eme_ical=public' );
 	if ( ! empty( $location_id ) ) {
-		$url = add_query_arg( array( 'location_id' => $location_id ), $url );
+		$url = add_query_arg( [ 'location_id' => $location_id ], $url );
 	}
 	if ( ! empty( $category ) ) {
-		$url = add_query_arg( array( 'category' => $category ), $url );
+		$url = add_query_arg( [ 'category' => $category ], $url );
 	}
 	if ( ! empty( $notcategory ) ) {
-		$url = add_query_arg( array( 'notcategory' => $notcategory ), $url );
+		$url = add_query_arg( [ 'notcategory' => $notcategory ], $url );
 	}
 	if ( ! empty( $scope ) ) {
-		$url = add_query_arg( array( 'scope' => $scope ), $url );
+		$url = add_query_arg( [ 'scope' => $scope ], $url );
 	}
 	if ( ! empty( $author ) ) {
-		$url = add_query_arg( array( 'author' => $author ), $url );
+		$url = add_query_arg( [ 'author' => $author ], $url );
 	}
 	if ( ! empty( $contact_person ) ) {
-		$url = add_query_arg( array( 'contact_person' => $contact_person ), $url );
+		$url = add_query_arg( [ 'contact_person' => $contact_person ], $url );
 	}
 	if ( ! empty( $language ) ) {
-		$url = add_query_arg( array( 'lang' => $language ), $url );
+		$url = add_query_arg( [ 'lang' => $language ], $url );
 	}
 
 	$link = "<a href='$url'>$text</a>";
@@ -180,8 +180,8 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 
 function eme_ical_link_shortcode( $atts ) {
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'justurl'        => 0,
 				'text'           => 'ICAL',
 				'category'       => '',
@@ -190,8 +190,8 @@ function eme_ical_link_shortcode( $atts ) {
 				'author'         => '',
 				'contact_person' => '',
 				'notcategory'    => '',
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 

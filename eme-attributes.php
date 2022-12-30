@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_attributes_form( $eme_array ) {
-	$eme_data = array();
+	$eme_data = [];
 	if ( isset( $eme_array['event_attributes'] ) ) {
 		$eme_data = $eme_array['event_attributes'];
 	} elseif ( isset( $eme_array['location_attributes'] ) ) {
@@ -75,7 +75,7 @@ function eme_attributes_form( $eme_array ) {
 	//We now have one long string of formats
 	preg_match_all( '/#(ESC|URL)?_ATT\{.+?\}(\{.+?\})?/', $formats, $placeholders );
 
-	$attributes = array();
+	$attributes = [];
 	//Now grab all the unique attributes we can use in our event or location.
 	foreach ( $placeholders[0] as $result ) {
 		$result    = str_replace( '#ESC', '#', $result );

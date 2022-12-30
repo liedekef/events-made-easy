@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_booking() {
-	$booking = array(
+	$booking = [
 		'event_id'         => 0,
 		'person_id'        => 0,
 		'payment_id'       => 0,
@@ -21,18 +21,18 @@ function eme_new_booking() {
 		'pg_pid'           => '',
 		'discount'         => '',
 		'discountids'      => '',
-		'dcodes_entered'   => array(),
-		'dcodes_used'      => array(),
+		'dcodes_entered'   => [],
+		'dcodes_used'      => [],
 		'dgroupid'         => 0,
 		'waitinglist'      => 0,
-	);
+	];
 
 	return $booking;
 }
 
 function eme_add_booking_form( $event_id, $only_if_not_registered = 0 ) {
 	$event           = eme_get_event( $event_id );
-	$event_ids       = array( 0 => $event );
+	$event_ids       = [ 0 => $event ];
 	$is_multibooking = 0;
 	// we don't worry about the eme_register_empty_seats param, for attendance-like events it is checked later on
 	return eme_add_multibooking_form( $event_ids, 0, 0, 0, 0, 0, $is_multibooking, $only_if_not_registered );
@@ -207,14 +207,14 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 			if ( $is_multibooking && $only_one_event ) {
 				if ( $simple ) {
 					$value      = eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event );
-					$list       = array( $event_id => $value );
-					$form_html .= "<input type='radio' id='eme_event_${event_id}' name='eme_event_ids[]' value='$event_id'> <label for='eme_event_${event_id}'>" . eme_esc_html( $value ) . '</label>';
+					$list       = [ $event_id => $value ];
+					$form_html .= "<input type='radio' id='eme_event_{$event_id}' name='eme_event_ids[]' value='$event_id'> <label for='eme_event_{$event_id}'>" . eme_esc_html( $value ) . '</label>';
 				} else {
 					$form_html .= "<option value='$event_id'>" . eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event ) . '</option>';
 				}
 			} elseif ( $is_multibooking && $simple ) {
 				$value      = eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event );
-				$list       = array( $event_id => $value );
+				$list       = [ $event_id => $value ];
 				$form_html .= eme_ui_checkbox( 0, 'eme_event_ids', $list );
 			} else {
 				$form_html .= "<input type='hidden' name='eme_event_ids[]' value='$event_id'>";
@@ -239,7 +239,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 				$event_id    = $tmp_event['event_id'];
 				$var_prefix  = "bookings[$event_id][";
 				$var_postfix = ']';
-				$fieldname   = "${var_prefix}bookedSeats${var_postfix}";
+				$fieldname   = "{$var_prefix}bookedSeats{$var_postfix}";
 				$form_html  .= "<input type='hidden' name='$fieldname' value='1'>";
 			}
 		}
@@ -255,7 +255,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 
 function eme_add_booking_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract( shortcode_atts( array( 'id' => 0 ), $atts ) );
+	extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
 	if ( $id ) {
 		return eme_add_booking_form( $id );
 	}
@@ -264,8 +264,8 @@ function eme_add_booking_form_shortcode( $atts ) {
 function eme_add_simple_multibooking_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'id'                     => 0,
 				'recurrence_id'          => 0,
 				'category_id'            => 0,
@@ -278,8 +278,8 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 				'only_one_seat'          => 0,
 				'scope'                  => '',
 				'order'                  => 'ASC',
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$register_empty_seats   = filter_var( $register_empty_seats, FILTER_VALIDATE_BOOLEAN );
@@ -305,8 +305,8 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 function eme_add_multibooking_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'id'                     => '',
 				'recurrence_id'          => 0,
 				'category_id'            => 0,
@@ -321,8 +321,8 @@ function eme_add_multibooking_form_shortcode( $atts ) {
 				'scope'                  => '',
 				'order'                  => 'ASC',
 				'simple'                 => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$register_empty_seats   = filter_var( $register_empty_seats, FILTER_VALIDATE_BOOLEAN );
@@ -349,8 +349,8 @@ function eme_add_multibooking_form_shortcode( $atts ) {
 function eme_booking_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'id'                 => 0,
 				'template_id'        => 0,
 				'template_id_header' => 0,
@@ -358,8 +358,8 @@ function eme_booking_list_shortcode( $atts ) {
 				'rsvp_status'        => 0,
 				'approval_status'    => 0,
 				'paid_status'        => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$approval_status = intval( $approval_status );
@@ -385,8 +385,8 @@ function eme_booking_list_shortcode( $atts ) {
 function eme_mybooking_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'id'                 => 0,
 				'template_id'        => 0,
 				'template_id_header' => 0,
@@ -396,8 +396,8 @@ function eme_mybooking_list_shortcode( $atts ) {
 				'rsvp_status'        => 0,
 				'approval_status'    => 0,
 				'paid_status'        => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$approval_status = intval( $approval_status );
@@ -433,8 +433,8 @@ function eme_mybooking_list_shortcode( $atts ) {
 function eme_attendee_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'id'                 => 0,
 				'template_id'        => 0,
 				'template_id_header' => 0,
@@ -443,8 +443,8 @@ function eme_attendee_list_shortcode( $atts ) {
 				'approval_status'    => 0,
 				'paid_status'        => 0,
 				'order'              => '',
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$approval_status = intval( $approval_status );
@@ -471,8 +471,8 @@ function eme_attendees_report_link_shortcode( $atts ) {
 	global $post;
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'title'              => __( 'Attendees CSV', 'events-made-easy' ),
 				'scope'              => 'this_month',
 				'event_template_id'  => 0,
@@ -480,8 +480,8 @@ function eme_attendees_report_link_shortcode( $atts ) {
 				'category'           => '',
 				'notcategory'        => '',
 				'public_access'      => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$public_access = filter_var( $public_access, FILTER_VALIDATE_BOOLEAN );
@@ -507,15 +507,15 @@ function eme_bookings_report_link_shortcode( $atts ) {
 	global $post;
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'title'              => __( 'Bookings CSV', 'events-made-easy' ),
 				'event_id'           => 0,
 				'template_id'        => 0,
 				'template_id_header' => 0,
 				'public_access'      => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$public_access = filter_var( $public_access, FILTER_VALIDATE_BOOLEAN );
@@ -571,7 +571,7 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 	$event = eme_get_event( $event_id );
 	if ( ! empty( $event ) ) {
 		foreach ( $bookings as $booking ) {
-			$line       = array();
+			$line       = [];
 			$format_arr = explode( ',', $format );
 			$line_count = 1;
 			foreach ( $format_arr as $single_format ) {
@@ -587,7 +587,7 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 			// now we have a line that contains arrays on every position, with $line_count indicating the max size of an arr in the line
 			// so let's use that to output multiple lines
 			for ( $i = 0;$i < $line_count;$i++ ) {
-				$output = array();
+				$output = [];
 				foreach ( $line as $el_arr ) {
 					if ( isset( $el_arr[ $i ] ) ) {
 						$output[] = $el_arr[ $i ];
@@ -619,11 +619,11 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
 	header( 'Content-type: text/csv' );
 	header( 'Content-Disposition: attachment; filename=report-' . date( 'Ymd-His' ) . '.csv' );
 	$fp      = fopen( 'php://output', 'w' );
-	$headers = array( __( 'Title\Date', 'events-made-easy' ) );
+	$headers = [ __( 'Title\Date', 'events-made-easy' ) ];
 
-	$all_attendees     = array();
-	$all_attendees_rec = array();
-	$all_dates         = array();
+	$all_attendees     = [];
+	$all_attendees_rec = [];
+	$all_dates         = [];
 	foreach ( $events as $event ) {
 		$event_id         = $event['event_id'];
 		$recurrence_id    = $event['recurrence_id'];
@@ -640,9 +640,9 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
 		$headers[] = $event_start_date;
 	}
 	eme_fputcsv( $fp, $headers );
-	$handled_recurrence_ids = array();
+	$handled_recurrence_ids = [];
 	foreach ( $events as $event ) {
-		$line          = array();
+		$line          = [];
 		$event_id      = $event['event_id'];
 		$recurrence_id = $event['recurrence_id'];
 		if ( isset( $handled_recurrence_ids[ $recurrence_id ] ) ) {
@@ -723,7 +723,7 @@ function eme_cancel_bookings_form( $event_id ) {
 }
 
 function eme_cancel_bookings_form_shortcode( $atts ) {
-	extract( shortcode_atts( array( 'id' => 0 ), $atts ) );
+	extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
 	return eme_cancel_bookings_form( $id );
 }
 
@@ -734,10 +734,10 @@ function eme_add_bookings_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 			$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -746,20 +746,20 @@ function eme_add_bookings_ajax() {
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
-			)
+			]
 		);
 		wp_die();
 	}
 	if ( empty( $_POST['eme_event_ids'] ) ) {
 		$form_html = __( 'Please select at least one event.', 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
-			)
+			]
 		);
 		wp_die();
 	}
@@ -769,10 +769,10 @@ function eme_add_bookings_ajax() {
 		if ( empty( $events ) ) {
 			$form_html = __( 'Please select at least one event.', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -785,10 +785,10 @@ function eme_add_bookings_ajax() {
 		if ( ! $captcha_res ) {
 			$form_html = __( 'Please check the hCaptcha box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -798,10 +798,10 @@ function eme_add_bookings_ajax() {
 		if ( ! $captcha_res ) {
 			$form_html = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -811,10 +811,10 @@ function eme_add_bookings_ajax() {
 		if ( ! $captcha_res ) {
 			$form_html = __( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -830,18 +830,18 @@ function eme_add_bookings_ajax() {
 		if ( has_filter( 'eme_eval_booking_form_post_filter' ) ) {
 			$eval_filter_return = apply_filters( 'eme_eval_booking_form_post_filter', $event );
 		} else {
-			$eval_filter_return = array(
+			$eval_filter_return = [
 				0 => 1,
 				1 => '',
-			);
+			];
 		}
 	} elseif ( has_filter( 'eme_eval_multibooking_form_post_filter' ) ) {
 			$eval_filter_return = apply_filters( 'eme_eval_multibooking_form_post_filter', $events );
 	} else {
-		$eval_filter_return = array(
+		$eval_filter_return = [
 			0 => 1,
 			1 => '',
-		);
+		];
 	}
 	if ( is_array( $eval_filter_return ) && ! $eval_filter_return[0] ) {
 		// the result of own eval rules failed, so let's use that as a result
@@ -893,21 +893,21 @@ function eme_add_bookings_ajax() {
 				$message              = eme_replace_booking_placeholders( $message, $event, $booking, $is_multi );
 				$form_result_message .= '<br>' . $message;
 				echo wp_json_encode(
-					array(
+				    [
 						'Result'      => 'OK',
 						'keep_form'   => 0,
 						'htmlmessage' => $form_result_message,
-					)
+					]
 				);
 			} elseif ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
 				$payment_form = eme_payment_form( $payment_id );
 				echo wp_json_encode(
-					array(
+				    [
 						'Result'      => 'OK',
 						'keep_form'   => 0,
 						'htmlmessage' => $form_result_message,
 						'paymentform' => $payment_form,
-					)
+					]
 				);
 			} elseif ( get_option( 'eme_payment_redirect' ) ) {
 				$payment      = eme_get_payment( $payment_id );
@@ -919,23 +919,23 @@ function eme_add_bookings_ajax() {
 					$form_result_message .= '<br>' . $redirect_msg;
 				}
 				echo wp_json_encode(
-					array(
+				    [
 						'Result'          => 'OK',
 						'keep_form'       => 0,
 						'htmlmessage'     => $form_result_message,
 						'waitperiod'      => $waitperiod,
 						'paymentredirect' => $payment_url,
-					)
+					]
 				);
 			} else {
 				$payment_form = eme_payment_form( $payment_id );
 				echo wp_json_encode(
-					array(
+				    [
 						'Result'      => 'OK',
 						'keep_form'   => 0,
 						'htmlmessage' => $form_result_message,
 						'paymentform' => $payment_form,
-					)
+					]
 				);
 			}
 		} else {
@@ -949,19 +949,19 @@ function eme_add_bookings_ajax() {
 			}
 			if ( ! $only_if_not_registered && get_option( 'eme_rsvp_show_form_after_booking' ) ) {
 				echo wp_json_encode(
-					array(
+				    [
 						'Result'      => 'OK',
 						'keep_form'   => 1,
 						'htmlmessage' => $form_result_message,
-					)
+					]
 				);
 			} else {
 				echo wp_json_encode(
-					array(
+				    [
 						'Result'      => 'OK',
 						'keep_form'   => 0,
 						'htmlmessage' => $form_result_message,
-					)
+					]
 				);
 			}
 		}
@@ -978,28 +978,28 @@ function eme_add_bookings_ajax() {
 		}
 		if ( ! $only_if_not_registered && get_option( 'eme_rsvp_show_form_after_booking' ) ) {
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'OK',
 					'keep_form'   => 1,
 					'htmlmessage' => $form_result_message,
-				)
+				]
 			);
 		} else {
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'OK',
 					'keep_form'   => 0,
 					'htmlmessage' => $form_result_message,
-				)
+				]
 			);
 		}
 	} else {
 		// booking failed
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_result_message,
-			)
+			]
 		);
 	}
 	wp_die();
@@ -1013,10 +1013,10 @@ function eme_cancel_bookings_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 			$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -1025,10 +1025,10 @@ function eme_cancel_bookings_ajax() {
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
-			)
+			]
 		);
 		wp_die();
 	}
@@ -1037,10 +1037,10 @@ function eme_cancel_bookings_ajax() {
 	if ( ! $event_id ) {
 		$form_html = __( 'No event id detected', 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
-			)
+			]
 		);
 		wp_die();
 	}
@@ -1049,10 +1049,10 @@ function eme_cancel_bookings_ajax() {
 	if ( empty( $event ) ) {
 		$form_html = __( 'No event id detected', 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
-			)
+			]
 		);
 		wp_die();
 	}
@@ -1062,10 +1062,10 @@ function eme_cancel_bookings_ajax() {
 		if ( ! eme_check_hcaptcha() ) {
 			$form_html = __( 'Please check the hCaptcha box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -1074,10 +1074,10 @@ function eme_cancel_bookings_ajax() {
 		if ( ! eme_check_recaptcha() ) {
 			$form_html = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -1086,10 +1086,10 @@ function eme_cancel_bookings_ajax() {
 		if ( ! eme_check_captcha( 1 ) ) {
 			$form_html = __( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -1097,7 +1097,7 @@ function eme_cancel_bookings_ajax() {
 
 	$registration_wp_users_only = $event['registration_wp_users_only'];
 
-	$booking_ids = array();
+	$booking_ids = [];
 	if ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT ) {
 		// we require a user to be WP registered to be able to book
 		if ( is_user_logged_in() ) {
@@ -1142,17 +1142,17 @@ function eme_cancel_bookings_ajax() {
 		$form_html = __( 'There are no bookings associated to this name and email', 'events-made-easy' );
 	}
 	echo wp_json_encode(
-		array(
+	    [
 			'Result'      => 'OK',
 			'htmlmessage' => $form_html,
-		)
+		]
 	);
 	wp_die();
 }
 
 function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1, $simple = 0 ) {
 	$eme_is_admin_request = eme_is_admin_request();
-	$booking_ids          = array();
+	$booking_ids          = [];
 	$form_html            = '';
 	if ( $eme_is_admin_request && get_option( 'eme_rsvp_admin_allow_overbooking' ) ) {
 		$allow_overbooking = 1;
@@ -1164,26 +1164,26 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
                 ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
                 ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
                         $form_html = __( 'Access denied!', 'events-made-easy' );
-                        return array(
+                        return [
                                 0 => $form_html,
                                 1 => $booking_ids,
-                        );
+                        ];
         }
 
 	$event = $events[0];
 	if ( ! eme_is_empty_string( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request ) {
 		if ( ! isset( $_POST['rsvp_password'] ) ) {
 			$form_html = __( 'Password is missing', 'events-made-easy' );
-			return array(
+			return [
 				0 => $form_html,
 				1 => $booking_ids,
-			);
+			];
 		} elseif ( eme_sanitize_request($_POST['rsvp_password']) != $event['event_properties']['rsvp_password'] ) {
 			$form_html = __( 'Incorrect password given', 'events-made-easy' );
-			return array(
+			return [
 				0 => $form_html,
 				1 => $booking_ids,
-			);
+			];
 		}
 	}
 
@@ -1322,7 +1322,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 			// check all required fields
 			if ( get_option( 'eme_rsvp_check_required_fields' ) ) {
 				$all_required_fields     = eme_find_required_formfields( $format );
-				$missing_required_fields = array();
+				$missing_required_fields = [];
 				$eme_address1_string     = get_option( 'eme_address1_string' );
 				$eme_address2_string     = get_option( 'eme_address2_string' );
 				foreach ( $all_required_fields as $required_field ) {
@@ -1431,10 +1431,10 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 		if ( has_filter( 'eme_eval_booking_filter' ) ) {
 			$eval_filter_return = apply_filters( 'eme_eval_booking_filter', $event );
 		} else {
-			$eval_filter_return = array(
+			$eval_filter_return = [
 				0 => 1,
 				1 => '',
-			);
+			];
 		}
 
 		if ( ! eme_is_multi( $min_allowed ) && $bookedSeats < $min_allowed ) {
@@ -1566,10 +1566,10 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 		$payment_id = 0;
 	}
 
-	$res = array(
+	$res = [
 		0 => $form_html,
 		1 => $payment_id,
-	);
+	];
 	return $res;
 }
 
@@ -1582,7 +1582,7 @@ function eme_book_seats( $event, $send_mail ) {
 	} else {
 		$format = eme_nl2br_save_html( get_option( 'eme_registration_form_format' ) );
 	}
-	$events          = array( 0 => $event );
+	$events          = [ 0 => $event ];
 	$is_multibooking = 0;
 	return eme_multibook_seats( $events, $send_mail, $format, $is_multibooking );
 }
@@ -1596,12 +1596,12 @@ function eme_get_booking( $booking_id ) {
 		if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
 			$booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
 		} else {
-			$booking['dcodes_used'] = array();
+			$booking['dcodes_used'] = [];
 		}
 		if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
 			$booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
 		} else {
-			$booking['dcodes_entered'] = array();
+			$booking['dcodes_entered'] = [];
 		}
 	}
 	return $booking;
@@ -1653,12 +1653,12 @@ function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_stat
 			if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
 				$booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
 			} else {
-				$booking['dcodes_used'] = array();
+				$booking['dcodes_used'] = [];
 			}
 			if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
 				$booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
 			} else {
-				$booking['dcodes_entered'] = array();
+				$booking['dcodes_entered'] = [];
 			}
 			$bookings[ $key ] = $booking;
 		}
@@ -1697,7 +1697,7 @@ function eme_get_pending_booking_ids_by_bookingids( $booking_ids ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode(',', $booking_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql            = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders) AND status IN (%d,%d)", array_merge($ids_arr,array(EME_RSVP_STATUS_PENDING,EME_RSVP_STATUS_USERPENDING),$ids_arr));
+	$sql            = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders) AND status IN (%d,%d)", array_merge($ids_arr, [EME_RSVP_STATUS_PENDING,EME_RSVP_STATUS_USERPENDING], $ids_arr));
 	return $wpdb->get_col( $sql );
 }
 function eme_get_unpaid_booking_ids_by_bookingids( $booking_ids ) {
@@ -1735,7 +1735,7 @@ function eme_get_booked_multiseats_by_wp_event_id( $wp_id, $event_id ) {
 	$persons_table    = $eme_db_prefix . PEOPLE_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.wp_id = %d AND bookings.event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $wp_id, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
-	$result           = array();
+	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {
 		$multiseats = eme_convert_multi2array( $booked_seats );
 		foreach ( $multiseats as $key => $value ) {
@@ -1764,7 +1764,7 @@ function eme_get_booked_multiseats_by_person_event_id( $person_id, $event_id ) {
 	$bookings_table   = $eme_db_prefix . BOOKINGS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d,%d) AND person_id = %d AND event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $person_id, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
-	$result           = array();
+	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {
 		$multiseats = eme_convert_multi2array( $booked_seats );
 		foreach ( $multiseats as $key => $value ) {
@@ -1788,7 +1788,7 @@ function eme_get_event_id_by_booking_id( $booking_id ) {
 
 function eme_get_event_by_booking_id( $booking_id ) {
 	$event_id = eme_get_event_id_by_booking_id( $booking_id );
-	$event    = array();
+	$event    = [];
 	if ( $event_id ) {
 		$event = eme_get_event( $event_id );
 	}
@@ -1856,8 +1856,8 @@ function eme_db_insert_booking( $event, $booker, $booking ) {
 // API function so people easily get the booking answers from a post, primarily used for discounts
 // we use $booking as a var because in discount functions this is also the main var
 function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
-	$answers     = array();
-	$fields_seen = array();
+	$answers     = [];
+	$fields_seen = [];
 	$event_id    = $booking['event_id'];
 
 	// first do the booking answers per event if any
@@ -1881,7 +1881,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 					} else {
 						$value = eme_sanitize_request( $value );
 					}
-					$answer    = array(
+					$answer    = [
 						'field_name'    => $formfield['field_name'],
 						'field_id'      => $field_id,
 						'field_purpose' => $formfield['field_purpose'],
@@ -1889,7 +1889,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 						'answer'        => $value,
 						'grouping_id'   => 0,
 						'occurence_id'  => 0,
-					);
+					];
 					$answers[] = $answer;
 				}
 			}
@@ -1922,15 +1922,15 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 							} else {
 								$value = eme_sanitize_request( $value );
 							}
-							$answer    = array(
+							$answer    = [
 								'field_name'    => $formfield['field_name'],
 								'field_id'      => $field_id,
 								'field_purpose' => $formfield['field_purpose'],
 								'extra_charge'  => $formfield['extra_charge'],
 								'answer'        => $value,
-								'grouping_id'   => $group_id,
-								'occurence_id'  => $occurence_id,
-							);
+								'grouping_id'   => intval($group_id),
+								'occurence_id'  => intval($occurence_id),
+							];
 							$answers[] = $answer;
 						}
 					}
@@ -1961,7 +1961,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 				} else {
 					$value = eme_sanitize_request( $value );
 				}
-				$answer    = array(
+				$answer    = [
 					'field_name'    => $formfield['field_name'],
 					'field_id'      => $field_id,
 					'field_purpose' => $formfield['field_purpose'],
@@ -1969,7 +1969,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 					'answer'        => $value,
 					'grouping_id'   => 0,
 					'occurence_id'  => 0,
-				);
+				];
 				$answers[] = $answer;
 			}
 		}
@@ -1982,7 +1982,7 @@ function eme_booking_answers( $booking, $do_update = 1 ) {
 }
 function eme_store_booking_answers( $booking, $do_update = 1 ) {
 	global $wpdb,$eme_db_prefix;
-	$fields_seen = array();
+	$fields_seen = [];
 	if ( empty( $booking['booking_id'] ) ) {
 		$do_update = 0;
 	}
@@ -1990,7 +1990,7 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
 	$extra_charge = 0;
 	$event_id     = $booking['event_id'];
 	$person_id    = $booking['person_id'];
-	$all_answers  = array();
+	$all_answers  = [];
 	if ( $do_update ) {
 		$booking_id = $booking['booking_id'];
 		if ( $booking_id > 0 ) {
@@ -2004,7 +2004,7 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
 		$booking_id = 0;
 	}
 
-	$answer_ids_seen = array();
+	$answer_ids_seen = [];
 	$found_answers   = eme_get_booking_post_answers( $booking );
 	foreach ( $found_answers as $answer ) {
 		if ( $answer['extra_charge'] && is_numeric( $answer['answer'] ) ) {
@@ -2096,7 +2096,7 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
 	$today        = $eme_date_obj_now->getDateTime();
 	$ids_arr = explode(',', $person_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($commaDelimitedPlaceholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", array_merge(array(EME_RSVP_STATUS_TRASH),$ids_arr,array($today)));
+	$sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($commaDelimitedPlaceholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", array_merge([EME_RSVP_STATUS_TRASH], $ids_arr, [$today]));
 	$wpdb->query( $sql );
 }
 
@@ -2106,9 +2106,9 @@ function eme_delete_person_bookings( $person_ids ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode(',', $person_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE person_id IN ($commaDelimitedPlaceholders))",$ids_arr);
+	$sql = $wpdb->prepare("DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE person_id IN ($commaDelimitedPlaceholders))", $ids_arr);
 	$wpdb->query( $sql );
-	$sql = $wpdb->prepare("DELETE FROM $bookings_table WHERE person_id IN ($commaDelimitedPlaceholders)",$ids_arr);
+	$sql = $wpdb->prepare("DELETE FROM $bookings_table WHERE person_id IN ($commaDelimitedPlaceholders)", $ids_arr);
 	$wpdb->query( $sql );
 }
 
@@ -2117,7 +2117,7 @@ function eme_transfer_person_bookings( $person_ids, $to_person_id ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode(',', $person_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("UPDATE $bookings_table SET person_id = %d WHERE person_id IN ($commaDelimitedPlaceholders)",array_merge(array($to_person_id),$ids_arr));
+	$sql = $wpdb->prepare("UPDATE $bookings_table SET person_id = %d WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge([$to_person_id], $ids_arr));
 	return $wpdb->query( $sql );
 }
 
@@ -2126,7 +2126,7 @@ function eme_trash_bookings_for_event_ids( $ids ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode(',', $ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($commaDelimitedPlaceholders)",array_merge(array(EME_RSVP_STATUS_TRASH),$ids_arr));
+	$sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($commaDelimitedPlaceholders)", array_merge([EME_RSVP_STATUS_TRASH], $ids_arr));
 	$wpdb->query( $sql );
 }
 
@@ -2137,8 +2137,8 @@ function eme_trash_booking( $booking_id ) {
 		$booking = eme_get_booking( $line['booking_id'] );
 		do_action( 'eme_trash_rsvp_action', $booking );
 	}
-	$where               = array();
-	$fields              = array();
+	$where               = [];
+	$fields              = [];
 	$where['booking_id'] = $booking_id;
 	$fields['status']    = EME_RSVP_STATUS_TRASH;
 	$res                 = $wpdb->update( $bookings_table, $fields, $where );
@@ -2178,8 +2178,8 @@ function eme_partial_payment_booking( $booking, $amount ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 
-	$where               = array();
-	$fields              = array();
+	$where               = [];
+	$fields              = [];
 	$where['booking_id'] = $booking['booking_id'];
 	$price               = eme_get_total_booking_price( $booking );
 	if ( empty( $booking['received'] ) ) {
@@ -2209,8 +2209,8 @@ function eme_mark_booking_paid( $booking, $pg = '', $pg_pid = '' ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 
-	$where                  = array();
-	$fields                 = array();
+	$where                  = [];
+	$fields                 = [];
 	$where['booking_id']    = $booking['booking_id'];
 	$fields['booking_paid'] = 1;
 	$fields['pg']           = $pg;
@@ -2233,8 +2233,8 @@ function eme_mark_booking_unpaid( $booking ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 
-	$where                  = array();
-	$fields                 = array();
+	$where                  = [];
+	$fields                 = [];
 	$where['booking_id']    = $booking['booking_id'];
 	$fields['booking_paid'] = 0;
 	$price                  = eme_get_total_booking_price( $booking );
@@ -2255,8 +2255,8 @@ function eme_mark_booking_paid_approved( $booking, $pg = '', $pg_pid = '' ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 
-	$where                  = array();
-	$fields                 = array();
+	$where                  = [];
+	$fields                 = [];
 	$where['booking_id']    = $booking['booking_id'];
 	$where['waitinglist']   = 0;
 	$fields['booking_paid'] = 1;
@@ -2281,7 +2281,7 @@ function eme_mark_booking_pending( $booking_id ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 
-	$where                 = array();
+	$where                 = [];
 	$where['booking_id']   = $booking_id;
 	$fields['status']      = EME_RSVP_STATUS_PENDING;
 	$fields['waitinglist'] = 0;
@@ -2297,7 +2297,7 @@ function eme_set_booking_reminder( $booking_id ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 
-	$where               = array();
+	$where               = [];
 	$where['booking_id'] = $booking_id;
 	$fields['reminder']  = current_time( 'timestamp' );
 	$res                 = $wpdb->update( $bookings_table, $fields, $where );
@@ -2312,8 +2312,8 @@ function eme_remove_from_waitinglist( $booking_id ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 
-	$where                 = array();
-	$fields                = array();
+	$where                 = [];
+	$fields                = [];
 	$where['booking_id']   = $booking_id;
 	$fields['waitinglist'] = 0;
 	$res                   = $wpdb->update( $bookings_table, $fields, $where );
@@ -2328,8 +2328,8 @@ function eme_move_on_waitinglist( $booking_id ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 
-	$where                 = array();
-	$fields                = array();
+	$where                 = [];
+	$fields                = [];
 	$where['booking_id']   = $booking_id;
 	$fields['waitinglist'] = 1;
 	$fields['status']      = EME_RSVP_STATUS_PENDING;
@@ -2346,7 +2346,7 @@ function eme_mark_booking_userconfirm( $booking_ids ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$ids_arr = explode(',', $booking_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql            = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($commaDelimitedPlaceholders)", array_merge(array(EME_RSVP_STATUS_USERPENDING),$ids_arr) );
+	$sql            = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($commaDelimitedPlaceholders)", array_merge([EME_RSVP_STATUS_USERPENDING], $ids_arr) );
 	$wpdb->query( $sql );
 }
 
@@ -2379,8 +2379,8 @@ function eme_approve_booking( $booking_id ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 
-	$where                 = array();
-	$fields                = array();
+	$where                 = [];
+	$fields                = [];
 	$where['booking_id']   = $booking_id;
 	$fields['waitinglist'] = 0;
 	$fields['status']      = EME_RSVP_STATUS_APPROVED;
@@ -2395,7 +2395,7 @@ function eme_approve_booking( $booking_id ) {
 function eme_db_update_booking( $line ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table      = $eme_db_prefix . BOOKINGS_TBNAME;
-	$where               = array();
+	$where               = [];
 	$where['booking_id'] = $line['booking_id'];
 	$line['modif_date']  = current_time( 'mysql', false );
 	// make sure we don't disturb the discount fields for now, that calc is done later
@@ -2455,17 +2455,17 @@ function eme_get_available_multiseats( $event_id, $exclude_waiting_list = 0, $ex
 		return 0;
 	}
 	$multiseats      = eme_convert_multi2array( $event['event_seats'] );
-	$available_seats = array();
+	$available_seats = [];
 	if ( $event['event_properties']['ignore_pending'] == 1 ) {
 		$used_multiseats = eme_get_approved_multiseats( $event_id );
 		if ( eme_event_has_pgs_configured( $event ) ) {
 			$young_pending_multiseats = eme_get_young_pending_multiseats( $event_id, $exclude_pending_booking_id );
 		} else {
-			$young_pending_multiseats = array();
+			$young_pending_multiseats = [];
 		}
 	} else {
 		$used_multiseats          = eme_get_booked_multiseats( $event_id, $exclude_waiting_list );
-		$young_pending_multiseats = array();
+		$young_pending_multiseats = [];
 	}
 	foreach ( $multiseats as $key => $value ) {
 		if ( isset( $used_multiseats[ $key ] ) ) {
@@ -2520,7 +2520,7 @@ function eme_get_booked_multiseats( $event_id, $exclude_waiting_list = 0, $only_
 	$waiting          = ( $only_waiting_list == 1 ) ? 'AND waitinglist=1' : '';
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d $exclude $waiting", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
-	$result           = array();
+	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {
 		if ( empty( $booked_seats ) ) {
 			continue;
@@ -2560,7 +2560,7 @@ function eme_get_paid_multiseats( $event_id ) {
 	$bookings_table   = $eme_db_prefix . BOOKINGS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d and booking_paid=1", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
-	$result           = array();
+	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {
 		$multiseats = eme_convert_multi2array( $booked_seats );
 		foreach ( $multiseats as $key => $value ) {
@@ -2589,7 +2589,7 @@ function eme_get_approved_multiseats( $event_id ) {
 	$bookings_table   = $eme_db_prefix . BOOKINGS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status=%d AND event_id = %d", EME_RSVP_STATUS_APPROVED, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
-	$result           = array();
+	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {
 		$multiseats = eme_convert_multi2array( $booked_seats );
 		foreach ( $multiseats as $key => $value ) {
@@ -2663,7 +2663,7 @@ function eme_get_pending_multiseats( $event_id, $old_date = '', $exclude_booking
 	}
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d) AND event_id = %d $younger_than $exclude_booking", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
-	$result           = array();
+	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {
 		$multiseats = eme_convert_multi2array( $booked_seats );
 		foreach ( $multiseats as $key => $value ) {
@@ -2760,12 +2760,12 @@ function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 ) 
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$people_table   = $eme_db_prefix . PEOPLE_TBNAME;
 
-	$bookings = array();
+	$bookings = [];
 	if ( ! $event_ids ) {
 		return $bookings;
 	}
 
-	$where = array();
+	$where = [];
 	if ( is_array( $event_ids ) && eme_array_integers( $event_ids ) ) {
 		$where[] = 'bookings.event_id IN (' . join( ',', $event_ids ) . ')';
 	} elseif ( is_numeric( $event_ids ) ) {
@@ -2794,7 +2794,7 @@ function eme_get_bookings_for_event_wp_id( $event_id, $wp_id ) {
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$people_table   = $eme_db_prefix . PEOPLE_TBNAME;
 
-	$bookings = array();
+	$bookings = [];
 	if ( ! $event_id || ! $wp_id ) {
 		return $bookings;
 	}
@@ -2811,14 +2811,14 @@ function eme_get_booking_personids( $booking_ids ) {
 	}
 	$ids_arr = explode(',', $booking_ids );
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("SELECT DISTINCT person_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders)",$ids_arr);
+	$sql = $wpdb->prepare("SELECT DISTINCT person_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders)", $ids_arr);
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_bookings_by_paymentid( $payment_id ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$bookings       = array();
+	$bookings       = [];
 	if ( ! $payment_id ) {
 		return $bookings;
 	}
@@ -2828,12 +2828,12 @@ function eme_get_bookings_by_paymentid( $payment_id ) {
 		if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
 				$booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
 		} else {
-			$booking['dcodes_used'] = array();
+			$booking['dcodes_used'] = [];
 		}
 		if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
 				$booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
 		} else {
-			$booking['dcodes_entered'] = array();
+			$booking['dcodes_entered'] = [];
 		}
 		$bookings[ $key ] = $booking;
 	}
@@ -2923,7 +2923,7 @@ function eme_get_attendees( $event_id, $rsvp_status = 0, $paid_status = 0 ) {
 	if ( $person_ids ) {
 		$attendees = eme_get_persons( $person_ids );
 	} else {
-		$attendees = array();
+		$attendees = [];
 	}
 	return $attendees;
 }
@@ -3075,10 +3075,10 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 	if ( $booking['person_id'] == -1 ) {
 		// -1 ? then this is from a fake booking
 		$person          = eme_add_update_person_from_form( 0, '', '', '', 0, 0, 1 );
-		$person_answers  = array();
+		$person_answers  = [];
 		$booking_answers = eme_get_booking_post_answers( $booking, 0 ); // add the 0-option to exclude dynamic answers
-		$dyn_answers     = array();
-		$files           = array();
+		$dyn_answers     = [];
+		$files           = [];
 	} else {
 		$person = eme_get_person( $booking['person_id'] );
 		if ( $take_answers_from_post ) {
@@ -3087,7 +3087,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			$booking_answers = eme_get_nodyndata_booking_answers( $booking['booking_id'] );
 		}
 		$person_answers = eme_get_person_answers( $booking['person_id'] );
-		$dyn_answers    = ( isset( $event['event_properties']['rsvp_dyndata'] ) ) ? eme_get_dyndata_booking_answers( $booking['booking_id'] ) : array();
+		$dyn_answers    = ( isset( $event['event_properties']['rsvp_dyndata'] ) ) ? eme_get_dyndata_booking_answers( $booking['booking_id'] ) : [];
 		$files          = eme_get_uploaded_files( $booking['booking_id'], 'bookings' );
 	}
 	if ( ! $person ) {
@@ -3257,7 +3257,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 		} elseif ( preg_match( '/#_APPLIEDDISCOUNTNAMES$/', $result ) ) {
 			if ( ! empty( $booking['discountids'] ) ) {
 				$discount_ids   = explode( ',', $booking['discountids'] );
-				$discount_names = array();
+				$discount_names = [];
 				foreach ( $discount_ids as $discount_id ) {
 					$discount = eme_get_discount( $discount_id );
 					if ( $discount && isset( $discount['name'] ) ) {
@@ -3440,9 +3440,9 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			$targetBasePath                = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
 			$targetBaseUrl                 = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'];
 			$url_to_encode                 = eme_check_rsvp_url( $payment, $booking['booking_id'] );
-			list($target_file,$target_url) = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
+			[$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
 			if ( is_file( $target_file ) ) {
-				list($width, $height, $type, $attr) = getimagesize( $target_file );
+				[$width, $height, $type, $attr] = getimagesize( $target_file );
 				$replacement                        = "<img width='$width' height='$height' src='$target_url'>";
 			}
 		} elseif ( $payment && preg_match( '/#_ATTENDANCE_URL$/', $result ) ) {
@@ -3479,7 +3479,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 		} elseif ( $payment && preg_match( '/#_CANCEL_CODE$/', $result ) ) {
 			$replacement = $payment['random_id'];
 		} elseif ( preg_match( '/#_FILES/', $result ) ) {
-			$res_files = array();
+			$res_files = [];
 			foreach ( $files as $file ) {
 				if ( $target == 'html' ) {
 					$res_files[] = eme_get_uploaded_file_html( $file );
@@ -3559,7 +3559,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 				$sep = '||';
 			}
 			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], array( 'generic', 'rsvp' ) ) ) {
+			if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp' ] ) ) {
 				$field_id      = $formfield['field_id'];
 				$field_replace = '';
 				foreach ( $answers as $answer ) {
@@ -4192,7 +4192,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 		// this possibily overrides mail_res, but that's ok since errors for mail to people are more important than to the contact person
 		// to make sure the attachment_ids is an array ...
 		if ( empty( $attachment_ids ) ) {
-			$attachment_ids_arr = array();
+			$attachment_ids_arr = [];
 		} else {
 			$attachment_ids_arr = explode( ',', $attachment_ids );
 		}
@@ -4359,7 +4359,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 					$person = eme_get_person_by_email_only( $email );
 				}
 				if ( ! $person ) {
-					$person              = array();
+					$person              = [];
 					$person['lastname']  = $lastname;
 					$person['firstname'] = $firstname;
 					$person['email']     = $email;
@@ -4410,7 +4410,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 				$already_booked_seats    = eme_get_total( $booking['booking_seats_mp'] );
 
 				$booking_prices_mp = eme_convert_multi2array( $booking['event_price'] );
-				$bookedSeats_mp    = array();
+				$bookedSeats_mp    = [];
 				// start with the existing mp bookedseats, in case a #_SEATSxx is missing (due to a eme_if condition maybe), it is then not touched
 				foreach ( $booking_prices_mp as $key => $value ) {
 					$bookedSeats_mp[ $key ] = intval( $already_booked_seats_mp[ $key ] );
@@ -4516,7 +4516,7 @@ function eme_import_csv_payments() {
 		$today        = $eme_date_obj_now->getDate();
 
 	//validate whether uploaded file is a csv file
-	$csvMimes = array( 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' );
+	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
 	if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
 		return sprintf( __( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 	}
@@ -4560,7 +4560,7 @@ function eme_import_csv_payments() {
 	if ( ! in_array( 'payment_date', $headers ) || ! ( in_array( 'unique_nbr', $headers ) || in_array( 'payment_id', $headers ) || in_array( 'payment_randomid', $headers ) ) || ! in_array( 'amount', $headers ) ) {
 		$result = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
-		$empty_props         = array();
+		$empty_props         = [];
 				$empty_props = eme_init_event_props( $empty_props );
 		// now loop over the rest
 		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
@@ -4634,7 +4634,7 @@ function eme_import_csv_payments() {
 function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	global $plugin_page, $eme_plugin_url;
 
-	$scope_names           = array();
+	$scope_names           = [];
 	$scope_names['past']   = __( 'Past events', 'events-made-easy' );
 	$scope_names['all']    = __( 'All events', 'events-made-easy' );
 	$scope_names['future'] = __( 'Future events', 'events-made-easy' );
@@ -4848,9 +4848,9 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	</div>
 	<?php
 	$formfields               = eme_get_formfields( '', 'rsvp,generic' );
-	$extrafields_arr          = array();
-	$extrafieldnames_arr      = array();
-	$extrafieldsearchable_arr = array();
+	$extrafields_arr          = [];
+	$extrafieldnames_arr      = [];
+	$extrafieldsearchable_arr = [];
 	foreach ( $formfields as $formfield ) {
 		$extrafields_arr[]          = $formfield['field_id'];
 		$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
@@ -4927,7 +4927,7 @@ function eme_get_seat_booking_price( $booking ) {
 }
 
 function eme_get_total_booking_multiprice_arr( $booking ) {
-	$price       = array();
+	$price       = [];
 	$basic_price = eme_get_booking_event_price( $booking );
 
 	if ( eme_is_multi( $basic_price ) ) {
@@ -4941,7 +4941,7 @@ function eme_get_total_booking_multiprice_arr( $booking ) {
 }
 
 function eme_get_seat_booking_multiprice_arr( $booking ) {
-	$price       = array();
+	$price       = [];
 	$basic_price = eme_get_booking_event_price( $booking );
 
 	if ( eme_is_multi( $basic_price ) ) {
@@ -5052,7 +5052,8 @@ function eme_ajax_bookings_list() {
 	global $wpdb,$eme_db_prefix, $eme_timezone, $eme_plugin_url;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	if ( ! ( current_user_can( get_option( 'eme_cap_registrations' ) ) ||
+	if ( ! (
+	    current_user_can( get_option( 'eme_cap_registrations' ) ) ||
 		current_user_can( get_option( 'eme_cap_author_registrations' ) ) ||
 		current_user_can( get_option( 'eme_cap_approve' ) ) ||
 		current_user_can( get_option( 'eme_cap_author_approve' ) )
@@ -5091,7 +5092,7 @@ function eme_ajax_bookings_list() {
 	$q         = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
 	$opt       = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
 	$where     = '';
-	$where_arr = array();
+	$where_arr = [];
 
 	if ( $booking_status == 'PENDING' ) {
 		if ( ! ( current_user_can( get_option( 'eme_cap_approve' ) ) ||
@@ -5108,7 +5109,7 @@ function eme_ajax_bookings_list() {
 			if ( empty( $event_ids_arr ) ) {
 				$jTableResult['Result']           = 'OK';
 				$jTableResult['TotalRecordCount'] = 0;
-				$jTableResult['Records']          = array();
+				$jTableResult['Records']          = [];
 				print wp_json_encode( $jTableResult );
 				wp_die();
 			} else {
@@ -5130,7 +5131,7 @@ function eme_ajax_bookings_list() {
 			if ( empty( $event_ids_arr ) ) {
 				$jTableResult['Result']           = 'OK';
 				$jTableResult['TotalRecordCount'] = 0;
-				$jTableResult['Records']          = array();
+				$jTableResult['Records']          = [];
 				print wp_json_encode( $jTableResult );
 				wp_die();
 			} else {
@@ -5142,7 +5143,7 @@ function eme_ajax_bookings_list() {
 	// we need this GROUP_CONCAT so we can sort on those fields too (otherwise the columns FIELD_* don't exist in the returning sql
 	$formfields_searchable = eme_get_searchable_formfields( 'rsvp', 1 );
 	$group_concat_sql      = '';
-	$field_ids_arr         = array();
+	$field_ids_arr         = [];
 	foreach ( $formfields_searchable as $formfield ) {
 		$field_id          = $formfield['field_id'];
 		$field_ids_arr[]   = $field_id;
@@ -5264,11 +5265,11 @@ function eme_ajax_bookings_list() {
 	$wp_users    = eme_get_indexed_users();
 
 	$formfields = eme_get_formfields( '', 'rsvp,generic' );
-	$rows       = array();
+	$rows       = [];
 	// the array $event_name_info will be used to store the event info for bookings, so we don't need to recalculate that for each booking
-	$event_name_info = array();
+	$event_name_info = [];
 	foreach ( $bookings as $booking ) {
-		$line             = array();
+		$line             = [];
 		$booking_event_id = $booking['event_id'];
 		if ( ! empty( $booking['person_id'] ) ) {
 			$person = eme_get_person( $booking['person_id'] );
@@ -5506,7 +5507,8 @@ function eme_ajax_bookings_list() {
 
 function eme_ajax_manage_bookings() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	if ( ! ( current_user_can( get_option( 'eme_cap_registrations' ) ) ||
+	if ( ! (
+	    current_user_can( get_option( 'eme_cap_registrations' ) ) ||
 		current_user_can( get_option( 'eme_cap_author_registrations' ) ) ||
 		current_user_can( get_option( 'eme_cap_approve' ) ) ||
 		current_user_can( get_option( 'eme_cap_author_approve' ) )
@@ -5637,7 +5639,7 @@ function eme_ajax_action_rsvp_paidandapprove( $ids_arr ) {
 			$action_ok = 0;
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( $mail_ok && $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'OK';
@@ -5671,7 +5673,7 @@ function eme_ajax_action_remove_waitinglist( $ids_arr, $action, $send_mail ) {
 			$action_ok = 0;
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( $mail_ok && $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'OK';
@@ -5712,7 +5714,7 @@ function eme_ajax_action_move_waitinglist( $ids_arr, $action, $send_mail, $refun
 			$action_ok = 0;
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( ! $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'ERROR';
@@ -5755,7 +5757,7 @@ function eme_ajax_action_rsvp_aprove( $ids_arr, $action, $send_mail ) {
 			}
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( $mail_ok && $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'OK';
@@ -5777,7 +5779,7 @@ function eme_ajax_action_rsvp_delete( $ids_arr ) {
 			$action_ok = 0;
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'OK';
@@ -5816,7 +5818,7 @@ function eme_ajax_action_rsvp_trash( $ids_arr, $action, $send_mail, $refund ) {
 			$action_ok = 0;
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( ! $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'ERROR';
@@ -5880,7 +5882,7 @@ function eme_ajax_action_booking_partial_payment( $booking_id, $amount, $send_ma
 	} else {
 		$action_ok = 0;
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( $mail_ok && $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'OK';
@@ -5922,7 +5924,7 @@ function eme_ajax_action_mark_booking_paid( $ids_arr, $action, $send_mail ) {
 			}
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( $mail_ok && $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'OK';
@@ -5961,7 +5963,7 @@ function eme_ajax_action_mark_booking_unpaid( $ids_arr, $action, $send_mail, $re
 			$action_ok = 0;
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( ! $action_ok ) {
 		if ( $refund ) {
 			$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem refunding the payment, please check your logs.', 'events-made-easy' ) . '</p></div>';
@@ -6001,7 +6003,7 @@ function eme_ajax_action_send_booking_mails( $ids_arr, $subject_template_id, $bo
 			}
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( $mail_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'OK';
@@ -6021,7 +6023,7 @@ function eme_ajax_action_resend_booking_mail( $ids_arr, $action ) {
 			$mail_ok = 0;
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( $mail_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'OK';
@@ -6034,7 +6036,7 @@ function eme_ajax_action_resend_booking_mail( $ids_arr, $action ) {
 
 function eme_ajax_action_mark_userconfirm( $ids, $action ) {
 	eme_mark_booking_userconfirm( $ids );
-	$ajaxResult                = array();
+	$ajaxResult                = [];
 	$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
 	$ajaxResult['Result']      = 'OK';
 	print wp_json_encode( $ajaxResult );
@@ -6066,7 +6068,7 @@ function eme_ajax_action_mark_pending( $ids_arr, $action, $send_mail, $refund ) 
 			$action_ok = 0;
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( ! $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'ERROR';
@@ -6102,7 +6104,7 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 	$orientation = $template['properties']['pdf_orientation'];
 	$pagesize    = $template['properties']['pdf_size'];
 	if ( $pagesize == 'custom' ) {
-		$pagesize = array( 0, 0, $template['properties']['pdf_width'], $template['properties']['pdf_height'] );
+		$pagesize = [ 0, 0, $template['properties']['pdf_width'], $template['properties']['pdf_height'] ];
 	}
 
 	$dompdf->setPaper( $pagesize, $orientation );
@@ -6168,7 +6170,7 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
 	$orientation = $template['properties']['pdf_orientation'];
 	$pagesize    = $template['properties']['pdf_size'];
 	if ( $pagesize == 'custom' ) {
-		$pagesize = array( 0, 0, $template['properties']['pdf_width'], $template['properties']['pdf_height'] );
+		$pagesize = [ 0, 0, $template['properties']['pdf_width'], $template['properties']['pdf_height'] ];
 	}
 
 	$dompdf->setPaper( $pagesize, $orientation );

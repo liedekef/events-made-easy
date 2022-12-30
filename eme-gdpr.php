@@ -12,14 +12,14 @@ function eme_gdpr_approve_url( $email ) {
 	$the_link = remove_query_arg( 'lang', $the_link );
 	$nonce    = wp_create_nonce( "gdpr $email" );
 	$the_link = add_query_arg(
-		array(
+	    [
 			'eme_gdpr_approve' => $email,
 			'eme_gdpr_nonce'   => $nonce,
-		),
-		$the_link
+		],
+	    $the_link
 	);
 	if ( ! empty( $language ) ) {
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -32,14 +32,14 @@ function eme_gdpr_url( $email ) {
 	$the_link = remove_query_arg( 'lang', $the_link );
 	$nonce    = wp_create_nonce( "gdpr $email" );
 	$the_link = add_query_arg(
-		array(
+	    [
 			'eme_gdpr'       => $email,
 			'eme_gdpr_nonce' => $nonce,
-		),
-		$the_link
+		],
+	    $the_link
 	);
 	if ( ! empty( $language ) ) {
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -52,10 +52,10 @@ function eme_gdpr_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 				$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 				echo wp_json_encode(
-					array(
+				    [
 						'Result'      => 'NOK',
 						'htmlmessage' => $form_html,
-					)
+					]
 				);
 				wp_die();
 		}
@@ -63,10 +63,10 @@ function eme_gdpr_ajax() {
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 			$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 	}
@@ -92,10 +92,10 @@ function eme_gdpr_ajax() {
 	}
 	$form_html = __( 'Thank you for your request, an email will be sent with further info', 'events-made-easy' );
 	echo wp_json_encode(
-		array(
+	    [
 			'Result'      => 'OK',
 			'htmlmessage' => $form_html,
-		)
+		]
 	);
 	wp_die();
 }
@@ -109,7 +109,7 @@ function eme_rpi_shortcode( $atts ) {
 		$email = '';
 	}
 
-	$atts = shortcode_atts( array( 'show_info_if_logged_in' => 0 ), $atts );
+	$atts = shortcode_atts( [ 'show_info_if_logged_in' => 0 ], $atts );
 	$show_info_if_logged_in = filter_var( $atts['show_info_if_logged_in'], FILTER_VALIDATE_BOOLEAN );
 
 	// for logged in users that are linked to an EME user, immediately show the info
@@ -143,10 +143,10 @@ function eme_gdpr_approve_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 				$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 				echo wp_json_encode(
-					array(
+				    [
 						'Result'      => 'NOK',
 						'htmlmessage' => $form_html,
-					)
+					]
 				);
 				wp_die();
 		}
@@ -154,10 +154,10 @@ function eme_gdpr_approve_ajax() {
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 			$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
-				)
+				]
 			);
 			wp_die();
 	}
@@ -183,10 +183,10 @@ function eme_gdpr_approve_ajax() {
 	}
 		$form_html = __( 'Thank you for your request, an email will be sent with further info', 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'OK',
 				'htmlmessage' => $form_html,
-			)
+			]
 		);
 		wp_die();
 }
@@ -221,10 +221,10 @@ function eme_cpi_request_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 				$message = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 				echo wp_json_encode(
-					array(
+				    [
 						'Result'      => 'NOK',
 						'htmlmessage' => $message,
-					)
+					]
 				);
 				wp_die();
 		}
@@ -232,10 +232,10 @@ function eme_cpi_request_ajax() {
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 			$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
-				)
+				]
 			);
 			wp_die();
 	}
@@ -294,10 +294,10 @@ function eme_cpi_request_ajax() {
 	}
 		$message = __( 'Thank you for your request, an email will be sent with further info.', 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'OK',
 				'htmlmessage' => $message,
-			)
+			]
 		);
 		wp_die();
 }
@@ -311,7 +311,7 @@ function eme_cpi_shortcode( $atts ) {
 		$email = '';
 	}
 
-	$atts = shortcode_atts( array( 'show_form_if_logged_in' => 0 ), $atts );
+	$atts = shortcode_atts( [ 'show_form_if_logged_in' => 0 ], $atts );
 	$show_form_if_logged_in = filter_var( $atts['show_form_if_logged_in'], FILTER_VALIDATE_BOOLEAN );
 
 	// for logged in users that are linked to an EME user, immediately show the form
@@ -345,10 +345,10 @@ function eme_cpi_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 			$message = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -356,10 +356,10 @@ function eme_cpi_ajax() {
 	if ( empty( $_POST['person_id'] ) ) {
 		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $message,
-			)
+			]
 		);
 		wp_die();
 	}
@@ -367,10 +367,10 @@ function eme_cpi_ajax() {
 	if ( ! isset( $_POST['eme_cpi_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_cpi_nonce']), "eme_cpi $person_id" ) ) {
 		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $message,
-			)
+			]
 		);
 		wp_die();
 	}
@@ -378,10 +378,10 @@ function eme_cpi_ajax() {
 		if ( ! eme_check_recaptcha() ) {
 			$message = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -389,10 +389,10 @@ function eme_cpi_ajax() {
 		if ( ! eme_check_hcaptcha() ) {
 			$message = __( 'Please check the hCaptcha box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -400,15 +400,15 @@ function eme_cpi_ajax() {
 		if ( ! eme_check_captcha( 1 ) ) {
 			$message = __( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
-				)
+				]
 			);
 			wp_die();
 		}
 	}
-	list($person_id,$add_update_message) = eme_add_update_person_from_form( $person_id );
+	[$person_id, $add_update_message] = eme_add_update_person_from_form( $person_id );
 	if ( $person_id ) {
 		$message = __( 'Person updated', 'events-made-easy' );
 	} else {
@@ -416,10 +416,10 @@ function eme_cpi_ajax() {
 		$message .= '<br>' . $add_update_message;
 	}
 	echo wp_json_encode(
-		array(
+	    [
 			'Result'      => 'OK',
 			'htmlmessage' => $message,
-		)
+		]
 	);
 	wp_die();
 }
@@ -483,7 +483,7 @@ function eme_show_personal_info( $email ) {
 			$output  .= '<tr><td>' . __( 'MassMail', 'events-made-easy' ) . '</td><td>' . $massmail . '</td></tr>';
 			$output  .= '<tr><td>' . __( 'GDPR approval', 'events-made-easy' ) . '</td><td>' . $gdpr . '</td></tr>';
 			if ( ! empty( $person['properties']['image_id'] ) ) {
-								$img = wp_get_attachment_image( $person['properties']['image_id'], 'full', 0, array( 'class' => 'eme_person_image' ) );
+								$img = wp_get_attachment_image( $person['properties']['image_id'], 'full', 0, [ 'class' => 'eme_person_image' ] );
 				$output             .= '<tr><td>' . __( 'Image', 'events-made-easy' ) . '</td><td>' . $img . '</td></tr>';
 			}
 			$output .= '<tr><td>' . __( 'Member of group(s)', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $groups ) . '</td></tr>';
@@ -569,14 +569,14 @@ function eme_gdpr_add_suggested_privacy_content() {
 }
 
 function eme_gdpr_register_exporters( $exporters ) {
-	$exporters[] = array(
+	$exporters[] = [
 		'exporter_friendly_name' => __( 'Events Made Easy' ),
 		'callback'               => 'eme_gdpr_user_data_exporter',
-	);
+	];
 	return $exporters;
 }
 function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
-	$export_items = array();
+	$export_items = [];
 	if ( eme_count_persons_by_email( $email ) > 0 ) {
 		$person_ids          = eme_get_personids_by_email( $email );
 		$eme_address1_string = get_option( 'eme_address1_string' );
@@ -588,133 +588,133 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 			$groups   = join( ',', eme_get_persongroup_names( $person['person_id'] ) );
 			$massmail = $person['massmail'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 			$gdpr     = $person['gdpr'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-			$data     = array();
-			$data[]   = array(
+			$data     = [];
+			$data[]   = [
 				'name'  => __( 'Person ID', 'events-made-easy' ),
 				'value' => $person['person_id'],
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'Last name', 'events-made-easy' ),
 				'value' => $person['lastname'],
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'First name', 'events-made-easy' ),
 				'value' => $person['firstname'],
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'Email', 'events-made-easy' ),
 				'value' => $person['email'],
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => $eme_address1_string,
 				'value' => $person['address1'],
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => $eme_address1_string,
 				'value' => $person['address2'],
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'City', 'events-made-easy' ),
 				'value' => $person['city'],
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'Postal code', 'events-made-easy' ),
 				'value' => $person['zip'],
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'State', 'events-made-easy' ),
 				'value' => eme_get_state_name( $person['state_code'], $person['country_code'], $person['lang'] ),
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'Country', 'events-made-easy' ),
 				'value' => eme_get_country_name( $person['country_code'], $person['lang'] ),
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'Phone number', 'events-made-easy' ),
 				'value' => $person['phone'],
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'MassMail', 'events-made-easy' ),
 				'value' => $massmail,
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'GDPR approval', 'events-made-easy' ),
 				'value' => $gdpr,
-			);
-			$data[]   = array(
+			];
+			$data[]   = [
 				'name'  => __( 'Member of group(s)', 'events-made-easy' ),
 				'value' => $groups,
-			);
+			];
 			foreach ( $answers as $answer ) {
 				$formfield = eme_get_formfield( $answer['field_id'] );
 				if ( ! empty( $formfield ) ) {
-					$data[] = array(
+					$data[] = [
 						'name'  => eme_translate( $formfield['field_name'] ),
 						'value' => eme_answer2readable( $answer['answer'], $formfield, 1, ',', 'text' ),
-					);
+					];
 				}
 			}
 			// Add this group of items to the exporters data array.
 			$group_id       = 'eme-personal-data';
 			$group_label    = __( 'Events Made Easy Personal Data', 'event-made-easy' );
-			$export_items[] = array(
+			$export_items[] = [
 				'group_id'    => $group_id,
 				'group_label' => $group_label,
 				'item_id'     => $person_id,
 				'data'        => $data,
-			);
+			];
 
 			// Now the media
 			$files = eme_get_uploaded_files( $person_id, 'people' );
 			if ( ! empty( $files ) ) {
 				$group_id    = 'eme-personal-data-media';
 				$group_label = __( 'Events Made Easy Uploaded files linked to the person', 'event-made-easy' );
-				$data        = array();
+				$data        = [];
 				foreach ( $files as $file ) {
-					$data[] = array(
+					$data[] = [
 						'name'  => eme_translate( $file['field_name'] ),
 						'value' => "<a href='" . $file['url'] . "'>" . $file['name'] . '</a>',
-					);
+					];
 				}
-				$export_items[] = array(
+				$export_items[] = [
 					'group_id'    => $group_id,
 					'group_label' => $group_label,
 					'item_id'     => $person_id,
 					'data'        => $data,
-				);
+				];
 			}
 
 			if ( count( $members ) > 0 ) {
 				foreach ( $members as $member ) {
 					$start_date         = eme_localized_date( $member['start_date'] );
 					$end_date           = eme_localized_date( $member['end_date'] );
-					$data               = array();
-					$data[]             = array(
+					$data               = [];
+					$data[]             = [
 						'name'  => __( 'Member ID', 'events-made-easy' ),
 						'value' => $member['member_id'],
-					);
-					$data[]             = array(
+					];
+					$data[]             = [
 						'name'  => __( 'Membership', 'events-made-easy' ),
 						'value' => $member['membership_name'],
-					);
-					$data[]             = array(
+					];
+					$data[]             = [
 						'name'  => __( 'Start', 'events-made-easy' ),
 						'value' => $start_date,
-					);
-					$data[]             = array(
+					];
+					$data[]             = [
 						'name'  => __( 'End', 'events-made-easy' ),
 						'value' => $end_date,
-					);
+					];
 					$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
 					if ( ! empty( $related_member_ids ) ) {
 						$related_member = eme_get_member( $related_member_id );
 						if ( $related_member ) {
 							$related_person = eme_get_person( $related_member['person_id'] );
 							if ( $related_person ) {
-								$data[] = array(
+								$data[] = [
 									'name'  => __( 'Main family account for', 'events-made-easy' ),
 									'value' => eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) . ' (' . $related_person['email'] . ')',
-								);
+								];
 							}
 						}
 					}
@@ -722,38 +722,38 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 					foreach ( $answers as $answer ) {
 						$formfield = eme_get_formfield( $answer['field_id'] );
 						if ( ! empty( $formfield ) ) {
-							$data[] = array(
+							$data[] = [
 								'name'  => eme_translate( $formfield['field_name'] ),
 								'value' => eme_answer2readable( $answer['answer'], $formfield, 1, ',', 'text' ),
-							);
+							];
 						}
 					}
 					$group_id       = 'eme-member-data';
 					$group_label    = __( 'Events Made Easy Member Data', 'event-made-easy' );
-					$export_items[] = array(
+					$export_items[] = [
 						'group_id'    => $group_id,
 						'group_label' => $group_label,
 						'item_id'     => $member['member_id'],
 						'data'        => $data,
-					);
+					];
 					// Now the media
 					$files = eme_get_uploaded_files( $member['member_id'], 'members' );
 					if ( ! empty( $files ) ) {
 						$group_id    = 'eme-member-data-media';
 						$group_label = __( 'Events Made Easy Uploaded files linked to the member', 'event-made-easy' );
-						$data        = array();
+						$data        = [];
 						foreach ( $files as $file ) {
-							$data[] = array(
+							$data[] = [
 								'name'  => eme_translate( $file['field_name'] ),
 								'value' => "<a href='" . $file['url'] . "'>" . $file['name'] . '</a>',
-							);
+							];
 						}
-						$export_items[] = array(
+						$export_items[] = [
 							'group_id'    => $group_id,
 							'group_label' => $group_label,
 							'item_id'     => $person_id,
 							'data'        => $data,
-						);
+						];
 					}
 				}
 			}
@@ -761,27 +761,27 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 	}
 	// Returns an array of exported items for this pass, but also a boolean whether this exporter is finished.
 	//If not it will be called again with $page increased by 1.
-	return array(
+	return [
 		'data' => $export_items,
 		'done' => true,
-	);
+	];
 }
 
-function eme_gdpr_register_erasers( $erasers = array() ) {
-	$erasers[] = array(
+function eme_gdpr_register_erasers( $erasers = [] ) {
+	$erasers[] = [
 		'eraser_friendly_name' => __( 'Events Made Easy' ),
 		'callback'             => 'eme_gdpr_user_data_eraser',
-	);
+	];
 	return $erasers;
 }
 function eme_gdpr_user_data_eraser( $email, $page = 1 ) {
 	if ( empty( $email ) ) {
-		return array(
+		return [
 			'items_removed'  => false,
 			'items_retained' => false,
-			'messages'       => array(),
+			'messages'       => [],
 			'done'           => true,
-		);
+		];
 	}
 	$person_ids = eme_get_personids_by_email( $email );
 	if ( ! empty( $person_ids ) ) {
@@ -790,14 +790,14 @@ function eme_gdpr_user_data_eraser( $email, $page = 1 ) {
 	}
 	$items_removed  = true;
 	$items_retained = false;
-	$messages       = array();
+	$messages       = [];
 	$messages[]     = __( "All data from the plugin Events Made Easy related to this email has been removed, but don't forget this also cancelled the corresponding memberships!", 'events-made-easy' );
-	return array(
+	return [
 		'items_removed'  => $items_removed,
 		'items_retained' => $items_retained,
 		'messages'       => $messages,
 		'done'           => true,
-	);
+	];
 }
 
 

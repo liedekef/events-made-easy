@@ -798,7 +798,7 @@ class ExpressiveDate extends DateTime {
 	public function isWeekday(): bool {
 		$day = $this->getDayOfWeek();
 
-		return ! in_array( $day, array( 'Saturday', 'Sunday' ) );
+		return ! in_array( $day, [ 'Saturday', 'Sunday' ] );
 	}
 
 	/**
@@ -837,7 +837,7 @@ class ExpressiveDate extends DateTime {
 
 		$difference = $this->diff( $compare );
 
-		list($years, $months) = explode( ':', $difference->format( '%y:%m' ) );
+		[$years, $months] = explode( ':', $difference->format( '%y:%m' ) );
 
 		return ( ( $years * 12 ) + $months ) * $difference->format( '%r1' );
 	}
@@ -895,7 +895,7 @@ class ExpressiveDate extends DateTime {
 
 		$difference = $this->diff( $compare );
 
-		list($days, $hours, $minutes, $seconds) = explode( ':', $difference->format( '%a:%h:%i:%s' ) );
+		[$days, $hours, $minutes, $seconds] = explode( ':', $difference->format( '%a:%h:%i:%s' ) );
 
 		// Add the total amount of seconds in all the days.
 		$seconds += ( $days * 24 * 60 * 60 );
@@ -920,8 +920,8 @@ class ExpressiveDate extends DateTime {
 			$compare = new ExpressiveDate( 'now', $this->getTimezone() );
 		}
 
-		$units  = array( 'second', 'minute', 'hour', 'day', 'week', 'month', 'year' );
-		$values = array( 60, 60, 24, 7, 4.35, 12 );
+		$units  = [ 'second', 'minute', 'hour', 'day', 'week', 'month', 'year' ];
+		$values = [ 60, 60, 24, 7, 4.35, 12 ];
 
 		// Get the difference between the two timestamps. We'll use this to cacluate the
 		// actual time remaining.
@@ -1027,7 +1027,7 @@ class ExpressiveDate extends DateTime {
 		if ( is_numeric( $weekStartDay ) ) {
 			$this->weekStartDay = $weekStartDay;
 		} else {
-			$this->weekStartDay = array_search( strtolower( $weekStartDay ), array( 'sunday', 'monday' ) );
+			$this->weekStartDay = array_search( strtolower( $weekStartDay ), [ 'sunday', 'monday' ] );
 		}
 
 		return $this;

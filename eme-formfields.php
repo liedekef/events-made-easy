@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_formfield() {
-	$formfield = array(
+	$formfield = [
 		'field_type'       => 'text',
 		'field_name'       => '',
 		'field_values'     => '',
@@ -19,7 +19,7 @@ function eme_new_formfield() {
 		'export'           => 0,
 		'extra_charge'     => 0,
 		'searchable'       => 0,
-	);
+	];
 	return $formfield;
 }
 
@@ -52,7 +52,7 @@ function eme_formfields_page() {
 	if ( isset( $_POST['eme_admin_action'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		if ( $_POST['eme_admin_action'] == 'do_editformfield' ) {
-			$formfield                   = array();
+			$formfield                   = [];
 			$field_id                    = intval( $_POST['field_id'] );
 			$formfield['field_name']     = trim( eme_sanitize_request( $_POST['field_name'] ) );
 			$formfield['field_type']     = trim( eme_esc_html( eme_sanitize_request( $_POST['field_type'] ) ) );
@@ -125,7 +125,7 @@ function eme_formfields_page() {
 				}
 			}
 			if ( $field_id > 0 ) {
-					$validation_result = $wpdb->update( $formfields_table, $formfield, array( 'field_id' => $field_id ) );
+					$validation_result = $wpdb->update( $formfields_table, $formfield, [ 'field_id' => $field_id ] );
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully edited the field', 'events-made-easy' );
 				} else {
@@ -210,13 +210,13 @@ function eme_formfields_table_layout( $message = '' ) {
 	<?php
 }
 
-function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield = array() ) {
+function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield = [] ) {
 	global $plugin_page;
 
 	$field_types                      = eme_get_fieldtypes();
 	$field_purposes                   = eme_get_fieldpurpose();
 	$groups                           = eme_get_static_groups();
-	$peoplefieldconditions            = array();
+	$peoplefieldconditions            = [];
 	$peoplefieldconditions['group:0'] = __( 'Show for all people', 'events-made-easy' );
 	foreach ( $groups as $group ) {
 			$peoplefieldconditions[ 'group:' . $group['group_id'] ] = $group['name'];
@@ -282,8 +282,8 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_purpose'>" . __( 'Field purpose', 'events-made-easy' ) . '</label></th>
                ';
-	if ( ! $used || in_array( $formfield['field_purpose'], array( 'generic', 'rsvp', 'members' ) ) ) {
-		if ( in_array( $formfield['field_purpose'], array( 'rsvp', 'members' ) ) ) {
+	if ( ! $used || in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'members' ] ) ) {
+		if ( in_array( $formfield['field_purpose'], [ 'rsvp', 'members' ] ) ) {
 			// for members or rsvp field: allow to change between those and generic
 			unset( $field_purposes['events'] );
 			unset( $field_purposes['locations'] );
@@ -414,7 +414,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
 }
 
 function eme_get_dyndata_conditions() {
-		$data = array(
+		$data = [
 			'eq'          => __( 'equal to', 'events-made-easy' ),
 			'ne'          => __( 'not equal to', 'events-made-easy' ),
 			'lt'          => __( 'lower than', 'events-made-easy' ),
@@ -424,7 +424,7 @@ function eme_get_dyndata_conditions() {
 			'notcontains' => __( 'does not contain', 'events-made-easy' ),
 			'incsv'       => __( 'CSV list contains', 'events-made-easy' ),
 			'notincsv'    => __( 'CSV list does not contain', 'events-made-easy' ),
-		);
+		];
 
 		return $data;
 }
@@ -453,13 +453,13 @@ function eme_get_formfields( $ids = '', $purpose = '' ) {
 	global $wpdb,$eme_db_prefix;
 	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
 	$where            = '';
-	$where_arr        = array();
+	$where_arr        = [];
 	if ( ! empty( $ids ) && eme_is_list_of_int($ids) ) {
 		$where_arr[] = "field_id IN ($ids)";
 	}
 	if ( ! empty( $purpose ) ) {
 		$purposes     = explode( ',', $purpose );
-		$purposes_arr = array();
+		$purposes_arr = [];
 		foreach ( $purposes as $tmp_p ) {
 			$purposes_arr[] = "field_purpose='" . esc_sql( $tmp_p ) . "'";
 		}
@@ -475,7 +475,7 @@ function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
 	global $wpdb,$eme_db_prefix;
 	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
 	$where            = '';
-	$where_arr        = array();
+	$where_arr        = [];
 	$where_arr[]      = 'searchable=1';
 	$where_arr[]      = "field_type <> 'file' AND field_type <> 'multifile'";
 	if ( ! empty( $purpose ) ) {
@@ -519,16 +519,16 @@ function eme_delete_formfields( $formfields ) {
 	if ( ! empty( $formfields ) && eme_array_integers( $formfields ) ) {
 		$ids_arr = explode( ',', $formfields );
 		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-		$validation_result = $wpdb->query( $wpdb->prepare("DELETE FROM $formfields_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
+		$validation_result = $wpdb->query( $wpdb->prepare("DELETE FROM $formfields_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
 		if ( $validation_result !== false ) {
 			$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $answers_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
+			$wpdb->query( $wpdb->prepare("DELETE FROM $answers_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
 			$events_customfields_table = $eme_db_prefix . EVENTS_CF_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $events_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
+			$wpdb->query( $wpdb->prepare("DELETE FROM $events_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
 			$locations_customfields_table = $eme_db_prefix . LOCATIONS_CF_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $locations_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
+			$wpdb->query( $wpdb->prepare("DELETE FROM $locations_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
 			$memberships_customfields_table = $eme_db_prefix . MEMBERSHIPS_CF_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $memberships_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)",$ids_arr ));
+			$wpdb->query( $wpdb->prepare("DELETE FROM $memberships_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
 			return true;
 		} else {
 			return false;
@@ -539,7 +539,7 @@ function eme_delete_formfields( $formfields ) {
 }
 
 function eme_get_fieldpurpose( $purpose = '' ) {
-	$uses = array(
+	$uses = [
 		'generic'     => __( 'Generic', 'events-made-easy' ),
 		'events'      => __( 'Events field', 'events-made-easy' ),
 		'locations'   => __( 'Locations field', 'events-made-easy' ),
@@ -547,7 +547,7 @@ function eme_get_fieldpurpose( $purpose = '' ) {
 		'people'      => __( 'People field', 'events-made-easy' ),
 		'members'     => __( 'Members field', 'events-made-easy' ),
 		'memberships' => __( 'Memberships field', 'events-made-easy' ),
-	);
+	];
 	if ( $purpose ) {
 		if ( isset( $uses[ $purpose ] ) ) {
 			return $uses[ $purpose ];
@@ -560,7 +560,7 @@ function eme_get_fieldpurpose( $purpose = '' ) {
 }
 
 function eme_get_fieldtypes() {
-	$types = array(
+	$types = [
 		'text'              => __( 'Text', 'events-made-easy' ),
 		'textarea'          => __( 'Textarea', 'events-made-easy' ),
 		'dropdown'          => __( 'Dropdown', 'events-made-easy' ),
@@ -588,7 +588,7 @@ function eme_get_fieldtypes() {
 		'range'             => __( 'Range (HTML5)', 'events-made-easy' ),
 		'tel'               => __( 'Tel (HTML5)', 'events-made-easy' ),
 		'url'               => __( 'Url (HTML5)', 'events-made-easy' ),
-	);
+	];
 	return $types;
 }
 
@@ -599,7 +599,7 @@ function eme_get_fieldtype( $type ) {
 
 function eme_is_multifield( $type ) {
 	global $wpdb,$eme_db_prefix;
-	return in_array( $type, array( 'dropdown', 'dropdown_multi', 'radiobox', 'radiobox_vertical', 'checkbox', 'checkbox_vertical' ) );
+	return in_array( $type, [ 'dropdown', 'dropdown_multi', 'radiobox', 'radiobox_vertical', 'checkbox', 'checkbox_vertical' ] );
 }
 
 function eme_get_formfield_html( $formfield, $field_name, $entered_val, $required, $class = '', $ro = 0, $force_single = 0 ) {
@@ -723,14 +723,14 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			# dropdown
 			$values = eme_convert_multi2array( $field_values );
 			$tags   = eme_convert_multi2array( $field_tags );
-			$my_arr = array();
+			$my_arr = [];
 			// since the values for a dropdown field need not be unique, we give them as an array to be built with eme_ui_select
 			foreach ( $values as $key => $val ) {
 				$tag      = eme_translate( $tags[ $key ] );
-				$new_el   = array(
+				$new_el   = [
 					0 => $val,
 					1 => $tag,
-				);
+				];
 				$my_arr[] = $new_el;
 			}
 			$html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class, $field_attributes . ' ' . $disabled );
@@ -739,19 +739,19 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			# dropdown, multiselect
 			$values = eme_convert_multi2array( $field_values );
 			$tags   = eme_convert_multi2array( $field_tags );
-			$my_arr = array();
+			$my_arr = [];
 			// since the values for a dropdown field need not be unique, we give them as an array to be built with eme_ui_select
 			foreach ( $values as $key => $val ) {
 				$tag      = eme_translate( $tags[ $key ] );
-				$new_el   = array(
+				$new_el   = [
 					0 => $val,
 					1 => $tag,
-				);
+				];
 				$my_arr[] = $new_el;
 			}
 			// force_single can be 1 (only possible case is in the filterform for now)
 			if ( $force_single == 1 ) {
-					$html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class, $field_attributes . ' ' . $disabled );
+				$html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class, $field_attributes . ' ' . $disabled );
 			} else {
 				$html = eme_ui_multiselect( $entered_val, $field_name, $my_arr, 5, '', $required, $class . ' eme_select2_width50_class', $field_attributes . ' ' . $disabled );
 			}
@@ -772,7 +772,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			# radiobox
 			$values = eme_convert_multi2array( $field_values );
 			$tags   = eme_convert_multi2array( $field_tags );
-			$my_arr = array();
+			$my_arr = [];
 			foreach ( $values as $key => $val ) {
 				$tag            = $tags[ $key ];
 				$my_arr[ $val ] = eme_translate( $tag );
@@ -783,7 +783,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			# radiobox, vertical
 			$values = eme_convert_multi2array( $field_values );
 			$tags   = eme_convert_multi2array( $field_tags );
-			$my_arr = array();
+			$my_arr = [];
 			foreach ( $values as $key => $val ) {
 				$tag            = $tags[ $key ];
 				$my_arr[ $val ] = eme_translate( $tag );
@@ -794,7 +794,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			# checkbox
 			$values = eme_convert_multi2array( $field_values );
 			$tags   = eme_convert_multi2array( $field_tags );
-			$my_arr = array();
+			$my_arr = [];
 			foreach ( $values as $key => $val ) {
 				$tag            = $tags[ $key ];
 				$my_arr[ $val ] = eme_translate( $tag );
@@ -814,7 +814,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			# checkbox, vertical
 			$values = eme_convert_multi2array( $field_values );
 			$tags   = eme_convert_multi2array( $field_tags );
-			$my_arr = array();
+			$my_arr = [];
 			foreach ( $values as $key => $val ) {
 				$tag            = $tags[ $key ];
 				$my_arr[ $val ] = eme_translate( $tag );
@@ -883,7 +883,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			} else {
 					$showhide_style = '';
 			}
-			$html .= "<input type='file' $disabled $class_att $required_att name='${field_name}[]' id='$field_name' multiple $showhide_style>";
+			$html .= "<input type='file' $disabled $class_att $required_att name='{$field_name}[]' id='$field_name' multiple $showhide_style>";
 			if ( ! empty( $entered_val ) ) {
 				foreach ( $entered_val as $file ) {
 					$html .= eme_get_uploaded_file_linkdelete( $file );
@@ -914,7 +914,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			}
 			$dateformat = $field_attributes;
 			$html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
-			$html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_${field_name}' id='dp_${field_name}' data-date='$value' data-date-format='$dateformat' data-alt-field='#$field_name' class='eme_formfield_fdate $class'>";
+			$html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$value' data-date-format='$dateformat' data-alt-field='#$field_name' class='eme_formfield_fdate $class'>";
 			break;
 		case 'datetime_js':
 			# for datetime JS field
@@ -936,7 +936,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			}
 			$dateformat = $field_attributes;
 			$html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
-			$html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_${field_name}' id='dp_${field_name}' data-date='$js_value' data-date-format='$dateformat' data-alt-field='#$field_name' class='eme_formfield_fdatetime $class'>";
+			$html      .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$field_name}' id='dp_{$field_name}' data-date='$js_value' data-date-format='$dateformat' data-alt-field='#$field_name' class='eme_formfield_fdatetime $class'>";
 			break;
 		case 'time_js':
 			# for time JS field
@@ -998,10 +998,10 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 
 		if ( preg_match( '/#_TASKSIGNUPCHECKBOX$/', $result ) ) {
 			if ( $free_spaces > 0 && ! $task_ended ) {
-					$select_value = $task['task_id'];
-					$select_name  = 'eme_task_signups[' . $event['event_id'] . '][]';
-					$select_id    = 'eme_task_signups_' . $event['event_id'] . '_' . $select_value;
-					$replacement  = "<input type='checkbox' name='${select_name}' id='${select_id}' value='$select_value'>";
+				$select_value = $task['task_id'];
+				$select_name  = 'eme_task_signups[' . $event['event_id'] . '][]';
+				$select_id    = 'eme_task_signups_' . $event['event_id'] . '_' . $select_value;
+				$replacement  = "<input type='checkbox' name='{$select_name}' id='{$select_id}' value='$select_value'>";
 			}
 		} else {
 			$found = 0;
@@ -1010,7 +1010,7 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 		if ( $required ) {
 			$eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
 			if ( ! empty( $eme_form_required_field_string ) ) {
-					$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+				$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
 			}
 		}
 
@@ -1045,7 +1045,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
-			$format = eme_add_captcha_submit( $format, 'hcaptcha' );
+		$format = eme_add_captcha_submit( $format, 'hcaptcha' );
 	} elseif ( $eme_captcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'captcha' );
 	} else {
@@ -1063,9 +1063,9 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 		$current_user = wp_get_current_user();
 		$person       = eme_get_person_by_wp_id( $current_user->ID );
 		if ( ! empty( $person ) ) {
-				$bookerLastName  = $person['lastname'];
-				$bookerFirstName = $person['firstname'];
-				$bookerEmail     = $person['email'];
+			$bookerLastName  = $person['lastname'];
+			$bookerFirstName = $person['firstname'];
+			$bookerEmail     = $person['email'];
 		} else {
 			$bookerLastName = $current_user->user_lastname;
 			if ( empty( $bookerLastName ) ) {
@@ -1139,16 +1139,16 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			$required = 1;
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
 			if ( $eme_hcaptcha_for_forms ) {
-					$replacement = eme_load_hcaptcha_html();
+				$replacement = eme_load_hcaptcha_html();
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
 			if ( $eme_recaptcha_for_forms ) {
-					$replacement = eme_load_recaptcha_html();
+				$replacement = eme_load_recaptcha_html();
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
 			if ( $eme_captcha_for_forms ) {
-					$replacement = eme_load_captcha_html();
-					$required    = 1;
+				$replacement = eme_load_captcha_html();
+				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -1165,7 +1165,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 		if ( $required ) {
 			$eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
 			if ( ! empty( $eme_form_required_field_string ) ) {
-					$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+				$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
 			}
 		}
 
@@ -1240,9 +1240,9 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 		$current_user = wp_get_current_user();
 		$person       = eme_get_person_by_wp_id( $current_user->ID );
 		if ( ! empty( $person ) ) {
-				$bookerLastName  = eme_esc_html($person['lastname']);
-				$bookerFirstName = eme_esc_html($person['firstname']);
-				$bookerEmail     = eme_esc_html($person['email']);
+			$bookerLastName  = eme_esc_html($person['lastname']);
+			$bookerFirstName = eme_esc_html($person['firstname']);
+			$bookerEmail     = eme_esc_html($person['email']);
 		} else {
 			$bookerLastName = $current_user->user_lastname;
 			if ( empty( $bookerLastName ) ) {
@@ -1333,16 +1333,16 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 			$replacement = "<textarea $required_att name='eme_cancelcomment' placeholder='$placeholder_text'>$bookerCancelComment</textarea>";
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
 			if ( $eme_hcaptcha_for_forms ) {
-					$replacement = eme_load_hcaptcha_html();
+				$replacement = eme_load_hcaptcha_html();
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
 			if ( $eme_recaptcha_for_forms ) {
-					$replacement = eme_load_recaptcha_html();
+				$replacement = eme_load_recaptcha_html();
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
 			if ( $eme_captcha_for_forms ) {
-					$replacement = eme_load_captcha_html();
-					$required    = 1;
+				$replacement = eme_load_captcha_html();
+				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -1460,16 +1460,16 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
 			if ( $eme_hcaptcha_for_forms ) {
-					$replacement = eme_load_hcaptcha_html();
+				$replacement = eme_load_hcaptcha_html();
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
 			if ( $eme_recaptcha_for_forms ) {
-					$replacement = eme_load_recaptcha_html();
+				$replacement = eme_load_recaptcha_html();
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
 			if ( $eme_captcha_for_forms ) {
-					$replacement = eme_load_captcha_html();
-					$required    = 1;
+				$replacement = eme_load_captcha_html();
+				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -1534,23 +1534,23 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 		$current_user = wp_get_current_user();
 		$person       = eme_get_person_by_wp_id( $current_user->ID );
 		if ( ! empty( $person ) ) {
-				$bookerLastName     = eme_esc_html( $person['lastname'] );
-				$bookerFirstName    = eme_esc_html( $person['firstname'] );
-				$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-				$bookerBirthplace   = eme_esc_html( $person['birthplace'] );
-				$bookerAddress1     = eme_esc_html( $person['address1'] );
-				$bookerAddress2     = eme_esc_html( $person['address2'] );
-				$bookerCity         = eme_esc_html( $person['city'] );
-				$bookerZip          = eme_esc_html( $person['zip'] );
-				$bookerState        = eme_esc_html( $person['state'] );
-				$bookerState_code   = eme_esc_html( $person['state_code'] );
-				$bookerCountry      = eme_esc_html( $person['country'] );
-				$bookerCountry_code = eme_esc_html( $person['country_code'] );
-				$bookerEmail        = eme_esc_html( $person['email'] );
-				$bookerPhone        = eme_esc_html( $person['phone'] );
-				$massmail           = intval( $person['massmail'] );
-				$bd_email           = intval( $person['bd_email'] );
-				$gdpr               = intval( $person['gdpr'] );
+			$bookerLastName     = eme_esc_html( $person['lastname'] );
+			$bookerFirstName    = eme_esc_html( $person['firstname'] );
+			$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
+			$bookerBirthplace   = eme_esc_html( $person['birthplace'] );
+			$bookerAddress1     = eme_esc_html( $person['address1'] );
+			$bookerAddress2     = eme_esc_html( $person['address2'] );
+			$bookerCity         = eme_esc_html( $person['city'] );
+			$bookerZip          = eme_esc_html( $person['zip'] );
+			$bookerState        = eme_esc_html( $person['state'] );
+			$bookerState_code   = eme_esc_html( $person['state_code'] );
+			$bookerCountry      = eme_esc_html( $person['country'] );
+			$bookerCountry_code = eme_esc_html( $person['country_code'] );
+			$bookerEmail        = eme_esc_html( $person['email'] );
+			$bookerPhone        = eme_esc_html( $person['phone'] );
+			$massmail           = intval( $person['massmail'] );
+			$bd_email           = intval( $person['bd_email'] );
+			$gdpr               = intval( $person['gdpr'] );
 		} else {
 			$bookerLastName = eme_esc_html( $current_user->user_lastname );
 			if ( empty( $bookerLastName ) ) {
@@ -1612,8 +1612,8 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 		if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
 			$this_readonly = '';
 			if ( is_user_logged_in() ) {
-					// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-					$this_readonly = "readonly='readonly'";
+				// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
+				$this_readonly = "readonly='readonly'";
 				if ( $allow_clear ) {
 					$this_readonly .= " data-clearable='true'";
 				}
@@ -1631,8 +1631,8 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 		} elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
 			$this_readonly = '';
 			if ( is_user_logged_in() ) {
-					// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-					$this_readonly = "readonly='readonly'";
+				// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
+				$this_readonly = "readonly='readonly'";
 			}
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)
@@ -1644,9 +1644,9 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			$replacement = "<input $required_att type='text' name='firstname' id='firstname' value='$bookerFirstName' $this_readonly placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
 			}
@@ -1690,9 +1690,9 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			$replacement = "<input $required_att type='text' name='city' id='city' value='$bookerCity' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_STATE$/', $result ) ) {
 			if ( ! empty( $bookerState_code ) ) {
-				$state_arr = array( $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) );
+				$state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
 			} else {
-				$state_arr = array();
+				$state_arr = [];
 			}
 			$replacement = eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, 'eme_select2_state_class' );
 		} elseif ( preg_match( '/#_(ZIP|POSTAL)(\{.+?\})?$/', $result, $matches ) ) {
@@ -1706,21 +1706,21 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			$replacement = "<input $required_att type='text' name='zip' id='zip' value='$bookerZip' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_COUNTRY\{(.+)\}$/', $result, $matches ) ) {
 			if ( ! empty( $bookerCountry_code ) ) {
-				$country_arr = array( $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) );
+				$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
 				$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
 			} else {
 				$country_code = $matches[1];
 				$country_name = eme_get_country_name( $country_code );
 				if ( ! empty( $country_name ) ) {
-						$country_arr = array( $country_code => $country_name );
-						$replacement = eme_ui_select( $country_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
+					$country_arr = [ $country_code => $country_name ];
+					$replacement = eme_ui_select( $country_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
 				}
 			}
 		} elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
 			if ( ! empty( $bookerCountry_code ) ) {
-				$country_arr = array( $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) );
+				$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
 			} else {
-				$country_arr = array();
+				$country_arr = [];
 			}
 			$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
 		} elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
@@ -1744,15 +1744,15 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 		} elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
 			$selected_massmail = 1;
 			if ( get_option( 'eme_massmail_popup' ) ) {
-					$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
-					$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
+				$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+				$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
 			}
 			$replacement .= eme_ui_select_binary( $selected_massmail, 'massmail' );
 		} elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
 			$selected_massmail = 0;
 			if ( get_option( 'eme_massmail_popup' ) ) {
-					$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
-					$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
+				$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+				$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
 			}
 			$replacement .= eme_ui_select_binary( $selected_massmail, 'massmail' );
 		} elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
@@ -1830,16 +1830,16 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			$replacement = "<textarea $required_att name='eme_rsvpcomment' placeholder='$placeholder_text' >$bookerComment</textarea>";
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
 			if ( $eme_hcaptcha_for_forms ) {
-					$replacement = eme_load_hcaptcha_html();
+				$replacement = eme_load_hcaptcha_html();
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
 			if ( $eme_recaptcha_for_forms ) {
-					$replacement = eme_load_recaptcha_html();
+				$replacement = eme_load_recaptcha_html();
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
 			if ( $eme_captcha_for_forms ) {
-					$replacement = eme_load_captcha_html();
-					$required    = 1;
+				$replacement = eme_load_captcha_html();
+				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -1855,7 +1855,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$replacement = eme_trans_esc_html( $formfield['field_name'] );
+				$replacement = eme_trans_esc_html( $formfield['field_name'] );
 			} else {
 				$found = 0;
 			}
@@ -1863,9 +1863,9 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$field_id       = $formfield['field_id'];
-					$postfield_name = 'FIELD' . $field_id;
-					$entered_val    = '';
+				$field_id       = $formfield['field_id'];
+				$postfield_name = 'FIELD' . $field_id;
+				$entered_val    = '';
 				if ( $formfield['field_required'] ) {
 					$required = 1;
 				}
@@ -1924,8 +1924,8 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
 		$files                        = array_merge( $files1, $files2 );
 	} else {
 		$editing_booking_from_backend = 0;
-		$dyn_answers                  = array();
-		$files                        = array();
+		$dyn_answers                  = [];
+		$files                        = [];
 	}
 
 	$needle_offset = 0;
@@ -1948,7 +1948,7 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$replacement = eme_trans_esc_html( $formfield['field_name'] );
+				$replacement = eme_trans_esc_html( $formfield['field_name'] );
 			} else {
 				$found = 0;
 			}
@@ -1956,16 +1956,16 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$field_id       = $formfield['field_id'];
-					$var_prefix     = "dynamic_bookings[$event_id][$grouping][$i][";
-					$var_postfix    = ']';
-					$postfield_name = "${var_prefix}FIELD" . $field_id . $var_postfix;
-					$postvar_arr    = array( 'dynamic_bookings', $event_id, $grouping, $i, 'FIELD' . $field_id );
+				$field_id       = $formfield['field_id'];
+				$var_prefix     = "dynamic_bookings[$event_id][$grouping][$i][";
+				$var_postfix    = ']';
+				$postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
+				$postvar_arr    = [ 'dynamic_bookings', $event_id, $grouping, $i, 'FIELD' . $field_id ];
 
-					// when we edit a booking, there's nothing in $_POST until a field condition changes
-					// so the first time entered_val=''
-					$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-					// if from backend and entered_val ===false, then get it from the stored answer
+				// when we edit a booking, there's nothing in $_POST until a field condition changes
+				// so the first time entered_val=''
+				$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
+				// if from backend and entered_val ===false, then get it from the stored answer
 				if ( $editing_booking_from_backend && $entered_val === false ) {
 					foreach ( $dyn_answers as $answer ) {
 						if ( $answer['field_id'] == $field_id ) {
@@ -1975,7 +1975,7 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
 				}
 				if ( $editing_booking_from_backend ) {
 					if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-						$entered_files = array();
+						$entered_files = [];
 						foreach ( $files as $file ) {
 							if ( $file['field_id'] == $field_id && $file['extra_id'] == "$event_id$grouping$i" ) {
 								$entered_files[] = $file;
@@ -2007,7 +2007,7 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
 		if ( $required ) {
 			$eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
 			if ( ! empty( $eme_form_required_field_string ) ) {
-					$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+				$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
 			}
 		}
 
@@ -2036,8 +2036,8 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 		$files                       = array_merge( $files1, $files2 );
 	} else {
 		$editing_member_from_backend = 0;
-		$dyn_answers                 = array();
-		$files                       = array();
+		$dyn_answers                 = [];
+		$files                       = [];
 	}
 
 	$needle_offset = 0;
@@ -2060,7 +2060,7 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$replacement = eme_trans_esc_html( $formfield['field_name'] );
+				$replacement = eme_trans_esc_html( $formfield['field_name'] );
 			} else {
 				$found = 0;
 			}
@@ -2068,16 +2068,16 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$field_id       = $formfield['field_id'];
-					$var_prefix     = "dynamic_member[$membership_id][$grouping][$i][";
-					$var_postfix    = ']';
-					$postfield_name = "${var_prefix}FIELD" . $field_id . $var_postfix;
-					$postvar_arr    = array( 'dynamic_member', $membership_id, $grouping, $i, 'FIELD' . $field_id );
+				$field_id       = $formfield['field_id'];
+				$var_prefix     = "dynamic_member[$membership_id][$grouping][$i][";
+				$var_postfix    = ']';
+				$postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
+				$postvar_arr    = [ 'dynamic_member', $membership_id, $grouping, $i, 'FIELD' . $field_id ];
 
-					// when we edit a booking, there's nothing in $_POST until a field condition changes
-					// so the first time entered_val=''
-					$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-					// if from backend and entered_val ===false, then get it from the stored answer
+				// when we edit a booking, there's nothing in $_POST until a field condition changes
+				// so the first time entered_val=''
+				$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
+				// if from backend and entered_val ===false, then get it from the stored answer
 				if ( $editing_member_from_backend && $entered_val === false ) {
 					foreach ( $dyn_answers as $answer ) {
 						if ( $answer['field_id'] == $field_id ) {
@@ -2088,7 +2088,7 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 
 				if ( $editing_member_from_backend ) {
 					if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-						$entered_files = array();
+						$entered_files = [];
 						foreach ( $files as $file ) {
 							if ( $file['field_id'] == $field_id && $file['extra_id'] == "$membership_id$grouping$i" ) {
 								$entered_files[] = $file;
@@ -2120,7 +2120,7 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 		if ( $required ) {
 			$eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
 			if ( ! empty( $eme_form_required_field_string ) ) {
-					$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+				$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
 			}
 		}
 
@@ -2189,7 +2189,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	$bookerComment    = '';
 	$bookerPhone      = '';
 	$bookedSeats      = 0;
-	$booking_seats_mp = array();
+	$booking_seats_mp = [];
 	$massmail         = null;
 	$bd_email         = 0;
 	$gdpr             = 0;
@@ -2200,8 +2200,8 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		if ( ! empty( $person ) ) {
 			$bookerLastName       = eme_esc_html( $person['lastname'] );
 			$bookerFirstName      = eme_esc_html( $person['firstname'] );
-				$bookerBirthdate  = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-				$bookerBirthplace = eme_esc_html( $person['birthplace'] );
+			$bookerBirthdate      = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
+			$bookerBirthplace     = eme_esc_html( $person['birthplace'] );
 			$bookerAddress1       = eme_esc_html( $person['address1'] );
 			$bookerAddress2       = eme_esc_html( $person['address2'] );
 			$bookerCity           = eme_esc_html( $person['city'] );
@@ -2294,7 +2294,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	}
 
 	// check which fields are used in the event definition for dynamic data
-	$eme_dyndatafields = array();
+	$eme_dyndatafields = [];
 	if ( isset( $event['event_properties']['rsvp_dyndata'] ) ) {
 		foreach ( $event['event_properties']['rsvp_dyndata'] as $dynfield ) {
 			$eme_dyndatafields[] = $dynfield['field'];
@@ -2345,7 +2345,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		}
 	}
 
-	$booked_seats_options = array();
+	$booked_seats_options = [];
 	if ( eme_is_multi( $max_allowed ) ) {
 		$multi_max_allowed    = eme_convert_multi2array( $max_allowed );
 		$max_allowed_is_multi = 1;
@@ -2369,7 +2369,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		}
 
 		foreach ( $multi_avail as $key => $avail_seats ) {
-			$booked_seats_options[ $key ] = array();
+			$booked_seats_options[ $key ] = [];
 			if ( $max_allowed_is_multi ) {
 				$real_max_allowed = intval( $multi_max_allowed[ $key ] );
 			} else {
@@ -2383,7 +2383,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 
 			// 0 means no limit, but we need a sensible max to show ...
 			if ( $event_multiseats[ $key ] == 0 && $real_max_allowed == 0 ) {
-					$real_max_allowed = 10;
+				$real_max_allowed = 10;
 			}
 
 			if ( $editing_booking_from_backend && isset( $booking_seats_mp[ $key ] ) ) {
@@ -2410,7 +2410,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	} elseif ( eme_is_multi( $event['price'] ) ) {
 		// we just need to loop through the same amount of seats as there are prices
 		foreach ( eme_convert_multi2array( $event['price'] ) as $key => $value ) {
-			$booked_seats_options[ $key ] = array();
+			$booked_seats_options[ $key ] = [];
 			if ( $max_allowed_is_multi ) {
 				$real_max_allowed = (int) $multi_max_allowed[ $key ];
 			} else {
@@ -2424,7 +2424,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 
 			// 0 means no limit, but we need a sensible max to show ...
 			if ( $event_seats == 0 && $real_max_allowed == 0 ) {
-					$real_max_allowed = 10;
+				$real_max_allowed = 10;
 			}
 
 			if ( $editing_booking_from_backend && isset( $booking_seats_mp[ $key ] ) ) {
@@ -2469,9 +2469,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		if ( $editing_booking_from_backend && $real_max_allowed < $bookedSeats ) {
 			$real_max_allowed += $bookedSeats;
 			if ( $max_allowed_is_multi && $real_max_allowed > $multi_max_allowed[0] ) {
-					$real_max_allowed = $multi_max_allowed[0];
+				$real_max_allowed = $multi_max_allowed[0];
 			} elseif ( $real_max_allowed > $max_allowed ) {
-					$real_max_allowed = $max_allowed;
+				$real_max_allowed = $max_allowed;
 			}
 		}
 
@@ -2610,15 +2610,15 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'lastname';
 				if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-						// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-						$this_readonly = "readonly='readonly'";
+					// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
+					$this_readonly = "readonly='readonly'";
 					if ( $allow_clear ) {
 						$this_readonly .= " data-clearable='true'";
 					}
 				} elseif ( ! empty( $invite_readonly ) && ! empty( $bookerLastName ) ) {
 					$this_readonly = $invite_readonly;
 				} else {
-						$this_readonly = $readonly;
+					$this_readonly = $readonly;
 				}
 				if ( isset( $matches[2] ) ) {
 					// remove { and } (first and last char of second match)
@@ -2640,12 +2640,12 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'firstname';
 				if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-						// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-						$this_readonly = "readonly='readonly'";
+					// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
+					$this_readonly = "readonly='readonly'";
 				} elseif ( ! empty( $invite_readonly ) && ! empty( $bookerFirstName ) ) {
 					$this_readonly = $invite_readonly;
 				} else {
-						$this_readonly = $readonly;
+					$this_readonly = $readonly;
 				}
 				if ( isset( $matches[1] ) ) {
 					// remove { and } (first and last char of second match)
@@ -2659,23 +2659,23 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		} elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
 			if ( ! $is_multibooking ) {
 				if ( isset( $matches[1] ) ) {
-						// remove { and } (first and last char of second match)
-						$placeholder_text = substr( $matches[1], 1, -1 );
-						$placeholder_text = eme_trans_esc_html( $placeholder_text );
+					// remove { and } (first and last char of second match)
+					$placeholder_text = substr( $matches[1], 1, -1 );
+					$placeholder_text = eme_trans_esc_html( $placeholder_text );
 				} else {
 					$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
 				}
 				$fieldname    = 'birthdate';
 				$replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-				$replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_${fieldname}' id='dp_${fieldname}' data-date='$bookerBirthdate' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
+				$replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
 			}
 		} elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
 			if ( ! $is_multibooking ) {
 				$fieldname = 'birthplace';
 				if ( isset( $matches[1] ) ) {
-						// remove { and } (first and last char of second match)
-						$placeholder_text = substr( $matches[1], 1, -1 );
-						$placeholder_text = eme_trans_esc_html( $placeholder_text );
+					// remove { and } (first and last char of second match)
+					$placeholder_text = substr( $matches[1], 1, -1 );
+					$placeholder_text = eme_trans_esc_html( $placeholder_text );
 				} else {
 					$placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
 				}
@@ -2685,9 +2685,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'address1';
 				if ( isset( $matches[1] ) ) {
-						// remove { and } (first and last char of second match)
-						$placeholder_text = substr( $matches[1], 1, -1 );
-						$placeholder_text = eme_trans_esc_html( $placeholder_text );
+					// remove { and } (first and last char of second match)
+					$placeholder_text = substr( $matches[1], 1, -1 );
+					$placeholder_text = eme_trans_esc_html( $placeholder_text );
 				} else {
 					$placeholder_text = eme_trans_esc_html( get_option( 'eme_address1_string' ) );
 				}
@@ -2697,9 +2697,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'address2';
 				if ( isset( $matches[1] ) ) {
-						// remove { and } (first and last char of second match)
-						$placeholder_text = substr( $matches[1], 1, -1 );
-						$placeholder_text = eme_trans_esc_html( $placeholder_text );
+					// remove { and } (first and last char of second match)
+					$placeholder_text = substr( $matches[1], 1, -1 );
+					$placeholder_text = eme_trans_esc_html( $placeholder_text );
 				} else {
 					$placeholder_text = eme_trans_esc_html( get_option( 'eme_address2_string' ) );
 				}
@@ -2709,9 +2709,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'city';
 				if ( isset( $matches[1] ) ) {
-						// remove { and } (first and last char of second match)
-						$placeholder_text = substr( $matches[1], 1, -1 );
-						$placeholder_text = eme_trans_esc_html( $placeholder_text );
+					// remove { and } (first and last char of second match)
+					$placeholder_text = substr( $matches[1], 1, -1 );
+					$placeholder_text = eme_trans_esc_html( $placeholder_text );
 				} else {
 					$placeholder_text = esc_html__( 'City', 'events-made-easy' );
 				}
@@ -2721,9 +2721,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'zip';
 				if ( isset( $matches[2] ) ) {
-						// remove { and } (first and last char of second match)
-						$placeholder_text = substr( $matches[2], 1, -1 );
-						$placeholder_text = eme_trans_esc_html( $placeholder_text );
+					// remove { and } (first and last char of second match)
+					$placeholder_text = substr( $matches[2], 1, -1 );
+					$placeholder_text = eme_trans_esc_html( $placeholder_text );
 				} else {
 					$placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
 				}
@@ -2733,9 +2733,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'state_code';
 				if ( ! empty( $bookerState_code ) ) {
-						$state_arr = array( $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) );
+					$state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
 				} else {
-					$state_arr = array();
+					$state_arr = [];
 				}
 				$replacement = eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, "eme_select2_state_class $dynamic_field_class_basic", $disabled );
 			}
@@ -2743,9 +2743,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'country_code';
 				if ( ! empty( $bookerCountry_code ) ) {
-						$country_arr = array( $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) );
+						$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
 				} else {
-					$country_arr = array();
+					$country_arr = [];
 				}
 				$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, "eme_select2_country_class $dynamic_field_class_basic", $disabled );
 			}
@@ -2753,12 +2753,12 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'email';
 				if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-						// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
-						$this_readonly = "readonly='readonly'";
+					// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
+					$this_readonly = "readonly='readonly'";
 				} elseif ( ! empty( $invite_readonly ) && ! empty( $bookerEmail ) ) {
 					$this_readonly = $invite_readonly;
 				} else {
-						$this_readonly = $readonly;
+					$this_readonly = $readonly;
 				}
 				// there still exist people without email, so in the backend we allow it ...
 				if ( isset( $matches[2] ) ) {
@@ -2781,9 +2781,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'phone';
 				if ( isset( $matches[1] ) ) {
-						// remove { and } (first and last char of second match)
-						$placeholder_text = substr( $matches[1], 1, -1 );
-						$placeholder_text = eme_trans_esc_html( $placeholder_text );
+					// remove { and } (first and last char of second match)
+					$placeholder_text = substr( $matches[1], 1, -1 );
+					$placeholder_text = eme_trans_esc_html( $placeholder_text );
 				} else {
 					$placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
 				}
@@ -2793,9 +2793,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			if ( ! $is_multibooking ) {
 				$fieldname = 'phone';
 				if ( isset( $matches[1] ) ) {
-						// remove { and } (first and last char of second match)
-						$placeholder_text = substr( $matches[1], 1, -1 );
-						$placeholder_text = eme_trans_esc_html( $placeholder_text );
+					// remove { and } (first and last char of second match)
+					$placeholder_text = substr( $matches[1], 1, -1 );
+					$placeholder_text = eme_trans_esc_html( $placeholder_text );
 				} else {
 					$placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
 				}
@@ -2808,8 +2808,8 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				$selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
 				$fieldname         = 'massmail';
 				if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-						$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
-						$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
+					$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+					$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
 				}
 				$replacement .= eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic, $disabled );
 			}
@@ -2818,16 +2818,16 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				$selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
 				$fieldname         = 'massmail';
 				if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-						$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
-						$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
+					$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+					$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
 				}
 				$replacement .= eme_ui_select_binary( $selected_massmail, $fieldname, 0, $dynamic_field_class_basic, $disabled );
 			}
 		} elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
 			if ( ! $is_multibooking ) {
 				if ( isset( $matches[1] ) ) {
-						// remove { and } (first and last char of second match)
-						$label = substr( $matches[1], 1, -1 );
+					// remove { and } (first and last char of second match)
+					$label = substr( $matches[1], 1, -1 );
 				} else {
 					$label = '';
 				}
@@ -2839,7 +2839,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		} elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
 			if ( ! $is_multibooking ) {
 				if ( is_numeric( $matches[1] ) ) {
-						$group = eme_get_group( $matches[1] );
+					$group = eme_get_group( $matches[1] );
 				} else {
 					$group = eme_get_group_by_name( eme_sanitize_request( $matches[1] ) );
 				}
@@ -2852,11 +2852,11 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 							// remove { and } (first and last char of second match)
 							$label = substr( $matches[2], 1, -1 );
 						} else {
-								$label = $group['name'];
+							$label = $group['name'];
 						}
 						$replacement = "<input id='subscribe_groups_$group_id' name='subscribe_groups[]' value='$group_id' type='checkbox' class='nodynamicupdates'>";
 						if ( ! empty( $label ) ) {
-								$replacement .= "<label for='subscribe_groups_$group_id'>" . eme_esc_html( $label ) . '</label>';
+							$replacement .= "<label for='subscribe_groups_$group_id'>" . eme_esc_html( $label ) . '</label>';
 						}
 					}
 				} else {
@@ -2865,7 +2865,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			}
 		} elseif ( preg_match( '/#_PASSWORD(\{.+?\})?$/', $result, $matches ) ) {
 			if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request && ! $is_multibooking ) {
-					$fieldname = 'rsvp_password';
+				$fieldname = 'rsvp_password';
 				if ( isset( $matches[1] ) ) {
 					// remove { and } (first and last char of second match)
 					$placeholder_text = substr( $matches[1], 1, -1 );
@@ -2889,7 +2889,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		} elseif ( preg_match( '/#_SEATS$|#_SPACES$/', $result ) ) {
 			$var_prefix  = "bookings[$event_id][";
 			$var_postfix = ']';
-			$fieldname   = "${var_prefix}bookedSeats${var_postfix}";
+			$fieldname   = "{$var_prefix}bookedSeats{$var_postfix}";
 			if ( $editing_booking_from_backend && isset( $bookedSeats ) ) {
 				$entered_val = $bookedSeats;
 			} else {
@@ -2916,12 +2916,12 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				++$seats_found;
 			}
 		} elseif ( preg_match( '/#_(SEATS|SPACES)\{(\d+)\}/', $result, $matches ) ) {
-					$field_id    = intval( $matches[2] );
-					$var_prefix  = "bookings[$event_id][";
-					$var_postfix = ']';
-					$fieldname   = "${var_prefix}bookedSeats" . $field_id . $var_postfix;
+			$field_id    = intval( $matches[2] );
+			$var_prefix  = "bookings[$event_id][";
+			$var_postfix = ']';
+			$fieldname   = "{$var_prefix}bookedSeats" . $field_id . $var_postfix;
 
-				// for multiseats, the index starts at 1 (#_SEATS1, #_SEATS2, etc ...) but in booking_seats_mp the index starts at 0, so we do -1
+			// for multiseats, the index starts at 1 (#_SEATS1, #_SEATS2, etc ...) but in booking_seats_mp the index starts at 0, so we do -1
 			if ( $editing_booking_from_backend && $field_id > 0 && isset( $booking_seats_mp[ $field_id - 1 ] ) ) {
 				$entered_val = intval( $booking_seats_mp[ $field_id - 1 ] );
 			} else {
@@ -2929,8 +2929,8 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			}
 
 			if ( ! eme_is_multi( $event['price'] ) ) {
-					// this will show if people mix #_SEATS and #_SEATS{xx}
-					$error_msg = __( 'By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings.', 'events-made-easy' );
+				// this will show if people mix #_SEATS and #_SEATS{xx}
+				$error_msg = __( 'By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings.', 'events-made-easy' );
 			} elseif ( $event['event_properties']['take_attendance'] ) {
 				// if we require 1 seat at the minimum, we set it to that and hide it for take_attendance
 				if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 ) {
@@ -2938,22 +2938,22 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				} else {
 					$replacement = eme_ui_select_binary( $entered_val, $fieldname, 0, $dynamic_price_class_basic . ' ' . $dynamic_field_class_basic );
 				}
-							++$seats_found;
+				++$seats_found;
 			} else {
 				if ( $min_allowed_is_multi && $multi_min_allowed[ $field_id - 1 ] > 0 && $multi_min_allowed[ $field_id - 1 ] == $multi_max_allowed[ $field_id - 1 ] ) {
-								$replacement = "<input type='hidden' name='$fieldname' value='" . $multi_min_allowed[ $field_id - 1 ] . "'>";
+					$replacement = "<input type='hidden' name='$fieldname' value='" . $multi_min_allowed[ $field_id - 1 ] . "'>";
 				} else {
-								$replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, $dynamic_price_class_basic . ' ' . $dynamic_field_class_basic );
+					$replacement = eme_ui_select( $entered_val, $fieldname, $booked_seats_options[ $field_id - 1 ], '', 0, $dynamic_price_class_basic . ' ' . $dynamic_field_class_basic );
 				}
-									++$seats_found;
+				++$seats_found;
 			}
 		} elseif ( preg_match( '/#_COMMENT(\{.+?\})?$/', $result, $matches ) ) {
 			if ( ! $is_multibooking ) {
 				$fieldname = 'eme_rsvpcomment';
 				if ( isset( $matches[1] ) ) {
-						// remove { and } (first and last char of second match)
-						$placeholder_text = substr( $matches[1], 1, -1 );
-						$placeholder_text = eme_trans_esc_html( $placeholder_text );
+					// remove { and } (first and last char of second match)
+					$placeholder_text = substr( $matches[1], 1, -1 );
+					$placeholder_text = eme_trans_esc_html( $placeholder_text );
 				} else {
 					$placeholder_text = esc_html__( 'Comment', 'events-made-easy' );
 				}
@@ -2961,7 +2961,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
 			if ( $eme_hcaptcha_for_forms && ! $is_multibooking ) {
-					$replacement = eme_load_hcaptcha_html();
+				$replacement = eme_load_hcaptcha_html();
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
 			if ( $eme_recaptcha_for_forms && ! $is_multibooking ) {
@@ -2976,7 +2976,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$replacement = eme_trans_esc_html( $formfield['field_name'] );
+				$replacement = eme_trans_esc_html( $formfield['field_name'] );
 			} else {
 				$found = 0;
 			}
@@ -2989,7 +2989,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 					$replacement = '';
 				} else {
 					$field_id       = $formfield['field_id'];
-					$fieldname      = "${var_prefix}FIELD" . $field_id . $var_postfix;
+					$fieldname      = "{$var_prefix}FIELD" . $field_id . $var_postfix;
 					$entered_val    = '';
 					$field_readonly = 0;
 					if ( $editing_booking_from_backend ) {
@@ -3010,7 +3010,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 						$files2 = eme_get_uploaded_files( $booking['booking_id'], 'bookings' );
 						$files  = array_merge( $files1, $files2 );
 						if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-							$entered_files = array();
+							$entered_files = [];
 							foreach ( $files as $file ) {
 								if ( $file['field_id'] == $field_id ) {
 									$entered_files[] = $file;
@@ -3028,7 +3028,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 							}
 						}
 						if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-							$entered_files = array();
+							$entered_files = [];
 							foreach ( $files as $file ) {
 								if ( $file['field_id'] == $field_id ) {
 									$entered_files[] = $file;
@@ -3056,14 +3056,14 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				if ( ! $eme_is_admin_request ) {
 					$var_prefix     = "bookings[$event_id][";
 					$var_postfix    = ']';
-					$postfield_name = "${var_prefix}DISCOUNT${discount_fields_count}${var_postfix}";
+					$postfield_name = "{$var_prefix}DISCOUNT{$discount_fields_count}{$var_postfix}";
 					$entered_val    = '';
 					if ( isset( $matches[1] ) ) {
-							// remove { and } (first and last char of second match)
-							$placeholder_text = substr( $matches[1], 1, -1 );
-							$placeholder_text = eme_trans_esc_html( $placeholder_text );
+						// remove { and } (first and last char of second match)
+						$placeholder_text = substr( $matches[1], 1, -1 );
+						$placeholder_text = eme_trans_esc_html( $placeholder_text );
 					} else {
-							$placeholder_text = esc_html__( 'Discount code', 'events-made-easy' );
+						$placeholder_text = esc_html__( 'Discount code', 'events-made-easy' );
 					}
 					$replacement = "<input $dynamic_price_class type='text' name='$postfield_name' value='$entered_val' $required_att placeholder='$placeholder_text'>";
 				} elseif ( $eme_is_admin_request && $discount_fields_count == 1 ) {
@@ -3114,7 +3114,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		if ( $required ) {
 			$eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
 			if ( ! empty( $eme_form_required_field_string ) ) {
-					$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+				$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
 			}
 		}
 
@@ -3181,10 +3181,10 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 		}
 
 		if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
-			$postvar_arr = array( 'familymember', $counter, 'lastname' );
+			$postvar_arr = [ 'familymember', $counter, 'lastname' ];
 			$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
 			if ( $entered_val === false ) {
-					$entered_val = '';
+				$entered_val = '';
 			}
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
@@ -3197,15 +3197,15 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 			++$lastname_found;
 			$required = 1;
 		} elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
-			$postvar_arr = array( 'familymember', $counter, 'firstname' );
+			$postvar_arr = [ 'familymember', $counter, 'firstname' ];
 			$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
 			if ( $entered_val === false ) {
-					$entered_val = '';
+				$entered_val = '';
 			}
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'First name', 'events-made-easy' );
 			}
@@ -3213,71 +3213,71 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 			++$firstname_found;
 			$required = 1;
 		} elseif ( preg_match( '/#_(PHONE$|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
-			$postvar_arr = array( 'familymember', $counter, 'phone' );
+			$postvar_arr = [ 'familymember', $counter, 'phone' ];
 			$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
 			if ( $entered_val === false ) {
-					$entered_val = '';
+				$entered_val = '';
 			}
 			if ( isset( $matches[2] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[2], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[2], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
 			}
 			$replacement = "<input required='required' type='tel' name='familymember[$counter][phone]' id='familymember[$counter][phone]' value='$entered_val' $dynamic_field_class placeholder='$placeholder_text'>";
 			$required    = 1;
 		} elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
-			$postvar_arr = array( 'familymember', $counter, 'email' );
+			$postvar_arr = [ 'familymember', $counter, 'email' ];
 			$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
 			if ( $entered_val === false ) {
-					$entered_val = '';
+				$entered_val = '';
 			}
 			if ( isset( $matches[2] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[2], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[2], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Email', 'events-made-easy' );
 			}
 			$replacement = "<input required='required' type='email' name='familymember[$counter][email]' id='familymember[$counter][email]' value='$entered_val' $dynamic_field_class placeholder='$placeholder_text'>";
 			$required    = 1;
 		} elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
-			$postvar_arr = array( 'familymember', $counter, 'bd_email' );
+			$postvar_arr = [ 'familymember', $counter, 'bd_email' ];
 			$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
 			if ( $entered_val === false ) {
-					$selected_bd_email = 1;
+				$selected_bd_email = 1;
 			} else {
 				$selected_bd_email = $entered_val;
 			}
 			$replacement .= eme_ui_select_binary( $selected_bd_email, "familymember[$counter][bd_email]", 0, $dynamic_field_class_basic );
 		} elseif ( preg_match( '/#_OPT_OUT/', $result ) ) {
-			$postvar_arr = array( 'familymember', $counter, 'massmail' );
+			$postvar_arr = [ 'familymember', $counter, 'massmail' ];
 			$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
 			if ( $entered_val === false ) {
-					$selected_massmail = 1;
+				$selected_massmail = 1;
 			} else {
 				$selected_massmail = $entered_val;
 			}
 			$replacement .= eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic );
 		} elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
 			if ( $entered_val === false ) {
-					$selected_massmail = 0;
+				$selected_massmail = 0;
 			} else {
 				$selected_massmail = $entered_val;
 			}
 			$replacement .= eme_ui_select_binary( $selected_massmail, "familymember[$counter][massmail]", 0, $dynamic_field_class_basic );
 			$required     = 1;
 		} elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?/', $result, $matches ) ) {
-			$postvar_arr = array( 'familymember', $counter, 'birthplace' );
+			$postvar_arr = [ 'familymember', $counter, 'birthplace' ];
 			$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
 			if ( $entered_val === false ) {
-					$entered_val = '';
+				$entered_val = '';
 			}
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
 			}
@@ -3285,26 +3285,26 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 			$required    = 1;
 		} elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?/', $result, $matches ) ) {
 			$fieldname   = "familymember[$counter][birthdate]";
-			$postvar_arr = array( 'familymember', $counter, 'birthdate' );
+			$postvar_arr = [ 'familymember', $counter, 'birthdate' ];
 			$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
 			if ( $entered_val === false ) {
-					$entered_val = '';
+				$entered_val = '';
 			}
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
 			}
 			$replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$entered_val'>";
-			$replacement .= "<input required='required' readonly='readonly' type='text' name='dp_${fieldname}' id='dp_${fieldname}' data-date='$entered_val' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#$fieldname' class='eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>";
+			$replacement .= "<input required='required' readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$entered_val' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#$fieldname' class='eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>";
 			$required     = 1;
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$replacement = eme_trans_esc_html( $formfield['field_name'] );
+				$replacement = eme_trans_esc_html( $formfield['field_name'] );
 			} else {
 				$found = 0;
 			}
@@ -3312,13 +3312,13 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people' ) {
-					$field_id = $formfield['field_id'];
-					// all the people fields are dynamic fields in the backend, and the function eme_store_people_answers searches for that, so we need that name again
-					$var_prefix     = "familymember[$counter][";
-					$var_postfix    = ']';
-					$postfield_name = "${var_prefix}FIELD" . $field_id . $var_postfix;
-					$postvar_arr    = array( 'familymember', $counter, 'FIELD' . $field_id );
-					$entered_val    = eme_getValueFromPath( $_POST, $postvar_arr );
+				$field_id = $formfield['field_id'];
+				// all the people fields are dynamic fields in the backend, and the function eme_store_people_answers searches for that, so we need that name again
+				$var_prefix     = "familymember[$counter][";
+				$var_postfix    = ']';
+				$postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
+				$postvar_arr    = [ 'familymember', $counter, 'FIELD' . $field_id ];
+				$entered_val    = eme_getValueFromPath( $_POST, $postvar_arr );
 				if ( $formfield['field_required'] ) {
 					$required = 1;
 				}
@@ -3409,23 +3409,23 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	if ( is_user_logged_in() && ! $eme_is_admin_request ) {
 		$person = eme_get_person_by_wp_id( $current_user->ID );
 		if ( ! empty( $person ) ) {
-				$bookerLastName     = eme_esc_html( $person['lastname'] );
-				$bookerFirstName    = eme_esc_html( $person['firstname'] );
+			$bookerLastName     = eme_esc_html( $person['lastname'] );
+			$bookerFirstName    = eme_esc_html( $person['firstname'] );
 			$bookerBirthdate        = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
 			$bookerBirthplace       = eme_esc_html( $person['birthplace'] );
-				$bookerAddress1     = eme_esc_html( $person['address1'] );
-				$bookerAddress2     = eme_esc_html( $person['address2'] );
-				$bookerCity         = eme_esc_html( $person['city'] );
-				$bookerZip          = eme_esc_html( $person['zip'] );
-				$bookerState        = eme_esc_html( $person['state'] );
-				$bookerState_code   = eme_esc_html( $person['state_code'] );
-				$bookerCountry      = eme_esc_html( $person['country'] );
-				$bookerCountry_code = eme_esc_html( $person['country_code'] );
-				$bookerEmail        = eme_esc_html( $person['email'] );
-				$bookerPhone        = eme_esc_html( $person['phone'] );
-				$massmail           = intval( $person['massmail'] );
-				$bd_email           = intval( $person['bd_email'] );
-				$gdpr               = intval( $person['gdpr'] );
+			$bookerAddress1     = eme_esc_html( $person['address1'] );
+			$bookerAddress2     = eme_esc_html( $person['address2'] );
+			$bookerCity         = eme_esc_html( $person['city'] );
+			$bookerZip          = eme_esc_html( $person['zip'] );
+			$bookerState        = eme_esc_html( $person['state'] );
+			$bookerState_code   = eme_esc_html( $person['state_code'] );
+			$bookerCountry      = eme_esc_html( $person['country'] );
+			$bookerCountry_code = eme_esc_html( $person['country_code'] );
+			$bookerEmail        = eme_esc_html( $person['email'] );
+			$bookerPhone        = eme_esc_html( $person['phone'] );
+			$massmail           = intval( $person['massmail'] );
+			$bd_email           = intval( $person['bd_email'] );
+			$gdpr               = intval( $person['gdpr'] );
 		} else {
 			$bookerLastName = eme_esc_html( $current_user->user_lastname );
 			if ( empty( $bookerLastName ) ) {
@@ -3469,7 +3469,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	}
 
 	// check which fields are used in the event definition for dynamic data
-	$eme_dyndatafields = array();
+	$eme_dyndatafields = [];
 	if ( isset( $membership['properties']['dyndata'] ) ) {
 		foreach ( $membership['properties']['dyndata'] as $dynfield ) {
 			$eme_dyndatafields[] = $dynfield['field'];
@@ -3575,7 +3575,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
 			$fieldname = 'lastname';
 			if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-					// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
+				// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
 				$this_readonly = "readonly='readonly'";
 				if ( $allow_clear ) {
 					$this_readonly .= " data-clearable='true'";
@@ -3603,7 +3603,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		} elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
 			$fieldname = 'firstname';
 			if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-					// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
+				// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
 				$this_readonly = "readonly='readonly'";
 			} else {
 				$this_readonly = $readonly;
@@ -3613,31 +3613,31 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 				$required     = 1;
 			}
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
-					$placeholder_text = esc_html__( 'First name', 'events-made-easy' );
+				$placeholder_text = esc_html__( 'First name', 'events-made-easy' );
 			}
 			$replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerFirstName' $this_readonly $dynamic_field_personal_info_class placeholder='$placeholder_text'>";
 			++$firstname_found;
 		} elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
 			$fieldname = 'birthdate';
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
 			}
 			$replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-			$replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_${fieldname}' id='dp_${fieldname}' data-date='$bookerBirthdate' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate $personal_info_class' placeholder='$placeholder_text'>";
+			$replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate $personal_info_class' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
 			$fieldname = 'birthplace';
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
 			}
@@ -3685,23 +3685,23 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		} elseif ( preg_match( '/#_STATE$/', $result ) ) {
 			$fieldname = 'state_code';
 			if ( ! empty( $bookerState_code ) ) {
-				$state_arr = array( $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) );
+				$state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
 			} else {
-				$state_arr = array();
+				$state_arr = [];
 			}
 			$replacement = "<div class=$personal_info_class>" . eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, "eme_select2_state_class $dynamic_field_class_basic", $disabled ) . '</div>';
 		} elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
 			$fieldname = 'country_code';
 			if ( ! empty( $bookerCountry_code ) ) {
-				$country_arr = array( $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) );
+				$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
 			} else {
-				$country_arr = array();
+				$country_arr = [];
 			}
 			$replacement = "<div class=$personal_info_class>" . eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, "eme_select2_country_class $dynamic_field_class_basic", $disabled ) . '</div>';
 		} elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
 			$fieldname = 'email';
 			if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-					// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
+				// in the frontend and logged in, so this info comes from the wp profile, so make it readonly
 				$this_readonly = "readonly='readonly'";
 			} else {
 				$this_readonly = $readonly;
@@ -3713,20 +3713,20 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 				$required     = 1;
 			}
 			if ( isset( $matches[2] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[2], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[2], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
-					$placeholder_text = esc_html__( 'Email', 'events-made-easy' );
+				$placeholder_text = esc_html__( 'Email', 'events-made-easy' );
 			}
 			$replacement = "<input $required_att type='email' id='$fieldname' name='$fieldname' value='$bookerEmail' $this_readonly $dynamic_field_personal_info_class placeholder='$placeholder_text'>";
 			++$email_found;
 		} elseif ( preg_match( '/#_(PHONE$|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
 			$fieldname = 'phone';
 			if ( isset( $matches[2] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[2], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[2], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
 			}
@@ -3745,8 +3745,8 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			$selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
 			$fieldname         = 'massmail';
 			if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
-					$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
-					$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
+				$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+				$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
 			}
 			$replacement .= eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class", $disabled );
 		} elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
@@ -3762,7 +3762,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			}
 		} elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
 			if ( is_numeric( $matches[1] ) ) {
-					$group = eme_get_group( $matches[1] );
+				$group = eme_get_group( $matches[1] );
 			} else {
 				$group = eme_get_group_by_name( eme_sanitize_request( $matches[1] ) );
 			}
@@ -3787,12 +3787,12 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			}
 		} elseif ( preg_match( '/#_DISCOUNT(\{.+?\})?$/', $result, $matches ) ) {
 			if ( $membership['properties']['discount'] || $membership['properties']['discountgroup'] ) {
-					// we need an ID to have a unique name per DISCOUNT input field
-					++$discount_fields_count;
+				// we need an ID to have a unique name per DISCOUNT input field
+				++$discount_fields_count;
 				if ( ! $eme_is_admin_request ) {
 					$var_prefix     = "members[$membership_id][";
 					$var_postfix    = ']';
-					$postfield_name = "${var_prefix}DISCOUNT${discount_fields_count}${var_postfix}";
+					$postfield_name = "{$var_prefix}DISCOUNT{$discount_fields_count}{$var_postfix}";
 					$entered_val    = '';
 					if ( isset( $matches[1] ) ) {
 							// remove { and } (first and last char of second match)
@@ -3855,7 +3855,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		} elseif ( preg_match( '/#_FAMILYCOUNT/', $result, $matches ) ) {
 			$fieldname = 'familycount';
 			if ( ! $eme_is_admin_request ) {
-				$range_arr = array();
+				$range_arr = [];
 				for ( $i = 0;$i <= 10;$i++ ) {
 					$range_arr[ $i ] = $i;
 				}
@@ -3880,10 +3880,10 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$field_id       = $formfield['field_id'];
-					$fieldname      = 'FIELD' . $field_id;
-					$entered_val    = '';
-					$field_readonly = 0;
+				$field_id       = $formfield['field_id'];
+				$fieldname      = 'FIELD' . $field_id;
+				$entered_val    = '';
+				$field_readonly = 0;
 				if ( $editing_from_backend ) {
 					if ( $formfield['field_purpose'] == 'people' ) {
 							$answers        = eme_get_person_answers( $member['person_id'] );
@@ -3981,15 +3981,15 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 
 	$tmp_groups = eme_get_public_groups();
 	if ( ! empty( $tmp_groups ) ) {
-			$public_groups = array( '' => esc_html__( 'All', 'events-made-easy' ) );
+		$public_groups = [ '' => esc_html__( 'All', 'events-made-easy' ) ];
 	} else {
-		$public_groups = array();
+		$public_groups = [];
 	}
 	if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
-			$public_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
+		$public_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
 	}
 	foreach ( $tmp_groups as $group ) {
-			$public_groups[ $group['group_id'] ] = eme_esc_html( $group['name'] );
+		$public_groups[ $group['group_id'] ] = eme_esc_html( $group['name'] );
 	}
 
 	$bookerLastName  = '';
@@ -4001,9 +4001,9 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 		$current_user = wp_get_current_user();
 		$person       = eme_get_person_by_wp_id( $current_user->ID );
 		if ( ! empty( $person ) ) {
-				$bookerLastName  = $person['lastname'];
-				$bookerFirstName = $person['firstname'];
-				$bookerEmail     = $person['email'];
+			$bookerLastName  = $person['lastname'];
+			$bookerFirstName = $person['firstname'];
+			$bookerEmail     = $person['email'];
 		} else {
 			$bookerLastName = $current_user->user_lastname;
 			if ( empty( $bookerLastName ) ) {
@@ -4110,15 +4110,15 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 			$replacement = eme_ui_checkbox_binary( 0, 'gdpr', $label, 1, 'eme-gdpr-field' );
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
 			if ( $eme_hcaptcha_for_forms ) {
-					$replacement = eme_load_hcaptcha_html();
+				$replacement = eme_load_hcaptcha_html();
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
 			if ( $eme_recaptcha_for_forms ) {
-					$replacement = eme_load_recaptcha_html();
+				$replacement = eme_load_recaptcha_html();
 			}
 		} elseif ( preg_match( '/#_CAPTCHA/', $result ) ) {
 			if ( $eme_captcha_for_forms ) {
-					$replacement = eme_load_captcha_html();
+				$replacement = eme_load_captcha_html();
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -4215,9 +4215,9 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 
 		if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[2] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[2], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[2], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Last name', 'events-made-easy' );
 			}
@@ -4230,9 +4230,9 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			$required = 1;
 		} elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'First name', 'events-made-easy' );
 			}
@@ -4244,9 +4244,9 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			$required = 1;
 		} elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
 			}
@@ -4255,9 +4255,9 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 		} elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
 			$replacement = "<input $required_att type='text' name='birthplace' id='birthplace' value='$bookerBirthplace' placeholder='$placeholder_text'>";
 			if ( isset( $matches[1] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[1], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
 			}
@@ -4290,9 +4290,9 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			$replacement = "<input $required_att type='text' name='city' id='city' value='$bookerCity' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_STATE$/', $result ) ) {
 			if ( ! empty( $bookerState_code ) ) {
-				$state_arr = array( $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) );
+				$state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
 			} else {
-				$state_arr = array();
+				$state_arr = [];
 			}
 			$replacement = eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, 'eme_select2_state_class' );
 		} elseif ( preg_match( '/#_(ZIP|POSTAL)(\{.+?\})?$/', $result, $matches ) ) {
@@ -4306,29 +4306,29 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			$replacement = "<input $required_att type='text' name='zip' id='zip' value='$bookerZip' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_COUNTRY\{(.+)\}$/', $result, $matches ) ) {
 			if ( ! empty( $bookerCountry_code ) ) {
-				$country_arr = array( $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) );
+				$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
 				$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
 			} else {
 				$country_code = $matches[1];
 				$country_name = eme_get_country_name( $country_code );
 				if ( ! empty( $country_name ) ) {
-					$country_arr = array( $country_code => $country_name );
+					$country_arr = [ $country_code => $country_name ];
 					$replacement = eme_ui_select( $country_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
 				}
 			}
 		} elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
 			if ( ! empty( $bookerCountry_code ) ) {
-				$country_arr = array( $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) );
+				$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
 			} else {
-				$country_arr = array();
+				$country_arr = [];
 			}
 			$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
 
 		} elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[2] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[2], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[2], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Email', 'events-made-easy' );
 			}
@@ -4340,9 +4340,9 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			$required = 1;
 		} elseif ( preg_match( '/#_(PHONE$|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[2] ) ) {
-					// remove { and } (first and last char of second match)
-					$placeholder_text = substr( $matches[2], 1, -1 );
-					$placeholder_text = eme_trans_esc_html( $placeholder_text );
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[2], 1, -1 );
+				$placeholder_text = eme_trans_esc_html( $placeholder_text );
 			} else {
 				$placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
 			}
@@ -4401,8 +4401,8 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 					$person_id      = $person['person_id'];
 					$var_prefix     = "dynamic_personfields[$person_id][";
 					$var_postfix    = ']';
-					$postfield_name = "${var_prefix}FIELD" . $field_id . $var_postfix;
-					$postvar_arr    = array( 'dynamic_personfields', $person_id, 'FIELD' . $field_id );
+					$postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
+					$postvar_arr    = [ 'dynamic_personfields', $person_id, 'FIELD' . $field_id ];
 					// the first time there's no $_POST yet
 				if ( ! empty( $_POST ) ) {
 					$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
@@ -4421,7 +4421,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 				}
 				$files = eme_get_uploaded_files( $person['person_id'], 'people' );
 				if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-					$entered_files = array();
+					$entered_files = [];
 					foreach ( $files as $file ) {
 						if ( $file['field_id'] == $field_id ) {
 							$entered_files[] = $file;
@@ -4452,7 +4452,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 		if ( $required ) {
 			$eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
 			if ( ! empty( $eme_form_required_field_string ) ) {
-					$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+				$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
 			}
 		}
 		if ( $found ) {
@@ -4476,7 +4476,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 function eme_find_required_formfields( $format ) {
 	preg_match_all( '/#REQ_?[A-Za-z0-9_]+(\{.*?\})?/', $format, $placeholders );
 	usort( $placeholders[0], 'eme_sort_stringlenth' );
-	$result = array();
+	$result = [];
 	foreach ( $placeholders[0] as $placeholder ) {
 		// #_NAME and #REQ_NAME should be using _LASTNAME
 		$res = preg_replace( '/_NAME/', '_LASTNAME', $placeholder );
@@ -4530,7 +4530,7 @@ function eme_answer2readable( $answer, $formfield, $convert_val = 1, $sep = '||'
 				return eme_convert_array2multi( $answers, $sep );
 			}
 			$tags   = eme_convert_multi2array( $field_tags );
-			$my_arr = array();
+			$my_arr = [];
 			foreach ( $answers as $ans ) {
 				foreach ( $values as $key => $val ) {
 					if ( $val === $ans ) {
@@ -4585,12 +4585,12 @@ function eme_answer2readable( $answer, $formfield, $convert_val = 1, $sep = '||'
 
 function eme_convert_answer_price( $answer ) {
 	if ( $answer['type'] == 'booking' ) { // for fields with answers that are an extra charge
-				$event = eme_get_event_by_booking_id( $answer['related_id'] );
-				return eme_localized_price( $answer, $event['currency'] );
+		$event = eme_get_event_by_booking_id( $answer['related_id'] );
+		return eme_localized_price( $answer, $event['currency'] );
 	} elseif ( $answer['type'] == 'member' ) { // for fields with answers that are an extra charge
-			$member     = eme_get_member( $answer['related_id'] );
-			$membership = eme_get_membership( $member['membership_id'] );
-			return eme_localized_price( $answer, $membership['properties']['currency'] );
+		$member     = eme_get_member( $answer['related_id'] );
+		$membership = eme_get_membership( $member['membership_id'] );
+		return eme_localized_price( $answer, $membership['properties']['currency'] );
 	} else {
 		return $answer;
 	}
@@ -4601,7 +4601,7 @@ function eme_get_answer_fieldids( $booking_ids_arr ) {
 	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($booking_ids_arr), '%d'));
-	$sql = $wpdb->prepare("SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($commaDelimitedPlaceholders) ORDER BY field_id",$booking_ids_arr);
+	$sql = $wpdb->prepare("SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($commaDelimitedPlaceholders) ORDER BY field_id", $booking_ids_arr);
 	return $wpdb->get_col( $sql );
 }
 
@@ -4636,7 +4636,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 			<?php
 			// if there are no entries in the eme_data array, make 1 empty entry in it, so it renders at least 1 row
 			if ( ! is_array( $eme_data ) || count( $eme_data ) == 0 ) {
-				$info     = array(
+				$info     = [
 					'field'              => '',
 					'condition'          => '',
 					'condval'            => '',
@@ -4645,8 +4645,8 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 					'template_id_footer' => 0,
 					'repeat'             => 0,
 					'grouping'           => 1,
-				);
-				$eme_data = array( $info );
+				];
+				$eme_data = [ $info ];
 				$required = '';
 			} else {
 				$required = "required='required'";
@@ -4711,10 +4711,10 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 }
 
 function eme_handle_dyndata_post_adminform() {
-		$eme_dyndata           = array();
-		$biggest_grouping_seen = 0;
-		$groupings_seen        = array();
-		$eme_dyndata_arr       = array();
+	$eme_dyndata           = [];
+	$biggest_grouping_seen = 0;
+	$groupings_seen        = [];
+	$eme_dyndata_arr       = [];
 	if ( empty( $_POST['eme_dyndata'] ) ) {
 		return $eme_dyndata_arr;
 	}
@@ -4728,21 +4728,21 @@ function eme_handle_dyndata_post_adminform() {
 	}
 	foreach ( $_POST['eme_dyndata'] as $eme_dyndata ) {
 		if ( $eme_dyndata['template_id'] > 0 ) {
-				$eme_dyndata['template_id'] = intval( $eme_dyndata['template_id'] );
+			$eme_dyndata['template_id'] = intval( $eme_dyndata['template_id'] );
 			if ( isset( $eme_dyndata['repeat'] ) && $eme_dyndata['repeat'] == 1 ) {
-					$eme_dyndata['repeat']  = intval( $eme_dyndata['repeat'] );
-					$eme_dyndata['condval'] = intval( $eme_dyndata['condval'] );
+				$eme_dyndata['repeat']  = intval( $eme_dyndata['repeat'] );
+				$eme_dyndata['condval'] = intval( $eme_dyndata['condval'] );
 			} else {
-					$eme_dyndata['repeat']  = 0;
-					$eme_dyndata['condval'] = $eme_dyndata['condval'];
+				$eme_dyndata['repeat']  = 0;
+				$eme_dyndata['condval'] = $eme_dyndata['condval'];
 			}
 			if ( isset( $eme_dyndata['template_id_header'] ) ) {
-					$eme_dyndata['template_id_header'] = intval( $eme_dyndata['template_id_header'] );
+				$eme_dyndata['template_id_header'] = intval( $eme_dyndata['template_id_header'] );
 			} else {
 				$eme_dyndata['template_id_header'] = 0;
 			}
 			if ( isset( $eme_dyndata['template_id_footer'] ) ) {
-					$eme_dyndata['template_id_footer'] = intval( $eme_dyndata['template_id_footer'] );
+				$eme_dyndata['template_id_footer'] = intval( $eme_dyndata['template_id_footer'] );
 			} else {
 				$eme_dyndata['template_id_footer'] = 0;
 			}
@@ -4765,7 +4765,7 @@ function eme_handle_dyndata_post_adminform() {
 			$eme_dyndata_arr[] = $eme_dyndata;
 		}
 	}
-		return $eme_dyndata_arr;
+	return $eme_dyndata_arr;
 }
 
 add_action( 'wp_ajax_eme_formfields_list', 'eme_ajax_formfields_list' );
@@ -4776,21 +4776,21 @@ function eme_ajax_formfields_list() {
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
-			$ajaxResult            = array();
-			$ajaxResult['Result']  = 'Error';
-			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-			print wp_json_encode( $ajaxResult );
-			wp_die();
+		$ajaxResult            = [];
+		$ajaxResult['Result']  = 'Error';
+		$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $ajaxResult );
+		wp_die();
 	}
 
 	$table              = $eme_db_prefix . FORMFIELDS_TBNAME;
 	$used_formfield_ids = eme_get_used_formfield_ids();
-	$jTableResult       = array();
+	$jTableResult       = [];
 	$search_type        = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';
 	$search_purpose     = isset( $_REQUEST['search_purpose'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_purpose'] ) ) : '';
 	$search_name        = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$where              = '';
-	$where_arr          = array();
+	$where_arr          = [];
 	if ( ! empty( $search_name ) ) {
 		$where_arr[] = "field_name like '%" . $search_name . "%'";
 	}
@@ -4812,7 +4812,7 @@ function eme_ajax_formfields_list() {
 		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql(eme_sanitize_sql_orderby($_REQUEST['jtSorting'])) : '';
 		$sql         = "SELECT * FROM $table $where $sorting LIMIT $start,$pagesize";
 		$rows        = $wpdb->get_results( $sql, ARRAY_A );
-		$res         = array();
+		$res         = [];
 		foreach ( $rows as $key => $row ) {
 			if ( empty( $row['field_name'] ) ) {
 				$row['field_name'] = __( 'No name', 'events-made-easy' );
@@ -4838,7 +4838,7 @@ function eme_ajax_formfields_list() {
 
 function eme_ajax_manage_formfields() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$jTableResult=array();
+	$jTableResult=[];
 	if (! current_user_can( get_option( 'eme_cap_forms' ) ) || !isset( $_POST['field_id'] ) ) {
 		$jTableResult['Result']      = 'Error';
 		$jTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
@@ -4849,7 +4849,7 @@ function eme_ajax_manage_formfields() {
 		switch ( $do_action ) {
 			case 'deleteFormfield':
 				// validation happens in the eme_delete_formfields function
-				eme_delete_formfields( array( intval($_POST['field_id']) ) );
+				eme_delete_formfields( [ intval($_POST['field_id']) ] );
 				$jTableResult['Result']      = 'OK';
 				$jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
 				print wp_json_encode( $jTableResult );

@@ -156,9 +156,9 @@ function eme_cleanup_events( $eme_number, $eme_period ) {
 function eme_cleanup_all_event_related_data( $other_data ) {
 	global $wpdb,$eme_db_prefix;
 
-	$tables = array( EVENTS_TBNAME, EVENTS_CF_TBNAME, BOOKINGS_TBNAME, LOCATIONS_TBNAME, LOCATIONS_CF_TBNAME, RECURRENCE_TBNAME, ANSWERS_TBNAME, PAYMENTS_TBNAME, PEOPLE_TBNAME, MEMBERS_TBNAME, MEMBERSHIPS_CF_TBNAME, MEMBERSHIPS_TBNAME, ATTENDANCES_TBNAME );
+	$tables = [ EVENTS_TBNAME, EVENTS_CF_TBNAME, BOOKINGS_TBNAME, LOCATIONS_TBNAME, LOCATIONS_CF_TBNAME, RECURRENCE_TBNAME, ANSWERS_TBNAME, PAYMENTS_TBNAME, PEOPLE_TBNAME, MEMBERS_TBNAME, MEMBERSHIPS_CF_TBNAME, MEMBERSHIPS_TBNAME, ATTENDANCES_TBNAME ];
 	if ( $other_data ) {
-		$tables2 = array( CATEGORIES_TBNAME, HOLIDAYS_TBNAME, TEMPLATES_TBNAME, FORMFIELDS_TBNAME, COUNTRIES_TBNAME, STATES_TBNAME );
+		$tables2 = [ CATEGORIES_TBNAME, HOLIDAYS_TBNAME, TEMPLATES_TBNAME, FORMFIELDS_TBNAME, COUNTRIES_TBNAME, STATES_TBNAME ];
 		$tables  = array_merge( $tables, $tables2 );
 	}
 	foreach ( $tables as $table ) {
@@ -175,7 +175,7 @@ function eme_cleanup_page() {
 			if ( $_POST['eme_admin_action'] == 'eme_cleanup_events' && isset( $_POST['eme_number'] ) && isset( $_POST['eme_period'] ) ) {
 				$eme_number = intval( $_POST['eme_number'] );
 				$eme_period = eme_sanitize_request( $_POST['eme_period'] );
-				if ( ! in_array( $eme_period, array( 'day', 'week', 'month' ) ) ) {
+				if ( ! in_array( $eme_period, [ 'day', 'week', 'month' ] ) ) {
 					$eme_period = 'month';
 				}
 

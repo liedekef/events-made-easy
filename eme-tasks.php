@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_task() {
-	$task = array(
+	$task = [
 		'event_id'    => 0,
 		'task_start'  => '',
 		'task_end'    => '',
@@ -14,13 +14,13 @@ function eme_new_task() {
 		'task_seq'    => 1,
 		'task_nbr'    => 0,
 		'spaces'      => 1,
-	);
+	];
 	return $task;
 }
 
 function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
 	global $eme_timezone;
-	$eme_tasks_arr = array();
+	$eme_tasks_arr = [];
 	if ( empty( $_POST['eme_tasks'] ) ) {
 		return $eme_tasks_arr;
 	}
@@ -102,7 +102,7 @@ function eme_db_update_task_by_task_nbr( $line ) {
 function eme_db_update_task( $line ) {
 	global $wpdb,$eme_db_prefix;
 	$table            = $eme_db_prefix . TASKS_TBNAME;
-	$where            = array();
+	$where            = [];
 	$where['task_id'] = $line['task_id'];
 
 	$tmp_task = eme_new_task();
@@ -120,7 +120,7 @@ function eme_db_update_task( $line ) {
 function eme_db_delete_task( $task_id ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . TASKS_TBNAME;
-	$wpdb->delete( $table, array( 'task_id' => $task_id ) );
+	$wpdb->delete( $table, [ 'task_id' => $task_id ] );
 }
 
 function eme_delete_event_tasks( $event_id ) {
@@ -141,10 +141,10 @@ function eme_delete_event_old_tasks( $event_id, $ids_arr ) {
 	}
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
 	$table    = $eme_db_prefix . TASKS_TBNAME;
-	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $commaDelimitedPlaceholders )", array_merge(array($event_id),$ids_arr));
+	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $commaDelimitedPlaceholders )", array_merge([$event_id], $ids_arr));
 	$wpdb->query( $sql);
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $commaDelimitedPlaceholders )", array_merge(array($event_id),$ids_arr));
+	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $commaDelimitedPlaceholders )", array_merge([$event_id], $ids_arr));
 	$wpdb->query( $sql);
 }
 
@@ -170,7 +170,7 @@ function eme_db_insert_task_signup( $line ) {
 function eme_db_update_task_signup( $line ) {
 	global $wpdb,$eme_db_prefix;
 	$table       = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$where       = array();
+	$where       = [];
 	$where['id'] = $line['id'];
 	if ( $wpdb->update( $table, $line, $where ) === false ) {
 		$res = false;
@@ -183,16 +183,16 @@ function eme_db_update_task_signup( $line ) {
 function eme_transfer_person_task_signups( $person_ids, $to_person_id ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$ids_arr = explode(',',$person_ids);
+	$ids_arr = explode(',', $person_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-        $sql = $wpdb->prepare( "UPDATE $table SET person_id = %d  WHERE person_id ( $commaDelimitedPlaceholders )", array_merge(array($to_person_id),$ids_arr));
+        $sql = $wpdb->prepare( "UPDATE $table SET person_id = %d  WHERE person_id ( $commaDelimitedPlaceholders )", array_merge([$to_person_id], $ids_arr));
 	return $wpdb->query( $sql );
 }
 
 function eme_db_delete_task_signup( $signup_id ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	if ( $wpdb->delete( $table, array( 'id' => $signup_id ) ) === false ) {
+	if ( $wpdb->delete( $table, [ 'id' => $signup_id ] ) === false ) {
 			$res = false;
 	} else {
 		$res = true;
@@ -242,7 +242,7 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
 	$events_table = $eme_db_prefix . EVENTS_TBNAME;
 
 	$events_join = "LEFT JOIN $events_table ON $table.event_id=$events_table.event_id";
-	$order_arr   = array();
+	$order_arr   = [];
 	if ( empty( $event_id ) ) {
 		$order_arr[] = "$events_table.event_start ASC, $events_table.event_name ASC";
 	}
@@ -256,7 +256,7 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
 	}
 
 	$wp_id     = intval( $wp_id );
-	$where_arr = array( "$people_table.wp_id=$wp_id" );
+	$where_arr = [ "$people_table.wp_id=$wp_id" ];
 	if ( empty( $event_id ) ) {
 		if ( $scope == 'future' ) {
 			$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
@@ -282,7 +282,7 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
 function eme_get_tasksignup_personids( $signup_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$ids_arr = explode(',',$signup_ids);
+	$ids_arr = explode(',', $signup_ids);
 	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
         $sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $table WHERE id IN ( $commaDelimitedPlaceholders )", $ids_arr);
 	return $wpdb->get_col( $sql );
@@ -293,7 +293,7 @@ function eme_count_event_task_signups( $event_id ) {
 	$table      = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT task_id, COUNT(*) as signup_count FROM $table WHERE event_id=%d GROUP BY task_id", $event_id );
 	$res        = $wpdb->get_results( $sql, ARRAY_A );
-	$return_arr = array();
+	$return_arr = [];
 	foreach ( $res as $row ) {
 		$return_arr[ $row['task_id'] ] = $row['signup_count'];
 	}
@@ -430,7 +430,7 @@ function eme_task_signups_table_layout( $message = '' ) {
 	<input type="text" class="clearable" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=20>
 	<select id="search_scope" name="search_scope">
 	<?php
-	$scope_names           = array();
+	$scope_names           = [];
 	$scope_names['past']   = __( 'Past events', 'events-made-easy' );
 	$scope_names['all']    = __( 'All events', 'events-made-easy' );
 	$scope_names['future'] = __( 'Future events', 'events-made-easy' );
@@ -652,7 +652,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 	} elseif ( ! empty( $event['event_id'] ) ) {
 		$tasks = eme_get_event_tasks( $event['event_id'] );
 	} else {
-		$tasks = array();
+		$tasks = [];
 	}
 	?>
 	<div id="div_tasks">
@@ -680,7 +680,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 			// if there are no entries in the array, make 1 empty entry in it, so it renders at least 1 row
 			if ( ! is_array( $tasks ) || count( $tasks ) == 0 ) {
 				$info     = eme_new_task();
-				$tasks    = array( $info );
+				$tasks    = [ $info ];
 				$required = '';
 			} else {
 				$required = "required='required'";
@@ -793,16 +793,16 @@ function eme_mytasks_signups_shortcode( $atts ) {
 		return;
 	}
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'scope'              => 'future',
 				'task_id'            => 0,
 				'event_id'           => 0,
 				'template_id'        => 0,
 				'template_id_header' => 0,
 				'template_id_footer' => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$format = '';
@@ -837,8 +837,8 @@ function eme_mytasks_signups_shortcode( $atts ) {
 function eme_tasks_signups_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'scope'                      => 'future',
 				'order'                      => 'ASC',
 				'category'                   => '',
@@ -855,12 +855,12 @@ function eme_tasks_signups_shortcode( $atts ) {
 				'template_id_header'         => 0,
 				'template_id_footer'         => 0,
 				'ignore_filter'              => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
-	$event_id_arr    = array();
-	$location_id_arr = array();
+	$event_id_arr    = [];
+	$location_id_arr = [];
 	$result          = '';
 
 	// per event, the header and footer are repeated, the template_id itself is repeated per task
@@ -992,7 +992,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 		$location_id = join( ',', $location_id_arr );
 	}
 
-	$extra_conditions_arr = array();
+	$extra_conditions_arr = [];
 	$extra_conditions     = '';
 	if ( ! empty( $event_id ) ) {
 		if ( strstr( ',', $event_id ) ) {
@@ -1037,8 +1037,8 @@ function eme_tasks_signupform_shortcode( $atts ) {
 	eme_enqueue_frontend();
 
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'scope'                      => 'future',
 				'order'                      => 'ASC',
 				'category'                   => '',
@@ -1056,12 +1056,12 @@ function eme_tasks_signupform_shortcode( $atts ) {
 				'signupform_template_id'     => 0,
 				'skip_full'                  => 0,
 				'ignore_filter'              => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
-	$event_id_arr    = array();
-	$location_id_arr = array();
+	$event_id_arr    = [];
+	$location_id_arr = [];
 	$result          = '';
 
 	// the filter list overrides the settings
@@ -1163,7 +1163,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 		$location_id = join( ',', $location_id_arr );
 	}
 
-	$extra_conditions_arr = array();
+	$extra_conditions_arr = [];
 	$extra_conditions     = '';
 	if ( ! empty( $event_id ) ) {
 		if ( strstr( ',', $event_id ) ) {
@@ -1530,10 +1530,10 @@ function eme_tasks_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 			$message = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -1541,20 +1541,20 @@ function eme_tasks_ajax() {
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 				$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $message,
-			)
+			]
 		);
 		wp_die();
 	}
 	if ( ! isset( $_POST['eme_task_signups'] ) || empty( $_POST['eme_task_signups'] ) ) {
 		$message = __( 'Please select at least one task.', 'events-made-easy' );
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $message,
-			)
+			]
 		);
 		wp_die();
 	}
@@ -1566,10 +1566,10 @@ function eme_tasks_ajax() {
 		if ( ! $captcha_res ) {
 			$message = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -1578,10 +1578,10 @@ function eme_tasks_ajax() {
 		if ( ! $captcha_res ) {
 			$message = __( 'Please check the hCaptcha box', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
-				)
+				]
 			);
 			wp_die();
 		}
@@ -1590,10 +1590,10 @@ function eme_tasks_ajax() {
 		if ( ! $captcha_res ) {
 			$message = __( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(
-				array(
+			    [
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
-				)
+				]
 			);
 			wp_die();
 		} else {
@@ -1664,11 +1664,11 @@ function eme_tasks_ajax() {
 					continue;
 				}
 				// all ok, insert signup
-				$signup = array(
+				$signup = [
 					'task_id'   => $task_id,
 					'person_id' => $person_id,
 					'event_id'  => $event_id,
-				);
+				];
 				eme_db_insert_task_signup( $signup );
 				eme_email_tasksignup_action( $signup, 'new' );
 				$message .= __( 'Signup done', 'events-made-easy' );
@@ -1682,25 +1682,25 @@ function eme_tasks_ajax() {
 	if ( $ok && $nok ) {
 		//echo wp_json_encode(array('Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message));
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'OK',
 				'htmlmessage' => $message,
-			)
+			]
 		);
 	} elseif ( $nok ) {
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'NOK',
 				'htmlmessage' => $message,
-			)
+			]
 		);
 	} elseif ( $ok ) {
 		//echo wp_json_encode(array('Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message));
 		echo wp_json_encode(
-			array(
+		    [
 				'Result'      => 'OK',
 				'htmlmessage' => $message,
-			)
+			]
 		);
 	}
 
@@ -1719,7 +1719,7 @@ function eme_ajax_task_signups_list() {
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
-			$ajaxResult            = array();
+			$ajaxResult            = [];
 			$ajaxResult['Result']  = 'Error';
 			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 			print wp_json_encode( $ajaxResult );
@@ -1730,7 +1730,7 @@ function eme_ajax_task_signups_list() {
 	$events_table      = $eme_db_prefix . EVENTS_TBNAME;
 	$tasks_table       = $eme_db_prefix . TASKS_TBNAME;
 	$people_table      = $eme_db_prefix . PEOPLE_TBNAME;
-	$jTableResult      = array();
+	$jTableResult      = [];
 	$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$search_scope      = ( isset( $_REQUEST['search_scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_scope'] ) ) : 'future';
 	$search_event      = isset( $_REQUEST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_event'] ) ) ) : '';
@@ -1739,7 +1739,7 @@ function eme_ajax_task_signups_list() {
 	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( $_REQUEST['search_end_date'] ) : '';
 
 	$where     = '';
-	$where_arr = array();
+	$where_arr = [];
 	if ( ! empty( $search_name ) ) {
 		$where_arr[] = "tasks.name like '%" . $search_name . "%'";
 	}
@@ -1808,7 +1808,7 @@ function eme_ajax_task_signups_list() {
 function eme_ajax_manage_task_signups() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
-			$ajaxResult            = array();
+			$ajaxResult            = [];
 			$ajaxResult['Result']  = 'Error';
 			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 			print wp_json_encode( $ajaxResult );
@@ -1838,7 +1838,7 @@ function eme_ajax_action_signup_delete( $ids_arr ) {
 			eme_email_tasksignup_action( $signup, 'delete' );
 		}
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( $action_ok ) {
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
 		$ajaxResult['Result']      = 'OK';

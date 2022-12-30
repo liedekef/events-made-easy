@@ -5,22 +5,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_country() {
-	$country = array(
+	$country = [
 		'alpha_2' => '',
 		'alpha_3' => '',
 		'num_3'   => '',
 		'name'    => '',
 		'lang'    => '',
-	);
+	];
 	return $country;
 }
 
 function eme_new_state() {
-	$state = array(
+	$state = [
 		'code'       => '',
 		'name'       => '',
 		'country_id' => 0,
-	);
+	];
 	return $state;
 }
 
@@ -33,7 +33,7 @@ function eme_countries_page() {
 	}
 
 	$message  = '';
-	$csvMimes = array( 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' );
+	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
 
 	// handle possible ations
 	if ( isset( $_POST['eme_admin_action'] ) ) {
@@ -729,7 +729,7 @@ function eme_db_update_country( $id, $line ) {
 	// we only want the columns that interest us
 	$keys     = array_intersect_key( $line, $country );
 	$new_line = array_merge( $country, $keys );
-	$where    = array( 'id' => $id );
+	$where    = [ 'id' => $id ];
 	if ( isset( $new_line['id'] ) ) {
 		unset( $new_line['id'] );
 	}
@@ -775,7 +775,7 @@ function eme_db_update_state( $id, $line ) {
 	// we only want the columns that interest us
 	$keys     = array_intersect_key( $line, $state );
 	$new_line = array_merge( $state, $keys );
-	$where    = array( 'id' => $id );
+	$where    = [ 'id' => $id ];
 	if ( isset( $new_line['id'] ) ) {
 		unset( $new_line['id'] );
 	}
@@ -844,7 +844,7 @@ function eme_get_state_name( $code, $country_code, $lang = '' ) {
 function eme_get_countries_lang() {
 	global $wpdb,$eme_db_prefix;
 	$table        = $eme_db_prefix . COUNTRIES_TBNAME;
-	$jTableResult = array();
+	$jTableResult = [];
 	$sql          = "SELECT id, CONCAT (name, ' (', lang, ')') AS name FROM $table";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
@@ -858,12 +858,12 @@ function eme_ajax_countries_list() {
 	global $wpdb,$eme_db_prefix;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$table        = $eme_db_prefix . COUNTRIES_TBNAME;
-	$jTableResult = array();
+	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
 	$opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
 	$where       = '';
-	$where_array = array();
+	$where_array = [];
 	if ( $q ) {
 		for ( $i = 0; $i < count( $opt ); $i++ ) {
 				$fld           = esc_sql( $opt[ $i ] );
@@ -902,7 +902,7 @@ function eme_ajax_states_list() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$table           = $eme_db_prefix . STATES_TBNAME;
 	$countries_table = $eme_db_prefix . COUNTRIES_TBNAME;
-	$jTableResult    = array();
+	$jTableResult    = [];
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table";
 		$recordCount = $wpdb->get_var( $sql );
@@ -981,7 +981,7 @@ function eme_ajax_country_delete() {
 
 function eme_ajax_state_edit() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$jTableResult = array();
+	$jTableResult = [];
 
 	if ( isset( $_POST['id'] ) ) {
 		$state  = eme_get_state( intval( $_POST['id'] ) );
@@ -1056,13 +1056,13 @@ function eme_select_state_ajax() {
 	$q            = isset( $_REQUEST['q'] ) ? eme_sanitize_request( $_REQUEST['q'] ) : '';
 	$country_code = isset( $_POST['country_code'] ) ? eme_sanitize_request( $_POST['country_code'] ) : '';
 	// the country code can be empty, in which case eme_get_localized_states will return states if only 1 country exists
-	$records = array();
+	$records = [];
 	$states  = eme_get_localized_states( $country_code );
 	foreach ( $states as $state ) {
 		if ( ! empty( $q ) && ! stristr( $state['name'], $q ) ) {
 			continue;
 		}
-		$record         = array();
+		$record         = [];
 		$record['id']   = $state['code'];
 		$record['text'] = $state['name'];
 		$records[]      = $record;
@@ -1079,13 +1079,13 @@ add_action( 'wp_ajax_nopriv_eme_select_country', 'eme_select_country_ajax' );
 function eme_select_country_ajax() {
 	check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 	$q         = isset( $_REQUEST['q'] ) ? eme_sanitize_request( $_REQUEST['q'] ) : '';
-	$records   = array();
+	$records   = [];
 	$countries = eme_get_localized_countries();
 	foreach ( $countries as $country ) {
 		if ( ! empty( $q ) && ! stristr( $country['name'], $q ) ) {
 			continue;
 		}
-		$record         = array();
+		$record         = [];
 		$record['id']   = $country['alpha_2'];
 		$record['text'] = $country['name'];
 		$records[]      = $record;

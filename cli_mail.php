@@ -92,7 +92,7 @@ function mailRead( $iKlimit = '' ) {
 	return $sEmail;
 }
 
-$arguments = getopt( 'hd:f:', array( 'fast', 'allowed_senders:', 'extra_allowed_senders:', 'groupid:' ) );
+$arguments = getopt( 'hd:f:', [ 'fast', 'allowed_senders:', 'extra_allowed_senders:', 'groupid:' ] );
 if ( ( ! isset( $arguments['groupid'] ) && ! isset( $arguments['d'] ) ) || isset( $arguments['h'] ) ) {
 	help( $argv[0] );
 }
@@ -140,7 +140,7 @@ foreach ( $structure as $part_label ) { // Search among each e-mail part
 				$on_behalf_of = '(' . sprintf(
 					/* translators: %s: original email sender name */
 					__( 'on behalf of %s', 'events-made-easy' ),
-					$on_behalf_of
+				    $on_behalf_of
 				) . ')';
 			}
 		}
@@ -170,7 +170,7 @@ if ( empty( $names_emails ) ) {
 	exit();
 }
 
-$emails = array();
+$emails = [];
 foreach ( $names_emails as $entry ) {
 	$emails[] = $entry['email'];
 }
@@ -207,10 +207,10 @@ if ( empty( $subject ) || empty( $body ) ) {
 
 // now create the mailing
 $mailing_name = "Forwarding mail from $from_email to $replyto_email to group " . $group['name'];
-$conditions   = array(
+$conditions   = [
 	'eme_genericmail_send_peoplegroups' => $group['group_id'],
 	'action'                            => 'genericmail',
-);
+];
 
 if ( get_option( 'eme_mail_force_from' ) ) {
 	// by setting the from address to the forced address, we avoid the sender name from being changed in eme_queue_mail later on (which is needed in this case, to keep the "on behalf of"

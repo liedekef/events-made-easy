@@ -170,11 +170,11 @@ add_filter( 'plugin_row_meta', 'eme_plugin_row_meta', 10, 2 );
 function eme_plugin_row_meta( $links, $file ) {
 
 	if ( strpos( $file, 'events-manager.php' ) !== false ) {
-		$new_links = array(
+		$new_links = [
 			'donate Paypal'  => '<a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurring=0&currency_code=EUR">Donate (Paypal)</a>',
 			'donate Liberapay'  => '<a href="https://liberapay.com/frankyvl/donate">Donate (Liberapay)</a>',
 			'Support' => '<a href="https://github.com/liedekef/events-made-easy">Support</a>',
-		);
+		];
 		$links     = array_merge( $links, $new_links );
 	}
 	return $links;
@@ -182,7 +182,7 @@ function eme_plugin_row_meta( $links, $file ) {
 
 add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'eme_add_action_links' );
 function eme_add_action_links( $links ) {
-	$mylinks = array( '<a href="admin.php?page=eme-options">Settings</a>' );
+	$mylinks = [ '<a href="admin.php?page=eme-options">Settings</a>' ];
 	return array_merge( $links, $mylinks );
 }
 
@@ -226,7 +226,7 @@ function eme_insertMyRewriteRules( $rules ) {
 	// using pagename as param to index.php causes rewrite troubles if the page is a subpage of another
 	// luckily for us we have the page id, and this works ok
 	$events_page_id  = eme_get_events_page_id();
-	$newrules        = array();
+	$newrules        = [];
 	$events_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
 	foreach ( $events_prefixes as $events_prefix ) {
 		if ( eme_is_empty_string( $events_prefix ) ) {
@@ -348,9 +348,9 @@ require 'plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 $myUpdateChecker = PucFactory::buildUpdateChecker(
-	'https://github.com/liedekef/events-made-easy/',
-	__FILE__,
-	'events-made-easy'
+    'https://github.com/liedekef/events-made-easy/',
+    __FILE__,
+    'events-made-easy'
 );
 
 //Set the branch that contains the stable release.
@@ -453,7 +453,7 @@ function _eme_install() {
 	}
 
 	// now cleanup old crons
-	$crons_to_remove = array( 'eme_cron_cleanup_unpaid', 'eme_cron_cleanup_unconfirmed', 'eme_cron_cleanup_captcha' );
+	$crons_to_remove = [ 'eme_cron_cleanup_unpaid', 'eme_cron_cleanup_unconfirmed', 'eme_cron_cleanup_captcha' ];
 	foreach ( $crons_to_remove as $tmp_cron ) {
 		if ( wp_next_scheduled( $tmp_cron ) ) {
 			wp_unschedule_hook( $tmp_cron );
@@ -461,14 +461,14 @@ function _eme_install() {
 	}
 
 	// we'll restore some planned actions too, if previously deactivated
-	$cron_actions = array( 'eme_cron_send_new_events', 'eme_cron_send_queued' );
+	$cron_actions = [ 'eme_cron_send_new_events', 'eme_cron_send_queued' ];
 	foreach ( $cron_actions as $cron_action ) {
 		$schedule = get_option( $cron_action );
 		// old schedule names are renamed to eme_*
 		if (preg_match( '/^(1min|5min|15min|30min|4weeks)$/', $schedule, $matches ) ) {
 			$res = $matches[0];
 			$schedule = "eme_".$res;
-			update_option($cron_action,$schedule);
+			update_option($cron_action, $schedule);
 			wp_unschedule_hook( $cron_action );
 		}
 
@@ -515,13 +515,13 @@ function _eme_uninstall( $force_drop = 0 ) {
 	$drop_settings = get_option( 'eme_uninstall_drop_settings' );
 
 	// these crons get planned with a fixed schedule at activation time, so we don't need to store their planned setting when deactivating
-	$cron_actions1 = array( 'eme_cron_daily_actions', 'eme_cron_cleanup_captcha' );
+	$cron_actions1 = [ 'eme_cron_daily_actions', 'eme_cron_cleanup_captcha' ];
 	foreach ( $cron_actions1 as $cron_action ) {
 		if ( wp_next_scheduled( $cron_action ) ) {
 			wp_unschedule_hook( $cron_action );
 		}
 	}
-	$cron_actions2 = array( 'eme_cron_cleanup_unpaid', 'eme_cron_send_new_events', 'eme_cron_send_queued' );
+	$cron_actions2 = [ 'eme_cron_cleanup_unpaid', 'eme_cron_send_new_events', 'eme_cron_send_queued' ];
 	foreach ( $cron_actions2 as $cron_action ) {
 		// if the action is planned, keep the planning in an option (if we're not clearing all data) and then clear the planning
 		if ( wp_next_scheduled( $cron_action ) ) {
@@ -926,15 +926,15 @@ function eme_create_locations_table( $charset, $collate, $db_version ) {
 		maybe_create_table( $table_name, $sql );
 
 		$wpdb->query(
-			'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
+		    'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
                VALUES ('Arts Millenium Building', 'Newcastle Road','Galway', '53.275', '-9.06532')"
 		);
 		$wpdb->query(
-			'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
+		    'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
                VALUES ('The Crane Bar', '2, Sea Road','Galway', '53.2683224', '-9.0626223')"
 		);
 		$wpdb->query(
-			'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
+		    'INSERT INTO ' . $table_name . " (location_name, location_address1, location_city, location_latitude, location_longitude)
                VALUES ('Taaffes Bar', '19 Shop Street','Galway', '53.2725', '-9.05321')"
 		);
 	} else {
@@ -1254,8 +1254,8 @@ function eme_create_categories_table( $charset, $collate, $db_version ) {
 		if ( $db_version < 66 ) {
 			$categories = $wpdb->get_results( "SELECT * FROM $table_name", ARRAY_A );
 			foreach ( $categories as $this_category ) {
-				$where                   = array();
-				$fields                  = array();
+				$where                   = [];
+				$fields                  = [];
 				$where['category_id']    = $this_category['category_id'];
 				$fields['category_slug'] = eme_permalink_convert_noslash( $this_category['category_name'] );
 				$wpdb->update( $table_name, $fields, $where );
@@ -1954,14 +1954,14 @@ function eme_create_attendances_table( $charset, $collate, $db_version ) {
 
 function eme_create_events_page() {
 	global $wpdb,$eme_db_prefix;
-	$postarr = array(
+	$postarr = [
 		'post_title'     => wp_strip_all_tags( __( 'Events', 'events-made-easy' ) ),
 		'post_content'   => __( "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly.", 'events-made-easy' ),
 		'post_type'      => 'page',
 		'post_status'    => 'publish',
 		'comment_status' => 'closed',
 		'ping_status'    => 'closed',
-	);
+	];
 	$int_post_id = wp_insert_post( $postarr );
 	if ( $int_post_id ) {
 		update_option( 'eme_events_page', $int_post_id );
@@ -2082,7 +2082,7 @@ function eme_admin_footer_text( $text ) {
 		$text = sprintf(
 				/* translators: %s: review url */
 			__( 'If you like Events Made Easy, please leave a <a href="%s" target="_blank" style="text-decoration:none">★★★★★</a> rating. A huge thanks in advance!', 'events-made-easy' ),
-			'https://wordpress.org/support/plugin/events-made-easy/reviews/?filter=5'
+		    'https://wordpress.org/support/plugin/events-made-easy/reviews/?filter=5'
 		);
 	}
 	return $text;

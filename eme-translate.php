@@ -94,7 +94,7 @@ function eme_uri_add_lang( $name, $lang ) {
 		} elseif ( $url_mode == 1 ) {
 			$the_link = trailingslashit( remove_query_arg( 'lang', $the_link ) );
 			$the_link = $the_link . user_trailingslashit( $name );
-			$the_link = add_query_arg( array( 'lang' => $lang ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $lang ], $the_link );
 		} else {
 			// url_mode is 0, then we don't add the lang and let wp do it
 			$the_link = trailingslashit( $the_link ) . user_trailingslashit( $name );
@@ -171,7 +171,7 @@ function eme_translate_string( $text, $lang = '' ) {
 function eme_detect_used_languages( $text ) {
 	$lang_code = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
 
-	$languages = array();
+	$languages = [];
 	if ( preg_match_all( "/\[:($lang_code?)\]/", $text, $matches ) ) {
 		$languages = array_unique( $matches[1] );
 	} elseif ( preg_match_all( "/\{:($lang_code?)\}/", $text, $matches ) ) {
@@ -183,7 +183,7 @@ function eme_detect_used_languages( $text ) {
 function eme_split_language_blocks( $text, $languages ) {
 	$lang_code = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
 
-	$result = array();
+	$result = [];
 	foreach ( $languages as $language ) {
 		$result[ $language ] = '';
 	}

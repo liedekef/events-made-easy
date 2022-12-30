@@ -48,11 +48,11 @@ function eme_client_clock_ajax() {
 		try {
 			$client_timeinfo = eme_sanitize_request( json_decode( $_COOKIE['eme_client_time'], true ) );
 			if ( ! is_array( $client_timeinfo ) ) {
-				$client_timeinfo = array();
+				$client_timeinfo = [];
 			}
 			$ret = '0';
 		} catch ( Exception $error ) {
-			$client_timeinfo = array();
+			$client_timeinfo = [];
 			$valid           = false;
 		}
 		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
@@ -164,7 +164,7 @@ function eme_captcha_generate( $file ) {
 	$red               = imagecolorallocate( $im, 255, 0, 0 );
 	$blue              = imagecolorallocate( $im, 0, 0, 255 );
 	$green             = imagecolorallocate( $im, 0, 255, 0 );
-	$background_colors = array( $red, $blue, $green, $black );
+	$background_colors = [ $red, $blue, $green, $black ];
 
 	// draw rectangle in random color
 	$background_color = $background_colors[ rand( 0, 3 ) ];
@@ -279,10 +279,10 @@ function eme_check_hcaptcha() {
 	$eme_hcaptcha     = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_hcaptcha_key = get_option( 'eme_hcaptcha_secret_key' );
 	if ( isset( $_POST['h-captcha-response'] ) && ! empty( $eme_hcaptcha_key ) && $eme_hcaptcha && function_exists( 'curl_init' ) ) {
-		$data     = array(
+		$data     = [
 			'secret'   => $eme_hcaptcha_key,
 			'response' => eme_sanitize_request( $_POST['h-captcha-response'] ),
-		);
+		];
 		$url      = 'https://hcaptcha.com/siteverify';
 		$response = wp_remote_post( $url, $data );
 		if ( is_wp_error( $response ) ) {
@@ -384,8 +384,8 @@ function eme_captcha_remove( $captcha ) {
 
 function eme_if_shortcode( $atts, $content ) {
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'tag'         => '',
 				'value'       => '',
 				'eq'          => '',
@@ -400,8 +400,8 @@ function eme_if_shortcode( $atts, $content ) {
 				'is_empty'    => 0,
 				'incsv'       => '',
 				'notincsv'    => '',
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	// replace placeholders if eme_if is used outside EME shortcodes
@@ -520,14 +520,14 @@ function eme_if_shortcode( $atts, $content ) {
 
 function eme_for_shortcode( $atts, $content ) {
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'min'  => 1,
 				'max'  => 0,
 				'list' => '',
 				'sep'  => ',',
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$min         = intval( $min );
@@ -535,20 +535,20 @@ function eme_for_shortcode( $atts, $content ) {
 	$result      = '';
 	$loopcounter = 1;
 	if ( ! empty( $list ) ) {
-		$search       = array( '#_LOOPVALUE', '#URL_LOOPVALUE', '#_LOOPCOUNTER' );
+		$search       = [ '#_LOOPVALUE', '#URL_LOOPVALUE', '#_LOOPCOUNTER' ];
 		$array_values = explode( $sep, $list );
 		foreach ( $array_values as $val ) {
 			$url_val     = rawurlencode( $val );
 			$esc_val     = eme_sanitize_request( eme_esc_html( preg_replace( '/\n|\r/', '', $val ) ) );
-			$replace     = array( $val, $url_val, $loopcounter );
+			$replace     = [ $val, $url_val, $loopcounter ];
 			$tmp_content = str_replace( $search, $replace, $content );
 			$result     .= do_shortcode( $tmp_content );
 			++$loopcounter;
 		}
 	} else {
-		$search = array( '#_LOOPVALUE', '#_LOOPCOUNTER' );
+		$search = [ '#_LOOPVALUE', '#_LOOPCOUNTER' ];
 		while ( $min <= $max ) {
-			$replace     = array( $min, $loopcounter );
+			$replace     = [ $min, $loopcounter ];
 			$tmp_content = str_replace( $search, $replace, $content );
 			$result     .= do_shortcode( $tmp_content );
 			++$min;
@@ -752,11 +752,11 @@ function eme_event_url( $event, $language = '' ) {
 			$the_link = eme_uri_add_lang( $name, $language );
 		} else {
 			$the_link = eme_get_events_page();
-			$the_link = add_query_arg( array( 'event_id' => $event['event_id'] ), $the_link );
+			$the_link = add_query_arg( [ 'event_id' => $event['event_id'] ], $the_link );
 			if ( ! empty( $language ) ) {
 				// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 				$the_link = remove_query_arg( 'lang', $the_link );
-				$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+				$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 			}
 		}
 	}
@@ -796,11 +796,11 @@ function eme_location_url( $location, $language = '' ) {
 			$the_link = eme_uri_add_lang( $name, $language );
 		} else {
 			$the_link = eme_get_events_page();
-			$the_link = add_query_arg( array( 'location_id' => $location['location_id'] ), $the_link );
+			$the_link = add_query_arg( [ 'location_id' => $location['location_id'] ], $the_link );
 			if ( ! empty( $language ) ) {
 				// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 				$the_link = remove_query_arg( 'lang', $the_link );
-				$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+				$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 			}
 		}
 	}
@@ -824,11 +824,11 @@ function eme_calendar_day_url( $day ) {
 		$the_link = eme_uri_add_lang( $name, $language );
 	} else {
 		$the_link = eme_get_events_page();
-		$the_link = add_query_arg( array( 'calendar_day' => $day ), $the_link );
+		$the_link = add_query_arg( [ 'calendar_day' => $day ], $the_link );
 		if ( ! empty( $language ) ) {
 			// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 			$the_link = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 		}
 	}
 	return $the_link;
@@ -847,16 +847,16 @@ function eme_booking_confirm_url( $payment ) {
 	} else {
 		$the_link = eme_get_events_page();
 		$the_link = add_query_arg(
-			array(
+		    [
 				'eme_pmt_rndid'    => $payment['random_id'],
 				'eme_rsvp_confirm' => 1,
-			),
-			$the_link
+			],
+		    $the_link
 		);
 		if ( ! empty( $language ) ) {
 			// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 			$the_link = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 		}
 	}
 	return $the_link;
@@ -878,16 +878,16 @@ function eme_payment_url( $payment, $resultcode = 0 ) {
 		$the_link = eme_uri_add_lang( $name, $language );
 	} else {
 		$the_link = eme_get_events_page();
-		$the_link = add_query_arg( array( 'eme_pmt_rndid' => $payment['random_id'] ), $the_link );
+		$the_link = add_query_arg( [ 'eme_pmt_rndid' => $payment['random_id'] ], $the_link );
 		if ( ! empty( $language ) ) {
 			// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 			$the_link = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 		}
 	}
 	if ( $resultcode > 0 ) {
 		// we return the payment url but we want to indicate a payment failure too
-		$the_link = add_query_arg( array( 'res_fail' => $resultcode ), $the_link );
+		$the_link = add_query_arg( [ 'res_fail' => $resultcode ], $the_link );
 	}
 	return $the_link;
 }
@@ -919,11 +919,11 @@ function eme_category_url( $category ) {
 	} else {
 		$the_link = eme_get_events_page();
 		$slug     = $category['category_slug'] ? $category['category_slug'] : $category['category_name'];
-		$the_link = add_query_arg( array( 'eme_event_cat' => $slug ), $the_link );
+		$the_link = add_query_arg( [ 'eme_event_cat' => $slug ], $the_link );
 		if ( ! empty( $language ) ) {
 			// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 			$the_link = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 		}
 	}
 	return $the_link;
@@ -959,17 +959,17 @@ function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
 	$hashstring  = $email . $lastname . $firstname;
 	$invite_hash = wp_hash( $hashstring . '|' . $event['event_id'], 'nonce' );
 	$the_link    = add_query_arg(
-		array(
+	    [
 			'eme_email'  => $email,
 			'eme_invite' => $invite_hash,
-		),
-		$the_link
+		],
+	    $the_link
 	);
 	if ( ! empty( $lastname ) ) {
-		$the_link = add_query_arg( array( 'eme_ln' => $lastname ), $the_link );
+		$the_link = add_query_arg( [ 'eme_ln' => $lastname ], $the_link );
 	}
 	if ( ! empty( $firstname ) ) {
-		$the_link = add_query_arg( array( 'eme_fn' => $firstname ), $the_link );
+		$the_link = add_query_arg( [ 'eme_fn' => $firstname ], $the_link );
 	}
 	return $the_link;
 }
@@ -977,11 +977,11 @@ function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
 function eme_check_rsvp_url( $payment, $booking_id ) {
 	$the_link = eme_get_events_page();
 	$the_link = add_query_arg(
-		array(
+	    [
 			'eme_check_rsvp' => 1,
 			'eme_pmt_rndid'  => $payment['random_id'],
-		),
-		$the_link
+		],
+	    $the_link
 	);
 	return $the_link;
 }
@@ -992,17 +992,17 @@ function eme_cpi_url( $person_id, $orig_email ) {
 	$the_link = eme_get_events_page();
 	$nonce    = wp_create_nonce( "change_pi $person_id $orig_email" );
 	$the_link = add_query_arg(
-		array(
+	    [
 			'eme_cpi'       => $person_id,
 			'email'         => $orig_email,
 			'eme_cpi_nonce' => $nonce,
-		),
-		$the_link
+		],
+	    $the_link
 	);
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1028,10 +1028,10 @@ function eme_check_member_url() {
 
 function eme_member_url( $member ) {
 	$the_link = eme_get_events_page();
-	$the_link = add_query_arg( array( 'eme_check_member' => 1 ), $the_link );
-	$the_link = add_query_arg( array( 'member_id' => $member['member_id'] ), $the_link );
+	$the_link = add_query_arg( [ 'eme_check_member' => 1 ], $the_link );
+	$the_link = add_query_arg( [ 'member_id' => $member['member_id'] ], $the_link );
 	$hash     = wp_hash( $member['member_id'], 'nonce' );
-	$the_link = add_query_arg( array( 'eme_nonce' => $hash ), $the_link );
+	$the_link = add_query_arg( [ 'eme_nonce' => $hash ], $the_link );
 	return $the_link;
 }
 
@@ -1048,8 +1048,8 @@ function eme_payment_return_url( $payment, $resultcode ) {
 		// payment result using the notification link and then redirects to the return url
 		$res = $resultcode;
 	}
-	$the_link = add_query_arg( array( 'eme_pmt_result' => $res ), $the_link );
-	$the_link = add_query_arg( array( 'eme_pmt_rndid' => $payment['random_id'] ), $the_link );
+	$the_link = add_query_arg( [ 'eme_pmt_result' => $res ], $the_link );
+	$the_link = add_query_arg( [ 'eme_pmt_rndid' => $payment['random_id'] ], $the_link );
 	return $the_link;
 }
 
@@ -1057,11 +1057,11 @@ function eme_tasksignup_cancel_url( $signup ) {
 	$language = eme_detect_lang();
 
 	$the_link = eme_get_events_page();
-	$the_link = add_query_arg( array( 'eme_cancel_signup' => $signup['random_id'] ), $the_link );
+	$the_link = add_query_arg( [ 'eme_cancel_signup' => $signup['random_id'] ], $the_link );
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1070,11 +1070,11 @@ function eme_cancel_url( $payment ) {
 	$language = eme_detect_lang();
 
 	$the_link = eme_get_events_page();
-	$the_link = add_query_arg( array( 'eme_cancel_payment' => $payment['random_id'] ), $the_link );
+	$the_link = add_query_arg( [ 'eme_cancel_payment' => $payment['random_id'] ], $the_link );
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1083,11 +1083,11 @@ function eme_unsub_url() {
 	$language = eme_detect_lang();
 
 	$the_link = eme_get_events_page();
-	$the_link = add_query_arg( array( 'eme_unsub' => 1 ), $the_link );
+	$the_link = add_query_arg( [ 'eme_unsub' => 1 ], $the_link );
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1098,19 +1098,19 @@ function eme_unsub_confirm_url( $email, $groups ) {
 	$the_link = eme_get_events_page();
 	$nonce    = wp_create_nonce( "unsub $email$groups" );
 	$the_link = add_query_arg(
-		array(
+	    [
 			'eme_unsub_confirm' => $email,
 			'eme_unsub_nonce'   => $nonce,
-		),
-		$the_link
+		],
+	    $the_link
 	);
 	if ( ! empty( $groups ) ) {
-		$the_link = add_query_arg( array( 'g' => $groups ), $the_link );
+		$the_link = add_query_arg( [ 'g' => $groups ], $the_link );
 	}
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1121,21 +1121,21 @@ function eme_sub_confirm_url( $lastname, $firstname, $email, $groups ) {
 	$the_link = eme_get_events_page();
 	$nonce    = wp_create_nonce( "sub $lastname$firstname$email$groups" );
 	$the_link = add_query_arg(
-		array(
+	    [
 			'eme_sub_confirm' => $email,
 			'lastname'        => $lastname,
 			'firstname'       => $firstname,
 			'eme_sub_nonce'   => $nonce,
-		),
-		$the_link
+		],
+	    $the_link
 	);
 	if ( ! empty( $groups ) ) {
-		$the_link = add_query_arg( array( 'g' => $groups ), $the_link );
+		$the_link = add_query_arg( [ 'g' => $groups ], $the_link );
 	}
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1145,7 +1145,7 @@ function eme_single_event_ical_url( $id ) {
 
 	$the_link = site_url( '/?eme_ical=public_single&event_id=' . $id );
 	if ( ! empty( $language ) ) {
-			$the_link = add_query_arg( array( 'lang' => $language ), $the_link );
+			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1159,25 +1159,25 @@ function eme_captcha_url( $file ) {
 	}
 	// ts added to try and prevent initial caching
 	$the_link = add_query_arg(
-		array(
+	    [
 			'eme_captcha' => 'generate',
 			'f'           => $file,
 			'ts'          => time(),
-		),
-		$the_link
+		],
+	    $the_link
 	);
 	return $the_link;
 }
 
 function eme_tracker_url( $random_id ) {
 	$the_link = eme_get_events_page();
-	$the_link = add_query_arg( array( 'eme_tracker_id' => $random_id ), $the_link );
+	$the_link = add_query_arg( [ 'eme_tracker_id' => $random_id ], $the_link );
 	return $the_link;
 }
 
-function eme_current_page_url( $extra_arg = array() ) {
+function eme_current_page_url( $extra_arg = [] ) {
 	global $wp;
-	$the_link = home_url( add_query_arg( array(), $wp->request ) );
+	$the_link = home_url( add_query_arg( [], $wp->request ) );
 	if ( ! empty( $extra_arg ) ) {
 		$extra_arg = array_map( 'esc_attr', $extra_arg );
 		$the_link  = add_query_arg( $extra_arg, $the_link );
@@ -1238,8 +1238,8 @@ function eme_capNamesCB( $cap ) {
 }
 function eme_get_all_caps() {
 	global $wp_roles;
-	$caps         = array();
-	$capabilities = array();
+	$caps         = [];
+	$capabilities = [];
 
 	foreach ( $wp_roles->roles as $role ) {
 		if ( $role['capabilities'] ) {
@@ -1261,7 +1261,7 @@ function eme_get_all_caps() {
 }
 
 function eme_status_array() {
-	$status_array                              = array();
+	$status_array                              = [];
 	$status_array[ EME_EVENT_STATUS_PUBLIC ]   = __( 'Public', 'events-made-easy' );
 	$status_array[ EME_EVENT_STATUS_PRIVATE ]  = __( 'Private', 'events-made-easy' );
 	$status_array[ EME_EVENT_STATUS_UNLISTED ] = __( 'Unlisted', 'events-made-easy' );
@@ -1270,7 +1270,7 @@ function eme_status_array() {
 }
 
 function eme_member_status_array() {
-	$status_array                              = array();
+	$status_array                              = [];
 	$status_array[ EME_MEMBER_STATUS_PENDING ] = __( 'Pending', 'events-made-easy' );
 	$status_array[ EME_MEMBER_STATUS_ACTIVE ]  = __( 'Active', 'events-made-easy' );
 	$status_array[ EME_MEMBER_STATUS_GRACE ]   = __( 'Grace period', 'events-made-easy' );
@@ -1298,7 +1298,7 @@ function eme_js_datetime( $mydate, $timezone = '' ) {
 		return '';
 	} elseif ( strstr( $mydate, ',' ) ) {
 		$dates   = explode( ',', $mydate );
-		$res_arr = array();
+		$res_arr = [];
 		foreach ( $dates as $date ) {
 			$eme_date_obj = new ExpressiveDate( $date, $timezone );
 			//if ($safari)
@@ -1486,7 +1486,7 @@ function eme_localized_price( $price, $cur, $target = 'html' ) {
 	if ( eme_is_multi( $price ) ) {
 		$price_arr = eme_convert_multi2array( $price );
 	} else {
-		$price_arr = array( $price );
+		$price_arr = [ $price ];
 	}
 
 	$locale = determine_locale();
@@ -1507,7 +1507,7 @@ function eme_localized_price( $price, $cur, $target = 'html' ) {
 		$decimals = intval( get_option( 'eme_decimals' ) );
 	}
 
-	$res = array();
+	$res = [];
 	foreach ( $price_arr as $t_price ) {
 		if ( $eme_localize_price ) {
 					$result = $formatter->formatCurrency( $t_price, $cur );
@@ -1549,7 +1549,7 @@ function eme_int_price( $price ) {
 }
 
 function eme_currency_array() {
-	$currency_array         = array();
+	$currency_array         = [];
 	$currency_array ['ARS'] = __( 'Argentine Peso', 'events-made-easy' );
 	$currency_array ['AUD'] = __( 'Australian Dollar', 'events-made-easy' );
 	$currency_array ['BIF'] = __( 'Burundian Franc', 'events-made-easy' );
@@ -1600,7 +1600,7 @@ function eme_currency_array() {
 }
 
 function eme_currency_codes() {
-	$currency_array         = array();
+	$currency_array         = [];
 	$currency_array ['ARS'] = '032';
 	$currency_array ['AUD'] = '036';
 	$currency_array ['BIF'] = '108';
@@ -1650,7 +1650,7 @@ function eme_currency_codes() {
 
 function eme_zero_decimal_currencies() {
 	# returns an array of currencies that don't have decimals
-	$currency_array = array(
+	$currency_array = [
 		'BIF',
 		'CLP',
 		'DJF',
@@ -1666,7 +1666,7 @@ function eme_zero_decimal_currencies() {
 		'XAF',
 		'XOF',
 		'XPF',
-	);
+	];
 	# the next filter allows people to add extra currencies:
 	if ( has_filter( 'eme_add_zero_decimal_currencies' ) ) {
 		$currency_array = apply_filters( 'eme_add_zero_decimal_currencies', $currency_array );
@@ -1675,7 +1675,7 @@ function eme_zero_decimal_currencies() {
 }
 
 function eme_thumbnail_sizes() {
-	$sizes = array();
+	$sizes = [];
 	foreach ( get_intermediate_image_sizes() as $s ) {
 		$sizes[ $s ] = $s;
 	}
@@ -1718,7 +1718,7 @@ if ( ! function_exists( 'array_replace_recursive' ) ) {
 			foreach ( $array1 as $key => $value ) {
 				// create new key in $array, if it is empty or not an array
 				if ( ! isset( $array[ $key ] ) || ( isset( $array[ $key ] ) && ! is_array( $array[ $key ] ) ) ) {
-					$array[ $key ] = array();
+					$array[ $key ] = [];
 				}
 
 				// overwrite the value in the base array
@@ -1988,8 +1988,8 @@ function eme_fake_booking( $event ) {
 function eme_booking_from_form( $event ) {
 		$booking        = eme_new_booking();
 		$bookedSeats    = 0;
-		$bookedSeats_mp = array();
-		$dcodes_entered = array();
+		$bookedSeats_mp = [];
+		$dcodes_entered = [];
 		$event_id       = $event['event_id'];
 	if ( ! eme_is_multi( $event['price'] ) ) {
 		if ( isset( $_POST['bookings'][ $event_id ]['bookedSeats'] ) ) {
@@ -2008,7 +2008,7 @@ function eme_booking_from_form( $event ) {
 		}
 		if ( isset( $_POST['bookings'][ $event_id ] ) ) {
 			foreach ( $_POST['bookings'][ $event_id ] as $key => $value ) {
-				if ( preg_match( '/bookedSeats(\d+)/', $key, $matches ) ) {
+				if ( preg_match( '/bookedSeats(\d+)/', eme_sanitize_request( $key ), $matches ) ) {
 					$field_id                    = intval( $matches[1] ) - 1;
 					$bookedSeats                += intval( $value );
 					$bookedSeats_mp[ $field_id ] = intval( $value );
@@ -2018,7 +2018,7 @@ function eme_booking_from_form( $event ) {
 	}
 	if ( isset( $_POST['bookings'][ $event_id ] ) ) {
 		foreach ( $_POST['bookings'][ $event_id ] as $key => $value ) {
-			if ( preg_match( '/^DISCOUNT/', $key, $matches ) ) {
+			if ( preg_match( '/^DISCOUNT/', eme_sanitize_request( $key ), $matches ) ) {
 				$discount_value = eme_sanitize_request( $value );
 				if ( ! empty( $value ) ) {
 					$dcodes_entered[] = $discount_value;
@@ -2066,7 +2066,7 @@ function eme_booking_from_form( $event ) {
 function eme_calc_bookingprice_ajax() {
 	header( 'Content-type: application/json; charset=utf-8' );
 	// first detect multibooking
-	$event_ids = array();
+	$event_ids = [];
 	if ( isset( $_POST['bookings'] ) ) {
 		foreach ( $_POST['bookings'] as $key => $val ) {
 			$event_ids[] = intval( $key );
@@ -2090,7 +2090,7 @@ function eme_calc_bookingprice_ajax() {
 	}
 
 	$result = eme_localized_price( $total, $cur );
-	echo wp_json_encode( array( 'total' => $result ) );
+	echo wp_json_encode( [ 'total' => $result ] );
 }
 
 // the people dyndata only gets called from the backend, so we use wp ajax and check the admin nonce
@@ -2109,14 +2109,14 @@ function eme_dyndata_people_ajax() {
 		$answers = eme_get_person_answers( $person_id );
 		$files   = eme_get_uploaded_files( $person_id, 'people' );
 	} else {
-		$answers = array();
-		$files   = array();
+		$answers = [];
+		$files   = [];
 	}
 
 	if ( isset( $_POST['groups'] ) && eme_array_integers( $_POST['groups'] ) ) {
 		$groups = eme_sanitize_request( $_POST['groups'] );
 	} else {
-		$groups = array();
+		$groups = [];
 	}
 	// We need the groupid 0 as the first element, to show fields not belonging to a specific group (the array keys are not important here, only the values)
 	array_unshift( $groups, '0' );
@@ -2137,8 +2137,8 @@ function eme_dyndata_people_ajax() {
 				$form_html     .= "$name</td><td>";
 				$var_prefix     = "dynamic_personfields[$person_id][";
 				$var_postfix    = ']';
-				$postfield_name = "${var_prefix}FIELD" . $field_id . $var_postfix;
-				$postvar_arr    = array( 'dynamic_personfields', $person_id, 'FIELD' . $field_id );
+				$postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
+				$postvar_arr    = [ 'dynamic_personfields', $person_id, 'FIELD' . $field_id ];
 				// the first time there's no $_POST yet
 				if ( ! empty( $_POST ) ) {
 					$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
@@ -2155,7 +2155,7 @@ function eme_dyndata_people_ajax() {
 				}
 				// the next code prevents uploading a file for a file field if already done
 				if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-					$entered_files = array();
+					$entered_files = [];
 					foreach ( $files as $file ) {
 						if ( $file['field_id'] == $field_id ) {
 							$entered_files[] = $file;
@@ -2177,19 +2177,19 @@ function eme_dyndata_people_ajax() {
 			$form_html .= '</table></div>';
 		}
 	}
-	echo wp_json_encode( array( 'Result' => $form_html ) );
+	echo wp_json_encode( [ 'Result' => $form_html ] );
 	wp_die();
 }
 
 function eme_dyndata_rsvp_ajax() {
 	header( 'Content-type: application/json; charset=utf-8' );
 	// first detect multibooking
-	$event_ids = array();
+	$event_ids = [];
 	if ( ! empty( $_POST['eme_event_ids'] ) ) {
 			$event_ids = array_map( 'intval', $_POST['eme_event_ids'] );
 	} elseif ( eme_is_admin_request() && ! empty( $_POST['event_id'] ) ) {
 		// the case when adding a booking in the backend
-			$event_ids = array( 0 => intval( $_POST['event_id'] ) );
+			$event_ids = [ 0 => intval( $_POST['event_id'] ) ];
 	}
 
 	if ( ! empty( $_POST['booking_id'] ) ) {
@@ -2197,9 +2197,9 @@ function eme_dyndata_rsvp_ajax() {
 		$booking_id = intval( $_POST['booking_id'] );
 		check_admin_referer( "eme_admin", 'eme_admin_nonce' );
 		$booking   = eme_get_booking( $booking_id );
-		$event_ids = array( 0 => $booking['event_id'] );
+		$event_ids = [ 0 => $booking['event_id'] ];
 	} else {
-		$booking = array();
+		$booking = [];
 	}
 
 	$form_html = '';
@@ -2321,7 +2321,7 @@ function eme_dyndata_rsvp_ajax() {
 			}
 		}
 	}
-	echo wp_json_encode( array( 'Result' => do_shortcode( $form_html ) ) );
+	echo wp_json_encode( [ 'Result' => do_shortcode( $form_html ) ] );
 }
 
 function eme_safe_css_attributes( $array ) {
@@ -2361,7 +2361,7 @@ function _eme_kses_single( $value, $allow_unfiltered ) {
 		// the first element is the tag, the rest the attributes
 		$tag = array_shift( $info );
 		if ( ! array_key_exists( $tag, $allowed_html ) ) {
-			$allowed_html[ $tag ] = array();
+			$allowed_html[ $tag ] = [];
 		}
 		foreach ( $info as $attr ) {
 			$allowed_html[ $tag ][ $attr ] = true;
@@ -2416,10 +2416,10 @@ function eme_strip_weird( $value ) {
 		#                       '?', $value);
 		//reject overly long 3 byte sequences and UTF-16 surrogates and replace with ?
 		$value = preg_replace(
-			'/\xE0[\x80-\x9F][\x80-\xBF]' .
+		    '/\xE0[\x80-\x9F][\x80-\xBF]' .
 			'|\xED[\xA0-\xBF][\x80-\xBF]/S',
-			'?',
-			$value
+		    '?',
+		    $value
 		);
 		return $value;
 	}
@@ -2430,12 +2430,12 @@ function eme_get_editor_settings( $tinymce = true, $quicktags = true, $media_but
 		add_action( 'admin_print_footer_scripts', 'eme_add_my_quicktags' );
 	}
 
-	return array(
+	return [
 		'textarea_rows' => $rows,
 		'tinymce'       => $tinymce,
 		'quicktags'     => $quicktags,
 		'media_buttons' => $media_buttons,
-	);
+	];
 }
 
 function eme_nl2br_save_html( $string ) {
@@ -2452,7 +2452,7 @@ function eme_nl2br_save_html( $string ) {
 	}
 
 	// replace other lineendings
-	$string = str_replace( array( "\r\n", "\r" ), "\n", $string );
+	$string = str_replace( [ "\r\n", "\r" ], "\n", $string );
 
 	// if br is found, replace it by BREAK
 	$string = preg_replace( "/\n?<br\W*?\/?>\n?/", 'BREAK', $string );
@@ -2492,7 +2492,7 @@ function eme_nl2br_save_html( $string ) {
 
 function eme_wp_date_format_php_to_datepicker_js( $php_format ) {
 	return $php_format;
-	$SYMBOLS_MATCHING   = array(
+	$SYMBOLS_MATCHING   = [
 		// Day
 		'd' => 'dd',
 		'D' => 'D',
@@ -2515,7 +2515,7 @@ function eme_wp_date_format_php_to_datepicker_js( $php_format ) {
 		'o' => '',
 		'Y' => 'yyyy',
 		'y' => 'yy',
-	);
+	];
 	$fdatepicker_format = '';
 	for ( $i = 0; $i < strlen( $php_format ); $i++ ) {
 		$char = $php_format[ $i ];
@@ -2533,7 +2533,7 @@ function eme_wp_date_format_php_to_datepicker_js( $php_format ) {
 
 function eme_wp_time_format_php_to_datepicker_js( $php_format ) {
 	return $php_format;
-		$SYMBOLS_MATCHING   = array(
+		$SYMBOLS_MATCHING   = [
 			'a' => 'aa', // am/pm
 			'A' => 'AA', // AM/PM
 			'g' => 'h', // 12-hour format of an hour without leading zeros
@@ -2548,7 +2548,7 @@ function eme_wp_time_format_php_to_datepicker_js( $php_format ) {
 			'P' => '', // Difference to Greenwich time (GMT) with colon between hours and minutes
 			'T' => '', // Timezone abbreviation
 			'Z' => '', // Timezone offset in seconds
-		);
+		];
 		$fdatepicker_format = '';
 		for ( $i = 0; $i < strlen( $php_format ); $i++ ) {
 			$char = $php_format[ $i ];
@@ -2582,14 +2582,14 @@ function eme_getValueFromPath( $arr, $path ) {
 
 function eme_get_wp_image( $image_id ) {
 	$image = get_post( $image_id );
-	return array(
+	return [
 		'alt'         => get_post_meta( $image->ID, '_wp_attachment_image_alt', true ),
 		'caption'     => $image->post_excerpt,
 		'description' => $image->post_content,
 		'href'        => get_permalink( $image->ID ),
 		'src'         => $image->guid,
 		'title'       => $image->post_title,
-	);
+	];
 }
 
 function eme_column_exists( $table_name, $column_name ) {
@@ -2775,7 +2775,7 @@ function eme_upload_file_err( $code ) {
 
 function eme_upload_files( $id, $type = 'bookings' ) {
 	//$supported_mime_types = wp_get_mime_types();
-	$errors               = array();
+	$errors               = [];
 	$max_upload_wp        = wp_max_upload_size();
 	$eme_is_admin_request = eme_is_admin_request();
 	foreach ( $_FILES as $key => $value ) {
@@ -2964,7 +2964,7 @@ function eme_upload_files( $id, $type = 'bookings' ) {
 }
 
 function eme_get_uploaded_files( $id, $type = 'bookings' ) {
-	$res = array();
+	$res = [];
 	$dir = EME_UPLOAD_DIR . '/' . $type . '/' . $id;
 	if ( is_dir( $dir ) ) {
 		if ( $handle = opendir( $dir ) ) {
@@ -2976,7 +2976,7 @@ function eme_get_uploaded_files( $id, $type = 'bookings' ) {
 					if ( count( $info ) != 4 ) {
 						continue;
 					}
-					$line              = array();
+					$line              = [];
 					$line['id']        = $id;
 					$line['type']      = $type;
 					$line['random_id'] = $info[0];
@@ -3027,7 +3027,7 @@ function eme_get_uploaded_file_html( $file ) {
 }
 
 function eme_delTree( $dir ) {
-	$files = array_diff( scandir( $dir ), array( '.', '..' ) );
+	$files = array_diff( scandir( $dir ), [ '.', '..' ] );
 	foreach ( $files as $file ) {
 		( is_dir( "$dir/$file" ) ) ? delTree( "$dir/$file" ) : wp_delete_file( "$dir/$file" );
 	}
@@ -3093,15 +3093,15 @@ function eme_fputcsv( $fh, $fields, $delimiter = ';', $enclosure = '"', $mysql_n
 		return;
 	}
 
-	$output = array();
+	$output = [];
 	foreach ( $fields as $field ) {
 		if ( $field === null && $mysql_null ) {
 			$output[] = 'NULL';
 			continue;
 		}
 
-		$output[] = preg_match( "/(?:${delimiter_esc}|${enclosure_esc}|\s|\r|\t|\n)/", $field ) ? (
-			$enclosure . str_replace( $enclosure, $enclosure . $enclosure, $field ) . $enclosure
+		$output[] = preg_match( "/(?:{$delimiter_esc}|{$enclosure_esc}|\s|\r|\t|\n)/", $field ) ? (
+		    $enclosure . str_replace( $enclosure, $enclosure . $enclosure, $field ) . $enclosure
 		) : $enclosure . $field . $enclosure;
 	}
 
@@ -3117,7 +3117,7 @@ function eme_nocache_headers() {
 
 function eme_text_split_newlines( $text ) {
 	// returns an array of trimmed lines, based on text input
-	$text  = str_replace( array( "\r\n", "\r" ), "\n", $text );
+	$text  = str_replace( [ "\r\n", "\r" ], "\n", $text );
 	$lines = explode( "\n", $text );
 	return $lines;
 }
@@ -3125,12 +3125,12 @@ function eme_text_split_newlines( $text ) {
 function eme_ajax_record_list( $tablename, $cap ) {
 	global $wpdb,$eme_db_prefix;
 	$table        = $eme_db_prefix . $tablename;
-	$jTableResult = array();
+	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
 	$opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
 	$where       = '';
-	$where_array = array();
+	$where_array = [];
 	if ( $q ) {
 		for ( $i = 0; $i < count( $opt ); $i++ ) {
 				$fld           = esc_sql( $opt[ $i ] );
@@ -3168,7 +3168,7 @@ function eme_ajax_record_list( $tablename, $cap ) {
 function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
 	global $wpdb,$eme_db_prefix;
 	$table        = $eme_db_prefix . $tablename;
-	$jTableResult = array();
+	$jTableResult = [];
 
 	if ( current_user_can( get_option( $cap ) ) && isset( $_POST[ $postvar ] ) ) {
 		// check the POST var
@@ -3190,7 +3190,7 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
 function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_function = '', $update = 0 ) {
 	global $wpdb,$eme_db_prefix;
 	$table        = $eme_db_prefix . $tablename;
-	$jTableResult = array();
+	$jTableResult = [];
 	if ( ! $record ) {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'No such record', 'events-made-easy' );
@@ -3200,7 +3200,7 @@ function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_fu
 	$wpdb->show_errors( false );
 	if ( current_user_can( get_option( $cap ) ) ) {
 		if ( $update ) {
-			$wpdb->update( $table, $record, array( $id_column => $record[ $id_column ] ) );
+			$wpdb->update( $table, $record, [ $id_column => $record[ $id_column ] ] );
 		} else {
 			$wpdb->insert( $table, $record );
 		}
@@ -3235,7 +3235,7 @@ function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_fu
 
 function eme_str_split_unicode( $str, $l = 0 ) {
 	if ( $l > 0 ) {
-		$ret = array();
+		$ret = [];
 		$len = mb_strlen( $str, 'UTF-8' );
 		for ( $i = 0; $i < $len; $i += $l ) {
 			$ret[] = mb_substr( $str, $i, $l, 'UTF-8' );
@@ -3308,7 +3308,7 @@ function eme_create_wp_user( $person ) {
 	if ( has_filter( 'eme_wp_userdata_filter' ) ) {
 		$userdata = apply_filters( 'eme_wp_userdata_filter', $person );
 	} else {
-		$userdata = array();
+		$userdata = [];
 	}
 
 	// let's do everything in one go
@@ -3343,10 +3343,10 @@ function eme_format_full_name( $firstname, $lastname ) {
 	if ( ! strstr( $format, '#_FIRSTNAME' ) ) {
 		$format .= ' #_FIRSTNAME';
 	}
-	$patterns        = array();
+	$patterns        = [];
 	$patterns[0]     = '/#_LASTNAME/';
 	$patterns[1]     = '/#_FIRSTNAME/';
-	$replacements    = array();
+	$replacements    = [];
 	$replacements[0] = $lastname;
 	$replacements[1] = $firstname;
 	$res             = preg_replace( $patterns, $replacements, $format );
@@ -3382,7 +3382,7 @@ function eme_extra_event_headers( $event ) {
 	$header             .= "\n";
 	$header             .= '<script type="application/ld+json">';
 	$footer              = '</script>';
-	$content             = array();
+	$content             = [];
 	$content['@context'] = 'http://www.schema.org';
 	$content['@type']    = 'Event';
 	$content['name']     = '#_EVENTNAME';
@@ -3405,7 +3405,7 @@ function eme_extra_event_headers( $event ) {
 	}
 
 	// location is a required property, so add it, even if empty
-	$loc      = array();
+	$loc      = [];
 	$location = eme_get_location( $event['location_id'] );
 	if ( ! empty( $location ) && ! empty( $location['location_url'] ) ) {
 		if ( $location['location_properties']['online_only'] ) {
@@ -3414,13 +3414,13 @@ function eme_extra_event_headers( $event ) {
 			$loc['url']                     = '#_LOCATION_EXTERNAL_URL';
 		} else {
 			$content['eventAttendanceMode'] = 'https://schema.org/MixedEventAttendanceMode';
-			$location1                      = array();
+			$location1                      = [];
 			$location1['@type']             = 'VirtualLocation';
 			$location1['url']               = '#_LOCATION_EXTERNAL_URL';
-			$location2                      = array();
+			$location2                      = [];
 			$location2['@type']             = 'Place';
 			$location2['name']              = '#_LOCATION';
-			$address                        = array();
+			$address                        = [];
 			$address['@type']               = 'PostalAddress';
 			$address['streetAddress']       = '#_ADDRESS';
 			$address['addressLocality']     = '#_CITY';
@@ -3434,7 +3434,7 @@ function eme_extra_event_headers( $event ) {
 		$content['eventAttendanceMode'] = 'https://schema.org/OfflineEventAttendanceMode';
 		$loc['@type']                   = 'Place';
 		$loc['name']                    = '#_LOCATION';
-		$address                        = array();
+		$address                        = [];
 		$address['@type']               = 'PostalAddress';
 		$address['streetAddress']       = '#_ADDRESS';
 		$address['addressLocality']     = '#_CITY';
@@ -3445,7 +3445,7 @@ function eme_extra_event_headers( $event ) {
 	$content['location'] = $loc;
 
 	if ( $event['event_rsvp'] ) {
-		$offers          = array();
+		$offers          = [];
 		$offers['@type'] = 'Offer';
 		$offers['url']   = '#_EVENTPAGEURL';
 		if ( ! eme_is_multi( $event['price'] ) ) {
@@ -3494,7 +3494,7 @@ function eme_extra_event_headers( $event ) {
 			if ( $answer['field_id'] == $field_id ) {
 				$val = eme_answer2readable( $answer['answer'], $formfield );
 				if ( ! empty( $val ) ) {
-					$performer            = array();
+					$performer            = [];
 					$performer['@type']   = 'Person';
 					$performer['name']    = $val;
 					$content['performer'] = $performer;
@@ -3506,12 +3506,12 @@ function eme_extra_event_headers( $event ) {
 
 	// add something, in case no performer custom field exists
 	if ( ! isset( $content['performer'] ) ) {
-		$performer            = array();
+		$performer            = [];
 		$performer['@type']   = 'Person';
 		$performer['name']    = '#_EVENTNAME';
 		$content['performer'] = $performer;
 	}
-		$organizer          = array();
+		$organizer          = [];
 		$organizer['@type'] = 'Organization';
 		$organizer['name']  = '#_CONTACTNAME';
 		$organizer['url']   = '#_EVENTPAGEURL';
@@ -3540,7 +3540,7 @@ function eme_serialize( $data ) {
 	if ( !eme_is_serialized( $data )) {
 		return json_encode( $data );
 	} elseif (is_serialized( $data )) {
-		$data = unserialize( $data,  ['allowed_classes' => false] );
+		$data = unserialize( $data, ['allowed_classes' => false] );
 		return json_encode( $data );
 	} else {
 		return $data;
@@ -3552,7 +3552,7 @@ function eme_unserialize( $data ) {
 		return unserialize( $data, ['allowed_classes' => false] );
 	} elseif (eme_isjson($data)) {
 		// add TRUE to make sure the return is an array
-		return json_decode ($data,TRUE);
+		return json_decode ($data, TRUE);
 	} else {
 		return $data;
 	}
@@ -3636,7 +3636,7 @@ function eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $
 		$target_file = $targetBasePath . '/' . basename( $existing_file );
 		$target_url  = $targetBaseUrl . '/' . basename( $existing_file );
 	}
-	return array( $target_file, $target_url );
+	return [ $target_file, $target_url ];
 }
 
 function eme_check_access( $post_id ) {
@@ -3653,12 +3653,12 @@ function eme_check_access( $post_id ) {
 			if ( eme_is_serialized( $eme_membershipids ) ) {
 				$page_membershipids = eme_unserialize( $eme_membershipids );
 			} else {
-				$page_membershipids = array();
+				$page_membershipids = [];
 			}
 			if ( eme_is_serialized( $eme_groupids ) ) {
 				$page_groupids = eme_unserialize( $eme_groupids );
 			} else {
-				$page_groupids = array();
+				$page_groupids = [];
 			}
 			if ( ! empty( $page_membershipids ) ) {
 				// check if the memberships still exist
@@ -3722,7 +3722,7 @@ function eme_migrate_event_payment_options() {
 		global $wpdb,$eme_db_prefix;
 		$table_name = $eme_db_prefix . EVENTS_TBNAME;
 
-		$payment_options = array( 'use_paypal', 'use_2co', 'use_webmoney', 'use_fdgg', 'use_mollie' );
+		$payment_options = [ 'use_paypal', 'use_2co', 'use_webmoney', 'use_fdgg', 'use_mollie' ];
 	foreach ( $payment_options as $payment_option ) {
 		$sql = "SELECT event_id from $table_name WHERE $payment_option=1";
 		$ids = $wpdb->get_col( $sql );
@@ -3839,12 +3839,12 @@ function eme_is_datamaster() {
 function eme_get_initials( $myname ) {
 		$words = preg_split( '/\s/', $myname, -1, PREG_SPLIT_NO_EMPTY );
 		$res   = implode(
-			'.',
-			array_map(
-				function ( $a ) {
+		    '.',
+		    array_map(
+			    function ( $a ) {
 					return mb_substr( $a[0], 0, 1, 'UTF-8' );
 				},
-				$words
+			    $words
 			)
 		);
 		// add trailing '.'

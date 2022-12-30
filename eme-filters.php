@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 function eme_filter_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'multiple'    => 0,
 				'multisize'   => 5,
 				'scope_count' => 12,
@@ -16,8 +16,8 @@ function eme_filter_form_shortcode( $atts ) {
 				'category'    => '',
 				'notcategory' => '',
 				'template_id' => 0,
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 	$multiple = filter_var( $multiple, FILTER_VALIDATE_BOOLEAN );
@@ -58,7 +58,7 @@ function eme_create_week_scope( $count, $eventful = 0 ) {
 	$start_of_week = get_option( 'start_of_week' );
 	$eme_date_obj  = new ExpressiveDate( 'now', $eme_timezone );
 	$eme_date_obj->setWeekStartDay( $start_of_week );
-	$scope = array();
+	$scope = [];
 	for ( $i = 0; $i < $count; $i++ ) {
 		$limit_start = $eme_date_obj->copy()->startOfWeek()->format( 'Y-m-d' );
 		$limit_end   = $eme_date_obj->copy()->endOfWeek()->format( 'Y-m-d' );
@@ -81,7 +81,7 @@ function eme_create_week_scope( $count, $eventful = 0 ) {
 
 function eme_create_month_scope( $count, $eventful = 0 ) {
 	global $eme_timezone;
-	$scope        = array();
+	$scope        = [];
 	$scope[0]     = __( 'Select Month', 'events-made-easy' );
 	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
 	for ( $i = 0; $i < $count; $i++ ) {
@@ -107,7 +107,7 @@ function eme_create_month_scope( $count, $eventful = 0 ) {
 
 function eme_create_year_scope( $count, $eventful = 0 ) {
 	global $eme_timezone;
-	$scope    = array();
+	$scope    = [];
 	$scope[0] = __( 'Select Year', 'events-made-easy' );
 
 	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
@@ -153,7 +153,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 	$selected_author   = isset( $_REQUEST[ $author_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $author_post_name ] ) : 0;
 	$selected_contact  = isset( $_REQUEST[ $contact_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $contact_post_name ] ) : 0;
 
-	$extra_conditions_arr = array();
+	$extra_conditions_arr = [];
 	if ( $category != '' ) {
 		$extra_conditions_arr[] = "(category_id IN ($category))";
 	}
@@ -200,7 +200,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 
 			$categories = eme_get_categories( $eventful, 'future', $extra_conditions );
 			if ( $categories ) {
-				$cat_list = array();
+				$cat_list = [];
 				foreach ( $categories as $this_category ) {
 					$id              = $this_category['category_id'];
 					$cat_list[ $id ] = eme_translate( $this_category['category_name'] );
@@ -231,7 +231,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			$locations  = eme_get_locations( $eventful, 'future', '', '', 0, true );
 
 			if ( ! empty( $locations ) ) {
-				$loc_list = array();
+				$loc_list = [];
 				foreach ( $locations as $this_location ) {
 					$id              = $this_location['location_id'];
 					$loc_list[ $id ] = eme_translate( $this_location['location_name'] );
@@ -261,7 +261,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			$aria_label = 'aria-label="' . eme_esc_html( $label ) . '"';
 			$cities     = eme_get_locations( $eventful, 'future', '', '', 0, true );
 			if ( ! empty( $cities ) ) {
-				$city_list = array();
+				$city_list = [];
 				foreach ( $cities as $this_city ) {
 					$id               = eme_translate( $this_city['location_city'] );
 					$city_list[ $id ] = $id;
@@ -292,7 +292,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 
 			$countries = eme_get_locations( $eventful, 'future', '', '', 0, true );
 			if ( ! empty( $countries ) ) {
-				$country_list = array();
+				$country_list = [];
 				foreach ( $countries as $this_country ) {
 					$id                  = eme_translate( $this_country['location_country'] );
 					$country_list[ $id ] = $id;
@@ -348,12 +348,12 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			} else {
 				$label = __( 'Event contact', 'events-made-easy' );
 			}
-			$args = array(
+			$args = [
 				'echo'             => 0,
 				'name'             => $contact_post_name,
 				'show_option_none' => eme_esc_html( $label ),
 				'selected'         => $selected_contact,
-			);
+			];
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
 				$exclude = substr( $matches[2], 1, -1 );
@@ -375,12 +375,12 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			} else {
 				$label = __( 'Event author', 'events-made-easy' );
 			}
-			$args = array(
+			$args = [
 				'echo'             => 0,
 				'name'             => $author_post_name,
 				'show_option_none' => eme_esc_html( $label ),
 				'selected'         => $selected_author,
-			);
+			];
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
 				$exclude = substr( $matches[2], 1, -1 );

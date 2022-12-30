@@ -8,7 +8,7 @@ function eme_db_insert_attendance( $type, $person_id, $attendance_date = '', $re
 	global $wpdb,$eme_db_prefix;
 	$table_name = $eme_db_prefix . ATTENDANCES_TBNAME;
 
-	$line              = array();
+	$line              = [];
 	$line['type']      = esc_sql( $type );
 	$line['person_id'] = intval( $person_id );
 	if ( ! empty( $attendance_date ) && ( eme_is_date( $attendance_date ) || eme_is_datetime( $attendance_date ) ) ) {
@@ -37,14 +37,14 @@ function eme_delete_old_attendances() {
 	}
 
 	$old_date = $eme_date_obj->minusDays( $remove_old_attendances_days )->getDateTime();
-	$wpdb->query( $wpdb->prepare("DELETE FROM $table_name WHERE creation_date<%s",$old_date) );
+	$wpdb->query( $wpdb->prepare("DELETE FROM $table_name WHERE creation_date<%s", $old_date) );
 }
 
 function eme_delete_attendances( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
 	if (eme_is_list_of_int($ids) ) {
-		$ids_arr = explode(',',$ids);
+		$ids_arr = explode(',', $ids);
 		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
 		$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE id IN ( $commaDelimitedPlaceholders )", $ids_arr);
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -55,7 +55,7 @@ function eme_delete_person_attendances( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
 	if (eme_is_list_of_int($ids) ) {
-		$ids_arr = explode(',',$ids);
+		$ids_arr = explode(',', $ids);
 		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
 		$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE person_id IN ( $commaDelimitedPlaceholders )", $ids_arr);
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -65,14 +65,14 @@ function eme_delete_person_attendances( $ids ) {
 function eme_delete_event_attendances( $event_id ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='event' AND related_id=%d",$event_id);
+	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='event' AND related_id=%d", $event_id);
 	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_delete_membership_attendances( $membership_id ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='membership' AND related_id=%d",$membership_id);
+	$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE type='membership' AND related_id=%d", $membership_id);
 	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
@@ -81,7 +81,7 @@ function eme_attendances_page() {
 }
 
 function eme_attendance_types() {
-	$att_names               = array();
+	$att_names               = [];
 	$att_types['any']        = __( 'Any', 'events-made-easy' );
 	$att_types['event']      = __( 'Events', 'events-made-easy' );
 	$att_types['membership'] = __( 'Memberships', 'events-made-easy' );
@@ -162,7 +162,7 @@ function eme_ajax_attendances_list() {
 	global $wpdb,$eme_db_prefix, $eme_timezone;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$table             = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$jTableResult      = array();
+	$jTableResult      = [];
 	$search_type       = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';
 	$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql( $_REQUEST['search_start_date'] ) : '';
 	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( $_REQUEST['search_end_date'] ) : '';
@@ -170,7 +170,7 @@ function eme_ajax_attendances_list() {
 	$att_types = eme_attendance_types();
 
 	$where     = '';
-	$where_arr = array();
+	$where_arr = [];
 	if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
 		$where_arr[] = "creation_date >= '$search_start_date'";
 		$where_arr[] = "creation_date <= '$search_end_date'";
@@ -257,7 +257,7 @@ function eme_ajax_manage_attendances() {
 	if ( ! current_user_can( get_option( 'eme_cap_list_attendances' ) ) ) {
 		wp_die();
 	}
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
@@ -271,7 +271,7 @@ function eme_ajax_manage_attendances() {
 
 function eme_ajax_action_attendances_delete( $ids ) {
 	eme_delete_events( $ids );
-	$ajaxResult            = array();
+	$ajaxResult            = [];
 	$ajaxResult['Result']  = 'OK';
 	$ajaxResult['Message'] = __( 'Events deleted', 'events-made-easy' );
 	print wp_json_encode( $ajaxResult );

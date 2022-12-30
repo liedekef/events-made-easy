@@ -9,14 +9,14 @@ function eme_set_wpmail_html_content_type() {
 }
 
 // for backwards compat, the fromname and email are after the replyto and can be empty
-function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $replytoemail = '', $replytoname = '', $fromemail = '', $fromname = '', $atts = array(), $custom_headers = array() ) {
+function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $replytoemail = '', $replytoname = '', $fromemail = '', $fromname = '', $atts = [], $custom_headers = [] ) {
 	$subject = preg_replace( '/(^\s+|\s+$)/m', '', $subject );
 	$res     = true;
 	$message = '';
 
 	// nothing to send? Then act as if all is ok
 	if ( empty( $body ) || empty( $subject ) || empty( $receiveremail ) ) {
-		return array( $res, $message );
+		return [ $res, $message ];
 	}
 
 	// the next 8 lines are no longer needed, but best to keep for mails already queued before this release (2.3.8)
@@ -31,7 +31,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 
 	// get all mail options, put them in an array and apply filter
 	// if you change this array, don't forget to update the doc
-	$mailoptions = array(
+	$mailoptions = [
 		'fromMail'         => $fromemail,
 		'fromName'         => $fromname,
 		'toMail'           => $receiveremail,
@@ -49,7 +49,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		'smtp_username'    => get_option( 'eme_smtp_username', '' ),
 		'smtp_password'    => get_option( 'eme_smtp_password', '' ),
 		'smtp_debug'       => get_option( 'eme_smtp_debug' ),  // true or false
-	);
+	];
 	$mailoptions = apply_filters( 'eme_filter_mail_options', $mailoptions );
 
 	if ( empty( $mailoptions['smtp_host'] ) ) {
@@ -62,7 +62,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 	$bcc_addresses = preg_split( '/,|;/', $mailoptions['bcc_addresses'] );
 
 	// allow either an array of file paths or of attachment ids
-	$attachment_paths_arr = array();
+	$attachment_paths_arr = [];
 	foreach ( $atts as $attachment ) {
 		if ( ! empty( $attachment ) ) {
 			if ( is_numeric( $attachment ) ) {
@@ -79,7 +79,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		}
 	}
 
-	if ( ! in_array( $mailoptions['mail_send_method'], array( 'smtp', 'mail', 'sendmail', 'qmail', 'wp_mail' ) ) ) {
+	if ( ! in_array( $mailoptions['mail_send_method'], [ 'smtp', 'mail', 'sendmail', 'qmail', 'wp_mail' ] ) ) {
 		$mailoptions['mail_send_method'] = 'wp_mail';
 	}
 
@@ -209,13 +209,13 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 				// so now we disable cert verification as requested and allow self signed
 				// but only for ip's in the reserved range
 				if ( $in_reserved_range ) {
-					$mail->SMTPOptions = array(
-						'ssl' => array(
+					$mail->SMTPOptions = [
+						'ssl' => [
 							'verify_peer'       => false,
 							'verify_peer_name'  => false,
 							'allow_self_signed' => true,
-						),
-					);
+						],
+					];
 				}
 			}
 
@@ -277,14 +277,14 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 	}
 	// remove the phpmailer url added for some errors
 	$message = str_replace( 'https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting', '', $message );
-	return array( $res, $message );
+	return [ $res, $message ];
 }
 
-function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions = array() ) {
+function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions = [] ) {
 	global $wpdb,$eme_db_prefix;
 	$mailing_table = $eme_db_prefix . MAILINGS_TBNAME;
 	$now           = current_time( 'mysql', false );
-	$mailing       = array(
+	$mailing       = [
 		'name'           => mb_substr( $mailing_name, 0, 255 ),
 		'planned_on'     => $now,
 		'status'         => 'ongoing',
@@ -297,7 +297,7 @@ function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromema
 		'mail_text_html' => $mail_text_html,
 		'creation_date'  => $now,
 		'conditions'     => eme_serialize( $conditions ),
-	);
+	];
 	if ( $wpdb->insert( $mailing_table, $mailing ) === false ) {
 		return false;
 	} else {
@@ -309,7 +309,7 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 	global $wpdb,$eme_db_prefix;
 	$mailing_table = $eme_db_prefix . MAILINGS_TBNAME;
 	$now           = current_time( 'mysql', false );
-	$mailing       = array(
+	$mailing       = [
 		'name'           => mb_substr( $mailing_name, 0, 255 ),
 		'planned_on'     => $planned_on,
 		'status'         => 'initial',
@@ -322,7 +322,7 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 		'mail_text_html' => $mail_text_html,
 		'creation_date'  => $now,
 		'conditions'     => eme_serialize( $conditions ),
-	);
+	];
 	if ( $wpdb->insert( $mailing_table, $mailing ) === false ) {
 		return false;
 	} else {
@@ -330,11 +330,11 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 	}
 }
 
-function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts = array() ) {
+function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts = [] ) {
 	return eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id, $person_id, $member_id, $atts, 1 );
 }
 
-function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts = array(), $send_immediately = 0 ) {
+function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts = [], $send_immediately = 0 ) {
 	global $wpdb,$eme_db_prefix;
 	$mqueue_table = $eme_db_prefix . MQUEUE_TBNAME;
 
@@ -348,7 +348,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 	}
 
 	$random_id      = eme_random_id();
-	$custom_headers = array( 'X-EME-mailid:' . $random_id );
+	$custom_headers = [ 'X-EME-mailid:' . $random_id ];
 	if ( ! get_option( 'eme_queue_mails' ) ) {
 		$send_immediately = 1;
 	}
@@ -363,7 +363,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 	}
 
 	$now  = current_time( 'mysql', false );
-	$mail = array(
+	$mail = [
 		'subject'       => mb_substr( $subject, 0, 255 ),
 		'body'          => $body,
 		'fromemail'     => $fromemail,
@@ -378,7 +378,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		'attachments'   => eme_serialize( $atts ),
 		'creation_date' => $now,
 		'random_id'     => $random_id,
-	);
+	];
 	if ( $send_immediately ) {
 		// we add the mail to the queue as sent and send it immediately
 		$mail['status']        = 1;
@@ -395,8 +395,8 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 function eme_mark_mail_ignored( $id ) {
 	global $wpdb,$eme_db_prefix;
 	$mqueue_table            = $eme_db_prefix . MQUEUE_TBNAME;
-	$where                   = array();
-	$fields                  = array();
+	$where                   = [];
+	$fields                  = [];
 	$where['id']             = intval( $id );
 	$fields['status']        = 4;
 	$fields['sent_datetime'] = current_time( 'mysql', false );
@@ -410,8 +410,8 @@ function eme_mark_mail_ignored( $id ) {
 function eme_mark_mail_sent( $id ) {
 	global $wpdb,$eme_db_prefix;
 	$mqueue_table            = $eme_db_prefix . MQUEUE_TBNAME;
-	$where                   = array();
-	$fields                  = array();
+	$where                   = [];
+	$fields                  = [];
 	$where['id']             = intval( $id );
 	$fields['status']        = 1;
 	$fields['sent_datetime'] = current_time( 'mysql', false );
@@ -425,8 +425,8 @@ function eme_mark_mail_sent( $id ) {
 function eme_mark_mail_fail( $id, $error_msg = '' ) {
 	global $wpdb,$eme_db_prefix;
 	$mqueue_table            = $eme_db_prefix . MQUEUE_TBNAME;
-	$where                   = array();
-	$fields                  = array();
+	$where                   = [];
+	$fields                  = [];
 	$where['id']             = intval( $id );
 	$fields['status']        = 2;
 	$fields['error_msg']     = esc_sql( $error_msg );
@@ -530,7 +530,7 @@ function eme_send_queued() {
 				$body .= $track_html;
 			}
 		}
-		$custom_headers = array( 'X-EME-mailid:' . $mail['random_id'] );
+		$custom_headers = [ 'X-EME-mailid:' . $mail['random_id'] ];
 		$mail_res_arr   = eme_send_mail( $mail['subject'], $body, $mail['receiveremail'], $mail['receivername'], $mail['replytoemail'], $mail['replytoname'], $mail['fromemail'], $mail['fromname'], $atts, $custom_headers );
 		if ( $mail_res_arr[0] ) {
 			eme_mark_mail_sent( $mail['id'] );
@@ -704,23 +704,23 @@ function eme_get_mailings( $archive = 0 ) {
 }
 
 function eme_mail_states() {
-	$states = array(
+	$states = [
 		0 => 'planned',
 		1 => 'sent',
 		2 => 'failed',
 		3 => 'cancelled',
 		4 => 'ignored',
-	);
+	];
 	return $states;
 }
 function eme_mail_localizedstates() {
-	$states = array(
+	$states = [
 		0 => __( 'Planned', 'events-made-easy' ),
 		1 => __( 'Sent', 'events-made-easy' ),
 		2 => __( 'Failed', 'events-made-easy' ),
 		3 => __( 'Cancelled', 'events-made-easy' ),
 		4 => __( 'Ignored', 'events-made-easy' ),
-	);
+	];
 	return $states;
 }
 
@@ -736,14 +736,14 @@ function eme_get_mailing_stats( $mailing_id = 0 ) {
 	$table     = $eme_db_prefix . MQUEUE_TBNAME;
 	$sql       = "SELECT COUNT(*) AS count,status FROM $table WHERE mailing_id=$mailing_id GROUP BY mailing_id,status";
 		$lines = $wpdb->get_results( $sql, ARRAY_A );
-	$res       = array(
+	$res       = [
 		'planned'          => 0,
 		'sent'             => 0,
 		'failed'           => 0,
 		'cancelled'        => 0,
 		'ignored'          => 0,
 		'total_read_count' => 0,
-	);
+	];
 	$states    = eme_mail_states();
 	foreach ( $lines as $line ) {
 		$status         = $states[ $line['status'] ];
@@ -837,28 +837,28 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 	$res['not_sent']      = '';
 	$mail_subject         = eme_replace_generic_placeholders( $mail_subject );
 	$mail_message         = eme_replace_generic_placeholders( $mail_message );
-	$not_sent             = array();
-	$emails_handled       = array();
+	$not_sent             = [];
+	$emails_handled       = [];
 	if ( isset( $conditions['ignore_massmail_setting'] ) && $conditions['ignore_massmail_setting'] == 1 ) {
 		$ignore_massmail_setting = 1;
 	} else {
 		$ignore_massmail_setting = 0;
 	}
 
-	$atts           = array();
+	$atts           = [];
 	$attachment_ids = '';
 	if ( $conditions['action'] == 'genericmail' ) {
-		$person_ids          = array();
-		$member_ids          = array();
-		$cond_person_ids_arr = array();
-		$cond_member_ids_arr = array();
+		$person_ids          = [];
+		$member_ids          = [];
+		$cond_person_ids_arr = [];
+		$cond_member_ids_arr = [];
 		if ( isset( $conditions['eme_generic_attach_ids'] ) ) {
 			$attachment_ids = $conditions['eme_generic_attach_ids'];
 		}
 		if ( ! empty( $attachment_ids ) ) {
 			$attachment_id_arr = explode( ',', $attachment_ids );
 		} else {
-			$attachment_id_arr = array();
+			$attachment_id_arr = [];
 		}
 
 		if ( isset( $conditions['eme_send_all_people'] ) ) {
@@ -961,7 +961,7 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 		if ( ! empty( $attachment_ids ) ) {
 			$attachment_id_arr = explode( ',', $attachment_ids );
 		} else {
-			$attachment_id_arr = array();
+			$attachment_id_arr = [];
 		}
 
 		if ( empty( $event ) ) {
@@ -998,8 +998,8 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 				}
 			}
 		} elseif ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'people_and_groups' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
-			$person_ids = array();
-			$member_ids = array();
+			$person_ids = [];
+			$member_ids = [];
 			if ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
 				// although we check later on the massmail preference per person too, we optimize the sql load a bit
 				if ( $ignore_massmail_setting ) {
@@ -1028,7 +1028,7 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 			if ( ! empty( $conditions['exclude_registered'] ) || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
 				$registered_ids = eme_get_attendee_ids( $conditions['event_id'] );
 			} else {
-				$registered_ids = array();
+				$registered_ids = [];
 			}
 			foreach ( $member_ids as $member_id ) {
 				$member = eme_get_member( $member_id );
@@ -1089,7 +1089,7 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 			if ( $conditions['eme_mail_type'] == 'all_wp_not_registered' || $conditions['exclude_registered'] ) {
 				$attendee_wp_ids = eme_get_wp_ids_for( $conditions['event_id'] );
 			} else {
-				$attendee_wp_ids = array();
+				$attendee_wp_ids = [];
 			}
 			$lang = eme_detect_lang();
 			foreach ( $wp_users as $wp_user ) {
@@ -1122,7 +1122,7 @@ function eme_mailingreport_list() {
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
-			$ajaxResult            = array();
+			$ajaxResult            = [];
 			$ajaxResult['Result']  = 'Error';
 			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 			print wp_json_encode( $ajaxResult );
@@ -1136,7 +1136,7 @@ function eme_mailingreport_list() {
 	$mailing_id  = intval( $_REQUEST['mailing_id'] );
 	$search_name = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$where       = '';
-	$where_arr   = array();
+	$where_arr   = [];
 	$where_arr[] = '(mailing_id=' . intval( $_REQUEST['mailing_id'] ) . ')';
 	if ( ! empty( $search_name ) ) {
 		$where_arr[] = "(receivername like '%$search_name%' OR receiveremail like '%$search_name%')";
@@ -1146,7 +1146,7 @@ function eme_mailingreport_list() {
 		$where = ' WHERE ' . implode( ' AND ', $where_arr );
 	}
 
-	$jTableResult = array();
+	$jTableResult = [];
 	$sql          = "SELECT COUNT(*) FROM $table $where";
 	$recordCount  = $wpdb->get_var( $sql );
 	$start        = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
@@ -1154,10 +1154,10 @@ function eme_mailingreport_list() {
 	$sorting      = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( $_REQUEST['jtSorting'] ) : '';
 	$sql          = "SELECT * FROM $table $where $sorting LIMIT $start,$pagesize";
 	$rows         = $wpdb->get_results( $sql, ARRAY_A );
-	$records      = array();
+	$records      = [];
 	$states       = eme_mail_localizedstates();
 	foreach ( $rows as $item ) {
-		$record                  = array();
+		$record                  = [];
 		$id                      = $item['id'];
 		$record['receiveremail'] = $item['receiveremail'];
 		$record['receivername']  = $item['receivername'];
@@ -1231,8 +1231,8 @@ function eme_send_mails_ajax_actions( $action ) {
 		wp_die();
 	}
 	$event_ids        = isset( $_POST['event_ids'] ) ? wp_parse_id_list($_POST['event_ids']) : 0;
-	$ajaxResult       = array();
-	$conditions       = array();
+	$ajaxResult       = [];
+	$conditions       = [];
 	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
 
 	if ( $action == 'searchmail' ) {
@@ -1430,7 +1430,7 @@ function eme_send_mails_ajax_actions( $action ) {
 			if ( ! empty( $attachment_ids ) ) {
 				$attachment_ids_arr = explode( ',', $attachment_ids );
 			} else {
-				$attachment_ids_arr = array();
+				$attachment_ids_arr = [];
 			}
 			$preview_mail_to = intval( $_POST['send_previewmailto_id'] );
 			if ( $preview_mail_to == 0 ) {
@@ -1592,7 +1592,7 @@ function eme_send_mails_ajax_actions( $action ) {
 			if ( ! empty( $attachment_ids ) ) {
 				$attachment_ids_arr = explode( ',', $attachment_ids );
 			} else {
-				$attachment_ids_arr = array();
+				$attachment_ids_arr = [];
 			}
 			$preview_mail_to = intval( $_POST['send_previeweventmailto_id'] );
 			if ( $preview_mail_to == 0 ) {
@@ -1663,7 +1663,7 @@ function eme_send_mails_ajax_actions( $action ) {
 		$current_userid                   = get_current_user_id();
 		$mail_problems                    = 0;
 		$mail_access_problems             = 0;
-		$not_sent                         = array();
+		$not_sent                         = [];
 		$count_event_ids                  = count( $event_ids );
 		foreach ( $event_ids as $event_id ) {
 			$conditions['event_id'] = $event_id;
@@ -1743,13 +1743,13 @@ function eme_emails_page() {
 		$eme_queue_mails_configured = 1;
 	}
 
-	$mygroups        = array();
-	$mymembergroups  = array();
-	$person_ids      = array();
-	$membership_ids  = array();
-	$persongroup_ids = array();
-	$membergroup_ids = array();
-	$member_ids      = array();
+	$mygroups        = [];
+	$mymembergroups  = [];
+	$person_ids      = [];
+	$membership_ids  = [];
+	$persongroup_ids = [];
+	$membergroup_ids = [];
+	$member_ids      = [];
 	// if we get a request for mailings, set the active tab to the 'tab-genericmails' tab (which is index 1)
 	if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'new_mailing' ) {
 		$data_forced_tab = 'data-showtab=1';

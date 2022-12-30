@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_recurrence() {
-	$recurrence = array(
+	$recurrence = [
 		'recurrence_start_date'    => '',
 		'recurrence_end_date'      => '',
 		'recurrence_interval'      => 1,
@@ -15,7 +15,7 @@ function eme_new_recurrence() {
 		'recurrence_specific_days' => '',
 		'event_duration'           => 1,
 		'holidays_id'              => 0,
-	);
+	];
 	return $recurrence;
 }
 
@@ -31,7 +31,7 @@ function eme_get_recurrence( $recurrence_id ) {
 function eme_get_recurrence_days( $recurrence ) {
 	global $eme_timezone;
 
-	$matching_days = array();
+	$matching_days = [];
 
 	if ( $recurrence['recurrence_freq'] == 'specific' ) {
 		$specific_days = explode( ',', $recurrence['recurrence_specific_days'] );
@@ -45,12 +45,12 @@ function eme_get_recurrence_days( $recurrence ) {
 	$start_date_obj = new ExpressiveDate( $recurrence['recurrence_start_date'], $eme_timezone );
 	$end_date_obj   = new ExpressiveDate( $recurrence['recurrence_end_date'], $eme_timezone );
 
-	$holidays = array();
+	$holidays = [];
 	if ( isset( $recurrence['holidays_id'] ) && $recurrence['holidays_id'] > 0 ) {
 		$holidays = eme_get_holiday_listinfo( $recurrence['holidays_id'] );
 	}
 
-	$last_week_start = array( 25, 22, 25, 24, 25, 24, 25, 25, 24, 25, 24, 25 );
+	$last_week_start = [ 25, 22, 25, 24, 25, 24, 25, 25, 24, 25, 24, 25 ];
 	$weekdays        = explode( ',', $recurrence['recurrence_byday'] );
 
 	$counter        = 0;
@@ -242,7 +242,7 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 		$recurrence['recurrence_end_date'] = $last_day;
 	}
 
-	$where = array( 'recurrence_id' => $recurrence['recurrence_id'] );
+	$where = [ 'recurrence_id' => $recurrence['recurrence_id'] ];
 	$wpdb->show_errors( true );
 	$wpdb->update( $recurrence_table, $recurrence, $where );
 	$wpdb->show_errors( false );
@@ -375,15 +375,15 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 		return;
 	}
 
-	$weekdays_name  = array( __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ), __( 'Thursday' ), __( 'Friday' ), __( 'Saturday' ), __( 'Sunday' ) );
-	$monthweek_name = array(
+	$weekdays_name  = [ __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ), __( 'Thursday' ), __( 'Friday' ), __( 'Saturday' ), __( 'Sunday' ) ];
+	$monthweek_name = [
 		'1'  => __( 'the first %s of the month', 'events-made-easy' ),
 		'2'  => __( 'the second %s of the month', 'events-made-easy' ),
 		'3'  => __( 'the third %s of the month', 'events-made-easy' ),
 		'4'  => __( 'the fourth %s of the month', 'events-made-easy' ),
 		'5'  => __( 'the fifth %s of the month', 'events-made-easy' ),
 		'-1' => __( 'the last %s of the month', 'events-made-easy' ),
-	);
+	];
 	$output         = sprintf( __( 'From %1$s to %2$s', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], $eme_timezone ), eme_localized_date( $recurrence['recurrence_end_date'], $eme_timezone ) ) . ', ';
 	if ( $recurrence['recurrence_freq'] == 'daily' ) {
 		$freq_desc = __( 'everyday', 'events-made-easy' );
@@ -401,7 +401,7 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 			}
 		}
 		$weekday_array = explode( ',', $recurrence['recurrence_byday'] );
-		$natural_days  = array();
+		$natural_days  = [];
 		foreach ( $weekday_array as $day ) {
 			array_push( $natural_days, $weekdays_name[ $day - 1 ] );
 		}
@@ -418,7 +418,7 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 			$recurrence['recurrence_byday'] = eme_localized_date( $recurrence['recurrence_start_date'], $eme_timezone, 'e' );
 		}
 		$weekday_array = explode( ',', $recurrence['recurrence_byday'] );
-		$natural_days  = array();
+		$natural_days  = [];
 		foreach ( $weekday_array as $day ) {
 			array_push( $natural_days, $weekdays_name[ $day - 1 ] );
 		}
@@ -431,7 +431,7 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 		}
 	} elseif ( $recurrence['recurrence_freq'] == 'specific' ) {
 		$specific_days    = eme_get_recurrence_days( $recurrence );
-		$natural_days     = array();
+		$natural_days     = [];
 		$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
 		foreach ( $specific_days as $day ) {
 			$date_obj = new ExpressiveDate( $day, $eme_timezone );
@@ -470,7 +470,7 @@ function eme_ajax_recurrences_list() {
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
-		$ajaxResult                = array();
+		$ajaxResult                = [];
 			$ajaxResult['Result']  = 'Error';
 			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 			print wp_json_encode( $ajaxResult );
@@ -489,7 +489,7 @@ function eme_ajax_recurrences_list() {
 	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_end_date'])) : '';
 
 	$where     = '';
-	$where_arr = array();
+	$where_arr = [];
 	if ( ! empty( $search_name ) ) {
 		$where_arr[] = "event_name like '%" . $search_name . "%'";
 	}
@@ -524,7 +524,7 @@ function eme_ajax_recurrences_list() {
 	}
 	$recurrences = $wpdb->get_results( $sql, ARRAY_A );
 
-	$rows = array();
+	$rows = [];
 	foreach ( $recurrences as $recurrence ) {
 		// due to our select with natural join, $recurrence contains everything for an event too (except eme_unserialized properties
 		// for ease of code, we'll set $event=$recurrence and use $event where logical
@@ -556,7 +556,7 @@ function eme_ajax_recurrences_list() {
 			$duration_string = sprintf( '%d %s, %s-%s', $duration_days, $day_string, eme_localized_time( $event['event_start'], $eme_timezone ), eme_localized_time( $event['event_end'], $eme_timezone ) );
 		}
 
-		$record                  = array();
+		$record                  = [];
 		$record['recurrence_id'] = $recurrence['recurrence_id'];
 		$record['event_name']    = "<strong><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_recurrence&amp;recurrence_id=' . $recurrence['recurrence_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . __( 'Edit recurrence', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
 		$record['copy']          = "<a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_recurrence&amp;recurrence_id=' . $recurrence['recurrence_id'] ) . "' title='" . __( 'Duplicate this recurrence', 'events-made-easy' ) . "'><img src='" . esc_url($eme_plugin_url) . "images/copy_24.png'></a>";
@@ -580,7 +580,7 @@ function eme_ajax_recurrences_list() {
 		if ( ! empty( $event['event_category_ids'] ) ) {
 			$categories            = explode( ',', $event['event_category_ids'] );
 			$record['event_name'] .= "<br><span class='eme_categories_small' title='" . __( 'Category', 'events-made-easy' ) . "'>";
-			$cat_names             = array();
+			$cat_names             = [];
 			foreach ( $categories as $cat ) {
 				$category = eme_get_category( $cat );
 				if ( $category ) {
@@ -621,7 +621,7 @@ function eme_ajax_recurrences_list() {
 		$rows[]                  = $record;
 	}
 
-	$ajaxResult                     = array();
+	$ajaxResult                     = [];
 	$ajaxResult['Result']           = 'OK';
 	$ajaxResult['TotalRecordCount'] = $recurrences_count;
 	$ajaxResult['Records']          = $rows;
@@ -631,7 +631,7 @@ function eme_ajax_recurrences_list() {
 
 function eme_ajax_manage_recurrences() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$ajaxResult = array();
+	$ajaxResult = [];
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action          = eme_sanitize_request( $_REQUEST['do_action'] );
 		$rec_new_start_date = eme_sanitize_request( $_REQUEST['rec_new_start_date'] );
@@ -674,7 +674,7 @@ function eme_ajax_action_recurrences_delete( $ids_arr ) {
 	foreach ( $ids_arr as $recurrence_id ) {
 		eme_db_delete_recurrence( $recurrence_id );
 	}
-	$ajaxResult            = array();
+	$ajaxResult            = [];
 	$ajaxResult['Result']  = 'OK';
 	$ajaxResult['Message'] = __( 'Recurrences deleted and events moved to trash', 'events-made-easy' );
 	print wp_json_encode( $ajaxResult );
@@ -685,7 +685,7 @@ function eme_ajax_action_recurrences_status( $ids_arr, $status ) {
 		$events_ids = eme_get_recurrence_eventids( $recurrence_id );
 		eme_change_event_status( $events_ids, $status );
 	}
-	$ajaxResult            = array();
+	$ajaxResult            = [];
 	$ajaxResult['Result']  = 'OK';
 	$ajaxResult['Message'] = __( 'Recurrences status updated', 'events-made-easy' );
 	print wp_json_encode( $ajaxResult );
@@ -715,7 +715,7 @@ function eme_ajax_action_recurrences_extend( $ids_arr, $rec_new_start_date, $rec
 			unset( $event );
 		}
 	}
-	$ajaxResult            = array();
+	$ajaxResult            = [];
 	$ajaxResult['Result']  = 'OK';
 	$ajaxResult['Message'] = __( 'Start and end date adjusted for the selected recurrences', 'events-made-easy' );
 	print wp_json_encode( $ajaxResult );

@@ -108,7 +108,7 @@ function eme_add_options( $reset = 0 ) {
 	$eme_bd_email_subject_localizable               = __( 'Happy birthday #_PERSONFIRSTNAME', 'events-made-easy' );
 	$eme_bd_email_body_localizable                  = __( 'Hi #_PERSONFIRSTNAME,<br><br>Congratulations on your birthday!!!<br><br>From EME', 'events-made-easy' );
 
-	$eme_options = array(
+	$eme_options = [
 		'eme_event_list_item_format'                      => '<li>#_STARTDATE - #_STARTTIME<br> #_LINKEDNAME<br>#_TOWN </li>',
 		'eme_event_list_item_format_header'               => DEFAULT_EVENT_LIST_HEADER_FORMAT,
 		'eme_cat_event_list_item_format_header'           => DEFAULT_CAT_EVENT_LIST_HEADER_FORMAT,
@@ -552,7 +552,7 @@ function eme_add_options( $reset = 0 ) {
 		'eme_check_free_waiting'                          => 0,
 		'eme_unique_email_per_person'                     => 0,
 		'eme_multisite_active'                            => 0,
-	);
+	];
 
 	foreach ( $eme_options as $key => $value ) {
 		eme_add_option( $key, $value, $reset );
@@ -581,17 +581,17 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 119 ) {
 			// remove some deprecated options
-			$options = array( 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_legacy', 'eme_deprecated', 'eme_legacy_warning', 'eme_list_events_page', 'eme_deny_mail_event_edit', 'eme_fb_app_id' );
+			$options = [ 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_legacy', 'eme_deprecated', 'eme_legacy_warning', 'eme_list_events_page', 'eme_deny_mail_event_edit', 'eme_fb_app_id' ];
 			foreach ( $options as $opt ) {
 				delete_option( $opt );
 			}
 			// rename some options
-			$options2 = array(
+			$options2 = [
 				'eme_cron_reminder_unpayed_minutes' => 'eme_cron_reminder_unpaid_minutes',
 				'eme_cron_cleanup_unpayed_minutes'  => 'eme_cron_cleanup_unpaid_minutes',
 				'eme_cron_reminder_unpayed_subject' => 'eme_cron_reminder_unpaid_subject',
 				'eme_cron_reminder_unpayed_body'    => 'eme_cron_reminder_unpaid_body',
-			);
+			];
 			foreach ( $options2 as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
@@ -617,9 +617,9 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 197 ) {
 			// rename some options
-			$options2 = array(
+			$options2 = [
 				'eme_rsvp_required_field_string' => 'eme_form_required_field_string',
-			);
+			];
 			foreach ( $options2 as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
@@ -629,10 +629,10 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 206 ) {
 			delete_option( 'eme_gmap_api_key' );
-			$options2 = array(
+			$options2 = [
 				'eme_gmap_active'  => 'eme_map_active',
 				'eme_gmap_zooming' => 'eme_map_zooming',
-			);
+			];
 			foreach ( $options2 as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
@@ -675,10 +675,10 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 247 ) {
 			// rename some options
-			$options2 = array(
+			$options2 = [
 				'eme_registration_denied_email_subject' => 'eme_registration_trashed_email_subject',
 				'eme_registration_denied_email_body'    => 'eme_registration_trashed_email_body',
-			);
+			];
 			foreach ( $options2 as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
@@ -688,10 +688,10 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 250 ) {
 			// rename some options
-			$options2 = array(
+			$options2 = [
 				'eme_cap_people'  => 'eme_cap_edit_people',
 				'eme_cap_members' => 'eme_cap_edit_members',
-			);
+			];
 			foreach ( $options2 as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
@@ -707,9 +707,9 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 298 ) {
 			// rename some options
-			$options2 = array(
+			$options2 = [
 				'eme_captcha_for_booking' => 'eme_captcha_for_forms',
-			);
+			];
 			foreach ( $options2 as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
@@ -732,9 +732,9 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 306 ) {
 			// rename some options
-			$options2 = array(
+			$options2 = [
 				'eme_mail_recipient_format' => 'eme_full_name_format',
-			);
+			];
 			foreach ( $options2 as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
@@ -749,9 +749,9 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 315 ) {
 			// rename some options
-			$options2 = array(
+			$options2 = [
 				'eme_gdpr_remove_old_bookings_days' => 'eme_gdpr_anonymize_old_bookings_days',
-			);
+			];
 			foreach ( $options2 as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
@@ -838,9 +838,9 @@ function eme_options_delete() {
 
 function eme_metabox_options_delete() {
 	global $wpdb,$eme_db_prefix;
-	$screens = array( 'events_page_eme-new_event', 'toplevel_page_eme-manager' );
+	$screens = [ 'events_page_eme-new_event', 'toplevel_page_eme-manager' ];
 	foreach ( $screens as $screen ) {
-		foreach ( array( 'metaboxhidden', 'closedpostboxes', 'wp_metaboxorder', 'meta-box-order', 'screen_layout' ) as $option ) {
+		foreach ( [ 'metaboxhidden', 'closedpostboxes', 'wp_metaboxorder', 'meta-box-order', 'screen_layout' ] as $option ) {
 			$keys[] = "'{$option}_{$screen}'";
 		}
 	}
@@ -984,56 +984,56 @@ function eme_options_register() {
 	if ( ! isset( $_POST['option_page'] ) || ( $_POST['option_page'] != 'eme-options' ) ) {
 		return;
 	}
-	$options = array();
+	$options = [];
 	$tab     = isset( $_POST['tab'] ) ? eme_sanitize_request( $_POST['tab'] ) : 'general';
 	switch ( $tab ) {
 		case 'general':
-				$options = array( 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_honeypot_for_forms', 'eme_frontend_nocache', 'eme_use_is_page_for_title' );
+				$options = [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_honeypot_for_forms', 'eme_frontend_nocache', 'eme_use_is_page_for_title' ];
 			break;
 		case 'seo':
-				$options = array( 'eme_seo_permalink', 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' );
+				$options = [ 'eme_seo_permalink', 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ];
 			break;
 		case 'access':
-				$options = array( 'eme_cap_add_event', 'eme_cap_author_event', 'eme_cap_publish_event', 'eme_cap_list_events', 'eme_cap_edit_events', 'eme_cap_manage_task_signups', 'eme_cap_list_locations', 'eme_cap_add_locations', 'eme_cap_author_locations', 'eme_cap_edit_locations', 'eme_cap_categories', 'eme_cap_holidays', 'eme_cap_templates', 'eme_cap_access_people', 'eme_cap_list_people', 'eme_cap_edit_people', 'eme_cap_author_person', 'eme_cap_access_members', 'eme_cap_list_members', 'eme_cap_edit_members', 'eme_cap_author_member', 'eme_cap_discounts', 'eme_cap_list_approve', 'eme_cap_author_approve', 'eme_cap_approve', 'eme_cap_list_registrations', 'eme_cap_author_registrations', 'eme_cap_registrations', 'eme_cap_attendancecheck', 'eme_cap_membercheck', 'eme_cap_forms', 'eme_cap_cleanup', 'eme_cap_settings', 'eme_cap_send_mails', 'eme_cap_send_other_mails', 'eme_cap_list_attendances', 'eme_cap_manage_attendances' );
+				$options = [ 'eme_cap_add_event', 'eme_cap_author_event', 'eme_cap_publish_event', 'eme_cap_list_events', 'eme_cap_edit_events', 'eme_cap_manage_task_signups', 'eme_cap_list_locations', 'eme_cap_add_locations', 'eme_cap_author_locations', 'eme_cap_edit_locations', 'eme_cap_categories', 'eme_cap_holidays', 'eme_cap_templates', 'eme_cap_access_people', 'eme_cap_list_people', 'eme_cap_edit_people', 'eme_cap_author_person', 'eme_cap_access_members', 'eme_cap_list_members', 'eme_cap_edit_members', 'eme_cap_author_member', 'eme_cap_discounts', 'eme_cap_list_approve', 'eme_cap_author_approve', 'eme_cap_approve', 'eme_cap_list_registrations', 'eme_cap_author_registrations', 'eme_cap_registrations', 'eme_cap_attendancecheck', 'eme_cap_membercheck', 'eme_cap_forms', 'eme_cap_cleanup', 'eme_cap_settings', 'eme_cap_send_mails', 'eme_cap_send_other_mails', 'eme_cap_list_attendances', 'eme_cap_manage_attendances' ];
 			break;
 		case 'events':
-				$options = array( 'eme_events_page', 'eme_display_events_in_events_page', 'eme_display_calendar_in_events_page', 'eme_event_list_number_items', 'eme_event_initial_state', 'eme_event_list_item_format_header', 'eme_cat_event_list_item_format_header', 'eme_event_list_item_format', 'eme_event_list_item_format_footer', 'eme_cat_event_list_item_format_footer', 'eme_event_page_title_format', 'eme_event_html_title_format', 'eme_single_event_format', 'eme_show_period_monthly_dateformat', 'eme_show_period_yearly_dateformat', 'eme_events_page_title', 'eme_no_events_message', 'eme_filter_form_format', 'eme_redir_priv_event_url' );
+				$options = [ 'eme_events_page', 'eme_display_events_in_events_page', 'eme_display_calendar_in_events_page', 'eme_event_list_number_items', 'eme_event_initial_state', 'eme_event_list_item_format_header', 'eme_cat_event_list_item_format_header', 'eme_event_list_item_format', 'eme_event_list_item_format_footer', 'eme_cat_event_list_item_format_footer', 'eme_event_page_title_format', 'eme_event_html_title_format', 'eme_single_event_format', 'eme_show_period_monthly_dateformat', 'eme_show_period_yearly_dateformat', 'eme_events_page_title', 'eme_no_events_message', 'eme_filter_form_format', 'eme_redir_priv_event_url' ];
 			break;
 		case 'calendar':
-				$options = array( 'eme_small_calendar_event_title_format', 'eme_small_calendar_event_title_separator', 'eme_full_calendar_event_format', 'eme_cal_hide_past_events', 'eme_cal_show_single' );
+				$options = [ 'eme_small_calendar_event_title_format', 'eme_small_calendar_event_title_separator', 'eme_full_calendar_event_format', 'eme_cal_hide_past_events', 'eme_cal_show_single' ];
 			break;
 		case 'locations':
-				$options = array( 'eme_location_list_format_header', 'eme_location_list_format_item', 'eme_location_list_format_footer', 'eme_location_page_title_format', 'eme_location_html_title_format', 'eme_single_location_format', 'eme_location_event_list_item_format', 'eme_location_no_events_message' );
+				$options = [ 'eme_location_list_format_header', 'eme_location_list_format_item', 'eme_location_list_format_footer', 'eme_location_page_title_format', 'eme_location_html_title_format', 'eme_single_location_format', 'eme_location_event_list_item_format', 'eme_location_no_events_message' ];
 			break;
 		case 'members':
-				$options = array( 'eme_page_access_denied', 'eme_membership_login_required_string', 'eme_redir_protected_pages_url', 'eme_membership_attendance_msg', 'eme_membership_unauth_attendance_msg', 'eme_members_show_people_info' );
+				$options = [ 'eme_page_access_denied', 'eme_membership_login_required_string', 'eme_redir_protected_pages_url', 'eme_membership_attendance_msg', 'eme_membership_unauth_attendance_msg', 'eme_members_show_people_info' ];
 			break;
 		case 'rss':
-				$options = array( 'eme_rss_main_title', 'eme_rss_main_description', 'eme_rss_title_format', 'eme_rss_description_format', 'eme_rss_show_pubdate', 'eme_rss_pubdate_startdate', 'eme_ical_description_format', 'eme_ical_location_format', 'eme_ical_title_format', 'eme_ical_quote_tzid' );
+				$options = [ 'eme_rss_main_title', 'eme_rss_main_description', 'eme_rss_title_format', 'eme_rss_description_format', 'eme_rss_show_pubdate', 'eme_rss_pubdate_startdate', 'eme_ical_description_format', 'eme_ical_location_format', 'eme_ical_title_format', 'eme_ical_quote_tzid' ];
 			break;
 		case 'rsvp':
-				$options = array( 'eme_default_contact_person', 'eme_rsvp_registered_users_only', 'eme_rsvp_reg_for_new_events', 'eme_rsvp_require_approval', 'eme_rsvp_require_user_confirmation', 'eme_rsvp_default_number_spaces', 'eme_rsvp_addbooking_min_spaces', 'eme_rsvp_addbooking_max_spaces', 'eme_rsvp_hide_full_events', 'eme_rsvp_hide_rsvp_ended_events', 'eme_rsvp_show_form_after_booking', 'eme_rsvp_addbooking_submit_string', 'eme_rsvp_delbooking_submit_string', 'eme_rsvp_not_yet_allowed_string', 'eme_rsvp_no_longer_allowed_string', 'eme_rsvp_full_string', 'eme_rsvp_on_waiting_list_string', 'eme_rsvp_cancel_no_longer_allowed_string', 'eme_attendees_list_format', 'eme_attendees_list_ignore_pending', 'eme_bookings_list_ignore_pending', 'eme_bookings_list_header_format', 'eme_bookings_list_format', 'eme_bookings_list_footer_format', 'eme_registration_recorded_ok_html', 'eme_registration_form_format', 'eme_cancel_form_format', 'eme_cancel_payment_form_format', 'eme_cancel_payment_line_format', 'eme_cancelled_payment_format', 'eme_rsvp_number_days', 'eme_rsvp_number_hours', 'eme_rsvp_end_target', 'eme_rsvp_check_required_fields', 'eme_cancel_rsvp_days', 'eme_cancel_rsvp_age', 'eme_rsvp_check_without_accents', 'eme_rsvp_admin_allow_overbooking', 'eme_rsvp_login_required_string', 'eme_rsvp_invitation_required_string', 'eme_rsvp_email_already_registered_string', 'eme_rsvp_person_already_registered_string', 'eme_check_free_waiting', 'eme_rsvp_pending_reminder_days', 'eme_rsvp_approved_reminder_days' );
+				$options = [ 'eme_default_contact_person', 'eme_rsvp_registered_users_only', 'eme_rsvp_reg_for_new_events', 'eme_rsvp_require_approval', 'eme_rsvp_require_user_confirmation', 'eme_rsvp_default_number_spaces', 'eme_rsvp_addbooking_min_spaces', 'eme_rsvp_addbooking_max_spaces', 'eme_rsvp_hide_full_events', 'eme_rsvp_hide_rsvp_ended_events', 'eme_rsvp_show_form_after_booking', 'eme_rsvp_addbooking_submit_string', 'eme_rsvp_delbooking_submit_string', 'eme_rsvp_not_yet_allowed_string', 'eme_rsvp_no_longer_allowed_string', 'eme_rsvp_full_string', 'eme_rsvp_on_waiting_list_string', 'eme_rsvp_cancel_no_longer_allowed_string', 'eme_attendees_list_format', 'eme_attendees_list_ignore_pending', 'eme_bookings_list_ignore_pending', 'eme_bookings_list_header_format', 'eme_bookings_list_format', 'eme_bookings_list_footer_format', 'eme_registration_recorded_ok_html', 'eme_registration_form_format', 'eme_cancel_form_format', 'eme_cancel_payment_form_format', 'eme_cancel_payment_line_format', 'eme_cancelled_payment_format', 'eme_rsvp_number_days', 'eme_rsvp_number_hours', 'eme_rsvp_end_target', 'eme_rsvp_check_required_fields', 'eme_cancel_rsvp_days', 'eme_cancel_rsvp_age', 'eme_rsvp_check_without_accents', 'eme_rsvp_admin_allow_overbooking', 'eme_rsvp_login_required_string', 'eme_rsvp_invitation_required_string', 'eme_rsvp_email_already_registered_string', 'eme_rsvp_person_already_registered_string', 'eme_check_free_waiting', 'eme_rsvp_pending_reminder_days', 'eme_rsvp_approved_reminder_days' ];
 			break;
 		case 'tasks':
-				$options = array( 'eme_task_registered_users_only', 'eme_task_allow_overlap', 'eme_task_form_taskentry_format', 'eme_task_form_format', 'eme_task_signup_format', 'eme_task_signup_recorded_ok_html', 'eme_task_signup_cancelled_ok_html', 'eme_task_reminder_days' );
+				$options = [ 'eme_task_registered_users_only', 'eme_task_allow_overlap', 'eme_task_form_taskentry_format', 'eme_task_form_format', 'eme_task_signup_format', 'eme_task_signup_recorded_ok_html', 'eme_task_signup_cancelled_ok_html', 'eme_task_reminder_days' ];
 			break;
 		case 'mail':
-				$options = array( 'eme_rsvp_mail_notify_is_active', 'eme_rsvp_mail_notify_pending', 'eme_rsvp_mail_notify_paid', 'eme_rsvp_mail_notify_approved', 'eme_mail_sender_name', 'eme_mail_sender_address', 'eme_mail_force_from', 'eme_rsvp_mail_send_method', 'eme_smtp_host', 'eme_smtp_port', 'eme_smtp_encryption', 'eme_rsvp_mail_SMTPAuth', 'eme_smtp_username', 'eme_smtp_password', 'eme_smtp_debug', 'eme_rsvp_send_html', 'eme_mail_bcc_address', 'eme_smtp_verify_cert', 'eme_queue_mails', 'eme_cron_send_queued', 'eme_cron_queue_count', 'eme_people_newsletter', 'eme_people_massmail', 'eme_massmail_popup_text', 'eme_massmail_popup', 'eme_mail_tracking', 'eme_mail_sleep', 'eme_mail_blacklist' );
+				$options = [ 'eme_rsvp_mail_notify_is_active', 'eme_rsvp_mail_notify_pending', 'eme_rsvp_mail_notify_paid', 'eme_rsvp_mail_notify_approved', 'eme_mail_sender_name', 'eme_mail_sender_address', 'eme_mail_force_from', 'eme_rsvp_mail_send_method', 'eme_smtp_host', 'eme_smtp_port', 'eme_smtp_encryption', 'eme_rsvp_mail_SMTPAuth', 'eme_smtp_username', 'eme_smtp_password', 'eme_smtp_debug', 'eme_rsvp_send_html', 'eme_mail_bcc_address', 'eme_smtp_verify_cert', 'eme_queue_mails', 'eme_cron_send_queued', 'eme_cron_queue_count', 'eme_people_newsletter', 'eme_people_massmail', 'eme_massmail_popup_text', 'eme_massmail_popup', 'eme_mail_tracking', 'eme_mail_sleep', 'eme_mail_blacklist' ];
 			break;
 		case 'mailtemplates':
-				$options = array( 'eme_contactperson_email_subject', 'eme_contactperson_cancelled_email_subject', 'eme_contactperson_pending_email_subject', 'eme_contactperson_email_body', 'eme_contactperson_cancelled_email_body', 'eme_contactperson_pending_email_body', 'eme_contactperson_ipn_email_subject', 'eme_contactperson_ipn_email_body', 'eme_contactperson_paid_email_subject', 'eme_contactperson_paid_email_body', 'eme_respondent_email_subject', 'eme_respondent_email_body', 'eme_registration_pending_email_subject', 'eme_registration_pending_email_body', 'eme_registration_userpending_email_subject', 'eme_registration_userpending_email_body', 'eme_registration_cancelled_email_subject', 'eme_registration_cancelled_email_body', 'eme_registration_trashed_email_subject', 'eme_registration_trashed_email_body', 'eme_registration_updated_email_subject', 'eme_registration_updated_email_body', 'eme_registration_paid_email_subject', 'eme_registration_paid_email_body', 'eme_registration_pending_reminder_email_subject', 'eme_registration_pending_reminder_email_body', 'eme_registration_reminder_email_subject', 'eme_registration_reminder_email_body', 'eme_sub_subject', 'eme_sub_body', 'eme_unsub_subject', 'eme_unsub_body', 'eme_booking_attach_ids', 'eme_pending_attach_ids', 'eme_paid_attach_ids', 'eme_subscribe_attach_ids', 'eme_full_name_format', 'eme_cp_task_signup_email_subject', 'eme_cp_task_signup_email_body', 'eme_cp_task_signup_cancelled_email_subject', 'eme_cp_task_signup_cancelled_email_body', 'eme_task_signup_email_subject', 'eme_task_signup_email_body', 'eme_task_signup_cancelled_email_subject', 'eme_task_signup_cancelled_email_body', 'eme_task_signup_trashed_email_subject', 'eme_task_signup_trashed_email_body', 'eme_task_signup_reminder_email_subject', 'eme_task_signup_reminder_email_body', 'eme_bd_email_subject', 'eme_bd_email_body' );
+				$options = [ 'eme_contactperson_email_subject', 'eme_contactperson_cancelled_email_subject', 'eme_contactperson_pending_email_subject', 'eme_contactperson_email_body', 'eme_contactperson_cancelled_email_body', 'eme_contactperson_pending_email_body', 'eme_contactperson_ipn_email_subject', 'eme_contactperson_ipn_email_body', 'eme_contactperson_paid_email_subject', 'eme_contactperson_paid_email_body', 'eme_respondent_email_subject', 'eme_respondent_email_body', 'eme_registration_pending_email_subject', 'eme_registration_pending_email_body', 'eme_registration_userpending_email_subject', 'eme_registration_userpending_email_body', 'eme_registration_cancelled_email_subject', 'eme_registration_cancelled_email_body', 'eme_registration_trashed_email_subject', 'eme_registration_trashed_email_body', 'eme_registration_updated_email_subject', 'eme_registration_updated_email_body', 'eme_registration_paid_email_subject', 'eme_registration_paid_email_body', 'eme_registration_pending_reminder_email_subject', 'eme_registration_pending_reminder_email_body', 'eme_registration_reminder_email_subject', 'eme_registration_reminder_email_body', 'eme_sub_subject', 'eme_sub_body', 'eme_unsub_subject', 'eme_unsub_body', 'eme_booking_attach_ids', 'eme_pending_attach_ids', 'eme_paid_attach_ids', 'eme_subscribe_attach_ids', 'eme_full_name_format', 'eme_cp_task_signup_email_subject', 'eme_cp_task_signup_email_body', 'eme_cp_task_signup_cancelled_email_subject', 'eme_cp_task_signup_cancelled_email_body', 'eme_task_signup_email_subject', 'eme_task_signup_email_body', 'eme_task_signup_cancelled_email_subject', 'eme_task_signup_cancelled_email_body', 'eme_task_signup_trashed_email_subject', 'eme_task_signup_trashed_email_body', 'eme_task_signup_reminder_email_subject', 'eme_task_signup_reminder_email_body', 'eme_bd_email_subject', 'eme_bd_email_body' ];
 			break;
 		case 'gdpr':
-				$options = array( 'eme_cpi_subject', 'eme_cpi_body', 'eme_cpi_form', 'eme_gdpr_subject', 'eme_gdpr_body', 'eme_gdpr_approve_subject', 'eme_gdpr_approve_body', 'eme_gdpr_page_title', 'eme_gdpr_page_header', 'eme_gdpr_page_footer', 'eme_gdpr_approve_page_title', 'eme_gdpr_approve_page_content', 'eme_gdpr_remove_expired_member_days', 'eme_gdpr_anonymize_old_bookings_days', 'eme_gdpr_remove_old_events_days', 'eme_gdpr_archive_old_mailings_days', 'eme_gdpr_remove_old_attendances_days', 'eme_gdpr_remove_old_signups_days' );
+				$options = [ 'eme_cpi_subject', 'eme_cpi_body', 'eme_cpi_form', 'eme_gdpr_subject', 'eme_gdpr_body', 'eme_gdpr_approve_subject', 'eme_gdpr_approve_body', 'eme_gdpr_page_title', 'eme_gdpr_page_header', 'eme_gdpr_page_footer', 'eme_gdpr_approve_page_title', 'eme_gdpr_approve_page_content', 'eme_gdpr_remove_expired_member_days', 'eme_gdpr_anonymize_old_bookings_days', 'eme_gdpr_remove_old_events_days', 'eme_gdpr_archive_old_mailings_days', 'eme_gdpr_remove_old_attendances_days', 'eme_gdpr_remove_old_signups_days' ];
 			break;
 		case 'payments':
-			$options = array( 'eme_default_vat', 'eme_payment_form_header_format', 'eme_payment_form_footer_format', 'eme_multipayment_form_header_format', 'eme_multipayment_form_footer_format', 'eme_payment_succes_format', 'eme_payment_fail_format', 'eme_payment_member_succes_format', 'eme_payment_member_fail_format', 'eme_payment_booking_already_paid_format', 'eme_payment_booking_on_waitinglist_format', 'eme_default_currency', 'eme_default_price', 'eme_payment_refund_ok', 'eme_pg_submit_immediately', 'eme_payment_redirect', 'eme_payment_redirect_wait', 'eme_payment_redirect_msg', 'eme_paypal_url', 'eme_paypal_clientid', 'eme_paypal_secret', 'eme_2co_demo', 'eme_2co_business', 'eme_2co_secret', 'eme_webmoney_purse', 'eme_webmoney_secret', 'eme_webmoney_demo', 'eme_fdgg_url', 'eme_fdgg_store_name', 'eme_fdgg_shared_secret', 'eme_2co_cost', 'eme_paypal_cost', 'eme_fdgg_cost', 'eme_webmoney_cost', 'eme_2co_cost2', 'eme_paypal_cost2', 'eme_fdgg_cost2', 'eme_webmoney_cost2', 'eme_mollie_api_key', 'eme_mollie_cost', 'eme_mollie_cost2', 'eme_paypal_button_label', 'eme_paypal_button_above', 'eme_paypal_button_below', 'eme_2co_button_label', 'eme_2co_button_above', 'eme_2co_button_below', 'eme_fdgg_button_label', 'eme_fdgg_button_above', 'eme_fdgg_button_below', 'eme_webmoney_button_label', 'eme_webmoney_button_above', 'eme_webmoney_button_below', 'eme_mollie_button_label', 'eme_mollie_button_above', 'eme_mollie_button_below', 'eme_paypal_button_img_url', 'eme_2co_button_img_url', 'eme_fdgg_button_img_url', 'eme_webmoney_button_img_url', 'eme_mollie_button_img_url', 'eme_worldpay_demo', 'eme_worldpay_instid', 'eme_worldpay_md5_secret', 'eme_worldpay_md5_parameters', 'eme_worldpay_test_pwd', 'eme_worldpay_live_pwd', 'eme_worldpay_cost', 'eme_worldpay_cost2', 'eme_worldpay_button_label', 'eme_worldpay_button_img_url', 'eme_worldpay_button_above', 'eme_worldpay_button_below', 'eme_braintree_private_key', 'eme_braintree_public_key', 'eme_braintree_merchant_id', 'eme_braintree_env', 'eme_braintree_cost', 'eme_braintree_cost2', 'eme_braintree_button_label', 'eme_braintree_button_img_url', 'eme_braintree_button_above', 'eme_braintree_button_below', 'eme_stripe_private_key', 'eme_stripe_public_key', 'eme_stripe_cost', 'eme_stripe_cost2', 'eme_stripe_button_label', 'eme_stripe_button_img_url', 'eme_stripe_button_above', 'eme_stripe_button_below', 'eme_stripe_payment_methods', 'eme_offline_payment', 'eme_legacypaypal_url', 'eme_legacypaypal_business', 'eme_legacypaypal_no_tax', 'eme_legacypaypal_cost', 'eme_legacypaypal_cost2', 'eme_legacypaypal_button_label', 'eme_legacypaypal_button_img_url', 'eme_legacypaypal_button_above', 'eme_legacypaypal_button_below', 'eme_instamojo_env', 'eme_instamojo_key', 'eme_instamojo_auth_token', 'eme_instamojo_salt', 'eme_instamojo_cost', 'eme_instamojo_cost2', 'eme_instamojo_button_label', 'eme_instamojo_button_img_url', 'eme_instamojo_button_above', 'eme_instamojo_button_below', 'eme_mercadopago_demo', 'eme_mercadopago_sandbox_token', 'eme_mercadopago_live_token', 'eme_mercadopago_cost', 'eme_mercadopago_cost2', 'eme_mercadopago_button_label', 'eme_mercadopago_button_img_url', 'eme_mercadopago_button_above', 'eme_mercadopago_button_below', 'eme_fondy_merchant_id', 'eme_fondy_secret_key', 'eme_fondy_cost', 'eme_fondy_cost2', 'eme_fondy_button_label', 'eme_fondy_button_img_url', 'eme_fondy_button_above', 'eme_fondy_button_below', 'eme_payconiq_api_key', 'eme_payconiq_env', 'eme_payconiq_merchant_id', 'eme_payconiq_cost', 'eme_payconiq_cost2', 'eme_payconiq_button_label', 'eme_payconiq_button_img_url', 'eme_payconiq_button_above', 'eme_payconiq_button_below', 'eme_sumup_merchant_code', 'eme_sumup_app_id', 'eme_sumup_app_secret', 'eme_sumup_cost', 'eme_sumup_cost2', 'eme_sumup_button_label', 'eme_sumup_button_img_url', 'eme_sumup_button_above', 'eme_sumup_button_below', 'eme_opayo_demo', 'eme_opayo_vendor_name', 'eme_opayo_test_pwd', 'eme_opayo_live_pwd', 'eme_opayo_cost', 'eme_opayo_cost2', 'eme_opayo_button_label', 'eme_opayo_button_img_url', 'eme_opayo_button_above', 'eme_opayo_button_below' );
+			$options = [ 'eme_default_vat', 'eme_payment_form_header_format', 'eme_payment_form_footer_format', 'eme_multipayment_form_header_format', 'eme_multipayment_form_footer_format', 'eme_payment_succes_format', 'eme_payment_fail_format', 'eme_payment_member_succes_format', 'eme_payment_member_fail_format', 'eme_payment_booking_already_paid_format', 'eme_payment_booking_on_waitinglist_format', 'eme_default_currency', 'eme_default_price', 'eme_payment_refund_ok', 'eme_pg_submit_immediately', 'eme_payment_redirect', 'eme_payment_redirect_wait', 'eme_payment_redirect_msg', 'eme_paypal_url', 'eme_paypal_clientid', 'eme_paypal_secret', 'eme_2co_demo', 'eme_2co_business', 'eme_2co_secret', 'eme_webmoney_purse', 'eme_webmoney_secret', 'eme_webmoney_demo', 'eme_fdgg_url', 'eme_fdgg_store_name', 'eme_fdgg_shared_secret', 'eme_2co_cost', 'eme_paypal_cost', 'eme_fdgg_cost', 'eme_webmoney_cost', 'eme_2co_cost2', 'eme_paypal_cost2', 'eme_fdgg_cost2', 'eme_webmoney_cost2', 'eme_mollie_api_key', 'eme_mollie_cost', 'eme_mollie_cost2', 'eme_paypal_button_label', 'eme_paypal_button_above', 'eme_paypal_button_below', 'eme_2co_button_label', 'eme_2co_button_above', 'eme_2co_button_below', 'eme_fdgg_button_label', 'eme_fdgg_button_above', 'eme_fdgg_button_below', 'eme_webmoney_button_label', 'eme_webmoney_button_above', 'eme_webmoney_button_below', 'eme_mollie_button_label', 'eme_mollie_button_above', 'eme_mollie_button_below', 'eme_paypal_button_img_url', 'eme_2co_button_img_url', 'eme_fdgg_button_img_url', 'eme_webmoney_button_img_url', 'eme_mollie_button_img_url', 'eme_worldpay_demo', 'eme_worldpay_instid', 'eme_worldpay_md5_secret', 'eme_worldpay_md5_parameters', 'eme_worldpay_test_pwd', 'eme_worldpay_live_pwd', 'eme_worldpay_cost', 'eme_worldpay_cost2', 'eme_worldpay_button_label', 'eme_worldpay_button_img_url', 'eme_worldpay_button_above', 'eme_worldpay_button_below', 'eme_braintree_private_key', 'eme_braintree_public_key', 'eme_braintree_merchant_id', 'eme_braintree_env', 'eme_braintree_cost', 'eme_braintree_cost2', 'eme_braintree_button_label', 'eme_braintree_button_img_url', 'eme_braintree_button_above', 'eme_braintree_button_below', 'eme_stripe_private_key', 'eme_stripe_public_key', 'eme_stripe_cost', 'eme_stripe_cost2', 'eme_stripe_button_label', 'eme_stripe_button_img_url', 'eme_stripe_button_above', 'eme_stripe_button_below', 'eme_stripe_payment_methods', 'eme_offline_payment', 'eme_legacypaypal_url', 'eme_legacypaypal_business', 'eme_legacypaypal_no_tax', 'eme_legacypaypal_cost', 'eme_legacypaypal_cost2', 'eme_legacypaypal_button_label', 'eme_legacypaypal_button_img_url', 'eme_legacypaypal_button_above', 'eme_legacypaypal_button_below', 'eme_instamojo_env', 'eme_instamojo_key', 'eme_instamojo_auth_token', 'eme_instamojo_salt', 'eme_instamojo_cost', 'eme_instamojo_cost2', 'eme_instamojo_button_label', 'eme_instamojo_button_img_url', 'eme_instamojo_button_above', 'eme_instamojo_button_below', 'eme_mercadopago_demo', 'eme_mercadopago_sandbox_token', 'eme_mercadopago_live_token', 'eme_mercadopago_cost', 'eme_mercadopago_cost2', 'eme_mercadopago_button_label', 'eme_mercadopago_button_img_url', 'eme_mercadopago_button_above', 'eme_mercadopago_button_below', 'eme_fondy_merchant_id', 'eme_fondy_secret_key', 'eme_fondy_cost', 'eme_fondy_cost2', 'eme_fondy_button_label', 'eme_fondy_button_img_url', 'eme_fondy_button_above', 'eme_fondy_button_below', 'eme_payconiq_api_key', 'eme_payconiq_env', 'eme_payconiq_merchant_id', 'eme_payconiq_cost', 'eme_payconiq_cost2', 'eme_payconiq_button_label', 'eme_payconiq_button_img_url', 'eme_payconiq_button_above', 'eme_payconiq_button_below', 'eme_sumup_merchant_code', 'eme_sumup_app_id', 'eme_sumup_app_secret', 'eme_sumup_cost', 'eme_sumup_cost2', 'eme_sumup_button_label', 'eme_sumup_button_img_url', 'eme_sumup_button_above', 'eme_sumup_button_below', 'eme_opayo_demo', 'eme_opayo_vendor_name', 'eme_opayo_test_pwd', 'eme_opayo_live_pwd', 'eme_opayo_cost', 'eme_opayo_cost2', 'eme_opayo_button_label', 'eme_opayo_button_img_url', 'eme_opayo_button_above', 'eme_opayo_button_below' ];
 			break;
 		case 'maps':
-				$options = array( 'eme_indiv_zoom_factor', 'eme_map_zooming', 'eme_location_baloon_format', 'eme_location_map_icon', 'eme_map_gesture_handling' );
+				$options = [ 'eme_indiv_zoom_factor', 'eme_map_zooming', 'eme_location_baloon_format', 'eme_location_map_icon', 'eme_map_gesture_handling' ];
 			break;
 		case 'other':
-				$options = array( 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_separator', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_allowed_html', 'eme_allowed_style_attr', 'eme_version', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_unique_email_per_person', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' );
+				$options = [ 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_separator', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_allowed_html', 'eme_allowed_style_attr', 'eme_version', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_unique_email_per_person', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' ];
 			break;
 	}
 
@@ -1054,7 +1054,7 @@ function eme_sanitize_options( $input ) {
 	// allow js only in very specific header settings
 	//$allow_js_arr=array('eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html');
 	if ( is_array( $input ) ) {
-		$output = array();
+		$output = [];
 		foreach ($input as $key=>$value) {
 			//if (in_array($key,$allow_js_arr))
 			//	$output[$key]=$value;
@@ -1068,7 +1068,7 @@ function eme_sanitize_options( $input ) {
 }
 
 function eme_admin_tabs( $current = 'homepage' ) {
-	$tabs = array(
+	$tabs = [
 		'general'       => __( 'General', 'events-made-easy' ),
 		'access'        => __( 'Access', 'events-made-easy' ),
 		'seo'           => __( 'SEO', 'events-made-easy' ),
@@ -1085,7 +1085,7 @@ function eme_admin_tabs( $current = 'homepage' ) {
 		'payments'      => __( 'Payments', 'events-made-easy' ),
 		'maps'          => __( 'Maps', 'events-made-easy' ),
 		'other'         => __( 'Other', 'events-made-easy' ),
-	);
+	];
 	if ( ! get_option( 'eme_rsvp_enabled' ) ) {
 		unset( $tabs['rsvp'] );
 	}
@@ -1245,18 +1245,18 @@ function eme_options_page() {
 				eme_options_input_text( __( 'hCaptcha site key', 'events-made-easy' ), 'eme_hcaptcha_site_key', __( 'This field is required', 'events-made-easy' ) );
 				eme_options_input_text( __( 'hCaptcha secret key', 'events-made-easy' ), 'eme_hcaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
 				eme_options_select(
-					__( 'Autocomplete sources', 'events-made-easy' ),
-					'eme_autocomplete_sources',
-					array(
+				    __( 'Autocomplete sources', 'events-made-easy' ),
+				    'eme_autocomplete_sources',
+				    [
 						'none'     => __( 'None', 'events-made-easy' ),
 						'people'   => __( 'EME people', 'events-made-easy' ),
 						'wp_users' => __( 'Wordpress users', 'events-made-easy' ),
 						'both'     => __(
-							'Both EME people and WP users',
-							'events-made-easy'
+						    'Both EME people and WP users',
+						    'events-made-easy'
 						),
-					),
-					__( 'Decide if autocompletion is used in RSVP or membership forms and select if you want to search EME people, WP users or both. The autocompletion only works on the lastname field and only if you have sufficient rights (event creator or event author).', 'events-made-easy' )
+					],
+				    __( 'Decide if autocompletion is used in RSVP or membership forms and select if you want to search EME people, WP users or both. The autocompletion only works on the lastname field and only if you have sufficient rights (event creator or event author).', 'events-made-easy' )
 				);
 				eme_options_radio_binary( __( 'Delete all stored EME data when upgrading or deactivating?', 'events-made-easy' ), 'eme_uninstall_drop_data', __( 'Check this option if you want to delete all EME data concerning events, bookings, ... when upgrading or deactivating the plugin.', 'events-made-easy' ) );
 				eme_options_radio_binary( __( 'Delete all EME settings when upgrading or deactivating?', 'events-made-easy' ), 'eme_uninstall_drop_settings', __( 'Check this option if you want to delete all EME settings when upgrading or deactivating the plugin.', 'events-made-easy' ) );
@@ -1579,10 +1579,10 @@ function eme_options_page() {
 		<input name="eme_rsvp_number_days" type="text" id="eme_rsvp_number_days" value="<?php echo eme_esc_html( $eme_rsvp_number_days ); ?>" size="4"> <?php esc_html_e( 'days', 'events-made-easy' ); ?>
 		<input name="eme_rsvp_number_hours" type="text" id="eme_rsvp_number_hours" value="<?php echo eme_esc_html( $eme_rsvp_number_hours ); ?>" size="4"> <?php esc_html_e( 'hours', 'events-made-easy' ); ?>
 			<?php
-				$eme_rsvp_end_target_list = array(
+				$eme_rsvp_end_target_list = [
 					'start' => __( 'starts', 'events-made-easy' ),
 					'end'   => __( 'ends', 'events-made-easy' ),
-				);
+				];
 				esc_html_e( 'before the event ', 'events-made-easy' );
 				echo eme_ui_select( $eme_rsvp_end_target, 'eme_rsvp_end_target', $eme_rsvp_end_target_list );
 				?>
@@ -1712,31 +1712,31 @@ function eme_options_page() {
 			eme_options_radio_binary( __( 'Force sender address everywhere', 'events-made-easy' ), 'eme_mail_force_from', __( 'Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP mails will be used for generic mails, while for event or membership related mails the configured contact person will be used (or the blog admin if empty).', 'events-made-easy' ) );
 			eme_options_input_text( __( 'Default email BCC', 'events-made-easy' ), 'eme_mail_bcc_address', __( 'Insert an email address that will be added in Bcc to all outgoing mails (multiple addresses are to be separated by comma or semicolon). Can be left empty.', 'events-made-easy' ) );
 			eme_options_select(
-				__( 'Email sending method', 'events-made-easy' ),
-				'eme_rsvp_mail_send_method',
-				array(
+			    __( 'Email sending method', 'events-made-easy' ),
+			    'eme_rsvp_mail_send_method',
+			    [
 					'smtp'     => 'SMTP',
 					'mail'     => __( 'PHP email function', 'events-made-easy' ),
 					'sendmail' => 'Sendmail',
 					'qmail'    => 'Qmail',
 					'wp_mail'  => 'Wordpress Email (default)',
-				),
-				__( 'Select how you want to send out emails.', 'events-made-easy' )
+				],
+			    __( 'Select how you want to send out emails.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'SMTP host', 'events-made-easy' ), 'eme_smtp_host', __( "The SMTP host. Usually it corresponds to 'localhost'.", 'events-made-easy' ) );
 			eme_options_input_text( __( 'SMTP port', 'events-made-easy' ), 'eme_smtp_port', __( "The port through which you email notifications will be sent. Make sure the firewall doesn't block this port", 'events-made-easy' ) );
 			eme_options_select(
-				__( 'SMTP encryption method', 'events-made-easy' ),
-				'eme_smtp_encryption',
-				array(
+			    __( 'SMTP encryption method', 'events-made-easy' ),
+			    'eme_smtp_encryption',
+			    [
 					'none' => __( 'None', 'events-made-easy' ),
 					'tls'  => __( 'TLS', 'events-made-easy' ),
 					'ssl'  => __(
-						'SSL',
-						'events-made-easy'
+					    'SSL',
+					    'events-made-easy'
 					),
-				),
-				__( 'Select the SMTP encryption method.', 'events-made-easy' )
+				],
+			    __( 'Select the SMTP encryption method.', 'events-made-easy' )
 			);
 			eme_options_radio_binary( __( 'Use SMTP authentication?', 'events-made-easy' ), 'eme_rsvp_mail_SMTPAuth', __( 'SMTP authentication is often needed. If you use Gmail, make sure to set this parameter to Yes', 'events-made-easy' ) );
 			eme_options_input_text( __( 'SMTP username', 'events-made-easy' ), 'eme_smtp_username', __( 'Insert the username to be used to access your SMTP server.', 'events-made-easy' ) );
@@ -2168,16 +2168,16 @@ function eme_options_page() {
 			<?php
 			echo "<tr><td colspan='2' class='notice notice-warning'>" . __( 'Remark: due to the incomplete PHP implementation by Paypal, it is not recommended to use this method. It works fine, but has some shortcomings: no webhook functionality (meaning: if someone closes the browser immediately after payment, the payment will not get marked as paid in EME) and refunding is not possible.', 'events-made-easy' ) . '</td></tr>';
 			eme_options_select(
-				__( 'PayPal live or test', 'events-made-easy' ),
-				'eme_paypal_url',
-				array(
+			    __( 'PayPal live or test', 'events-made-easy' ),
+			    'eme_paypal_url',
+			    [
 					'sandbox' => __( 'Paypal Sandbox (for testing)', 'events-made-easy' ),
 					'live'    => __(
-						'Paypal Live',
-						'events-made-easy'
+					    'Paypal Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test paypal in a paypal sandbox or go live and really use paypal.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test paypal in a paypal sandbox or go live and really use paypal.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'PayPal client ID', 'events-made-easy' ), 'eme_paypal_clientid', __( 'Paypal client ID.', 'events-made-easy' ) . '<br>' . sprintf( __( 'For more info on Paypal apps and credentials, see <a href="%s">this page</a>', 'events-made-easy' ), 'https://developer.paypal.com/docs/integration/admin/manage-apps/#create-an-app-for-testing' ) );
 			eme_options_input_text( __( 'PayPal secret', 'events-made-easy' ), 'eme_paypal_secret', __( 'Paypal secret.', 'events-made-easy' ) . '<br>' . sprintf( __( 'For more info on Paypal apps and credentials, see <a href="%s">this page</a>', 'events-made-easy' ), 'https://developer.paypal.com/docs/integration/admin/manage-apps/#create-an-app-for-testing' ) );
@@ -2197,18 +2197,18 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			$notification_link = add_query_arg( array( 'eme_eventAction' => 'legacypaypal_notification' ), $events_page_link );
+			$notification_link = add_query_arg( [ 'eme_eventAction' => 'legacypaypal_notification' ], $events_page_link );
 			eme_options_select(
-				__( 'PayPal live or test', 'events-made-easy' ),
-				'eme_legacypaypal_url',
-				array(
+			    __( 'PayPal live or test', 'events-made-easy' ),
+			    'eme_legacypaypal_url',
+			    [
 					'sandbox' => __( 'Paypal Sandbox (for testing)', 'events-made-easy' ),
 					'live'    => __(
-						'Paypal Live',
-						'events-made-easy'
+					    'Paypal Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test paypal in a paypal sandbox or go live and really use paypal.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test paypal in a paypal sandbox or go live and really use paypal.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'PayPal business info', 'events-made-easy' ), 'eme_legacypaypal_business', __( 'Paypal business ID or email.', 'events-made-easy' ) );
 			eme_options_radio_binary( __( 'Ignore Paypal tax setting?', 'events-made-easy' ), 'eme_legacypaypal_no_tax', __( 'Select yes to ignore the tax setting in your Paypal profile.', 'events-made-easy' ) );
@@ -2230,20 +2230,20 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			$notification_link = add_query_arg( array( 'eme_eventAction' => '2co_notification' ), $events_page_link );
+			$notification_link = add_query_arg( [ 'eme_eventAction' => '2co_notification' ], $events_page_link );
 
 			eme_options_select(
-				__( '2Checkout live or test', 'events-made-easy' ),
-				'eme_2co_demo',
-				array(
+			    __( '2Checkout live or test', 'events-made-easy' ),
+			    'eme_2co_demo',
+			    [
 					2 => __( '2Checkout Sandbox (for testing)', 'events-made-easy' ),
 					1 => __( '2Checkout Test (the "demo" mode)', 'events-made-easy' ),
 					0 => __(
-						'2Checkout Live',
-						'events-made-easy'
+					    '2Checkout Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test 2Checkout in a sandbox or go live and really use 2Checkout.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test 2Checkout in a sandbox or go live and really use 2Checkout.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( '2Checkout Account number', 'events-made-easy' ), 'eme_2co_business', __( '2Checkout Account number.', 'events-made-easy' ) );
 			eme_options_input_password( __( '2Checkout Secret', 'events-made-easy' ), 'eme_2co_secret', __( '2Checkout secret.', 'events-made-easy' ) );
@@ -2264,19 +2264,19 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			$notification_link = add_query_arg( array( 'eme_eventAction' => 'webmoney_notification' ), $events_page_link );
+			$notification_link = add_query_arg( [ 'eme_eventAction' => 'webmoney_notification' ], $events_page_link );
 
 			eme_options_select(
-				__( 'Webmoney live or test', 'events-made-easy' ),
-				'eme_webmoney_demo',
-				array(
+			    __( 'Webmoney live or test', 'events-made-easy' ),
+			    'eme_webmoney_demo',
+			    [
 					1 => __( 'Webmoney Sandbox (for testing)', 'events-made-easy' ),
 					0 => __(
-						'Webmoney Live',
-						'events-made-easy'
+					    'Webmoney Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test Webmoney in a sandbox or go live and really use Webmoney.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test Webmoney in a sandbox or go live and really use Webmoney.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'Webmoney Purse', 'events-made-easy' ), 'eme_webmoney_purse', __( 'Webmoney Purse.', 'events-made-easy' ) );
 			eme_options_input_password( __( 'Webmoney Secret', 'events-made-easy' ), 'eme_webmoney_secret', __( 'Webmoney secret.', 'events-made-easy' ) );
@@ -2297,19 +2297,19 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			$notification_link = add_query_arg( array( 'eme_eventAction' => 'fdgg_notification' ), $events_page_link );
+			$notification_link = add_query_arg( [ 'eme_eventAction' => 'fdgg_notification' ], $events_page_link );
 
 			eme_options_select(
-				__( 'First Data live or test', 'events-made-easy' ),
-				'eme_fdgg_url',
-				array(
+			    __( 'First Data live or test', 'events-made-easy' ),
+			    'eme_fdgg_url',
+			    [
 					'sandbox' => __( 'First Data Sandbox (for testing)', 'events-made-easy' ),
 					'live'    => __(
-						'First Data Live',
-						'events-made-easy'
+					    'First Data Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test First Data in a sandbox or go live and really use First Data.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test First Data in a sandbox or go live and really use First Data.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'First Data Store Name', 'events-made-easy' ), 'eme_fdgg_store_name', __( 'First Data Store Name.', 'events-made-easy' ) );
 			eme_options_input_password( __( 'First Data Shared Secret', 'events-made-easy' ), 'eme_fdgg_shared_secret', __( 'First Data Shared Secret.', 'events-made-easy' ) );
@@ -2330,7 +2330,7 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			$notification_link = add_query_arg( array( 'eme_eventAction' => 'mollie_notification' ), $events_page_link );
+			$notification_link = add_query_arg( [ 'eme_eventAction' => 'mollie_notification' ], $events_page_link );
 
 			eme_options_input_text( __( 'Mollie API key', 'events-made-easy' ), 'eme_mollie_api_key', __( 'Mollie API key', 'events-made-easy' ) );
 			$gateway = 'mollie';
@@ -2350,18 +2350,18 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			$notification_link = add_query_arg( array( 'eme_eventAction' => 'payconiq_notification' ), $events_page_link );
+			$notification_link = add_query_arg( [ 'eme_eventAction' => 'payconiq_notification' ], $events_page_link );
 			eme_options_select(
-				__( 'Payconiq live or test', 'events-made-easy' ),
-				'eme_payconiq_env',
-				array(
+			    __( 'Payconiq live or test', 'events-made-easy' ),
+			    'eme_payconiq_env',
+			    [
 					'sandbox'    => __( 'Payconiq Sandbox (for testing)', 'events-made-easy' ),
 					'production' => __(
-						'Payconiq Live',
-						'events-made-easy'
+					    'Payconiq Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test Payconiq in a sandbox or go live and really use Payconiq.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test Payconiq in a sandbox or go live and really use Payconiq.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'Payconiq API key', 'events-made-easy' ), 'eme_payconiq_api_key', __( 'Payconiq API key', 'events-made-easy' ) );
 			eme_options_input_text( __( 'Payconiq Merchant ID', 'events-made-easy' ), 'eme_payconiq_merchant_id', __( 'Payconiq Merchant ID', 'events-made-easy' ) );
@@ -2382,18 +2382,18 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			$notification_link = add_query_arg( array( 'eme_eventAction' => 'worldpay_notification' ), $events_page_link );
+			$notification_link = add_query_arg( [ 'eme_eventAction' => 'worldpay_notification' ], $events_page_link );
 			eme_options_select(
-				__( 'Worldpay live or test', 'events-made-easy' ),
-				'eme_worldpay_demo',
-				array(
+			    __( 'Worldpay live or test', 'events-made-easy' ),
+			    'eme_worldpay_demo',
+			    [
 					1 => __( 'Worldpay Sandbox (for testing)', 'events-made-easy' ),
 					0 => __(
-						'Worldpay Live',
-						'events-made-easy'
+					    'Worldpay Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test Worldpay in a sandbox or go live and really use Worldpay.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test Worldpay in a sandbox or go live and really use Worldpay.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'Worldpay installation ID', 'events-made-easy' ), 'eme_worldpay_instid', __( 'Worldpay installation ID', 'events-made-easy' ) );
 			eme_options_input_text( __( 'Worldpay MD5 secret', 'events-made-easy' ), 'eme_worldpay_md5_secret', __( 'Worldpay MD5 secret used when submitting payments', 'events-made-easy' ) );
@@ -2418,16 +2418,16 @@ function eme_options_page() {
 <table class='form-table'>
 			<?php
 			eme_options_select(
-				__( 'Opayo live or test', 'events-made-easy' ),
-				'eme_opayo_demo',
-				array(
+			    __( 'Opayo live or test', 'events-made-easy' ),
+			    'eme_opayo_demo',
+			    [
 					1 => __( 'Opayo Sandbox (for testing)', 'events-made-easy' ),
 					0 => __(
-						'Opayo Live',
-						'events-made-easy'
+					    'Opayo Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test Opayo in a sandbox or go live and really use Opayo.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test Opayo in a sandbox or go live and really use Opayo.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'Opayo Vendor Name', 'events-made-easy' ), 'eme_opayo_vendor_name', __( 'Opayo Vendor Name', 'events-made-easy' ) );
 			eme_options_input_password( __( 'Opayo Test Password', 'events-made-easy' ), 'eme_opayo_test_pwd', __( 'Opayo password for testing purposes', 'events-made-easy' ) );
@@ -2449,7 +2449,7 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			$notification_link = add_query_arg( array( 'eme_eventAction' => 'sumup_notification' ), $events_page_link );
+			$notification_link = add_query_arg( [ 'eme_eventAction' => 'sumup_notification' ], $events_page_link );
 			eme_options_input_text( __( 'SumUp Merchant Code', 'events-made-easy' ), 'eme_sumup_merchant_code', __( 'SumUp Merchant Code', 'events-made-easy' ) );
 			eme_options_input_text( __( 'SumUp App ID', 'events-made-easy' ), 'eme_sumup_app_id', __( 'SumUp App ID', 'events-made-easy' ) );
 			eme_options_input_text( __( 'SumUp App Secret', 'events-made-easy' ), 'eme_sumup_app_secret', __( 'SumUp App Secret', 'events-made-easy' ) );
@@ -2470,7 +2470,7 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			$notification_link = add_query_arg( array( 'eme_eventAction' => 'stripe_notification' ), $events_page_link );
+			$notification_link = add_query_arg( [ 'eme_eventAction' => 'stripe_notification' ], $events_page_link );
 			eme_options_input_text( __( 'Stripe Secret Key', 'events-made-easy' ), 'eme_stripe_private_key', __( 'Stripe Secret Key', 'events-made-easy' ) );
 			eme_options_input_text( __( 'Stripe Public Key', 'events-made-easy' ), 'eme_stripe_public_key', __( 'Stripe Public Key', 'events-made-easy' ) );
 			$gateway = 'stripe';
@@ -2480,7 +2480,7 @@ function eme_options_page() {
 			eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
 			eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
 			eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-			$stripe_pms = array(
+			$stripe_pms = [
 				'alipay'            => 'alipay',
 				'card'              => 'card',
 				'ideal'             => 'ideal',
@@ -2498,7 +2498,7 @@ function eme_options_page() {
 				'wechat_pay'        => 'wechat_pay',
 				'boleto'            => 'boleto',
 				'oxxo'              => 'oxxo',
-			);
+			];
 			eme_options_multiselect( __( 'Stripe payment methods', 'events-made-easy' ), 'eme_stripe_payment_methods', $stripe_pms, __( "The different Stripe payment methods you want to handle/provide. Defaults to 'card'. See the <a href='https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types'>Stripe doc</a> for more info.", 'events-made-easy' ), false, 'eme_select2_width50_class' );
 
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
@@ -2526,16 +2526,16 @@ function eme_options_page() {
 <table class='form-table'>
 			<?php
 			eme_options_select(
-				__( 'Braintree live or test', 'events-made-easy' ),
-				'eme_braintree_env',
-				array(
+			    __( 'Braintree live or test', 'events-made-easy' ),
+			    'eme_braintree_env',
+			    [
 					'sandbox'    => __( 'Braintree Sandbox (for testing)', 'events-made-easy' ),
 					'production' => __(
-						'Braintree Live',
-						'events-made-easy'
+					    'Braintree Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test Braintree in a sandbox or go live and really use Braintree.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test Braintree in a sandbox or go live and really use Braintree.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'Braintree Merchant ID', 'events-made-easy' ), 'eme_braintree_merchant_id', __( 'Braintree Merchant ID', 'events-made-easy' ) );
 			eme_options_input_text( __( 'Braintree Public Key', 'events-made-easy' ), 'eme_braintree_public_key', __( 'Braintree Public Key', 'events-made-easy' ) );
@@ -2557,16 +2557,16 @@ function eme_options_page() {
 <table class='form-table'>
 			<?php
 			eme_options_select(
-				__( 'Instamojo live or test', 'events-made-easy' ),
-				'eme_instamojo_env',
-				array(
+			    __( 'Instamojo live or test', 'events-made-easy' ),
+			    'eme_instamojo_env',
+			    [
 					'sandbox'    => __( 'Instamojo Sandbox (for testing)', 'events-made-easy' ),
 					'production' => __(
-						'Instamojo Live',
-						'events-made-easy'
+					    'Instamojo Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test Instamojo in a sandbox or go live and really use Instamojo.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test Instamojo in a sandbox or go live and really use Instamojo.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'Instamojo Private Key', 'events-made-easy' ), 'eme_instamojo_key', __( 'Instamojo Private Key', 'events-made-easy' ) );
 			eme_options_input_text( __( 'Instamojo Private Auth Token', 'events-made-easy' ), 'eme_instamojo_auth_token', __( 'Instamojo Private Auth Token', 'events-made-easy' ) );
@@ -2588,16 +2588,16 @@ function eme_options_page() {
 <table class='form-table'>
 			<?php
 			eme_options_select(
-				__( 'Mercado Pago live or test', 'events-made-easy' ),
-				'eme_mercadopago_demo',
-				array(
+			    __( 'Mercado Pago live or test', 'events-made-easy' ),
+			    'eme_mercadopago_demo',
+			    [
 					1 => __( 'Mercado Pago Sandbox (for testing)', 'events-made-easy' ),
 					0 => __(
-						'Mercado Pago Live',
-						'events-made-easy'
+					    'Mercado Pago Live',
+					    'events-made-easy'
 					),
-				),
-				__( 'Choose wether you want to test Mercado Pago in a sandbox or go live and really use Mercado Pago.', 'events-made-easy' )
+				],
+			    __( 'Choose wether you want to test Mercado Pago in a sandbox or go live and really use Mercado Pago.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'Mercado Pago Sandbox Access Token', 'events-made-easy' ), 'eme_mercadopago_sandbox_token', __( 'Mercado Pago Sandbox Access Token', 'events-made-easy' ) );
 			eme_options_input_text( __( 'Mercado Pago Live Access Token', 'events-made-easy' ), 'eme_mercadopago_live_token', __( 'Mercado Pago Live Access Token', 'events-made-easy' ) );
@@ -2677,7 +2677,7 @@ function eme_options_page() {
 				require_once 'dompdf/2.0.1/vendor/autoload.php';
 				$dompdf                = new Dompdf\Dompdf();
 				$dompdf_fontfamilies   = array_keys( $dompdf->getFontMetrics()->getFontFamilies() );
-				$pdf_font_families_arr = array();
+				$pdf_font_families_arr = [];
 			foreach ( $dompdf_fontfamilies as $font ) {
 				$pdf_font_families_arr[ $font ] = ucwords( $font );
 			}

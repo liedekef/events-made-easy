@@ -8,8 +8,8 @@ function eme_get_calendar_shortcode( $atts ) {
 	global $eme_timezone;
 	eme_enqueue_frontend();
 	extract(
-		shortcode_atts(
-			array(
+	    shortcode_atts(
+		    [
 				'category'       => 0,
 				'notcategory'    => 0,
 				'full'           => 0,
@@ -26,8 +26,8 @@ function eme_get_calendar_shortcode( $atts ) {
 				'htmltable'      => 1,
 				'htmldiv'        => 0,
 				'weekdays'       => '',
-			),
-			$atts
+			],
+		    $atts
 		)
 	);
 
@@ -56,7 +56,7 @@ function eme_get_calendar_shortcode( $atts ) {
 		$month = 1;
 	}
 
-	$location_id_arr = array();
+	$location_id_arr = [];
 	// the filter list overrides the settings
 	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
 		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
@@ -128,7 +128,7 @@ function eme_get_calendar_shortcode( $atts ) {
 function eme_get_calendar( $args = '' ) {
 	global $wp_locale, $eme_timezone;
 
-	$defaults = array(
+	$defaults = [
 		'category'       => 0,
 		'notcategory'    => 0,
 		'full'           => 0,
@@ -144,7 +144,7 @@ function eme_get_calendar( $args = '' ) {
 		'htmltable'      => 1,
 		'htmldiv'        => 0,
 		'weekdays'       => '',
-	);
+	];
 	$r        = wp_parse_args( $args, $defaults );
 	extract( $r );
 	$echo        = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
@@ -154,7 +154,7 @@ function eme_get_calendar( $args = '' ) {
 	if ( ! empty( $weekdays ) ) {
 		$weekday_arr = explode( ',', $weekdays );
 	} else {
-		$weekday_arr = array();
+		$weekday_arr = [];
 	}
 
 	// this comes from global WordPress preferences
@@ -173,10 +173,10 @@ function eme_get_calendar( $args = '' ) {
 		try {
 			$client_timeinfo = eme_sanitize_request( json_decode( $_COOKIE['eme_client_time'], true ) );
 			if ( ! is_array( $client_timeinfo ) ) {
-				$client_timeinfo = array();
+				$client_timeinfo = [];
 			}
 		} catch ( Exception $error ) {
-			$client_timeinfo = array();
+			$client_timeinfo = [];
 		}
 		// avoid php warnings
 		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
@@ -203,11 +203,11 @@ function eme_get_calendar( $args = '' ) {
 			$iNowYear = 0;
 		}
 		if ( empty( $iNowDay ) || empty( $iNowMonth ) || empty( $iNowYear ) ) {
-			list($iNowYear, $iNowMonth, $iNowDay) = explode( '-', $eme_date_obj->getDate() );
+			[$iNowYear, $iNowMonth, $iNowDay] = explode( '-', $eme_date_obj->getDate() );
 		}
 	} else {
 		// Get current year, month and day
-		list($iNowYear, $iNowMonth, $iNowDay) = explode( '-', $eme_date_obj->getDate() );
+		[$iNowYear, $iNowMonth, $iNowDay] = explode( '-', $eme_date_obj->getDate() );
 	}
 
 	$iSelectedYear  = $year;
@@ -317,7 +317,7 @@ function eme_get_calendar( $args = '' ) {
 	$calend   = "$iNextYear-$iNextMonth-07";
 	$events   = eme_get_events( 0, "$calbegin--$calend", 'ASC', 0, $location_id, $category, $author, $contact_person, 1, $notcategory );
 
-	$eventful_days = array();
+	$eventful_days = [];
 	if ( $events ) {
 		// go through the events and slot them into the right d-m index
 		foreach ( $events as $event ) {
@@ -346,7 +346,7 @@ function eme_get_calendar( $args = '' ) {
 					if ( isset( $eventful_days[ $event_eventful_date ] ) && is_array( $eventful_days[ $event_eventful_date ] ) ) {
 						$eventful_days[ $event_eventful_date ][] = $event;
 					} else {
-						$eventful_days[ $event_eventful_date ] = array( $event );
+						$eventful_days[ $event_eventful_date ] = [ $event ];
 					}
 					$eme_date_obj_tmp->addOneDay();
 				}
@@ -356,7 +356,7 @@ function eme_get_calendar( $args = '' ) {
 				if ( isset( $eventful_days[ $event_start_date ] ) && is_array( $eventful_days[ $event_start_date ] ) ) {
 					$eventful_days[ $event_start_date ][] = $event;
 				} else {
-					$eventful_days[ $event_start_date ] = array( $event );
+					$eventful_days[ $event_start_date ] = [ $event ];
 				}
 			}
 		}
@@ -371,9 +371,9 @@ function eme_get_calendar( $args = '' ) {
 
 	$event_title_format           = get_option( 'eme_small_calendar_event_title_format' );
 	$event_title_separator_format = get_option( 'eme_small_calendar_event_title_separator' );
-	$cells                        = array();
-	$holidays                     = array();
-	$holiday_titles               = array();
+	$cells                        = [];
+	$holidays                     = [];
+	$holiday_titles               = [];
 	if ( $holiday_id ) {
 		$holidays = eme_get_holiday_listinfo( $holiday_id );
 		if ( $holidays ) {
@@ -416,7 +416,7 @@ function eme_get_calendar( $args = '' ) {
 
 	foreach ( $eventful_days as $day_key => $events ) {
 		// Set the date into the key
-		$events_titles = array();
+		$events_titles = [];
 		if ( isset( $holiday_titles[ $day_key ] ) ) {
 			$events_titles[] = $holiday_titles[ $day_key ];
 		}
@@ -431,23 +431,23 @@ function eme_get_calendar( $args = '' ) {
 		// Let's add the possible options
 		// template_id is not being used per event
 		if ( ! empty( $location_id ) ) {
-			$cal_day_link = add_query_arg( array( 'location_id' => $location_id ), $cal_day_link );
+			$cal_day_link = add_query_arg( [ 'location_id' => $location_id ], $cal_day_link );
 		}
 		if ( ! empty( $category ) ) {
-			$cal_day_link = add_query_arg( array( 'category' => $category ), $cal_day_link );
+			$cal_day_link = add_query_arg( [ 'category' => $category ], $cal_day_link );
 		}
 		if ( ! empty( $notcategory ) ) {
-			$cal_day_link = add_query_arg( array( 'notcategory' => $notcategory ), $cal_day_link );
+			$cal_day_link = add_query_arg( [ 'notcategory' => $notcategory ], $cal_day_link );
 		}
 		// the hash char and everything following it in a GET is not getting through a browser request, so we replace "#_MYSELF" with just "_MYSELF" here
 		$author         = str_replace( '#_MYSELF', '_MYSELF', $author );
 		$contact_person = str_replace( '#_MYSELF', '_MYSELF', $contact_person );
 
 		if ( ! empty( $author ) ) {
-			$cal_day_link = add_query_arg( array( 'author' => $author ), $cal_day_link );
+			$cal_day_link = add_query_arg( [ 'author' => $author ], $cal_day_link );
 		}
 		if ( ! empty( $contact_person ) ) {
-			$cal_day_link = add_query_arg( array( 'contact_person' => $contact_person ), $cal_day_link );
+			$cal_day_link = add_query_arg( [ 'contact_person' => $contact_person ], $cal_day_link );
 		}
 
 		$event_date = explode( '-', $day_key );
@@ -570,8 +570,8 @@ function eme_get_calendar( $args = '' ) {
 		$sCalDivRows .= "</div>\n";
 	}
 
-	$weekday_names        = array( __( 'Sunday' ), __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ), __( 'Thursday' ), __( 'Friday' ), __( 'Saturday' ) );
-	$weekday_header_class = array( 'Sun_header', 'Mon_header', 'Tue_header', 'Wed_header', 'Thu_header', 'Fri_header', 'Sat_header' );
+	$weekday_names        = [ __( 'Sunday' ), __( 'Monday' ), __( 'Tuesday' ), __( 'Wednesday' ), __( 'Thursday' ), __( 'Friday' ), __( 'Saturday' ) ];
+	$weekday_header_class = [ 'Sun_header', 'Mon_header', 'Tue_header', 'Wed_header', 'Thu_header', 'Fri_header', 'Sat_header' ];
 	$sCalTblDayNames      = '';
 	$sCalDivDayNames      = '';
 	// respect the beginning of the week offset

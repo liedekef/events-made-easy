@@ -326,7 +326,7 @@ function eme_import_csv_locations() {
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
 			}
 		}
-		$result = sprintf( __( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
+		$result = sprintf( __( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
 		if ( $errors ) {
 			$result .= '<br>' . $error_msg;
 		}

@@ -273,7 +273,7 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 				$end_date      = eme_localized_date( $member['end_date'], $eme_timezone );
 				$next_end_date = eme_get_next_end_date( $membership, $member['end_date'] );
 				$next_end_date = eme_localized_date( $next_end_date, $eme_timezone );
-				$ret_string   .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %1$s. If you pay the membership fee again, your membership will be extended until %2$s', 'events-made-easy' ), $end_date, $next_end_date ) . '</div>';
+				$ret_string   .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s', 'events-made-easy' ), $end_date, $next_end_date ) . '</div>';
 			} elseif ( $member['status'] == EME_MEMBER_STATUS_EXPIRED ) {
 				// set the third option to eme_get_start_date to 1, to force a new startdate (only has an effect for rolling-type memberships)
 				$new_start_date = eme_get_start_date( $membership, $member, 1 );

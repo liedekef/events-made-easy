@@ -804,7 +804,7 @@ function eme_import_csv_people() {
 			}
 			if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
 								++$errors;
-				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
 			} elseif ( isset( $line['lastname'] ) && isset( $line['firstname'] ) && isset( $line['email'] ) ) {
 				// also import properties
 				foreach ( $line as $key => $value ) {
@@ -870,7 +870,7 @@ function eme_import_csv_people() {
 		}
 	}
 	fclose( $handle );
-	$result = sprintf( esc_html__( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
+	$result = sprintf( esc_html__( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
 	if ( $errors ) {
 		$result .= '<br>' . $error_msg;
 	}

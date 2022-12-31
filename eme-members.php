@@ -5161,16 +5161,16 @@ function eme_import_csv_members() {
 			}
 			if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
 				++$errors;
-				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
 			} elseif ( ! empty( $line['start_date'] ) && ! eme_is_date( $line['start_date'] ) ) {
 				++$errors;
-				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'start_date', implode( ',', $row ) ) );
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'start_date', implode( ',', $row ) ) );
 			} elseif ( ! empty( $line['end_date'] ) && ! eme_is_date( $line['end_date'] ) ) {
 				++$errors;
-				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'end_date', implode( ',', $row ) ) );
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'end_date', implode( ',', $row ) ) );
 			} elseif ( ! empty( $line['creation_date'] ) && ! ( eme_is_date( $line['creation_date'] ) || eme_is_datetime( $line['creation_date'] ) ) ) {
 				++$errors;
-				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'creation_date', implode( ',', $row ) ) );
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'creation_date', implode( ',', $row ) ) );
 			} elseif ( isset( $line['lastname'] ) && isset( $line['firstname'] ) && isset( $line['email'] ) && isset( $line['membership'] ) && isset( $line['start_date'] ) ) {
 				// we need at least 4 fields present, otherwise nothing will be done
 				$person_id  = 0;
@@ -5259,7 +5259,7 @@ function eme_import_csv_members() {
 		}
 	}
 	fclose( $handle );
-	$result = sprintf( __( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
+	$result = sprintf( __( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
 	if ( $errors ) {
 		$result .= '<br>' . $error_msg;
 	}
@@ -5399,7 +5399,7 @@ function eme_import_csv_member_dynamic_answers() {
 		}
 	}
 	fclose( $handle );
-	$result = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
+	$result = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
 	if ( $errors ) {
 		$result .= '<br>' . $error_msg;
 	}
@@ -5595,7 +5595,7 @@ function eme_ajax_memberships_list() {
 		}
 		$total = $mainmembercount[ $item['membership_id'] ] + $familymembercount[ $item['membership_id'] ];
 		if ( ! empty( $item['properties']['family_membership'] ) ) {
-			$record['membercount'] = $total . ' (' . sprintf( esc_html__( '%1$d head of the family accounts + %2$d family members', 'events-made-easy' ), $mainmembercount[ $item['membership_id'] ], $familymembercount[ $item['membership_id'] ] ) . ')';
+			$record['membercount'] = $total . ' (' . sprintf( esc_html__( '%d head of the family accounts + %d family members', 'events-made-easy' ), $mainmembercount[ $item['membership_id'] ], $familymembercount[ $item['membership_id'] ] ) . ')';
 		} else {
 			$record['membercount'] = $total;
 		}

@@ -986,10 +986,10 @@ function eme_events_page_content() {
 			$seats_booked     = $booking['booking_seats'];
 			if ( $attendance_count > $seats_booked ) {
 				$img     = "<img src='" . esc_url($eme_plugin_url) . "images/error-48.png'>";
-				$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%1$d, max count=%2$d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
+				$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
 			} else {
 				$img     = "<img src='" . esc_url($eme_plugin_url) . "images/good-48.png'>";
-				$format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%1$d, max count=%2$d', 'events-made-easy' ), $attendance_count, $seats_booked );
+				$format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked );
 				$format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), eme_esc_html( $event['event_name'] ) );
 				if ( $event['event_properties']['attendancerecord'] ) {
 					$res = eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );
@@ -5599,10 +5599,10 @@ function eme_import_csv_events() {
 
 			if ( ! empty( $line['event_start_date'] ) && ! eme_is_date( $line['event_start_date'] ) ) {
 								++$errors;
-								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'event_start_date', implode( ',', $row ) ) );
+								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_start_date', implode( ',', $row ) ) );
 			} elseif ( ! empty( $line['event_end_date'] ) && ! eme_is_date( $line['event_end_date'] ) ) {
 								++$errors;
-								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %1$s not valid): %2$s', 'events-made-easy' ), 'event_end_date', implode( ',', $row ) ) );
+								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_end_date', implode( ',', $row ) ) );
 			} elseif ( isset( $line['event_name'] ) ) {
 				if ( ! isset( $line['location_id'] ) ) {
 					$line['location_id'] = $location_id;
@@ -5677,7 +5677,7 @@ function eme_import_csv_events() {
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
 			}
 		}
-		$result = sprintf( __( 'Import finished: %1$d inserts, %2$d updates, %3$d errors', 'events-made-easy' ), $inserted, $updated, $errors );
+		$result = sprintf( __( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
 		if ( $errors ) {
 			$result .= '<br>' . $error_msg;
 		}
@@ -6314,7 +6314,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 							<?php
 								$view_button_text = __( 'View' );
 								$view_button      = sprintf(
-								    '%1$s<span class="screen-reader-text"> %2$s</span> &raquo;',
+								    '%s<span class="screen-reader-text"> %s</span> &raquo;',
 								    $view_button_text,
 									/* translators: Accessibility text. */
 										__( '(opens in a new tab)' )

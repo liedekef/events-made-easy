@@ -83,7 +83,7 @@ function eme_countries_page() {
 									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
-							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
+							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
 							if ( $errors ) {
 								$message .= '<br>' . $error_msg;
 							}
@@ -142,7 +142,7 @@ function eme_countries_page() {
 									$error_msg .= '<br>' . esc_html( sprintf( __( 'Not imported: %s', 'events-made-easy' ), implode( ',', $row ) ) );
 								}
 							}
-							$message = sprintf( __( 'Import finished: %1$d inserts, %2$d errors', 'events-made-easy' ), $inserted, $errors );
+							$message = sprintf( __( 'Import finished: %d inserts, %d errors', 'events-made-easy' ), $inserted, $errors );
 							if ( $errors ) {
 								$message .= '<br>' . $error_msg;
 							}

@@ -384,7 +384,7 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 		'5'  => __( 'the fifth %s of the month', 'events-made-easy' ),
 		'-1' => __( 'the last %s of the month', 'events-made-easy' ),
 	];
-	$output         = sprintf( __( 'From %1$s to %2$s', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], $eme_timezone ), eme_localized_date( $recurrence['recurrence_end_date'], $eme_timezone ) ) . ', ';
+	$output         = sprintf( __( 'From %s to %s', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], $eme_timezone ), eme_localized_date( $recurrence['recurrence_end_date'], $eme_timezone ) ) . ', ';
 	if ( $recurrence['recurrence_freq'] == 'daily' ) {
 		$freq_desc = __( 'everyday', 'events-made-easy' );
 		if ( $recurrence['recurrence_interval'] > 1 ) {

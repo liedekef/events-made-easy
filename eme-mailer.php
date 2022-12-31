@@ -601,7 +601,7 @@ function eme_mark_mailing_completed( $mailing_id ) {
 	if ( $stats['failed'] > 0 ) {
 		$mailing        = eme_get_mailing( $mailing_id );
 		$failed_subject = __( 'Mailing completed with errors', 'events-made-easy' );
-		$failed_body    = sprintf( __( 'Mailing "%1$s" completed with %2$d errors, please check the mailing report', 'events-made-easy' ), $mailing['name'], $stats['failed'] );
+		$failed_body    = sprintf( __( 'Mailing "%s" completed with %d errors, please check the mailing report', 'events-made-easy' ), $mailing['name'], $stats['failed'] );
 		eme_send_mail( $failed_subject, $failed_body, $mailing['replytoemail'], $mailing['replytoname'], $mailing['replytoemail'], $mailing['replytoname'] );
 	}
 }
@@ -2451,7 +2451,7 @@ function eme_ajax_mailings_div() {
 		if ( $mailing['status'] == 'cancelled' ) {
 			$status = __( 'Cancelled', 'events-made-easy' );
 			$stats  = eme_unserialize( $mailing['stats'] );
-			$extra  = sprintf( __( '%1$d mails sent, %2$d mails failed, %3$d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
+			$extra  = sprintf( __( '%d mails sent, %d mails failed, %d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
 			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a> <a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=archive_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Archive', 'events-made-easy' ) . '</a>';
 		} elseif ( $mailing['status'] == 'initial' ) {
 			$status = __( 'Initializing ...', 'events-made-easy' );
@@ -2466,12 +2466,12 @@ function eme_ajax_mailings_div() {
 		} elseif ( $mailing['status'] == 'ongoing' ) {
 			$status = __( 'Ongoing', 'events-made-easy' );
 			$stats  = eme_get_mailing_stats( $id );
-			$extra  = sprintf( __( '%1$d mails sent, %2$d mails failed, %3$d mails left', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['planned'] );
+			$extra  = sprintf( __( '%d mails sent, %d mails failed, %d mails left', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['planned'] );
 			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
 		} elseif ( $mailing['status'] == 'completed' || $mailing['status'] == '' ) {
 			$status = __( 'Completed', 'events-made-easy' );
 			$stats  = eme_unserialize( $mailing['stats'] );
-			$extra  = sprintf( __( '%1$d mails sent, %2$d mails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
+			$extra  = sprintf( __( '%d mails sent, %d mails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
 			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a> <a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=archive_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Archive', 'events-made-easy' ) . '</a>';
 		}
 		if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
@@ -2533,7 +2533,7 @@ function eme_ajax_mail_archive_div() {
 	foreach ( $mailings as $mailing ) {
 		$id     = $mailing['id'];
 		$stats  = eme_unserialize( $mailing['stats'] );
-		$extra  = sprintf( __( '%1$d mails sent, %2$d mails failed, %3$d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
+		$extra  = sprintf( __( '%d mails sent, %d mails failed, %d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
 		$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . '</a>';
 		if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
 			$action .= " <a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a>';

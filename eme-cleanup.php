@@ -181,7 +181,7 @@ function eme_cleanup_page() {
 
 				if ( $eme_number > 1 ) {
 					eme_cleanup_events( $eme_number, $eme_period );
-					$message = sprintf( __( 'Cleanup done: events (and corresponding booking data) older than %1$d %2$s(s) have been removed.', 'events-made-easy' ), $eme_number, $eme_period );
+					$message = sprintf( __( 'Cleanup done: events (and corresponding booking data) older than %d %s(s) have been removed.', 'events-made-easy' ), $eme_number, $eme_period );
 				}
 			} elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_unpaid' ) {
 				$eme_number = 0;

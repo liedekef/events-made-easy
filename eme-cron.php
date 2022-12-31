@@ -260,7 +260,7 @@ function eme_cron_page() {
 							$eme_cron_queue_count     = get_option( 'eme_cron_queue_count' );
 							$eme_cron_queued_schedule = wp_get_schedule( 'eme_cron_send_queued' );
 							$mail_schedule            = $schedules[ $eme_cron_queued_schedule ];
-							$message                  = sprintf( __( '%1$s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %2$d %3$s)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count, $mail_schedule['display'] );
+							$message                  = sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count, $mail_schedule['display'] );
 						}
 					} else {
 						$message = __( 'New events will not be mailed to EME registered people.', 'events-made-easy' );
@@ -358,7 +358,7 @@ function eme_cron_form( $message = '' ) {
 		if ( isset( $schedules[ $eme_cron_send_queued_schedule ] ) ) {
 			$schedule = $schedules[ $eme_cron_send_queued_schedule ];
 			echo '<br>';
-			echo sprintf( esc_html__( 'Queued mails will be send out in batches of %1$d %2$s', 'events-made-easy' ), get_option( 'eme_cron_queue_count' ), $schedule['display'] );
+			echo sprintf( esc_html__( 'Queued mails will be send out in batches of %d %s', 'events-made-easy' ), get_option( 'eme_cron_queue_count' ), $schedule['display'] );
 		}
 	}
 

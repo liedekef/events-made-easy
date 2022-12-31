@@ -4601,10 +4601,10 @@ function eme_import_csv_payments() {
 								$ignored_msg .= '<br>' . eme_esc_html( sprintf( __( 'No linked payment found: %s', 'events-made-easy' ), implode( $delimiter, $row ) ) );
 			} elseif ( ! eme_is_date( $payment_date ) ) {
 								++$errors;
-								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %1$s not valid: %2$s', 'events-made-easy' ), 'payment_date', implode( $delimiter, $row ) ) );
+								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'payment_date', implode( $delimiter, $row ) ) );
 			} elseif ( empty( $amount ) ) {
 								++$errors;
-								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %1$s not valid: %2$s', 'events-made-easy' ), 'amount', implode( $delimiter, $row ) ) );
+								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'amount', implode( $delimiter, $row ) ) );
 			} else {
 				$to_pay = eme_get_payment_price( $payment_id );
 				if ( $to_pay == 0 ) {
@@ -4615,11 +4615,11 @@ function eme_import_csv_payments() {
 					eme_mark_payment_paid( $payment_id, 0 );
 				} else {
 					++$errors;
-					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Amount paid (%1$s) is not equal to the expected amount (%2$s): %3$s', 'events-made-easy' ), $amount, $to_pay, implode( $delimiter, $row ) ) );
+					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Amount paid (%s) is not equal to the expected amount (%s): %s', 'events-made-easy' ), $amount, $to_pay, implode( $delimiter, $row ) ) );
 				}
 			}
 		}
-		$result = sprintf( __( 'Import finished: %1$d entries marked as paid, %2$d ignored, %3$d errors', 'events-made-easy' ), $updated, $ignored, $errors );
+		$result = sprintf( __( 'Import finished: %d entries marked as paid, %d ignored, %d errors', 'events-made-easy' ), $updated, $ignored, $errors );
 		if ( $ignored ) {
 			$result .= '<br><br>' . __( 'Ignored entries', 'events-made-easy' ) . '<br>' . $ignored_msg;
 		}

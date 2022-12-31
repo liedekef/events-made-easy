@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // Setting constants
 define( 'EME_VERSION', '2.3.29' );
-define( 'EME_DB_VERSION', 363 );
+define( 'EME_DB_VERSION', 364 );
 define( 'EVENTS_TBNAME', 'eme_events' );
 define( 'EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -484,6 +484,9 @@ function _eme_install() {
 		update_option( 'eme_cron_send_queued', $schedule );
 	}
 	eme_plan_queue_mails();
+
+	// remove possible translations in WP
+	array_map( 'wp_delete_file', glob( WP_CONTENT_DIR."/languages/plugins/events-made-easy*" ) );
 
 	// now set the version correct
 	update_option( 'eme_version', EME_DB_VERSION );

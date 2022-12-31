@@ -2075,23 +2075,4 @@ function eme_explain_events_page_missing() {
 	<?php
 }
 
-/*
-add_filter( 'admin_footer_text', 'eme_admin_footer_text' );
-function eme_admin_footer_text( $text ) {
-	global $plugin_page;
-	if ( empty( $plugin_page ) ) {
-			return $text;
-	}
-
-	if ( preg_match( '/^eme-/', $plugin_page ) ) {
-		$text = sprintf(
-				/* translators: %s: review url */
-			__( 'If you like Events Made Easy, please leave a <a href="%s" target="_blank" style="text-decoration:none">★★★★★</a> rating. A huge thanks in advance!', 'events-made-easy' ),
-		    'https://wordpress.org/support/plugin/events-made-easy/reviews/?filter=5'
-		);
-	}
-	return $text;
-}
-*/
-
 ?>

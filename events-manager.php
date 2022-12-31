@@ -2075,6 +2075,7 @@ function eme_explain_events_page_missing() {
 	<?php
 }
 
+/*
 add_filter( 'admin_footer_text', 'eme_admin_footer_text' );
 function eme_admin_footer_text( $text ) {
 	global $plugin_page;
@@ -2091,5 +2092,6 @@ function eme_admin_footer_text( $text ) {
 	}
 	return $text;
 }
+*/
 
 ?>

@@ -12,7 +12,8 @@
 cd pot_gen
 # path to plugin
 plugin_dir="../../"
-php makepot.php --exclude="langs/pot_gen,plugin-update-checker" wp-plugin $plugin_dir "$plugin_dir/langs/events-made-easy.pot"
+# excludes langs/pot_gen,plugin-update-checker are set fixed in makepot.php
+php makepot.php wp-plugin $plugin_dir "$plugin_dir/langs/events-made-easy.pot"
 cd "$plugin_dir/langs"
 for i in `ls *po`; do
    j=`echo "${i%.*}"`

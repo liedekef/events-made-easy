@@ -17,7 +17,10 @@ php makepot.php wp-plugin $plugin_dir "$plugin_dir/langs/events-made-easy.pot"
 cd "$plugin_dir/langs"
 for i in `ls *po`; do
    j=`echo "${i%.*}"`
-   msgmerge --strict -o "$j-new.po" "$i" events-made-easy.pot
+   # first remove old location comments
+   grep -v '^# File:' $i > "$j-new.po"
+   mv "$j-new.po" "$j.po"
+   msgmerge --strict -o "$j-new.po" "$j.po" events-made-easy.pot
    echo "==> Compiling strings for $i"
    msgfmt --strict -c -v -o "$j-new.mo" "$j-new.po"
    mv "$j-new.po" "$j.po"

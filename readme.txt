@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.30
+Stable tag: 2.3.31
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
+= 2.3.31 (2023/01/01) =
+* No changes, but release to make sure new updates come in fine
+
 = 2.3.30 (2023/01/01) =
 * Fix plugin update checker to actually use the released zip (of course that will only really work from this release onwards :-) )
 * Use short php array notation, and updated lang files

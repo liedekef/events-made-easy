@@ -513,11 +513,10 @@ function eme_get_formfield( $field_info ) {
 	return $formfield;
 }
 
-function eme_delete_formfields( $formfields ) {
+function eme_delete_formfields( $ids_arr ) {
 	global $wpdb,$eme_db_prefix;
 	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
-	if ( ! empty( $formfields ) && eme_array_integers( $formfields ) ) {
-		$ids_arr = explode( ',', $formfields );
+	if ( ! empty( $ids_arr ) && eme_array_integers( $ids_arr ) ) {
 		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
 		$validation_result = $wpdb->query( $wpdb->prepare("DELETE FROM $formfields_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
 		if ( $validation_result !== false ) {

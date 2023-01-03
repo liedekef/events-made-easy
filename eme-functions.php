@@ -1810,7 +1810,27 @@ function eme_is_numeric_array( $only_integers ) {
 	if ( ! is_array( $only_integers ) ) {
 		return false;
 	}
-	return array_map( 'intval', array_filter( $only_integers, 'is_numeric' )) === $only_integers;
+	return array_filter( $only_integers, 'is_numeric' ) === $only_integers;
+	/* the next code works to check if the array is actual only positive integers (or strings of), but we don't need to go that far (mysql itself will protect us here)
+	$tmp_arr = array_filter( $only_integers, 'is_numeric' );
+        // if the filtered array is identical to the original, it only contains numeric values
+        if ($tmp_arr === $only_integers) {
+                // now check the values, to eliminate negatives and floating point
+                $tmp_arr = array_map(function ($value) {
+                        // let's use non-signed integers in one array
+                        return abs((int)$value);
+                }, $tmp_arr);
+
+                $only_integers = array_map(function ($value) {
+                        // let's convert the original to numbers using a trick
+                        return $value+0;
+                }, $only_integers);
+                return $tmp_arr === $only_integers;
+        } else {
+                return false;
+        }
+	 */
+
 }
 
 function eme_is_list_of_int( $text ) {

@@ -844,9 +844,8 @@ function eme_metabox_options_delete() {
 			$keys[] = "'{$option}_{$screen}'";
 		}
 	}
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($keys), '%s'));
-	$sql = $wpdb->prepare( "DELETE FROM {$wpdb->usermeta} WHERE meta_key IN ( $commaDelimitedPlaceholders )", $keys);
-	$wpdb->query($sq);
+	$my_list = implode(',', $keys);
+	$wpdb->query( "DELETE FROM {$wpdb->usermeta} WHERE meta_key IN ( $my_list )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 }
 
 function eme_options_postsave_actions() {

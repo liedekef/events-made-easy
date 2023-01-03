@@ -121,7 +121,7 @@ function eme_locations_page() {
 			//switched to WP TinyMCE field
 			$location['location_description'] = eme_kses_maybe_unfiltered( $_POST['content'] );
 
-			if ( isset( $_POST['location_category_ids'] ) && eme_array_integers( $_POST['location_category_ids'] ) ) {
+			if ( isset( $_POST['location_category_ids'] ) && eme_is_numeric_array( $_POST['location_category_ids'] ) ) {
 				$location ['location_category_ids'] = join( ',', $_POST['location_category_ids'] );
 			} else {
 				$location ['location_category_ids'] = '';
@@ -1122,7 +1122,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 
 		if ( ! empty( $location_id ) ) {
 			$location_ids = explode( ',', $location_id );
-			if ( eme_array_integers( $location_ids ) ) {
+			if ( eme_is_numeric_array( $location_ids ) ) {
 				$conditions [] = "(location_id IN ($location_id))";
 			}
 		}
@@ -2878,7 +2878,7 @@ function eme_ajax_locations_list() {
 		foreach ( $formfields_searchable as $formfield ) {
 				$field_ids_arr[] = $formfield['field_id'];
 		}
-		if ( ! empty( $_REQUEST['search_customfieldids'] ) && eme_array_integers( $_REQUEST['search_customfieldids'] ) ) {
+		if ( ! empty( $_REQUEST['search_customfieldids'] ) && eme_is_numeric_array( $_REQUEST['search_customfieldids'] ) ) {
 					$field_ids = join( ',', $_REQUEST['search_customfieldids'] );
 		} else {
 			$field_ids = join( ',', $field_ids_arr );

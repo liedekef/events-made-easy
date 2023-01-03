@@ -145,10 +145,9 @@ function eme_templates_page() {
 		} elseif ( $_POST['eme_admin_action'] == 'do_deletetemplate' && isset( $_POST['templates'] ) ) {
 			// Delete template or multiple
 			$templates = eme_sanitize_request( $_POST['templates'] );
-			if ( ! empty( $templates ) && eme_array_integers( $templates ) ) {
-				$commaDelimitedPlaceholders = implode(',', array_fill(0, count($templates), '%d'));
-                                $sql = $wpdb->prepare( "DELETE FROM $templates_table WHERE id IN ( $commaDelimitedPlaceholders )", $templates);
-                                $validation_result = $wpdb->query( $sql );
+			if ( ! empty( $templates ) && eme_is_numeric_array( $templates ) ) {
+				$ids_list = implode(',', $templates);
+                                $validation_result = $wpdb->query( "DELETE FROM $templates_table WHERE id IN ( $ids_list )"); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully deleted the selected template(s).', 'events-made-easy' );
 				} else {

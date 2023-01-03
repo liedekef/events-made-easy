@@ -62,12 +62,11 @@ function eme_holidays_page() {
 		} elseif ( $_POST['eme_admin_action'] == 'do_deleteholidays' && isset( $_POST['holidays'] ) ) {
 			// Delete holidays
 			$holidays = eme_sanitize_request($_POST['holidays']);
-			if ( is_array( $holidays ) && eme_array_integers( $holidays ) ) {
+			if ( is_array( $holidays ) && eme_is_numeric_array( $holidays ) ) {
 				//Run the query if we have an array of holidays ids
 				if ( count( $holidays > 0 ) ) {
-					$commaDelimitedPlaceholders = implode(',', array_fill(0, count($holidays), '%d'));
-					$sql = $wpdb->prepare( "DELETE FROM $holidays_table WHERE id IN ( $commaDelimitedPlaceholders )", $holidays);
-					$validation_result = $wpdb->query( $sql );
+					$ids_list = implode(',', $holidays);
+					$validation_result = $wpdb->query( "DELETE FROM $holidays_table WHERE id IN ( $ids_list )"); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 					if ( $validation_result !== false ) {
 						$message = __( 'Successfully deleted the selected holiday lists.', 'events-made-easy' );
 					} else {

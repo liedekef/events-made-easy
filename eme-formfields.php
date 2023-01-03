@@ -516,18 +516,18 @@ function eme_get_formfield( $field_info ) {
 function eme_delete_formfields( $ids_arr ) {
 	global $wpdb,$eme_db_prefix;
 	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
-	if ( ! empty( $ids_arr ) && eme_array_integers( $ids_arr ) ) {
-		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-		$validation_result = $wpdb->query( $wpdb->prepare("DELETE FROM $formfields_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
+	if ( ! empty( $ids_arr ) && eme_is_numeric_array( $ids_arr ) ) {
+		$ids_list = implode(',', $ids_arr);
+		$validation_result = $wpdb->query( "DELETE FROM $formfields_table WHERE field_id IN ($ids_list)" );
 		if ( $validation_result !== false ) {
 			$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $answers_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
+			$wpdb->query( "DELETE FROM $answers_table WHERE field_id IN ($ids_list)" );
 			$events_customfields_table = $eme_db_prefix . EVENTS_CF_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $events_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
+			$wpdb->query( "DELETE FROM $events_customfields_table WHERE field_id IN ($ids_list)" );
 			$locations_customfields_table = $eme_db_prefix . LOCATIONS_CF_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $locations_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
+			$wpdb->query( "DELETE FROM $locations_customfields_table WHERE field_id IN ($ids_list)" );
 			$memberships_customfields_table = $eme_db_prefix . MEMBERSHIPS_CF_TBNAME;
-			$wpdb->query( $wpdb->prepare("DELETE FROM $memberships_customfields_table WHERE field_id IN ($commaDelimitedPlaceholders)", $ids_arr ));
+			$wpdb->query( "DELETE FROM $memberships_customfields_table WHERE field_id IN ($ids_list)" );
 			return true;
 		} else {
 			return false;
@@ -4081,9 +4081,10 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of match)
 				$group_ids = substr( $matches[1], 1, -1 );
-				$ids_arr   = explode( ',', $group_ids );
-				if ( eme_array_integers( $ids_arr ) ) {
-						$groups = eme_get_public_groups( $group_ids );
+				if ( eme_is_list_of_int( $group_ids ) ) {
+					$groups  = eme_get_public_groups( $group_ids );
+					// if only 1 group id, take that one
+					$ids_arr = explode( ',', $group_ids );
 					if ( count( $ids_arr ) == 1 ) {
 						$selected_value = $ids_arr[0];
 						$replacement    = eme_ui_select_key_value( $selected_value, 'email_group', $groups, 'group_id', 'name', '', 1 );
@@ -4595,13 +4596,12 @@ function eme_convert_answer_price( $answer ) {
 	}
 }
 
-function eme_get_answer_fieldids( $booking_ids_arr ) {
+function eme_get_answer_fieldids( $ids_arr ) {
 	global $wpdb,$eme_db_prefix;
 	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($booking_ids_arr), '%d'));
-	$sql = $wpdb->prepare("SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($commaDelimitedPlaceholders) ORDER BY field_id", $booking_ids_arr);
-	return $wpdb->get_col( $sql );
+	$ids_list = implode(',', $ids_arr);
+	return $wpdb->get_col( "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($ids_list) ORDER BY field_id" );
 }
 
 function eme_get_people_export_fieldids() {
@@ -4856,7 +4856,7 @@ function eme_ajax_manage_formfields() {
 				break;
 			case 'deleteFormfields':
 				$field_ids = explode( ',', eme_sanitize_request($_POST['field_id']) );
-				if (eme_array_integers( $field_ids)) {
+				if (eme_is_numeric_array( $field_ids)) {
 					// validation happens in the eme_delete_formfields function
 					eme_delete_formfields( $field_ids );
 					$jTableResult['Result']      = 'OK';

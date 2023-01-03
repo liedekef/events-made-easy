@@ -44,10 +44,7 @@ function eme_delete_attendances( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
 	if (eme_is_list_of_int($ids) ) {
-		$ids_arr = explode(',', $ids);
-		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-		$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE id IN ( $commaDelimitedPlaceholders )", $ids_arr);
-		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( "DELETE FROM $attendances_table WHERE id IN ($ids)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 }
 
@@ -55,10 +52,7 @@ function eme_delete_person_attendances( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
 	if (eme_is_list_of_int($ids) ) {
-		$ids_arr = explode(',', $ids);
-		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-		$sql = $wpdb->prepare( "DELETE FROM $attendances_table WHERE person_id IN ( $commaDelimitedPlaceholders )", $ids_arr);
-		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( "DELETE FROM $attendances_table WHERE person_id IN ($ids)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 }
 

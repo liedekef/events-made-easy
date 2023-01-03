@@ -123,7 +123,7 @@ function eme_discounts_page() {
 								if ( ! empty( $line['dgroup'] ) ) {
 									$dgroups    = $line['group'];
 									$dgroup_arr = explode( ',', $dgroups );
-									if ( ! eme_array_integers( $dgroup_arr ) ) {
+									if ( ! eme_is_numeric_array( $dgroup_arr ) ) {
 										$selected_dgroup_arr = [];
 										foreach ( $dgroup_arr as $dgroup_name ) {
 											$dgroup = eme_get_discountgroup_by_name( $dgroup_name );
@@ -792,7 +792,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		if ( ! empty( $selected_dgroup ) ) {
 			// let's see if the dgroup is an array of integers, if not: we take it as a name and convert it to 1 id
 			$selected_dgroup_arr = explode( ',', $selected_dgroup );
-			if ( ! eme_array_integers( $selected_dgroup_arr ) ) {
+			if ( ! eme_is_numeric_array( $selected_dgroup_arr ) ) {
 				$dgroup = eme_get_discountgroup_by_name( $selected_dgroup );
 				// take the case where the group no longer exists into account
 				if ( ! empty( $dgroup ) ) {
@@ -1604,7 +1604,7 @@ function eme_ajax_discounts_list() {
 			// let's see if the dgroup is an csv of integers, if so: convert to names
 			$selected_dgroup_arr = explode( ',', $selected_dgroup );
 			$res_arr             = [];
-			if ( eme_array_integers( $selected_dgroup_arr ) ) {
+			if ( eme_is_numeric_array( $selected_dgroup_arr ) ) {
 				foreach ( $selected_dgroup_arr as $dgroup_id ) {
 					$dgroup = eme_get_discountgroup( $dgroup_id );
 					if ( ! empty( $dgroup ) ) {
@@ -1781,7 +1781,7 @@ function eme_ajax_manage_discounts() {
 			case 'changeValidFrom':
 				$date    = ( isset( $_POST['new_validfrom'] ) ) ? eme_sanitize_request( $_POST['new_validfrom'] ) : '';
 				$ids_arr = explode( ',', eme_sanitize_request($_POST['id']) );
-				if ( eme_is_datetime( $date ) && eme_array_integers( $ids_arr ) ) {
+				if ( eme_is_datetime( $date ) && eme_is_numeric_array( $ids_arr ) ) {
 					foreach ( $ids_arr as $discount_id ) {
 							eme_change_discount_validfrom( $discount_id, $date );
 					}
@@ -1791,7 +1791,7 @@ function eme_ajax_manage_discounts() {
 			case 'changeValidTo':
 				$date    = ( isset( $_POST['new_validto'] ) ) ? eme_sanitize_request( $_POST['new_validto'] ) : '';
 				$ids_arr = explode( ',', eme_sanitize_request($_POST['id']) );
-				if ( eme_is_datetime( $date ) && eme_array_integers( $ids_arr ) ) {
+				if ( eme_is_datetime( $date ) && eme_is_numeric_array( $ids_arr ) ) {
 					foreach ( $ids_arr as $discount_id ) {
 						eme_change_discount_validto( $discount_id, $date );
 					}
@@ -1801,7 +1801,7 @@ function eme_ajax_manage_discounts() {
 			case 'addToGroup':
 				$group_id = ( isset( $_POST['addtogroup'] ) ) ? intval( $_POST['addtogroup'] ) : 0;
 				$ids_arr  = explode( ',', eme_sanitize_request($_POST['id']) );
-				if ( eme_array_integers( $ids_arr ) ) {
+				if ( eme_is_numeric_array( $ids_arr ) ) {
 					foreach ( $ids_arr as $discount_id ) {
 						eme_add_discount_to_group( $discount_id, $group_id );
 					}
@@ -1811,7 +1811,7 @@ function eme_ajax_manage_discounts() {
 			case 'removeFromGroup':
 				$group_id = ( isset( $_POST['removefromgroup'] ) ) ? intval( $_POST['removefromgroup'] ) : 0;
 				$ids_arr  = explode( ',', eme_sanitize_request($_POST['id']) );
-				if ( eme_array_integers( $ids_arr ) ) {
+				if ( eme_is_numeric_array( $ids_arr ) ) {
 					foreach ( $ids_arr as $discount_id ) {
 						eme_remove_discount_from_group( $discount_id, $group_id );
 					}

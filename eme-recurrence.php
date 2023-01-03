@@ -638,7 +638,7 @@ function eme_ajax_manage_recurrences() {
 		$rec_new_end_date   = eme_sanitize_request( $_REQUEST['rec_new_end_date'] );
 		$ids                = $_REQUEST['recurrence_id'];
 		$ids_arr            = explode( ',', $ids );
-		if ( ! eme_array_integers( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
 			$ajaxResult['Result']  = 'Error';
 			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 			print wp_json_encode( $ajaxResult );

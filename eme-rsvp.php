@@ -764,7 +764,7 @@ function eme_add_bookings_ajax() {
 		wp_die();
 	}
 
-	if ( !empty( $_POST['eme_event_ids'] ) && eme_array_integers( $_POST['eme_event_ids'] ) ) {
+	if ( !empty( $_POST['eme_event_ids'] ) && eme_is_numeric_array( $_POST['eme_event_ids'] ) ) {
 		$events = eme_get_event_arr( $_POST['eme_event_ids'] );
 		if ( empty( $events ) ) {
 			$form_html = __( 'Please select at least one event.', 'events-made-easy' );
@@ -1695,18 +1695,20 @@ function eme_get_booking_ids_by_wp_event_id( $wp_id, $event_id ) {
 function eme_get_pending_booking_ids_by_bookingids( $booking_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$ids_arr = explode(',', $booking_ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql            = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders) AND status IN (%d,%d)", array_merge($ids_arr, [EME_RSVP_STATUS_PENDING,EME_RSVP_STATUS_USERPENDING], $ids_arr));
-	return $wpdb->get_col( $sql );
+	if (eme_is_list_of_int($booking_ids) ) {
+		return $wpdb->get_col( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($booking_ids) AND status IN (%d,%d)", EME_RSVP_STATUS_PENDING,EME_RSVP_STATUS_USERPENDING );
+	} else {
+		return 0;
+	}	
 }
 function eme_get_unpaid_booking_ids_by_bookingids( $booking_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$ids_arr = explode(',', $booking_ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-        $sql = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ( $commaDelimitedPlaceholders ) AND booking_paid=0", $ids_arr);
-	return $wpdb->get_col( $sql );
+	if (eme_is_list_of_int($booking_ids) ) {
+		return $wpdb->get_col( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ( $booking_ids ) AND booking_paid=0" );
+	} else {
+		return 0;
+	}	
 }
 
 // API function: get all bookings for a certain email
@@ -2094,40 +2096,39 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
 	$events_table     = $eme_db_prefix . EVENTS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
 	$today        = $eme_date_obj_now->getDateTime();
-	$ids_arr = explode(',', $person_ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($commaDelimitedPlaceholders) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", array_merge([EME_RSVP_STATUS_TRASH], $ids_arr, [$today]));
-	$wpdb->query( $sql );
+	if (eme_is_list_of_int($person_ids) ) {
+		$wpdb->query( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($person_ids) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", EME_RSVP_STATUS_TRASH, $today );
+	}
 }
 
 function eme_delete_person_bookings( $person_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$answers_table  = $eme_db_prefix . ANSWERS_TBNAME;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$ids_arr = explode(',', $person_ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE person_id IN ($commaDelimitedPlaceholders))", $ids_arr);
-	$wpdb->query( $sql );
-	$sql = $wpdb->prepare("DELETE FROM $bookings_table WHERE person_id IN ($commaDelimitedPlaceholders)", $ids_arr);
-	$wpdb->query( $sql );
+	if (eme_is_list_of_int($person_ids) ) {
+		$wpdb->query( "DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE person_id IN ($person_ids))");
+		$wpdb->query( "DELETE FROM $bookings_table WHERE person_id IN ($person_ids)");
+	}
 }
 
 function eme_transfer_person_bookings( $person_ids, $to_person_id ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$ids_arr = explode(',', $person_ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("UPDATE $bookings_table SET person_id = %d WHERE person_id IN ($commaDelimitedPlaceholders)", array_merge([$to_person_id], $ids_arr));
-	return $wpdb->query( $sql );
+	if (eme_is_list_of_int($person_ids) ) {
+		$sql = $wpdb->prepare( "UPDATE $bookings_table SET person_id = %d WHERE person_id IN ($person_ids)", $to_person_id );
+		return $wpdb->query( $sql );
+	} else {
+		return false;
+	}
 }
 
 function eme_trash_bookings_for_event_ids( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$ids_arr = explode(',', $ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($commaDelimitedPlaceholders)", array_merge([EME_RSVP_STATUS_TRASH], $ids_arr));
-	$wpdb->query( $sql );
+	if (eme_is_list_of_int($ids) ) {
+		$sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($ids)", EME_RSVP_STATUS_TRASH);
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_trash_booking( $booking_id ) {
@@ -2344,10 +2345,10 @@ function eme_move_on_waitinglist( $booking_id ) {
 function eme_mark_booking_userconfirm( $booking_ids ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$ids_arr = explode(',', $booking_ids);
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql            = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($commaDelimitedPlaceholders)", array_merge([EME_RSVP_STATUS_USERPENDING], $ids_arr) );
-	$wpdb->query( $sql );
+	if (eme_is_list_of_int($booking_ids) ) {
+		$sql = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($booking_ids)", EME_RSVP_STATUS_USERPENDING );
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_userconfirm_bookings( $booking_ids_arr, $price, $is_multibooking = 0 ) {
@@ -2766,7 +2767,7 @@ function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 ) 
 	}
 
 	$where = [];
-	if ( is_array( $event_ids ) && eme_array_integers( $event_ids ) ) {
+	if ( is_array( $event_ids ) && eme_is_numeric_array( $event_ids ) ) {
 		$where[] = 'bookings.event_id IN (' . join( ',', $event_ids ) . ')';
 	} elseif ( is_numeric( $event_ids ) ) {
 		$where[] = "bookings.event_id = $event_ids";
@@ -2809,10 +2810,11 @@ function eme_get_booking_personids( $booking_ids ) {
 	if ( is_array( $booking_ids ) ) {
 		$booking_ids = join( ',', $booking_ids );
 	}
-	$ids_arr = explode(',', $booking_ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql = $wpdb->prepare("SELECT DISTINCT person_id FROM $bookings_table WHERE booking_id IN ($commaDelimitedPlaceholders)", $ids_arr);
-	return $wpdb->get_col( $sql );
+	if (eme_is_list_of_int($booking_ids) ) {
+		return $wpdb->get_col("SELECT DISTINCT person_id FROM $bookings_table WHERE booking_id IN ($booking_ids)");
+	} else {
+		return false;
+	}
 }
 
 function eme_get_bookings_by_paymentid( $payment_id ) {
@@ -2869,9 +2871,9 @@ function eme_get_attendee_ids( $event_id, $rsvp_status = 0, $paid_status = 0, $o
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
 	$people_table   = $eme_db_prefix . PEOPLE_TBNAME;
-	if ( is_array( $event_id ) && eme_array_integers( $event_id ) ) {
-		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($event_id), '%d'));
-		$sql = $wpdb->prepare("SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($commaDelimitedPlaceholders) AND bookings.person_id>0", $event_id);
+	if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
+		$ids_list = implode(',', $event_id);
+		$sql = "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($ids_list) AND bookings.person_id>0";
 	} else {
 		$sql = $wpdb->prepare( "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id = %d AND bookings.person_id>0", $event_id );
 	}
@@ -2902,9 +2904,9 @@ function eme_get_attendees_for( $event_id, $rsvp_status = 0, $paid_status = 0 ) 
 function eme_get_attendees( $event_id, $rsvp_status = 0, $paid_status = 0 ) {
 	global $wpdb,$eme_db_prefix;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	if ( is_array( $event_id ) && eme_array_integers( $event_id ) ) {
-		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($event_id), '%d'));
-		$sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN ($commaDelimitedPlaceholders)", $event_id);
+	if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
+		$ids_list = implode(',', $event_id);
+		$sql = "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN ($ids_list)";
 	} else {
 		$sql = $wpdb->prepare( "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id = %d", $event_id );
 	}
@@ -5527,7 +5529,7 @@ function eme_ajax_manage_bookings() {
 			$refund = 0;
 		}
 
-		if ( eme_array_integers( $ids_arr ) ) {
+		if ( eme_is_numeric_array( $ids_arr ) ) {
 			switch ( $do_action ) {
 				case 'paidandapprove':
 					// shortcut button to do 2 things at once, mail will always be sent
@@ -6249,7 +6251,7 @@ function eme_rsvp_send_pending_reminders() {
 			continue;
 		}
 		$reminder_days = explode( ',', $event['event_properties']['rsvp_pending_reminder_days'] );
-		if ( ! eme_array_integers( $reminder_days ) ) {
+		if ( ! eme_is_numeric_array( $reminder_days ) ) {
 			continue;
 		}
 		$bookings     = eme_get_bookings_for( $event['event_id'], EME_RSVP_STATUS_PENDING );
@@ -6276,7 +6278,7 @@ function eme_rsvp_send_approved_reminders() {
 			continue;
 		}
 		$reminder_days = explode( ',', $event['event_properties']['rsvp_approved_reminder_days'] );
-		if ( ! eme_array_integers( $reminder_days ) ) {
+		if ( ! eme_is_numeric_array( $reminder_days ) ) {
 			continue;
 		}
 		$bookings     = eme_get_bookings_for( $event['event_id'], EME_RSVP_STATUS_APPROVED );

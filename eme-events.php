@@ -456,7 +456,7 @@ function eme_events_page() {
 			}
 		}
 
-		if ( isset( $_POST['event_category_ids'] ) && eme_array_integers( $_POST['event_category_ids'] ) ) {
+		if ( isset( $_POST['event_category_ids'] ) && eme_is_numeric_array( $_POST['event_category_ids'] ) ) {
 			$event['event_category_ids'] = join( ',', $_POST['event_category_ids'] );
 		} else {
 			$event['event_category_ids'] = '';
@@ -856,7 +856,7 @@ function eme_events_page_content() {
 		if ( ! empty( $_GET['g'] ) ) {
 				$eme_email_groups     = eme_sanitize_request( $_GET['g'] );
 				$eme_email_groups_arr = explode( ',', $eme_email_groups );
-			if ( ! eme_array_integers( $eme_email_groups_arr ) ) {
+			if ( ! eme_is_numeric_array( $eme_email_groups_arr ) ) {
 					$eme_email_groups_arr = [];
 			}
 		} else {
@@ -878,7 +878,7 @@ function eme_events_page_content() {
 		if ( ! empty( $_GET['g'] ) ) {
 			$eme_email_groups     = eme_sanitize_request( $_GET['g'] );
 			$eme_email_groups_arr = explode( ',', $eme_email_groups );
-			if ( ! eme_array_integers( $eme_email_groups_arr ) ) {
+			if ( ! eme_is_numeric_array( $eme_email_groups_arr ) ) {
 						$eme_email_groups_arr = [];
 			}
 		} else {
@@ -4042,7 +4042,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 	if ( $user_registered_only == 1 && is_user_logged_in() ) {
 		$current_userid        = get_current_user_id();
 		$list_of_event_ids_arr = eme_get_event_ids_for( $current_userid );
-		if ( eme_array_integers( $list_of_event_ids_arr ) ) {
+		if ( eme_is_numeric_array( $list_of_event_ids_arr ) ) {
 			$list_of_event_ids      = join( ',', eme_get_event_ids_for( $current_userid ) );
 			$extra_conditions_arr[] = "event_id in ($list_of_event_ids)";
 		} else {
@@ -5435,7 +5435,7 @@ function eme_get_event_arr( $event_ids ) {
 		$event_ids = eme_array_remove_empty_elements( $event_ids );
 	}
 	// empty array or containing something else but integers? Then go away
-	if ( empty( $event_ids ) || ! eme_array_integers( $event_ids ) ) {
+	if ( empty( $event_ids ) || ! eme_is_numeric_array( $event_ids ) ) {
 		return;
 	}
 
@@ -6550,7 +6550,7 @@ function eme_validate_event( $event ) {
 			$arr1   = eme_convert_multi2array( $event_properties['max_allowed'] );
 			$count1 = count( $arr1 );
 			$count2 = count( eme_convert_multi2array( $event['price'] ) );
-			if ( ! eme_array_integers( $arr1 ) ) {
+			if ( ! eme_is_numeric_array( $arr1 ) ) {
 				$troubles .= '<li>' . __( 'If specified, the max amount of seats to book should consist of integers only.', 'events-made-easy' ) . '</li>';
 			}
 			if ( $count1 != $count2 ) {
@@ -6563,7 +6563,7 @@ function eme_validate_event( $event ) {
 			$arr1   = eme_convert_multi2array( $event_properties['min_allowed'] );
 			$count1 = count( $arr1 );
 			$count2 = count( eme_convert_multi2array( $event['price'] ) );
-			if ( ! eme_array_integers( $arr1 ) ) {
+			if ( ! eme_is_numeric_array( $arr1 ) ) {
 				$troubles .= '<li>' . __( 'If specified, the min amount of seats to book should consist of integers only.', 'events-made-easy' ) . '</li>';
 			}
 			if ( $count1 != $count2 ) {
@@ -9864,7 +9864,7 @@ function eme_ajax_events_list() {
 		$field_id        = $formfield['field_id'];
 		$field_ids_arr[] = $field_id;
 	}
-	if ( ! empty( $_REQUEST['search_customfieldids'] ) && eme_array_integers( $_REQUEST['search_customfieldids'] ) ) {
+	if ( ! empty( $_REQUEST['search_customfieldids'] ) && eme_is_numeric_array( $_REQUEST['search_customfieldids'] ) ) {
 		$field_ids = join( ',', $_REQUEST['search_customfieldids'] );
 	} else {
 		$field_ids = join( ',', $field_ids_arr );
@@ -10093,7 +10093,7 @@ function eme_ajax_manage_events() {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		$ids       = $_REQUEST['event_id'];
 		$ids_arr   = explode( ',', $ids );
-		if ( ! eme_array_integers( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
+		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
 			$ajaxResult['Result']  = 'Error';
 			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
 			print wp_json_encode( $ajaxResult );
@@ -10168,11 +10168,11 @@ function eme_ajax_action_events_status( $ids_arr, $status ) {
 function eme_ajax_action_events_addcat( $ids, $category_id ) {
 	global $wpdb,$eme_db_prefix;
 	$table_name = $eme_db_prefix . EVENTS_TBNAME;
-	$ids_arr = explode( ',', $ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql        = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
-	   WHERE event_id IN ($commaDelimitedPlaceholders) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", array_merge([$category_id], $ids_arr, [$category_id]));
-	$wpdb->query( $sql );
+        if (eme_is_list_of_int($ids) ) {
+		$wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
+		   WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id);
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+        }
 	$ajaxResult['Result']  = 'OK';
 	$ajaxResult['Message'] = __( 'Events added to category', 'events-made-easy' );
 	print wp_json_encode( $ajaxResult );
@@ -10182,10 +10182,11 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 	global $wpdb,$eme_db_prefix;
 	$table_name     = $eme_db_prefix . EVENTS_TBNAME;
 	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$ids_arr = explode( ',', $ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql            = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($commaDelimitedPlaceholders)", array_merge([EME_EVENT_STATUS_TRASH], $ids_arr));
-	$wpdb->query( $sql );
+        if (!eme_is_list_of_int($ids) ) {
+		return;
+	}
+	$sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_TRASH);
+	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 
 	if ( $send_trashmails ) {
 		$event_ids = explode( ',', $ids );
@@ -10209,10 +10210,10 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 function eme_untrash_events( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$table_name = $eme_db_prefix . EVENTS_TBNAME;
-	$ids_arr = explode( ',', $ids );
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql        = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($commaDelimitedPlaceholders)", array_merge([EME_EVENT_STATUS_DRAFT], $ids_arr));
-	$wpdb->query( $sql );
+        if (eme_is_list_of_int($ids) ) {
+		$sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_DRAFT);
+		$wpdb->query( $sql );
+	}
 }
 
 function eme_delete_events( $ids_arr ) {

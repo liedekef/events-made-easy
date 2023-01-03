@@ -50,7 +50,7 @@ function eme_init_membership_props( $props = [] ) {
 		$props['reminder_days'] = '';
 	} else {
 		$test_arr = explode( ',', $props['reminder_days'] );
-		if ( ! eme_array_integers( $test_arr ) ) {
+		if ( ! eme_is_numeric_array( $test_arr ) ) {
 			$props['reminder_days'] = '';
 		}
 	}
@@ -338,13 +338,13 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
 	$members_table     = $eme_db_prefix . MEMBERS_TBNAME;
 	$memberships_table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
 	$lines             = [];
-	if ( ! empty( $member_ids ) && eme_array_integers( $member_ids ) ) {
-		$commaDelimitedPlaceholders = implode(',', array_fill(0, count($member_ids), '%d'));
-		$sql     = $wpdb->prepare("SELECT members.*, people.lastname, people.firstname, people.email, memberships.name AS membership_name
+	if ( ! empty( $member_ids ) && eme_is_numeric_array( $member_ids ) ) {
+		$ids_list = implode(',', $member_ids);
+		$sql     = "SELECT members.*, people.lastname, people.firstname, people.email, memberships.name AS membership_name
               FROM $members_table AS members
               LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
               LEFT JOIN $people_table AS people ON members.person_id=people.person_id
-              WHERE members.member_id IN ($commaDelimitedPlaceholders)", $member_ids);
+              WHERE members.member_id IN ($ids_list)";
 		if ( ! empty( $extra_search ) ) {
 			$sql .= " AND $extra_search";
 		}
@@ -358,7 +358,7 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
 			$sql .= " WHERE $extra_search";
 		}
 	}
-	$lines = $wpdb->get_results( $sql, ARRAY_A );
+	$lines = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	return $lines;
 }
 
@@ -1084,9 +1084,12 @@ function eme_membership_exists( $id ) {
 function eme_memberships_exists( $ids_arr ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
-	$commaDelimitedPlaceholders = implode(',', array_fill(0, count($ids_arr), '%d'));
-	$sql   = $wpdb->prepare( "SELECT DISTINCT membership_id FROM $table WHERE membership_id IN ($commaDelimitedPlaceholders)", $ids_arr);
-	return $wpdb->get_col( $sql );
+	if ( ! empty( $ids_arr ) && eme_is_numeric_array( $ids_arr ) ) {
+		$ids_list = join( ',', $ids_arr );
+		return $wpdb->get_col( "SELECT DISTINCT membership_id FROM $table WHERE membership_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	} else {
+		return false;
+	}
 }
 
 function eme_add_update_membership( $membership_id = 0 ) {
@@ -2461,7 +2464,7 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 			$search_memberid = intval( $search_terms['search_memberid'] );
 			$where_arr[]     = "(members.member_id = $search_memberid)";
 	}
-	if ( ! empty( $search_terms['search_membershipids'] ) && eme_array_integers( $search_terms['search_membershipids'] ) ) {
+	if ( ! empty( $search_terms['search_membershipids'] ) && eme_is_numeric_array( $search_terms['search_membershipids'] ) ) {
 		$search_membershipids = join( ',', $search_terms['search_membershipids'] );
 		$where_arr[]          = "(members.membership_id IN ($search_membershipids))";
 	}
@@ -2499,7 +2502,7 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 	}
 
 	if ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfields'] ) && $search_terms['search_customfields'] != '' ) {
-		if ( ! empty( $search_terms['search_customfieldids'] ) && eme_array_integers( $search_terms['search_customfieldids'] ) ) {
+		if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
 			$field_ids = join( ',', $search_terms['search_customfieldids'] );
 		} else {
 			$field_ids = join( ',', $field_ids_arr );
@@ -4095,12 +4098,12 @@ function eme_access_meta_box_save( $post_id ) {
 		return;
 	}
 
-	if ( isset( $_POST['eme_membershipids'] ) && eme_array_integers( $_POST['eme_membershipids'] ) ) {
+	if ( isset( $_POST['eme_membershipids'] ) && eme_is_numeric_array( $_POST['eme_membershipids'] ) ) {
 		update_post_meta( $post_id, 'eme_membershipids', $_POST['eme_membershipids'] );
 	} else {
 		delete_post_meta( $post_id, 'eme_membershipids' );
 	}
-	if ( isset( $_POST['eme_groupids'] ) && eme_array_integers( $_POST['eme_groupids'] ) ) {
+	if ( isset( $_POST['eme_groupids'] ) && eme_is_numeric_array( $_POST['eme_groupids'] ) ) {
 		update_post_meta( $post_id, 'eme_groupids', $_POST['eme_groupids'] );
 	} else {
 		delete_post_meta( $post_id, 'eme_groupids' );
@@ -5855,7 +5858,7 @@ function eme_ajax_manage_members() {
 
 		$ids     = eme_sanitize_request($_POST['member_id']);
 		$ids_arr = explode( ',', $ids );
-		if ( ! eme_array_integers( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 			$jTableResult['Result']      = 'Error';
 			$jTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
 			print wp_json_encode( $jTableResult );
@@ -5926,7 +5929,7 @@ function eme_ajax_manage_memberships() {
 
 		$ids     = eme_sanitize_request($_POST['membership_id']);
 		$ids_arr = explode( ',', $ids );
-		if ( ! eme_array_integers( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 			$ajaxResult['Result']      = 'Error';
 			$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'Access denied!', 'events-made-easy' ) . '</p></div>';
 			print wp_json_encode( $ajaxResult );

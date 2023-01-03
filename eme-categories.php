@@ -73,10 +73,9 @@ function eme_categories_page() {
 		} elseif ( $_POST['eme_admin_action'] == 'do_deletecategory' && isset( $_POST['categories'] ) ) {
 			// Delete category or multiple
 			$categories = eme_sanitize_request( $_POST['categories']);
-			if ( ! empty( $categories ) && eme_array_integers( $categories ) ) {
-				$commaDelimitedPlaceholders = implode(',', array_fill(0, count($categories), '%d'));
-				$sql = $wpdb->prepare( "DELETE FROM $categories_table WHERE category_id IN ( $commaDelimitedPlaceholders )", $categories);
-				$validation_result = $wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			if ( ! empty( $categories ) && eme_is_numeric_array( $categories ) ) {
+				$ids_list = implode(',', $categories);
+				$validation_result = $wpdb->query( "DELETE FROM $categories_table WHERE category_id IN ( $ids_list )"); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully deleted the selected categories.', 'events-made-easy' );
 				} else {
@@ -302,14 +301,12 @@ function eme_get_categories( $eventful = false, $scope = 'future', $extra_condit
 				}
 			}
 		}
-		if ( ! empty( $categories ) && eme_array_integers( $categories ) ) {
+		if ( ! empty( $categories ) && eme_is_numeric_array( $categories ) ) {
 			$event_cats = join( ',', $categories );
 			if ( $extra_conditions != '' ) {
 				$extra_conditions = " AND ($extra_conditions)";
 			}
-			$commaDelimitedPlaceholders = implode(',', array_fill(0, count($categories), '%d'));
-			$sql = $wpdb->prepare( "SELECT * FROM $categories_table WHERE category_id IN ( $commaDelimitedPlaceholders ) $extra_conditions $order_by", $categories);
-			$result = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+			$result = $wpdb->get_results( "SELECT * FROM $categories_table WHERE category_id IN ( $event_cats ) $extra_conditions $order_by", ARRAY_A); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
 	} else {
 		if ( $extra_conditions != '' ) {

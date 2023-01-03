@@ -1806,17 +1806,17 @@ function eme_get_query_arg( $arg ) {
 }
 
 // returns true if the array values are all integers
-function eme_array_integers( $only_integers ) {
+function eme_is_numeric_array( $only_integers ) {
 	if ( ! is_array( $only_integers ) ) {
 		return false;
 	}
-	return array_filter( $only_integers, 'is_numeric' ) === $only_integers;
+	return array_map( 'intval', array_filter( $only_integers, 'is_numeric' )) === $only_integers;
 }
 
 function eme_is_list_of_int( $text ) {
 	if ( strstr( $text, ',' ) ) {
 		$id_arr = explode( ',', $text );
-		return eme_array_integers( $id_arr );
+		return eme_is_numeric_array( $id_arr );
 	} elseif ( ! is_numeric( $text ) ) {
 		return false;
 	}
@@ -2113,7 +2113,7 @@ function eme_dyndata_people_ajax() {
 		$files   = [];
 	}
 
-	if ( isset( $_POST['groups'] ) && eme_array_integers( $_POST['groups'] ) ) {
+	if ( isset( $_POST['groups'] ) && eme_is_numeric_array( $_POST['groups'] ) ) {
 		$groups = eme_sanitize_request( $_POST['groups'] );
 	} else {
 		$groups = [];
@@ -3173,7 +3173,7 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
 	if ( current_user_can( get_option( $cap ) ) && isset( $_POST[ $postvar ] ) ) {
 		// check the POST var
 		$ids_arr = explode( ',', eme_sanitize_request($_POST[ $postvar ]) );
-		if ( eme_array_integers( $ids_arr ) ) {
+		if ( eme_is_numeric_array( $ids_arr ) ) {
 			$wpdb->query( "DELETE FROM $table WHERE $postvar IN ( " . eme_sanitize_request($_POST[ $postvar ]) . ')' );
 		}
 		$jTableResult['Result']      = 'OK';

@@ -359,7 +359,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$exclude = substr( $matches[2], 1, -1 );
 				// check if all integers
 				$exclude_arr = explode( ',', $exclude );
-				if ( eme_array_integers( $exclude_arr ) ) {
+				if ( eme_is_numeric_array( $exclude_arr ) ) {
 					$args['exclude'] = $exclude_arr;
 				}
 			}
@@ -386,7 +386,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$exclude = substr( $matches[2], 1, -1 );
 				// check if all integers
 				$exclude_arr = explode( ',', $exclude );
-				if ( eme_array_integers( $exclude_arr ) ) {
+				if ( eme_is_numeric_array( $exclude_arr ) ) {
 						$args['exclude'] = $exclude_arr;
 				}
 			}

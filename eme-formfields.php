@@ -501,11 +501,11 @@ function eme_get_formfield( $field_info ) {
 	}
 	if ( $formfield === false ) {
 		if ( is_numeric( $field_info ) ) {
-			$sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_id=%d", $field_info );
+			$sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_id=%d", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		} else {
-			$sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_name=%s LIMIT 1", $field_info );
+			$sql = $wpdb->prepare( "SELECT * FROM $formfields_table WHERE field_name=%s LIMIT 1", $field_info ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		}
-		$formfield = $wpdb->get_row( $sql, ARRAY_A );
+		$formfield = $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( is_numeric( $field_info ) || $field_info == 'performer' ) {
 			wp_cache_set( "eme_formfield $field_info", $formfield, '', 60 );
 		}
@@ -518,16 +518,16 @@ function eme_delete_formfields( $ids_arr ) {
 	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
 	if ( ! empty( $ids_arr ) && eme_is_numeric_array( $ids_arr ) ) {
 		$ids_list = implode(',', $ids_arr);
-		$validation_result = $wpdb->query( "DELETE FROM $formfields_table WHERE field_id IN ($ids_list)" );
+		$validation_result = $wpdb->query( "DELETE FROM $formfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( $validation_result !== false ) {
 			$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
-			$wpdb->query( "DELETE FROM $answers_table WHERE field_id IN ($ids_list)" );
+			$wpdb->query( "DELETE FROM $answers_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$events_customfields_table = $eme_db_prefix . EVENTS_CF_TBNAME;
-			$wpdb->query( "DELETE FROM $events_customfields_table WHERE field_id IN ($ids_list)" );
+			$wpdb->query( "DELETE FROM $events_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$locations_customfields_table = $eme_db_prefix . LOCATIONS_CF_TBNAME;
-			$wpdb->query( "DELETE FROM $locations_customfields_table WHERE field_id IN ($ids_list)" );
+			$wpdb->query( "DELETE FROM $locations_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			$memberships_customfields_table = $eme_db_prefix . MEMBERSHIPS_CF_TBNAME;
-			$wpdb->query( "DELETE FROM $memberships_customfields_table WHERE field_id IN ($ids_list)" );
+			$wpdb->query( "DELETE FROM $memberships_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			return true;
 		} else {
 			return false;
@@ -4654,8 +4654,12 @@ function eme_get_answer_fieldids( $ids_arr ) {
 	global $wpdb,$eme_db_prefix;
 	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
-	$ids_list = implode(',', $ids_arr);
-	return $wpdb->get_col( "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($ids_list) ORDER BY field_id" );
+	if (eme_is_numeric_array( $ids_arr ) ) {
+		$ids_list = implode(',', $ids_arr);
+		return $wpdb->get_col( "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($ids_list) ORDER BY field_id" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+	} else {
+		return false;
+	}
 }
 
 function eme_get_people_export_fieldids() {
@@ -4663,7 +4667,7 @@ function eme_get_people_export_fieldids() {
 	$table = $eme_db_prefix . FORMFIELDS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each run)
 	$sql = "SELECT field_id FROM $table WHERE export=1 AND field_purpose='people' ORDER BY field_id";
-	return $wpdb->get_col( $sql );
+	return $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids ) {

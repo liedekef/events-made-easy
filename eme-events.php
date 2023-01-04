@@ -459,8 +459,8 @@ function eme_events_page() {
 			}
 		}
 
-		if ( isset( $_POST['event_category_ids'] ) && eme_is_numeric_array( $_POST['event_category_ids'] ) ) {
-			$event['event_category_ids'] = join( ',', $_POST['event_category_ids'] );
+		if ( isset( $_POST['event_category_ids'] ) && eme_is_numeric_array( eme_sanitize_request( $_POST['event_category_ids'] ) ) ) {
+			$event['event_category_ids'] = join( ',', eme_sanitize_request( $_POST['event_category_ids'] ) );
 		} else {
 			$event['event_category_ids'] = '';
 		}
@@ -10199,8 +10199,8 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
         if (!eme_is_list_of_int($ids) ) {
 		return;
 	}
-	$sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_TRASH);
-	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_TRASH); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
 	if ( $send_trashmails ) {
 		$event_ids = explode( ',', $ids );
@@ -10225,8 +10225,8 @@ function eme_untrash_events( $ids ) {
 	global $wpdb,$eme_db_prefix;
 	$table_name = $eme_db_prefix . EVENTS_TBNAME;
         if (eme_is_list_of_int($ids) ) {
-		$sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_DRAFT);
-		$wpdb->query( $sql );
+		$sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_DRAFT); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
 }
 

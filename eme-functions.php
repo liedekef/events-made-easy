@@ -1882,7 +1882,6 @@ function eme_is_numeric_array( $only_integers ) {
                 return false;
         }
 	 */
-
 }
 
 function eme_is_list_of_int( $text ) {

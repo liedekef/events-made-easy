@@ -96,7 +96,7 @@ function eme_holidays_table_layout( $message = '' ) {
          </div>
          <h1>" . __( 'Manage holidays', 'events-made-easy' ) . "</h1>\n ";
 
-	if ( $message != '' ) {
+	if ( $message !== '' ) {
 		$table .= "
             <div id='message' class='updated notice notice-success is-dismissible'>
                <p>$message</p>
@@ -160,13 +160,13 @@ function eme_holidays_table_layout( $message = '' ) {
                      </div>
 		";
 	} else {
-			$table .= '<p>' . __( 'No holiday lists have been inserted yet!', 'events-made-easy' );
+			$table .= '<p>' . esc_html__( 'No holiday lists have been inserted yet!', 'events-made-easy' );
 	}
 					$table .= '
                   </form>
          </div>
    </div>';
-	echo $table;
+	echo $table;  //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Was escaped above where needed
 }
 
 function eme_holidays_edit_layout( $message = '' ) {
@@ -175,13 +175,13 @@ function eme_holidays_edit_layout( $message = '' ) {
 	if ( isset( $_GET['id'] ) ) {
 			$holidays_id   = intval( $_GET['id'] );
 		$holidays          = eme_get_holiday_list( $holidays_id );
-			$h1_string     = __( 'Edit holidays list', 'events-made-easy' );
-			$action_string = __( 'Update list of holidays', 'events-made-easy' );
+			$h1_string     = esc_html__( 'Edit holidays list', 'events-made-easy' );
+			$action_string = esc_attr__( 'Update list of holidays', 'events-made-easy' );
 	} else {
 			$holidays_id   = 0;
 			$holidays      = eme_new_holidays();
-			$h1_string     = __( 'Create holidays list', 'events-made-easy' );
-			$action_string = __( 'Add list of holidays', 'events-made-easy' );
+			$h1_string     = esc_html__( 'Create holidays list', 'events-made-easy' );
+			$action_string = esc_attr__( 'Add list of holidays', 'events-made-easy' );
 	}
 
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
@@ -193,7 +193,7 @@ function eme_holidays_edit_layout( $message = '' ) {
          
       <h1>" . $h1_string . '</h1>';
 
-	if ( $message != '' ) {
+	if ( $message !== '' ) {
 		$layout .= "
       <div id='message' class='updated notice notice-success is-dismissible'>
          <p>$message</p>
@@ -222,20 +222,20 @@ function eme_holidays_edit_layout( $message = '' ) {
       </form>
    </div>
    ";
-	echo $layout;
+	echo $layout; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
 
 function eme_get_holiday_lists() {
 	global $wpdb,$eme_db_prefix;
 	$holidays_table = $eme_db_prefix . HOLIDAYS_TBNAME;
 	$sql            = "SELECT id,name FROM $holidays_table";
-	return $wpdb->get_results( $sql, ARRAY_A );
+	return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 function eme_get_holiday_list( $id ) {
 	global $wpdb,$eme_db_prefix;
 	$holidays_table = $eme_db_prefix . HOLIDAYS_TBNAME;
-	$sql            = $wpdb->prepare( "SELECT * FROM $holidays_table WHERE id = %d", $id );
-	return $wpdb->get_row( $sql, ARRAY_A );
+	$sql            = $wpdb->prepare( "SELECT * FROM $holidays_table WHERE id = %d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	return $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_get_holiday_listinfo( $id ) {
@@ -246,10 +246,10 @@ function eme_get_holiday_listinfo( $id ) {
 		//$info=explode(',',$day_info);
 		[$date_info, $name, $class, $link] = array_pad( explode( ',', $day_info ), 4, '' );
 		if ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $date_info, $matches ) ) {
-			$start = $matches[1];
-			$end   = $matches[2];
-			$start = $current = strtotime( $start );
-			$end   = strtotime( $end );
+			$start   = $matches[1];
+			$end     = $matches[2];
+			$current = strtotime( $start );
+			$end     = strtotime( $end );
 			while ( $current <= $end ) {
 				$day_in_range                       = date( 'Y-m-d', $current );
 				$res_days[ $day_in_range ]['name']  = $name;
@@ -292,7 +292,7 @@ function eme_holidays_shortcode( $atts ) {
 		)
 	);
 
-	if ( $id != '' ) {
+	if ( ! empty( $id ) && is_numeric( $id ) ) {
 		$holiday_list = eme_get_holiday_list( intval( $id ) );
 	} else {
 		return;
@@ -308,14 +308,15 @@ function eme_holidays_shortcode( $atts ) {
 			continue;
 		}
 		$eme_date_obj = new ExpressiveDate( $day, $eme_timezone );
-		if ( $scope == 'future' && $eme_date_obj < $eme_date_obj_now ) {
+		if ( $scope === 'future' && $eme_date_obj < $eme_date_obj_now ) {
 			continue;
 		}
-		if ( $scope == 'past' && $eme_date_obj > $eme_date_obj_now ) {
+		if ( $scope === 'past' && $eme_date_obj > $eme_date_obj_now ) {
 			continue;
 		}
-		print '<span id="eme_holidays_date">' . eme_localized_date( $day, $eme_timezone ) . '</span>';
-		print '&nbsp; <span id="eme_holidays_name">' . eme_trans_esc_html( $name ) . '</span><br>';
+		print '<span id="eme_holidays_date">' . eme_localized_date( $day, $eme_timezone ) . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+
+		print '&nbsp; <span id="eme_holidays_name">' . eme_trans_esc_html( $name ) . '</span><br>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 	print '</div>';
 }

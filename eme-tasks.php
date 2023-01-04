@@ -184,7 +184,7 @@ function eme_transfer_person_task_signups( $person_ids, $to_person_id ) {
 	global $wpdb,$eme_db_prefix;
 	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
-        	$sql = $wpdb->prepare( "UPDATE $table SET person_id = %d  WHERE person_id ( $person_ids )", $to_person_id);
+		$sql = $wpdb->prepare( "UPDATE $table SET person_id = %d  WHERE person_id IN ( $person_ids )", $to_person_id);
 		return $wpdb->query( $sql );
 	}
 }

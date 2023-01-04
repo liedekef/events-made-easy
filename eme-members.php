@@ -2468,7 +2468,7 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 
 	// if the person is not allowed to manage all people, show only himself
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
-			$wp_id      = get_current_user_id();
+		$wp_id          = get_current_user_id();
 		$member_ids_arr = eme_get_memberids_by_wpid( $wp_id );
 		if ( empty( $member_ids_arr ) ) {
 			$where_arr[] = '(members.member_id = -1)';
@@ -2477,8 +2477,8 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 			$where_arr[] = "(members.member_id IN ($member_ids))";
 		}
 	} elseif ( ! empty( $search_terms['search_memberid'] ) ) {
-			$search_memberid = intval( $search_terms['search_memberid'] );
-			$where_arr[]     = "(members.member_id = $search_memberid)";
+		$search_memberid = intval( $search_terms['search_memberid'] );
+		$where_arr[]     = "(members.member_id = $search_memberid)";
 	}
 	if ( ! empty( $search_terms['search_membershipids'] ) && eme_is_numeric_array( $search_terms['search_membershipids'] ) ) {
 		$search_membershipids = join( ',', $search_terms['search_membershipids'] );

@@ -3599,7 +3599,7 @@ function eme_cancel_payment_ajax() {
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), "cancel payment $payment_randomid" ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
 			]
@@ -3607,22 +3607,33 @@ function eme_cancel_payment_ajax() {
 		wp_die();
 	}
 	// now the captcha
-	if ( get_option( 'eme_hcaptcha_for_forms' ) ) {
-		if ( ! eme_check_hcaptcha() ) {
-			$form_html = __( 'Please check the hCaptcha box', 'events-made-easy' );
+	if ( get_option( 'eme_recaptcha_for_forms' ) ) {
+		if ( ! eme_check_recaptcha() ) {
+			$form_html = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
 				]
 			);
 			wp_die();
 		}
-	} elseif ( get_option( 'eme_recaptcha_for_forms' ) ) {
-		if ( ! eme_check_recaptcha() ) {
-			$form_html = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
+	} elseif ( get_option( 'eme_hcaptcha_for_forms' ) ) {
+		if ( ! eme_check_hcaptcha() ) {
+			$form_html = __( 'Please check the hCaptcha box', 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
+					'Result'      => 'NOK',
+					'htmlmessage' => $form_html,
+				]
+			);
+			wp_die();
+		}
+	} elseif ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
+		if ( ! eme_check_cfcaptcha() ) {
+			$form_html = __( 'Please check the Clodflare Turnstile box', 'events-made-easy' );
+			echo wp_json_encode(
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
 				]

@@ -96,6 +96,9 @@ function eme_init_membership_props( $props = [] ) {
 	if ( ! isset( $props['vat_pct'] ) ) {
 		$props['vat_pct'] = get_option( 'eme_default_vat' );
 	}
+	if ( ! isset( $props['use_cfcaptcha'] ) ) {
+		$props['use_cfcaptcha'] = get_option( 'eme_cfcaptcha_for_forms' ) ? 1 : 0;
+	}
 	if ( ! isset( $props['use_hcaptcha'] ) ) {
 		$props['use_hcaptcha'] = get_option( 'eme_hcaptcha_for_forms' ) ? 1 : 0;
 	}
@@ -1106,7 +1109,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
 		$membership['properties'] = eme_kses( $_POST['properties'] );
 	}
 	// now for the select boxes, we need to set to 0 if not in the _POST
-	$select_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'create_wp_user' ];
+	$select_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'create_wp_user' ];
 	foreach ( $select_post_vars as $post_var ) {
 		if ( ! isset( $_POST['properties'][ $post_var ] ) ) {
 			$membership['properties'][ $post_var ] = 0;
@@ -1138,6 +1141,9 @@ function eme_add_update_membership( $membership_id = 0 ) {
 
 	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
 		$membership['properties']['use_hcaptcha'] = 0;
+	}
+	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
+		$membership['properties']['use_cfcaptcha'] = 0;
 	}
 	if ( empty( get_option( 'eme_recaptcha_for_forms' ) ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
 		$membership['properties']['use_recaptcha'] = 0;
@@ -1561,6 +1567,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	$use_captcha                = ( $membership['properties']['use_captcha'] ) ? "checked='checked'" : '';
 	$use_recaptcha              = ( $membership['properties']['use_recaptcha'] ) ? "checked='checked'" : '';
 	$use_hcaptcha               = ( $membership['properties']['use_hcaptcha'] ) ? "checked='checked'" : '';
+	$use_cfcaptcha              = ( $membership['properties']['use_cfcaptcha'] ) ? "checked='checked'" : '';
 	$attendancerecord           = ( $membership['properties']['attendancerecord'] ) ? "checked='checked'" : '';
 	$allow_renewal              = ( $membership['properties']['allow_renewal'] ) ? "checked='checked'" : '';
 	$family_membership          = ( $membership['properties']['family_membership'] ) ? "checked='checked'" : '';
@@ -1656,6 +1663,15 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><input id="use_hcaptcha" name="properties[use_hcaptcha]" type="checkbox" <?php echo $use_hcaptcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the hCaptcha on the membership signup form.', 'events-made-easy' ); ?>
 			<br><?php esc_html_e( 'If this option is checked, make sure to use #_HCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
+	</td>
+	</tr>
+<?php endif; ?>
+	<?php if ( ! empty( get_option( 'eme_cfcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) : ?>
+	<tr>
+	<td><label for="use_cfcaptcha"><?php esc_html_e( 'Cloudflare Turnstile', 'events-made-easy' ); ?></label></td>
+	<td><input id="use_cfcaptcha" name="properties[use_cfcaptcha]" type="checkbox" <?php echo $use_cfcaptcha; ?>>
+		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use Cloudflare Turnstile on the membership signup form.', 'events-made-easy' ); ?>
+			<br><?php esc_html_e( 'If this option is checked, make sure to use #_CFCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
 	</td>
 	</tr>
 <?php endif; ?>
@@ -4162,22 +4178,8 @@ function eme_add_member_ajax() {
 		$membership = eme_get_membership( intval( $_POST['membership_id'] ) );
 	}
 
-		$captcha_res = '';
-	if ( $membership['properties']['use_hcaptcha'] ) {
-		$captcha_res = eme_check_hcaptcha();
-		if ( ! $captcha_res ) {
-			$result = __( 'Please check the hCaptcha box', 'events-made-easy' );
-			echo wp_json_encode(
-			    [
-					'Result'      => 'NOK',
-					'htmlmessage' => $result,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( $membership['properties']['use_recaptcha'] ) {
-		$captcha_res = eme_check_recaptcha();
-		if ( ! $captcha_res ) {
+	if ( $membership['properties']['use_recaptcha'] ) {
+		if ( ! eme_check_recaptcha() ) {
 			$result = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
 			echo wp_json_encode(
 			    [
@@ -4187,12 +4189,34 @@ function eme_add_member_ajax() {
 			);
 			wp_die();
 		}
+	} elseif ( $membership['properties']['use_hcaptcha'] ) {
+		if ( ! eme_check_hcaptcha() ) {
+			$result = __( 'Please check the hCaptcha box', 'events-made-easy' );
+			echo wp_json_encode(
+				[
+					'Result'      => 'NOK',
+					'htmlmessage' => $result,
+				]
+			);
+			wp_die();
+		}
+	} elseif ( $membership['properties']['use_cfcaptcha'] ) {
+		if ( ! eme_check_cfcaptcha() ) {
+			$message = __( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
+			echo wp_json_encode(
+				[
+					'Result'      => 'NOK',
+					'htmlmessage' => $message,
+				]
+			);
+			wp_die();
+		}
+
 	} elseif ( $membership['properties']['use_captcha'] ) {
-		$captcha_res = eme_check_captcha( 0 );
-		if ( ! $captcha_res ) {
+		if ( ! eme_check_captcha( 0 ) ) {
 			$result = __( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $result,
 				]
@@ -4201,15 +4225,15 @@ function eme_add_member_ajax() {
 		}
 	}
 
-		// check for wrong discount codes
-		$tmp_member     = eme_member_from_form( $membership );
-		$dcodes_entered = $tmp_member['dcodes_entered'];
-		$dcodes_used    = $tmp_member['dcodes_used'];
+	// check for wrong discount codes
+	$tmp_member     = eme_member_from_form( $membership );
+	$dcodes_entered = $tmp_member['dcodes_entered'];
+	$dcodes_used    = $tmp_member['dcodes_used'];
 	if ( ! empty( $dcodes_entered ) ) {
 		if ( ! $tmp_member['discount'] || empty( $dcodes_used ) || count( $dcodes_used ) != count( $dcodes_entered ) ) {
 			$result = __( 'You did not enter a valid discount code', 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $result,
 				]
@@ -4219,7 +4243,7 @@ function eme_add_member_ajax() {
 	}
 
 	if ( has_filter( 'eme_eval_member_form_post_filter' ) ) {
-			$eval_filter_return = apply_filters( 'eme_eval_member_form_post_filter', $membership );
+		$eval_filter_return = apply_filters( 'eme_eval_member_form_post_filter', $membership );
 	} else {
 		$eval_filter_return = [
 			0 => 1,

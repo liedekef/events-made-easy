@@ -515,12 +515,15 @@ function eme_register_scripts_orig() {
 	wp_register_script( 'eme-location-map', $eme_plugin_url . 'js/eme_location_map.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
 
 	if ( get_option( 'eme_recaptcha_for_forms' ) ) {
-			// using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...
-			//wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js?onload=eme_CaptchaCallback&render=explicit', array('eme-basic'), '',true);
-			wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js', [ 'eme-basic' ], '', true );
+		// using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...
+		//wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js?onload=eme_CaptchaCallback&render=explicit', array('eme-basic'), '',true);
+		wp_register_script( 'eme-recaptcha', 'https://www.google.com/recaptcha/api.js', [ 'eme-basic' ], '', true );
 	}
 	if ( get_option( 'eme_hcaptcha_for_forms' ) ) {
-			wp_register_script( 'eme-hcaptcha', 'https://js.hcaptcha.com/1/api.js', [ 'eme-basic' ], '', true );
+		wp_register_script( 'eme-hcaptcha', 'https://js.hcaptcha.com/1/api.js', [ 'eme-basic' ], '', true );
+	}
+	if ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
+		wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], '', true );
 	}
 }
 
@@ -596,6 +599,9 @@ function eme_register_scripts() {
 	if ( get_option( 'eme_hcaptcha_for_forms' ) ) {
 		wp_register_script( 'eme-hcaptcha', 'https://js.hcaptcha.com/1/api.js', [ 'eme-basic' ], '', true );
 	}
+	if ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
+		wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], '', true );
+	}
 }
 add_action( 'wp_enqueue_scripts', 'eme_register_scripts' );
 
@@ -633,7 +639,7 @@ function eme_add_defer_attribute( $tag, $handle ) {
 			return str_replace( ' src', ' defer="defer" src', $tag );
 	}
 
-	if ( 'eme-recaptcha' === $handle || 'eme-hcaptcha' === $handle ) {
+	if ( 'eme-recaptcha' === $handle || 'eme-hcaptcha' === $handle || 'eme-cfcaptcha' === $handle ) {
 		return str_replace( ' src', ' defer="defer" async src', $tag );
 	}
 	return $tag;

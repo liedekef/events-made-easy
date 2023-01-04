@@ -1549,7 +1549,7 @@ function eme_tasks_ajax() {
 	if ( ! isset( $_POST['eme_task_signups'] ) || empty( $_POST['eme_task_signups'] ) ) {
 		$message = __( 'Please select at least one task.', 'events-made-easy' );
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'NOK',
 				'htmlmessage' => $message,
 			]
@@ -1564,7 +1564,7 @@ function eme_tasks_ajax() {
 		if ( ! $captcha_res ) {
 			$message = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
 				]
@@ -1576,7 +1576,19 @@ function eme_tasks_ajax() {
 		if ( ! $captcha_res ) {
 			$message = __( 'Please check the hCaptcha box', 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
+					'Result'      => 'NOK',
+					'htmlmessage' => $message,
+				]
+			);
+			wp_die();
+		}
+	} elseif ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
+		$captcha_res = eme_check_cfcaptcha();
+		if ( ! $captcha_res ) {
+			$message = __( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
+			echo wp_json_encode(
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
 				]
@@ -1588,7 +1600,7 @@ function eme_tasks_ajax() {
 		if ( ! $captcha_res ) {
 			$message = __( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
 				]

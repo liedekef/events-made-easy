@@ -102,6 +102,7 @@ See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpr
 == Changelog ==
 = 2.3.32 (2023//) =
 * Fix deleting custom fields
+* Add Cloudflare Turnstile as captcha method for forms
 
 = 2.3.31 (2023/01/01) =
 * No changes, but release to make sure new updates come in fine

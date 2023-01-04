@@ -163,6 +163,9 @@ function eme_add_options( $reset = 0 ) {
 		'eme_recaptcha_for_forms'                         => 0,
 		'eme_recaptcha_site_key'                          => '',
 		'eme_recaptcha_secret_key'                        => '',
+		'eme_cfcaptcha_for_forms'                         => 0,
+		'eme_cfcaptcha_site_key'                          => '',
+		'eme_cfcaptcha_secret_key'                        => '',
 		'eme_captcha_for_forms'                           => 0,
 		'eme_stay_on_edit_page'                           => 0,
 		'eme_rsvp_mail_notify_is_active'                  => 1,
@@ -807,10 +810,6 @@ function eme_update_options( $db_version ) {
 	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
 		update_option( 'eme_captcha_for_forms', 0 );
 	}
-	if ( ! function_exists( 'curl_init' ) ) {
-		update_option( 'eme_recaptcha_for_forms', 0 );
-		update_option( 'eme_hcaptcha_for_forms', 0 );
-	}
 
 	// always reset the drop data option
 	update_option( 'eme_uninstall_drop_data', 0 );
@@ -852,10 +851,6 @@ function eme_options_postsave_actions() {
 	// make sure the captcha doesn't cause problems
 	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
 		update_option( 'eme_captcha_for_forms', 0 );
-	}
-	if ( ! function_exists( 'curl_init' ) ) {
-		update_option( 'eme_recaptcha_for_forms', 0 );
-		update_option( 'eme_hcaptcha_for_forms', 0 );
 	}
 
 	$tab = isset( $_GET['tab'] ) ? eme_sanitize_request( $_GET['tab'] ) : 'general';
@@ -987,7 +982,7 @@ function eme_options_register() {
 	$tab     = isset( $_POST['tab'] ) ? eme_sanitize_request( $_POST['tab'] ) : 'general';
 	switch ( $tab ) {
 		case 'general':
-				$options = [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_honeypot_for_forms', 'eme_frontend_nocache', 'eme_use_is_page_for_title' ];
+				$options = [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_honeypot_for_forms', 'eme_frontend_nocache', 'eme_use_is_page_for_title' ];
 			break;
 		case 'seo':
 				$options = [ 'eme_seo_permalink', 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ];
@@ -1243,6 +1238,9 @@ function eme_options_page() {
 				eme_options_radio_binary( __( 'Use hCaptcha for forms?', 'events-made-easy' ), 'eme_hcaptcha_for_forms', __( 'Check this option if you want to use hCaptcha on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_HCAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present.', 'events-made-easy' ) );
 				eme_options_input_text( __( 'hCaptcha site key', 'events-made-easy' ), 'eme_hcaptcha_site_key', __( 'This field is required', 'events-made-easy' ) );
 				eme_options_input_text( __( 'hCaptcha secret key', 'events-made-easy' ), 'eme_hcaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
+				eme_options_radio_binary( __( 'Use Cloudflare Turnstile for forms?', 'events-made-easy' ), 'eme_cfcaptcha_for_forms', __( 'Check this option if you want to use Cloudflare Turnstile on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CFCAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present.', 'events-made-easy' ) );
+				eme_options_input_text( __( 'Cloudflare Turnstile site key', 'events-made-easy' ), 'eme_cfcaptcha_site_key', __( 'This field is required', 'events-made-easy' ) );
+				eme_options_input_text( __( 'Cloudflare Turnstile secret key', 'events-made-easy' ), 'eme_cfcaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
 				eme_options_select(
 				    __( 'Autocomplete sources', 'events-made-easy' ),
 				    'eme_autocomplete_sources',

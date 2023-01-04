@@ -11,6 +11,17 @@ jQuery(document).ready( function($) {
 			$('#eme_recaptcha_site_key').prop('required',false);
 			$('#eme_recaptcha_secret_key').prop('required',false);
 		}
+		if ($('input[name=eme_cfcaptcha_for_forms]').prop('checked')) {
+			$('tr#eme_cfcaptcha_site_key_row').show();
+			$('tr#eme_cfcaptcha_secret_key_row').show(); 
+			$('#eme_cfcaptcha_site_key').prop('required',true);
+			$('#eme_cfcaptcha_secret_key').prop('required',true);
+		} else {
+			$('tr#eme_cfcaptcha_site_key_row').hide();
+			$('tr#eme_cfcaptcha_secret_key_row').hide(); 
+			$('#eme_cfcaptcha_site_key').prop('required',false);
+			$('#eme_cfcaptcha_secret_key').prop('required',false);
+		}
 		if ($('input[name=eme_hcaptcha_for_forms]').prop('checked')) {
 			$('tr#eme_hcaptcha_site_key_row').show();
 			$('tr#eme_hcaptcha_secret_key_row').show(); 

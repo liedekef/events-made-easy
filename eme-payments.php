@@ -3631,7 +3631,7 @@ function eme_cancel_payment_ajax() {
 		}
 	} elseif ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
 		if ( ! eme_check_cfcaptcha() ) {
-			$form_html = __( 'Please check the Clodflare Turnstile box', 'events-made-easy' );
+			$form_html = __( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
 			echo wp_json_encode(
 				[
 					'Result'      => 'NOK',

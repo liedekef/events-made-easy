@@ -263,7 +263,7 @@ function eme_load_cfcaptcha_html() {
 	}
 
 	$eme_cfcaptcha_sitekey = get_option( 'eme_cfcaptcha_site_key' );
-		return '<!-- Clodflare Turnstile Captcha widget -->
+		return '<!-- Cloudflare Turnstile Captcha widget -->
             <div class="cf-turnstile" data-sitekey="' . $eme_cfcaptcha_sitekey . '"></div>';
 }
 

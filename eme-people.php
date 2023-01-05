@@ -4215,7 +4215,7 @@ function eme_subscribe_ajax() {
 		}
 	} elseif ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
 		if ( ! eme_check_cfcaptcha() ) {
-			$message = esc_html__( 'Please check the Clodflare Turnstile box', 'events-made-easy' );
+			$message = esc_html__( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
 			echo wp_json_encode(
 				[
 					'Result'      => 'NOK',
@@ -4344,7 +4344,7 @@ function eme_unsubscribe_ajax() {
 		}
 	} elseif ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
 		if ( ! eme_check_cfcaptcha() ) {
-			$message = esc_html__( 'Please check the Clodflare Turnstile box', 'events-made-easy' );
+			$message = esc_html__( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
 			echo wp_json_encode(
 				[
 					'Result'      => 'NOK',

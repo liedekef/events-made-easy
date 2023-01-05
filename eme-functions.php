@@ -2681,11 +2681,11 @@ function eme_table_exists( $table_name ) {
 }
 
 function eme_maybe_drop_column( $table_name, $column_name ) {
-		global $wpdb,$eme_db_prefix;
+	global $wpdb,$eme_db_prefix;
 	if ( eme_column_exists( $table_name, $column_name ) ) {
 		$wpdb->query( "ALTER TABLE $table_name DROP COLUMN $column_name;" );
 	}
-		return true;
+	return true;
 }
 
 function eme_drop_table( $table ) {
@@ -2704,7 +2704,7 @@ function eme_get_total( $multistring ) {
 	if ( eme_is_multi( $multistring ) ) {
 		return array_sum( eme_convert_multi2array( $multistring ) );
 	} else {
-		return $multistring;
+		return $multistring+0; // convert to a number (type is float if string is a float, otherwise it is int)
 	}
 }
 

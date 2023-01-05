@@ -968,10 +968,16 @@ function eme_ajax_country_delete() {
 	$states_table    = $eme_db_prefix . STATES_TBNAME;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$ids_arr = explode( ',', eme_sanitize_request($_POST['id']) );
-	if ( eme_is_numeric_array( $ids_arr ) ) {
-		$wpdb->query( "DELETE FROM $countries_table WHERE id in ( " . $_POST['id'] . ')' );
-		$wpdb->query( "UPDATE $states_table SET country_id=0 where country_id in ( " . $_POST['id'] . ')' );
+	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
+		$jTableResult['Result']  = 'Error';
+		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $jTableResult );
+		wp_die();
+	}
+	$ids_list = eme_sanitize_request($_POST['id']);
+	if ( eme_is_list_of_int( $ids_list ) ) {
+		$wpdb->query( "DELETE FROM $countries_table WHERE id in ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		$wpdb->query( "UPDATE $states_table SET country_id=0 where country_id in ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 	$jTableResult['Result']  = 'OK';
 	$jTableResult['Message'] = __( 'Country deleted!', 'events-made-easy' );
@@ -981,6 +987,12 @@ function eme_ajax_country_delete() {
 
 function eme_ajax_state_edit() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
+		$jTableResult['Result']  = 'Error';
+		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $jTableResult );
+		wp_die();
+	}
 	$jTableResult = [];
 
 	if ( isset( $_POST['id'] ) ) {
@@ -1016,31 +1028,26 @@ function eme_ajax_state_edit() {
 		wp_die();
 	}
 
-	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
+	if ( $update ) {
+		$res = eme_db_update_state( $state['id'], $state );
+	} else {
+		$res = eme_db_insert_state( $state );
+	}
+	if ( ! $res ) {
+		$jTableResult['Result'] = 'Error';
 		if ( $update ) {
-			$res = eme_db_update_state( $state['id'], $state );
+			$jTableResult['Message'] = __( 'Update failed: ', 'events-made-easy' );
 		} else {
-			$res = eme_db_insert_state( $state );
-		}
-		if ( ! $res ) {
-			$jTableResult['Result'] = 'Error';
-			if ( $update ) {
-				$jTableResult['Message'] = __( 'Update failed: ', 'events-made-easy' );
-			} else {
-				$jTableResult['Message'] = __( 'Insert failed: ', 'events-made-easy' );
-			}
-		} else {
-			$jTableResult['Result'] = 'OK';
-			if ( ! $update ) {
-				$record = eme_get_state( $res );
-				// for the new record, we also need to provide the lang (as done in eme_get_states)
-				$record['lang']         = eme_get_state_lang( $res );
-				$jTableResult['Record'] = eme_esc_html( $record );
-			}
+			$jTableResult['Message'] = __( 'Insert failed: ', 'events-made-easy' );
 		}
 	} else {
-		$jTableResult['Result']  = 'Error';
-		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		$jTableResult['Result'] = 'OK';
+		if ( ! $update ) {
+			$record = eme_get_state( $res );
+			// for the new record, we also need to provide the lang (as done in eme_get_states)
+			$record['lang']         = eme_get_state_lang( $res );
+			$jTableResult['Record'] = eme_esc_html( $record );
+		}
 	}
 
 	//Return result to jTable

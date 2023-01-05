@@ -2350,8 +2350,8 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		}
 	}
 
-	$min_allowed = (int) $event['event_properties']['min_allowed'];
-	$max_allowed = (int) $event['event_properties']['max_allowed'];
+	$min_allowed = $event['event_properties']['min_allowed']; // it is a string (can be a number or some multi-format)
+	$max_allowed = $event['event_properties']['max_allowed']; // it is a string (can be a number or some multi-format)
 	//if ($event['event_properties']['take_attendance']) {
 	//   $min_allowed = 0;
 	//   $max_allowed = 1;
@@ -2399,9 +2399,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		foreach ( $multi_avail as $key => $avail_seats ) {
 			$booked_seats_options[ $key ] = [];
 			if ( $max_allowed_is_multi ) {
-				$real_max_allowed = intval( $multi_max_allowed[ $key ] );
+				$real_max_allowed = (int) $multi_max_allowed[ $key ];
 			} else {
-				$real_max_allowed = $max_allowed;
+				$real_max_allowed = (int) $max_allowed;
 			}
 
 			// don't let people choose more seats than available

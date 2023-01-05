@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Development (trunk)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-01-05 20:41:24+00:00\n"
+"POT-Creation-Date: 2023-01-05 21:03:25+00:00\n"
 "PO-Revision-Date: 2022-12-23 09:21:50+0000\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -16523,6 +16523,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you like Events Made Easy, please leave a <a href=\"%s\" "
 #~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> rating. A huge "
@@ -16531,6 +16532,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Ak sa vám Events Made Easy páči, zanechajte prosím <a href=\"%s\" "
 #~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> hodnotenie. "
 #~ "Obrovská vďaka vopred!"
+#
 #
 #
 #
@@ -16567,6 +16569,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "Single Noop"
 #~ msgid_plural "Plural Noop"
@@ -16588,9 +16591,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "Attribute"
 #~ msgstr "Atribúty"
+#
 #
 #
 #
@@ -16625,6 +16630,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "View details"
 #~ msgstr "Zobraziť podujatie"
@@ -16643,9 +16649,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "More information about %s"
 #~ msgstr "Viac informácií o sviatkoch nájdete na stránke "
+#
 #
 #
 #

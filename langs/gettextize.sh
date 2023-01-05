@@ -1,14 +1,7 @@
-#Download the i18n files from: http://i18n.svn.wordpress.org/tools/trunk/
+# First copy /var/www/html/wordpress/wp-includes/pomo/ into pot_gen
 
-#You can do this using wget by running the following command in your terminal:
+# Now you can generate the pot file:
 
-#wget -r -np -R "index.html*" http://i18n.svn.wordpress.org/tools/trunk/
-
-#Then copy /var/www/html/wordpress/wp-includes/pomo/ into tools/trunk
-
-#Now you can generate the pot file:
-
-# cd to where tools/trunk is
 cd pot_gen
 # path to plugin
 plugin_dir="../../"

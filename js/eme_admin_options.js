@@ -100,6 +100,7 @@ jQuery(document).ready( function($) {
 	updateShowHideMailQueueOptions();
 	$('input[name=eme_recaptcha_for_forms]').on("change",updateShowHideCaptcha);
 	$('input[name=eme_hcaptcha_for_forms]').on("change",updateShowHideCaptcha);
+	$('input[name=eme_cfcaptcha_for_forms]').on("change",updateShowHideCaptcha);
 	$('input[name=eme_rsvp_mail_notify_is_active]').on("change",updateShowHideRsvpMailNotify);
 	$('select[name=eme_rsvp_mail_send_method]').on("change",updateShowHideRsvpMailSendMethod);
 	$('input[name=eme_rsvp_mail_SMTPAuth]').on("change",updateShowHideRsvpMailSMTPAuth);

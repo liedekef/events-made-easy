@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Events Made Easy package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.3.32\n"
+"Project-Id-Version: Events Made Easy 2.3.33\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-01-05 21:03:25+00:00\n"
+"POT-Creation-Date: 2023-01-06 16:32:03+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,8 +24,8 @@ msgstr ""
 #: eme-discounts.php:1688 eme-events.php:9813 eme-events.php:10112
 #: eme-events.php:10356 eme-formfields.php:4838 eme-formfields.php:4890
 #: eme-formfields.php:4901 eme-formfields.php:4902 eme-formfields.php:4924
-#: eme-formfields.php:4925 eme-functions.php:3233 eme-functions.php:3254
-#: eme-functions.php:3255 eme-functions.php:3299 eme-locations.php:2834
+#: eme-formfields.php:4925 eme-functions.php:3229 eme-functions.php:3250
+#: eme-functions.php:3251 eme-functions.php:3295 eme-locations.php:2834
 #: eme-mailer.php:1127 eme-members.php:5566 eme-members.php:5663
 #: eme-members.php:5815 eme-members.php:5887 eme-members.php:5958
 #: eme-options.php:134 eme-people.php:3611 eme-people.php:3735
@@ -820,11 +820,11 @@ msgstr ""
 msgid "Incorrect country selection"
 msgstr ""
 
-#: eme-countries.php:1039 eme-functions.php:3281
+#: eme-countries.php:1039 eme-functions.php:3277
 msgid "Update failed: "
 msgstr ""
 
-#: eme-countries.php:1041 eme-functions.php:3283
+#: eme-countries.php:1041 eme-functions.php:3279
 msgid "Insert failed: "
 msgstr ""
 
@@ -4948,7 +4948,7 @@ msgid ""
 "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr ""
 
-#: eme-formfields.php:4911 eme-formfields.php:4921 eme-functions.php:3251
+#: eme-formfields.php:4911 eme-formfields.php:4921 eme-functions.php:3247
 msgid "Records deleted!"
 msgstr ""
 
@@ -4958,278 +4958,278 @@ msgid ""
 "administrator"
 msgstr ""
 
-#: eme-functions.php:418
+#: eme-functions.php:414
 msgid "Please enter the displayed code."
 msgstr ""
 
-#: eme-functions.php:1317
+#: eme-functions.php:1313
 msgid "Public"
 msgstr ""
 
-#: eme-functions.php:1318
+#: eme-functions.php:1314
 msgid "Private"
 msgstr ""
 
-#: eme-functions.php:1319
+#: eme-functions.php:1315
 msgid "Unlisted"
 msgstr ""
 
-#: eme-functions.php:1320
+#: eme-functions.php:1316
 msgid "Draft"
 msgstr ""
 
-#: eme-functions.php:1326 eme-people.php:987 eme-people.php:1303
+#: eme-functions.php:1322 eme-people.php:987 eme-people.php:1303
 #: eme-people.php:1443
 msgid "Pending"
 msgstr ""
 
-#: eme-functions.php:1327
+#: eme-functions.php:1323
 msgid "Active"
 msgstr ""
 
-#: eme-functions.php:1328 eme-members.php:1620
+#: eme-functions.php:1324 eme-members.php:1620
 msgid "Grace period"
 msgstr ""
 
-#: eme-functions.php:1329
+#: eme-functions.php:1325
 msgid "Expired"
 msgstr ""
 
-#: eme-functions.php:1605
+#: eme-functions.php:1601
 msgid "Argentine Peso"
 msgstr ""
 
-#: eme-functions.php:1606
+#: eme-functions.php:1602
 msgid "Australian Dollar"
 msgstr ""
 
-#: eme-functions.php:1607
+#: eme-functions.php:1603
 msgid "Burundian Franc"
 msgstr ""
 
-#: eme-functions.php:1608
+#: eme-functions.php:1604
 msgid "Brazilian Real"
 msgstr ""
 
-#: eme-functions.php:1609
+#: eme-functions.php:1605
 msgid "Canadian Dollar"
 msgstr ""
 
-#: eme-functions.php:1610
+#: eme-functions.php:1606
 msgid "Chilean Peso"
 msgstr ""
 
-#: eme-functions.php:1611
+#: eme-functions.php:1607
 msgid "Chinese Yuan Renminbi"
 msgstr ""
 
-#: eme-functions.php:1612
+#: eme-functions.php:1608
 msgid "Czech Koruna"
 msgstr ""
 
-#: eme-functions.php:1613
+#: eme-functions.php:1609
 msgid "Danish Krone"
 msgstr ""
 
-#: eme-functions.php:1614
+#: eme-functions.php:1610
 msgid "Djiboutian Franc"
 msgstr ""
 
-#: eme-functions.php:1615
+#: eme-functions.php:1611
 msgid "Euro"
 msgstr ""
 
-#: eme-functions.php:1616
+#: eme-functions.php:1612
 msgid "Pound Sterling"
 msgstr ""
 
-#: eme-functions.php:1617
+#: eme-functions.php:1613
 msgid "Guinean Franc"
 msgstr ""
 
-#: eme-functions.php:1618
+#: eme-functions.php:1614
 msgid "Hong Kong Dollar"
 msgstr ""
 
-#: eme-functions.php:1619
+#: eme-functions.php:1615
 msgid "Hungarian Forint"
 msgstr ""
 
-#: eme-functions.php:1620
+#: eme-functions.php:1616
 msgid "Indian Rupee"
 msgstr ""
 
-#: eme-functions.php:1621
+#: eme-functions.php:1617
 msgid "Israeli New Sheqel"
 msgstr ""
 
-#: eme-functions.php:1622
+#: eme-functions.php:1618
 msgid "Japanese Yen"
 msgstr ""
 
-#: eme-functions.php:1623
+#: eme-functions.php:1619
 msgid "Comoro Franc"
 msgstr ""
 
-#: eme-functions.php:1624
+#: eme-functions.php:1620
 msgid "South Korean Won"
 msgstr ""
 
-#: eme-functions.php:1625
+#: eme-functions.php:1621
 msgid "Malagasy Ariary"
 msgstr ""
 
-#: eme-functions.php:1626
+#: eme-functions.php:1622
 msgid "Mexican Peso"
 msgstr ""
 
-#: eme-functions.php:1627
+#: eme-functions.php:1623
 msgid "Norwegian Krone"
 msgstr ""
 
-#: eme-functions.php:1628
+#: eme-functions.php:1624
 msgid "New Zealand Dollar"
 msgstr ""
 
-#: eme-functions.php:1629
+#: eme-functions.php:1625
 msgid "Philippine Peso"
 msgstr ""
 
-#: eme-functions.php:1630
+#: eme-functions.php:1626
 msgid "Polish Zloty"
 msgstr ""
 
-#: eme-functions.php:1631
+#: eme-functions.php:1627
 msgid "Paraguayan Guarani"
 msgstr ""
 
-#: eme-functions.php:1632
+#: eme-functions.php:1628
 msgid "Russian Ruble"
 msgstr ""
 
-#: eme-functions.php:1633
+#: eme-functions.php:1629
 msgid "Rwandan Franc"
 msgstr ""
 
-#: eme-functions.php:1634
+#: eme-functions.php:1630
 msgid "Singapore Dollar"
 msgstr ""
 
-#: eme-functions.php:1635
+#: eme-functions.php:1631
 msgid "Swedish Krona"
 msgstr ""
 
-#: eme-functions.php:1636
+#: eme-functions.php:1632
 msgid "Swiss Franc"
 msgstr ""
 
-#: eme-functions.php:1637
+#: eme-functions.php:1633
 msgid "Thai Baht"
 msgstr ""
 
-#: eme-functions.php:1638
+#: eme-functions.php:1634
 msgid "U.S. Dollar"
 msgstr ""
 
-#: eme-functions.php:1639
+#: eme-functions.php:1635
 msgid "Vietnamese dong"
 msgstr ""
 
-#: eme-functions.php:1640
+#: eme-functions.php:1636
 msgid "Vanuatu vatu"
 msgstr ""
 
-#: eme-functions.php:1641
+#: eme-functions.php:1637
 msgid "CFA Franc BEAC"
 msgstr ""
 
-#: eme-functions.php:1642
+#: eme-functions.php:1638
 msgid "CFA Franc BCEAO"
 msgstr ""
 
-#: eme-functions.php:1643
+#: eme-functions.php:1639
 msgid "CFP Franc (Franc Pacifique)"
 msgstr ""
 
-#: eme-functions.php:1644
+#: eme-functions.php:1640
 msgid "South African Rand"
 msgstr ""
 
-#: eme-functions.php:2200 eme-mailer.php:2445 eme-mailer.php:2530
+#: eme-functions.php:2196 eme-mailer.php:2445 eme-mailer.php:2530
 msgid "Extra info"
 msgstr ""
 
-#: eme-functions.php:2202
+#: eme-functions.php:2198
 msgid "Group"
 msgstr ""
 
-#: eme-functions.php:2819
+#: eme-functions.php:2815
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: eme-functions.php:2822
+#: eme-functions.php:2818
 msgid ""
 "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
 "the HTML form"
 msgstr ""
 
-#: eme-functions.php:2825
+#: eme-functions.php:2821
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: eme-functions.php:2828
+#: eme-functions.php:2824
 msgid "No file was uploaded"
 msgstr ""
 
-#: eme-functions.php:2831
+#: eme-functions.php:2827
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: eme-functions.php:2834
+#: eme-functions.php:2830
 msgid "Failed to write file to disk"
 msgstr ""
 
-#: eme-functions.php:2837
+#: eme-functions.php:2833
 msgid "File upload stopped by extension"
 msgstr ""
 
-#: eme-functions.php:2841
+#: eme-functions.php:2837
 msgid "Unknown upload error"
 msgstr ""
 
-#: eme-functions.php:2883
+#: eme-functions.php:2879
 msgid "Failure creating upload dir, please check your permissions."
 msgstr ""
 
-#: eme-functions.php:2922 eme-functions.php:2983
+#: eme-functions.php:2918 eme-functions.php:2979
 msgid "File upload is required."
 msgstr ""
 
-#: eme-functions.php:2930 eme-functions.php:2991
+#: eme-functions.php:2926 eme-functions.php:2987
 msgid "Illegal filename."
 msgstr ""
 
-#: eme-functions.php:2936 eme-functions.php:2997
+#: eme-functions.php:2932 eme-functions.php:2993
 msgid "File already exists."
 msgstr ""
 
-#: eme-functions.php:2942 eme-functions.php:3003
+#: eme-functions.php:2938 eme-functions.php:2999
 msgid "File too large."
 msgstr ""
 
-#: eme-functions.php:2958 eme-functions.php:3019
+#: eme-functions.php:2954 eme-functions.php:3015
 msgid "Incorrect file type."
 msgstr ""
 
-#: eme-functions.php:2963 eme-functions.php:3024
+#: eme-functions.php:2959 eme-functions.php:3020
 msgid "Upload failed."
 msgstr ""
 
-#: eme-functions.php:3031
+#: eme-functions.php:3027
 msgid "Errors encountered while uploading files"
 msgstr ""
 
-#: eme-functions.php:3267
+#: eme-functions.php:3263
 msgid "No such record"
 msgstr ""
 
@@ -5365,7 +5365,7 @@ msgid ""
 "adjust for client/server time differences when showing event dates and times."
 msgstr ""
 
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.32)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.33)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: eme-gdpr.php:580 eme-gdpr.php:586 eme-gdpr.php:785 events-manager.php:2034
 msgid "Events Made Easy"

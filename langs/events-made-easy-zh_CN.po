@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Development (trunk)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-01-05 21:03:25+00:00\n"
+"POT-Creation-Date: 2023-01-06 16:32:03+00:00\n"
 "PO-Revision-Date: 2022-09-26 01:16:56+0000\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -40,10 +40,10 @@ msgstr ""
 # File: eme-formfields.php, line: 4902
 # File: eme-formfields.php, line: 4924
 # File: eme-formfields.php, line: 4925
-# File: eme-functions.php, line: 3233
-# File: eme-functions.php, line: 3254
-# File: eme-functions.php, line: 3255
-# File: eme-functions.php, line: 3299
+# File: eme-functions.php, line: 3229
+# File: eme-functions.php, line: 3250
+# File: eme-functions.php, line: 3251
+# File: eme-functions.php, line: 3295
 # File: eme-locations.php, line: 2834
 # File: eme-mailer.php, line: 1127
 # File: eme-members.php, line: 5566
@@ -1131,12 +1131,12 @@ msgid "Incorrect country selection"
 msgstr "国家选择不正确"
 #
 # File: eme-countries.php, line: 1039
-# File: eme-functions.php, line: 3281
+# File: eme-functions.php, line: 3277
 msgid "Update failed: "
 msgstr "更新失败："
 #
 # File: eme-countries.php, line: 1041
-# File: eme-functions.php, line: 3283
+# File: eme-functions.php, line: 3279
 msgid "Insert failed: "
 msgstr "插入失败："
 #
@@ -6229,7 +6229,7 @@ msgstr "使用占位符 #_DYNAMICDATA 来显示您表格中的动态表格。"
 #
 # File: eme-formfields.php, line: 4911
 # File: eme-formfields.php, line: 4921
-# File: eme-functions.php, line: 3251
+# File: eme-functions.php, line: 3247
 msgid "Records deleted!"
 msgstr "记录已被删除!"
 #
@@ -6239,289 +6239,289 @@ msgid ""
 "administrator"
 msgstr "在生成验证码时出现问题，请与网站管理员核实。"
 #
-# File: eme-functions.php, line: 418
+# File: eme-functions.php, line: 414
 msgid "Please enter the displayed code."
 msgstr "请输入显示的代码。"
 #
-# File: eme-functions.php, line: 1317
+# File: eme-functions.php, line: 1313
 msgid "Public"
 msgstr "公开"
 #
-# File: eme-functions.php, line: 1318
+# File: eme-functions.php, line: 1314
 msgid "Private"
 msgstr "私人"
 #
-# File: eme-functions.php, line: 1319
+# File: eme-functions.php, line: 1315
 msgid "Unlisted"
 msgstr "未被列出"
 #
-# File: eme-functions.php, line: 1320
+# File: eme-functions.php, line: 1316
 msgid "Draft"
 msgstr "草稿"
 #
-# File: eme-functions.php, line: 1326
+# File: eme-functions.php, line: 1322
 # File: eme-people.php, line: 987
 # File: eme-people.php, line: 1303
 # File: eme-people.php, line: 1443
 msgid "Pending"
 msgstr "待订"
 #
-# File: eme-functions.php, line: 1327
+# File: eme-functions.php, line: 1323
 msgid "Active"
 msgstr "有效"
 #
-# File: eme-functions.php, line: 1328
+# File: eme-functions.php, line: 1324
 # File: eme-members.php, line: 1620
 msgid "Grace period"
 msgstr "宽限期"
 #
-# File: eme-functions.php, line: 1329
+# File: eme-functions.php, line: 1325
 msgid "Expired"
 msgstr "已过期"
 #
-# File: eme-functions.php, line: 1605
+# File: eme-functions.php, line: 1601
 msgid "Argentine Peso"
 msgstr "阿根廷比索"
 #
-# File: eme-functions.php, line: 1606
+# File: eme-functions.php, line: 1602
 msgid "Australian Dollar"
 msgstr "澳元"
 #
-# File: eme-functions.php, line: 1607
+# File: eme-functions.php, line: 1603
 msgid "Burundian Franc"
 msgstr "布隆迪法郎"
 #
-# File: eme-functions.php, line: 1608
+# File: eme-functions.php, line: 1604
 msgid "Brazilian Real"
 msgstr "巴西雷亚尔"
 #
-# File: eme-functions.php, line: 1609
+# File: eme-functions.php, line: 1605
 msgid "Canadian Dollar"
 msgstr "加元"
 #
-# File: eme-functions.php, line: 1610
+# File: eme-functions.php, line: 1606
 msgid "Chilean Peso"
 msgstr "智利比索"
 #
-# File: eme-functions.php, line: 1611
+# File: eme-functions.php, line: 1607
 msgid "Chinese Yuan Renminbi"
 msgstr "中国元 人民币"
 #
-# File: eme-functions.php, line: 1612
+# File: eme-functions.php, line: 1608
 msgid "Czech Koruna"
 msgstr "捷克克朗"
 #
-# File: eme-functions.php, line: 1613
+# File: eme-functions.php, line: 1609
 msgid "Danish Krone"
 msgstr "丹麦克朗"
 #
-# File: eme-functions.php, line: 1614
+# File: eme-functions.php, line: 1610
 msgid "Djiboutian Franc"
 msgstr "吉布提法郎"
 #
-# File: eme-functions.php, line: 1615
+# File: eme-functions.php, line: 1611
 msgid "Euro"
 msgstr "欧元"
 #
-# File: eme-functions.php, line: 1616
+# File: eme-functions.php, line: 1612
 msgid "Pound Sterling"
 msgstr "英镑"
 #
-# File: eme-functions.php, line: 1617
+# File: eme-functions.php, line: 1613
 msgid "Guinean Franc"
 msgstr "几内亚法郎"
 #
-# File: eme-functions.php, line: 1618
+# File: eme-functions.php, line: 1614
 msgid "Hong Kong Dollar"
 msgstr "港币(&#36;)"
 #
-# File: eme-functions.php, line: 1619
+# File: eme-functions.php, line: 1615
 msgid "Hungarian Forint"
 msgstr "匈牙利福林"
 #
-# File: eme-functions.php, line: 1620
+# File: eme-functions.php, line: 1616
 msgid "Indian Rupee"
 msgstr "印度卢比"
 #
-# File: eme-functions.php, line: 1621
+# File: eme-functions.php, line: 1617
 msgid "Israeli New Sheqel"
 msgstr "以色列新谢克尔"
 #
-# File: eme-functions.php, line: 1622
+# File: eme-functions.php, line: 1618
 msgid "Japanese Yen"
 msgstr "日元"
 #
-# File: eme-functions.php, line: 1623
+# File: eme-functions.php, line: 1619
 msgid "Comoro Franc"
 msgstr "科摩罗法郎"
 #
-# File: eme-functions.php, line: 1624
+# File: eme-functions.php, line: 1620
 msgid "South Korean Won"
 msgstr "韩元"
 #
-# File: eme-functions.php, line: 1625
+# File: eme-functions.php, line: 1621
 msgid "Malagasy Ariary"
 msgstr "马达加斯加阿里亚里"
 #
-# File: eme-functions.php, line: 1626
+# File: eme-functions.php, line: 1622
 msgid "Mexican Peso"
 msgstr "墨西哥比索"
 #
-# File: eme-functions.php, line: 1627
+# File: eme-functions.php, line: 1623
 msgid "Norwegian Krone"
 msgstr "挪威克朗"
 #
-# File: eme-functions.php, line: 1628
+# File: eme-functions.php, line: 1624
 msgid "New Zealand Dollar"
 msgstr "新西兰元"
 #
-# File: eme-functions.php, line: 1629
+# File: eme-functions.php, line: 1625
 msgid "Philippine Peso"
 msgstr "菲律宾比索"
 #
-# File: eme-functions.php, line: 1630
+# File: eme-functions.php, line: 1626
 msgid "Polish Zloty"
 msgstr "波兰兹罗提"
 #
-# File: eme-functions.php, line: 1631
+# File: eme-functions.php, line: 1627
 msgid "Paraguayan Guarani"
 msgstr ""
 #
-# File: eme-functions.php, line: 1632
+# File: eme-functions.php, line: 1628
 msgid "Russian Ruble"
 msgstr "俄罗斯卢布"
 #
-# File: eme-functions.php, line: 1633
+# File: eme-functions.php, line: 1629
 msgid "Rwandan Franc"
 msgstr "卢旺达法郎"
 #
-# File: eme-functions.php, line: 1634
+# File: eme-functions.php, line: 1630
 msgid "Singapore Dollar"
 msgstr "新加坡元"
 #
-# File: eme-functions.php, line: 1635
+# File: eme-functions.php, line: 1631
 msgid "Swedish Krona"
 msgstr "瑞典克朗"
 #
-# File: eme-functions.php, line: 1636
+# File: eme-functions.php, line: 1632
 msgid "Swiss Franc"
 msgstr "瑞士法郎"
 #
-# File: eme-functions.php, line: 1637
+# File: eme-functions.php, line: 1633
 msgid "Thai Baht"
 msgstr "泰铢"
 #
-# File: eme-functions.php, line: 1638
+# File: eme-functions.php, line: 1634
 msgid "U.S. Dollar"
 msgstr "美元"
 #
-# File: eme-functions.php, line: 1639
+# File: eme-functions.php, line: 1635
 msgid "Vietnamese dong"
 msgstr ""
 #
-# File: eme-functions.php, line: 1640
+# File: eme-functions.php, line: 1636
 msgid "Vanuatu vatu"
 msgstr "瓦努阿图瓦图"
 #
-# File: eme-functions.php, line: 1641
+# File: eme-functions.php, line: 1637
 msgid "CFA Franc BEAC"
 msgstr "非洲金融共同体法郎"
 #
-# File: eme-functions.php, line: 1642
+# File: eme-functions.php, line: 1638
 msgid "CFA Franc BCEAO"
 msgstr "非洲金融共同体法郎 BCEAO"
 #
-# File: eme-functions.php, line: 1643
+# File: eme-functions.php, line: 1639
 msgid "CFP Franc (Franc Pacifique)"
 msgstr "非洲金融共同体法郎 (Franc Pacifique)"
 #
-# File: eme-functions.php, line: 1644
+# File: eme-functions.php, line: 1640
 msgid "South African Rand"
 msgstr "南非兰特"
 #
-# File: eme-functions.php, line: 2200
+# File: eme-functions.php, line: 2196
 # File: eme-mailer.php, line: 2445
 # File: eme-mailer.php, line: 2530
 msgid "Extra info"
 msgstr "额外信息"
 #
-# File: eme-functions.php, line: 2202
+# File: eme-functions.php, line: 2198
 msgid "Group"
 msgstr "群组"
 #
-# File: eme-functions.php, line: 2819
+# File: eme-functions.php, line: 2815
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 #
-# File: eme-functions.php, line: 2822
+# File: eme-functions.php, line: 2818
 msgid ""
 "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
 "the HTML form"
 msgstr ""
 #
-# File: eme-functions.php, line: 2825
+# File: eme-functions.php, line: 2821
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 #
-# File: eme-functions.php, line: 2828
+# File: eme-functions.php, line: 2824
 msgid "No file was uploaded"
 msgstr ""
 #
-# File: eme-functions.php, line: 2831
+# File: eme-functions.php, line: 2827
 msgid "Missing a temporary folder"
 msgstr ""
 #
-# File: eme-functions.php, line: 2834
+# File: eme-functions.php, line: 2830
 msgid "Failed to write file to disk"
 msgstr ""
 #
-# File: eme-functions.php, line: 2837
+# File: eme-functions.php, line: 2833
 msgid "File upload stopped by extension"
 msgstr ""
 #
-# File: eme-functions.php, line: 2841
+# File: eme-functions.php, line: 2837
 msgid "Unknown upload error"
 msgstr ""
 #
-# File: eme-functions.php, line: 2883
+# File: eme-functions.php, line: 2879
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "创建上传目录失败，请检查您的权限。"
 #
-# File: eme-functions.php, line: 2922
-# File: eme-functions.php, line: 2983
+# File: eme-functions.php, line: 2918
+# File: eme-functions.php, line: 2979
 msgid "File upload is required."
 msgstr "需要上传文件。"
 #
-# File: eme-functions.php, line: 2930
-# File: eme-functions.php, line: 2991
+# File: eme-functions.php, line: 2926
+# File: eme-functions.php, line: 2987
 msgid "Illegal filename."
 msgstr "文件名不合法。"
 #
-# File: eme-functions.php, line: 2936
-# File: eme-functions.php, line: 2997
+# File: eme-functions.php, line: 2932
+# File: eme-functions.php, line: 2993
 msgid "File already exists."
 msgstr "文件已经存在。"
 #
-# File: eme-functions.php, line: 2942
-# File: eme-functions.php, line: 3003
+# File: eme-functions.php, line: 2938
+# File: eme-functions.php, line: 2999
 msgid "File too large."
 msgstr "文件太大。"
 #
-# File: eme-functions.php, line: 2958
-# File: eme-functions.php, line: 3019
+# File: eme-functions.php, line: 2954
+# File: eme-functions.php, line: 3015
 msgid "Incorrect file type."
 msgstr "文件类型不正确。"
 #
-# File: eme-functions.php, line: 2963
-# File: eme-functions.php, line: 3024
+# File: eme-functions.php, line: 2959
+# File: eme-functions.php, line: 3020
 msgid "Upload failed."
 msgstr "上传失败。"
 #
-# File: eme-functions.php, line: 3031
+# File: eme-functions.php, line: 3027
 msgid "Errors encountered while uploading files"
 msgstr "上传文件时遇到的错误"
 #
-# File: eme-functions.php, line: 3267
+# File: eme-functions.php, line: 3263
 msgid "No such record"
 msgstr "没有这样的记录"
 #
@@ -6715,7 +6715,7 @@ msgstr ""
 "EME 有选择地使用一个 cookie 来存储客户端的日期和时间，以便在显示活动日期和时"
 "间时调整客户端或服务器的时间差异。"
 #
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.32)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.33)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 # File: eme-gdpr.php, line: 580
 # File: eme-gdpr.php, line: 586

@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
+= 2.3.34 (2023/01/05) =
+* Fix Google reCaptcha
+
 = 2.3.33 (2023/01/05) =
 * Fix multiprice/multiseat events
 

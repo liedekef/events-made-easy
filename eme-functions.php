@@ -271,12 +271,8 @@ function eme_check_recaptcha() {
 	$eme_recaptcha     = get_option( 'eme_recaptcha_for_forms' );
 	$eme_recaptcha_key = get_option( 'eme_recaptcha_secret_key' );
 	if ( isset( $_POST['g-recaptcha-response'] ) && ! empty( $eme_recaptcha_key ) && $eme_recaptcha ) {
-		$url      = 'https://www.google.com/recaptcha/api/siteverify';
-		$data     = [
-			'secret'   => $eme_recaptcha_key,
-			'response' => eme_sanitize_request( $_POST['g-captcha-response'] ),
-		];
-		$response = wp_remote_get( $url, $data );
+		$url      = 'https://www.google.com/recaptcha/api/siteverify?secret=' . $eme_recaptcha_key . '&response=' . eme_sanitize_request( $_POST['g-recaptcha-response'] );
+                $response = wp_remote_get( $url );
 		if ( is_wp_error( $response ) ) {
 			return false;
 		} else {

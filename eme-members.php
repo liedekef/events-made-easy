@@ -1466,9 +1466,17 @@ function eme_member_form( $member, $membership_id, $from_backend = 0, $form_id =
 	} elseif ( ! empty( $membership['properties']['member_form_tpl'] ) ) {
 		$format = eme_get_template_format( $membership['properties']['member_form_tpl'] );
 	}
-	if ( isset( $format ) ) {
-		$form_html .= eme_replace_membership_formfields_placeholders( $membership, $member, $format );
+	if ( eme_is_empty_string( $format ) ) {
+		$format = "<table class='eme-rsvp-form'>
+            <tr><th scope='row'>" . esc_html__( 'Last name', 'events-made-easy' ) . "*:</th><td>#_LASTNAME</td></tr>
+            <tr><th scope='row'>" . esc_html__( 'First name', 'events-made-easy' ) . "*:</th><td>#REQ_FIRSTNAME</td></tr>
+            <tr><th scope='row'>" . esc_html__( 'Email', 'events-made-easy' ) . "*:</th><td>#_EMAIL</td></tr>
+            </table>
+            #_SUBMIT
+            ";
 	}
+
+	$form_html .= eme_replace_membership_formfields_placeholders( $membership, $member, $format );
 
 	if ( ! $from_backend ) {
 		$form_html .= '</form></div>';
@@ -1748,7 +1756,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><label for="properties[member_form_tpl]"><?php esc_html_e( 'Member Form:', 'events-made-easy' ); ?></label></td>
 	<td><?php echo eme_ui_select_key_value( $membership['properties']['member_form_tpl'], 'properties[member_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
 		<br><p class='eme_smaller'><?php esc_html_e( 'This is the form that will be shown when a new member wants to sign up for this membership.', 'events-made-easy' ); ?>
-		<br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown.', 'events-made-easy' ); ?></p>
+		<br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If empty, a simple default will be used.', 'events-made-easy' ); ?></p>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
 		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_form_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
@@ -2889,8 +2897,13 @@ function eme_dyndata_familymember_ajax() {
 	} else {
 		$format = eme_get_template_format( $membership['properties']['familymember_form_tpl'] );
 	}
-	if ( empty( $format ) ) {
-		$format = 'Lastname: #_LASTNAME<br>Firstname: #_FIRSTNAME<br>Email: #_EMAIL<br>';
+	if ( eme_is_empty_string( $format ) ) {
+		$format = "<table class='eme-rsvp-form'>
+            <tr><th scope='row'>" . esc_html__( 'Last name', 'events-made-easy' ) . "*:</th><td>#_LASTNAME</td></tr>
+            <tr><th scope='row'>" . esc_html__( 'First name', 'events-made-easy' ) . "*:</th><td>#REQ_FIRSTNAME</td></tr>
+            <tr><th scope='row'>" . esc_html__( 'Email', 'events-made-easy' ) . "*:</th><td>#_EMAIL</td></tr>
+            </table>
+            ";
 	}
 	for ( $i = 1;$i <= $count;$i++ ) {
 		$form_html .= eme_replace_membership_familyformfields_placeholders( $format, $i );

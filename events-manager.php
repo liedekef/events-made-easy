@@ -484,8 +484,8 @@ function _eme_install() {
 	}
 	eme_plan_queue_mails();
 
-	// remove possible translations in WP
-	array_map( 'wp_delete_file', glob( WP_CONTENT_DIR."/languages/plugins/events-made-easy*" ) );
+	// remove possible translations in WP (but leave frontend submit)
+	array_map( 'wp_delete_file', preg_grep('/.*frontend.*/', glob( WP_CONTENT_DIR."/languages/plugins/events-made-easy*" ), PREG_GREP_INVERT) );
 
 	// now set the version correct
 	update_option( 'eme_version', EME_DB_VERSION );

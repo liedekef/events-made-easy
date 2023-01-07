@@ -51,7 +51,7 @@ function eme_options_input_text( $title, $name, $description, $type = 'text', $o
 	}
 	?>
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-		<th scope="row"><label for='<?php echo $name; ?>'><?php eme_esc_html( $title ); ?></label></th>
+		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html( $title ); ?></label></th>
 		<td>
 		<input name="<?php echo $name; ?>" type="<?php echo $type; ?>" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
 					<?php

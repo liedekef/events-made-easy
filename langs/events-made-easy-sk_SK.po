@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Development (trunk)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-01-06 16:32:03+00:00\n"
+"POT-Creation-Date: 2023-01-07 16:48:29+00:00\n"
 "PO-Revision-Date: 2022-12-23 09:21:50+0000\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
@@ -47,11 +47,11 @@ msgstr "v mene %s"
 # File: eme-functions.php, line: 3295
 # File: eme-locations.php, line: 2834
 # File: eme-mailer.php, line: 1127
-# File: eme-members.php, line: 5566
-# File: eme-members.php, line: 5663
-# File: eme-members.php, line: 5815
-# File: eme-members.php, line: 5887
-# File: eme-members.php, line: 5958
+# File: eme-members.php, line: 5579
+# File: eme-members.php, line: 5681
+# File: eme-members.php, line: 5833
+# File: eme-members.php, line: 5905
+# File: eme-members.php, line: 5976
 # File: eme-options.php, line: 134
 # File: eme-people.php, line: 3611
 # File: eme-people.php, line: 3735
@@ -304,8 +304,8 @@ msgstr "Filtrovať podľa účasti"
 # File: eme-events.php, line: 5957
 # File: eme-formfields.php, line: 204
 # File: eme-locations.php, line: 888
-# File: eme-members.php, line: 2715
-# File: eme-members.php, line: 2786
+# File: eme-members.php, line: 2723
+# File: eme-members.php, line: 2794
 # File: eme-people.php, line: 1899
 # File: eme-people.php, line: 2354
 # File: eme-rsvp.php, line: 4866
@@ -511,7 +511,7 @@ msgstr "ID záznamu"
 # File: eme-mailer.php, line: 1267
 # File: eme-mailer.php, line: 2439
 # File: eme-mailer.php, line: 2525
-# File: eme-members.php, line: 1589
+# File: eme-members.php, line: 1597
 # File: eme-people.php, line: 2258
 # File: eme-tasks.php, line: 668
 # File: eme-templates.php, line: 279
@@ -523,7 +523,7 @@ msgstr "Názov"
 # File: eme-formfields.php, line: 4875
 # File: eme-holidays.php, line: 138
 # File: eme-locations.php, line: 2911
-# File: eme-members.php, line: 5602
+# File: eme-members.php, line: 5615
 # File: eme-people.php, line: 4944
 # File: eme-templates.php, line: 497
 msgid "No name"
@@ -699,8 +699,8 @@ msgstr "Mesiacov"
 # File: eme-locations.php, line: 886
 # File: eme-mailer.php, line: 2430
 # File: eme-mailer.php, line: 2516
-# File: eme-members.php, line: 2713
-# File: eme-members.php, line: 2784
+# File: eme-members.php, line: 2721
+# File: eme-members.php, line: 2792
 # File: eme-people.php, line: 1897
 # File: eme-people.php, line: 2352
 # File: eme-rsvp.php, line: 4864
@@ -784,8 +784,8 @@ msgstr "Nemáte oprávnenie spravovať zľavy!"
 # File: eme-discounts.php, line: 171
 # File: eme-events.php, line: 5519
 # File: eme-locations.php, line: 218
-# File: eme-members.php, line: 5148
-# File: eme-members.php, line: 5318
+# File: eme-members.php, line: 5161
+# File: eme-members.php, line: 5331
 # File: eme-people.php, line: 760
 # File: eme-rsvp.php, line: 4555
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
@@ -798,8 +798,8 @@ msgstr ""
 # File: eme-discounts.php, line: 196
 # File: eme-events.php, line: 5546
 # File: eme-locations.php, line: 245
-# File: eme-members.php, line: 5174
-# File: eme-members.php, line: 5344
+# File: eme-members.php, line: 5187
+# File: eme-members.php, line: 5357
 # File: eme-people.php, line: 787
 # File: eme-rsvp.php, line: 4582
 msgid "Not all required fields present."
@@ -816,7 +816,7 @@ msgstr "Neimportované: %s"
 # File: eme-countries.php, line: 145
 # File: eme-discounts.php, line: 149
 # File: eme-discounts.php, line: 208
-# File: eme-members.php, line: 5429
+# File: eme-members.php, line: 5442
 #, fuzzy
 msgid "Import finished: %d inserts, %d errors"
 msgstr ""
@@ -829,8 +829,8 @@ msgstr ""
 # File: eme-discounts.php, line: 216
 # File: eme-events.php, line: 5510
 # File: eme-locations.php, line: 209
-# File: eme-members.php, line: 5140
-# File: eme-members.php, line: 5311
+# File: eme-members.php, line: 5153
+# File: eme-members.php, line: 5324
 # File: eme-people.php, line: 751
 # File: eme-rsvp.php, line: 4545
 msgid "Problem detected while uploading the file"
@@ -842,8 +842,8 @@ msgstr "Pri nahrávaní súboru sa vyskytol problém"
 # File: eme-discounts.php, line: 219
 # File: eme-events.php, line: 5507
 # File: eme-locations.php, line: 206
-# File: eme-members.php, line: 5137
-# File: eme-members.php, line: 5308
+# File: eme-members.php, line: 5150
+# File: eme-members.php, line: 5321
 # File: eme-people.php, line: 748
 # File: eme-rsvp.php, line: 4542
 msgid "No CSV file detected: %s"
@@ -952,7 +952,7 @@ msgstr "Pridať krajinu"
 # File: eme-discounts.php, line: 508
 # File: eme-events.php, line: 5742
 # File: eme-locations.php, line: 834
-# File: eme-members.php, line: 2608
+# File: eme-members.php, line: 2616
 # File: eme-people.php, line: 1800
 msgid "Click on the icon to show the import form"
 msgstr "Kliknutím na ikonu zobrazíte formulár na import"
@@ -963,8 +963,8 @@ msgstr "Kliknutím na ikonu zobrazíte formulár na import"
 # File: eme-discounts.php, line: 515
 # File: eme-events.php, line: 5749
 # File: eme-locations.php, line: 841
-# File: eme-members.php, line: 2615
-# File: eme-members.php, line: 2630
+# File: eme-members.php, line: 2623
+# File: eme-members.php, line: 2638
 # File: eme-people.php, line: 1807
 # File: eme-rsvp.php, line: 4723
 msgid "Delimiter:"
@@ -976,8 +976,8 @@ msgstr "Oddelovač:"
 # File: eme-discounts.php, line: 517
 # File: eme-events.php, line: 5751
 # File: eme-locations.php, line: 843
-# File: eme-members.php, line: 2617
-# File: eme-members.php, line: 2632
+# File: eme-members.php, line: 2625
+# File: eme-members.php, line: 2640
 # File: eme-people.php, line: 1809
 # File: eme-rsvp.php, line: 4725
 msgid "Enclosure:"
@@ -1021,8 +1021,8 @@ msgstr ""
 # File: eme-locations.php, line: 878
 # File: eme-mailer.php, line: 2426
 # File: eme-mailer.php, line: 2513
-# File: eme-members.php, line: 2672
-# File: eme-members.php, line: 2779
+# File: eme-members.php, line: 2680
+# File: eme-members.php, line: 2787
 # File: eme-people.php, line: 1849
 # File: eme-people.php, line: 2347
 # File: eme-rsvp.php, line: 4793
@@ -1494,7 +1494,7 @@ msgstr "Názov zľavy"
 # File: eme-events.php, line: 9415
 # File: eme-events.php, line: 9512
 # File: eme-events.php, line: 9567
-# File: eme-members.php, line: 1593
+# File: eme-members.php, line: 1601
 # File: eme-people.php, line: 2262
 # File: eme-tasks.php, line: 672
 # File: eme-templates.php, line: 283
@@ -1506,7 +1506,7 @@ msgstr "Popis"
 # File: eme-events.php, line: 9375
 # File: eme-events.php, line: 9394
 # File: eme-events.php, line: 9421
-# File: eme-members.php, line: 1597
+# File: eme-members.php, line: 1605
 # File: eme-templates.php, line: 300
 msgid "Type"
 msgstr "Typ"
@@ -1594,7 +1594,7 @@ msgstr ""
 "nebude platný po tomto dátume a čase."
 #
 # File: eme-discounts.php, line: 898
-# File: eme-members.php, line: 1736
+# File: eme-members.php, line: 1744
 msgid "Logged-in users only"
 msgstr "Iba prihlásený používatelia"
 #
@@ -1620,7 +1620,7 @@ msgid "Require EME membership"
 msgstr "Vyžadovať EME členstvo"
 #
 # File: eme-discounts.php, line: 916
-# File: eme-members.php, line: 2599
+# File: eme-members.php, line: 2607
 msgid "No memberships defined yet!"
 msgstr "Žiadne členstvá neboli ešte definované!"
 #
@@ -1738,7 +1738,7 @@ msgstr "Pevná na miesto"
 # File: eme-gdpr.php, line: 602
 # File: eme-gdpr.php, line: 603
 # File: eme-locations.php, line: 2928
-# File: eme-members.php, line: 5758
+# File: eme-members.php, line: 5776
 # File: eme-people.php, line: 434
 # File: eme-people.php, line: 442
 # File: eme-people.php, line: 450
@@ -1768,7 +1768,7 @@ msgstr "Áno"
 # File: eme-gdpr.php, line: 602
 # File: eme-gdpr.php, line: 603
 # File: eme-locations.php, line: 2928
-# File: eme-members.php, line: 5758
+# File: eme-members.php, line: 5776
 # File: eme-people.php, line: 434
 # File: eme-people.php, line: 442
 # File: eme-people.php, line: 450
@@ -2258,10 +2258,10 @@ msgstr "Miesta neboli importované: %s"
 #
 # File: eme-events.php, line: 5605
 # File: eme-events.php, line: 5608
-# File: eme-members.php, line: 5191
-# File: eme-members.php, line: 5194
-# File: eme-members.php, line: 5197
-# File: eme-members.php, line: 5200
+# File: eme-members.php, line: 5204
+# File: eme-members.php, line: 5207
+# File: eme-members.php, line: 5210
+# File: eme-members.php, line: 5213
 # File: eme-people.php, line: 807
 msgid "Not imported (field %s not valid): %s"
 msgstr "Neimportované (osoba neexistuje): %s"
@@ -2276,15 +2276,15 @@ msgstr "Neimportované (problém s vložením podujatia do databázy): %s"
 #
 # File: eme-events.php, line: 5680
 # File: eme-locations.php, line: 326
-# File: eme-members.php, line: 5284
-# File: eme-members.php, line: 5424
+# File: eme-members.php, line: 5297
+# File: eme-members.php, line: 5437
 # File: eme-people.php, line: 868
 msgid "Not imported (not all required fields are present): %s"
 msgstr "Neimportované (nie sú prítomné všetky povinné polia): %s"
 #
 # File: eme-events.php, line: 5683
 # File: eme-locations.php, line: 329
-# File: eme-members.php, line: 5289
+# File: eme-members.php, line: 5302
 # File: eme-people.php, line: 873
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr ""
@@ -2374,8 +2374,8 @@ msgstr "Stav podujatia"
 #
 # File: eme-events.php, line: 5807
 # File: eme-locations.php, line: 858
-# File: eme-members.php, line: 2435
-# File: eme-members.php, line: 2440
+# File: eme-members.php, line: 2443
+# File: eme-members.php, line: 2448
 # File: eme-people.php, line: 1636
 # File: eme-people.php, line: 1641
 msgid "Custom field value to search"
@@ -2387,7 +2387,7 @@ msgstr "Filtrovať podujatia"
 #
 # File: eme-events.php, line: 5817
 # File: eme-locations.php, line: 867
-# File: eme-members.php, line: 2661
+# File: eme-members.php, line: 2669
 # File: eme-people.php, line: 1838
 msgid ""
 "Hint: when searching for custom field values, you can optionally limit which "
@@ -2400,7 +2400,7 @@ msgstr ""
 #
 # File: eme-events.php, line: 5818
 # File: eme-locations.php, line: 868
-# File: eme-members.php, line: 2662
+# File: eme-members.php, line: 2670
 # File: eme-people.php, line: 1839
 msgid ""
 "If you can't see your custom field in the \"Custom fields to filter on\" "
@@ -2557,8 +2557,8 @@ msgstr "Atribúty"
 # File: eme-events.php, line: 8199
 # File: eme-locations.php, line: 384
 # File: eme-locations.php, line: 747
-# File: eme-members.php, line: 1529
-# File: eme-members.php, line: 2341
+# File: eme-members.php, line: 1537
+# File: eme-members.php, line: 2349
 # File: eme-options.php, line: 1395
 msgid "Custom fields"
 msgstr "Vlastné polia"
@@ -2568,7 +2568,7 @@ msgid "Generic RSVP info"
 msgstr "Všeobecné rezervačné info"
 #
 # File: eme-events.php, line: 6153
-# File: eme-members.php, line: 1875
+# File: eme-members.php, line: 1883
 msgid "Payment methods"
 msgstr "Spôsoby platby"
 #
@@ -3206,23 +3206,23 @@ msgstr "Buď si vyberte šablónu: "
 # File: eme-events.php, line: 7990
 # File: eme-events.php, line: 8352
 # File: eme-events.php, line: 8367
-# File: eme-members.php, line: 1752
-# File: eme-members.php, line: 1778
-# File: eme-members.php, line: 1796
-# File: eme-members.php, line: 1814
-# File: eme-members.php, line: 1832
-# File: eme-members.php, line: 1850
-# File: eme-members.php, line: 1917
-# File: eme-members.php, line: 1986
-# File: eme-members.php, line: 2039
-# File: eme-members.php, line: 2074
-# File: eme-members.php, line: 2109
-# File: eme-members.php, line: 2144
-# File: eme-members.php, line: 2172
-# File: eme-members.php, line: 2210
-# File: eme-members.php, line: 2248
-# File: eme-members.php, line: 2279
-# File: eme-members.php, line: 2313
+# File: eme-members.php, line: 1760
+# File: eme-members.php, line: 1786
+# File: eme-members.php, line: 1804
+# File: eme-members.php, line: 1822
+# File: eme-members.php, line: 1840
+# File: eme-members.php, line: 1858
+# File: eme-members.php, line: 1925
+# File: eme-members.php, line: 1994
+# File: eme-members.php, line: 2047
+# File: eme-members.php, line: 2082
+# File: eme-members.php, line: 2117
+# File: eme-members.php, line: 2152
+# File: eme-members.php, line: 2180
+# File: eme-members.php, line: 2218
+# File: eme-members.php, line: 2256
+# File: eme-members.php, line: 2287
+# File: eme-members.php, line: 2321
 # File: eme-widgets.php, line: 232
 msgid ""
 "Or enter your own (if anything is entered here, it takes precedence over the "
@@ -3254,7 +3254,7 @@ msgstr ""
 # File: eme-locations.php, line: 754
 # File: eme-mailer.php, line: 2113
 # File: eme-mailer.php, line: 2293
-# File: eme-members.php, line: 2348
+# File: eme-members.php, line: 2356
 # File: eme-templates.php, line: 292
 msgid ""
 "Your account has the ability to post unrestricted HTML content here, except "
@@ -3268,7 +3268,7 @@ msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr "Predmet emailu o oznámení platobnej brány pre kontaktnú osobu"
 #
 # File: eme-events.php, line: 7104
-# File: eme-members.php, line: 2303
+# File: eme-members.php, line: 2311
 # File: eme-options.php, line: 1967
 msgid ""
 "The subject of the email which will be sent to the contact person when a "
@@ -3282,7 +3282,7 @@ msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr "Telo emailu o oznámení platobnej brány pre kontaktnú osobu"
 #
 # File: eme-events.php, line: 7126
-# File: eme-members.php, line: 2310
+# File: eme-members.php, line: 2318
 # File: eme-options.php, line: 1968
 msgid ""
 "The body of the email which will be sent to the contact person when a "
@@ -3292,7 +3292,7 @@ msgstr ""
 "prostredníctvom platobnej brány."
 #
 # File: eme-events.php, line: 7150
-# File: eme-members.php, line: 1953
+# File: eme-members.php, line: 1961
 msgid "Dynamic data check on every field"
 msgstr "Kontrola dynamických údajov v každom poli"
 #
@@ -3445,7 +3445,7 @@ msgstr "Prílohy emailu o vykonanej rezervácii"
 # File: eme-events.php, line: 9682
 # File: eme-mailer.php, line: 2138
 # File: eme-mailer.php, line: 2316
-# File: eme-members.php, line: 2021
+# File: eme-members.php, line: 2029
 # File: eme-options.php, line: 1808
 # File: eme-options.php, line: 1854
 # File: eme-options.php, line: 1953
@@ -3458,7 +3458,7 @@ msgstr "Pridať prílohu"
 # File: eme-events.php, line: 7883
 # File: eme-mailer.php, line: 2139
 # File: eme-mailer.php, line: 2317
-# File: eme-members.php, line: 2022
+# File: eme-members.php, line: 2030
 # File: eme-options.php, line: 1809
 # File: eme-options.php, line: 1855
 # File: eme-options.php, line: 1954
@@ -3966,7 +3966,7 @@ msgstr ""
 #
 # File: eme-events.php, line: 8242
 # File: eme-locations.php, line: 789
-# File: eme-members.php, line: 2379
+# File: eme-members.php, line: 2387
 msgid ""
 "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr ""
@@ -4006,7 +4006,7 @@ msgstr ""
 "nastavení platby)."
 #
 # File: eme-events.php, line: 8303
-# File: eme-members.php, line: 1906
+# File: eme-members.php, line: 1914
 msgid ""
 "No payment methods configured yet. Go in the EME payment settings and "
 "configure some."
@@ -4231,8 +4231,8 @@ msgid "For multiprice events, separate the values by '||'"
 msgstr "V prípade podujatí s rôznymi cenami, oddeľte hodnoty znakom „||“"
 #
 # File: eme-events.php, line: 8476
-# File: eme-members.php, line: 1694
-# File: eme-members.php, line: 1700
+# File: eme-members.php, line: 1702
+# File: eme-members.php, line: 1708
 # File: eme-options.php, line: 2132
 msgid "Use the point as decimal separator"
 msgstr "Použitie bodky ako desatinného oddeľovača"
@@ -4264,7 +4264,7 @@ msgid "VAT percentage: "
 msgstr "Percento DPH: "
 #
 # File: eme-events.php, line: 8489
-# File: eme-members.php, line: 1708
+# File: eme-members.php, line: 1716
 msgid "VAT percentage"
 msgstr "Percento DPH"
 #
@@ -4277,12 +4277,12 @@ msgstr ""
 "sa predpokladá použitie špeciálnych zástupných výrazov."
 #
 # File: eme-events.php, line: 8494
-# File: eme-members.php, line: 1714
+# File: eme-members.php, line: 1722
 msgid "Discount to apply"
 msgstr "Uplatniť zľavu"
 #
 # File: eme-events.php, line: 8495
-# File: eme-members.php, line: 1715
+# File: eme-members.php, line: 1723
 msgid ""
 "The discount name you want to apply (is overridden by discount group if "
 "used)."
@@ -4291,12 +4291,12 @@ msgstr ""
 "použitá)."
 #
 # File: eme-events.php, line: 8498
-# File: eme-members.php, line: 1718
+# File: eme-members.php, line: 1726
 msgid "Discount group to apply"
 msgstr "Uplatniť skupinu zliav"
 #
 # File: eme-events.php, line: 8499
-# File: eme-members.php, line: 1719
+# File: eme-members.php, line: 1727
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr "Názov skupinovej zľavy, ktorú chcete použiť (nadradená zľave)."
 #
@@ -4379,12 +4379,12 @@ msgstr ""
 "počtu miest pri rezervácii skryté."
 #
 # File: eme-events.php, line: 8525
-# File: eme-members.php, line: 1865
+# File: eme-members.php, line: 1873
 msgid "Group to add people to"
 msgstr "Skupina, do ktorej majú byť ľudia pridaní"
 #
 # File: eme-events.php, line: 8526
-# File: eme-members.php, line: 1866
+# File: eme-members.php, line: 1874
 msgid ""
 "The group you want people to automatically become a member of when they "
 "subscribe."
@@ -4985,6 +4985,8 @@ msgstr "Skupiny"
 # File: eme-gdpr.php, line: 267
 # File: eme-gdpr.php, line: 486
 # File: eme-gdpr.php, line: 610
+# File: eme-members.php, line: 1471
+# File: eme-members.php, line: 2902
 # File: eme-options.php, line: 35
 # File: eme-options.php, line: 45
 # File: eme-options.php, line: 88
@@ -5011,6 +5013,8 @@ msgstr "Priezvisko"
 # File: eme-gdpr.php, line: 267
 # File: eme-gdpr.php, line: 487
 # File: eme-gdpr.php, line: 614
+# File: eme-members.php, line: 1472
+# File: eme-members.php, line: 2903
 # File: eme-options.php, line: 36
 # File: eme-options.php, line: 46
 # File: eme-options.php, line: 89
@@ -5041,6 +5045,8 @@ msgstr "Krstné meno"
 # File: eme-gdpr.php, line: 488
 # File: eme-gdpr.php, line: 618
 # File: eme-mailer.php, line: 1268
+# File: eme-members.php, line: 1473
+# File: eme-members.php, line: 2904
 # File: eme-options.php, line: 37
 # File: eme-options.php, line: 47
 # File: eme-options.php, line: 90
@@ -5913,11 +5919,11 @@ msgstr "Viac informácií o poliach formulára nájdete na stránke "
 #
 # File: eme-formfields.php, line: 411
 # File: eme-holidays.php, line: 218
-# File: eme-members.php, line: 1795
-# File: eme-members.php, line: 1813
-# File: eme-members.php, line: 1831
-# File: eme-members.php, line: 1849
-# File: eme-members.php, line: 1916
+# File: eme-members.php, line: 1803
+# File: eme-members.php, line: 1821
+# File: eme-members.php, line: 1839
+# File: eme-members.php, line: 1857
+# File: eme-members.php, line: 1924
 # File: eme-options.php, line: 1451
 # File: eme-options.php, line: 1456
 # File: eme-options.php, line: 1466
@@ -6313,7 +6319,7 @@ msgstr "Použitá skupina zliav %d už neexistuje"
 #
 # File: eme-formfields.php, line: 3123
 # File: eme-formfields.php, line: 3862
-# File: eme-members.php, line: 4419
+# File: eme-members.php, line: 4432
 # File: eme-people.php, line: 1066
 # File: eme-people.php, line: 1358
 # File: eme-rsvp.php, line: 3287
@@ -6577,7 +6583,7 @@ msgid "Active"
 msgstr "Aktívne"
 #
 # File: eme-functions.php, line: 1324
-# File: eme-members.php, line: 1620
+# File: eme-members.php, line: 1628
 msgid "Grace period"
 msgstr "Doba odkladu"
 #
@@ -6836,7 +6842,7 @@ msgstr "Taký záznam neexistuje"
 # File: eme-gdpr.php, line: 144
 # File: eme-gdpr.php, line: 222
 # File: eme-gdpr.php, line: 346
-# File: eme-members.php, line: 4146
+# File: eme-members.php, line: 4159
 # File: eme-payments.php, line: 3589
 # File: eme-people.php, line: 4173
 # File: eme-people.php, line: 4301
@@ -6855,7 +6861,7 @@ msgstr ""
 # File: eme-gdpr.php, line: 233
 # File: eme-gdpr.php, line: 357
 # File: eme-gdpr.php, line: 368
-# File: eme-members.php, line: 4158
+# File: eme-members.php, line: 4171
 # File: eme-payments.php, line: 3600
 # File: eme-people.php, line: 4184
 # File: eme-people.php, line: 4313
@@ -6915,7 +6921,7 @@ msgid "Request to change personal info"
 msgstr "Žiadosť o zmenu osobných informácií"
 #
 # File: eme-gdpr.php, line: 380
-# File: eme-members.php, line: 4183
+# File: eme-members.php, line: 4196
 # File: eme-payments.php, line: 3612
 # File: eme-people.php, line: 4196
 # File: eme-people.php, line: 4325
@@ -6926,7 +6932,7 @@ msgid "Please check the Google reCAPTCHA box"
 msgstr "Prosím označte políčko Google reCAPTCHA"
 #
 # File: eme-gdpr.php, line: 391
-# File: eme-members.php, line: 4194
+# File: eme-members.php, line: 4207
 # File: eme-payments.php, line: 3623
 # File: eme-people.php, line: 4207
 # File: eme-people.php, line: 4336
@@ -6937,7 +6943,7 @@ msgid "Please check the hCaptcha box"
 msgstr "Označte prosím políčko hCaptcha"
 #
 # File: eme-gdpr.php, line: 402
-# File: eme-members.php, line: 4205
+# File: eme-members.php, line: 4218
 # File: eme-payments.php, line: 3634
 # File: eme-people.php, line: 4218
 # File: eme-people.php, line: 4347
@@ -6949,7 +6955,7 @@ msgid "Please check the Cloudflare Turnstile box"
 msgstr "Prosím označte políčko Google reCAPTCHA"
 #
 # File: eme-gdpr.php, line: 413
-# File: eme-members.php, line: 4217
+# File: eme-members.php, line: 4230
 # File: eme-payments.php, line: 3645
 # File: eme-people.php, line: 4229
 # File: eme-people.php, line: 4358
@@ -7032,7 +7038,7 @@ msgstr ""
 "sa pri zobrazovaní dátumov a časov podujatí prispôsobili časovým rozdielom "
 "medzi klientom a serverom."
 #
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.33)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.34)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 # File: eme-gdpr.php, line: 580
 # File: eme-gdpr.php, line: 586
@@ -7390,9 +7396,9 @@ msgstr "Duplikovať toto miesto"
 # File: eme-mailer.php, line: 1526
 # File: eme-mailer.php, line: 1620
 # File: eme-mailer.php, line: 1725
-# File: eme-members.php, line: 6010
-# File: eme-members.php, line: 6089
-# File: eme-members.php, line: 6209
+# File: eme-members.php, line: 6028
+# File: eme-members.php, line: 6107
+# File: eme-members.php, line: 6227
 # File: eme-rsvp.php, line: 1158
 # File: eme-rsvp.php, line: 4509
 # File: eme-rsvp.php, line: 6032
@@ -7502,7 +7508,7 @@ msgstr "Vložte prosím platnú e-mailovú adresu"
 # File: eme-mailer.php, line: 1516
 # File: eme-mailer.php, line: 1617
 # File: eme-mailer.php, line: 1718
-# File: eme-members.php, line: 6007
+# File: eme-members.php, line: 6025
 # File: eme-rsvp.php, line: 6029
 # File: eme-rsvp.php, line: 6049
 msgid "The mail has been sent."
@@ -8180,16 +8186,16 @@ msgid "The extra charge for the membership is not a valid price, resetted to 0"
 msgstr "Príplatok za členstvo nie je platná cena, vynulované na 0"
 #
 # File: eme-members.php, line: 1231
-# File: eme-members.php, line: 2594
+# File: eme-members.php, line: 2602
 msgid "Add member"
 msgstr "Pridať člena"
 #
 # File: eme-members.php, line: 1238
 # File: eme-members.php, line: 1328
-# File: eme-members.php, line: 5711
-# File: eme-members.php, line: 5721
-# File: eme-members.php, line: 5722
-# File: eme-members.php, line: 5723
+# File: eme-members.php, line: 5729
+# File: eme-members.php, line: 5739
+# File: eme-members.php, line: 5740
+# File: eme-members.php, line: 5741
 msgid "Edit member"
 msgstr "Upraviť člena"
 #
@@ -8262,7 +8268,7 @@ msgstr ""
 "prepojenie (vyprázdnením tohto poľa) a stlačte tlačidlo Uložiť."
 #
 # File: eme-members.php, line: 1346
-# File: eme-members.php, line: 1601
+# File: eme-members.php, line: 1609
 msgid "Start date"
 msgstr "Začiatočný dátum"
 #
@@ -8320,36 +8326,36 @@ msgstr "Členské info"
 msgid "No membership with ID %d found"
 msgstr "Nenašlo sa žiadne členstvo s ID %d"
 #
-# File: eme-members.php, line: 1497
+# File: eme-members.php, line: 1505
 msgid "Add a membership definition"
 msgstr "Pridať definíciu členstva"
 #
-# File: eme-members.php, line: 1499
+# File: eme-members.php, line: 1507
 msgid "Edit membership '%s'"
 msgstr "Upraviť členstvo '%s'"
 #
-# File: eme-members.php, line: 1527
+# File: eme-members.php, line: 1535
 msgid "Membership details"
 msgstr "Podrobnosti členstva"
 #
-# File: eme-members.php, line: 1528
+# File: eme-members.php, line: 1536
 msgid "Mail format settings"
 msgstr "Nastavenia formátu e-mailu"
 #
-# File: eme-members.php, line: 1544
-# File: eme-members.php, line: 2769
+# File: eme-members.php, line: 1552
+# File: eme-members.php, line: 2777
 msgid "Add membership"
 msgstr "Pridať členstvo"
 #
-# File: eme-members.php, line: 1546
+# File: eme-members.php, line: 1554
 msgid "Update membership"
 msgstr "Aktualizovať členstvo"
 #
-# File: eme-members.php, line: 1607
+# File: eme-members.php, line: 1615
 msgid "Duration period"
 msgstr "Trvanie"
 #
-# File: eme-members.php, line: 1609
+# File: eme-members.php, line: 1617
 msgid ""
 "Once this duration period has passed, the membership start date for new "
 "members will be increased by the passed period."
@@ -8357,11 +8363,11 @@ msgstr ""
 "Po uplynutí tohto obdobia sa dátum začatia členstva pre nových členov zvýši "
 "o uplynuté obdobie."
 #
-# File: eme-members.php, line: 1613
+# File: eme-members.php, line: 1621
 msgid "One extra free period"
 msgstr "Jedno bezplatné obdobie navyše"
 #
-# File: eme-members.php, line: 1615
+# File: eme-members.php, line: 1623
 msgid ""
 "When someone becomes a member, the end date is the end date of the current "
 "period calculated for this membership."
@@ -8369,7 +8375,7 @@ msgstr ""
 "Keď sa niekto stane členom, dátum ukončenia je dátum ukončenia aktuálneho "
 "obdobia vypočítaného pre toto členstvo."
 #
-# File: eme-members.php, line: 1616
+# File: eme-members.php, line: 1624
 msgid ""
 "If you want new members to get one extra membership period for free, set "
 "this option."
@@ -8377,7 +8383,7 @@ msgstr ""
 "Ak chcete, aby noví členovia dostali jedno ďalšie obdobie členstva zadarmo, "
 "nastavte túto možnosť."
 #
-# File: eme-members.php, line: 1622
+# File: eme-members.php, line: 1630
 msgid ""
 "After a membership has expired, people can still be considered as a member "
 "until this many days have passed."
@@ -8385,17 +8391,17 @@ msgstr ""
 "Po vypršaní členstva sa osoby môžu považovať za členov až do uplynutia "
 "takéhoto počtu dní."
 #
-# File: eme-members.php, line: 1623
+# File: eme-members.php, line: 1631
 msgid ""
 "After the mentioned number of days have passed, the membership will be set "
 "to expired."
 msgstr "Po uplynutí uvedeného počtu dní členstvo vyprší."
 #
-# File: eme-members.php, line: 1627
+# File: eme-members.php, line: 1635
 msgid "Reminder"
 msgstr "Pripomienka"
 #
-# File: eme-members.php, line: 1629
+# File: eme-members.php, line: 1637
 msgid ""
 "Set the number of days before membership expiration a reminder will be sent "
 "out."
@@ -8403,7 +8409,7 @@ msgstr ""
 "Nastaviť počet dní, kedy bude zaslaná pripomienka pred uplynutím platnosti "
 "členstva."
 #
-# File: eme-members.php, line: 1630
+# File: eme-members.php, line: 1638
 msgid ""
 "If you want to send out multiple reminders, seperate the days here by "
 "commas. This can contain negative numbers too, if you want to send out a "
@@ -8413,11 +8419,11 @@ msgstr ""
 "obsahovať aj záporné čísla, ak chcete poslať pripomenutie po dátume "
 "ukončenia členstva, napr. počas obdobia odkladu."
 #
-# File: eme-members.php, line: 1634
+# File: eme-members.php, line: 1642
 msgid "Automatically remove pending members"
 msgstr "Automaticky odstrániť čakajúcich členov"
 #
-# File: eme-members.php, line: 1636
+# File: eme-members.php, line: 1644
 msgid ""
 "Set the number of days after which pending members are automatically "
 "removed. Leave empty or 0 for no automatic removal."
@@ -8425,11 +8431,11 @@ msgstr ""
 "Nastavte počet dní, po ktorých budú čakajúci členovia automaticky "
 "odstránení. Nechajte prázdne alebo 0 pre vypnutie automatického odstránenia."
 #
-# File: eme-members.php, line: 1640
+# File: eme-members.php, line: 1648
 msgid "Allow membership renewal"
 msgstr "Povoliť obnovenie členstva"
 #
-# File: eme-members.php, line: 1642
+# File: eme-members.php, line: 1650
 msgid ""
 "Select this option if you want members to be able to renew/extend the "
 "membership after payment via the unique payment url generated by the member "
@@ -8442,11 +8448,11 @@ msgstr ""
 "všeobecného zástupného výrazu #_MEMBERSHIP_PAYMENT_URL{xx}. (pričom xx je "
 "identifikátor členstva, pozrite dokumentáciu)."
 #
-# File: eme-members.php, line: 1646
+# File: eme-members.php, line: 1654
 msgid "Renewal for active members based on end date"
 msgstr "Obnovenie pre aktívnych členov na základe konečného dátumu"
 #
-# File: eme-members.php, line: 1648
+# File: eme-members.php, line: 1656
 msgid ""
 "Allow active members to pay for a renewal only if the membership end date is "
 "less than the mentioned number of days away. This prevents people from "
@@ -8458,11 +8464,11 @@ msgstr ""
 "zabráni tomu, aby ľudia platili viackrát za sebou. Ak chcete túto funkciu "
 "vypnúť, zadajte 0 alebo nič (predvolené nastavenie)."
 #
-# File: eme-members.php, line: 1653
+# File: eme-members.php, line: 1661
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 #
-# File: eme-members.php, line: 1655
+# File: eme-members.php, line: 1663
 msgid ""
 "Select this option if you want to use the Google reCAPTCHA on the membership "
 "signup form."
@@ -8470,7 +8476,7 @@ msgstr ""
 "Vyberte túto možnosť, ak chcete použiť Google reCAPTCHA v registračnom "
 "formulári členstva."
 #
-# File: eme-members.php, line: 1656
+# File: eme-members.php, line: 1664
 msgid ""
 "If this option is checked, make sure to use #_RECAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
@@ -8479,11 +8485,11 @@ msgstr ""
 "členstva použiť #_RECAPTCHA. Ak nie je prítomné, pridá sa priamo nad "
 "tlačidlo odoslania."
 #
-# File: eme-members.php, line: 1662
+# File: eme-members.php, line: 1670
 msgid "hCaptcha"
 msgstr "hCaptcha"
 #
-# File: eme-members.php, line: 1664
+# File: eme-members.php, line: 1672
 msgid ""
 "Select this option if you want to use the hCaptcha on the membership signup "
 "form."
@@ -8491,7 +8497,7 @@ msgstr ""
 "Túto možnosť vyberte, ak chcete vo formulári na registráciu členstva "
 "používať hCaptcha."
 #
-# File: eme-members.php, line: 1665
+# File: eme-members.php, line: 1673
 msgid ""
 "If this option is checked, make sure to use #_HCAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
@@ -8500,11 +8506,11 @@ msgstr ""
 "členstva použiť #_HCAPTCHA. Ak nie je prítomná, pridá sa hneď nad tlačidlo "
 "odoslať."
 #
-# File: eme-members.php, line: 1671
+# File: eme-members.php, line: 1679
 msgid "Cloudflare Turnstile"
 msgstr ""
 #
-# File: eme-members.php, line: 1673
+# File: eme-members.php, line: 1681
 #, fuzzy
 msgid ""
 "Select this option if you want to use Cloudflare Turnstile on the membership "
@@ -8513,7 +8519,7 @@ msgstr ""
 "Vyberte túto možnosť, ak chcete použiť captcha v registračnom formulári "
 "členstva."
 #
-# File: eme-members.php, line: 1674
+# File: eme-members.php, line: 1682
 #, fuzzy
 msgid ""
 "If this option is checked, make sure to use #_CFCAPTCHA in your membership "
@@ -8523,11 +8529,11 @@ msgstr ""
 "členstva použiť #_CAPTCHA. Ak nie je prítomné, pridá sa priamo nad tlačidlo "
 "odoslania."
 #
-# File: eme-members.php, line: 1679
+# File: eme-members.php, line: 1687
 msgid "Captcha"
 msgstr "Captcha"
 #
-# File: eme-members.php, line: 1681
+# File: eme-members.php, line: 1689
 msgid ""
 "Select this option if you want to use the captcha on the membership signup "
 "form."
@@ -8535,7 +8541,7 @@ msgstr ""
 "Vyberte túto možnosť, ak chcete použiť captcha v registračnom formulári "
 "členstva."
 #
-# File: eme-members.php, line: 1682
+# File: eme-members.php, line: 1690
 msgid ""
 "If this option is checked, make sure to use #_CAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
@@ -8544,11 +8550,11 @@ msgstr ""
 "členstva použiť #_CAPTCHA. Ak nie je prítomné, pridá sa priamo nad tlačidlo "
 "odoslania."
 #
-# File: eme-members.php, line: 1686
+# File: eme-members.php, line: 1694
 msgid "Create WP user after signup"
 msgstr "Vytvoriť WP používateľa po úspešnej rezervácii"
 #
-# File: eme-members.php, line: 1688
+# File: eme-members.php, line: 1696
 msgid ""
 "This will create a WP user after the membership signup is completed, as if "
 "the person registered in WP itself. This will only create a user if the "
@@ -8560,19 +8566,19 @@ msgstr ""
 "rezervujúca podujatie nebola prihlásení a e-mail ešte nie je obsadený iným "
 "používateľom WP."
 #
-# File: eme-members.php, line: 1692
+# File: eme-members.php, line: 1700
 msgid "Price"
 msgstr "Cena"
 #
-# File: eme-members.php, line: 1698
+# File: eme-members.php, line: 1706
 msgid "Extra charge for new members"
 msgstr "Príplatok pre nových členov"
 #
-# File: eme-members.php, line: 1704
+# File: eme-members.php, line: 1712
 msgid "Currency"
 msgstr "Mena"
 #
-# File: eme-members.php, line: 1710
+# File: eme-members.php, line: 1718
 msgid ""
 "The price you indicate for memberships is VAT included, special placeholders "
 "are foreseen to indicate the price without VAT."
@@ -8580,15 +8586,15 @@ msgstr ""
 "Cena, ktorú uvediete pre členstvá, je vrátane DPH. Na uvedenie ceny bez DPH "
 "sa predpokladá použitie špeciálnych zástupných výrazov."
 #
-# File: eme-members.php, line: 1722
+# File: eme-members.php, line: 1730
 msgid "Contact person"
 msgstr "Kontaktná osoba"
 #
-# File: eme-members.php, line: 1728
+# File: eme-members.php, line: 1736
 msgid "WP Admin"
 msgstr "WP Admin"
 #
-# File: eme-members.php, line: 1738
+# File: eme-members.php, line: 1746
 msgid ""
 "Require users to be logged-in before being able to sign up for this "
 "membership."
@@ -8596,11 +8602,11 @@ msgstr ""
 "Pred prihlásením sa do tohto členstva požadujte od používateľov, aby boli "
 "prihlásení."
 #
-# File: eme-members.php, line: 1742
+# File: eme-members.php, line: 1750
 msgid "Keep attendance records?"
 msgstr "Uchovať záznamy o účasti?"
 #
-# File: eme-members.php, line: 1744
+# File: eme-members.php, line: 1752
 msgid ""
 "Select this option if you want an attendance record to be kept everytime the "
 "member QRCODE is scanned by an EME admin."
@@ -8608,14 +8614,14 @@ msgstr ""
 "Vyberte túto voľbu, ak chcete, aby sa záznam o účasti uchovával vždy, keď "
 "správca EME naskenuje QR kód člena."
 #
-# File: eme-members.php, line: 1748
+# File: eme-members.php, line: 1756
 msgid "Member Form:"
 msgstr "Formulár člena:"
 #
-# File: eme-members.php, line: 1749
-# File: eme-members.php, line: 1774
-# File: eme-members.php, line: 2705
-# File: eme-members.php, line: 2710
+# File: eme-members.php, line: 1757
+# File: eme-members.php, line: 1782
+# File: eme-members.php, line: 2713
+# File: eme-members.php, line: 2718
 # File: eme-people.php, line: 1889
 # File: eme-people.php, line: 1894
 # File: eme-rsvp.php, line: 4856
@@ -8623,7 +8629,7 @@ msgstr "Formulár člena:"
 msgid "Please select a template"
 msgstr "Prosím vyberte šablónu"
 #
-# File: eme-members.php, line: 1750
+# File: eme-members.php, line: 1758
 msgid ""
 "This is the form that will be shown when a new member wants to sign up for "
 "this membership."
@@ -8631,20 +8637,23 @@ msgstr ""
 "Toto je formulár, ktorý sa zobrazí, keď sa chce nový člen zaregistrovať pre "
 "toto členstvo."
 #
-# File: eme-members.php, line: 1751
+# File: eme-members.php, line: 1759
+#, fuzzy
 msgid ""
 "The template should at least contain the placeholders #_LASTNAME, "
-"#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
+"#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If "
+"empty, a simple default will be used."
 msgstr ""
 "Šablóna by mala obsahovať aspoň zástupné výrazy #_LASTNAME, #_FIRSTNAME, "
-"#_EMAIL a #_SUBMIT. Ak nemá, formulár sa nezobrazí."
+"#_EMAIL. V opačnom prípade sa formulár nezobrazí. Ak je prázdne, použije sa "
+"jednoduché predvolené nastavenie."
 #
-# File: eme-members.php, line: 1767
+# File: eme-members.php, line: 1775
 msgid "Ask for family member info when someone signs up"
 msgstr ""
 "Požiadať o informácie o rodinnom príslušníkovi, keď sa niekto zaregistruje"
 #
-# File: eme-members.php, line: 1769
+# File: eme-members.php, line: 1777
 msgid ""
 "Select this option if you want to ask for extra info for each family member "
 "of the person that signs up. These will also become a member but payment "
@@ -8660,11 +8669,11 @@ msgstr ""
 "požiadalo o počet rodinných príslušníkov, a \"#_FAMILYMEMBERS\", aby sa "
 "požiadalo o informácie o rodinných príslušníkoch."
 #
-# File: eme-members.php, line: 1773
+# File: eme-members.php, line: 1781
 msgid "Family Member Form:"
 msgstr "Formulár pre rodinných príslušníkov:"
 #
-# File: eme-members.php, line: 1775
+# File: eme-members.php, line: 1783
 msgid ""
 "This is the form that will be shown/repeated for the family members when a "
 "new member wants to sign up for this membership."
@@ -8672,7 +8681,7 @@ msgstr ""
 "Toto je formulár, ktorý sa zobrazí/opakuje členom rodiny, keď sa nový člen "
 "chce zaregistrovať pre toto členstvo."
 #
-# File: eme-members.php, line: 1776
+# File: eme-members.php, line: 1784
 msgid ""
 "The template should at least contain the placeholders #_LASTNAME, "
 "#_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple "
@@ -8682,7 +8691,7 @@ msgstr ""
 "#_EMAIL. V opačnom prípade sa formulár nezobrazí. Ak je prázdne, použije sa "
 "jednoduché predvolené nastavenie."
 #
-# File: eme-members.php, line: 1777
+# File: eme-members.php, line: 1785
 msgid ""
 "The template may contain the person placeholders #_LASTNAME, #_FIRSTNAME, "
 "#_EMAIL, #_OPT_IN (or #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE and "
@@ -8698,11 +8707,11 @@ msgstr ""
 "#_OPT_IN (alebo #_OPT_OUT), skopírujú sa od osoby, ktorá sa zaregistrovala. "
 "Informácie o adrese sa vždy skopírujú od registrujúcej sa osoby."
 #
-# File: eme-members.php, line: 1793
+# File: eme-members.php, line: 1801
 msgid "Member Added Message:"
 msgstr "Oznámenie o pridaní člena:"
 #
-# File: eme-members.php, line: 1795
+# File: eme-members.php, line: 1803
 msgid ""
 "The format of the text shown after someone subscribed. If left empty, a "
 "default message will be shown."
@@ -8710,11 +8719,11 @@ msgstr ""
 "Formát textu zobrazeného po prihlásení na odber. Ak zostane prázdne, zobrazí "
 "sa predvolená správa."
 #
-# File: eme-members.php, line: 1795
-# File: eme-members.php, line: 1813
-# File: eme-members.php, line: 1831
-# File: eme-members.php, line: 1849
-# File: eme-members.php, line: 1916
+# File: eme-members.php, line: 1803
+# File: eme-members.php, line: 1821
+# File: eme-members.php, line: 1839
+# File: eme-members.php, line: 1857
+# File: eme-members.php, line: 1924
 # File: eme-options.php, line: 1451
 # File: eme-options.php, line: 1456
 # File: eme-options.php, line: 1466
@@ -8808,11 +8817,11 @@ msgstr ""
 msgid "For all possible placeholders, see "
 msgstr "Všetky možné zástupné výrazy nájdete v časti "
 #
-# File: eme-members.php, line: 1811
+# File: eme-members.php, line: 1819
 msgid "Payment Form Header:"
 msgstr "Hlavička platobného formulára:"
 #
-# File: eme-members.php, line: 1813
+# File: eme-members.php, line: 1821
 # File: eme-options.php, line: 2138
 msgid ""
 "The format of the text shown above the payment buttons. If left empty, a "
@@ -8821,22 +8830,22 @@ msgstr ""
 "Formát textu zobrazeného nad platobnými tlačidlami. Ak necháte prázdne, "
 "zobrazí sa predvolená správa."
 #
-# File: eme-members.php, line: 1829
+# File: eme-members.php, line: 1837
 msgid "Payment Form Footer:"
 msgstr "Pätička platobného formulára:"
 #
-# File: eme-members.php, line: 1831
+# File: eme-members.php, line: 1839
 # File: eme-options.php, line: 2139
 msgid "The format of the text shown below the payment buttons. Default: empty."
 msgstr ""
 "Formát textu zobrazeného pod platobnými tlačidlami. Predvolená hodnota: "
 "prázdne."
 #
-# File: eme-members.php, line: 1847
+# File: eme-members.php, line: 1855
 msgid "Payment Success Message:"
 msgstr "Správa o úspešnej platbe:"
 #
-# File: eme-members.php, line: 1849
+# File: eme-members.php, line: 1857
 msgid ""
 "The message shown when the payment is succesfull for membership signup. "
 "Default: see global EME settings for payments, subsection \"General "
@@ -8846,11 +8855,11 @@ msgstr ""
 "nastavenie: pozri globálne nastavenia EME pre platby, podmenu \"Všeobecné "
 "možnosti\"."
 #
-# File: eme-members.php, line: 1869
+# File: eme-members.php, line: 1877
 msgid "Membership card PDF template"
 msgstr "PDF šablóna členskej karty"
 #
-# File: eme-members.php, line: 1871
+# File: eme-members.php, line: 1879
 msgid ""
 "This optional template is used to send a PDF attachment in the mail when the "
 "membership is paid for."
@@ -8858,7 +8867,7 @@ msgstr ""
 "Táto voliteľná šablóna sa používa na odoslanie prílohy PDF v emaily, keď je "
 "členstvo zaplatené."
 #
-# File: eme-members.php, line: 1878
+# File: eme-members.php, line: 1886
 msgid ""
 "If no payment method is selected, the \"Member Added Message\" will be "
 "shown. Otherwise the \"Member Added Message\" will be shown and after some "
@@ -8871,12 +8880,12 @@ msgstr ""
 "(pozri všeobecné nastavenia EME týkajúce sa časového limitu presmerovania a "
 "ďalších nastavení platby)."
 #
-# File: eme-members.php, line: 1903
+# File: eme-members.php, line: 1911
 # File: eme-payments.php, line: 24
 msgid "Offline"
 msgstr "Offline"
 #
-# File: eme-members.php, line: 1910
+# File: eme-members.php, line: 1918
 msgid ""
 "If one or more payment methods are selected, the person signing up will be "
 "redirected to a payment page. In that case, make sure to check the different "
@@ -8886,18 +8895,18 @@ msgstr ""
 "prihlási, bude presmerovaná na stránku platby. V takom prípade nezabudnite "
 "skontrolovať rôzne šablóny platieb definované pre toto členstvo."
 #
-# File: eme-members.php, line: 1914
+# File: eme-members.php, line: 1922
 msgid "Offline Payment Format:"
 msgstr "Formát offline platby:"
 #
-# File: eme-members.php, line: 1916
+# File: eme-members.php, line: 1924
 msgid ""
 "The format of the text shown for the offline payment method. Default: empty."
 msgstr ""
 "Formát textu zobrazeného pre spôsob platby offline. Predvolená hodnota: "
 "prázdna."
 #
-# File: eme-members.php, line: 1955
+# File: eme-members.php, line: 1963
 msgid ""
 "By default the dynamic data check only happens for the fields mentioned in "
 "your dynamic data condition if those are present in your membership form "
@@ -8912,7 +8921,7 @@ msgstr ""
 "členstva. Malá nevýhoda spočíva v tom, že v backende bude vykonaných viac "
 "požiadaviek, takže ju používajte iba v nevyhnutných prípadoch."
 #
-# File: eme-members.php, line: 1956
+# File: eme-members.php, line: 1964
 msgid ""
 "If your membership uses a discount of type code and you want the dynamic "
 "price (using #_DYNAMICPRICE) to be updated taking that discount into account "
@@ -8922,11 +8931,11 @@ msgstr ""
 "(pomocou #_DYNAMICPRICE) aktualizovala aj so zohľadnením tejto zľavy, tak "
 "označte aj túto možnosť."
 #
-# File: eme-members.php, line: 1969
+# File: eme-members.php, line: 1977
 msgid "New member email"
 msgstr "Email o novom členovi"
 #
-# File: eme-members.php, line: 1971
+# File: eme-members.php, line: 1979
 msgid ""
 "Warning: when the membership is configured to ask for family member info, "
 "this mail is NOT sent to each of the family members, just the member that is "
@@ -8936,32 +8945,32 @@ msgstr ""
 "rodinných príslušníkoch, tento email sa NEODOŠLE každému z rodinných "
 "príslušníkov, ale len členovi, ktorý sa registruje."
 #
-# File: eme-members.php, line: 1974
+# File: eme-members.php, line: 1982
 msgid "New member email subject"
 msgstr "Predmet emailu o novom členovi"
 #
-# File: eme-members.php, line: 1976
+# File: eme-members.php, line: 1984
 msgid "The subject of the mail sent to the person signing up as a member."
 msgstr "Predmet emailu zaslaného osobe, ktorá sa zaregistruje ako člen."
 #
-# File: eme-members.php, line: 1981
+# File: eme-members.php, line: 1989
 msgid "New member email body"
 msgstr "Telo emailu o novom členovi"
 #
-# File: eme-members.php, line: 1983
+# File: eme-members.php, line: 1991
 msgid "The body of the mail sent to the person signing up as a member."
 msgstr "Telo emailu zaslaného osobe, ktorá sa zaregistruje ako člen."
 #
-# File: eme-members.php, line: 1984
-# File: eme-members.php, line: 2037
-# File: eme-members.php, line: 2072
-# File: eme-members.php, line: 2107
-# File: eme-members.php, line: 2142
-# File: eme-members.php, line: 2170
-# File: eme-members.php, line: 2208
-# File: eme-members.php, line: 2246
-# File: eme-members.php, line: 2277
-# File: eme-members.php, line: 2311
+# File: eme-members.php, line: 1992
+# File: eme-members.php, line: 2045
+# File: eme-members.php, line: 2080
+# File: eme-members.php, line: 2115
+# File: eme-members.php, line: 2150
+# File: eme-members.php, line: 2178
+# File: eme-members.php, line: 2216
+# File: eme-members.php, line: 2254
+# File: eme-members.php, line: 2285
+# File: eme-members.php, line: 2319
 msgid ""
 "No template shown in the list? Then go in the section Templates and create a "
 "template of type \"Membership related mail\"."
@@ -8969,70 +8978,70 @@ msgstr ""
 "V zozname nie je zobrazená žiadna šablóna? Potom prejdite do časti Šablóny a "
 "vytvorte šablónu typu „Email súvisiaci s členstvom“."
 #
-# File: eme-members.php, line: 2001
+# File: eme-members.php, line: 2009
 msgid "New member mail attachments"
 msgstr "Prílohy k emailu nového člena"
 #
-# File: eme-members.php, line: 2023
+# File: eme-members.php, line: 2031
 msgid "Optionally add attachments to the mail when a new member signs up."
 msgstr "Voliteľne pridajte prílohy k emailu pri registrácii nového člena."
 #
-# File: eme-members.php, line: 2027
+# File: eme-members.php, line: 2035
 msgid "Contactperson new member email subject"
 msgstr "Predmet emailu o novom členovi pre kontaktnú osobu"
 #
-# File: eme-members.php, line: 2029
+# File: eme-members.php, line: 2037
 msgid ""
 "The subject of the mail sent to the contactperson when someone signes up as "
 "a member."
 msgstr ""
 "Predmet správy zaslané kontaktnej osobe, keď sa niekto zaregistruje ako člen."
 #
-# File: eme-members.php, line: 2034
+# File: eme-members.php, line: 2042
 msgid "Contactperson new member email body"
 msgstr "Telo emailu o novom členovi pre kontaktnú osobu"
 #
-# File: eme-members.php, line: 2036
+# File: eme-members.php, line: 2044
 msgid ""
 "The body of the mail sent to the contactperson when someone signes up as a "
 "member."
 msgstr ""
 "Telo správy zaslané kontaktnej osobe, keď sa niekto zaregistruje ako člen."
 #
-# File: eme-members.php, line: 2057
+# File: eme-members.php, line: 2065
 msgid "Member updated Email"
 msgstr "Email o aktualizovaní člena"
 #
-# File: eme-members.php, line: 2061
+# File: eme-members.php, line: 2069
 msgid "Updated member email subject"
 msgstr "Predmet emailu o aktualizovaní člena"
 #
-# File: eme-members.php, line: 2063
+# File: eme-members.php, line: 2071
 msgid "The subject of the mail sent to the member upon changes."
 msgstr "Predmet emailu zaslaného členovi pri zmenách."
 #
-# File: eme-members.php, line: 2064
-# File: eme-members.php, line: 2071
+# File: eme-members.php, line: 2072
+# File: eme-members.php, line: 2079
 msgid "Currently only used when a member is manually marked as unpaid."
 msgstr ""
 "V súčasnosti sa používa len vtedy, keď je člen manuálne označený ako "
 "neplatiaci."
 #
-# File: eme-members.php, line: 2068
+# File: eme-members.php, line: 2076
 msgid "Updated member email body"
 msgstr "Telo emailu o aktualizovaní člena"
 #
-# File: eme-members.php, line: 2070
+# File: eme-members.php, line: 2078
 msgid "The body of the mail sent to the member upon changes."
 msgstr "Telo emailu zaslaného členovi pri zmenách."
 #
-# File: eme-members.php, line: 2092
+# File: eme-members.php, line: 2100
 msgid "Membership extended email"
 msgstr "Email o predĺžení členstva"
 #
-# File: eme-members.php, line: 2094
-# File: eme-members.php, line: 2129
-# File: eme-members.php, line: 2230
+# File: eme-members.php, line: 2102
+# File: eme-members.php, line: 2137
+# File: eme-members.php, line: 2238
 msgid ""
 "Warning: when the membership is configured to ask for family member info, "
 "this mail is ALSO sent to each of the family members."
@@ -9041,49 +9050,49 @@ msgstr ""
 "o rodinných príslušníkoch, tento mail sa TIEŽ odošle každému z rodinných "
 "príslušníkov."
 #
-# File: eme-members.php, line: 2097
+# File: eme-members.php, line: 2105
 msgid "Membership extended email subject"
 msgstr "Predmet emailu o predĺžení členstva"
 #
-# File: eme-members.php, line: 2099
+# File: eme-members.php, line: 2107
 msgid ""
 "The subject of the mail sent to the member when the membership is extended."
 msgstr "Predmet emailu zaslaného členovi pri predĺžení členstva."
 #
-# File: eme-members.php, line: 2104
+# File: eme-members.php, line: 2112
 msgid "Membership extended email body"
 msgstr "Telo emailu o predĺžení členstva"
 #
-# File: eme-members.php, line: 2106
+# File: eme-members.php, line: 2114
 msgid ""
 "The body of the mail sent to the member when the membership is extended."
 msgstr "Telo emailu zaslaného členovi pri predĺžení členstva."
 #
-# File: eme-members.php, line: 2127
+# File: eme-members.php, line: 2135
 msgid "Membership paid email"
 msgstr "Email o zaplatení členstva"
 #
-# File: eme-members.php, line: 2132
+# File: eme-members.php, line: 2140
 msgid "Membership paid email subject"
 msgstr "Predmet emailu zaplatenia členstva"
 #
-# File: eme-members.php, line: 2134
+# File: eme-members.php, line: 2142
 msgid "The subject of the mail sent to the member when marked as paid."
 msgstr "Predmet emailu zaslaného členovi, po označení platby ako zaplatenej."
 #
-# File: eme-members.php, line: 2139
+# File: eme-members.php, line: 2147
 msgid "Membership paid email body"
 msgstr "Telo emailu zaplatenia členstva"
 #
-# File: eme-members.php, line: 2141
+# File: eme-members.php, line: 2149
 msgid "The body of the mail sent to the member when marked as paid."
 msgstr "Telo emailu zaslaného členovi, po označení platby ako zaplatenej."
 #
-# File: eme-members.php, line: 2160
+# File: eme-members.php, line: 2168
 msgid "Contactperson membership paid email subject"
 msgstr "Predmet emailu o zaplatení členstva pre kontaktnú osobu"
 #
-# File: eme-members.php, line: 2162
+# File: eme-members.php, line: 2170
 msgid ""
 "The subject of the mail sent to the contactperson after a member is marked "
 "as paid."
@@ -9091,11 +9100,11 @@ msgstr ""
 "Predmet emailu zaslaného kontaktnej osobe po označení platby člena ako "
 "zaplatenej."
 #
-# File: eme-members.php, line: 2167
+# File: eme-members.php, line: 2175
 msgid "Contactperson membership paid email body"
 msgstr "Telo emailu o zaplatení členstva pre kontaktnú osobu"
 #
-# File: eme-members.php, line: 2169
+# File: eme-members.php, line: 2177
 msgid ""
 "The body of the mail sent to the contactperson after a member is marked as "
 "paid."
@@ -9103,11 +9112,11 @@ msgstr ""
 "Telo emailu zaslaného kontaktnej osobe po označení platby člena ako "
 "zaplatenej."
 #
-# File: eme-members.php, line: 2190
+# File: eme-members.php, line: 2198
 msgid "Membership reminder email"
 msgstr "Email pripomienky členstva"
 #
-# File: eme-members.php, line: 2192
+# File: eme-members.php, line: 2200
 msgid ""
 "Warning: when the membership is configured to ask for family member info, "
 "this mail is NOT sent to each of the family members, just the head of the "
@@ -9117,11 +9126,11 @@ msgstr ""
 "členoch rodiny, tento mail sa NEODOŠLE každému členovi rodiny, ale len hlave "
 "rodiny."
 #
-# File: eme-members.php, line: 2195
+# File: eme-members.php, line: 2203
 msgid "Membership reminder email subject"
 msgstr "Predmet emailu pripomienky členstva"
 #
-# File: eme-members.php, line: 2197
+# File: eme-members.php, line: 2205
 msgid ""
 "The subject of the mail sent to the member when membership is about to "
 "expire. These reminders will be sent once a day, based on the reminder "
@@ -9131,18 +9140,18 @@ msgstr ""
 "pripomenutia sa budú odosielať raz denne na základe nastavení pripomenutia "
 "definovaného členstva."
 #
-# File: eme-members.php, line: 2198
-# File: eme-members.php, line: 2207
+# File: eme-members.php, line: 2206
+# File: eme-members.php, line: 2215
 msgid ""
 "This reminder email does NOT take into account an optional grace period."
 msgstr ""
 "Tento e-mail s pripomienkou neberie do úvahy voliteľné obdobie tolerancie."
 #
-# File: eme-members.php, line: 2204
+# File: eme-members.php, line: 2212
 msgid "Membership reminder email body"
 msgstr "Telo emailu pripomienky členstva"
 #
-# File: eme-members.php, line: 2206
+# File: eme-members.php, line: 2214
 msgid ""
 "The body of the mail sent to the member when membership is about to expire. "
 "These reminders will be sent once a day, based on the reminder settings of "
@@ -9152,25 +9161,25 @@ msgstr ""
 "pripomenutia sa budú odosielať raz denne na základe nastavení pripomenutia "
 "definovaného členstva."
 #
-# File: eme-members.php, line: 2228
+# File: eme-members.php, line: 2236
 msgid "Membership stopped email"
 msgstr "Email o pozastavení členstva"
 #
-# File: eme-members.php, line: 2233
+# File: eme-members.php, line: 2241
 msgid "Membership stopped email subject"
 msgstr "Predmet emailu o pozastavení členstva"
 #
-# File: eme-members.php, line: 2235
+# File: eme-members.php, line: 2243
 msgid ""
 "The subject of the mail sent to the member when a membership has expired or "
 "is marked as stopped."
 msgstr ""
 "Predmet emailu zaslaného členovi po uplynutí alebo pozastavení členstva."
 #
-# File: eme-members.php, line: 2236
-# File: eme-members.php, line: 2245
-# File: eme-members.php, line: 2267
-# File: eme-members.php, line: 2276
+# File: eme-members.php, line: 2244
+# File: eme-members.php, line: 2253
+# File: eme-members.php, line: 2275
+# File: eme-members.php, line: 2284
 msgid ""
 "If a grace period is defined for the membership, the expiry email is only "
 "sent at the end of the grace period."
@@ -9178,21 +9187,21 @@ msgstr ""
 "Ak je pre členstvo definované obdobie tolerancie, e-mail o vypršaní "
 "platnosti sa odošle až na konci obdobia tolerancie."
 #
-# File: eme-members.php, line: 2242
+# File: eme-members.php, line: 2250
 msgid "Membership stopped email body"
 msgstr "Telo emailu o pozastavení členstva"
 #
-# File: eme-members.php, line: 2244
+# File: eme-members.php, line: 2252
 msgid ""
 "The body of the mail sent to the member when a membership has expired or is "
 "marked as stopped."
 msgstr "Telo emailu zaslaného členovi po uplynutí alebo pozastavení členstva."
 #
-# File: eme-members.php, line: 2264
+# File: eme-members.php, line: 2272
 msgid "Contactperson membership stopped email subject"
 msgstr "Predmet emailu o pozastavení členstva pre kontaktnú osobu"
 #
-# File: eme-members.php, line: 2266
+# File: eme-members.php, line: 2274
 msgid ""
 "The subject of the mail sent to the contactperson when a membership has "
 "expired or is stopped."
@@ -9200,102 +9209,102 @@ msgstr ""
 "Predmet emailu zaslaného kontaktnej osobe po uplynutí alebo zastavení "
 "členstva."
 #
-# File: eme-members.php, line: 2273
+# File: eme-members.php, line: 2281
 msgid "Contactperson membership stopped email body"
 msgstr "Telo emailu o pozastavení členstva pre kontaktnú osobu"
 #
-# File: eme-members.php, line: 2275
+# File: eme-members.php, line: 2283
 msgid ""
 "The body of the mail sent to the contactperson when a membership has expired "
 "or is stopped."
 msgstr ""
 "Telo emailu zaslaného kontaktnej osobe po uplynutí alebo zastavení členstva."
 #
-# File: eme-members.php, line: 2297
+# File: eme-members.php, line: 2305
 msgid "Contactperson payment notification email"
 msgstr "Email o oznámení platby pre kontaktnú osobu"
 #
-# File: eme-members.php, line: 2301
+# File: eme-members.php, line: 2309
 msgid "Contactperson payment notification email subject"
 msgstr "Predmet emailu o oznámení platby pre kontaktnú osobu"
 #
-# File: eme-members.php, line: 2308
+# File: eme-members.php, line: 2316
 msgid "Contactperson payment notification email body"
 msgstr "Telo emailu o oznámení platby pre kontaktnú osobu"
 #
-# File: eme-members.php, line: 2344
+# File: eme-members.php, line: 2352
 msgid "Here custom fields of type 'Membership' are shown."
 msgstr "Tu sa zobrazujú vlastné polia typu „Členstvo“."
 #
-# File: eme-members.php, line: 2377
+# File: eme-members.php, line: 2385
 msgid "File upload is not allowed here."
 msgstr "Nahrávanie súborov tu nie je povolené."
 #
-# File: eme-members.php, line: 2402
+# File: eme-members.php, line: 2410
 # File: eme-people.php, line: 1618
 msgid "Select memberships"
 msgstr "Vybrať členstvo"
 #
-# File: eme-members.php, line: 2409
+# File: eme-members.php, line: 2417
 # File: eme-people.php, line: 1626
 msgid "Select member status"
 msgstr "Vybrať stav člena"
 #
-# File: eme-members.php, line: 2416
-# File: eme-members.php, line: 2421
+# File: eme-members.php, line: 2424
+# File: eme-members.php, line: 2429
 # File: eme-people.php, line: 1603
 # File: eme-people.php, line: 1608
 # File: eme-rsvp.php, line: 4780
 msgid "Filter on person"
 msgstr "Filtrovať na osobu"
 #
-# File: eme-members.php, line: 2423
-# File: eme-members.php, line: 2428
+# File: eme-members.php, line: 2431
+# File: eme-members.php, line: 2436
 msgid "Filter on member ID"
 msgstr "Filtrovať ID člena"
 #
-# File: eme-members.php, line: 2429
+# File: eme-members.php, line: 2437
 # File: eme-rsvp.php, line: 4784
 msgid "Filter on payment id"
 msgstr "Filtrovať na ID platby"
 #
-# File: eme-members.php, line: 2430
+# File: eme-members.php, line: 2438
 # File: eme-rsvp.php, line: 4785
 msgid "Filter on payment GW id"
 msgstr "Filtrovať na platbu GW id"
 #
-# File: eme-members.php, line: 2442
+# File: eme-members.php, line: 2450
 # File: eme-people.php, line: 1643
 msgid "Custom field to search"
 msgstr "Vlastné pole na vyhľadávanie"
 #
-# File: eme-members.php, line: 2585
+# File: eme-members.php, line: 2593
 msgid "Add a new member"
 msgstr "Pridať nového člena"
 #
-# File: eme-members.php, line: 2604
+# File: eme-members.php, line: 2612
 msgid "Manage members"
 msgstr "Spravovať členov"
 #
-# File: eme-members.php, line: 2621
-# File: eme-members.php, line: 2636
+# File: eme-members.php, line: 2629
+# File: eme-members.php, line: 2644
 # File: eme-people.php, line: 1813
 msgid "Allow empty email?"
 msgstr "Povoliť prázdny email?"
 #
-# File: eme-members.php, line: 2624
+# File: eme-members.php, line: 2632
 msgid "Import members"
 msgstr "Importovať členov"
 #
-# File: eme-members.php, line: 2625
+# File: eme-members.php, line: 2633
 msgid "If you want, use this to import members info into the database"
 msgstr "Ak chcete, pomocou tohto môžete importovať členov do databázy"
 #
-# File: eme-members.php, line: 2639
+# File: eme-members.php, line: 2647
 msgid "Import dynamic field answers"
 msgstr "Importovať odpovede dynamických polí"
 #
-# File: eme-members.php, line: 2640
+# File: eme-members.php, line: 2648
 msgid ""
 "Once you finished importing members, use this to import dynamic field "
 "answers into the database"
@@ -9303,54 +9312,54 @@ msgstr ""
 "Po dokončení importovania členov použite toto na importovanie odpovedí "
 "dynamických polí do databázy"
 #
-# File: eme-members.php, line: 2651
+# File: eme-members.php, line: 2659
 msgid "Filter members"
 msgstr "Filtrovať členov"
 #
-# File: eme-members.php, line: 2652
+# File: eme-members.php, line: 2660
 # File: eme-people.php, line: 1829
 msgid "Store result as dynamic group"
 msgstr "Uložiť výsledok ako dynamickú skupinu"
 #
-# File: eme-members.php, line: 2653
+# File: eme-members.php, line: 2661
 # File: eme-people.php, line: 1830
 msgid "Enter a name for this dynamic group"
 msgstr "Zadajte názov pre túto dynamickú skupinu"
 #
-# File: eme-members.php, line: 2654
+# File: eme-members.php, line: 2662
 # File: eme-people.php, line: 1831
 msgid "Store dynamic group"
 msgstr "Uložiť dynamickú skupinu"
 #
-# File: eme-members.php, line: 2674
+# File: eme-members.php, line: 2682
 msgid "Accept membership payment"
 msgstr "Akceptovať platbu členstva"
 #
-# File: eme-members.php, line: 2675
+# File: eme-members.php, line: 2683
 msgid "Set membership unpaid"
 msgstr "Nastaviť členstvo na nezaplatené"
 #
-# File: eme-members.php, line: 2676
+# File: eme-members.php, line: 2684
 msgid "Stop membership"
 msgstr "Zastaviť členstvo"
 #
-# File: eme-members.php, line: 2677
+# File: eme-members.php, line: 2685
 msgid "Delete selected members"
 msgstr "Vymazať vybraných členov"
 #
-# File: eme-members.php, line: 2678
+# File: eme-members.php, line: 2686
 msgid "Resend the mail for pending members"
 msgstr "Znovu odoslať email čakajúcim členom"
 #
-# File: eme-members.php, line: 2679
+# File: eme-members.php, line: 2687
 msgid "Resend the mail for paid members"
 msgstr "Znovu odoslať emaily platiacim členom"
 #
-# File: eme-members.php, line: 2680
+# File: eme-members.php, line: 2688
 msgid "Resend the expiration reminder mail"
 msgstr "Opätovné odoslanie e-mailu s pripomienkou o vypršaní platnosti"
 #
-# File: eme-members.php, line: 2681
+# File: eme-members.php, line: 2689
 # File: eme-people.php, line: 1854
 # File: eme-rsvp.php, line: 4810
 # File: eme-rsvp.php, line: 4824
@@ -9358,44 +9367,44 @@ msgstr "Opätovné odoslanie e-mailu s pripomienkou o vypršaní platnosti"
 msgid "Send generic email to selected persons"
 msgstr "Poslať vybraným členom všeobecný email"
 #
-# File: eme-members.php, line: 2682
+# File: eme-members.php, line: 2690
 msgid "Send membership related email to selected members"
 msgstr "Poslať vybraným členom e-mail súvisiaci s členstvom"
 #
-# File: eme-members.php, line: 2684
+# File: eme-members.php, line: 2692
 # File: eme-people.php, line: 1868
 # File: eme-rsvp.php, line: 4812
 # File: eme-rsvp.php, line: 4826
 msgid "PDF output"
 msgstr "PDF výstup"
 #
-# File: eme-members.php, line: 2685
+# File: eme-members.php, line: 2693
 # File: eme-people.php, line: 1869
 # File: eme-rsvp.php, line: 4813
 # File: eme-rsvp.php, line: 4827
 msgid "HTML output"
 msgstr "HTML výstup"
 #
-# File: eme-members.php, line: 2689
+# File: eme-members.php, line: 2697
 msgid "Send mails to members upon changes being made?"
 msgstr "Poslať členom správy po vykonaní zmien?"
 #
-# File: eme-members.php, line: 2695
+# File: eme-members.php, line: 2703
 msgid "Move corresponding persons to the trash bin?"
 msgstr "Presunúť zodpovedajúce osoby do koša?"
 #
-# File: eme-members.php, line: 2700
+# File: eme-members.php, line: 2708
 # File: eme-rsvp.php, line: 4851
 msgid "Select a subject template"
 msgstr "Prosím vyberte šablónu predmetu emailu"
 #
-# File: eme-members.php, line: 2701
+# File: eme-members.php, line: 2709
 # File: eme-rsvp.php, line: 4852
 msgid "Please select a body template"
 msgstr "Prosím vyberte šablónu tela emailu"
 #
-# File: eme-members.php, line: 2704
-# File: eme-members.php, line: 2709
+# File: eme-members.php, line: 2712
+# File: eme-members.php, line: 2717
 # File: eme-people.php, line: 1888
 # File: eme-people.php, line: 1893
 # File: eme-rsvp.php, line: 4855
@@ -9403,8 +9412,8 @@ msgstr "Prosím vyberte šablónu tela emailu"
 msgid "Select an optional header template"
 msgstr "Vyberte voliteľnú šablónu hlavičky"
 #
-# File: eme-members.php, line: 2706
-# File: eme-members.php, line: 2711
+# File: eme-members.php, line: 2714
+# File: eme-members.php, line: 2719
 # File: eme-people.php, line: 1890
 # File: eme-people.php, line: 1895
 # File: eme-rsvp.php, line: 4857
@@ -9412,27 +9421,27 @@ msgstr "Vyberte voliteľnú šablónu hlavičky"
 msgid "Select an optional footer template"
 msgstr "Vyberte voliteľnú šablónu pätičky"
 #
-# File: eme-members.php, line: 2764
+# File: eme-members.php, line: 2772
 msgid "Add a new membership definition"
 msgstr "Pridať novú definíciu členstva"
 #
-# File: eme-members.php, line: 2774
+# File: eme-members.php, line: 2782
 msgid "Manage memberships"
 msgstr "Spravovať členstvá"
 #
-# File: eme-members.php, line: 2781
+# File: eme-members.php, line: 2789
 msgid "Delete selected memberships"
 msgstr "Vymazať vybrané členstvá"
 #
-# File: eme-members.php, line: 3908
+# File: eme-members.php, line: 3921
 msgid "Members CSV"
 msgstr "CSV členovia"
 #
-# File: eme-members.php, line: 4074
+# File: eme-members.php, line: 4087
 msgid "Limit access to EME members of"
 msgstr "Obmedziť prístup k EME členom skupiny"
 #
-# File: eme-members.php, line: 4080
+# File: eme-members.php, line: 4093
 msgid ""
 "Allow access after the membership has been active for this many days (drip "
 "content):"
@@ -9440,15 +9449,15 @@ msgstr ""
 "Povoliť prístup k obsahu po tom, ako je členstvo aktívne toľkoto dní "
 "(postupný prístup k obsahu):"
 #
-# File: eme-members.php, line: 4083
+# File: eme-members.php, line: 4096
 msgid "Limit access to EME people that are members of the following groups"
 msgstr "Obmedziť prístup k EME osobám, ktoré sú členmi týchto skupín"
 #
-# File: eme-members.php, line: 4090
+# File: eme-members.php, line: 4103
 msgid "Access denied message template"
 msgstr "Šablóna správy o zamietnutom prístupe"
 #
-# File: eme-members.php, line: 4094
+# File: eme-members.php, line: 4107
 msgid ""
 "The format of the text shown if access to the page is denied. If left empty, "
 "a default message will be shown."
@@ -9456,123 +9465,129 @@ msgstr ""
 "Formát textu, ktorý sa zobrazí, ak je prístup na stránku odmietnutý. Ak "
 "zostane prázdne, zobrazí sa predvolená správa."
 #
-# File: eme-members.php, line: 4169
+# File: eme-members.php, line: 4182
 msgid "No membership selected"
 msgstr "Žiadne členstvo nebolo vybraté"
 #
-# File: eme-members.php, line: 4234
+# File: eme-members.php, line: 4247
 # File: eme-rsvp.php, line: 1444
 msgid "You did not enter a valid discount code"
 msgstr "Nezadali ste platný zľavový kód"
 #
-# File: eme-members.php, line: 4491
+# File: eme-members.php, line: 4504
 # File: eme-rsvp.php, line: 5475
 msgid "Never"
 msgstr "Nikdy"
 #
-# File: eme-members.php, line: 4522
-# File: eme-members.php, line: 4540
-# File: eme-members.php, line: 4579
-# File: eme-members.php, line: 4601
+# File: eme-members.php, line: 4535
+# File: eme-members.php, line: 4553
+# File: eme-members.php, line: 4592
+# File: eme-members.php, line: 4614
 msgid "no end date"
 msgstr "žiadny dátum ukončenia"
 #
-# File: eme-members.php, line: 4595
+# File: eme-members.php, line: 4608
 msgid "expired"
 msgstr "vypršalo"
 #
-# File: eme-members.php, line: 5132
-# File: eme-members.php, line: 5302
+# File: eme-members.php, line: 5145
+# File: eme-members.php, line: 5315
 msgid "Access denied"
 msgstr "Prístup zamietnutý"
 #
-# File: eme-members.php, line: 5222
+# File: eme-members.php, line: 5235
 # File: eme-people.php, line: 833
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr "Neimportované (problém s aktualizáciou osoby v databáze): %s"
 #
-# File: eme-members.php, line: 5228
-# File: eme-members.php, line: 5419
+# File: eme-members.php, line: 5241
+# File: eme-members.php, line: 5432
 msgid "Not imported (membership does not exist): %s"
 msgstr "Neimportované (členstvo neexistuje): %s"
 #
-# File: eme-members.php, line: 5278
+# File: eme-members.php, line: 5291
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr "Neimportované (problém s vložením člena do databázy): %s"
 #
-# File: eme-members.php, line: 5369
+# File: eme-members.php, line: 5382
 msgid "Not imported (person does not exist): %s"
 msgstr "Neimportované (osoba neexistuje): %s"
 #
-# File: eme-members.php, line: 5414
+# File: eme-members.php, line: 5427
 msgid "Not imported (member does not exist): %s"
 msgstr "Neimportované (člen neexistuje): %s"
 #
-# File: eme-members.php, line: 5612
+# File: eme-members.php, line: 5625
 msgid "Edit membership"
 msgstr "Upraviť členstvo"
 #
-# File: eme-members.php, line: 5625
+# File: eme-members.php, line: 5631
+msgid ""
+"No membership form has been defined for this membership, a simple default "
+"will be used."
+msgstr ""
+#
+# File: eme-members.php, line: 5643
 #, fuzzy
 msgid "%d head of the family accounts + %d family members"
 msgstr "Účet \"Hlava rodiny\""
 #
-# File: eme-members.php, line: 5671
+# File: eme-members.php, line: 5689
 # File: eme-people.php, line: 4798
 msgid "(Dynamic)"
 msgstr "(Dynamické)"
 #
-# File: eme-members.php, line: 5707
+# File: eme-members.php, line: 5725
 # File: eme-people.php, line: 4832
 msgid "(family member)"
 msgstr "(člen rodiny)"
 #
-# File: eme-members.php, line: 5712
+# File: eme-members.php, line: 5730
 msgid "Head of the family: "
 msgstr "Hlava rodiny: "
 #
-# File: eme-members.php, line: 5715
+# File: eme-members.php, line: 5733
 msgid "(head of the family)"
 msgstr "(head of the family)"
 #
-# File: eme-members.php, line: 5760
+# File: eme-members.php, line: 5778
 msgid "This is based on the payment ID of the member: %d"
 msgstr "Toto je založené na ID platby člena: %d"
 #
-# File: eme-members.php, line: 5868
+# File: eme-members.php, line: 5886
 # File: eme-people.php, line: 5037
 msgid "Dynamic group added"
 msgstr "Dynamická skupina pridaná"
 #
-# File: eme-members.php, line: 5870
+# File: eme-members.php, line: 5888
 # File: eme-people.php, line: 5039
 msgid "Please enter a name for the group"
 msgstr "Prosím, vložte meno pre skupinu"
 #
-# File: eme-members.php, line: 5921
-# File: eme-members.php, line: 5983
+# File: eme-members.php, line: 5939
+# File: eme-members.php, line: 6001
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr ""
 "Obsah predmetu alebo tela emailu bol prázdny, nebol odoslaný žiadny mail."
 #
-# File: eme-members.php, line: 5968
+# File: eme-members.php, line: 5986
 msgid "Memberships deleted."
 msgstr "Členstvo vymazané."
 #
-# File: eme-members.php, line: 6025
+# File: eme-members.php, line: 6043
 msgid "No corresponding persons found."
 msgstr "Žiadne zodpovedajúce osoby sa nenašli."
 #
-# File: eme-members.php, line: 6034
+# File: eme-members.php, line: 6052
 msgid "Members deleted."
 msgstr "Členovia vymazaní."
 #
-# File: eme-members.php, line: 6060
-# File: eme-members.php, line: 6086
-# File: eme-members.php, line: 6150
-# File: eme-members.php, line: 6181
-# File: eme-members.php, line: 6206
+# File: eme-members.php, line: 6078
+# File: eme-members.php, line: 6104
+# File: eme-members.php, line: 6168
+# File: eme-members.php, line: 6199
 # File: eme-members.php, line: 6224
+# File: eme-members.php, line: 6242
 # File: eme-rsvp.php, line: 5665
 # File: eme-rsvp.php, line: 5699
 # File: eme-rsvp.php, line: 5743
@@ -9588,8 +9603,8 @@ msgstr "Členovia vymazaní."
 msgid "The action has been executed successfully."
 msgstr "Akcia bola úspešne vykonaná."
 #
-# File: eme-members.php, line: 6063
-# File: eme-members.php, line: 6184
+# File: eme-members.php, line: 6081
+# File: eme-members.php, line: 6202
 # File: eme-rsvp.php, line: 5668
 # File: eme-rsvp.php, line: 5702
 # File: eme-rsvp.php, line: 5746
@@ -9605,8 +9620,8 @@ msgid ""
 msgstr ""
 "Akcia bola úspešne vykonaná, ale pri odosielaní pošty sa vyskytli problémy."
 #
-# File: eme-members.php, line: 6066
-# File: eme-members.php, line: 6187
+# File: eme-members.php, line: 6084
+# File: eme-members.php, line: 6205
 # File: eme-rsvp.php, line: 5671
 # File: eme-rsvp.php, line: 5705
 # File: eme-rsvp.php, line: 5740
@@ -16512,6 +16527,19 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#~ msgid ""
+#~ "The template should at least contain the placeholders #_LASTNAME, "
+#~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
+#~ msgstr ""
+#~ "Šablóna by mala obsahovať aspoň zástupné výrazy #_LASTNAME, #_FIRSTNAME, "
+#~ "#_EMAIL a #_SUBMIT. Ak nemá, formulár sa nezobrazí."
+#
+#
+#
+#
+#
+#
+#
 #
 #
 #
@@ -16533,6 +16561,9 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Ak sa vám Events Made Easy páči, zanechajte prosím <a href=\"%s\" "
 #~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> hodnotenie. "
 #~ "Obrovská vďaka vopred!"
+#
+#
+#
 #
 #
 #
@@ -16573,6 +16604,9 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
 #, fuzzy
 #~ msgid "Single Noop"
 #~ msgid_plural "Plural Noop"
@@ -16596,9 +16630,15 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
 #, fuzzy
 #~ msgid "Attribute"
 #~ msgstr "Atribúty"
+#
+#
+#
 #
 #
 #
@@ -16637,6 +16677,9 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
 #, fuzzy
 #~ msgid "View details"
 #~ msgstr "Zobraziť podujatie"
@@ -16657,9 +16700,15 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
 #, fuzzy
 #~ msgid "More information about %s"
 #~ msgstr "Viac informácií o sviatkoch nájdete na stránke "
+#
+#
+#
 #
 #
 #

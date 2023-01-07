@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.34
+Stable tag: 2.3.35
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,6 +100,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
+= 2.3.35 (2023/01/07) =
+* Fix options title on some options
+* Fix GDPR settings (typo prevented the page from rendering)
+* Add a default member form format if none is provided (and alert in the list of memberships if done)
+
 = 2.3.34 (2023/01/06) =
 * Fix Google reCaptcha
 

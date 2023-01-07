@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-01-06 16:32:03+00:00\n"
+"POT-Creation-Date: 2023-01-07 16:48:29+00:00\n"
 "PO-Revision-Date: 2022-11-30 21:44:39+0000\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -46,11 +46,11 @@ msgstr "im Namen von %s"
 # File: eme-functions.php, line: 3295
 # File: eme-locations.php, line: 2834
 # File: eme-mailer.php, line: 1127
-# File: eme-members.php, line: 5566
-# File: eme-members.php, line: 5663
-# File: eme-members.php, line: 5815
-# File: eme-members.php, line: 5887
-# File: eme-members.php, line: 5958
+# File: eme-members.php, line: 5579
+# File: eme-members.php, line: 5681
+# File: eme-members.php, line: 5833
+# File: eme-members.php, line: 5905
+# File: eme-members.php, line: 5976
 # File: eme-options.php, line: 134
 # File: eme-people.php, line: 3611
 # File: eme-people.php, line: 3735
@@ -319,8 +319,8 @@ msgstr "Anwesenheiten filtern"
 # File: eme-events.php, line: 5957
 # File: eme-formfields.php, line: 204
 # File: eme-locations.php, line: 888
-# File: eme-members.php, line: 2715
-# File: eme-members.php, line: 2786
+# File: eme-members.php, line: 2723
+# File: eme-members.php, line: 2794
 # File: eme-people.php, line: 1899
 # File: eme-people.php, line: 2354
 # File: eme-rsvp.php, line: 4866
@@ -527,7 +527,7 @@ msgstr "ID"
 # File: eme-mailer.php, line: 1267
 # File: eme-mailer.php, line: 2439
 # File: eme-mailer.php, line: 2525
-# File: eme-members.php, line: 1589
+# File: eme-members.php, line: 1597
 # File: eme-people.php, line: 2258
 # File: eme-tasks.php, line: 668
 # File: eme-templates.php, line: 279
@@ -539,7 +539,7 @@ msgstr "Name"
 # File: eme-formfields.php, line: 4875
 # File: eme-holidays.php, line: 138
 # File: eme-locations.php, line: 2911
-# File: eme-members.php, line: 5602
+# File: eme-members.php, line: 5615
 # File: eme-people.php, line: 4944
 # File: eme-templates.php, line: 497
 msgid "No name"
@@ -714,8 +714,8 @@ msgstr "Monat(e)"
 # File: eme-locations.php, line: 886
 # File: eme-mailer.php, line: 2430
 # File: eme-mailer.php, line: 2516
-# File: eme-members.php, line: 2713
-# File: eme-members.php, line: 2784
+# File: eme-members.php, line: 2721
+# File: eme-members.php, line: 2792
 # File: eme-people.php, line: 1897
 # File: eme-people.php, line: 2352
 # File: eme-rsvp.php, line: 4864
@@ -800,8 +800,8 @@ msgstr "Du hast keine Berechtigung für die Bearbeitung der Rabatte!"
 # File: eme-discounts.php, line: 171
 # File: eme-events.php, line: 5519
 # File: eme-locations.php, line: 218
-# File: eme-members.php, line: 5148
-# File: eme-members.php, line: 5318
+# File: eme-members.php, line: 5161
+# File: eme-members.php, line: 5331
 # File: eme-people.php, line: 760
 # File: eme-rsvp.php, line: 4555
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
@@ -815,8 +815,8 @@ msgstr ""
 # File: eme-discounts.php, line: 196
 # File: eme-events.php, line: 5546
 # File: eme-locations.php, line: 245
-# File: eme-members.php, line: 5174
-# File: eme-members.php, line: 5344
+# File: eme-members.php, line: 5187
+# File: eme-members.php, line: 5357
 # File: eme-people.php, line: 787
 # File: eme-rsvp.php, line: 4582
 msgid "Not all required fields present."
@@ -833,7 +833,7 @@ msgstr "Nicht importiert: %s"
 # File: eme-countries.php, line: 145
 # File: eme-discounts.php, line: 149
 # File: eme-discounts.php, line: 208
-# File: eme-members.php, line: 5429
+# File: eme-members.php, line: 5442
 msgid "Import finished: %d inserts, %d errors"
 msgstr "Import beendet: %d hinzugefügt, %d Fehler"
 #
@@ -843,8 +843,8 @@ msgstr "Import beendet: %d hinzugefügt, %d Fehler"
 # File: eme-discounts.php, line: 216
 # File: eme-events.php, line: 5510
 # File: eme-locations.php, line: 209
-# File: eme-members.php, line: 5140
-# File: eme-members.php, line: 5311
+# File: eme-members.php, line: 5153
+# File: eme-members.php, line: 5324
 # File: eme-people.php, line: 751
 # File: eme-rsvp.php, line: 4545
 msgid "Problem detected while uploading the file"
@@ -856,8 +856,8 @@ msgstr "Problem beim Hochladen der Datei erkannt"
 # File: eme-discounts.php, line: 219
 # File: eme-events.php, line: 5507
 # File: eme-locations.php, line: 206
-# File: eme-members.php, line: 5137
-# File: eme-members.php, line: 5308
+# File: eme-members.php, line: 5150
+# File: eme-members.php, line: 5321
 # File: eme-people.php, line: 748
 # File: eme-rsvp.php, line: 4542
 msgid "No CSV file detected: %s"
@@ -971,7 +971,7 @@ msgstr "Land hinzufügen"
 # File: eme-discounts.php, line: 508
 # File: eme-events.php, line: 5742
 # File: eme-locations.php, line: 834
-# File: eme-members.php, line: 2608
+# File: eme-members.php, line: 2616
 # File: eme-people.php, line: 1800
 msgid "Click on the icon to show the import form"
 msgstr "Klicke auf das Symbol um das Importformular anzeigen zu lassen"
@@ -982,8 +982,8 @@ msgstr "Klicke auf das Symbol um das Importformular anzeigen zu lassen"
 # File: eme-discounts.php, line: 515
 # File: eme-events.php, line: 5749
 # File: eme-locations.php, line: 841
-# File: eme-members.php, line: 2615
-# File: eme-members.php, line: 2630
+# File: eme-members.php, line: 2623
+# File: eme-members.php, line: 2638
 # File: eme-people.php, line: 1807
 # File: eme-rsvp.php, line: 4723
 msgid "Delimiter:"
@@ -995,8 +995,8 @@ msgstr "Begrenzungszeichen:"
 # File: eme-discounts.php, line: 517
 # File: eme-events.php, line: 5751
 # File: eme-locations.php, line: 843
-# File: eme-members.php, line: 2617
-# File: eme-members.php, line: 2632
+# File: eme-members.php, line: 2625
+# File: eme-members.php, line: 2640
 # File: eme-people.php, line: 1809
 # File: eme-rsvp.php, line: 4725
 msgid "Enclosure:"
@@ -1044,8 +1044,8 @@ msgstr ""
 # File: eme-locations.php, line: 878
 # File: eme-mailer.php, line: 2426
 # File: eme-mailer.php, line: 2513
-# File: eme-members.php, line: 2672
-# File: eme-members.php, line: 2779
+# File: eme-members.php, line: 2680
+# File: eme-members.php, line: 2787
 # File: eme-people.php, line: 1849
 # File: eme-people.php, line: 2347
 # File: eme-rsvp.php, line: 4793
@@ -1535,7 +1535,7 @@ msgstr "Der Name des Rabatts"
 # File: eme-events.php, line: 9415
 # File: eme-events.php, line: 9512
 # File: eme-events.php, line: 9567
-# File: eme-members.php, line: 1593
+# File: eme-members.php, line: 1601
 # File: eme-people.php, line: 2262
 # File: eme-tasks.php, line: 672
 # File: eme-templates.php, line: 283
@@ -1547,7 +1547,7 @@ msgstr "Beschreibung"
 # File: eme-events.php, line: 9375
 # File: eme-events.php, line: 9394
 # File: eme-events.php, line: 9421
-# File: eme-members.php, line: 1597
+# File: eme-members.php, line: 1605
 # File: eme-templates.php, line: 300
 msgid "Type"
 msgstr "Typ"
@@ -1639,7 +1639,7 @@ msgstr ""
 "Uhrzeit nicht mehr gültig."
 #
 # File: eme-discounts.php, line: 898
-# File: eme-members.php, line: 1736
+# File: eme-members.php, line: 1744
 msgid "Logged-in users only"
 msgstr "Nur angemeldete Benutzer"
 #
@@ -1664,7 +1664,7 @@ msgid "Require EME membership"
 msgstr "Erforderliche EME-Mitgliedschaft"
 #
 # File: eme-discounts.php, line: 916
-# File: eme-members.php, line: 2599
+# File: eme-members.php, line: 2607
 msgid "No memberships defined yet!"
 msgstr "Bislang keine Mitgliedschaft definiert!"
 #
@@ -1783,7 +1783,7 @@ msgstr "Fest pro Platz"
 # File: eme-gdpr.php, line: 602
 # File: eme-gdpr.php, line: 603
 # File: eme-locations.php, line: 2928
-# File: eme-members.php, line: 5758
+# File: eme-members.php, line: 5776
 # File: eme-people.php, line: 434
 # File: eme-people.php, line: 442
 # File: eme-people.php, line: 450
@@ -1813,7 +1813,7 @@ msgstr "Ja"
 # File: eme-gdpr.php, line: 602
 # File: eme-gdpr.php, line: 603
 # File: eme-locations.php, line: 2928
-# File: eme-members.php, line: 5758
+# File: eme-members.php, line: 5776
 # File: eme-people.php, line: 434
 # File: eme-people.php, line: 442
 # File: eme-people.php, line: 450
@@ -2305,10 +2305,10 @@ msgstr "Veranstaltungsort nicht importiert: %s"
 #
 # File: eme-events.php, line: 5605
 # File: eme-events.php, line: 5608
-# File: eme-members.php, line: 5191
-# File: eme-members.php, line: 5194
-# File: eme-members.php, line: 5197
-# File: eme-members.php, line: 5200
+# File: eme-members.php, line: 5204
+# File: eme-members.php, line: 5207
+# File: eme-members.php, line: 5210
+# File: eme-members.php, line: 5213
 # File: eme-people.php, line: 807
 msgid "Not imported (field %s not valid): %s"
 msgstr "Nicht importiert (Feld %s ist ungültig): %s"
@@ -2327,15 +2327,15 @@ msgstr ""
 #
 # File: eme-events.php, line: 5680
 # File: eme-locations.php, line: 326
-# File: eme-members.php, line: 5284
-# File: eme-members.php, line: 5424
+# File: eme-members.php, line: 5297
+# File: eme-members.php, line: 5437
 # File: eme-people.php, line: 868
 msgid "Not imported (not all required fields are present): %s"
 msgstr "Nicht importiert (nicht alle erforderlichen Felder sind vorhanden): %s"
 #
 # File: eme-events.php, line: 5683
 # File: eme-locations.php, line: 329
-# File: eme-members.php, line: 5289
+# File: eme-members.php, line: 5302
 # File: eme-people.php, line: 873
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr "Import abgeschlossen: %d neue Einträge, %d Aktualisierungen, %d Fehler"
@@ -2425,8 +2425,8 @@ msgstr "Veranstaltungsstatus"
 #
 # File: eme-events.php, line: 5807
 # File: eme-locations.php, line: 858
-# File: eme-members.php, line: 2435
-# File: eme-members.php, line: 2440
+# File: eme-members.php, line: 2443
+# File: eme-members.php, line: 2448
 # File: eme-people.php, line: 1636
 # File: eme-people.php, line: 1641
 msgid "Custom field value to search"
@@ -2438,7 +2438,7 @@ msgstr "Veranstaltungen filtern"
 #
 # File: eme-events.php, line: 5817
 # File: eme-locations.php, line: 867
-# File: eme-members.php, line: 2661
+# File: eme-members.php, line: 2669
 # File: eme-people.php, line: 1838
 msgid ""
 "Hint: when searching for custom field values, you can optionally limit which "
@@ -2451,7 +2451,7 @@ msgstr ""
 #
 # File: eme-events.php, line: 5818
 # File: eme-locations.php, line: 868
-# File: eme-members.php, line: 2662
+# File: eme-members.php, line: 2670
 # File: eme-people.php, line: 1839
 msgid ""
 "If you can't see your custom field in the \"Custom fields to filter on\" "
@@ -2612,8 +2612,8 @@ msgstr "Attribute"
 # File: eme-events.php, line: 8199
 # File: eme-locations.php, line: 384
 # File: eme-locations.php, line: 747
-# File: eme-members.php, line: 1529
-# File: eme-members.php, line: 2341
+# File: eme-members.php, line: 1537
+# File: eme-members.php, line: 2349
 # File: eme-options.php, line: 1395
 msgid "Custom fields"
 msgstr "Benutzerdefinierte Felder"
@@ -2623,7 +2623,7 @@ msgid "Generic RSVP info"
 msgstr "Allgemeine Buchungs-Informationen"
 #
 # File: eme-events.php, line: 6153
-# File: eme-members.php, line: 1875
+# File: eme-members.php, line: 1883
 msgid "Payment methods"
 msgstr "Zahlungsoptionen"
 #
@@ -3267,23 +3267,23 @@ msgstr "Wähle entweder aus einer Vorlage:"
 # File: eme-events.php, line: 7990
 # File: eme-events.php, line: 8352
 # File: eme-events.php, line: 8367
-# File: eme-members.php, line: 1752
-# File: eme-members.php, line: 1778
-# File: eme-members.php, line: 1796
-# File: eme-members.php, line: 1814
-# File: eme-members.php, line: 1832
-# File: eme-members.php, line: 1850
-# File: eme-members.php, line: 1917
-# File: eme-members.php, line: 1986
-# File: eme-members.php, line: 2039
-# File: eme-members.php, line: 2074
-# File: eme-members.php, line: 2109
-# File: eme-members.php, line: 2144
-# File: eme-members.php, line: 2172
-# File: eme-members.php, line: 2210
-# File: eme-members.php, line: 2248
-# File: eme-members.php, line: 2279
-# File: eme-members.php, line: 2313
+# File: eme-members.php, line: 1760
+# File: eme-members.php, line: 1786
+# File: eme-members.php, line: 1804
+# File: eme-members.php, line: 1822
+# File: eme-members.php, line: 1840
+# File: eme-members.php, line: 1858
+# File: eme-members.php, line: 1925
+# File: eme-members.php, line: 1994
+# File: eme-members.php, line: 2047
+# File: eme-members.php, line: 2082
+# File: eme-members.php, line: 2117
+# File: eme-members.php, line: 2152
+# File: eme-members.php, line: 2180
+# File: eme-members.php, line: 2218
+# File: eme-members.php, line: 2256
+# File: eme-members.php, line: 2287
+# File: eme-members.php, line: 2321
 # File: eme-widgets.php, line: 232
 msgid ""
 "Or enter your own (if anything is entered here, it takes precedence over the "
@@ -3315,7 +3315,7 @@ msgstr ""
 # File: eme-locations.php, line: 754
 # File: eme-mailer.php, line: 2113
 # File: eme-mailer.php, line: 2293
-# File: eme-members.php, line: 2348
+# File: eme-members.php, line: 2356
 # File: eme-templates.php, line: 292
 msgid ""
 "Your account has the ability to post unrestricted HTML content here, except "
@@ -3329,7 +3329,7 @@ msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr "Kontaktperson Buchung Bezahlt E-Mail Bezahldienst-Nachricht Betreff"
 #
 # File: eme-events.php, line: 7104
-# File: eme-members.php, line: 2303
+# File: eme-members.php, line: 2311
 # File: eme-options.php, line: 1967
 msgid ""
 "The subject of the email which will be sent to the contact person when a "
@@ -3343,7 +3343,7 @@ msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr "Kontaktperson Buchung Bezahlt E-Mail Bezahldienst-Nachricht Textkörper"
 #
 # File: eme-events.php, line: 7126
-# File: eme-members.php, line: 2310
+# File: eme-members.php, line: 2318
 # File: eme-options.php, line: 1968
 msgid ""
 "The body of the email which will be sent to the contact person when a "
@@ -3353,7 +3353,7 @@ msgstr ""
 "wenn eine Zahlungsbestätigung über ein Zahlungsportal empfangen wird."
 #
 # File: eme-events.php, line: 7150
-# File: eme-members.php, line: 1953
+# File: eme-members.php, line: 1961
 msgid "Dynamic data check on every field"
 msgstr "Dynamische Datenprüfung für alle Felder"
 #
@@ -3509,7 +3509,7 @@ msgstr "Buchung erfolgt E-Mail Anhänge"
 # File: eme-events.php, line: 9682
 # File: eme-mailer.php, line: 2138
 # File: eme-mailer.php, line: 2316
-# File: eme-members.php, line: 2021
+# File: eme-members.php, line: 2029
 # File: eme-options.php, line: 1808
 # File: eme-options.php, line: 1854
 # File: eme-options.php, line: 1953
@@ -3522,7 +3522,7 @@ msgstr "E-Mail Anhänge hinzufügen"
 # File: eme-events.php, line: 7883
 # File: eme-mailer.php, line: 2139
 # File: eme-mailer.php, line: 2317
-# File: eme-members.php, line: 2022
+# File: eme-members.php, line: 2030
 # File: eme-options.php, line: 1809
 # File: eme-options.php, line: 1855
 # File: eme-options.php, line: 1954
@@ -4035,7 +4035,7 @@ msgstr ""
 #
 # File: eme-events.php, line: 8242
 # File: eme-locations.php, line: 789
-# File: eme-members.php, line: 2379
+# File: eme-members.php, line: 2387
 msgid ""
 "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr ""
@@ -4077,7 +4077,7 @@ msgstr ""
 "Zahlungseinstellungen)."
 #
 # File: eme-events.php, line: 8303
-# File: eme-members.php, line: 1906
+# File: eme-members.php, line: 1914
 msgid ""
 "No payment methods configured yet. Go in the EME payment settings and "
 "configure some."
@@ -4317,8 +4317,8 @@ msgstr ""
 "getrennt"
 #
 # File: eme-events.php, line: 8476
-# File: eme-members.php, line: 1694
-# File: eme-members.php, line: 1700
+# File: eme-members.php, line: 1702
+# File: eme-members.php, line: 1708
 # File: eme-options.php, line: 2132
 msgid "Use the point as decimal separator"
 msgstr "Verwende den Punkt als Dezimal-Trennzeichen"
@@ -4351,7 +4351,7 @@ msgid "VAT percentage: "
 msgstr "Prozentsatz der MwSt:"
 #
 # File: eme-events.php, line: 8489
-# File: eme-members.php, line: 1708
+# File: eme-members.php, line: 1716
 msgid "VAT percentage"
 msgstr "MwSt.-Prozentsatz"
 #
@@ -4365,12 +4365,12 @@ msgstr ""
 "Mehrwertsteuer anzugeben."
 #
 # File: eme-events.php, line: 8494
-# File: eme-members.php, line: 1714
+# File: eme-members.php, line: 1722
 msgid "Discount to apply"
 msgstr "Rabatt anwenden"
 #
 # File: eme-events.php, line: 8495
-# File: eme-members.php, line: 1715
+# File: eme-members.php, line: 1723
 msgid ""
 "The discount name you want to apply (is overridden by discount group if "
 "used)."
@@ -4379,12 +4379,12 @@ msgstr ""
 "Rabattgruppen überschrieben)."
 #
 # File: eme-events.php, line: 8498
-# File: eme-members.php, line: 1718
+# File: eme-members.php, line: 1726
 msgid "Discount group to apply"
 msgstr "Rabattgruppe anwenden"
 #
 # File: eme-events.php, line: 8499
-# File: eme-members.php, line: 1719
+# File: eme-members.php, line: 1727
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr ""
 "Den Rabattgruppen-Namen, den Du verwenden möchtest (überschreibt den Rabatt)."
@@ -4469,12 +4469,12 @@ msgstr ""
 "zur Auswahl der Anzahl der zu buchenden Plätze ausgeblendet."
 #
 # File: eme-events.php, line: 8525
-# File: eme-members.php, line: 1865
+# File: eme-members.php, line: 1873
 msgid "Group to add people to"
 msgstr "Gruppe, zu der Personen hinzugefügt werden sollen"
 #
 # File: eme-events.php, line: 8526
-# File: eme-members.php, line: 1866
+# File: eme-members.php, line: 1874
 msgid ""
 "The group you want people to automatically become a member of when they "
 "subscribe."
@@ -5078,6 +5078,8 @@ msgstr "Gruppen"
 # File: eme-gdpr.php, line: 267
 # File: eme-gdpr.php, line: 486
 # File: eme-gdpr.php, line: 610
+# File: eme-members.php, line: 1471
+# File: eme-members.php, line: 2902
 # File: eme-options.php, line: 35
 # File: eme-options.php, line: 45
 # File: eme-options.php, line: 88
@@ -5104,6 +5106,8 @@ msgstr "Nachname"
 # File: eme-gdpr.php, line: 267
 # File: eme-gdpr.php, line: 487
 # File: eme-gdpr.php, line: 614
+# File: eme-members.php, line: 1472
+# File: eme-members.php, line: 2903
 # File: eme-options.php, line: 36
 # File: eme-options.php, line: 46
 # File: eme-options.php, line: 89
@@ -5134,6 +5138,8 @@ msgstr "Vorname"
 # File: eme-gdpr.php, line: 488
 # File: eme-gdpr.php, line: 618
 # File: eme-mailer.php, line: 1268
+# File: eme-members.php, line: 1473
+# File: eme-members.php, line: 2904
 # File: eme-options.php, line: 37
 # File: eme-options.php, line: 47
 # File: eme-options.php, line: 90
@@ -6025,11 +6031,11 @@ msgstr "Für weitere Informationen zu Formularfeldern konsultiere die "
 #
 # File: eme-formfields.php, line: 411
 # File: eme-holidays.php, line: 218
-# File: eme-members.php, line: 1795
-# File: eme-members.php, line: 1813
-# File: eme-members.php, line: 1831
-# File: eme-members.php, line: 1849
-# File: eme-members.php, line: 1916
+# File: eme-members.php, line: 1803
+# File: eme-members.php, line: 1821
+# File: eme-members.php, line: 1839
+# File: eme-members.php, line: 1857
+# File: eme-members.php, line: 1924
 # File: eme-options.php, line: 1451
 # File: eme-options.php, line: 1456
 # File: eme-options.php, line: 1466
@@ -6427,7 +6433,7 @@ msgstr "Angewendete Rabattgruppe %d existiert nicht mehr"
 #
 # File: eme-formfields.php, line: 3123
 # File: eme-formfields.php, line: 3862
-# File: eme-members.php, line: 4419
+# File: eme-members.php, line: 4432
 # File: eme-people.php, line: 1066
 # File: eme-people.php, line: 1358
 # File: eme-rsvp.php, line: 3287
@@ -6698,7 +6704,7 @@ msgid "Active"
 msgstr "Aktiv"
 #
 # File: eme-functions.php, line: 1324
-# File: eme-members.php, line: 1620
+# File: eme-members.php, line: 1628
 msgid "Grace period"
 msgstr "Übergangszeit "
 #
@@ -6958,7 +6964,7 @@ msgstr "Kein solcher Eintrag"
 # File: eme-gdpr.php, line: 144
 # File: eme-gdpr.php, line: 222
 # File: eme-gdpr.php, line: 346
-# File: eme-members.php, line: 4146
+# File: eme-members.php, line: 4159
 # File: eme-payments.php, line: 3589
 # File: eme-people.php, line: 4173
 # File: eme-people.php, line: 4301
@@ -6977,7 +6983,7 @@ msgstr ""
 # File: eme-gdpr.php, line: 233
 # File: eme-gdpr.php, line: 357
 # File: eme-gdpr.php, line: 368
-# File: eme-members.php, line: 4158
+# File: eme-members.php, line: 4171
 # File: eme-payments.php, line: 3600
 # File: eme-people.php, line: 4184
 # File: eme-people.php, line: 4313
@@ -7043,7 +7049,7 @@ msgid "Request to change personal info"
 msgstr "Anfrage zum Ändern persönlicher Daten"
 #
 # File: eme-gdpr.php, line: 380
-# File: eme-members.php, line: 4183
+# File: eme-members.php, line: 4196
 # File: eme-payments.php, line: 3612
 # File: eme-people.php, line: 4196
 # File: eme-people.php, line: 4325
@@ -7054,7 +7060,7 @@ msgid "Please check the Google reCAPTCHA box"
 msgstr "Bitte aktiviere das Google reCAPTCHA-Feld"
 #
 # File: eme-gdpr.php, line: 391
-# File: eme-members.php, line: 4194
+# File: eme-members.php, line: 4207
 # File: eme-payments.php, line: 3623
 # File: eme-people.php, line: 4207
 # File: eme-people.php, line: 4336
@@ -7065,7 +7071,7 @@ msgid "Please check the hCaptcha box"
 msgstr "Bitte aktiviere das hCaptcha-Kästchen"
 #
 # File: eme-gdpr.php, line: 402
-# File: eme-members.php, line: 4205
+# File: eme-members.php, line: 4218
 # File: eme-payments.php, line: 3634
 # File: eme-people.php, line: 4218
 # File: eme-people.php, line: 4347
@@ -7077,7 +7083,7 @@ msgid "Please check the Cloudflare Turnstile box"
 msgstr "Bitte aktiviere das Google reCAPTCHA-Feld"
 #
 # File: eme-gdpr.php, line: 413
-# File: eme-members.php, line: 4217
+# File: eme-members.php, line: 4230
 # File: eme-payments.php, line: 3645
 # File: eme-people.php, line: 4229
 # File: eme-people.php, line: 4358
@@ -7160,7 +7166,7 @@ msgstr ""
 "und Zeitdifferenzen bei der Anzeigen von Veranstaltungsdatum/-zeiten zu "
 "berücksichtigen."
 #
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.33)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.34)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 # File: eme-gdpr.php, line: 580
 # File: eme-gdpr.php, line: 586
@@ -7534,9 +7540,9 @@ msgstr "Kopiere diesen Veranstaltungsort"
 # File: eme-mailer.php, line: 1526
 # File: eme-mailer.php, line: 1620
 # File: eme-mailer.php, line: 1725
-# File: eme-members.php, line: 6010
-# File: eme-members.php, line: 6089
-# File: eme-members.php, line: 6209
+# File: eme-members.php, line: 6028
+# File: eme-members.php, line: 6107
+# File: eme-members.php, line: 6227
 # File: eme-rsvp.php, line: 1158
 # File: eme-rsvp.php, line: 4509
 # File: eme-rsvp.php, line: 6032
@@ -7646,7 +7652,7 @@ msgstr "Bitte gib eine gültige E-Mail Adresse ein"
 # File: eme-mailer.php, line: 1516
 # File: eme-mailer.php, line: 1617
 # File: eme-mailer.php, line: 1718
-# File: eme-members.php, line: 6007
+# File: eme-members.php, line: 6025
 # File: eme-rsvp.php, line: 6029
 # File: eme-rsvp.php, line: 6049
 msgid "The mail has been sent."
@@ -8348,16 +8354,16 @@ msgstr ""
 "zurückgesetzt."
 #
 # File: eme-members.php, line: 1231
-# File: eme-members.php, line: 2594
+# File: eme-members.php, line: 2602
 msgid "Add member"
 msgstr "Mitglied hinzufügen"
 #
 # File: eme-members.php, line: 1238
 # File: eme-members.php, line: 1328
-# File: eme-members.php, line: 5711
-# File: eme-members.php, line: 5721
-# File: eme-members.php, line: 5722
-# File: eme-members.php, line: 5723
+# File: eme-members.php, line: 5729
+# File: eme-members.php, line: 5739
+# File: eme-members.php, line: 5740
+# File: eme-members.php, line: 5741
 msgid "Edit member"
 msgstr "Mitglied bearbeiten"
 #
@@ -8438,7 +8444,7 @@ msgstr ""
 "du das tun möchtest."
 #
 # File: eme-members.php, line: 1346
-# File: eme-members.php, line: 1601
+# File: eme-members.php, line: 1609
 msgid "Start date"
 msgstr "Start-Datum"
 #
@@ -8496,36 +8502,36 @@ msgstr "Mitgliedsinformation"
 msgid "No membership with ID %d found"
 msgstr "Keine Mitgliedschaft mit ID %d gefunden"
 #
-# File: eme-members.php, line: 1497
+# File: eme-members.php, line: 1505
 msgid "Add a membership definition"
 msgstr "Eine Mitgliedschaft-Definition hinzuzufügen"
 #
-# File: eme-members.php, line: 1499
+# File: eme-members.php, line: 1507
 msgid "Edit membership '%s'"
 msgstr "Mitgliedschaft '%s' bearbeiten"
 #
-# File: eme-members.php, line: 1527
+# File: eme-members.php, line: 1535
 msgid "Membership details"
 msgstr "Details der Mitgliedschaft"
 #
-# File: eme-members.php, line: 1528
+# File: eme-members.php, line: 1536
 msgid "Mail format settings"
 msgstr "E-Mail-Formateinstellungen"
 #
-# File: eme-members.php, line: 1544
-# File: eme-members.php, line: 2769
+# File: eme-members.php, line: 1552
+# File: eme-members.php, line: 2777
 msgid "Add membership"
 msgstr "Mitgliedschaft hinzufügen"
 #
-# File: eme-members.php, line: 1546
+# File: eme-members.php, line: 1554
 msgid "Update membership"
 msgstr "Mitgliedschaft aktualisieren"
 #
-# File: eme-members.php, line: 1607
+# File: eme-members.php, line: 1615
 msgid "Duration period"
 msgstr "Dauer der Periode"
 #
-# File: eme-members.php, line: 1609
+# File: eme-members.php, line: 1617
 msgid ""
 "Once this duration period has passed, the membership start date for new "
 "members will be increased by the passed period."
@@ -8533,11 +8539,11 @@ msgstr ""
 "Die Dauer der Mitgliedschaft für neue Mitglieder wird um eine weitere "
 "Mitgliedschaftsperiode verlängert wenn die erste verstrichen ist."
 #
-# File: eme-members.php, line: 1613
+# File: eme-members.php, line: 1621
 msgid "One extra free period"
 msgstr "Eine zusätzliche kostenlose Periode"
 #
-# File: eme-members.php, line: 1615
+# File: eme-members.php, line: 1623
 msgid ""
 "When someone becomes a member, the end date is the end date of the current "
 "period calculated for this membership."
@@ -8545,7 +8551,7 @@ msgstr ""
 "Wenn jemand Mitglied wird, entspricht das End-Datum der Mitgliedschaft der "
 "aktuellen Periode der Mitgliedschaft."
 #
-# File: eme-members.php, line: 1616
+# File: eme-members.php, line: 1624
 msgid ""
 "If you want new members to get one extra membership period for free, set "
 "this option."
@@ -8553,7 +8559,7 @@ msgstr ""
 "Falls ein neues Mitglied eine weitere kostenlose Mitgliedsperiode erhalten "
 "soll, setze diese Option."
 #
-# File: eme-members.php, line: 1622
+# File: eme-members.php, line: 1630
 msgid ""
 "After a membership has expired, people can still be considered as a member "
 "until this many days have passed."
@@ -8561,7 +8567,7 @@ msgstr ""
 "Nachdem die Mitgliedschaft beendet ist, können Personen noch als Mitglied  "
 "für die Anzahl an Tagen die hier angegeben wurde betrachtet werden."
 #
-# File: eme-members.php, line: 1623
+# File: eme-members.php, line: 1631
 msgid ""
 "After the mentioned number of days have passed, the membership will be set "
 "to expired."
@@ -8569,11 +8575,11 @@ msgstr ""
 "Nach der angegebenen Anzahl an Tagen wird die Mitgliedschaft auf ausgelaufen "
 "gesetzt."
 #
-# File: eme-members.php, line: 1627
+# File: eme-members.php, line: 1635
 msgid "Reminder"
 msgstr "Erinnerung"
 #
-# File: eme-members.php, line: 1629
+# File: eme-members.php, line: 1637
 msgid ""
 "Set the number of days before membership expiration a reminder will be sent "
 "out."
@@ -8581,7 +8587,7 @@ msgstr ""
 "Setze die Anzahl der Tage bevor eine Erinnerung wegen Ablauf der "
 "Mitgliedschaft verschickt werden soll."
 #
-# File: eme-members.php, line: 1630
+# File: eme-members.php, line: 1638
 msgid ""
 "If you want to send out multiple reminders, seperate the days here by "
 "commas. This can contain negative numbers too, if you want to send out a "
@@ -8592,11 +8598,11 @@ msgstr ""
 "Erinnerung nach dem Mitgliedschaftsende verschickt werden soll, zum Beispiel "
 "innerhalb der Übergangszeit."
 #
-# File: eme-members.php, line: 1634
+# File: eme-members.php, line: 1642
 msgid "Automatically remove pending members"
 msgstr "Automatische Löschung unbestätigter Mitglieder"
 #
-# File: eme-members.php, line: 1636
+# File: eme-members.php, line: 1644
 msgid ""
 "Set the number of days after which pending members are automatically "
 "removed. Leave empty or 0 for no automatic removal."
@@ -8605,11 +8611,11 @@ msgstr ""
 "gelöscht werden sollen. Lasse die Option leer oder setze sie auf 0 um die "
 "automatische Löschung zu deaktivieren."
 #
-# File: eme-members.php, line: 1640
+# File: eme-members.php, line: 1648
 msgid "Allow membership renewal"
 msgstr "Erneuerung der Mitgliedschaft zulassen"
 #
-# File: eme-members.php, line: 1642
+# File: eme-members.php, line: 1650
 msgid ""
 "Select this option if you want members to be able to renew/extend the "
 "membership after payment via the unique payment url generated by the member "
@@ -8622,11 +8628,11 @@ msgstr ""
 "Platzhalter #_MEMBERSHIP_PAYMENT_URL{xx} generiert wird (wobei xx die "
 "Mitgliedschafts-ID ist, siehe Dokument)."
 #
-# File: eme-members.php, line: 1646
+# File: eme-members.php, line: 1654
 msgid "Renewal for active members based on end date"
 msgstr "Erneuerung für aktive Mitglieder basierend auf dem Enddatum"
 #
-# File: eme-members.php, line: 1648
+# File: eme-members.php, line: 1656
 msgid ""
 "Allow active members to pay for a renewal only if the membership end date is "
 "less than the mentioned number of days away. This prevents people from "
@@ -8639,11 +8645,11 @@ msgstr ""
 "zahlen. Gebe eine 0 oder nichts ein, um dies zu deaktivieren "
 "(Standardeinstellung)."
 #
-# File: eme-members.php, line: 1653
+# File: eme-members.php, line: 1661
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 #
-# File: eme-members.php, line: 1655
+# File: eme-members.php, line: 1663
 msgid ""
 "Select this option if you want to use the Google reCAPTCHA on the membership "
 "signup form."
@@ -8651,7 +8657,7 @@ msgstr ""
 "Wähle diese Option, falls du das Google reCAPTCHA auf dem Anmeldeformular "
 "für die Mitgliedschaft verwenden möchtest."
 #
-# File: eme-members.php, line: 1656
+# File: eme-members.php, line: 1664
 msgid ""
 "If this option is checked, make sure to use #_RECAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
@@ -8660,11 +8666,11 @@ msgstr ""
 "deinem Anmeldeformular für die Mitgliedschaft verwendest. Falls nicht "
 "vorhanden, wird es direkt über der Schaltfläche \"Senden\" eingefügt."
 #
-# File: eme-members.php, line: 1662
+# File: eme-members.php, line: 1670
 msgid "hCaptcha"
 msgstr "hCaptcha"
 #
-# File: eme-members.php, line: 1664
+# File: eme-members.php, line: 1672
 msgid ""
 "Select this option if you want to use the hCaptcha on the membership signup "
 "form."
@@ -8672,7 +8678,7 @@ msgstr ""
 "Mit dieser Option lässt sich das hCaptcha auf dem Anmeldeformular für die "
 "Mitgliedschaft verwenden."
 #
-# File: eme-members.php, line: 1665
+# File: eme-members.php, line: 1673
 msgid ""
 "If this option is checked, make sure to use #_HCAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
@@ -8681,11 +8687,11 @@ msgstr ""
 "die Mitgliedschaft verwendet werden. Ist dies nicht der Fall, wird es direkt "
 "über der Schaltfläche \"Senden\" eingefügt."
 #
-# File: eme-members.php, line: 1671
+# File: eme-members.php, line: 1679
 msgid "Cloudflare Turnstile"
 msgstr ""
 #
-# File: eme-members.php, line: 1673
+# File: eme-members.php, line: 1681
 #, fuzzy
 msgid ""
 "Select this option if you want to use Cloudflare Turnstile on the membership "
@@ -8694,7 +8700,7 @@ msgstr ""
 "Wähle diese Option falls Du ein Captcha auf dem Formular für "
 "Mitgliedschaften verwenden möchtest.   "
 #
-# File: eme-members.php, line: 1674
+# File: eme-members.php, line: 1682
 #, fuzzy
 msgid ""
 "If this option is checked, make sure to use #_CFCAPTCHA in your membership "
@@ -8704,11 +8710,11 @@ msgstr ""
 "Anmeldeformular für die Mitgliedschaft verwendest. Falls nicht vorhanden, "
 "wird es direkt über der Schaltfläche \"Senden\" hinzugefügt."
 #
-# File: eme-members.php, line: 1679
+# File: eme-members.php, line: 1687
 msgid "Captcha"
 msgstr "Captcha"
 #
-# File: eme-members.php, line: 1681
+# File: eme-members.php, line: 1689
 msgid ""
 "Select this option if you want to use the captcha on the membership signup "
 "form."
@@ -8716,7 +8722,7 @@ msgstr ""
 "Wähle diese Option falls Du ein Captcha auf dem Formular für "
 "Mitgliedschaften verwenden möchtest.   "
 #
-# File: eme-members.php, line: 1682
+# File: eme-members.php, line: 1690
 msgid ""
 "If this option is checked, make sure to use #_CAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
@@ -8725,11 +8731,11 @@ msgstr ""
 "Anmeldeformular für die Mitgliedschaft verwendest. Falls nicht vorhanden, "
 "wird es direkt über der Schaltfläche \"Senden\" hinzugefügt."
 #
-# File: eme-members.php, line: 1686
+# File: eme-members.php, line: 1694
 msgid "Create WP user after signup"
 msgstr "WP-Benutzer nach der Anmeldung anlegen"
 #
-# File: eme-members.php, line: 1688
+# File: eme-members.php, line: 1696
 msgid ""
 "This will create a WP user after the membership signup is completed, as if "
 "the person registered in WP itself. This will only create a user if the "
@@ -8742,19 +8748,19 @@ msgstr ""
 "bereits in WP angemeldet ist und die E-Mail noch nicht von einem anderen WP-"
 "Benutzer benutzt wird."
 #
-# File: eme-members.php, line: 1692
+# File: eme-members.php, line: 1700
 msgid "Price"
 msgstr "Preis"
 #
-# File: eme-members.php, line: 1698
+# File: eme-members.php, line: 1706
 msgid "Extra charge for new members"
 msgstr "Aufpreis für neue Mitglieder"
 #
-# File: eme-members.php, line: 1704
+# File: eme-members.php, line: 1712
 msgid "Currency"
 msgstr "Währung"
 #
-# File: eme-members.php, line: 1710
+# File: eme-members.php, line: 1718
 msgid ""
 "The price you indicate for memberships is VAT included, special placeholders "
 "are foreseen to indicate the price without VAT."
@@ -8763,15 +8769,15 @@ msgstr ""
 "Mehrwertsteuer, für die Angabe des Preises ohne Mehrwertsteuer sind "
 "spezielle Platzhalter vorgesehen."
 #
-# File: eme-members.php, line: 1722
+# File: eme-members.php, line: 1730
 msgid "Contact person"
 msgstr "Kontaktperson"
 #
-# File: eme-members.php, line: 1728
+# File: eme-members.php, line: 1736
 msgid "WP Admin"
 msgstr "WP Admin"
 #
-# File: eme-members.php, line: 1738
+# File: eme-members.php, line: 1746
 msgid ""
 "Require users to be logged-in before being able to sign up for this "
 "membership."
@@ -8779,11 +8785,11 @@ msgstr ""
 "Erfordert, dass Benutzer angemeldet sein müssen, bevor sie sich für diese "
 "Mitgliedschaft anmelden können."
 #
-# File: eme-members.php, line: 1742
+# File: eme-members.php, line: 1750
 msgid "Keep attendance records?"
 msgstr "Anwesenheitsbericht führen?"
 #
-# File: eme-members.php, line: 1744
+# File: eme-members.php, line: 1752
 msgid ""
 "Select this option if you want an attendance record to be kept everytime the "
 "member QRCODE is scanned by an EME admin."
@@ -8792,14 +8798,14 @@ msgstr ""
 "gespeichert wird, wenn der Mitglieder-QRCODE von einem EME-Administrator "
 "gescannt wird."
 #
-# File: eme-members.php, line: 1748
+# File: eme-members.php, line: 1756
 msgid "Member Form:"
 msgstr "Mitgliedsformular:"
 #
-# File: eme-members.php, line: 1749
-# File: eme-members.php, line: 1774
-# File: eme-members.php, line: 2705
-# File: eme-members.php, line: 2710
+# File: eme-members.php, line: 1757
+# File: eme-members.php, line: 1782
+# File: eme-members.php, line: 2713
+# File: eme-members.php, line: 2718
 # File: eme-people.php, line: 1889
 # File: eme-people.php, line: 1894
 # File: eme-rsvp.php, line: 4856
@@ -8807,7 +8813,7 @@ msgstr "Mitgliedsformular:"
 msgid "Please select a template"
 msgstr "Bitte wähle eine Vorlage"
 #
-# File: eme-members.php, line: 1750
+# File: eme-members.php, line: 1758
 msgid ""
 "This is the form that will be shown when a new member wants to sign up for "
 "this membership."
@@ -8815,20 +8821,23 @@ msgstr ""
 "Dies ist das Formular, das angezeigt wird, wenn ein neues Mitglied sich für "
 "diese Mitgliedschaft anmelden möchte."
 #
-# File: eme-members.php, line: 1751
+# File: eme-members.php, line: 1759
+#, fuzzy
 msgid ""
 "The template should at least contain the placeholders #_LASTNAME, "
-"#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
+"#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If "
+"empty, a simple default will be used."
 msgstr ""
 "Die Vorlage sollte mindestens die Platzhalter #_LASTNAME, #_FIRSTNAME, "
-"#_EMAIL und #_SUBMIT beinhalten, ansonsten wird das Formular nicht angezeigt."
+"#_EMAIL enthalten. Falls nicht, wird das Formular nicht angezeigt. Falls "
+"leer, wird eine einfache Standardvorlage verwendet."
 #
-# File: eme-members.php, line: 1767
+# File: eme-members.php, line: 1775
 msgid "Ask for family member info when someone signs up"
 msgstr ""
 "Frage nach Informationen über Familienmitglieder, wenn sich jemand anmeldet"
 #
-# File: eme-members.php, line: 1769
+# File: eme-members.php, line: 1777
 msgid ""
 "Select this option if you want to ask for extra info for each family member "
 "of the person that signs up. These will also become a member but payment "
@@ -8845,11 +8854,11 @@ msgstr ""
 "Familienmitglieder zu fragen, und \"#_FAMILYMEMBERS\", um nach den Daten der "
 "zusätzlichen Familienmitglieder zu fragen."
 #
-# File: eme-members.php, line: 1773
+# File: eme-members.php, line: 1781
 msgid "Family Member Form:"
 msgstr "Familienmitglied Formular:"
 #
-# File: eme-members.php, line: 1775
+# File: eme-members.php, line: 1783
 msgid ""
 "This is the form that will be shown/repeated for the family members when a "
 "new member wants to sign up for this membership."
@@ -8857,7 +8866,7 @@ msgstr ""
 "Dies ist das Formular, das für die Familienmitglieder angezeigt/wiederholt "
 "wird, wenn sich ein neues Mitglied für diese Mitgliedschaft anmelden möchte."
 #
-# File: eme-members.php, line: 1776
+# File: eme-members.php, line: 1784
 msgid ""
 "The template should at least contain the placeholders #_LASTNAME, "
 "#_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple "
@@ -8867,7 +8876,7 @@ msgstr ""
 "#_EMAIL enthalten. Falls nicht, wird das Formular nicht angezeigt. Falls "
 "leer, wird eine einfache Standardvorlage verwendet."
 #
-# File: eme-members.php, line: 1777
+# File: eme-members.php, line: 1785
 msgid ""
 "The template may contain the person placeholders #_LASTNAME, #_FIRSTNAME, "
 "#_EMAIL, #_OPT_IN (or #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE and "
@@ -8884,11 +8893,11 @@ msgstr ""
 "sich anmeldenden Person übernommen. Die Adressdaten werden immer von der "
 "sich anmeldenden Person kopiert."
 #
-# File: eme-members.php, line: 1793
+# File: eme-members.php, line: 1801
 msgid "Member Added Message:"
 msgstr "Mitglied Hinzugefügt Meldung:"
 #
-# File: eme-members.php, line: 1795
+# File: eme-members.php, line: 1803
 msgid ""
 "The format of the text shown after someone subscribed. If left empty, a "
 "default message will be shown."
@@ -8896,11 +8905,11 @@ msgstr ""
 "Das Format des Textes der angezeigt wird nachdem sich jemand eingeschrieben "
 "hat. Falls leer gelassen, wird ein Standardtext angezeigt."
 #
-# File: eme-members.php, line: 1795
-# File: eme-members.php, line: 1813
-# File: eme-members.php, line: 1831
-# File: eme-members.php, line: 1849
-# File: eme-members.php, line: 1916
+# File: eme-members.php, line: 1803
+# File: eme-members.php, line: 1821
+# File: eme-members.php, line: 1839
+# File: eme-members.php, line: 1857
+# File: eme-members.php, line: 1924
 # File: eme-options.php, line: 1451
 # File: eme-options.php, line: 1456
 # File: eme-options.php, line: 1466
@@ -8994,11 +9003,11 @@ msgstr ""
 msgid "For all possible placeholders, see "
 msgstr "Alle möglichen Platzhalter findest Du in der"
 #
-# File: eme-members.php, line: 1811
+# File: eme-members.php, line: 1819
 msgid "Payment Form Header:"
 msgstr "Kopfzeile des Zahlungsformulars:"
 #
-# File: eme-members.php, line: 1813
+# File: eme-members.php, line: 1821
 # File: eme-options.php, line: 2138
 msgid ""
 "The format of the text shown above the payment buttons. If left empty, a "
@@ -9007,22 +9016,22 @@ msgstr ""
 "Das Format des Textes, der oberhalb der Zahlungs-Schaltfläche erscheint. "
 "Falls leer, wird ein Standardtext gezeigt."
 #
-# File: eme-members.php, line: 1829
+# File: eme-members.php, line: 1837
 msgid "Payment Form Footer:"
 msgstr "Fußzeile des Zahlungsformulars:"
 #
-# File: eme-members.php, line: 1831
+# File: eme-members.php, line: 1839
 # File: eme-options.php, line: 2139
 msgid "The format of the text shown below the payment buttons. Default: empty."
 msgstr ""
 "Das Format des Textes, der unterhalb der Bezahl-Schaltflächen erscheint. "
 "Standard: leer."
 #
-# File: eme-members.php, line: 1847
+# File: eme-members.php, line: 1855
 msgid "Payment Success Message:"
 msgstr "Erfolgsmeldung zur Zahlung:"
 #
-# File: eme-members.php, line: 1849
+# File: eme-members.php, line: 1857
 msgid ""
 "The message shown when the payment is succesfull for membership signup. "
 "Default: see global EME settings for payments, subsection \"General "
@@ -9032,11 +9041,11 @@ msgstr ""
 "Mitgliedschaft erfolgreich war. Standard: siehe globale EME-Einstellungen "
 "für Zahlungen, Unterabschnitt \"Allgemeine Optionen\"."
 #
-# File: eme-members.php, line: 1869
+# File: eme-members.php, line: 1877
 msgid "Membership card PDF template"
 msgstr "Mitgliedsausweis PDF Vorlage"
 #
-# File: eme-members.php, line: 1871
+# File: eme-members.php, line: 1879
 msgid ""
 "This optional template is used to send a PDF attachment in the mail when the "
 "membership is paid for."
@@ -9044,7 +9053,7 @@ msgstr ""
 "Diese optionale Vorlage wird verwendet, um einen PDF-Anhang mit der Mail zu "
 "versenden, sobald die Mitgliedschaft bezahlt wurde."
 #
-# File: eme-members.php, line: 1878
+# File: eme-members.php, line: 1886
 msgid ""
 "If no payment method is selected, the \"Member Added Message\" will be "
 "shown. Otherwise the \"Member Added Message\" will be shown and after some "
@@ -9057,12 +9066,12 @@ msgstr ""
 "Benutzer auf die Zahlungsseite umgeleitet (siehe die allgemeinen EME-"
 "Einstellungen über die Umleitungszeit und weitere Zahlungseinstellungen)."
 #
-# File: eme-members.php, line: 1903
+# File: eme-members.php, line: 1911
 # File: eme-payments.php, line: 24
 msgid "Offline"
 msgstr "Offline"
 #
-# File: eme-members.php, line: 1910
+# File: eme-members.php, line: 1918
 msgid ""
 "If one or more payment methods are selected, the person signing up will be "
 "redirected to a payment page. In that case, make sure to check the different "
@@ -9073,18 +9082,18 @@ msgstr ""
 "die verschiedenen Zahlungsvorlagen, die für diese Mitgliedschaft definiert "
 "sind."
 #
-# File: eme-members.php, line: 1914
+# File: eme-members.php, line: 1922
 msgid "Offline Payment Format:"
 msgstr "E-Mail-Text: Offline-Zahlung"
 #
-# File: eme-members.php, line: 1916
+# File: eme-members.php, line: 1924
 msgid ""
 "The format of the text shown for the offline payment method. Default: empty."
 msgstr ""
 "Das Format des Textes der für die Offline-Zahlungsmethode angezeigt wird. "
 "Standard: Leer"
 #
-# File: eme-members.php, line: 1955
+# File: eme-members.php, line: 1963
 msgid ""
 "By default the dynamic data check only happens for the fields mentioned in "
 "your dynamic data condition if those are present in your membership form "
@@ -9100,7 +9109,7 @@ msgstr ""
 "ist, dass mehr Anfragen an das Backend gestellt werden, also nur dann "
 "verwenden, wenn es unbedingt notwendig ist."
 #
-# File: eme-members.php, line: 1956
+# File: eme-members.php, line: 1964
 msgid ""
 "If your membership uses a discount of type code and you want the dynamic "
 "price (using #_DYNAMICPRICE) to be updated taking that discount into account "
@@ -9111,11 +9120,11 @@ msgstr ""
 "Berücksichtigung dieses Rabatts aktualisiert wird, dann aktiviere diese "
 "Option ebenfalls."
 #
-# File: eme-members.php, line: 1969
+# File: eme-members.php, line: 1977
 msgid "New member email"
 msgstr "Neues Mitglied E-Mail"
 #
-# File: eme-members.php, line: 1971
+# File: eme-members.php, line: 1979
 msgid ""
 "Warning: when the membership is configured to ask for family member info, "
 "this mail is NOT sent to each of the family members, just the member that is "
@@ -9126,34 +9135,34 @@ msgstr ""
 "an alle Familienmitglieder gesendet, sondern nur an das Mitglied, das sich "
 "anmeldet."
 #
-# File: eme-members.php, line: 1974
+# File: eme-members.php, line: 1982
 msgid "New member email subject"
 msgstr "E-Mail-Betreff: Neues Mitglied"
 #
-# File: eme-members.php, line: 1976
+# File: eme-members.php, line: 1984
 msgid "The subject of the mail sent to the person signing up as a member."
 msgstr "Der Betreff der E-Mail an die Person, die sich als Mitglied anmeldet."
 #
-# File: eme-members.php, line: 1981
+# File: eme-members.php, line: 1989
 msgid "New member email body"
 msgstr "E-Mail-Text: Neues Mitglied"
 #
-# File: eme-members.php, line: 1983
+# File: eme-members.php, line: 1991
 msgid "The body of the mail sent to the person signing up as a member."
 msgstr ""
 "Der E-Mail-Text der Nachricht, die der Person zugestellt wird, die eine "
 "Mitgliedschaft anmeldet."
 #
-# File: eme-members.php, line: 1984
-# File: eme-members.php, line: 2037
-# File: eme-members.php, line: 2072
-# File: eme-members.php, line: 2107
-# File: eme-members.php, line: 2142
-# File: eme-members.php, line: 2170
-# File: eme-members.php, line: 2208
-# File: eme-members.php, line: 2246
-# File: eme-members.php, line: 2277
-# File: eme-members.php, line: 2311
+# File: eme-members.php, line: 1992
+# File: eme-members.php, line: 2045
+# File: eme-members.php, line: 2080
+# File: eme-members.php, line: 2115
+# File: eme-members.php, line: 2150
+# File: eme-members.php, line: 2178
+# File: eme-members.php, line: 2216
+# File: eme-members.php, line: 2254
+# File: eme-members.php, line: 2285
+# File: eme-members.php, line: 2319
 msgid ""
 "No template shown in the list? Then go in the section Templates and create a "
 "template of type \"Membership related mail\"."
@@ -9161,21 +9170,21 @@ msgstr ""
 "Keine Vorlage in der Liste angezeigt? Gehe in den Abschnitt Vorlagen und "
 "erstelle eine Vorlage vom Typ \"Mail zur Mitgliedschaft\"."
 #
-# File: eme-members.php, line: 2001
+# File: eme-members.php, line: 2009
 msgid "New member mail attachments"
 msgstr "E-Mail Anhänge Neues Mitglied"
 #
-# File: eme-members.php, line: 2023
+# File: eme-members.php, line: 2031
 msgid "Optionally add attachments to the mail when a new member signs up."
 msgstr ""
 "Fügen Sie optional Anhänge zur E-Mail hinzu, wenn sich ein neues Mitglied "
 "registriert."
 #
-# File: eme-members.php, line: 2027
+# File: eme-members.php, line: 2035
 msgid "Contactperson new member email subject"
 msgstr "Kontaktperson E-Mail-Betreff: neues Mitglied"
 #
-# File: eme-members.php, line: 2029
+# File: eme-members.php, line: 2037
 msgid ""
 "The subject of the mail sent to the contactperson when someone signes up as "
 "a member."
@@ -9183,11 +9192,11 @@ msgstr ""
 "Der Betreff der E-Mail, die an die Kontaktperson verschickt wird, wenn eine "
 "Mitgliedschaftsanfrage gestellt wurde."
 #
-# File: eme-members.php, line: 2034
+# File: eme-members.php, line: 2042
 msgid "Contactperson new member email body"
 msgstr "Kontaktperson E-Mail-Text: neues Mitglied"
 #
-# File: eme-members.php, line: 2036
+# File: eme-members.php, line: 2044
 msgid ""
 "The body of the mail sent to the contactperson when someone signes up as a "
 "member."
@@ -9195,43 +9204,43 @@ msgstr ""
 "Der E-Mail-Text der Nachricht, die an die Kontaktperson zugestellt wird, "
 "wenn eine Mitgliedschaft angemeldet wird."
 #
-# File: eme-members.php, line: 2057
+# File: eme-members.php, line: 2065
 msgid "Member updated Email"
 msgstr "Mitglied aktualisiert E-Mail"
 #
-# File: eme-members.php, line: 2061
+# File: eme-members.php, line: 2069
 msgid "Updated member email subject"
 msgstr "E-Mail-Betreff: Mitglied aktualisiert"
 #
-# File: eme-members.php, line: 2063
+# File: eme-members.php, line: 2071
 msgid "The subject of the mail sent to the member upon changes."
 msgstr ""
 "Der Betreff der E-Mail, die dem Mitglied bei Änderungen zugesandt wird."
 #
-# File: eme-members.php, line: 2064
-# File: eme-members.php, line: 2071
+# File: eme-members.php, line: 2072
+# File: eme-members.php, line: 2079
 msgid "Currently only used when a member is manually marked as unpaid."
 msgstr ""
 "Aktuell nur in Gebrauch, wenn ein Mitglied manuell als unbezahlte markiert "
 "wurde."
 #
-# File: eme-members.php, line: 2068
+# File: eme-members.php, line: 2076
 msgid "Updated member email body"
 msgstr "E-Mail-Text: Mitglied aktualisiert"
 #
-# File: eme-members.php, line: 2070
+# File: eme-members.php, line: 2078
 msgid "The body of the mail sent to the member upon changes."
 msgstr ""
 "Der E-Mail-Text der Nachricht, die dem Mitglied bei Änderungen zugestellt "
 "wird."
 #
-# File: eme-members.php, line: 2092
+# File: eme-members.php, line: 2100
 msgid "Membership extended email"
 msgstr "Mitgliedschaft verlängert E-Mail"
 #
-# File: eme-members.php, line: 2094
-# File: eme-members.php, line: 2129
-# File: eme-members.php, line: 2230
+# File: eme-members.php, line: 2102
+# File: eme-members.php, line: 2137
+# File: eme-members.php, line: 2238
 msgid ""
 "Warning: when the membership is configured to ask for family member info, "
 "this mail is ALSO sent to each of the family members."
@@ -9240,57 +9249,57 @@ msgstr ""
 "Informationen über die Familienmitglieder fragt, wird diese E-Mail AUCH an "
 "jedes der Familienmitglieder gesendet."
 #
-# File: eme-members.php, line: 2097
+# File: eme-members.php, line: 2105
 msgid "Membership extended email subject"
 msgstr "E-Mail-Betreff: Mitgliedschaft verlängert"
 #
-# File: eme-members.php, line: 2099
+# File: eme-members.php, line: 2107
 msgid ""
 "The subject of the mail sent to the member when the membership is extended."
 msgstr ""
 "Der Betreff der E-Mail, die an das Mitglied verschickt wird, wenn die "
 "Mitgliedschaft verlängert wurde."
 #
-# File: eme-members.php, line: 2104
+# File: eme-members.php, line: 2112
 msgid "Membership extended email body"
 msgstr "E-Mail-Text: Mitgliedschaft verlängert"
 #
-# File: eme-members.php, line: 2106
+# File: eme-members.php, line: 2114
 msgid ""
 "The body of the mail sent to the member when the membership is extended."
 msgstr ""
 "Der Text der E-Mail, die an das Mitglied verschickt wird, wenn die "
 "Mitgliedschaft verlängert wurde."
 #
-# File: eme-members.php, line: 2127
+# File: eme-members.php, line: 2135
 msgid "Membership paid email"
 msgstr "Mitgliedschaft bezahlt E-Mail"
 #
-# File: eme-members.php, line: 2132
+# File: eme-members.php, line: 2140
 msgid "Membership paid email subject"
 msgstr "E-Mail-Betreff: Mitgliedschaft bezahlt"
 #
-# File: eme-members.php, line: 2134
+# File: eme-members.php, line: 2142
 msgid "The subject of the mail sent to the member when marked as paid."
 msgstr ""
 "Der Betreff der E-Mail, die an das Mitglied verschickt wird, wenn eine "
 "Mitgliedschaft als Bezahlt markiert wurde."
 #
-# File: eme-members.php, line: 2139
+# File: eme-members.php, line: 2147
 msgid "Membership paid email body"
 msgstr "E-Mail-Text: Mitgliedschaft bezahlt"
 #
-# File: eme-members.php, line: 2141
+# File: eme-members.php, line: 2149
 msgid "The body of the mail sent to the member when marked as paid."
 msgstr ""
 "Der E-Mail-Text der Nachricht, die dem Mitglied zugestellt wird, wenn eine "
 "Mitgliedschaft als Bezahlt markiert wurde."
 #
-# File: eme-members.php, line: 2160
+# File: eme-members.php, line: 2168
 msgid "Contactperson membership paid email subject"
 msgstr "Kontaktperson E-Mail-Betreff: Mitgliedschaft bezahlt"
 #
-# File: eme-members.php, line: 2162
+# File: eme-members.php, line: 2170
 msgid ""
 "The subject of the mail sent to the contactperson after a member is marked "
 "as paid."
@@ -9298,11 +9307,11 @@ msgstr ""
 "Der Betreff der E-Mail, die an die Kontaktperson verschickt wird, wenn die "
 "Mitgliedschaft als bezahlt markiert wurde."
 #
-# File: eme-members.php, line: 2167
+# File: eme-members.php, line: 2175
 msgid "Contactperson membership paid email body"
 msgstr "Kontaktperson E-Mail-Text: Mitgliedschaft bezahlt"
 #
-# File: eme-members.php, line: 2169
+# File: eme-members.php, line: 2177
 msgid ""
 "The body of the mail sent to the contactperson after a member is marked as "
 "paid."
@@ -9310,11 +9319,11 @@ msgstr ""
 "Der E-Mail-Text der Nachricht, die an die Kontaktperson zugestellt wird, "
 "wenn eine Mitgliedschaft als Bezahlt markiert wurde."
 #
-# File: eme-members.php, line: 2190
+# File: eme-members.php, line: 2198
 msgid "Membership reminder email"
 msgstr "Mitgliedschaft Erinnerungs-E-Mail"
 #
-# File: eme-members.php, line: 2192
+# File: eme-members.php, line: 2200
 msgid ""
 "Warning: when the membership is configured to ask for family member info, "
 "this mail is NOT sent to each of the family members, just the head of the "
@@ -9325,11 +9334,11 @@ msgstr ""
 "NICHT an jedes einzelne Familienmitglied gesendet, sondern nur an das "
 "Familienoberhaupt."
 #
-# File: eme-members.php, line: 2195
+# File: eme-members.php, line: 2203
 msgid "Membership reminder email subject"
 msgstr "E-Mail-Betreff: Mitgliedschaft Erinnerung"
 #
-# File: eme-members.php, line: 2197
+# File: eme-members.php, line: 2205
 msgid ""
 "The subject of the mail sent to the member when membership is about to "
 "expire. These reminders will be sent once a day, based on the reminder "
@@ -9339,18 +9348,18 @@ msgstr ""
 "Mitgliedschaft ausläuft. Diese Erinnerung wird täglich verschickt, basierend "
 "auf den Erinnerungseinstellungen der Mitgliedschaft. "
 #
-# File: eme-members.php, line: 2198
-# File: eme-members.php, line: 2207
+# File: eme-members.php, line: 2206
+# File: eme-members.php, line: 2215
 msgid ""
 "This reminder email does NOT take into account an optional grace period."
 msgstr ""
 "Diese Erinnerungs-E-Mail berücksichtigt NICHT eine optionale Übergangsfrist."
 #
-# File: eme-members.php, line: 2204
+# File: eme-members.php, line: 2212
 msgid "Membership reminder email body"
 msgstr "E-Mail-Text: Mitgliedschaft Erinnerung"
 #
-# File: eme-members.php, line: 2206
+# File: eme-members.php, line: 2214
 msgid ""
 "The body of the mail sent to the member when membership is about to expire. "
 "These reminders will be sent once a day, based on the reminder settings of "
@@ -9360,15 +9369,15 @@ msgstr ""
 "bevor die Mitgliedschaft ausläuft. Diese Erinnerung wird täglich verschickt, "
 "basierend auf den Erinnerungseinstellungen der Mitgliedschaft. "
 #
-# File: eme-members.php, line: 2228
+# File: eme-members.php, line: 2236
 msgid "Membership stopped email"
 msgstr "Mitgliedschaft beendet E-Mail"
 #
-# File: eme-members.php, line: 2233
+# File: eme-members.php, line: 2241
 msgid "Membership stopped email subject"
 msgstr "E-Mail-Betreff: Mitgliedschaft beendet"
 #
-# File: eme-members.php, line: 2235
+# File: eme-members.php, line: 2243
 msgid ""
 "The subject of the mail sent to the member when a membership has expired or "
 "is marked as stopped."
@@ -9376,10 +9385,10 @@ msgstr ""
 "Der Betreff der E-Mail, die an das Mitglied verschickt wird, wenn eine "
 "Mitgliedschaft abgelaufen, gekündigt oder als beendet gekennzeichnet wurde."
 #
-# File: eme-members.php, line: 2236
-# File: eme-members.php, line: 2245
-# File: eme-members.php, line: 2267
-# File: eme-members.php, line: 2276
+# File: eme-members.php, line: 2244
+# File: eme-members.php, line: 2253
+# File: eme-members.php, line: 2275
+# File: eme-members.php, line: 2284
 msgid ""
 "If a grace period is defined for the membership, the expiry email is only "
 "sent at the end of the grace period."
@@ -9387,11 +9396,11 @@ msgstr ""
 "Wenn für die Mitgliedschaft eine Übergangsfrist festgelegt wurde, wird die E-"
 "Mail mit dem Ablaufdatum erst nach Ablauf der Übergangsfrist versandt."
 #
-# File: eme-members.php, line: 2242
+# File: eme-members.php, line: 2250
 msgid "Membership stopped email body"
 msgstr "E-Mail-Text: Mitgliedschaft beendet"
 #
-# File: eme-members.php, line: 2244
+# File: eme-members.php, line: 2252
 msgid ""
 "The body of the mail sent to the member when a membership has expired or is "
 "marked as stopped."
@@ -9400,11 +9409,11 @@ msgstr ""
 "eine Mitgliedschaft abgelaufen, gekündigt oder als beendet gekennzeichnet "
 "wurde\t"
 #
-# File: eme-members.php, line: 2264
+# File: eme-members.php, line: 2272
 msgid "Contactperson membership stopped email subject"
 msgstr "Kontaktperson E-Mail-Betreff: Mitgliedschaft beendet"
 #
-# File: eme-members.php, line: 2266
+# File: eme-members.php, line: 2274
 msgid ""
 "The subject of the mail sent to the contactperson when a membership has "
 "expired or is stopped."
@@ -9412,11 +9421,11 @@ msgstr ""
 "Der Betreff der E-Mail, die an die Kontaktperson verschickt wird, wenn die "
 "Mitgliedschaft ausgelaufen oder beendet wurde."
 #
-# File: eme-members.php, line: 2273
+# File: eme-members.php, line: 2281
 msgid "Contactperson membership stopped email body"
 msgstr "Kontaktperson E-Mail-Text: Mitgliedschaft beendet"
 #
-# File: eme-members.php, line: 2275
+# File: eme-members.php, line: 2283
 msgid ""
 "The body of the mail sent to the contactperson when a membership has expired "
 "or is stopped."
@@ -9424,94 +9433,94 @@ msgstr ""
 "Der E-Mail-Text der Nachricht, die der Kontaktperson zugestellt wird, wenn "
 "eine Mitgliedschaft abgelaufen ist oder beendet wird."
 #
-# File: eme-members.php, line: 2297
+# File: eme-members.php, line: 2305
 msgid "Contactperson payment notification email"
 msgstr "Kontaktperson Zahlungsbenachrichtigungs-E-Mail"
 #
-# File: eme-members.php, line: 2301
+# File: eme-members.php, line: 2309
 msgid "Contactperson payment notification email subject"
 msgstr "Kontaktperson Zahlungsbenachrichtigungs-E-Mail Betreff"
 #
-# File: eme-members.php, line: 2308
+# File: eme-members.php, line: 2316
 msgid "Contactperson payment notification email body"
 msgstr "Kontaktperson Zahlungsbenachrichtigungs-E-Mail Text"
 #
-# File: eme-members.php, line: 2344
+# File: eme-members.php, line: 2352
 msgid "Here custom fields of type 'Membership' are shown."
 msgstr ""
 "Hier werden benutzerdefinierte Felder vom Typ'Mitgliedschaft' angezeigt."
 #
-# File: eme-members.php, line: 2377
+# File: eme-members.php, line: 2385
 msgid "File upload is not allowed here."
 msgstr "Datei-Upload ist hier nicht erlaubt."
 #
-# File: eme-members.php, line: 2402
+# File: eme-members.php, line: 2410
 # File: eme-people.php, line: 1618
 msgid "Select memberships"
 msgstr "Mitgliedschaften auswählen"
 #
-# File: eme-members.php, line: 2409
+# File: eme-members.php, line: 2417
 # File: eme-people.php, line: 1626
 msgid "Select member status"
 msgstr "Mitgliedsstatus wählen"
 #
-# File: eme-members.php, line: 2416
-# File: eme-members.php, line: 2421
+# File: eme-members.php, line: 2424
+# File: eme-members.php, line: 2429
 # File: eme-people.php, line: 1603
 # File: eme-people.php, line: 1608
 # File: eme-rsvp.php, line: 4780
 msgid "Filter on person"
 msgstr "Personen filtern"
 #
-# File: eme-members.php, line: 2423
-# File: eme-members.php, line: 2428
+# File: eme-members.php, line: 2431
+# File: eme-members.php, line: 2436
 msgid "Filter on member ID"
 msgstr "Filtern auf Mitglied ID"
 #
-# File: eme-members.php, line: 2429
+# File: eme-members.php, line: 2437
 # File: eme-rsvp.php, line: 4784
 msgid "Filter on payment id"
 msgstr "Filter auf Zahlungs-ID"
 #
-# File: eme-members.php, line: 2430
+# File: eme-members.php, line: 2438
 # File: eme-rsvp.php, line: 4785
 msgid "Filter on payment GW id"
 msgstr "Filter auf Zahlungs-GW ID"
 #
-# File: eme-members.php, line: 2442
+# File: eme-members.php, line: 2450
 # File: eme-people.php, line: 1643
 msgid "Custom field to search"
 msgstr "Benutzerdefiniertes Feld für die Suche"
 #
-# File: eme-members.php, line: 2585
+# File: eme-members.php, line: 2593
 msgid "Add a new member"
 msgstr "Ein neues Mitglied hinzufügen"
 #
-# File: eme-members.php, line: 2604
+# File: eme-members.php, line: 2612
 msgid "Manage members"
 msgstr "Mitglieder verwalten"
 #
-# File: eme-members.php, line: 2621
-# File: eme-members.php, line: 2636
+# File: eme-members.php, line: 2629
+# File: eme-members.php, line: 2644
 # File: eme-people.php, line: 1813
 msgid "Allow empty email?"
 msgstr "Eine leere E-Mail erlauben?"
 #
-# File: eme-members.php, line: 2624
+# File: eme-members.php, line: 2632
 msgid "Import members"
 msgstr "Importiere Mitglieder"
 #
-# File: eme-members.php, line: 2625
+# File: eme-members.php, line: 2633
 msgid "If you want, use this to import members info into the database"
 msgstr ""
 "Falls gewünscht, verwende diese Funktion um Mitglieder in die Datenbank zu "
 "importieren."
 #
-# File: eme-members.php, line: 2639
+# File: eme-members.php, line: 2647
 msgid "Import dynamic field answers"
 msgstr "Importiere Antworten zu dynamischen Feldern"
 #
-# File: eme-members.php, line: 2640
+# File: eme-members.php, line: 2648
 msgid ""
 "Once you finished importing members, use this to import dynamic field "
 "answers into the database"
@@ -9519,54 +9528,54 @@ msgstr ""
 "Nutze diese Option, um nach erfolgtem Import von Mitgliedern, Antworten für "
 "dynamische Felder in die Datenbank zu importieren"
 #
-# File: eme-members.php, line: 2651
+# File: eme-members.php, line: 2659
 msgid "Filter members"
 msgstr "Mitglieder filtern"
 #
-# File: eme-members.php, line: 2652
+# File: eme-members.php, line: 2660
 # File: eme-people.php, line: 1829
 msgid "Store result as dynamic group"
 msgstr "Speichere das Ergebnis als dynamische Gruppe"
 #
-# File: eme-members.php, line: 2653
+# File: eme-members.php, line: 2661
 # File: eme-people.php, line: 1830
 msgid "Enter a name for this dynamic group"
 msgstr "Bitte gib einen Namen für die dynamische Gruppe an"
 #
-# File: eme-members.php, line: 2654
+# File: eme-members.php, line: 2662
 # File: eme-people.php, line: 1831
 msgid "Store dynamic group"
 msgstr "Speichere dynamische Gruppe"
 #
-# File: eme-members.php, line: 2674
+# File: eme-members.php, line: 2682
 msgid "Accept membership payment"
 msgstr "Akzeptiere Zahlungen für Mitgliedschaft"
 #
-# File: eme-members.php, line: 2675
+# File: eme-members.php, line: 2683
 msgid "Set membership unpaid"
 msgstr "Setze Mitgliedschaft auf unbezahlt"
 #
-# File: eme-members.php, line: 2676
+# File: eme-members.php, line: 2684
 msgid "Stop membership"
 msgstr "Beende Mitgliedschaft"
 #
-# File: eme-members.php, line: 2677
+# File: eme-members.php, line: 2685
 msgid "Delete selected members"
 msgstr "Lösche ausgewählte Mitglieder"
 #
-# File: eme-members.php, line: 2678
+# File: eme-members.php, line: 2686
 msgid "Resend the mail for pending members"
 msgstr "E-Mail an unbestätigte Mitglieder erneut versenden"
 #
-# File: eme-members.php, line: 2679
+# File: eme-members.php, line: 2687
 msgid "Resend the mail for paid members"
 msgstr "Erneutes Versenden der E-Mail für bezahlte Mitglieder"
 #
-# File: eme-members.php, line: 2680
+# File: eme-members.php, line: 2688
 msgid "Resend the expiration reminder mail"
 msgstr "Erneutes Versenden der Ablauferinnerungsmail"
 #
-# File: eme-members.php, line: 2681
+# File: eme-members.php, line: 2689
 # File: eme-people.php, line: 1854
 # File: eme-rsvp.php, line: 4810
 # File: eme-rsvp.php, line: 4824
@@ -9574,44 +9583,44 @@ msgstr "Erneutes Versenden der Ablauferinnerungsmail"
 msgid "Send generic email to selected persons"
 msgstr "Generische E-Mail an ausgewählte Personen senden"
 #
-# File: eme-members.php, line: 2682
+# File: eme-members.php, line: 2690
 msgid "Send membership related email to selected members"
 msgstr "Senden von mitgliedsbezogenen E-Mails an ausgewählte Mitglieder"
 #
-# File: eme-members.php, line: 2684
+# File: eme-members.php, line: 2692
 # File: eme-people.php, line: 1868
 # File: eme-rsvp.php, line: 4812
 # File: eme-rsvp.php, line: 4826
 msgid "PDF output"
 msgstr "PDF Ausgabe"
 #
-# File: eme-members.php, line: 2685
+# File: eme-members.php, line: 2693
 # File: eme-people.php, line: 1869
 # File: eme-rsvp.php, line: 4813
 # File: eme-rsvp.php, line: 4827
 msgid "HTML output"
 msgstr "HTML Ausgabe"
 #
-# File: eme-members.php, line: 2689
+# File: eme-members.php, line: 2697
 msgid "Send mails to members upon changes being made?"
 msgstr "Sende E-Mails an Mitglieder nach der Aktualisierung?"
 #
-# File: eme-members.php, line: 2695
+# File: eme-members.php, line: 2703
 msgid "Move corresponding persons to the trash bin?"
 msgstr "Verschiebe betroffene Personen zum Papierkorb?"
 #
-# File: eme-members.php, line: 2700
+# File: eme-members.php, line: 2708
 # File: eme-rsvp.php, line: 4851
 msgid "Select a subject template"
 msgstr "Wähle eine Betreff-Vorlage"
 #
-# File: eme-members.php, line: 2701
+# File: eme-members.php, line: 2709
 # File: eme-rsvp.php, line: 4852
 msgid "Please select a body template"
 msgstr "Bitte wähle eine Textvorlage aus"
 #
-# File: eme-members.php, line: 2704
-# File: eme-members.php, line: 2709
+# File: eme-members.php, line: 2712
+# File: eme-members.php, line: 2717
 # File: eme-people.php, line: 1888
 # File: eme-people.php, line: 1893
 # File: eme-rsvp.php, line: 4855
@@ -9619,8 +9628,8 @@ msgstr "Bitte wähle eine Textvorlage aus"
 msgid "Select an optional header template"
 msgstr "Wähle eine optionale Kopfzeilenvorlage"
 #
-# File: eme-members.php, line: 2706
-# File: eme-members.php, line: 2711
+# File: eme-members.php, line: 2714
+# File: eme-members.php, line: 2719
 # File: eme-people.php, line: 1890
 # File: eme-people.php, line: 1895
 # File: eme-rsvp.php, line: 4857
@@ -9628,27 +9637,27 @@ msgstr "Wähle eine optionale Kopfzeilenvorlage"
 msgid "Select an optional footer template"
 msgstr "Wähle eine optionale Fußzeilenvorlage"
 #
-# File: eme-members.php, line: 2764
+# File: eme-members.php, line: 2772
 msgid "Add a new membership definition"
 msgstr "Füge eine neue Mitgliedschaftsdefinition hinzu"
 #
-# File: eme-members.php, line: 2774
+# File: eme-members.php, line: 2782
 msgid "Manage memberships"
 msgstr "Mitgliedschaften verwalten"
 #
-# File: eme-members.php, line: 2781
+# File: eme-members.php, line: 2789
 msgid "Delete selected memberships"
 msgstr "Ausgewählte Mitgliedschaften löschen"
 #
-# File: eme-members.php, line: 3908
+# File: eme-members.php, line: 3921
 msgid "Members CSV"
 msgstr "Mitglieder CSV"
 #
-# File: eme-members.php, line: 4074
+# File: eme-members.php, line: 4087
 msgid "Limit access to EME members of"
 msgstr "Beschränkter Zugang für EME-Mitglieder von"
 #
-# File: eme-members.php, line: 4080
+# File: eme-members.php, line: 4093
 msgid ""
 "Allow access after the membership has been active for this many days (drip "
 "content):"
@@ -9656,17 +9665,17 @@ msgstr ""
 "Erlaube den Zugang, nachdem die Mitgliedschaft x-Tage lang aktiv war (drip "
 "content):"
 #
-# File: eme-members.php, line: 4083
+# File: eme-members.php, line: 4096
 msgid "Limit access to EME people that are members of the following groups"
 msgstr ""
 "Zugriffsbeschränkung für EME-Personen, die Mitglieder der folgenden Gruppen "
 "sind"
 #
-# File: eme-members.php, line: 4090
+# File: eme-members.php, line: 4103
 msgid "Access denied message template"
 msgstr "Zugang verweigert Nachrichtenvorlage"
 #
-# File: eme-members.php, line: 4094
+# File: eme-members.php, line: 4107
 msgid ""
 "The format of the text shown if access to the page is denied. If left empty, "
 "a default message will be shown."
@@ -9675,124 +9684,130 @@ msgstr ""
 "verweigert wird. Wenn das Feld leer bleibt, wird eine Standardmeldung "
 "angezeigt."
 #
-# File: eme-members.php, line: 4169
+# File: eme-members.php, line: 4182
 msgid "No membership selected"
 msgstr "Keine Mitgliedschaft ausgewählt"
 #
-# File: eme-members.php, line: 4234
+# File: eme-members.php, line: 4247
 # File: eme-rsvp.php, line: 1444
 msgid "You did not enter a valid discount code"
 msgstr "Du hast keinen gültigen Gutschein-Code eingetragen"
 #
-# File: eme-members.php, line: 4491
+# File: eme-members.php, line: 4504
 # File: eme-rsvp.php, line: 5475
 msgid "Never"
 msgstr "Niemals"
 #
-# File: eme-members.php, line: 4522
-# File: eme-members.php, line: 4540
-# File: eme-members.php, line: 4579
-# File: eme-members.php, line: 4601
+# File: eme-members.php, line: 4535
+# File: eme-members.php, line: 4553
+# File: eme-members.php, line: 4592
+# File: eme-members.php, line: 4614
 msgid "no end date"
 msgstr "Kein End-Datum"
 #
-# File: eme-members.php, line: 4595
+# File: eme-members.php, line: 4608
 msgid "expired"
 msgstr "abgelaufen"
 #
-# File: eme-members.php, line: 5132
-# File: eme-members.php, line: 5302
+# File: eme-members.php, line: 5145
+# File: eme-members.php, line: 5315
 msgid "Access denied"
 msgstr "Zugriff verweigert"
 #
-# File: eme-members.php, line: 5222
+# File: eme-members.php, line: 5235
 # File: eme-people.php, line: 833
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr ""
 "Nicht importiert (Problem beim Aktualisieren der Person in der Datenbank): %s"
 #
-# File: eme-members.php, line: 5228
-# File: eme-members.php, line: 5419
+# File: eme-members.php, line: 5241
+# File: eme-members.php, line: 5432
 msgid "Not imported (membership does not exist): %s"
 msgstr "Nicht importiert (Mitgliedschaft existiert nicht): %s"
 #
-# File: eme-members.php, line: 5278
+# File: eme-members.php, line: 5291
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr ""
 "Nicht importiert (Problem beim Einfügen des Mitglieds in die Datenbank): %s"
 #
-# File: eme-members.php, line: 5369
+# File: eme-members.php, line: 5382
 msgid "Not imported (person does not exist): %s"
 msgstr "Nicht importiert (Person existiert nicht): %s"
 #
-# File: eme-members.php, line: 5414
+# File: eme-members.php, line: 5427
 msgid "Not imported (member does not exist): %s"
 msgstr "Nicht importiert (Mitglied existiert nicht): %s"
 #
-# File: eme-members.php, line: 5612
+# File: eme-members.php, line: 5625
 msgid "Edit membership"
 msgstr "Mitgliedschaft bearbeiten"
 #
-# File: eme-members.php, line: 5625
+# File: eme-members.php, line: 5631
+msgid ""
+"No membership form has been defined for this membership, a simple default "
+"will be used."
+msgstr ""
+#
+# File: eme-members.php, line: 5643
 msgid "%d head of the family accounts + %d family members"
 msgstr "%d Konten des Familienoberhaupts + %d Familienmitglieder"
 #
-# File: eme-members.php, line: 5671
+# File: eme-members.php, line: 5689
 # File: eme-people.php, line: 4798
 msgid "(Dynamic)"
 msgstr "(Dynamisch)"
 #
-# File: eme-members.php, line: 5707
+# File: eme-members.php, line: 5725
 # File: eme-people.php, line: 4832
 msgid "(family member)"
 msgstr "(Familienmitglied)"
 #
-# File: eme-members.php, line: 5712
+# File: eme-members.php, line: 5730
 msgid "Head of the family: "
 msgstr "Familienoberhaupt: "
 #
-# File: eme-members.php, line: 5715
+# File: eme-members.php, line: 5733
 msgid "(head of the family)"
 msgstr "(Familienoberhaupt)"
 #
-# File: eme-members.php, line: 5760
+# File: eme-members.php, line: 5778
 msgid "This is based on the payment ID of the member: %d"
 msgstr "Dies basiert auf der Zahlungs-ID des Mitglieds: %d"
 #
-# File: eme-members.php, line: 5868
+# File: eme-members.php, line: 5886
 # File: eme-people.php, line: 5037
 msgid "Dynamic group added"
 msgstr "Dynamische Gruppe hinzugefügt"
 #
-# File: eme-members.php, line: 5870
+# File: eme-members.php, line: 5888
 # File: eme-people.php, line: 5039
 msgid "Please enter a name for the group"
 msgstr "Bitte gib einen Namen für die Gruppe an"
 #
-# File: eme-members.php, line: 5921
-# File: eme-members.php, line: 5983
+# File: eme-members.php, line: 5939
+# File: eme-members.php, line: 6001
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr ""
 "Inhalt von Betreff oder Haupttext war leer, es wurde keine E-Mail gesendet."
 #
-# File: eme-members.php, line: 5968
+# File: eme-members.php, line: 5986
 msgid "Memberships deleted."
 msgstr "Mitgliedschaft gelöscht."
 #
-# File: eme-members.php, line: 6025
+# File: eme-members.php, line: 6043
 msgid "No corresponding persons found."
 msgstr "Keine entsprechende Person gefunden."
 #
-# File: eme-members.php, line: 6034
+# File: eme-members.php, line: 6052
 msgid "Members deleted."
 msgstr "Mitglieder gelöscht."
 #
-# File: eme-members.php, line: 6060
-# File: eme-members.php, line: 6086
-# File: eme-members.php, line: 6150
-# File: eme-members.php, line: 6181
-# File: eme-members.php, line: 6206
+# File: eme-members.php, line: 6078
+# File: eme-members.php, line: 6104
+# File: eme-members.php, line: 6168
+# File: eme-members.php, line: 6199
 # File: eme-members.php, line: 6224
+# File: eme-members.php, line: 6242
 # File: eme-rsvp.php, line: 5665
 # File: eme-rsvp.php, line: 5699
 # File: eme-rsvp.php, line: 5743
@@ -9808,8 +9823,8 @@ msgstr "Mitglieder gelöscht."
 msgid "The action has been executed successfully."
 msgstr "Die Aktion wurde erfolgreich ausgeführt."
 #
-# File: eme-members.php, line: 6063
-# File: eme-members.php, line: 6184
+# File: eme-members.php, line: 6081
+# File: eme-members.php, line: 6202
 # File: eme-rsvp.php, line: 5668
 # File: eme-rsvp.php, line: 5702
 # File: eme-rsvp.php, line: 5746
@@ -9826,8 +9841,8 @@ msgstr ""
 "Die Aktion wurde erfolgreich ausgeführt, dennoch gab es Probleme beim "
 "Versand der Nachricht."
 #
-# File: eme-members.php, line: 6066
-# File: eme-members.php, line: 6187
+# File: eme-members.php, line: 6084
+# File: eme-members.php, line: 6205
 # File: eme-rsvp.php, line: 5671
 # File: eme-rsvp.php, line: 5705
 # File: eme-rsvp.php, line: 5740
@@ -16963,6 +16978,20 @@ msgstr "Franky Van Liedekerke"
 #. Author URI of the plugin/theme
 msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
+#
+#
+#
+#
+#~ msgid ""
+#~ "The template should at least contain the placeholders #_LASTNAME, "
+#~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
+#~ msgstr ""
+#~ "Die Vorlage sollte mindestens die Platzhalter #_LASTNAME, #_FIRSTNAME, "
+#~ "#_EMAIL und #_SUBMIT beinhalten, ansonsten wird das Formular nicht "
+#~ "angezeigt."
+#
+#
+#
 #
 #
 #

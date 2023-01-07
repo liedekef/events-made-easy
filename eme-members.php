@@ -5572,7 +5572,7 @@ add_action( 'wp_ajax_eme_manage_memberships', 'eme_ajax_manage_memberships' );
 add_action( 'wp_ajax_eme_store_members_query', 'eme_ajax_store_members_query' );
 
 function eme_ajax_memberships_list() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb, $eme_db_prefix, $eme_plugin_url;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
 			$ajaxResult['Result']      = 'Error';
@@ -5626,6 +5626,11 @@ function eme_ajax_memberships_list() {
 		} else {
 			$record['name'] = eme_esc_html( $item['name'] );
 		}
+
+		if ( eme_is_empty_string( $item['properties']['member_form_text'] ) && empty( $item['properties']['member_form_tpl'] ) ) {
+			$record['name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning' title='" . __( 'No membership form has been defined for this membership, a simple default will be used.', 'events-made-easy' ) . "'>";
+		}
+
 		$record['description'] = eme_esc_html( $item['description'] );
 		if ( ! isset( $familymembercount[ $item['membership_id'] ] ) ) {
 			$familymembercount[ $item['membership_id'] ] = 0;

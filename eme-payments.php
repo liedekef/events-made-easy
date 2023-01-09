@@ -761,7 +761,7 @@ function eme_braintree_form( $item_name, $payment, $baseprice, $cur, $multi_book
 		return;
 	}
 
-	require_once 'payment_gateways/braintree/braintree-php-6.9.0/lib/Braintree.php';
+	require_once 'payment_gateways/braintree/lib/Braintree.php';
 	$braintree_gateway = new Braintree\Gateway(
 	    [
 			'environment' => $eme_braintree_env,
@@ -875,7 +875,7 @@ function eme_sumup_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 	$button_below   = get_option( 'eme_' . $gateway . '_button_below' );
 	$button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
-	require_once 'payment_gateways/sumup/1.1.0/vendor/autoload.php';
+	require_once 'payment_gateways/sumup/vendor/autoload.php';
 	try {
 		$sumup       = new \SumUp\SumUp(
 		    [
@@ -1421,7 +1421,7 @@ function eme_mercadopago_form( $item_name, $payment, $baseprice, $cur, $multi_bo
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => 'mercadopago_notification' ], $events_page_link );
 
-	require_once 'payment_gateways/mercadopago/2.4.9/vendor/autoload.php';
+	require_once 'payment_gateways/mercadopago/vendor/autoload.php';
 	MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
 
 	$payment_id = $payment['id'];
@@ -1583,7 +1583,7 @@ function eme_fondy_form( $event_or_memebership, $payment, $baseprice, $cur, $mul
 function eme_complete_instamojo_transaction( $payment ) {
 	$instamojo_key        = get_option( 'eme_instamojo_key' );
 	$instamojo_auth_token = get_option( 'eme_instamojo_auth_token' );
-	require_once 'payment_gateways/instamojo/1.0/vendor/autoload.php';
+	require_once 'payment_gateways/instamojo/vendor/autoload.php';
 	$mode = get_option( 'eme_instamojo_env' );
 	if ( preg_match( '/sandbox/', $mode ) ) {
 			$api = new Instamojo\Instamojo( $instamojo_key, $instamojo_auth_token, 'https://test.instamojo.com/api/1.1/' );
@@ -1617,7 +1617,7 @@ function eme_complete_sumup_transaction( $payment ) {
 		return;
 	}
 
-	require_once 'payment_gateways/sumup/1.1.0/vendor/autoload.php';
+	require_once 'payment_gateways/sumup/vendor/autoload.php';
 	try {
 			$sumup = new \SumUp\SumUp(
 			    [
@@ -1658,7 +1658,7 @@ function eme_complete_sumup_transaction( $payment ) {
 }
 
 function eme_complete_stripe_transaction( $payment ) {
-	require_once 'payment_gateways/stripe/stripe-php-9.6.0/init.php';
+	require_once 'payment_gateways/stripe/init.php';
 	$eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
 	\Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 
@@ -1729,7 +1729,7 @@ function eme_complete_fondy_transaction( $payment ) {
 		return 'No secret key';
 	}
 
-	require_once 'payment_gateways/fondy/php-sdk-v2-1.0.9.1/autoload.php';
+	require_once 'payment_gateways/fondy/autoload.php';
 	\Cloudipsp\Configuration::setMerchantId( $eme_fondy_merchant_id );
 	\Cloudipsp\Configuration::setSecretKey( $eme_fondy_secret_key );
 
@@ -1756,7 +1756,7 @@ function eme_notification_instamojo() {
 	$instamojo_key        = get_option( 'eme_instamojo_key' );
 	$instamojo_auth_token = get_option( 'eme_instamojo_auth_token' );
 	$instamojo_salt       = get_option( 'eme_instamojo_salt' );
-	require_once 'payment_gateways/instamojo/1.0/vendor/autoload.php';
+	require_once 'payment_gateways/instamojo/vendor/autoload.php';
 	$mode = get_option( 'eme_instamojo_env' );
 	if ( preg_match( '/sandbox/', $mode ) ) {
 			$api = new Instamojo\Instamojo( $instamojo_key, $instamojo_auth_token, 'https://test.instamojo.com/api/1.1/' );
@@ -1793,7 +1793,7 @@ function eme_notification_mercadopago() {
 		return;
 	}
 
-	require_once 'payment_gateways/mercadopago/2.4.9/vendor/autoload.php';
+	require_once 'payment_gateways/mercadopago/vendor/autoload.php';
 	MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
 
 	// the IPN can also arrive for merchant orders, but for EME on the "payment" case will happen
@@ -2036,7 +2036,7 @@ function eme_notification_sumup() {
 		return;
 	}
 
-	require_once 'payment_gateways/sumup/1.1.0/vendor/autoload.php';
+	require_once 'payment_gateways/sumup/vendor/autoload.php';
 	try {
 			$sumup       = new \SumUp\SumUp(
 			    [
@@ -2075,7 +2075,7 @@ function eme_notification_stripe() {
 	$eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
 	$webhook_secret         = get_option( 'eme_stripe_webhook_secret' );
 
-	require_once 'payment_gateways/stripe/stripe-php-9.6.0/init.php';
+	require_once 'payment_gateways/stripe/init.php';
 	\Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 
 	$payload    = @file_get_contents( 'php://input' );
@@ -2121,7 +2121,7 @@ function eme_notification_fondy() {
 		exit;
 	}
 
-	require_once 'payment_gateways/fondy/php-sdk-v2-1.0.9.1/autoload.php';
+	require_once 'payment_gateways/fondy/autoload.php';
 	\Cloudipsp\Configuration::setMerchantId( $merchant_id );
 	\Cloudipsp\Configuration::setSecretKey( $secret_key );
 
@@ -2156,7 +2156,7 @@ function eme_stripe_webhook() {
 		return;
 	}
 
-	require_once 'payment_gateways/stripe/stripe-php-9.6.0/init.php';
+	require_once 'payment_gateways/stripe/init.php';
 	\Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 
 	// first check all webhooks, delete the one matching our url and recreate it, otherwise we can't get the secret
@@ -2304,7 +2304,7 @@ function eme_charge_stripe() {
 		$item_name = $description;
 	}
 
-	require_once 'payment_gateways/stripe/stripe-php-9.6.0/init.php';
+	require_once 'payment_gateways/stripe/init.php';
 	\Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 	\Stripe\Stripe::setAppInfo( 'WordPress Events Made Easy Stripe plugin' );
 	$payment_methods = get_option( 'eme_stripe_payment_methods' );
@@ -2416,7 +2416,7 @@ function eme_charge_braintree() {
 		$price = eme_get_payment_price( $payment_id );
 	}
 	$price = eme_payment_gateway_total( $price, $cur, 'braintree' );
-	require_once 'payment_gateways/braintree/braintree-php-6.9.0/lib/Braintree.php';
+	require_once 'payment_gateways/braintree/lib/Braintree.php';
 	if ( ! isset( $_POST['braintree_nonce'] ) ) {
 		die( 'The nonce was not generated correctly' );
 	}
@@ -2471,7 +2471,7 @@ function eme_charge_instamojo() {
 		exit;
 	}
 
-	require_once 'payment_gateways/instamojo/1.0/vendor/autoload.php';
+	require_once 'payment_gateways/instamojo/vendor/autoload.php';
 	$mode = get_option( 'eme_instamojo_env' );
 	if ( preg_match( '/sandbox/', $mode ) ) {
 		$api = new Instamojo\Instamojo( $instamojo_key, $instamojo_auth_token, 'https://test.instamojo.com/api/1.1/' );
@@ -2520,7 +2520,7 @@ function eme_charge_mercadopago() {
 	$success_link = eme_payment_return_url( $payment, 0 );
 	$fail_link    = eme_payment_return_url( $payment, 1 );
 
-	require_once 'payment_gateways/mercadopago/2.4.9/vendor/autoload.php';
+	require_once 'payment_gateways/mercadopago/vendor/autoload.php';
 	MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
 	$filter               = [
 		'external_reference' => $payment_id,
@@ -2571,7 +2571,7 @@ function eme_charge_fondy() {
 		exit;
 	}
 
-	require_once 'payment_gateways/fondy/php-sdk-v2-1.0.9.1/autoload.php';
+	require_once 'payment_gateways/fondy/autoload.php';
 	\Cloudipsp\Configuration::setMerchantId( $merchant_id );
 	\Cloudipsp\Configuration::setSecretKey( $secret_key );
 
@@ -2645,7 +2645,7 @@ function eme_refund_booking_mercadopago( $booking ) {
 		return;
 	}
 
-	require_once 'payment_gateways/mercadopago/2.4.9/vendor/autoload.php';
+	require_once 'payment_gateways/mercadopago/vendor/autoload.php';
 	MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
 
 	try {
@@ -2671,7 +2671,7 @@ function eme_refund_booking_instamojo( $booking ) {
 		return;
 	}
 
-	require_once 'payment_gateways/instamojo/1.0/vendor/autoload.php';
+	require_once 'payment_gateways/instamojo/vendor/autoload.php';
 	$mode = get_option( 'eme_instamojo_env' );
 	if ( preg_match( '/sandbox/', $mode ) ) {
 		$api = new Instamojo\Instamojo( $instamojo_key, $instamojo_auth_token, 'https://test.instamojo.com/api/1.1/' );
@@ -2702,7 +2702,7 @@ function eme_refund_booking_fondy( $booking ) {
 		return;
 	}
 
-	require_once 'payment_gateways/fondy/php-sdk-v2-1.0.9.1/autoload.php';
+	require_once 'payment_gateways/fondy/autoload.php';
 	\Cloudipsp\Configuration::setMerchantId( $merchant_id );
 	\Cloudipsp\Configuration::setSecretKey( $secret_key );
 
@@ -2734,7 +2734,7 @@ function eme_refund_booking_stripe( $booking ) {
 		return;
 	}
 
-	require_once 'payment_gateways/stripe/stripe-php-9.6.0/init.php';
+	require_once 'payment_gateways/stripe/init.php';
 	\Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 
 	$stripe_pi_id = $booking['pg_pid'];
@@ -2762,7 +2762,7 @@ function eme_refund_booking_braintree( $booking ) {
 		return;
 	}
 
-	require_once 'payment_gateways/braintree/braintree-php-6.9.0/lib/Braintree.php';
+	require_once 'payment_gateways/braintree/lib/Braintree.php';
 	$braintree_gateway = new Braintree\Gateway(
 	    [
 			'environment' => $eme_braintree_env,
@@ -2801,7 +2801,7 @@ function eme_charge_mollie() {
 
 	// Avoid loading the Mollie API if it is already loaded by another plugin
 	if ( ! class_exists( 'Mollie\Api\MollieApiClient' ) ) {
-		require_once 'payment_gateways/Mollie/2.46.0/vendor/autoload.php';
+		require_once 'payment_gateways/Mollie/vendor/autoload.php';
 	}
 	$mollie = new \Mollie\Api\MollieApiClient();
 
@@ -2844,7 +2844,7 @@ function eme_notification_mollie( $mollie_payment_id = 0 ) {
 	}
 	// Avoid loading the Mollie API if it is already loaded by another plugin
 	if ( ! class_exists( 'Mollie\Api\MollieApiClient' ) ) {
-		require_once 'payment_gateways/Mollie/2.46.0/vendor/autoload.php';
+		require_once 'payment_gateways/Mollie/vendor/autoload.php';
 	}
 
 	$mollie = new \Mollie\Api\MollieApiClient();
@@ -2986,7 +2986,7 @@ function eme_refund_booking_mollie( $booking ) {
 	}
 	// Avoid loading the Mollie API if it is already loaded by another plugin
 	if ( ! class_exists( 'Mollie\Api\MollieApiClient' ) ) {
-		require_once 'payment_gateways/Mollie/2.46.0/vendor/autoload.php';
+		require_once 'payment_gateways/Mollie/vendor/autoload.php';
 	}
 
 	$mollie = new \Mollie\Api\MollieApiClient();

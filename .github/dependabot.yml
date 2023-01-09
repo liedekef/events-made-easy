@@ -9,3 +9,27 @@ updates:
     directory: "/payment_gateways/Mollie" # Location of package manifests
     schedule:
       interval: "weekly"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/payment_gateways/braintree" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/payment_gateways/fondy" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/payment_gateways/instamojo" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/payment_gateways/mercadopago" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/payment_gateways/stripe" # Location of package manifests
+    schedule:
+      interval: "weekly"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/payment_gateways/sumup" # Location of package manifests
+    schedule:
+      interval: "weekly"

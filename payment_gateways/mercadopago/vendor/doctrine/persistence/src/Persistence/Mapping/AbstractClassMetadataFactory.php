@@ -163,9 +163,6 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      */
     private function normalizeClassName(string $className): string
     {
-        /**
-         * @phpstan-ignore-next-line
-         */
         return ltrim($className, '\\');
     }
 
@@ -276,7 +273,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @psalm-param class-string $name
      *
      * @return string[]
-     * @psalm-return class-string[]
+     * @psalm-return list<class-string>
      */
     protected function getParentClasses(string $name)
     {
@@ -308,6 +305,7 @@ abstract class AbstractClassMetadataFactory implements ClassMetadataFactory
      * @psalm-param class-string $name
      *
      * @return array<int, string>
+     * @psalm-return list<string>
      */
     protected function loadMetadata(string $name)
     {

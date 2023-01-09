@@ -22,6 +22,7 @@ use function array_map;
 use function array_slice;
 use function array_unique;
 use function assert;
+use function bin2hex;
 use function call_user_func;
 use function chmod;
 use function class_exists;
@@ -35,6 +36,7 @@ use function in_array;
 use function interface_exists;
 use function is_callable;
 use function is_dir;
+use function is_scalar;
 use function is_string;
 use function is_writable;
 use function lcfirst;
@@ -43,20 +45,24 @@ use function method_exists;
 use function mkdir;
 use function preg_match;
 use function preg_match_all;
+use function preg_replace;
+use function preg_split;
+use function random_bytes;
 use function rename;
 use function rtrim;
 use function sprintf;
 use function str_replace;
+use function strpos;
 use function strrev;
 use function strtolower;
 use function strtr;
 use function substr;
 use function trim;
-use function uniqid;
 use function var_export;
 
 use const DIRECTORY_SEPARATOR;
 use const PHP_VERSION_ID;
+use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
  * This factory is used to generate proxy classes.
@@ -68,7 +74,13 @@ class ProxyGenerator
      * Used to match very simple id methods that don't need
      * to be decorated since the identifier is known.
      */
-    public const PATTERN_MATCH_ID_METHOD = '((public\s+)?(function\s+%s\s*\(\)\s*)\s*(?::\s*\??\s*\\\\?[a-z_\x7f-\xff][\w\x7f-\xff]*(?:\\\\[a-z_\x7f-\xff][\w\x7f-\xff]*)*\s*)?{\s*return\s*\$this->%s;\s*})i';
+    public const PATTERN_MATCH_ID_METHOD = <<<'EOT'
+((?(DEFINE)
+  (?<type>\\?[a-z_\x7f-\xff][\w\x7f-\xff]*(?:\\[a-z_\x7f-\xff][\w\x7f-\xff]*)*)
+  (?<intersection_type>(?&type)\s*&\s*(?&type))
+  (?<union_type>(?:(?:\(\s*(?&intersection_type)\s*\))|(?&type))(?:\s*\|\s*(?:(?:\(\s*(?&intersection_type)\s*\))|(?&type)))+)
+)(?:public\s+)?(?:function\s+%s\s*\(\)\s*)\s*(?::\s*(?:(?&union_type)|(?&intersection_type)|(?:\??(?&type)))\s*)?{\s*return\s*\$this->%s;\s*})i
+EOT;
 
     /**
      * The namespace that contains all proxy classes.
@@ -338,16 +350,14 @@ class <proxyShortClassName> extends \<className> implements \<baseProxyInterface
             throw UnexpectedValueException::proxyDirectoryNotWritable($this->proxyDirectory);
         }
 
-        $tmpFileName = $fileName . '.' . uniqid('', true);
+        $tmpFileName = $fileName . '.' . bin2hex(random_bytes(12));
 
         file_put_contents($tmpFileName, $proxyCode);
         @chmod($tmpFileName, 0664);
         rename($tmpFileName, $fileName);
     }
 
-    /**
-     * @throws InvalidArgumentException
-     */
+    /** @throws InvalidArgumentException */
     private function verifyClassCanBeProxied(ClassMetadata $class)
     {
         if ($class->getReflectionClass()->isFinal()) {
@@ -356,6 +366,10 @@ class <proxyShortClassName> extends \<className> implements \<baseProxyInterface
 
         if ($class->getReflectionClass()->isAbstract()) {
             throw InvalidArgumentException::classMustNotBeAbstract($class->getName());
+        }
+
+        if (PHP_VERSION_ID >= 80200 && $class->getReflectionClass()->isReadOnly()) {
+            throw InvalidArgumentException::classMustNotBeReadOnly($class->getName());
         }
     }
 
@@ -859,7 +873,9 @@ EOT;
      */
     private function generateCloneImpl(ClassMetadata $class)
     {
-        $hasParentClone  = $class->getReflectionClass()->hasMethod('__clone');
+        $reflectionClass = $class->getReflectionClass();
+        $hasParentClone  = $reflectionClass->hasMethod('__clone');
+        $returnTypeHint  = $hasParentClone ? $this->getMethodReturnType($reflectionClass->getMethod('__clone')) : '';
         $inheritDoc      = $hasParentClone ? '{@inheritDoc}' : '';
         $callParentClone = $hasParentClone ? "\n        parent::__clone();\n" : '';
 
@@ -867,7 +883,7 @@ EOT;
     /**
      * $inheritDoc
      */
-    public function __clone()
+    public function __clone()$returnTypeHint
     {
         \$this->__cloner__ && \$this->__cloner__->__invoke(\$this, '__clone', []);
 $callParentClone    }
@@ -1088,10 +1104,7 @@ EOT;
             }
 
             $parameterDefinition .= '$' . ($renameParameters ? $renameParameters[$i] : $param->getName());
-
-            if ($param->isDefaultValueAvailable()) {
-                $parameterDefinition .= ' = ' . var_export($param->getDefaultValue(), true);
-            }
+            $parameterDefinition .= $this->getParameterDefaultValue($param);
 
             $parameterDefinitions[] = $parameterDefinition;
         }
@@ -1099,9 +1112,7 @@ EOT;
         return implode(', ', $parameterDefinitions);
     }
 
-    /**
-     * @return string|null
-     */
+    /** @return string|null */
     private function getParameterType(ReflectionParameter $parameter)
     {
         if (! $parameter->hasType()) {
@@ -1113,6 +1124,33 @@ EOT;
         assert($declaringFunction instanceof ReflectionMethod);
 
         return $this->formatType($parameter->getType(), $declaringFunction, $parameter);
+    }
+
+    /** @return string */
+    private function getParameterDefaultValue(ReflectionParameter $parameter)
+    {
+        if (! $parameter->isDefaultValueAvailable()) {
+            return '';
+        }
+
+        if (PHP_VERSION_ID < 80100 || is_scalar($parameter->getDefaultValue())) {
+            return ' = ' . var_export($parameter->getDefaultValue(), true);
+        }
+
+        $value = rtrim(substr(explode('$' . $parameter->getName() . ' = ', (string) $parameter, 2)[1], 0, -2));
+
+        if (strpos($value, '\\') !== false || strpos($value, '::') !== false) {
+            $value = preg_split("/('(?:[^'\\\\]*+(?:\\\\.)*+)*+')/", $value, -1, PREG_SPLIT_DELIM_CAPTURE);
+            foreach ($value as $i => $part) {
+                if ($i % 2 === 0) {
+                    $value[$i] = preg_replace('/(?<![a-zA-Z0-9_\x7f-\xff\\\\])[a-zA-Z0-9_\x7f-\xff]++(?:\\\\[a-zA-Z0-9_\x7f-\xff]++|::)++/', '\\\\\0', $part);
+                }
+            }
+
+            $value = implode('', $value);
+        }
+
+        return ' = ' . $value;
     }
 
     /**
@@ -1153,9 +1191,7 @@ EOT;
         );
     }
 
-    /**
-     * @return string
-     */
+    /** @return string */
     private function getMethodReturnType(ReflectionMethod $method)
     {
         if (! $method->hasReturnType()) {
@@ -1165,9 +1201,7 @@ EOT;
         return ': ' . $this->formatType($method->getReturnType(), $method);
     }
 
-    /**
-     * @return bool
-     */
+    /** @return bool */
     private function shouldProxiedMethodReturn(ReflectionMethod $method)
     {
         if (! $method->hasReturnType()) {
@@ -1181,9 +1215,7 @@ EOT;
         );
     }
 
-    /**
-     * @return string
-     */
+    /** @return string */
     private function formatType(
         ReflectionType $type,
         ReflectionMethod $method,
@@ -1192,6 +1224,10 @@ EOT;
         if ($type instanceof ReflectionUnionType) {
             return implode('|', array_map(
                 function (ReflectionType $unionedType) use ($method, $parameter) {
+                    if ($unionedType instanceof ReflectionIntersectionType) {
+                        return '(' . $this->formatType($unionedType, $method, $parameter) . ')';
+                    }
+
                     return $this->formatType($unionedType, $method, $parameter);
                 },
                 $type->getTypes()

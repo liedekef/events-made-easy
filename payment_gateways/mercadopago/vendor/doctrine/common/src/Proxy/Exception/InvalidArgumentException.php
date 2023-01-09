@@ -17,9 +17,7 @@ use function sprintf;
  */
 class InvalidArgumentException extends BaseInvalidArgumentException implements ProxyException
 {
-    /**
-     * @return self
-     */
+    /** @return self */
     public static function proxyDirectoryRequired()
     {
         return new self('You must configure a proxy directory. See docs for details');
@@ -47,17 +45,13 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements P
         return new self(sprintf('Provided placeholder for "%s" must be either a string or a valid callable', $name));
     }
 
-    /**
-     * @return self
-     */
+    /** @return self */
     public static function proxyNamespaceRequired()
     {
         return new self('You must configure a proxy namespace');
     }
 
-    /**
-     * @return self
-     */
+    /** @return self */
     public static function unitializedProxyExpected(Proxy $proxy)
     {
         return new self(sprintf('Provided proxy of type "%s" must not be initialized.', get_class($proxy)));
@@ -98,8 +92,17 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements P
     }
 
     /**
-     * @param mixed $value
+     * @param string $className
+     * @psalm-param class-string $className
+     *
+     * @return self
      */
+    public static function classMustNotBeReadOnly($className)
+    {
+        return new self(sprintf('Unable to create a proxy for a readonly class "%s".', $className));
+    }
+
+    /** @param mixed $value */
     public static function invalidAutoGenerateMode($value): self
     {
         return new self(sprintf('Invalid auto generate mode "%s" given.', $value));

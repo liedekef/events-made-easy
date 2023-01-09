@@ -185,11 +185,25 @@ class Payment extends Entity
     protected $money_release_date;
 
     /**
+     * money_release_days
+     * @var int
+     * @Attribute()
+     */
+    protected $money_release_days;
+
+    /**
      * money_release_schema
      * @var string
      * @Attribute()
      */
     protected $money_release_schema;
+    
+    /**
+     * money_release_status
+     * @var string
+     * @Attribute()
+     */
+    protected $money_release_status;
 
     /**
      * currency_id
@@ -582,6 +596,13 @@ class Payment extends Entity
      * @Attribute()
      */
     protected $build_version;
+
+    /**
+     * payment_method
+     * @var object
+     * @Attribute()
+     */
+    protected $payment_method;
 
     /**
      * refund

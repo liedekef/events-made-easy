@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
+= 2.3.36 (2023//) =
+* Payment gateway updates for Mollie, Mercadopago and Stripe
+
 = 2.3.35 (2023/01/07) =
 * Fix options title on some options
 * Fix GDPR settings (typo prevented the page from rendering)

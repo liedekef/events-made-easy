@@ -4,17 +4,16 @@ namespace Mollie\Api\Endpoints;
 
 use Mollie\Api\Exceptions\ApiException;
 use Mollie\Api\MollieApiClient;
-use Mollie\Api\Resources\BaseCollection;
 use Mollie\Api\Resources\BaseResource;
 use Mollie\Api\Resources\ResourceFactory;
 
 abstract class EndpointAbstract
 {
-    const REST_CREATE = MollieApiClient::HTTP_POST;
-    const REST_UPDATE = MollieApiClient::HTTP_PATCH;
-    const REST_READ = MollieApiClient::HTTP_GET;
-    const REST_LIST = MollieApiClient::HTTP_GET;
-    const REST_DELETE = MollieApiClient::HTTP_DELETE;
+    public const REST_CREATE = MollieApiClient::HTTP_POST;
+    public const REST_UPDATE = MollieApiClient::HTTP_PATCH;
+    public const REST_READ = MollieApiClient::HTTP_GET;
+    public const REST_LIST = MollieApiClient::HTTP_GET;
+    public const REST_DELETE = MollieApiClient::HTTP_DELETE;
 
     /**
      * @var MollieApiClient
@@ -80,7 +79,7 @@ abstract class EndpointAbstract
     }
 
     /**
-     * Sends a PATCH request to a single Molle API object.
+     * Sends a PATCH request to a single Mollie API object.
      *
      * @param string $id
      * @param array $body
@@ -160,33 +159,7 @@ abstract class EndpointAbstract
         return ResourceFactory::createFromApiResult($result, $this->getResourceObject());
     }
 
-    /**
-     * Get a collection of objects from the REST API.
-     *
-     * @param string $from The first resource ID you want to include in your list.
-     * @param int $limit
-     * @param array $filters
-     *
-     * @return mixed
-     * @throws ApiException
-     */
-    protected function rest_list($from = null, $limit = null, array $filters = [])
-    {
-        $filters = array_merge(["from" => $from, "limit" => $limit], $filters);
 
-        $apiPath = $this->getResourcePath() . $this->buildQueryString($filters);
-
-        $result = $this->client->performHttpCall(self::REST_LIST, $apiPath);
-
-        /** @var BaseCollection $collection */
-        $collection = $this->getResourceCollectionObject($result->count, $result->_links);
-
-        foreach ($result->_embedded->{$collection->getCollectionResourceName()} as $dataResult) {
-            $collection[] = ResourceFactory::createFromApiResult($dataResult, $this->getResourceObject());
-        }
-
-        return $collection;
-    }
 
     /**
      * Get the object that is used by this API endpoint. Every API endpoint uses one type of object.
@@ -210,7 +183,7 @@ abstract class EndpointAbstract
     public function getResourcePath()
     {
         if (strpos($this->resourcePath, "_") !== false) {
-            list($parentResource, $childResource) = explode("_", $this->resourcePath, 2);
+            [$parentResource, $childResource] = explode("_", $this->resourcePath, 2);
 
             if (empty($this->parentId)) {
                 throw new ApiException("Subresource '{$this->resourcePath}' used without parent '$parentResource' ID.");

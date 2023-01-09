@@ -6,6 +6,6 @@
 version: 2
 updates:
   - package-ecosystem: "composer" # See documentation for possible values
-    directory: "/" # Location of package manifests
+    directory: "/payment_gateways/Mollie/2.46.0" # Location of package manifests
     schedule:
       interval: "weekly"

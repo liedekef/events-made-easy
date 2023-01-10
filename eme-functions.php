@@ -303,7 +303,7 @@ function eme_check_hcaptcha() {
 			return false;
 		} else {
 			$body                = wp_remote_retrieve_body( $response );
-			$responseCaptchaData = json_decode( $data );
+			$responseCaptchaData = json_decode( $body );
 			if ( $responseCaptchaData->success ) {
 				return true;
 			} else {
@@ -329,7 +329,7 @@ function eme_check_cfcaptcha() {
 			return false;
 		} else {
 			$body                = wp_remote_retrieve_body( $response );
-			$responseCaptchaData = json_decode( $data );
+			$responseCaptchaData = json_decode( $body );
 			if ( $responseCaptchaData->success ) {
 				return true;
 			} else {

@@ -102,6 +102,7 @@ See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpr
 == Changelog ==
 = 2.3.36 (2023//) =
 * Payment gateway updates for Mollie, Mercadopago and Stripe
+* Fix updating a person personal info (due to double nonce-checking people received "access denied")
 
 = 2.3.35 (2023/01/07) =
 * Fix options title on some options

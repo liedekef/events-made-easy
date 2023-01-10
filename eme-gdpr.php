@@ -364,7 +364,7 @@ function eme_cpi_ajax() {
 		wp_die();
 	}
 	$person_id = intval( $_POST['person_id'] );
-	if ( ! isset( $_POST['eme_cpi_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_cpi_nonce']), "eme_cpi $person_id" ) ) {
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), "eme_frontend" ) ) {
 		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			[
@@ -444,7 +444,7 @@ function eme_cpi_form( $person_id ) {
 		return "<div class='eme-message-error eme-cpi-message-error'>" . __( 'This link is no longer valid, please request a new link.', 'events-made-easy' ) . '</div>';
 	}
 
-	$nonce          = wp_nonce_field( "eme_cpi $person_id", 'eme_cpi_nonce', false, false );
+	$nonce          = wp_nonce_field( "eme_frontend", 'eme_frontend_nonce', false, false );
 	$format_default = esc_html__( 'Last name: ', 'events-made-easy' ) . '#_LASTNAME <br>' .
 		esc_html__( 'First name: ', 'events-made-easy' ) . '#_FIRSTNAME <br>' .
 		esc_html__( 'Email: ', 'events-made-easy' ) . '#_EMAIL <br>';

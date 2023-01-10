@@ -3381,7 +3381,7 @@ function eme_member_remove_pending() {
 }
 
 // for GDPR CRON
-function eme_member_remove_expired() {
+function eme_member_remove_old_expired() {
 	global $wpdb,$eme_db_prefix,$eme_timezone;
 	$table               = $eme_db_prefix . MEMBERS_TBNAME;
 	$remove_expired_days = get_option( 'eme_gdpr_remove_expired_member_days' );

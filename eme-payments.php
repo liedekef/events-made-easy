@@ -3566,17 +3566,17 @@ function eme_cancel_payment_form( $payment_randomid ) {
 	$person_ids = eme_get_booking_personids( $booking_ids );
 	$person     = eme_get_person( $person_ids[0] );
 
-		$form_id = uniqid();
-	$nonce       = wp_nonce_field( "cancel payment $payment_randomid", 'eme_frontend_nonce', false, false );
+	$form_id = uniqid();
+	$nonce   = wp_nonce_field( "cancel payment $payment_randomid", 'eme_frontend_nonce', false, false );
 
-		$output  = "<div id='eme-cancel-payment-message-ok-$form_id' class='eme-message-success eme-cancel-payment-message eme-cancel-payment-message-success eme-hidden'></div><div id='eme-cancel-payment-message-error-$form_id' class='eme-message-error eme-cancel-payment-message eme-cancel-payment-message-error eme-hidden'></div><div id='div_eme-cancel-payment-form-$form_id'><form id='$form_id' name='eme-cancel-payment-form' method='post' action='#'>
+	$output  = "<div id='eme-cancel-payment-message-ok-$form_id' class='eme-message-success eme-cancel-payment-message eme-cancel-payment-message-success eme-hidden'></div><div id='eme-cancel-payment-message-error-$form_id' class='eme-message-error eme-cancel-payment-message eme-cancel-payment-message-error eme-hidden'></div><div id='div_eme-cancel-payment-form-$form_id'><form id='$form_id' name='eme-cancel-payment-form' method='post' action='#'>
                 $nonce
                 <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
                 <input type='hidden' name='eme_pmt_rndid' value='" . $payment_randomid . "'>
                 ";
-		$output .= eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids );
-	$output     .= '</form>';
-		return $output;
+	$output .= eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids );
+	$output .= '</form>';
+	return $output;
 }
 
 add_action( 'wp_ajax_eme_cancel_payment', 'eme_cancel_payment_ajax' );
@@ -3588,7 +3588,7 @@ function eme_cancel_payment_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 			$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
 				]

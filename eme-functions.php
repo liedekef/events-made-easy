@@ -298,7 +298,7 @@ function eme_check_hcaptcha() {
 			'secret'   => $eme_hcaptcha_key,
 			'response' => eme_sanitize_request( $_POST['h-captcha-response'] ),
 		];
-		$response = wp_remote_post( $url, $data );
+		$response = wp_remote_post( $url, [ 'body' => $data ] );
 		if ( is_wp_error( $response ) ) {
 			return false;
 		} else {
@@ -324,7 +324,7 @@ function eme_check_cfcaptcha() {
 			'secret'   => $eme_cfcaptcha_key,
 			'response' => eme_sanitize_request( $_POST['cf-turnstile-response'] ),
 		];
-		$response = wp_remote_post( $url, $data );
+		$response = wp_remote_post( $url, [ 'body' => $data ] );
 		if ( is_wp_error( $response ) ) {
 			return false;
 		} else {

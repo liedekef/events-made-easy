@@ -80,11 +80,12 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 - To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/liedekef/events-made-easyissues?q=label%3Abug).
 - Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
 - Collect information about the bug:
-  - Stack trace (Traceback)
-  - OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
-  - Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.
+  - Logfiles
+  - Screenshots
+  - Version of php, wordpress, ...
   - Possibly your input and the output
   - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
+  - Are you sure it is not related to your theme or other plugins? Did you try with a default theme and plugins disabled?
 
 <!-- omit in toc -->
 #### How Do I Submit a Good Bug Report?
@@ -95,18 +96,7 @@ A good bug report shouldn't leave others needing to chase you up for more inform
 We use GitHub issues to track bugs and errors. If you run into an issue with the project:
 
 - Open an [Issue](https://github.com/liedekef/events-made-easy/issues/new). (Since we can't be sure at this point whether it is a bug or not, we ask you not to talk about a bug yet and not to label the issue.)
-- Explain the behavior you would expect and the actual behavior.
-- Please provide as much context as possible and describe the *reproduction steps* that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports you should isolate the problem and create a reduced test case.
-- Provide the information you collected in the previous section.
-
-Once it's filed:
-
-- The project team will label the issue accordingly.
-- A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and mark the issue as `needs-repro`. Bugs with the `needs-repro` tag will not be addressed until they are reproduced.
-- If the team is able to reproduce the issue, it will be marked `needs-fix`, as well as possibly other tags (such as `critical`), and the issue will be left to be [implemented by someone](#your-first-code-contribution).
-
-<!-- You might want to create an issue template for bugs and errors that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
-
+- Use the provided template to fill out all info about the issue at hand
 
 ### Suggesting Enhancements
 
@@ -131,13 +121,6 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/liedek
 - You may want to **include screenshots and animated GIFs** which help you demonstrate the steps or point out the part which the suggestion is related to. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux. <!-- this should only be included if the project has a GUI -->
 - **Explain why this enhancement would be useful** to most Events Made Easy users. You may also want to point out the other projects that solved it better and which could serve as inspiration.
 
-<!-- You might want to create an issue template for enhancement suggestions that can be used as a guide and that defines the structure of the information to be included. If you do so, reference it here in the description. -->
-
-### Your First Code Contribution
-<!-- TODO
-include Setup of env, IDE and typical getting started instructions?
-
--->
 
 ### Improving The Documentation
 <!-- TODO
@@ -152,7 +135,7 @@ Updating, improving and correcting the documentation
 -->
 
 ## Join The Project Team
-<!-- TODO -->
+Ask me :-)
 
 <!-- omit in toc -->
 ## Attribution

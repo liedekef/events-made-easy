@@ -31,7 +31,7 @@ Main features:
 * Several GDPR assistance features (request, view and edit personal info via link; delete old records for mailings, attendances, bookings)
 * Fully localisable and already fully localised in German, Swedish, French and Dutch. Also fully compatible with qtranslate-xt (https://github.com/qtranslate/qtranslate-xt/): most of the settings allow for language tags so you can show your events in different languages to different people. The booking mails also take the choosen language into account. For other multi-lingual plugins, EME provides its own in-text language tags and takes the current chosen language into account.
 
-For more information, documentation and support forum visit the [Official site](https://www.e-dynamics.be/wordpress/) .
+For documentation on all shortcodes and placeholders, visit the [Official site](https://www.e-dynamics.be/wordpress/) .
 
 ## Installation
 

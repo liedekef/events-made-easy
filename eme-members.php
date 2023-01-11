@@ -3339,14 +3339,17 @@ function eme_member_recalculate_status( $member_id = 0 ) {
 		if ( $item['status'] != $status_calculated ) {
 			$related_member_ids = eme_get_family_member_ids( $item['member_id'] );
 			if ( $status_calculated == EME_MEMBER_STATUS_EXPIRED ) {
-				eme_stop_member( $item['member_id'], 1 );
-				$member = eme_get_member( $item['member_id'] );
-						eme_email_member_action( $member, 'stopMember' );
-				if ( ! empty( $related_member_ids ) ) {
-					foreach ( $related_member_ids as $related_member_id ) {
-						eme_stop_member( $related_member_id );
-						$member = eme_get_member( $related_member_id );
-						eme_email_member_action( $member, 'stopMember' );
+				// stop member also stops familiy members
+				$res = eme_stop_member( $item['member_id'] );
+				if ($res) {
+					$member = eme_get_member( $item['member_id'] );
+					eme_email_member_action( $member, 'stopMember' );
+					if ( ! empty( $related_member_ids ) ) {
+						// the family members are also stopped when calling eme_stop_member, but we still need to send the mail
+						foreach ( $related_member_ids as $related_member_id ) {
+							$member = eme_get_member( $related_member_id );
+							eme_email_member_action( $member, 'stopMember' );
+						}
 					}
 				}
 			} else {
@@ -3589,6 +3592,7 @@ function eme_extend_member( $member, $pg = '', $pg_pid = '' ) {
 	$fields['reminder']      = 0;
 	$fields['reminder_date'] = '0000-00-00 00:00:00';
 	$fields['renewal_count'] = $member['renewal_count'] + 1;
+	// the function is called for active or grace status, so let's set to active if needed
 	if ( $member['status'] == EME_MEMBER_STATUS_GRACE ) {
 		$fields['status'] = EME_MEMBER_STATUS_ACTIVE;
 	}
@@ -3660,21 +3664,20 @@ function eme_member_set_status( $member_id, $status ) {
 	return $wpdb->update( $table, $fields, $where );
 }
 
-function eme_stop_member( $member_id, $main_only = 0 ) {
+function eme_stop_member( $member_id ) {
 	global $wpdb,$eme_db_prefix, $eme_timezone;
 	$table = $eme_db_prefix . MEMBERS_TBNAME;
 
 	$where              = [];
 	$fields             = [];
 	$where['member_id'] = $member_id;
-	if ( $main_only ) {
-		$where['related_member_id'] = 0;
-	}
+	// first we work on the main account
+	$where['related_member_id'] = 0;
 
 	$member = eme_get_member( $member_id );
 
-	// only for active members
-	if ( $member['status'] != EME_MEMBER_STATUS_ACTIVE ) {
+	// only for member with active or grace status
+	if ( $member['status'] != EME_MEMBER_STATUS_ACTIVE || $member['status'] != EME_MEMBER_STATUS_GRACE ) {
 		return false;
 	}
 
@@ -3694,18 +3697,20 @@ function eme_stop_member( $member_id, $main_only = 0 ) {
 	$fields['status']           = EME_MEMBER_STATUS_EXPIRED;
 	// we set the paid status to 0 so a call to eme_member_payment_url will show the payment form again for an expired member too
 	$fields['paid'] = 0;
+	$res = $wpdb->update( $table, $fields, $where );
 
-	$res                = $wpdb->update( $table, $fields, $where );
-	$related_member_ids = eme_get_family_member_ids( $member_id );
-	if ( ! empty( $related_member_ids ) ) {
-		foreach ( $related_member_ids as $related_member_id ) {
-			$where['member_id'] = $related_member_id;
-			$wpdb->update( $table, $fields, $where );
-		}
-	}
+	// now that this is done, work on the family members
 	if ( $res === false ) {
 		return false;
 	} else {
+		$related_member_ids = eme_get_family_member_ids( $member_id );
+		if ( ! empty( $related_member_ids ) ) {
+			$where2 = [];
+			foreach ( $related_member_ids as $related_member_id ) {
+				$where2['member_id'] = $related_member_id;
+				$wpdb->update( $table, $fields, $where2 );
+			}
+		}
 		return true;
 	}
 }
@@ -6111,8 +6116,8 @@ function eme_ajax_action_resend_paid_member( $ids_arr, $action ) {
 }
 
 function eme_accept_member_payment( $payment_id, $pg = '', $pg_pid = '' ) {
-		$member = eme_get_member_by_paymentid( $payment_id );
-		// we don't accept payments for family members, only the head of the family
+	$member = eme_get_member_by_paymentid( $payment_id );
+	// we don't accept payments for family members, only the head of the family
 	if ( ! empty( $member['related_member_id'] ) ) {
 		return;
 	}
@@ -6174,7 +6179,7 @@ function eme_ajax_action_stop_membership( $ids_arr, $action, $send_mail ) {
 	$action_ok = 1;
 	$mails_ok  = 1;
 	foreach ( $ids_arr as $member_id ) {
-		$res = eme_stop_member( $member_id, 1 );
+		$res = eme_stop_member( $member_id );
 		if ( $res ) {
 			if ( $send_mail ) {
 					$member = eme_get_member( $member_id );

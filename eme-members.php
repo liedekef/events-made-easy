@@ -3677,7 +3677,7 @@ function eme_stop_member( $member_id ) {
 	$member = eme_get_member( $member_id );
 
 	// only for member with active or grace status
-	if ( $member['status'] != EME_MEMBER_STATUS_ACTIVE || $member['status'] != EME_MEMBER_STATUS_GRACE ) {
+	if ( $member['status'] != EME_MEMBER_STATUS_ACTIVE && $member['status'] != EME_MEMBER_STATUS_GRACE ) {
 		return false;
 	}
 

@@ -100,7 +100,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
 
 == Changelog ==
-= 2.3.36 (2023//) =
+= 2.3.37 (2023/01/11) =
+* Fix hCaptcha and Cloudflare Turnstile captcha verification
+* Fix memberships going past grace period (upon which they daily received the stopped-member mail but the status was not set to stopped)
+
+= 2.3.36 (2023/01/11) =
 * Payment gateway updates for Mollie, Mercadopago and Stripe
 * Fix updating a person personal info (due to double nonce-checking people received "access denied")
 * Fix hCaptcha and Cloudflare Turnstile captcha verification

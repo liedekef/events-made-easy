@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.35
+Stable tag: 2.3.36
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -103,6 +103,7 @@ See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpr
 = 2.3.36 (2023//) =
 * Payment gateway updates for Mollie, Mercadopago and Stripe
 * Fix updating a person personal info (due to double nonce-checking people received "access denied")
+* Fix hCaptcha and Cloudflare Turnstile captcha verification
 
 = 2.3.35 (2023/01/07) =
 * Fix options title on some options

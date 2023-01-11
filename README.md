@@ -82,7 +82,7 @@ After the installation, Events Made Easy add a top level "Events" menu to your W
 *  The *Settings* page is used to set generic EME defaults for events, payment gateways, mailserver info, mail templates, ...
 *  Fine-grainded configurable access control (ACL) for managing events, locations, bookings, members, ...
 
-Events list and calendars can be added to your blogs through widgets, shortcodes and placeholders. See the full documentation at the [Events Made Easy Support Page](https://www.e-dynamics.be/wordpress/).
+Events list and calendars can be added to your blogs through widgets, shortcodes and placeholders. See the full documentation at the [Official site](https://www.e-dynamics.be/wordpress/).
  
 ## Translations and how to translate
 
@@ -96,4 +96,4 @@ I sometimes forget to update the language files, so drop me a hint me when you t
 
 ## Frequently Asked Questions
 
-See the FAQ section at [the documentation site](https://www.e-dynamics.be/wordpress).
+See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).

@@ -138,8 +138,8 @@ function eme_cron_cleanup_function() {
 	if ( get_option( 'eme_captcha_for_forms' ) ) {
 		$tmp_dir = get_temp_dir();
 		foreach ( glob( $tmp_dir . 'eme_captcha_*' ) as $file ) {
-			// delete captcha files older than 1 hour
-			if ( time() - filemtime( $file ) > 3600 ) {
+			// delete captcha files older than 30 minutes
+			if ( time() - filemtime( $file ) > 1800 ) {
 				wp_delete_file( $file );
 			}
 		}

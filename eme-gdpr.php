@@ -44,8 +44,8 @@ function eme_gdpr_url( $email ) {
 	return $the_link;
 }
 
-add_action( 'wp_ajax_eme_gdpr', 'eme_gdpr_ajax' );
-add_action( 'wp_ajax_nopriv_eme_gdpr', 'eme_gdpr_ajax' );
+add_action( 'wp_ajax_eme_rpi', 'eme_rpi_ajax' );
+add_action( 'wp_ajax_nopriv_eme_rpi', 'eme_rpi_ajax' );
 function eme_gdpr_ajax() {
 	// check for spammers as early as possible
 	if ( get_option( 'eme_honeypot_for_forms' ) ) {
@@ -70,6 +70,9 @@ function eme_gdpr_ajax() {
 			);
 			wp_die();
 	}
+
+	// while it is possible to generate a captcha, it is overkill in the first stage here, so for now in comment
+	// eme_check_captchas();
 
 	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
 	// send email to client if it exists, otherwise do nothing, but always return the same message
@@ -121,15 +124,19 @@ function eme_rpi_shortcode( $atts ) {
 		}
 	}
 
+	// while it is possible to generate a captcha, it is overkill in the first stage here, so for now in comment
+	// $captcha_html = eme_generate_captchas_html();
+	$captcha_html = "";
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	usleep( 2 );
 	$form_id   = uniqid();
 	$form_html = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-	<div id='eme-gdpr-message-ok-$form_id' class='eme-message-success eme-gdpr-message eme-gdpr-message-success eme-hidden'></div><div id='eme-gdpr-message-error-$form_id' class='eme-message-error eme-gdpr-message eme-gdpr-message-error eme-hidden'></div><div id='div_eme-gdpr-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-gdpr-form' method='post' action='#'>
+	<div id='eme-rpi-message-ok-$form_id' class='eme-message-success eme-rpi-message eme-rpi-message-success eme-hidden'></div><div id='eme-rpi-message-error-$form_id' class='eme-message-error eme-rpi-message eme-rpi-message-error eme-hidden'></div><div id='div_eme-rpi-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-rpi-form' method='post' action='#'>
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
 		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . __( 'Email', 'events-made-easy' ) . "'>
 		<img id='loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><br>
+		$captcha_html
 		<input type='submit' value='" . __( 'Request person data', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form></div>";
 	return $form_html;
@@ -138,34 +145,37 @@ function eme_rpi_shortcode( $atts ) {
 add_action( 'wp_ajax_eme_gdpr_approve', 'eme_gdpr_approve_ajax' );
 add_action( 'wp_ajax_nopriv_eme_gdpr_approve', 'eme_gdpr_approve_ajax' );
 function eme_gdpr_approve_ajax() {
-		// check for spammers as early as possible
+	// check for spammers as early as possible
 	if ( get_option( 'eme_honeypot_for_forms' ) ) {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
-				$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
-				echo wp_json_encode(
-				    [
-						'Result'      => 'NOK',
-						'htmlmessage' => $form_html,
-					]
-				);
-				wp_die();
-		}
-	}
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
-			$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+			$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
 				]
 			);
 			wp_die();
+		}
+	}
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
+		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+		echo wp_json_encode(
+			[
+				'Result'      => 'NOK',
+				'htmlmessage' => $form_html,
+			]
+		);
+		wp_die();
 	}
 
-		$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
-		// send email to client if it exists, otherwise do nothing, but always return the same message
-		$email = eme_sanitize_email( $_POST['eme_email'] );
-		// check if email is found, if so: send the gdpr url
+	// while it is possible to generate a captcha, it is overkill in the first stage here, so for now in comment
+	// eme_check_captchas();
+
+	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	// send email to client if it exists, otherwise do nothing, but always return the same message
+	$email = eme_sanitize_email( $_POST['eme_email'] );
+	// check if email is found, if so: send the gdpr url
 	if ( eme_count_persons_by_email( $email ) > 0 ) {
 		$contact_email = get_option( 'eme_mail_sender_address' );
 		$contact_name  = get_option( 'eme_mail_sender_name' );
@@ -181,14 +191,14 @@ function eme_gdpr_approve_ajax() {
 		$gdpr_body    = eme_replace_generic_placeholders( $gdpr_body, $mail_text_html );
 		eme_queue_fastmail( $gdpr_subject, $gdpr_body, $contact_email, $contact_name, $email, '', $contact_email, $contact_name );
 	}
-		$form_html = __( 'Thank you for your request, an email will be sent with further info', 'events-made-easy' );
-		echo wp_json_encode(
-		    [
-				'Result'      => 'OK',
-				'htmlmessage' => $form_html,
-			]
-		);
-		wp_die();
+	$form_html = __( 'Thank you for your request, an email will be sent with further info', 'events-made-easy' );
+	echo wp_json_encode(
+		[
+			'Result'      => 'OK',
+			'htmlmessage' => $form_html,
+		]
+	);
+	wp_die();
 }
 
 function eme_gdpr_approve_shortcode() {
@@ -199,6 +209,9 @@ function eme_gdpr_approve_shortcode() {
 	} else {
 		$email = '';
 	}
+	// while it is possible to generate a captcha, it is overkill in the first stage here, so for now in comment
+	// $captcha_html = eme_generate_captchas_html();
+	$captcha_html = "";
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	usleep( 2 );
 	$form_id   = uniqid();
@@ -208,6 +221,7 @@ function eme_gdpr_approve_shortcode() {
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
    		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . __( 'Email', 'events-made-easy' ) . "'>
 		<img id='loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><br>
+		$captcha_html
    		<input type='submit' value='" . __( 'Initiate GDPR approval', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form>";
 	return $form_html;
@@ -216,43 +230,38 @@ function eme_gdpr_approve_shortcode() {
 add_action( 'wp_ajax_eme_cpi_request', 'eme_cpi_request_ajax' );
 add_action( 'wp_ajax_nopriv_eme_cpi_request', 'eme_cpi_request_ajax' );
 function eme_cpi_request_ajax() {
-		// check for spammers as early as possible
+	// check for spammers as early as possible
 	if ( get_option( 'eme_honeypot_for_forms' ) ) {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
-				$message = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
-				echo wp_json_encode(
-				    [
-						'Result'      => 'NOK',
-						'htmlmessage' => $message,
-					]
-				);
-				wp_die();
-		}
-	}
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
-			$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+			$message = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
 				]
 			);
 			wp_die();
+		}
+	}
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
+		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+		echo wp_json_encode(
+			[
+				'Result'      => 'NOK',
+				'htmlmessage' => $message,
+			]
+		);
+		wp_die();
 	}
 
-	#      if (get_option('eme_captcha_for_forms')) {
-	#         if (!eme_check_captcha(1)) {
-	#              $message = __("You entered an incorrect code",'events-made-easy');
-	#              echo wp_json_encode(array('Result'=>'NOK','htmlmessage'=>$message));
-	#              wp_die();
-	#         }
-	#      }
+	// while it is possible to generate a captcha, it is overkill in the first stage here, so for now in comment
+	// eme_check_captchas();
 
-		// send email to client if it exists, otherwise do nothing, but always return the same message
-		$email = eme_sanitize_email( $_POST['eme_email'] );
-		// check if email is found, if so: send the url
-		$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
-		$person_ids     = eme_get_personids_by_email( $email );
+	// send email to client if it exists, otherwise do nothing, but always return the same message
+	$email = eme_sanitize_email( $_POST['eme_email'] );
+	// check if email is found, if so: send the url
+	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	$person_ids     = eme_get_personids_by_email( $email );
 	if ( ! empty( $person_ids ) ) {
 		$contact_email = get_option( 'eme_mail_sender_address' );
 		$contact_name  = get_option( 'eme_mail_sender_name' );
@@ -292,14 +301,14 @@ function eme_cpi_request_ajax() {
 		$change_body = eme_replace_generic_placeholders( $change_body, $mail_text_html );
 		eme_queue_fastmail( $change_subject, $change_body, $contact_email, $contact_name, $email, $first_person_name, $contact_email, $contact_name );
 	}
-		$message = __( 'Thank you for your request, an email will be sent with further info.', 'events-made-easy' );
-		echo wp_json_encode(
-		    [
-				'Result'      => 'OK',
-				'htmlmessage' => $message,
-			]
-		);
-		wp_die();
+	$message = __( 'Thank you for your request, an email will be sent with further info.', 'events-made-easy' );
+	echo wp_json_encode(
+		[
+			'Result'      => 'OK',
+			'htmlmessage' => $message,
+		]
+	);
+	wp_die();
 }
 
 function eme_cpi_shortcode( $atts ) {
@@ -323,18 +332,24 @@ function eme_cpi_shortcode( $atts ) {
 		}
 	}
 
-		$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
+	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
+
+	// while it is possible to generate a captcha, it is overkill in the first stage here, so for now in comment
+	// $captcha_html = eme_generate_captchas_html();
+	$captcha_html = "";
+
 	usleep( 2 );
-		$form_id = uniqid();
+	$form_id = uniqid();
 	$form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-cpi-request-message-ok-$form_id' class='eme-message-success eme-cpi-request-message eme-cpi-request-message-success eme-hidden'></div><div id='eme-cpi-request-message-error-$form_id' class='eme-message-error eme-cpi-request-message eme-cpi-request-message-error eme-hidden'></div><div id='div_eme-cpi-request-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-cpi-request-form' method='post' action='#'>
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
 		<input type='email' name='eme_email' value='" . $email . "' placeholder='" . __( 'Email', 'events-made-easy' ) . "'>
 		<img id='loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><br>
+		$captcha_html
 		<input type='submit' value='" . __( 'Request to change personal info', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form></div>";
-		return $form_html;
+	return $form_html;
 }
 
 add_action( 'wp_ajax_eme_cpi', 'eme_cpi_ajax' );
@@ -345,7 +360,7 @@ function eme_cpi_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 			$message = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
 				]
@@ -356,7 +371,7 @@ function eme_cpi_ajax() {
 	if ( empty( $_POST['person_id'] ) ) {
 		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'NOK',
 				'htmlmessage' => $message,
 			]
@@ -375,51 +390,7 @@ function eme_cpi_ajax() {
 		wp_die();
 	}
 
-	if ( get_option( 'eme_recaptcha_for_forms' ) ) {
-		if ( ! eme_check_recaptcha() ) {
-			$message = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_hcaptcha_for_forms' ) ) {
-		if ( ! eme_check_hcaptcha() ) {
-			$message = __( 'Please check the hCaptcha box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
-		if ( ! eme_check_cfcaptcha() ) {
-			$message = __( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_captcha_for_forms' ) ) {
-		if ( ! eme_check_captcha( 1 ) ) {
-			$message = __( 'You entered an incorrect code', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	}
+	eme_check_captchas();
 
 	[$person_id, $add_update_message] = eme_add_update_person_from_form( $person_id );
 	if ( $person_id ) {
@@ -451,7 +422,7 @@ function eme_cpi_form( $person_id ) {
 	$format         = eme_nl2br_save_html( get_option( 'eme_cpi_form', $format_default ) );
 
 	usleep( 2 );
-		$form_id = uniqid();
+	$form_id = uniqid();
 	$form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-cpi-message-ok-$form_id' class='eme-message-success eme-cpi-message eme-cpi-message-success eme-hidden'></div><div id='eme-cpi-message-error-$form_id' class='eme-message-error eme-cpi-message eme-cpi-message-error eme-hidden'></div><div id='div_eme-cpi-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-cpi-form' method='post' action='#'>
 		$nonce

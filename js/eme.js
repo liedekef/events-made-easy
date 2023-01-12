@@ -618,10 +618,10 @@ jQuery(document).ready( function($) {
 		var form_id=$(this).attr('id');
 		eme_genericform_json(form_id,'unsubscribe','eme_unsubscribe');
 	});
-	$('[name=eme-gdpr-form]').on('submit', function(event) {
+	$('[name=eme-rpi-form]').on('submit', function(event) {
 		event.preventDefault();
 		var form_id=$(this).attr('id');
-		eme_genericform_json(form_id,'gdpr','eme_gdpr');
+		eme_genericform_json(form_id,'rpi','eme_rpi');
 	});
 	$('[name=eme-gdpr-approve-form]').on('submit', function(event) {
 		event.preventDefault();

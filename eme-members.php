@@ -4196,52 +4196,7 @@ function eme_add_member_ajax() {
 		$membership = eme_get_membership( intval( $_POST['membership_id'] ) );
 	}
 
-	if ( $membership['properties']['use_recaptcha'] ) {
-		if ( ! eme_check_recaptcha() ) {
-			$result = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
-			echo wp_json_encode(
-			    [
-					'Result'      => 'NOK',
-					'htmlmessage' => $result,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( $membership['properties']['use_hcaptcha'] ) {
-		if ( ! eme_check_hcaptcha() ) {
-			$result = __( 'Please check the hCaptcha box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $result,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( $membership['properties']['use_cfcaptcha'] ) {
-		if ( ! eme_check_cfcaptcha() ) {
-			$message = __( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-
-	} elseif ( $membership['properties']['use_captcha'] ) {
-		if ( ! eme_check_captcha( 0 ) ) {
-			$result = __( 'You entered an incorrect code', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $result,
-				]
-			);
-			wp_die();
-		}
-	}
+        eme_check_captchas( $membership['properties'] );
 
 	// check for wrong discount codes
 	$tmp_member     = eme_member_from_form( $membership );

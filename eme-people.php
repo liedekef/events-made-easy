@@ -4191,51 +4191,8 @@ function eme_subscribe_ajax() {
 		wp_die();
 	}
 
-	if ( get_option( 'eme_recaptcha_for_forms' ) ) {
-		if ( ! eme_check_recaptcha() ) {
-			$message = esc_html__( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_hcaptcha_for_forms' ) ) {
-		if ( ! eme_check_hcaptcha() ) {
-			$message = esc_html__( 'Please check the hCaptcha box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
-		if ( ! eme_check_cfcaptcha() ) {
-			$message = esc_html__( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_captcha_for_forms' ) ) {
-		if ( ! eme_check_captcha( 1 ) ) {
-			$message = esc_html__( 'You entered an incorrect code', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	}
+	// verify captchas
+	eme_check_captchas();
 
 	$eme_lastname  = isset( $_POST['lastname'] ) ? eme_sanitize_request( $_POST['lastname'] ) : '';
 	$eme_firstname = isset( $_POST['firstname'] ) ? eme_sanitize_request( $_POST['firstname'] ) : '';
@@ -4320,51 +4277,8 @@ function eme_unsubscribe_ajax() {
 		wp_die();
 	}
 
-	if ( get_option( 'eme_recaptcha_for_forms' ) ) {
-		if ( ! eme_check_recaptcha() ) {
-			$message = esc_html__( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_hcaptcha_for_forms' ) ) {
-		if ( ! eme_check_hcaptcha() ) {
-			$message = esc_html__( 'Please check the hCaptcha box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
-		if ( ! eme_check_cfcaptcha() ) {
-			$message = esc_html__( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_captcha_for_forms' ) ) {
-		if ( ! eme_check_captcha( 1 ) ) {
-			$message = esc_html__( 'You entered an incorrect code', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	}
+	// verify captchas
+	eme_check_captchas();
 
 	$eme_email = eme_sanitize_email( $_POST['email'] );
 	if ( eme_is_email( $eme_email, 1 ) ) {

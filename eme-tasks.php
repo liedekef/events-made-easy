@@ -1557,59 +1557,7 @@ function eme_tasks_ajax() {
 		wp_die();
 	}
 
-	$captcha_res          = '';
-	$remove_captcha_if_ok = 0;
-	if ( get_option( 'eme_recaptcha_for_forms' ) ) {
-		$captcha_res = eme_check_recaptcha();
-		if ( ! $captcha_res ) {
-			$message = __( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_hcaptcha_for_forms' ) ) {
-		$captcha_res = eme_check_hcaptcha();
-		if ( ! $captcha_res ) {
-			$message = __( 'Please check the hCaptcha box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
-		$captcha_res = eme_check_cfcaptcha();
-		if ( ! $captcha_res ) {
-			$message = __( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		}
-	} elseif ( get_option( 'eme_captcha_for_forms' ) ) {
-		$captcha_res = eme_check_captcha( 0 );
-		if ( ! $captcha_res ) {
-			$message = __( 'You entered an incorrect code', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $message,
-				]
-			);
-			wp_die();
-		} else {
-			$remove_captcha_if_ok = 1;
-		}
-	}
+	eme_check_captchas();
 
 	if ( is_user_logged_in() ) {
 		$booker_wp_id = get_current_user_id();

@@ -1557,7 +1557,7 @@ function eme_tasks_ajax() {
 		wp_die();
 	}
 
-	eme_check_captchas();
+	$captcha_res = eme_check_captchas();
 
 	if ( is_user_logged_in() ) {
 		$booker_wp_id = get_current_user_id();
@@ -1663,7 +1663,7 @@ function eme_tasks_ajax() {
 	}
 
 	// remove the captcha if ok
-	if ( $remove_captcha_if_ok && $ok ) {
+	if ( get_option( 'eme_captcha_for_forms' ) && $ok ) {
 		eme_captcha_remove( $captcha_res );
 	}
 	wp_die();

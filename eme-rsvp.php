@@ -779,7 +779,7 @@ function eme_add_bookings_ajax() {
 	}
 
 	$event       = $events[0];
-	eme_check_captchas( $event['event_properties'] );
+	$captcha_res = eme_check_captchas( $event['event_properties'] );
 
 	if ( isset( $_POST['eme_is_multibooking'] ) && intval( $_POST['eme_is_multibooking'] ) > 0 ) {
 		$is_multibooking = 1;

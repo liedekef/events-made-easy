@@ -4196,7 +4196,7 @@ function eme_add_member_ajax() {
 		$membership = eme_get_membership( intval( $_POST['membership_id'] ) );
 	}
 
-        eme_check_captchas( $membership['properties'] );
+        $captcha_res = eme_check_captchas( $membership['properties'] );
 
 	// check for wrong discount codes
 	$tmp_member     = eme_member_from_form( $membership );
@@ -4234,7 +4234,7 @@ function eme_add_member_ajax() {
 		$payment_id          = $member_res[1];
 	}
 
-		// let's decide for the first event wether or not payment is needed
+	// let's decide for the first event wether or not payment is needed
 	if ( $payment_id && eme_membership_has_pgs_configured( $membership ) ) {
 		if ( $membership['properties']['use_captcha'] ) {
 			eme_captcha_remove( $captcha_res );

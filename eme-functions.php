@@ -377,7 +377,7 @@ function eme_check_captcha( $remove_upon_success = 0 ) {
 	}
 }
 
-function eme_check_captchas( $properties = [], $remove_captcha = 0 ) {
+function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 	$captcha_res = false;
 	if ( ( ! empty( $properties ) && $properties['use_recaptcha'] ) || get_option( 'eme_recaptcha_for_forms' ) ) {
 		$captcha_res = eme_check_recaptcha();
@@ -419,7 +419,7 @@ function eme_check_captchas( $properties = [], $remove_captcha = 0 ) {
 		}
 	}
 	if ( ( ! empty( $properties ) && $properties['use_captcha'] ) || get_option( 'eme_captcha_for_forms' ) ) {
-		$captcha_res = eme_check_captcha();
+		$captcha_res = eme_check_captcha( $remove_captcha_if_ok );
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(
@@ -430,8 +430,6 @@ function eme_check_captchas( $properties = [], $remove_captcha = 0 ) {
 			);
 			wp_die();
 		}
-		if ( $remove_captcha == 1 ) {
-			eme_captcha_remove( $captcha_res );
 	}
 	return $captcha_res;
 }
@@ -505,7 +503,7 @@ function eme_add_captcha_submit( $format, $captcha = '', $add_dyndadata = 0 ) {
 }
 
 function eme_captcha_remove( $captcha_file ) {
-	if ( ! empty( $captcha ) && is_string($captcha_file) && file_exists( $captcha_file ) ) {
+	if ( ! empty( $captcha ) && is_string( $captcha_file ) && file_exists( $captcha_file ) ) {
 		wp_delete_file( $captcha_file );
 	}
 }

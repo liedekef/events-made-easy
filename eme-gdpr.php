@@ -46,7 +46,7 @@ function eme_gdpr_url( $email ) {
 
 add_action( 'wp_ajax_eme_rpi', 'eme_rpi_ajax' );
 add_action( 'wp_ajax_nopriv_eme_rpi', 'eme_rpi_ajax' );
-function eme_gdpr_ajax() {
+function eme_rpi_ajax() {
 	// check for spammers as early as possible
 	if ( get_option( 'eme_honeypot_for_forms' ) ) {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
@@ -71,8 +71,8 @@ function eme_gdpr_ajax() {
 			wp_die();
 	}
 
-	$remove_captcha = 1;
-	eme_check_captchas(null, $remove_captcha);
+	$remove_captcha_if_ok = 1;
+	eme_check_captchas( null, $remove_captcha_if_ok );
 
 	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
 	// send email to client if it exists, otherwise do nothing, but always return the same message
@@ -124,9 +124,7 @@ function eme_rpi_shortcode( $atts ) {
 		}
 	}
 
-	// while it is possible to generate a captcha, it is overkill in the first stage here, so for now in comment
-	// $captcha_html = eme_generate_captchas_html();
-	$captcha_html = "";
+	$captcha_html = eme_generate_captchas_html();
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	usleep( 2 );
 	$form_id   = uniqid();
@@ -169,8 +167,8 @@ function eme_gdpr_approve_ajax() {
 		wp_die();
 	}
 
-	$remove_captcha = 1;
-	eme_check_captchas(null, $remove_captcha);
+	$remove_captcha_if_ok = 1;
+	eme_check_captchas( null, $remove_captcha_if_ok );
 
 	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
 	// send email to client if it exists, otherwise do nothing, but always return the same message
@@ -209,9 +207,8 @@ function eme_gdpr_approve_shortcode() {
 	} else {
 		$email = '';
 	}
-	// while it is possible to generate a captcha, it is overkill in the first stage here, so for now in comment
-	// $captcha_html = eme_generate_captchas_html();
-	$captcha_html = "";
+
+	$captcha_html = eme_generate_captchas_html();
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	usleep( 2 );
 	$form_id   = uniqid();
@@ -254,8 +251,8 @@ function eme_cpi_request_ajax() {
 		wp_die();
 	}
 
-	$remove_captcha = 1;
-	eme_check_captchas(null, $remove_captcha);
+	$remove_captcha_if_ok = 1;
+	eme_check_captchas( null, $remove_captcha_if_ok );
 
 	// send email to client if it exists, otherwise do nothing, but always return the same message
 	$email = eme_sanitize_email( $_POST['eme_email'] );
@@ -334,9 +331,7 @@ function eme_cpi_shortcode( $atts ) {
 
 	$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 
-	// while it is possible to generate a captcha, it is overkill in the first stage here, so for now in comment
-	// $captcha_html = eme_generate_captchas_html();
-	$captcha_html = "";
+	$captcha_html = eme_generate_captchas_html();
 
 	usleep( 2 );
 	$form_id = uniqid();

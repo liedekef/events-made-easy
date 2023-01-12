@@ -3608,7 +3608,7 @@ function eme_cancel_payment_ajax() {
 	}
 
 	// check the captchas
-	eme_check_captchas();
+	$captcha_res = eme_check_captchas();
 
 	$format      = get_option( 'eme_cancelled_payment_format' );
 	$booking_ids = eme_get_randompayment_booking_ids( $payment_randomid );
@@ -3668,8 +3668,11 @@ function eme_cancel_payment_ajax() {
 
 	// replace leftover placeholders at the end
 	$form_html = eme_replace_people_placeholders( $form_html, $person );
+
 	// don't delete the linked payment, since the booking is in trash and can still be restored
 	// eme_delete_payment($booking['payment_id']);
+
+	eme_captcha_remove( $captcha_res );
 	echo wp_json_encode(
 	    [
 			'Result'      => 'OK',

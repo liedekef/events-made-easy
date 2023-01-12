@@ -71,7 +71,8 @@ function eme_gdpr_ajax() {
 			wp_die();
 	}
 
-	eme_check_captchas();
+	$remove_captcha = 1;
+	eme_check_captchas(null, $remove_captcha);
 
 	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
 	// send email to client if it exists, otherwise do nothing, but always return the same message
@@ -168,7 +169,8 @@ function eme_gdpr_approve_ajax() {
 		wp_die();
 	}
 
-	eme_check_captchas();
+	$remove_captcha = 1;
+	eme_check_captchas(null, $remove_captcha);
 
 	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
 	// send email to client if it exists, otherwise do nothing, but always return the same message
@@ -252,7 +254,8 @@ function eme_cpi_request_ajax() {
 		wp_die();
 	}
 
-	eme_check_captchas();
+	$remove_captcha = 1;
+	eme_check_captchas(null, $remove_captcha);
 
 	// send email to client if it exists, otherwise do nothing, but always return the same message
 	$email = eme_sanitize_email( $_POST['eme_email'] );
@@ -387,11 +390,12 @@ function eme_cpi_ajax() {
 		wp_die();
 	}
 
-	eme_check_captchas();
+	$captcha_res = eme_check_captchas();
 
 	[$person_id, $add_update_message] = eme_add_update_person_from_form( $person_id );
 	if ( $person_id ) {
 		$message = __( 'Person updated', 'events-made-easy' );
+		eme_captcha_remove( $captcha_res );
 	} else {
 		$message  = __( 'Problem detected while updating person', 'events-made-easy' );
 		$message .= '<br>' . $add_update_message;

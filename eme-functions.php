@@ -377,11 +377,11 @@ function eme_check_captcha( $remove_upon_success = 0 ) {
 	}
 }
 
-function eme_check_captchas( $properties = [] ) {
+function eme_check_captchas( $properties = [], $remove_captcha = 0 ) {
 	$captcha_res = false;
 	if ( ( ! empty( $properties ) && $properties['use_recaptcha'] ) || get_option( 'eme_recaptcha_for_forms' ) ) {
 		$captcha_res = eme_check_recaptcha();
-		if (!$captcha_res) {
+		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
 			echo wp_json_encode(
 				[
@@ -394,7 +394,7 @@ function eme_check_captchas( $properties = [] ) {
 	}
 	if ( ( ! empty( $properties ) && $properties['use_hcaptcha'] ) || get_option( 'eme_hcaptcha_for_forms' ) ) {
 		$captcha_res = eme_check_hcaptcha();
-		if (!$captcha_res) {
+		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the hCaptcha box', 'events-made-easy' );
 			echo wp_json_encode(
 				[
@@ -407,7 +407,7 @@ function eme_check_captchas( $properties = [] ) {
 	}
 	if ( ( ! empty( $properties ) && $properties['use_cfcaptcha'] ) || get_option( 'eme_cfcaptcha_for_forms' ) ) {
 		$captcha_res = eme_check_cfcaptcha();
-		if (!$captcha_res) {
+		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
 			echo wp_json_encode(
 				[
@@ -420,7 +420,7 @@ function eme_check_captchas( $properties = [] ) {
 	}
 	if ( ( ! empty( $properties ) && $properties['use_captcha'] ) || get_option( 'eme_captcha_for_forms' ) ) {
 		$captcha_res = eme_check_captcha();
-		if (!$captcha_res) {
+		if ( ! $captcha_res ) {
 			$message = esc_html__( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(
 				[
@@ -430,6 +430,8 @@ function eme_check_captchas( $properties = [] ) {
 			);
 			wp_die();
 		}
+		if ( $remove_captcha == 1 ) {
+			eme_captcha_remove( $captcha_res );
 	}
 	return $captcha_res;
 }
@@ -502,9 +504,9 @@ function eme_add_captcha_submit( $format, $captcha = '', $add_dyndadata = 0 ) {
 	return $format;
 }
 
-function eme_captcha_remove( $captcha ) {
-	if ( ! empty( $captcha ) && file_exists( $captcha ) ) {
-		wp_delete_file( $captcha );
+function eme_captcha_remove( $captcha_file ) {
+	if ( ! empty( $captcha ) && is_string($captcha_file) && file_exists( $captcha_file ) ) {
+		wp_delete_file( $captcha_file );
 	}
 }
 

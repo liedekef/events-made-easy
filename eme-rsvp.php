@@ -1019,7 +1019,7 @@ function eme_cancel_bookings_ajax() {
 	}
 
 	// now the captcha
-	eme_check_captchas( $event['event_properties'] );
+	$captcha_res = eme_check_captchas( $event['event_properties'] );
 
 	$registration_wp_users_only = $event['registration_wp_users_only'];
 
@@ -1067,6 +1067,7 @@ function eme_cancel_bookings_ajax() {
 	} else {
 		$form_html = __( 'There are no bookings associated to this name and email', 'events-made-easy' );
 	}
+	eme_captcha_remove ( $captcha_res );
 	echo wp_json_encode(
 	    [
 			'Result'      => 'OK',

@@ -4192,12 +4192,13 @@ function eme_subscribe_ajax() {
 	}
 
 	// verify captchas
-	eme_check_captchas();
+	$captcha_res = eme_check_captchas();
 
 	$eme_lastname  = isset( $_POST['lastname'] ) ? eme_sanitize_request( $_POST['lastname'] ) : '';
 	$eme_firstname = isset( $_POST['firstname'] ) ? eme_sanitize_request( $_POST['firstname'] ) : '';
 	$eme_email     = eme_sanitize_email( $_POST['email'] );
 	if ( eme_is_email( $eme_email, 1 ) ) {
+		eme_captcha_remove ( $captcha_res );
 		if ( isset( $_POST['email_groups'] ) && eme_is_numeric_array( $_POST['email_groups'] ) ) {
 			$eme_email_groups = join( ',', $_POST['email_groups'] );
 		} elseif ( isset( $_POST['email_group'] ) && is_numeric( $_POST['email_group'] ) ) {
@@ -4278,10 +4279,11 @@ function eme_unsubscribe_ajax() {
 	}
 
 	// verify captchas
-	eme_check_captchas();
+	$captcha_res = eme_check_captchas();
 
 	$eme_email = eme_sanitize_email( $_POST['email'] );
 	if ( eme_is_email( $eme_email, 1 ) ) {
+		eme_captcha_remove ( $captcha_res );
 		if ( isset( $_POST['email_groups'] ) && eme_is_numeric_array( $_POST['email_groups'] ) ) {
 			$eme_email_groups = join( ',', $_POST['email_groups'] );
 		} elseif ( isset( $_POST['email_group'] ) && is_numeric( $_POST['email_group'] ) ) {
@@ -4306,7 +4308,7 @@ function eme_unsubscribe_ajax() {
 			]
 		);
 	}
-		wp_die();
+	wp_die();
 }
 
 function eme_unsubform_shortcode( $atts ) {

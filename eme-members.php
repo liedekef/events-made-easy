@@ -4236,9 +4236,7 @@ function eme_add_member_ajax() {
 
 	// let's decide for the first event wether or not payment is needed
 	if ( $payment_id && eme_membership_has_pgs_configured( $membership ) ) {
-		if ( $membership['properties']['use_captcha'] ) {
-			eme_captcha_remove( $captcha_res );
-		}
+		eme_captcha_remove( $captcha_res );
 		$total_price = eme_get_member_payment_price( $payment_id );
 
 		// count the payment gateways active for this membership
@@ -4291,9 +4289,7 @@ function eme_add_member_ajax() {
 			);
 		}
 	} elseif ( $payment_id ) {
-		if ( $membership['properties']['use_captcha'] ) {
-			eme_captcha_remove( $captcha_res );
-		}
+		eme_captcha_remove( $captcha_res );
 		echo wp_json_encode(
 		    [
 				'Result'      => 'OK',

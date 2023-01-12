@@ -1640,14 +1640,14 @@ function eme_tasks_ajax() {
 	if ( $ok && $nok ) {
 		//echo wp_json_encode(array('Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message));
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'OK',
 				'htmlmessage' => $message,
 			]
 		);
 	} elseif ( $nok ) {
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'NOK',
 				'htmlmessage' => $message,
 			]
@@ -1655,7 +1655,7 @@ function eme_tasks_ajax() {
 	} elseif ( $ok ) {
 		//echo wp_json_encode(array('Result'=>'OK','keep_form'=>1,'htmlmessage'=>$message));
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'OK',
 				'htmlmessage' => $message,
 			]
@@ -1663,7 +1663,7 @@ function eme_tasks_ajax() {
 	}
 
 	// remove the captcha if ok
-	if ( get_option( 'eme_captcha_for_forms' ) && $ok ) {
+	if ( $ok ) {
 		eme_captcha_remove( $captcha_res );
 	}
 	wp_die();

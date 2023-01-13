@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	if ( file_exists( __DIR__ . '/../../../wp-load.php' ) ) {
 		require_once __DIR__ . '/../../../wp-load.php';
 	} else {
-		echo "This script needs to be run in wp-content/plugins/events-made-easy !!!! \n";
+		echo "This script needs to be run in the main 'Events Made Easy' plugin directory !!!! \n";
 		die();
 	}
 }
@@ -19,6 +19,7 @@ if ( ! function_exists( 'mailparse_msg_create' ) ) {
 }
 
 function help( $progname ) {
+	echo "For all doc, see https://www.e-dynamics.be/wordpress/category/documentation/21-command-line-mail-script/\n";
 	echo "Usage: $progname -d <email>\n";
 	echo "Or   : $progname --groupid=<groupid>\n";
 	echo "-d <email>\tCauses the email to be forwarded to the EME group with the specified email address";

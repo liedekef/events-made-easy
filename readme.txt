@@ -100,6 +100,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.38 (2023//) =
+* Captcha also for gdpr-related forms (request/change personal info)
+* Fix a warning during plugin activation
+
 = 2.3.37 (2023/01/11) =
 * Fix hCaptcha and Cloudflare Turnstile captcha verification
 * Fix memberships going past grace period (upon which they daily received the stopped-member mail but the status was not set to stopped)

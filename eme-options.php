@@ -5,7 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_add_options( $reset = 0 ) {
-	global $eme_plugin_url;
+	// due to filters and such, the global var $eme_plugin_url is not filled out during install, so we calculate it directly
+	$eme_plugin_url = eme_plugin_url();
 	$contact_person_email_subject_localizable                = __( "New booking for '#_EVENTNAME'", 'events-made-easy' );
 	$contact_person_email_body_localizable                   = __( '#_PERSONFULLNAME (#_PERSONEMAIL) will attend #_EVENTNAME on #_STARTDATE. They want to book #_RESPSEATS seat(s).<br>Now there are #_RESERVEDSEATS seat(s) booked, #_AVAILABLESEATS are still available.<br><br>Yours faithfully,<br>Events Manager', 'events-made-easy' );
 	$contactperson_cancelled_email_subject_localizable       = __( "A booking has been cancelled for '#_EVENTNAME'", 'events-made-easy' );

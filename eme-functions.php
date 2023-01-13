@@ -1081,7 +1081,7 @@ function eme_check_invite_url( $event_id ) {
 		return 0;
 	}
 	if ( isset( $_GET['eme_email'] ) ) {
-		$hash_string = sanitize_email( $_GET['eme_email'] );
+		$hash_string = eme_sanitize_email( $_GET['eme_email'] );
 	} else {
 		return 0;
 	}

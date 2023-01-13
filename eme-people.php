@@ -1158,7 +1158,7 @@ function eme_printable_booking_report( $event_id ) {
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 		<html>
 		<head>
-	<title><?php esc_html_e( 'Bookings for', 'events-made-easy' ) . ' ' . eme_trans_esc_html( $event['event_name'] ); ?></title>
+	<title><?php echo esc_html__( 'Bookings for', 'events-made-easy' ) . ' ' . eme_trans_esc_html( $event['event_name'] ); ?></title>
 	<link rel="stylesheet" href="<?php echo esc_url($stylesheet); ?>" type="text/css" media="screen">
 		<?php
 		$file_name = get_stylesheet_directory() . '/eme.css';
@@ -1173,7 +1173,7 @@ function eme_printable_booking_report( $event_id ) {
 		</head>
 		<body id="eme_printable_body">
 	<div id="eme_printable_container">
-	<h1><?php esc_html_e( 'Bookings for', 'events-made-easy' ) . ' ' . eme_trans_esc_html( $event['event_name'] ); ?></h1> 
+	<h1><?php echo esc_html__( 'Bookings for', 'events-made-easy' ) . ' ' . eme_trans_esc_html( $event['event_name'] ); ?></h1> 
 	<p><?php echo esc_html(eme_localized_datetime( $event['event_start'], $eme_timezone )); ?></p>
 	<p>
 	<?php

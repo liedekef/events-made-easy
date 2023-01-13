@@ -98,11 +98,15 @@ if ( ( ! isset( $arguments['groupid'] ) && ! isset( $arguments['d'] ) ) || isset
 	help( $argv[0] );
 }
 
+$group = '';
 if ( isset( $arguments['groupid'] ) ) {
 	$groupid = intval( $arguments['groupid'] );
 	$group   = eme_get_group( $groupid );
 } else {
-	$group = eme_get_group_by_email( sanitize_email( $arguments['d'] ) );
+	// in this case argument d is set
+	if ( eme_is_email( $arguments['d'] ) ) {
+		$group = eme_get_group_by_email( eme_sanitize_email( $arguments['d'] ) );
+	}
 }
 if ( empty( $group ) ) {
 	echo "Group doesn't exist\n";
@@ -114,8 +118,8 @@ $email_raw = mailRead();
 $mime_resource = mailparse_msg_create();
 mailparse_msg_parse( $mime_resource, $email_raw );
 $structure = mailparse_msg_get_structure( $mime_resource ); // Ex. ["1", "1.1", "1.2"]
-if ( isset( $arguments['f'] ) ) {
-	$from_email = sanitize_email( $arguments['f'] );
+if ( isset( $arguments['f'] ) && eme_is_email( $arguments['f'] ) ) {
+	$from_email = eme_sanitize_email( $arguments['f'] );
 } else {
 	$from_email = '';
 }

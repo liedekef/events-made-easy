@@ -564,6 +564,7 @@ function eme_add_options( $reset = 0 ) {
 }
 
 function eme_update_options( $db_version ) {
+	$eme_plugin_url = eme_plugin_url();
 	if ( $db_version ) {
 		if ( $db_version > 0 && $db_version < 49 ) {
 			delete_option( 'eme_events_admin_limit' );
@@ -804,6 +805,11 @@ function eme_update_options( $db_version ) {
 		if ( $db_version < 361 ) {
 			if ( ! empty( get_option( 'eme_mail_sender_address' ) ) ) {
 				update_option( 'eme_mail_force_from', 1 );
+			}
+		}
+		if ( $db_version < 366 ) {
+			if ( get_option( 'eme_payconiq_button_img_url' ) == 'images/payment_gateways/payconiq/logo.png') {
+				update_option( 'eme_payconiq_button_img_url', esc_url($eme_plugin_url) . 'images/payment_gateways/payconiq/logo.png' );
 			}
 		}
 	}

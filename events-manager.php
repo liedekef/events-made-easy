@@ -36,7 +36,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // Setting constants
 define( 'EME_VERSION', '2.3.37' );
-define( 'EME_DB_VERSION', 365 );
+define( 'EME_DB_VERSION', 366 );
 define( 'EVENTS_TBNAME', 'eme_events' );
 define( 'EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'RECURRENCE_TBNAME', 'eme_recurrence' );

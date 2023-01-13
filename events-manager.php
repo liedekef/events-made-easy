@@ -203,7 +203,7 @@ add_filter( 'eme_text', 'wp_strip_all_tags' );
 add_filter( 'eme_text', 'html_entity_decode' );
 
 // set some vars
-$eme_timezone = eme_get_wptimezone();
+$eme_timezone = wp_timezone_string();
 $eme_wp_date_format = get_option( 'date_format' );
 $eme_wp_time_format = get_option( 'time_format' );
 
@@ -329,7 +329,6 @@ require_once 'eme-tasks.php';
 require_once 'eme-translate.php';
 
 require_once 'class-expressivedate.php';
-
 require 'plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
@@ -407,7 +406,7 @@ function _eme_install() {
 	}
 
 	// some cron we want
-	$eme_timezone = eme_get_wptimezone();
+	$eme_timezone = wp_timezone_string();
 	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
 	// midnight
 	$timestamp = $eme_date_obj->addOneDay()->setTime( 0, 0, 0 )->getTimestamp();
@@ -680,7 +679,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_create_table( $table_name, $sql );
 		// insert a few events in the new table
 		// get the current timestamp into an array
-		$eme_timezone = eme_get_wptimezone();
+		$eme_timezone = wp_timezone_string();
 		$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
 		$eme_date_obj->addDays( 7 );
 		$in_one_week = $eme_date_obj->getDate();

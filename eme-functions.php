@@ -21,6 +21,25 @@ function eme_plugin_dir() {
 	return $dir;
 }
 
+function eme_get_wptimezone() {
+	if ( function_exists( 'wp_timezone_string' ) ) {
+		$eme_timezone = wp_timezone_string();
+	} else {
+		$eme_timezone = get_option( 'timezone_string' );
+		if ( ! $eme_timezone ) {
+			$offset = get_option( 'gmt_offset' );
+			if ( $offset > 0 ) {
+				$eme_timezone = "+$offset";
+			} elseif ( $offset < 0 ) {
+				$eme_timezone = "$offset";
+			} else {
+				$eme_timezone = '+0';
+			}
+		}       
+	}               
+	return $eme_timezone;
+}
+
 add_action( 'wp_ajax_eme_client_clock', 'eme_client_clock_ajax' );
 add_action( 'wp_ajax_nopriv_eme_client_clock', 'eme_client_clock_ajax' );
 function eme_client_clock_ajax() {

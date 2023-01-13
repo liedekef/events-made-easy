@@ -203,21 +203,7 @@ add_filter( 'eme_text', 'wp_strip_all_tags' );
 add_filter( 'eme_text', 'html_entity_decode' );
 
 // set some vars
-if ( function_exists( 'wp_timezone_string' ) ) {
-	$eme_timezone = wp_timezone_string();
-} else {
-	$eme_timezone = get_option( 'timezone_string' );
-	if ( ! $eme_timezone ) {
-		$offset = get_option( 'gmt_offset' );
-		if ( $offset > 0 ) {
-			$eme_timezone = "+$offset";
-		} elseif ( $offset < 0 ) {
-			$eme_timezone = "$offset";
-		} else {
-			$eme_timezone = '+0';
-		}
-	}
-}
+$eme_timezone = eme_get_wptimezone();
 $eme_wp_date_format = get_option( 'date_format' );
 $eme_wp_time_format = get_option( 'time_format' );
 
@@ -361,7 +347,7 @@ $eme_plugin_url = eme_plugin_url();
 $eme_db_prefix  = eme_get_db_prefix();
 
 function eme_install( $networkwide ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		// check if it is a network activation - if so, run the activation function for each blog id
 		if ( $networkwide ) {
@@ -373,8 +359,6 @@ function eme_install( $networkwide ) {
 				_eme_install();
 				restore_current_blog();
 			}
-			// make sure we get the right prefix again at the end, during install it can change in the eme_create_tables call
-			$eme_db_prefix = eme_get_db_prefix();
 			//switch_to_blog($old_blog);
 			return;
 		}
@@ -385,8 +369,6 @@ function eme_install( $networkwide ) {
 
 // the private function; for activation
 function _eme_install() {
-	global $eme_timezone;
-
 	eme_add_options();
 	$db_version = intval( get_option( 'eme_version' ) );
 	if ( $db_version > EME_DB_VERSION ) {
@@ -425,6 +407,7 @@ function _eme_install() {
 	}
 
 	// some cron we want
+	$eme_timezone = eme_get_wptimezone();
 	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
 	// midnight
 	$timestamp = $eme_date_obj->addOneDay()->setTime( 0, 0, 0 )->getTimestamp();
@@ -584,7 +567,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 }
 
 function eme_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
 		$old_blog = $wpdb->blogid;
@@ -595,11 +578,11 @@ function eme_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
 }
 
 function eme_create_tables( $db_version ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	// Creates the events table if necessary
 	require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 	// during install, the prefix changes per blog, so get it here
-	$eme_db_prefix = eme_get_db_prefix();
+	$db_prefix = eme_get_db_prefix();
 	$charset       = '';
 	$collate       = '';
 	if ( $wpdb->has_cap( 'collation' ) ) {
@@ -616,87 +599,88 @@ function eme_create_tables( $db_version ) {
 	//$mysql_version = preg_replace( '/[^0-9.].*/', '', $mysql_version);
 	//$mysql_old = version_compare( $mysql_version, "5.6", '<' );
 
-	eme_create_events_table( $charset, $collate, $db_version );
-	eme_create_recurrence_table( $charset, $collate, $db_version );
-	eme_create_locations_table( $charset, $collate, $db_version );
-	eme_create_bookings_table( $charset, $collate, $db_version );
-	eme_create_people_table( $charset, $collate, $db_version );
-	eme_create_members_table( $charset, $collate, $db_version );
-	eme_create_categories_table( $charset, $collate, $db_version );
-	eme_create_holidays_table( $charset, $collate, $db_version );
-	eme_create_templates_table( $charset, $collate, $db_version );
-	eme_create_formfields_table( $charset, $collate, $db_version );
-	eme_create_answers_table( $charset, $collate, $db_version );
-	eme_create_payments_table( $charset, $collate, $db_version );
-	eme_create_discounts_table( $charset, $collate, $db_version );
-	eme_create_discountgroups_table( $charset, $collate, $db_version );
-	eme_create_mqueue_table( $charset, $collate, $db_version );
-	eme_create_countries_table( $charset, $collate, $db_version );
-	eme_create_states_table( $charset, $collate, $db_version );
-	eme_create_attendances_table( $charset, $collate, $db_version );
-	eme_create_task_tables( $charset, $collate, $db_version );
+	eme_create_events_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_locations_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_people_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_members_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_categories_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_holidays_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_templates_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_formfields_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_answers_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_payments_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_discountgroups_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_countries_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_states_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_attendances_table( $charset, $collate, $db_version, $db_prefix );
+	eme_create_task_tables( $charset, $collate, $db_version, $db_prefix );
 }
 
-function eme_create_events_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
 
-	$table_name = $eme_db_prefix . EVENTS_TBNAME;
+	$table_name = $db_prefix . EVENTS_TBNAME;
 
 	$default_current_ts = 'DEFAULT CURRENT_TIMESTAMP';
 	$update_current_ts  = 'DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP';
 	if ( ! eme_table_exists( $table_name ) ) {
 		// Creating the events table
 		$sql = 'CREATE TABLE ' . $table_name . " (
-         event_id mediumint(9) NOT NULL AUTO_INCREMENT,
-         event_status mediumint(9) DEFAULT 1,
-         event_author mediumint(9) DEFAULT 0,
-         event_name text NOT NULL,
-         event_prefix text,
-         event_slug text,
-         event_url text,
-         event_start datetime,
-         event_end datetime,
-         creation_date datetime,
-         modif_date datetime,
-         event_notes longtext,
-         event_rsvp bool DEFAULT 0,
-         event_tasks bool DEFAULT 0,
-         price text,
-         currency text,
-         rsvp_number_days mediumint(5) DEFAULT 0,
-         rsvp_number_hours mediumint(5) DEFAULT 0,
-         event_seats text,
-         event_contactperson_id mediumint(9) DEFAULT 0,
-         location_id mediumint(9) DEFAULT 0,
-         recurrence_id mediumint(9) DEFAULT 0,
-         event_category_ids text,
-         event_attributes text, 
-         event_properties text, 
-         event_page_title_format text, 
-         event_single_event_format text, 
-         event_contactperson_email_body text, 
-         event_respondent_email_body text, 
-         event_registration_recorded_ok_html text, 
-         event_registration_pending_email_body text, 
-         event_registration_updated_email_body text, 
-         event_registration_cancelled_email_body text, 
-         event_registration_paid_email_body text, 
-         event_registration_trashed_email_body text, 
-         event_registration_form_format text, 
-         event_cancel_form_format text, 
-         registration_requires_approval bool DEFAULT 0,
-         registration_wp_users_only bool DEFAULT 0,
-         event_image_url text,
-         event_image_id mediumint(9) DEFAULT 0,
-         event_external_ref text, 
-         UNIQUE KEY (event_id),
-         KEY (event_start),
-         KEY (event_end)
-         ) $charset $collate;";
+			event_id mediumint(9) NOT NULL AUTO_INCREMENT,
+			event_status mediumint(9) DEFAULT 1,
+			event_author mediumint(9) DEFAULT 0,
+			event_name text NOT NULL,
+			event_prefix text,
+			event_slug text,
+			event_url text,
+			event_start datetime,
+			event_end datetime,
+			creation_date datetime,
+			modif_date datetime,
+			event_notes longtext,
+			event_rsvp bool DEFAULT 0,
+			event_tasks bool DEFAULT 0,
+			price text,
+			currency text,
+			rsvp_number_days mediumint(5) DEFAULT 0,
+			rsvp_number_hours mediumint(5) DEFAULT 0,
+			event_seats text,
+			event_contactperson_id mediumint(9) DEFAULT 0,
+			location_id mediumint(9) DEFAULT 0,
+			recurrence_id mediumint(9) DEFAULT 0,
+			event_category_ids text,
+			event_attributes text, 
+			event_properties text, 
+			event_page_title_format text, 
+			event_single_event_format text, 
+			event_contactperson_email_body text, 
+			event_respondent_email_body text, 
+			event_registration_recorded_ok_html text, 
+			event_registration_pending_email_body text, 
+			event_registration_updated_email_body text, 
+			event_registration_cancelled_email_body text, 
+			event_registration_paid_email_body text, 
+			event_registration_trashed_email_body text, 
+			event_registration_form_format text, 
+			event_cancel_form_format text, 
+			registration_requires_approval bool DEFAULT 0,
+			registration_wp_users_only bool DEFAULT 0,
+			event_image_url text,
+			event_image_id mediumint(9) DEFAULT 0,
+			event_external_ref text, 
+			UNIQUE KEY (event_id),
+			KEY (event_start),
+			KEY (event_end)
+		) $charset $collate;";
 
 		maybe_create_table( $table_name, $sql );
 		// insert a few events in the new table
 		// get the current timestamp into an array
+		$eme_timezone = eme_get_wptimezone();
 		$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
 		$eme_date_obj->addDays( 7 );
 		$in_one_week = $eme_date_obj->getDate();
@@ -803,7 +787,7 @@ function eme_create_events_table( $charset, $collate, $db_version ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY price text;" );
 		}
 		if ( $db_version < 33 ) {
-			$post_table_name = $eme_db_prefix . 'posts';
+			$post_table_name = $db_prefix . 'posts';
 			$wpdb->query( "UPDATE $table_name SET event_image_id = (select ID from $post_table_name where post_type = 'attachment' AND guid = $table_name.event_image_url);" );
 		}
 		if ( $db_version < 38 ) {
@@ -851,24 +835,24 @@ function eme_create_events_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_recurrence_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . RECURRENCE_TBNAME;
+function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . RECURRENCE_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
-         recurrence_id mediumint(9) NOT NULL AUTO_INCREMENT,
-         recurrence_start_date date NOT NULL,
-         recurrence_end_date date NOT NULL,
-         recurrence_interval tinyint NOT NULL, 
-         recurrence_freq tinytext NOT NULL,
-         recurrence_byday tinytext NOT NULL,
-         recurrence_byweekno tinyint NOT NULL,
-         event_duration mediumint(9) DEFAULT 0,
-         recurrence_specific_days text,
-         holidays_id mediumint(9) DEFAULT 0,
-         UNIQUE KEY (recurrence_id)
-         ) $charset $collate;";
+			recurrence_id mediumint(9) NOT NULL AUTO_INCREMENT,
+			recurrence_start_date date NOT NULL,
+			recurrence_end_date date NOT NULL,
+			recurrence_interval tinyint NOT NULL, 
+			recurrence_freq tinytext NOT NULL,
+			recurrence_byday tinytext NOT NULL,
+			recurrence_byweekno tinyint NOT NULL,
+			event_duration mediumint(9) DEFAULT 0,
+			recurrence_specific_days text,
+			holidays_id mediumint(9) DEFAULT 0,
+			UNIQUE KEY (recurrence_id)
+	 	) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
 		maybe_add_column( $table_name, 'event_duration', "ALTER TABLE $table_name ADD event_duration mediumint(9) DEFAULT 0;" );
@@ -897,9 +881,9 @@ function eme_create_recurrence_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_locations_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . LOCATIONS_TBNAME;
+function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . LOCATIONS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -958,7 +942,7 @@ function eme_create_locations_table( $charset, $collate, $db_version ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY location_name text NOT NULL ;" );
 		}
 		if ( $db_version < 33 ) {
-			$post_table_name = $eme_db_prefix . 'posts';
+			$post_table_name = $db_prefix . 'posts';
 			$wpdb->query( "UPDATE $table_name SET location_image_id = (select ID from $post_table_name where post_type = 'attachment' AND guid = $table_name.location_image_url);" );
 		}
 		if ( $db_version < 110 ) {
@@ -976,9 +960,9 @@ function eme_create_locations_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_bookings_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . BOOKINGS_TBNAME;
+function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . BOOKINGS_TBNAME;
 
 	// column discount: effective calculated discount value
 	// columns discountid , dgroupid: pointer to discount/discout group applied
@@ -1056,12 +1040,12 @@ function eme_create_bookings_table( $charset, $collate, $db_version ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY booking_seats mediumint(9) NOT NULL;" );
 		}
 		if ( $db_version < 47 ) {
-			$people_table_name = $eme_db_prefix . PEOPLE_TBNAME;
+			$people_table_name = $db_prefix . PEOPLE_TBNAME;
 			$wpdb->query( "update $table_name a JOIN $people_table_name b on (a.person_id = b.person_id)  set a.wp_id=b.wp_id;" );
 		}
 		if ( $db_version < 92 ) {
 			maybe_add_column( $table_name, 'payment_id', "ALTER TABLE $table_name ADD payment_id mediumint(9) DEFAULT NULL;" );
-			$payment_table_name = $eme_db_prefix . PAYMENTS_TBNAME;
+			$payment_table_name = $db_prefix . PAYMENTS_TBNAME;
 			$sql                = "SELECT id,booking_ids from $payment_table_name";
 
 			$rows = $wpdb->get_results( $sql, ARRAY_A );
@@ -1106,11 +1090,11 @@ function eme_create_bookings_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_people_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name          = $eme_db_prefix . PEOPLE_TBNAME;
-	$grouptable_name     = $eme_db_prefix . GROUPS_TBNAME;
-	$usergrouptable_name = $eme_db_prefix . USERGROUPS_TBNAME;
+function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name          = $db_prefix . PEOPLE_TBNAME;
+	$grouptable_name     = $db_prefix . GROUPS_TBNAME;
+	$usergrouptable_name = $db_prefix . USERGROUPS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1234,9 +1218,9 @@ function eme_create_people_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_categories_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . CATEGORIES_TBNAME;
+function eme_create_categories_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . CATEGORIES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1267,9 +1251,9 @@ function eme_create_categories_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_holidays_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . HOLIDAYS_TBNAME;
+function eme_create_holidays_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . HOLIDAYS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1285,9 +1269,9 @@ function eme_create_holidays_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_templates_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . TEMPLATES_TBNAME;
+function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . TEMPLATES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1321,9 +1305,9 @@ function eme_create_templates_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_formfields_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . FORMFIELDS_TBNAME;
+function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . FORMFIELDS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1379,13 +1363,13 @@ function eme_create_formfields_table( $charset, $collate, $db_version ) {
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='date' WHERE old_type=8;" );
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='date_js' WHERE old_type=9;" );
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='dropdown_multi' WHERE old_type=10;" );
-			eme_drop_table( $eme_db_prefix . FIELDTYPES_TBNAME );
+			eme_drop_table( $db_prefix . FIELDTYPES_TBNAME );
 		}
 		// the next one is to fix older issues
 		if ( $db_version < 193 ) {
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='radiobox_vertical' WHERE old_type=5;" );
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='checkbox_vertical' WHERE old_type=7;" );
-			eme_drop_table( $eme_db_prefix . FIELDTYPES_TBNAME );
+			eme_drop_table( $db_prefix . FIELDTYPES_TBNAME );
 		}
 		if ( $db_version < 214 ) {
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_purpose='generic' WHERE field_purpose IS NULL;" );
@@ -1396,9 +1380,9 @@ function eme_create_formfields_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_answers_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . ANSWERS_TBNAME;
+function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . ANSWERS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1425,7 +1409,7 @@ function eme_create_answers_table( $charset, $collate, $db_version ) {
 		}
 		if ( $db_version < 112 ) {
 			maybe_add_column( $table_name, 'field_id', "ALTER TABLE $table_name ADD field_id INT(11) DEFAULT 0;" );
-			$formfield_table_name = $eme_db_prefix . FORMFIELDS_TBNAME;
+			$formfield_table_name = $db_prefix . FORMFIELDS_TBNAME;
 			$res                  = $wpdb->query( "UPDATE $table_name SET field_id = (select field_id from $formfield_table_name where field_name = $table_name.field_name LIMIT 1);" );
 			if ( $res !== false ) {
 				eme_maybe_drop_column( $table_name, 'field_name' );
@@ -1465,17 +1449,17 @@ function eme_create_answers_table( $charset, $collate, $db_version ) {
 			eme_maybe_drop_column( $table_name, 'member_id' );
 			$wpdb->query( "UPDATE $table_name SET related_id=booking_id,type='booking' WHERE booking_id>0" );
 			eme_maybe_drop_column( $table_name, 'booking_id' );
-			$cf_table_name = $eme_db_prefix . MEMBERSHIPS_CF_TBNAME;
+			$cf_table_name = $db_prefix . MEMBERSHIPS_CF_TBNAME;
 			if ( eme_table_exists( $cf_table_name ) ) {
 					$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`membership_id`,`answer`,'membership' FROM $cf_table_name" );
 					eme_drop_table( $cf_table_name );
 			}
-			$cf_table_name = $eme_db_prefix . EVENTS_CF_TBNAME;
+			$cf_table_name = $db_prefix . EVENTS_CF_TBNAME;
 			if ( eme_table_exists( $cf_table_name ) ) {
 				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`event_id`,`answer`,'event' FROM $cf_table_name" );
 				eme_drop_table( $cf_table_name );
 			}
-			$cf_table_name = $eme_db_prefix . LOCATIONS_CF_TBNAME;
+			$cf_table_name = $db_prefix . LOCATIONS_CF_TBNAME;
 			if ( eme_table_exists( $cf_table_name ) ) {
 					$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`location_id`,`answer`,'location' FROM $cf_table_name" );
 					eme_drop_table( $cf_table_name );
@@ -1484,9 +1468,9 @@ function eme_create_answers_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_payments_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . PAYMENTS_TBNAME;
+function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . PAYMENTS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1541,9 +1525,9 @@ function eme_create_payments_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_discounts_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . DISCOUNTS_TBNAME;
+function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . DISCOUNTS_TBNAME;
 
 	// coupon types: 1=fixed,2=percentage,3=code (filter),4=fixed_per_seat
 	// column coupon: text to be entered by booker
@@ -1585,9 +1569,9 @@ function eme_create_discounts_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_discountgroups_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
+function eme_create_discountgroups_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . DISCOUNTGROUPS_TBNAME;
 
 	// column maxdiscounts: max number of discounts in a group that can
 	// be used, 0 for no max (this to avoid hackers from adding discount fields
@@ -1609,9 +1593,9 @@ function eme_create_discountgroups_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_mqueue_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . MQUEUE_TBNAME;
+function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . MQUEUE_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1676,7 +1660,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version ) {
 		}
 	}
 
-	$table_name = $eme_db_prefix . MAILINGS_TBNAME;
+	$table_name = $db_prefix . MAILINGS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
          id int(11) NOT NULL auto_increment,
@@ -1741,9 +1725,9 @@ function eme_create_mqueue_table( $charset, $collate, $db_version ) {
 		}
 	}
 }
-function eme_create_members_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . MEMBERS_TBNAME;
+function eme_create_members_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . MEMBERS_TBNAME;
 
 	// state contains the defined/calculated state
 	// autostate indicates if the state needs to be calculated automatically
@@ -1827,7 +1811,7 @@ function eme_create_members_table( $charset, $collate, $db_version ) {
 	// type: fixed/rolling
 	// duration_count+duration_period form a logical date format: 1 days, 2 days, 3 weeks, etc ...
 	// start date: only used for type fixed
-	$table_name = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	$table_name = $db_prefix . MEMBERSHIPS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
          membership_id int(11) NOT NULL auto_increment,
@@ -1847,9 +1831,9 @@ function eme_create_members_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_countries_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . COUNTRIES_TBNAME;
+function eme_create_countries_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . COUNTRIES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1874,9 +1858,9 @@ function eme_create_countries_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_states_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . STATES_TBNAME;
+function eme_create_states_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . STATES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1893,9 +1877,9 @@ function eme_create_states_table( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_task_tables( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . TASKS_TBNAME;
+function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . TASKS_TBNAME;
 
 	// the sequence of the tasks is decided per event and stored as task_seq
 	// when updating a task, we will use the combo event_id and task_nbr, so we can use that for
@@ -1920,7 +1904,7 @@ function eme_create_task_tables( $charset, $collate, $db_version ) {
 		maybe_add_column( $table_name, 'task_nbr', "ALTER TABLE $table_name ADD task_nbr smallint DEFAULT 1;" );
 	}
 
-	$table_name = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	$table_name = $db_prefix . TASK_SIGNUPS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
          id int(11) NOT NULL auto_increment,
@@ -1935,9 +1919,9 @@ function eme_create_task_tables( $charset, $collate, $db_version ) {
 	}
 }
 
-function eme_create_attendances_table( $charset, $collate, $db_version ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . ATTENDANCES_TBNAME;
+function eme_create_attendances_table( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . ATTENDANCES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1956,7 +1940,6 @@ function eme_create_attendances_table( $charset, $collate, $db_version ) {
 }
 
 function eme_create_events_page() {
-	global $wpdb,$eme_db_prefix;
 	$postarr = [
 		'post_title'     => wp_strip_all_tags( __( 'Events', 'events-made-easy' ) ),
 		'post_content'   => __( "This page is used by Events Made Easy. Don't change it, don't use it in your menu's, don't delete it. Just make sure the EME setting called 'Events page' points to this page. EME uses this page to render any and all events, locations, bookings, maps, ... anything. If you do want to delete this page, create a new one EME can use and update the EME setting 'Events page' accordingly.", 'events-made-easy' ),

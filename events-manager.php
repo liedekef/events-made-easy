@@ -144,29 +144,7 @@ define( 'EME_LANGUAGE_REGEX', '[a-z]{2,3}' );
 $upload_info = wp_upload_dir();
 define( 'EME_UPLOAD_DIR', $upload_info['basedir'] . '/events-made-easy' );
 define( 'EME_UPLOAD_URL', $upload_info['baseurl'] . '/events-made-easy' );
-if ( ! is_dir( EME_UPLOAD_DIR ) ) {
-	wp_mkdir_p( EME_UPLOAD_DIR );
-}
-if ( ! is_dir( EME_UPLOAD_DIR . '/bookings' ) ) {
-	wp_mkdir_p( EME_UPLOAD_DIR . '/bookings' );
-}
-if ( ! is_file( EME_UPLOAD_DIR . '/bookings/index.html' ) ) {
-	touch( EME_UPLOAD_DIR . '/bookings/index.html' );
-}
-if ( ! is_dir( EME_UPLOAD_DIR . '/people' ) ) {
-	wp_mkdir_p( EME_UPLOAD_DIR . '/people' );
-}
-if ( ! is_file( EME_UPLOAD_DIR . '/people/index.html' ) ) {
-	touch( EME_UPLOAD_DIR . '/people/index.html' );
-}
-if ( ! is_dir( EME_UPLOAD_DIR . '/members' ) ) {
-	wp_mkdir_p( EME_UPLOAD_DIR . '/members' );
-}
-if ( ! is_file( EME_UPLOAD_DIR . '/members/index.html' ) ) {
-	touch( EME_UPLOAD_DIR . '/members/index.html' );
-}
 
-add_filter( 'plugin_row_meta', 'eme_plugin_row_meta', 10, 2 );
 function eme_plugin_row_meta( $links, $file ) {
 
 	if ( strpos( $file, 'events-manager.php' ) !== false ) {
@@ -179,12 +157,13 @@ function eme_plugin_row_meta( $links, $file ) {
 	}
 	return $links;
 }
+add_filter( 'plugin_row_meta', 'eme_plugin_row_meta', 10, 2 );
 
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'eme_add_action_links' );
 function eme_add_action_links( $links ) {
 	$mylinks = [ '<a href="admin.php?page=eme-options">Settings</a>' ];
 	return array_merge( $links, $mylinks );
 }
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'eme_add_action_links' );
 
 // To enable activation through the activate function
 register_activation_hook( __FILE__, 'eme_install' );
@@ -294,9 +273,6 @@ function eme_insertMyRewriteQueryVars( $vars ) {
 add_filter( 'query_vars', 'eme_insertMyRewriteQueryVars' );
 
 // INCLUDES
-// We let the includes happen at the end, so all init-code is done
-// (like eg. the load_textdomain). Some includes do stuff based on _GET
-// so they need the correct info before doing stuff
 require_once 'eme-options.php';
 require_once 'eme-functions.php';
 require_once 'eme-filters.php';
@@ -327,9 +303,10 @@ require_once 'eme-countries.php';
 require_once 'eme-gdpr.php';
 require_once 'eme-tasks.php';
 require_once 'eme-translate.php';
-
 require_once 'class-expressivedate.php';
-require 'plugin-update-checker/plugin-update-checker.php';
+
+// include our custom update checker code
+require_once 'plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
 
 $myUpdateChecker = PucFactory::buildUpdateChecker(
@@ -375,6 +352,29 @@ function _eme_install() {
 	}
 	if ( $db_version != EME_DB_VERSION ) {
 		eme_update_options( $db_version );
+	}
+
+	// some dir
+	if ( ! is_dir( EME_UPLOAD_DIR ) ) {
+		wp_mkdir_p( EME_UPLOAD_DIR );
+	}
+	if ( ! is_dir( EME_UPLOAD_DIR . '/bookings' ) ) {
+		wp_mkdir_p( EME_UPLOAD_DIR . '/bookings' );
+	}
+	if ( ! is_file( EME_UPLOAD_DIR . '/bookings/index.html' ) ) {
+		touch( EME_UPLOAD_DIR . '/bookings/index.html' );
+	}
+	if ( ! is_dir( EME_UPLOAD_DIR . '/people' ) ) {
+		wp_mkdir_p( EME_UPLOAD_DIR . '/people' );
+	}
+	if ( ! is_file( EME_UPLOAD_DIR . '/people/index.html' ) ) {
+		touch( EME_UPLOAD_DIR . '/people/index.html' );
+	}
+	if ( ! is_dir( EME_UPLOAD_DIR . '/members' ) ) {
+		wp_mkdir_p( EME_UPLOAD_DIR . '/members' );
+	}
+	if ( ! is_file( EME_UPLOAD_DIR . '/members/index.html' ) ) {
+		touch( EME_UPLOAD_DIR . '/members/index.html' );
 	}
 
 	// Create events page if necessary

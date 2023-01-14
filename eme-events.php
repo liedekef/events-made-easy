@@ -9010,6 +9010,16 @@ function eme_sanitize_event( $event ) {
 
 function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_difference = 0 ) {
 	global $wpdb,$eme_db_prefix, $eme_timezone;
+
+	// During plugin activation, the globals $eme_db_prefix and $eme_timezone are not available
+	// but we call this function to insert 3 examples
+	// so to avoid issues, lets set them
+	if ( empty ( $eme_db_prefix ) ) {
+		$eme_db_prefix  = eme_get_db_prefix();
+	}
+	if ( empty ( $eme_timezone ) ) {
+	        $eme_timezone = wp_timezone_string();
+	}
 	$table_name = $eme_db_prefix . EVENTS_TBNAME;
 
 	if ( empty( $line['event_author'] ) ) {

@@ -1364,7 +1364,7 @@ function eme_printable_booking_report( $event_id ) {
 			</td>
 			<td class='eme_print_total_price'><?php echo eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'] ); ?></td>
 			<td class='eme_print_unique_nbr'><?php echo eme_unique_nbr_formatted( $booking['unique_nbr'] ); ?></td>
-			<td class='eme_print_comment'><?php eme_esc_html( $booking['booking_comment'] ); ?></td> 
+			<td class='eme_print_comment'><?php echo eme_esc_html( $booking['booking_comment'] ); ?></td> 
 					<?php
 					$answers = eme_get_nodyndata_booking_answers( $booking['booking_id'] );
 					foreach ( $answer_fieldids as $field_id ) {

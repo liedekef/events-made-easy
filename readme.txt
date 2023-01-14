@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.3.38 (2023//) =
 * Captcha also for gdpr-related forms (request/change personal info)
 * Fix a warning during plugin activation
+* Fix showing event title and booking comment in booking printable report
 
 = 2.3.37 (2023/01/11) =
 * Fix hCaptcha and Cloudflare Turnstile captcha verification

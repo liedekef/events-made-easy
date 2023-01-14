@@ -308,15 +308,15 @@ require_once 'class-expressivedate.php';
 // include our custom update checker code
 require_once 'plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
-
-$myUpdateChecker = PucFactory::buildUpdateChecker(
-    'https://github.com/liedekef/events-made-easy/',
-    __FILE__,
-    'events-made-easy'
-);
-
-//Set the branch that contains the stable release.
-$myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	$myUpdateChecker = PucFactory::buildUpdateChecker(
+		'https://github.com/liedekef/events-made-easy/',
+		__FILE__,
+		'events-made-easy'
+	);
+	// we'll use a release asset
+	$myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
+}
 
 // now some extra global vars
 $eme_plugin_url = eme_plugin_url();
@@ -697,7 +697,10 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		$event['event_end']   = "$in_one_week 18:00:00";
 		$event['location_id'] = 1;
 		$event                = eme_sanitize_event( $event );
-		eme_db_insert_event( $event );
+		// the fourth param is 1 to indicate we're in plugin install mode
+		// this will cause eme_db_insert_event to check the prefix itself
+		// since during install plugin globals are not available ...
+		eme_db_insert_event( $event, 0, 0, 1 );
 
 		$event                = eme_new_event();
 		$event['event_name']  = 'Traditional music session';
@@ -705,7 +708,10 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		$event['event_end']   = "$in_four_weeks 22:00:00";
 		$event['location_id'] = 2;
 		$event                = eme_sanitize_event( $event );
-		eme_db_insert_event( $event );
+		// the fourth param is 1 to indicate we're in plugin install mode
+		// this will cause eme_db_insert_event to check the prefix itself
+		// since during install plugin globals are not available ...
+		eme_db_insert_event( $event, 0, 0, 1 );
 
 		$event                = eme_new_event();
 		$event['event_name']  = '6 Nations, Italy VS Ireland';
@@ -713,7 +719,10 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		$event['event_end']   = "$in_one_year 23:59:59";
 		$event['location_id'] = 3;
 		$event                = eme_sanitize_event( $event );
-		eme_db_insert_event( $event );
+		// the fourth param is 1 to indicate we're in plugin install mode
+		// this will cause eme_db_insert_event to check the prefix itself
+		// since during install plugin globals are not available ...
+		eme_db_insert_event( $event, 0, 0, 1 );
 
 	} else {
 		// eventual maybe_add_column() for later versions

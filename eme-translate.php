@@ -115,33 +115,37 @@ function eme_trans_esc_html( $value, $lang = '' ) {
 }
 
 function eme_translate( $value, $lang = '' ) {
+	$translated = $value;
 	if ( function_exists( 'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && function_exists( 'qtrans_use' ) ) {
 		if ( empty( $lang ) ) {
-			return qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
+			$translated = qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
 		} else {
-			return qtrans_use( $lang, $value );
+			$translated = qtrans_use( $lang, $value );
 		}
 	} elseif ( function_exists( 'ppqtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && function_exists( 'ppqtrans_use' ) ) {
 		if ( empty( $lang ) ) {
-			return ppqtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
+			$translated = ppqtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
 		} else {
-			return ppqtrans_use( $lang, $value );
+			$translated = ppqtrans_use( $lang, $value );
 		}
 	} elseif ( function_exists( 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && function_exists( 'qtranxf_use' ) ) {
 		if ( empty( $lang ) ) {
-			return qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
+			$translated = qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $value );
 		} else {
-			return qtranxf_use( $lang, $value );
+			$translated = qtranxf_use( $lang, $value );
 		}
 	} elseif ( function_exists( 'pll_translate_string' ) && function_exists( 'pll__' ) ) {
 		// pll language notation is different from what qtrans (and eme) support, so lets also translate the eme language tags
 		$value = eme_translate_string( $value, $lang );
 		if ( empty( $lang ) ) {
-			return pll__( $value );
+			$translated = pll__( $value );
 		} else {
-			return pll_translate_string( $value, $lang );
+			$translated = pll_translate_string( $value, $lang );
 		}
-	} else {
+	}
+	if ( $translated != $value ) {
+		return $translated;
+	} else { 
 		return eme_translate_string( $value, $lang );
 	}
 }

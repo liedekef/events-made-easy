@@ -281,8 +281,8 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 }
 
 function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions = [] ) {
-	global $wpdb,$eme_db_prefix;
-	$mailing_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$mailing_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$now           = current_time( 'mysql', false );
 	$mailing       = [
 		'name'           => mb_substr( $mailing_name, 0, 255 ),
@@ -306,8 +306,8 @@ function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromema
 }
 
 function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions ) {
-	global $wpdb,$eme_db_prefix;
-	$mailing_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$mailing_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$now           = current_time( 'mysql', false );
 	$mailing       = [
 		'name'           => mb_substr( $mailing_name, 0, 255 ),
@@ -335,8 +335,8 @@ function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiverem
 }
 
 function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts = [], $send_immediately = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$mqueue_table = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$mqueue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 
 	if ( eme_is_empty_string( $subject ) || eme_is_empty_string( $body ) ) {
 		// no mail to be sent: fake it
@@ -393,8 +393,8 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 }
 
 function eme_mark_mail_ignored( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$mqueue_table            = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$mqueue_table            = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$where                   = [];
 	$fields                  = [];
 	$where['id']             = intval( $id );
@@ -408,8 +408,8 @@ function eme_mark_mail_ignored( $id ) {
 }
 
 function eme_mark_mail_sent( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$mqueue_table            = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$mqueue_table            = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$where                   = [];
 	$fields                  = [];
 	$where['id']             = intval( $id );
@@ -423,8 +423,8 @@ function eme_mark_mail_sent( $id ) {
 }
 
 function eme_mark_mail_fail( $id, $error_msg = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$mqueue_table            = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$mqueue_table            = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$where                   = [];
 	$fields                  = [];
 	$where['id']             = intval( $id );
@@ -439,24 +439,24 @@ function eme_mark_mail_fail( $id, $error_msg = '' ) {
 }
 
 function eme_remove_all_queued() {
-	global $wpdb,$eme_db_prefix;
-	$mqueue_table = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$mqueue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql          = "DELETE FROM $mqueue_table WHERE status=0";
 	return $wpdb->query( $sql );
 }
 
 function eme_get_queued_count() {
-	global $wpdb,$eme_db_prefix;
-	$mqueue_table = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$mqueue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	// the queued count is to know how much mails are left unsent in the queue
 	$sql = "SELECT COUNT(*) FROM $mqueue_table WHERE status=0";
 		return $wpdb->get_var( $sql );
 }
 
 function eme_get_queued( $now ) {
-	global $wpdb,$eme_db_prefix;
-	$mqueue_table   = $eme_db_prefix . MQUEUE_TBNAME;
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$mqueue_table   = EME_DB_PREFIX . MQUEUE_TBNAME;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	// we take only the queued mails with status=0 where either the planning date for the mailing has passed (so we know those can be send) or that are not part of a mailing
 	$sql                  = "SELECT mqueue.* FROM $mqueue_table AS mqueue LEFT JOIN $mailings_table AS mailings ON mqueue.mailing_id=mailings.id WHERE mqueue.status=0 AND (mqueue.mailing_id=0 OR (mqueue.mailing_id>0 and mailings.planned_on<'$now'))";
 	$eme_cron_queue_count = intval( get_option( 'eme_cron_queue_count' ) );
@@ -467,7 +467,7 @@ function eme_get_queued( $now ) {
 }
 
 function eme_send_queued() {
-	global $eme_timezone;
+	
 
 	// we'll build in a safety precaution to make sure to never surpass the schedule duration
 	$start_time   = time();
@@ -493,7 +493,7 @@ function eme_send_queued() {
 	// we use $now as an argument for eme_get_passed_planned_mailings and eme_get_queued
 	// Reason: since eme_check_mailing_receivers can take some time, we want to make sure that
 	// both eme_get_passed_planned_mailings and eme_get_queued are talking about the same 'past'
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$now              = $eme_date_obj_now->getDateTime();
 	// for all planned mailings in the passed: re-evaluate the receivers
 	// since we mark the mailing as ongoing afterwards, this re-evalution only happens once
@@ -565,37 +565,37 @@ function eme_send_queued() {
 }
 
 function eme_get_passed_planned_mailings( $now ) {
-	global $wpdb,$eme_db_prefix;
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = "SELECT id FROM $mailings_table WHERE status='planned' AND planned_on<'$now'";
 		return $wpdb->get_col( $sql );
 }
 
 function eme_get_ongoing_mailings() {
-	global $wpdb,$eme_db_prefix;
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = "SELECT id FROM $mailings_table WHERE status='ongoing'";
 		return $wpdb->get_col( $sql );
 }
 
 function eme_mark_mailing_planned( $mailing_id ) {
-	global $wpdb,$eme_db_prefix;
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='planned' where id=%d", $mailing_id );
 		$wpdb->query( $sql );
 }
 
 function eme_mark_mailing_ongoing( $mailing_id ) {
-	global $wpdb,$eme_db_prefix;
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='ongoing' where id=%d", $mailing_id );
 		$wpdb->query( $sql );
 }
 
 function eme_mark_mailing_completed( $mailing_id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	$stats          = eme_get_mailing_stats( $mailing_id );
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='completed', stats=%s where id=%d", eme_serialize( $stats ), $mailing_id );
 		$wpdb->query( $sql );
 	if ( $stats['failed'] > 0 ) {
@@ -607,33 +607,33 @@ function eme_mark_mailing_completed( $mailing_id ) {
 }
 
 function eme_archive_mailing( $mailing_id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	$mailing = eme_get_mailing( $mailing_id );
 	if ( $mailing['status'] == 'planned' || $mailing['status'] == 'ongoing' ) {
 		return;
 	}
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='archived', stats=%s WHERE id=%d", $stats, $mailing_id );
 		$wpdb->query( $sql );
-	$queue_table = $eme_db_prefix . MQUEUE_TBNAME;
+	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = $wpdb->prepare( "DELETE FROM $queue_table where mailing_id=%d", $mailing_id );
 		$wpdb->query( $sql );
 }
 
 // for GDPR CRON
 function eme_archive_old_mailings() {
-	global $wpdb,$eme_db_prefix,$eme_timezone;
+	global $wpdb;
 	$archive_old_mailings_days = get_option( 'eme_gdpr_archive_old_mailings_days' );
 	if ( empty( $archive_old_mailings_days ) ) {
 		return;
 	} else {
 		$archive_old_mailings_days = abs( $archive_old_mailings_days );
 	}
-	$eme_date_obj   = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj   = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$now            = $eme_date_obj->getDateTime();
 	$old_date       = $eme_date_obj->minusDays( $archive_old_mailings_days )->getDateTime();
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = "SELECT id from $mailings_table WHERE creation_date < '$old_date' AND (status='completed' OR status='cancelled')";
 	$mailing_ids    = $wpdb->get_col( $sql );
 	foreach ( $mailing_ids as $mailing_id ) {
@@ -641,59 +641,59 @@ function eme_archive_old_mailings() {
 	}
 
 	// now remove old mails not belonging to a specific mailing
-	$queue_table = $eme_db_prefix . MQUEUE_TBNAME;
+	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = "DELETE FROM $queue_table where mailing_id=0 AND creation_date < '$old_date'";
 		$wpdb->query( $sql );
 }
 
 function eme_cancel_mail( $mail_id ) {
-	global $wpdb,$eme_db_prefix;
-	$queue_table = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = $wpdb->prepare( "UPDATE $queue_table SET status=3 WHERE status=0 AND id=%d", $mail_id );
 		$wpdb->query( $sql );
 }
 
 function eme_cancel_mailing( $mailing_id ) {
-	global $wpdb,$eme_db_prefix;
-	$queue_table = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = $wpdb->prepare( "UPDATE $queue_table SET status=3 WHERE status=0 AND mailing_id=%d", $mailing_id );
 		$wpdb->query( $sql );
 	$stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='cancelled', stats=%s WHERE id=%d", $stats, $mailing_id );
 		$wpdb->query( $sql );
 }
 
 function eme_delete_mailing_mails( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$queue_table = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = $wpdb->prepare( "DELETE FROM $queue_table where mailing_id=%d", $id );
 		$wpdb->query( $sql );
 }
 function eme_delete_mailing( $id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	eme_delete_mailing_mails( $id );
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "DELETE FROM $mailings_table where id=%d", $id );
 		$wpdb->query( $sql );
 }
 
 function eme_get_mail( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * from $table WHERE id=%d", $id );
 		return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_mailing( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT * from $mailings_table WHERE id=%d", $id );
 		return $wpdb->get_row( $sql, ARRAY_A );
 }
 function eme_get_mailings( $archive = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	if ( $archive ) {
 		$where = " WHERE status='archived' ";
 	} else {
@@ -725,15 +725,15 @@ function eme_mail_localizedstates() {
 }
 
 function eme_count_mails_to_sent( $mailing_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE status=0 AND mailing_id=%d", $mailing_id );
 		return $wpdb->get_var( $sql );
 }
 
 function eme_get_mailing_stats( $mailing_id = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table     = $eme_db_prefix . MQUEUE_TBNAME;
+	global $wpdb;
+	$table     = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql       = "SELECT COUNT(*) AS count,status FROM $table WHERE mailing_id=$mailing_id GROUP BY mailing_id,status";
 		$lines = $wpdb->get_results( $sql, ARRAY_A );
 	$res       = [
@@ -753,9 +753,9 @@ function eme_get_mailing_stats( $mailing_id = 0 ) {
 }
 
 function eme_mail_track( $random_id ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
-	$table          = $eme_db_prefix . MQUEUE_TBNAME;
-	$mailings_table = $eme_db_prefix . MAILINGS_TBNAME;
+	global $wpdb;
+	$table          = EME_DB_PREFIX . MQUEUE_TBNAME;
+	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 
 	if ( ! empty( $random_id ) && get_option( 'eme_mail_tracking' ) ) {
 		// we'll randomly sleep between 0 and 20 times 0.1 seconds (100000 microseconds)
@@ -766,11 +766,11 @@ function eme_mail_track( $random_id ) {
 		$queued_mail = $wpdb->get_row( $sql, ARRAY_A );
 		if ( $queued_mail ) {
 				// update the queue table when the mail was read for the first time
-			$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+			$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 			// ignore if the same track arrives within the firt 2 minutes
 			$ignore = 0;
 			if ( ! eme_is_empty_datetime( $queued_mail['last_read_on'] ) ) {
-				$eme_date_obj_lastread = new ExpressiveDate( $queued_mail['last_read_on'], $eme_timezone );
+				$eme_date_obj_lastread = new ExpressiveDate( $queued_mail['last_read_on'], EME_TIMEZONE );
 				if ( $eme_date_obj_lastread->getDifferenceInMinutes( $eme_date_obj_now ) < 2 ) {
 					$ignore = 1;
 				}
@@ -812,7 +812,7 @@ function eme_mail_track( $random_id ) {
 }
 
 function eme_check_mailing_receivers( $mailing_id ) {
-	global $eme_timezone;
+	
 	if ( ! $mailing_id ) {
 		return;
 	}
@@ -821,8 +821,8 @@ function eme_check_mailing_receivers( $mailing_id ) {
 		return;
 	}
 	// don't update the receivers if the mailing was created less than 5 minutes ago
-	$eme_date_obj_now     = new ExpressiveDate( 'now', $eme_timezone );
-	$eme_date_obj_created = new ExpressiveDate( $mailing['creation_date'], $eme_timezone );
+	$eme_date_obj_now     = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj_created = new ExpressiveDate( $mailing['creation_date'], EME_TIMEZONE );
 	if ( $eme_date_obj_created->getDifferenceInMinutes( $eme_date_obj_now ) <= 5 ) {
 		return;
 	}
@@ -1118,7 +1118,7 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 
 add_action( 'wp_ajax_eme_mailingreport_list', 'eme_mailingreport_list' );
 function eme_mailingreport_list() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
@@ -1129,7 +1129,7 @@ function eme_mailingreport_list() {
 			wp_die();
 	}
 
-	$table = $eme_db_prefix . MQUEUE_TBNAME;
+	$table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	if ( ! isset( $_REQUEST['mailing_id'] ) ) {
 		return;
 	}
@@ -1225,7 +1225,7 @@ function eme_send_mails_ajax_action_previeweventmail() {
 }
 
 function eme_send_mails_ajax_actions( $action ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
 		wp_die();
@@ -1233,10 +1233,10 @@ function eme_send_mails_ajax_actions( $action ) {
 	$event_ids        = isset( $_POST['event_ids'] ) ? wp_parse_id_list($_POST['event_ids']) : 0;
 	$ajaxResult       = [];
 	$conditions       = [];
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 
 	if ( $action == 'searchmail' ) {
-		$table = $eme_db_prefix . MQUEUE_TBNAME;
+		$table = EME_DB_PREFIX . MQUEUE_TBNAME;
 		$where = '';
 		if ( eme_is_empty_string( $_POST['search_text'] ) ) {
 			if ( ! empty( $_POST['search_failed'] ) ) {

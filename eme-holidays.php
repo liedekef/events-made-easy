@@ -13,7 +13,7 @@ function eme_new_holidays() {
 }
 
 function eme_holidays_page() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	if ( ! current_user_can( get_option( 'eme_cap_holidays' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
 		$message = __( 'You have no right to update holidays!', 'events-made-easy' );
@@ -35,7 +35,7 @@ function eme_holidays_page() {
 	}
 
 	// Insert/Update/Delete Record
-	$holidays_table = $eme_db_prefix . HOLIDAYS_TBNAME;
+	$holidays_table = EME_DB_PREFIX . HOLIDAYS_TBNAME;
 	$message        = '';
 	if ( isset( $_POST['eme_admin_action'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -226,14 +226,14 @@ function eme_holidays_edit_layout( $message = '' ) {
 }
 
 function eme_get_holiday_lists() {
-	global $wpdb,$eme_db_prefix;
-	$holidays_table = $eme_db_prefix . HOLIDAYS_TBNAME;
+	global $wpdb;
+	$holidays_table = EME_DB_PREFIX . HOLIDAYS_TBNAME;
 	$sql            = "SELECT id,name FROM $holidays_table";
 	return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 function eme_get_holiday_list( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$holidays_table = $eme_db_prefix . HOLIDAYS_TBNAME;
+	global $wpdb;
+	$holidays_table = EME_DB_PREFIX . HOLIDAYS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT * FROM $holidays_table WHERE id = %d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	return $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
@@ -280,7 +280,7 @@ function eme_get_holidays_array_by_id() {
 
 # return number of days until next event or until the specified event
 function eme_holidays_shortcode( $atts ) {
-	global $eme_timezone;
+	
 	eme_enqueue_frontend();
 	extract(
 	    shortcode_atts(
@@ -300,21 +300,21 @@ function eme_holidays_shortcode( $atts ) {
 
 	$list             = preg_replace( '/\r\n|\n\r/', "\n", $holiday_list['list'] );
 	$days             = explode( "\n", $list );
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	print '<div id="eme_holidays_list">';
 	foreach ( $days as $day_info ) {
 		[$day, $name, $class] = array_pad( explode( ',', $day_info ), 3, '' );
 		if ( empty( $day ) ) {
 			continue;
 		}
-		$eme_date_obj = new ExpressiveDate( $day, $eme_timezone );
+		$eme_date_obj = new ExpressiveDate( $day, EME_TIMEZONE );
 		if ( $scope === 'future' && $eme_date_obj < $eme_date_obj_now ) {
 			continue;
 		}
 		if ( $scope === 'past' && $eme_date_obj > $eme_date_obj_now ) {
 			continue;
 		}
-		print '<span id="eme_holidays_date">' . eme_localized_date( $day, $eme_timezone ) . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		print '<span id="eme_holidays_date">' . eme_localized_date( $day, EME_TIMEZONE ) . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 		print '&nbsp; <span id="eme_holidays_name">' . eme_trans_esc_html( $name ) . '</span><br>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}

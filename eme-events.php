@@ -5,8 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_event() {
-	global $eme_timezone;
-	$eme_date_obj  = new ExpressiveDate( 'now', $eme_timezone );
+	
+	$eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today         = $eme_date_obj->getDate();
 	$this_datetime = $eme_date_obj->getDateTime();
 	$event         = [
@@ -243,7 +243,7 @@ function eme_init_event_props( $props = [] ) {
 }
 
 function eme_events_page() {
-	global $wpdb,$eme_db_prefix, $eme_timezone, $eme_wp_time_format;
+	global $wpdb;
 
 	$press_back       = __( 'Press the back-button in your browser to return to the previous screen and correct your errors', 'events-made-easy' );
 	$extra_conditions = [];
@@ -381,7 +381,7 @@ function eme_events_page() {
 			$event['event_status'] = intval( $_POST['event_status'] );
 		}
 
-		$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 		// we do event_start_date and event_end_date differently
 		if ( isset( $_POST['event_start_date'] ) ) {
 			$event_start_date = eme_kses( $_POST['event_start_date'] );
@@ -391,7 +391,7 @@ function eme_events_page() {
 		$recurrence['event_duration'] = isset( $_POST['event_duration'] ) ? intval( $_POST['event_duration'] ) : 1;
 		if ( $action == 'insert_recurrence' || $action == 'update_recurrence' ) {
 			$duration       = $recurrence['event_duration'] - 1;
-			$end_date_obj   = new ExpressiveDate( $event_start_date, $eme_timezone );
+			$end_date_obj   = new ExpressiveDate( $event_start_date, EME_TIMEZONE );
 			$event_end_date = $end_date_obj->addDays( $duration )->getDate();
 		} elseif ( isset( $_POST['event_end_date'] ) ) {
 			$event_end_date = eme_kses( $_POST['event_end_date'] );
@@ -399,15 +399,15 @@ function eme_events_page() {
 			$event_end_date = $eme_date_obj->endOfDay()->getDate();
 		}
 		if ( ! empty( $_POST['localized_start_time'] ) ) {
-			//$event_start_time = $eme_date_obj->setTimestampFromString(eme_sanitize_request($_POST['event_start_time'])." ".$eme_timezone)->format("H:i:00");
-			$start_date_obj   = ExpressiveDate::createFromFormat( $eme_wp_time_format, eme_sanitize_request( $_POST['localized_start_time'] ), ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+			//$event_start_time = $eme_date_obj->setTimestampFromString(eme_sanitize_request($_POST['event_start_time'])." ".EME_TIMEZONE)->format("H:i:00");
+			$start_date_obj   = ExpressiveDate::createFromFormat( EME_WP_TIME_FORMAT, eme_sanitize_request( $_POST['localized_start_time'] ), ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 			$event_start_time = $start_date_obj->format( 'H:i:00' );
 		} else {
 			$event_start_time = '00:00:00';
 		}
 		if ( ! empty( $_POST['localized_end_time'] ) ) {
-			//$event_end_time = $eme_date_obj->setTimestampFromString(eme_sanitize_request($_POST['event_end_time'])." ".$eme_timezone)->format("H:i:00");
-			$end_date_obj   = ExpressiveDate::createFromFormat( $eme_wp_time_format, eme_sanitize_request( $_POST['localized_end_time'] ), ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+			//$event_end_time = $eme_date_obj->setTimestampFromString(eme_sanitize_request($_POST['event_end_time'])." ".EME_TIMEZONE)->format("H:i:00");
+			$end_date_obj   = ExpressiveDate::createFromFormat( EME_WP_TIME_FORMAT, eme_sanitize_request( $_POST['localized_end_time'] ), ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 			$event_end_time = $end_date_obj->format( 'H:i:00' );
 		} else {
 			$event_end_time = '23:59:59';
@@ -816,8 +816,8 @@ function eme_events_page() {
 
 // array of all pages, bypasses the filter I set up :)
 function eme_get_all_pages() {
-	global $wpdb,$eme_db_prefix;
-	$query = 'SELECT id, post_title FROM ' . $eme_db_prefix . "posts WHERE post_type = 'page' AND post_status='publish'";
+	global $wpdb;
+	$query = 'SELECT id, post_title FROM ' . EME_DB_PREFIX . "posts WHERE post_type = 'page' AND post_status='publish'";
 	$pages = $wpdb->get_results( $query, ARRAY_A );
 	// get_pages() is better, but uses way more memory and it might be filtered by eme_filter_get_pages()
 	//$pages = get_pages();
@@ -832,7 +832,7 @@ function eme_get_all_pages() {
 
 //This is the content of the event page
 function eme_events_page_content() {
-	global $eme_timezone, $eme_plugin_url;
+	
 
 	$page_body = '';
 	if ( ! empty( $_GET['eme_cancel_payment'] ) ) {
@@ -936,10 +936,10 @@ function eme_events_page_content() {
 			return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'No such event', 'events-made-easy' ) . '</div>';
 		}
 		if ( ! empty( $booking['booking_paid'] ) ) {
-			$img    = "<img src='" . esc_url($eme_plugin_url) . "images/good-48.png'>";
+			$img    = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
 			$format = "<div class='eme-message-success eme-attendance-message-success'>$img" . __( 'Payment ok', 'events-made-easy' ) . '</div>';
 		} else {
-			$img    = "<img src='" . esc_url($eme_plugin_url) . "images/error-48.png'>";
+			$img    = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 			$format = "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'Payment not ok', 'events-made-easy' ) . '</div>';
 		}
 		// if not logged in or not enough rights, just show that the payment is ok or not and return
@@ -972,26 +972,26 @@ function eme_events_page_content() {
 			return $format;
 		}
 
-		$eme_date_obj_now   = new ExpressiveDate( 'now', $eme_timezone );
-		$eme_start_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
-		$eme_end_date_obj   = new ExpressiveDate( $event['event_end'], $eme_timezone );
+		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_start_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+		$eme_end_date_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 		$begin_difference   = round( $eme_date_obj_now->getDifferenceInHours( $eme_start_date_obj ) );
 		$end_difference     = round( $eme_end_date_obj->getDifferenceInHours( $eme_date_obj_now ) );
 		if ( $begin_difference > intval( $event['event_properties']['attendance_begin'] ) ) {
-			$img     = "<img src='" . esc_url($eme_plugin_url) . "images/error-48.png'>";
+			$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 			$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'No entry allowed yet', 'events-made-easy' ) . '</div>';
 		} elseif ( $end_difference > intval( $event['event_properties']['attendance_end'] ) ) {
-			$img     = "<img src='" . esc_url($eme_plugin_url) . "images/error-48.png'>";
+			$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 			$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'No entry allowed anymore', 'events-made-easy' ) . '</div>';
 		} else {
 			eme_update_attendance_count( $booking_id );
 			$attendance_count = eme_get_attendance_count( $booking_id );
 			$seats_booked     = $booking['booking_seats'];
 			if ( $attendance_count > $seats_booked ) {
-				$img     = "<img src='" . esc_url($eme_plugin_url) . "images/error-48.png'>";
+				$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 				$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
 			} else {
-				$img     = "<img src='" . esc_url($eme_plugin_url) . "images/good-48.png'>";
+				$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
 				$format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked );
 				$format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), eme_esc_html( $event['event_name'] ) );
 				if ( $event['event_properties']['attendancerecord'] ) {
@@ -1007,15 +1007,15 @@ function eme_events_page_content() {
 
 	} elseif ( get_query_var( 'eme_check_member' ) ) {
 		//if (!current_user_can( get_option('eme_cap_membercheck')) && !current_user_can( get_option('eme_cap_edit_members')) ) {
-		//        $img="<img src='".$eme_plugin_url."images/denied-48.png'>";
+		//        $img="<img src='".EME_PLUGIN_URL."images/denied-48.png'>";
 		//        return "<div class='eme-rsvp-message-error'>$img ".__("Access denied!",'events-made-easy')."</div>";
 		//     }
 		$member_id = intval( $_GET['member_id'] );
 		if ( ! eme_check_member_url() ) {
-			$img    = "<img src='" . esc_url($eme_plugin_url) . "images/error-48.png'>";
+			$img    = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 			$format = "<div class='eme-message-error eme-member-message-error'>$img " . sprintf( __( 'NOK: member %d is either not active or does not exist!', 'events-made-easy' ), $member_id ) . '</div>';
 		} else {
-			$img            = "<img src='" . esc_url($eme_plugin_url) . "images/good-48.png'>";
+			$img            = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
 				$member     = eme_get_member( $member_id );
 				$membership = eme_get_membership( $member['membership_id'] );
 				$format     = "<div class='eme-message-success eme-rsvp-message-success'>$img ";
@@ -1344,8 +1344,8 @@ function eme_events_page_content() {
 }
 
 function eme_events_count_for( $date ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . EVENTS_TBNAME;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
 	$conditions = [];
 	if ( ! eme_is_admin_request() ) {
 		if ( is_user_logged_in() ) {
@@ -1366,7 +1366,7 @@ function eme_events_count_for( $date ) {
 // filter function to call the event page when appropriate
 function eme_filter_events_page( $data ) {
 
-	global $wp_current_filter, $eme_timezone;
+	global $wp_current_filter;
 	// we need to make sure we do this only once. Reason being: other plugins can call the_content as well
 	// Suppose you add a shortcode from another plugin to the detail part of an event and that other plugin
 	// calls apply_filter('the_content'), then this would cause recursion since that call would call our filter again
@@ -1865,7 +1865,7 @@ function eme_add_post_state( $post_states, $post ) {
 add_filter( 'display_post_states', 'eme_add_post_state', 10, 2 );
 
 function eme_replace_generic_placeholders( $format, $target = 'html' ) {
-	global $eme_timezone;
+	
 
 	$email_target = 0;
 	$orig_target  = $target;
@@ -1874,7 +1874,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			$target       = 'html';
 	}
 
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$current_userid   = get_current_user_id();
 	$needle_offset    = 0;
 	preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
@@ -1900,14 +1900,14 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			} else {
 				$date_format = '';
 			}
-			$replacement = eme_localized_date( $eme_date_obj_now->getDateTime(), $eme_timezone, $date_format );
+			$replacement = eme_localized_date( $eme_date_obj_now->getDateTime(), EME_TIMEZONE, $date_format );
 		} elseif ( preg_match( '/#_CURTIME(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
 				$date_format = substr( $matches[1], 1, -1 );
 			} else {
 				$date_format = '';
 			}
-			$replacement = eme_localized_time( $eme_date_obj_now->getDateTime(), $eme_timezone, $date_format );
+			$replacement = eme_localized_time( $eme_date_obj_now->getDateTime(), EME_TIMEZONE, $date_format );
 		} elseif ( preg_match( '/#_DATE\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
 			$date = $matches[1];
 			if ( isset( $matches[2] ) ) {
@@ -1915,7 +1915,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			} else {
 				$date_format = '';
 			}
-			$replacement = eme_localized_date( $date, $eme_timezone, $date_format );
+			$replacement = eme_localized_date( $date, EME_TIMEZONE, $date_format );
 		} elseif ( preg_match( '/#_SINGLE_EVENTPAGE_EVENTID/', $result ) ) {
 			// returns the event id of the single event page currently shown
 			if ( eme_is_single_event_page() ) {
@@ -1927,7 +1927,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			}
 		} elseif ( preg_match( '/#_CALENDAR_DAY/', $result ) ) {
 			$day_key     = get_query_var( 'calendar_day' );
-			$replacement = eme_localized_date( $day_key, $eme_timezone );
+			$replacement = eme_localized_date( $day_key, EME_TIMEZONE );
 			if ( $target == 'html' ) {
 				$replacement = apply_filters( 'eme_general', $replacement );
 			} elseif ( $target == 'rss' ) {
@@ -2166,7 +2166,7 @@ function eme_replace_placeholders( $format, $event, $target = 'html', $lang = ''
 }
 
 function eme_replace_event_placeholders( $format, $event, $target = 'html', $lang = '', $do_shortcode = 1, $recursion_level = 0 ) {
-	global $eme_timezone;
+	
 
 	$email_target = 0;
 	$orig_target  = $target;
@@ -2271,7 +2271,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 	$author           = null;
 	$author_person    = null;
 
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$needle_offset    = 0;
 	preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
@@ -2342,9 +2342,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( preg_match( '/#_STARTDATETIME_8601/', $result ) ) {
-			$replacement = eme_localized_date( $event['event_start'], $eme_timezone, 'c' );
+			$replacement = eme_localized_date( $event['event_start'], EME_TIMEZONE, 'c' );
 		} elseif ( preg_match( '/#_ENDDATETIME_8601/', $result ) ) {
-			$replacement = eme_localized_date( $event['event_end'], $eme_timezone, 'c' );
+			$replacement = eme_localized_date( $event['event_end'], EME_TIMEZONE, 'c' );
 		} elseif ( preg_match( '/#_STARTDATE(\{(.+?)\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)
@@ -2352,7 +2352,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			} else {
 				$date_format = '';
 			}
-			$replacement = eme_localized_date( $event['event_start'], $eme_timezone, $date_format );
+			$replacement = eme_localized_date( $event['event_start'], EME_TIMEZONE, $date_format );
 
 		} elseif ( preg_match( '/#_ENDDATE(\{(.+?)\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -2361,23 +2361,23 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			} else {
 				$date_format = '';
 			}
-			$replacement = eme_localized_date( $event['event_end'], $eme_timezone, $date_format );
+			$replacement = eme_localized_date( $event['event_end'], EME_TIMEZONE, $date_format );
 
 		} elseif ( $event && preg_match( '/#_STARTTIME/', $result ) ) {
-			$replacement = eme_localized_time( $event['event_start'], $eme_timezone );
+			$replacement = eme_localized_time( $event['event_start'], EME_TIMEZONE );
 
 		} elseif ( $event && preg_match( '/#_ENDTIME/', $result ) ) {
-			$replacement = eme_localized_time( $event['event_end'], $eme_timezone );
+			$replacement = eme_localized_time( $event['event_end'], EME_TIMEZONE );
 
 		} elseif ( $event && preg_match( '/#_24HSTARTTIME/', $result ) ) {
-			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . $eme_timezone )->format( 'H:i' );
+			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . EME_TIMEZONE )->format( 'H:i' );
 
 		} elseif ( $event && preg_match( '/#_24HENDTIME$/', $result ) ) {
-			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . $eme_timezone )->format( 'H:i' );
+			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . EME_TIMEZONE )->format( 'H:i' );
 
 		} elseif ( $event && preg_match( '/#_PAST_FUTURE_CLASS/', $result ) ) {
-			$eme_start_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
-			$eme_end_obj   = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$eme_start_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+			$eme_end_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			if ( $eme_start_obj > $eme_date_obj_now ) {
 				$replacement = 'eme-future-event';
 			} elseif ( $eme_start_obj <= $eme_date_obj_now && $eme_end_obj >= $eme_date_obj_now ) {
@@ -2386,19 +2386,19 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = 'eme-past-event';
 			}
 		} elseif ( $event && preg_match( '/#_12HSTARTTIME$/', $result ) ) {
-			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . $eme_timezone )->format( 'h:i A' );
+			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . EME_TIMEZONE )->format( 'h:i A' );
 
 		} elseif ( $event && preg_match( '/#_12HENDTIME$/', $result ) ) {
-			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . $eme_timezone )->format( 'h:i A' );
+			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . EME_TIMEZONE )->format( 'h:i A' );
 
 		} elseif ( $event && preg_match( '/#_12HSTARTTIME_NOLEADINGZERO/', $result ) ) {
-			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . $eme_timezone )->format( 'g:i A' );
+			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_start'] . ' ' . EME_TIMEZONE )->format( 'g:i A' );
 			if ( get_option( 'eme_time_remove_leading_zeros' ) ) {
 				$replacement = str_replace( ':00', '', $replacement );
 				$replacement = str_replace( ':0', ':', $replacement );
 			}
 		} elseif ( $event && preg_match( '/#_12HENDTIME_NOLEADINGZERO/', $result ) ) {
-			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . $eme_timezone )->format( 'g:i A' );
+			$replacement = $eme_date_obj_now->copy()->setTimestampFromString( $event['event_end'] . ' ' . EME_TIMEZONE )->format( 'g:i A' );
 			if ( get_option( 'eme_time_remove_leading_zeros' ) ) {
 				$replacement = str_replace( ':00', '', $replacement );
 				$replacement = str_replace( ':0', ':', $replacement );
@@ -2969,9 +2969,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 
 		} elseif ( $event && preg_match( '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)$/', $result, $matches ) ) {
 			if ( $matches[2] == 'START' ) {
-				$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+				$eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 			} else {
-				$eme_date_obj = new ExpressiveDate( $event['event_end'], $eme_timezone );
+				$eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			}
 			$diff = $eme_date_obj_now->diff( $eme_date_obj )->format( '%r1:%y:%m:%a:%h:%i:%s' );
 			[$pos_neg, $years, $months, $days, $hours, $mins, $secs] = explode( ':', $diff );
@@ -3000,47 +3000,47 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			}
 		} elseif ( $event && preg_match( '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)\{(.+?)\}$/', $result, $matches ) ) {
 			if ( $matches[2] == 'START' ) {
-				$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+				$eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 			} else {
-				$eme_date_obj = new ExpressiveDate( $event['event_end'], $eme_timezone );
+				$eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			}
 			$replacement = $eme_date_obj_now->diff( $eme_date_obj )->format( $matches[3] );
 
 		} elseif ( $event && preg_match( '/#_DATETIMEDIFF_START_END\{(.+?)\}$/', $result, $matches ) ) {
-			$eme_date_obj_start = new ExpressiveDate( $event['event_start'], $eme_timezone );
-			$eme_date_obj_end   = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$eme_date_obj_start = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+			$eme_date_obj_end   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			$replacement        = $eme_date_obj_start->diff( $eme_date_obj_end )->format( $matches[1] );
 
 		} elseif ( $event && preg_match( '/#_DAYS_TILL_START$/', $result ) ) {
-			$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 			$replacement  = $eme_date_obj_now->getDifferenceInDays( $eme_date_obj );
 
 		} elseif ( $event && preg_match( '/#_NIGHTS_TILL_START$/', $result ) ) {
-			$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 			$replacement  = $eme_date_obj_now->getDifferenceInDays( $eme_date_obj->endOfDay() );
 
 		} elseif ( $event && preg_match( '/#_DAYS_FROM_START$/', $result ) ) {
-			$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 			$replacement  = $eme_date_obj->getDifferenceInDays( $eme_date_obj_now );
 
 		} elseif ( $event && preg_match( '/#_DAYS_TILL_END$/', $result ) ) {
-			$eme_date_obj = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			$replacement  = $eme_date_obj_now->getDifferenceInDays( $eme_date_obj );
 
 		} elseif ( $event && preg_match( '/#_NIGHTS_TILL_END$/', $result ) ) {
-			$eme_date_obj = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			$replacement  = $eme_date_obj_now->getDifferenceInDays( $eme_date_obj->endOfDay() );
 
 		} elseif ( $event && preg_match( '/#_HOURS_TILL_START$/', $result ) ) {
-			$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 			$replacement  = round( $eme_date_obj_now->getDifferenceInHours( $eme_date_obj ) );
 
 		} elseif ( $event && preg_match( '/#_HOURS_FROM_START$/', $result ) ) {
-			$eme_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 			$replacement  = round( $eme_date_obj->getDifferenceInHours( $eme_date_obj_now ) );
 
 		} elseif ( $event && preg_match( '/#_HOURS_TILL_END$/', $result ) ) {
-			$eme_date_obj = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			$replacement  = round( $eme_date_obj_now->getDifferenceInHours( $eme_date_obj ) );
 
 		} elseif ( $event && preg_match( '/#_EVENTPRICE$|#_PRICE$/', $result ) ) {
@@ -3289,27 +3289,27 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( preg_match( '/#_EVENTCREATIONDATE\{(.+?)\}$/', $result, $matches ) ) {
-					$replacement = eme_localized_date( $event['creation_date'], $eme_timezone, $matches[1] );
+					$replacement = eme_localized_date( $event['creation_date'], EME_TIMEZONE, $matches[1] );
 		} elseif ( preg_match( '/#_EVENTMODIFDATE\{(.+?)\}/', $result, $matches ) ) {
-			$replacement = eme_localized_date( $event['modif_date'], $eme_timezone, $matches[1] );
+			$replacement = eme_localized_date( $event['modif_date'], EME_TIMEZONE, $matches[1] );
 		} elseif ( preg_match( '/#_EVENTCREATIONDATE$/', $result ) ) {
-			$replacement = eme_localized_date( $event['creation_date'], $eme_timezone );
+			$replacement = eme_localized_date( $event['creation_date'], EME_TIMEZONE );
 		} elseif ( preg_match( '/#_EVENTMODIFDATE$/', $result ) ) {
-			$replacement = eme_localized_date( $event['modif_date'], $eme_timezone );
+			$replacement = eme_localized_date( $event['modif_date'], EME_TIMEZONE );
 		} elseif ( preg_match( '/#_EVENTCREATIONTIME/', $result ) ) {
-			$replacement = eme_localized_time( $event['creation_date'], $eme_timezone );
+			$replacement = eme_localized_time( $event['creation_date'], EME_TIMEZONE );
 		} elseif ( preg_match( '/#_EVENTMODIFTIME/', $result ) ) {
-			$replacement = eme_localized_time( $event['modif_date'], $eme_timezone );
+			$replacement = eme_localized_time( $event['modif_date'], EME_TIMEZONE );
 
 		} elseif ( $event && preg_match( '/#[A-Za-z]$/', $result ) ) {
 			// matches all PHP date placeholders for startdate-time
-			$replacement = eme_localized_date( $event['event_start'], $eme_timezone, ltrim( $result, '#' ) );
+			$replacement = eme_localized_date( $event['event_start'], EME_TIMEZONE, ltrim( $result, '#' ) );
 			if ( get_option( 'eme_time_remove_leading_zeros' ) && $result == '#i' ) {
 				$replacement = ltrim( $replacement, '0' );
 			}
 		} elseif ( $event && preg_match( '/#@[A-Za-z]$/', $result ) ) {
 					// matches all PHP time placeholders for enddate-time
-					$replacement = eme_localized_date( $event['event_end'], $eme_timezone, ltrim( $result, '#@' ) );
+					$replacement = eme_localized_date( $event['event_end'], EME_TIMEZONE, ltrim( $result, '#@' ) );
 			if ( get_option( 'eme_time_remove_leading_zeros' ) && $result == '#@i' ) {
 				$replacement = ltrim( $replacement, '0' );
 			}
@@ -3567,34 +3567,34 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$rsvp_number_hours = intval( $event['event_properties']['rsvp_start_number_hours'] );
 				if ( $rsvp_number_days || $rsvp_number_hours ) {
 					if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
-						$rsvp_date_obj = new ExpressiveDate( $event['event_end'], $eme_timezone );
+						$rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 					} else {
-						$rsvp_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+						$rsvp_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 					}
 					$rsvp_date_obj->minusDays( $rsvp_number_days )->minusHours( $rsvp_number_hours );
-					$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), $eme_timezone );
+					$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE );
 				}
 			}
 		} elseif ( $event && preg_match( '/#_RSVPEND/', $result ) ) {
 					// show the end date+time for which a user can rsvp for an event
 			if ( eme_is_event_rsvp( $event ) ) {
 				if ( $event['event_properties']['rsvp_end_target'] == 'start' ) {
-					$rsvp_date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+					$rsvp_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 				} else {
-					$rsvp_date_obj = new ExpressiveDate( $event['event_end'], $eme_timezone );
+					$rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 				}
 				$rsvp_number_days  = intval( $event['rsvp_number_days'] );
 				$rsvp_number_hours = intval( $event['rsvp_number_hours'] );
 				$rsvp_date_obj->minusDays( $rsvp_number_days )->minusHours( $rsvp_number_hours );
-				$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), $eme_timezone );
+				$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE );
 			}
 		} elseif ( $event && preg_match( '/#_CANCELEND/', $result ) ) {
 					// show the end date+time for which a user can cancel an rsvp for an event
 			if ( eme_is_event_rsvp( $event ) ) {
 				$eme_cancel_rsvp_days = intval( $event['event_properties']['cancel_rsvp_days'] );
-				$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], $eme_timezone );
+				$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 				$cancel_cutofftime->minusDays( $eme_cancel_rsvp_days );
-				$replacement = eme_localized_datetime( $cancel_cutofftime->getDateTime(), $eme_timezone );
+				$replacement = eme_localized_datetime( $cancel_cutofftime->getDateTime(), EME_TIMEZONE );
 			}
 		} elseif ( $event && preg_match( '/#_RSVP_STATUS/', $result ) ) {
 				$replacement = eme_event_rsvp_status( $event );
@@ -3648,8 +3648,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = 0;
 			}
 		} elseif ( $event && preg_match( '/#_IS_ONGOING_EVENT/', $result ) ) {
-			$eme_start_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
-			$eme_end_obj   = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$eme_start_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+			$eme_end_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			if ( $eme_start_obj <= $eme_date_obj_now &&
 			$eme_end_obj >= $eme_date_obj_now ) {
 				$replacement = 1;
@@ -3657,7 +3657,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = 0;
 			}
 		} elseif ( $event && preg_match( '/#_IS_ENDED_EVENT/', $result ) ) {
-			$eme_end_obj = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$eme_end_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			if ( $eme_end_obj < $eme_date_obj_now ) {
 				$replacement = 1;
 			} else {
@@ -3825,7 +3825,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$offset = 3;
 		}
 
-		$replacement = eme_localized_date( $event[ $my_dt ], $eme_timezone, substr( $result, $offset, ( strlen( $result ) - ( $offset + 1 ) ) ) );
+		$replacement = eme_localized_date( $event[ $my_dt ], EME_TIMEZONE, substr( $result, $offset, ( strlen( $result ) - ( $offset + 1 ) ) ) );
 
 		if ( $need_escape ) {
 			$replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
@@ -3964,7 +3964,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
 
 // TEMPLATE TAGS
 function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format = '', $format_header = '', $format_footer = '', $echo = 0, $category = '', $showperiod = '', $long_events = 0, $author = '', $contact_person = '', $paging = 0, $event_ids = '', $location_id = '', $user_registered_only = 0, $show_ongoing = 1, $link_showperiod = 0, $notcategory = '', $show_recurrent_events_once = 0, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $no_events_message = '', $template_id_no_events = 0, $limit_offset = 0 ) {
-	global $post, $eme_timezone;
+	global $post;
 	if ( $limit === '' ) {
 		$limit = get_option( 'eme_event_list_number_items' );
 	}
@@ -4071,7 +4071,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 	}
 
 	if ( $paging == 1 && $limit == 0 ) {
-		$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$scope_offset = 0;
 		$scope_text   = '';
 		if ( isset( $_GET['eme_offset'] ) ) {
@@ -4086,7 +4086,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 			$limit_start = $eme_date_obj->startOfWeek()->format( 'Y-m-d' );
 			$limit_end   = $eme_date_obj->endOfWeek()->format( 'Y-m-d' );
 			$scope       = "$limit_start--$limit_end";
-			$scope_text  = eme_localized_date( $limit_start, $eme_timezone ) . ' -- ' . eme_localized_date( $limit_end, $eme_timezone );
+			$scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE ) . ' -- ' . eme_localized_date( $limit_end, EME_TIMEZONE );
 			$prev_text   = __( 'Previous week', 'events-made-easy' );
 			$next_text   = __( 'Next week', 'events-made-easy' );
 
@@ -4097,7 +4097,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 			$limit_start = $eme_date_obj->startOfMonth()->format( 'Y-m-d' );
 			$limit_end   = $eme_date_obj->endOfMonth()->format( 'Y-m-d' );
 			$scope       = "$limit_start--$limit_end";
-			$scope_text  = eme_localized_date( $limit_start, $eme_timezone, get_option( 'eme_show_period_monthly_dateformat' ) );
+			$scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE, get_option( 'eme_show_period_monthly_dateformat' ) );
 			$prev_text   = __( 'Previous month', 'events-made-easy' );
 			$next_text   = __( 'Next month', 'events-made-easy' );
 
@@ -4107,7 +4107,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 			$limit_start = "$year-01-01";
 			$limit_end   = "$year-12-31";
 			$scope       = "$limit_start--$limit_end";
-			$scope_text  = eme_localized_date( $limit_start, $eme_timezone, get_option( 'eme_show_period_yearly_dateformat' ) );
+			$scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE, get_option( 'eme_show_period_yearly_dateformat' ) );
 			$prev_text   = __( 'Previous year', 'events-made-easy' );
 			$next_text   = __( 'Next year', 'events-made-easy' );
 
@@ -4115,7 +4115,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 			$scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
 			$limit_start = $scope;
 			$limit_end   = $scope;
-			$scope_text  = eme_localized_date( $limit_start, $eme_timezone );
+			$scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE );
 			$prev_text   = __( 'Previous day', 'events-made-easy' );
 			$next_text   = __( 'Next day', 'events-made-easy' );
 
@@ -4124,7 +4124,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 			$scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
 			$limit_start = $scope;
 			$limit_end   = $scope;
-			$scope_text  = eme_localized_date( $limit_start, $eme_timezone );
+			$scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE );
 			$prev_text   = __( 'Previous day', 'events-made-easy' );
 			$next_text   = __( 'Next day', 'events-made-easy' );
 		}
@@ -4290,8 +4290,8 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 			if ( $limit > 0 && $event_counter > $limit ) {
 				break;
 			}
-			$eme_date_obj_tmp = new ExpressiveDate( $event['event_start'], $eme_timezone );
-			$eme_date_obj_end = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$eme_date_obj_tmp = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+			$eme_date_obj_end = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			if ( $eme_date_obj_end < $eme_date_obj_tmp ) {
 				$eme_date_obj_end = $eme_date_obj_tmp->copy();
 			}
@@ -4323,12 +4323,12 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		$curmonth      = '';
 		$curday        = '';
 		foreach ( $eventful_days as $day_key => $day_events ) {
-			$eme_date_obj                      = new ExpressiveDate( $day_key, $eme_timezone );
+			$eme_date_obj                      = new ExpressiveDate( $day_key, EME_TIMEZONE );
 			[$theyear, $themonth, $theday] = explode( '-', $eme_date_obj->getDate() );
 			if ( $showperiod == 'yearly' && $theyear != $curyear ) {
-				$output .= "<li class='eme_period'>" . eme_localized_date( $day_key, $eme_timezone, get_option( 'eme_show_period_yearly_dateformat' ) ) . '</li>';
+				$output .= "<li class='eme_period'>" . eme_localized_date( $day_key, EME_TIMEZONE, get_option( 'eme_show_period_yearly_dateformat' ) ) . '</li>';
 			} elseif ( $showperiod == 'monthly' && "$theyear$themonth" != "$curyear$curmonth" ) {
-				$output .= "<li class='eme_period'>" . eme_localized_date( $day_key, $eme_timezone, get_option( 'eme_show_period_monthly_dateformat' ) ) . '</li>';
+				$output .= "<li class='eme_period'>" . eme_localized_date( $day_key, EME_TIMEZONE, get_option( 'eme_show_period_monthly_dateformat' ) ) . '</li>';
 			} elseif ( $showperiod == 'daily' && "$theyear$themonth$theday" != "$curyear$curmonth$curday" ) {
 				$output .= "<li class='eme_period'>";
 				if ( $link_showperiod ) {
@@ -4342,9 +4342,9 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 					}
 
 					$eme_link = eme_calendar_day_url( $theyear . '-' . $themonth . '-' . $theday );
-					$output  .= "<a href='$eme_link' $class>" . eme_localized_date( $day_key, $eme_timezone ) . '</a>';
+					$output  .= "<a href='$eme_link' $class>" . eme_localized_date( $day_key, EME_TIMEZONE ) . '</a>';
 				} else {
-					$output .= eme_localized_date( $day_key, $eme_timezone );
+					$output .= eme_localized_date( $day_key, EME_TIMEZONE );
 				}
 				$output .= '</li>';
 			}
@@ -4610,9 +4610,9 @@ function eme_are_events_available( $scope = 'future', $order = 'ASC', $location_
 }
 
 function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_id = 0, $only_rsvp = 0 ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
-	$table         = $eme_db_prefix . EVENTS_TBNAME;
-	$eme_date_obj  = new ExpressiveDate( 'now', $eme_timezone );
+	global $wpdb;
+	$table         = EME_DB_PREFIX . EVENTS_TBNAME;
+	$eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$start_of_week = get_option( 'start_of_week' );
 	$eme_date_obj->setWeekStartDay( $start_of_week );
 	$now = $eme_date_obj->getDateTime();
@@ -4652,11 +4652,11 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 
 // main function querying the database event table
 function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '' ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 
-	$events_table    = $eme_db_prefix . EVENTS_TBNAME;
-	$bookings_table  = $eme_db_prefix . BOOKINGS_TBNAME;
-	$locations_table = $eme_db_prefix . LOCATIONS_TBNAME;
+	$events_table    = EME_DB_PREFIX . EVENTS_TBNAME;
+	$bookings_table  = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$locations_table = EME_DB_PREFIX . LOCATIONS_TBNAME;
 
 	if ( strpos( $o_limit, '=' ) ) {
 		// allows the use of arguments
@@ -4725,7 +4725,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		}
 	}
 
-	$eme_date_obj  = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$start_of_week = get_option( 'start_of_week' );
 	$eme_date_obj->setWeekStartDay( $start_of_week );
 	$today         = $eme_date_obj->getDate();
@@ -4900,7 +4900,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 	} elseif ( preg_match( '/^relative\-(\d+)d--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
 		$days      = $matches[1];
 		$limit_end = $matches[2] . ' 23:59:59';
-		$eme_date_obj->setTimestampFromString( $limit_end . ' ' . $eme_timezone );
+		$eme_date_obj->setTimestampFromString( $limit_end . ' ' . EME_TIMEZONE );
 		$limit_start = $eme_date_obj->minusDays( $days )->startOfDay()->getDateTime();
 		if ( $show_ongoing ) {
 			$conditions[] = "((event_start BETWEEN '$limit_start' AND '$limit_end') OR (event_end BETWEEN '$limit_start' AND '$limit_end') OR (event_start <= '$limit_start' AND event_end >= '$limit_end'))";
@@ -4910,7 +4910,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 	} elseif ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--relative\+(\d+)d$/', $scope, $matches ) ) {
 		$limit_start = $matches[1] . ' 00:00:00';
 		$days        = $matches[2];
-		$eme_date_obj->setTimestampFromString( $limit_start . ' ' . $eme_timezone );
+		$eme_date_obj->setTimestampFromString( $limit_start . ' ' . EME_TIMEZONE );
 		$limit_end = $eme_date_obj->addDays( $days )->endOfDay()->getDateTime();
 		if ( $show_ongoing ) {
 			$conditions[] = "((event_start BETWEEN '$limit_start' AND '$limit_end') OR (event_end BETWEEN '$limit_start' AND '$limit_end') OR (event_start <= '$limit_start' AND event_end >= '$limit_end'))";
@@ -5280,7 +5280,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		}
 	} elseif ( $include_customformfields ) {
 		$formfields_searchable = eme_get_formfields( $search_customfieldids );
-		$answers_table         = $eme_db_prefix . ANSWERS_TBNAME;
+		$answers_table         = EME_DB_PREFIX . ANSWERS_TBNAME;
 		foreach ( $formfields_searchable as $formfield ) {
 			$field_id = $formfield['field_id'];
 		}
@@ -5359,9 +5359,9 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 }
 
 function eme_get_eventids_by_author( $author_id, $scope, $event_id ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
-	$events_table     = $eme_db_prefix . EVENTS_TBNAME;
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	global $wpdb;
+	$events_table     = EME_DB_PREFIX . EVENTS_TBNAME;
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$this_datetime    = $eme_date_obj_now->getDateTime();
 	$where_arr        = [];
 
@@ -5384,13 +5384,13 @@ function eme_get_eventids_by_author( $author_id, $scope, $event_id ) {
 }
 
 function eme_get_event_name( $event_id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	if ( ! $event_id ) {
 		return '';
 	}
 
-	$events_table = $eme_db_prefix . EVENTS_TBNAME;
+	$events_table = EME_DB_PREFIX . EVENTS_TBNAME;
 	if ( is_numeric( $event_id ) ) {
 		$sql = $wpdb->prepare( "SELECT event_name from $events_table WHERE event_id = %d", $event_id );
 	} else {
@@ -5400,7 +5400,7 @@ function eme_get_event_name( $event_id ) {
 }
 
 function eme_get_event( $event_id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	if ( is_string( $event_id ) && $event_id == '#_SINGLE_EVENTPAGE_EVENTID' && eme_is_single_event_page() ) {
 		$event_id = eme_sanitize_request( get_query_var( 'event_id' ) );
@@ -5410,7 +5410,7 @@ function eme_get_event( $event_id ) {
 		return false;
 	}
 
-	$events_table = $eme_db_prefix . EVENTS_TBNAME;
+	$events_table = EME_DB_PREFIX . EVENTS_TBNAME;
 	$conditions   = [];
 
 	if ( is_numeric( $event_id ) ) {
@@ -5431,7 +5431,7 @@ function eme_get_event( $event_id ) {
 
 
 function eme_get_event_arr( $event_ids ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	// remove possible empty elements
 	if ( ! empty( $event_ids ) ) {
@@ -5449,7 +5449,7 @@ function eme_get_event_arr( $event_ids ) {
 		return $events;
 	}
 
-	$events_table     = $eme_db_prefix . EVENTS_TBNAME;
+	$events_table     = EME_DB_PREFIX . EVENTS_TBNAME;
 	$conditions       = [];
 	$event_ids_joined = join( ',', $event_ids );
 	$conditions[]     = "event_id IN ($event_ids_joined)";
@@ -5498,8 +5498,8 @@ function eme_get_extra_event_data( $event ) {
 }
 
 function eme_import_csv_events() {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 
 	//validate whether uploaded file is a csv file
 	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
@@ -5690,7 +5690,7 @@ function eme_import_csv_events() {
 }
 
 function eme_events_table( $message = '' ) {
-	global $eme_timezone, $plugin_page, $eme_plugin_url;
+	global $plugin_page;
 
 	if ( empty( $message ) ) {
 			$hidden_style = 'display:none;';
@@ -5740,7 +5740,7 @@ function eme_events_table( $message = '' ) {
 		<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
 		<span class="eme_import_form_img">
 			<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
 		</span>
 		<div id='div_import' style='display:none;'>
 		<form id='event-import' method='post' enctype='multipart/form-data' action='#'>
@@ -5878,7 +5878,7 @@ function eme_events_table( $message = '' ) {
 }
 
 function eme_recurrences_table( $message = '' ) {
-	global $eme_timezone, $plugin_page;
+	global $plugin_page;
 
 	if ( empty( $message ) ) {
 			$hidden_style = 'display:none;';
@@ -5965,7 +5965,7 @@ function eme_recurrences_table( $message = '' ) {
 
 function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 
-	global $plugin_page, $eme_timezone;
+	global $plugin_page;
 	$event_status_array = eme_status_array();
 	$nonce_field        = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( ! isset( $info['feedback'] ) ) {
@@ -6023,8 +6023,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		}
 		if ( ! $recurrence['event_duration'] ) {
 			// old recurrences didn't have this, so we take the event start/end date and calc the difference
-			$event_start_obj              = new ExpressiveDate( $event['event_start'], $eme_timezone );
-			$event_end_obj                = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$event_start_obj              = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+			$event_end_obj                = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			$recurrence['event_duration'] = abs( $event_end_obj->getDifferenceInDays( $event_start_obj ) ) + 1;
 		}
 	} elseif ( $edit_recurrence && $action == 'duplicate_recurrence' && $recurrence_ID > 0 ) {
@@ -6038,8 +6038,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		}
 		if ( ! $recurrence['event_duration'] ) {
 			// old recurrences didn't have this, so we take the event start/end date and calc the difference
-			$event_start_obj              = new ExpressiveDate( $event['event_start'], $eme_timezone );
-			$event_end_obj                = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$event_start_obj              = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+			$event_end_obj                = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			$recurrence['event_duration'] = abs( $event_end_obj->getDifferenceInDays( $event_start_obj ) ) + 1;
 		}
 	} else {
@@ -6065,7 +6065,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	$registration_wp_users_only     = ( $event['registration_wp_users_only'] ) ? "checked='checked'" : '';
 	$registration_requires_approval = ( $event['registration_requires_approval'] ) ? "checked='checked'" : '';
 
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 
 	?>
 	<div class="wrap">
@@ -6833,11 +6833,11 @@ function eme_meta_box_div_event_name( $event, $edit_recurrence = 0 ) {
 }
 
 function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence = 0 ) {
-	global $eme_timezone, $eme_wp_date_format, $eme_wp_time_format, $eme_plugin_url;
+	
 	// check if the user wants AM/PM or 24 hour notation
 	// make sure that escaped characters are filtered out first
-	$start_date_obj         = new ExpressiveDate( $event['event_start'], $eme_timezone );
-	$end_date_obj           = new ExpressiveDate( $event['event_end'], $eme_timezone );
+	$start_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+	$end_date_obj           = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 	$eme_recurrence_checked = '';
 	if ( $edit_recurrence ) {
 		$show_recurrent_form = 1;
@@ -6885,9 +6885,9 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 		<?php
 		echo '<b>' . __( 'Event time', 'events-made-easy' ) . '</b>';
 		?>
-		<input id="localized_start_time" type="text" size="8" name="localized_start_time" value="<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo $start_date_obj->format( $eme_wp_time_format );} ?>" class='eme_formfield_timepicker' >
+		<input id="localized_start_time" type="text" size="8" name="localized_start_time" value="<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo $start_date_obj->format( EME_WP_TIME_FORMAT );} ?>" class='eme_formfield_timepicker' >
 		-
-		<input id="localized_end_time" type="text" size="8" name="localized_end_time" value="<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo $end_date_obj->format( $eme_wp_time_format );} ?>" class='eme_formfield_timepicker' >
+		<input id="localized_end_time" type="text" size="8" name="localized_end_time" value="<?php if ( ! eme_is_empty_datetime( $event['event_end'] ) ) { echo $end_date_obj->format( EME_WP_TIME_FORMAT );} ?>" class='eme_formfield_timepicker' >
 		<p class="eme_smaller">
 		<?php esc_html_e( 'The time of the event beginning and end', 'events-made-easy' ); ?>
 		</p>
@@ -6902,7 +6902,7 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 			<label for="event-recurrence"><?php esc_html_e( 'Check if your event happens more than once.', 'events-made-easy' ); ?></label>
 			<?php
 		} else {
-			echo "<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>";
+			echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
 			esc_html_e( 'Bookings found for this event, so not possible to convert to a recurring event.', 'events-made-easy' );
 		}
 		?>
@@ -7020,7 +7020,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 }
 
 function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	if ( eme_is_empty_string( $event['event_page_title_format'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7039,7 +7039,7 @@ function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_page_title_format_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_page_title_format_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_page_title_format_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_page_title_format', $event['event_page_title_format'], 1, 0 ); ?> 
@@ -7049,7 +7049,7 @@ function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
 }
 
 function eme_meta_box_div_event_single_event_format( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	if ( eme_is_empty_string( $event['event_single_event_format'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7074,7 +7074,7 @@ function eme_meta_box_div_event_single_event_format( $event, $templates_array ) 
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_single_event_format_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_single_event_format_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_single_event_format_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_single_event_format', $event['event_single_event_format'], 1, 0 ); ?> 
@@ -7091,7 +7091,7 @@ function eme_meta_box_div_event_single_event_format( $event, $templates_array ) 
 }
 
 function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_ipn_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7111,7 +7111,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_ipn_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_ipn_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_contactperson_registration_ipn_email_subject" id="eme_prop_contactperson_registration_ipn_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_ipn_email_subject'] ); ?>">
 	<br>
@@ -7133,7 +7133,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo $eme_plugin_url; ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_ipn_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo EME_PLUGIN_URL; ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_ipn_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="eme_prop_contactperson_registration_ipn_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_ipn_email_body', $event['event_properties']['contactperson_registration_ipn_email_body'], $use_html_editor, 0 ); ?> 
@@ -7156,7 +7156,7 @@ function eme_meta_box_div_event_dyndata_allfields( $event, $templates_array ) {
 }
 
 function eme_meta_box_div_event_registration_recorded_ok_html( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	if ( eme_is_empty_string( $event['event_registration_recorded_ok_html'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7179,7 +7179,7 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_recorded_ok_html_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_recorded_ok_html_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_recorded_ok_html_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_recorded_ok_html', $event['event_registration_recorded_ok_html'], 1, 0 ); ?> 
@@ -7189,14 +7189,14 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
 }
 
 function eme_meta_box_div_event_registration_approved_email( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_respondent_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
 		$showhide_style = 'style="width:100%;"';
 	}
-	echo "<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>";
+	echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
 		esc_html_e( 'When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid.', 'events-made-easy' );
 	if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
 		print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
@@ -7216,7 +7216,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_respondent_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_respondent_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_respondent_email_subject" id="eme_prop_event_respondent_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_respondent_email_subject'] ); ?>">
 	<br>
@@ -7238,7 +7238,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_respondent_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_respondent_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_respondent_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_respondent_email_body', $event['event_respondent_email_body'], $use_html_editor, 0 ); ?> 
@@ -7264,7 +7264,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_contactperson_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_contactperson_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_contactperson_email_subject" id="eme_prop_event_contactperson_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_contactperson_email_subject'] ); ?>">
 	<br>
@@ -7286,7 +7286,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_contactperson_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_contactperson_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_contactperson_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_contactperson_email_body', $event['event_contactperson_email_body'], $use_html_editor, 0 ); ?> 
@@ -7322,7 +7322,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 }
 
 function eme_meta_box_div_event_registration_userpending_email( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_userpending_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7348,7 +7348,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_userpending_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_userpending_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_registration_userpending_email_subject" id="eme_prop_event_registration_userpending_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_userpending_email_subject'] ); ?>">
 	<br>
@@ -7370,7 +7370,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_userpending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_userpending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_userpending_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'eme_prop_event_registration_userpending_email_body', $event['event_properties']['event_registration_userpending_email_body'], $use_html_editor, 0 ); ?> 
@@ -7380,7 +7380,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
 }
 
 function eme_meta_box_div_event_registration_pending_email( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7406,7 +7406,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_pending_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_pending_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_registration_pending_email_subject" id="eme_prop_event_registration_pending_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_pending_email_subject'] ); ?>">
 	<br>
@@ -7428,7 +7428,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_pending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_pending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_pending_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_pending_email_body', $event['event_registration_pending_email_body'], $use_html_editor, 0 ); ?> 
@@ -7454,7 +7454,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_pending_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_pending_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_contactperson_registration_pending_email_subject" id="eme_prop_contactperson_registration_pending_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_pending_email_subject'] ); ?>">
 	<br>
@@ -7476,7 +7476,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_pending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_pending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="eme_prop_contactperson_registration_pending_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_pending_email_body', $event['event_properties']['contactperson_registration_pending_email_body'], $use_html_editor, 0 ); ?> 
@@ -7512,7 +7512,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 }
 
 function eme_meta_box_div_event_registration_updated_email( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_updated_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7532,7 +7532,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_updated_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_updated_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_registration_updated_email_subject" id="eme_prop_event_registration_updated_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_updated_email_subject'] ); ?>">
 	<br>
@@ -7554,7 +7554,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_updated_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_updated_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_updated_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_updated_email_body', $event['event_registration_updated_email_body'], $use_html_editor, 0 ); ?> 
@@ -7564,7 +7564,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
 }
 
 function eme_meta_box_div_event_registration_reminder_email( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_reminder_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7584,7 +7584,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_pending_reminder_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_pending_reminder_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_registration_pending_reminder_email_subject" id="eme_prop_event_registration_pending_reminder_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_pending_reminder_email_subject'] ); ?>">
 	<br>
@@ -7606,7 +7606,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_pending_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_pending_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_pending_reminder_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_pending_reminder_email_body', $event['event_properties']['event_registration_pending_reminder_email_body'], $use_html_editor, 0 ); ?> 
@@ -7625,7 +7625,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_reminder_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_reminder_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_registration_reminder_email_subject" id="eme_prop_event_registration_reminder_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_reminder_email_subject'] ); ?>">
 	<br>
@@ -7647,7 +7647,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_reminder_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_reminder_email_body', $event['event_properties']['event_registration_reminder_email_body'], $use_html_editor, 0 ); ?> 
@@ -7657,7 +7657,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 }
 
 function eme_meta_box_div_event_registration_cancelled_email( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_cancelled_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7677,7 +7677,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_cancelled_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_cancelled_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_registration_cancelled_email_subject" id="eme_prop_event_registration_cancelled_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_cancelled_email_subject'] ); ?>">
 	<br>
@@ -7699,7 +7699,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_cancelled_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_cancelled_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_cancelled_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_cancelled_email_body', $event['event_registration_cancelled_email_body'], $use_html_editor, 0 ); ?> 
@@ -7725,7 +7725,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_cancelled_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_cancelled_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_contactperson_registration_cancelled_email_subject" id="eme_prop_contactperson_registration_cancelled_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_cancelled_email_subject'] ); ?>">
 	<br>
@@ -7747,7 +7747,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_cancelled_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_cancelled_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="eme_prop_contactperson_registration_cancelled_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_cancelled_email_body', $event['event_properties']['contactperson_registration_cancelled_email_body'], $use_html_editor, 0 ); ?> 
@@ -7757,7 +7757,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 }
 
 function eme_meta_box_div_event_registration_paid_email( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_paid_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7783,7 +7783,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_paid_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_paid_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_registration_paid_email_subject" id="eme_prop_event_registration_paid_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_paid_email_subject'] ); ?>">
 	<br>
@@ -7805,7 +7805,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_paid_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_paid_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_paid_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_paid_email_body', $event['event_registration_paid_email_body'], $use_html_editor, 0 ); ?> 
@@ -7831,7 +7831,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_paid_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_paid_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_contactperson_registration_paid_email_subject" id="eme_prop_contactperson_registration_paid_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['contactperson_registration_paid_email_subject'] ); ?>">
 	<br>
@@ -7853,7 +7853,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_paid_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_paid_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="eme_prop_contactperson_registration_paid_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_paid_email_body', $event['event_properties']['contactperson_registration_paid_email_body'], $use_html_editor, 0 ); ?> 
@@ -7887,7 +7887,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 }
 
 function eme_meta_box_div_event_registration_trashed_email( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_trashed_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7907,7 +7907,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_trashed_email_subject" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_event_registration_trashed_email_subject" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<input type="text" maxlength="250" name="eme_prop_event_registration_trashed_email_subject" id="eme_prop_event_registration_trashed_email_subject" <?php echo $showhide_style; ?> value="<?php echo eme_esc_html( $event['event_properties']['event_registration_trashed_email_subject'] ); ?>">
 	<br>
@@ -7929,7 +7929,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_trashed_email_body_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_trashed_email_body_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_trashed_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_trashed_email_body', $event['event_registration_trashed_email_body'], $use_html_editor, 0 ); ?> 
@@ -7939,7 +7939,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
 }
 
 function eme_meta_box_div_event_registration_form_format( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	if ( eme_is_empty_string( $event['event_registration_form_format'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7958,7 +7958,7 @@ function eme_meta_box_div_event_registration_form_format( $event, $templates_arr
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_form_format_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_form_format_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_registration_form_format_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_form_format', $event['event_registration_form_format'], 1, 0 ); ?> 
@@ -7968,7 +7968,7 @@ function eme_meta_box_div_event_registration_form_format( $event, $templates_arr
 }
 
 function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	if ( eme_is_empty_string( $event['event_cancel_form_format'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7988,7 +7988,7 @@ function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
 	?>
 	<br>
 	<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_cancel_form_format_div" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_cancel_form_format_div" style="cursor: pointer; vertical-align: middle; ">
 	<br>
 	<div id="event_cancel_form_format_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_cancel_form_format', $event['event_cancel_form_format'], 1, 0 ); ?> 
@@ -7998,7 +7998,7 @@ function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
 }
 
 function eme_meta_box_div_event_captcha_settings( $event ) {
-	global $eme_plugin_url;
+	
 	$eme_prop_use_captcha   = ( $event['event_properties']['use_captcha'] ) ? "checked='checked'" : '';
 	$eme_prop_use_recaptcha = ( $event['event_properties']['use_recaptcha'] ) ? "checked='checked'" : '';
 	$eme_prop_use_hcaptcha  = ( $event['event_properties']['use_hcaptcha'] ) ? "checked='checked'" : '';
@@ -8314,7 +8314,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 }
 
 function eme_meta_box_div_attendance_info( $event, $templates_array ) {
-	global $eme_plugin_url;
+	
 	$eme_prop_attendancerecord = ( $event['event_properties']['attendancerecord'] ) ? "checked='checked'" : '';
 	if ( eme_is_empty_string( $event['event_properties']['attendance_unauth_scan_tpl'] ) ) {
 		$showhide_style_unauth = 'style="display:none; width:100%;"';
@@ -8350,7 +8350,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array ) {
 				?>
 				<br>
 				<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-				<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="attendance_unauth_scan_format_div" style="cursor: pointer; vertical-align: middle; ">
+				<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="attendance_unauth_scan_format_div" style="cursor: pointer; vertical-align: middle; ">
 				<br>
 				<div id="attendance_unauth_scan_format_div" <?php echo $showhide_style_unauth; ?>>
 				<?php eme_wysiwyg_textarea( 'eme_prop_attendance_unauth_scan_format', $event['event_properties']['attendance_unauth_scan_format'], 1, 0 ); ?> 
@@ -8365,7 +8365,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array ) {
 				?>
 				<br>
 				<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-				<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="attendance_auth_scan_format_div" style="cursor: pointer; vertical-align: middle; ">
+				<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="attendance_auth_scan_format_div" style="cursor: pointer; vertical-align: middle; ">
 				<br>
 				<div id="attendance_auth_scan_format_div" <?php echo $showhide_style_auth; ?>>
 				<?php eme_wysiwyg_textarea( 'eme_prop_attendance_auth_scan_format', $event['event_properties']['attendance_auth_scan_format'], 1, 0 ); ?> 
@@ -8375,7 +8375,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array ) {
 	<?php
 }
 function eme_meta_box_div_event_rsvp( $event ) {
-	global $eme_plugin_url;
+	
 	$currency_array                 = eme_currency_array();
 	$event_number_seats             = $event['event_seats'];
 	$registration_wp_users_only     = ( $event['registration_wp_users_only'] ) ? "checked='checked'" : '';
@@ -8411,7 +8411,7 @@ function eme_meta_box_div_event_rsvp( $event ) {
 					<br>
 	<?php
 	if ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
-				print "<span id='span_approval_required_mail_warning'><img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</span>';
+				print "<span id='span_approval_required_mail_warning'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</span>';
 	}
 	?>
 							</p>
@@ -8673,7 +8673,7 @@ function eme_rss_link_shortcode( $atts ) {
 }
 
 function eme_rss() {
-		global $eme_timezone;
+		
 
 	if ( isset( $_GET['limit'] ) ) {
 		$limit = intval( $_GET['limit'] );
@@ -8777,7 +8777,7 @@ Weblog Editor 2.0
 			echo "<link>$event_link</link>\n";
 			if ( get_option( 'eme_rss_show_pubdate' ) ) {
 				if ( get_option( 'eme_rss_pubdate_startdate' ) ) {
-					echo '<pubDate>' . eme_rfc822_date( $event['event_start'], $eme_timezone ) . "</pubDate>\n";
+					echo '<pubDate>' . eme_rfc822_date( $event['event_start'], EME_TIMEZONE ) . "</pubDate>\n";
 				} else {
 					echo '<pubDate>' . eme_rfc822_date( $event['modif_date'], 'GMT' ) . "</pubDate>\n";
 				}
@@ -8868,14 +8868,14 @@ function eme_general_footer() {
 }
 
 function eme_sanitize_event( $event ) {
-	global $eme_timezone;
+	
 	// remove possible unwanted fields
 	if ( isset( $event['event_id'] ) ) {
 		unset( $event['event_id'] );
 	}
 
-	$eme_date_start_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
-	$eme_date_end_obj   = new ExpressiveDate( $event['event_end'], $eme_timezone );
+	$eme_date_start_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+	$eme_date_end_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 	if ( ! empty( $event['event_properties'] ) ) {
 		$event_properties = $event['event_properties'];
 		if ( isset( $event_properties['all_day'] ) && $event_properties['all_day'] ) {
@@ -9009,16 +9009,17 @@ function eme_sanitize_event( $event ) {
 }
 
 function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_difference = 0, $plugin_installing = 0 ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 
-	// During plugin activation, the globals $eme_db_prefix and $eme_timezone are not available
+	// During plugin activation, the globals EME_DB_PREFIX is not usefull since it needs to change per blog and EME_TIMEZONE are not available
 	// but we call this function to insert 3 examples
 	// so to avoid issues, lets set them
 	if ( $plugin_installing == 1 ) {
-		$eme_db_prefix  = eme_get_db_prefix();
-	        $eme_timezone = wp_timezone_string();
+		$eme_db_prexix  = eme_get_db_prefix();
+	} else {
+		$eme_db_prexix  = EME_DB_PREFIX;
 	}
-	$table_name = $eme_db_prefix . EVENTS_TBNAME;
+	$table_name = $eme_db_prexix . EVENTS_TBNAME;
 
 	if ( empty( $line['event_author'] ) ) {
 		$line['event_author'] = get_current_user_id();
@@ -9068,8 +9069,8 @@ function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_diff
 }
 
 function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0, $day_difference = 0 ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
-	$table_name = $eme_db_prefix . EVENTS_TBNAME;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
 
 	if ( empty( $line['event_author'] ) ) {
 		$line['event_author'] = get_current_user_id();
@@ -9139,8 +9140,8 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 }
 
 function eme_change_event_status( $events, $status ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . EVENTS_TBNAME;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
 
 	if ( is_array( $events ) ) {
 		$events_to_change = join( ',', $events );
@@ -9154,8 +9155,8 @@ function eme_change_event_status( $events, $status ) {
 
 // for GDPR cron
 function eme_delete_old_events() {
-	global $wpdb,$eme_db_prefix,$eme_timezone;
-	$events_table           = $eme_db_prefix . EVENTS_TBNAME;
+	global $wpdb;
+	$events_table           = EME_DB_PREFIX . EVENTS_TBNAME;
 	$remove_old_events_days = get_option( 'eme_gdpr_remove_old_events_days' );
 	if ( empty( $remove_old_events_days ) ) {
 			return;
@@ -9163,7 +9164,7 @@ function eme_delete_old_events() {
 		$remove_old_events_days = abs( $remove_old_events_days );
 	}
 
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$old_date     = $eme_date_obj->minusDays( $remove_old_events_days )->getDateTime();
 
 	$query     = "SELECT event_id FROM $events_table WHERE $events_table.event_end <'$old_date'";
@@ -9174,7 +9175,7 @@ function eme_delete_old_events() {
 }
 
 function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	$event = eme_get_event( $event_id );
 	if ( empty( $event ) ) {
@@ -9186,7 +9187,7 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
 		do_action( 'eme_delete_event_action', $event );
 	}
 
-	$table_name = $eme_db_prefix . EVENTS_TBNAME;
+	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
 	$sql        = $wpdb->prepare( "DELETE FROM $table_name WHERE event_id = %d", $event_id );
 	if ( $wpdb->query( $sql ) ) {
 		eme_delete_all_bookings_for_event_id( $event_id );
@@ -9197,21 +9198,21 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
 }
 
 function eme_delete_event_answers( $event_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='event'", $event_id );
 	$wpdb->query( $sql );
 }
 
 function eme_check_event_external_ref( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . EVENTS_TBNAME;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_external_ref = %s", $id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_admin_enqueue_js() {
-	global $plugin_page, $eme_wp_date_format, $eme_wp_time_format, $eme_plugin_url;
+	global $plugin_page;
 	if ( empty( $plugin_page ) ) {
 		return;
 	}
@@ -9222,7 +9223,7 @@ function eme_admin_enqueue_js() {
 		// remove some scripts from widgetopts that get loaded everywhere ...
 		remove_action( 'admin_enqueue_scripts', 'widgetopts_load_admin_scripts', 100 );
 		$translation_array = [
-			'translate_plugin_url'         => esc_url($eme_plugin_url),
+			'translate_plugin_url'         => esc_url(EME_PLUGIN_URL),
 			'translate_ajax_url'           => admin_url( 'admin-ajax.php' ),
 			'translate_selectstate'        => __( 'State', 'events-made-easy' ),
 			'translate_selectcountry'      => __( 'Country', 'events-made-easy' ),
@@ -9234,8 +9235,8 @@ function eme_admin_enqueue_js() {
 			'translate_firstDayOfWeek'     => get_option( 'start_of_week' ),
 			'translate_flanguage'          => $language,
 			'translate_minutesStep'        => get_option( 'eme_timepicker_minutesstep' ),
-			'translate_fdateformat'        => $eme_wp_date_format,
-			'translate_ftimeformat'        => $eme_wp_time_format,
+			'translate_fdateformat'        => EME_WP_DATE_FORMAT,
+			'translate_ftimeformat'        => EME_WP_TIME_FORMAT,
 			'translate_selectimg'          => __( 'Select the image to be used as person image', 'events-made-easy' ),
 			'translate_setimg'             => __( 'Set image', 'events-made-easy' ),
 			'translate_chooseimg'          => __( 'Choose image', 'events-made-easy' ),
@@ -9260,8 +9261,8 @@ function eme_admin_enqueue_js() {
 			'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
 			'translate_flanguage'                  => $language,
 			'translate_minutesStep'                => get_option( 'eme_timepicker_minutesstep' ),
-			'translate_fdateformat'                => $eme_wp_date_format,
-			'translate_ftimeformat'                => $eme_wp_time_format,
+			'translate_fdateformat'                => EME_WP_DATE_FORMAT,
+			'translate_ftimeformat'                => EME_WP_TIME_FORMAT,
 		];
 		wp_localize_script( 'eme-admin', 'emeadmin', $translation_array );
 		wp_enqueue_script( 'eme-admin' );
@@ -9311,7 +9312,7 @@ function eme_admin_enqueue_js() {
 			'translate_rec_singledur'              => __( 'Single event duration', 'events-made-easy' ),
 			'translate_date'                       => __( 'Date', 'events-made-easy' ),
 			'translate_datetime'                   => __( 'Date and time', 'events-made-easy' ),
-			'translate_fdateformat'                => $eme_wp_date_format,
+			'translate_fdateformat'                => EME_WP_DATE_FORMAT,
 			'translate_selecteddates'              => __( 'Selected dates:', 'events-made-easy' ),
 			'translate_created_on'                 => __( 'Created on', 'events-made-easy' ),
 			'translate_modified_on'                => __( 'Modified on', 'events-made-easy' ),
@@ -9460,7 +9461,7 @@ function eme_admin_enqueue_js() {
 			'translate_state'                      => __( 'State', 'events-made-easy' ),
 			'translate_lang'                       => __( 'Language', 'events-made-easy' ),
 			'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
-			'translate_missingcountry'             => "<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning' title='" . __( 'No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info.', 'events-made-easy' ) . "'>",
+			'translate_missingcountry'             => "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . __( 'No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info.', 'events-made-easy' ) . "'>",
 			'translate_added'                      => __( 'Record added', 'events-made-easy' ),
 			'translate_updated'                    => __( 'Record updated', 'events-made-easy' ),
 			'translate_deleted'                    => __( 'Records deleted', 'events-made-easy' ),
@@ -9512,7 +9513,7 @@ function eme_admin_enqueue_js() {
 		wp_enqueue_media();
 		$translation_array = [
 			'translate_nomatchperson'              => __( 'No matching person found', 'events-made-easy' ),
-			'translate_plugin_url'                 => esc_url($eme_plugin_url),
+			'translate_plugin_url'                 => esc_url(EME_PLUGIN_URL),
 			'translate_personid'                   => __( 'Person ID', 'events-made-easy' ),
 			'translate_groupid'                    => __( 'Group ID', 'events-made-easy' ),
 			'translate_people'                     => __( 'People', 'events-made-easy' ),
@@ -9558,7 +9559,7 @@ function eme_admin_enqueue_js() {
 			'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
 			'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
 			'translate_flanguage'                  => $language,
-			'translate_fdateformat'                => $eme_wp_date_format,
+			'translate_fdateformat'                => EME_WP_DATE_FORMAT,
 		];
 		wp_localize_script( 'eme-people', 'eme', $translation_array );
 		wp_enqueue_script( 'eme-people' );
@@ -9568,7 +9569,7 @@ function eme_admin_enqueue_js() {
 		$translation_array = [
 			'translate_nomatchperson'              => __( 'No matching person found', 'events-made-easy' ),
 			'translate_nomatchmember'              => __( 'No matching member found', 'events-made-easy' ),
-			'translate_plugin_url'                 => esc_url($eme_plugin_url),
+			'translate_plugin_url'                 => esc_url(EME_PLUGIN_URL),
 			'translate_members'                    => __( 'Members', 'events-made-easy' ),
 			'translate_memberships'                => __( 'Memberships', 'events-made-easy' ),
 			'translate_membership'                 => __( 'Membership', 'events-made-easy' ),
@@ -9692,16 +9693,16 @@ function eme_admin_enqueue_js() {
 			'translate_firstDayOfWeek'  => get_option( 'start_of_week' ),
 			'translate_flanguage'       => $language,
 			'translate_minutesStep'     => get_option( 'eme_timepicker_minutesstep' ),
-			'translate_fdateformat'     => $eme_wp_date_format,
-			'translate_ftimeformat'     => $eme_wp_time_format,
-			'translate_fdatetimeformat' => $eme_wp_date_format . ' ' . $eme_wp_time_format,
+			'translate_fdateformat'     => EME_WP_DATE_FORMAT,
+			'translate_ftimeformat'     => EME_WP_TIME_FORMAT,
+			'translate_fdatetimeformat' => EME_WP_DATE_FORMAT . ' ' . EME_WP_TIME_FORMAT,
 		];
 		wp_localize_script( 'eme-sendmails', 'eme', $translation_array );
 		wp_enqueue_script( 'eme-sendmails' );
 	}
 
 	if ( preg_match( '/^eme-/', $plugin_page ) ) {
-		wp_enqueue_style( 'eme_textsec', $eme_plugin_url . 'css/text-security/text-security-disc.css', [], EME_VERSION );
+		wp_enqueue_style( 'eme_textsec', EME_PLUGIN_URL . 'css/text-security/text-security-disc.css', [], EME_VERSION );
 		wp_enqueue_style( 'eme_stylesheet' );
 		wp_enqueue_style( 'eme_stylesheet_extra' );
 	}
@@ -9709,7 +9710,7 @@ function eme_admin_enqueue_js() {
 
 # return number of days until next event or until the specified event
 function eme_countdown_shortcode( $atts ) {
-	global $eme_timezone;
+	
 	extract(
 	    shortcode_atts(
 		    [
@@ -9741,8 +9742,8 @@ function eme_countdown_shortcode( $atts ) {
 		}
 	}
 	if ( ! empty( $event ) ) {
-		$eme_date_obj     = new ExpressiveDate( $event['event_start'], $eme_timezone );
-		$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+		$eme_date_obj     = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 		return intval( $eme_date_obj_now->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() ) );
 	} else {
 		return 0;
@@ -9750,7 +9751,7 @@ function eme_countdown_shortcode( $atts ) {
 }
 
 function eme_ajax_events_search() {
-	global $eme_timezone;
+	
 
 	$return = [];
 	if ( isset( $_REQUEST['q'] ) ) {
@@ -9772,7 +9773,7 @@ function eme_ajax_events_search() {
 	foreach ( $events as $event ) {
 		$record              = [];
 		$record['event_id']  = $event['event_id'];
-		$record['eventinfo'] = eme_esc_html( $event['event_name'] . ' (' . eme_localized_date( $event['event_start'], $eme_timezone, 1 ) . ')' );
+		$record['eventinfo'] = eme_esc_html( $event['event_name'] . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' );
 		$return[]            = $record;
 	}
 	header( 'Content-type: application/json; charset=utf-8' );
@@ -9813,7 +9814,7 @@ add_action( 'wp_ajax_eme_manage_events', 'eme_ajax_manage_events' );
 add_action( 'wp_ajax_eme_autocomplete_event', 'eme_ajax_events_search' );
 
 function eme_ajax_events_list() {
-	global $wpdb,$eme_timezone, $eme_plugin_url;
+	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
@@ -9905,7 +9906,7 @@ function eme_ajax_events_list() {
 	$jtSorting          = str_replace( 'datetime ', '', $jtSorting );
 	$events             = eme_get_events( $jtPageSize, $scope, $jtSorting, $jtStartIndex, '', $category, '', '', 1, '', 0, $where, 0, 1, $field_ids, $search_customfields );
 	$event_status_array = eme_status_array();
-	$eme_date_obj_now   = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
 
 	// no searchable formfields yet, so we use eme_get_formfields here
 	$formfields = eme_get_formfields( '', 'events' );
@@ -9916,7 +9917,7 @@ function eme_ajax_events_list() {
 		if ( empty( $event['event_name'] ) ) {
 			$event['event_name'] = __( 'No name', 'events-made-easy' );
 		}
-		$date_obj = new ExpressiveDate( $event['event_start'], $eme_timezone );
+		$date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 
 		$record['event_name_simple'] = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
 		$record['event_name']        = $record['event_name_simple'];
@@ -9996,7 +9997,7 @@ function eme_ajax_events_list() {
 		} else {
 			$record['location_name'] = "<a href='" . admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $event['location_id'] ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['location_name'] ) . '</a>';
 			if ( ! $event['location_latitude'] && ! $event['location_longitude'] && get_option( 'eme_map_is_active' ) && ! $event['location_properties']['online_only'] ) {
-				$record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning' title='" . __( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
+				$record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . __( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
 			}
 		}
 
@@ -10022,7 +10023,7 @@ function eme_ajax_events_list() {
 			}
 		}
 
-		$record['copy'] = "<a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "'><img src='" . esc_url($eme_plugin_url) . "images/copy_24.png'></a>";
+		$record['copy'] = "<a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_24.png'></a>";
 
 		if ( $event['event_rsvp'] && ! $view_trash ) {
 			if ( $event['registration_requires_approval'] ) {
@@ -10049,11 +10050,11 @@ function eme_ajax_events_list() {
 			$record['eventprice'] = '';
 		}
 
-		$record['creation_date'] = eme_localized_datetime( $event['creation_date'], $eme_timezone, 1 );
-		$record['modif_date']    = eme_localized_datetime( $event['modif_date'], $eme_timezone, 1 );
+		$record['creation_date'] = eme_localized_datetime( $event['creation_date'], EME_TIMEZONE, 1 );
+		$record['modif_date']    = eme_localized_datetime( $event['modif_date'], EME_TIMEZONE, 1 );
 
-		$localized_start_date = eme_localized_date( $event['event_start'], $eme_timezone, 1 );
-		$localized_end_date   = eme_localized_date( $event['event_end'], $eme_timezone, 1 );
+		$localized_start_date = eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 );
+		$localized_end_date   = eme_localized_date( $event['event_end'], EME_TIMEZONE, 1 );
 		if ( $event['event_properties']['all_day'] == 1 ) {
 			if ( $localized_end_date != '' && $localized_end_date != $localized_start_date ) {
 				$record['datetime'] = $localized_start_date . ' - ' . $localized_end_date;
@@ -10063,11 +10064,11 @@ function eme_ajax_events_list() {
 			$record['datetime'] .= '<br>';
 			$record['datetime'] .= __( 'All day', 'events-made-easy' );
 		} elseif ( $localized_end_date != '' && $localized_end_date != $localized_start_date ) {
-				$record['datetime'] = eme_localized_datetime( $event['event_start'], $eme_timezone, 1 ) . ' - <br>' . eme_localized_datetime( $event['event_end'], $eme_timezone, 1 );
+				$record['datetime'] = eme_localized_datetime( $event['event_start'], EME_TIMEZONE, 1 ) . ' - <br>' . eme_localized_datetime( $event['event_end'], EME_TIMEZONE, 1 );
 		} else {
 			$record['datetime']  = $localized_start_date;
 			$record['datetime'] .= '<br>';
-			$record['datetime'] .= eme_localized_time( $event['event_start'], $eme_timezone, 1 ) . ' - ' . eme_localized_time( $event['event_end'], $eme_timezone, 1 );
+			$record['datetime'] .= eme_localized_time( $event['event_start'], EME_TIMEZONE, 1 ) . ' - ' . eme_localized_time( $event['event_end'], EME_TIMEZONE, 1 );
 		}
 
 		// if in the past, show it
@@ -10188,8 +10189,8 @@ function eme_ajax_action_events_status( $ids_arr, $status ) {
 }
 
 function eme_ajax_action_events_addcat( $ids, $category_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . EVENTS_TBNAME;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
         if (eme_is_list_of_int($ids) ) {
 		$wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
 		   WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id);
@@ -10201,9 +10202,9 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
 }
 
 function eme_trash_events( $ids, $send_trashmails = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name     = $eme_db_prefix . EVENTS_TBNAME;
-	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
+	global $wpdb;
+	$table_name     = EME_DB_PREFIX . EVENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
         if (!eme_is_list_of_int($ids) ) {
 		return;
 	}
@@ -10230,8 +10231,8 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 }
 
 function eme_untrash_events( $ids ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . EVENTS_TBNAME;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
         if (eme_is_list_of_int($ids) ) {
 		$sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_DRAFT); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -10284,8 +10285,8 @@ function eme_get_event_cf_answers( $event_id ) {
 }
 
 function eme_get_event_answers( $event_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$cf            = wp_cache_get( "eme_event_cf $event_id" );
 	if ( $cf === false ) {
 		$sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='event'", $event_id );
@@ -10323,8 +10324,8 @@ function eme_event_store_cf_answers( $event_id ) {
 }
 
 function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table      = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$table      = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$conditions = [];
 	$val        = eme_kses( $val );
 
@@ -10356,7 +10357,7 @@ function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
 
 add_action( 'wp_ajax_eme_events_select2', 'eme_ajax_events_select2' );
 function eme_ajax_events_select2() {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
@@ -10381,7 +10382,7 @@ function eme_ajax_events_select2() {
 				( current_user_can( get_option( 'eme_cap_send_mails' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
 			$records[] = [
 				'id'   => $event['event_id'],
-				'text' => trim( eme_esc_html( strip_tags( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], $eme_timezone, 1 ) . ')' ) ),
+				'text' => trim( eme_esc_html( strip_tags( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ) ),
 			];
 			++$recordCount;
 		}
@@ -10393,9 +10394,9 @@ function eme_ajax_events_select2() {
 }
 
 function eme_get_event_cf_answers_groupingids( $event_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table  = $eme_db_prefix . ANSWERS_TBNAME;
-	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
+	global $wpdb;
+	$answers_table  = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT DISTINCT a.eme_grouping FROM $answers_table a LEFT JOIN $bookings_table b ON b.booking_id=a.related_id WHERE b.event_id=%d AND a.type='booking'", $event_id );
 	return $wpdb->get_col( $sql );
 }

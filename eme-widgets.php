@@ -251,7 +251,7 @@ class WP_Widget_eme_calendar extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
-		global $wp_query, $eme_timezone;
+		global $wp_query;
 		eme_enqueue_frontend();
 		//extract($args);
 		//$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Calendar','eme' ) : $instance['title'], $instance, $this->id_base);
@@ -289,9 +289,9 @@ class WP_Widget_eme_calendar extends WP_Widget {
 		// the month shown depends on the calendar day clicked
 		// make sure it is a valid date though ...
 		if ( get_query_var( 'calendar_day' ) && eme_is_date( get_query_var( 'calendar_day' ) ) ) {
-			$eme_date_obj = new ExpressiveDate( get_query_var( 'calendar_day' ), $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( get_query_var( 'calendar_day' ), EME_TIMEZONE );
 		} else {
-			$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 		}
 		$options['month']      = $eme_date_obj->format( 'm' );
 		$options['year']       = $eme_date_obj->format( 'Y' );

@@ -5,12 +5,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_cleanup_people() {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
-	$bookings_table   = $eme_db_prefix . BOOKINGS_TBNAME;
-	$members_table    = $eme_db_prefix . MEMBERS_TBNAME;
-	$usergroups_table = $eme_db_prefix . USERGROUPS_TBNAME;
-	$people_table     = $eme_db_prefix . PEOPLE_TBNAME;
-	$tasksignup_table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$members_table    = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$tasksignup_table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE person_id NOT IN (SELECT person_id FROM $bookings_table WHERE status != %d) AND person_id NOT IN (SELECT person_id FROM $members_table WHERE status != %d) AND person_id NOT IN (SELECT person_id FROM $usergroups_table) AND person_id NOT IN (SELECT person_id FROM $tasksignup_table) AND status !=%d ", EME_RSVP_STATUS_TRASH, EME_MEMBER_STATUS_EXPIRED, EME_PEOPLE_STATUS_TRASH );
 	$person_ids       = $wpdb->get_col( $sql );
 	$count            = count( $person_ids );
@@ -20,14 +20,14 @@ function eme_cleanup_people() {
 }
 
 function eme_cleanup_trashed_people( $eme_number, $eme_period ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 
-	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
 
 	if ( $eme_number < 1 ) {
 		$eme_number = 1;
 	}
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	switch ( $eme_period ) {
 		case 'day':
 			$eme_date_obj->minusDays( $eme_number );
@@ -49,13 +49,13 @@ function eme_cleanup_trashed_people( $eme_number, $eme_period ) {
 }
 
 function eme_cleanup_unconfirmed( $eme_number ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 
-	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$members_table  = $eme_db_prefix . MEMBERS_TBNAME;
-	$events_table   = $eme_db_prefix . EVENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$members_table  = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$events_table   = EME_DB_PREFIX . EVENTS_TBNAME;
 
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today        = $eme_date_obj->getDateTime();
 	// the min is 5 minutes, but if 0 we won't do anything either, to be safe
 	if ( ! $eme_number ) {
@@ -76,8 +76,8 @@ function eme_cleanup_unconfirmed( $eme_number ) {
 			eme_trash_booking( $booking_id );
 			eme_manage_waitinglist( $event );
 		}
-		$eme_date_obj_booking_created = new ExpressiveDate( $booking['creation_date'], $eme_timezone );
-		$eme_date_obj_person_modified = new ExpressiveDate( $person['modif_date'], $eme_timezone );
+		$eme_date_obj_booking_created = new ExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
+		$eme_date_obj_person_modified = new ExpressiveDate( $person['modif_date'], EME_TIMEZONE );
 		$diff                         = abs( $eme_date_obj_booking_created->getDifferenceInMinutes( $eme_date_obj_person_modified ) );
 		// if the person was modified at most 2 minutes after booking creation (meaning in fact never), we also delete the person if no other bookings or members match that person
 		if ( $diff < 2 ) {
@@ -91,12 +91,12 @@ function eme_cleanup_unconfirmed( $eme_number ) {
 }
 
 function eme_cleanup_unpaid( $eme_number ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 
-	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
-	$events_table   = $eme_db_prefix . EVENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$events_table   = EME_DB_PREFIX . EVENTS_TBNAME;
 
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today        = $eme_date_obj->getDateTime();
 	// the min is 5 minutes, but if 0 we won't do anything either, to be safe
 	if ( ! $eme_number ) {
@@ -121,18 +121,18 @@ function eme_cleanup_unpaid( $eme_number ) {
 }
 
 function eme_cleanup_events( $eme_number, $eme_period ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 
-	$bookings_table    = $eme_db_prefix . BOOKINGS_TBNAME;
-	$attendances_table = $eme_db_prefix . ATTENDANCES_TBNAME;
-	$events_table      = $eme_db_prefix . EVENTS_TBNAME;
-	$events_cf_table   = $eme_db_prefix . EVENTS_CF_TBNAME;
-	$recurrence_table  = $eme_db_prefix . RECURRENCE_TBNAME;
+	$bookings_table    = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$attendances_table = EME_DB_PREFIX . ATTENDANCES_TBNAME;
+	$events_table      = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_cf_table   = EME_DB_PREFIX . EVENTS_CF_TBNAME;
+	$recurrence_table  = EME_DB_PREFIX . RECURRENCE_TBNAME;
 
 	if ( $eme_number < 1 ) {
 		$eme_number = 1;
 	}
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	switch ( $eme_period ) {
 		case 'day':
 			$eme_date_obj->minusDays( $eme_number );
@@ -154,7 +154,7 @@ function eme_cleanup_events( $eme_number, $eme_period ) {
 }
 
 function eme_cleanup_all_event_related_data( $other_data ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	$tables = [ EVENTS_TBNAME, EVENTS_CF_TBNAME, BOOKINGS_TBNAME, LOCATIONS_TBNAME, LOCATIONS_CF_TBNAME, RECURRENCE_TBNAME, ANSWERS_TBNAME, PAYMENTS_TBNAME, PEOPLE_TBNAME, MEMBERS_TBNAME, MEMBERSHIPS_CF_TBNAME, MEMBERSHIPS_TBNAME, ATTENDANCES_TBNAME ];
 	if ( $other_data ) {
@@ -162,7 +162,7 @@ function eme_cleanup_all_event_related_data( $other_data ) {
 		$tables  = array_merge( $tables, $tables2 );
 	}
 	foreach ( $tables as $table ) {
-		$wpdb->query( 'DELETE FROM ' . esc_sql( $eme_db_prefix . $table ) );
+		$wpdb->query( 'DELETE FROM ' . esc_sql( EME_DB_PREFIX . $table ) );
 	}
 }
 

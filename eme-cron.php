@@ -68,7 +68,7 @@ function eme_plan_queue_mails() {
 
 add_action( 'eme_cron_send_new_events', 'eme_cron_send_new_events_function' );
 function eme_cron_send_new_events_function() {
-	global $eme_timezone;
+	
 	// if not data master, then don't do this
 	if ( ! eme_is_datamaster() ) {
 		return;
@@ -101,7 +101,7 @@ function eme_cron_send_new_events_function() {
 	$contact_name         = $contact->display_name;
 
 	// we'll create a mailing for the newsletter, so we can delete/cancel if easily while ongoing too
-	$eme_date_obj     = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj     = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$mailing_datetime = $eme_date_obj->getDateTime();
 	$mailing_name     = "newsletter $mailing_datetime";
 	$mailing_id       = eme_db_insert_ongoing_mailing( $mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html );
@@ -203,8 +203,7 @@ function eme_cron_daily_actions() {
 }
 
 function eme_cron_page() {
-	global $eme_db_prefix;
-	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
 
 	$message = '';
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {

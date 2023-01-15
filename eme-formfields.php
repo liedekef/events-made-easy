@@ -24,7 +24,7 @@ function eme_new_formfield() {
 }
 
 function eme_formfields_page() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	if ( ! current_user_can( get_option( 'eme_cap_forms' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
 		$message = __( 'You have no right to update form fields!', 'events-made-easy' );
@@ -46,7 +46,7 @@ function eme_formfields_page() {
 	}
 
 	// Insert/Update/Delete Record
-	$formfields_table  = $eme_db_prefix . FORMFIELDS_TBNAME;
+	$formfields_table  = EME_DB_PREFIX . FORMFIELDS_TBNAME;
 	$validation_result = '';
 	$message           = '';
 	if ( isset( $_POST['eme_admin_action'] ) ) {
@@ -430,28 +430,28 @@ function eme_get_dyndata_conditions() {
 }
 
 function eme_get_used_formfield_ids() {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	return $wpdb->get_col( "SELECT DISTINCT field_id FROM $table" );
 }
 
 function eme_check_used_formfield( $field_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table  = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$table  = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
 	$count  = $wpdb->get_var( $query );
-	$table  = $eme_db_prefix . EVENTS_CF_TBNAME;
+	$table  = EME_DB_PREFIX . EVENTS_CF_TBNAME;
 	$query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
 	$count += $wpdb->get_var( $query );
-	$table  = $eme_db_prefix . LOCATIONS_CF_TBNAME;
+	$table  = EME_DB_PREFIX . LOCATIONS_CF_TBNAME;
 	$query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
 	$count += $wpdb->get_var( $query );
 	return $count;
 }
 
 function eme_get_formfields( $ids = '', $purpose = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
+	global $wpdb;
+	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
 	$where            = '';
 	$where_arr        = [];
 	if ( ! empty( $ids ) && eme_is_list_of_int($ids) ) {
@@ -472,8 +472,8 @@ function eme_get_formfields( $ids = '', $purpose = '' ) {
 }
 
 function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
+	global $wpdb;
+	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
 	$where            = '';
 	$where_arr        = [];
 	$where_arr[]      = 'searchable=1';
@@ -492,8 +492,8 @@ function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
 }
 
 function eme_get_formfield( $field_info ) {
-	global $wpdb,$eme_db_prefix;
-	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
+	global $wpdb;
+	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
 	if ( is_numeric( $field_info ) || $field_info == 'performer' ) {
 		$formfield = wp_cache_get( "eme_formfield $field_info" );
 	} else {
@@ -514,19 +514,19 @@ function eme_get_formfield( $field_info ) {
 }
 
 function eme_delete_formfields( $ids_arr ) {
-	global $wpdb,$eme_db_prefix;
-	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
+	global $wpdb;
+	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
 	if ( ! empty( $ids_arr ) && eme_is_numeric_array( $ids_arr ) ) {
 		$ids_list = implode(',', $ids_arr);
 		$validation_result = $wpdb->query( "DELETE FROM $formfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( $validation_result !== false ) {
-			$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+			$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 			$wpdb->query( "DELETE FROM $answers_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			$events_customfields_table = $eme_db_prefix . EVENTS_CF_TBNAME;
+			$events_customfields_table = EME_DB_PREFIX . EVENTS_CF_TBNAME;
 			$wpdb->query( "DELETE FROM $events_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			$locations_customfields_table = $eme_db_prefix . LOCATIONS_CF_TBNAME;
+			$locations_customfields_table = EME_DB_PREFIX . LOCATIONS_CF_TBNAME;
 			$wpdb->query( "DELETE FROM $locations_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			$memberships_customfields_table = $eme_db_prefix . MEMBERSHIPS_CF_TBNAME;
+			$memberships_customfields_table = EME_DB_PREFIX . MEMBERSHIPS_CF_TBNAME;
 			$wpdb->query( "DELETE FROM $memberships_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			return true;
 		} else {
@@ -597,12 +597,12 @@ function eme_get_fieldtype( $type ) {
 }
 
 function eme_is_multifield( $type ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	return in_array( $type, [ 'dropdown', 'dropdown_multi', 'radiobox', 'radiobox_vertical', 'checkbox', 'checkbox_vertical' ] );
 }
 
 function eme_get_formfield_html( $formfield, $field_name, $entered_val, $required, $class = '', $ro = 0, $force_single = 0 ) {
-	global $eme_wp_date_format, $eme_wp_time_format, $eme_timezone;
+	
 	if ( empty( $formfield ) ) {
 		return;
 	}
@@ -903,13 +903,13 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 				$value = $field_values;
 			}
 			if ( $value == 'NOW' ) {
-				$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+				$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 				$value        = $eme_date_obj->getDate();
 			}
 
 			$value = eme_esc_html( $value );
 			if ( empty( $field_attributes ) ) {
-				$field_attributes = $eme_wp_date_format;
+				$field_attributes = EME_WP_DATE_FORMAT;
 			}
 			$dateformat = $field_attributes;
 			$html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
@@ -925,13 +925,13 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 				$value = $field_values;
 			}
 			if ( $value == 'NOW' ) {
-				$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+				$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 				$value        = $eme_date_obj->getDateTime();
 			}
 			$value    = eme_esc_html( $value );
-			$js_value = eme_js_datetime( $value, $eme_timezone );
+			$js_value = eme_js_datetime( $value, EME_TIMEZONE );
 			if ( empty( $field_attributes ) ) {
-				$field_attributes = "$eme_wp_date_format $eme_wp_time_format";
+				$field_attributes = EME_WP_DATE_FORMAT .' '. EME_WP_TIME_FORMAT;
 			}
 			$dateformat = $field_attributes;
 			$html       = "<input type='hidden' name='$field_name' id='$field_name' value='$value' $class_att>";
@@ -947,16 +947,16 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 				$value = $field_values;
 			}
 			if ( $value == 'NOW' ) {
-				$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+				$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 				$value        = $eme_date_obj->getTime();
 			}
 			$value = eme_esc_html( $value );
 			if ( empty( $field_attributes ) ) {
-				$field_attributes = $eme_wp_time_format;
+				$field_attributes = EME_WP_TIME_FORMAT;
 			}
 			$dateformat = $field_attributes;
 			if ( ! empty( $value ) ) {
-				$date_obj = ExpressiveDate::createFromFormat( 'H:i:s', $value, ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+				$date_obj = ExpressiveDate::createFromFormat( 'H:i:s', $value, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 				$value    = $date_obj->format( $dateformat );
 			}
 			$html = "<input $required_att $disabled name='$field_name' id='$field_name' value='$value' data-time-format='$dateformat' class='eme_formfield_timepicker $class'>";
@@ -966,15 +966,15 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 }
 
 function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) {
-	global $eme_timezone;
+	
 
 	$task_signups = eme_get_task_signups( $task['task_id'] );
 	$used_spaces  = count( $task_signups );
 	$free_spaces  = $task['spaces'] - $used_spaces;
 
 	$task_ended       = 0;
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
-	$task_end_obj     = ExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $task['task_end'], ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$task_end_obj     = ExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $task['task_end'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 	if ( $task_end_obj < $eme_date_obj_now ) {
 		$task_ended = 1;
 	}
@@ -1029,7 +1029,7 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 }
 
 function eme_replace_task_signupformfields_placeholders( $format ) {
-	global $eme_plugin_url;
+	
 	//$eme_is_admin_request = eme_is_admin_request();
 
 	if ( is_user_logged_in() ) {
@@ -1112,7 +1112,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			}
 			$replacement = "<input required='required' type='text' name='task_lastname' id='task_lastname' value='$bookerLastName' $readonly placeholder='$placeholder_text'>";
 			if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-				$replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
+				$replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
 			}
 
 			++$lastname_found;
@@ -1163,7 +1163,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			} else {
 				$label = __( 'Subscribe', 'events-made-easy' );
 			}
-			$replacement = "<img id='task_loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+			$replacement = "<img id='task_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
 		} else {
 			$found = 0;
 		}
@@ -1196,7 +1196,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	}
 }
 function eme_replace_cancelformfields_placeholders( $event ) {
-	global $eme_plugin_url;
+	
 	// not used from the admin backend, but we check to be sure
 	$eme_is_admin_request = eme_is_admin_request();
 	if ( $eme_is_admin_request ) {
@@ -1364,7 +1364,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 			} else {
 				$label = get_option( 'eme_rsvp_delbooking_submit_string' );
 			}
-			$replacement = "<img id='rsvp_cancel_loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+			$replacement = "<img id='rsvp_cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
 		} else {
 			$found = 0;
 		}
@@ -1401,7 +1401,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 }
 
 function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids ) {
-	global $eme_timezone, $eme_plugin_url;
+	
 
 	// We need at least #_CANCEL_PAYMENT_LINE
 	$line_found = 0;
@@ -1449,7 +1449,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 		if ( preg_match( '/#_CANCEL_PAYMENT_LINE$/', $result ) ) {
 			$tmp_format = get_option( 'eme_cancel_payment_line_format' );
 			++$line_found;
-			$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+			$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 			foreach ( $booking_ids as $booking_id ) {
 					$booking = eme_get_booking( $booking_id );
 					$event   = eme_get_event( $booking['event_id'] );
@@ -1457,7 +1457,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 					continue;
 				}
 				// first the rsvp cutoff based on event start date
-				$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], $eme_timezone );
+				$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 				$eme_cancel_rsvp_days = -1 * intval( $event['event_properties']['cancel_rsvp_days'] );
 				$cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
 				if ( $cancel_cutofftime < $eme_date_obj_now ) {
@@ -1465,7 +1465,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 					return "<div class='eme-message-error eme-rsvp-message-error'>" . $no_longer_allowed . '</div>';
 				}
 				// second the rsvp cutoff based on booking age
-				$cancel_cutofftime    = new ExpressiveDate( $booking['creation_date'], $eme_timezone );
+				$cancel_cutofftime    = new ExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
 				$eme_cancel_rsvp_days = intval( $event['event_properties']['cancel_rsvp_age'] );
 				$cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
 				if ( $eme_cancel_rsvp_days && $cancel_cutofftime < $eme_date_obj_now ) {
@@ -1498,7 +1498,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 			} else {
 				$label = get_option( 'eme_rsvp_delbooking_submit_string' );
 			}
-			$replacement = "<img id='cancel_loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+			$replacement = "<img id='cancel_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
 		} else {
 			$found = 0;
 		}
@@ -1527,7 +1527,6 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 // the event param in eme_replace_extra_multibooking_formfields_placeholders
 // is only there for generic replacements, like e.g. currency
 function eme_replace_extra_multibooking_formfields_placeholders( $format, $event ) {
-	global $eme_plugin_url, $eme_wp_date_format;
 	$bookerLastName     = '';
 	$bookerFirstName    = '';
 	$bookerBirthdate    = '';
@@ -1672,7 +1671,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 				$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
 			}
 			$replacement  = "<input type='hidden' name='birthdate' id='birthdate' value='$bookerBirthdate'>";
-			$replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-date-format='$eme_wp_date_format' data-alt-field='#birthdate' data-view='years' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
+			$replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-alt-field='#birthdate' data-view='years' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)
@@ -1873,7 +1872,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			} else {
 				$label = get_option( 'eme_rsvp_addbooking_submit_string' );
 			}
-			$replacement = "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+			$replacement = "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
 		} elseif ( preg_match( '/#_DYNAMICPRICE$/', $result ) ) {
 			$replacement = "<span id='eme_calc_bookingprice'></span>";
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
@@ -1928,8 +1927,8 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 }
 
 function eme_get_dyndata_people_fields( $condition ) {
-	global $wpdb,$eme_db_prefix;
-	$formfields_table = $eme_db_prefix . FORMFIELDS_TBNAME;
+	global $wpdb;
+	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT * FROM $formfields_table where field_purpose='people' AND FIND_IN_SET(%s,field_condition)", $condition );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
@@ -2159,7 +2158,6 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 }
 
 function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '', $is_multibooking = 0 ) {
-	global $eme_plugin_url, $eme_wp_date_format;
 	$eme_is_admin_request = eme_is_admin_request();
 	// the next can happen if we would be editing a booking where the event has been deleted but somehow the booking remains
 	if ( isset( $event['event_id'] ) ) {
@@ -2657,7 +2655,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				}
 				$replacement = "<input required='required' type='text' name='$fieldname' id='$fieldname' value='$bookerLastName' $this_readonly $dynamic_field_class placeholder='$placeholder_text'>";
 				if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-					$replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
+					$replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
 				}
 
 				++$lastname_found;
@@ -2695,7 +2693,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				}
 				$fieldname    = 'birthdate';
 				$replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-				$replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
+				$replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
 			}
 		} elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
 			if ( ! $is_multibooking ) {
@@ -3137,7 +3135,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				} else {
 					$label = get_option( 'eme_rsvp_addbooking_submit_string' );
 				}
-				$replacement .= "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+				$replacement .= "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
 			}
 		} else {
 			$found = 0;
@@ -3187,7 +3185,6 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 }
 
 function eme_replace_membership_familyformfields_placeholders( $format, $counter ) {
-	global $eme_wp_date_format;
 
 	$lastname_found  = 0;
 	$firstname_found = 0;
@@ -3330,7 +3327,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 				$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
 			}
 			$replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$entered_val'>";
-			$replacement .= "<input required='required' readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$entered_val' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#$fieldname' class='eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>";
+			$replacement .= "<input required='required' readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$entered_val' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#$fieldname' class='eme_formfield_fdate $dynamic_field_class_basic' placeholder='$placeholder_text'>";
 			$required     = 1;
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
@@ -3387,7 +3384,6 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 }
 
 function eme_replace_membership_formfields_placeholders( $membership, $member, $format ) {
-	global $eme_plugin_url, $eme_wp_date_format;
 	$eme_is_admin_request = eme_is_admin_request();
 	$membership_id        = $membership['membership_id'];
 
@@ -3632,7 +3628,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			}
 			$replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerLastName' $this_readonly $dynamic_field_personal_info_class placeholder='$placeholder_text'>";
 			if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-					$replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
+					$replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
 			}
 			++$lastname_found;
 		} elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
@@ -3666,7 +3662,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 				$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
 			}
 			$replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
-			$replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate $personal_info_class' placeholder='$placeholder_text'>";
+			$replacement .= "<input $required_att readonly='readonly' $disabled type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate $personal_info_class' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
 			$fieldname = 'birthplace';
 			if ( isset( $matches[1] ) ) {
@@ -3970,7 +3966,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			} else {
 				$label = __( 'Become member', 'events-made-easy' );
 			}
-			$replacement = "<img id='member_loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+			$replacement = "<img id='member_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
 		} else {
 			$found = 0;
 		}
@@ -4003,7 +3999,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 }
 
 function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
-	global $eme_plugin_url;
+	
 
 	$eme_captcha_for_forms   = get_option( 'eme_captcha_for_forms' );
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
@@ -4090,7 +4086,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 				}
 				$replacement = "<input $required_att type='text' name='lastname' id='lastname' value='$bookerLastName' $readonly placeholder='$placeholder_text'>";
 				if ( ! empty( $readonly ) ) {
-					$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) . '</div>';
+					$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) . '</div>';
 				}
 			}
 		} elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
@@ -4104,7 +4100,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 				}
 				$replacement = "<input $required_att type='text' name='firstname' id='firstname' value='$bookerFirstName' $readonly placeholder='$placeholder_text'>";
 				if ( ! empty( $readonly ) ) {
-					$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) . '</div>';
+					$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) . '</div>';
 				}
 			}
 		} elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
@@ -4117,7 +4113,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 			}
 			$replacement = "<input required='required' type='email' name='email' value='$bookerEmail' $readonly placeholder='$placeholder_text'>";
 			if ( ! empty( $readonly ) ) {
-				$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) . '</div>';
+				$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) . '</div>';
 			}
 			++$email_found;
 		} elseif ( preg_match( '/#_MAILGROUPS(\{.+?\})?/', $result, $matches ) ) {
@@ -4176,7 +4172,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 			} else {
 				$label = __( 'Subscribe', 'events-made-easy' );
 			}
-			$replacement = "<img id='loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+			$replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
 		} else {
 			$found = 0;
 		}
@@ -4200,7 +4196,6 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 }
 
 function eme_replace_cpiform_placeholders( $format, $person ) {
-	global $eme_plugin_url, $eme_wp_date_format;
 
 	$eme_captcha_for_forms   = get_option( 'eme_captcha_for_forms' );
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
@@ -4273,7 +4268,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			}
 			$replacement = "<input required='required' type='text' name='lastname' id='lastname' value='$bookerLastName' $readonly placeholder='$placeholder_text'>";
 			if ( ! empty( $readonly ) ) {
-				$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) . '</div>';
+				$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your last name in your WP profile.', 'events-made-easy' ) . '</div>';
 			}
 			// #_NAME is always required
 			++$lastname_found;
@@ -4288,7 +4283,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			}
 			$replacement = "<input required='required' type='text' name='firstname' id='firstname' value='$bookerFirstName' $readonly placeholder='$placeholder_text'>";
 			if ( ! empty( $readonly ) ) {
-				$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) . '</div>';
+				$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your first name in your WP profile.', 'events-made-easy' ) . '</div>';
 			}
 			++$firstname_found;
 			$required = 1;
@@ -4301,7 +4296,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 				$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
 			}
 			$replacement  = "<input type='hidden' name='birthdate' id='birthdate' value='$bookerBirthdate'>";
-			$replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-date-format='$eme_wp_date_format' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
+			$replacement .= "<input $required_att readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
 			$replacement = "<input $required_att type='text' name='birthplace' id='birthplace' value='$bookerBirthplace' placeholder='$placeholder_text'>";
 			if ( isset( $matches[1] ) ) {
@@ -4384,7 +4379,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			}
 			$replacement = "<input required='required' type='email' id='email' name='email' value='$bookerEmail' $readonly placeholder='$placeholder_text'>";
 			if ( ! empty( $readonly ) ) {
-				$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) . '</div>';
+				$replacement .= "<br><div class='eme_warning_wp_profile'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'You can change your email in your WP profile.', 'events-made-easy' ) . '</div>';
 			}
 			++$email_found;
 			$required = 1;
@@ -4498,7 +4493,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			} else {
 				$label = __( 'Save personal info', 'events-made-easy' );
 			}
-			$replacement = "<img id='loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
+			$replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
 		} else {
 			$found = 0;
 		}
@@ -4571,7 +4566,7 @@ function eme_find_required_formfields( $format ) {
 }
 
 function eme_answer2readable( $answer, $formfield, $convert_val = 1, $sep = '||', $target = 'html', $from_backend = 0 ) {
-	global $eme_timezone;
+	
 	//   $formfield=eme_get_formfield($answer['field_id']);
 	$field_values = $formfield['field_values'];
 	$field_tags   = $formfield['field_tags'];
@@ -4609,24 +4604,24 @@ function eme_answer2readable( $answer, $formfield, $convert_val = 1, $sep = '||'
 			$formfield['field_attributes'] = '';
 		}
 		if ( $formfield['field_type'] == 'date' ) { // for type DATE
-			return eme_localized_date( $answer, $eme_timezone, $from_backend );
+			return eme_localized_date( $answer, EME_TIMEZONE, $from_backend );
 		} elseif ( $formfield['field_type'] == 'date_js' ) { // for type DateJS
 			if ( $from_backend ) {
-				return eme_localized_date( $answer, $eme_timezone, $from_backend );
+				return eme_localized_date( $answer, EME_TIMEZONE, $from_backend );
 			} else {
-				return eme_localized_date( $answer, $eme_timezone, $formfield['field_attributes'] );
+				return eme_localized_date( $answer, EME_TIMEZONE, $formfield['field_attributes'] );
 			}
 		} elseif ( $formfield['field_type'] == 'datetime_js' ) { // for type DateJS
 			if ( $from_backend ) {
-				return eme_localized_datetime( $answer, $eme_timezone, $from_backend );
+				return eme_localized_datetime( $answer, EME_TIMEZONE, $from_backend );
 			} else {
-				return eme_localized_datetime( $answer, $eme_timezone, $formfield['field_attributes'] );
+				return eme_localized_datetime( $answer, EME_TIMEZONE, $formfield['field_attributes'] );
 			}
 		} elseif ( $formfield['field_type'] == 'time_js' ) { // for type DateJS
 			if ( $from_backend ) {
-				return eme_localized_time( $answer, $eme_timezone, $from_backend );
+				return eme_localized_time( $answer, EME_TIMEZONE, $from_backend );
 			} else {
-				return eme_localized_time( $answer, $eme_timezone, $formfield['field_attributes'] );
+				return eme_localized_time( $answer, EME_TIMEZONE, $formfield['field_attributes'] );
 			}
 		} elseif ( $formfield['extra_charge'] && $target == 'html' ) {
 			//return eme_convert_answer_price($answer);
@@ -4651,8 +4646,8 @@ function eme_convert_answer_price( $answer ) {
 }
 
 function eme_get_answer_fieldids( $ids_arr ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
 	if (eme_is_numeric_array( $ids_arr ) ) {
 		$ids_list = implode(',', $ids_arr);
@@ -4663,15 +4658,15 @@ function eme_get_answer_fieldids( $ids_arr ) {
 }
 
 function eme_get_people_export_fieldids() {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . FORMFIELDS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each run)
 	$sql = "SELECT field_id FROM $table WHERE export=1 AND field_purpose='people' ORDER BY field_id";
 	return $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 
 function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids ) {
-	global $eme_plugin_url;
+	
 	$eme_dyndata_conditions = eme_get_dyndata_conditions();
 	?>
 	<div id="div_dyndata">
@@ -4713,7 +4708,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 				?>
 					<tr id="eme_dyndata_<?php echo $count; ?>" >
 					<td>
-				<?php echo "<img class='eme-sortable-handle' src='" . esc_url($eme_plugin_url) . "images/reorder.png' alt='" . __( 'Reorder', 'events-made-easy' ) . "'>"; ?>
+				<?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . __( 'Reorder', 'events-made-easy' ) . "'>"; ?>
 					</td>
 					<td>
 				<?php echo $info['grouping']; ?>
@@ -4740,10 +4735,10 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 				<?php echo eme_ui_select_binary( $info['repeat'], 'eme_dyndata[' . $count . '][repeat]', 0, '', "aria-label='repeat'" ); ?>
 					</td>
 					<td>
-						<a href="#" class='eme_remove_dyndatacondition'><?php echo "<img src='" . esc_url($eme_plugin_url) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_dyndata_add_tag"><?php echo "<img src='" . esc_url($eme_plugin_url) . "images/plus_16.png' alt='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "'>"; ?></a>
+						<a href="#" class='eme_remove_dyndatacondition'><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_dyndata_add_tag"><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new condition', 'events-made-easy' ) . "'>"; ?></a>
 				<?php
 				if ( $grouping_used ) {
-					echo "<br><img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects.', 'events-made-easy' ) . "'>";
+					echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects.', 'events-made-easy' ) . "'>";
 				}
 				?>
 					</td>
@@ -4829,7 +4824,7 @@ add_action( 'wp_ajax_eme_formfields_list', 'eme_ajax_formfields_list' );
 add_action( 'wp_ajax_eme_manage_formfields', 'eme_ajax_manage_formfields' );
 
 function eme_ajax_formfields_list() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
@@ -4840,7 +4835,7 @@ function eme_ajax_formfields_list() {
 		wp_die();
 	}
 
-	$table              = $eme_db_prefix . FORMFIELDS_TBNAME;
+	$table              = EME_DB_PREFIX . FORMFIELDS_TBNAME;
 	$used_formfield_ids = eme_get_used_formfield_ids();
 	$jTableResult       = [];
 	$search_type        = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';

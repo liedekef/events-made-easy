@@ -52,7 +52,7 @@ function eme_init_discount_props( $props ) {
 }
 
 function eme_discounts_page() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	if ( ! current_user_can( get_option( 'eme_cap_discounts' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
 		$message = __( 'You have no right to manage discounts!', 'events-made-easy' );
@@ -385,7 +385,7 @@ function eme_discounts_main_layout( $message = '' ) {
 }
 
 function eme_manage_discounts_layout( $message = '' ) {
-	global $plugin_page, $eme_plugin_url;
+	global $plugin_page;
 
 	$dgroups     = eme_get_dgroups();
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
@@ -420,7 +420,7 @@ function eme_manage_discounts_layout( $message = '' ) {
 	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
 	<span class="eme_import_form_img">
 		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
 	<div id='div_import' style='display:none;'>
 	<form id='discount-import' method='post' enctype='multipart/form-data' action='#'>
@@ -474,7 +474,7 @@ function eme_manage_discounts_layout( $message = '' ) {
 }
 
 function eme_manage_dgroups_layout( $message = '' ) {
-	global $plugin_page, $eme_plugin_url;
+	global $plugin_page;
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
 			$hidden_style = 'display:none;';
@@ -506,7 +506,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
 	<span class="eme_import_form_img">
 		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
 	<div id='div_import' style='display:none;'>
 	<form id='discountgroups-import' method='post' enctype='multipart/form-data' action='#'>
@@ -730,7 +730,7 @@ function eme_member_discount( $membership, $member ) {
 }
 
 function eme_update_booking_discount( $booking ) {
-		global $wpdb,$eme_db_prefix;
+		global $wpdb;
 
 		$event = eme_get_event( $booking['event_id'] );
 	if ( empty( $event ) ) {
@@ -738,7 +738,7 @@ function eme_update_booking_discount( $booking ) {
 	}
 		$calc_discount = eme_booking_discount( $event, $booking );
 
-		$bookings_table        = $eme_db_prefix . BOOKINGS_TBNAME;
+		$bookings_table        = EME_DB_PREFIX . BOOKINGS_TBNAME;
 		$where                 = [];
 		$fields                = [];
 		$where['booking_id']   = $booking['booking_id'];
@@ -758,12 +758,12 @@ function eme_update_booking_discount( $booking ) {
 }
 
 function eme_update_member_discount( $member ) {
-		global $wpdb,$eme_db_prefix;
+		global $wpdb;
 
 		$membership    = eme_get_membership( $member['membership_id'] );
 		$calc_discount = eme_member_discount( $membership, $member );
 
-		$members_table         = $eme_db_prefix . MEMBERS_TBNAME;
+		$members_table         = EME_DB_PREFIX . MEMBERS_TBNAME;
 		$where                 = [];
 		$fields                = [];
 		$where['member_id']    = $member['member_id'];
@@ -1014,8 +1014,8 @@ function eme_dgroups_edit_layout( $dgroup_id = 0, $message = '' ) {
 }
 
 function eme_get_discounts( $extra_search = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 	$sql   = "SELECT * FROM $table";
 	if ( ! empty( $extra_search ) ) {
 		$sql .= " AND $extra_search";
@@ -1029,8 +1029,8 @@ function eme_get_discounts( $extra_search = '' ) {
 }
 
 function eme_get_dgroups( $extra_search = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
 	$sql   = "SELECT * FROM $table";
 	if ( ! empty( $extra_search ) ) {
 		$sql .= " AND $extra_search";
@@ -1039,8 +1039,8 @@ function eme_get_dgroups( $extra_search = '' ) {
 }
 
 function eme_db_insert_discount( $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 
 	$discount = eme_new_discount();
 	// we only want the columns that interest us
@@ -1062,8 +1062,8 @@ function eme_db_insert_discount( $line ) {
 }
 
 function eme_db_update_discount( $id, $line ) {
-		global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTS_TBNAME;
+		global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 
 		$discount = eme_get_discount( $id );
 		// we only want the columns that interest us
@@ -1084,8 +1084,8 @@ function eme_db_update_discount( $id, $line ) {
 }
 
 function eme_db_insert_dgroup( $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
 
 	$discountgroup = eme_new_discountgroup();
 	// we only want the columns that interest us
@@ -1099,8 +1099,8 @@ function eme_db_insert_dgroup( $line ) {
 }
 
 function eme_db_update_dgroup( $id, $line ) {
-		global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
+		global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
 
 		$discountgroup = eme_get_discountgroup( $id );
 		// we only want the columns that interest us
@@ -1155,8 +1155,8 @@ function eme_remove_discount_from_group( $discount_id, $group_id ) {
 }
 
 function eme_change_discount_validfrom( $discount_id, $date ) {
-		global $wpdb,$eme_db_prefix;
-		$table = $eme_db_prefix . DISCOUNTS_TBNAME;
+		global $wpdb;
+		$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 
 	if ( eme_is_datetime( $date ) ) {
 		$sql = $wpdb->prepare( "UPDATE $table SET valid_from = %s WHERE id = %d", $date, $discount_id );
@@ -1164,8 +1164,8 @@ function eme_change_discount_validfrom( $discount_id, $date ) {
 	}
 }
 function eme_change_discount_validto( $discount_id, $date ) {
-		global $wpdb,$eme_db_prefix;
-		$table = $eme_db_prefix . DISCOUNTS_TBNAME;
+		global $wpdb;
+		$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 
 	if ( eme_is_datetime( $date ) ) {
 		$sql = $wpdb->prepare( "UPDATE $table SET valid_to = %s WHERE id = %d", $date, $discount_id );
@@ -1174,35 +1174,35 @@ function eme_change_discount_validto( $discount_id, $date ) {
 }
 
 function eme_get_discountgroup( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_discountgroup_by_name( $name ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE name = %s", $name );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_discountids_by_group( $dgroup ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT id FROM $table WHERE FIND_IN_SET(%d,dgroup) OR dgroup = %s", $dgroup['id'], $dgroup['name'] );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_increase_discount_count( $id, $usage ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET count=count+%d WHERE id = %d", $usage, $id );
 	return $wpdb->query( $sql );
 }
 function eme_decrease_discount_count( $id, $usage ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET count=count-%d WHERE id = %d", $usage, $id );
 	return $wpdb->query( $sql );
 }
@@ -1265,8 +1265,8 @@ function eme_decrease_discount_member_count( $id, $member ) {
 }
 
 function eme_get_discount( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table    = $eme_db_prefix . DISCOUNTS_TBNAME;
+	global $wpdb;
+	$table    = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 	$sql      = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
 	$discount = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $discount ) {
@@ -1277,21 +1277,21 @@ function eme_get_discount( $id ) {
 	}
 }
 function eme_get_discount_name( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT name FROM $table WHERE id = %d", $id );
 	return $wpdb->get_var( $sql );
 }
 function eme_get_dgroup_name( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT name FROM $table WHERE id = %d", $id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_discount_by_name( $name ) {
-	global $wpdb,$eme_db_prefix;
-	$table    = $eme_db_prefix . DISCOUNTS_TBNAME;
+	global $wpdb;
+	$table    = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 	$sql      = $wpdb->prepare( "SELECT * FROM $table WHERE name = %s", $name );
 	$discount = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $discount ) {
@@ -1305,17 +1305,17 @@ function eme_get_discount_by_name( $name ) {
 function eme_calc_booking_discount( $discount, $booking ) {
 	// check valid from/to
 	if ( ! eme_is_empty_datetime( $discount['valid_from'] ) ) {
-		global $eme_timezone;
-		$eme_date_obj_now   = new ExpressiveDate( 'now', $eme_timezone );
-		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], $eme_timezone );
+		
+		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
 		if ( $eme_valid_from_obj > $eme_date_obj_now ) {
 			return false;
 		}
 	}
 	if ( ! eme_is_empty_datetime( $discount['valid_to'] ) ) {
-		global $eme_timezone;
-		$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
-		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], $eme_timezone );
+		
+		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
 		if ( $eme_valid_to_obj < $eme_date_obj_now ) {
 			return false;
 		}
@@ -1433,17 +1433,17 @@ function eme_calc_booking_single_discount( $discount, $booking, $coupon = '' ) {
 function eme_calc_member_discount( $discount, $member ) {
 	// check valid from/to
 	if ( ! empty( $discount['valid_from'] ) ) {
-		global $eme_timezone;
-		$eme_date_obj_now   = new ExpressiveDate( 'now', $eme_timezone );
-		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], $eme_timezone );
+		
+		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
 		if ( $eme_valid_from_obj > $eme_date_obj_now ) {
 			return false;
 		}
 	}
 	if ( ! empty( $discount['valid_to'] ) ) {
-		global $eme_timezone;
-		$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
-		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], $eme_timezone );
+		
+		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
 		if ( $eme_valid_to_obj < $eme_date_obj_now ) {
 			return false;
 		}
@@ -1570,9 +1570,9 @@ add_action( 'wp_ajax_eme_discounts_select2', 'eme_ajax_discounts_select2' );
 add_action( 'wp_ajax_eme_dgroups_select2', 'eme_ajax_dgroups_select2' );
 
 function eme_ajax_discounts_list() {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$table        = $eme_db_prefix . DISCOUNTS_TBNAME;
+	$table        = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
@@ -1623,12 +1623,12 @@ function eme_ajax_discounts_list() {
 			}
 			$rows[ $key ]['dgroup'] = $selected_dgroup;
 			if ( ! empty( $row['valid_from'] ) ) {
-				$rows[ $key ]['valid_from'] = eme_localized_datetime( $row['valid_from'], $eme_timezone, 1 );
+				$rows[ $key ]['valid_from'] = eme_localized_datetime( $row['valid_from'], EME_TIMEZONE, 1 );
 			} else {
 				$rows[ $key ]['valid_from'] = '';
 			}
 			if ( ! empty( $row['valid_to'] ) ) {
-				$rows[ $key ]['valid_to'] = eme_localized_datetime( $row['valid_to'], $eme_timezone, 1 );
+				$rows[ $key ]['valid_to'] = eme_localized_datetime( $row['valid_to'], EME_TIMEZONE, 1 );
 			} else {
 				$rows[ $key ]['valid_to'] = '';
 			}
@@ -1649,9 +1649,9 @@ function eme_ajax_discounts_list() {
 }
 
 function eme_ajax_discountgroups_list() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$table        = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
+	$table        = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
@@ -1692,13 +1692,13 @@ function eme_ajax_discountgroups_list() {
 }
 
 function eme_ajax_discounts_select2() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		wp_die();
 	}
-	$table        = $eme_db_prefix . DISCOUNTS_TBNAME;
+	$table        = EME_DB_PREFIX . DISCOUNTS_TBNAME;
 	$jTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
@@ -1728,13 +1728,13 @@ function eme_ajax_discounts_select2() {
 	wp_die();
 }
 function eme_ajax_dgroups_select2() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		wp_die();
 	}
-	$table        = $eme_db_prefix . DISCOUNTGROUPS_TBNAME;
+	$table        = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
 	$jTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {

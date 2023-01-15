@@ -309,7 +309,7 @@ function eme_countries_main_layout( $message = '' ) {
 }
 
 function eme_manage_countries_layout( $message = '' ) {
-	global $plugin_page, $eme_plugin_url;
+	global $plugin_page;
 	$lang        = eme_detect_lang();
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
@@ -352,7 +352,7 @@ function eme_manage_countries_layout( $message = '' ) {
 	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
 	<span class="eme_import_form_img">
 		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
 	<div id='div_import' style='display:none;'>
 	<form id='countries-import' method='post' enctype='multipart/form-data' action='#'>
@@ -392,7 +392,7 @@ function eme_manage_countries_layout( $message = '' ) {
 }
 
 function eme_manage_states_layout( $message = '' ) {
-	global $plugin_page, $eme_plugin_url;
+	global $plugin_page;
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
 			$hidden_style = 'display:none;';
@@ -424,7 +424,7 @@ function eme_manage_states_layout( $message = '' ) {
 	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
 	<span class="eme_import_form_img">
 		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
 	<div id='div_import' style='display:none;'>
 	<form id='states-import' method='post' enctype='multipart/form-data' action='#'>
@@ -606,16 +606,16 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
 	echo $layout;
 }
 function eme_get_states( $country_id = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table           = $eme_db_prefix . STATES_TBNAME;
-	$countries_table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table           = EME_DB_PREFIX . STATES_TBNAME;
+	$countries_table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$sql             = "SELECT state.*,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 function eme_get_localized_states( $country_code = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$table           = $eme_db_prefix . STATES_TBNAME;
-	$countries_table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table           = EME_DB_PREFIX . STATES_TBNAME;
+	$countries_table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$lang            = eme_detect_lang();
 	if ( empty( $country_code ) ) {
 		$sql = $wpdb->prepare( "SELECT state.*,country.name AS country,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE lang=%s", $lang );
@@ -635,21 +635,21 @@ function eme_get_localized_states( $country_code = '' ) {
 }
 
 function eme_get_countries_count() {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$sql   = "SELECT count(*) FROM $table";
 	return $wpdb->get_var( $sql );
 }
 function eme_get_countries() {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$sql   = "SELECT * FROM $table";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_localized_countries() {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$lang  = eme_detect_lang();
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE lang=%s", $lang );
 	$res   = $wpdb->get_results( $sql, ARRAY_A );
@@ -660,8 +660,8 @@ function eme_get_localized_countries() {
 	return $res;
 }
 function eme_get_countries_alpha2() {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$sql   = "SELECT alpha_2 FROM $table GROUP BY alpha_2";
 	return $wpdb->get_col( $sql );
 }
@@ -684,8 +684,8 @@ function eme_validate_country( $country ) {
 }
 
 function eme_db_insert_country( $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 
 	$country = eme_new_country();
 	// we only want the columns that interest us
@@ -702,9 +702,9 @@ function eme_db_insert_country( $line ) {
 }
 
 function eme_db_update_country( $id, $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table        = $eme_db_prefix . COUNTRIES_TBNAME;
-	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
+	global $wpdb;
+	$table        = EME_DB_PREFIX . COUNTRIES_TBNAME;
+	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
 
 		$line['alpha_2'] = strtoupper( $line['alpha_2'] );
 		$line['alpha_3'] = strtoupper( $line['alpha_3'] );
@@ -742,8 +742,8 @@ function eme_db_update_country( $id, $line ) {
 }
 
 function eme_db_insert_state( $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . STATES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . STATES_TBNAME;
 
 	$state = eme_new_state();
 	// we only want the columns that interest us
@@ -758,9 +758,9 @@ function eme_db_insert_state( $line ) {
 }
 
 function eme_db_update_state( $id, $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table            = $eme_db_prefix . STATES_TBNAME;
-	$people_table     = $eme_db_prefix . PEOPLE_TBNAME;
+	global $wpdb;
+	$table            = EME_DB_PREFIX . STATES_TBNAME;
+	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
 		$line['code'] = strtoupper( $line['code'] );
 
 	// first get the existing state, compary the state code and change ALL relevant states and people from the old to new code if not the same
@@ -788,8 +788,8 @@ function eme_db_update_state( $id, $line ) {
 }
 
 function eme_get_country( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table        = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table        = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
 	$res          = $wpdb->get_row( $sql, ARRAY_A );
 	$res['num_3'] = sprintf( '%03s', $res['num_3'] );
@@ -797,8 +797,8 @@ function eme_get_country( $id ) {
 }
 
 function eme_get_country_name( $code, $lang = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	if ( empty( $lang ) ) {
 		$lang = eme_detect_lang();
 	}
@@ -812,24 +812,24 @@ function eme_get_country_name( $code, $lang = '' ) {
 }
 
 function eme_get_state( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . STATES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . STATES_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_state_lang( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table           = $eme_db_prefix . STATES_TBNAME;
-	$countries_table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table           = EME_DB_PREFIX . STATES_TBNAME;
+	$countries_table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$sql             = $wpdb->prepare( "SELECT country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id WHERE state.id=%d", $id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_state_name( $code, $country_code, $lang = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$table           = $eme_db_prefix . STATES_TBNAME;
-	$countries_table = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table           = EME_DB_PREFIX . STATES_TBNAME;
+	$countries_table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	if ( empty( $lang ) ) {
 		$lang = eme_detect_lang();
 	}
@@ -842,8 +842,8 @@ function eme_get_state_name( $code, $country_code, $lang = '' ) {
 }
 
 function eme_get_countries_lang() {
-	global $wpdb,$eme_db_prefix;
-	$table        = $eme_db_prefix . COUNTRIES_TBNAME;
+	global $wpdb;
+	$table        = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$jTableResult = [];
 	$sql          = "SELECT id, CONCAT (name, ' (', lang, ')') AS name FROM $table";
 	return $wpdb->get_results( $sql, ARRAY_A );
@@ -855,9 +855,9 @@ add_action( 'wp_ajax_eme_states_list', 'eme_ajax_states_list' );
 add_action( 'wp_ajax_eme_manage_states', 'eme_ajax_manage_states' );
 
 function eme_ajax_countries_list() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$table        = $eme_db_prefix . COUNTRIES_TBNAME;
+	$table        = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
@@ -898,10 +898,10 @@ function eme_ajax_countries_list() {
 }
 
 function eme_ajax_states_list() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$table           = $eme_db_prefix . STATES_TBNAME;
-	$countries_table = $eme_db_prefix . COUNTRIES_TBNAME;
+	$table           = EME_DB_PREFIX . STATES_TBNAME;
+	$countries_table = EME_DB_PREFIX . COUNTRIES_TBNAME;
 	$jTableResult    = [];
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table";
@@ -963,9 +963,9 @@ function eme_ajax_manage_states() {
 	wp_die();
 }
 function eme_ajax_country_delete() {
-	global $wpdb,$eme_db_prefix;
-	$countries_table = $eme_db_prefix . COUNTRIES_TBNAME;
-	$states_table    = $eme_db_prefix . STATES_TBNAME;
+	global $wpdb;
+	$countries_table = EME_DB_PREFIX . COUNTRIES_TBNAME;
+	$states_table    = EME_DB_PREFIX . STATES_TBNAME;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {

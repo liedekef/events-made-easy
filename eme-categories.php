@@ -15,7 +15,7 @@ function eme_new_category() {
 }
 
 function eme_categories_page() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	if ( ! current_user_can( get_option( 'eme_cap_categories' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
 		$message = __( 'You have no right to update categories!', 'events-made-easy' );
@@ -38,7 +38,7 @@ function eme_categories_page() {
 	}
 
 	// Insert/Update/Delete Record
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	$message          = '';
 	if ( isset( $_POST['eme_admin_action'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -283,8 +283,8 @@ function eme_get_cached_categories() {
 }
 
 function eme_get_categories( $eventful = false, $scope = 'future', $extra_conditions = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	global $wpdb;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	$categories       = [];
 	$order_by         = ' ORDER BY category_name ASC';
 	if ( $eventful ) {
@@ -332,16 +332,16 @@ function eme_get_categories_filtered( $category_ids, $categories ) {
 }
 
 function eme_get_category( $category_id ) {
-	global $wpdb,$eme_db_prefix;
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	global $wpdb;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT * FROM $categories_table WHERE category_id = %d", $category_id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_event_category_names( $event_id, $extra_conditions = '', $order_by = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$event_table      = $eme_db_prefix . EVENTS_TBNAME;
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	global $wpdb;
+	$event_table      = EME_DB_PREFIX . EVENTS_TBNAME;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	if ( $extra_conditions != '' ) {
 		$extra_conditions = " AND ($extra_conditions)";
 	}
@@ -353,9 +353,9 @@ function eme_get_event_category_names( $event_id, $extra_conditions = '', $order
 }
 
 function eme_get_event_category_descriptions( $event_id, $extra_conditions = '', $order_by = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$event_table      = $eme_db_prefix . EVENTS_TBNAME;
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	global $wpdb;
+	$event_table      = EME_DB_PREFIX . EVENTS_TBNAME;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	if ( $extra_conditions != '' ) {
 		$extra_conditions = " AND ($extra_conditions)";
 	}
@@ -367,9 +367,9 @@ function eme_get_event_category_descriptions( $event_id, $extra_conditions = '',
 }
 
 function eme_get_event_categories( $event_id, $extra_conditions = '', $order_by = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$event_table      = $eme_db_prefix . EVENTS_TBNAME;
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	global $wpdb;
+	$event_table      = EME_DB_PREFIX . EVENTS_TBNAME;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	if ( $extra_conditions != '' ) {
 		$extra_conditions = " AND ($extra_conditions)";
 	}
@@ -381,13 +381,13 @@ function eme_get_event_categories( $event_id, $extra_conditions = '', $order_by 
 }
 
 function eme_get_category_eventids( $category_id, $future_only = 1 ) {
-	global $eme_timezone;
+	
 	// similar to eme_get_recurrence_eventids
-	global $wpdb,$eme_db_prefix;
-	$events_table    = $eme_db_prefix . EVENTS_TBNAME;
+	global $wpdb;
+	$events_table    = EME_DB_PREFIX . EVENTS_TBNAME;
 	$extra_condition = '';
 	if ( $future_only ) {
-		$eme_date_obj    = new ExpressiveDate( 'now', $eme_timezone );
+		$eme_date_obj    = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$today           = $eme_date_obj->getDateTime();
 		$extra_condition = "AND event_start > '$today'";
 	}
@@ -405,9 +405,9 @@ function eme_get_category_eventids( $category_id, $future_only = 1 ) {
 }
 
 function eme_get_location_categories( $location_id, $extra_conditions = '', $order_by = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$locations_table  = $eme_db_prefix . LOCATIONS_TBNAME;
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	global $wpdb;
+	$locations_table  = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	if ( $extra_conditions != '' ) {
 		$extra_conditions = " AND ($extra_conditions)";
 	}
@@ -419,9 +419,9 @@ function eme_get_location_categories( $location_id, $extra_conditions = '', $ord
 }
 
 function eme_get_location_category_names( $location_id, $extra_conditions = '', $order_by = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$locations_table  = $eme_db_prefix . LOCATIONS_TBNAME;
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	global $wpdb;
+	$locations_table  = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	if ( $extra_conditions != '' ) {
 		$extra_conditions = " AND ($extra_conditions)";
 	}
@@ -433,9 +433,9 @@ function eme_get_location_category_names( $location_id, $extra_conditions = '', 
 }
 
 function eme_get_location_category_descriptions( $location_id, $extra_conditions = '', $order_by = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$locations_table  = $eme_db_prefix . LOCATIONS_TBNAME;
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	global $wpdb;
+	$locations_table  = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	if ( $extra_conditions != '' ) {
 		$extra_conditions = " AND ($extra_conditions)";
 	}
@@ -447,8 +447,8 @@ function eme_get_location_category_descriptions( $location_id, $extra_conditions
 }
 
 function eme_get_category_ids( $cat_slug ) {
-	global $wpdb,$eme_db_prefix;
-	$categories_table = $eme_db_prefix . CATEGORIES_TBNAME;
+	global $wpdb;
+	$categories_table = EME_DB_PREFIX . CATEGORIES_TBNAME;
 	$cat_ids          = [];
 	if ( ! empty( $cat_slug ) ) {
 		$sql     = $wpdb->prepare( "SELECT DISTINCT category_id FROM $categories_table WHERE category_slug = %s", $cat_slug );

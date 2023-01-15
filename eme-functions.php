@@ -24,11 +24,11 @@ function eme_plugin_dir() {
 add_action( 'wp_ajax_eme_client_clock', 'eme_client_clock_ajax' );
 add_action( 'wp_ajax_nopriv_eme_client_clock', 'eme_client_clock_ajax' );
 function eme_client_clock_ajax() {
-	global $eme_timezone;
+	
 	$valid = true;
 	$ret   = '0';
 	// Set php clock values in an array
-	$phptime_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$phptime_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// if clock data not set
 	if ( ! isset( $_COOKIE['eme_client_time'] ) ) {
 		// no valid data received
@@ -805,8 +805,8 @@ function eme_email_obfuscate( $e, $target = 'html' ) {
 }
 
 function eme_unique_slug( $slug, $table, $column, $index_col, $index_colval = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . $table;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . $table;
 	$slug       = untrailingslashit( $slug );
 	// code taken from function wp_unique_term_slug
 	$query = $wpdb->prepare( "SELECT $column FROM $table_name WHERE $index_col<> $index_colval AND $column = %s", $slug );
@@ -1312,15 +1312,15 @@ function eme_current_page_url( $extra_arg = [] ) {
 }
 
 function eme_check_event_exists( $id ) {
-		global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . EVENTS_TBNAME;
+		global $wpdb;
+	$table = EME_DB_PREFIX . EVENTS_TBNAME;
 	$event = eme_get_event( $id );
 	return $event;
 }
 
 function eme_check_location_exists( $id ) {
-		global $wpdb,$eme_db_prefix;
-	$table    = $eme_db_prefix . LOCATIONS_TBNAME;
+		global $wpdb;
+	$table    = EME_DB_PREFIX . LOCATIONS_TBNAME;
 	$location = eme_get_location( $id );
 	return $location;
 }
@@ -1407,10 +1407,10 @@ function eme_member_status_array() {
 // The next function is to format the datetime in the expected format for the calendar javascript to be able to parse it
 // If the argument is just a date (no time portion), this function doesn't need to be called since the calendar JS can cope with that already
 function eme_js_datetime( $mydate, $timezone = '' ) {
-	global $eme_timezone;
+	
 
 	if ( empty( $timezone ) ) {
-		$timezone = $eme_timezone;
+		$timezone = EME_TIMEZONE;
 	}
 
 	//  $ExactBrowserNameUA=strtolower($_SERVER['HTTP_USER_AGENT']);
@@ -1467,7 +1467,7 @@ function eme_localized_datetime( $mydate, $timezone = '', $datetime_format = '' 
 }
 
 function eme_localized_date( $mydate, $timezone = '', $date_format = '' ) {
-	global $eme_wp_date_format,$eme_timezone;
+	
 	if ( eme_is_empty_date( $mydate ) ) {
 		return '';
 	}
@@ -1475,10 +1475,10 @@ function eme_localized_date( $mydate, $timezone = '', $date_format = '' ) {
 		$date_format = get_option( 'eme_backend_dateformat' );
 	}
 	if ( empty( $date_format ) ) {
-		$date_format = $eme_wp_date_format;
+		$date_format = EME_WP_DATE_FORMAT;
 	}
 	if ( empty( $timezone ) ) {
-		$timezone = $eme_timezone;
+		$timezone = EME_TIMEZONE;
 	}
 
 	// catch possible issues with invalid/unparseable dates etc ...
@@ -1507,16 +1507,16 @@ function eme_localized_date( $mydate, $timezone = '', $date_format = '' ) {
 }
 
 function eme_localized_time( $mytime, $timezone = '', $time_format = '' ) {
-	global $eme_wp_time_format,$eme_timezone;
+	
 
 	if ( $time_format == 1 ) {
 		$time_format = get_option( 'eme_backend_timeformat' );
 	}
 	if ( empty( $time_format ) ) {
-		$time_format = $eme_wp_time_format;
+		$time_format = EME_WP_TIME_FORMAT;
 	}
 	if ( empty( $timezone ) ) {
-		$timezone = $eme_timezone;
+		$timezone = EME_TIMEZONE;
 	}
 
 	// if strlen is >6, we assume it includes the date-portion in the string too
@@ -1533,13 +1533,13 @@ function eme_localized_time( $mytime, $timezone = '', $time_format = '' ) {
 }
 
 function eme_convert_localized_time( $time_format, $mytime ) {
-	global $eme_wp_time_format,$eme_timezone;
+	
 
 	if ( empty( $time_format ) ) {
-		$time_format = $eme_wp_time_format;
+		$time_format = EME_WP_TIME_FORMAT;
 	}
 
-	$date_obj = ExpressiveDate::createfromformat( $time_format, $mytime, ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+	$date_obj = ExpressiveDate::createfromformat( $time_format, $mytime, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 	return $date_obj->format( 'H:i:00' );
 }
 
@@ -1548,18 +1548,18 @@ function eme_localized_db_datetime( $mydate ) {
 	return eme_localized_db_date( $mydate ) . ' ' . eme_localized_db_time( $mydate );
 }
 function eme_localized_db_date( $mydate, $date_format = '' ) {
-	global $eme_wp_date_format, $eme_timezone;
+	
 	$eme_db_time_diff = eme_get_db_time_diff();
 
 	if ( empty( $date_format ) ) {
-		$date_format = $eme_wp_date_format;
+		$date_format = EME_WP_DATE_FORMAT;
 	}
-	$eme_date_obj = new ExpressiveDate( $mydate, $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( $mydate, EME_TIMEZONE );
 	// account for the difference stored in the db (we claim that $mydate is in timezone eme_timezone, but the db might be in a different tz)
 	$eme_date_obj->addSeconds( $eme_db_time_diff );
 	// rest is taken from eme_localize_date
 	if ( function_exists( 'wp_date' ) ) {
-		$eme_tz_obj = new DateTimeZone( $eme_timezone );
+		$eme_tz_obj = new DateTimeZone( EME_TIMEZONE );
 		$result     = wp_date( $date_format, $eme_date_obj->getTimestamp(), $eme_tz_obj );
 	} else {
 		$wp_date = new ExpressiveDate( $eme_date_obj->getDateTime(), date_default_timezone_get() );
@@ -1570,8 +1570,7 @@ function eme_localized_db_date( $mydate, $date_format = '' ) {
 }
 
 function eme_localized_db_time( $mydate ) {
-	global $eme_wp_time_format;
-	$result = eme_localized_db_date( $mydate, $eme_wp_time_format );
+	$result = eme_localized_db_date( $mydate, EME_WP_TIME_FORMAT );
 	if ( get_option( 'eme_time_remove_leading_zeros' ) ) {
 		$result = str_replace( ':00', '', $result );
 		$result = str_replace( ':0', ':', $result );
@@ -1587,8 +1586,8 @@ function eme_rfc822_date( $mydate, $tz ) {
 }
 
 function eme_get_db_time_diff() {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	global $wpdb;
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$db_diff      = $wpdb->get_var( "select time_to_sec(time_format(timediff(now(),UTC_TIMESTAMP),'%H:%i'))" );
 	$tz_diff      = $eme_date_obj->getOffset() - $db_diff;
 	return $tz_diff;
@@ -2738,7 +2737,7 @@ function eme_get_wp_image( $image_id ) {
 }
 
 function eme_column_exists( $table_name, $column_name ) {
-		global $wpdb,$eme_db_prefix;
+		global $wpdb;
 	foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) {
 		if ( $column == $column_name ) {
 			return true;
@@ -2748,14 +2747,14 @@ function eme_column_exists( $table_name, $column_name ) {
 }
 
 function eme_table_exists( $table_name ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	$query     = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
 	$db_result = $wpdb->get_var( $query );
 	return strtolower( $db_result ) === strtolower( $table_name );
 }
 
 function eme_maybe_drop_column( $table_name, $column_name ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	if ( eme_column_exists( $table_name, $column_name ) ) {
 		$wpdb->query( "ALTER TABLE $table_name DROP COLUMN $column_name;" );
 	}
@@ -2768,8 +2767,8 @@ function eme_drop_table( $table ) {
 }
 
 function eme_convert_charset( $table, $charset, $collate ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . $table;
+	global $wpdb;
+	$table = EME_DB_PREFIX . $table;
 	$sql   = "ALTER TABLE $table CONVERT TO $charset $collate;";
 	$wpdb->query( $sql );
 }
@@ -3148,7 +3147,7 @@ function eme_get_uploaded_files( $id, $type = 'bookings' ) {
 }
 
 function eme_get_uploaded_file_linkdelete( $file ) {
-	global $eme_plugin_url;
+	
 	$style_del = 'eme_del_upload-button';
 	// the name of the file given by the person
 	$name = $file['name'];
@@ -3160,7 +3159,7 @@ function eme_get_uploaded_file_linkdelete( $file ) {
 	$random_id = $file['random_id'];
 	$extra_id  = $file['extra_id'];
 	$field_id  = $file['field_id'];
-	$html      = "<a href='$url'>$name</a> <a class='$style_del' href='#' data-id='$id' data-name='$name' data-random_id='$random_id' data-type='$type' data-extra_id='$extra_id' data-field_id='$field_id'><img src=" . esc_url($eme_plugin_url) . 'images/cross.png></a>';
+	$html      = "<a href='$url'>$name</a> <a class='$style_del' href='#' data-id='$id' data-name='$name' data-random_id='$random_id' data-type='$type' data-extra_id='$extra_id' data-field_id='$field_id'><img src=" . esc_url(EME_PLUGIN_URL) . 'images/cross.png></a>';
 	return "<span id='span_$random_id'>$html<br></span>";
 }
 
@@ -3268,8 +3267,8 @@ function eme_text_split_newlines( $text ) {
 }
 
 function eme_ajax_record_list( $tablename, $cap ) {
-	global $wpdb,$eme_db_prefix;
-	$table        = $eme_db_prefix . $tablename;
+	global $wpdb;
+	$table        = EME_DB_PREFIX . $tablename;
 	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
@@ -3311,8 +3310,8 @@ function eme_ajax_record_list( $tablename, $cap ) {
 }
 
 function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
-	global $wpdb,$eme_db_prefix;
-	$table        = $eme_db_prefix . $tablename;
+	global $wpdb;
+	$table        = EME_DB_PREFIX . $tablename;
 	$jTableResult = [];
 
 	if ( current_user_can( get_option( $cap ) ) && isset( $_POST[ $postvar ] ) ) {
@@ -3333,8 +3332,8 @@ function eme_ajax_record_delete( $tablename, $cap, $postvar ) {
 }
 
 function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_function = '', $update = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table        = $eme_db_prefix . $tablename;
+	global $wpdb;
+	$table        = EME_DB_PREFIX . $tablename;
 	$jTableResult = [];
 	if ( ! $record ) {
 		$jTableResult['Result']  = 'Error';
@@ -3505,7 +3504,7 @@ function eme_format_full_name( $firstname, $lastname ) {
 }
 
 function eme_extra_event_headers( $event ) {
-	global $eme_timezone;
+	
 
 	if ( $event['event_status'] != EME_EVENT_STATUS_PUBLIC && ! is_user_logged_in() ) {
 		return;
@@ -3605,8 +3604,8 @@ function eme_extra_event_headers( $event ) {
 
 		// allow rsvp from rsvp_start_number_days:rsvp_start_number_hours before the event starts/ends (rsvp_start_target)
 		if ( ( intval( $event['event_properties']['rsvp_start_number_days'] ) > 0 || intval( $event['event_properties']['rsvp_start_number_hours'] ) > 0 ) ) {
-			$event_rsvp_startdatetime = new ExpressiveDate( $event['event_start'], $eme_timezone );
-			$event_rsvp_enddatetime   = new ExpressiveDate( $event['event_end'], $eme_timezone );
+			$event_rsvp_startdatetime = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+			$event_rsvp_enddatetime   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
 				$event_rsvp_start = $event_rsvp_enddatetime->copy();
 			} else {
@@ -3618,7 +3617,7 @@ function eme_extra_event_headers( $event ) {
 		} elseif ( eme_is_empty_datetime( $event['creation_date'] ) ) {
 			$validfrom = '#_STARTDATETIME_8601';
 		} else {
-			$eme_date_obj = new ExpressiveDate( $event['creation_date'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $event['creation_date'], EME_TIMEZONE );
 			$validfrom    = $eme_date_obj->format( 'c' );
 		}
 		$offers['validFrom'] = $validfrom;
@@ -3785,7 +3784,7 @@ function eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $
 }
 
 function eme_check_access( $post_id ) {
-	global $eme_timezone;
+	
 
 	$access_allowed = wp_cache_get( "eme_access $post_id" );
 	if ( $access_allowed === false ) {
@@ -3822,11 +3821,11 @@ function eme_check_access( $post_id ) {
 								// if we need to drip content, get the member and check the payment date
 								$person_id        = eme_get_personid_by_wpid( $wp_id );
 								$show_content     = 0;
-								$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+								$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 							foreach ( $res_intersect as $membership_id ) {
 								$member = eme_get_active_member_by_personid_membershipid( $person_id, $membership_id );
 								if ( ! empty( $member ) ) {
-									$payment_obj = new ExpressiveDate( $member['payment_date'], $eme_timezone );
+									$payment_obj = new ExpressiveDate( $member['payment_date'], EME_TIMEZONE );
 									if ( $member['paid'] && $eme_date_obj_now >= $payment_obj->modifyDays( $eme_drip_counter ) ) {
 										$show_content = 1;
 										break;
@@ -3864,8 +3863,8 @@ function eme_check_access( $post_id ) {
 }
 
 function eme_migrate_event_payment_options() {
-		global $wpdb,$eme_db_prefix;
-		$table_name = $eme_db_prefix . EVENTS_TBNAME;
+		global $wpdb;
+		$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
 
 		$payment_options = [ 'use_paypal', 'use_2co', 'use_webmoney', 'use_fdgg', 'use_mollie' ];
 	foreach ( $payment_options as $payment_option ) {
@@ -3939,22 +3938,22 @@ function eme_get_answerid( $answers, $related_id, $type, $field_id, $grouping = 
 	return 0;
 }
 function eme_insert_answer( $type, $related_id, $field_id, $answer, $grouping_id = 0, $occurence = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "INSERT INTO $answers_table (type,related_id,field_id,answer,eme_grouping,occurence) VALUES (%s,%d,%d,%s,%d,%d)", $type, $related_id, $field_id, $answer, $grouping_id, $occurence );
 	$wpdb->query( $sql );
 	return $wpdb->insert_id;
 }
 
 function eme_update_answer( $answer_id, $value ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "UPDATE $answers_table SET answer=%s WHERE answer_id=%d", $value, $answer_id );
 	$wpdb->query( $sql );
 }
 function eme_delete_answer( $answer_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE answer_id=%d", $answer_id );
 	$wpdb->query( $sql );
 }

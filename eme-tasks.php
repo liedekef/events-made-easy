@@ -19,7 +19,7 @@ function eme_new_task() {
 }
 
 function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
-	global $eme_timezone;
+	
 	$eme_tasks_arr = [];
 	if ( empty( $_POST['eme_tasks'] ) ) {
 		return $eme_tasks_arr;
@@ -43,8 +43,8 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
 			continue;
 		}
 		if ( $day_difference != 0 ) {
-			$eme_date_obj_start     = new ExpressiveDate( $eme_task['task_start'], $eme_timezone );
-			$eme_date_obj_end       = new ExpressiveDate( $eme_task['task_end'], $eme_timezone );
+			$eme_date_obj_start     = new ExpressiveDate( $eme_task['task_start'], EME_TIMEZONE );
+			$eme_date_obj_end       = new ExpressiveDate( $eme_task['task_end'], EME_TIMEZONE );
 			$eme_task['task_start'] = $eme_date_obj_start->addDays( $day_difference )->getDateTime();
 			$eme_task['task_end']   = $eme_date_obj_end->addDays( $day_difference )->getDateTime();
 		}
@@ -66,8 +66,8 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
 }
 
 function eme_db_insert_task( $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASKS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASKS_TBNAME;
 
 	$tmp_task = eme_new_task();
 	// we only want the columns that interest us
@@ -83,8 +83,8 @@ function eme_db_insert_task( $line ) {
 }
 
 function eme_db_update_task_by_task_nbr( $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASKS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASKS_TBNAME;
 
 	// get the task id
 	$sql     = $wpdb->prepare( "SELECT task_id FROM $table WHERE event_id = %d AND task_nbr = %d", $line['event_id'], $line['task_nbr'] );
@@ -100,8 +100,8 @@ function eme_db_update_task_by_task_nbr( $line ) {
 }
 
 function eme_db_update_task( $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table            = $eme_db_prefix . TASKS_TBNAME;
+	global $wpdb;
+	$table            = EME_DB_PREFIX . TASKS_TBNAME;
 	$where            = [];
 	$where['task_id'] = $line['task_id'];
 
@@ -118,46 +118,46 @@ function eme_db_update_task( $line ) {
 }
 
 function eme_db_delete_task( $task_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASKS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASKS_TBNAME;
 	$wpdb->delete( $table, [ 'task_id' => $task_id ] );
 }
 
 function eme_delete_event_tasks( $event_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASKS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASKS_TBNAME;
 	$sql   = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d", $event_id );
 	$wpdb->query( $sql );
 
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql   = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d", $event_id );
 	$wpdb->query( $sql );
 }
 
 function eme_delete_event_old_tasks( $event_id, $ids_arr ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	if ( empty( $ids_arr ) || ! eme_is_numeric_array( $ids_arr ) ) {
 		return;
 	}
 	$ids_list = implode(',', $ids_arr);
-	$table    = $eme_db_prefix . TASKS_TBNAME;
+	$table    = EME_DB_PREFIX . TASKS_TBNAME;
 	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $ids_list )", $event_id);
 	$wpdb->query( $sql);
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql = $wpdb->prepare( "DELETE FROM $table WHERE event_id=%d AND task_id NOT IN ( $ids_list )", $event_id);
 	$wpdb->query( $sql);
 }
 
 function eme_cancel_task_signup( $signup_randomid ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql   = $wpdb->prepare( "DELETE FROM $table WHERE random_id=%s", $signup_randomid );
 	return $wpdb->query( $sql );
 }
 
 function eme_db_insert_task_signup( $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table             = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table             = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$line['random_id'] = eme_random_id();
 	if ( $wpdb->insert( $table, $line ) === false ) {
 		return false;
@@ -168,8 +168,8 @@ function eme_db_insert_task_signup( $line ) {
 }
 
 function eme_db_update_task_signup( $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table       = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table       = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$where       = [];
 	$where['id'] = $line['id'];
 	if ( $wpdb->update( $table, $line, $where ) === false ) {
@@ -181,8 +181,8 @@ function eme_db_update_task_signup( $line ) {
 }
 
 function eme_transfer_person_task_signups( $person_ids, $to_person_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$sql = $wpdb->prepare( "UPDATE $table SET person_id = %d  WHERE person_id IN ( $person_ids )", $to_person_id);
 		return $wpdb->query( $sql );
@@ -190,8 +190,8 @@ function eme_transfer_person_task_signups( $person_ids, $to_person_id ) {
 }
 
 function eme_db_delete_task_signup( $signup_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	if ( $wpdb->delete( $table, [ 'id' => $signup_id ] ) === false ) {
 			$res = false;
 	} else {
@@ -201,45 +201,45 @@ function eme_db_delete_task_signup( $signup_id ) {
 }
 
 function eme_get_task( $task_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASKS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASKS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE task_id=%d", $task_id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_event_tasks( $event_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASKS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASKS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE event_id=%d ORDER BY task_seq ASC", $event_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_task_signup( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_count_task_signups( $task_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d", $task_id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_task_signups( $task_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE task_id=%d ", $task_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 'future' ) {
-	global $wpdb,$eme_db_prefix,$eme_timezone;
-	$table        = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$people_table = $eme_db_prefix . PEOPLE_TBNAME;
-	$events_table = $eme_db_prefix . EVENTS_TBNAME;
+	global $wpdb;
+	$table        = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
+	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$events_table = EME_DB_PREFIX . EVENTS_TBNAME;
 
 	$events_join = "LEFT JOIN $events_table ON $table.event_id=$events_table.event_id";
 	$order_arr   = [];
@@ -259,11 +259,11 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
 	$where_arr = [ "$people_table.wp_id=$wp_id" ];
 	if ( empty( $event_id ) ) {
 		if ( $scope == 'future' ) {
-			$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+			$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 			$search_end_date  = $eme_date_obj_now->getDateTime();
 			$where_arr[]      = "$events_table.event_end >= '$search_end_date'";
 		} elseif ( $scope == 'past' ) {
-			$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+			$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 			$search_end_date  = $eme_date_obj_now->getDateTime();
 			$where_arr[]      = "$events_table.event_end <= '$search_end_date'";
 		}
@@ -280,16 +280,16 @@ function eme_get_task_signups_by( $wp_id, $task_id = 0, $event_id = 0, $scope = 
 }
 
 function eme_get_tasksignup_personids( $signup_ids ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	if ( eme_is_list_of_int( $signup_ids ) ) {
 		return $wpdb->get_col ( "SELECT DISTINCT person_id FROM $table WHERE id IN ( $signup_ids )" );
 	}
 }
 
 function eme_count_event_task_signups( $event_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table      = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table      = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT task_id, COUNT(*) as signup_count FROM $table WHERE event_id=%d GROUP BY task_id", $event_id );
 	$res        = $wpdb->get_results( $sql, ARRAY_A );
 	$return_arr = [];
@@ -300,24 +300,24 @@ function eme_count_event_task_signups( $event_id ) {
 }
 
 function eme_count_person_task_signups( $task_id, $person_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE task_id=%d AND person_id=%d", $task_id, $person_id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_check_task_signup_overlap( $task, $person_id ) {
-	global $wpdb,$eme_db_prefix;
-	$tasks_table = $eme_db_prefix . TASKS_TBNAME;
-	$table       = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$tasks_table = EME_DB_PREFIX . TASKS_TBNAME;
+	$table       = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$sql         = $wpdb->prepare( "SELECT COUNT(*) FROM $table LEFT JOIN $tasks_table ON $table.task_id=$tasks_table.task_id WHERE $table.task_id<>%d AND person_id=%d AND task_start<%s AND task_end>%s", $task['task_id'], $person_id, $task['task_end'], $task['task_start'] );
 	return $wpdb->get_var( $sql );
 }
 
 // for CRON
 function eme_tasks_send_signup_reminders() {
-	global $eme_timezone;
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// this gets us future and ongoing events with tasks enabled
 	$events = eme_get_events( 'extra_conditions=' . urlencode( 'event_tasks=1' ) );
 	foreach ( $events as $event ) {
@@ -330,7 +330,7 @@ function eme_tasks_send_signup_reminders() {
 		}
 		$tasks = eme_get_event_tasks( $event['event_id'] );
 		foreach ( $tasks as $task ) {
-			$eme_date_obj = new ExpressiveDate( $task['task_start'], $eme_timezone );
+			$eme_date_obj = new ExpressiveDate( $task['task_start'], EME_TIMEZONE );
 			$days_diff    = intval( $eme_date_obj_now->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() ) );
 			foreach ( $task_reminder_days as $reminder_day ) {
 				$reminder_day = intval( $reminder_day );
@@ -347,8 +347,8 @@ function eme_tasks_send_signup_reminders() {
 
 // for GDPR CRON
 function eme_tasks_remove_old_signups() {
-	global $wpdb,$eme_db_prefix,$eme_timezone;
-	$table                   = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	global $wpdb;
+	$table                   = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$remove_old_signups_days = get_option( 'eme_gdpr_remove_old_signups_days' );
 	if ( empty( $remove_old_signups_days ) ) {
 			return;
@@ -356,7 +356,7 @@ function eme_tasks_remove_old_signups() {
 			$remove_old_signups_days = abs( $remove_old_signups_days );
 	}
 
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$old_date     = $eme_date_obj->minusDays( $remove_old_signups_days )->getDateTime();
 
 	// we don't remove old bookings, just anonymize them
@@ -366,7 +366,7 @@ function eme_tasks_remove_old_signups() {
 
 
 function eme_task_signups_page() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
 		$message = __( 'You have no right to manage task signups!', 'events-made-easy' );
@@ -375,7 +375,7 @@ function eme_task_signups_page() {
 	}
 
 	// Insert/Update/Delete Record
-	$table   = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
+	$table   = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
 	$message = '';
 	if ( isset( $_POST['eme_admin_action'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -644,7 +644,7 @@ function eme_meta_box_div_event_task_signup_recorded_ok_html( $event, $templates
 }
 
 function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
-	global $eme_plugin_url, $eme_timezone;
+	
 	if ( isset( $event['is_duplicate'] ) ) {
 		$tasks = eme_get_event_tasks( $event['orig_id'] );
 	} elseif ( ! empty( $event['event_id'] ) ) {
@@ -687,7 +687,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 				?>
 					<tr id="eme_row_task_<?php echo $count; ?>" >
 					<td>
-				<?php echo "<img class='eme-sortable-handle' src='" . esc_url($eme_plugin_url) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
+				<?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
 					</td>
 					<td>
 				<?php if ( ! isset( $event['is_duplicate'] ) ) : // we set the task ids only if it is not a duplicate event ?>
@@ -733,7 +733,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 			<textarea id="eme_tasks[<?php echo $count; ?>][description]" name="eme_tasks[<?php echo $count; ?>][description]" ><?php echo eme_esc_html( $task['description'] ); ?></textarea>
 					</td>
 					<td>
-						<a href="#" class='eme_remove_task'><?php echo "<img src='" . esc_url($eme_plugin_url) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img src='" . esc_url($eme_plugin_url) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>
+						<a href="#" class='eme_remove_task'><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>
 					</td>
 					</tr>
 				<?php
@@ -748,7 +748,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 			esc_html_e( 'For recurring events, enter the start and end date of the task as if you would do it for the first event in the series. The tasks for the other events will be adjusted accordingly.', 'events-made-easy' );
 			if ( ! eme_is_empty_date( $event['event_start'] ) ) {
 				echo '<br>';
-				echo esc_html(sprintf( __( 'The start date of the first event in the series was initially %s', 'events-made-easy' ), eme_localized_datetime( $event['event_start'], $eme_timezone ) ));
+				echo esc_html(sprintf( __( 'The start date of the first event in the series was initially %s', 'events-made-easy' ), eme_localized_datetime( $event['event_start'], EME_TIMEZONE ) ));
 			}
 			echo '</div>';
 		}
@@ -1031,7 +1031,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 }
 
 function eme_tasks_signupform_shortcode( $atts ) {
-	global $eme_timezone;
+	
 	eme_enqueue_frontend();
 
 	extract(
@@ -1223,7 +1223,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
                 ";
 
 	$open_tasks_found = 0;
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	foreach ( $events as $event ) {
 		// we add the event ids for the autocomplete check, not used for anything else
 		$result               .= "<input type='hidden' name='eme_event_ids[]' id='eme_event_ids[]' value='" . $event['event_id'] . "'>";
@@ -1249,7 +1249,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 			}
 
 			$task_ended   = 0;
-			$task_end_obj = ExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $task['task_end'], ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+			$task_end_obj = ExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $task['task_end'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 			if ( $task_end_obj < $eme_date_obj_now ) {
 				$task_ended = 1;
 			}
@@ -1366,7 +1366,7 @@ function eme_email_tasksignup_action( $signup, $action ) {
 }
 
 function eme_replace_task_placeholders( $format, $task, $event, $target = 'html', $lang = '' ) {
-	global $eme_timezone;
+	
 
 	$email_target = 0;
 	$orig_target  = $target;
@@ -1414,7 +1414,7 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 			} else {
 				$date_format = '';
 			}
-			$replacement = eme_localized_datetime( $task['task_start'], $eme_timezone, $date_format );
+			$replacement = eme_localized_datetime( $task['task_start'], EME_TIMEZONE, $date_format );
 		} elseif ( preg_match( '/#_(TASKEND|TASKENDDATE)(\{(.+?)\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
@@ -1422,7 +1422,7 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 			} else {
 				$date_format = '';
 			}
-			$replacement = eme_localized_datetime( $task['task_end'], $eme_timezone, $date_format );
+			$replacement = eme_localized_datetime( $task['task_end'], EME_TIMEZONE, $date_format );
 		} elseif ( preg_match( '/#_TASKSPACES$/', $result ) ) {
 			$replacement = intval( $task['spaces'] );
 		} elseif ( preg_match( '/#_FREETASKSPACES$/', $result ) ) {
@@ -1456,7 +1456,7 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 }
 
 function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task, $target = 'html', $lang = '' ) {
-	global $eme_timezone;
+	
 
 	$email_target = 0;
 	$orig_target  = $target;
@@ -1673,7 +1673,7 @@ add_action( 'wp_ajax_eme_task_signups_list', 'eme_ajax_task_signups_list' );
 add_action( 'wp_ajax_eme_manage_task_signups', 'eme_ajax_manage_task_signups' );
 
 function eme_ajax_task_signups_list() {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
+	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
@@ -1684,10 +1684,10 @@ function eme_ajax_task_signups_list() {
 			wp_die();
 	}
 
-	$table             = $eme_db_prefix . TASK_SIGNUPS_TBNAME;
-	$events_table      = $eme_db_prefix . EVENTS_TBNAME;
-	$tasks_table       = $eme_db_prefix . TASKS_TBNAME;
-	$people_table      = $eme_db_prefix . PEOPLE_TBNAME;
+	$table             = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
+	$events_table      = EME_DB_PREFIX . EVENTS_TBNAME;
+	$tasks_table       = EME_DB_PREFIX . TASKS_TBNAME;
+	$people_table      = EME_DB_PREFIX . PEOPLE_TBNAME;
 	$jTableResult      = [];
 	$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$search_scope      = ( isset( $_REQUEST['search_scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_scope'] ) ) : 'future';
@@ -1716,11 +1716,11 @@ function eme_ajax_task_signups_list() {
 	} elseif ( ! empty( $search_end_date ) ) {
 		$where_arr[] = "events.event_end LIKE '$search_end_date%'";
 	} elseif ( $search_scope == 'future' ) {
-		$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$search_end_date  = $eme_date_obj_now->getDateTime();
 		$where_arr[]      = "events.event_end >= '$search_end_date'";
 	} elseif ( $search_scope == 'past' ) {
-		$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$search_end_date  = $eme_date_obj_now->getDateTime();
 		$where_arr[]      = "events.event_end <= '$search_end_date'";
 	}
@@ -1742,10 +1742,10 @@ function eme_ajax_task_signups_list() {
 		$sql         = "SELECT $table.*, events.event_id,events.event_name, events.event_start, events.event_end, people.person_id,people.lastname, people.firstname, people.email, tasks.name AS task_name, task_start, task_end FROM $table $join $where $sorting LIMIT $start,$pagesize";
 		$rows        = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
-			$localized_start_date            = eme_localized_date( $row['event_start'], $eme_timezone, 1 );
-			$localized_end_date              = eme_localized_date( $row['event_end'], $eme_timezone, 1 );
-			$localized_taskstart_date        = eme_localized_datetime( $row['task_start'], $eme_timezone, 1 );
-			$localized_taskend_date          = eme_localized_datetime( $row['task_end'], $eme_timezone, 1 );
+			$localized_start_date            = eme_localized_date( $row['event_start'], EME_TIMEZONE, 1 );
+			$localized_end_date              = eme_localized_date( $row['event_end'], EME_TIMEZONE, 1 );
+			$localized_taskstart_date        = eme_localized_datetime( $row['task_start'], EME_TIMEZONE, 1 );
+			$localized_taskend_date          = eme_localized_datetime( $row['task_end'], EME_TIMEZONE, 1 );
 			$rows[ $key ]['event_name']      = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $row['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $row['event_name'] ) . '</a></strong><br>' . $localized_start_date . ' - ' . $localized_end_date;
 				$rows[ $key ]['task_name']   = eme_esc_html( $row['task_name'] );
 				$rows[ $key ]['task_start']  = $localized_taskstart_date;

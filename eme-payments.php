@@ -237,7 +237,7 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 }
 
 function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
-	global $eme_timezone;
+	
 	if ( $resultcode > 0 ) {
 			$ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Payment failed for your membership for #_MEMBERSHIPNAME, please try again.', 'events-made-easy' ) . '</div>';
 	} else {
@@ -256,8 +256,8 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 		} else {
 			$too_soon_to_pay = 0;
 			if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE && ! empty( $membership['properties']['renewal_cutoff_days'] ) ) {
-				$end_date_obj     = ExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
-				$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+				$end_date_obj     = ExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+				$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 				$diff             = $eme_date_obj_now->getDifferenceInDays( $end_date_obj );
 				if ( $diff > intval( $membership['properties']['renewal_cutoff_days'] ) ) {
 					$too_soon_to_pay = 1;
@@ -265,20 +265,20 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 			}
 
 			if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE && $too_soon_to_pay ) {
-				$end_date    = eme_localized_date( $member['end_date'], $eme_timezone );
+				$end_date    = eme_localized_date( $member['end_date'], EME_TIMEZONE );
 				$ret_string .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. It is not allowed to extend the membership yet (too soon).', 'events-made-easy' ), $end_date ) . '</div>';
 				return $ret_string;
 
 			} elseif ( $member['status'] == EME_MEMBER_STATUS_ACTIVE || $member['status'] == EME_MEMBER_STATUS_GRACE ) {
-				$end_date      = eme_localized_date( $member['end_date'], $eme_timezone );
+				$end_date      = eme_localized_date( $member['end_date'], EME_TIMEZONE );
 				$next_end_date = eme_get_next_end_date( $membership, $member['end_date'] );
-				$next_end_date = eme_localized_date( $next_end_date, $eme_timezone );
+				$next_end_date = eme_localized_date( $next_end_date, EME_TIMEZONE );
 				$ret_string   .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. If you pay the membership fee again, your membership will be extended until %s', 'events-made-easy' ), $end_date, $next_end_date ) . '</div>';
 			} elseif ( $member['status'] == EME_MEMBER_STATUS_EXPIRED ) {
 				// set the third option to eme_get_start_date to 1, to force a new startdate (only has an effect for rolling-type memberships)
 				$new_start_date = eme_get_start_date( $membership, $member, 1 );
 				$next_end_date  = eme_get_next_end_date( $membership, $new_start_date );
-				$next_end_date  = eme_localized_date( $next_end_date, $eme_timezone );
+				$next_end_date  = eme_localized_date( $next_end_date, EME_TIMEZONE );
 				$ret_string    .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership has expired. If you pay the membership fee again, your membership will be reactivated until %s', 'events-made-easy' ), $next_end_date ) . '</div>';
 			}
 		}
@@ -996,7 +996,7 @@ function eme_stripe_form( $item_name, $payment, $baseprice, $cur, $multi_booking
 }
 
 function eme_fdgg_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
-	global $eme_timezone;
+	
 	$gateway       = 'fdgg';
 	$store_name    = get_option( 'eme_fdgg_store_name' );
 	$shared_secret = get_option( 'eme_fdgg_shared_secret' );
@@ -1036,7 +1036,7 @@ function eme_fdgg_form( $item_name, $payment, $baseprice, $cur, $multi_booking =
 	}
 
 	$quantity  = 1;
-	$datetime  = eme_localized_date( $payment['creation_date'], $eme_timezone, 'Y:m:d-H:i:s' );
+	$datetime  = eme_localized_date( $payment['creation_date'], EME_TIMEZONE, 'Y:m:d-H:i:s' );
 	$cur_codes = eme_currency_codes();
 	$cur_code  = $cur_codes[ $cur ];
 
@@ -1053,7 +1053,7 @@ function eme_fdgg_form( $item_name, $payment, $baseprice, $cur, $multi_booking =
 	$hash       = fdgg_createHash( $store_name . $datetime . $price . $cur_code . $shared_secret );
 	$form_html  = $button_above;
 	$form_html .= "<form action='$url' method='post' name='eme_fdgg_form' id='eme_fdgg_form'>";
-	$form_html .= "<input type='hidden' name='timezone' value='$eme_timezone'>";
+	$form_html .= "<input type='hidden' name='timezone' value='EME_TIMEZONE'>";
 	$form_html .= "<input type='hidden' name='authenticateTransaction' value='false'>";
 	$form_html .= "<input type='hidden' name='txntype' value='sale'>";
 	$form_html .= "<input type='hidden' name='mode' value='payonly'>";
@@ -1751,7 +1751,7 @@ function eme_complete_fondy_transaction( $payment ) {
 
 
 function eme_notification_instamojo() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	$instamojo_key        = get_option( 'eme_instamojo_key' );
 	$instamojo_auth_token = get_option( 'eme_instamojo_auth_token' );
@@ -1972,7 +1972,7 @@ function eme_notification_webmoney() {
 }
 
 function eme_notification_fdgg() {
-	global $eme_timezone;
+	
 	$store_name    = get_option( 'eme_fdgg_store_name' );
 	$shared_secret = get_option( 'eme_fdgg_shared_secret' );
 	require_once 'payment_gateways/fdgg/fdgg-util_sha2.php';
@@ -2011,7 +2011,7 @@ function eme_notification_fdgg() {
 			return;
 		}
 	}
-	$datetime  = eme_localized_date( $payment['creation_date'], $eme_timezone, 'Y:m:d-H:i:s' );
+	$datetime  = eme_localized_date( $payment['creation_date'], EME_TIMEZONE, 'Y:m:d-H:i:s' );
 	$cur_codes = eme_currency_codes();
 	$cur_code  = $cur_codes[ $cur ];
 	$calc_hash = fdgg_createHash( $shared_secret . $approval_code . $charge_total . $cur_code . $datetime . $store_name );
@@ -2110,7 +2110,7 @@ function eme_notification_stripe() {
 }
 
 function eme_notification_fondy() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	$gateway = 'fondy';
 
@@ -3194,9 +3194,9 @@ function eme_membership_get_first_pg( $membership ) {
 }
 
 function eme_create_member_payment( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$payments_table           = $eme_db_prefix . PAYMENTS_TBNAME;
-	$members_table            = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$payments_table           = EME_DB_PREFIX . PAYMENTS_TBNAME;
+	$members_table            = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$payment_id               = false;
 	$payment                  = [];
 	$payment['random_id']     = eme_random_id();
@@ -3213,9 +3213,9 @@ function eme_create_member_payment( $member_id ) {
 }
 
 function eme_create_payment( $booking_ids ) {
-	global $wpdb,$eme_db_prefix;
-	$payments_table = $eme_db_prefix . PAYMENTS_TBNAME;
-	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
+	global $wpdb;
+	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
 
 	// some safety
 	if ( ! $booking_ids ) {
@@ -3243,8 +3243,8 @@ function eme_create_payment( $booking_ids ) {
 }
 
 function eme_get_payment( $payment_id, $payment_randomid = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$payments_table = $eme_db_prefix . PAYMENTS_TBNAME;
+	global $wpdb;
+	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
 	if ( $payment_id ) {
 		$sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE id=%d", $payment_id );
 	} else {
@@ -3254,23 +3254,23 @@ function eme_get_payment( $payment_id, $payment_randomid = 0 ) {
 }
 
 function eme_get_payment_by_pg_pid( $pg_pid ) {
-	global $wpdb,$eme_db_prefix;
-	$payments_table = $eme_db_prefix . PAYMENTS_TBNAME;
+	global $wpdb;
+	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT * FROM $payments_table WHERE pg_pid=%s", $pg_pid );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_payment_booking_ids( $payment_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . BOOKINGS_TBNAME;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . BOOKINGS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT booking_id FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_randompayment_booking_ids( $payment_randomid, $check_trash = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$payments_table = $eme_db_prefix . PAYMENTS_TBNAME;
-	$bookings_table = $eme_db_prefix . BOOKINGS_TBNAME;
+	global $wpdb;
+	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
 	if ( $check_trash ) {
 		$sql = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $payments_table AS payments ON bookings.payment_id=payments.id where bookings.status = %d AND payments.random_id=%s", EME_RSVP_STATUS_TRASH, $payment_randomid );
 	} else {
@@ -3280,8 +3280,8 @@ function eme_get_randompayment_booking_ids( $payment_randomid, $check_trash = 0 
 }
 
 function eme_delete_payment( $payment_id ) {
-	global $wpdb,$eme_db_prefix;
-	$payments_table = $eme_db_prefix . PAYMENTS_TBNAME;
+	global $wpdb;
+	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
 	$sql            = $wpdb->prepare( "DELETE FROM $payments_table WHERE id=%d", $payment_id );
 	return $wpdb->get_var( $sql );
 }
@@ -3338,33 +3338,33 @@ function eme_get_member_payment_price( $payment_id ) {
 }
 
 function eme_update_attendance_count( $booking_id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	if ( $booking_id ) {
-		$table = $eme_db_prefix . BOOKINGS_TBNAME;
+		$table = EME_DB_PREFIX . BOOKINGS_TBNAME;
 		$sql   = "UPDATE $table SET attend_count=attend_count+1 WHERE booking_id=$booking_id";
 		$wpdb->query( $sql );
 	}
 }
 
 function eme_get_attendance_count( $booking_id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	if ( $booking_id ) {
-		$table = $eme_db_prefix . BOOKINGS_TBNAME;
+		$table = EME_DB_PREFIX . BOOKINGS_TBNAME;
 		$sql   = "SELECT attend_count FROM $table WHERE booking_id=$booking_id";
 		return $wpdb->get_var( $sql );
 	}
 }
 
 function eme_update_payment_pg_pid( $payment_id, $pg_pid = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . PAYMENTS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . PAYMENTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET pg_pid=%s, pg_handled=0 WHERE id=%d", $pg_pid, $payment_id );
 	$wpdb->query( $sql );
 }
 
 function eme_update_payment_pg_handled( $payment_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . PAYMENTS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . PAYMENTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET pg_handled=1 WHERE id=%d", $payment_id );
 	$wpdb->query( $sql );
 }
@@ -3516,8 +3516,8 @@ function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $
 }
 
 function eme_payment_count_unpaid_bookings( $payment_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table_name = $eme_db_prefix . BOOKINGS_TBNAME;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . BOOKINGS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT COUNT(*) FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d AND booking_paid=0", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_id );
 	return $wpdb->get_var( $sql );
 }
@@ -3582,7 +3582,7 @@ function eme_cancel_payment_form( $payment_randomid ) {
 add_action( 'wp_ajax_eme_cancel_payment', 'eme_cancel_payment_ajax' );
 add_action( 'wp_ajax_nopriv_eme_cancel_payment', 'eme_cancel_payment_ajax' );
 function eme_cancel_payment_ajax() {
-	global $eme_timezone;
+	
 	$payment_randomid = eme_sanitize_request( $_POST['eme_pmt_rndid'] );
 	if ( get_option( 'eme_honeypot_for_forms' ) ) {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
@@ -3634,7 +3634,7 @@ function eme_cancel_payment_ajax() {
 	$person           = eme_get_person( $person_ids[0] );
 	$tmp_format       = get_option( 'eme_cancel_payment_line_format' );
 	$replacement      = '';
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	foreach ( $booking_ids as $booking_id ) {
 		$booking = eme_get_booking( $booking_id );
 		$event   = eme_get_event( $booking['event_id'] );
@@ -3642,7 +3642,7 @@ function eme_cancel_payment_ajax() {
 			continue;
 		}
 		// first the rsvp cutoff based on event start date
-		$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], $eme_timezone );
+		$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 		$eme_cancel_rsvp_days = -1 * intval( $event['event_properties']['cancel_rsvp_days'] );
 		$cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
 		if ( $cancel_cutofftime < $eme_date_obj_now ) {
@@ -3650,7 +3650,7 @@ function eme_cancel_payment_ajax() {
 			continue;
 		}
 		// second the rsvp cutoff based on booking age
-		$cancel_cutofftime    = new ExpressiveDate( $booking['creation_date'], $eme_timezone );
+		$cancel_cutofftime    = new ExpressiveDate( $booking['creation_date'], EME_TIMEZONE );
 		$eme_cancel_rsvp_days = intval( $event['event_properties']['cancel_rsvp_age'] );
 		$cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
 		if ( $eme_cancel_rsvp_days && $cancel_cutofftime < $eme_date_obj_now ) {

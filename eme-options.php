@@ -5,8 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_add_options( $reset = 0 ) {
-	// due to filters and such, the global var $eme_plugin_url is not filled out during install, so we calculate it directly
-	$eme_plugin_url = eme_plugin_url();
 	$contact_person_email_subject_localizable                = __( "New booking for '#_EVENTNAME'", 'events-made-easy' );
 	$contact_person_email_body_localizable                   = __( '#_PERSONFULLNAME (#_PERSONEMAIL) will attend #_EVENTNAME on #_STARTDATE. They want to book #_RESPSEATS seat(s).<br>Now there are #_RESERVEDSEATS seat(s) booked, #_AVAILABLESEATS are still available.<br><br>Yours faithfully,<br>Events Manager', 'events-made-easy' );
 	$contactperson_cancelled_email_subject_localizable       = __( "A booking has been cancelled for '#_EVENTNAME'", 'events-made-easy' );
@@ -474,7 +472,7 @@ function eme_add_options( $reset = 0 ) {
 		'eme_payconiq_cost'                               => 0,
 		'eme_payconiq_cost2'                              => 0,
 		'eme_payconiq_button_label'                       => sprintf( $eme_payment_button_label_localizable, 'Payconiq' ),
-		'eme_payconiq_button_img_url'                     => esc_url($eme_plugin_url) . 'images/payment_gateways/payconiq/logo.png',
+		'eme_payconiq_button_img_url'                     => esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/payconiq/logo.png',
 		'eme_payconiq_button_above'                       => sprintf( $eme_payment_button_above_localizable, 'Payconiq' ),
 		'eme_payconiq_button_below'                       => '',
 		'eme_mercadopago_demo'                            => 1,
@@ -564,7 +562,6 @@ function eme_add_options( $reset = 0 ) {
 }
 
 function eme_update_options( $db_version ) {
-	$eme_plugin_url = eme_plugin_url();
 	if ( $db_version ) {
 		if ( $db_version > 0 && $db_version < 49 ) {
 			delete_option( 'eme_events_admin_limit' );
@@ -809,7 +806,7 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 366 ) {
 			if ( get_option( 'eme_payconiq_button_img_url' ) == 'images/payment_gateways/payconiq/logo.png') {
-				update_option( 'eme_payconiq_button_img_url', esc_url($eme_plugin_url) . 'images/payment_gateways/payconiq/logo.png' );
+				update_option( 'eme_payconiq_button_img_url', esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/payconiq/logo.png' );
 			}
 		}
 	}
@@ -843,7 +840,7 @@ function eme_options_delete() {
 }
 
 function eme_metabox_options_delete() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	$screens = [ 'events_page_eme-new_event', 'toplevel_page_eme-manager' ];
 	foreach ( $screens as $screen ) {
 		foreach ( [ 'metaboxhidden', 'closedpostboxes', 'wp_metaboxorder', 'meta-box-order', 'screen_layout' ] as $option ) {
@@ -1107,7 +1104,7 @@ function eme_admin_tabs( $current = 'homepage' ) {
 }
 
 function eme_check_conflicting_slug() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	$events_prefixes     = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
 	$locations_prefixes  = explode( ',', get_option( 'eme_permalink_locations_prefix', 'locations' ) );
 	$categories_prefixes = explode( ',', get_option( 'eme_permalink_categories_prefix', '' ) );
@@ -1201,7 +1198,7 @@ function eme_explain_slug_conflict( $conflict_found ) {
 
 // Function composing the options page
 function eme_options_page() {
-	global $eme_timezone;
+	
 
 	$tab = isset( $_GET['tab'] ) ? eme_sanitize_request( $_GET['tab'] ) : 'general';
 	eme_admin_tabs( $tab );
@@ -2673,7 +2670,7 @@ function eme_options_page() {
 				eme_options_radio_binary( __( 'Use external url for single events or locations?', 'events-made-easy' ), 'eme_use_external_url', __( 'If selected, clicking on the single event or location url for details will go to the defined external url for that event or location if present.', 'events-made-easy' ) );
 				eme_options_radio_binary( __( 'By default send out birthday email for new persons?', 'events-made-easy' ), 'eme_bd_email', __( 'If selected, new persons registered with a non-empty birthday will get a birthday email. Go in the Email Templates settings to change the look and feel of that email.', 'events-made-easy' ) );
 				eme_options_radio_binary( __( 'Limit birthday emails to active members?', 'events-made-easy' ), 'eme_bd_email_members_only', __( 'If selected and birthday emails are to be send, only persons with an active membership will get a birthday email.', 'events-made-easy' ) );
-				$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+				$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 				$now_date         = $eme_date_obj_now->getDate();
 				$now_time         = $eme_date_obj_now->getTime();
 				eme_options_input_text( __( 'EME backend date format', 'events-made-easy' ), 'eme_backend_dateformat', __( 'The date format used in EME tables. Leave this empty to use the WordPress settings.', 'events-made-easy' ) . "<p class='date-time-doc'>" . __( '<a href="https://wordpress.org/support/article/formatting-date-and-time/">Documentation on date and time formatting</a>.' ) . '</p>' );

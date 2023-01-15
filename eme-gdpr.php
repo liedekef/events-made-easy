@@ -104,7 +104,7 @@ function eme_rpi_ajax() {
 }
 
 function eme_rpi_shortcode( $atts ) {
-	global $eme_plugin_url;
+	
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
 		$email = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
@@ -133,7 +133,7 @@ function eme_rpi_shortcode( $atts ) {
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
 		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . __( 'Email', 'events-made-easy' ) . "'>
-		<img id='loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><br>
+		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><br>
 		$captcha_html
 		<input type='submit' value='" . __( 'Request person data', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form></div>";
@@ -200,7 +200,7 @@ function eme_gdpr_approve_ajax() {
 }
 
 function eme_gdpr_approve_shortcode() {
-	global $eme_plugin_url;
+	
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
 		$email = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
@@ -217,7 +217,7 @@ function eme_gdpr_approve_shortcode() {
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
    		<input type='email' name='eme_email' required='required' value='" . $email . "' placeholder='" . __( 'Email', 'events-made-easy' ) . "'>
-		<img id='loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><br>
+		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><br>
 		$captcha_html
    		<input type='submit' value='" . __( 'Initiate GDPR approval', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form>";
@@ -309,7 +309,7 @@ function eme_cpi_request_ajax() {
 }
 
 function eme_cpi_shortcode( $atts ) {
-	global $eme_plugin_url;
+	
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
 		$email = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
@@ -340,7 +340,7 @@ function eme_cpi_shortcode( $atts ) {
 		$nonce
 		<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
 		<input type='email' name='eme_email' value='" . $email . "' placeholder='" . __( 'Email', 'events-made-easy' ) . "'>
-		<img id='loading_gif' alt='loading' src='" . esc_url($eme_plugin_url) . "images/spinner.gif' style='display:none;'><br>
+		<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><br>
 		$captcha_html
 		<input type='submit' value='" . __( 'Request to change personal info', 'events-made-easy' ) . "' name='doaction' id='doaction' class='button-primary action'>
 		</form></div>";
@@ -405,7 +405,7 @@ function eme_cpi_ajax() {
 }
 
 function eme_cpi_form( $person_id ) {
-	global $eme_plugin_url;
+	
 	$person = eme_get_person( $person_id );
 	if ( empty( $person ) ) {
 		return "<div class='eme-message-error eme-cpi-message-error'>" . __( 'This link is no longer valid, please request a new link.', 'events-made-easy' ) . '</div>';

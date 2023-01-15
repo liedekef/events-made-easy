@@ -54,9 +54,9 @@ function eme_filter_form_shortcode( $atts ) {
 }
 
 function eme_create_week_scope( $count, $eventful = 0 ) {
-	global $eme_timezone;
+	
 	$start_of_week = get_option( 'start_of_week' );
-	$eme_date_obj  = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_date_obj->setWeekStartDay( $start_of_week );
 	$scope = [];
 	for ( $i = 0; $i < $count; $i++ ) {
@@ -69,7 +69,7 @@ function eme_create_week_scope( $count, $eventful = 0 ) {
 				continue;
 			}
 		}
-		$scope_text           = eme_localized_date( $limit_start, $eme_timezone ) . ' -- ' . eme_localized_date( $limit_end, $eme_timezone );
+		$scope_text           = eme_localized_date( $limit_start, EME_TIMEZONE ) . ' -- ' . eme_localized_date( $limit_end, EME_TIMEZONE );
 		$scope[ $this_scope ] = $scope_text;
 		$eme_date_obj->addOneWeek();
 	}
@@ -80,10 +80,10 @@ function eme_create_week_scope( $count, $eventful = 0 ) {
 }
 
 function eme_create_month_scope( $count, $eventful = 0 ) {
-	global $eme_timezone;
+	
 	$scope        = [];
 	$scope[0]     = __( 'Select Month', 'events-made-easy' );
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	for ( $i = 0; $i < $count; $i++ ) {
 		$limit_start   = $eme_date_obj->startOfMonth()->format( 'Y-m-d' );
 		$days_in_month = $eme_date_obj->getDaysInMonth();
@@ -95,7 +95,7 @@ function eme_create_month_scope( $count, $eventful = 0 ) {
 				continue;
 			}
 		}
-		$scope_text           = eme_localized_date( $limit_start, $eme_timezone, get_option( 'eme_show_period_monthly_dateformat' ) );
+		$scope_text           = eme_localized_date( $limit_start, EME_TIMEZONE, get_option( 'eme_show_period_monthly_dateformat' ) );
 		$scope[ $this_scope ] = $scope_text;
 		$eme_date_obj->addOneMonth();
 	}
@@ -106,11 +106,11 @@ function eme_create_month_scope( $count, $eventful = 0 ) {
 }
 
 function eme_create_year_scope( $count, $eventful = 0 ) {
-	global $eme_timezone;
+	
 	$scope    = [];
 	$scope[0] = __( 'Select Year', 'events-made-easy' );
 
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	for ( $i = 0; $i < $count; $i++ ) {
 		$year        = $eme_date_obj->getYear();
 		$limit_start = "$year-01-01";
@@ -122,7 +122,7 @@ function eme_create_year_scope( $count, $eventful = 0 ) {
 				continue;
 			}
 		}
-		$scope_text           = eme_localized_date( $limit_start, $eme_timezone, get_option( 'eme_show_period_yearly_dateformat' ) );
+		$scope_text           = eme_localized_date( $limit_start, EME_TIMEZONE, get_option( 'eme_show_period_yearly_dateformat' ) );
 		$scope[ $this_scope ] = $scope_text;
 		$eme_date_obj->addOneYear();
 	}

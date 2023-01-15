@@ -34,6 +34,39 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
+// INCLUDES
+require_once 'eme-options.php';
+require_once 'eme-functions.php';
+require_once 'eme-filters.php';
+require_once 'eme-events.php';
+require_once 'eme-calendar.php';
+require_once 'eme-widgets.php';
+require_once 'eme-rsvp.php';
+require_once 'eme-locations.php';
+require_once 'eme-people.php';
+require_once 'eme-recurrence.php';
+require_once 'eme-ui-helpers.php';
+require_once 'eme-categories.php';
+require_once 'eme-holidays.php';
+require_once 'eme-templates.php';
+require_once 'eme-attributes.php';
+require_once 'eme-attendances.php';
+require_once 'eme-ical.php';
+require_once 'eme-cleanup.php';
+require_once 'eme-cron.php';
+require_once 'eme-formfields.php';
+require_once 'eme-shortcodes.php';
+require_once 'eme-actions.php';
+require_once 'eme-payments.php';
+require_once 'eme-discounts.php';
+require_once 'eme-members.php';
+require_once 'eme-mailer.php';
+require_once 'eme-countries.php';
+require_once 'eme-gdpr.php';
+require_once 'eme-tasks.php';
+require_once 'eme-translate.php';
+require_once 'class-expressivedate.php';
+
 // Setting constants
 define( 'EME_VERSION', '2.3.38' );
 define( 'EME_DB_VERSION', 366 );
@@ -144,6 +177,11 @@ define( 'EME_LANGUAGE_REGEX', '[a-z]{2,3}' );
 $upload_info = wp_upload_dir();
 define( 'EME_UPLOAD_DIR', $upload_info['basedir'] . '/events-made-easy' );
 define( 'EME_UPLOAD_URL', $upload_info['baseurl'] . '/events-made-easy' );
+DEFINE( 'EME_PLUGIN_URL',  eme_plugin_url() );
+DEFINE( 'EME_DB_PREFIX',  eme_get_db_prefix() );
+DEFINE( 'EME_WP_DATE_FORMAT', get_option( 'date_format' ) );
+DEFINE( 'EME_WP_TIME_FORMAT', get_option( 'time_format' ) );
+DEFINE( 'EME_TIMEZONE', wp_timezone_string() );
 
 function eme_plugin_row_meta( $links, $file ) {
 
@@ -180,11 +218,6 @@ add_filter( 'eme_general', 'trim' );
 // TEXT content filter
 add_filter( 'eme_text', 'wp_strip_all_tags' );
 add_filter( 'eme_text', 'html_entity_decode' );
-
-// set some vars
-$eme_timezone = wp_timezone_string();
-$eme_wp_date_format = get_option( 'date_format' );
-$eme_wp_time_format = get_option( 'time_format' );
 
 // Adding a new rule
 function eme_insertMyRewriteRules( $rules ) {
@@ -272,39 +305,6 @@ function eme_insertMyRewriteQueryVars( $vars ) {
 }
 add_filter( 'query_vars', 'eme_insertMyRewriteQueryVars' );
 
-// INCLUDES
-require_once 'eme-options.php';
-require_once 'eme-functions.php';
-require_once 'eme-filters.php';
-require_once 'eme-events.php';
-require_once 'eme-calendar.php';
-require_once 'eme-widgets.php';
-require_once 'eme-rsvp.php';
-require_once 'eme-locations.php';
-require_once 'eme-people.php';
-require_once 'eme-recurrence.php';
-require_once 'eme-ui-helpers.php';
-require_once 'eme-categories.php';
-require_once 'eme-holidays.php';
-require_once 'eme-templates.php';
-require_once 'eme-attributes.php';
-require_once 'eme-attendances.php';
-require_once 'eme-ical.php';
-require_once 'eme-cleanup.php';
-require_once 'eme-cron.php';
-require_once 'eme-formfields.php';
-require_once 'eme-shortcodes.php';
-require_once 'eme-actions.php';
-require_once 'eme-payments.php';
-require_once 'eme-discounts.php';
-require_once 'eme-members.php';
-require_once 'eme-mailer.php';
-require_once 'eme-countries.php';
-require_once 'eme-gdpr.php';
-require_once 'eme-tasks.php';
-require_once 'eme-translate.php';
-require_once 'class-expressivedate.php';
-
 // include our custom update checker code
 require_once 'plugin-update-checker/plugin-update-checker.php';
 use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
@@ -317,10 +317,6 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	// we'll use a release asset
 	$myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
 }
-
-// now some extra global vars
-$eme_plugin_url = eme_plugin_url();
-$eme_db_prefix  = eme_get_db_prefix();
 
 function eme_install( $networkwide ) {
 	global $wpdb;
@@ -406,8 +402,7 @@ function _eme_install() {
 	}
 
 	// some cron we want
-	$eme_timezone = wp_timezone_string();
-	$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// midnight
 	$timestamp = $eme_date_obj->addOneDay()->setTime( 0, 0, 0 )->getTimestamp();
 	// to make sure summer/winter starts at the same day, we add one hour (WP "daily" uses 24 hours/day fixed)
@@ -500,7 +495,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 	$drop_settings = get_option( 'eme_uninstall_drop_settings' );
 
 	// these crons get planned with a fixed schedule at activation time, so we don't need to store their planned setting when deactivating
-	$cron_actions1 = [ 'eme_cron_daily_actions', 'eme_cron_cleanup_captcha' ];
+	$cron_actions1 = [ 'eme_cron_daily_actions', 'eme_cron_member_daily_actions', 'eme_cron_gdpr_daily_actions', 'eme_cron_events_daily_actions', 'eme_cron_cleanup_actions' ];
 	foreach ( $cron_actions1 as $cron_action ) {
 		if ( wp_next_scheduled( $cron_action ) ) {
 			wp_unschedule_hook( $cron_action );
@@ -513,11 +508,8 @@ function _eme_uninstall( $force_drop = 0 ) {
 			if ( ! ( $drop_settings || $force_drop ) ) {
 				$scheduled = wp_get_schedule( $cron_action );
 				update_option( $cron_action, $scheduled );
-			} else {
-				wp_unschedule_hook( $cron_action );
 			}
-		} else {
-			delete_option( $cron_action );
+			wp_unschedule_hook( $cron_action );
 		}
 	}
 
@@ -679,8 +671,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_create_table( $table_name, $sql );
 		// insert a few events in the new table
 		// get the current timestamp into an array
-		$eme_timezone = wp_timezone_string();
-		$eme_date_obj = new ExpressiveDate( 'now', $eme_timezone );
+		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_date_obj->addDays( 7 );
 		$in_one_week = $eme_date_obj->getDate();
 		$eme_date_obj->minusDays( 7 );
@@ -1972,7 +1963,7 @@ function eme_delete_events_page() {
 // Create the Manage Events and the Options submenus
 add_action( 'admin_menu', 'eme_create_events_submenu' );
 function eme_create_events_submenu() {
-	global $eme_plugin_url;
+	
 	# just in case: make sure the Settings page can be reached if something is not correct with the security settings
 	if ( get_option( 'eme_cap_settings' ) == '' ) {
 		$cap_settings = DEFAULT_CAP_SETTINGS;
@@ -2022,7 +2013,7 @@ function eme_create_events_submenu() {
 		}
 
 		// location 40: Above the appearance menu
-		add_menu_page( __( 'Events Made Easy', 'events-made-easy' ), __( 'Events Made Easy', 'events-made-easy' ) . $main_menu_label, get_option( 'eme_cap_list_events' ), 'eme-manager', 'eme_events_page', $eme_plugin_url . 'images/calendar-16.png', 40 );
+		add_menu_page( __( 'Events Made Easy', 'events-made-easy' ), __( 'Events Made Easy', 'events-made-easy' ) . $main_menu_label, get_option( 'eme_cap_list_events' ), 'eme-manager', 'eme_events_page', EME_PLUGIN_URL . 'images/calendar-16.png', 40 );
 		// Add a submenu to the custom top-level menu:
 		// edit event also needs just "add" as capability, otherwise you will not be able to edit own created events
 		$plugin_page = add_submenu_page( 'eme-manager', __( 'All events', 'events-made-easy' ), __( 'Events', 'events-made-easy' ), get_option( 'eme_cap_list_events' ), 'eme-manager', 'eme_events_page' );

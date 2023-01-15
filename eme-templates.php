@@ -55,7 +55,7 @@ function eme_template_types() {
 }
 
 function eme_templates_page() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	if ( ! current_user_can( get_option( 'eme_cap_templates' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
 		$message = __( 'You have no right to update templates!', 'events-made-easy' );
@@ -93,7 +93,7 @@ function eme_templates_page() {
 	}
 
 	// Insert/Update/Delete Record
-	$templates_table   = $eme_db_prefix . TEMPLATES_TBNAME;
+	$templates_table   = EME_DB_PREFIX . TEMPLATES_TBNAME;
 	$validation_result = true;
 	$message           = '';
 	if ( isset( $_POST['eme_admin_action'] ) ) {
@@ -348,8 +348,8 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 }
 
 function eme_get_templates( $type = '', $strict = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TEMPLATES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TEMPLATES_TBNAME;
 	if ( ! empty( $type ) ) {
 		if ( $strict ) {
 			$sql = $wpdb->prepare( "SELECT * FROM $table WHERE type=%s ORDER BY type,name", $type );
@@ -363,8 +363,8 @@ function eme_get_templates( $type = '', $strict = 0 ) {
 }
 
 function eme_get_templates_name_id( $type = '', $strict = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . TEMPLATES_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . TEMPLATES_TBNAME;
 	if ( ! empty( $type ) ) {
 		if ( $strict ) {
 			$sql = $wpdb->prepare( "SELECT name,id FROM $table WHERE type=%s ORDER BY type,name", $type );
@@ -392,12 +392,12 @@ function eme_get_templates_array_by_id( $type = '' ) {
 }
 
 function eme_get_template( $template_id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	// let's do this correct
 	$template_id = intval( $template_id );
 	$template    = wp_cache_get( "eme_template $template_id" );
 	if ( $template === false ) {
-		$templates_table = $eme_db_prefix . TEMPLATES_TBNAME;
+		$templates_table = EME_DB_PREFIX . TEMPLATES_TBNAME;
 		$sql             = $wpdb->prepare( "SELECT * FROM $templates_table WHERE id = %d", $template_id );
 		$template        = $wpdb->get_row( $sql, ARRAY_A );
 		if ( $template !== false ) {
@@ -464,9 +464,9 @@ add_action( 'wp_ajax_eme_get_template', 'eme_ajax_get_template' );
 //add_action( 'wp_ajax_eme_get_template_plain', 'eme_ajax_get_template_plain' );
 
 function eme_ajax_templates_list() {
-	global $wpdb,$eme_db_prefix, $eme_plugin_url;
+	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$table          = $eme_db_prefix . TEMPLATES_TBNAME;
+	$table          = EME_DB_PREFIX . TEMPLATES_TBNAME;
 	$template_types = eme_template_types();
 	$jTableResult   = [];
 	$search_type    = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';
@@ -498,7 +498,7 @@ function eme_ajax_templates_list() {
 			}
 			$rows[ $key ]['type'] = $template_types[ $row['type'] ];
 			$rows[ $key ]['name'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=edit_template&amp;id=' . $row['id'] ) . "'>" . $row['name'] . '</a>';
-			$rows[ $key ]['copy'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=copy_template&amp;id=' . $row['id'] ) . "' title='" . __( 'Duplicate this template', 'events-made-easy' ) . "'><img src='" . esc_url($eme_plugin_url) . "images/copy_16.png'></a>";
+			$rows[ $key ]['copy'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=copy_template&amp;id=' . $row['id'] ) . "' title='" . __( 'Duplicate this template', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_16.png'></a>";
 		}
 
 		$jTableResult['Result']           = 'OK';

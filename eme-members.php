@@ -5,8 +5,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_membership() {
-	global $eme_timezone;
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today            = $eme_date_obj_now->getDate();
 
 	$membership               = [
@@ -185,8 +185,8 @@ function eme_init_membership_props( $props = [] ) {
 }
 
 function eme_db_insert_membership( $membership ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
 	$wpdb->show_errors( true );
 	if ( ! eme_is_serialized( $membership['properties'] ) ) {
 		$membership['properties'] = eme_serialize( $membership['properties'] );
@@ -200,8 +200,8 @@ function eme_db_insert_membership( $membership ) {
 }
 
 function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$wpdb->show_errors( true );
 
 	if ( $membership['properties']['create_wp_user'] ) {
@@ -252,8 +252,8 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
 }
 
 function eme_db_update_member( $member_id, $line, $membership, $update_answers = 1 ) {
-	global $wpdb,$eme_db_prefix;
-	$table              = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table              = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$where              = [];
 	$where['member_id'] = intval( $member_id );
 
@@ -300,8 +300,8 @@ function eme_db_update_member( $member_id, $line, $membership, $update_answers =
 }
 
 function eme_db_update_membership( $membership_id, $line ) {
-	global $wpdb,$eme_db_prefix;
-	$table                  = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	global $wpdb;
+	$table                  = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
 	$where                  = [];
 	$where['membership_id'] = intval( $membership_id );
 
@@ -325,8 +325,8 @@ function eme_db_update_membership( $membership_id, $line ) {
 }
 
 function eme_update_member_lastseen( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table              = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table              = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$where              = [];
 	$where['member_id'] = intval( $member_id );
 
@@ -336,10 +336,10 @@ function eme_update_member_lastseen( $member_id ) {
 }
 
 function eme_get_members( $member_ids, $extra_search = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$people_table      = $eme_db_prefix . PEOPLE_TBNAME;
-	$members_table     = $eme_db_prefix . MEMBERS_TBNAME;
-	$memberships_table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	global $wpdb;
+	$people_table      = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
 	$lines             = [];
 	if ( ! empty( $member_ids ) && eme_is_numeric_array( $member_ids ) ) {
 		$ids_list = implode(',', $member_ids);
@@ -366,8 +366,8 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
 }
 
 function eme_get_memberships( $exclude_id = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
 	$sql   = "SELECT * FROM $table";
 	if ( ! empty( $exclude_id ) ) {
 		$sql .= ' WHERE membership_id <> ' . intval( $exclude_id );
@@ -381,8 +381,8 @@ function eme_get_memberships( $exclude_id = 0 ) {
 }
 
 function eme_get_membership( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
 	if ( empty( $id ) ) {
 		return false;
 	}
@@ -429,8 +429,8 @@ function eme_membership_durations() {
 }
 
 function eme_get_member( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table  = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table  = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$sql    = $wpdb->prepare( "SELECT * FROM $table WHERE member_id=%d", $id );
 	$member = $wpdb->get_row( $sql, ARRAY_A );
 	if ( ! empty( $member ) ) {
@@ -449,8 +449,8 @@ function eme_get_member( $id ) {
 }
 
 function eme_get_active_member_by_personid_membershipid( $person_id, $membership_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table         = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table         = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$status_active = EME_MEMBER_STATUS_ACTIVE;
 	$status_grace  = EME_MEMBER_STATUS_GRACE;
 	$sql           = $wpdb->prepare( "SELECT * FROM $table WHERE person_id=%d AND membership_id=%d AND status IN ($status_active,$status_grace) LIMIT 1", $person_id, $membership_id );
@@ -471,9 +471,9 @@ function eme_get_active_member_by_personid_membershipid( $person_id, $membership
 }
 
 function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
-	$persons_table = $eme_db_prefix . PEOPLE_TBNAME;
+	global $wpdb;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$persons_table = EME_DB_PREFIX . PEOPLE_TBNAME;
 	if ( ! empty( $status ) ) {
 		if ( strstr( $status, ',' ) ) {
 			$cond_status = "AND members.status IN ($status)";
@@ -502,60 +502,60 @@ function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = 
 }
 
 function eme_get_activemembership_names_by_personid( $person_id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	$status_active     = EME_MEMBER_STATUS_ACTIVE;
 	$status_grace      = EME_MEMBER_STATUS_GRACE;
-	$members_table     = $eme_db_prefix . MEMBERS_TBNAME;
-	$memberships_table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
-	$people_table      = $eme_db_prefix . PEOPLE_TBNAME;
+	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$people_table      = EME_DB_PREFIX . PEOPLE_TBNAME;
 	$sql               = $wpdb->prepare( "SELECT DISTINCT memberships.name FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN ($status_active,$status_grace)", $person_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_active_membershipids_by_wpid( $wp_id ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	$status_active = EME_MEMBER_STATUS_ACTIVE;
 	$status_grace  = EME_MEMBER_STATUS_GRACE;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
-	$people_table  = $eme_db_prefix . PEOPLE_TBNAME;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$people_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT DISTINCT members.membership_id FROM $members_table AS members, $people_table AS persons WHERE members.status IN ($status_active,$status_grace) AND members.person_id=persons.person_id AND persons.wp_id=%d", $wp_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_memberids_by_wpid( $wp_id ) {
-	global $wpdb,$eme_db_prefix;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
-	$persons_table = $eme_db_prefix . PEOPLE_TBNAME;
+	global $wpdb;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$persons_table = EME_DB_PREFIX . PEOPLE_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT DISTINCT members.member_id FROM $members_table AS members, $persons_table AS persons WHERE members.person_id=persons.person_id AND persons.wp_id=%d", $wp_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_members_by_wpid_membershipid( $wp_id, $membership_id ) {
-	global $wpdb,$eme_db_prefix;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
-	$persons_table = $eme_db_prefix . PEOPLE_TBNAME;
+	global $wpdb;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$persons_table = EME_DB_PREFIX . PEOPLE_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT members.* FROM $members_table AS members, $persons_table AS persons WHERE members.membership_id=%d AND members.person_id=persons.person_id AND persons.wp_id=%d", $membership_id, $wp_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_membership_memberids( $membership_id ) {
-	global $wpdb,$eme_db_prefix;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT member_id from $members_table WHERE membership_id = %d", $membership_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_member_by_paymentid( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE payment_id=%d AND related_member_id=0", $id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_delete_member( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	if ( ! empty( $member_id ) ) {
 		// do the related member ids before deletion the head of the family
 		$related_member_ids = eme_get_family_member_ids( $member_id );
@@ -572,10 +572,10 @@ function eme_delete_member( $member_id ) {
 }
 
 function eme_delete_membership( $membership_id ) {
-	global $wpdb,$eme_db_prefix;
-	$members_table     = $eme_db_prefix . MEMBERS_TBNAME;
-	$memberships_table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
-	$answers_table     = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$answers_table     = EME_DB_PREFIX . ANSWERS_TBNAME;
 	// first get all existing memberids, so we can delete the uploaded files
 	$member_ids = eme_get_membership_memberids( $membership_id );
 	foreach ( $member_ids as $member_id ) {
@@ -1055,8 +1055,8 @@ function eme_is_expired_member( $member ) {
 }
 
 function eme_is_active_memberid( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE member_id=%d AND status IN (%d,%d)", $member_id, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE );
 	$res   = $wpdb->get_var( $sql );
 	if ( $res > 0 ) {
@@ -1067,8 +1067,8 @@ function eme_is_active_memberid( $member_id ) {
 }
 
 function eme_is_member( $person_id, $membership_id, $include_expired = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	if ( $include_expired ) {
 		$sql = $wpdb->prepare( "SELECT member_id FROM $table WHERE membership_id=%d AND person_id=%d", $membership_id, $person_id );
 	} else {
@@ -1078,15 +1078,15 @@ function eme_is_member( $person_id, $membership_id, $include_expired = 0 ) {
 }
 
 function eme_membership_exists( $id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE membership_id=%d", $id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_memberships_exists( $ids_arr ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
 	if ( ! empty( $ids_arr ) && eme_is_numeric_array( $ids_arr ) ) {
 		$ids_list = join( ',', $ids_arr );
 		return $wpdb->get_col( "SELECT DISTINCT membership_id FROM $table WHERE membership_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -1209,7 +1209,7 @@ function eme_member_edit_layout( $member, $limited = 0 ) {
 }
 
 function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
-	global $eme_timezone, $eme_plugin_url;
+	
 	$nonce_field             = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	$eme_member_status_array = eme_member_status_array();
 	usleep( 2 );
@@ -1298,7 +1298,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 					?>
 					<br>
 					<?php
-					echo "<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>";
+					echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
 						esc_html_e( 'Warning: if you transfer a member from one membership to another, make sure both memberships have the same index values for dynamic fields, otherwise the answers to those fields will either get mixed up or become empty.', 'events-made-easy' );
 					?>
 					<?php } ?>
@@ -1335,7 +1335,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 		<br><?php esc_html_e( "You can link this member to a 'head of the family' account, after which this member's start/end date and status are linked to the values of the head of the family and the below values for those fields are then ignored. This person will then no longer be charged for his membership too.", 'events-made-easy' ); ?>
 			<?php
 			if ( ! empty( $member['related_member_id'] ) ) {
-				echo "<br><img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>";
+				echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
 				esc_html_e( "Since this member relates to another family member, you can't edit the basic membership info. Please first remove the relationship (by emptying this field) and press save if you want to do that.", 'events-made-easy' );
 			}
 		}
@@ -1348,7 +1348,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			<input type='hidden' name='start_date' id='start_date' value='<?php echo $member['start_date']; ?>'>
 		<?php
 		if ( $limited ) {
-				echo eme_localized_date( $member['start_date'], $eme_timezone, 1 );
+				echo eme_localized_date( $member['start_date'], EME_TIMEZONE, 1 );
 		} else {
 			?>
 				<input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo eme_js_datetime( $member['start_date'] ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
@@ -1360,7 +1360,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			<input type='hidden' name='end_date' id='end_date' value='<?php echo $member['end_date']; ?>'>
 		<?php
 		if ( $limited ) {
-				echo eme_localized_date( $member['end_date'], $eme_timezone, 1 );
+				echo eme_localized_date( $member['end_date'], EME_TIMEZONE, 1 );
 		} else {
 			?>
 			<input type='text' readonly='readonly' name='dp_end_date' id='dp_end_date' data-date='<?php echo eme_js_datetime( $member['end_date'] ); ?>' data-alt-field='end_date' class='eme_formfield_fdate'>
@@ -1370,7 +1370,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 	<td><?php echo eme_ui_select_binary( $member['status_automatic'], 'status_automatic', 0, 'nodynamicupdates', $disabled ); ?>
 		<?php
 		if ( $member['status_automatic'] && ! $member['paid'] && $action == 'edit' && empty( $member['related_member_id'] ) ) {
-				echo "<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: membership is not paid for, so automatic status calculation will not happen!', 'events-made-easy' );
+				echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: membership is not paid for, so automatic status calculation will not happen!', 'events-made-easy' );
 		}
 		?>
 		<br>
@@ -1387,7 +1387,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			<input type='hidden' name='payment_date' id='payment_date' value='<?php echo $member['payment_date']; ?>'>
 		<?php
 		if ( $limited ) {
-				echo eme_localized_datetime( $member['payment_date'], $eme_timezone, 1 );
+				echo eme_localized_datetime( $member['payment_date'], EME_TIMEZONE, 1 );
 		} else {
 			?>
 			<input type='text' readonly='readonly' name='dp_payment_date' id='dp_payment_date' data-date='<?php echo eme_js_datetime( $member['payment_date'] ); ?>' data-alt-field='payment_date' class='eme_formfield_fdatetime'>
@@ -1564,7 +1564,7 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 }
 
 function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
-	global $eme_plugin_url, $eme_timezone;
+	
 
 	$templates_array            = eme_get_templates_array_by_id( 'membershipform' );
 	$templates_array2           = eme_get_templates( 'membershipform' );
@@ -1758,7 +1758,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<br><p class='eme_smaller'><?php esc_html_e( 'This is the form that will be shown when a new member wants to sign up for this membership.', 'events-made-easy' ); ?>
 		<br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If empty, a simple default will be used.', 'events-made-easy' ); ?></p>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_form_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_form_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['member_form_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -1784,7 +1784,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple default will be used.', 'events-made-easy' ); ?></p>
 		<br><?php esc_html_e( 'The template may contain the person placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL, #_OPT_IN (or #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE and placeholders referring to custom person fields, nothing else. #_LASTNAME, #_FIRSTNAME are required. If #_EMAIL, #_PHONE, #_OPT_IN (or #_OPT_OUT) is not set, it is copied over from the person signing up. The address info is always copied over from the person signing up.', 'events-made-easy' ); ?></p>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_familymember_form_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_familymember_form_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['familymember_form_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -1802,7 +1802,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><?php echo eme_ui_select( $membership['properties']['member_added_tpl'], 'properties[member_added_tpl]', $templates_array ); ?>
 		<br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown after someone subscribed. If left empty, a default message will be shown.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_added_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_added_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['member_added_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -1820,7 +1820,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><?php echo eme_ui_select( $membership['properties']['payment_form_header_tpl'], 'properties[payment_form_header_tpl]', $templates_array ); ?>
 		<br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown above the payment buttons. If left empty, a default message will be shown.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_header_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_header_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['payment_form_header_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -1838,7 +1838,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><?php echo eme_ui_select( $membership['properties']['payment_form_footer_tpl'], 'properties[payment_form_footer_tpl]', $templates_array ); ?>
 		<br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown below the payment buttons. Default: empty.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_footer_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_footer_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['payment_form_footer_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -1856,7 +1856,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><?php echo eme_ui_select( $membership['properties']['payment_success_tpl'], 'properties[payment_success_tpl]', $templates_array ); ?>
 		<br><p class='eme_smaller'><?php echo esc_html__( 'The message shown when the payment is succesfull for membership signup. Default: see global EME settings for payments, subsection "General options".', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_success_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_success_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['payment_success_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -1923,7 +1923,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><?php echo eme_ui_select( $membership['properties']['offline_payment_tpl'], 'properties[offline_payment_tpl]', $templates_array ); ?>
 		<br><p class='eme_smaller'><?php echo esc_html__( 'The format of the text shown for the offline payment method. Default: empty.', 'events-made-easy' ) . '<br>' . esc_html__( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . esc_html__( 'the documentation', 'events-made-easy' ) . '</a>'; ?></p>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_offline_payment_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_offline_payment_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['offline_payment_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -1968,7 +1968,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 }
 
 function eme_meta_box_div_membershipmailformats( $membership ) {
-	global $eme_plugin_url;
+	
 	$templates_array = eme_get_templates_array_by_id( 'membershipmail' );
 	?>
 <div id="tab-mailformats">
@@ -1976,7 +1976,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 
 	<h3><?php esc_html_e( 'New member email', 'events-made-easy' ); ?></h3>
 		<div>
-	<img style='vertical-align: middle;' src='<?php echo esc_url($eme_plugin_url); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the member that is signing up.', 'events-made-easy' ); ?>
+	<img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the member that is signing up.', 'events-made-easy' ); ?>
 	<table class="eme_membership_admin_table">
 	<tr>
 	<td><label for="name"><?php esc_html_e( 'New member email subject', 'events-made-easy' ); ?></label></td>
@@ -1992,7 +1992,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_new_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_new_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['new_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2045,7 +2045,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_new_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_new_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['contact_new_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2080,7 +2080,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_updated_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_updated_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['updated_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2099,7 +2099,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 
 	<h3><?php esc_html_e( 'Membership extended email', 'events-made-easy' ); ?></h3>
 		<div>
-	<img style='vertical-align: middle;' src='<?php echo esc_url($eme_plugin_url); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
+	<img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
 	<table class="eme_membership_admin_table">
 	<tr>
 	<td><label for="name"><?php esc_html_e( 'Membership extended email subject', 'events-made-easy' ); ?></label></td>
@@ -2115,7 +2115,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_extended_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_extended_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['extended_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2134,7 +2134,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 
 	<h3><?php esc_html_e( 'Membership paid email', 'events-made-easy' ); ?></h3>
 		<div>
-	<img style='vertical-align: middle;' src='<?php echo esc_url($eme_plugin_url); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
+	<img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
 	<table class="eme_membership_admin_table">
 	<tr>
 	<td><label for="name"><?php esc_html_e( 'Membership paid email subject', 'events-made-easy' ); ?></label></td>
@@ -2150,7 +2150,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_paid_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_paid_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['paid_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2178,7 +2178,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_paid_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_paid_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['contact_paid_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2197,7 +2197,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 
 	<h3><?php esc_html_e( 'Membership reminder email', 'events-made-easy' ); ?></h3>
 		<div>
-	<img style='vertical-align: middle;' src='<?php echo esc_url($eme_plugin_url); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the head of the family.', 'events-made-easy' ); ?>
+	<img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the head of the family.', 'events-made-easy' ); ?>
 	<table class="eme_membership_admin_table">
 	<tr>
 	<td><label for="name"><?php esc_html_e( 'Membership reminder email subject', 'events-made-easy' ); ?></label></td>
@@ -2216,7 +2216,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 				<br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_reminder_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_reminder_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['reminder_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2235,7 +2235,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 
 	<h3><?php esc_html_e( 'Membership stopped email', 'events-made-easy' ); ?></h3>
 		<div>
-	<img style='vertical-align: middle;' src='<?php echo esc_url($eme_plugin_url); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
+	<img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
 	<table class="eme_membership_admin_table">
 	<tr>
 	<td><label for="name"><?php esc_html_e( 'Membership stopped email subject', 'events-made-easy' ); ?></label></td>
@@ -2254,7 +2254,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 				<br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['stop_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2285,7 +2285,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 				<br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['contact_stop_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2319,7 +2319,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
-		<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_ipn_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_ipn_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['contact_ipn_body_text'] ) ) {
 				$showhide_style = 'style="display:none; width:100%;"';
@@ -2457,11 +2457,11 @@ function eme_render_members_searchfields( $group = [] ) {
 }
 
 function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize = 0, $sorting = '', $count = 0, $memberids_only = 0, $peopleids_only = 0, $emails_only = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$members_table           = $eme_db_prefix . MEMBERS_TBNAME;
-	$memberships_table       = $eme_db_prefix . MEMBERSHIPS_TBNAME;
-	$people_table            = $eme_db_prefix . PEOPLE_TBNAME;
-	$answers_table           = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$members_table           = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$memberships_table       = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$people_table            = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$answers_table           = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$eme_member_status_array = eme_member_status_array();
 
 	$answer_member_ids = [];
@@ -2565,7 +2565,7 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 }
 
 function eme_manage_members_layout( $message ) {
-	global $plugin_page, $eme_plugin_url;
+	global $plugin_page;
 
 	$memberships     = eme_get_memberships();
 	$pdftemplates    = eme_get_templates( 'pdf', 1 );
@@ -2614,7 +2614,7 @@ function eme_manage_members_layout( $message ) {
 	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
 	<span class="eme_import_form_img">
 		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
-	<img src="<?php echo esc_url($eme_plugin_url); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
+	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
 	<div id='div_import' style='display:none;'>
 	<form id='member-import' method='post' enctype='multipart/form-data' action='#'>
@@ -3130,7 +3130,7 @@ function eme_member_answers( $member, $membership, $do_update = 1 ) {
 	return eme_store_member_answers( $member, $do_update );
 }
 function eme_store_member_answers( $member, $do_update = 1 ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	$fields_seen = [];
 
 	$extra_charge   = 0;
@@ -3176,7 +3176,7 @@ function eme_store_member_answers( $member, $do_update = 1 ) {
 
 	if ( $do_update && $member_id > 0 ) {
 		// put the extra charge found in the member
-		$members_table = $eme_db_prefix . MEMBERS_TBNAME;
+		$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
 		$sql           = $wpdb->prepare( "UPDATE $members_table SET extra_charge = %s WHERE member_id = %d", $extra_charge, $member_id );
 		$wpdb->query( $sql );
 
@@ -3191,49 +3191,49 @@ function eme_store_member_answers( $member, $do_update = 1 ) {
 }
 
 function eme_get_person_ids_from_member_ids( $member_ids ) {
-	global $wpdb,$eme_db_prefix;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$sql           = "SELECT person_id from $members_table WHERE member_id IN ($member_ids)";
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_member_answers( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='member'", $member_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_nodyndata_member_answers( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table        = $eme_db_prefix . ANSWERS_TBNAME;
-	$formfield_table_name = $eme_db_prefix . FORMFIELDS_TBNAME;
+	global $wpdb;
+	$answers_table        = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$formfield_table_name = EME_DB_PREFIX . FORMFIELDS_TBNAME;
 	$sql                  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=0 AND type='member'", $member_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_dyndata_member_answers( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping>0 AND type='member' ORDER BY eme_grouping,occurence,field_id", $member_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 function eme_get_dyndata_member_answer( $member_id, $grouping = 0, $occurence = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=%d AND occurence=%d AND type='member'", $member_id, $grouping, $occurence );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_delete_member_answers( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='member'", $member_id );
 	$wpdb->query( $sql );
 }
 function eme_delete_membership_answers( $membership_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='membership'", $member_id );
 	$wpdb->query( $sql );
 }
@@ -3245,13 +3245,13 @@ function eme_get_next_start_date( $membership, $member, $renew_expired = 0 ) {
 
 // function is only called for new or renew_expired
 function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
-	global $eme_timezone;
+	
 
 	if ( ! $membership ) {
 		return;
 	}
 
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	if ( $membership['type'] == 'rolling' ) {
 		if ( $renew_expired ) {
 			// expired members that want a renewal? Base it on today
@@ -3262,7 +3262,7 @@ function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
 			if ( empty( $member['creation_date'] ) ) {
 				return $eme_date_obj_now->getDate();
 			} else {
-				$eme_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $member['creation_date'], ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+				$eme_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d H:i:s', $member['creation_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 				// check the return code to make sure we can return something sensible
 				if ( $eme_date_obj !== false ) {
 					return $eme_date_obj->getDate();
@@ -3272,7 +3272,7 @@ function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
 			}
 		}
 	} else {
-		$base_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $membership['start_date'], ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+		$base_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $membership['start_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 		if ( $membership['duration_period'] == 'forever' ) {
 			$start_date_obj = $eme_date_obj_now->copy();
 		} else {
@@ -3295,7 +3295,7 @@ function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
 }
 
 function eme_get_next_end_date( $membership, $start_date, $new_member = 0 ) {
-	global $eme_timezone;
+	
 
 	if ( ! $membership ) {
 		return;
@@ -3304,10 +3304,10 @@ function eme_get_next_end_date( $membership, $start_date, $new_member = 0 ) {
 		return '';
 	}
 
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// set at midnight from today
 	$eme_date_obj_now->today();
-	$base_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $start_date, ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+	$base_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $start_date, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 	$interval      = DateInterval::createFromDateString( $membership['duration_count'] . ' ' . $membership['duration_period'] );
 	$base_date_obj->add( $interval );
 	while ( $base_date_obj < $eme_date_obj_now ) {
@@ -3322,9 +3322,9 @@ function eme_get_next_end_date( $membership, $start_date, $new_member = 0 ) {
 
 // for CRON
 function eme_member_recalculate_status( $member_id = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$members_table     = $eme_db_prefix . MEMBERS_TBNAME;
-	$memberships_table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	global $wpdb;
+	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
 	// we only recalculate member status if status_automatic=1 and the member has paid
 	if ( $member_id ) {
 		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE a.member_id=$member_id AND a.status_automatic=1 AND a.paid=1 AND related_member_id=0";
@@ -3366,15 +3366,15 @@ function eme_member_recalculate_status( $member_id = 0 ) {
 
 // for CRON
 function eme_member_remove_pending() {
-	global $wpdb,$eme_db_prefix,$eme_timezone;
-	$table            = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table            = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT member_id,membership_id,creation_date from $table WHERE status=%d", EME_MEMBER_STATUS_PENDING );
 	$members          = $wpdb->get_results( $sql, ARRAY_A );
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	foreach ( $members as $member ) {
 		$membership = eme_get_membership( $member['membership_id'] );
 		if ( ! empty( $membership['properties']['remove_pending_days'] ) ) {
-			$datetime = new ExpressiveDate( $member['creation_date'], $eme_timezone );
+			$datetime = new ExpressiveDate( $member['creation_date'], EME_TIMEZONE );
 			$diff     = $datetime->getDifferenceInDays( $eme_date_obj_now );
 			if ( $diff > $membership['properties']['remove_pending_days'] ) {
 				eme_delete_member( $member['member_id'] );
@@ -3385,14 +3385,14 @@ function eme_member_remove_pending() {
 
 // for GDPR CRON
 function eme_member_remove_old_expired() {
-	global $wpdb,$eme_db_prefix,$eme_timezone;
-	$table               = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table               = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$remove_expired_days = get_option( 'eme_gdpr_remove_expired_member_days' );
 	if ( empty( $remove_expired_days ) ) {
 		return;
 	}
 
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today            = $eme_date_obj_now->getDate();
 
 	$sql        = $wpdb->prepare( "SELECT member_id from $table WHERE status=%d AND DATEDIFF(%s,end_date)>%d", EME_MEMBER_STATUS_EXPIRED, $today, $remove_expired_days );
@@ -3404,10 +3404,10 @@ function eme_member_remove_old_expired() {
 
 // for CRON
 function eme_member_send_expiration_reminders() {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
-	$table            = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table            = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$memberships      = eme_get_memberships();
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today            = $eme_date_obj_now->getDate();
 	foreach ( $memberships as $membership ) {
 		$membership_id = $membership['membership_id'];
@@ -3430,16 +3430,16 @@ function eme_member_send_expiration_reminders() {
 }
 
 function eme_count_pending_members() {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) from $table WHERE status=%d", EME_MEMBER_STATUS_PENDING );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_member_send_expiration_reminder( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table            = $eme_db_prefix . MEMBERS_TBNAME;
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	global $wpdb;
+	$table            = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today            = $eme_date_obj_now->getDate();
 	$member           = eme_get_member( $member_id );
 	eme_email_member_action( $member, 'expiration_reminder' );
@@ -3448,12 +3448,12 @@ function eme_member_send_expiration_reminder( $member_id ) {
 }
 
 function eme_member_calc_status( $start_date, $end_date, $duration = '', $grace_period = 0 ) {
-	global $eme_timezone;
+	
 
-	$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// set at midnight from today
 	$eme_date_obj_now->today();
-	$start_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $start_date, ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+	$start_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $start_date, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 	if ( $start_date_obj === false ) {
 		// a default return
 		return EME_MEMBER_STATUS_PENDING;
@@ -3465,7 +3465,7 @@ function eme_member_calc_status( $start_date, $end_date, $duration = '', $grace_
 	}
 
 	if ( ! empty( $end_date ) ) {
-		$end_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $end_date, ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+		$end_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $end_date, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 		if ( $end_date_obj === false ) {
 			// a default return
 			return EME_MEMBER_STATUS_PENDING;
@@ -3495,8 +3495,8 @@ function eme_member_calc_status( $start_date, $end_date, $duration = '', $grace_
 }
 
 function eme_member_set_paid( $member, $pg = '', $pg_pid = '' ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
-	$table      = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table      = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$membership = eme_get_membership( $member['membership_id'] );
 
 	if ( ! empty( $member['related_member_id'] ) ) {
@@ -3544,8 +3544,8 @@ function eme_member_set_paid( $member, $pg = '', $pg_pid = '' ) {
 }
 
 function eme_member_set_unpaid( $member ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	// do nothing if not paid or if a family member
 	if ( ! $member['paid'] || ! empty( $member['related_member_id'] ) ) {
 		return true;
@@ -3573,8 +3573,8 @@ function eme_member_set_unpaid( $member ) {
 }
 
 function eme_extend_member( $member, $pg = '', $pg_pid = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 
 	if ( empty( $member['end_date'] ) ) {
 		return eme_member_set_paid( $member, $pg, $pg_pid );
@@ -3610,8 +3610,8 @@ function eme_extend_member( $member, $pg = '', $pg_pid = '' ) {
 }
 
 function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 
 	if ( ! empty( $member['related_member_id'] ) ) {
 		return 0;
@@ -3643,8 +3643,8 @@ function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
 }
 
 function eme_get_family_member_ids( $member_id ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	if ( empty( $member_id ) ) {
 		return false;
 	}
@@ -3653,8 +3653,8 @@ function eme_get_family_member_ids( $member_id ) {
 }
 
 function eme_member_set_status( $member_id, $status ) {
-	global $wpdb,$eme_db_prefix;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 
 	$where              = [];
 	$fields             = [];
@@ -3665,8 +3665,8 @@ function eme_member_set_status( $member_id, $status ) {
 }
 
 function eme_stop_member( $member_id ) {
-	global $wpdb,$eme_db_prefix, $eme_timezone;
-	$table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
 
 	$where              = [];
 	$fields             = [];
@@ -3684,10 +3684,10 @@ function eme_stop_member( $member_id ) {
 	// when we stop the member, make sure the end date reflects this too
 	// this is more relevant when manually marking a member as stopped
 	if ( ! eme_is_empty_date( $member['end_date'] ) ) {
-		$eme_date_obj_now = new ExpressiveDate( 'now', $eme_timezone );
+		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 		// set at midnight from today
 		$eme_date_obj_now->today();
-		$end_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], ExpressiveDate::parseSuppliedTimezone( $eme_timezone ) );
+		$end_date_obj = ExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 		if ( $end_date_obj > $eme_date_obj_now ) {
 			$fields['end_date'] = $eme_date_obj_now->getDate();
 		}
@@ -4309,7 +4309,7 @@ function eme_add_member_ajax() {
 }
 
 function eme_replace_member_placeholders( $format, $membership, $member, $target = 'html', $lang = '', $take_answers_from_post = 0 ) {
-	global $eme_timezone;
+	
 
 	$email_target = 0;
 	$orig_target  = $target;
@@ -4455,7 +4455,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			}
 		} elseif ( preg_match( '/#_MEMBERLASTSEEN/', $result, $matches ) ) {
 			if ( ! eme_is_empty_datetime( $member['last_seen'] ) ) {
-					$replacement = eme_localized_datetime( $member['last_seen'], $eme_timezone );
+					$replacement = eme_localized_datetime( $member['last_seen'], EME_TIMEZONE );
 			} else {
 				$replacement = __( 'Never', 'events-made-easy' );
 			}
@@ -4466,7 +4466,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_MEMBERCREATIONDATE\{(.+?)\}/', $result, $matches ) ) {
-			$replacement = eme_localized_date( $member['creation_date'], $eme_timezone, $matches[1] );
+			$replacement = eme_localized_date( $member['creation_date'], EME_TIMEZONE, $matches[1] );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
 				$replacement = apply_filters( 'eme_general', $replacement );
@@ -4474,7 +4474,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_MEMBERSTARTDATE\{(.+?)\}/', $result, $matches ) ) {
-			$replacement = eme_localized_date( $member['start_date'], $eme_timezone, $matches[1] );
+			$replacement = eme_localized_date( $member['start_date'], EME_TIMEZONE, $matches[1] );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
 				$replacement = apply_filters( 'eme_general', $replacement );
@@ -4491,7 +4491,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 					$replacement = __( 'no end date', 'events-made-easy' );
 				}
 			} elseif ( ! eme_is_empty_date( $member['end_date'] ) ) {
-					$replacement = eme_localized_date( $member['end_date'], $eme_timezone, $matches[1] );
+					$replacement = eme_localized_date( $member['end_date'], EME_TIMEZONE, $matches[1] );
 			}
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4510,11 +4510,11 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				}
 			} elseif ( ! eme_is_empty_date( $member['end_date'] ) ) {
 				$next_end_date = eme_get_next_end_date( $membership, $member['end_date'] );
-				$replacement   = eme_localized_date( $next_end_date, $eme_timezone, $matches[1] );
+				$replacement   = eme_localized_date( $next_end_date, EME_TIMEZONE, $matches[1] );
 			} elseif ( eme_is_empty_date( $member['end_date'] ) ) {
 					$start_date    = eme_get_start_date( $membership, $member );
 					$next_end_date = eme_get_next_end_date( $membership, $start_date );
-				$replacement       = eme_localized_date( $next_end_date, $eme_timezone, $matches[1] );
+				$replacement       = eme_localized_date( $next_end_date, EME_TIMEZONE, $matches[1] );
 			}
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4523,7 +4523,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_MEMBERCREATIONDATE$/', $result ) ) {
-			$replacement = eme_localized_date( $member['creation_date'], $eme_timezone );
+			$replacement = eme_localized_date( $member['creation_date'], EME_TIMEZONE );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
 				$replacement = apply_filters( 'eme_general', $replacement );
@@ -4531,7 +4531,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_MEMBERSTARTDATE$/', $result ) ) {
-			$replacement = eme_localized_date( $member['start_date'], $eme_timezone );
+			$replacement = eme_localized_date( $member['start_date'], EME_TIMEZONE );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
 				$replacement = apply_filters( 'eme_general', $replacement );
@@ -4548,7 +4548,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 					$replacement = __( 'no end date', 'events-made-easy' );
 				}
 			} elseif ( ! eme_is_empty_date( $member['end_date'] ) ) {
-					$replacement = eme_localized_date( $member['end_date'], $eme_timezone );
+					$replacement = eme_localized_date( $member['end_date'], EME_TIMEZONE );
 			}
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4571,11 +4571,11 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				}
 			} elseif ( ! eme_is_empty_date( $member['end_date'] ) ) {
 				$next_end_date = eme_get_next_end_date( $membership, $member['end_date'] );
-				$replacement   = eme_localized_date( $next_end_date, $eme_timezone );
+				$replacement   = eme_localized_date( $next_end_date, EME_TIMEZONE );
 			} elseif ( eme_is_empty_date( $member['end_date'] ) ) {
 					$start_date    = eme_get_start_date( $membership, $member );
 					$next_end_date = eme_get_next_end_date( $membership, $start_date );
-				$replacement       = eme_localized_date( $next_end_date, $eme_timezone );
+				$replacement       = eme_localized_date( $next_end_date, EME_TIMEZONE );
 			}
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -5094,8 +5094,8 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 }
 
 function eme_import_csv_members() {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 
 	if ( ! current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 		return __( 'Access denied', 'events-made-easy' );
@@ -5264,8 +5264,8 @@ function eme_import_csv_members() {
 }
 
 function eme_import_csv_member_dynamic_answers() {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 
 	if ( ! current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			return __( 'Access denied', 'events-made-easy' );
@@ -5404,9 +5404,9 @@ function eme_import_csv_member_dynamic_answers() {
 
 
 function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$people_table  = $eme_db_prefix . PEOPLE_TBNAME;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
+	global $wpdb;
+	$people_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
@@ -5528,7 +5528,7 @@ add_action( 'wp_ajax_eme_manage_memberships', 'eme_ajax_manage_memberships' );
 add_action( 'wp_ajax_eme_store_members_query', 'eme_ajax_store_members_query' );
 
 function eme_ajax_memberships_list() {
-	global $wpdb, $eme_db_prefix, $eme_plugin_url;
+	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
 			$ajaxResult['Result']      = 'Error';
@@ -5538,8 +5538,8 @@ function eme_ajax_memberships_list() {
 	}
 	$status_active = EME_MEMBER_STATUS_ACTIVE;
 	$status_grace  = EME_MEMBER_STATUS_GRACE;
-	$table         = $eme_db_prefix . MEMBERSHIPS_TBNAME;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
+	$table         = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
 	$ajaxResult    = [];
 
 	$formfields = eme_get_formfields( '', 'memberships' );
@@ -5584,7 +5584,7 @@ function eme_ajax_memberships_list() {
 		}
 
 		if ( eme_is_empty_string( $item['properties']['member_form_text'] ) && empty( $item['properties']['member_form_tpl'] ) ) {
-			$record['name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url($eme_plugin_url) . "images/warning.png' alt='warning' title='" . __( 'No membership form has been defined for this membership, a simple default will be used.', 'events-made-easy' ) . "'>";
+			$record['name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . __( 'No membership form has been defined for this membership, a simple default will be used.', 'events-made-easy' ) . "'>";
 		}
 
 		$record['description'] = eme_esc_html( $item['description'] );
@@ -5627,7 +5627,7 @@ function eme_ajax_memberships_list() {
 }
 
 function eme_ajax_members_list( $dynamic_groupname = '' ) {
-	global $wpdb,$eme_db_prefix,$eme_timezone;
+	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$eme_member_status_array = eme_member_status_array();
 	$ajaxResult              = [];
@@ -5640,7 +5640,7 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 	}
 
 	if ( ! empty( $dynamic_groupname ) ) {
-			$table         = $eme_db_prefix . GROUPS_TBNAME;
+			$table         = EME_DB_PREFIX . GROUPS_TBNAME;
 			$group['type'] = 'dynamic_members';
 		$group['name']     = $dynamic_groupname . ' ' . __( '(Dynamic)', 'events-made-easy' );
 		$search_terms      = [];
@@ -5695,7 +5695,7 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 		$record['lastname']   = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['lastname'] ) . '</a> ' . $familytext;
 		$record['firstname']  = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['firstname'] ) . '</a> ' . $familytext;
 		$record['email']      = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['email'] ) . '</a> ' . $familytext;
-		$record['birthdate']  = eme_localized_date( $item['birthdate'], $eme_timezone, 1 );
+		$record['birthdate']  = eme_localized_date( $item['birthdate'], EME_TIMEZONE, 1 );
 		$record['birthplace'] = eme_esc_html( $item['birthplace'] );
 		$record['address1']   = eme_esc_html( $item['address1'] );
 		$record['address2']   = eme_esc_html( $item['address2'] );
@@ -5716,13 +5716,13 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 		} else {
 			$record['membership_name'] = '';
 		}
-		$record['start_date']      = eme_localized_date( $item['start_date'], $eme_timezone, 1 );
-		$record['end_date']        = eme_localized_date( $item['end_date'], $eme_timezone, 1 );
-		$record['creation_date']   = eme_localized_datetime( $item['creation_date'], $eme_timezone, 1 );
-		$record['last_seen']       = eme_localized_datetime( $item['last_seen'], $eme_timezone, 1 );
-		$record['payment_date']    = eme_localized_datetime( $item['payment_date'], $eme_timezone, 1 );
+		$record['start_date']      = eme_localized_date( $item['start_date'], EME_TIMEZONE, 1 );
+		$record['end_date']        = eme_localized_date( $item['end_date'], EME_TIMEZONE, 1 );
+		$record['creation_date']   = eme_localized_datetime( $item['creation_date'], EME_TIMEZONE, 1 );
+		$record['last_seen']       = eme_localized_datetime( $item['last_seen'], EME_TIMEZONE, 1 );
+		$record['payment_date']    = eme_localized_datetime( $item['payment_date'], EME_TIMEZONE, 1 );
 		$record['reminder']        = intval( $item['reminder'] );
-		$record['reminder_date']   = eme_localized_datetime( $item['reminder_date'], $eme_timezone, 1 );
+		$record['reminder_date']   = eme_localized_datetime( $item['reminder_date'], EME_TIMEZONE, 1 );
 		$record['membershipprice'] = eme_localized_price( $membership['properties']['price'], $membership['properties']['currency'] );
 		$record['totalprice']      = eme_localized_price( eme_get_total_member_price( $item ), $membership['properties']['currency'] );
 		$record['discount']        = eme_localized_price( $item['discount'], $membership['properties']['currency'] );
@@ -5780,7 +5780,7 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 }
 
 function eme_ajax_members_select2() {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
@@ -5791,10 +5791,10 @@ function eme_ajax_members_select2() {
 			wp_die();
 	}
 
-	$table             = $eme_db_prefix . MEMBERS_TBNAME;
-	$people_table      = $eme_db_prefix . PEOPLE_TBNAME;
-	$members_table     = $eme_db_prefix . MEMBERS_TBNAME;
-	$memberships_table = $eme_db_prefix . MEMBERSHIPS_TBNAME;
+	$table             = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$people_table      = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
 	$jTableResult      = [];
 	$q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
@@ -5988,7 +5988,7 @@ function eme_ajax_action_send_member_mails( $ids_arr, $subject_template_id, $bod
 }
 
 function eme_ajax_action_delete_members( $ids_arr, $trash_person = 0 ) {
-	global $wpdb,$eme_db_prefix;
+	global $wpdb;
 	if ( $trash_person ) {
 		$ids        = join( ',', $ids_arr );
 		$person_ids = eme_get_person_ids_from_member_ids( $ids );
@@ -6201,7 +6201,7 @@ function eme_ajax_action_resend_member_reminders( $ids_arr ) {
 }
 
 function eme_generate_member_pdf( $member, $membership, $template_id ) {
-	global $eme_plugin_url;
+	
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
 		$format = eme_get_template_format( $template_id );
@@ -6221,7 +6221,7 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 	}
 
 	$dompdf->setPaper( $pagesize, $orientation );
-	$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url($eme_plugin_url) . "css/eme.css' type='text/css' media='all'>";
+	$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
 	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
 		$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
@@ -6264,7 +6264,7 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 }
 
 function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
-	global $eme_plugin_url;
+	
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
 		$format = eme_get_template_format( $template_id );
@@ -6286,7 +6286,7 @@ function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_head
 	}
 
 	$dompdf->setPaper( $pagesize, $orientation );
-		$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url($eme_plugin_url) . "css/eme.css' type='text/css' media='all'>";
+		$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
 		$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
 			$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
@@ -6371,8 +6371,8 @@ function eme_get_membership_post_answers() {
 }
 
 function eme_get_membership_answers( $membership_id ) {
-	global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$cf            = wp_cache_get( "eme_membership_cf $membership_id" );
 	if ( $cf === false ) {
 		$sql    = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='membership'", $membership_id );
@@ -6410,8 +6410,8 @@ function eme_membership_store_answers( $membership_id ) {
 }
 
 function eme_get_cf_membership_ids( $val, $field_id, $is_multi = 0 ) {
-	global $wpdb,$eme_db_prefix;
-	$table      = $eme_db_prefix . ANSWERS_TBNAME;
+	global $wpdb;
+	$table      = EME_DB_PREFIX . ANSWERS_TBNAME;
 	$conditions = [];
 	$val        = eme_kses( $val );
 
@@ -6441,9 +6441,9 @@ function eme_get_cf_membership_ids( $val, $field_id, $is_multi = 0 ) {
 }
 
 function eme_get_membership_cf_answers_groupingids( $membership_id ) {
-		global $wpdb,$eme_db_prefix;
-	$answers_table = $eme_db_prefix . ANSWERS_TBNAME;
-	$members_table = $eme_db_prefix . MEMBERS_TBNAME;
+		global $wpdb;
+	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
 		$sql       = $wpdb->prepare( "select distinct a.eme_grouping from $answers_table a left join $members_table m on m.member_id=a.related_id where m.membership_id=%d AND a.type='member'", $membership_id );
 		return $wpdb->get_col( $sql );
 }

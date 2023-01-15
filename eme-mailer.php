@@ -1836,12 +1836,18 @@ function eme_emails_page() {
 			if ( $mail['person_id'] > 0 ) {
 				$person_ids[]                     = $mail['person_id'];
 				$person                           = eme_get_person( $mail['person_id'] );
-				$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+				if ( !empty( $person ) ) {
+					$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+				}
 			} elseif ( $mail['member_id'] > 0 ) {
 				$member_ids[]                           = $mail['member_id'];
 				$member                                 = eme_get_member( $mail['member_id'] );
-				$person                                 = eme_get_person( $member['person_id'] );
-				$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+				if (! empty( $member ) ) {
+					$person = eme_get_person( $member['person_id'] );
+					if ( !empty( $person ) ) {
+						$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+					}
+				}
 			}
 			// reuse the attachments too
 			if ( ! empty( $mail['attachments'] ) ) {

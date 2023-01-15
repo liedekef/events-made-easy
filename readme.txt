@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.38
+Stable tag: 2.3.41
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,10 +100,8 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.41 (2023//) =
+= 2.3.41 (2023/01/15) =
 * Add an action to (retry to) resend all failed mails in a mailing
-
-= 2.3.40 (2023/01/15) =
 * Fix wrongfull captcha check if captcha was disabled for an event
 * Decrease use of globals as much as possible, "define" is more than enough (and available during plugin install, while globals are not)
  

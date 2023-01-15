@@ -22,6 +22,5 @@ done
 
 echo
 echo "Don't forget to git add/commit/push the new files:"
-echo "git add events-made-easy.*"
-echo "git commit -m 'language file updates' events-made-easy.*"
+echo "git commit -m 'language file updates' events-made-easy*"
 echo 'git push'

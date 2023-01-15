@@ -379,7 +379,7 @@ function eme_check_captcha( $remove_upon_success = 0 ) {
 
 function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 	$captcha_res = false;
-	if ( ( ! empty( $properties ) && $properties['use_recaptcha'] ) || get_option( 'eme_recaptcha_for_forms' ) ) {
+	if ( ( ! empty( $properties ) && $properties['use_recaptcha'] ) || ( empty( $properties ) && get_option( 'eme_recaptcha_for_forms' ) ) ) {
 		$captcha_res = eme_check_recaptcha();
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
@@ -392,7 +392,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			wp_die();
 		}
 	}
-	if ( ( ! empty( $properties ) && $properties['use_hcaptcha'] ) || get_option( 'eme_hcaptcha_for_forms' ) ) {
+	if ( ( ! empty( $properties ) && $properties['use_hcaptcha'] ) || ( empty( $properties ) && get_option( 'eme_hcaptcha_for_forms' ) ) ) {
 		$captcha_res = eme_check_hcaptcha();
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the hCaptcha box', 'events-made-easy' );
@@ -405,7 +405,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			wp_die();
 		}
 	}
-	if ( ( ! empty( $properties ) && $properties['use_cfcaptcha'] ) || get_option( 'eme_cfcaptcha_for_forms' ) ) {
+	if ( ( ! empty( $properties ) && $properties['use_cfcaptcha'] ) || ( empty( $properties ) && get_option( 'eme_cfcaptcha_for_forms' ) ) ) {
 		$captcha_res = eme_check_cfcaptcha();
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
@@ -418,7 +418,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			wp_die();
 		}
 	}
-	if ( ( ! empty( $properties ) && $properties['use_captcha'] ) || get_option( 'eme_captcha_for_forms' ) ) {
+	if ( ( ! empty( $properties ) && $properties['use_captcha'] ) || ( empty( $properties ) && get_option( 'eme_captcha_for_forms' ) ) ) {
 		$captcha_res = eme_check_captcha( $remove_captcha_if_ok );
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'You entered an incorrect code', 'events-made-easy' );

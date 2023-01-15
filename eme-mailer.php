@@ -450,7 +450,7 @@ function eme_get_queued_count() {
 	$mqueue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	// the queued count is to know how much mails are left unsent in the queue
 	$sql = "SELECT COUNT(*) FROM $mqueue_table WHERE status=0";
-		return $wpdb->get_var( $sql );
+	return $wpdb->get_var( $sql );
 }
 
 function eme_get_queued( $now ) {
@@ -463,12 +463,10 @@ function eme_get_queued( $now ) {
 	if ( $eme_cron_queue_count > 0 ) {
 		$sql .= " LIMIT $eme_cron_queue_count";
 	}
-		return $wpdb->get_results( $sql, ARRAY_A );
+	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_send_queued() {
-	
-
 	// we'll build in a safety precaution to make sure to never surpass the schedule duration
 	$start_time   = time();
 	$scheduled    = wp_get_schedule( 'eme_cron_send_queued' );
@@ -568,28 +566,28 @@ function eme_get_passed_planned_mailings( $now ) {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = "SELECT id FROM $mailings_table WHERE status='planned' AND planned_on<'$now'";
-		return $wpdb->get_col( $sql );
+	return $wpdb->get_col( $sql );
 }
 
 function eme_get_ongoing_mailings() {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = "SELECT id FROM $mailings_table WHERE status='ongoing'";
-		return $wpdb->get_col( $sql );
+	return $wpdb->get_col( $sql );
 }
 
 function eme_mark_mailing_planned( $mailing_id ) {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='planned' where id=%d", $mailing_id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 }
 
 function eme_mark_mailing_ongoing( $mailing_id ) {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='ongoing' where id=%d", $mailing_id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 }
 
 function eme_mark_mailing_completed( $mailing_id ) {
@@ -597,7 +595,7 @@ function eme_mark_mailing_completed( $mailing_id ) {
 	$stats          = eme_get_mailing_stats( $mailing_id );
 	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='completed', stats=%s where id=%d", eme_serialize( $stats ), $mailing_id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 	if ( $stats['failed'] > 0 ) {
 		$mailing        = eme_get_mailing( $mailing_id );
 		$failed_subject = __( 'Mailing completed with errors', 'events-made-easy' );
@@ -615,10 +613,25 @@ function eme_archive_mailing( $mailing_id ) {
 	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='archived', stats=%s WHERE id=%d", $stats, $mailing_id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = $wpdb->prepare( "DELETE FROM $queue_table where mailing_id=%d", $mailing_id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
+}
+
+function eme_mailing_retry_failed( $id ) {
+	global $wpdb;
+	$mqueue_table            = EME_DB_PREFIX . MQUEUE_TBNAME;
+	$where                   = [];
+	$fields                  = [];
+	$where['mailing_id']     = intval( $id );
+	$where['status']         = 2;
+	$fields['status']        = 0;
+	if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
+		return false;
+	} else {
+		return true;
+	}
 }
 
 // for GDPR CRON
@@ -643,53 +656,53 @@ function eme_archive_old_mailings() {
 	// now remove old mails not belonging to a specific mailing
 	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = "DELETE FROM $queue_table where mailing_id=0 AND creation_date < '$old_date'";
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 }
 
 function eme_cancel_mail( $mail_id ) {
 	global $wpdb;
 	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = $wpdb->prepare( "UPDATE $queue_table SET status=3 WHERE status=0 AND id=%d", $mail_id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 }
 
 function eme_cancel_mailing( $mailing_id ) {
 	global $wpdb;
 	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = $wpdb->prepare( "UPDATE $queue_table SET status=3 WHERE status=0 AND mailing_id=%d", $mailing_id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 	$stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
 	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='cancelled', stats=%s WHERE id=%d", $stats, $mailing_id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 }
 
 function eme_delete_mailing_mails( $id ) {
 	global $wpdb;
 	$queue_table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql         = $wpdb->prepare( "DELETE FROM $queue_table where mailing_id=%d", $id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 }
 function eme_delete_mailing( $id ) {
 	global $wpdb;
 	eme_delete_mailing_mails( $id );
 	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "DELETE FROM $mailings_table where id=%d", $id );
-		$wpdb->query( $sql );
+	$wpdb->query( $sql );
 }
 
 function eme_get_mail( $id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * from $table WHERE id=%d", $id );
-		return $wpdb->get_row( $sql, ARRAY_A );
+	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_mailing( $id ) {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . MAILINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT * from $mailings_table WHERE id=%d", $id );
-		return $wpdb->get_row( $sql, ARRAY_A );
+	return $wpdb->get_row( $sql, ARRAY_A );
 }
 function eme_get_mailings( $archive = 0 ) {
 	global $wpdb;
@@ -700,7 +713,7 @@ function eme_get_mailings( $archive = 0 ) {
 		$where = " WHERE status<>'archived' ";
 	}
 	$sql = "SELECT * from $mailings_table $where ORDER BY planned_on,name";
-		return $wpdb->get_results( $sql, ARRAY_A );
+	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_mail_states() {
@@ -728,14 +741,14 @@ function eme_count_mails_to_sent( $mailing_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE status=0 AND mailing_id=%d", $mailing_id );
-		return $wpdb->get_var( $sql );
+	return $wpdb->get_var( $sql );
 }
 
 function eme_get_mailing_stats( $mailing_id = 0 ) {
 	global $wpdb;
 	$table     = EME_DB_PREFIX . MQUEUE_TBNAME;
 	$sql       = "SELECT COUNT(*) AS count,status FROM $table WHERE mailing_id=$mailing_id GROUP BY mailing_id,status";
-		$lines = $wpdb->get_results( $sql, ARRAY_A );
+	$lines = $wpdb->get_results( $sql, ARRAY_A );
 	$res       = [
 		'planned'          => 0,
 		'sent'             => 0,
@@ -812,7 +825,6 @@ function eme_mail_track( $random_id ) {
 }
 
 function eme_check_mailing_receivers( $mailing_id ) {
-	
 	if ( ! $mailing_id ) {
 		return;
 	}
@@ -1866,6 +1878,15 @@ function eme_emails_page() {
 			$data_forced_tab = 'data-showtab=1';
 		}
 	}
+	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'retry_failed_mailing' && isset( $_GET['id'] ) ) {
+		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+		$id      = intval( $_GET['id'] );
+		$mailing = eme_get_mailing( $id );
+		if ( $mailing ) {
+			eme_mailing_retry_failed( $id );
+			eme_mark_mailing_ongoing( $id );
+		}
+	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'reuse_mailing' && isset( $_GET['id'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		$id      = intval( $_GET['id'] );
@@ -2482,6 +2503,9 @@ function eme_ajax_mailings_div() {
 		}
 		if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
 			$action .= " <a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a>';
+		}
+		if ( is_array( $stats ) && !empty( $stats['failed'] ) ) {
+			$action .= "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=retry_failed_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Retry failed mails', 'events-made-easy' ) . '</a>';
 		}
 		print '<tr>';
 		print "<td><input type='checkbox' class='row-selector' value='$id' name='mailing_ids[]'></td>";

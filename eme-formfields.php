@@ -597,12 +597,10 @@ function eme_get_fieldtype( $type ) {
 }
 
 function eme_is_multifield( $type ) {
-	global $wpdb;
 	return in_array( $type, [ 'dropdown', 'dropdown_multi', 'radiobox', 'radiobox_vertical', 'checkbox', 'checkbox_vertical' ] );
 }
 
 function eme_get_formfield_html( $formfield, $field_name, $entered_val, $required, $class = '', $ro = 0, $force_single = 0 ) {
-	
 	if ( empty( $formfield ) ) {
 		return;
 	}

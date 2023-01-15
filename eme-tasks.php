@@ -1031,9 +1031,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 }
 
 function eme_tasks_signupform_shortcode( $atts ) {
-	
 	eme_enqueue_frontend();
-
 	extract(
 	    shortcode_atts(
 		    [
@@ -1366,8 +1364,6 @@ function eme_email_tasksignup_action( $signup, $action ) {
 }
 
 function eme_replace_task_placeholders( $format, $task, $event, $target = 'html', $lang = '' ) {
-	
-
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {

@@ -676,8 +676,6 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
 }
 
 function eme_cancel_bookings_form( $event_id ) {
-	
-
 	$form_html           = '';
 	$form_result_message = '';
 	$event               = eme_get_event( $event_id );

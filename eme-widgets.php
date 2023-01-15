@@ -251,7 +251,6 @@ class WP_Widget_eme_calendar extends WP_Widget {
 	}
 
 	public function widget( $args, $instance ) {
-		global $wp_query;
 		eme_enqueue_frontend();
 		//extract($args);
 		//$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Calendar','eme' ) : $instance['title'], $instance, $this->id_base);

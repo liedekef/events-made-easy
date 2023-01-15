@@ -100,7 +100,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.39 (2023/01/15) =
+= 2.3.40 (2023/01/15) =
 * Fix wrongfull captcha check if captcha was disabled for an event
 * Decrease use of globals as much as possible, "define" is more than enough (and available during plugin install, while globals are not)
  

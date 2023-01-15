@@ -4,7 +4,12 @@ if ( ! defined( 'ABSPATH' ) && ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit();
 }
 
-require 'events-manager.php';
+// require the minimal files needed to uninstall the plugin
+// we could include the main file, but that might trigger other issues
+// and does "too much"
+require_once 'eme-install.php';
+require_once 'eme-options.php';
+require_once 'eme-functions.php';
 
 // For Single site
 if ( ! is_multisite() ) {

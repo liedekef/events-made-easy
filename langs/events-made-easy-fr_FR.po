@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
 "POT-Creation-Date: 2023-01-15 22:29:00+00:00\n"
-"PO-Revision-Date: 2023-01-16 09:56+0100\n"
+"PO-Revision-Date: 2023-01-16 10:23+0100\n"
 "Last-Translator: Fred17 <f14m07@netc.fr>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -178,7 +178,7 @@ msgstr ""
 "Cette page correspond à la page des évènements <strong>Events Made Easy</"
 "strong>. Son contenu sera précisé par<strong>Events Made Easy</strong>. Si "
 "vous souhaitez afficher votre contenu, vous pouvez affecter une autre page à "
-"<strong>Events Made Easy</strong> dans les <a href='%s'>Réglages</a>."
+"<strong>Events Made Easy</strong> dans les <a href='%s'>Réglages</a>. "
 
 #
 # File: eme-actions.php, line: 675
@@ -294,7 +294,7 @@ msgstr "Commencez à taper un nom"
 #
 # File: eme-attendances.php, line: 113
 msgid "Optional attendance date and time: "
-msgstr "Date et heure de présence facultatives :"
+msgstr "Date et heure de présence facultatives : "
 
 #
 # File: eme-attendances.php, line: 116
@@ -494,7 +494,7 @@ msgstr "Vous n'avez pas les droits de mettre à jour des catégories !"
 #
 # File: eme-categories.php, line: 61
 msgid "Successfully edited the category"
-msgstr "La catégorie a bien été modifiée."
+msgstr "La catégorie a bien été modifiée"
 
 #
 # File: eme-categories.php, line: 63
@@ -506,7 +506,7 @@ msgstr ""
 #
 # File: eme-categories.php, line: 68
 msgid "Successfully added the category"
-msgstr "La catégorie a bien été ajoutée."
+msgstr "La catégorie a bien été ajoutée"
 
 #
 # File: eme-categories.php, line: 70
@@ -692,7 +692,7 @@ msgid ""
 "Cleanup done: unpaid pending bookings older than %d minutes have been "
 "removed."
 msgstr ""
-"Nettoyage fait: réservations impayées datant de %d heures on été supprimées"
+"Nettoyage fait: réservations impayées datant de %d heures on été supprimées."
 
 #
 # File: eme-cleanup.php, line: 202
@@ -836,7 +836,7 @@ msgid ""
 "memberships to trash"
 msgstr ""
 "Mettre à la corbeille l’état des personnes qui ne sont plus référencées dans "
-"les réservations, les groupes ou les adhésions."
+"les réservations, les groupes ou les adhésions"
 
 #
 # File: eme-cleanup.php, line: 283
@@ -1215,7 +1215,7 @@ msgstr "Ajouter un état"
 msgid "If you want, use this to import states into the database"
 msgstr ""
 "Si vous le souhaitez, utilisez-le pour importer des états dans la base de "
-"données."
+"données"
 
 #
 # File: eme-countries.php, line: 443
@@ -1404,7 +1404,7 @@ msgstr "Une fois toutes les 4 semaines (planning EME)"
 msgid "Scheduled the cleanup of unpaid pending bookings older than %d minutes"
 msgstr ""
 "Planifier le nettoyage des réservations en attente non payées datant de plus "
-"de %d minutes."
+"de %d minutes"
 
 #
 # File: eme-cron.php, line: 220
@@ -1418,7 +1418,7 @@ msgstr ""
 msgid "Scheduled the cleanup of unconfirmed bookings older than %d minutes"
 msgstr ""
 "Planifier le nettoyage des réservations non confirmées datant de plus de %d "
-"minutes."
+"minutes"
 
 #
 # File: eme-cron.php, line: 229
@@ -1616,7 +1616,7 @@ msgstr ""
 #
 # File: eme-discounts.php, line: 307
 msgid "Successfully edited the discount group"
-msgstr "Le groupe de remise a bien été modifié "
+msgstr "Le groupe de remise a bien été modifié"
 
 #
 # File: eme-discounts.php, line: 313
@@ -1628,7 +1628,7 @@ msgstr ""
 #
 # File: eme-discounts.php, line: 318
 msgid "Successfully added the discount group"
-msgstr "Le groupe de remises a bien été ajouté "
+msgstr "Le groupe de remises a bien été ajouté"
 
 #
 # File: eme-discounts.php, line: 324
@@ -1671,7 +1671,7 @@ msgstr "Ajouter une remise"
 msgid "If you want, use this to import discounts into the database"
 msgstr ""
 "Si vous le souhaitez, utilisez-le pour importer des remises dans la base de "
-"données."
+"données"
 
 #
 # File: eme-discounts.php, line: 445
@@ -1698,7 +1698,7 @@ msgstr "Modifier la date « valable à partir du »"
 #
 # File: eme-discounts.php, line: 449
 msgid "Change \"valid until\" date"
-msgstr "Modifier la date « valable jusqu'au »."
+msgstr "Modifier la date « valable jusqu'au »"
 
 #
 # File: eme-discounts.php, line: 452
@@ -1739,7 +1739,7 @@ msgstr "Gérer les groupes de remise"
 msgid "If you want, use this to import discountgroups into the database"
 msgstr ""
 "Si vous le souhaitez, utilisez-le pour importer des groupes de remise dans "
-"la base de données."
+"la base de données"
 
 #
 # File: eme-discounts.php, line: 531
@@ -1822,7 +1822,7 @@ msgstr ""
 #
 # File: eme-discounts.php, line: 857
 msgid "For type \"Percentage\" the value should be >=0 and <=100"
-msgstr "Pour le type « Pourcentage », la valeur doit être >= 0 et <= 100."
+msgstr "Pour le type « Pourcentage », la valeur doit être >= 0 et <= 100"
 
 #
 # File: eme-discounts.php, line: 861
@@ -1845,7 +1845,7 @@ msgid ""
 "can use this as an \"early bird\" discount"
 msgstr ""
 "Si vous laissez le code promo vide mais définissez une date d’expiration de "
-"la remise, vous pouvez l’utiliser comme une « remise anticipée »."
+"la remise, vous pouvez l’utiliser comme une « remise anticipée »"
 
 #
 # File: eme-discounts.php, line: 868
@@ -1860,7 +1860,7 @@ msgid ""
 "and then apply a discount group to your event"
 msgstr ""
 "Si vous le souhaitez, vous pouvez intégrer ce rabais à un rabais de groupe, "
-"puis appliquer le rabais de groupe à votre évènement."
+"puis appliquer le rabais de groupe à votre évènement"
 
 #
 # File: eme-discounts.php, line: 874
@@ -2149,7 +2149,7 @@ msgid ""
 "correct your errors"
 msgstr ""
 "Appuyez sur le bouton précédent de votre navigateur pour revenir à l'écran "
-"précédent et corriger vos erreurs."
+"précédent et corriger vos erreurs"
 
 #
 # File: eme-events.php, line: 278
@@ -2885,7 +2885,7 @@ msgstr "Rendre les évènements sélectionnés privés"
 #
 # File: eme-events.php, line: 5839
 msgid "Make selected events draft"
-msgstr "Faire un brouillon des évènements sélectionnés  "
+msgstr "Faire un brouillon des évènements sélectionnés"
 
 #
 # File: eme-events.php, line: 5840
@@ -3167,7 +3167,7 @@ msgstr "Réglages du format des e-mails de tâches"
 # File: eme-events.php, line: 6269
 # File: eme-options.php, line: 2015
 msgid "Task Signup Made Email"
-msgstr " E-mail d’Inscription aux tâches"
+msgstr "E-mail d’Inscription aux tâches"
 
 #
 # File: eme-events.php, line: 6273
@@ -3267,12 +3267,12 @@ msgstr ""
 # File: eme-widgets.php, line: 208
 # File: eme-widgets.php, line: 380
 msgid "Author"
-msgstr "Auteur:"
+msgstr "Auteur"
 
 #
 # File: eme-events.php, line: 6381
 msgid "Author of this event: "
-msgstr "Auteur de cet événement"
+msgstr "Auteur de cet événement : "
 
 #
 # File: eme-events.php, line: 6398
@@ -3764,7 +3764,7 @@ msgstr ""
 # File: eme-mailer.php, line: 2308
 # File: eme-widgets.php, line: 227
 msgid "Either choose from a template: "
-msgstr "Soit choisissez parmi un modèle :"
+msgstr "Soit choisissez parmi un modèle : "
 
 #
 # File: eme-events.php, line: 7041
@@ -3835,7 +3835,7 @@ msgstr "Évènement unique"
 #
 # File: eme-events.php, line: 7065
 msgid "The format of the single event page."
-msgstr "Format pour la page d'un événement particulier"
+msgstr "Format pour la page d'un événement particulier."
 
 #
 # File: eme-events.php, line: 7069
@@ -4017,7 +4017,7 @@ msgstr ""
 # File: eme-events.php, line: 7230
 # File: eme-options.php, line: 1787
 msgid "Booking Made Email Body"
-msgstr "Corps de l'e-mail de réservation faite "
+msgstr "Corps de l'e-mail de réservation faite"
 
 #
 # File: eme-events.php, line: 7231
@@ -4240,7 +4240,7 @@ msgstr ""
 # File: eme-events.php, line: 7524
 # File: eme-options.php, line: 1872
 msgid "Booking Updated Email Subject"
-msgstr "Sujet de l'e-mail de mise à jour de la réservation "
+msgstr "Sujet de l'e-mail de mise à jour de la réservation"
 
 #
 # File: eme-events.php, line: 7525
@@ -4256,7 +4256,7 @@ msgstr ""
 # File: eme-events.php, line: 7546
 # File: eme-options.php, line: 1873
 msgid "Booking Updated Email Body"
-msgstr "Corps de l’e-mail de mise à jour de la réservation "
+msgstr "Corps de l’e-mail de mise à jour de la réservation"
 
 #
 # File: eme-events.php, line: 7547
@@ -4411,7 +4411,7 @@ msgstr ""
 # File: eme-events.php, line: 7775
 # File: eme-options.php, line: 1932
 msgid "Booking Paid Email Subject"
-msgstr " Sujet de l' e-mail : Réservation payée"
+msgstr "Sujet de l' e-mail : Réservation payée"
 
 #
 # File: eme-events.php, line: 7776
@@ -4690,7 +4690,7 @@ msgid ""
 "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr ""
 "Les champs personnalisés de type 'caché' sont inutiles ici et ne seront bien "
-"sûr pas affichés"
+"sûr pas affichés."
 
 #
 # File: eme-events.php, line: 8258
@@ -4776,7 +4776,7 @@ msgstr ""
 #
 # File: eme-events.php, line: 8338
 msgid "hours before the event starts until "
-msgstr "heures avant le début de l'événement jusqu'à"
+msgstr "heures avant le début de l'événement jusqu'à "
 
 #
 # File: eme-events.php, line: 8340
@@ -5041,7 +5041,7 @@ msgstr ""
 #
 # File: eme-events.php, line: 8488
 msgid "VAT percentage: "
-msgstr "Pourcentage de TVA :"
+msgstr "Pourcentage de TVA : "
 
 #
 # File: eme-events.php, line: 8489
@@ -5110,7 +5110,7 @@ msgid ""
 "available again"
 msgstr ""
 "Transférer automatiquement une réservation de la liste d’attente lorsque des "
-"places se libèrent."
+"places se libèrent"
 
 #
 # File: eme-events.php, line: 8511
@@ -5565,7 +5565,7 @@ msgstr "Appuyez sur le bouton supprimer pour supprimer"
 msgid "Since the event is repeated, you must specify an end date"
 msgstr ""
 "Comme l'événement est récurrant, vous devez spécifier une date de fin pour "
-"cet événement."
+"cet événement"
 
 #
 # File: eme-events.php, line: 9326
@@ -6355,13 +6355,13 @@ msgstr "Modifier l'évènement"
 # File: eme-events.php, line: 9938
 # File: eme-rsvp.php, line: 5269
 msgid "RSVP Info: "
-msgstr "RSVP-information"
+msgstr "RSVP-information : "
 
 #
 # File: eme-events.php, line: 9966
 # File: eme-rsvp.php, line: 5300
 msgid "Free: "
-msgstr "Places libres:"
+msgstr "Places libres : "
 
 #
 # File: eme-events.php, line: 9967
@@ -6386,7 +6386,7 @@ msgstr "Absent :"
 # File: eme-recurrence.php, line: 570
 # File: eme-rsvp.php, line: 5316
 msgid "Max: "
-msgstr "Max:"
+msgstr "Max : "
 
 #
 # File: eme-events.php, line: 9985
@@ -7113,7 +7113,7 @@ msgstr "Pour plus d'informations sur les champs de formulaire, voir "
 # File: eme-options.php, line: 2628
 # File: eme-options.php, line: 2629
 msgid "the documentation"
-msgstr "La documentation"
+msgstr "la documentation"
 
 #
 # File: eme-formfields.php, line: 418
@@ -7218,12 +7218,12 @@ msgstr "Liste déroulante (multiple)"
 #
 # File: eme-formfields.php, line: 567
 msgid "Radiobox"
-msgstr "bouton radio"
+msgstr "Bouton radio"
 
 #
 # File: eme-formfields.php, line: 568
 msgid "Radiobox (vertical)"
-msgstr "bouton radio (Vertical)"
+msgstr "Bouton radio (vertical)"
 
 #
 # File: eme-formfields.php, line: 569
@@ -7757,7 +7757,7 @@ msgid ""
 "administrator"
 msgstr ""
 "Problème lors de la génération du CAPTCHA, veuillez contacter "
-"l'administrateur du site."
+"l'administrateur du site"
 
 #
 # File: eme-functions.php, line: 385
@@ -8043,7 +8043,7 @@ msgstr "Groupe"
 #
 # File: eme-functions.php, line: 2892
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
-msgstr "Le fichier téléversé dépasse la limite upload_max_filesize du php.ini."
+msgstr "Le fichier téléversé dépasse la limite upload_max_filesize du php.ini"
 
 #
 # File: eme-functions.php, line: 2895
@@ -8052,7 +8052,7 @@ msgid ""
 "the HTML form"
 msgstr ""
 "Le fichier téléversé dépasse la valeur MAX_FILE_SIZE spécifiée dans le "
-"formulaire HTML."
+"formulaire HTML"
 
 #
 # File: eme-functions.php, line: 2898
@@ -8368,7 +8368,7 @@ msgstr "Vous n'avez pas le droit de mettre à jour les vacances !"
 #
 # File: eme-holidays.php, line: 50
 msgid "Successfully edited the list of holidays"
-msgstr " Édition réussie de la liste des vacances"
+msgstr "Édition réussie de la liste des vacances"
 
 #
 # File: eme-holidays.php, line: 52
@@ -8515,7 +8515,7 @@ msgstr "Le lieu vient d'êtra ajouté."
 #
 # File: eme-locations.php, line: 168
 msgid "There has been a problem adding the location."
-msgstr "Il y a eu un problème lors de l'ajout du lieu"
+msgstr "Il y a eu un problème lors de l'ajout du lieu."
 
 #
 # File: eme-locations.php, line: 173
@@ -8525,7 +8525,7 @@ msgstr "Le lieu vient d'être mis à jour."
 #
 # File: eme-locations.php, line: 181
 msgid "The location update failed."
-msgstr "La mise à jour du lieu a échoué"
+msgstr "La mise à jour du lieu a échoué."
 
 #
 # File: eme-locations.php, line: 296

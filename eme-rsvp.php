@@ -3529,6 +3529,18 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 				$price       = eme_get_payment_price( $payment_id );
 				$replacement = eme_localized_price( $price, $event['currency'], $target );
 			}
+		} elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_TOTALPRICE_NO_VAT$/', $result ) ) {
+			if ( $is_multibooking ) {
+				// returns the price for all bookings in the payment id related to this booking
+				$price       = eme_get_payment_price_novat( $payment_id );
+				$replacement = eme_localized_price( $price, $event['currency'], $target );
+			}
+		} elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_TOTALPRICE_VAT_ONLY$/', $result ) ) {
+			if ( $is_multibooking ) {
+				// returns the price for all bookings in the payment id related to this booking
+				$price       = eme_get_payment_price_vatonly( $payment_id );
+				$replacement = eme_localized_price( $price, $event['currency'], $target );
+			}
 		} elseif ( $payment_id && preg_match( '/#_MULTIBOOKING_DETAILS_TEMPLATE\{(\d+)\}$/', $result, $matches ) ) {
 			$template_id = intval( $matches[1] );
 			$template    = eme_get_template_format( $template_id );

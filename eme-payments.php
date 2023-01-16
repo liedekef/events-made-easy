@@ -3314,14 +3314,47 @@ function eme_get_payment_seats( $payment ) {
 	return $seats;
 }
 
+function eme_get_payment_price_novat( $payment_id ) {
+	$price    = 0;
+	$bookings = eme_get_bookings_by_paymentid( $payment_id );
+	foreach ( $bookings as $booking ) {
+		$event = eme_get_event($booking['event_id']);
+		$total_booking_price = eme_get_total_booking_price( $booking );
+		// take into account already received payments (in any possible way)
+		if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
+			$remaining = $total_booking_price;
+		} else {
+			$remaining = $booking['remaining'];
+		}
+		$price += $remaining / ( 1 + $event['event_properties']['vat_pct'] / 100 );
+	}
+	return $price;
+}
+function eme_get_payment_price_vatonly( $payment_id ) {
+	$price    = 0;
+	$bookings = eme_get_bookings_by_paymentid( $payment_id );
+	foreach ( $bookings as $booking ) {
+		$event = eme_get_event($booking['event_id']);
+		$total_booking_price = eme_get_total_booking_price( $booking );
+		// take into account already received payments (in any possible way)
+		if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
+			$remaining = $total_booking_price;
+		} else {
+			$remaining = $booking['remaining'];
+		}
+		$price += $remaining - $remaining / ( 1 + $event['event_properties']['vat_pct'] / 100 );
+	}
+	return $price;
+}
+
 function eme_get_payment_price( $payment_id ) {
 	$price    = 0;
 	$bookings = eme_get_bookings_by_paymentid( $payment_id );
 	foreach ( $bookings as $booking ) {
-		$booking_totalprice = eme_get_total_booking_price( $booking );
+		$total_booking_price = eme_get_total_booking_price( $booking );
 		// take into account already received payments (in any possible way)
 		if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
-			$remaining = $booking_totalprice;
+			$remaining = $total_booking_price;
 		} else {
 			$remaining = $booking['remaining'];
 		}

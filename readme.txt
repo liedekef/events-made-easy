@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.42 (2023//) =
+* Added #_MULTIBOOKING_TOTALPRICE_NO_VAT and #_MULTIBOOKING_TOTALPRICE_VAT_ONLY
+
 = 2.3.41 (2023/01/15) =
 * Add an action to (retry to) resend all failed mails in a mailing
 * Fix wrongfull captcha check if captcha was disabled for an event

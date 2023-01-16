@@ -4653,6 +4653,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	<form id="eme-admin-regsearchform" name="eme-admin-regsearchform" action="#" method="post">
 
 	<?php
+	// this is used in the javascript
 	if ( $pending ) {
 		echo '<input type="hidden" id="booking_status" name="booking_status" value="PENDING">';
 	} else {
@@ -5468,9 +5469,9 @@ function eme_ajax_manage_bookings() {
 
 		if ( eme_is_numeric_array( $ids_arr ) ) {
 			switch ( $do_action ) {
-				case 'paidandapprove':
+				case 'markpaidandapprove':
 					// shortcut button to do 2 things at once, mail will always be sent
-					eme_ajax_action_rsvp_paidandapprove( $ids_arr );
+					eme_ajax_action_rsvp_markpaidandapprove( $ids_arr );
 					break;
 				case 'approveBooking':
 					eme_ajax_action_rsvp_aprove( $ids_arr, $do_action, $send_mail );
@@ -5541,7 +5542,7 @@ function eme_ajax_manage_bookings() {
 	wp_die();
 }
 
-function eme_ajax_action_rsvp_paidandapprove( $ids_arr ) {
+function eme_ajax_action_rsvp_markpaidandapprove( $ids_arr ) {
 	$action_ok        = 1;
 	$mail_ok          = 1;
 	$mailing_approved = get_option( 'eme_rsvp_mail_notify_approved' );

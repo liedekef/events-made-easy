@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Allow paymentid to be given as param to wp-admin/admin.php?page=eme-registration-approval and wp-admin/admin.php?page=eme-registration-seats
   so you can create a link to bookings just related to that payment. Example:
   wp-admin/admin.php?page=eme-registration-seats&paymentid=#_PAYMENTID
+* Add "Mark paid" button in the table for approved bookings too, similar to the "Mark paid and approve" button in the table for pending bookings
 
 = 2.3.41 (2023/01/15) =
 * Add an action to (retry to) resend all failed mails in a mailing

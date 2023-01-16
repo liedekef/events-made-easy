@@ -102,6 +102,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.42 (2023//) =
 * Added #_MULTIBOOKING_TOTALPRICE_NO_VAT and #_MULTIBOOKING_TOTALPRICE_VAT_ONLY
+* Allow paymentid to be given as param to wp-admin/admin.php?page=eme-registration-approval and wp-admin/admin.php?page=eme-registration-seats
+  so you can create a link to bookings just related to that payment. Example:
+  wp-admin/admin.php?page=eme-registration-seats&paymentid=#_PAYMENTID
 
 = 2.3.41 (2023/01/15) =
 * Add an action to (retry to) resend all failed mails in a mailing

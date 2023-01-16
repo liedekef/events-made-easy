@@ -12,18 +12,19 @@ cd /home/liedekef/wordpress/git
 zip -r events-made-easy-minimal.zip events-made-easy -x '*.git*' 'events-made-easy/langs/*.po' 'events-made-easy/langs/pot_gen*' 'events-made-easy/langs/*.pot' 'events-made-easy/langs/gettextize.sh' 'events-made-easy/screenshot*' -x 'events-made-easy/dist*' -x 'events-made-easy/changelog.txt' -x 'events-made-easy/script*' -x 'events-made-easy/dompdf*' -x 'events-made-easy/payment_gateways*'
 mv events-made-easy-minimal.zip events-made-easy/dist
 
+
+# If wanted, automate language file updates
+cd /home/liedekef/wordpress/git/events-made-easy/langs
+./gettextize.sh
+
 # now update the release version
 cd /home/liedekef/wordpress/git/events-made-easy
 sed -i "s/$old_release/$release/" events-manager.php
 sed -i "s/Stable tag: $old_release/Stable tag: $release/" readme.txt
 
-# If wanted, automate language file updates
-#cd /home/liedekef/wordpress/git/events-made-easy/langs
-#./gettextize.sh
-
 # now create a zip of the new release
 cd /home/liedekef/wordpress/git
-zip -r events-made-easy.zip events-made-easy -x '*.git*' 'events-made-easy/langs/*.po' 'events-made-easy/langs/pot_gen*' 'events-made-easy/langs/*.pot' 'events-made-easy/langs/gettextize.sh' 'events-made-easy/screenshot*' -x 'events-made-easy/dist*' -x 'events-made-easy/changelog.txt' -x 'events-made-easy/script*' -x 'events-made-easy/payment_gateways/*/composer.json' -x 'events-made-easy/payment_gateways/*/composer.lock'
+zip -r events-made-easy.zip events-made-easy -x '*.git*' 'events-made-easy/langs/*.po' 'events-made-easy/langs/pot_gen*' 'events-made-easy/langs/*.pot' 'events-made-easy/langs/gettextize.sh' 'events-made-easy/screenshot*' -x 'events-made-easy/dist*' -x 'events-made-easy/changelog.txt' -x 'events-made-easy/script*'
 mv events-made-easy.zip events-made-easy/dist
 
 # move 

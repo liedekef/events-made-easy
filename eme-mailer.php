@@ -202,7 +202,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 				$in_reserved_range = 0;
 				if ( filter_var( $tmp_ip, FILTER_VALIDATE_IP )
 				&& ! filter_var( $tmp_ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE ) ) {
-					// not reserved? then we still set it only if the ip is valid
+					// ip in the reserved range? then we still set it only if the ip is valid
 					$in_reserved_range = 1;
 				}
 

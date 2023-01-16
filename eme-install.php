@@ -37,19 +37,16 @@ define( 'TASKS_TBNAME', 'eme_tasks' );
 define( 'TASK_SIGNUPS_TBNAME', 'eme_task_signups' );
 
 function eme_install( $networkwide ) {
-	global $wpdb;
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		// check if it is a network activation - if so, run the activation function for each blog id
 		if ( $networkwide ) {
-			//$old_blog = $wpdb->blogid;
-			// Get all blog ids
-			$blogids = $wpdb->get_col( 'SELECT blog_id FROM ' . $wpdb->blogs );
-			foreach ( $blogids as $blog_id ) {
-				switch_to_blog( $blog_id );
+			// Loop through sites.
+			$blog_ids = get_sites( [ 'fields' => 'ids' ] );
+			foreach ( $blog_ids as $site_id ) {
+				switch_to_blog( $site_id );
 				_eme_install();
 				restore_current_blog();
 			}
-			//switch_to_blog($old_blog);
 			return;
 		}
 	}
@@ -187,19 +184,16 @@ function _eme_install() {
 }
 
 function eme_uninstall( $networkwide ) {
-	global $wpdb;
-
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		// check if it is a network activation - if so, run the activation function for each blog id
 		if ( $networkwide ) {
-			$old_blog = $wpdb->blogid;
 			// Get all blog ids
-			$blogids = $wpdb->get_col( 'SELECT blog_id FROM ' . $wpdb->blogs );
-			foreach ( $blogids as $blog_id ) {
-				switch_to_blog( $blog_id );
-				_eme_uninstall();
-			}
-			switch_to_blog( $old_blog );
+			$blog_ids = get_sites( [ 'fields' => 'ids' ] );
+                        foreach ( $blog_ids as $site_id ) {
+                                switch_to_blog( $site_id );
+                                _eme_uninstall();
+				restore_current_blog();
+                        }
 			return;
 		}
 	}

@@ -110,11 +110,19 @@ function eme_trans_sanitize_html( $value, $lang = '' ) {
 	return eme_trans_esc_html( $value, $lang );
 }
 
-function eme_trans_esc_html( $value, $lang = '' ) {
-	return eme_esc_html( eme_translate( $value, $lang ) );
+function eme_trans_nowptrans_esc_html( $value, $lang = '' ) {
+	return eme_trans_esc_html( $value, $lang, 0 );
 }
 
-function eme_translate( $value, $lang = '' ) {
+function eme_trans_esc_html( $value, $lang = '', $use_wp_trans = 1 ) {
+	return eme_esc_html( eme_translate( $value, $lang, $use_wp_trans ) );
+}
+
+function eme_translate_nowptrans( $value, $lang = '' ) {
+	return eme_translate( $value, $lang, 0 );
+}
+
+function eme_translate( $value, $lang = '', $use_wp_trans = 1 ) {
 	$translated = $value;
 	if ( function_exists( 'qtrans_useCurrentLanguageIfNotFoundUseDefaultLanguage' ) && function_exists( 'qtrans_use' ) ) {
 		if ( empty( $lang ) ) {
@@ -146,16 +154,16 @@ function eme_translate( $value, $lang = '' ) {
 	if ( $translated != $value ) {
 		return $translated;
 	} else { 
-		return eme_translate_string( $value, $lang );
+		return eme_translate_string( $value, $lang, $use_wp_trans );
 	}
 }
 
-function eme_translate_string( $text, $lang = '' ) {
+function eme_translate_string( $text, $lang = '', $use_wp_trans = 1 ) {
 	if ( empty( $lang ) ) {
 		$lang = eme_detect_lang();
 	}
 	$languages = eme_detect_used_languages( $text );
-	if ( empty( $languages ) ) {
+	if ( empty( $languages ) && $use_wp_trans ) {
 		// no language is encoded in the $text (most frequent case), then run it through wp trans and be done with it
 		return __( $text, 'events-made-easy' );
 	}

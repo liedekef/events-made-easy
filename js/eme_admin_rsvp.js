@@ -167,11 +167,11 @@ jQuery(document).ready(function ($) {
 			selectOnRowClick: true, //Enable this to only select using checkboxes
 			toolbar: {
 				items: [{
-					text: eme.translate_paidandapprove,
+					text: eme.translate_markpaidandapprove,
 					cssClass: 'eme_jtable_button_for_pending_only',
 					click: function () {
 						var selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
-						var do_action = 'paidandapprove';
+						var do_action = 'markpaidandapprove';
 						if (selectedRows.length > 0) {
 							var ids = [];
 							selectedRows.each(function () {
@@ -187,23 +187,49 @@ jQuery(document).ready(function ($) {
 								}
 
 								$('#BookingsTableContainer').jtable('reload');
-								$('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(eme.translate_paidandapprove);
+								$('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(eme.translate_markpaidandapprove);
 							}, 'json');
 						}
 					}
 				},
-					{
-						text: eme.translate_csv,
-						click: function () {
-							jtable_csv('#BookingsTableContainer');
-						}
-					},
-					{
-						text: eme.translate_print,
-						click: function () {
-							$('#BookingsTableContainer').printElement();
+				{
+					text: eme.translate_markpaid,
+					cssClass: 'eme_jtable_button_for_approved_only',
+					click: function () {
+						var selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
+						var do_action = 'markPaid';
+						if (selectedRows.length > 0) {
+							var ids = [];
+							selectedRows.each(function () {
+								ids.push($(this).data('record')['booking_id']);
+							});
+							var idsjoined = ids.join(); //will be such a string '2,5,7'
+							$('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(eme.translate_pleasewait);
+							$.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': eme.translate_adminnonce }, function(data) {
+								if (data.Result!='OK') {
+									$('div#bookings-message').html(data.htmlmessage);
+									$('div#bookings-message').show();
+									$('div#bookings-message').delay(3000).fadeOut('slow');
+								}
+
+								$('#BookingsTableContainer').jtable('reload');
+								$('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(eme.translate_markpaid);
+							}, 'json');
 						}
 					}
+				},
+				{
+					text: eme.translate_csv,
+					click: function () {
+						jtable_csv('#BookingsTableContainer');
+					}
+				},
+				{
+					text: eme.translate_print,
+					click: function () {
+						$('#BookingsTableContainer').printElement();
+					}
+				}
 				]
 			},
 			actions: {
@@ -271,14 +297,19 @@ jQuery(document).ready(function ($) {
         updateShowHideStuff();
 
         // hide one toolbar button if not on pending approval and trash=0 (or not set)
-        function hideButtonPaidApprove() {
+        function showhideButtonPaidApprove() {
            if ($('#booking_status').val() == "PENDING" && (typeof $_GET['trash']==='undefined' || $_GET['trash']==0)) {
               $('.eme_jtable_button_for_pending_only').show();
            } else {
               $('.eme_jtable_button_for_pending_only').hide();
            }
+           if ($('#booking_status').val() == "APPROVED" && (typeof $_GET['trash']==='undefined' || $_GET['trash']==0)) {
+              $('.eme_jtable_button_for_approved_only').show();
+           } else {
+              $('.eme_jtable_button_for_approved_only').hide();
+           }
         }
-        hideButtonPaidApprove();
+        showhideButtonPaidApprove();
 
         // Actions button
         $('#BookingsActionsButton').on("click",function (e) {

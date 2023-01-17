@@ -4583,6 +4583,14 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
+		} elseif ( $payment && preg_match( '/#_MEMBERPAYMENTDATE\{(.+?)\}/', $result, $matches ) ) {
+			$replacement = eme_localized_date( $member['payment_date'], EME_TIMEZONE, $matches[1] );
+		} elseif ( $payment && preg_match( '/#_MEMBERPAYMENTDATE/', $result ) ) {
+			$replacement = eme_localized_date( $member['payment_date'], EME_TIMEZONE );
+		} elseif ( $payment && preg_match( '/#_MEMBERPAYMENTTIME\{(.+?)\}/', $result, $matches ) ) {
+			$replacement = eme_localized_time( $member['payment_date'], EME_TIMEZONE, $matches[1] );
+		} elseif ( $payment && preg_match( '/#_MEMBERPAYMENTTIME/', $result ) ) {
+			$replacement = eme_localized_time( $member['payment_date'], EME_TIMEZONE );
 		} elseif ( preg_match( '/#_MEMBER_STATUS$/', $result ) ) {
 			$eme_member_status_array = eme_member_status_array();
 			$replacement             = $eme_member_status_array[ $member['status'] ];

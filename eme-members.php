@@ -129,6 +129,9 @@ function eme_init_membership_props( $props = [] ) {
 	if ( ! isset( $props['discountgroup'] ) ) {
 		$props['discountgroup'] = '';
 	}
+	if ( ! isset( $props['skippaymentoptions'] ) ) {
+		$props['skippaymentoptions'] = 0;
+	}
 
 	$payment_gateways = eme_payment_gateways();
 	foreach ( $payment_gateways as $pg => $desc ) {
@@ -1934,6 +1937,12 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<div id="div_membership_properties_offline_payment_text" <?php echo $showhide_style; ?>>
 		<?php eme_wysiwyg_textarea( 'properties[offline_payment_text]', $membership['properties']['offline_payment_text'], 1, 0 ); ?>
 		</div>
+	</td>
+	</tr>
+	<tr id="tr_skippaymentoptions">
+	<td><label for="properties[skippaymentoptions]"><?php esc_html_e( 'Skip payment methods after registration:', 'events-made-easy' ); ?></label></td>
+	<td><?php echo eme_ui_checkbox_binary( $membership['properties']['skippaymentoptions'], 'properties[skippaymentoptions]', __( 'Skip payment methods', 'events-made-easy' ) );
+                  esc_html_e( 'If you want to skip the possibility to pay immediately after registration, select this option. This might be useful if you for example want to approve unpaid members internally and only then send them the payment link using #_PAYMENT_URL (for example via the Reminder template).', 'events-made-easy' ); ?>
 	</td>
 	</tr>
 	</table>
@@ -4235,7 +4244,7 @@ function eme_add_member_ajax() {
 	}
 
 	// let's decide for the first event wether or not payment is needed
-	if ( $payment_id && eme_membership_has_pgs_configured( $membership ) ) {
+	if ( $payment_id && eme_membership_has_pgs_configured( $membership ) && !$membership['properties']['skippaymentoptions']) {
 		eme_captcha_remove( $captcha_res );
 		$total_price = eme_get_member_payment_price( $payment_id );
 

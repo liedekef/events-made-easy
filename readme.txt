@@ -104,6 +104,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Added #_MULTIBOOKING_TOTALPRICE_NO_VAT and #_MULTIBOOKING_TOTALPRICE_VAT_ONLY
 * Added member placeholders #_MEMBERPAYMENTDATE and #_MEMBERPAYMENTTIME that return the payment date and/or time formatted based on your wp preferences
 * Added member placeholders #_MEMBERPAYMENTDATE{xx} and #_MEMBERPAYMENTTIME{xx} so you can format the layout to your liking ('xx' being the date/time format in php date notation)
+* Add the "Skip payment option" to memberships (identical as for event bookings)
 
 * Allow paymentid to be given as param to wp-admin/admin.php?page=eme-registration-approval and wp-admin/admin.php?page=eme-registration-seats
   so you can create a link to bookings just related to that payment. Example:

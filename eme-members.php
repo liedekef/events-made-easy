@@ -135,7 +135,7 @@ function eme_init_membership_props( $props = [] ) {
 
 	$payment_gateways = eme_payment_gateways();
 	foreach ( $payment_gateways as $pg => $desc ) {
-			// the properties for payment gateways alsways have "use_" in front of them, so add it
+		// the properties for payment gateways alsways have "use_" in front of them, so add it
 		if ( ! isset( $props[ 'use_' . $pg ] ) ) {
 				$props[ 'use_' . $pg ] = 0;
 		}
@@ -963,7 +963,7 @@ function eme_add_update_member( $member_id = 0 ) {
 					} else {
 						// make sure to update the discount count if applied
 						if ( ! $eme_is_admin_request && ! empty( $member['discountids'] ) ) {
-															$discount_ids = explode( ',', $member['discountids'] );
+							$discount_ids = explode( ',', $member['discountids'] );
 							foreach ( $discount_ids as $discount_id ) {
 									eme_increase_discount_member_count( $discount_id, $member );
 							}
@@ -1130,7 +1130,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
 
 	$eme_dyndata = eme_handle_dyndata_post_adminform();
 	if ( ! empty( $eme_dyndata ) ) {
-				$membership['properties']['dyndata'] = $eme_dyndata;
+		$membership['properties']['dyndata'] = $eme_dyndata;
 	}
 
 	// some common sense logic
@@ -1158,7 +1158,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
 			$message                          .= __( 'The membership price is not a valid price, resetted to 0', 'events-made-easy' ) . '<br>';
 		}
 	} else {
-			$membership['properties']['price'] = 0;
+		$membership['properties']['price'] = 0;
 	}
 	if ( isset( $membership['properties']['extra_charge'] ) ) {
 		if ( ! is_numeric( $membership['properties']['extra_charge'] ) ) {
@@ -1166,13 +1166,13 @@ function eme_add_update_membership( $membership_id = 0 ) {
 			$message                                 .= __( 'The extra charge for the membership is not a valid price, resetted to 0', 'events-made-easy' ) . '<br>';
 		}
 	} else {
-			$membership['properties']['extra_charge'] = 0;
+		$membership['properties']['extra_charge'] = 0;
 	}
 
 	if ( $membership_id ) {
-			$membership_id = eme_db_update_membership( $membership_id, $membership );
+		$membership_id = eme_db_update_membership( $membership_id, $membership );
 	} else {
-			$membership_id = eme_db_insert_membership( $membership );
+		$membership_id = eme_db_insert_membership( $membership );
 	}
 	if ( $membership_id ) {
 		eme_membership_store_answers( $membership_id );
@@ -1199,7 +1199,7 @@ function eme_member_edit_layout( $member, $limited = 0 ) {
 		<?php
 		if ( $action == 'add' && ! empty( $_POST['membership_id'] ) ) {
 			$membership_id = intval( $_POST['membership_id'] );
-				eme_admin_edit_memberform( $member, $membership_id );
+			eme_admin_edit_memberform( $member, $membership_id );
 		}
 		if ( $action == 'edit' ) {
 			$membership_id = $member['membership_id'];
@@ -1272,42 +1272,41 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 	echo $nonce_field;
 	if ( $action == 'add' ) {
 		?>
-			<tr><td><?php esc_html_e( 'Send mail to new member?', 'events-made-easy' ); ?>
-			</td><td>
+		<tr><td><?php esc_html_e( 'Send mail to new member?', 'events-made-easy' ); ?>
+		</td><td>
 		<?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); ?>
-					<br>
-					<input type='hidden' name='eme_admin_action' value='do_addmember'>
-				<input type='hidden' name='person_id' id='person_id' value=''>
+			<br>
+			<input type='hidden' name='eme_admin_action' value='do_addmember'>
+			<input type='hidden' name='person_id' id='person_id' value=''>
 		<?php esc_html_e( 'If you want, select an existing person to become a member', 'events-made-easy' ); ?><br>
 				<input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
-			</td></tr>
-		<?php } else { ?>
-			<tr><td>
-				<input type='hidden' name='eme_admin_action' value='do_editmember'>
-				<input type='hidden' name='person_id' id='person_id' value='<?php echo $member['person_id']; ?>'>
-				<input type='hidden' name='member_id' id='member_id' value='<?php echo $member['member_id']; ?>'>
-			<?php if ( empty( $membership['properties']['family_membership'] ) || ( ! empty( $membership['properties']['family_membership'] ) && empty( $member['related_member_id'] ) ) ) { ?>
-						<?php esc_html_e( 'If you want, select an existing person to transfer this member to', 'events-made-easy' ); ?><br>
-				</td><td>
-					<input type='text' id='transferperson' name='transferperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
-					<input type='hidden' name='transferto_personid' id='transferto_personid' value=''>
-				</td></tr>
-				<tr><td>
-						<?php esc_html_e( 'If you want, select a different membership to transfer this member to: ', 'events-made-easy' ); ?>
-				</td><td>
-					<?php
-					$memberships = eme_get_memberships( $membership['membership_id'] );
-					echo eme_ui_select_key_value( '', 'transferto_membershipid', $memberships, 'membership_id', 'name', '&nbsp;', 0, 'nodynamicupdates' );
-					?>
-					<br>
-					<?php
-					echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
-						esc_html_e( 'Warning: if you transfer a member from one membership to another, make sure both memberships have the same index values for dynamic fields, otherwise the answers to those fields will either get mixed up or become empty.', 'events-made-easy' );
-					?>
-					<?php } ?>
-			</td></tr>
+		</td></tr>
+	<?php } else { ?>
+		<tr><td>
+			<input type='hidden' name='eme_admin_action' value='do_editmember'>
+			<input type='hidden' name='person_id' id='person_id' value='<?php echo $member['person_id']; ?>'>
+			<input type='hidden' name='member_id' id='member_id' value='<?php echo $member['member_id']; ?>'>
+		<?php if ( empty( $membership['properties']['family_membership'] ) || ( ! empty( $membership['properties']['family_membership'] ) && empty( $member['related_member_id'] ) ) ) { ?>
+			<?php esc_html_e( 'If you want, select an existing person to transfer this member to', 'events-made-easy' ); ?><br>
+		</td><td>
+			<input type='text' id='transferperson' name='transferperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
+			<input type='hidden' name='transferto_personid' id='transferto_personid' value=''>
+		</td></tr>
+		<tr><td>
+			<?php esc_html_e( 'If you want, select a different membership to transfer this member to: ', 'events-made-easy' ); ?>
+		</td><td>
+		<?php
+			$memberships = eme_get_memberships( $membership['membership_id'] );
+			echo eme_ui_select_key_value( '', 'transferto_membershipid', $memberships, 'membership_id', 'name', '&nbsp;', 0, 'nodynamicupdates' );
+		?>
+		<br>
+		<?php
+			echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
+			esc_html_e( 'Warning: if you transfer a member from one membership to another, make sure both memberships have the same index values for dynamic fields, otherwise the answers to those fields will either get mixed up or become empty.', 'events-made-easy' );
+		?>
 		<?php } ?>
-
+		</td></tr>
+	<?php } ?>
 		<tr><td><?php esc_html_e( 'Membership', 'events-made-easy' ); ?></td>
 		<td>
 		<?php
@@ -1319,14 +1318,14 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 		<td style="vertical-align:top"><label for="chooserelatedmember"><?php esc_html_e( "'Head of the family' account", 'events-made-easy' ); ?></label></td>
 		<td> <input type="hidden" name="related_member_id" id="related_member_id" value="<?php echo intval( $member['related_member_id'] ); ?>">
 		<?php
-			$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
+		$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
 		if ( $action == 'edit' && ! empty( $related_member_ids ) ) {
-				esc_html_e( 'This member is head of the family for other members.', 'events-made-easy' );
-				print '<br>' . esc_html__( 'Family members:', 'events-made-easy' );
+			esc_html_e( 'This member is head of the family for other members.', 'events-made-easy' );
+			print '<br>' . esc_html__( 'Family members:', 'events-made-easy' );
 			foreach ( $related_member_ids as $related_member_id ) {
 				$related_member = eme_get_member( $related_member_id );
 				if ( $related_member ) {
-										$related_person = eme_get_person( $related_member['person_id'] );
+					$related_person = eme_get_person( $related_member['person_id'] );
 					if ( $related_person ) {
 						print "<br><a href='" . admin_url( "admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=$related_member_id" ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) ) . '</a>';
 					}
@@ -1351,11 +1350,10 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			<input type='hidden' name='start_date' id='start_date' value='<?php echo $member['start_date']; ?>'>
 		<?php
 		if ( $limited ) {
-				echo eme_localized_date( $member['start_date'], EME_TIMEZONE, 1 );
+			echo eme_localized_date( $member['start_date'], EME_TIMEZONE, 1 );
 		} else {
 			?>
-				<input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo eme_js_datetime( $member['start_date'] ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
-
+			<input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo eme_js_datetime( $member['start_date'] ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
 		<?php } ?>
 	</td></tr>
 	<tr><td><?php esc_html_e( 'End date', 'events-made-easy' ); ?></td>
@@ -1363,7 +1361,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			<input type='hidden' name='end_date' id='end_date' value='<?php echo $member['end_date']; ?>'>
 		<?php
 		if ( $limited ) {
-				echo eme_localized_date( $member['end_date'], EME_TIMEZONE, 1 );
+			echo eme_localized_date( $member['end_date'], EME_TIMEZONE, 1 );
 		} else {
 			?>
 			<input type='text' readonly='readonly' name='dp_end_date' id='dp_end_date' data-date='<?php echo eme_js_datetime( $member['end_date'] ); ?>' data-alt-field='end_date' class='eme_formfield_fdate'>
@@ -1373,7 +1371,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 	<td><?php echo eme_ui_select_binary( $member['status_automatic'], 'status_automatic', 0, 'nodynamicupdates', $disabled ); ?>
 		<?php
 		if ( $member['status_automatic'] && ! $member['paid'] && $action == 'edit' && empty( $member['related_member_id'] ) ) {
-				echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: membership is not paid for, so automatic status calculation will not happen!', 'events-made-easy' );
+			echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: membership is not paid for, so automatic status calculation will not happen!', 'events-made-easy' );
 		}
 		?>
 		<br>
@@ -1505,7 +1503,7 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 		<h1>
 		<?php
 		if ( $is_new_membership == 1 ) {
-				esc_html_e( 'Add a membership definition', 'events-made-easy' );
+			esc_html_e( 'Add a membership definition', 'events-made-easy' );
 		} else {
 			echo sprintf( __( "Edit membership '%s'", 'events-made-easy' ), eme_esc_html( $membership['name'] ) );
 		}
@@ -1533,31 +1531,23 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 		<div id="poststuff">
 		<div id="post-body" class="metabox-holder">
 			<div id="post-body-content">
-<div id="membership-tabs" style="display: none;">
-	<ul>
-	<li><a href="#tab-membershipdetails"><?php esc_html_e( 'Membership details', 'events-made-easy' ); ?></a></li>
-	<li><a href="#tab-mailformats"><?php esc_html_e( 'Mail format settings', 'events-made-easy' ); ?></a></li>
-	<li><a href="#tab-customfields"><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></a></li>
-	</ul>
-	<div id="tab-membershipdetails">
-	<?php eme_meta_box_div_membershipdetails( $membership, $is_new_membership ); ?>
-	</div>
-	<div id="tab-mailformats">
-	<?php eme_meta_box_div_membershipmailformats( $membership ); ?>
-	</div>
-	<div id="tab-customfields">
-	<?php eme_meta_box_div_membershipcustomfields( $membership ); ?>
-	</div>
-</div> <!-- end membership-tabs -->
-			<p class="submit"><input type="submit" class="button-primary" name="submit" value="
-			<?php
-			if ( $is_new_membership == 1 ) {
-				esc_html_e( 'Add membership', 'events-made-easy' );
-			} else {
-				esc_html_e( 'Update membership', 'events-made-easy' );
-			}
-			?>
-			"></p>
+				<div id="membership-tabs" style="display: none;">
+					<ul>
+					<li><a href="#tab-membershipdetails"><?php esc_html_e( 'Membership details', 'events-made-easy' ); ?></a></li>
+					<li><a href="#tab-mailformats"><?php esc_html_e( 'Mail format settings', 'events-made-easy' ); ?></a></li>
+					<li><a href="#tab-customfields"><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></a></li>
+					</ul>
+					<div id="tab-membershipdetails">
+					<?php eme_meta_box_div_membershipdetails( $membership, $is_new_membership ); ?>
+					</div>
+					<div id="tab-mailformats">
+					<?php eme_meta_box_div_membershipmailformats( $membership ); ?>
+					</div>
+					<div id="tab-customfields">
+					<?php eme_meta_box_div_membershipcustomfields( $membership ); ?>
+					</div>
+				</div> <!-- end membership-tabs -->
+				<p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $is_new_membership == 1 ) { esc_html_e( 'Add membership', 'events-made-easy' ); } else { esc_html_e( 'Update membership', 'events-made-easy' ); } ?>"></p>
 			</div>
 		</div>
 		</div>
@@ -1567,8 +1557,6 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 }
 
 function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
-	
-
 	$templates_array            = eme_get_templates_array_by_id( 'membershipform' );
 	$templates_array2           = eme_get_templates( 'membershipform' );
 	$currency_array             = eme_currency_array();
@@ -1664,7 +1652,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><label for="properties[use_recaptcha]"><?php esc_html_e( 'Google reCAPTCHA', 'events-made-easy' ); ?></label></td>
 	<td><input id="use_recaptcha" name="properties[use_recaptcha]" type="checkbox" <?php echo $use_recaptcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the Google reCAPTCHA on the membership signup form.', 'events-made-easy' ); ?>
-			<br><?php esc_html_e( 'If this option is checked, make sure to use #_RECAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
+		<br><?php esc_html_e( 'If this option is checked, make sure to use #_RECAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
 	</td>
 	</tr>
 <?php endif; ?>
@@ -1673,7 +1661,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><label for="use_hcaptcha"><?php esc_html_e( 'hCaptcha', 'events-made-easy' ); ?></label></td>
 	<td><input id="use_hcaptcha" name="properties[use_hcaptcha]" type="checkbox" <?php echo $use_hcaptcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the hCaptcha on the membership signup form.', 'events-made-easy' ); ?>
-			<br><?php esc_html_e( 'If this option is checked, make sure to use #_HCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
+		<br><?php esc_html_e( 'If this option is checked, make sure to use #_HCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
 	</td>
 	</tr>
 <?php endif; ?>
@@ -1682,7 +1670,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><label for="use_cfcaptcha"><?php esc_html_e( 'Cloudflare Turnstile', 'events-made-easy' ); ?></label></td>
 	<td><input id="use_cfcaptcha" name="properties[use_cfcaptcha]" type="checkbox" <?php echo $use_cfcaptcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use Cloudflare Turnstile on the membership signup form.', 'events-made-easy' ); ?>
-			<br><?php esc_html_e( 'If this option is checked, make sure to use #_CFCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
+		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CFCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
 	</td>
 	</tr>
 <?php endif; ?>
@@ -1690,7 +1678,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><label for="use_captcha"><?php esc_html_e( 'Captcha', 'events-made-easy' ); ?></label></td>
 	<td><input id="use_captcha" name="properties[use_captcha]" type="checkbox" <?php echo $use_captcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the captcha on the membership signup form.', 'events-made-easy' ); ?>
-			<br><?php esc_html_e( 'If this option is checked, make sure to use #_CAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
+		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
 	</td>
 	</tr>
 	<tr>
@@ -2138,8 +2126,8 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		</p>
 	</td>
 	</tr>
-		</table>
-		</div>
+	</table>
+	</div>
 
 	<h3><?php esc_html_e( 'Membership paid email', 'events-made-easy' ); ?></h3>
 		<div>
@@ -2212,8 +2200,8 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 	<td><label for="name"><?php esc_html_e( 'Membership reminder email subject', 'events-made-easy' ); ?></label></td>
 	<td><input id="properties[reminder_subject_format]" name="properties[reminder_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['reminder_subject_format'] ); ?>" size="40">
 		<br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership.', 'events-made-easy' ); ?>
-				<br><?php esc_html_e( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ); ?>
-			</p>
+		<br><?php esc_html_e( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ); ?>
+		</p>
 		<br>
 	</td>
 	</tr>
@@ -2250,8 +2238,8 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 	<td><label for="name"><?php esc_html_e( 'Membership stopped email subject', 'events-made-easy' ); ?></label></td>
 	<td><input id="properties[stop_subject_format]" name="properties[stop_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['stop_subject_format'] ); ?>" size="40">
 		<br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the member when a membership has expired or is marked as stopped.', 'events-made-easy' ); ?>
-					<br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
-			</p>
+		<br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
+		</p>
 		<br>
 	</td>
 	</tr>
@@ -2259,8 +2247,8 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 	<td><label for="name"><?php esc_html_e( 'Membership stopped email body', 'events-made-easy' ); ?></label></td>
 	<td><?php echo eme_ui_select( $membership['properties']['stop_body_format_tpl'], 'properties[stop_body_format_tpl]', $templates_array ); ?>
 		<br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member when a membership has expired or is marked as stopped.', 'events-made-easy' ); ?>
-				<br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
-				<br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
+		<br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
+		<br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
 		<br>
 		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2351,24 +2339,24 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 }
 
 function eme_meta_box_div_membershipcustomfields( $membership ) {
-	?>
+?>
 <div id="div_membership_customfields">
-		<br><b>
-		<?php
-		echo esc_html__( 'Custom fields', 'events-made-easy' );
-		?>
-		</b>
-		<p><?php echo esc_html__( "Here custom fields of type 'Membership' are shown.", 'events-made-easy' ); ?></p>
-				<?php
-				if ( current_user_can( 'unfiltered_html' ) ) {
-						echo "<div class='eme_notice_unfiltered_html'>";
-						esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
-						echo '</div>';
-				}
-				?>
-		<table style='width: 100%;'>
+	<br><b>
 	<?php
-		$formfields = eme_get_formfields( '', 'memberships' );
+	echo esc_html__( 'Custom fields', 'events-made-easy' );
+	?>
+	</b>
+	<p><?php echo esc_html__( "Here custom fields of type 'Membership' are shown.", 'events-made-easy' ); ?></p>
+	<?php
+		if ( current_user_can( 'unfiltered_html' ) ) {
+			echo "<div class='eme_notice_unfiltered_html'>";
+			esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
+			echo '</div>';
+		}
+	?>
+	<table style='width: 100%;'>
+	<?php
+	$formfields = eme_get_formfields( '', 'memberships' );
 	$formfields     = apply_filters( 'eme_membership_formfields', $formfields );
 	if ( ! empty( $membership['membership_id'] ) ) {
 			$answers = eme_get_membership_answers( $membership['membership_id'] );
@@ -2376,33 +2364,33 @@ function eme_meta_box_div_membershipcustomfields( $membership ) {
 			$answers = [];
 	}
 	foreach ( $formfields as $formfield ) {
-			$field_name     = eme_trans_esc_html( $formfield['field_name'] );
-			$field_id       = $formfield['field_id'];
-			$postfield_name = 'FIELD' . $field_id;
-			$entered_val    = '';
+		$field_name     = eme_trans_esc_html( $formfield['field_name'] );
+		$field_id       = $formfield['field_id'];
+		$postfield_name = 'FIELD' . $field_id;
+		$entered_val    = '';
 		foreach ( $answers as $answer ) {
 			if ( $answer['field_id'] == $field_id ) {
 				$entered_val = $answer['answer'];
 			}
 		}
 		if ( $formfield['field_required'] ) {
-				$required = 1;
+			$required = 1;
 		} else {
 			$required = 0;
 		}
 		if ( $formfield['field_type'] == 'file' ) {
-				$field_html = esc_html__( 'File upload is not allowed here.', 'events-made-easy' );
+			$field_html = esc_html__( 'File upload is not allowed here.', 'events-made-easy' );
 		} elseif ( $formfield['field_type'] == 'hidden' ) {
 			$field_html = esc_html__( "Custom fields of type 'hidden' are useless here and of course won't be shown.", 'events-made-easy' );
 		} else {
-				$field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
+			$field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
 		}
-				echo "<tr><td>$field_name</td><td style='width: 100%;'>$field_html</td></tr>";
+		echo "<tr><td>$field_name</td><td style='width: 100%;'>$field_html</td></tr>";
 	}
 	?>
-		</table>
+	</table>
 </div>
-	<?php
+<?php
 }
 
 function eme_render_members_searchfields( $group = [] ) {
@@ -2588,15 +2576,15 @@ function eme_manage_members_layout( $message ) {
 		$style_class = "class='notice is-dismissible eme-message-admin'";
 	}
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
-		<div id="icon-edit" class="icon32">
-			<br>
-		</div>
+	<div class="wrap nosubsub">
+	<div id="poststuff">
+	<div id="icon-edit" class="icon32">
+		<br>
+	</div>
 
-		<div id="members-message" <?php echo $style_class; ?>>
-				<p><?php echo $message; ?></p>
-		</div>
+	<div id="members-message" <?php echo $style_class; ?>>
+		<p><?php echo $message; ?></p>
+	</div>
 
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
 		<h1><?php esc_html_e( 'Add a new member', 'events-made-easy' ); ?></h1>
@@ -2622,39 +2610,39 @@ function eme_manage_members_layout( $message ) {
 
 	<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>
 	<span class="eme_import_form_img">
-		<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Click on the icon to show the import form', 'events-made-easy' ); ?>
 	<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
 	</span>
 	<div id='div_import' style='display:none;'>
 	<form id='member-import' method='post' enctype='multipart/form-data' action='#'>
-		<?php echo $nonce_field; ?>
+	<?php echo $nonce_field; ?>
 	<input type="file" name="eme_csv">
-		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 	<input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
-		<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
 	<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
 	<input type="hidden" name="eme_admin_action" value="import">
-		<?php
-		esc_html_e( 'Allow empty email?', 'events-made-easy' );
-		echo eme_ui_select_binary( '', 'allow_empty_email' );
-		?>
+	<?php
+	esc_html_e( 'Allow empty email?', 'events-made-easy' );
+	echo eme_ui_select_binary( '', 'allow_empty_email' );
+	?>
 	<input type="submit" value="<?php esc_html_e( 'Import members', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-		<?php esc_html_e( 'If you want, use this to import members info into the database', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'If you want, use this to import members info into the database', 'events-made-easy' ); ?>
 	</form>
 	<form id='member-import-answers' method='post' enctype='multipart/form-data' action='#'>
-		<?php echo $nonce_field; ?>
+	<?php echo $nonce_field; ?>
 	<input type="file" name="eme_csv">
-		<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Delimiter:', 'events-made-easy' ); ?>
 	<input type="text" size=1 maxlength=1 name="delimiter" value=',' required='required'>
-		<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
 	<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
 	<input type="hidden" name="eme_admin_action" value="import_dynamic_answers">
-		<?php
-		esc_html_e( 'Allow empty email?', 'events-made-easy' );
-		echo eme_ui_select_binary( '', 'allow_empty_email' );
-		?>
+	<?php
+	esc_html_e( 'Allow empty email?', 'events-made-easy' );
+	echo eme_ui_select_binary( '', 'allow_empty_email' );
+	?>
 	<input type="submit" value="<?php esc_html_e( 'Import dynamic field answers', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-		<?php esc_html_e( 'Once you finished importing members, use this to import dynamic field answers into the database', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Once you finished importing members, use this to import dynamic field answers into the database', 'events-made-easy' ); ?>
 	</form>
 	</div>
 	<br>
@@ -2741,8 +2729,8 @@ function eme_manage_members_layout( $message ) {
 		$formfields = eme_get_formfields( '', 'members,generic' );
 	}
 	foreach ( $formfields as $formfield ) {
-			$extrafields_arr[]      = $formfield['field_id'];
-			$extrafieldnames_arr[]  = eme_trans_esc_html( $formfield['field_name'] );
+		$extrafields_arr[]      = $formfield['field_id'];
+		$extrafieldnames_arr[]  = eme_trans_esc_html( $formfield['field_name'] );
 		$extrafieldsearchable_arr[] = $formfield['searchable'];
 	}
 	// these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns
@@ -2762,20 +2750,20 @@ function eme_manage_memberships_layout( $message ) {
 
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-			$hidden_style = 'display:none;';
+		$hidden_style = 'display:none;';
 	} else {
 		$hidden_style = '';
 	}
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
-		<div id="icon-edit" class="icon32">
-			<br>
-		</div>
+	<div class="wrap nosubsub">
+	<div id="poststuff">
+	<div id="icon-edit" class="icon32">
+		<br>
+	</div>
 
-		<div id="memberships-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-				<p><?php echo $message; ?></p>
-		</div>
+	<div id="memberships-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
+		<p><?php echo $message; ?></p>
+	</div>
 
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
 		<h1><?php esc_html_e( 'Add a new membership definition', 'events-made-easy' ); ?></h1>
@@ -2788,7 +2776,7 @@ function eme_manage_memberships_layout( $message ) {
 		</div>
 	<?php endif; ?>
 
-		<h1><?php esc_html_e( 'Manage memberships', 'events-made-easy' ); ?></h1>
+	<h1><?php esc_html_e( 'Manage memberships', 'events-made-easy' ); ?></h1>
 
 	<form id='memberships-form' action="#" method="post">
 	<?php echo $nonce_field; ?>
@@ -2800,7 +2788,7 @@ function eme_manage_memberships_layout( $message ) {
 	</select>
 	<button id="MembershipsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
 	<span class="rightclickhint">
-		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span><br>
 	<?php
 	$formfields               = eme_get_formfields( '', 'memberships' );
@@ -2808,9 +2796,9 @@ function eme_manage_memberships_layout( $message ) {
 	$extrafieldnames_arr      = [];
 	$extrafieldsearchable_arr = [];
 	foreach ( $formfields as $formfield ) {
-			$extrafields_arr[]          = $formfield['field_id'];
-			$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
-			$extrafieldsearchable_arr[] = $formfield['searchable'];
+		$extrafields_arr[]          = $formfield['field_id'];
+		$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
+		$extrafieldsearchable_arr[] = $formfield['searchable'];
 	}
 	// these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns
 	$extrafields          = join( ',', $extrafields_arr );
@@ -2977,25 +2965,25 @@ function eme_dyndata_member_ajax() {
 					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
 				}
 				if ( $condition['condition'] == 'contains' && strpos( $entered_val, $condition['condval'] ) !== false ) {
-						$template   = eme_get_template_format( $condition['template_id'] );
-						$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$template   = eme_get_template_format( $condition['template_id'] );
+					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
 					$form_html     .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
 					$form_html     .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
 				}
 				if ( $condition['condition'] == 'notcontains' && strpos( $entered_val, $condition['condval'] ) === false ) {
-						$template = eme_get_template_format( $condition['template_id'] );
+					$template = eme_get_template_format( $condition['template_id'] );
 					$form_html   .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
 					$form_html   .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
 					$form_html   .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
 				}
 				if ( $condition['condition'] == 'incsv' && ( in_array( $condition['condval'], explode( ',', $entered_val ) ) || in_array( $condition['condval'], explode( ', ', $entered_val ) ) ) ) {
-								$template = eme_get_template_format( $condition['template_id'] );
+					$template = eme_get_template_format( $condition['template_id'] );
 					$form_html           .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
 					$form_html           .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
 					$form_html           .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
 				}
 				if ( $condition['condition'] == 'notincsv' && ! ( in_array( $condition['condval'], explode( ',', $entered_val ) ) || in_array( $condition['condval'], explode( ', ', $entered_val ) ) ) ) {
-								$template = eme_get_template_format( $condition['template_id'] );
+					$template = eme_get_template_format( $condition['template_id'] );
 					$form_html           .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
 					$form_html           .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
 					$form_html           .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
@@ -3254,8 +3242,6 @@ function eme_get_next_start_date( $membership, $member, $renew_expired = 0 ) {
 
 // function is only called for new or renew_expired
 function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
-	
-
 	if ( ! $membership ) {
 		return;
 	}
@@ -3304,8 +3290,6 @@ function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
 }
 
 function eme_get_next_end_date( $membership, $start_date, $new_member = 0 ) {
-	
-
 	if ( ! $membership ) {
 		return;
 	}
@@ -3457,8 +3441,6 @@ function eme_member_send_expiration_reminder( $member_id ) {
 }
 
 function eme_member_calc_status( $start_date, $end_date, $duration = '', $grace_period = 0 ) {
-	
-
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// set at midnight from today
 	$eme_date_obj_now->today();
@@ -3871,11 +3853,11 @@ function eme_add_member_form_shortcode( $atts ) {
 	extract(
 	    shortcode_atts(
 		    [
-				'id'   => 0,
-				'name' => '',
-			],
+			    'id'   => 0,
+			    'name' => '',
+		    ],
 		    $atts
-		)
+	    )
 	);
 	if ( ! empty( $name ) ) {
 		$membership = eme_get_membership( $name );
@@ -3892,12 +3874,12 @@ function eme_mymemberships_list_shortcode( $atts ) {
 	extract(
 	    shortcode_atts(
 		    [
-				'template_id'        => 0,
-				'template_id_header' => 0,
-				'template_id_footer' => 0,
-			],
+			    'template_id'        => 0,
+			    'template_id_header' => 0,
+			    'template_id_footer' => 0,
+		    ],
 		    $atts
-		)
+	    )
 	);
 	if ( is_user_logged_in() ) {
 		$wp_id = get_current_user_id();
@@ -3925,19 +3907,19 @@ function eme_mymemberships_list_shortcode( $atts ) {
 function eme_members_report_link_shortcode( $atts ) {
 	global $post;
 	eme_enqueue_frontend();
-		extract(
-		    shortcode_atts(
-			    [
-					'group_id'           => 0,
-					'membership_id'      => 0,
-					'template_id'        => 0,
-					'template_id_header' => 0,
-					'link_text'          => __( 'Members CSV', 'events-made-easy' ),
-					'public_access'      => 0,
-				],
-			    $atts
-			)
-		);
+	extract(
+		shortcode_atts(
+			[
+				'group_id'           => 0,
+				'membership_id'      => 0,
+				'template_id'        => 0,
+				'template_id_header' => 0,
+				'link_text'          => __( 'Members CSV', 'events-made-easy' ),
+				'public_access'      => 0,
+			],
+			$atts
+		)
+	);
 	$public_access = filter_var( $public_access, FILTER_VALIDATE_BOOLEAN );
 
 	if ( ( ! is_user_logged_in() || ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) && ! $public_access ) {
@@ -3963,18 +3945,18 @@ function eme_members_report_link_shortcode( $atts ) {
 
 function eme_members_shortcode( $atts ) {
 	eme_enqueue_frontend();
-		extract(
-		    shortcode_atts(
-			    [
-					'group_id'           => 0,
-					'membership_id'      => 0,
-					'template_id'        => 0,
-					'template_id_header' => 0,
-					'template_id_footer' => 0,
-				],
-			    $atts
-			)
-		);
+	extract(
+		shortcode_atts(
+			[
+				'group_id'           => 0,
+				'membership_id'      => 0,
+				'template_id'        => 0,
+				'template_id_header' => 0,
+				'template_id_footer' => 0,
+			],
+			$atts
+		)
+	);
 
 	if ( ! empty( $group_id ) ) {
 		$member_ids = eme_get_groups_member_ids( $group_id );
@@ -3988,9 +3970,9 @@ function eme_members_shortcode( $atts ) {
 		return '';
 	}
 
-		$format            = '';
-		$eme_format_header = '';
-		$eme_format_footer = '';
+	$format            = '';
+	$eme_format_header = '';
+	$eme_format_footer = '';
 	$format                = eme_get_template_format( $template_id );
 	if ( $template_id_header ) {
 		$eme_format_header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
@@ -3998,15 +3980,15 @@ function eme_members_shortcode( $atts ) {
 	if ( $template_id_footer ) {
 		$eme_format_footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
 	}
-		$output = '';
+	$output = '';
 	$lang       = eme_detect_lang();
 	foreach ( $member_ids as $member_id ) {
 		$member     = eme_get_member( $member_id );
 		$membership = eme_get_membership( $member['membership_id'] );
 		$output    .= eme_replace_member_placeholders( $format, $membership, $member, 'html', $lang );
 	}
-		$output = $eme_format_header . $output . $eme_format_footer;
-		return $output;
+	$output = $eme_format_header . $output . $eme_format_footer;
+	return $output;
 }
 
 function eme_members_frontend_csv_report( $group_id, $membership_id, $template_id, $template_id_header ) {
@@ -4022,8 +4004,8 @@ function eme_members_frontend_csv_report( $group_id, $membership_id, $template_i
 		return '';
 	}
 
-		$format            = '';
-		$eme_format_header = '';
+	$format            = '';
+	$eme_format_header = '';
 	// no nl2br for csv output
 	$format = eme_get_template_format( $template_id, 0 );
 
@@ -4034,7 +4016,7 @@ function eme_members_frontend_csv_report( $group_id, $membership_id, $template_i
 
 	if ( $template_id_header ) {
 		// no nl2br for csv output
-			$eme_format_header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header, 0 ) ) );
+		$eme_format_header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header, 0 ) ) );
 		$headers               = explode( ',', $eme_format_header );
 		eme_fputcsv( $fp, $headers );
 	}
@@ -4172,7 +4154,7 @@ function eme_add_member_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 			$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $form_html,
 				]
@@ -4184,7 +4166,7 @@ function eme_add_member_ajax() {
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
 			]
@@ -4195,7 +4177,7 @@ function eme_add_member_ajax() {
 	if ( ! isset( $_POST['membership_id'] ) ) {
 		$form_html = __( 'No membership selected', 'events-made-easy' );
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_html,
 			]
@@ -4255,33 +4237,33 @@ function eme_add_member_ajax() {
 			if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
 				$payment_form = eme_payment_member_form( $payment_id );
 				echo wp_json_encode(
-				    [
+					[
 						'Result'      => 'OK',
 						'htmlmessage' => $form_result_message,
 						'paymentform' => $payment_form,
 					]
 				);
 			} elseif ( get_option( 'eme_payment_redirect' ) ) {
-					$payment     = eme_get_payment( $payment_id );
-					$payment_url = eme_payment_url( $payment );
+				$payment     = eme_get_payment( $payment_id );
+				$payment_url = eme_payment_url( $payment );
 				$waitperiod      = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
 				$redirect_msg    = get_option( 'eme_payment_redirect_msg' );
 				if ( ! empty( $redirect_msg ) ) {
 					$redirect_msg         = str_replace( '#_PAYMENT_URL', $payment_url, $redirect_msg );
 					$form_result_message .= '<br>' . $redirect_msg;
 				}
-					echo wp_json_encode(
-					    [
-							'Result'          => 'OK',
-							'htmlmessage'     => $form_result_message,
-							'waitperiod'      => $waitperiod,
-							'paymentredirect' => $payment_url,
-						]
-					);
+				echo wp_json_encode(
+					[
+						'Result'          => 'OK',
+						'htmlmessage'     => $form_result_message,
+						'waitperiod'      => $waitperiod,
+						'paymentredirect' => $payment_url,
+					]
+				);
 			} else {
 				$payment_form = eme_payment_member_form( $payment_id );
 				echo wp_json_encode(
-				    [
+					[
 						'Result'      => 'OK',
 						'htmlmessage' => $form_result_message,
 						'paymentform' => $payment_form,
@@ -4291,7 +4273,7 @@ function eme_add_member_ajax() {
 		} else {
 			// price=0
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'OK',
 					'htmlmessage' => $form_result_message,
 				]
@@ -4300,7 +4282,7 @@ function eme_add_member_ajax() {
 	} elseif ( $payment_id ) {
 		eme_captcha_remove( $captcha_res );
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'OK',
 				'htmlmessage' => $form_result_message,
 			]
@@ -4308,23 +4290,21 @@ function eme_add_member_ajax() {
 	} else {
 		// failed
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'NOK',
 				'htmlmessage' => $form_result_message,
 			]
 		);
 	}
-		wp_die();
+	wp_die();
 }
 
 function eme_replace_member_placeholders( $format, $membership, $member, $target = 'html', $lang = '', $take_answers_from_post = 0 ) {
-	
-
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+		$email_target = 1;
+		$target       = 'html';
 	}
 
 	if ( $member['person_id'] == -1 ) {
@@ -4374,8 +4354,8 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 		if ( preg_match( '/#_MEMBERID/', $result ) ) {
 			$replacement = $member['member_id'];
 			if ( $target == 'html' ) {
-					$replacement = eme_esc_html( $replacement );
-					$replacement = apply_filters( 'eme_general', $replacement );
+				$replacement = eme_esc_html( $replacement );
+				$replacement = apply_filters( 'eme_general', $replacement );
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
@@ -4464,7 +4444,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			}
 		} elseif ( preg_match( '/#_MEMBERLASTSEEN/', $result, $matches ) ) {
 			if ( ! eme_is_empty_datetime( $member['last_seen'] ) ) {
-					$replacement = eme_localized_datetime( $member['last_seen'], EME_TIMEZONE );
+				$replacement = eme_localized_datetime( $member['last_seen'], EME_TIMEZONE );
 			} else {
 				$replacement = __( 'Never', 'events-made-easy' );
 			}
@@ -4492,7 +4472,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			}
 		} elseif ( preg_match( '/#_MEMBERENDDATE\{(.+?)\}/', $result, $matches ) ) {
 			if ( eme_is_expired_member( $member ) && $need_escape ) {
-					$replacement = 'expired';
+				$replacement = 'expired';
 			} elseif ( eme_is_active_member( $member ) && ( $membership['duration_period'] == 'forever' ) ) {
 				if ( $need_escape ) {
 					$replacement = 'forever';
@@ -4500,17 +4480,17 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 					$replacement = __( 'no end date', 'events-made-easy' );
 				}
 			} elseif ( ! eme_is_empty_date( $member['end_date'] ) ) {
-					$replacement = eme_localized_date( $member['end_date'], EME_TIMEZONE, $matches[1] );
+				$replacement = eme_localized_date( $member['end_date'], EME_TIMEZONE, $matches[1] );
 			}
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
 				$replacement = apply_filters( 'eme_general', $replacement );
 			} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_MEMBERNEXTENDDATE\{(.+?)\}/', $result, $matches ) ) {
 			if ( eme_is_expired_member( $member ) && $need_escape ) {
-					$replacement = 'expired';
+				$replacement = 'expired';
 			} elseif ( eme_is_active_member( $member ) && ( $membership['duration_period'] == 'forever' ) ) {
 				if ( $need_escape ) {
 					$replacement = 'forever';
@@ -4521,8 +4501,8 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				$next_end_date = eme_get_next_end_date( $membership, $member['end_date'] );
 				$replacement   = eme_localized_date( $next_end_date, EME_TIMEZONE, $matches[1] );
 			} elseif ( eme_is_empty_date( $member['end_date'] ) ) {
-					$start_date    = eme_get_start_date( $membership, $member );
-					$next_end_date = eme_get_next_end_date( $membership, $start_date );
+				$start_date    = eme_get_start_date( $membership, $member );
+				$next_end_date = eme_get_next_end_date( $membership, $start_date );
 				$replacement       = eme_localized_date( $next_end_date, EME_TIMEZONE, $matches[1] );
 			}
 			if ( $target == 'html' ) {
@@ -4549,7 +4529,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			}
 		} elseif ( preg_match( '/#_MEMBERENDDATE$/', $result ) ) {
 			if ( eme_is_expired_member( $member ) && $need_escape ) {
-					$replacement = 'expired';
+				$replacement = 'expired';
 			} elseif ( eme_is_active_member( $member ) && ( $membership['duration_period'] == 'forever' ) ) {
 				if ( $need_escape ) {
 					$replacement = 'forever';
@@ -4557,13 +4537,13 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 					$replacement = __( 'no end date', 'events-made-easy' );
 				}
 			} elseif ( ! eme_is_empty_date( $member['end_date'] ) ) {
-					$replacement = eme_localized_date( $member['end_date'], EME_TIMEZONE );
+				$replacement = eme_localized_date( $member['end_date'], EME_TIMEZONE );
 			}
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
 				$replacement = apply_filters( 'eme_general', $replacement );
 			} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_MEMBERNEXTENDDATE$/', $result ) ) {
 			if ( eme_is_expired_member( $member ) ) {
@@ -4582,8 +4562,8 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				$next_end_date = eme_get_next_end_date( $membership, $member['end_date'] );
 				$replacement   = eme_localized_date( $next_end_date, EME_TIMEZONE );
 			} elseif ( eme_is_empty_date( $member['end_date'] ) ) {
-					$start_date    = eme_get_start_date( $membership, $member );
-					$next_end_date = eme_get_next_end_date( $membership, $start_date );
+				$start_date    = eme_get_start_date( $membership, $member );
+				$next_end_date = eme_get_next_end_date( $membership, $start_date );
 				$replacement       = eme_localized_date( $next_end_date, EME_TIMEZONE );
 			}
 			if ( $target == 'html' ) {
@@ -4677,7 +4657,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_PAYMENT_URL/', $result ) ) {
-					// no payment id yet? let's create one (can be old members, older imports, ...)
+			// no payment id yet? let's create one (can be old members, older imports, ...)
 			if ( empty( $member['payment_id'] ) ) {
 				$member['payment_id'] = eme_create_member_payment( $member['member_id'] );
 			}
@@ -4695,13 +4675,13 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$size = 'medium';
 			}
-				$targetBasePath            = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
-				$targetBaseUrl             = EME_UPLOAD_URL . '/members/' . $member['member_id'];
+			$targetBasePath            = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
+			$targetBaseUrl             = EME_UPLOAD_URL . '/members/' . $member['member_id'];
 			$url_to_encode                 = eme_member_url( $member );
 			[$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
 			if ( is_file( $target_file ) ) {
-					[$width, $height, $type, $attr] = getimagesize( $target_file );
-					$replacement                        = "<img width='$width' height='$height' src='$target_url'>";
+				[$width, $height, $type, $attr] = getimagesize( $target_file );
+				$replacement                        = "<img width='$width' height='$height' src='$target_url'>";
 			}
 		} elseif ( preg_match( '/#_DYNAMICFIELD\{(.+?)\}$/', $result, $matches ) ) {
 			$field_key = $matches[1];
@@ -4711,7 +4691,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 					if ( $answer['field_id'] != $formfield['field_id'] ) {
 						continue;
 					}
-						$tmp_formfield = eme_get_formfield( $answer['field_id'] );
+					$tmp_formfield = eme_get_formfield( $answer['field_id'] );
 					if ( ! empty( $tmp_formfield ) ) {
 						if ( $target == 'html' ) {
 							$replacement .= eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target );
@@ -4720,9 +4700,9 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 						}
 					}
 				}
-					$replacement = eme_translate( $replacement, $lang );
+				$replacement = eme_translate( $replacement, $lang );
 				if ( $target == 'html' ) {
-						$replacement = apply_filters( 'eme_general', $replacement );
+					$replacement = apply_filters( 'eme_general', $replacement );
 				} else {
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
@@ -4730,15 +4710,15 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 		} elseif ( preg_match( '/#_DYNAMICDATA$/', $result ) ) {
 			if ( ! empty( $dyn_answers ) ) {
 				if ( $target == 'html' ) {
-						$replacement = "<table style='border-collapse: collapse;border: 1px solid black;' class='eme_dyndata_table'>";
+					$replacement = "<table style='border-collapse: collapse;border: 1px solid black;' class='eme_dyndata_table'>";
 				}
-					$old_grouping = 1;
+				$old_grouping = 1;
 				$old_occurence    = 0;
 				foreach ( $dyn_answers as $answer ) {
-							$grouping      = $answer['eme_grouping'];
-							$occurence     = $answer['occurence'];
-							$class         = 'eme_print_formfield' . $answer['field_id'];
-							$tmp_formfield = eme_get_formfield( $answer['field_id'] );
+					$grouping      = $answer['eme_grouping'];
+					$occurence     = $answer['occurence'];
+					$class         = 'eme_print_formfield' . $answer['field_id'];
+					$tmp_formfield = eme_get_formfield( $answer['field_id'] );
 					if ( ! empty( $tmp_formfield ) ) {
 						if ( $target == 'html' ) {
 							if ( $old_grouping != $grouping || $old_occurence != $occurence ) {
@@ -4752,11 +4732,11 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 						}
 					}
 				}
-					// to close the last table
+				// to close the last table
 				if ( $target == 'html' ) {
-							$replacement .= '</table>';
+					$replacement .= '</table>';
 				}
-						$replacement = eme_translate( $replacement, $lang );
+				$replacement = eme_translate( $replacement, $lang );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} else {
@@ -4851,7 +4831,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			$found = 0;
 		}
 		if ( $found ) {
-				$format     = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
+			$format     = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
 	}

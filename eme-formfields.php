@@ -3889,7 +3889,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			$fieldname = 'familycount';
 			if ( ! $eme_is_admin_request ) {
 				$range_arr = [];
-				for ( $i = 0;$i <= 10;$i++ ) {
+				for ( $i = 0;$i <= intval($membership['properties']['family_maxmembers']);$i++ ) {
 					$range_arr[ $i ] = $i;
 				}
 				$replacement = eme_ui_select( 1, 'familycount', $range_arr );

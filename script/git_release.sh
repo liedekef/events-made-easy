@@ -24,7 +24,7 @@ sed -i "s/Stable tag: $old_release/Stable tag: $release/" readme.txt
 
 # now create a zip of the new release
 cd /home/liedekef/wordpress/git
-zip -r events-made-easy.zip events-made-easy -x '*.git*' 'events-made-easy/langs/*.po' 'events-made-easy/langs/pot_gen*' 'events-made-easy/langs/*.pot' 'events-made-easy/langs/gettextize.sh' 'events-made-easy/screenshot*' -x 'events-made-easy/dist*' -x 'events-made-easy/changelog.txt' -x 'events-made-easy/script*'
+zip -r events-made-easy.zip events-made-easy -x '*.git*' 'events-made-easy/langs/*.po' 'events-made-easy/langs/pot_gen*' 'events-made-easy/langs/*.pot' 'events-made-easy/langs/gettextize.sh' 'events-made-easy/screenshot*' -x 'events-made-easy/dist*' -x 'events-made-easy/changelog.txt' -x 'events-made-easy/script*' -x 'events-made-easy/payment_gateways/*/composer.json' -x 'events-made-easy/payment_gateways/*/composer.lock'
 mv events-made-easy.zip events-made-easy/dist
 
 # move 

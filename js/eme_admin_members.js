@@ -765,9 +765,11 @@ jQuery(document).ready(function ($) {
 
 	function updateShowHideFamilytpl () {
                 if ($('input#family_membership').prop('checked')) {
-                        $('tr#familymember_form_tpl').fadeIn();
+                        $('tr#tr_family_maxmembers').fadeIn();
+                        $('tr#tr_familymember_form_tpl').fadeIn();
                 } else {
-                        $('tr#familymember_form_tpl').fadeOut();
+                        $('tr#tr_family_maxmembers').fadeOut();
+                        $('tr#tr_familymember_form_tpl').fadeOut();
                 }
         }
         $('input#family_membership').on("change",updateShowHideFamilytpl);

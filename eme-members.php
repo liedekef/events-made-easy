@@ -1771,13 +1771,13 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to ask for extra info for each family member of the person that signs up. These will also become a member but payment will only be handled by the initial member that signs up. The membership member form must include the placeholder "#_FAMILYCOUNT" to ask for the number of extra family members and "#_FAMILYMEMBERS" to ask for the extra family members info.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
-	<tr>
-	<td><label for="family_maxmembers"><?php esc_html_e( 'Ask for family member info when someone signs up', 'events-made-easy' ); ?></label></td>
+	<tr id="tr_family_maxmembers">
+	<td><label for="family_maxmembers"><?php esc_html_e( 'Maximum number of family members', 'events-made-easy' ); ?></label></td>
 	<td><input id="family_maxmembers" name="properties[family_maxmembers]" type="number" value="<?php echo intval( $membership['properties']['family_maxmembers'] ); ?>" size="4">
-		<br><p class='eme_smaller'><?php esc_html_e( 'The maximum number of family members allowed.', 'events-made-easy' ); ?></p>
+		<br><p class='eme_smaller'><?php esc_html_e( 'The maximum number of family members allowed to sign up.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
-	<tr id="familymember_form_tpl">
+	<tr id="tr_familymember_form_tpl">
 	<td><label for="properties[familymember_form_tpl]"><?php esc_html_e( 'Family Member Form:', 'events-made-easy' ); ?></label></td>
 	<td><?php echo eme_ui_select_key_value( $membership['properties']['familymember_form_tpl'], 'properties[familymember_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
 		<br><p class='eme_smaller'><?php esc_html_e( 'This is the form that will be shown/repeated for the family members when a new member wants to sign up for this membership.', 'events-made-easy' ); ?>

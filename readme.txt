@@ -110,6 +110,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
   so you can create a link to bookings just related to that payment. Example:
   wp-admin/admin.php?page=eme-registration-seats&paymentid=#_PAYMENTID
 * Add "Mark paid" button in the table for approved bookings too, similar to the "Mark paid and approve" button in the table for pending bookings
+* Fix categories include/exclude in #_EVENTCATEGORIES placeholders (typo in php)
 
 = 2.3.41 (2023/01/15) =
 * Add an action to (retry to) resend all failed mails in a mailing

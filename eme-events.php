@@ -3413,11 +3413,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$exclude_cats         = $matches[3];
 			$extra_conditions_arr = [];
 			$order_by                 = '';
-			if ( ! empty( $include_cats ) && eme_list_of_int($include_cats) ) {
+			if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
 				$order_by = "FIELD(category_id,$include_cats)";
 			}
-			if ( ! empty( $exclude_cats ) && eme_list_of_int($exclude_cats) ) {
+			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats) ) {
 				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
 			}
 			$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -3447,11 +3447,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$exclude_cats         = $matches[3];
 			$extra_conditions_arr = [];
 			$order_by                 = '';
-			if ( ! empty( $include_cats ) && eme_list_of_int($include_cats) ) {
+			if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
 				$order_by = "FIELD(category_id,$include_cats)";
 			}
-			if ( ! empty( $exclude_cats ) && eme_list_of_int($exclude_cats) ) {
+			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats) ) {
 				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
 			}
 			$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -3471,11 +3471,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$exclude_cats         = $matches[3];
 			$extra_conditions_arr = [];
 			$order_by             = '';
-			if ( ! empty( $include_cats ) && eme_list_of_int($include_cats) ) {
+			if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
 				$order_by = "FIELD(category_id,$include_cats)";
 			}
-			if ( ! empty( $exclude_cats ) && eme_list_of_int($exclude_cats) ) {
+			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats) ) {
 				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
 			}
 			$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -3497,11 +3497,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$exclude_cats         = $matches[3];
 			$extra_conditions_arr = [];
 			$order_by                 = '';
-			if ( ! empty( $include_cats ) && eme_list_of_int($include_cats) ) {
+			if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
 				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
 				$order_by = "FIELD(category_id,$include_cats)";
 			}
-			if ( ! empty( $exclude_cats ) && eme_list_of_int($exclude_cats) ) {
+			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats) ) {
 				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
 			}
 			$extra_conditions = join( ' AND ', $extra_conditions_arr );

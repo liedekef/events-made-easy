@@ -265,6 +265,14 @@ function _eme_uninstall( $force_drop = 0 ) {
 		delete_option( 'eme_version' );
 	}
 
+	// unschedule the update checker when uninstalling only
+	if ($force_drop) {
+		$cron_action = 'puc_cron_check_updates-events-made-easy';
+		if ( wp_next_scheduled( $cron_action ) ) {
+			wp_unschedule_hook( $cron_action );
+		}
+	}
+
 	// SEO rewrite rules
 	flush_rewrite_rules();
 }

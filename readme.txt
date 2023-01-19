@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.41
+Stable tag: 2.3.42
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,7 +100,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.42 (2023//) =
+= 2.3.42 (2023/01/19) =
 * Added #_MULTIBOOKING_TOTALPRICE_NO_VAT and #_MULTIBOOKING_TOTALPRICE_VAT_ONLY
 * Added member placeholders #_MEMBERPAYMENTDATE and #_MEMBERPAYMENTTIME that return the payment date and/or time formatted based on your wp preferences
 * Added member placeholders #_MEMBERPAYMENTDATE{xx} and #_MEMBERPAYMENTTIME{xx} so you can format the layout to your liking ('xx' being the date/time format in php date notation)

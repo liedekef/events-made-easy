@@ -539,8 +539,8 @@ function eme_register_scripts() {
 	wp_register_script( 'eme-select2', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/js/select2.min.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
 	if ( $language != 'en' ) {
 		$eme_plugin_dir  = eme_plugin_dir();
-		$locale_file     = $eme_plugin_dir . "js/jquery-select2/select2-4.1.0-rc.0/dist//js/i18n/$language.js";
-		$locale_file_url = EME_PLUGIN_URL . "js/jquery-select2/select2-4.1.0-rc.0/dist//js/i18n/$language.js";
+		$locale_file     = $eme_plugin_dir . "js/jquery-select2/select2-4.1.0-rc.0/dist/js/i18n/$language.js";
+		$locale_file_url = EME_PLUGIN_URL . "js/jquery-select2/select2-4.1.0-rc.0/dist/js/i18n/$language.js";
 		if ( file_exists( $locale_file ) ) {
 			wp_register_script( 'eme-select2-locale', $locale_file_url, [ 'eme-select2' ], EME_VERSION, $load_js_in_footer );
 		}

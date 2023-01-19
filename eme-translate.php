@@ -163,9 +163,13 @@ function eme_translate_string( $text, $lang = '', $use_wp_trans = 1 ) {
 		$lang = eme_detect_lang();
 	}
 	$languages = eme_detect_used_languages( $text );
-	if ( empty( $languages ) && $use_wp_trans ) {
-		// no language is encoded in the $text (most frequent case), then run it through wp trans and be done with it
-		return __( $text, 'events-made-easy' );
+	if ( empty( $languages ) ) {
+		if ( $use_wp_trans ) {
+			// no language is encoded in the $text (most frequent case), then run it through wp trans and be done with it
+			return __( $text, 'events-made-easy' );
+		} else {
+			return $text;
+		}
 	}
 	$content   = eme_split_language_blocks( $text, $languages );
 	$languages = array_keys( $content );

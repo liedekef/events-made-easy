@@ -24,6 +24,7 @@ if [ $? -gt 0 ]; then
 		msgmerge --strict -o "$i" "tmp.po" events-made-easy.pot
 		rm "tmp.po"
 	done
+	rm "$lang_dir/events-made-easy-orig.pot"
 else
 	mv "$lang_dir/events-made-easy-orig.pot" "$lang_dir/events-made-easy.pot"
 fi

@@ -4344,6 +4344,11 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 
 	$total_member_price = eme_get_total_member_price( $member );
 
+	// no payment id yet? let's create one (can be old members, older imports, ...)
+	if ( empty( $member['payment_id'] ) ) {
+		$member['payment_id'] = eme_create_member_payment( $member['member_id'] );
+	}
+
 	// replace the generic placeholders
 	$format = eme_replace_generic_placeholders( $format, $orig_target );
 
@@ -4581,13 +4586,13 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( $payment && preg_match( '/#_MEMBERPAYMENTDATE\{(.+?)\}/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_MEMBERPAYMENTDATE\{(.+?)\}/', $result, $matches ) ) {
 			$replacement = eme_localized_date( $member['payment_date'], EME_TIMEZONE, $matches[1] );
-		} elseif ( $payment && preg_match( '/#_MEMBERPAYMENTDATE/', $result ) ) {
+		} elseif ( preg_match( '/#_MEMBERPAYMENTDATE/', $result ) ) {
 			$replacement = eme_localized_date( $member['payment_date'], EME_TIMEZONE );
-		} elseif ( $payment && preg_match( '/#_MEMBERPAYMENTTIME\{(.+?)\}/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_MEMBERPAYMENTTIME\{(.+?)\}/', $result, $matches ) ) {
 			$replacement = eme_localized_time( $member['payment_date'], EME_TIMEZONE, $matches[1] );
-		} elseif ( $payment && preg_match( '/#_MEMBERPAYMENTTIME/', $result ) ) {
+		} elseif ( preg_match( '/#_MEMBERPAYMENTTIME/', $result ) ) {
 			$replacement = eme_localized_time( $member['payment_date'], EME_TIMEZONE );
 		} elseif ( preg_match( '/#_MEMBER_STATUS$/', $result ) ) {
 			$eme_member_status_array = eme_member_status_array();
@@ -4654,10 +4659,6 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				$replacement = EME_UPLOAD_URL . '/members/' . $member['member_id'] . '/' . basename( $pdf_path );
 			}
 		} elseif ( preg_match( '/#_PAYMENTID/', $result ) ) {
-			// no payment id yet? let's create one (can be old members, older imports, ...)
-			if ( empty( $member['payment_id'] ) ) {
-				$member['payment_id'] = eme_create_member_payment( $member['member_id'] );
-			}
 			$replacement = $member['payment_id'];
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4666,10 +4667,6 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_PAYMENT_URL/', $result ) ) {
-			// no payment id yet? let's create one (can be old members, older imports, ...)
-			if ( empty( $member['payment_id'] ) ) {
-				$member['payment_id'] = eme_create_member_payment( $member['member_id'] );
-			}
 			$payment = eme_get_payment( $member['payment_id'] );
 			if ( $payment ) {
 				$replacement = eme_payment_url( $payment );

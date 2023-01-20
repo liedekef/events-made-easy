@@ -748,47 +748,47 @@ function eme_meta_box_div_location_customfields( $location ) {
 		<p><?php esc_html_e( "Here custom fields of type 'locations' are shown.", 'events-made-easy' ); ?>
 		<br><?php esc_html_e( 'The difference with location attributes is that attributes need to be defined in your format first and can only be text, here you can first create custom fields of any kind which allows more freedom.', 'events-made-easy' ); ?>
 		</p>
-				<?php
-				if ( current_user_can( 'unfiltered_html' ) ) {
-						echo "<div class='eme_notice_unfiltered_html'>";
-						esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
-						echo '</div>';
-				}
-				?>
+<?php
+	if ( current_user_can( 'unfiltered_html' ) ) {
+		echo "<div class='eme_notice_unfiltered_html'>";
+		esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
+		echo '</div>';
+	}
+?>
 		<table style="width: 100%;">
 	<?php
-		$formfields = eme_get_formfields( '', 'locations' );
-		$formfields = apply_filters( 'eme_location_formfields', $formfields );
+	$formfields = eme_get_formfields( '', 'locations' );
+	$formfields = apply_filters( 'eme_location_formfields', $formfields );
 	// only in case of location duplicate, the cf_answers is set
 	if ( isset( $location['cf_answers'] ) ) {
-			$answers = $location['cf_answers'];
+		$answers = $location['cf_answers'];
 	} elseif ( ! empty( $location['location_id'] ) ) {
-				$answers = eme_get_location_answers( $location['location_id'] );
+		$answers = eme_get_location_answers( $location['location_id'] );
 	} else {
-			$answers = [];
+		$answers = [];
 	}
 
 	foreach ( $formfields as $formfield ) {
-			$field_name     = eme_trans_esc_html( $formfield['field_name'] );
-			$field_id       = $formfield['field_id'];
-			$postfield_name = 'FIELD' . $field_id;
-			$entered_val    = '';
+		$field_name     = eme_trans_esc_html( $formfield['field_name'] );
+		$field_id       = $formfield['field_id'];
+		$postfield_name = 'FIELD' . $field_id;
+		$entered_val    = '';
 		foreach ( $answers as $answer ) {
 			if ( $answer['field_id'] == $field_id ) {
 				$entered_val = $answer['answer'];
 			}
 		}
 		if ( $formfield['field_required'] ) {
-				$required = 1;
+			$required = 1;
 		} else {
 			$required = 0;
 		}
 		if ( $formfield['field_type'] == 'file' ) {
-				$field_html = __( "File upload is not allowed here, use the regular WP media library to upload files or use the 'Add media' button in the location description.", 'events-made-easy' );
+			$field_html = __( "File upload is not allowed here, use the regular WP media library to upload files or use the 'Add media' button in the location description.", 'events-made-easy' );
 		} elseif ( $formfield['field_type'] == 'hidden' ) {
-				$field_html = __( "Custom fields of type 'hidden' are useless here and of course won't be shown.", 'events-made-easy' );
+			$field_html = __( "Custom fields of type 'hidden' are useless here and of course won't be shown.", 'events-made-easy' );
 		} else {
-				$field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
+			$field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
 		}
 			echo "<tr><td>$field_name</td><td style='width: 100%;'>$field_html</td></tr>";
 	}
@@ -988,7 +988,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-					$location_id = -1;
+				$location_id = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_country_filter'] ) ) {
@@ -1000,7 +1000,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-					$location_id = -1;
+				$location_id = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_cat_filter'] ) ) {
@@ -1017,8 +1017,8 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 			$key = eme_sanitize_request( $key );
 			$value = eme_sanitize_request( $value );
 			if ( preg_match( '/eme_customfield_filter(\d+)/', $key, $matches ) ) {
-					$field_id  = intval( $matches[1] );
-					$formfield = eme_get_formfield( $field_id );
+				$field_id  = intval( $matches[1] );
+				$formfield = eme_get_formfield( $field_id );
 				if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
 					$is_multi    = eme_is_multifield( $formfield['field_type'] );
 						$tmp_ids = eme_get_cf_location_ids( $value, $field_id, $is_multi );
@@ -1064,10 +1064,10 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 		if ( get_option( 'eme_categories_enabled' ) ) {
 			if ( is_numeric( $category ) ) {
 				if ( $category > 0 ) {
-						$conditions [] = " FIND_IN_SET($category,location_category_ids)";
+					$conditions [] = " FIND_IN_SET($category,location_category_ids)";
 				}
 			} elseif ( $category == 'none' ) {
-					$conditions [] = "location_category_ids=''";
+				$conditions [] = "location_category_ids=''";
 			} elseif ( preg_match( '/,/', $category ) ) {
 				$category            = explode( ',', $category );
 				$category_conditions = [];
@@ -1078,10 +1078,10 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 						$category_conditions[] = " location_category_ids=''";
 					}
 				}
-					$conditions [] = '(' . implode( ' OR', $category_conditions ) . ')';
+				$conditions [] = '(' . implode( ' OR', $category_conditions ) . ')';
 			} elseif ( preg_match( '/\+/', $category ) ) {
-					$category            = explode( '+', $category );
-					$category_conditions = [];
+				$category            = explode( '+', $category );
+				$category_conditions = [];
 				foreach ( $category as $cat ) {
 					if ( is_numeric( $cat ) && $cat > 0 ) {
 						$category_conditions[] = " FIND_IN_SET($cat,location_category_ids)";

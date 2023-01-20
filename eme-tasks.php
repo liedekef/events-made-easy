@@ -1192,7 +1192,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 	}
 
 	if ( ! strstr( $format, '#_TASKSIGNUPCHECKBOX' ) ) {
-					$format = "#_TASKSIGNUPCHECKBOX $format";
+		$format = "#_TASKSIGNUPCHECKBOX $format";
 	}
 
 	if ( ! empty( $template_id_header ) ) {
@@ -1205,10 +1205,10 @@ function eme_tasks_signupform_shortcode( $atts ) {
 
 	$current_userid = get_current_user_id();
 	if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
-			( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
-			$search_tables = get_option( 'eme_autocomplete_sources' );
+		( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
+		$search_tables = get_option( 'eme_autocomplete_sources' );
 		if ( $search_tables != 'none' ) {
-				wp_enqueue_script( 'eme-autocomplete-form' );
+			wp_enqueue_script( 'eme-autocomplete-form' );
 		}
 	}
 
@@ -1524,7 +1524,7 @@ function eme_tasks_ajax() {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
 			$message = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 			echo wp_json_encode(
-			    [
+				[
 					'Result'      => 'NOK',
 					'htmlmessage' => $message,
 				]
@@ -1533,9 +1533,9 @@ function eme_tasks_ajax() {
 		}
 	}
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
-				$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+		$message = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
-		    [
+			[
 				'Result'      => 'NOK',
 				'htmlmessage' => $message,
 			]

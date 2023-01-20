@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Events Made Easy package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.3.41\n"
+"Project-Id-Version: Events Made Easy 2.3.42\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-01-19 22:42:54+00:00\n"
+"POT-Creation-Date: 2023-01-20 23:15:41+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,8 +26,8 @@ msgstr ""
 #: eme-formfields.php:4894 eme-formfields.php:4895 eme-formfields.php:4917
 #: eme-formfields.php:4918 eme-functions.php:3306 eme-functions.php:3327
 #: eme-functions.php:3328 eme-functions.php:3372 eme-locations.php:2834
-#: eme-mailer.php:1139 eme-members.php:5541 eme-members.php:5643
-#: eme-members.php:5795 eme-members.php:5867 eme-members.php:5938
+#: eme-mailer.php:1139 eme-members.php:5550 eme-members.php:5652
+#: eme-members.php:5804 eme-members.php:5876 eme-members.php:5947
 #: eme-options.php:133 eme-people.php:3611 eme-people.php:3735
 #: eme-people.php:4706 eme-people.php:4836 eme-people.php:4908
 #: eme-people.php:4947 eme-people.php:4970 eme-people.php:5052
@@ -152,8 +152,8 @@ msgid "Manually add an attendance record"
 msgstr ""
 
 #: eme-attendances.php:112 eme-locations.php:884 eme-mailer.php:2196
-#: eme-mailer.php:2374 eme-members.php:1285 eme-members.php:1295
-#: eme-members.php:1339 eme-people.php:1879 eme-people.php:2051
+#: eme-mailer.php:2374 eme-members.php:1294 eme-members.php:1308
+#: eme-members.php:1352 eme-people.php:1879 eme-people.php:2051
 msgid "Start typing a name"
 msgstr ""
 
@@ -192,7 +192,7 @@ msgstr ""
 #: eme-attendances.php:145 eme-countries.php:385 eme-countries.php:456
 #: eme-discounts.php:467 eme-discounts.php:535 eme-events.php:5854
 #: eme-events.php:5957 eme-formfields.php:204 eme-locations.php:888
-#: eme-members.php:2729 eme-members.php:2800 eme-people.php:1899
+#: eme-members.php:2741 eme-members.php:2812 eme-people.php:1899
 #: eme-people.php:2354 eme-rsvp.php:4785 eme-tasks.php:461
 #: eme-templates.php:211
 msgid "Hint: rightclick on the column headers to show/hide columns"
@@ -331,13 +331,13 @@ msgstr ""
 #: eme-events.php:9457 eme-events.php:9485 eme-events.php:9522
 #: eme-events.php:9582 eme-events.php:9685 eme-holidays.php:125
 #: eme-holidays.php:132 eme-mailer.php:1279 eme-mailer.php:2466
-#: eme-mailer.php:2556 eme-members.php:1591 eme-people.php:2258
+#: eme-mailer.php:2556 eme-members.php:1603 eme-people.php:2258
 #: eme-tasks.php:668 eme-templates.php:279
 msgid "Name"
 msgstr ""
 
 #: eme-categories.php:144 eme-events.php:9919 eme-formfields.php:4868
-#: eme-holidays.php:138 eme-locations.php:2911 eme-members.php:5577
+#: eme-holidays.php:138 eme-locations.php:2911 eme-members.php:5586
 #: eme-people.php:4860 eme-templates.php:497
 msgid "No name"
 msgstr ""
@@ -465,8 +465,8 @@ msgstr ""
 #: eme-events.php:9411 eme-events.php:9445 eme-events.php:9473
 #: eme-events.php:9501 eme-events.php:9538 eme-events.php:9596
 #: eme-events.php:9660 eme-formfields.php:202 eme-locations.php:886
-#: eme-mailer.php:2457 eme-mailer.php:2547 eme-members.php:2727
-#: eme-members.php:2798 eme-people.php:1897 eme-people.php:2352
+#: eme-mailer.php:2457 eme-mailer.php:2547 eme-members.php:2739
+#: eme-members.php:2810 eme-people.php:1897 eme-people.php:2352
 #: eme-rsvp.php:4783 eme-tasks.php:459 eme-templates.php:209
 msgid "Apply"
 msgstr ""
@@ -531,14 +531,14 @@ msgstr ""
 
 #: eme-countries.php:50 eme-countries.php:108 eme-discounts.php:78
 #: eme-discounts.php:171 eme-events.php:5519 eme-locations.php:218
-#: eme-members.php:5123 eme-members.php:5293 eme-people.php:760
+#: eme-members.php:5132 eme-members.php:5302 eme-people.php:760
 #: eme-rsvp.php:4473
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
 msgstr ""
 
 #: eme-countries.php:74 eme-countries.php:133 eme-discounts.php:103
 #: eme-discounts.php:196 eme-events.php:5546 eme-locations.php:245
-#: eme-members.php:5149 eme-members.php:5319 eme-people.php:787
+#: eme-members.php:5158 eme-members.php:5328 eme-people.php:787
 #: eme-rsvp.php:4500
 msgid "Not all required fields present."
 msgstr ""
@@ -549,20 +549,20 @@ msgid "Not imported: %s"
 msgstr ""
 
 #: eme-countries.php:86 eme-countries.php:145 eme-discounts.php:149
-#: eme-discounts.php:208 eme-members.php:5404
+#: eme-discounts.php:208 eme-members.php:5413
 msgid "Import finished: %d inserts, %d errors"
 msgstr ""
 
 #: eme-countries.php:94 eme-countries.php:153 eme-discounts.php:157
 #: eme-discounts.php:216 eme-events.php:5510 eme-locations.php:209
-#: eme-members.php:5115 eme-members.php:5286 eme-people.php:751
+#: eme-members.php:5124 eme-members.php:5295 eme-people.php:751
 #: eme-rsvp.php:4463
 msgid "Problem detected while uploading the file"
 msgstr ""
 
 #: eme-countries.php:97 eme-countries.php:156 eme-discounts.php:160
 #: eme-discounts.php:219 eme-events.php:5507 eme-locations.php:206
-#: eme-members.php:5112 eme-members.php:5283 eme-people.php:748
+#: eme-members.php:5121 eme-members.php:5292 eme-people.php:748
 #: eme-rsvp.php:4460
 msgid "No CSV file detected: %s"
 msgstr ""
@@ -652,20 +652,20 @@ msgstr ""
 
 #: eme-countries.php:354 eme-countries.php:426 eme-discounts.php:422
 #: eme-discounts.php:508 eme-events.php:5742 eme-locations.php:834
-#: eme-members.php:2622 eme-people.php:1800
+#: eme-members.php:2634 eme-people.php:1800
 msgid "Click on the icon to show the import form"
 msgstr ""
 
 #: eme-countries.php:361 eme-countries.php:433 eme-discounts.php:429
 #: eme-discounts.php:515 eme-events.php:5749 eme-locations.php:841
-#: eme-members.php:2629 eme-members.php:2644 eme-people.php:1807
+#: eme-members.php:2641 eme-members.php:2656 eme-people.php:1807
 #: eme-rsvp.php:4641
 msgid "Delimiter:"
 msgstr ""
 
 #: eme-countries.php:363 eme-countries.php:435 eme-discounts.php:431
 #: eme-discounts.php:517 eme-events.php:5751 eme-locations.php:843
-#: eme-members.php:2631 eme-members.php:2646 eme-people.php:1809
+#: eme-members.php:2643 eme-members.php:2658 eme-people.php:1809
 #: eme-rsvp.php:4643
 msgid "Enclosure:"
 msgstr ""
@@ -694,7 +694,7 @@ msgstr ""
 #: eme-countries.php:380 eme-countries.php:451 eme-discounts.php:444
 #: eme-discounts.php:530 eme-events.php:5831 eme-events.php:5942
 #: eme-formfields.php:199 eme-locations.php:878 eme-mailer.php:2453
-#: eme-mailer.php:2544 eme-members.php:2686 eme-members.php:2793
+#: eme-mailer.php:2544 eme-members.php:2698 eme-members.php:2805
 #: eme-people.php:1849 eme-people.php:2347 eme-rsvp.php:4712 eme-tasks.php:455
 #: eme-templates.php:206
 msgid "Bulk Actions"
@@ -1103,13 +1103,13 @@ msgstr ""
 
 #: eme-discounts.php:845 eme-discounts.php:1000 eme-events.php:9383
 #: eme-events.php:9424 eme-events.php:9521 eme-events.php:9576
-#: eme-members.php:1595 eme-people.php:2262 eme-tasks.php:672
+#: eme-members.php:1607 eme-people.php:2262 eme-tasks.php:672
 #: eme-templates.php:283
 msgid "Description"
 msgstr ""
 
 #: eme-discounts.php:849 eme-events.php:9343 eme-events.php:9384
-#: eme-events.php:9403 eme-events.php:9430 eme-members.php:1599
+#: eme-events.php:9403 eme-events.php:9430 eme-members.php:1611
 #: eme-templates.php:300
 msgid "Type"
 msgstr ""
@@ -1180,7 +1180,7 @@ msgid ""
 "valid after this date and time."
 msgstr ""
 
-#: eme-discounts.php:898 eme-members.php:1738
+#: eme-discounts.php:898 eme-members.php:1750
 msgid "Logged-in users only"
 msgstr ""
 
@@ -1202,7 +1202,7 @@ msgstr ""
 msgid "Require EME membership"
 msgstr ""
 
-#: eme-discounts.php:916 eme-members.php:2613
+#: eme-discounts.php:916 eme-members.php:2625
 msgid "No memberships defined yet!"
 msgstr ""
 
@@ -1297,7 +1297,7 @@ msgstr ""
 #: eme-discounts.php:1636 eme-discounts.php:1637 eme-formfields.php:4871
 #: eme-formfields.php:4873 eme-formfields.php:4874 eme-formfields.php:4875
 #: eme-gdpr.php:449 eme-gdpr.php:450 eme-gdpr.php:569 eme-gdpr.php:570
-#: eme-locations.php:2928 eme-members.php:5738 eme-people.php:434
+#: eme-locations.php:2928 eme-members.php:5747 eme-people.php:434
 #: eme-people.php:442 eme-people.php:450 eme-people.php:1005
 #: eme-people.php:1006 eme-people.php:1041 eme-people.php:1333
 #: eme-people.php:4766 eme-people.php:4783 eme-people.php:4784
@@ -1309,7 +1309,7 @@ msgstr ""
 #: eme-discounts.php:1636 eme-discounts.php:1637 eme-formfields.php:4871
 #: eme-formfields.php:4873 eme-formfields.php:4874 eme-formfields.php:4875
 #: eme-gdpr.php:449 eme-gdpr.php:450 eme-gdpr.php:569 eme-gdpr.php:570
-#: eme-locations.php:2928 eme-members.php:5738 eme-people.php:434
+#: eme-locations.php:2928 eme-members.php:5747 eme-people.php:434
 #: eme-people.php:442 eme-people.php:450 eme-people.php:1005
 #: eme-people.php:1006 eme-people.php:1041 eme-people.php:1335
 #: eme-people.php:4766 eme-people.php:4783 eme-people.php:4784
@@ -1708,8 +1708,8 @@ msgstr ""
 msgid "Location not imported: %s"
 msgstr ""
 
-#: eme-events.php:5605 eme-events.php:5608 eme-members.php:5166
-#: eme-members.php:5169 eme-members.php:5172 eme-members.php:5175
+#: eme-events.php:5605 eme-events.php:5608 eme-members.php:5175
+#: eme-members.php:5178 eme-members.php:5181 eme-members.php:5184
 #: eme-people.php:807
 msgid "Not imported (field %s not valid): %s"
 msgstr ""
@@ -1722,12 +1722,12 @@ msgstr ""
 msgid "Not imported (problem inserting the event in the db): %s"
 msgstr ""
 
-#: eme-events.php:5680 eme-locations.php:326 eme-members.php:5259
-#: eme-members.php:5399 eme-people.php:868
+#: eme-events.php:5680 eme-locations.php:326 eme-members.php:5268
+#: eme-members.php:5408 eme-people.php:868
 msgid "Not imported (not all required fields are present): %s"
 msgstr ""
 
-#: eme-events.php:5683 eme-locations.php:329 eme-members.php:5264
+#: eme-events.php:5683 eme-locations.php:329 eme-members.php:5273
 #: eme-people.php:873
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr ""
@@ -1794,8 +1794,8 @@ msgstr ""
 msgid "Event Status"
 msgstr ""
 
-#: eme-events.php:5807 eme-locations.php:858 eme-members.php:2449
-#: eme-members.php:2454 eme-people.php:1636 eme-people.php:1641
+#: eme-events.php:5807 eme-locations.php:858 eme-members.php:2461
+#: eme-members.php:2466 eme-people.php:1636 eme-people.php:1641
 msgid "Custom field value to search"
 msgstr ""
 
@@ -1803,7 +1803,7 @@ msgstr ""
 msgid "Filter events"
 msgstr ""
 
-#: eme-events.php:5817 eme-locations.php:867 eme-members.php:2675
+#: eme-events.php:5817 eme-locations.php:867 eme-members.php:2687
 #: eme-people.php:1838
 msgid ""
 "Hint: when searching for custom field values, you can optionally limit which "
@@ -1811,7 +1811,7 @@ msgid ""
 "select-box shown."
 msgstr ""
 
-#: eme-events.php:5818 eme-locations.php:868 eme-members.php:2676
+#: eme-events.php:5818 eme-locations.php:868 eme-members.php:2688
 #: eme-people.php:1839
 msgid ""
 "If you can't see your custom field in the \"Custom fields to filter on\" "
@@ -1948,7 +1948,7 @@ msgid "Attributes"
 msgstr ""
 
 #: eme-events.php:6124 eme-events.php:8199 eme-locations.php:384
-#: eme-locations.php:747 eme-members.php:1541 eme-members.php:2355
+#: eme-locations.php:747 eme-members.php:1553 eme-members.php:2367
 #: eme-options.php:1399
 msgid "Custom fields"
 msgstr ""
@@ -1957,7 +1957,7 @@ msgstr ""
 msgid "Generic RSVP info"
 msgstr ""
 
-#: eme-events.php:6153 eme-members.php:1883
+#: eme-events.php:6153 eme-members.php:1895
 msgid "Payment methods"
 msgstr ""
 
@@ -2439,13 +2439,13 @@ msgstr ""
 #: eme-events.php:7749 eme-events.php:7785 eme-events.php:7807
 #: eme-events.php:7833 eme-events.php:7855 eme-events.php:7909
 #: eme-events.php:7931 eme-events.php:7960 eme-events.php:7990
-#: eme-events.php:8352 eme-events.php:8367 eme-members.php:1754
-#: eme-members.php:1786 eme-members.php:1804 eme-members.php:1822
-#: eme-members.php:1840 eme-members.php:1858 eme-members.php:1925
-#: eme-members.php:2000 eme-members.php:2053 eme-members.php:2088
-#: eme-members.php:2123 eme-members.php:2158 eme-members.php:2186
-#: eme-members.php:2224 eme-members.php:2262 eme-members.php:2293
-#: eme-members.php:2327 eme-widgets.php:232
+#: eme-events.php:8352 eme-events.php:8367 eme-members.php:1766
+#: eme-members.php:1798 eme-members.php:1816 eme-members.php:1834
+#: eme-members.php:1852 eme-members.php:1870 eme-members.php:1937
+#: eme-members.php:2012 eme-members.php:2065 eme-members.php:2100
+#: eme-members.php:2135 eme-members.php:2170 eme-members.php:2198
+#: eme-members.php:2236 eme-members.php:2274 eme-members.php:2305
+#: eme-members.php:2339 eme-widgets.php:232
 msgid ""
 "Or enter your own (if anything is entered here, it takes precedence over the "
 "selected template): "
@@ -2467,7 +2467,7 @@ msgstr ""
 
 #: eme-events.php:7084 eme-events.php:8142 eme-events.php:8207
 #: eme-locations.php:658 eme-locations.php:754 eme-mailer.php:2140
-#: eme-mailer.php:2320 eme-members.php:2362 eme-templates.php:292
+#: eme-mailer.php:2320 eme-members.php:2374 eme-templates.php:292
 msgid ""
 "Your account has the ability to post unrestricted HTML content here, except "
 "javascript."
@@ -2477,7 +2477,7 @@ msgstr ""
 msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr ""
 
-#: eme-events.php:7104 eme-members.php:2317 eme-options.php:1971
+#: eme-events.php:7104 eme-members.php:2329 eme-options.php:1971
 msgid ""
 "The subject of the email which will be sent to the contact person when a "
 "payment notification is received via a payment gateway."
@@ -2487,13 +2487,13 @@ msgstr ""
 msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr ""
 
-#: eme-events.php:7126 eme-members.php:2324 eme-options.php:1972
+#: eme-events.php:7126 eme-members.php:2336 eme-options.php:1972
 msgid ""
 "The body of the email which will be sent to the contact person when a "
 "payment notification is received via a payment gateway."
 msgstr ""
 
-#: eme-events.php:7150 eme-members.php:1967
+#: eme-events.php:7150 eme-members.php:1979
 msgid "Dynamic data check on every field"
 msgstr ""
 
@@ -2592,14 +2592,14 @@ msgstr ""
 
 #: eme-events.php:7316 eme-events.php:7506 eme-events.php:7882
 #: eme-events.php:9257 eme-events.php:9618 eme-events.php:9692
-#: eme-mailer.php:2165 eme-mailer.php:2343 eme-members.php:2035
+#: eme-mailer.php:2165 eme-mailer.php:2343 eme-members.php:2047
 #: eme-options.php:1812 eme-options.php:1858 eme-options.php:1957
 #: eme-options.php:2004
 msgid "Add attachments"
 msgstr ""
 
 #: eme-events.php:7317 eme-events.php:7507 eme-events.php:7883
-#: eme-mailer.php:2166 eme-mailer.php:2344 eme-members.php:2036
+#: eme-mailer.php:2166 eme-mailer.php:2344 eme-members.php:2048
 #: eme-options.php:1813 eme-options.php:1859 eme-options.php:1958
 #: eme-options.php:2005
 msgid "Remove attachments"
@@ -2968,7 +2968,7 @@ msgid ""
 "files or use the 'Add media' button in the event notes."
 msgstr ""
 
-#: eme-events.php:8242 eme-locations.php:789 eme-members.php:2393
+#: eme-events.php:8242 eme-locations.php:789 eme-members.php:2405
 msgid ""
 "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr ""
@@ -2996,7 +2996,7 @@ msgid ""
 "redirection timeout and more payment settings)."
 msgstr ""
 
-#: eme-events.php:8303 eme-members.php:1914
+#: eme-events.php:8303 eme-members.php:1926
 msgid ""
 "No payment methods configured yet. Go in the EME payment settings and "
 "configure some."
@@ -3166,7 +3166,7 @@ msgstr ""
 msgid "For multiprice events, separate the values by '||'"
 msgstr ""
 
-#: eme-events.php:8476 eme-members.php:1696 eme-members.php:1702
+#: eme-events.php:8476 eme-members.php:1708 eme-members.php:1714
 #: eme-options.php:2136
 msgid "Use the point as decimal separator"
 msgstr ""
@@ -3194,7 +3194,7 @@ msgstr ""
 msgid "VAT percentage: "
 msgstr ""
 
-#: eme-events.php:8489 eme-members.php:1710
+#: eme-events.php:8489 eme-members.php:1722
 msgid "VAT percentage"
 msgstr ""
 
@@ -3204,21 +3204,21 @@ msgid ""
 "foreseen to indicate the price without VAT."
 msgstr ""
 
-#: eme-events.php:8494 eme-members.php:1716
+#: eme-events.php:8494 eme-members.php:1728
 msgid "Discount to apply"
 msgstr ""
 
-#: eme-events.php:8495 eme-members.php:1717
+#: eme-events.php:8495 eme-members.php:1729
 msgid ""
 "The discount name you want to apply (is overridden by discount group if "
 "used)."
 msgstr ""
 
-#: eme-events.php:8498 eme-members.php:1720
+#: eme-events.php:8498 eme-members.php:1732
 msgid "Discount group to apply"
 msgstr ""
 
-#: eme-events.php:8499 eme-members.php:1721
+#: eme-events.php:8499 eme-members.php:1733
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr ""
 
@@ -3283,11 +3283,11 @@ msgid ""
 "book will be hidden."
 msgstr ""
 
-#: eme-events.php:8525 eme-members.php:1873
+#: eme-events.php:8525 eme-members.php:1885
 msgid "Group to add people to"
 msgstr ""
 
-#: eme-events.php:8526 eme-members.php:1874
+#: eme-events.php:8526 eme-members.php:1886
 msgid ""
 "The group you want people to automatically become a member of when they "
 "subscribe."
@@ -3756,7 +3756,7 @@ msgstr ""
 #: eme-formfields.php:1305 eme-formfields.php:1644 eme-formfields.php:2652
 #: eme-formfields.php:3221 eme-formfields.php:3625 eme-formfields.php:4083
 #: eme-formfields.php:4265 eme-gdpr.php:273 eme-gdpr.php:453 eme-gdpr.php:577
-#: eme-members.php:1475 eme-members.php:2908 eme-options.php:34
+#: eme-members.php:1487 eme-members.php:2920 eme-options.php:34
 #: eme-options.php:44 eme-options.php:87 eme-people.php:921 eme-people.php:1206
 #: eme-people.php:1517 eme-people.php:1563 eme-people.php:2022 eme-rsvp.php:71
 msgid "Last name"
@@ -3766,7 +3766,7 @@ msgstr ""
 #: eme-formfields.php:1317 eme-formfields.php:1660 eme-formfields.php:2679
 #: eme-formfields.php:2898 eme-formfields.php:3237 eme-formfields.php:3649
 #: eme-formfields.php:4097 eme-formfields.php:4280 eme-gdpr.php:273
-#: eme-gdpr.php:454 eme-gdpr.php:581 eme-members.php:1476 eme-members.php:2909
+#: eme-gdpr.php:454 eme-gdpr.php:581 eme-members.php:1488 eme-members.php:2921
 #: eme-options.php:35 eme-options.php:45 eme-options.php:88 eme-people.php:922
 #: eme-people.php:1212 eme-people.php:1518 eme-people.php:1564
 #: eme-people.php:2031 eme-rsvp.php:71 eme-rsvp.php:1268
@@ -3778,7 +3778,7 @@ msgstr ""
 #: eme-formfields.php:2793 eme-formfields.php:3268 eme-formfields.php:3749
 #: eme-formfields.php:4110 eme-formfields.php:4376 eme-gdpr.php:135
 #: eme-gdpr.php:219 eme-gdpr.php:342 eme-gdpr.php:455 eme-gdpr.php:585
-#: eme-mailer.php:1280 eme-members.php:1477 eme-members.php:2910
+#: eme-mailer.php:1280 eme-members.php:1489 eme-members.php:2922
 #: eme-options.php:36 eme-options.php:46 eme-options.php:89
 #: eme-options.php:1080 eme-people.php:929 eme-people.php:1218
 #: eme-people.php:1519 eme-people.php:1565 eme-people.php:2040 eme-rsvp.php:71
@@ -3855,7 +3855,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: eme-events.php:9575 eme-gdpr.php:493 eme-gdpr.php:677 eme-members.php:1313
+#: eme-events.php:9575 eme-gdpr.php:493 eme-gdpr.php:677 eme-members.php:1326
 msgid "Membership"
 msgstr ""
 
@@ -4481,9 +4481,9 @@ msgstr ""
 msgid "For more information about form fields, see "
 msgstr ""
 
-#: eme-formfields.php:411 eme-holidays.php:218 eme-members.php:1803
-#: eme-members.php:1821 eme-members.php:1839 eme-members.php:1857
-#: eme-members.php:1924 eme-options.php:1455 eme-options.php:1460
+#: eme-formfields.php:411 eme-holidays.php:218 eme-members.php:1815
+#: eme-members.php:1833 eme-members.php:1851 eme-members.php:1869
+#: eme-members.php:1936 eme-options.php:1455 eme-options.php:1460
 #: eme-options.php:1470 eme-options.php:1504 eme-options.php:1509
 #: eme-options.php:1609 eme-options.php:1612 eme-options.php:1626
 #: eme-options.php:1627 eme-options.php:1628 eme-options.php:1643
@@ -4774,7 +4774,7 @@ msgstr ""
 msgid "Applied discount group %d no longer exists"
 msgstr ""
 
-#: eme-formfields.php:3119 eme-formfields.php:3856 eme-members.php:4386
+#: eme-formfields.php:3119 eme-formfields.php:3856 eme-members.php:4403
 #: eme-people.php:1066 eme-people.php:1358 eme-rsvp.php:3193
 msgid "Applied discount %d no longer exists"
 msgstr ""
@@ -5008,7 +5008,7 @@ msgstr ""
 msgid "Active"
 msgstr ""
 
-#: eme-functions.php:1402 eme-members.php:1622
+#: eme-functions.php:1402 eme-members.php:1634
 msgid "Grace period"
 msgstr ""
 
@@ -5255,7 +5255,7 @@ msgid "No such record"
 msgstr ""
 
 #: eme-gdpr.php:53 eme-gdpr.php:149 eme-gdpr.php:233 eme-gdpr.php:356
-#: eme-members.php:4164 eme-payments.php:3622 eme-people.php:4173
+#: eme-members.php:4176 eme-payments.php:3622 eme-people.php:4173
 #: eme-people.php:4259 eme-rsvp.php:733 eme-rsvp.php:973 eme-tasks.php:1525
 msgid ""
 "Bot detected. If you believe you've received this message in error please "
@@ -5263,7 +5263,7 @@ msgid ""
 msgstr ""
 
 #: eme-gdpr.php:64 eme-gdpr.php:160 eme-gdpr.php:244 eme-gdpr.php:367
-#: eme-gdpr.php:378 eme-members.php:4176 eme-payments.php:3633
+#: eme-gdpr.php:378 eme-members.php:4188 eme-payments.php:3633
 #: eme-people.php:4184 eme-people.php:4271 eme-rsvp.php:745 eme-rsvp.php:985
 #: eme-tasks.php:1536
 msgid ""
@@ -5276,7 +5276,7 @@ msgid "Thank you for your request, an email will be sent with further info"
 msgstr ""
 
 #: eme-gdpr.php:131 eme-gdpr.php:215 eme-gdpr.php:338 eme-gdpr.php:422
-#: eme-members.php:1442 eme-people.php:4245 eme-people.php:4330
+#: eme-members.php:1454 eme-people.php:4245 eme-people.php:4330
 #: eme-rsvp.php:130 eme-rsvp.php:705 eme-tasks.php:1217
 msgid "Javascript is required for this form to work properly"
 msgstr ""
@@ -5362,7 +5362,7 @@ msgid ""
 "adjust for client/server time differences when showing event dates and times."
 msgstr ""
 
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.41)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.42)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: eme-gdpr.php:547 eme-gdpr.php:553 eme-gdpr.php:752 events-manager.php:344
 msgid "Events Made Easy"
@@ -5681,7 +5681,7 @@ msgstr ""
 
 #: eme-mailer.php:115 eme-mailer.php:1371 eme-mailer.php:1464
 #: eme-mailer.php:1538 eme-mailer.php:1632 eme-mailer.php:1737
-#: eme-members.php:5990 eme-members.php:6069 eme-members.php:6189
+#: eme-members.php:5999 eme-members.php:6078 eme-members.php:6198
 #: eme-rsvp.php:1063 eme-rsvp.php:4427 eme-rsvp.php:5951 eme-rsvp.php:5971
 msgid "There were some problems while sending mail."
 msgstr ""
@@ -5755,7 +5755,7 @@ msgid ""
 "to cancel this mail."
 msgstr ""
 
-#: eme-mailer.php:1349 eme-members.php:884 eme-members.php:887
+#: eme-mailer.php:1349 eme-members.php:891 eme-members.php:894
 #: eme-people.php:3492 eme-people.php:3630 eme-people.php:3742
 #: eme-people.php:3929 eme-people.php:4218 eme-people.php:4303
 #: eme-rsvp.php:1212
@@ -5763,7 +5763,7 @@ msgid "Please enter a valid email address"
 msgstr ""
 
 #: eme-mailer.php:1368 eme-mailer.php:1461 eme-mailer.php:1528
-#: eme-mailer.php:1629 eme-mailer.php:1730 eme-members.php:5987
+#: eme-mailer.php:1629 eme-mailer.php:1730 eme-members.php:5996
 #: eme-rsvp.php:5948 eme-rsvp.php:5968
 msgid "The mail has been sent."
 msgstr ""
@@ -6182,7 +6182,7 @@ msgstr ""
 msgid "Membership extended"
 msgstr ""
 
-#: eme-members.php:154 eme-members.php:717
+#: eme-members.php:154 eme-members.php:718
 msgid "Membership updated"
 msgstr ""
 
@@ -6243,164 +6243,168 @@ msgid "Forever"
 msgstr ""
 
 #: eme-members.php:637 eme-members.php:644 eme-members.php:652
-#: eme-members.php:672 eme-members.php:686
+#: eme-members.php:673 eme-members.php:687
 msgid "You have no right to manage members!"
 msgstr ""
 
-#: eme-members.php:663
+#: eme-members.php:664
 msgid "You have no right to edit this member!"
 msgstr ""
 
-#: eme-members.php:695
+#: eme-members.php:696
 msgid "You have no right to manage memberships!"
 msgstr ""
 
-#: eme-members.php:700
+#: eme-members.php:701
 msgid "Membership added"
 msgstr ""
 
-#: eme-members.php:710
+#: eme-members.php:711
 msgid "Problem detected while adding membership"
 msgstr ""
 
-#: eme-members.php:727
+#: eme-members.php:728
 msgid "Problem detected while updating membership"
 msgstr ""
 
-#: eme-members.php:756
+#: eme-members.php:757
 msgid "No valid membership selected"
 msgstr ""
 
-#: eme-members.php:808
+#: eme-members.php:809
 msgid "Linking to yourself is not allowed."
 msgstr ""
 
-#: eme-members.php:813
+#: eme-members.php:814
 msgid ""
 "The related family member you're trying to set already belongs to another "
 "family account, so this is not allowed."
 msgstr ""
 
-#: eme-members.php:838
+#: eme-members.php:839
 msgid "Member updated, but there were some problems uploading files"
 msgstr ""
 
-#: eme-members.php:841
+#: eme-members.php:842
 msgid "Member updated"
 msgstr ""
 
-#: eme-members.php:862
+#: eme-members.php:869
 msgid "Problem detected while updating member"
 msgstr ""
 
-#: eme-members.php:876
+#: eme-members.php:883
 msgid "No such person found"
 msgstr ""
 
-#: eme-members.php:881
+#: eme-members.php:888
 msgid "Please enter at least the last name for a new member"
 msgstr ""
 
-#: eme-members.php:922
+#: eme-members.php:929
 msgid "This person is already a member"
 msgstr ""
 
-#: eme-members.php:937
+#: eme-members.php:944
 msgid "Payment not possible for this member."
 msgstr ""
 
-#: eme-members.php:939
+#: eme-members.php:946
 msgid ""
 "This person is already a member, but the membership has expired. No updates "
 "have been done. Please click <a href=\"%s\">here</a> to complete the payment "
 "process and reactivate the membership."
 msgstr ""
 
-#: eme-members.php:941
+#: eme-members.php:948
 msgid ""
 "This person is already a member, but has not paid yet. Please click <a "
 "href=\"%s\">here</a> to complete the payment process."
 msgstr ""
 
-#: eme-members.php:959
+#: eme-members.php:966
 msgid "Member added, but there were some problems uploading files"
 msgstr ""
 
-#: eme-members.php:962
+#: eme-members.php:969
 msgid "There were some problems uploading files, please try again"
 msgstr ""
 
-#: eme-members.php:1022 eme-members.php:1027
+#: eme-members.php:1029 eme-members.php:1034
 msgid "Member added, but there were some problems sending out the mail"
 msgstr ""
 
-#: eme-members.php:1025
+#: eme-members.php:1032
 msgid "Member added"
 msgstr ""
 
-#: eme-members.php:1038
+#: eme-members.php:1045
 msgid ""
 "Problem detected while adding personal info: at least last name, first name "
 "and email need to be present"
 msgstr ""
 
-#: eme-members.php:1161
+#: eme-members.php:1168
 msgid "The membership price is not a valid price, resetted to 0"
 msgstr ""
 
-#: eme-members.php:1169
+#: eme-members.php:1176
 msgid "The extra charge for the membership is not a valid price, resetted to 0"
 msgstr ""
 
-#: eme-members.php:1237 eme-members.php:2608
+#: eme-members.php:1244 eme-members.php:2620
 msgid "Add member"
 msgstr ""
 
-#: eme-members.php:1244 eme-members.php:1333 eme-members.php:5691
-#: eme-members.php:5701 eme-members.php:5702 eme-members.php:5703
+#: eme-members.php:1251 eme-members.php:1346 eme-members.php:5700
+#: eme-members.php:5710 eme-members.php:5711 eme-members.php:5712
 msgid "Edit member"
 msgstr ""
 
-#: eme-members.php:1269 eme-rsvp.php:4217
+#: eme-members.php:1276 eme-rsvp.php:4217
 msgid "Click on this link to edit the corresponding person info"
 msgstr ""
 
-#: eme-members.php:1278
+#: eme-members.php:1285
 msgid "Send mail to new member?"
 msgstr ""
 
-#: eme-members.php:1284
+#: eme-members.php:1292
 msgid "If you want, select an existing person to become a member"
 msgstr ""
 
-#: eme-members.php:1293
+#: eme-members.php:1297
+msgid "Send mail for changed member?"
+msgstr ""
+
+#: eme-members.php:1306
 msgid "If you want, select an existing person to transfer this member to"
 msgstr ""
 
-#: eme-members.php:1299
+#: eme-members.php:1312
 msgid "If you want, select a different membership to transfer this member to: "
 msgstr ""
 
-#: eme-members.php:1308
+#: eme-members.php:1321
 msgid ""
 "Warning: if you transfer a member from one membership to another, make sure "
 "both memberships have the same index values for dynamic fields, otherwise "
 "the answers to those fields will either get mixed up or become empty."
 msgstr ""
 
-#: eme-members.php:1321
+#: eme-members.php:1334
 msgid "'Head of the family' account"
 msgstr ""
 
-#: eme-members.php:1326
+#: eme-members.php:1339
 msgid "This member is head of the family for other members."
 msgstr ""
 
-#: eme-members.php:1327 eme-people.php:2060
+#: eme-members.php:1340 eme-people.php:2060
 msgid "Family members:"
 msgstr ""
 
-#: eme-members.php:1340
+#: eme-members.php:1353
 msgid ""
 "You can link this member to a 'head of the family' account, after which this "
 "member's start/end date and status are linked to the values of the head of "
@@ -6408,158 +6412,158 @@ msgid ""
 "person will then no longer be charged for his membership too."
 msgstr ""
 
-#: eme-members.php:1344
+#: eme-members.php:1357
 msgid ""
 "Since this member relates to another family member, you can't edit the basic "
 "membership info. Please first remove the relationship (by emptying this "
 "field) and press save if you want to do that."
 msgstr ""
 
-#: eme-members.php:1351 eme-members.php:1603
+#: eme-members.php:1364 eme-members.php:1615
 msgid "Start date"
 msgstr ""
 
-#: eme-members.php:1362
+#: eme-members.php:1375
 msgid "End date"
 msgstr ""
 
-#: eme-members.php:1373
+#: eme-members.php:1386
 msgid "Member status calculated automatically"
 msgstr ""
 
-#: eme-members.php:1377
+#: eme-members.php:1390
 msgid ""
 "Warning: membership is not paid for, so automatic status calculation will "
 "not happen!"
 msgstr ""
 
-#: eme-members.php:1381
+#: eme-members.php:1393
 msgid ""
 "If set to automatic and the membership is paid for, the status will be "
 "recalculated on a daily basis."
 msgstr ""
 
-#: eme-members.php:1383
+#: eme-members.php:1395
 msgid "Member status"
 msgstr ""
 
-#: eme-members.php:1386
+#: eme-members.php:1398
 msgid "Has the member paid?"
 msgstr ""
 
-#: eme-members.php:1389
+#: eme-members.php:1401
 msgid "Last payment received date"
 msgstr ""
 
-#: eme-members.php:1400
+#: eme-members.php:1412
 msgid ""
 "This indicates the last date a payment was received. Changing this will only "
 "change that date, no new payment will actually be processed and the "
 "membership state is not influenced by this."
 msgstr ""
 
-#: eme-members.php:1414
+#: eme-members.php:1426
 msgid "Member info"
 msgstr ""
 
-#: eme-members.php:1427
+#: eme-members.php:1439
 msgid "No membership with ID %d found"
 msgstr ""
 
-#: eme-members.php:1509
+#: eme-members.php:1521
 msgid "Add a membership definition"
 msgstr ""
 
-#: eme-members.php:1511
+#: eme-members.php:1523
 msgid "Edit membership '%s'"
 msgstr ""
 
-#: eme-members.php:1539
+#: eme-members.php:1551
 msgid "Membership details"
 msgstr ""
 
-#: eme-members.php:1540
+#: eme-members.php:1552
 msgid "Mail format settings"
 msgstr ""
 
-#: eme-members.php:1553 eme-members.php:2783
+#: eme-members.php:1565 eme-members.php:2795
 msgid "Add membership"
 msgstr ""
 
-#: eme-members.php:1553
+#: eme-members.php:1565
 msgid "Update membership"
 msgstr ""
 
-#: eme-members.php:1609
+#: eme-members.php:1621
 msgid "Duration period"
 msgstr ""
 
-#: eme-members.php:1611
+#: eme-members.php:1623
 msgid ""
 "Once this duration period has passed, the membership start date for new "
 "members will be increased by the passed period."
 msgstr ""
 
-#: eme-members.php:1615
+#: eme-members.php:1627
 msgid "One extra free period"
 msgstr ""
 
-#: eme-members.php:1617
+#: eme-members.php:1629
 msgid ""
 "When someone becomes a member, the end date is the end date of the current "
 "period calculated for this membership."
 msgstr ""
 
-#: eme-members.php:1618
+#: eme-members.php:1630
 msgid ""
 "If you want new members to get one extra membership period for free, set "
 "this option."
 msgstr ""
 
-#: eme-members.php:1624
+#: eme-members.php:1636
 msgid ""
 "After a membership has expired, people can still be considered as a member "
 "until this many days have passed."
 msgstr ""
 
-#: eme-members.php:1625
+#: eme-members.php:1637
 msgid ""
 "After the mentioned number of days have passed, the membership will be set "
 "to expired."
 msgstr ""
 
-#: eme-members.php:1629
+#: eme-members.php:1641
 msgid "Reminder"
 msgstr ""
 
-#: eme-members.php:1631
+#: eme-members.php:1643
 msgid ""
 "Set the number of days before membership expiration a reminder will be sent "
 "out."
 msgstr ""
 
-#: eme-members.php:1632
+#: eme-members.php:1644
 msgid ""
 "If you want to send out multiple reminders, seperate the days here by "
 "commas. This can contain negative numbers too, if you want to send out a "
 "reminder past the membership end date, e.g. during the grace period."
 msgstr ""
 
-#: eme-members.php:1636
+#: eme-members.php:1648
 msgid "Automatically remove pending members"
 msgstr ""
 
-#: eme-members.php:1638
+#: eme-members.php:1650
 msgid ""
 "Set the number of days after which pending members are automatically "
 "removed. Leave empty or 0 for no automatic removal."
 msgstr ""
 
-#: eme-members.php:1642
+#: eme-members.php:1654
 msgid "Allow membership renewal"
 msgstr ""
 
-#: eme-members.php:1644
+#: eme-members.php:1656
 msgid ""
 "Select this option if you want members to be able to renew/extend the "
 "membership after payment via the unique payment url generated by the member "
@@ -6567,11 +6571,11 @@ msgid ""
 "#_MEMBERSHIP_PAYMENT_URL{xx} (with xx being the membership id, see the doc)."
 msgstr ""
 
-#: eme-members.php:1648
+#: eme-members.php:1660
 msgid "Renewal for active members based on end date"
 msgstr ""
 
-#: eme-members.php:1650
+#: eme-members.php:1662
 msgid ""
 "Allow active members to pay for a renewal only if the membership end date is "
 "less than the mentioned number of days away. This prevents people from "
@@ -6579,75 +6583,75 @@ msgid ""
 "default)."
 msgstr ""
 
-#: eme-members.php:1655
+#: eme-members.php:1667
 msgid "Google reCAPTCHA"
 msgstr ""
 
-#: eme-members.php:1657
+#: eme-members.php:1669
 msgid ""
 "Select this option if you want to use the Google reCAPTCHA on the membership "
 "signup form."
 msgstr ""
 
-#: eme-members.php:1658
+#: eme-members.php:1670
 msgid ""
 "If this option is checked, make sure to use #_RECAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
 msgstr ""
 
-#: eme-members.php:1664
+#: eme-members.php:1676
 msgid "hCaptcha"
 msgstr ""
 
-#: eme-members.php:1666
+#: eme-members.php:1678
 msgid ""
 "Select this option if you want to use the hCaptcha on the membership signup "
 "form."
 msgstr ""
 
-#: eme-members.php:1667
+#: eme-members.php:1679
 msgid ""
 "If this option is checked, make sure to use #_HCAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
 msgstr ""
 
-#: eme-members.php:1673
+#: eme-members.php:1685
 msgid "Cloudflare Turnstile"
 msgstr ""
 
-#: eme-members.php:1675
+#: eme-members.php:1687
 msgid ""
 "Select this option if you want to use Cloudflare Turnstile on the membership "
 "signup form."
 msgstr ""
 
-#: eme-members.php:1676
+#: eme-members.php:1688
 msgid ""
 "If this option is checked, make sure to use #_CFCAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
 msgstr ""
 
-#: eme-members.php:1681
+#: eme-members.php:1693
 msgid "Captcha"
 msgstr ""
 
-#: eme-members.php:1683
+#: eme-members.php:1695
 msgid ""
 "Select this option if you want to use the captcha on the membership signup "
 "form."
 msgstr ""
 
-#: eme-members.php:1684
+#: eme-members.php:1696
 msgid ""
 "If this option is checked, make sure to use #_CAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
 msgstr ""
 
-#: eme-members.php:1688
+#: eme-members.php:1700
 msgid "Create WP user after signup"
 msgstr ""
 
-#: eme-members.php:1690
+#: eme-members.php:1702
 msgid ""
 "This will create a WP user after the membership signup is completed, as if "
 "the person registered in WP itself. This will only create a user if the "
@@ -6655,76 +6659,76 @@ msgid ""
 "another WP user."
 msgstr ""
 
-#: eme-members.php:1694
+#: eme-members.php:1706
 msgid "Price"
 msgstr ""
 
-#: eme-members.php:1700
+#: eme-members.php:1712
 msgid "Extra charge for new members"
 msgstr ""
 
-#: eme-members.php:1706
+#: eme-members.php:1718
 msgid "Currency"
 msgstr ""
 
-#: eme-members.php:1712
+#: eme-members.php:1724
 msgid ""
 "The price you indicate for memberships is VAT included, special placeholders "
 "are foreseen to indicate the price without VAT."
 msgstr ""
 
-#: eme-members.php:1724
+#: eme-members.php:1736
 msgid "Contact person"
 msgstr ""
 
-#: eme-members.php:1730
+#: eme-members.php:1742
 msgid "WP Admin"
 msgstr ""
 
-#: eme-members.php:1740
+#: eme-members.php:1752
 msgid ""
 "Require users to be logged-in before being able to sign up for this "
 "membership."
 msgstr ""
 
-#: eme-members.php:1744
+#: eme-members.php:1756
 msgid "Keep attendance records?"
 msgstr ""
 
-#: eme-members.php:1746
+#: eme-members.php:1758
 msgid ""
 "Select this option if you want an attendance record to be kept everytime the "
 "member QRCODE is scanned by an EME admin."
 msgstr ""
 
-#: eme-members.php:1750
+#: eme-members.php:1762
 msgid "Member Form:"
 msgstr ""
 
-#: eme-members.php:1751 eme-members.php:1782 eme-members.php:2719
-#: eme-members.php:2724 eme-people.php:1889 eme-people.php:1894
+#: eme-members.php:1763 eme-members.php:1794 eme-members.php:2731
+#: eme-members.php:2736 eme-people.php:1889 eme-people.php:1894
 #: eme-rsvp.php:4775 eme-rsvp.php:4780
 msgid "Please select a template"
 msgstr ""
 
-#: eme-members.php:1752
+#: eme-members.php:1764
 msgid ""
 "This is the form that will be shown when a new member wants to sign up for "
 "this membership."
 msgstr ""
 
-#: eme-members.php:1753
+#: eme-members.php:1765
 msgid ""
 "The template should at least contain the placeholders #_LASTNAME, "
 "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If "
 "empty, a simple default will be used."
 msgstr ""
 
-#: eme-members.php:1769
+#: eme-members.php:1781
 msgid "Ask for family member info when someone signs up"
 msgstr ""
 
-#: eme-members.php:1771
+#: eme-members.php:1783
 msgid ""
 "Select this option if you want to ask for extra info for each family member "
 "of the person that signs up. These will also become a member but payment "
@@ -6734,32 +6738,32 @@ msgid ""
 "family members info."
 msgstr ""
 
-#: eme-members.php:1775
+#: eme-members.php:1787
 msgid "Maximum number of family members"
 msgstr ""
 
-#: eme-members.php:1777
+#: eme-members.php:1789
 msgid "The maximum number of family members allowed to sign up."
 msgstr ""
 
-#: eme-members.php:1781
+#: eme-members.php:1793
 msgid "Family Member Form:"
 msgstr ""
 
-#: eme-members.php:1783
+#: eme-members.php:1795
 msgid ""
 "This is the form that will be shown/repeated for the family members when a "
 "new member wants to sign up for this membership."
 msgstr ""
 
-#: eme-members.php:1784
+#: eme-members.php:1796
 msgid ""
 "The template should at least contain the placeholders #_LASTNAME, "
 "#_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple "
 "default will be used."
 msgstr ""
 
-#: eme-members.php:1785
+#: eme-members.php:1797
 msgid ""
 "The template may contain the person placeholders #_LASTNAME, #_FIRSTNAME, "
 "#_EMAIL, #_OPT_IN (or #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE and "
@@ -6769,18 +6773,18 @@ msgid ""
 "always copied over from the person signing up."
 msgstr ""
 
-#: eme-members.php:1801
+#: eme-members.php:1813
 msgid "Member Added Message:"
 msgstr ""
 
-#: eme-members.php:1803
+#: eme-members.php:1815
 msgid ""
 "The format of the text shown after someone subscribed. If left empty, a "
 "default message will be shown."
 msgstr ""
 
-#: eme-members.php:1803 eme-members.php:1821 eme-members.php:1839
-#: eme-members.php:1857 eme-members.php:1924 eme-options.php:1455
+#: eme-members.php:1815 eme-members.php:1833 eme-members.php:1851
+#: eme-members.php:1869 eme-members.php:1936 eme-options.php:1455
 #: eme-options.php:1460 eme-options.php:1470 eme-options.php:1504
 #: eme-options.php:1509 eme-options.php:1643 eme-options.php:1644
 #: eme-options.php:1645 eme-options.php:1646 eme-options.php:1647
@@ -6814,46 +6818,46 @@ msgstr ""
 msgid "For all possible placeholders, see "
 msgstr ""
 
-#: eme-members.php:1819
+#: eme-members.php:1831
 msgid "Payment Form Header:"
 msgstr ""
 
-#: eme-members.php:1821 eme-options.php:2142
+#: eme-members.php:1833 eme-options.php:2142
 msgid ""
 "The format of the text shown above the payment buttons. If left empty, a "
 "default message will be shown."
 msgstr ""
 
-#: eme-members.php:1837
+#: eme-members.php:1849
 msgid "Payment Form Footer:"
 msgstr ""
 
-#: eme-members.php:1839 eme-options.php:2143
+#: eme-members.php:1851 eme-options.php:2143
 msgid "The format of the text shown below the payment buttons. Default: empty."
 msgstr ""
 
-#: eme-members.php:1855
+#: eme-members.php:1867
 msgid "Payment Success Message:"
 msgstr ""
 
-#: eme-members.php:1857
+#: eme-members.php:1869
 msgid ""
 "The message shown when the payment is succesfull for membership signup. "
 "Default: see global EME settings for payments, subsection \"General "
 "options\"."
 msgstr ""
 
-#: eme-members.php:1877
+#: eme-members.php:1889
 msgid "Membership card PDF template"
 msgstr ""
 
-#: eme-members.php:1879
+#: eme-members.php:1891
 msgid ""
 "This optional template is used to send a PDF attachment in the mail when the "
 "membership is paid for."
 msgstr ""
 
-#: eme-members.php:1886
+#: eme-members.php:1898
 msgid ""
 "If no payment method is selected, the \"Member Added Message\" will be "
 "shown. Otherwise the \"Member Added Message\" will be shown and after some "
@@ -6861,35 +6865,35 @@ msgid ""
 "settings on the redirection timeout and more payment settings)."
 msgstr ""
 
-#: eme-members.php:1911 eme-payments.php:24
+#: eme-members.php:1923 eme-payments.php:24
 msgid "Offline"
 msgstr ""
 
-#: eme-members.php:1918
+#: eme-members.php:1930
 msgid ""
 "If one or more payment methods are selected, the person signing up will be "
 "redirected to a payment page. In that case, make sure to check the different "
 "payment templates defined for this membership."
 msgstr ""
 
-#: eme-members.php:1922
+#: eme-members.php:1934
 msgid "Offline Payment Format:"
 msgstr ""
 
-#: eme-members.php:1924
+#: eme-members.php:1936
 msgid ""
 "The format of the text shown for the offline payment method. Default: empty."
 msgstr ""
 
-#: eme-members.php:1940
+#: eme-members.php:1952
 msgid "Skip payment methods after registration:"
 msgstr ""
 
-#: eme-members.php:1941
+#: eme-members.php:1953
 msgid "Skip payment methods"
 msgstr ""
 
-#: eme-members.php:1942
+#: eme-members.php:1954
 msgid ""
 "If you want to skip the possibility to pay immediately after registration, "
 "select this option. This might be useful if you for example want to approve "
@@ -6897,7 +6901,7 @@ msgid ""
 "#_PAYMENT_URL (for example via the Reminder template)."
 msgstr ""
 
-#: eme-members.php:1969
+#: eme-members.php:1981
 msgid ""
 "By default the dynamic data check only happens for the fields mentioned in "
 "your dynamic data condition if those are present in your membership form "
@@ -6906,576 +6910,576 @@ msgid ""
 "requests will be made to the backend, so use only when absolutely needed."
 msgstr ""
 
-#: eme-members.php:1970
+#: eme-members.php:1982
 msgid ""
 "If your membership uses a discount of type code and you want the dynamic "
 "price (using #_DYNAMICPRICE) to be updated taking that discount into account "
 "too, then also check this option."
 msgstr ""
 
-#: eme-members.php:1983
+#: eme-members.php:1995
 msgid "New member email"
 msgstr ""
 
-#: eme-members.php:1985
+#: eme-members.php:1997
 msgid ""
 "Warning: when the membership is configured to ask for family member info, "
 "this mail is NOT sent to each of the family members, just the member that is "
 "signing up."
 msgstr ""
 
-#: eme-members.php:1988
+#: eme-members.php:2000
 msgid "New member email subject"
 msgstr ""
 
-#: eme-members.php:1990
+#: eme-members.php:2002
 msgid "The subject of the mail sent to the person signing up as a member."
 msgstr ""
 
-#: eme-members.php:1995
+#: eme-members.php:2007
 msgid "New member email body"
 msgstr ""
 
-#: eme-members.php:1997
+#: eme-members.php:2009
 msgid "The body of the mail sent to the person signing up as a member."
 msgstr ""
 
-#: eme-members.php:1998 eme-members.php:2051 eme-members.php:2086
-#: eme-members.php:2121 eme-members.php:2156 eme-members.php:2184
-#: eme-members.php:2222 eme-members.php:2260 eme-members.php:2291
-#: eme-members.php:2325
+#: eme-members.php:2010 eme-members.php:2063 eme-members.php:2098
+#: eme-members.php:2133 eme-members.php:2168 eme-members.php:2196
+#: eme-members.php:2234 eme-members.php:2272 eme-members.php:2303
+#: eme-members.php:2337
 msgid ""
 "No template shown in the list? Then go in the section Templates and create a "
 "template of type \"Membership related mail\"."
 msgstr ""
 
-#: eme-members.php:2015
+#: eme-members.php:2027
 msgid "New member mail attachments"
 msgstr ""
 
-#: eme-members.php:2037
+#: eme-members.php:2049
 msgid "Optionally add attachments to the mail when a new member signs up."
 msgstr ""
 
-#: eme-members.php:2041
+#: eme-members.php:2053
 msgid "Contactperson new member email subject"
 msgstr ""
 
-#: eme-members.php:2043
+#: eme-members.php:2055
 msgid ""
 "The subject of the mail sent to the contactperson when someone signes up as "
 "a member."
 msgstr ""
 
-#: eme-members.php:2048
+#: eme-members.php:2060
 msgid "Contactperson new member email body"
 msgstr ""
 
-#: eme-members.php:2050
+#: eme-members.php:2062
 msgid ""
 "The body of the mail sent to the contactperson when someone signes up as a "
 "member."
 msgstr ""
 
-#: eme-members.php:2071
+#: eme-members.php:2083
 msgid "Member updated Email"
 msgstr ""
 
-#: eme-members.php:2075
+#: eme-members.php:2087
 msgid "Updated member email subject"
 msgstr ""
 
-#: eme-members.php:2077
+#: eme-members.php:2089
 msgid "The subject of the mail sent to the member upon changes."
 msgstr ""
 
-#: eme-members.php:2078 eme-members.php:2085
+#: eme-members.php:2090 eme-members.php:2097
 msgid "Currently only used when a member is manually marked as unpaid."
 msgstr ""
 
-#: eme-members.php:2082
+#: eme-members.php:2094
 msgid "Updated member email body"
 msgstr ""
 
-#: eme-members.php:2084
+#: eme-members.php:2096
 msgid "The body of the mail sent to the member upon changes."
 msgstr ""
 
-#: eme-members.php:2106
+#: eme-members.php:2118
 msgid "Membership extended email"
 msgstr ""
 
-#: eme-members.php:2108 eme-members.php:2143 eme-members.php:2244
+#: eme-members.php:2120 eme-members.php:2155 eme-members.php:2256
 msgid ""
 "Warning: when the membership is configured to ask for family member info, "
 "this mail is ALSO sent to each of the family members."
 msgstr ""
 
-#: eme-members.php:2111
+#: eme-members.php:2123
 msgid "Membership extended email subject"
 msgstr ""
 
-#: eme-members.php:2113
+#: eme-members.php:2125
 msgid ""
 "The subject of the mail sent to the member when the membership is extended."
 msgstr ""
 
-#: eme-members.php:2118
+#: eme-members.php:2130
 msgid "Membership extended email body"
 msgstr ""
 
-#: eme-members.php:2120
+#: eme-members.php:2132
 msgid ""
 "The body of the mail sent to the member when the membership is extended."
 msgstr ""
 
-#: eme-members.php:2141
+#: eme-members.php:2153
 msgid "Membership paid email"
 msgstr ""
 
-#: eme-members.php:2146
+#: eme-members.php:2158
 msgid "Membership paid email subject"
 msgstr ""
 
-#: eme-members.php:2148
+#: eme-members.php:2160
 msgid "The subject of the mail sent to the member when marked as paid."
 msgstr ""
 
-#: eme-members.php:2153
+#: eme-members.php:2165
 msgid "Membership paid email body"
 msgstr ""
 
-#: eme-members.php:2155
+#: eme-members.php:2167
 msgid "The body of the mail sent to the member when marked as paid."
 msgstr ""
 
-#: eme-members.php:2174
+#: eme-members.php:2186
 msgid "Contactperson membership paid email subject"
 msgstr ""
 
-#: eme-members.php:2176
+#: eme-members.php:2188
 msgid ""
 "The subject of the mail sent to the contactperson after a member is marked "
 "as paid."
 msgstr ""
 
-#: eme-members.php:2181
+#: eme-members.php:2193
 msgid "Contactperson membership paid email body"
 msgstr ""
 
-#: eme-members.php:2183
+#: eme-members.php:2195
 msgid ""
 "The body of the mail sent to the contactperson after a member is marked as "
 "paid."
 msgstr ""
 
-#: eme-members.php:2204
+#: eme-members.php:2216
 msgid "Membership reminder email"
 msgstr ""
 
-#: eme-members.php:2206
+#: eme-members.php:2218
 msgid ""
 "Warning: when the membership is configured to ask for family member info, "
 "this mail is NOT sent to each of the family members, just the head of the "
 "family."
 msgstr ""
 
-#: eme-members.php:2209
+#: eme-members.php:2221
 msgid "Membership reminder email subject"
 msgstr ""
 
-#: eme-members.php:2211
+#: eme-members.php:2223
 msgid ""
 "The subject of the mail sent to the member when membership is about to "
 "expire. These reminders will be sent once a day, based on the reminder "
 "settings of the defined membership."
 msgstr ""
 
-#: eme-members.php:2212 eme-members.php:2221
+#: eme-members.php:2224 eme-members.php:2233
 msgid ""
 "This reminder email does NOT take into account an optional grace period."
 msgstr ""
 
-#: eme-members.php:2218
+#: eme-members.php:2230
 msgid "Membership reminder email body"
 msgstr ""
 
-#: eme-members.php:2220
+#: eme-members.php:2232
 msgid ""
 "The body of the mail sent to the member when membership is about to expire. "
 "These reminders will be sent once a day, based on the reminder settings of "
 "the defined membership."
 msgstr ""
 
-#: eme-members.php:2242
+#: eme-members.php:2254
 msgid "Membership stopped email"
 msgstr ""
 
-#: eme-members.php:2247
+#: eme-members.php:2259
 msgid "Membership stopped email subject"
 msgstr ""
 
-#: eme-members.php:2249
+#: eme-members.php:2261
 msgid ""
 "The subject of the mail sent to the member when a membership has expired or "
 "is marked as stopped."
 msgstr ""
 
-#: eme-members.php:2250 eme-members.php:2259 eme-members.php:2281
-#: eme-members.php:2290
+#: eme-members.php:2262 eme-members.php:2271 eme-members.php:2293
+#: eme-members.php:2302
 msgid ""
 "If a grace period is defined for the membership, the expiry email is only "
 "sent at the end of the grace period."
 msgstr ""
 
-#: eme-members.php:2256
+#: eme-members.php:2268
 msgid "Membership stopped email body"
 msgstr ""
 
-#: eme-members.php:2258
+#: eme-members.php:2270
 msgid ""
 "The body of the mail sent to the member when a membership has expired or is "
 "marked as stopped."
 msgstr ""
 
-#: eme-members.php:2278
+#: eme-members.php:2290
 msgid "Contactperson membership stopped email subject"
 msgstr ""
 
-#: eme-members.php:2280
+#: eme-members.php:2292
 msgid ""
 "The subject of the mail sent to the contactperson when a membership has "
 "expired or is stopped."
 msgstr ""
 
-#: eme-members.php:2287
+#: eme-members.php:2299
 msgid "Contactperson membership stopped email body"
 msgstr ""
 
-#: eme-members.php:2289
+#: eme-members.php:2301
 msgid ""
 "The body of the mail sent to the contactperson when a membership has expired "
 "or is stopped."
 msgstr ""
 
-#: eme-members.php:2311
+#: eme-members.php:2323
 msgid "Contactperson payment notification email"
 msgstr ""
 
-#: eme-members.php:2315
+#: eme-members.php:2327
 msgid "Contactperson payment notification email subject"
 msgstr ""
 
-#: eme-members.php:2322
+#: eme-members.php:2334
 msgid "Contactperson payment notification email body"
 msgstr ""
 
-#: eme-members.php:2358
+#: eme-members.php:2370
 msgid "Here custom fields of type 'Membership' are shown."
 msgstr ""
 
-#: eme-members.php:2391
+#: eme-members.php:2403
 msgid "File upload is not allowed here."
 msgstr ""
 
-#: eme-members.php:2416 eme-people.php:1618
+#: eme-members.php:2428 eme-people.php:1618
 msgid "Select memberships"
 msgstr ""
 
-#: eme-members.php:2423 eme-people.php:1626
+#: eme-members.php:2435 eme-people.php:1626
 msgid "Select member status"
 msgstr ""
 
-#: eme-members.php:2430 eme-members.php:2435 eme-people.php:1603
+#: eme-members.php:2442 eme-members.php:2447 eme-people.php:1603
 #: eme-people.php:1608 eme-rsvp.php:4699
 msgid "Filter on person"
 msgstr ""
 
-#: eme-members.php:2437 eme-members.php:2442
+#: eme-members.php:2449 eme-members.php:2454
 msgid "Filter on member ID"
 msgstr ""
 
-#: eme-members.php:2443 eme-rsvp.php:4703
+#: eme-members.php:2455 eme-rsvp.php:4703
 msgid "Filter on payment id"
 msgstr ""
 
-#: eme-members.php:2444 eme-rsvp.php:4704
+#: eme-members.php:2456 eme-rsvp.php:4704
 msgid "Filter on payment GW id"
 msgstr ""
 
-#: eme-members.php:2456 eme-people.php:1643
+#: eme-members.php:2468 eme-people.php:1643
 msgid "Custom field to search"
 msgstr ""
 
-#: eme-members.php:2599
+#: eme-members.php:2611
 msgid "Add a new member"
 msgstr ""
 
-#: eme-members.php:2618
+#: eme-members.php:2630
 msgid "Manage members"
 msgstr ""
 
-#: eme-members.php:2635 eme-members.php:2650 eme-people.php:1813
+#: eme-members.php:2647 eme-members.php:2662 eme-people.php:1813
 msgid "Allow empty email?"
 msgstr ""
 
-#: eme-members.php:2638
+#: eme-members.php:2650
 msgid "Import members"
 msgstr ""
 
-#: eme-members.php:2639
+#: eme-members.php:2651
 msgid "If you want, use this to import members info into the database"
 msgstr ""
 
-#: eme-members.php:2653
+#: eme-members.php:2665
 msgid "Import dynamic field answers"
 msgstr ""
 
-#: eme-members.php:2654
+#: eme-members.php:2666
 msgid ""
 "Once you finished importing members, use this to import dynamic field "
 "answers into the database"
 msgstr ""
 
-#: eme-members.php:2665
+#: eme-members.php:2677
 msgid "Filter members"
 msgstr ""
 
-#: eme-members.php:2666 eme-people.php:1829
+#: eme-members.php:2678 eme-people.php:1829
 msgid "Store result as dynamic group"
 msgstr ""
 
-#: eme-members.php:2667 eme-people.php:1830
+#: eme-members.php:2679 eme-people.php:1830
 msgid "Enter a name for this dynamic group"
 msgstr ""
 
-#: eme-members.php:2668 eme-people.php:1831
+#: eme-members.php:2680 eme-people.php:1831
 msgid "Store dynamic group"
 msgstr ""
 
-#: eme-members.php:2688
+#: eme-members.php:2700
 msgid "Accept membership payment"
 msgstr ""
 
-#: eme-members.php:2689
+#: eme-members.php:2701
 msgid "Set membership unpaid"
 msgstr ""
 
-#: eme-members.php:2690
+#: eme-members.php:2702
 msgid "Stop membership"
 msgstr ""
 
-#: eme-members.php:2691
+#: eme-members.php:2703
 msgid "Delete selected members"
 msgstr ""
 
-#: eme-members.php:2692
+#: eme-members.php:2704
 msgid "Resend the mail for pending members"
 msgstr ""
 
-#: eme-members.php:2693
+#: eme-members.php:2705
 msgid "Resend the mail for paid members"
 msgstr ""
 
-#: eme-members.php:2694
+#: eme-members.php:2706
 msgid "Resend the expiration reminder mail"
 msgstr ""
 
-#: eme-members.php:2695 eme-people.php:1854 eme-rsvp.php:4729 eme-rsvp.php:4743
+#: eme-members.php:2707 eme-people.php:1854 eme-rsvp.php:4729 eme-rsvp.php:4743
 #: eme-tasks.php:456
 msgid "Send generic email to selected persons"
 msgstr ""
 
-#: eme-members.php:2696
+#: eme-members.php:2708
 msgid "Send membership related email to selected members"
 msgstr ""
 
-#: eme-members.php:2698 eme-people.php:1868 eme-rsvp.php:4731 eme-rsvp.php:4745
+#: eme-members.php:2710 eme-people.php:1868 eme-rsvp.php:4731 eme-rsvp.php:4745
 msgid "PDF output"
 msgstr ""
 
-#: eme-members.php:2699 eme-people.php:1869 eme-rsvp.php:4732 eme-rsvp.php:4746
+#: eme-members.php:2711 eme-people.php:1869 eme-rsvp.php:4732 eme-rsvp.php:4746
 msgid "HTML output"
 msgstr ""
 
-#: eme-members.php:2703
+#: eme-members.php:2715
 msgid "Send mails to members upon changes being made?"
 msgstr ""
 
-#: eme-members.php:2709
+#: eme-members.php:2721
 msgid "Move corresponding persons to the trash bin?"
 msgstr ""
 
-#: eme-members.php:2714 eme-rsvp.php:4770
+#: eme-members.php:2726 eme-rsvp.php:4770
 msgid "Select a subject template"
 msgstr ""
 
-#: eme-members.php:2715 eme-rsvp.php:4771
+#: eme-members.php:2727 eme-rsvp.php:4771
 msgid "Please select a body template"
 msgstr ""
 
-#: eme-members.php:2718 eme-members.php:2723 eme-people.php:1888
+#: eme-members.php:2730 eme-members.php:2735 eme-people.php:1888
 #: eme-people.php:1893 eme-rsvp.php:4774 eme-rsvp.php:4779
 msgid "Select an optional header template"
 msgstr ""
 
-#: eme-members.php:2720 eme-members.php:2725 eme-people.php:1890
+#: eme-members.php:2732 eme-members.php:2737 eme-people.php:1890
 #: eme-people.php:1895 eme-rsvp.php:4776 eme-rsvp.php:4781
 msgid "Select an optional footer template"
 msgstr ""
 
-#: eme-members.php:2778
+#: eme-members.php:2790
 msgid "Add a new membership definition"
 msgstr ""
 
-#: eme-members.php:2788
+#: eme-members.php:2800
 msgid "Manage memberships"
 msgstr ""
 
-#: eme-members.php:2795
+#: eme-members.php:2807
 msgid "Delete selected memberships"
 msgstr ""
 
-#: eme-members.php:3926
+#: eme-members.php:3938
 msgid "Members CSV"
 msgstr ""
 
-#: eme-members.php:4092
+#: eme-members.php:4104
 msgid "Limit access to EME members of"
 msgstr ""
 
-#: eme-members.php:4098
+#: eme-members.php:4110
 msgid ""
 "Allow access after the membership has been active for this many days (drip "
 "content):"
 msgstr ""
 
-#: eme-members.php:4101
+#: eme-members.php:4113
 msgid "Limit access to EME people that are members of the following groups"
 msgstr ""
 
-#: eme-members.php:4108
+#: eme-members.php:4120
 msgid "Access denied message template"
 msgstr ""
 
-#: eme-members.php:4112
+#: eme-members.php:4124
 msgid ""
 "The format of the text shown if access to the page is denied. If left empty, "
 "a default message will be shown."
 msgstr ""
 
-#: eme-members.php:4187
+#: eme-members.php:4199
 msgid "No membership selected"
 msgstr ""
 
-#: eme-members.php:4207 eme-rsvp.php:1350
+#: eme-members.php:4219 eme-rsvp.php:1350
 msgid "You did not enter a valid discount code"
 msgstr ""
 
-#: eme-members.php:4458 eme-rsvp.php:5394
+#: eme-members.php:4475 eme-rsvp.php:5394
 msgid "Never"
 msgstr ""
 
-#: eme-members.php:4489 eme-members.php:4507 eme-members.php:4546
-#: eme-members.php:4568
+#: eme-members.php:4506 eme-members.php:4524 eme-members.php:4563
+#: eme-members.php:4585
 msgid "no end date"
 msgstr ""
 
-#: eme-members.php:4562
+#: eme-members.php:4579
 msgid "expired"
 msgstr ""
 
-#: eme-members.php:5107 eme-members.php:5277
+#: eme-members.php:5116 eme-members.php:5286
 msgid "Access denied"
 msgstr ""
 
-#: eme-members.php:5197 eme-people.php:833
+#: eme-members.php:5206 eme-people.php:833
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr ""
 
-#: eme-members.php:5203 eme-members.php:5394
+#: eme-members.php:5212 eme-members.php:5403
 msgid "Not imported (membership does not exist): %s"
 msgstr ""
 
-#: eme-members.php:5253
+#: eme-members.php:5262
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr ""
 
-#: eme-members.php:5344
+#: eme-members.php:5353
 msgid "Not imported (person does not exist): %s"
 msgstr ""
 
-#: eme-members.php:5389
+#: eme-members.php:5398
 msgid "Not imported (member does not exist): %s"
 msgstr ""
 
-#: eme-members.php:5587
+#: eme-members.php:5596
 msgid "Edit membership"
 msgstr ""
 
-#: eme-members.php:5593
+#: eme-members.php:5602
 msgid ""
 "No membership form has been defined for this membership, a simple default "
 "will be used."
 msgstr ""
 
-#: eme-members.php:5605
+#: eme-members.php:5614
 msgid "%d head of the family accounts + %d family members"
 msgstr ""
 
-#: eme-members.php:5651 eme-people.php:4714
+#: eme-members.php:5660 eme-people.php:4714
 msgid "(Dynamic)"
 msgstr ""
 
-#: eme-members.php:5687 eme-people.php:4748
+#: eme-members.php:5696 eme-people.php:4748
 msgid "(family member)"
 msgstr ""
 
-#: eme-members.php:5692
+#: eme-members.php:5701
 msgid "Head of the family: "
 msgstr ""
 
-#: eme-members.php:5695
+#: eme-members.php:5704
 msgid "(head of the family)"
 msgstr ""
 
-#: eme-members.php:5740
+#: eme-members.php:5749
 msgid "This is based on the payment ID of the member: %d"
 msgstr ""
 
-#: eme-members.php:5848 eme-people.php:4953
+#: eme-members.php:5857 eme-people.php:4953
 msgid "Dynamic group added"
 msgstr ""
 
-#: eme-members.php:5850 eme-people.php:4955
+#: eme-members.php:5859 eme-people.php:4955
 msgid "Please enter a name for the group"
 msgstr ""
 
-#: eme-members.php:5901 eme-members.php:5963
+#: eme-members.php:5910 eme-members.php:5972
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr ""
 
-#: eme-members.php:5948
+#: eme-members.php:5957
 msgid "Memberships deleted."
 msgstr ""
 
-#: eme-members.php:6005
+#: eme-members.php:6014
 msgid "No corresponding persons found."
 msgstr ""
 
-#: eme-members.php:6014
+#: eme-members.php:6023
 msgid "Members deleted."
 msgstr ""
 
-#: eme-members.php:6040 eme-members.php:6066 eme-members.php:6130
-#: eme-members.php:6161 eme-members.php:6186 eme-members.php:6204
+#: eme-members.php:6049 eme-members.php:6075 eme-members.php:6139
+#: eme-members.php:6170 eme-members.php:6195 eme-members.php:6213
 #: eme-rsvp.php:5584 eme-rsvp.php:5618 eme-rsvp.php:5662 eme-rsvp.php:5702
 #: eme-rsvp.php:5724 eme-rsvp.php:5766 eme-rsvp.php:5827 eme-rsvp.php:5869
 #: eme-rsvp.php:5918 eme-rsvp.php:5980 eme-rsvp.php:6016 eme-tasks.php:1797
 msgid "The action has been executed successfully."
 msgstr ""
 
-#: eme-members.php:6043 eme-members.php:6164 eme-rsvp.php:5587
+#: eme-members.php:6052 eme-members.php:6173 eme-rsvp.php:5587
 #: eme-rsvp.php:5621 eme-rsvp.php:5665 eme-rsvp.php:5705 eme-rsvp.php:5769
 #: eme-rsvp.php:5830 eme-rsvp.php:5872 eme-rsvp.php:5915 eme-rsvp.php:6019
 msgid ""
@@ -7483,7 +7487,7 @@ msgid ""
 "sending mail."
 msgstr ""
 
-#: eme-members.php:6046 eme-members.php:6167 eme-rsvp.php:5590
+#: eme-members.php:6055 eme-members.php:6176 eme-rsvp.php:5590
 #: eme-rsvp.php:5624 eme-rsvp.php:5659 eme-rsvp.php:5708 eme-rsvp.php:5727
 #: eme-rsvp.php:5763 eme-rsvp.php:5833 eme-rsvp.php:5875 eme-rsvp.php:5911
 #: eme-rsvp.php:6013 eme-tasks.php:1800

@@ -829,7 +829,7 @@ function eme_add_update_member( $member_id = 0 ) {
 	$membership = eme_get_membership( $membership_id );
 	if ( $member_id ) {
 		// existing member, all person info remains unchanged
-			$res = eme_db_update_member( $member_id, $member, $membership );
+		$res = eme_db_update_member( $member_id, $member, $membership );
 		if ( $res ) {
 			$member          = eme_get_member( $member_id );
 			$upload_failures = eme_upload_files( $member_id, 'members' );
@@ -839,6 +839,7 @@ function eme_add_update_member( $member_id = 0 ) {
 				$result .= $upload_failures;
 			} else {
 				$result = __( 'Member updated', 'events-made-easy' );
+				eme_email_member_action( $member, 'updateMember' );
 			}
 			$payment_id = $member['payment_id'];
 			// if we're updaing the head of the family, change the family members
@@ -856,6 +857,7 @@ function eme_add_update_member( $member_id = 0 ) {
 					// for the update of an existing master account, we will not update the answers for family members of course
 					$update_answers = 0;
 					eme_db_update_member( $related_member_id, $related_member, $membership, $update_answers );
+					eme_email_member_action( $related_member, 'updateMember' );
 				}
 			}
 		} else {

@@ -1282,18 +1282,39 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 	echo $nonce_field;
 	if ( $action == 'add' ) {
 		?>
+		<?php
+		// we'll present the option to send a mail only if the membership is configured to do so
+		$member_subject = $membership['properties']['new_subject_format'];
+		if ( ! eme_is_empty_string( $membership['properties']['new_body_text'] ) ) {
+			$member_body = $membership['properties']['new_body_text'];
+		} else {
+			$member_body = eme_get_template_format_plain( $membership['properties']['new_body_format_tpl'] );
+		}
+		if ( ! empty ( $member_subject ) && ! empty ( $member_body ) ) {
+		?>
 		<tr><td><?php esc_html_e( 'Send mail to new member?', 'events-made-easy' ); ?>
 		</td><td>
 		<?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); ?>
 			<input type='hidden' name='eme_admin_action' value='do_addmember'>
 			<input type='hidden' name='person_id' id='person_id' value=''>
 		</td></tr>
+		<?php } ?>
 		<tr><td>
 		<?php esc_html_e( 'If you want, select an existing person to become a member', 'events-made-easy' ); ?>
 		</td><td>
 			<input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
 		</td></tr>
 	<?php } else { ?>
+		<?php
+		// we'll present the option to send a mail only if the membership is configured to do so
+		$member_subject = $membership['properties']['updated_subject_format'];
+                if ( ! eme_is_empty_string( $membership['properties']['updated_body_text'] ) ) {
+                        $member_body = $membership['properties']['updated_body_text'];
+                } else {
+                        $member_body = eme_get_template_format_plain( $membership['properties']['updated_body_format_tpl'] );
+                }
+		if ( ! empty ( $member_subject ) && ! empty ( $member_body ) ) {
+		?>
 		<tr><td><?php esc_html_e( 'Send mail for changed member?', 'events-made-easy' ); ?>
 		</td><td>
 		<?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); ?>
@@ -1301,6 +1322,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			<input type='hidden' name='person_id' id='person_id' value='<?php echo $member['person_id']; ?>'>
 			<input type='hidden' name='member_id' id='member_id' value='<?php echo $member['member_id']; ?>'>
 		</td></tr>
+		<?php } ?>
 		<?php if ( empty( $membership['properties']['family_membership'] ) || ( ! empty( $membership['properties']['family_membership'] ) && empty( $member['related_member_id'] ) ) ) { ?>
 		<tr><td>
 			<?php esc_html_e( 'If you want, select an existing person to transfer this member to', 'events-made-easy' ); ?><br>

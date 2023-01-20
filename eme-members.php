@@ -1222,7 +1222,7 @@ function eme_member_edit_layout( $member, $limited = 0 ) {
 }
 
 function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
-	
+	global $plugin_page;
 	$nonce_field             = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	$eme_member_status_array = eme_member_status_array();
 	usleep( 2 );
@@ -1276,7 +1276,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 		echo "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $member['person_id'] ) . "' title='" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . "'>" . esc_html__( 'Click on this link to edit the corresponding person info', 'events-made-easy' ) . '</a><br><br>';
 	}
 	?>
-	<form method='post' autocomplete='off' action='#' name='eme-member-adminform' id='eme-member-adminform' enctype='multipart/form-data'>
+	<form name="eme-member-adminform" id="eme-member-adminform" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" enctype='multipart/form-data'>
 	<table>
 	<?php
 	echo $nonce_field;

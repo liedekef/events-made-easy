@@ -653,11 +653,12 @@ function eme_members_page() {
 		}
 	} elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_editmember' ) {
 		$member_id = intval( $_POST['member_id'] );
+		$send_mail = intval( $_POST['send_mail'] );
 		$member    = eme_get_member( $member_id );
 		$wp_id     = eme_get_wpid_by_personid( $member['person_id'] );
 		if ( $member && ( current_user_can( get_option( 'eme_cap_edit_members' ) ) || ( current_user_can( get_option( 'eme_cap_author_members' ) ) && $wp_id == $current_userid ) ) ) {
 			check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-			$res     = eme_add_update_member( $member_id );
+			$res     = eme_add_update_member( $member_id, $send_mail );
 			$message = $res[0];
 		} else {
 			$message = __( 'You have no right to edit this member!', 'events-made-easy' );
@@ -745,7 +746,7 @@ function eme_memberships_page() {
 	eme_manage_memberships_layout( $message );
 }
 
-function eme_add_update_member( $member_id = 0 ) {
+function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 	$member        = [];
 	$payment_id    = 0;
 	$membership_id = 0;
@@ -839,7 +840,9 @@ function eme_add_update_member( $member_id = 0 ) {
 				$result .= $upload_failures;
 			} else {
 				$result = __( 'Member updated', 'events-made-easy' );
-				eme_email_member_action( $member, 'updateMember' );
+				if ( $send_mail ) {
+					eme_email_member_action( $member, 'updateMember' );
+				}
 			}
 			$payment_id = $member['payment_id'];
 			// if we're updaing the head of the family, change the family members
@@ -857,7 +860,9 @@ function eme_add_update_member( $member_id = 0 ) {
 					// for the update of an existing master account, we will not update the answers for family members of course
 					$update_answers = 0;
 					eme_db_update_member( $related_member_id, $related_member, $membership, $update_answers );
-					eme_email_member_action( $related_member, 'updateMember' );
+					if ( $send_mail ) {
+						eme_email_member_action( $related_member, 'updateMember' );
+					}
 				}
 			}
 		} else {
@@ -1280,18 +1285,24 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 		<tr><td><?php esc_html_e( 'Send mail to new member?', 'events-made-easy' ); ?>
 		</td><td>
 		<?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); ?>
-			<br>
 			<input type='hidden' name='eme_admin_action' value='do_addmember'>
 			<input type='hidden' name='person_id' id='person_id' value=''>
-		<?php esc_html_e( 'If you want, select an existing person to become a member', 'events-made-easy' ); ?><br>
-				<input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
+		</td></tr>
+		<tr><td>
+		<?php esc_html_e( 'If you want, select an existing person to become a member', 'events-made-easy' ); ?>
+		</td><td>
+			<input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
 		</td></tr>
 	<?php } else { ?>
-		<tr><td>
+		<tr><td><?php esc_html_e( 'Send mail for changed member?', 'events-made-easy' ); ?>
+		</td><td>
+		<?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); ?>
 			<input type='hidden' name='eme_admin_action' value='do_editmember'>
 			<input type='hidden' name='person_id' id='person_id' value='<?php echo $member['person_id']; ?>'>
 			<input type='hidden' name='member_id' id='member_id' value='<?php echo $member['member_id']; ?>'>
+		</td></tr>
 		<?php if ( empty( $membership['properties']['family_membership'] ) || ( ! empty( $membership['properties']['family_membership'] ) && empty( $member['related_member_id'] ) ) ) { ?>
+		<tr><td>
 			<?php esc_html_e( 'If you want, select an existing person to transfer this member to', 'events-made-easy' ); ?><br>
 		</td><td>
 			<input type='text' id='transferperson' name='transferperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
@@ -1309,8 +1320,8 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
 			esc_html_e( 'Warning: if you transfer a member from one membership to another, make sure both memberships have the same index values for dynamic fields, otherwise the answers to those fields will either get mixed up or become empty.', 'events-made-easy' );
 		?>
-		<?php } ?>
 		</td></tr>
+		<?php } ?>
 	<?php } ?>
 		<tr><td><?php esc_html_e( 'Membership', 'events-made-easy' ); ?></td>
 		<td>
@@ -1379,8 +1390,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: membership is not paid for, so automatic status calculation will not happen!', 'events-made-easy' );
 		}
 		?>
-		<br>
-		<?php echo '<p>' . esc_html__( 'If set to automatic and the membership is paid for, the status will be recalculated on a daily basis.', 'events-made-easy' ) . '</p>'; ?>
+		<?php echo "<p class='eme_smaller'>" . esc_html__( 'If set to automatic and the membership is paid for, the status will be recalculated on a daily basis.', 'events-made-easy' ) . '</p>'; ?>
 		</td></tr>
 		<tr><td><?php esc_html_e( 'Member status', 'events-made-easy' ); ?></td>
 	<td><?php echo eme_ui_select( $member['status'], 'status', $eme_member_status_array, '', 0, 'nodynamicupdates', $disabled ); ?>

@@ -4706,7 +4706,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 				?>
 					<tr id="eme_dyndata_<?php echo $count; ?>" >
 					<td>
-				<?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . __( 'Reorder', 'events-made-easy' ) . "'>"; ?>
+				<?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
 					</td>
 					<td>
 				<?php echo $info['grouping']; ?>

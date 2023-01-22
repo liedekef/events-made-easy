@@ -5804,7 +5804,7 @@ function eme_events_table( $message = '' ) {
 	<?php
 	$formfields_searchable = eme_get_searchable_formfields( 'events' );
 	if ( ! empty( $formfields_searchable ) ) {
-		echo '<input type="text" class="clearable" name="search_customfields" id="search_customfields" placeholder="' . __( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
+		echo '<input type="text" class="clearable" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
 		echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2_customfieldids_class' );
 	}
 	?>
@@ -6266,19 +6266,19 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		<div id="tasks-mailtemplates-accordion">
 		<?php
 		$templates_array = eme_get_templates_array_by_id( 'task' );
-		echo '<h3>' . __( 'Task Signup Made Email', 'events-made-easy' ) . '</h3>';
+		echo '<h3>' . esc_html__( 'Task Signup Made Email', 'events-made-easy' ) . '</h3>';
 		echo '<div>';
 		eme_meta_box_div_event_task_signup_made_email( $event, $templates_array );
 		echo '</div>';
-		echo '<h3>' . __( 'Task Signup Reminder Email', 'events-made-easy' ) . '</h3>';
+		echo '<h3>' . esc_html__( 'Task Signup Reminder Email', 'events-made-easy' ) . '</h3>';
 		echo '<div>';
 		eme_meta_box_div_event_task_signup_reminder_email( $event, $templates_array );
 		echo '</div>';
-		echo '<h3>' . __( 'Task Signup Cancelled Email', 'events-made-easy' ) . '</h3>';
+		echo '<h3>' . esc_html__( 'Task Signup Cancelled Email', 'events-made-easy' ) . '</h3>';
 		echo '<div>';
 		eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_array );
 		echo '</div>';
-		echo '<h3>' . __( 'Task Signup Deleted Email', 'events-made-easy' ) . '</h3>';
+		echo '<h3>' . esc_html__( 'Task Signup Deleted Email', 'events-made-easy' ) . '</h3>';
 		echo '<div>';
 		eme_meta_box_div_event_task_signup_trashed_email( $event, $templates_array );
 		echo '</div>';
@@ -6800,9 +6800,9 @@ function eme_meta_box_div_event_name( $event, $edit_recurrence = 0 ) {
 	<br>
 	<?php
 	if ( ! empty( $event['event_id'] ) && ! empty( $event['event_name'] ) != '' ) {
-		echo '<b>' . __( 'Permalink: ', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Permalink: ', 'events-made-easy' ) . '</b>';
 	} else {
-		echo '<b>' . __( 'Permalink prefix: ', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Permalink prefix: ', 'events-made-easy' ) . '</b>';
 	}
 	echo trailingslashit( home_url() );
 	$events_prefixes = get_option( 'eme_permalink_events_prefix', 'events' );
@@ -6883,7 +6883,7 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 		</div>
 		<div id="time-selector">
 		<?php
-		echo '<b>' . __( 'Event time', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Event time', 'events-made-easy' ) . '</b>';
 		?>
 		<input id="localized_start_time" type="text" size="8" name="localized_start_time" value="<?php if ( ! eme_is_empty_datetime( $event['event_start'] ) ) { echo $start_date_obj->format( EME_WP_TIME_FORMAT );} ?>" class='eme_formfield_timepicker' >
 		-
@@ -7059,7 +7059,7 @@ function eme_meta_box_div_event_single_event_format( $event, $templates_array ) 
 <div id="div_event_single_event_format">
 		<br>
 		<?php
-		echo '<b>' . __( 'Single Event', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Single Event', 'events-made-easy' ) . '</b>';
 		?>
 	<p class="eme_smaller">
 	<?php esc_html_e( 'The format of the single event page.', 'events-made-easy' ); ?>
@@ -7121,7 +7121,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
 	} else {
 		$showhide_style = 'style="width:100%;"';
 	}
-	echo '<b>' . __( 'Contact Person Payment Gateway Notification Email Body', 'events-made-easy' ) . '</b>';
+	echo '<b>' . esc_html__( 'Contact Person Payment Gateway Notification Email Body', 'events-made-easy' ) . '</b>';
 	?>
 	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?>
 	<br>
@@ -7167,7 +7167,7 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
 <div id="div_event_registration_recorded_ok_html">
 		<br>
 		<?php
-		echo '<b>' . __( 'Booking recorded message', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Booking recorded message', 'events-made-easy' ) . '</b>';
 		?>
 	<p class="eme_smaller"><?php esc_html_e( 'The text (html allowed) shown to the user when the booking has been made successfully.', 'events-made-easy' ); ?>
 	<br>
@@ -7358,7 +7358,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
 	} else {
 		$showhide_style = 'style="width:100%;"';
 	}
-	echo '<b>' . __( 'Booking Awaiting User Confirmation Email Body', 'events-made-easy' ) . '</b>';
+	echo '<b>' . esc_html__( 'Booking Awaiting User Confirmation Email Body', 'events-made-easy' ) . '</b>';
 	?>
 	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent if the booking requires user confirmation.', 'events-made-easy' ); ?>
 	<br>
@@ -7416,7 +7416,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 	} else {
 		$showhide_style = 'style="width:100%;"';
 	}
-	echo '<b>' . __( 'Booking Pending Email Body', 'events-made-easy' ) . '</b>';
+	echo '<b>' . esc_html__( 'Booking Pending Email Body', 'events-made-easy' ) . '</b>';
 	?>
 	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent if the booking requires approval.', 'events-made-easy' ); ?>
 	<br>
@@ -7841,7 +7841,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 	} else {
 		$showhide_style = 'style="width:100%;"';
 	}
-	echo '<b>' . __( 'Contact Person Booking Paid Email Body', 'events-made-easy' ) . '</b>';
+	echo '<b>' . esc_html__( 'Contact Person Booking Paid Email Body', 'events-made-easy' ) . '</b>';
 	?>
 	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person when a booking is marked as paid (not via a payment gateway).', 'events-made-easy' ); ?>
 	<br>
@@ -8130,7 +8130,7 @@ function eme_meta_box_div_event_notes( $event ) {
 <div id="div_event_notes">
 		<br>
 		<?php
-		echo '<b>' . __( 'Event description', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Event description', 'events-made-easy' ) . '</b>';
 		?>
 	<p class="eme_smaller"><?php esc_html_e( 'The event description. This is also used in html meta tags and google tags to show the event info.', 'events-made-easy' ); ?></p>
 	<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
@@ -8159,10 +8159,10 @@ function eme_meta_box_div_event_image( $event ) {
 	</h3>
 	<?php
 	if ( ! empty( $event['event_image_url'] ) ) {
-		echo "<img id='eme_event_image_example' alt='" . __( 'Event image', 'events-made-easy' ) . "' src='" . $event['event_image_url'] . "' width='200'>";
+		echo "<img id='eme_event_image_example' alt='" . esc_attr__( 'Event image', 'events-made-easy' ) . "' src='" . $event['event_image_url'] . "' width='200'>";
 		echo "<input type='hidden' name='event_image_url' id='event_image_url' value='" . $event['event_image_url'] . "'>";
 	} else {
-		echo "<img id='eme_event_image_example' src='' alt='" . __( 'Event image', 'events-made-easy' ) . "' width='200'>";
+		echo "<img id='eme_event_image_example' src='' alt='" . esc_attr__( 'Event image', 'events-made-easy' ) . "' width='200'>";
 		echo "<input type='hidden' name='event_image_url' id='event_image_url'>";
 	}
 	if ( ! empty( $event['event_image_id'] ) ) {
@@ -8184,7 +8184,7 @@ function eme_meta_box_div_event_attributes( $event ) {
 <div id="div_event_attributes">
 		<br>
 		<?php
-		echo '<b>' . __( 'Attributes', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Attributes', 'events-made-easy' ) . '</b>';
 		?>
 	<?php
 	eme_attributes_form( $event );

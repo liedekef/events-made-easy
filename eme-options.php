@@ -2167,7 +2167,7 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 			<?php
-			echo "<tr><td colspan='2' class='notice notice-warning'>" . __( 'Remark: due to the incomplete PHP implementation by Paypal, it is not recommended to use this method. It works fine, but has some shortcomings: no webhook functionality (meaning: if someone closes the browser immediately after payment, the payment will not get marked as paid in EME) and refunding is not possible.', 'events-made-easy' ) . '</td></tr>';
+			echo "<tr><td colspan='2' class='notice notice-warning'>" . esc_html__( 'Remark: due to the incomplete PHP implementation by Paypal, it is not recommended to use this method. It works fine, but has some shortcomings: no webhook functionality (meaning: if someone closes the browser immediately after payment, the payment will not get marked as paid in EME) and refunding is not possible.', 'events-made-easy' ) . '</td></tr>';
 			eme_options_select(
 			    __( 'PayPal live or test', 'events-made-easy' ),
 			    'eme_paypal_url',

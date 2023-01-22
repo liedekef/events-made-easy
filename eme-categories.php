@@ -223,12 +223,12 @@ function eme_categories_edit_layout( $message = '' ) {
 			<tr class='form-field'>
 		<th scope='row' style='vertical-align:top'><label for='description'><?php esc_html_e( 'Category description', 'events-made-easy' ); ?></label></th>
 			<td><div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
-					<!-- we need content for qtranslate as ID -->
-					<?php
-					$eme_editor_settings = eme_get_editor_settings();
-							wp_editor( $category['description'], 'description', $eme_editor_settings );
-					?>
-		<br><?php esc_html_e( 'The description of the category', 'events-made-easy' ); ?>
+				<!-- we need description for qtranslate as ID -->
+				<?php
+				$eme_editor_settings = eme_get_editor_settings();
+				wp_editor( $category['description'], 'description', $eme_editor_settings );
+				?>
+				<br><?php esc_html_e( 'The description of the category', 'events-made-easy' ); ?>
 				</div>
 			</td>
 			</tr>

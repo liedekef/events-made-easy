@@ -497,9 +497,9 @@ function eme_meta_box_div_location_name( $location ) {
 	<br>
 	<?php
 	if ( $action == 'edit' ) {
-		echo '<b>' . __( 'Permalink: ', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Permalink: ', 'events-made-easy' ) . '</b>';
 	} else {
-		echo '<b>' . __( 'Permalink prefix: ', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Permalink prefix: ', 'events-made-easy' ) . '</b>';
 	}
 	echo trailingslashit( home_url() );
 	$locations_prefixes = get_option( 'eme_permalink_locations_prefix', 'locations' );
@@ -679,10 +679,10 @@ function eme_meta_box_div_location_image( $location ) {
 	<div id="location_current_image_inside" class="inside">
 	<?php
 	if ( ! empty( $location['location_image_url'] ) ) {
-		echo "<img id='eme_location_image_example' alt='" . __( 'Location image', 'events-made-easy' ) . "' src='" . $location['location_image_url'] . "' width='200'>";
+		echo "<img id='eme_location_image_example' alt='" . esc_attr__( 'Location image', 'events-made-easy' ) . "' src='" . $location['location_image_url'] . "' width='200'>";
 		echo "<input type='hidden' name='location_image_url' id='location_image_url' value='" . $location['location_image_url'] . "'>";
 	} else {
-		echo "<img id='eme_location_image_example' alt='" . __( 'Location image', 'events-made-easy' ) . "' src='' width='200'>";
+		echo "<img id='eme_location_image_example' alt='" . esc_attr__( 'Location image', 'events-made-easy' ) . "' src='' width='200'>";
 		echo "<input type='hidden' name='location_image_url' id='location_image_url'>";
 	}
 	if ( ! empty( $location['location_image_id'] ) ) {
@@ -732,7 +732,7 @@ function eme_meta_box_div_location_attributes( $location ) {
 <div id="div_location_attributes">
 		<br>
 		<?php
-		echo '<b>' . __( 'Attributes', 'events-made-easy' ) . '</b>';
+		echo '<b>' . esc_html__( 'Attributes', 'events-made-easy' ) . '</b>';
 		?>
 	<?php
 	eme_attributes_form( $location );
@@ -855,7 +855,7 @@ function eme_locations_table( $message = '' ) {
 	<?php
 	$formfields_searchable = eme_get_searchable_formfields( 'locations' );
 	if ( ! empty( $formfields_searchable ) ) {
-		echo '<input type="text" class="clearable" name="search_customfields" id="search_customfields" placeholder="' . __( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
+		echo '<input type="text" class="clearable" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
 		echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2_customfieldids_class' );
 	}
 	?>

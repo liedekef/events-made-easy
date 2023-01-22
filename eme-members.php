@@ -1090,6 +1090,38 @@ function eme_is_member( $person_id, $membership_id, $include_expired = 0 ) {
 	return $wpdb->get_var( $sql );
 }
 
+function eme_check_member_allowed_to_pay( $member, $membership ) {
+        if ( $membership['properties']['allow_renewal'] && $member['status'] != EME_MEMBER_STATUS_PENDING ) {
+                if ( empty( $member['end_date'] ) || $member['end_date'] == '0000-00-00' ) {
+                        return "<div class='eme-message-success eme-already-paid'>" . __( 'This has already been paid for', 'events-made-easy' ) . '</div>';
+                } else {
+                        $too_soon_to_pay = 0;
+                        if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE && ! empty( $membership['properties']['renewal_cutoff_days'] ) ) {
+                                $end_date_obj     = ExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+                                $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+                                $diff             = $eme_date_obj_now->getDifferenceInDays( $end_date_obj );
+                                if ( $diff > intval( $membership['properties']['renewal_cutoff_days'] ) ) {
+                                        $too_soon_to_pay = 1;
+                                }
+                        }
+
+                        if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE && $too_soon_to_pay ) {
+                                $end_date    = eme_localized_date( $member['end_date'], EME_TIMEZONE );
+                                $ret_string .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. It is not allowed to extend the membership yet (too soon).', 'events-made-easy' ), $end_date ) . '</div>';
+                                return $ret_string;
+			}
+		}
+	}
+	if ( ! $membership['properties']['allow_renewal'] && $member['status'] == EME_MEMBER_STATUS_EXPIRED ) {
+                $contact         = eme_get_contact( $membership['properties']['contact_id'] );
+                $contact_name    = $contact->display_name;
+		$ret_string .= "<div class='eme-message-error eme-rsvp-message-error'>" . sprintf( __( 'Your membership has expired but renewal is not allowed, please contact %s.', 'events-made-easy' ), $contact_name ) . '</div>';
+                return $ret_string;
+        }
+
+	return '';
+}
+
 function eme_membership_exists( $id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;

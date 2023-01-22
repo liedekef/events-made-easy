@@ -137,6 +137,48 @@ class Client
 	}
 
 	/**
+	 * Refund an existing payment
+	 *
+	 * @param  string $paymentId  The unique Payconiq identifier of a payment as provided by the create payment service
+	 *
+	 * @param  float $amount		Payment amount in cents
+	 * @param  string $currency		Payment currency code in IOS 4217 format
+	 *
+	 * @return  object  Response object by Payconiq
+	 */
+	public function refundPayment($paymentId, $amount, $currency = 'EUR', $description = '' )
+	{
+		$data_arr = [
+                        'amount' => $amount,
+                        'currency' => $currency,
+                        'description' => $description,
+                ];
+		$response = $this->curl('POST', $this->getEndpoint('/payments/' . $paymentId), $this->constructHeaders(), $data_arr);
+
+		if (empty($response->paymentId))
+			throw new RefundFailedException($response->message);
+
+		return $response;
+	}
+
+	/**
+	 * Get refund IBAN
+	 *
+	 * @param  string $paymentId  The unique Payconiq identifier of a payment as provided by the create payment service
+	 *
+	 * @return  object  Response object by Payconiq
+	 */
+	public function getRefundIban($paymentId )
+	{
+		$response = $this->curl('GET', $this->getEndpoint('/payments/' . $paymentId . 'debtor/refundIban'), $this->constructHeaders());
+
+		if (empty($response->iban))
+			throw new GetRefundIbanFailedException($response->message);
+
+		return $response->iban;
+	}
+
+	/**
 	 * Get the endpoint for the call
 	 *
 	 * @param  string $route

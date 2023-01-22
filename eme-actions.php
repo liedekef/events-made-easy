@@ -265,7 +265,7 @@ function eme_actions_init() {
 		}
 		if ( $_POST['eme_eventAction'] == 'braintree_charge' ) {
 			eme_charge_braintree();
-			// braintree uses a local charge function, so we charge the card, set paid or not and then continue regular flow of events
+			exit();
 		}
 	}
 }

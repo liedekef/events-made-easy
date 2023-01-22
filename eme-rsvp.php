@@ -5203,6 +5203,7 @@ function eme_ajax_bookings_list() {
 	$recordCount = $wpdb->get_var( $sql1 );
 	$bookings    = $wpdb->get_results( $sql2, ARRAY_A );
 	$wp_users    = eme_get_indexed_users();
+	$pgs         = eme_payment_gateways();
 
 	$formfields = eme_get_formfields( '', 'rsvp,generic' );
 	$rows       = [];
@@ -5406,7 +5407,8 @@ function eme_ajax_bookings_list() {
 			$line['remaining'] = eme_localized_price( $booking['remaining'], $event['currency'] );
 		}
 		$line['received']        = eme_convert_multi2br( eme_localized_price( $booking['received'], $event['currency'] ) );
-		$line['pg']              = eme_esc_html( $booking['pg'] );
+		$line['pg']              = eme_esc_html( $pgs[ $booking['pg'] ] );
+
 		$line['pg_pid']          = eme_esc_html( $booking['pg_pid'] );
 		$line['attend_count']    = intval( $booking['attend_count'] );
 		$line['booking_comment'] = eme_esc_html( $booking['booking_comment'] );

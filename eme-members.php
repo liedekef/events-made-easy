@@ -5699,6 +5699,7 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$eme_member_status_array = eme_member_status_array();
+	$pgs                     = eme_payment_gateways();
 	$ajaxResult              = [];
 
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
@@ -5811,7 +5812,7 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 			$record['wp_user'] = '';
 		}
 
-		$record['pg']     = eme_esc_html( $item['pg'] );
+		$record['pg']     = eme_esc_html( $pgs[ $item['pg'] ] );
 		$record['pg_pid'] = eme_esc_html( $item['pg_pid'] );
 		$answers          = eme_get_member_answers( $item['member_id'] );
 		foreach ( $formfields as $formfield ) {

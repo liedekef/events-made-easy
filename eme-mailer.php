@@ -2432,6 +2432,11 @@ function eme_emails_page() {
 add_action( 'wp_ajax_eme_get_mailings_div', 'eme_ajax_mailings_div' );
 function eme_ajax_mailings_div() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+		print "<div class='eme-message-admin'><p>";
+		esc_html_e( 'Access denied!', 'events-made-easy' );
+		wp_die();
+	}
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 	?>
@@ -2532,6 +2537,12 @@ function eme_ajax_mailings_div() {
 add_action( 'wp_ajax_eme_get_mail_archive_div', 'eme_ajax_mail_archive_div' );
 function eme_ajax_mail_archive_div() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+		print "<div class='eme-message-admin'><p>";
+		esc_html_e( 'Access denied!', 'events-made-easy' );
+		wp_die();
+	}
+
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	?>
 	<h1><?php esc_html_e( 'Email archive', 'events-made-easy' ); ?></h1>

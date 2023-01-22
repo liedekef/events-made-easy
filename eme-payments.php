@@ -3164,7 +3164,7 @@ function eme_event_can_pay_online( $event ) {
 	return eme_event_has_pgs_configured( $event );
 }
 function eme_event_has_pgs_configured( $event ) {
-		$pgs = eme_payment_gateways();
+	$pgs = eme_payment_gateways();
 	foreach ( $pgs as $pg => $value ) {
 		if ( $event['event_properties'][ 'use_' . $pg ] ) {
 			return 1;
@@ -3176,7 +3176,7 @@ function eme_membership_can_pay_online( $membership ) {
 	return eme_membership_has_pgs_configured( $membership );
 }
 function eme_membership_has_pgs_configured( $membership ) {
-		$pgs = eme_payment_gateways();
+	$pgs = eme_payment_gateways();
 	foreach ( $pgs as $pg => $value ) {
 		if ( $membership['properties'][ 'use_' . $pg ] ) {
 			return 1;
@@ -3186,8 +3186,8 @@ function eme_membership_has_pgs_configured( $membership ) {
 }
 function eme_event_count_pgs( $event ) {
 	// count the payment gateways active for this event
-		$pgs      = eme_payment_gateways();
-		$pg_count = 0;
+	$pgs      = eme_payment_gateways();
+	$pg_count = 0;
 	foreach ( $pgs as $pg => $value ) {
 		if ( $event['event_properties'][ 'use_' . $pg ] ) {
 				//if ($pg != "offline") {
@@ -3199,8 +3199,8 @@ function eme_event_count_pgs( $event ) {
 }
 function eme_membership_count_pgs( $membership ) {
 	// count the payment gateways active for this event
-		$pgs      = eme_payment_gateways();
-		$pg_count = 0;
+	$pgs      = eme_payment_gateways();
+	$pg_count = 0;
 	foreach ( $pgs as $pg => $value ) {
 		if ( $membership['properties'][ 'use_' . $pg ] ) {
 				//if ($pg != "offline") {
@@ -3212,8 +3212,8 @@ function eme_membership_count_pgs( $membership ) {
 }
 function eme_event_get_first_pg( $event ) {
 	// count the payment gateways active for this event
-		$pgs      = eme_payment_gateways();
-		$pg_count = 0;
+	$pgs      = eme_payment_gateways();
+	$pg_count = 0;
 	foreach ( $pgs as $pg => $value ) {
 		if ( $event['event_properties'][ 'use_' . $pg ] ) {
 			if ( $pg != 'offline' ) {
@@ -3225,8 +3225,8 @@ function eme_event_get_first_pg( $event ) {
 }
 function eme_membership_get_first_pg( $membership ) {
 	// count the payment gateways active for this event
-		$pgs      = eme_payment_gateways();
-		$pg_count = 0;
+	$pgs      = eme_payment_gateways();
+	$pg_count = 0;
 	foreach ( $pgs as $pg => $value ) {
 		if ( $membership['properties'][ 'use_' . $pg ] ) {
 			if ( $pg != 'offline' ) {

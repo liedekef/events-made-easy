@@ -103,6 +103,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.3.43 (2023//) =
 * Fix the new placeholders #_MEMBERPAYMENTDATE and #_MEMBERPAYMENTTIME (usage of an not-needed variable caused these not to work)
 * Send the "update member" mail also when updating a single member in the backend, not just for the mass action "mark unpaid"
+* Try to treat all payment methods the same way, will be easier to add others in the future in a dynamic manner
+* Make sure only logged-in users with correct permissions can see the mailings (it was already nonce-protected, but better be safe than sorry)
 
 = 2.3.42 (2023/01/19) =
 * Added #_MULTIBOOKING_TOTALPRICE_NO_VAT and #_MULTIBOOKING_TOTALPRICE_VAT_ONLY

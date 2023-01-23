@@ -5595,7 +5595,6 @@ add_action( 'wp_ajax_eme_memberships_list', 'eme_ajax_memberships_list' );
 add_action( 'wp_ajax_eme_manage_members', 'eme_ajax_manage_members' );
 add_action( 'wp_ajax_eme_manage_memberships', 'eme_ajax_manage_memberships' );
 add_action( 'wp_ajax_eme_store_members_query', 'eme_ajax_store_members_query' );
-add_action( 'wp_ajax_eme_get_payconiq_iban', 'eme_ajax_get_payconiq_iban' );
 
 function eme_ajax_memberships_list() {
 	global $wpdb;
@@ -6415,44 +6414,6 @@ function eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_hea
 	}
 	$html .= "$footer</body></html>";
 	print $html;
-}
-
-function eme_ajax_get_payconiq_iban() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$ajaxResult              = [];
-
-	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
-			$ajaxResult['Result']      = 'Error';
-			$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
-			print wp_json_encode( $ajaxResult );
-			wp_die();
-	}
-	$api_key = get_option( "eme_payconiq_api_key" );
-        if ( ! $api_key ) {
-                wp_die();
-        }
-        if ( ! class_exists( 'Payconiq\Client' ) ) {
-                require_once 'payment_gateways/payconiq/liedekef-1.0.0rc1/src/Client.php';
-        }
-
-	$pg_pid = eme_sanitize_request( $_POST['pg_pid'] );
-        $mode     = get_option( 'eme_payconiq_env' );
-        $payconiq = new \Payconiq\Client( $api_key );
-        if ( preg_match( '/sandbox/', $mode ) ) {
-                        $payconiq->setEndpointTest();
-        }
-        try {
-                $iban = $payconiq->getRefundIban( $pg_pid );
-        } catch ( Exception $e ) {
-		wp_die();
-        }
-
-	$ajaxResult = [];
-	$ajaxResult['iban'] = $iban;
-	$payment = eme_get_payment_by_pg_pid( $pg_pid );
-	$ajaxResult['payment_id'] = $payment['id']; 
-	print wp_json_encode( $ajaxResult );
-	wp_die();
 }
 
 function eme_get_membership_post_answers() {

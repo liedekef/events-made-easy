@@ -424,6 +424,22 @@ jQuery(document).ready(function ($) {
            return false;
         });
 
+	// we add the on-click to the body and limit to the .eme_iban_button class, so that the iban-buttons that are only added via ajax are handled as well
+        $('body').on('click', '.eme_iban_button', function(e) {
+           e.preventDefault();
+           var params = {
+               'action': 'eme_get_payconiq_iban',
+               'pg_pid': $(this).data('pg_pid'),
+               'eme_admin_nonce': eme.translate_adminnonce
+           };
+           $.post(ajaxurl, params, function(data) {
+                   $('span#payconiq_'+data.payment_id).html(data.iban);
+           }, 'json');
+           // return false to make sure the real form doesn't submit
+           return false;
+        });
+
+
     // for autocomplete to work, the element needs to exist, otherwise JS errors occur
     // we check for that using length
     if ($('input[name=chooseevent]').length) {

@@ -438,6 +438,21 @@ jQuery(document).ready(function ($) {
 	$('#StoreQueryButton').hide();
 	$('#StoreQueryDiv').hide();
 
+	// we add the on-click to the body and limit to the .eme_iban_button class, so that the iban-buttons that are only added via ajax are handled as well
+	$('body').on('click', '.eme_iban_button', function(e) {
+           e.preventDefault();
+	   var params = {
+	       'action': 'eme_get_payconiq_iban',
+               'pg_pid': $(this).data('pg_pid'),
+	       'eme_admin_nonce': eme.translate_adminnonce
+	   };
+           $.post(ajaxurl, params, function(data) {
+		   $('span#payconiq_'+data.payment_id).html(data.iban);
+           }, 'json');
+           // return false to make sure the real form doesn't submit
+           return false;
+	});
+
         function updateShowHideFixedStartdate () {
            if ($('select#type').val() == 'fixed') {
               $('tr#startdate').show();

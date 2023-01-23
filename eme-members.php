@@ -5595,6 +5595,7 @@ add_action( 'wp_ajax_eme_memberships_list', 'eme_ajax_memberships_list' );
 add_action( 'wp_ajax_eme_manage_members', 'eme_ajax_manage_members' );
 add_action( 'wp_ajax_eme_manage_memberships', 'eme_ajax_manage_memberships' );
 add_action( 'wp_ajax_eme_store_members_query', 'eme_ajax_store_members_query' );
+add_action( 'wp_ajax_eme_get_payconiq_iban', 'eme_ajax_get_payconiq_iban' );
 
 function eme_ajax_memberships_list() {
 	global $wpdb;
@@ -5813,6 +5814,9 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 		}
 
 		$record['pg']     = eme_esc_html( $pgs[ $item['pg'] ] );
+		if ($item['pg'] == 'payconiq' && !empty($item['pg_pid'])) {
+			$record['pg'] .= "<button class='button action eme_iban_button' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$item['payment_id']."'></span>";
+		}
 		$record['pg_pid'] = eme_esc_html( $item['pg_pid'] );
 		$answers          = eme_get_member_answers( $item['member_id'] );
 		foreach ( $formfields as $formfield ) {
@@ -6328,9 +6332,9 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 	array_map( 'wp_delete_file', glob( "$targetPath/member-$template_id-*.pdf" ) );
 	// now put new one
 	$rand_id         = eme_random_id();
-		$target_file = $targetPath . "/member-$template_id-$rand_id.pdf";
-		file_put_contents( $target_file, $dompdf->output() );
-		return $target_file;
+	$target_file = $targetPath . "/member-$template_id-$rand_id.pdf";
+	file_put_contents( $target_file, $dompdf->output() );
+	return $target_file;
 }
 
 function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
@@ -6396,9 +6400,9 @@ $header
 
 function eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
 	// the template format needs br-handling, so lets use a handy function
-		$format = eme_get_template_format( $template_id );
-	$header     = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
-		$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
+	$format = eme_get_template_format( $template_id );
+	$header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
+	$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
 
 	$html  = "<html><body>$header";
 	$total = count( $ids_arr );
@@ -6410,7 +6414,45 @@ function eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_hea
 		$html      .= eme_replace_member_placeholders( $format, $membership, $member, 'html', $lang );
 	}
 	$html .= "$footer</body></html>";
-		print $html;
+	print $html;
+}
+
+function eme_ajax_get_payconiq_iban() {
+	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	$ajaxResult              = [];
+
+	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
+			$ajaxResult['Result']      = 'Error';
+			$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+			print wp_json_encode( $ajaxResult );
+			wp_die();
+	}
+	$api_key = get_option( "eme_payconiq_api_key" );
+        if ( ! $api_key ) {
+                wp_die();
+        }
+        if ( ! class_exists( 'Payconiq\Client' ) ) {
+                require_once 'payment_gateways/payconiq/liedekef-1.0.0rc1/src/Client.php';
+        }
+
+	$pg_pid = eme_sanitize_request( $_POST['pg_pid'] );
+        $mode     = get_option( 'eme_payconiq_env' );
+        $payconiq = new \Payconiq\Client( $api_key );
+        if ( preg_match( '/sandbox/', $mode ) ) {
+                        $payconiq->setEndpointTest();
+        }
+        try {
+                $iban = $payconiq->getRefundIban( $pg_pid );
+        } catch ( Exception $e ) {
+		wp_die();
+        }
+
+	$ajaxResult = [];
+	$ajaxResult['iban'] = $iban;
+	$payment = eme_get_payment_by_pg_pid( $pg_pid );
+	$ajaxResult['payment_id'] = $payment['id']; 
+	print wp_json_encode( $ajaxResult );
+	wp_die();
 }
 
 function eme_get_membership_post_answers() {

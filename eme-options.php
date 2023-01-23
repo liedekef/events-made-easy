@@ -2374,7 +2374,7 @@ function eme_options_page() {
 			eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
 			eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented since it requires manual transfer of the funds to the relevant bank accounts anyway.', 'events-made-easy' ) . '</td></tr>';
+			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is implemented but the way payconiq works it might still require manual transfer of the funds to the relevant bank accounts anyway.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
 </div>

@@ -5,6 +5,8 @@ namespace Payconiq;
 use Payconiq\Support\Exceptions\CreatePaymentFailedException;
 use Payconiq\Support\Exceptions\RetrievePaymentFailedException;
 use Payconiq\Support\Exceptions\GetPaymentsListFailedException;
+use Payconiq\Support\Exceptions\RefundFailedException;
+use Payconiq\Support\Exceptions\GetRefundIbanFailedException;
 
 class Client
 {
@@ -170,7 +172,7 @@ class Client
 	 */
 	public function getRefundIban($paymentId )
 	{
-		$response = $this->curl('GET', $this->getEndpoint('/payments/' . $paymentId . 'debtor/refundIban'), $this->constructHeaders());
+		$response = $this->curl('GET', $this->getEndpoint('/payments/' . $paymentId . '/debtor/refundIban'), $this->constructHeaders());
 
 		if (empty($response->iban))
 			throw new GetRefundIbanFailedException($response->message);

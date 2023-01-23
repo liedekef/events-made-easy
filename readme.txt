@@ -106,6 +106,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Try to treat all payment methods the same way, will be easier to add others in the future in a dynamic manner
 * Make sure only logged-in users with correct permissions can see the mailings (it was already nonce-protected, but better be safe than sorry)
 * If payment is done via payconiq, refund might be possible (payconiq restrictions apply). But: a button will appear in the "payment gw" column, allowing you to get the IBAN number to refund to if done manually
+* Fix adding categories to events via the mass-action 
 
 = 2.3.42 (2023/01/19) =
 * Added #_MULTIBOOKING_TOTALPRICE_NO_VAT and #_MULTIBOOKING_TOTALPRICE_VAT_ONLY

@@ -10193,7 +10193,7 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
 	global $wpdb;
 	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
         if (eme_is_list_of_int($ids) ) {
-		$wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
+		$sql = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
 		   WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id);
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
         }

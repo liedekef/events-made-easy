@@ -5281,8 +5281,6 @@ function eme_ajax_bookings_list() {
 		if ( isset( $event['event_id'] ) && $event['event_rsvp'] ) {
 			if ( $add_event_info ) {
 				$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( 'RSVP Info: ', 'events-made-easy' );
-			}
-			if ( $add_event_info ) {
 				$booked_seats  = eme_get_approved_seats( $event['event_id'] );
 				$pending_seats = eme_get_pending_seats( $event['event_id'] );
 				$booked_string = esc_html__( 'Approved:', 'events-made-easy' );
@@ -5354,6 +5352,22 @@ function eme_ajax_bookings_list() {
 		} else {
 			$line['rsvp'] = '';
 		}
+		if ( isset( $event['event_id'] ) && $event['event_tasks'] && $add_event_info ) {
+			$tasks = eme_get_event_tasks( $event['event_id'] );
+			$task_count = count($tasks);
+			if ( $add_event_info && $task_count>0 ) {
+				$used_spaces = 0;
+				$total_spaces = 0;
+				foreach ( $tasks as $task ) {
+					$used_spaces += eme_count_task_signups( $task['task_id'] );
+					$total_spaces += $task['spaces'];
+				}
+				#$free_spaces = $total_spaces - $used_spaces;
+				#$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
+				$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d used/total slots', 'events-made-easy' ), $task_count, $used_spaces, $total_spaces );
+			}
+		}
+
 		$line['event_name'] = $event_name_info[ $booking_event_id ];
 		$line['event_cats'] = join( '<br>', eme_get_event_category_names( $booking_event_id ) );
 

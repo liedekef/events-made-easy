@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.42
+Stable tag: 2.3.43
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,7 +100,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.43 (2023//) =
+= 2.3.43 (2023/01/24) =
 * Fix the new placeholders #_MEMBERPAYMENTDATE and #_MEMBERPAYMENTTIME (usage of an not-needed variable caused these not to work)
 * Send the "update member" mail also when updating a single member in the backend, not just for the mass action "mark unpaid"
 * Try to treat all payment methods the same way, will be easier to add others in the future in a dynamic manner

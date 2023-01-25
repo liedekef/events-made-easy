@@ -9993,6 +9993,22 @@ function eme_ajax_events_list() {
 			}
 		}
 
+		if ( $event['event_tasks'] && ! $view_trash ) {
+                        $tasks = eme_get_event_tasks( $event['event_id'] );
+                        $task_count = count($tasks);
+                        if ( $add_event_info && $task_count>0 ) {
+                                $used_spaces = 0;
+                                $total_spaces = 0;
+                                foreach ( $tasks as $task ) {
+                                        $used_spaces += eme_count_task_signups( $task['task_id'] );
+                                        $total_spaces += $task['spaces'];
+                                }
+                                #$free_spaces = $total_spaces - $used_spaces;
+                                #$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
+                                $record['event_name'] .= '<br>' . sprintf( __('Task Info: %d tasks, %d/%d used/total slots', 'events-made-easy' ), $task_count, $used_spaces, $total_spaces );
+                        }
+                }
+
 		if ( empty( $event['location_name'] ) ) {
 			$record['location_name'] = '';
 		} else {

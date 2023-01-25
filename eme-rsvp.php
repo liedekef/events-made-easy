@@ -5364,7 +5364,7 @@ function eme_ajax_bookings_list() {
 				}
 				#$free_spaces = $total_spaces - $used_spaces;
 				#$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
-				$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d used/total slots', 'events-made-easy' ), $task_count, $used_spaces, $total_spaces );
+				$event_name_info[ $booking_event_id ] .= '<br>' . sprintf( __('Task Info: %d tasks, %d/%d used/total slots', 'events-made-easy' ), $task_count, $used_spaces, $total_spaces );
 			}
 		}
 

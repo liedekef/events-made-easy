@@ -9996,7 +9996,7 @@ function eme_ajax_events_list() {
 		if ( $event['event_tasks'] && ! $view_trash ) {
                         $tasks = eme_get_event_tasks( $event['event_id'] );
                         $task_count = count($tasks);
-                        if ( $add_event_info && $task_count>0 ) {
+                        if ( $task_count>0 ) {
                                 $used_spaces = 0;
                                 $total_spaces = 0;
                                 foreach ( $tasks as $task ) {

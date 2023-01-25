@@ -55,7 +55,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 		if ( $template_id_entry ) {
 			$format_entry = eme_get_template_format( $template_id_entry );
 		} elseif ( $simple ) {
-				$format_entry = '#_EVENTNAME #_STARTDATE #_STARTTIME';
+			$format_entry = '#_EVENTNAME #_STARTDATE #_STARTTIME';
 		} elseif ( $only_one_event ) {
 			$format_entry = '#_EVENTNAME #_STARTDATE #_STARTTIME (#_AVAILABLESEATS/#_TOTALSEATS)';
 		} else {

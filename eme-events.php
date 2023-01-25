@@ -8518,8 +8518,9 @@ function eme_meta_box_div_event_rsvp( $event ) {
 								<tr id='row_take_attendance'>
 								<td><label for='eme_prop_take_attendance'><?php esc_html_e( 'Attendance-only event?', 'events-made-easy' ); ?></label></td>
 					<td><?php echo eme_ui_checkbox_binary( $event['event_properties']['take_attendance'], 'eme_prop_take_attendance', __( 'Only take attendance (0 or 1 seat) for this event', 'events-made-easy' ) ); ?>
-								<span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden.', 'events-made-easy' ); ?>
-								</span></td>
+								<span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox.', 'events-made-easy' ); ?></span><br />
+								<span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1.', 'events-made-easy' ); ?></span>
+								</td>
 								</tr>
 								<tr id='row_addpersontogroup'>
 								<td><label for='eme_prop_rsvp_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>

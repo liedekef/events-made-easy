@@ -100,6 +100,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.44 (2023//) =
+* Show task info in event admin overview (identical to RSVP info)
+* Make action eme_trash_person_action work again
+
 = 2.3.43 (2023/01/24) =
 * Fix the new placeholders #_MEMBERPAYMENTDATE and #_MEMBERPAYMENTTIME (usage of an not-needed variable caused these not to work)
 * Send the "update member" mail also when updating a single member in the backend, not just for the mass action "mark unpaid"

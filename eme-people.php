@@ -2629,6 +2629,7 @@ function eme_trash_people( $person_ids ) {
 		return;
 	}
 	if ( has_action( 'eme_trash_person_action' ) ) {
+		$ids_arr = explode(',',$person_ids);
 		foreach ( $ids_arr as $person_id ) {
 			$person = eme_get_person( $person_id );
 			do_action( 'eme_trash_person_action', $person );

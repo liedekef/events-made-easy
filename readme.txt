@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.44 (2023//) =
 * Show task info in event admin overview (identical to RSVP info)
+* Implement simple task approval. Approval requirement can be set globally or per event (not per task, allthough in the future this might be)
 * Make action eme_trash_person_action work again
 
 = 2.3.43 (2023/01/24) =

@@ -5812,9 +5812,17 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 			$record['wp_user'] = '';
 		}
 
-		$record['pg']     = eme_esc_html( $pgs[ $item['pg'] ] );
-		if ($item['pg'] == 'payconiq' && !empty($item['pg_pid'])) {
-			$record['pg'] .= "<button class='button action eme_iban_button' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$item['payment_id']."'></span>";
+		if ( !empty( $item['pg'] ) ) {
+			if ( isset( $pgs[ $item['pg'] ] ) ) {
+				$record['pg'] = eme_esc_html( $pgs[ $item['pg'] ] );
+			} else {
+				$record['pg'] = 'UNKNOWN';
+			}
+			if ($item['pg'] == 'payconiq' && !empty($item['pg_pid'])) {
+				$record['pg'] .= "<button class='button action eme_iban_button' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$item['payment_id']."'></span>";
+			}
+		} else {
+			$record['pg'] = '';
 		}
 		$record['pg_pid'] = eme_esc_html( $item['pg_pid'] );
 		$answers          = eme_get_member_answers( $item['member_id'] );

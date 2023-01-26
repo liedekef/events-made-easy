@@ -52,6 +52,10 @@ jQuery(document).ready( function($) {
                 task_end: {
 		    title: emetasks.translate_taskend
                 },
+                signup_status: {
+                    visibility: 'hidden',
+		    title: emetasks.translate_tasksignup_status
+                },
                 person_info: {
 		    sorting: false,
 		    title: emetasks.translate_person
@@ -62,11 +66,13 @@ jQuery(document).ready( function($) {
         if ($('#TaskSignupsTableContainer').length) {
            $('#TaskSignupsTableContainer').jtable('load', {
 		   'search_name': $('#search_name').val(),
-		   'search_event_name': $('#search_event_name').val(),
-		   'search_person_name': $('#search_person_name').val(),
+		   'search_event': $('#search_event').val(),
+		   'search_eventid': $('#search_eventid').val(),
+		   'search_person': $('#search_person').val(),
 		   'search_scope': $('#search_scope').val(),
 		   'search_start_date': $('#search_start_date').val(),
-		   'search_end_date': $('#search_end_date').val()
+		   'search_end_date': $('#search_end_date').val(),
+		   'search_signup_status': $('#search_signup_status').val()
 	   });
         }
  
@@ -123,10 +129,12 @@ jQuery(document).ready( function($) {
            $('#TaskSignupsTableContainer').jtable('load', {
 		   'search_name': $('#search_name').val(),
 		   'search_event': $('#search_event').val(),
+		   'search_eventid': $('#search_eventid').val(),
 		   'search_person': $('#search_person').val(),
 		   'search_scope': $('#search_scope').val(),
 		   'search_start_date': $('#search_start_date').val(),
-		   'search_end_date': $('#search_end_date').val()
+		   'search_end_date': $('#search_end_date').val(),
+		   'search_signup_status': $('#search_signup_status').val()
            });
            // return false to make sure the real form doesn't submit
            return false;

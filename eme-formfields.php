@@ -964,11 +964,8 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 }
 
 function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) {
-	
-
-	$task_signups = eme_get_task_signups( $task['task_id'] );
-	$used_spaces  = count( $task_signups );
-	$free_spaces  = $task['spaces'] - $used_spaces;
+	$used_spaces = eme_count_task_approved_signups( $task['task_id'] );
+	$free_spaces = $task['spaces'] - $used_spaces;
 
 	$task_ended       = 0;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );

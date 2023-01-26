@@ -5356,15 +5356,23 @@ function eme_ajax_bookings_list() {
 			$tasks = eme_get_event_tasks( $event['event_id'] );
 			$task_count = count($tasks);
 			if ( $add_event_info && $task_count>0 ) {
-				$used_spaces = 0;
-				$total_spaces = 0;
-				foreach ( $tasks as $task ) {
-					$used_spaces += eme_count_task_signups( $task['task_id'] );
-					$total_spaces += $task['spaces'];
-				}
-				#$free_spaces = $total_spaces - $used_spaces;
-				#$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
-				$event_name_info[ $booking_event_id ] .= '<br>' . sprintf( __('Task Info: %d tasks, %d/%d used/total slots', 'events-made-easy' ), $task_count, $used_spaces, $total_spaces );
+				$pending_spaces = 0;
+                                $used_spaces = 0;
+                                $total_spaces = 0;
+                                foreach ( $tasks as $task ) {
+					if ( $event['event_properties']['task_requires_approval'] ) {
+						$pending_spaces += eme_count_task_pending_signups( $task['task_id'] );
+					}
+                                        $used_spaces += eme_count_task_approved_signups( $task['task_id'] );
+                                        $total_spaces += $task['spaces'];
+                                }
+                                #$free_spaces = $total_spaces - $used_spaces;
+                                #$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
+				 $event_name_info[ $booking_event_id ] .= '<br>' . sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
+                                if ( $pending_spaces >0 ) {
+                                        $event_name_info[ $booking_event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=0&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+                                }
+                                $event_name_info[ $booking_event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=1&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
 			}
 		}
 
@@ -5420,10 +5428,18 @@ function eme_ajax_bookings_list() {
 		} else {
 			$line['remaining'] = eme_localized_price( $booking['remaining'], $event['currency'] );
 		}
-		$line['received']        = eme_convert_multi2br( eme_localized_price( $booking['received'], $event['currency'] ) );
-		$line['pg']              = eme_esc_html( $pgs[ $booking['pg'] ] );
-		if ($booking['pg'] == 'payconiq' && !empty($booking['pg_pid'])) {
-                        $line['pg'] .= "<button class='button action eme_iban_button' data-pg_pid='".$booking['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$booking['payment_id']."'></span>";
+		$line['received'] = eme_convert_multi2br( eme_localized_price( $booking['received'], $event['currency'] ) );
+		if ( !empty( $booking['pg'] ) ) {
+			if ( isset( $pgs[ $booking['pg'] ] ) ) {
+                                $line['pg'] = eme_esc_html( $pgs[ $booking['pg'] ] );
+                        } else {
+                                $line['pg'] = 'UNKNOWN';
+                        }
+			if ($booking['pg'] == 'payconiq' && !empty($booking['pg_pid'])) {
+				$line['pg'] .= "<button class='button action eme_iban_button' data-pg_pid='".$booking['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$booking['payment_id']."'></span>";
+			}
+                } else {
+                        $line['pg'] = '';
                 }
 
 		$line['pg_pid']          = eme_esc_html( $booking['pg_pid'] );

@@ -198,8 +198,8 @@ function eme_init_event_props( $props = [] ) {
 	if ( ! isset( $props['task_registered_users_only'] ) ) {
 		$props['task_registered_users_only'] = get_option( 'eme_task_registered_users_only' );
 	}
-	if ( ! isset( $props['task_require_approval'] ) ) {
-		$props['task_require_approval'] = get_option( 'eme_task_require_approval' );
+	if ( ! isset( $props['task_requires_approval'] ) ) {
+		$props['task_requires_approval'] = get_option( 'eme_task_requires_approval' );
 	}
 	if ( ! isset( $props['task_allow_overlap'] ) ) {
 		$props['task_allow_overlap'] = get_option( 'eme_task_allow_overlap' );
@@ -361,7 +361,7 @@ function eme_events_page() {
 		}
 
 		// now for the select boxes, we need to set to 0 if not in the _POST
-		$select_post_vars = [ 'event_tasks', 'event_rsvp', 'registration_requires_approval', 'registration_wp_users_only' ];
+		$select_post_vars = [ 'event_tasks', 'event_rsvp', 'registration_requires_approval', 'registration_wp_users_only', 'task_requires_approval' ];
 		foreach ( $select_post_vars as $post_var ) {
 			if ( isset( $_POST[ $post_var ] ) ) {
 				$event[ $post_var ] = intval( $_POST[ $post_var ] );
@@ -2085,7 +2085,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				if ( $current_userid ) {
 					$tasks_arr = explode( ',', $tasks );
 					foreach ( $tasks_arr as $task_id ) {
-							$signups = eme_get_task_signups_by( $current_userid, $task_id );
+						$signups = eme_get_task_signups_by( $current_userid, $task_id );
 						if ( ! empty( $signups ) ) {
 							$replacement = 1;
 							break;
@@ -2684,7 +2684,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				} else {
 					$open_tasks_found = 0;
 					foreach ( $tasks as $task ) {
-						$used_spaces = eme_count_task_signups( $task['task_id'] );
+						$used_spaces = eme_count_task_approved_signups( $task['task_id'] );
 						$free_spaces = $task['spaces'] - $used_spaces;
 						if ( $free_spaces == 0 && $skip_full ) {
 							// skip full option, so check the free spaces for that task, if 0: set $skip=1
@@ -6266,6 +6266,10 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		<div id="tasks-mailtemplates-accordion">
 		<?php
 		$templates_array = eme_get_templates_array_by_id( 'task' );
+		echo '<h3>' . esc_html__( 'Task Signup Pending Email', 'events-made-easy' ) . '</h3>';
+		echo '<div>';
+		eme_meta_box_div_event_task_signup_pending_email( $event, $templates_array );
+		echo '</div>';
 		echo '<h3>' . esc_html__( 'Task Signup Made Email', 'events-made-easy' ) . '</h3>';
 		echo '<div>';
 		eme_meta_box_div_event_task_signup_made_email( $event, $templates_array );
@@ -9372,6 +9376,7 @@ function eme_admin_enqueue_js() {
 			'translate_deleted'                    => __( 'Records deleted', 'events-made-easy' ),
 			'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
 			'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
+			'translate_tasksignup_status'          => __( 'Status', 'events-made-easy' ),
 		];
 		wp_localize_script( 'eme-tasksignups', 'emetasks', $translation_array );
 		wp_enqueue_script( 'eme-tasksignups' );
@@ -9998,15 +10003,21 @@ function eme_ajax_events_list() {
                         $tasks = eme_get_event_tasks( $event['event_id'] );
                         $task_count = count($tasks);
                         if ( $task_count>0 ) {
+                                $pending_spaces = 0;
                                 $used_spaces = 0;
                                 $total_spaces = 0;
                                 foreach ( $tasks as $task ) {
-                                        $used_spaces += eme_count_task_signups( $task['task_id'] );
+					if ( $event['event_properties']['task_requires_approval'] ) {
+                                        	$pending_spaces += eme_count_task_pending_signups( $task['task_id'] );
+					}
+                                        $used_spaces += eme_count_task_approved_signups( $task['task_id'] );
                                         $total_spaces += $task['spaces'];
                                 }
-                                #$free_spaces = $total_spaces - $used_spaces;
-                                #$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
-                                $record['event_name'] .= '<br>' . sprintf( __('Task Info: %d tasks, %d/%d used/total slots', 'events-made-easy' ), $task_count, $used_spaces, $total_spaces );
+				$record['event_name'] .= '<br>' . sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
+				if ( $pending_spaces >0 ) {
+					$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=0&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+				}
+				$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=1&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
                         }
                 }
 

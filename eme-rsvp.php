@@ -2022,7 +2022,8 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today        = $eme_date_obj_now->getDateTime();
 	if (eme_is_list_of_int($person_ids) ) {
-		$wpdb->query( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($person_ids) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", EME_RSVP_STATUS_TRASH, $today );
+		$sql = $wpdb->prepare( "UPDATE $bookings_table SET status = %d WHERE person_id IN ($person_ids) AND event_id IN (SELECT event_id from $events_table WHERE event_end >= %s)", EME_RSVP_STATUS_TRASH, $today );
+		$wpdb->query( $sql );
 	}
 }
 

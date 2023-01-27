@@ -92,6 +92,7 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 			$booking_ids[] = $booking['booking_id'];
 		}
 		eme_userconfirm_bookings( $booking_ids, $total_price, $is_multi );
+
 		// reget the bookings, since the status changed
 		$bookings = eme_get_bookings_by_paymentid( $payment_id );
 		if ( $is_multi ) {

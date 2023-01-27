@@ -2280,7 +2280,14 @@ function eme_userconfirm_bookings( $booking_ids_arr, $price, $is_multibooking = 
 	$action = '';
 	foreach ( $booking_ids_arr as $booking_id ) {
 		$event = eme_get_event_by_booking_id( $booking_id );
-		if ( $price == 0 || ! $event['registration_requires_approval'] || $event['event_properties']['auto_approve'] ) {
+		if ( $price == 0 && $event['event_properties']['auto_approve'] ) {
+			$booking = eme_get_booking( $booking_id );
+			$res = eme_mark_booking_paid_approved( $booking );
+			if ( $res ) {
+				$action = 'approveBooking';
+			}
+			eme_manage_waitinglist( $event );
+		} elseif ( ! $event['registration_requires_approval'] ) {
 			$res = eme_approve_booking( $booking_id );
 			if ( $res ) {
 				$action = 'approveBooking';

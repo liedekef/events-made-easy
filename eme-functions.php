@@ -1106,6 +1106,7 @@ function eme_check_rsvp_url( $payment, $booking_id ) {
 	    [
 			'eme_check_rsvp' => 1,
 			'eme_pmt_rndid'  => $payment['random_id'],
+			'bid'  => $booking_id,
 		],
 	    $the_link
 	);

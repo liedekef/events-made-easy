@@ -930,7 +930,13 @@ function eme_events_page_content() {
 		if ( empty( $booking_ids ) ) {
 			return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Invalid URL', 'events-made-easy' ) . '</div>';
 		}
-		$booking = eme_get_booking( $booking_ids[0] );
+		if ( ! empty( $_GET['bid'] ) ) {
+			$booking_id = intval( $_GET['bid'] );
+			if ( ! in_array( $booking_id, $booking_ids ) ) {
+				$booking_id = $booking_ids[0];
+			}
+		}
+		$booking = eme_get_booking( $booking_id );
 		$event   = eme_get_event( $booking['event_id'] );
 		if ( empty( $event ) ) {
 			return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'No such event', 'events-made-easy' ) . '</div>';
@@ -984,8 +990,8 @@ function eme_events_page_content() {
 			$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 			$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'No entry allowed anymore', 'events-made-easy' ) . '</div>';
 		} else {
-			eme_update_attendance_count( $booking['booking_id'] );
-			$attendance_count = eme_get_attendance_count( $booking['booking_id'] );
+			eme_update_attendance_count( $booking_id );
+			$attendance_count = eme_get_attendance_count( $booking_id );
 			$seats_booked     = $booking['booking_seats'];
 			if ( $attendance_count > $seats_booked ) {
 				$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";

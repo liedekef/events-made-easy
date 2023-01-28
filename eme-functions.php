@@ -1836,40 +1836,6 @@ function eme_unique_nbr_formatted( $my_nbr ) {
 	return '+++' . substr( $my_nbr, 0, 3 ) . '/' . substr( $my_nbr, 3, 4 ) . '/' . substr( $my_nbr, 7, 5 ) . '+++';
 }
 
-# support older php version for array_replace_recursive
-if ( ! function_exists( 'array_replace_recursive' ) ) {
-	function array_replace_recursive( $array, $array1 ) {
-		function recurse( $array, $array1 ) {
-			foreach ( $array1 as $key => $value ) {
-				// create new key in $array, if it is empty or not an array
-				if ( ! isset( $array[ $key ] ) || ( isset( $array[ $key ] ) && ! is_array( $array[ $key ] ) ) ) {
-					$array[ $key ] = [];
-				}
-
-				// overwrite the value in the base array
-				if ( is_array( $value ) ) {
-					$value = recurse( $array[ $key ], $value );
-				}
-				$array[ $key ] = $value;
-			}
-			return $array;
-		}
-
-		// handle the arguments, merge one by one
-		$args  = func_get_args();
-		$array = $args[0];
-		if ( ! is_array( $array ) ) {
-			return $array;
-		}
-		for ( $i = 1; $i < count( $args ); $i++ ) {
-			if ( is_array( $args[ $i ] ) ) {
-				$array = recurse( $array, $args[ $i ] );
-			}
-		}
-		return $array;
-	}
-}
-
 // returns 1 if each element of array1 is > than the correspondig element of array2
 function eme_array_gt( $array1, $array2 ) {
 	if ( count( $array1 ) != count( $array2 ) ) {
@@ -1920,14 +1886,6 @@ function eme_array_le( $array1, $array2 ) {
 		}
 	}
 	return 1;
-}
-
-function eme_get_query_arg( $arg ) {
-	if ( isset( $_GET[ $arg ] ) ) {
-		return eme_sanitize_request( $_GET[ $arg ] );
-	} else {
-		return false;
-	}
 }
 
 // returns true if the array values are all integers
@@ -2061,24 +2019,6 @@ function eme_is_multi( $element ) {
 	}
 }
 
-function eme_is_never_admin() {
-		$is_ajax = false;
-	if ( function_exists( 'wp_doing_ajax' ) && wp_doing_ajax() ) {
-		return true;
-	} elseif ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-		return true;
-	}
-	if ( function_exists( 'wp_doing_cron' ) && wp_doing_cron() ) {
-		return true;
-	} elseif ( defined( 'DOING_CRON' ) && DOING_CRON ) {
-		return true;
-	}
-	if ( defined( 'XMLRPC_REQUEST' ) && XMLRPC_REQUEST ) {
-		return true; }
-	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-		return true; }
-}
-
 function eme_convert_multi2br( $multistring ) {
 	return str_replace( '||', '<br>', $multistring );
 }
@@ -2130,11 +2070,11 @@ function eme_fake_booking( $event ) {
 }
 
 function eme_booking_from_form( $event ) {
-		$booking        = eme_new_booking();
-		$bookedSeats    = 0;
-		$bookedSeats_mp = [];
-		$dcodes_entered = [];
-		$event_id       = $event['event_id'];
+	$booking        = eme_new_booking();
+	$bookedSeats    = 0;
+	$bookedSeats_mp = [];
+	$dcodes_entered = [];
+	$event_id       = $event['event_id'];
 	if ( ! eme_is_multi( $event['price'] ) ) {
 		if ( isset( $_POST['bookings'][ $event_id ]['bookedSeats'] ) ) {
 			$bookedSeats = intval( $_POST['bookings'][ $event_id ]['bookedSeats'] );
@@ -2171,7 +2111,7 @@ function eme_booking_from_form( $event ) {
 		}
 	}
 
-		// for non-multi event seats, let's check the waitinglist option too
+	// for non-multi event seats, let's check the waitinglist option too
 	if ( ! eme_is_multi( $event['event_seats'] ) ) {
 		$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
 		// check for real available seats excluding waitinglis
@@ -2189,22 +2129,22 @@ function eme_booking_from_form( $event ) {
 		$bookerComment = '';
 	}
 
-		$booking['booking_id']       = 0;
-		$booking['event_id']         = $event_id;
-		$booking['booking_seats']    = $bookedSeats;
-		$booking['booking_seats_mp'] = eme_convert_array2multi( $bookedSeats_mp );
-		$booking['event_price']      = $event['price'];
-		$booking['booking_comment']  = $bookerComment;
-		$booking['extra_charge']     = eme_store_booking_answers( $booking, 0 );
+	$booking['booking_id']       = 0;
+	$booking['event_id']         = $event_id;
+	$booking['booking_seats']    = $bookedSeats;
+	$booking['booking_seats_mp'] = eme_convert_array2multi( $bookedSeats_mp );
+	$booking['event_price']      = $event['price'];
+	$booking['booking_comment']  = $bookerComment;
+	$booking['extra_charge']     = eme_store_booking_answers( $booking, 0 );
 
-		$booking['dcodes_entered'] = $dcodes_entered;
-		$calc_discount             = eme_booking_discount( $event, $booking );
-		$booking['discount']       = $calc_discount['discount'];
-		$booking['dcodes_used']    = $calc_discount['dcodes_used'];
-		$booking['discountids']    = $calc_discount['discountids'];
-		$booking['dgroupid']       = $calc_discount['dgroupid'];
-		$booking['remaining']      = eme_get_total_booking_price( $booking );
-		return $booking;
+	$booking['dcodes_entered'] = $dcodes_entered;
+	$calc_discount             = eme_booking_discount( $event, $booking );
+	$booking['discount']       = $calc_discount['discount'];
+	$booking['dcodes_used']    = $calc_discount['dcodes_used'];
+	$booking['discountids']    = $calc_discount['discountids'];
+	$booking['dgroupid']       = $calc_discount['dgroupid'];
+	$booking['remaining']      = eme_get_total_booking_price( $booking );
+	return $booking;
 }
 
 function eme_calc_bookingprice_ajax() {

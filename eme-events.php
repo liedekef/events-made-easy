@@ -848,33 +848,33 @@ function eme_events_page_content() {
 			return "<div class='eme-message-success eme-subscribe-message-success'>" . __( 'You have successfully cancelled your signup for this task.', 'events-made-easy' ) . '</div>';
 		}
 	} elseif ( ! empty( $_GET['eme_unsub'] ) ) {
-			// lets act as if the unsub shortcode is on the page
-			$atts = [];
-			return eme_unsubform_shortcode( $atts );
+		// lets act as if the unsub shortcode is on the page
+		$atts = [];
+		return eme_unsubform_shortcode( $atts );
 
 	} elseif ( ! empty( $_GET['eme_sub_confirm'] ) && ! empty( $_GET['eme_sub_nonce'] ) ) {
 		$eme_email     = eme_sanitize_email( $_GET['eme_sub_confirm'] );
 		$eme_lastname  = ! empty( $_GET['lastname'] ) ? eme_sanitize_request( $_GET['lastname'] ) : '';
 		$eme_firstname = ! empty( $_GET['firstname'] ) ? eme_sanitize_request( $_GET['firstname'] ) : '';
 		if ( ! empty( $_GET['g'] ) ) {
-				$eme_email_groups     = eme_sanitize_request( $_GET['g'] );
-				$eme_email_groups_arr = explode( ',', $eme_email_groups );
+			$eme_email_groups     = eme_sanitize_request( $_GET['g'] );
+			$eme_email_groups_arr = explode( ',', $eme_email_groups );
 			if ( ! eme_is_numeric_array( $eme_email_groups_arr ) ) {
-					$eme_email_groups_arr = [];
+				$eme_email_groups_arr = [];
 			}
 		} else {
-				$eme_email_groups     = '';
-				$eme_email_groups_arr = [];
+			$eme_email_groups     = '';
+			$eme_email_groups_arr = [];
 		}
 		if ( wp_verify_nonce( eme_sanitize_request( $_GET['eme_sub_nonce'] ), "sub $eme_lastname$eme_firstname$eme_email$eme_email_groups" ) ) {
-				$res = eme_sub_do( $eme_lastname, $eme_firstname, $eme_email, $eme_email_groups_arr );
+			$res = eme_sub_do( $eme_lastname, $eme_firstname, $eme_email, $eme_email_groups_arr );
 			if ( $res ) {
 				return "<div class='eme-message-success eme-subscribe-message-success'>" . __( 'You have been subscribed.', 'events-made-easy' ) . '</div>';
 			} else {
 				return "<div class='eme-message-error eme-subscribe-message-error'>" . __( 'Subscription failed.', 'events-made-easy' ) . '</div>';
 			}
 		} else {
-				return "<div class='eme-message-error eme-subscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
+			return "<div class='eme-message-error eme-subscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
 		}
 	} elseif ( ! empty( $_GET['eme_unsub_confirm'] ) && ! empty( $_GET['eme_unsub_nonce'] ) ) {
 			$eme_email = eme_sanitize_email( $_GET['eme_unsub_confirm'] );
@@ -882,20 +882,20 @@ function eme_events_page_content() {
 			$eme_email_groups     = eme_sanitize_request( $_GET['g'] );
 			$eme_email_groups_arr = explode( ',', $eme_email_groups );
 			if ( ! eme_is_numeric_array( $eme_email_groups_arr ) ) {
-						$eme_email_groups_arr = [];
+				$eme_email_groups_arr = [];
 			}
 		} else {
 			$eme_email_groups     = '';
 			$eme_email_groups_arr = [];
 		}
 		if ( wp_verify_nonce( eme_sanitize_request( $_GET['eme_unsub_nonce'] ), "unsub $eme_email$eme_email_groups" ) ) {
-				eme_unsub_do( $eme_email, $eme_email_groups_arr );
-				return "<div class='eme-message-success eme-unsubscribe-message-success'>" . __( 'You have been unsubscribed.', 'events-made-easy' ) . '</div>';
+			eme_unsub_do( $eme_email, $eme_email_groups_arr );
+			return "<div class='eme-message-success eme-unsubscribe-message-success'>" . __( 'You have been unsubscribed.', 'events-made-easy' ) . '</div>';
 		} else {
-				return "<div class='eme-message-error eme-unsubscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
+			return "<div class='eme-message-error eme-unsubscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
 		}
 	} elseif ( ! empty( $_GET['eme_gdpr_approve'] ) && ! empty( $_GET['eme_gdpr_nonce'] ) ) {
-			$eme_email = eme_sanitize_email( $_GET['eme_gdpr_approve'] );
+		$eme_email = eme_sanitize_email( $_GET['eme_gdpr_approve'] );
 		if ( wp_verify_nonce( eme_sanitize_request( $_GET['eme_gdpr_nonce'] ), "gdpr $eme_email" ) ) {
 			eme_update_email_gdpr( $eme_email );
 			return eme_gdpr_approve_show();
@@ -903,23 +903,23 @@ function eme_events_page_content() {
 			return "<div class='eme-message-error eme-gdpr-message-error'>" . __( 'This link is no longer valid, please request a new link.', 'events-made-easy' ) . '</div>';
 		}
 	} elseif ( ! empty( $_GET['eme_gdpr'] ) && ! empty( $_GET['eme_gdpr_nonce'] ) ) {
-			$eme_email = eme_sanitize_email( $_GET['eme_gdpr'] );
+		$eme_email = eme_sanitize_email( $_GET['eme_gdpr'] );
 		if ( wp_verify_nonce( eme_sanitize_request( $_GET['eme_gdpr_nonce'] ), "gdpr $eme_email" ) ) {
 			return eme_show_personal_info( $eme_email );
 		} else {
 			return "<div class='eme-message-error eme-gdpr-message-error'>" . __( 'This link is no longer valid, please request a new link.', 'events-made-easy' ) . '</div>';
 		}
 	} elseif ( ! empty( $_GET['eme_cpi'] ) && ! empty( $_GET['eme_cpi_nonce'] ) && ! empty( $_GET['email'] ) ) {
-			$person_id  = intval( $_GET['eme_cpi'] );
-			$orig_email = eme_sanitize_email( $_GET['email'] );
+		$person_id  = intval( $_GET['eme_cpi'] );
+		$orig_email = eme_sanitize_email( $_GET['email'] );
 		if ( wp_verify_nonce( eme_sanitize_request( $_GET['eme_cpi_nonce'] ), "change_pi $person_id $orig_email" ) ) {
 			return eme_cpi_form( $person_id );
 		} else {
 			return "<div class='eme-message-error eme-cpi-message-error'>" . __( 'This link is no longer valid, please request a new link.', 'events-made-easy' ) . '</div>';
 		}
 	} elseif ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
-			$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
-			$payment          = eme_get_payment( 0, $payment_randomid );
+		$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
+		$payment          = eme_get_payment( 0, $payment_randomid );
 		if ( ! $payment ) {
 			return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
 		}
@@ -984,8 +984,8 @@ function eme_events_page_content() {
 			$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 			$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'No entry allowed anymore', 'events-made-easy' ) . '</div>';
 		} else {
-			eme_update_attendance_count( $booking_id );
-			$attendance_count = eme_get_attendance_count( $booking_id );
+			eme_update_attendance_count( $booking['booking_id'] );
+			$attendance_count = eme_get_attendance_count( $booking['booking_id'] );
 			$seats_booked     = $booking['booking_seats'];
 			if ( $attendance_count > $seats_booked ) {
 				$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
@@ -1016,9 +1016,9 @@ function eme_events_page_content() {
 			$format = "<div class='eme-message-error eme-member-message-error'>$img " . sprintf( __( 'NOK: member %d is either not active or does not exist!', 'events-made-easy' ), $member_id ) . '</div>';
 		} else {
 			$img            = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
-				$member     = eme_get_member( $member_id );
-				$membership = eme_get_membership( $member['membership_id'] );
-				$format     = "<div class='eme-message-success eme-rsvp-message-success'>$img ";
+			$member     = eme_get_member( $member_id );
+			$membership = eme_get_membership( $member['membership_id'] );
+			$format     = "<div class='eme-message-success eme-rsvp-message-success'>$img ";
 			if ( current_user_can( get_option( 'eme_cap_membercheck' ) ) || current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 				eme_update_member_lastseen( $member_id );
 				$eme_membership_attendance_msg = eme_nl2br_save_html( get_option( 'eme_membership_attendance_msg' ) );
@@ -1033,7 +1033,7 @@ function eme_events_page_content() {
 				$eme_membership_attendance_msg = eme_nl2br_save_html( get_option( 'eme_membership_unauth_attendance_msg' ) );
 				$format                       .= eme_replace_member_placeholders( $eme_membership_attendance_msg, $membership, $member );
 			}
-				$format .= '</div>';
+			$format .= '</div>';
 		}
 		return $format;
 	} elseif ( get_query_var( 'eme_pmt_result' ) && get_query_var( 'eme_pmt_rndid' ) ) {
@@ -8333,15 +8333,15 @@ function eme_meta_box_div_attendance_info( $event, $templates_array ) {
 	?>
 			<div id='div_event_attendance_info'>
 				<p id='p_attendancerecord'>
-								<input id="eme_prop_attendancerecord" name='eme_prop_attendancerecord' value='1' type='checkbox' <?php echo $eme_prop_attendancerecord; ?>>
-								<label for="eme_prop_attendancerecord"><?php esc_html_e( 'Select this option if you want an attendance record to be kept everytime the RSVP attendance QRCODE is scanned by an authorized user.', 'events-made-easy' ); ?></label>
+					<input id="eme_prop_attendancerecord" name='eme_prop_attendancerecord' value='1' type='checkbox' <?php echo $eme_prop_attendancerecord; ?>>
+					<label for="eme_prop_attendancerecord"><?php esc_html_e( 'Select this option if you want an attendance record to be kept everytime the RSVP attendance QRCODE is scanned by an authorized user.', 'events-made-easy' ); ?></label>
 				</p>
 				<p id='span_attendance_limit'>
-								<?php esc_html_e( 'Attendance URL (generated by #_ATTENDANCE_URL) is valid from ', 'events-made-easy' ); ?>
+					<?php esc_html_e( 'Attendance URL (generated by #_ATTENDANCE_URL) is valid from ', 'events-made-easy' ); ?>
 					<input id="eme_prop_attendance_begin" type="text" name="eme_prop_attendance_begin" maxlength='3' size='2' value="<?php echo $event['event_properties']['attendance_begin']; ?>">
-								<?php esc_html_e( 'hours before the event starts until ', 'events-made-easy' ); ?>
+					<?php esc_html_e( 'hours before the event starts until ', 'events-made-easy' ); ?>
 					<input id="eme_prop_attendance_end" type="text" name="eme_prop_attendance_end" maxlength='3' size='2' value="<?php echo $event['event_properties']['attendance_end']; ?>">
-								<?php esc_html_e( 'hours after the event ends.', 'events-made-easy' ); ?>
+					<?php esc_html_e( 'hours after the event ends.', 'events-made-easy' ); ?>
 					<br><span class="eme_smaller"><?php esc_html_e( 'When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter. EME will then also count the number of times the code is scanned by an authorized user and issue a warning is this count is greater than the number of booked seats.', 'events-made-easy' ); ?></span>
 				</p>
 

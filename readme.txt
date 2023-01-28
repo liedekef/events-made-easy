@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.45 (2023//) =
+* Fix attendance count after qrcode scan
+
 = 2.3.44 (2023/01/27) =
 * Show task info in event admin overview (identical to RSVP info)
 * Implement simple task approval. Approval requirement can be set globally or per event (not per task, allthough in the future this might be)

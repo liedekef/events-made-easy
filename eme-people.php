@@ -4347,7 +4347,7 @@ function eme_sub_send_mail( $lastname, $firstname, $email, $groups ) {
 		$contact_name  = $contact->display_name;
 	}
 	$sub_link    = eme_sub_confirm_url( $lastname, $firstname, $email, $groups );
-	$sub_subject = get_option( 'eme_sub_subject' );
+	$sub_subject = eme_translate( get_option( 'eme_sub_subject' ) );
 	$sub_body    = eme_translate( get_option( 'eme_sub_body' ) );
 	$sub_body    = str_replace( '#_SUB_CONFIRM_URL', $sub_link, $sub_body );
 	$sub_body    = str_replace( '#_LASTNAME', $lastname, $sub_body );

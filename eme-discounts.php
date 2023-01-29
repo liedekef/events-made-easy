@@ -738,7 +738,7 @@ function eme_update_booking_discount( $booking ) {
 	}
 		$calc_discount = eme_booking_discount( $event, $booking );
 
-		$bookings_table        = EME_DB_PREFIX . BOOKINGS_TBNAME;
+		$bookings_table        = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 		$where                 = [];
 		$fields                = [];
 		$where['booking_id']   = $booking['booking_id'];
@@ -763,7 +763,7 @@ function eme_update_member_discount( $member ) {
 		$membership    = eme_get_membership( $member['membership_id'] );
 		$calc_discount = eme_member_discount( $membership, $member );
 
-		$members_table         = EME_DB_PREFIX . MEMBERS_TBNAME;
+		$members_table         = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 		$where                 = [];
 		$fields                = [];
 		$where['member_id']    = $member['member_id'];
@@ -1015,7 +1015,7 @@ function eme_dgroups_edit_layout( $dgroup_id = 0, $message = '' ) {
 
 function eme_get_discounts( $extra_search = '' ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$sql   = "SELECT * FROM $table";
 	if ( ! empty( $extra_search ) ) {
 		$sql .= " AND $extra_search";
@@ -1030,7 +1030,7 @@ function eme_get_discounts( $extra_search = '' ) {
 
 function eme_get_dgroups( $extra_search = '' ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
+	$table = EME_DB_PREFIX . DISCOUNTEME_GROUPS_TBNAME;
 	$sql   = "SELECT * FROM $table";
 	if ( ! empty( $extra_search ) ) {
 		$sql .= " AND $extra_search";
@@ -1040,7 +1040,7 @@ function eme_get_dgroups( $extra_search = '' ) {
 
 function eme_db_insert_discount( $line ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 
 	$discount = eme_new_discount();
 	// we only want the columns that interest us
@@ -1063,7 +1063,7 @@ function eme_db_insert_discount( $line ) {
 
 function eme_db_update_discount( $id, $line ) {
 		global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 
 		$discount = eme_get_discount( $id );
 		// we only want the columns that interest us
@@ -1085,7 +1085,7 @@ function eme_db_update_discount( $id, $line ) {
 
 function eme_db_insert_dgroup( $line ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
+	$table = EME_DB_PREFIX . DISCOUNTEME_GROUPS_TBNAME;
 
 	$discountgroup = eme_new_discountgroup();
 	// we only want the columns that interest us
@@ -1100,7 +1100,7 @@ function eme_db_insert_dgroup( $line ) {
 
 function eme_db_update_dgroup( $id, $line ) {
 		global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
+	$table = EME_DB_PREFIX . DISCOUNTEME_GROUPS_TBNAME;
 
 		$discountgroup = eme_get_discountgroup( $id );
 		// we only want the columns that interest us
@@ -1156,7 +1156,7 @@ function eme_remove_discount_from_group( $discount_id, $group_id ) {
 
 function eme_change_discount_validfrom( $discount_id, $date ) {
 		global $wpdb;
-		$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+		$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 
 	if ( eme_is_datetime( $date ) ) {
 		$sql = $wpdb->prepare( "UPDATE $table SET valid_from = %s WHERE id = %d", $date, $discount_id );
@@ -1165,7 +1165,7 @@ function eme_change_discount_validfrom( $discount_id, $date ) {
 }
 function eme_change_discount_validto( $discount_id, $date ) {
 		global $wpdb;
-		$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+		$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 
 	if ( eme_is_datetime( $date ) ) {
 		$sql = $wpdb->prepare( "UPDATE $table SET valid_to = %s WHERE id = %d", $date, $discount_id );
@@ -1175,34 +1175,34 @@ function eme_change_discount_validto( $discount_id, $date ) {
 
 function eme_get_discountgroup( $id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
+	$table = EME_DB_PREFIX . DISCOUNTEME_GROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_discountgroup_by_name( $name ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
+	$table = EME_DB_PREFIX . DISCOUNTEME_GROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE name = %s", $name );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_discountids_by_group( $dgroup ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT id FROM $table WHERE FIND_IN_SET(%d,dgroup) OR dgroup = %s", $dgroup['id'], $dgroup['name'] );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_increase_discount_count( $id, $usage ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET count=count+%d WHERE id = %d", $usage, $id );
 	return $wpdb->query( $sql );
 }
 function eme_decrease_discount_count( $id, $usage ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET count=count-%d WHERE id = %d", $usage, $id );
 	return $wpdb->query( $sql );
 }
@@ -1266,7 +1266,7 @@ function eme_decrease_discount_member_count( $id, $member ) {
 
 function eme_get_discount( $id ) {
 	global $wpdb;
-	$table    = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table    = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$sql      = $wpdb->prepare( "SELECT * FROM $table WHERE id = %d", $id );
 	$discount = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $discount ) {
@@ -1278,20 +1278,20 @@ function eme_get_discount( $id ) {
 }
 function eme_get_discount_name( $id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT name FROM $table WHERE id = %d", $id );
 	return $wpdb->get_var( $sql );
 }
 function eme_get_dgroup_name( $id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
+	$table = EME_DB_PREFIX . DISCOUNTEME_GROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT name FROM $table WHERE id = %d", $id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_discount_by_name( $name ) {
 	global $wpdb;
-	$table    = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table    = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$sql      = $wpdb->prepare( "SELECT * FROM $table WHERE name = %s", $name );
 	$discount = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $discount ) {
@@ -1572,7 +1572,7 @@ add_action( 'wp_ajax_eme_dgroups_select2', 'eme_ajax_dgroups_select2' );
 function eme_ajax_discounts_list() {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$table        = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
@@ -1651,7 +1651,7 @@ function eme_ajax_discounts_list() {
 function eme_ajax_discountgroups_list() {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$table        = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
+	$table        = EME_DB_PREFIX . DISCOUNTEME_GROUPS_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
 	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
@@ -1698,7 +1698,7 @@ function eme_ajax_discounts_select2() {
 	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		wp_die();
 	}
-	$table        = EME_DB_PREFIX . DISCOUNTS_TBNAME;
+	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$jTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
@@ -1734,7 +1734,7 @@ function eme_ajax_dgroups_select2() {
 	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		wp_die();
 	}
-	$table        = EME_DB_PREFIX . DISCOUNTGROUPS_TBNAME;
+	$table        = EME_DB_PREFIX . DISCOUNTEME_GROUPS_TBNAME;
 	$jTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
@@ -1775,7 +1775,7 @@ function eme_ajax_manage_discounts() {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteDiscounts':
-				eme_ajax_record_delete( DISCOUNTS_TBNAME, 'eme_cap_discounts', 'id' );
+				eme_ajax_record_delete( EME_DISCOUNTS_TBNAME, 'eme_cap_discounts', 'id' );
 				$ajaxResult['htmlmessage'] = __( 'Discounts deleted', 'events-made-easy' );
 				break;
 			case 'changeValidFrom':
@@ -1835,7 +1835,7 @@ function eme_ajax_manage_discountgroups() {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteDiscountGroups':
-				eme_ajax_record_delete( DISCOUNTGROUPS_TBNAME, 'eme_cap_discounts', 'id' );
+				eme_ajax_record_delete( DISCOUNTEME_GROUPS_TBNAME, 'eme_cap_discounts', 'id' );
 				$ajaxResult['htmlmessage'] = __( 'Discount groups deleted.', 'events-made-easy' );
 				break;
 		}

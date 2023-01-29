@@ -740,7 +740,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 
 function eme_import_csv_people() {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
 	//validate whether uploaded file is a csv file
 	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
@@ -1651,10 +1651,10 @@ function eme_render_people_searchfields( $group = [] ) {
 
 function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize = 0, $sorting = '', $count = 0, $ids_only = 0, $emails_only = 0 ) {
 	global $wpdb;
-	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
-	$answers_table    = EME_DB_PREFIX . ANSWERS_TBNAME;
-	$members_table    = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$answers_table    = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+	$members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
 	// trim the search_person param too
 	$search_person = isset( $search_terms['search_person'] ) ? esc_sql( $wpdb->esc_like( trim( $search_terms['search_person'] ) ) ) : '';
@@ -2421,21 +2421,21 @@ function eme_get_person_by_post() {
 
 function eme_count_persons_by_email( $email ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT COUNT(*) FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE, $email );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_personids_by_email( $email ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE, $email );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_person_by_email_only( $email ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	// by default this function (eme_get_person_by_email_only) searches for persons with empty name and matching email
 	// but if the option eme_unique_email_per_person is set, we search only for matching email
 	// this option will get activated once donation has been done
@@ -2455,7 +2455,7 @@ function eme_get_person_by_name_and_email( $lastname, $firstname, $email ) {
 	// we order by "wp_id DESC" so if someone matches with and without wp_id, the one with wp_id wins
 	// we also search for lastname+firstname in the wrong order (if someone missed and switched last/firstname)
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( ! empty( $firstname ) ) {
 		$sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE ((lastname = %s AND firstname = %s) OR (firstname = %s AND lastname = %s)) AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', $lastname, $firstname, $lastname, $firstname, $email );
 	} else {
@@ -2478,19 +2478,19 @@ function eme_get_person_by_name_and_email( $lastname, $firstname, $email ) {
 
 function eme_get_personid_by_wpid( $wp_id ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE wp_id = %d LIMIT 1", $wp_id );
 	return intval( $wpdb->get_var( $sql ) );
 }
 function eme_get_wpid_by_personid( $person_id ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT wp_id FROM $people_table WHERE person_id = %d", $person_id );
 	return intval( $wpdb->get_var( $sql ) );
 }
 function eme_get_used_wpids( $exclude_id = 0 ) {
 		global $wpdb;
-		$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+		$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( ! empty( $exclude_id ) ) {
 			$sql = $wpdb->prepare( "SELECT DISTINCT wp_id FROM $people_table WHERE wp_id <> %d", $exclude_id );
 	} else {
@@ -2501,28 +2501,28 @@ function eme_get_used_wpids( $exclude_id = 0 ) {
 
 function eme_find_persons_double_email() {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare("SELECT email FROM $people_table WHERE status=%d GROUP BY email HAVING COUNT(*)>1", EME_PEOPLE_STATUS_ACTIVE);
 	return $wpdb->get_col( $sql );
 }
 
 function eme_find_persons_double_wp() {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql = $wpdb->prepare("SELECT wp_id FROM $people_table WHERE status= %d AND wp_id>0 AND wp_id IS NOT NULL GROUP BY wp_id HAVING COUNT(*)>1", EME_PEOPLE_STATUS_ACTIVE);
 	return $wpdb->get_col( $sql );
 }
 
 function eme_count_persons_with_wp_id( $wp_id ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT COUNT(*) FROM $people_table WHERE wp_id = %d AND status= %d ", $wp_id, EME_PEOPLE_STATUS_ACTIVE);
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_people_by_ids( $ids ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( eme_is_list_of_int( $ids ) ) {
 		$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE person_id IN ($ids) AND status= %d ORDER BY person_id", EME_PEOPLE_STATUS_ACTIVE);
 		return $wpdb->get_results( $sql, ARRAY_A );
@@ -2533,7 +2533,7 @@ function eme_get_people_by_ids( $ids ) {
 
 function eme_get_people_by_wp_ids( $wp_ids ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( eme_is_list_of_int( $wp_ids ) ) {
 	$ids_arr = explode(',', $wp_ids);
 		$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE wp_id IN ($wp_ids) AND status= %d ORDER BY wp_id", EME_PEOPLE_STATUS_ACTIVE);
@@ -2545,7 +2545,7 @@ function eme_get_people_by_wp_ids( $wp_ids ) {
 
 function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$user_info    = get_userdata( $wp_id );
 	$lastname     = $user_info->user_lastname;
 	$firstname    = $user_info->user_firstname;
@@ -2603,7 +2603,7 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 
 function eme_get_person_by_randomid( $random_id ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT * FROM $people_table WHERE random_id = %s LIMIT 1", $random_id );
 	$person       = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $person ) {
@@ -2613,7 +2613,7 @@ function eme_get_person_by_randomid( $random_id ) {
 }
 function eme_get_person( $person_id ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT * FROM $people_table WHERE person_id = %d LIMIT 1", $person_id );
 	$person       = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $person ) {
@@ -2624,7 +2624,7 @@ function eme_get_person( $person_id ) {
 
 function eme_trash_people( $person_ids ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( ! eme_is_list_of_int( $person_ids ) ) {
 		return;
 	}
@@ -2680,8 +2680,8 @@ function eme_gdpr_trash_people( $person_ids ) {
 function eme_people_birthday_emails() {
 	global $wpdb;
 
-	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$members_table    = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$month_day        = $eme_date_obj_now->format( 'm-d' );
 	// let's do the leap year logic outside the db
@@ -2735,7 +2735,7 @@ function eme_people_birthday_emails() {
 
 function eme_untrash_people( $person_ids ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$sql = $wpdb->prepare( "UPDATE $people_table SET status=%d WHERE person_id IN ($person_ids)", EME_PEOPLE_STATUS_ACTIVE);
 		$wpdb->query( $sql );
@@ -2744,7 +2744,7 @@ function eme_untrash_people( $person_ids ) {
 
 function eme_add_personid_to_newsletter( $person_id ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "UPDATE $people_table SET newsletter=1 WHERE person_id=%d", $person_id );
 	$sql_res      = $wpdb->query( $sql );
 	if ( $sql_res === false ) {
@@ -2755,7 +2755,7 @@ function eme_add_personid_to_newsletter( $person_id ) {
 }
 function eme_remove_email_from_newsletter( $email ) {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "UPDATE $people_table SET newsletter=0 WHERE email=%s", $email );
 	$wpdb->query( $sql );
 }
@@ -2775,7 +2775,7 @@ function eme_delete_people( $person_ids ) {
 	eme_delete_person_memberships( $person_ids );
 	eme_delete_person_groups( $person_ids );
 	eme_delete_person_attendances( $person_ids );
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$wpdb->query( "DELETE FROM $people_table WHERE person_id IN ($person_ids)");
 		$ids_arr   = explode( ',', $person_ids );
@@ -2787,7 +2787,7 @@ function eme_delete_people( $person_ids ) {
 
 function eme_get_group( $group_id ) {
 	global $wpdb;
-	$groups_table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$groups_table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT * FROM $groups_table WHERE group_id = %d", $group_id );
 	$res          = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $res !== false && ! empty( $res ) && ! empty( $res['search_terms'] ) ) {
@@ -2797,21 +2797,21 @@ function eme_get_group( $group_id ) {
 }
 function eme_get_group_by_name( $name ) {
 	global $wpdb;
-	$groups_table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$groups_table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT * FROM $groups_table WHERE name = %s LIMIT 1", $name );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_group_by_email( $email ) {
 	global $wpdb;
-	$groups_table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$groups_table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT * FROM $groups_table WHERE email = %s LIMIT 1", $email );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_group_name( $group_id ) {
 	global $wpdb;
-	$groups_table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$groups_table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT name FROM $groups_table WHERE group_id = %d", $group_id );
 	$result       = $wpdb->get_var( $sql );
 	return $result;
@@ -2819,13 +2819,13 @@ function eme_get_group_name( $group_id ) {
 
 function eme_get_groups() {
 	global $wpdb;
-	$table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$sql   = "SELECT * FROM $table ORDER BY name";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 function eme_get_public_groups( $group_ids = '' ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	if ( !empty( $group_ids ) && eme_is_list_of_int( $group_ids ) ) {
 		$sql = "SELECT * FROM $table WHERE public=1 AND type='static' AND group_id IN ($group_ids) ORDER BY name";
 	} else {
@@ -2835,27 +2835,27 @@ function eme_get_public_groups( $group_ids = '' ) {
 }
 function eme_get_public_groupids() {
 	global $wpdb;
-	$table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$sql   = "SELECT group_id FROM $table WHERE public=1 AND type='static' ORDER BY name";
 	return $wpdb->get_col( $sql );
 }
 function eme_get_membergroups() {
 	global $wpdb;
-	$table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$sql   = "SELECT * FROM $table WHERE type='dynamic_members' ORDER BY name";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_static_groups() {
 	global $wpdb;
-	$table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$sql   = "SELECT * FROM $table WHERE type = 'static' ORDER BY name";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_groups_exists( $ids_arr ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	if ( eme_is_numeric_array( $ids_arr ) ) {
 		$ids_list = implode(',', $ids_arr);
 		return $wpdb->get_col( "SELECT DISTINCT group_id FROM $table WHERE group_id IN ($ids_list)" );
@@ -2866,8 +2866,8 @@ function eme_groups_exists( $ids_arr ) {
 
 function eme_get_persongroup_ids( $person_id, $wp_id = 0 ) {
 	global $wpdb;
-	$table        = EME_DB_PREFIX . USERGROUPS_TBNAME;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table        = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( $wp_id ) {
 		$sql = $wpdb->prepare( "SELECT DISTINCT group_id FROM $table WHERE person_id IN (SELECT person_id FROM $people_table WHERE wp_id=%d)", $wp_id );
 	} else {
@@ -2878,9 +2878,9 @@ function eme_get_persongroup_ids( $person_id, $wp_id = 0 ) {
 
 function eme_get_persongroup_names( $person_id, $wp_id = 0 ) {
 	global $wpdb;
-	$table        = EME_DB_PREFIX . USERGROUPS_TBNAME;
-	$groups_table = EME_DB_PREFIX . GROUPS_TBNAME;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table        = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$groups_table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( $wp_id ) {
 		$sql = $wpdb->prepare( "SELECT DISTINCT groups.name FROM $table AS ugroups,$groups_table AS groups WHERE ugroups.person_id IN (SELECT person_id FROM $people_table WHERE wp_id=%d) AND ugroups.group_id=groups.group_id", $wp_id );
 	} else {
@@ -2905,8 +2905,8 @@ function eme_get_grouppersons( $group_ids, $order = 'ASC' ) {
 
 function eme_add_persongroups( $person_id, $group_ids, $public = 0 ) {
 	global $wpdb;
-	$table        = EME_DB_PREFIX . USERGROUPS_TBNAME;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table        = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( empty( $group_ids ) ) {
 		return;
 	}
@@ -2948,8 +2948,8 @@ function eme_add_persongroups( $person_id, $group_ids, $public = 0 ) {
 
 function eme_get_person_by_email_in_groups( $email, $group_ids ) {
 	global $wpdb;
-	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
 	if ( empty( $group_ids ) ) {
 		$sql = $wpdb->prepare( "SELECT p.person_id FROM $people_table p WHERE p.email=%s LIMIT 1", $email );
 	} else {
@@ -2971,23 +2971,23 @@ function eme_get_person_by_email_in_groups( $email, $group_ids ) {
 
 function eme_delete_emailfromgroup( $email, $group_id ) {
 	global $wpdb;
-	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
 	$sql              = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE group_id=%d AND person_id IN (SELECT person_id FROM $people_table WHERE email=%s)", $group_id, $email );
 	$wpdb->query( $sql );
 }
 
 function eme_delete_personfromgroup( $person_id, $group_id ) {
 	global $wpdb;
-	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
 	$sql              = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE group_id=%d AND person_id=%d", $group_id, $person_id );
 	$wpdb->query( $sql );
 }
 
 function eme_update_persongroups( $person_id, $group_ids ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "DELETE from $table WHERE person_id = %d", $person_id );
 	$wpdb->query( $sql );
 	foreach ( $group_ids as $group_id ) {
@@ -2998,7 +2998,7 @@ function eme_update_persongroups( $person_id, $group_ids ) {
 
 function eme_update_grouppersons( $group_id, $person_ids ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "DELETE from $table WHERE group_id = %d", $group_id );
 	$wpdb->query( $sql );
 	foreach ( $person_ids as $person_id ) {
@@ -3009,8 +3009,8 @@ function eme_update_grouppersons( $group_id, $person_ids ) {
 
 function eme_delete_group( $group_id ) {
 	global $wpdb;
-	$groups_table     = EME_DB_PREFIX . GROUPS_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$groups_table     = EME_DB_PREFIX . EME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
 	$sql              = $wpdb->prepare( "DELETE FROM $groups_table WHERE group_id = %d", $group_id );
 	$wpdb->query( $sql );
 	$sql = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE group_id = %d", $group_id );
@@ -3019,8 +3019,8 @@ function eme_delete_group( $group_id ) {
 
 function eme_delete_groups( $group_ids ) {
 	global $wpdb;
-	$groups_table     = EME_DB_PREFIX . GROUPS_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$groups_table     = EME_DB_PREFIX . EME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
 	if ( eme_is_list_of_int( $group_ids ) ) {
 		$wpdb->query("DELETE FROM $groups_table WHERE group_id IN ($group_ids)" );
 		$wpdb->query("DELETE FROM $usergroups_table WHERE group_id IN ($group_ids)" );
@@ -3029,8 +3029,8 @@ function eme_delete_groups( $group_ids ) {
 
 function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $order = 'ASC' ) {
 	global $wpdb;
-	$people_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
 	$where       = '';
 	$where_arr   = [];
@@ -3112,30 +3112,30 @@ function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $or
 
 function eme_get_allmail_person_ids() {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = "SELECT person_id FROM $people_table WHERE status=" . EME_PEOPLE_STATUS_ACTIVE . " AND email<>'' GROUP BY email";
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_newsletter_person_ids() {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare("SELECT person_id FROM $people_table WHERE status=%d AND massmail=1 AND newsletter=1 AND email<>'' GROUP BY email", EME_PEOPLE_STATUS_ACTIVE);
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_massmail_person_ids() {
 	global $wpdb;
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare("SELECT person_id FROM $people_table WHERE status=%d AND massmail=1 AND email<>'' GROUP BY email", EME_PEOPLE_STATUS_ACTIVE);
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_groups_person_massemails( $group_ids ) {
 	global $wpdb;
-	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
-	$groups_table     = EME_DB_PREFIX . GROUPS_TBNAME;
+	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$groups_table     = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	if ( ! eme_is_list_of_int( $group_ids ) ) {
 		return;
 	}
@@ -3183,9 +3183,9 @@ function eme_get_groups_person_massemails( $group_ids ) {
 
 function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
 	global $wpdb;
-	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
-	$groups_table     = EME_DB_PREFIX . GROUPS_TBNAME;
+	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$groups_table     = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 
 	// in case $extra_sql is not empty, we'll cache the info so we can reuse it
 	if ( ! empty( $extra_sql ) ) {
@@ -3246,7 +3246,7 @@ function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
 
 function eme_get_groups_member_ids( $group_ids ) {
 	global $wpdb;
-	$groups_table   = EME_DB_PREFIX . GROUPS_TBNAME;
+	$groups_table   = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	if ( ! eme_is_list_of_int( $group_ids ) ) {
 		return false;
 	}
@@ -3267,8 +3267,8 @@ function eme_get_groups_member_ids( $group_ids ) {
 
 function eme_get_memberships_member_ids( $membership_ids ) {
 	global $wpdb;
-	$people_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	if ( ! eme_is_list_of_int( $membership_ids ) ) {
 		return false;
 	}
@@ -3278,7 +3278,7 @@ function eme_get_memberships_member_ids( $membership_ids ) {
 
 function eme_db_insert_person( $line ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 
 	$person = eme_new_person();
 	// we only want the columns that interest us
@@ -3324,7 +3324,7 @@ function eme_db_insert_person( $line ) {
 
 function eme_db_insert_group( $line ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 
 	$group = eme_new_group();
 	// we only want the columns that interest us
@@ -3345,7 +3345,7 @@ function eme_db_insert_group( $line ) {
 
 function eme_db_update_person( $person_id, $line ) {
 	global $wpdb;
-	$table              = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table              = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$where              = [];
 	$where['person_id'] = intval( $person_id );
 
@@ -3390,7 +3390,7 @@ function eme_db_update_person( $person_id, $line ) {
 
 function eme_db_update_group( $group_id, $line ) {
 	global $wpdb;
-	$table             = EME_DB_PREFIX . GROUPS_TBNAME;
+	$table             = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$where             = [];
 	$where['group_id'] = intval( $group_id );
 
@@ -3542,7 +3542,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
 function eme_add_update_group( $group_id = 0 ) {
 	global $wpdb;
 	check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
-	$table = EME_DB_PREFIX . GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$group = [];
 	if ( isset( $_POST['name'] ) ) {
 		$group['name'] = eme_sanitize_request( $_POST['name'] );
@@ -4025,7 +4025,7 @@ function eme_after_profile_update( $wp_id, $old_user_data ) {
 
 function eme_update_person_wp_id( $person_id, $wp_id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	// the function wp_dropdown_users uses -1 for an "empty" wp_id, but our db only allows >=0, so lets rectify that
 	if ( $wp_id < 0 ) {
 		$wp_id = 0;
@@ -4066,7 +4066,7 @@ function eme_update_person_wp_id( $person_id, $wp_id ) {
 
 function eme_update_email_gdpr( $email ) {
 	global $wpdb;
-	$table     = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$gdpr_date = current_time( 'mysql', false );
 	$sql       = $wpdb->prepare( "UPDATE $table SET gdpr = 1, gdpr_date=%s WHERE email = %s", $gdpr_date, $email );
 	$wpdb->query( $sql );
@@ -4074,7 +4074,7 @@ function eme_update_email_gdpr( $email ) {
 
 function eme_update_people_gdpr( $person_ids, $gdpr = 1 ) {
 	global $wpdb;
-	$table     = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$gdpr_date = current_time( 'mysql', false );
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$sql = $wpdb->prepare("UPDATE $table SET gdpr=%d, gdpr_date=%s WHERE person_id IN ($person_ids)", $gdpr, $gdpr_date);
@@ -4084,14 +4084,14 @@ function eme_update_people_gdpr( $person_ids, $gdpr = 1 ) {
 
 function eme_update_email_massmail( $email, $massmail ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET massmail = %d WHERE email = %s", $massmail, $email );
 	$wpdb->query( $sql );
 }
 
 function eme_update_people_massmail( $person_ids, $massmail = 1 ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$sql = $wpdb->prepare( "UPDATE $table SET massmail=%d WHERE person_id IN ($person_ids)", $massmail );
 		$wpdb->query( $sql );
@@ -4100,7 +4100,7 @@ function eme_update_people_massmail( $person_ids, $massmail = 1 ) {
 
 function eme_update_people_bdemail( $person_ids, $bd_email = 1 ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$sql = $wpdb->prepare( "UPDATE $table SET bd_mail=%d WHERE person_id IN ($person_ids)", $bd_mail );
 		$wpdb->query( $sql );
@@ -4109,7 +4109,7 @@ function eme_update_people_bdemail( $person_ids, $bd_email = 1 ) {
 
 function eme_update_people_language( $person_ids, $lang ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$sql   = $wpdb->prepare( "UPDATE $table SET lang=%s WHERE person_id IN ($person_ids)", $lang );
 		$wpdb->query( $sql );
@@ -4444,7 +4444,7 @@ function eme_unsub_do( $email, $group_ids ) {
 
 function eme_get_person_answers( $person_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$answers       = wp_cache_get( "eme_person_answers $person_id" );
 	if ( $answers === false ) {
 		$sql     = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='person'", $person_id );
@@ -4456,7 +4456,7 @@ function eme_get_person_answers( $person_id ) {
 
 function eme_delete_person_groups( $person_ids ) {
 	global $wpdb;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$wpdb->query( "DELETE FROM $usergroups_table WHERE person_id IN ($person_ids)" );
 	}
@@ -4464,7 +4464,7 @@ function eme_delete_person_groups( $person_ids ) {
 
 function eme_delete_person_answers( $person_ids ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$wpdb->query( "DELETE FROM $answers_table WHERE related_id IN ($person_ids) AND type='person'" );
 	}
@@ -4472,8 +4472,8 @@ function eme_delete_person_answers( $person_ids ) {
 
 function eme_delete_person_memberships( $person_ids ) {
 	global $wpdb;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$wpdb->query( "DELETE FROM $answers_table WHERE type='member' AND related_id IN (SELECT member_id FROM $members_table WHERE person_id IN ($person_ids))" );
 		$wpdb->query( "DELETE FROM $members_table WHERE person_id IN ($person_ids)" );
@@ -4710,7 +4710,7 @@ function eme_ajax_people_list( $dynamic_groupname = '' ) {
 	}
 
 	if ( ! empty( $dynamic_groupname ) ) {
-		$table         = EME_DB_PREFIX . GROUPS_TBNAME;
+		$table         = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 		$group['type'] = 'dynamic_people';
 		$group['name'] = $dynamic_groupname . ' ' . esc_html__( '(Dynamic)', 'events-made-easy' );
 		$search_terms  = [];
@@ -4828,8 +4828,8 @@ function eme_ajax_people_list( $dynamic_groupname = '' ) {
 
 function eme_ajax_groups_list() {
 	global $wpdb;
-	$table            = EME_DB_PREFIX . GROUPS_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
+	$table            = EME_DB_PREFIX . EME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
@@ -4911,7 +4911,7 @@ function eme_ajax_people_select2() {
 		wp_die();
 	}
 
-	$table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 
 	$jTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
@@ -5262,7 +5262,7 @@ function eme_ajax_generate_people_html( $ids_arr, $template_id, $template_id_hea
 
 function eme_get_family_person_ids( $person_id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT person_id FROM $table WHERE related_person_id=%d AND status<>%d", $person_id, EME_PEOPLE_STATUS_TRASH );
 	return $wpdb->get_col( $sql );
 }

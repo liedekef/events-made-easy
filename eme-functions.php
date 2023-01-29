@@ -1314,14 +1314,14 @@ function eme_current_page_url( $extra_arg = [] ) {
 
 function eme_check_event_exists( $id ) {
 		global $wpdb;
-	$table = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$event = eme_get_event( $id );
 	return $event;
 }
 
 function eme_check_location_exists( $id ) {
 		global $wpdb;
-	$table    = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$table    = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$location = eme_get_location( $id );
 	return $location;
 }
@@ -3805,7 +3805,7 @@ function eme_check_access( $post_id ) {
 
 function eme_migrate_event_payment_options() {
 		global $wpdb;
-		$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
+		$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
 		$payment_options = [ 'use_paypal', 'use_2co', 'use_webmoney', 'use_fdgg', 'use_mollie' ];
 	foreach ( $payment_options as $payment_option ) {
@@ -3880,7 +3880,7 @@ function eme_get_answerid( $answers, $related_id, $type, $field_id, $grouping = 
 }
 function eme_insert_answer( $type, $related_id, $field_id, $answer, $grouping_id = 0, $occurence = 0 ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "INSERT INTO $answers_table (type,related_id,field_id,answer,eme_grouping,occurence) VALUES (%s,%d,%d,%s,%d,%d)", $type, $related_id, $field_id, $answer, $grouping_id, $occurence );
 	$wpdb->query( $sql );
 	return $wpdb->insert_id;
@@ -3888,13 +3888,13 @@ function eme_insert_answer( $type, $related_id, $field_id, $answer, $grouping_id
 
 function eme_update_answer( $answer_id, $value ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "UPDATE $answers_table SET answer=%s WHERE answer_id=%d", $value, $answer_id );
 	$wpdb->query( $sql );
 }
 function eme_delete_answer( $answer_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE answer_id=%d", $answer_id );
 	$wpdb->query( $sql );
 }

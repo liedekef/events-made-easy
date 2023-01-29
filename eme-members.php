@@ -192,7 +192,7 @@ function eme_init_membership_props( $props = [] ) {
 
 function eme_db_insert_membership( $membership ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	$wpdb->show_errors( true );
 	if ( ! eme_is_serialized( $membership['properties'] ) ) {
 		$membership['properties'] = eme_serialize( $membership['properties'] );
@@ -207,7 +207,7 @@ function eme_db_insert_membership( $membership ) {
 
 function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$wpdb->show_errors( true );
 
 	if ( $membership['properties']['create_wp_user'] ) {
@@ -259,7 +259,7 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
 
 function eme_db_update_member( $member_id, $line, $membership, $update_answers = 1 ) {
 	global $wpdb;
-	$table              = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table              = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$where              = [];
 	$where['member_id'] = intval( $member_id );
 
@@ -307,7 +307,7 @@ function eme_db_update_member( $member_id, $line, $membership, $update_answers =
 
 function eme_db_update_membership( $membership_id, $line ) {
 	global $wpdb;
-	$table                  = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$table                  = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	$where                  = [];
 	$where['membership_id'] = intval( $membership_id );
 
@@ -332,7 +332,7 @@ function eme_db_update_membership( $membership_id, $line ) {
 
 function eme_update_member_lastseen( $member_id ) {
 	global $wpdb;
-	$table              = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table              = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$where              = [];
 	$where['member_id'] = intval( $member_id );
 
@@ -343,9 +343,9 @@ function eme_update_member_lastseen( $member_id ) {
 
 function eme_get_members( $member_ids, $extra_search = '' ) {
 	global $wpdb;
-	$people_table      = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	$lines             = [];
 	if ( ! empty( $member_ids ) && eme_is_numeric_array( $member_ids ) ) {
 		$ids_list = implode(',', $member_ids);
@@ -373,7 +373,7 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
 
 function eme_get_memberships( $exclude_id = 0 ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	$sql   = "SELECT * FROM $table";
 	if ( ! empty( $exclude_id ) ) {
 		$sql .= ' WHERE membership_id <> ' . intval( $exclude_id );
@@ -388,7 +388,7 @@ function eme_get_memberships( $exclude_id = 0 ) {
 
 function eme_get_membership( $id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	if ( empty( $id ) ) {
 		return false;
 	}
@@ -436,7 +436,7 @@ function eme_membership_durations() {
 
 function eme_get_member( $id ) {
 	global $wpdb;
-	$table  = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table  = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$sql    = $wpdb->prepare( "SELECT * FROM $table WHERE member_id=%d", $id );
 	$member = $wpdb->get_row( $sql, ARRAY_A );
 	if ( ! empty( $member ) ) {
@@ -456,7 +456,7 @@ function eme_get_member( $id ) {
 
 function eme_get_active_member_by_personid_membershipid( $person_id, $membership_id ) {
 	global $wpdb;
-	$table         = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table         = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$status_active = EME_MEMBER_STATUS_ACTIVE;
 	$status_grace  = EME_MEMBER_STATUS_GRACE;
 	$sql           = $wpdb->prepare( "SELECT * FROM $table WHERE person_id=%d AND membership_id=%d AND status IN ($status_active,$status_grace) LIMIT 1", $person_id, $membership_id );
@@ -478,8 +478,8 @@ function eme_get_active_member_by_personid_membershipid( $person_id, $membership
 
 function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = '' ) {
 	global $wpdb;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$persons_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$persons_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( ! empty( $status ) ) {
 		if ( strstr( $status, ',' ) ) {
 			$cond_status = "AND members.status IN ($status)";
@@ -511,9 +511,9 @@ function eme_get_activemembership_names_by_personid( $person_id ) {
 	global $wpdb;
 	$status_active     = EME_MEMBER_STATUS_ACTIVE;
 	$status_grace      = EME_MEMBER_STATUS_GRACE;
-	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
-	$people_table      = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
+	$people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql               = $wpdb->prepare( "SELECT DISTINCT memberships.name FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN ($status_active,$status_grace)", $person_id );
 	return $wpdb->get_col( $sql );
 }
@@ -522,46 +522,46 @@ function eme_get_active_membershipids_by_wpid( $wp_id ) {
 	global $wpdb;
 	$status_active = EME_MEMBER_STATUS_ACTIVE;
 	$status_grace  = EME_MEMBER_STATUS_GRACE;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$people_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT DISTINCT members.membership_id FROM $members_table AS members, $people_table AS persons WHERE members.status IN ($status_active,$status_grace) AND members.person_id=persons.person_id AND persons.wp_id=%d", $wp_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_memberids_by_wpid( $wp_id ) {
 	global $wpdb;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$persons_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$persons_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT DISTINCT members.member_id FROM $members_table AS members, $persons_table AS persons WHERE members.person_id=persons.person_id AND persons.wp_id=%d", $wp_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_members_by_wpid_membershipid( $wp_id, $membership_id ) {
 	global $wpdb;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$persons_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$persons_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT members.* FROM $members_table AS members, $persons_table AS persons WHERE members.membership_id=%d AND members.person_id=persons.person_id AND persons.wp_id=%d", $membership_id, $wp_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_membership_memberids( $membership_id ) {
 	global $wpdb;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT member_id from $members_table WHERE membership_id = %d", $membership_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_member_by_paymentid( $id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE payment_id=%d AND related_member_id=0", $id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_delete_member( $member_id ) {
 	global $wpdb;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	if ( ! empty( $member_id ) ) {
 		// do the related member ids before deletion the head of the family
 		$related_member_ids = eme_get_family_member_ids( $member_id );
@@ -579,9 +579,9 @@ function eme_delete_member( $member_id ) {
 
 function eme_delete_membership( $membership_id ) {
 	global $wpdb;
-	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
-	$answers_table     = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
+	$answers_table     = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	// first get all existing memberids, so we can delete the uploaded files
 	$member_ids = eme_get_membership_memberids( $membership_id );
 	foreach ( $member_ids as $member_id ) {
@@ -1069,7 +1069,7 @@ function eme_is_expired_member( $member ) {
 
 function eme_is_active_memberid( $member_id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE member_id=%d AND status IN (%d,%d)", $member_id, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_GRACE );
 	$res   = $wpdb->get_var( $sql );
 	if ( $res > 0 ) {
@@ -1081,7 +1081,7 @@ function eme_is_active_memberid( $member_id ) {
 
 function eme_is_member( $person_id, $membership_id, $include_expired = 0 ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	if ( $include_expired ) {
 		$sql = $wpdb->prepare( "SELECT member_id FROM $table WHERE membership_id=%d AND person_id=%d", $membership_id, $person_id );
 	} else {
@@ -1124,14 +1124,14 @@ function eme_check_member_allowed_to_pay( $member, $membership ) {
 
 function eme_membership_exists( $id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE membership_id=%d", $id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_memberships_exists( $ids_arr ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	if ( ! empty( $ids_arr ) && eme_is_numeric_array( $ids_arr ) ) {
 		$ids_list = join( ',', $ids_arr );
 		return $wpdb->get_col( "SELECT DISTINCT membership_id FROM $table WHERE membership_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -2530,10 +2530,10 @@ function eme_render_members_searchfields( $group = [] ) {
 
 function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize = 0, $sorting = '', $count = 0, $memberids_only = 0, $peopleids_only = 0, $emails_only = 0 ) {
 	global $wpdb;
-	$members_table           = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$memberships_table       = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
-	$people_table            = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$answers_table           = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$members_table           = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$memberships_table       = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
+	$people_table            = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$answers_table           = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$eme_member_status_array = eme_member_status_array();
 
 	$answer_member_ids = [];
@@ -3248,7 +3248,7 @@ function eme_store_member_answers( $member, $do_update = 1 ) {
 
 	if ( $do_update && $member_id > 0 ) {
 		// put the extra charge found in the member
-		$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+		$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 		$sql           = $wpdb->prepare( "UPDATE $members_table SET extra_charge = %s WHERE member_id = %d", $extra_charge, $member_id );
 		$wpdb->query( $sql );
 
@@ -3264,48 +3264,48 @@ function eme_store_member_answers( $member, $do_update = 1 ) {
 
 function eme_get_person_ids_from_member_ids( $member_ids ) {
 	global $wpdb;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$sql           = "SELECT person_id from $members_table WHERE member_id IN ($member_ids)";
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_member_answers( $member_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='member'", $member_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_nodyndata_member_answers( $member_id ) {
 	global $wpdb;
-	$answers_table        = EME_DB_PREFIX . ANSWERS_TBNAME;
-	$formfield_table_name = EME_DB_PREFIX . FORMFIELDS_TBNAME;
+	$answers_table        = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+	$formfield_table_name = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	$sql                  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=0 AND type='member'", $member_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_dyndata_member_answers( $member_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping>0 AND type='member' ORDER BY eme_grouping,occurence,field_id", $member_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 function eme_get_dyndata_member_answer( $member_id, $grouping = 0, $occurence = 0 ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=%d AND occurence=%d AND type='member'", $member_id, $grouping, $occurence );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_delete_member_answers( $member_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='member'", $member_id );
 	$wpdb->query( $sql );
 }
 function eme_delete_membership_answers( $membership_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='membership'", $member_id );
 	$wpdb->query( $sql );
 }
@@ -3391,8 +3391,8 @@ function eme_get_next_end_date( $membership, $start_date, $new_member = 0 ) {
 // for CRON
 function eme_member_recalculate_status( $member_id = 0 ) {
 	global $wpdb;
-	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	// we only recalculate member status if status_automatic=1 and the member has paid
 	if ( $member_id ) {
 		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE a.member_id=$member_id AND a.status_automatic=1 AND a.paid=1 AND related_member_id=0";
@@ -3435,7 +3435,7 @@ function eme_member_recalculate_status( $member_id = 0 ) {
 // for CRON
 function eme_member_remove_pending() {
 	global $wpdb;
-	$table            = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table            = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT member_id,membership_id,creation_date from $table WHERE status=%d", EME_MEMBER_STATUS_PENDING );
 	$members          = $wpdb->get_results( $sql, ARRAY_A );
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
@@ -3454,7 +3454,7 @@ function eme_member_remove_pending() {
 // for GDPR CRON
 function eme_member_remove_old_expired() {
 	global $wpdb;
-	$table               = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table               = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$remove_expired_days = get_option( 'eme_gdpr_remove_expired_member_days' );
 	if ( empty( $remove_expired_days ) ) {
 		return;
@@ -3473,7 +3473,7 @@ function eme_member_remove_old_expired() {
 // for CRON
 function eme_member_send_expiration_reminders() {
 	global $wpdb;
-	$table            = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table            = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$memberships      = eme_get_memberships();
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today            = $eme_date_obj_now->getDate();
@@ -3499,14 +3499,14 @@ function eme_member_send_expiration_reminders() {
 
 function eme_count_pending_members() {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) from $table WHERE status=%d", EME_MEMBER_STATUS_PENDING );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_member_send_expiration_reminder( $member_id ) {
 	global $wpdb;
-	$table            = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table            = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today            = $eme_date_obj_now->getDate();
 	$member           = eme_get_member( $member_id );
@@ -3562,7 +3562,7 @@ function eme_member_calc_status( $start_date, $end_date, $duration = '', $grace_
 
 function eme_member_set_paid( $member, $pg = '', $pg_pid = '' ) {
 	global $wpdb;
-	$table      = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table      = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$membership = eme_get_membership( $member['membership_id'] );
 
 	if ( ! empty( $member['related_member_id'] ) ) {
@@ -3611,7 +3611,7 @@ function eme_member_set_paid( $member, $pg = '', $pg_pid = '' ) {
 
 function eme_member_set_unpaid( $member ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	// do nothing if not paid or if a family member
 	if ( ! $member['paid'] || ! empty( $member['related_member_id'] ) ) {
 		return true;
@@ -3640,7 +3640,7 @@ function eme_member_set_unpaid( $member ) {
 
 function eme_extend_member( $member, $pg = '', $pg_pid = '' ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
 	if ( empty( $member['end_date'] ) ) {
 		return eme_member_set_paid( $member, $pg, $pg_pid );
@@ -3677,7 +3677,7 @@ function eme_extend_member( $member, $pg = '', $pg_pid = '' ) {
 
 function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
 	if ( ! empty( $member['related_member_id'] ) ) {
 		return 0;
@@ -3710,7 +3710,7 @@ function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
 
 function eme_get_family_member_ids( $member_id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	if ( empty( $member_id ) ) {
 		return false;
 	}
@@ -3720,7 +3720,7 @@ function eme_get_family_member_ids( $member_id ) {
 
 function eme_member_set_status( $member_id, $status ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
 	$where              = [];
 	$fields             = [];
@@ -3732,7 +3732,7 @@ function eme_member_set_status( $member_id, $status ) {
 
 function eme_stop_member( $member_id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
 	$where              = [];
 	$fields             = [];
@@ -5164,7 +5164,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 
 function eme_import_csv_members() {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
 	if ( ! current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 		return __( 'Access denied', 'events-made-easy' );
@@ -5334,7 +5334,7 @@ function eme_import_csv_members() {
 
 function eme_import_csv_member_dynamic_answers() {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
 	if ( ! current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			return __( 'Access denied', 'events-made-easy' );
@@ -5474,8 +5474,8 @@ function eme_import_csv_member_dynamic_answers() {
 
 function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
 	global $wpdb;
-	$people_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
@@ -5607,8 +5607,8 @@ function eme_ajax_memberships_list() {
 	}
 	$status_active = EME_MEMBER_STATUS_ACTIVE;
 	$status_grace  = EME_MEMBER_STATUS_GRACE;
-	$table         = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$table         = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$ajaxResult    = [];
 
 	$formfields = eme_get_formfields( '', 'memberships' );
@@ -5710,7 +5710,7 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 	}
 
 	if ( ! empty( $dynamic_groupname ) ) {
-			$table         = EME_DB_PREFIX . GROUPS_TBNAME;
+			$table         = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 			$group['type'] = 'dynamic_members';
 		$group['name']     = $dynamic_groupname . ' ' . __( '(Dynamic)', 'events-made-easy' );
 		$search_terms      = [];
@@ -5872,10 +5872,10 @@ function eme_ajax_members_select2() {
 			wp_die();
 	}
 
-	$table             = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$people_table      = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$members_table     = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$memberships_table = EME_DB_PREFIX . MEMBERSHIPS_TBNAME;
+	$table             = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	$jTableResult      = [];
 	$q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
@@ -6453,7 +6453,7 @@ function eme_get_membership_post_answers() {
 
 function eme_get_membership_answers( $membership_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$cf            = wp_cache_get( "eme_membership_cf $membership_id" );
 	if ( $cf === false ) {
 		$sql    = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='membership'", $membership_id );
@@ -6492,7 +6492,7 @@ function eme_membership_store_answers( $membership_id ) {
 
 function eme_get_cf_membership_ids( $val, $field_id, $is_multi = 0 ) {
 	global $wpdb;
-	$table      = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$table      = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$conditions = [];
 	$val        = eme_kses( $val );
 
@@ -6523,8 +6523,8 @@ function eme_get_cf_membership_ids( $val, $field_id, $is_multi = 0 ) {
 
 function eme_get_membership_cf_answers_groupingids( $membership_id ) {
 		global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
-	$members_table = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 		$sql       = $wpdb->prepare( "select distinct a.eme_grouping from $answers_table a left join $members_table m on m.member_id=a.related_id where m.membership_id=%d AND a.type='member'", $membership_id );
 		return $wpdb->get_col( $sql );
 }

@@ -198,7 +198,7 @@ function eme_locations_page() {
 
 function eme_import_csv_locations() {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
 	//validate whether uploaded file is a csv file
 	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
@@ -912,7 +912,7 @@ function eme_locations_table( $message = '' ) {
 
 function eme_search_locations( $name ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$query = "SELECT * FROM $table WHERE (location_name LIKE %s) OR
            (location_description LIKE %s) ORDER BY location_name";
 	$sql   = $wpdb->prepare( $query, '%'.$wpdb->esc_like($name).'%', '%'.$wpdb->esc_like($name).'%' );
@@ -922,7 +922,7 @@ function eme_search_locations( $name ) {
 // this returns all locations, can be useful in dropdown for location selects
 function eme_get_all_locations() {
 	global $wpdb;
-	$locations_table = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$sql             = "SELECT * FROM $locations_table WHERE location_name != '' ORDER BY location_name";
 	$locations       = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $locations as $key => $location ) {
@@ -936,7 +936,7 @@ function eme_get_all_locations() {
 
 function eme_get_locations_by_distance( $longitude, $latitude, $distance, $location_ids_only ) {
 	global $wpdb;
-	$locations_table = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	if ( $location_ids_only ) {
 		$sql       = $wpdb->prepare( "SELECT location_id FROM $locations_table WHERE ST_Distance_Sphere(point(%f,%f),point(location_longitude,location_latitude)) < %d", $longitude, $latitude, $distance );
 		$locations = $wpdb->get_col( $sql );
@@ -955,8 +955,8 @@ function eme_get_locations_by_distance( $longitude, $latitude, $distance, $locat
 
 function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $notcategory = '', $limit = 0, $ignore_filter = false, $random_order = false, $author = '', $contact_person = '' ) {
 	global $wpdb;
-	$locations_table = EME_DB_PREFIX . LOCATIONS_TBNAME;
-	$events_table    = EME_DB_PREFIX . EVENTS_TBNAME;
+	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+	$events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$locations       = [];
 
 	$location_id_arr = [];
@@ -1188,7 +1188,7 @@ function eme_get_location( $location_id ) {
 	if ( empty( $location_id ) ) {
 		return false;
 	} else {
-		$locations_table = EME_DB_PREFIX . LOCATIONS_TBNAME;
+		$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 		if ( is_numeric( $location_id ) ) {
 			$sql = $wpdb->prepare( "SELECT * from $locations_table WHERE location_id = %d", $location_id );
 		} else {
@@ -1231,7 +1231,7 @@ function eme_get_extra_location_data( $location ) {
 
 function eme_get_city_location_ids( $cities ) {
 	global $wpdb;
-	$locations_table = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$location_ids    = [];
 	$conditions      = '';
 	if ( is_array( $cities ) ) {
@@ -1252,7 +1252,7 @@ function eme_get_city_location_ids( $cities ) {
 
 function eme_get_country_location_ids( $countries ) {
 	global $wpdb;
-	$locations_table = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$location_ids    = [];
 	$conditions      = '';
 	if ( is_array( $countries ) ) {
@@ -1273,7 +1273,7 @@ function eme_get_country_location_ids( $countries ) {
 
 function eme_get_identical_location_id( $location ) {
 	global $wpdb;
-	$locations_table = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$prepared_sql    = $wpdb->prepare( "SELECT location_id FROM $locations_table WHERE location_name = %s AND location_address1 = %s AND location_address2 = %s AND location_city = %s AND location_state = %s AND location_zip = %s AND location_country = %s AND location_latitude = %s AND location_longitude = %s LIMIT 1", stripcslashes( $location['location_name'] ), stripcslashes( $location['location_address1'] ), stripcslashes( $location['location_address2'] ), stripcslashes( $location['location_city'] ), stripcslashes( $location['location_state'] ), stripcslashes( $location['location_zip'] ), stripcslashes( $location['location_country'] ), stripcslashes( $location['location_latitude'] ), stripcslashes( $location['location_longitude'] ) );
 	return $wpdb->get_var( $prepared_sql );
 }
@@ -1352,7 +1352,7 @@ function eme_validate_location( $location ) {
 
 function eme_update_location( $line, $location_id ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 
 	if ( empty( $line['location_author'] ) ) {
 		$line['location_author'] = get_current_user_id();
@@ -1360,7 +1360,7 @@ function eme_update_location( $line, $location_id ) {
 	if ( empty( $line['location_slug'] ) ) {
 		$line['location_slug'] = eme_permalink_convert_noslash( $line['location_name'] );
 	}
-	$line['location_slug'] = eme_unique_slug( $line['location_slug'], LOCATIONS_TBNAME, 'location_slug', 'location_id', $location_id );
+	$line['location_slug'] = eme_unique_slug( $line['location_slug'], EME_LOCATIONS_TBNAME, 'location_slug', 'location_id', $location_id );
 
 	$location = eme_new_location();
 	// we only want the columns that interest us
@@ -1387,7 +1387,7 @@ function eme_insert_location( $line, $force = 0 ) {
 	// the force parameter can be used to ignore capabilities for a user when inserting a location
 	// the frontend submit plugin can use this
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 
 	if ( empty( $line['location_author'] ) ) {
 		$line['location_author'] = get_current_user_id();
@@ -1395,7 +1395,7 @@ function eme_insert_location( $line, $force = 0 ) {
 	if ( empty( $line['location_slug'] ) ) {
 		$line['location_slug'] = eme_permalink_convert_noslash( $line['location_name'] );
 	}
-	$line['location_slug'] = eme_unique_slug( $line['location_slug'], LOCATIONS_TBNAME, 'location_slug', 'location_id' );
+	$line['location_slug'] = eme_unique_slug( $line['location_slug'], EME_LOCATIONS_TBNAME, 'location_slug', 'location_id' );
 
 	$location = eme_new_location();
 	// we only want the columns that interest us
@@ -1432,11 +1432,11 @@ function eme_delete_location( $location_id, $transfer_id = 0 ) {
 		return;
 	}
 
-	$table_name = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$sql        = $wpdb->prepare( "DELETE FROM $table_name where location_id=%d", $location_id );
 	$wpdb->query( $sql );
 
-	$events_table = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$sql          = $wpdb->prepare( "UPDATE $events_table SET location_id=%d WHERE location_id = %d", $transfer_id, $location_id );
 	$wpdb->query( $sql );
 
@@ -1445,7 +1445,7 @@ function eme_delete_location( $location_id, $transfer_id = 0 ) {
 
 function eme_delete_location_answers( $location_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='location'", $location_id );
 	$wpdb->query( $sql );
 }
@@ -1453,20 +1453,20 @@ function eme_delete_location_answers( $location_id ) {
 
 function eme_check_location_external_ref( $id ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_external_ref = %s", $id );
 	return $wpdb->get_var( $sql );
 }
 function eme_check_location_coord( $lat, $long ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_latitude = %s AND location_longitude = %s", $lat, $long );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_check_location_name_address( $location ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	if ( ! isset( $location['location_address2'] ) ) {
 		$location['location_address2'] = '';
 	}
@@ -1488,7 +1488,7 @@ function eme_check_location_name_address( $location ) {
 
 function eme_location_has_events( $location_id ) {
 	global $wpdb;
-	$events_table = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	if ( ! eme_is_admin_request() ) {
 		if ( is_user_logged_in() ) {
 			$condition = 'AND event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_PRIVATE . ')';
@@ -2836,8 +2836,8 @@ function eme_ajax_locations_list() {
 			wp_die();
 	}
 
-	$table         = EME_DB_PREFIX . LOCATIONS_TBNAME;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$table         = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$search_name   = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$where         = '';
 	$where_arr     = [];
@@ -2956,7 +2956,7 @@ function eme_ajax_locations_list() {
 function eme_ajax_manage_locations() {
 	global $wpdb;
 	$current_userid = get_current_user_id();
-	$table          = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$table          = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$jTableResult = [];
 	if ( isset( $_POST['do_action'] ) ) {
@@ -3013,7 +3013,7 @@ function eme_get_location_cf_answers( $location_id ) {
 
 function eme_get_location_answers( $location_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$cf            = wp_cache_get( "eme_location_cf $location_id" );
 	if ( $cf === false ) {
 		$sql    = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='location'", $location_id );
@@ -3052,7 +3052,7 @@ function eme_location_store_cf_answers( $location_id ) {
 
 function eme_get_cf_location_ids( $val, $field_id, $is_multi = 0 ) {
 	global $wpdb;
-	$table      = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$table      = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$conditions = [];
 	$val        = eme_kses( $val );
 

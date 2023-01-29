@@ -3240,8 +3240,8 @@ function eme_membership_get_first_pg( $membership ) {
 
 function eme_create_member_payment( $member_id ) {
 	global $wpdb;
-	$payments_table           = EME_DB_PREFIX . PAYMENTS_TBNAME;
-	$members_table            = EME_DB_PREFIX . MEMBERS_TBNAME;
+	$payments_table           = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
+	$members_table            = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$payment_id               = false;
 	$payment                  = [];
 	$payment['random_id']     = eme_random_id();
@@ -3259,8 +3259,8 @@ function eme_create_member_payment( $member_id ) {
 
 function eme_create_payment( $booking_ids ) {
 	global $wpdb;
-	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	// some safety
 	if ( ! $booking_ids ) {
@@ -3289,7 +3289,7 @@ function eme_create_payment( $booking_ids ) {
 
 function eme_get_payment( $payment_id, $payment_randomid = 0 ) {
 	global $wpdb;
-	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
+	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	if ( $payment_id ) {
 		$sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE id=%d", $payment_id );
 	} else {
@@ -3300,22 +3300,22 @@ function eme_get_payment( $payment_id, $payment_randomid = 0 ) {
 
 function eme_get_payment_by_pg_pid( $pg_pid ) {
 	global $wpdb;
-	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
+	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT * FROM $payments_table WHERE pg_pid=%s", $pg_pid );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_payment_booking_ids( $payment_id ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT booking_id FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_randompayment_booking_ids( $payment_randomid, $check_trash = 0 ) {
 	global $wpdb;
-	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if ( $check_trash ) {
 		$sql = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $payments_table AS payments ON bookings.payment_id=payments.id where bookings.status = %d AND payments.random_id=%s", EME_RSVP_STATUS_TRASH, $payment_randomid );
 	} else {
@@ -3326,7 +3326,7 @@ function eme_get_randompayment_booking_ids( $payment_randomid, $check_trash = 0 
 
 function eme_delete_payment( $payment_id ) {
 	global $wpdb;
-	$payments_table = EME_DB_PREFIX . PAYMENTS_TBNAME;
+	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	$sql            = $wpdb->prepare( "DELETE FROM $payments_table WHERE id=%d", $payment_id );
 	return $wpdb->get_var( $sql );
 }
@@ -3418,7 +3418,7 @@ function eme_get_member_payment_price( $payment_id ) {
 function eme_update_attendance_count( $booking_id ) {
 	global $wpdb;
 	if ( $booking_id ) {
-		$table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+		$table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 		$sql   = "UPDATE $table SET attend_count=attend_count+1 WHERE booking_id=$booking_id";
 		$wpdb->query( $sql );
 	}
@@ -3427,7 +3427,7 @@ function eme_update_attendance_count( $booking_id ) {
 function eme_get_attendance_count( $booking_id ) {
 	global $wpdb;
 	if ( $booking_id ) {
-		$table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+		$table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 		$sql   = "SELECT attend_count FROM $table WHERE booking_id=$booking_id";
 		return $wpdb->get_var( $sql );
 	}
@@ -3435,14 +3435,14 @@ function eme_get_attendance_count( $booking_id ) {
 
 function eme_update_payment_pg_pid( $payment_id, $pg_pid = '' ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . PAYMENTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET pg_pid=%s, pg_handled=0 WHERE id=%d", $pg_pid, $payment_id );
 	$wpdb->query( $sql );
 }
 
 function eme_update_payment_pg_handled( $payment_id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . PAYMENTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET pg_handled=1 WHERE id=%d", $payment_id );
 	$wpdb->query( $sql );
 }
@@ -3595,7 +3595,7 @@ function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $
 
 function eme_payment_count_unpaid_bookings( $payment_id ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT COUNT(*) FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d AND booking_paid=0", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_id );
 	return $wpdb->get_var( $sql );
 }

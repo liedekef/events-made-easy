@@ -46,7 +46,7 @@ function eme_formfields_page() {
 	}
 
 	// Insert/Update/Delete Record
-	$formfields_table  = EME_DB_PREFIX . FORMFIELDS_TBNAME;
+	$formfields_table  = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	$validation_result = '';
 	$message           = '';
 	if ( isset( $_POST['eme_admin_action'] ) ) {
@@ -431,19 +431,19 @@ function eme_get_dyndata_conditions() {
 
 function eme_get_used_formfield_ids() {
 	global $wpdb;
-	$table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	return $wpdb->get_col( "SELECT DISTINCT field_id FROM $table" );
 }
 
 function eme_check_used_formfield( $field_id ) {
 	global $wpdb;
-	$table  = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
 	$count  = $wpdb->get_var( $query );
-	$table  = EME_DB_PREFIX . EVENTS_CF_TBNAME;
+	$table  = EME_DB_PREFIX . EME_EVENTS_CF_TBNAME;
 	$query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
 	$count += $wpdb->get_var( $query );
-	$table  = EME_DB_PREFIX . LOCATIONS_CF_TBNAME;
+	$table  = EME_DB_PREFIX . EME_LOCATIONS_CF_TBNAME;
 	$query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
 	$count += $wpdb->get_var( $query );
 	return $count;
@@ -451,7 +451,7 @@ function eme_check_used_formfield( $field_id ) {
 
 function eme_get_formfields( $ids = '', $purpose = '' ) {
 	global $wpdb;
-	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
+	$formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	$where            = '';
 	$where_arr        = [];
 	if ( ! empty( $ids ) && eme_is_list_of_int($ids) ) {
@@ -473,7 +473,7 @@ function eme_get_formfields( $ids = '', $purpose = '' ) {
 
 function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
 	global $wpdb;
-	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
+	$formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	$where            = '';
 	$where_arr        = [];
 	$where_arr[]      = 'searchable=1';
@@ -493,7 +493,7 @@ function eme_get_searchable_formfields( $purpose = '', $include_generic = 0 ) {
 
 function eme_get_formfield( $field_info ) {
 	global $wpdb;
-	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
+	$formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	if ( is_numeric( $field_info ) || $field_info == 'performer' ) {
 		$formfield = wp_cache_get( "eme_formfield $field_info" );
 	} else {
@@ -515,18 +515,18 @@ function eme_get_formfield( $field_info ) {
 
 function eme_delete_formfields( $ids_arr ) {
 	global $wpdb;
-	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
+	$formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	if ( ! empty( $ids_arr ) && eme_is_numeric_array( $ids_arr ) ) {
 		$ids_list = implode(',', $ids_arr);
 		$validation_result = $wpdb->query( "DELETE FROM $formfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		if ( $validation_result !== false ) {
-			$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+			$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 			$wpdb->query( "DELETE FROM $answers_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			$events_customfields_table = EME_DB_PREFIX . EVENTS_CF_TBNAME;
+			$events_customfields_table = EME_DB_PREFIX . EME_EVENTS_CF_TBNAME;
 			$wpdb->query( "DELETE FROM $events_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			$locations_customfields_table = EME_DB_PREFIX . LOCATIONS_CF_TBNAME;
+			$locations_customfields_table = EME_DB_PREFIX . EME_LOCATIONS_CF_TBNAME;
 			$wpdb->query( "DELETE FROM $locations_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-			$memberships_customfields_table = EME_DB_PREFIX . MEMBERSHIPS_CF_TBNAME;
+			$memberships_customfields_table = EME_DB_PREFIX . EME_MEMBERSHIPS_CF_TBNAME;
 			$wpdb->query( "DELETE FROM $memberships_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			return true;
 		} else {
@@ -1923,7 +1923,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 
 function eme_get_dyndata_people_fields( $condition ) {
 	global $wpdb;
-	$formfields_table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
+	$formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT * FROM $formfields_table where field_purpose='people' AND FIND_IN_SET(%s,field_condition)", $condition );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
@@ -4642,7 +4642,7 @@ function eme_convert_answer_price( $answer ) {
 
 function eme_get_answer_fieldids( $ids_arr ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
 	if (eme_is_numeric_array( $ids_arr ) ) {
 		$ids_list = implode(',', $ids_arr);
@@ -4654,7 +4654,7 @@ function eme_get_answer_fieldids( $ids_arr ) {
 
 function eme_get_people_export_fieldids() {
 	global $wpdb;
-	$table = EME_DB_PREFIX . FORMFIELDS_TBNAME;
+	$table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each run)
 	$sql = "SELECT field_id FROM $table WHERE export=1 AND field_purpose='people' ORDER BY field_id";
 	return $wpdb->get_col( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -4830,7 +4830,7 @@ function eme_ajax_formfields_list() {
 		wp_die();
 	}
 
-	$table              = EME_DB_PREFIX . FORMFIELDS_TBNAME;
+	$table              = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	$used_formfield_ids = eme_get_used_formfield_ids();
 	$jTableResult       = [];
 	$search_type        = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';

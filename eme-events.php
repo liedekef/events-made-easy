@@ -1351,7 +1351,7 @@ function eme_events_page_content() {
 
 function eme_events_count_for( $date ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$conditions = [];
 	if ( ! eme_is_admin_request() ) {
 		if ( is_user_logged_in() ) {
@@ -4617,7 +4617,7 @@ function eme_are_events_available( $scope = 'future', $order = 'ASC', $location_
 
 function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_id = 0, $only_rsvp = 0 ) {
 	global $wpdb;
-	$table         = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table         = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$start_of_week = get_option( 'start_of_week' );
 	$eme_date_obj->setWeekStartDay( $start_of_week );
@@ -4660,9 +4660,9 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '' ) {
 	global $wpdb;
 
-	$events_table    = EME_DB_PREFIX . EVENTS_TBNAME;
-	$bookings_table  = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$locations_table = EME_DB_PREFIX . LOCATIONS_TBNAME;
+	$events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$bookings_table  = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 
 	if ( strpos( $o_limit, '=' ) ) {
 		// allows the use of arguments
@@ -5286,7 +5286,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		}
 	} elseif ( $include_customformfields ) {
 		$formfields_searchable = eme_get_formfields( $search_customfieldids );
-		$answers_table         = EME_DB_PREFIX . ANSWERS_TBNAME;
+		$answers_table         = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 		foreach ( $formfields_searchable as $formfield ) {
 			$field_id = $formfield['field_id'];
 		}
@@ -5366,7 +5366,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 
 function eme_get_eventids_by_author( $author_id, $scope, $event_id ) {
 	global $wpdb;
-	$events_table     = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$this_datetime    = $eme_date_obj_now->getDateTime();
 	$where_arr        = [];
@@ -5396,7 +5396,7 @@ function eme_get_event_name( $event_id ) {
 		return '';
 	}
 
-	$events_table = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	if ( is_numeric( $event_id ) ) {
 		$sql = $wpdb->prepare( "SELECT event_name from $events_table WHERE event_id = %d", $event_id );
 	} else {
@@ -5416,7 +5416,7 @@ function eme_get_event( $event_id ) {
 		return false;
 	}
 
-	$events_table = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$conditions   = [];
 
 	if ( is_numeric( $event_id ) ) {
@@ -5455,7 +5455,7 @@ function eme_get_event_arr( $event_ids ) {
 		return $events;
 	}
 
-	$events_table     = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$conditions       = [];
 	$event_ids_joined = join( ',', $event_ids );
 	$conditions[]     = "event_id IN ($event_ids_joined)";
@@ -5505,7 +5505,7 @@ function eme_get_extra_event_data( $event ) {
 
 function eme_import_csv_events() {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
 	//validate whether uploaded file is a csv file
 	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
@@ -9030,7 +9030,7 @@ function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_diff
 	} else {
 		$eme_db_prexix  = EME_DB_PREFIX;
 	}
-	$table_name = $eme_db_prexix . EVENTS_TBNAME;
+	$table_name = $eme_db_prexix . EME_EVENTS_TBNAME;
 
 	if ( empty( $line['event_author'] ) ) {
 		$line['event_author'] = get_current_user_id();
@@ -9041,7 +9041,7 @@ function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_diff
 	if ( empty( $line['event_slug'] ) ) {
 		$line['event_slug'] = eme_permalink_convert_noslash( $line['event_name'] );
 	}
-	$line['event_slug'] = eme_unique_slug( $line['event_slug'], EVENTS_TBNAME, 'event_slug', 'event_id' );
+	$line['event_slug'] = eme_unique_slug( $line['event_slug'], EME_EVENTS_TBNAME, 'event_slug', 'event_id' );
 	if ( eme_is_empty_datetime( $line['event_start'] ) && isset( $line['event_start_date'] ) && isset( $line['event_start_time'] ) ) {
 		$line['event_start'] = $line['event_start_date'] . ' ' . $line['event_start_time'];
 	}
@@ -9081,7 +9081,7 @@ function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_diff
 
 function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0, $day_difference = 0 ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
 	if ( empty( $line['event_author'] ) ) {
 		$line['event_author'] = get_current_user_id();
@@ -9101,10 +9101,10 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 		if ( $orig_slug_base == $new_slug_base ) {
 			$line['event_slug'] = $orig_event['event_slug'];
 		} else {
-			$line['event_slug'] = eme_unique_slug( $line['event_slug'], EVENTS_TBNAME, 'event_slug', 'event_id', $event_id );
+			$line['event_slug'] = eme_unique_slug( $line['event_slug'], EME_EVENTS_TBNAME, 'event_slug', 'event_id', $event_id );
 		}
 	} else {
-		$line['event_slug'] = eme_unique_slug( $line['event_slug'], EVENTS_TBNAME, 'event_slug', 'event_id', $event_id );
+		$line['event_slug'] = eme_unique_slug( $line['event_slug'], EME_EVENTS_TBNAME, 'event_slug', 'event_id', $event_id );
 	}
 	if ( eme_is_empty_datetime( $line['event_start'] ) && isset( $line['event_start_date'] ) && isset( $line['event_start_time'] ) ) {
 		$line['event_start'] = $line['event_start_date'] . ' ' . $line['event_start_time'];
@@ -9152,7 +9152,7 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 
 function eme_change_event_status( $events, $status ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
 	if ( is_array( $events ) ) {
 		$events_to_change = join( ',', $events );
@@ -9167,7 +9167,7 @@ function eme_change_event_status( $events, $status ) {
 // for GDPR cron
 function eme_delete_old_events() {
 	global $wpdb;
-	$events_table           = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_table           = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$remove_old_events_days = get_option( 'eme_gdpr_remove_old_events_days' );
 	if ( empty( $remove_old_events_days ) ) {
 			return;
@@ -9198,7 +9198,7 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
 		do_action( 'eme_delete_event_action', $event );
 	}
 
-	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$sql        = $wpdb->prepare( "DELETE FROM $table_name WHERE event_id = %d", $event_id );
 	if ( $wpdb->query( $sql ) ) {
 		eme_delete_all_bookings_for_event_id( $event_id );
@@ -9210,14 +9210,14 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
 
 function eme_delete_event_answers( $event_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='event'", $event_id );
 	$wpdb->query( $sql );
 }
 
 function eme_check_event_external_ref( $id ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$sql        = $wpdb->prepare( "SELECT location_id FROM $table_name WHERE location_external_ref = %s", $id );
 	return $wpdb->get_var( $sql );
 }
@@ -10225,7 +10225,7 @@ function eme_ajax_action_events_status( $ids_arr, $status ) {
 
 function eme_ajax_action_events_addcat( $ids, $category_id ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
         if (eme_is_list_of_int($ids) ) {
 		$sql = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
 		   WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id);
@@ -10238,8 +10238,8 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
 
 function eme_trash_events( $ids, $send_trashmails = 0 ) {
 	global $wpdb;
-	$table_name     = EME_DB_PREFIX . EVENTS_TBNAME;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$table_name     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
         if (!eme_is_list_of_int($ids) ) {
 		return;
 	}
@@ -10267,7 +10267,7 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 
 function eme_untrash_events( $ids ) {
 	global $wpdb;
-	$table_name = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
         if (eme_is_list_of_int($ids) ) {
 		$sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_DRAFT); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -10321,7 +10321,7 @@ function eme_get_event_cf_answers( $event_id ) {
 
 function eme_get_event_answers( $event_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$cf            = wp_cache_get( "eme_event_cf $event_id" );
 	if ( $cf === false ) {
 		$sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='event'", $event_id );
@@ -10360,7 +10360,7 @@ function eme_event_store_cf_answers( $event_id ) {
 
 function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
 	global $wpdb;
-	$table      = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$table      = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$conditions = [];
 	$val        = eme_kses( $val );
 
@@ -10430,8 +10430,8 @@ function eme_ajax_events_select2() {
 
 function eme_get_event_cf_answers_groupingids( $event_id ) {
 	global $wpdb;
-	$answers_table  = EME_DB_PREFIX . ANSWERS_TBNAME;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$answers_table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT DISTINCT a.eme_grouping FROM $answers_table a LEFT JOIN $bookings_table b ON b.booking_id=a.related_id WHERE b.event_id=%d AND a.type='booking'", $event_id );
 	return $wpdb->get_col( $sql );
 }

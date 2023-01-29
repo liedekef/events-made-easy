@@ -7,34 +7,34 @@ if ( ! defined( 'ABSPATH' ) ) {
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
 define( 'EME_DB_VERSION', 367 );
-define( 'EVENTS_TBNAME', 'eme_events' );
-define( 'EVENTS_CF_TBNAME', 'eme_events_cf' );
-define( 'RECURRENCE_TBNAME', 'eme_recurrence' );
-define( 'LOCATIONS_TBNAME', 'eme_locations' );
-define( 'LOCATIONS_CF_TBNAME', 'eme_locations_cf' );
-define( 'BOOKINGS_TBNAME', 'eme_bookings' );
-define( 'PEOPLE_TBNAME', 'eme_people' );
-define( 'GROUPS_TBNAME', 'eme_groups' );
-define( 'USERGROUPS_TBNAME', 'eme_usergroups' );
-define( 'CATEGORIES_TBNAME', 'eme_categories' );
-define( 'HOLIDAYS_TBNAME', 'eme_holidays' );
-define( 'TEMPLATES_TBNAME', 'eme_templates' );
-define( 'FORMFIELDS_TBNAME', 'eme_formfields' );
-define( 'FIELDTYPES_TBNAME', 'eme_fieldtypes' );
-define( 'ANSWERS_TBNAME', 'eme_answers' );
-define( 'PAYMENTS_TBNAME', 'eme_payments' );
-define( 'DISCOUNTS_TBNAME', 'eme_discounts' );
-define( 'DISCOUNTGROUPS_TBNAME', 'eme_dgroups' );
-define( 'MQUEUE_TBNAME', 'eme_mqueue' );
-define( 'MAILINGS_TBNAME', 'eme_mailings' );
-define( 'MEMBERS_TBNAME', 'eme_members' );
-define( 'MEMBERSHIPS_TBNAME', 'eme_memberships' );
-define( 'MEMBERSHIPS_CF_TBNAME', 'eme_memberships_cf' );
-define( 'COUNTRIES_TBNAME', 'eme_countries' );
-define( 'STATES_TBNAME', 'eme_states' );
-define( 'ATTENDANCES_TBNAME', 'eme_attendances' );
-define( 'TASKS_TBNAME', 'eme_tasks' );
-define( 'TASK_SIGNUPS_TBNAME', 'eme_task_signups' );
+define( 'EME_EVENTS_TBNAME', 'eme_events' );
+define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
+define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
+define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
+define( 'EME_LOCATIONS_CF_TBNAME', 'eme_locations_cf' );
+define( 'EME_BOOKINGS_TBNAME', 'eme_bookings' );
+define( 'EME_PEOPLE_TBNAME', 'eme_people' );
+define( 'EME_GROUPS_TBNAME', 'eme_groups' );
+define( 'USEREME_GROUPS_TBNAME', 'eme_usergroups' );
+define( 'EME_CATEGORIES_TBNAME', 'eme_categories' );
+define( 'EME_HOLIDAYS_TBNAME', 'eme_holidays' );
+define( 'EME_TEMPLATES_TBNAME', 'eme_templates' );
+define( 'EME_FORMFIELDS_TBNAME', 'eme_formfields' );
+define( 'EME_FIELDTYPES_TBNAME', 'eme_fieldtypes' );
+define( 'EME_ANSWERS_TBNAME', 'eme_answers' );
+define( 'EME_PAYMENTS_TBNAME', 'eme_payments' );
+define( 'EME_DISCOUNTS_TBNAME', 'eme_discounts' );
+define( 'DISCOUNTEME_GROUPS_TBNAME', 'eme_dgroups' );
+define( 'EME_MQUEUE_TBNAME', 'eme_mqueue' );
+define( 'EME_MAILINGS_TBNAME', 'eme_mailings' );
+define( 'EME_MEMBERS_TBNAME', 'eme_members' );
+define( 'EME_MEMBERSHIPS_TBNAME', 'eme_memberships' );
+define( 'EME_MEMBERSHIPS_CF_TBNAME', 'eme_memberships_cf' );
+define( 'EME_COUNTRIES_TBNAME', 'eme_countries' );
+define( 'EME_STATES_TBNAME', 'eme_states' );
+define( 'EME_ATTENDANCES_TBNAME', 'eme_attendances' );
+define( 'EME_TASKS_TBNAME', 'eme_tasks' );
+define( 'EME_TASK_SIGNUPS_TBNAME', 'eme_task_signups' );
 
 function eme_install( $networkwide ) {
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
@@ -228,31 +228,31 @@ function _eme_uninstall( $force_drop = 0 ) {
 	if ( $drop_data || $force_drop ) {
 		// during uninstall, we only take the prefix per blog (not based on the settings "is_multisite() && get_option( 'eme_multisite_active' )" in the function  eme_get_db_prefix)
 		$db_prefix = $wpdb->prefix;
-		eme_drop_table( $db_prefix . EVENTS_TBNAME );
-		eme_drop_table( $db_prefix . RECURRENCE_TBNAME );
-		eme_drop_table( $db_prefix . LOCATIONS_TBNAME );
-		eme_drop_table( $db_prefix . BOOKINGS_TBNAME );
-		eme_drop_table( $db_prefix . PEOPLE_TBNAME );
-		eme_drop_table( $db_prefix . GROUPS_TBNAME );
-		eme_drop_table( $db_prefix . USERGROUPS_TBNAME );
-		eme_drop_table( $db_prefix . CATEGORIES_TBNAME );
-		eme_drop_table( $db_prefix . HOLIDAYS_TBNAME );
-		eme_drop_table( $db_prefix . TEMPLATES_TBNAME );
-		eme_drop_table( $db_prefix . FORMFIELDS_TBNAME );
-		eme_drop_table( $db_prefix . FIELDTYPES_TBNAME );
-		eme_drop_table( $db_prefix . ANSWERS_TBNAME );
-		eme_drop_table( $db_prefix . PAYMENTS_TBNAME );
-		eme_drop_table( $db_prefix . DISCOUNTS_TBNAME );
-		eme_drop_table( $db_prefix . DISCOUNTGROUPS_TBNAME );
-		eme_drop_table( $db_prefix . MQUEUE_TBNAME );
-		eme_drop_table( $db_prefix . MAILINGS_TBNAME );
-		eme_drop_table( $db_prefix . MEMBERS_TBNAME );
-		eme_drop_table( $db_prefix . MEMBERSHIPS_TBNAME );
-		eme_drop_table( $db_prefix . COUNTRIES_TBNAME );
-		eme_drop_table( $db_prefix . STATES_TBNAME );
-		eme_drop_table( $db_prefix . ATTENDANCES_TBNAME );
-		eme_drop_table( $db_prefix . TASKS_TBNAME );
-		eme_drop_table( $db_prefix . TASK_SIGNUPS_TBNAME );
+		eme_drop_table( $db_prefix . EME_EVENTS_TBNAME );
+		eme_drop_table( $db_prefix . EME_RECURRENCE_TBNAME );
+		eme_drop_table( $db_prefix . EME_LOCATIONS_TBNAME );
+		eme_drop_table( $db_prefix . EME_BOOKINGS_TBNAME );
+		eme_drop_table( $db_prefix . EME_PEOPLE_TBNAME );
+		eme_drop_table( $db_prefix . EME_GROUPS_TBNAME );
+		eme_drop_table( $db_prefix . USEREME_GROUPS_TBNAME );
+		eme_drop_table( $db_prefix . EME_CATEGORIES_TBNAME );
+		eme_drop_table( $db_prefix . EME_HOLIDAYS_TBNAME );
+		eme_drop_table( $db_prefix . EME_TEMPLATES_TBNAME );
+		eme_drop_table( $db_prefix . EME_FORMFIELDS_TBNAME );
+		eme_drop_table( $db_prefix . EME_FIELDTYPES_TBNAME );
+		eme_drop_table( $db_prefix . EME_ANSWERS_TBNAME );
+		eme_drop_table( $db_prefix . EME_PAYMENTS_TBNAME );
+		eme_drop_table( $db_prefix . EME_DISCOUNTS_TBNAME );
+		eme_drop_table( $db_prefix . DISCOUNTEME_GROUPS_TBNAME );
+		eme_drop_table( $db_prefix . EME_MQUEUE_TBNAME );
+		eme_drop_table( $db_prefix . EME_MAILINGS_TBNAME );
+		eme_drop_table( $db_prefix . EME_MEMBERS_TBNAME );
+		eme_drop_table( $db_prefix . EME_MEMBERSHIPS_TBNAME );
+		eme_drop_table( $db_prefix . EME_COUNTRIES_TBNAME );
+		eme_drop_table( $db_prefix . EME_STATES_TBNAME );
+		eme_drop_table( $db_prefix . EME_ATTENDANCES_TBNAME );
+		eme_drop_table( $db_prefix . EME_TASKS_TBNAME );
+		eme_drop_table( $db_prefix . EME_TASK_SIGNUPS_TBNAME );
 	}
 	if ( $drop_settings || $force_drop ) {
 		eme_delete_events_page();
@@ -334,7 +334,7 @@ function eme_create_tables( $db_version ) {
 function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
 
-	$table_name = $db_prefix . EVENTS_TBNAME;
+	$table_name = $db_prefix . EME_EVENTS_TBNAME;
 
 	$default_current_ts = 'DEFAULT CURRENT_TIMESTAMP';
 	$update_current_ts  = 'DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP';
@@ -556,7 +556,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 
 function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . RECURRENCE_TBNAME;
+	$table_name = $db_prefix . EME_RECURRENCE_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -602,7 +602,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 
 function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . LOCATIONS_TBNAME;
+	$table_name = $db_prefix . EME_LOCATIONS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -681,7 +681,7 @@ function eme_create_locations_table( $charset, $collate, $db_version, $db_prefix
 
 function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . BOOKINGS_TBNAME;
+	$table_name = $db_prefix . EME_BOOKINGS_TBNAME;
 
 	// column discount: effective calculated discount value
 	// columns discountid , dgroupid: pointer to discount/discout group applied
@@ -759,12 +759,12 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 			$wpdb->query( "ALTER TABLE $table_name MODIFY booking_seats mediumint(9) NOT NULL;" );
 		}
 		if ( $db_version < 47 ) {
-			$people_table_name = $db_prefix . PEOPLE_TBNAME;
+			$people_table_name = $db_prefix . EME_PEOPLE_TBNAME;
 			$wpdb->query( "update $table_name a JOIN $people_table_name b on (a.person_id = b.person_id)  set a.wp_id=b.wp_id;" );
 		}
 		if ( $db_version < 92 ) {
 			maybe_add_column( $table_name, 'payment_id', "ALTER TABLE $table_name ADD payment_id mediumint(9) DEFAULT NULL;" );
-			$payment_table_name = $db_prefix . PAYMENTS_TBNAME;
+			$payment_table_name = $db_prefix . EME_PAYMENTS_TBNAME;
 			$sql                = "SELECT id,booking_ids from $payment_table_name";
 
 			$rows = $wpdb->get_results( $sql, ARRAY_A );
@@ -811,9 +811,9 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 
 function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name          = $db_prefix . PEOPLE_TBNAME;
-	$grouptable_name     = $db_prefix . GROUPS_TBNAME;
-	$usergrouptable_name = $db_prefix . USERGROUPS_TBNAME;
+	$table_name          = $db_prefix . EME_PEOPLE_TBNAME;
+	$grouptable_name     = $db_prefix . EME_GROUPS_TBNAME;
+	$usergrouptable_name = $db_prefix . USEREME_GROUPS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -939,7 +939,7 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 
 function eme_create_categories_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . CATEGORIES_TBNAME;
+	$table_name = $db_prefix . EME_CATEGORIES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -972,7 +972,7 @@ function eme_create_categories_table( $charset, $collate, $db_version, $db_prefi
 
 function eme_create_holidays_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . HOLIDAYS_TBNAME;
+	$table_name = $db_prefix . EME_HOLIDAYS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -990,7 +990,7 @@ function eme_create_holidays_table( $charset, $collate, $db_version, $db_prefix 
 
 function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . TEMPLATES_TBNAME;
+	$table_name = $db_prefix . EME_TEMPLATES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1026,7 +1026,7 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
 
 function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . FORMFIELDS_TBNAME;
+	$table_name = $db_prefix . EME_FORMFIELDS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1082,13 +1082,13 @@ function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefi
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='date' WHERE old_type=8;" );
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='date_js' WHERE old_type=9;" );
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='dropdown_multi' WHERE old_type=10;" );
-			eme_drop_table( $db_prefix . FIELDTYPES_TBNAME );
+			eme_drop_table( $db_prefix . EME_FIELDTYPES_TBNAME );
 		}
 		// the next one is to fix older issues
 		if ( $db_version < 193 ) {
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='radiobox_vertical' WHERE old_type=5;" );
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_type='checkbox_vertical' WHERE old_type=7;" );
-			eme_drop_table( $db_prefix . FIELDTYPES_TBNAME );
+			eme_drop_table( $db_prefix . EME_FIELDTYPES_TBNAME );
 		}
 		if ( $db_version < 214 ) {
 			$wpdb->query( 'UPDATE ' . $table_name . " SET field_purpose='generic' WHERE field_purpose IS NULL;" );
@@ -1101,7 +1101,7 @@ function eme_create_formfields_table( $charset, $collate, $db_version, $db_prefi
 
 function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . ANSWERS_TBNAME;
+	$table_name = $db_prefix . EME_ANSWERS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1128,7 +1128,7 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 		}
 		if ( $db_version < 112 ) {
 			maybe_add_column( $table_name, 'field_id', "ALTER TABLE $table_name ADD field_id INT(11) DEFAULT 0;" );
-			$formfield_table_name = $db_prefix . FORMFIELDS_TBNAME;
+			$formfield_table_name = $db_prefix . EME_FORMFIELDS_TBNAME;
 			$res                  = $wpdb->query( "UPDATE $table_name SET field_id = (select field_id from $formfield_table_name where field_name = $table_name.field_name LIMIT 1);" );
 			if ( $res !== false ) {
 				eme_maybe_drop_column( $table_name, 'field_name' );
@@ -1168,17 +1168,17 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 			eme_maybe_drop_column( $table_name, 'member_id' );
 			$wpdb->query( "UPDATE $table_name SET related_id=booking_id,type='booking' WHERE booking_id>0" );
 			eme_maybe_drop_column( $table_name, 'booking_id' );
-			$cf_table_name = $db_prefix . MEMBERSHIPS_CF_TBNAME;
+			$cf_table_name = $db_prefix . EME_MEMBERSHIPS_CF_TBNAME;
 			if ( eme_table_exists( $cf_table_name ) ) {
 					$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`membership_id`,`answer`,'membership' FROM $cf_table_name" );
 					eme_drop_table( $cf_table_name );
 			}
-			$cf_table_name = $db_prefix . EVENTS_CF_TBNAME;
+			$cf_table_name = $db_prefix . EME_EVENTS_CF_TBNAME;
 			if ( eme_table_exists( $cf_table_name ) ) {
 				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`event_id`,`answer`,'event' FROM $cf_table_name" );
 				eme_drop_table( $cf_table_name );
 			}
-			$cf_table_name = $db_prefix . LOCATIONS_CF_TBNAME;
+			$cf_table_name = $db_prefix . EME_LOCATIONS_CF_TBNAME;
 			if ( eme_table_exists( $cf_table_name ) ) {
 					$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`location_id`,`answer`,'location' FROM $cf_table_name" );
 					eme_drop_table( $cf_table_name );
@@ -1189,7 +1189,7 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 
 function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . PAYMENTS_TBNAME;
+	$table_name = $db_prefix . EME_PAYMENTS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1246,7 +1246,7 @@ function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix 
 
 function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . DISCOUNTS_TBNAME;
+	$table_name = $db_prefix . EME_DISCOUNTS_TBNAME;
 
 	// coupon types: 1=fixed,2=percentage,3=code (filter),4=fixed_per_seat
 	// column coupon: text to be entered by booker
@@ -1290,7 +1290,7 @@ function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix
 
 function eme_create_discountgroups_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . DISCOUNTGROUPS_TBNAME;
+	$table_name = $db_prefix . DISCOUNTEME_GROUPS_TBNAME;
 
 	// column maxdiscounts: max number of discounts in a group that can
 	// be used, 0 for no max (this to avoid hackers from adding discount fields
@@ -1314,7 +1314,7 @@ function eme_create_discountgroups_table( $charset, $collate, $db_version, $db_p
 
 function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . MQUEUE_TBNAME;
+	$table_name = $db_prefix . EME_MQUEUE_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1379,7 +1379,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		}
 	}
 
-	$table_name = $db_prefix . MAILINGS_TBNAME;
+	$table_name = $db_prefix . EME_MAILINGS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
          id int(11) NOT NULL auto_increment,
@@ -1446,7 +1446,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 }
 function eme_create_members_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . MEMBERS_TBNAME;
+	$table_name = $db_prefix . EME_MEMBERS_TBNAME;
 
 	// state contains the defined/calculated state
 	// autostate indicates if the state needs to be calculated automatically
@@ -1530,7 +1530,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 	// type: fixed/rolling
 	// duration_count+duration_period form a logical date format: 1 days, 2 days, 3 weeks, etc ...
 	// start date: only used for type fixed
-	$table_name = $db_prefix . MEMBERSHIPS_TBNAME;
+	$table_name = $db_prefix . EME_MEMBERSHIPS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
          membership_id int(11) NOT NULL auto_increment,
@@ -1552,7 +1552,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 
 function eme_create_countries_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . COUNTRIES_TBNAME;
+	$table_name = $db_prefix . EME_COUNTRIES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1579,7 +1579,7 @@ function eme_create_countries_table( $charset, $collate, $db_version, $db_prefix
 
 function eme_create_states_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . STATES_TBNAME;
+	$table_name = $db_prefix . EME_STATES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -1598,7 +1598,7 @@ function eme_create_states_table( $charset, $collate, $db_version, $db_prefix ) 
 
 function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . TASKS_TBNAME;
+	$table_name = $db_prefix . EME_TASKS_TBNAME;
 
 	// the sequence of the tasks is decided per event and stored as task_seq
 	// when updating a task, we will use the combo event_id and task_nbr, so we can use that for
@@ -1623,7 +1623,7 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
 		maybe_add_column( $table_name, 'task_nbr', "ALTER TABLE $table_name ADD task_nbr smallint DEFAULT 1;" );
 	}
 
-	$table_name = $db_prefix . TASK_SIGNUPS_TBNAME;
+	$table_name = $db_prefix . EME_TASK_SIGNUPS_TBNAME;
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
          id int(11) NOT NULL auto_increment,
@@ -1645,7 +1645,7 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
 
 function eme_create_attendances_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . ATTENDANCES_TBNAME;
+	$table_name = $db_prefix . EME_ATTENDANCES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (

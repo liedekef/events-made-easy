@@ -35,7 +35,7 @@ function eme_holidays_page() {
 	}
 
 	// Insert/Update/Delete Record
-	$holidays_table = EME_DB_PREFIX . HOLIDAYS_TBNAME;
+	$holidays_table = EME_DB_PREFIX . EME_HOLIDAYS_TBNAME;
 	$message        = '';
 	if ( isset( $_POST['eme_admin_action'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -227,13 +227,13 @@ function eme_holidays_edit_layout( $message = '' ) {
 
 function eme_get_holiday_lists() {
 	global $wpdb;
-	$holidays_table = EME_DB_PREFIX . HOLIDAYS_TBNAME;
+	$holidays_table = EME_DB_PREFIX . EME_HOLIDAYS_TBNAME;
 	$sql            = "SELECT id,name FROM $holidays_table";
 	return $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }
 function eme_get_holiday_list( $id ) {
 	global $wpdb;
-	$holidays_table = EME_DB_PREFIX . HOLIDAYS_TBNAME;
+	$holidays_table = EME_DB_PREFIX . EME_HOLIDAYS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT * FROM $holidays_table WHERE id = %d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	return $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 }

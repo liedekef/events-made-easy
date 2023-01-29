@@ -203,7 +203,7 @@ function eme_cron_daily_actions() {
 }
 
 function eme_cron_page() {
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$message = '';
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {

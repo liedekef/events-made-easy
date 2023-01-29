@@ -6,11 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function eme_cleanup_people() {
 	global $wpdb;
-	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$members_table    = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USERGROUPS_TBNAME;
-	$people_table     = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$tasksignup_table = EME_DB_PREFIX . TASK_SIGNUPS_TBNAME;
+	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$tasksignup_table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE person_id NOT IN (SELECT person_id FROM $bookings_table WHERE status != %d) AND person_id NOT IN (SELECT person_id FROM $members_table WHERE status != %d) AND person_id NOT IN (SELECT person_id FROM $usergroups_table) AND person_id NOT IN (SELECT person_id FROM $tasksignup_table) AND status !=%d ", EME_RSVP_STATUS_TRASH, EME_MEMBER_STATUS_EXPIRED, EME_PEOPLE_STATUS_TRASH );
 	$person_ids       = $wpdb->get_col( $sql );
 	$count            = count( $person_ids );
@@ -22,7 +22,7 @@ function eme_cleanup_people() {
 function eme_cleanup_trashed_people( $eme_number, $eme_period ) {
 	global $wpdb;
 
-	$people_table = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 
 	if ( $eme_number < 1 ) {
 		$eme_number = 1;
@@ -51,9 +51,9 @@ function eme_cleanup_trashed_people( $eme_number, $eme_period ) {
 function eme_cleanup_unconfirmed( $eme_number ) {
 	global $wpdb;
 
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$members_table  = EME_DB_PREFIX . MEMBERS_TBNAME;
-	$events_table   = EME_DB_PREFIX . EVENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$members_table  = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$events_table   = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today        = $eme_date_obj->getDateTime();
@@ -93,8 +93,8 @@ function eme_cleanup_unconfirmed( $eme_number ) {
 function eme_cleanup_unpaid( $eme_number ) {
 	global $wpdb;
 
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$events_table   = EME_DB_PREFIX . EVENTS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$events_table   = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today        = $eme_date_obj->getDateTime();
@@ -123,11 +123,11 @@ function eme_cleanup_unpaid( $eme_number ) {
 function eme_cleanup_events( $eme_number, $eme_period ) {
 	global $wpdb;
 
-	$bookings_table    = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$attendances_table = EME_DB_PREFIX . ATTENDANCES_TBNAME;
-	$events_table      = EME_DB_PREFIX . EVENTS_TBNAME;
-	$events_cf_table   = EME_DB_PREFIX . EVENTS_CF_TBNAME;
-	$recurrence_table  = EME_DB_PREFIX . RECURRENCE_TBNAME;
+	$bookings_table    = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$attendances_table = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
+	$events_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$events_cf_table   = EME_DB_PREFIX . EME_EVENTS_CF_TBNAME;
+	$recurrence_table  = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 
 	if ( $eme_number < 1 ) {
 		$eme_number = 1;
@@ -156,9 +156,9 @@ function eme_cleanup_events( $eme_number, $eme_period ) {
 function eme_cleanup_all_event_related_data( $other_data ) {
 	global $wpdb;
 
-	$tables = [ EVENTS_TBNAME, EVENTS_CF_TBNAME, BOOKINGS_TBNAME, LOCATIONS_TBNAME, LOCATIONS_CF_TBNAME, RECURRENCE_TBNAME, ANSWERS_TBNAME, PAYMENTS_TBNAME, PEOPLE_TBNAME, MEMBERS_TBNAME, MEMBERSHIPS_CF_TBNAME, MEMBERSHIPS_TBNAME, ATTENDANCES_TBNAME ];
+	$tables = [ EME_EVENTS_TBNAME, EME_EVENTS_CF_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_LOCATIONS_CF_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_CF_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_ATTENDANCES_TBNAME ];
 	if ( $other_data ) {
-		$tables2 = [ CATEGORIES_TBNAME, HOLIDAYS_TBNAME, TEMPLATES_TBNAME, FORMFIELDS_TBNAME, COUNTRIES_TBNAME, STATES_TBNAME ];
+		$tables2 = [ EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME ];
 		$tables  = array_merge( $tables, $tables2 );
 	}
 	foreach ( $tables as $table ) {

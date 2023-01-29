@@ -93,7 +93,7 @@ function eme_templates_page() {
 	}
 
 	// Insert/Update/Delete Record
-	$templates_table   = EME_DB_PREFIX . TEMPLATES_TBNAME;
+	$templates_table   = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
 	$validation_result = true;
 	$message           = '';
 	if ( isset( $_POST['eme_admin_action'] ) ) {
@@ -349,7 +349,7 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 
 function eme_get_templates( $type = '', $strict = 0 ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . TEMPLATES_TBNAME;
+	$table = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
 	if ( ! empty( $type ) ) {
 		if ( $strict ) {
 			$sql = $wpdb->prepare( "SELECT * FROM $table WHERE type=%s ORDER BY type,name", $type );
@@ -364,7 +364,7 @@ function eme_get_templates( $type = '', $strict = 0 ) {
 
 function eme_get_templates_name_id( $type = '', $strict = 0 ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . TEMPLATES_TBNAME;
+	$table = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
 	if ( ! empty( $type ) ) {
 		if ( $strict ) {
 			$sql = $wpdb->prepare( "SELECT name,id FROM $table WHERE type=%s ORDER BY type,name", $type );
@@ -397,7 +397,7 @@ function eme_get_template( $template_id ) {
 	$template_id = intval( $template_id );
 	$template    = wp_cache_get( "eme_template $template_id" );
 	if ( $template === false ) {
-		$templates_table = EME_DB_PREFIX . TEMPLATES_TBNAME;
+		$templates_table = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
 		$sql             = $wpdb->prepare( "SELECT * FROM $templates_table WHERE id = %d", $template_id );
 		$template        = $wpdb->get_row( $sql, ARRAY_A );
 		if ( $template !== false ) {
@@ -466,7 +466,7 @@ add_action( 'wp_ajax_eme_get_template', 'eme_ajax_get_template' );
 function eme_ajax_templates_list() {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	$table          = EME_DB_PREFIX . TEMPLATES_TBNAME;
+	$table          = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
 	$template_types = eme_template_types();
 	$jTableResult   = [];
 	$search_type    = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';
@@ -520,7 +520,7 @@ function eme_ajax_manage_templates() {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteTemplates':
-				eme_ajax_record_delete( TEMPLATES_TBNAME, 'eme_cap_templates', 'id' );
+				eme_ajax_record_delete( EME_TEMPLATES_TBNAME, 'eme_cap_templates', 'id' );
 				break;
 		}
 	}

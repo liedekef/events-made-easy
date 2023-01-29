@@ -1514,7 +1514,7 @@ function eme_book_seats( $event, $send_mail ) {
 
 function eme_get_booking( $booking_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT * FROM $bookings_table WHERE booking_id = %d", $booking_id );
 	$booking        = $wpdb->get_row( $sql, ARRAY_A );
 	if ( $booking !== false ) {
@@ -1534,7 +1534,7 @@ function eme_get_booking( $booking_id ) {
 
 function eme_get_event_price( $event_id ) {
 	global $wpdb;
-	$events_table = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT price FROM $events_table WHERE event_id = %d", $event_id );
 	$result       = $wpdb->get_var( $sql );
 	return $result;
@@ -1542,9 +1542,9 @@ function eme_get_event_price( $event_id ) {
 
 function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_status = 0 ) {
 	global $wpdb;
-	$events_table    = EME_DB_PREFIX . EVENTS_TBNAME;
-	$bookings_table  = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$persons_table   = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$bookings_table  = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$persons_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$extra_condition = '';
 	if ( $rsvp_status ) {
 		$extra_condition .= " bookings.status=".intval($rsvp_status);
@@ -1596,30 +1596,30 @@ function eme_get_booking_by_person_event_id( $person_id, $event_id ) {
 }
 function eme_get_booking_ids_by_person_event_id( $person_id, $event_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE status IN (%d,%d,%d) AND person_id = %d AND event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $person_id, $event_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_booking_ids_by_email_event_id( $email, $event_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$persons_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$persons_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.email = %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id, $email );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_booking_ids_by_wp_event_id( $wp_id, $event_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$persons_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$persons_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.wp_id=%d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id, $wp_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_pending_booking_ids_by_bookingids( $booking_ids ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if (eme_is_list_of_int($booking_ids) ) {
 		return $wpdb->get_col( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($booking_ids) AND status IN (%d,%d)", EME_RSVP_STATUS_PENDING,EME_RSVP_STATUS_USERPENDING );
 	} else {
@@ -1628,7 +1628,7 @@ function eme_get_pending_booking_ids_by_bookingids( $booking_ids ) {
 }
 function eme_get_unpaid_booking_ids_by_bookingids( $booking_ids ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if (eme_is_list_of_int($booking_ids) ) {
 		return $wpdb->get_col( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ( $booking_ids ) AND booking_paid=0" );
 	} else {
@@ -1639,8 +1639,8 @@ function eme_get_unpaid_booking_ids_by_bookingids( $booking_ids ) {
 // API function: get all bookings for a certain email
 function eme_get_booking_ids_by_email( $email ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$persons_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$persons_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.email = %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $email );
 	return $wpdb->get_col( $sql );
 }
@@ -1650,16 +1650,16 @@ function eme_get_booked_seats_by_wp_event_id( $wp_id, $event_id ) {
 	if ( eme_is_event_multiseats( $event_id ) ) {
 		return array_sum( eme_get_booked_multiseats_by_wp_event_id( $wp_id, $event_id ) );
 	}
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$persons_table  = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$persons_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT COALESCE(SUM(booking_seats),0) AS booked_seats FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.wp_id = %d AND bookings.event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $wp_id, $event_id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_booked_multiseats_by_wp_event_id( $wp_id, $event_id ) {
 	global $wpdb;
-	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$persons_table    = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$persons_table    = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.wp_id = %d AND bookings.event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $wp_id, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
 	$result           = [];
@@ -1681,14 +1681,14 @@ function eme_get_booked_seats_by_person_event_id( $person_id, $event_id ) {
 	if ( eme_is_event_multiseats( $event_id ) ) {
 		return array_sum( eme_get_booked_multiseats_by_person_event_id( $person_id, $event_id ) );
 	}
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT COALESCE(SUM(booking_seats),0) AS booked_seats FROM $bookings_table WHERE status IN (%d,%d,%d) AND person_id = %d AND event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $person_id, $event_id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_booked_multiseats_by_person_event_id( $person_id, $event_id ) {
 	global $wpdb;
-	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d,%d) AND person_id = %d AND event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $person_id, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
 	$result           = [];
@@ -1707,7 +1707,7 @@ function eme_get_booked_multiseats_by_person_event_id( $person_id, $event_id ) {
 
 function eme_get_event_id_by_booking_id( $booking_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT DISTINCT event_id FROM $bookings_table WHERE booking_id = %d", $booking_id );
 	$event_id       = $wpdb->get_var( $sql );
 	return $event_id;
@@ -1724,7 +1724,7 @@ function eme_get_event_by_booking_id( $booking_id ) {
 
 function eme_get_event_ids_by_booker_id( $person_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT DISTINCT event_id FROM $bookings_table WHERE status IN (%d,%d,%d) AND person_id = %d", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $person_id );
 	return $wpdb->get_col( $sql );
 }
@@ -1735,7 +1735,7 @@ function eme_record_booking( $event, $booker, $booking ) {
 function eme_db_insert_booking( $event, $booker, $booking ) {
 	global $wpdb, $plugin_page;
 	$eme_is_admin_request = eme_is_admin_request();
-	$bookings_table       = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table       = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$event_id             = $event['event_id'];
 	$booking['person_id'] = intval( $booker['person_id'] );
 
@@ -1956,7 +1956,7 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
 
 	if ( $do_update && $booking_id > 0 ) {
 		// put the extra charge found in the booking made
-		$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+		$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 		$sql            = $wpdb->prepare( "UPDATE $bookings_table SET extra_charge = %s WHERE booking_id = %d", $extra_charge, $booking_id );
 		$wpdb->query( $sql );
 
@@ -1972,42 +1972,42 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
 
 function eme_get_booking_answers( $booking_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='booking'", $booking_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_nodyndata_booking_answers( $booking_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=0 AND type='booking'", $booking_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_get_dyndata_booking_answers( $booking_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping>0 AND type='booking' ORDER BY eme_grouping,occurence,field_id", $booking_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 function eme_get_dyndata_booking_answer( $booking_id, $grouping = 0, $occurence = 0 ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='booking' AND eme_grouping=%d AND occurence=%d", $booking_id, $grouping, $occurence );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_delete_booking_answers( $booking_id ) {
 	global $wpdb;
-	$answers_table = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='booking'", $booking_id );
 	$wpdb->query( $sql );
 }
 
 function eme_delete_all_bookings_for_event_id( $event_id ) {
 	global $wpdb;
-	$answers_table  = EME_DB_PREFIX . ANSWERS_TBNAME;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$answers_table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE event_id = %d)", $event_id );
 	$wpdb->query( $sql );
 	$sql = $wpdb->prepare( "DELETE FROM $bookings_table WHERE event_id = %d", $event_id );
@@ -2017,8 +2017,8 @@ function eme_delete_all_bookings_for_event_id( $event_id ) {
 
 function eme_trash_person_bookings_future_events( $person_ids ) {
 	global $wpdb;
-	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$events_table     = EME_DB_PREFIX . EVENTS_TBNAME;
+	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today        = $eme_date_obj_now->getDateTime();
 	if (eme_is_list_of_int($person_ids) ) {
@@ -2029,8 +2029,8 @@ function eme_trash_person_bookings_future_events( $person_ids ) {
 
 function eme_delete_person_bookings( $person_ids ) {
 	global $wpdb;
-	$answers_table  = EME_DB_PREFIX . ANSWERS_TBNAME;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$answers_table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if (eme_is_list_of_int($person_ids) ) {
 		$wpdb->query( "DELETE FROM $answers_table WHERE type='booking' AND related_id IN (SELECT booking_id from $bookings_table WHERE person_id IN ($person_ids))");
 		$wpdb->query( "DELETE FROM $bookings_table WHERE person_id IN ($person_ids)");
@@ -2039,7 +2039,7 @@ function eme_delete_person_bookings( $person_ids ) {
 
 function eme_transfer_person_bookings( $person_ids, $to_person_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if (eme_is_list_of_int($person_ids) ) {
 		$sql = $wpdb->prepare( "UPDATE $bookings_table SET person_id = %d WHERE person_id IN ($person_ids)", $to_person_id );
 		return $wpdb->query( $sql );
@@ -2050,7 +2050,7 @@ function eme_transfer_person_bookings( $person_ids, $to_person_id ) {
 
 function eme_trash_bookings_for_event_ids( $ids ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if (eme_is_list_of_int($ids) ) {
 		$sql = $wpdb->prepare("UPDATE $bookings_table SET status = %d WHERE event_id IN ($ids)", EME_RSVP_STATUS_TRASH);
 		$wpdb->query( $sql );
@@ -2059,7 +2059,7 @@ function eme_trash_bookings_for_event_ids( $ids ) {
 
 function eme_trash_booking( $booking_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if ( has_action( 'eme_trash_rsvp_action' ) ) {
 		$booking = eme_get_booking( $line['booking_id'] );
 		do_action( 'eme_trash_rsvp_action', $booking );
@@ -2078,7 +2078,7 @@ function eme_trash_booking( $booking_id ) {
 
 function eme_delete_booking( $booking_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$booking        = eme_get_booking( $booking_id );
 	if ( empty( $booking ) ) {
 		return false;
@@ -2103,7 +2103,7 @@ function eme_delete_booking( $booking_id ) {
 
 function eme_partial_payment_booking( $booking, $amount ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$where               = [];
 	$fields              = [];
@@ -2134,7 +2134,7 @@ function eme_partial_payment_booking( $booking, $amount ) {
 
 function eme_mark_booking_paid( $booking, $pg = '', $pg_pid = '' ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$where                  = [];
 	$fields                 = [];
@@ -2158,7 +2158,7 @@ function eme_mark_booking_paid( $booking, $pg = '', $pg_pid = '' ) {
 
 function eme_mark_booking_unpaid( $booking ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$where                  = [];
 	$fields                 = [];
@@ -2180,7 +2180,7 @@ function eme_mark_booking_unpaid( $booking ) {
 
 function eme_mark_booking_paid_approved( $booking, $pg = '', $pg_pid = '' ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$where                  = [];
 	$fields                 = [];
@@ -2206,7 +2206,7 @@ function eme_mark_booking_paid_approved( $booking, $pg = '', $pg_pid = '' ) {
 
 function eme_mark_booking_pending( $booking_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$where                 = [];
 	$where['booking_id']   = $booking_id;
@@ -2222,7 +2222,7 @@ function eme_mark_booking_pending( $booking_id ) {
 
 function eme_set_booking_reminder( $booking_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$where               = [];
 	$where['booking_id'] = $booking_id;
@@ -2237,7 +2237,7 @@ function eme_set_booking_reminder( $booking_id ) {
 
 function eme_remove_from_waitinglist( $booking_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$where                 = [];
 	$fields                = [];
@@ -2253,7 +2253,7 @@ function eme_remove_from_waitinglist( $booking_id ) {
 
 function eme_move_on_waitinglist( $booking_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$where                 = [];
 	$fields                = [];
@@ -2270,7 +2270,7 @@ function eme_move_on_waitinglist( $booking_id ) {
 
 function eme_mark_booking_userconfirm( $booking_ids ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if (eme_is_list_of_int($booking_ids) ) {
 		$sql = $wpdb->prepare( "UPDATE $bookings_table SET status=%d WHERE booking_id IN ($booking_ids)", EME_RSVP_STATUS_USERPENDING );
 		$wpdb->query( $sql );
@@ -2311,7 +2311,7 @@ function eme_userconfirm_bookings( $booking_ids_arr, $price, $is_multibooking = 
 
 function eme_approve_booking( $booking_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 
 	$where                 = [];
 	$fields                = [];
@@ -2328,7 +2328,7 @@ function eme_approve_booking( $booking_id ) {
 
 function eme_db_update_booking( $line ) {
 	global $wpdb;
-	$bookings_table      = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table      = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$where               = [];
 	$where['booking_id'] = $line['booking_id'];
 	$line['modif_date']  = current_time( 'mysql', false );
@@ -2432,7 +2432,7 @@ function eme_get_booked_seats( $event_id, $exclude_waiting_list = 0, $only_waiti
 	if ( eme_is_event_multiseats( $event_id ) ) {
 		return array_sum( eme_get_booked_multiseats( $event_id, $exclude_waiting_list ) );
 	}
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$exclude        = ( $exclude_waiting_list == 1 ) ? 'AND waitinglist=0' : '';
 	$waiting        = ( $only_waiting_list == 1 ) ? 'AND waitinglist=1' : '';
 
@@ -2442,14 +2442,14 @@ function eme_get_booked_seats( $event_id, $exclude_waiting_list = 0, $only_waiti
 
 function eme_get_absent_bookings( $event_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT COUNT(*) FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d AND booking_seats=0", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_booked_multiseats( $event_id, $exclude_waiting_list = 0, $only_waiting_list = 0 ) {
 	global $wpdb;
-	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$exclude          = ( $exclude_waiting_list == 1 ) ? 'AND waitinglist=0' : '';
 	$waiting          = ( $only_waiting_list == 1 ) ? 'AND waitinglist=1' : '';
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d $exclude $waiting", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
@@ -2484,14 +2484,14 @@ function eme_get_paid_seats( $event_id ) {
 	if ( eme_is_event_multiseats( $event_id ) ) {
 		return array_sum( eme_get_approved_multiseats( $event_id ) );
 	}
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT COALESCE(SUM(booking_seats),0) AS booked_seats FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d and booking_paid=1", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_paid_multiseats( $event_id ) {
 	global $wpdb;
-	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d and booking_paid=1", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
 	$result           = [];
@@ -2513,14 +2513,14 @@ function eme_get_approved_seats( $event_id ) {
 	if ( eme_is_event_multiseats( $event_id ) ) {
 		return array_sum( eme_get_approved_multiseats( $event_id ) );
 	}
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT COALESCE(SUM(booking_seats),0) AS booked_seats FROM $bookings_table WHERE status=%d AND event_id = %d", EME_RSVP_STATUS_APPROVED, $event_id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_approved_multiseats( $event_id ) {
 	global $wpdb;
-	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status=%d AND event_id = %d", EME_RSVP_STATUS_APPROVED, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
 	$result           = [];
@@ -2549,7 +2549,7 @@ function eme_get_pending_seats( $event_id, $old_date = '', $exclude_booking_id =
 	if ( eme_is_event_multiseats( $event_id ) ) {
 		return array_sum( eme_get_pending_multiseats( $event_id ) );
 	}
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if ( empty( $old_date ) ) {
 		$younger_than = '';
 	} else {
@@ -2566,7 +2566,7 @@ function eme_get_pending_seats( $event_id, $old_date = '', $exclude_booking_id =
 
 function eme_get_total_seats( $event_id ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . EVENTS_TBNAME;
+	$table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT event_seats FROM $table WHERE event_id = %d", $event_id );
 	$res   = $wpdb->get_var( $sql );
 	if ( $res ) {
@@ -2584,7 +2584,7 @@ function eme_get_young_pending_multiseats( $event_id, $exclude_booking_id = 0 ) 
 }
 function eme_get_pending_multiseats( $event_id, $old_date = '', $exclude_booking_id = 0 ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if ( empty( $old_date ) ) {
 		$younger_than = '';
 	} else {
@@ -2672,14 +2672,14 @@ function eme_are_multiseats_available_for( $event_id, $multiseats, $exclude_wait
 
 function eme_get_bookingids_for( $event_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id=%d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_basic_bookings_on_waitinglist( $event_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$bookings       = wp_cache_get( "eme_basic_bookings_onwaitinglist $event_id" );
 	if ( $bookings === false ) {
 		$sql      = $wpdb->prepare( "SELECT booking_id, booking_seats, booking_seats_mp, remaining FROM $bookings_table WHERE event_id=%d AND waitinglist=1 ORDER BY creation_date ASC", $event_id );
@@ -2691,8 +2691,8 @@ function eme_get_basic_bookings_on_waitinglist( $event_id ) {
 
 function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$people_table   = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 
 	$bookings = [];
 	if ( ! $event_ids ) {
@@ -2725,8 +2725,8 @@ function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 ) 
 
 function eme_get_bookings_for_event_wp_id( $event_id, $wp_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$people_table   = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 
 	$bookings = [];
 	if ( ! $event_id || ! $wp_id ) {
@@ -2739,7 +2739,7 @@ function eme_get_bookings_for_event_wp_id( $event_id, $wp_id ) {
 
 function eme_get_booking_personids( $booking_ids ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if ( is_array( $booking_ids ) ) {
 		$booking_ids = join( ',', $booking_ids );
 	}
@@ -2752,7 +2752,7 @@ function eme_get_booking_personids( $booking_ids ) {
 
 function eme_get_bookings_by_paymentid( $payment_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$bookings       = [];
 	if ( ! $payment_id ) {
 		return $bookings;
@@ -2777,16 +2777,16 @@ function eme_get_bookings_by_paymentid( $payment_id ) {
 
 function eme_get_wp_ids_for( $event_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$people_table   = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT DISTINCT people.wp_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.wp_id != 0", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_event_ids_for( $wp_id ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$people_table   = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( $wp_id ) {
 		$sql = $wpdb->prepare( "SELECT DISTINCT bookings.event_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.wp_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $wp_id );
 		return $wpdb->get_col( $sql );
@@ -2802,8 +2802,8 @@ function eme_get_attendee_ids_for( $event_id, $rsvp_status = 0, $paid_status = 0
 
 function eme_get_attendee_ids( $event_id, $rsvp_status = 0, $paid_status = 0, $order = '' ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$people_table   = EME_DB_PREFIX . PEOPLE_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
 		$ids_list = implode(',', $event_id);
 		$sql = "SELECT DISTINCT people.person_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.event_id IN ($ids_list) AND bookings.person_id>0";
@@ -2836,7 +2836,7 @@ function eme_get_attendees_for( $event_id, $rsvp_status = 0, $paid_status = 0 ) 
 
 function eme_get_attendees( $event_id, $rsvp_status = 0, $paid_status = 0 ) {
 	global $wpdb;
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if ( is_array( $event_id ) && eme_is_numeric_array( $event_id ) ) {
 		$ids_list = implode(',', $event_id);
 		$sql = "SELECT DISTINCT person_id FROM $bookings_table WHERE event_id IN ($ids_list)";
@@ -4458,7 +4458,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 
 function eme_import_csv_payments() {
 	global $wpdb;
-	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$today        = $eme_date_obj_now->getDate();
 
@@ -4829,7 +4829,7 @@ function eme_is_event_rsvpable() {
 
 function eme_event_needs_approval( $event_id ) {
 	global $wpdb;
-	$events_table = EME_DB_PREFIX . EVENTS_TBNAME;
+	$events_table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT registration_requires_approval from $events_table where event_id=%d", $event_id );
 	return $wpdb->get_var( $sql );
 }
@@ -5009,10 +5009,10 @@ function eme_ajax_bookings_list() {
 		wp_die();
 	}
 
-	$bookings_table = EME_DB_PREFIX . BOOKINGS_TBNAME;
-	$events_table   = EME_DB_PREFIX . EVENTS_TBNAME;
-	$people_table   = EME_DB_PREFIX . PEOPLE_TBNAME;
-	$answers_table  = EME_DB_PREFIX . ANSWERS_TBNAME;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$events_table   = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$answers_table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
 	$jtStartIndex   = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 	$jtPageSize     = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
@@ -5127,7 +5127,7 @@ function eme_ajax_bookings_list() {
 		}
 	}
 	if ( ! empty( $_REQUEST['search_customfields'] ) ) {
-		$answers_table       = EME_DB_PREFIX . ANSWERS_TBNAME;
+		$answers_table       = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 		$search_customfields = $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_customfields']) );
 		$sql                 = $wpdb->prepare("SELECT related_id FROM $answers_table WHERE answer LIKE %s AND type='booking' GROUP BY related_id", "%$search_customfields%");
 		$booking_ids         = $wpdb->get_col( $sql );
@@ -6280,8 +6280,8 @@ function eme_rsvp_send_approved_reminders() {
 // for GDPR CRON
 function eme_rsvp_anonymize_old_bookings() {
 	global $wpdb;
-	$events_table                = EME_DB_PREFIX . EVENTS_TBNAME;
-	$bookings_table              = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$events_table                = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$bookings_table              = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$anonymize_old_bookings_days = get_option( 'eme_gdpr_anonymize_old_bookings_days' );
 	if ( empty( $anonymize_old_bookings_days ) ) {
 		return;
@@ -6300,8 +6300,8 @@ function eme_rsvp_anonymize_old_bookings() {
 
 function eme_count_pending_bookings() {
 	global $wpdb;
-	$events_table     = EME_DB_PREFIX . EVENTS_TBNAME;
-	$bookings_table   = EME_DB_PREFIX . BOOKINGS_TBNAME;
+	$events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$now              = $eme_date_obj_now->getDateTime();
 	$sql              = $wpdb->prepare( "SELECT count(bookings.booking_id) FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id WHERE bookings.status IN (%d,%d) AND events.event_end >= %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $now );

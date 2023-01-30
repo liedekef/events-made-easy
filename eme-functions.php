@@ -24,7 +24,6 @@ function eme_plugin_dir() {
 add_action( 'wp_ajax_eme_client_clock', 'eme_client_clock_ajax' );
 add_action( 'wp_ajax_nopriv_eme_client_clock', 'eme_client_clock_ajax' );
 function eme_client_clock_ajax() {
-	
 	$valid = true;
 	$ret   = '0';
 	// Set php clock values in an array
@@ -1085,11 +1084,11 @@ function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
 	$hashstring  = $email . $lastname . $firstname;
 	$invite_hash = wp_hash( $hashstring . '|' . $event['event_id'], 'nonce' );
 	$the_link    = add_query_arg(
-	    [
+		[
 			'eme_email'  => $email,
 			'eme_invite' => $invite_hash,
 		],
-	    $the_link
+		$the_link
 	);
 	if ( ! empty( $lastname ) ) {
 		$the_link = add_query_arg( [ 'eme_ln' => $lastname ], $the_link );
@@ -1103,7 +1102,7 @@ function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
 function eme_check_rsvp_url( $payment, $booking_id ) {
 	$the_link = eme_get_events_page();
 	$the_link = add_query_arg(
-	    [
+		[
 			'eme_check_rsvp' => 1,
 			'eme_pmt_rndid'  => $payment['random_id'],
 			'bid'  => $booking_id,
@@ -1119,7 +1118,7 @@ function eme_cpi_url( $person_id, $orig_email ) {
 	$the_link = eme_get_events_page();
 	$nonce    = wp_create_nonce( "change_pi $person_id $orig_email" );
 	$the_link = add_query_arg(
-	    [
+		[
 			'eme_cpi'       => $person_id,
 			'email'         => $orig_email,
 			'eme_cpi_nonce' => $nonce,
@@ -1129,7 +1128,7 @@ function eme_cpi_url( $person_id, $orig_email ) {
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
 		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
+		$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1149,7 +1148,7 @@ function eme_check_member_url() {
 	if ( $nonce_check != $nonce_get ) {
 		return 0;
 	} else {
-				return eme_is_active_memberid( $member_id );
+		return eme_is_active_memberid( $member_id );
 	}
 }
 
@@ -1187,8 +1186,8 @@ function eme_tasksignup_cancel_url( $signup ) {
 	$the_link = add_query_arg( [ 'eme_cancel_signup' => $signup['random_id'] ], $the_link );
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
+		$the_link = remove_query_arg( 'lang', $the_link );
+		$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1200,8 +1199,8 @@ function eme_cancel_url( $payment ) {
 	$the_link = add_query_arg( [ 'eme_cancel_payment' => $payment['random_id'] ], $the_link );
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
+		$the_link = remove_query_arg( 'lang', $the_link );
+		$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1213,8 +1212,8 @@ function eme_unsub_url() {
 	$the_link = add_query_arg( [ 'eme_unsub' => 1 ], $the_link );
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
+		$the_link = remove_query_arg( 'lang', $the_link );
+		$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1225,19 +1224,19 @@ function eme_unsub_confirm_url( $email, $groups ) {
 	$the_link = eme_get_events_page();
 	$nonce    = wp_create_nonce( "unsub $email$groups" );
 	$the_link = add_query_arg(
-	    [
+		[
 			'eme_unsub_confirm' => $email,
 			'eme_unsub_nonce'   => $nonce,
 		],
-	    $the_link
+		$the_link
 	);
 	if ( ! empty( $groups ) ) {
 		$the_link = add_query_arg( [ 'g' => $groups ], $the_link );
 	}
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
+		$the_link = remove_query_arg( 'lang', $the_link );
+		$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1248,21 +1247,21 @@ function eme_sub_confirm_url( $lastname, $firstname, $email, $groups ) {
 	$the_link = eme_get_events_page();
 	$nonce    = wp_create_nonce( "sub $lastname$firstname$email$groups" );
 	$the_link = add_query_arg(
-	    [
+		[
 			'eme_sub_confirm' => $email,
 			'lastname'        => $lastname,
 			'firstname'       => $firstname,
 			'eme_sub_nonce'   => $nonce,
 		],
-	    $the_link
+		$the_link
 	);
 	if ( ! empty( $groups ) ) {
 		$the_link = add_query_arg( [ 'g' => $groups ], $the_link );
 	}
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-		$the_link     = remove_query_arg( 'lang', $the_link );
-			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
+		$the_link = remove_query_arg( 'lang', $the_link );
+		$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1272,7 +1271,7 @@ function eme_single_event_ical_url( $id ) {
 
 	$the_link = site_url( '/?eme_ical=public_single&event_id=' . $id );
 	if ( ! empty( $language ) ) {
-			$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
+		$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
 }
@@ -1286,12 +1285,12 @@ function eme_captcha_url( $file ) {
 	}
 	// ts added to try and prevent initial caching
 	$the_link = add_query_arg(
-	    [
+		[
 			'eme_captcha' => 'generate',
 			'f'           => $file,
 			'ts'          => time(),
 		],
-	    $the_link
+		$the_link
 	);
 	return $the_link;
 }
@@ -1303,7 +1302,6 @@ function eme_tracker_url( $random_id ) {
 }
 
 function eme_current_page_url( $extra_arg = [] ) {
-	global $wp;
 	$the_link = home_url( add_query_arg( [], $wp->request ) );
 	if ( ! empty( $extra_arg ) ) {
 		$extra_arg = array_map( 'esc_attr', $extra_arg );
@@ -1313,15 +1311,11 @@ function eme_current_page_url( $extra_arg = [] ) {
 }
 
 function eme_check_event_exists( $id ) {
-		global $wpdb;
-	$table = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$event = eme_get_event( $id );
 	return $event;
 }
 
 function eme_check_location_exists( $id ) {
-		global $wpdb;
-	$table    = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	$location = eme_get_location( $id );
 	return $location;
 }
@@ -1408,8 +1402,6 @@ function eme_member_status_array() {
 // The next function is to format the datetime in the expected format for the calendar javascript to be able to parse it
 // If the argument is just a date (no time portion), this function doesn't need to be called since the calendar JS can cope with that already
 function eme_js_datetime( $mydate, $timezone = '' ) {
-	
-
 	if ( empty( $timezone ) ) {
 		$timezone = EME_TIMEZONE;
 	}
@@ -1620,12 +1612,12 @@ function eme_localized_price( $price, $cur, $target = 'html' ) {
 	}
 
 	if ( $eme_localize_price ) {
-			$formatter = new NumberFormatter( $locale . "@currency=$cur", NumberFormatter::CURRENCY );
+		$formatter = new NumberFormatter( $locale . "@currency=$cur", NumberFormatter::CURRENCY );
 	}
 
 	$eme_zero_decimal_currencies_arr = eme_zero_decimal_currencies();
 	if ( in_array( $cur, $eme_zero_decimal_currencies_arr ) ) {
-			$decimals = 0;
+		$decimals = 0;
 	} else {
 		$decimals = intval( get_option( 'eme_decimals' ) );
 	}
@@ -1633,7 +1625,7 @@ function eme_localized_price( $price, $cur, $target = 'html' ) {
 	$res = [];
 	foreach ( $price_arr as $t_price ) {
 		if ( $eme_localize_price ) {
-					$result = $formatter->formatCurrency( $t_price, $cur );
+			$result = $formatter->formatCurrency( $t_price, $cur );
 		} else {
 			$result = number_format_i18n( $t_price, $decimals );
 		}
@@ -1656,8 +1648,8 @@ function eme_int_price( $price ) {
 
 	$locale = determine_locale();
 	if ( class_exists( 'NumberFormatter' ) ) {
-			$formatter = new NumberFormatter( $locale, NumberFormatter::DECIMAL );
-		$res           = numfmt_parse( $formatter, $price );
+		$formatter = new NumberFormatter( $locale, NumberFormatter::DECIMAL );
+		$res       = numfmt_parse( $formatter, $price );
 		if ( $res === false ) {
 			$res = $price;
 		}
@@ -1946,7 +1938,7 @@ function eme_is_url( $url ) {
 	}
 	$parsed = parse_url( $url );
 	if ( empty( $parsed['scheme'] ) ) {
-			$url = 'https://' . ltrim( $url, '/' );
+		$url = 'https://' . ltrim( $url, '/' );
 	}
 	return filter_var( $url, FILTER_VALIDATE_URL );
 }
@@ -1982,7 +1974,7 @@ function eme_is_email( $email, $extra_checks_required = 0 ) {
 		// get the part after the '@'
 		$fqdn = substr( strrchr( $email, '@' ), 1 );
 		// add trailing '.'
-			$fqdn .= ( substr( $fqdn, -1 ) == '.' ? '' : '.' );
+		$fqdn .= ( substr( $fqdn, -1 ) == '.' ? '' : '.' );
 		if ( $result = getmxrr( $fqdn, $mx_records, $mx_weight ) ) {
 			if ( ! isset( $mx_records ) || ( count( $mx_records ) == 0 ) ) {
 				$result = false;
@@ -2052,7 +2044,7 @@ function eme_wordpress_search_locations() {
 
 // API function so people can call this from their theme's search.php
 function eme_wordpress_search( $scope = 'future' ) {
-		return eme_wordpress_search_events( $scope );
+	return eme_wordpress_search_events( $scope );
 }
 function eme_wordpress_search_events( $scope = 'future' ) {
 	if ( isset( $_REQUEST['s'] ) ) {
@@ -2158,8 +2150,8 @@ function eme_calc_bookingprice_ajax() {
 	$cur   = '';
 	// in the admin interface, we have a booking id, so we use the currently applied discount
 	if ( ! empty( $_POST['booking_id'] ) ) {
-			$booking_id = intval( $_POST['booking_id'] );
-			check_admin_referer( "eme_admin", 'eme_admin_nonce' );
+		$booking_id = intval( $_POST['booking_id'] );
+		check_admin_referer( "eme_admin", 'eme_admin_nonce' );
 	}
 
 	foreach ( $event_ids as $event_id ) {
@@ -2205,7 +2197,7 @@ function eme_dyndata_people_ajax() {
 	$form_html = '';
 	foreach ( $groups as $group_id ) {
 		$group      = eme_get_group( $group_id );
-			$fields = eme_get_dyndata_people_fields( 'group:' . $group_id );
+		$fields = eme_get_dyndata_people_fields( 'group:' . $group_id );
 		if ( ! empty( $fields ) ) {
 			if ( ! $group_id ) {
 				$form_html .= "<hr><div><span id='eme-people-dyndata-group-" . $group_id . "'>" . eme_esc_html( __( 'Extra info', 'events-made-easy' ) ) . '</span><table>';
@@ -2268,10 +2260,10 @@ function eme_dyndata_rsvp_ajax() {
 	// first detect multibooking
 	$event_ids = [];
 	if ( ! empty( $_POST['eme_event_ids'] ) ) {
-			$event_ids = array_map( 'intval', $_POST['eme_event_ids'] );
+		$event_ids = array_map( 'intval', $_POST['eme_event_ids'] );
 	} elseif ( eme_is_admin_request() && ! empty( $_POST['event_id'] ) ) {
 		// the case when adding a booking in the backend
-			$event_ids = [ 0 => intval( $_POST['event_id'] ) ];
+		$event_ids = [ 0 => intval( $_POST['event_id'] ) ];
 	}
 
 	if ( ! empty( $_POST['booking_id'] ) ) {
@@ -2293,11 +2285,11 @@ function eme_dyndata_rsvp_ajax() {
 		// we use a fake booking to get an initial price based on current entered data
 		$fake_booking = eme_fake_booking( $event );
 		if ( ! empty( $booking ) ) {
-				// if we work on an existing booking (backend), take some values from the fake booking and keep the rest
-				$booking['booking_seats']    = $fake_booking['booking_seats'];
-				$booking['booking_seats_mp'] = $fake_booking['booking_seats_mp'];
-				$booking['booking_comment']  = $fake_booking['booking_comment'];
-				$fake_booking                = $booking;
+			// if we work on an existing booking (backend), take some values from the fake booking and keep the rest
+			$booking['booking_seats']    = $fake_booking['booking_seats'];
+			$booking['booking_seats_mp'] = $fake_booking['booking_seats_mp'];
+			$booking['booking_comment']  = $fake_booking['booking_comment'];
+			$fake_booking                = $booking;
 		}
 
 		if ( isset( $event['event_properties']['rsvp_dyndata'] ) ) {
@@ -2309,17 +2301,17 @@ function eme_dyndata_rsvp_ajax() {
 				}
 				// sensible values ...
 				if ( empty( $condition['grouping'] ) ) {
-						$grouping = $count;
+					$grouping = $count;
 				} else {
 					$grouping = intval( $condition['grouping'] );
 				}
 
 				if ( $condition['field'] == '#_GROUPS' ) {
-						$wp_id       = eme_get_wpid_by_post();
-						$entered_val = join( ',', eme_esc_html( eme_get_persongroup_names( 0, $wp_id ) ) );
+					$wp_id       = eme_get_wpid_by_post();
+					$entered_val = join( ',', eme_esc_html( eme_get_persongroup_names( 0, $wp_id ) ) );
 				} else {
 					// indicate "1" to make sure the answers are taken from the POST, and not from the existing member
-						$entered_val = eme_replace_booking_placeholders( $condition['field'], $event, $fake_booking, 0, 'html', '', 1 );
+					$entered_val = eme_replace_booking_placeholders( $condition['field'], $event, $fake_booking, 0, 'html', '', 1 );
 				}
 
 				if ( $condition['condition'] == 'eq' && $entered_val == $condition['condval'] ) {
@@ -2615,35 +2607,35 @@ function eme_wp_date_format_php_to_datepicker_js( $php_format ) {
 
 function eme_wp_time_format_php_to_datepicker_js( $php_format ) {
 	return $php_format;
-		$SYMBOLS_MATCHING   = [
-			'a' => 'aa', // am/pm
-			'A' => 'AA', // AM/PM
-			'g' => 'h', // 12-hour format of an hour without leading zeros
-			'h' => 'hh', // 12-hour format of an hour with leading zeros
-			'G' => 'h', // 24-hour format of an hour without leading zeros
-			'H' => 'hh', // 24-hour format of an hour with leading zeros
-			'i' => get_option( 'eme_time_remove_leading_zeros' ) ? 'i' : 'ii', // Minutes with leading zeros
-			's' => '', // seconds with leading zeros
-			'e' => '', // Timezone identifier
-			'I' => '', // Whether or not the date is in daylight saving time
-			'O' => '', // Difference to Greenwich time (GMT) in hours
-			'P' => '', // Difference to Greenwich time (GMT) with colon between hours and minutes
-			'T' => '', // Timezone abbreviation
-			'Z' => '', // Timezone offset in seconds
-		];
-		$fdatepicker_format = '';
-		for ( $i = 0; $i < strlen( $php_format ); $i++ ) {
-			$char = $php_format[ $i ];
-			if ( $char === '\\' ) { // PHP date format escaping character
-				++$i;
-				$fdatepicker_format .= $php_format[ $i ];
-			} elseif ( isset( $SYMBOLS_MATCHING[ $char ] ) ) {
-					$fdatepicker_format .= $SYMBOLS_MATCHING[ $char ];
-			} else {
-				$fdatepicker_format .= $char;
-			}
+	$SYMBOLS_MATCHING   = [
+		'a' => 'aa', // am/pm
+		'A' => 'AA', // AM/PM
+		'g' => 'h', // 12-hour format of an hour without leading zeros
+		'h' => 'hh', // 12-hour format of an hour with leading zeros
+		'G' => 'h', // 24-hour format of an hour without leading zeros
+		'H' => 'hh', // 24-hour format of an hour with leading zeros
+		'i' => get_option( 'eme_time_remove_leading_zeros' ) ? 'i' : 'ii', // Minutes with leading zeros
+		's' => '', // seconds with leading zeros
+		'e' => '', // Timezone identifier
+		'I' => '', // Whether or not the date is in daylight saving time
+		'O' => '', // Difference to Greenwich time (GMT) in hours
+		'P' => '', // Difference to Greenwich time (GMT) with colon between hours and minutes
+		'T' => '', // Timezone abbreviation
+		'Z' => '', // Timezone offset in seconds
+	];
+	$fdatepicker_format = '';
+	for ( $i = 0; $i < strlen( $php_format ); $i++ ) {
+		$char = $php_format[ $i ];
+		if ( $char === '\\' ) { // PHP date format escaping character
+			++$i;
+			$fdatepicker_format .= $php_format[ $i ];
+		} elseif ( isset( $SYMBOLS_MATCHING[ $char ] ) ) {
+			$fdatepicker_format .= $SYMBOLS_MATCHING[ $char ];
+		} else {
+			$fdatepicker_format .= $char;
 		}
-		return $fdatepicker_format;
+	}
+	return $fdatepicker_format;
 }
 
 function eme_getValueFromPath( $arr, $path ) {
@@ -2675,7 +2667,7 @@ function eme_get_wp_image( $image_id ) {
 }
 
 function eme_column_exists( $table_name, $column_name ) {
-		global $wpdb;
+	global $wpdb;
 	foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) {
 		if ( $column == $column_name ) {
 			return true;
@@ -2767,7 +2759,7 @@ function eme_sanitize_sql_orderby( $orderby ) {
 	if ( preg_match( '/^\s*(([a-z0-9_\.]+|`[a-z0-9_\.]+`)(\s+(ASC|DESC))?\s*(,\s*(?=[a-z0-9_\.`])|$))+$/i', $orderby ) || preg_match( '/^\s*RAND\(\s*\)\s*$/i', $orderby ) ) {
 			return $orderby;
 	}
-		return false;
+	return false;
 }
 
 function eme_sort_stringlenth( $a, $b ) {
@@ -2856,7 +2848,7 @@ function eme_upload_file_err( $code ) {
 			$message = __( 'Unknown upload error', 'events-made-easy' );
 			break;
 	}
-		return $message;
+	return $message;
 }
 
 function eme_upload_files( $id, $type = 'bookings' ) {
@@ -3089,7 +3081,6 @@ function eme_get_uploaded_files( $id, $type = 'bookings' ) {
 }
 
 function eme_get_uploaded_file_linkdelete( $file ) {
-	
 	$style_del = 'eme_del_upload-button';
 	// the name of the file given by the person
 	$name = $file['name'];
@@ -3145,26 +3136,26 @@ function eme_replacelinks( $text ) {
 }
 
 function eme_is_admin_request() {
-		// Get admin URL and referrer.
-		$admin_url = strtolower( admin_url() );
-		$referrer  = strtolower( wp_get_referer() );
+	// Get admin URL and referrer.
+	$admin_url = strtolower( admin_url() );
+	$referrer  = strtolower( wp_get_referer() );
 
-		// Check if this is a admin request. If true, it
-		// could also be a AJAX request from the frontend.
+	// Check if this is a admin request. If true, it
+	// could also be a AJAX request from the frontend.
 	if ( is_user_logged_in() && is_admin() ) {
-			// Check if the user comes from an admin page.
+		// Check if the user comes from an admin page.
 		if ( 0 === strpos( $referrer, $admin_url ) ) {
-				return true;
+			return true;
 		} else {
-				// Check for AJAX requests.
+			// Check for AJAX requests.
 			if ( function_exists( 'wp_doing_ajax' ) ) {
-					return ! wp_doing_ajax();
+				return ! wp_doing_ajax();
 			} else {
-					return ! ( defined( 'DOING_AJAX' ) && DOING_AJAX );
+				return ! ( defined( 'DOING_AJAX' ) && DOING_AJAX );
 			}
 		}
 	} else {
-			return false;
+		return false;
 	}
 }
 
@@ -3219,8 +3210,8 @@ function eme_ajax_record_list( $tablename, $cap ) {
 	$where_array = [];
 	if ( $q ) {
 		for ( $i = 0; $i < count( $opt ); $i++ ) {
-				$fld           = esc_sql( $opt[ $i ] );
-				$where_array[] = "`$fld` LIKE '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%'";
+			$fld           = esc_sql( $opt[ $i ] );
+			$where_array[] = "`$fld` LIKE '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%'";
 		}
 		$where = ' WHERE ' . implode( ' AND ', $where_array );
 	}
@@ -3645,7 +3636,7 @@ function eme_unserialize( $data ) {
 }
 
 function eme_prettyprint_assoc( $jsonData, $pre = '' ) {
-		$pretty = '';
+	$pretty = '';
 	foreach ( $jsonData as $key => $val ) {
 		$pretty .= $pre . htmlspecialchars( ucfirst( $key ) ) . ': ';
 		if ( strcmp( gettype( $val ), 'array' ) == 0 ) {
@@ -3659,7 +3650,7 @@ function eme_prettyprint_assoc( $jsonData, $pre = '' ) {
 			$pretty .= htmlspecialchars( $val ) . "<br>\n";
 		}
 	}
-		return $pretty;
+	return $pretty;
 }
 
 function eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size ) {
@@ -3726,16 +3717,14 @@ function eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $
 }
 
 function eme_check_access( $post_id ) {
-	
-
 	$access_allowed = wp_cache_get( "eme_access $post_id" );
 	if ( $access_allowed === false ) {
 		$access_allowed = 1;
 		$custom_values  = @get_post_custom( $post_id );
 		if ( is_array( $custom_values ) ) {
-				$eme_drip_counter  = ! empty( $custom_values['eme_drip_counter'] ) ? intval( $custom_values['eme_drip_counter'][0] ) : 0;
-				$eme_membershipids = isset( $custom_values['eme_membershipids'] ) ? $custom_values['eme_membershipids'][0] : '';
-				$eme_groupids      = isset( $custom_values['eme_groupids'] ) ? $custom_values['eme_groupids'][0] : '';
+			$eme_drip_counter  = ! empty( $custom_values['eme_drip_counter'] ) ? intval( $custom_values['eme_drip_counter'][0] ) : 0;
+			$eme_membershipids = isset( $custom_values['eme_membershipids'] ) ? $custom_values['eme_membershipids'][0] : '';
+			$eme_groupids      = isset( $custom_values['eme_groupids'] ) ? $custom_values['eme_groupids'][0] : '';
 			if ( eme_is_serialized( $eme_membershipids ) ) {
 				$page_membershipids = eme_unserialize( $eme_membershipids );
 			} else {
@@ -3805,10 +3794,10 @@ function eme_check_access( $post_id ) {
 }
 
 function eme_migrate_event_payment_options() {
-		global $wpdb;
-		$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 
-		$payment_options = [ 'use_paypal', 'use_2co', 'use_webmoney', 'use_fdgg', 'use_mollie' ];
+	$payment_options = [ 'use_paypal', 'use_2co', 'use_webmoney', 'use_fdgg', 'use_mollie' ];
 	foreach ( $payment_options as $payment_option ) {
 		$sql = "SELECT event_id from $table_name WHERE $payment_option=1";
 		$ids = $wpdb->get_col( $sql );
@@ -3923,18 +3912,18 @@ function eme_is_datamaster() {
 }
 
 function eme_get_initials( $myname ) {
-		$words = preg_split( '/\s/', $myname, -1, PREG_SPLIT_NO_EMPTY );
-		$res   = implode(
-		    '.',
-		    array_map(
-			    function ( $a ) {
-					return mb_substr( $a[0], 0, 1, 'UTF-8' );
-				},
-			    $words
-			)
-		);
-		// add trailing '.'
-		$res .= ( mb_substr( $res, -1 ) == '.' ? '' : '.' );
+	$words = preg_split( '/\s/', $myname, -1, PREG_SPLIT_NO_EMPTY );
+	$res   = implode(
+		'.',
+		array_map(
+			function ( $a ) {
+				return mb_substr( $a[0], 0, 1, 'UTF-8' );
+			},
+			$words
+		)
+	);
+	// add trailing '.'
+	$res .= ( mb_substr( $res, -1 ) == '.' ? '' : '.' );
 	return $res;
 }
 ?>

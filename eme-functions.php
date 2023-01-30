@@ -1468,7 +1468,6 @@ function eme_localized_datetime( $mydate, $timezone = '', $datetime_format = '' 
 }
 
 function eme_localized_date( $mydate, $timezone = '', $date_format = '' ) {
-	
 	if ( eme_is_empty_date( $mydate ) ) {
 		return '';
 	}
@@ -1508,8 +1507,6 @@ function eme_localized_date( $mydate, $timezone = '', $date_format = '' ) {
 }
 
 function eme_localized_time( $mytime, $timezone = '', $time_format = '' ) {
-	
-
 	if ( $time_format == 1 ) {
 		$time_format = get_option( 'eme_backend_timeformat' );
 	}
@@ -1534,12 +1531,13 @@ function eme_localized_time( $mytime, $timezone = '', $time_format = '' ) {
 }
 
 function eme_convert_localized_time( $time_format, $mytime ) {
-	
-
 	if ( empty( $time_format ) ) {
 		$time_format = EME_WP_TIME_FORMAT;
 	}
 
+	if ( empty ( $mytime ) ) {
+		return '';
+	}
 	$date_obj = ExpressiveDate::createfromformat( $time_format, $mytime, ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
 	return $date_obj->format( 'H:i:00' );
 }
@@ -1549,7 +1547,6 @@ function eme_localized_db_datetime( $mydate ) {
 	return eme_localized_db_date( $mydate ) . ' ' . eme_localized_db_time( $mydate );
 }
 function eme_localized_db_date( $mydate, $date_format = '' ) {
-	
 	$eme_db_time_diff = eme_get_db_time_diff();
 
 	if ( empty( $date_format ) ) {
@@ -2691,7 +2688,11 @@ function eme_table_exists( $table_name ) {
 	global $wpdb;
 	$query     = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
 	$db_result = $wpdb->get_var( $query );
-	return strtolower( $db_result ) === strtolower( $table_name );
+	if ( empty( $db_result ) ) {
+		return false;
+	} else {
+		return strtolower( $db_result ) === strtolower( $table_name );
+	}
 }
 
 function eme_maybe_drop_column( $table_name, $column_name ) {

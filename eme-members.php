@@ -1309,9 +1309,19 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 	}
 	?>
 	<form name="eme-member-adminform" id="eme-member-adminform" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" enctype='multipart/form-data'>
-	<table>
 	<?php
 	echo $nonce_field;
+	if ( $action == 'add' ) {
+	?>
+		<input type='hidden' name='eme_admin_action' value='do_addmember'>
+		<input type='hidden' name='person_id' id='person_id' value=''>
+	<?php } else { ?>
+		<input type='hidden' name='eme_admin_action' value='do_editmember'>
+		<input type='hidden' name='person_id' id='person_id' value='<?php echo $member['person_id']; ?>'>
+		<input type='hidden' name='member_id' id='member_id' value='<?php echo $member['member_id']; ?>'>
+	<?php } ?>
+	<table>
+	<?php
 	if ( $action == 'add' ) {
 		?>
 		<?php
@@ -1327,8 +1337,6 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 		<tr><td><?php esc_html_e( 'Send mail to new member?', 'events-made-easy' ); ?>
 		</td><td>
 		<?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); ?>
-			<input type='hidden' name='eme_admin_action' value='do_addmember'>
-			<input type='hidden' name='person_id' id='person_id' value=''>
 		</td></tr>
 		<?php } ?>
 		<tr><td>
@@ -1350,9 +1358,6 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 		<tr><td><?php esc_html_e( 'Send mail for changed member?', 'events-made-easy' ); ?>
 		</td><td>
 		<?php echo eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ); ?>
-			<input type='hidden' name='eme_admin_action' value='do_editmember'>
-			<input type='hidden' name='person_id' id='person_id' value='<?php echo $member['person_id']; ?>'>
-			<input type='hidden' name='member_id' id='member_id' value='<?php echo $member['member_id']; ?>'>
 		</td></tr>
 		<?php } ?>
 		<?php if ( empty( $membership['properties']['family_membership'] ) || ( ! empty( $membership['properties']['family_membership'] ) && empty( $member['related_member_id'] ) ) ) { ?>
@@ -3042,26 +3047,26 @@ function eme_dyndata_member_ajax() {
 				if ( $condition['condition'] == 'contains' && strpos( $entered_val, $condition['condval'] ) !== false ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
 					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
-					$form_html     .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html     .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
+					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
 				}
 				if ( $condition['condition'] == 'notcontains' && strpos( $entered_val, $condition['condval'] ) === false ) {
-					$template = eme_get_template_format( $condition['template_id'] );
-					$form_html   .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
-					$form_html   .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html   .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$template   = eme_get_template_format( $condition['template_id'] );
+					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
+					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
 				}
 				if ( $condition['condition'] == 'incsv' && ( in_array( $condition['condval'], explode( ',', $entered_val ) ) || in_array( $condition['condval'], explode( ', ', $entered_val ) ) ) ) {
-					$template = eme_get_template_format( $condition['template_id'] );
-					$form_html           .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
-					$form_html           .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html           .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$template   = eme_get_template_format( $condition['template_id'] );
+					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
+					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
 				}
 				if ( $condition['condition'] == 'notincsv' && ! ( in_array( $condition['condval'], explode( ',', $entered_val ) ) || in_array( $condition['condval'], explode( ', ', $entered_val ) ) ) ) {
-					$template = eme_get_template_format( $condition['template_id'] );
-					$form_html           .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
-					$form_html           .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html           .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$template   = eme_get_template_format( $condition['template_id'] );
+					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
+					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
 				}
 				if ( $condition['condition'] == 'lt' && $entered_val < $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );

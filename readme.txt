@@ -104,6 +104,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Fix attendance count after qrcode scan
 * Also include booking_id for attendance count, since payment id alone can count for multiple bookings
 * Translate the subject for email subscriptions too, not just the mail body
+* Fix editing a member's dynamic data if no mail template was defined in the membership for updating a member
 
 = 2.3.44 (2023/01/27) =
 * Show task info in event admin overview (identical to RSVP info)

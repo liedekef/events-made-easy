@@ -100,7 +100,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.45 (2023/01/30) =
+= 2.3.47 (2023/01/30) =
+* Fix attendance scan and also allow people with "Manage attendees" capability to scan and insert attendance records
+
+= 2.3.46 (2023/01/30) =
 * Fix attendance count after qrcode scan
 * Also include booking_id for attendance count, since payment id alone can count for multiple bookings
 * Translate the subject for email subscriptions too, not just the mail body

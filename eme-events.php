@@ -935,6 +935,8 @@ function eme_events_page_content() {
 			if ( ! in_array( $booking_id, $booking_ids ) ) {
 				$booking_id = $booking_ids[0];
 			}
+		} else {
+			$booking_id = $booking_ids[0];
 		}
 		$booking = eme_get_booking( $booking_id );
 		$event   = eme_get_event( $booking['event_id'] );
@@ -949,7 +951,7 @@ function eme_events_page_content() {
 			$format = "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'Payment not ok', 'events-made-easy' ) . '</div>';
 		}
 		// if not logged in or not enough rights, just show that the payment is ok or not and return
-		if ( ! current_user_can( get_option( 'eme_cap_attendancecheck' ) ) && ! current_user_can( get_option( 'eme_cap_approve' ) ) && ! current_user_can( get_option( 'eme_cap_registrations' ) ) ) {
+		if ( ! current_user_can( get_option( 'eme_cap_attendancecheck' ) ) && ! current_user_can( get_option( 'eme_cap_approve' ) ) && ! current_user_can( get_option( 'eme_cap_registrations' ) ) && ! current_user_can( get_option( 'eme_cap_manage_attendances' ) ) ) {
 			#return "<div class='eme-message-error eme-attendance-message-error'>".__("Only WP people with the correct rights can use this link.",'events-made-easy')."</div>";
 			if ( ! empty( $event['event_properties']['attendance_unauth_scan_tpl'] ) ) {
 				$format .= "<div class='eme-message-info eme-attendance-message-info'>";

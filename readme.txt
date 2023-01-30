@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.44
+Stable tag: 2.3.45
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,7 +100,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.45 (2023//) =
+= 2.3.45 (2023/01/30) =
 * Fix attendance count after qrcode scan
 * Also include booking_id for attendance count, since payment id alone can count for multiple bookings
 * Translate the subject for email subscriptions too, not just the mail body

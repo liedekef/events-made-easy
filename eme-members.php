@@ -3964,9 +3964,17 @@ function eme_mymemberships_list_shortcode( $atts ) {
 	if ( is_user_logged_in() ) {
 		$wp_id = get_current_user_id();
 		if ( $wp_id ) {
-			$format  = eme_get_template_format( $template_id );
-			$header  = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
-			$footer  = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
+			$format = eme_get_template_format( $template_id );
+			if ( ! empty( $template_id_header ) ) {
+				$header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
+			} else {
+				$header = "";
+			}
+			if ( ! empty( $template_id_footer ) ) {
+				$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
+			} else {
+				$footer = "";
+			}
 			$ids_arr = eme_get_memberids_by_wpid( $wp_id );
 
 			$result = $header;

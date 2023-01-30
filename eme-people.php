@@ -3728,15 +3728,6 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
 function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname = '', $email = '', $wp_id = 0, $create_wp_user = 0, $return_fake_person = 0 ) {
 	$person = [];
 
-	if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
-                ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
-                ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
-                        return [
-                                0 => 0,
-                                1 => esc_html__( 'Access denied!', 'events-made-easy' ),
-                        ];
-        }
-
 	if ( ! $return_fake_person && ! empty( $email ) && ! eme_is_email( $email, 1 ) ) {
 		return [
 			0 => 0,

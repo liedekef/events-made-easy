@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.48 (2023//) =
+* Fix an undefined var
+
 = 2.3.47 (2023/01/30) =
 * Fix attendance scan and also allow people with "Manage attendees" capability to scan and insert attendance records
 

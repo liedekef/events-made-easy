@@ -1302,6 +1302,7 @@ function eme_tracker_url( $random_id ) {
 }
 
 function eme_current_page_url( $extra_arg = [] ) {
+	global $wp;
 	$the_link = home_url( add_query_arg( [], $wp->request ) );
 	if ( ! empty( $extra_arg ) ) {
 		$extra_arg = array_map( 'esc_attr', $extra_arg );

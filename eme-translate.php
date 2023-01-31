@@ -75,7 +75,7 @@ function eme_lang_url_mode() {
 		$url       = eme_current_page_url();
 		$home_url  = preg_quote( preg_replace( "/\/$lang_code\/?$/", '', home_url() ), '/' );
 		if ( preg_match( "/$home_url\/($lang_code)\//", $url, $matches ) ) {
-				$url_mode = 2;
+			$url_mode = 2;
 		}
 	}
 	wp_cache_set( 'eme_url_mode', $url_mode, '', 10 );

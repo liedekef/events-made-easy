@@ -23,7 +23,8 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		$fromemail = $replytoemail;
 		$fromname  = $replytoname;
 	}
-	if ( get_option( 'eme_mail_force_from' ) ) {
+	// if forced or fromemail is still empty
+	if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
 		$default_sender_address = get_option( 'eme_mail_sender_address' );
 		if ( eme_is_email( $default_sender_address ) && $fromemail != $default_sender_address ) {
 			$fromemail = $default_sender_address;
@@ -33,6 +34,20 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 			$fromemail = $contact->user_email;
 			$fromname  = $contact->display_name;
 		}
+		// Still empty from, then we go further up
+		if ( empty( $fromemail ) ) {
+			$fromemail = get_option( 'admin_email' );
+		}
+		if ( empty( $fromname ) ) {
+			$fromname = get_option( 'blogname' );
+		}
+	}
+	// now the from should never be empty, so just check reply to again
+	if ( empty( $replytoemail ) ) {
+		$replytoemail = $fromemail;
+	}
+	if ( empty( $replytoname ) ) {
+		$replytoname = $fromname;
 	}
 
 	// get all mail options, put them in an array and apply filter
@@ -363,7 +378,8 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		$fromemail = $replytoemail;
 		$fromname  = $replytoname;
 	}
-	if ( get_option( 'eme_mail_force_from' ) ) {
+	// if forced or fromemail is still empty
+	if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
 		$default_sender_address = get_option( 'eme_mail_sender_address' );
 		if ( eme_is_email( $default_sender_address ) && $fromemail != $default_sender_address ) {
 			$fromemail = $default_sender_address;
@@ -373,6 +389,20 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 			$fromemail = $contact->user_email;
 			$fromname  = $contact->display_name;
 		}
+		// Still empty from, then we go further up
+		if ( empty( $fromemail ) ) {
+			$fromemail = get_option( 'admin_email' );
+		}
+		if ( empty( $fromname ) ) {
+			$fromname = get_option( 'blogname' );
+		}
+	}
+	// now the from should never be empty, so just check reply to again
+	if ( empty( $replytoemail ) ) {
+		$replytoemail = $fromemail;
+	}
+	if ( empty( $replytoname ) ) {
+		$replytoname = $fromname;
 	}
 
 	$now  = current_time( 'mysql', false );

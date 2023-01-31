@@ -724,7 +724,7 @@ function eme_is_single_location_page() {
 function eme_get_contact( $contact_id = 0 ) {
 	// suppose the user has been deleted ...
 	if ( ! $contact_id || ! get_userdata( $contact_id ) ) {
-		$contact_id = get_option( 'eme_default_contact_person' );
+		$contact_id = intval(get_option( 'eme_default_contact_person',0) );
 	}
 	if ( $contact_id < 1 ) {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
@@ -753,7 +753,7 @@ function eme_get_event_contact( $event = null ) {
 			$contact_id = $event['event_author'];
 		}
 	} else {
-		$contact_id = get_option( 'eme_default_contact_person' );
+		$contact_id = intval(get_option( 'eme_default_contact_person',0) );
 	}
 	return eme_get_contact( $contact_id );
 }

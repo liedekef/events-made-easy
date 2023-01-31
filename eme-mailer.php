@@ -19,14 +19,20 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		return [ $res, $message ];
 	}
 
-	// the next 8 lines are no longer needed, but best to keep for mails already queued before this release (2.3.8)
 	if ( empty( $fromemail ) ) {
 		$fromemail = $replytoemail;
 		$fromname  = $replytoname;
 	}
-	if ( get_option( 'eme_mail_force_from' ) && $fromemail != get_option( 'eme_mail_sender_address' ) ) {
-		$fromemail = get_option( 'eme_mail_sender_address' );
-		$fromname  = get_option( 'eme_mail_sender_name' );
+	if ( get_option( 'eme_mail_force_from' ) ) {
+		$default_sender_address = get_option( 'eme_mail_sender_address' );
+		if ( eme_is_email( $default_sender_address ) && $fromemail != $default_sender_address ) {
+			$fromemail = $default_sender_address;
+			$fromname  = get_option( 'eme_mail_sender_name' );
+		} else {
+			$contact   = eme_get_contact();
+			$fromemail = $contact->user_email;
+			$fromname  = $contact->display_name;
+		}
 	}
 
 	// get all mail options, put them in an array and apply filter
@@ -357,9 +363,16 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		$fromemail = $replytoemail;
 		$fromname  = $replytoname;
 	}
-	if ( get_option( 'eme_mail_force_from' ) && $fromemail != get_option( 'eme_mail_sender_address' ) ) {
-		$fromemail = get_option( 'eme_mail_sender_address' );
-		$fromname  = get_option( 'eme_mail_sender_name' );
+	if ( get_option( 'eme_mail_force_from' ) ) {
+		$default_sender_address = get_option( 'eme_mail_sender_address' );
+		if ( eme_is_email( $default_sender_address ) && $fromemail != $default_sender_address ) {
+			$fromemail = $default_sender_address;
+			$fromname  = get_option( 'eme_mail_sender_name' );
+		} else {
+			$contact   = eme_get_contact();
+			$fromemail = $contact->user_email;
+			$fromname  = $contact->display_name;
+		}
 	}
 
 	$now  = current_time( 'mysql', false );

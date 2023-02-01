@@ -247,7 +247,7 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 	];
 
 	$size_array = [ 'custom' => __( 'Custom', 'events-made-easy' ) ];
-	require_once 'dompdf/2.0.1/vendor/autoload.php';
+	require_once 'dompdf/2.0.2/vendor/autoload.php';
 	foreach ( Dompdf\Adapter\CPDF::$PAPER_SIZES as $key => $val ) {
 		$size_array[ $key ] = strtoupper( $key );
 	}

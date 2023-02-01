@@ -102,6 +102,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.48 (2023//) =
 * Fix an undefined var
+* Translate cancel-not-allowed string for multi-language sites
+* Upgrade dompdf to 2.0.2
 
 = 2.3.47 (2023/01/30) =
 * Fix attendance scan and also allow people with "Manage attendees" capability to scan and insert attendance records

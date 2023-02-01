@@ -1456,7 +1456,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 				$eme_cancel_rsvp_days = -1 * intval( $event['event_properties']['cancel_rsvp_days'] );
 				$cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
 				if ( $cancel_cutofftime < $eme_date_obj_now ) {
-					$no_longer_allowed = get_option( 'eme_rsvp_cancel_no_longer_allowed_string' );
+					$no_longer_allowed = eme_translate( get_option( 'eme_rsvp_cancel_no_longer_allowed_string' ) );
 					return "<div class='eme-message-error eme-rsvp-message-error'>" . $no_longer_allowed . '</div>';
 				}
 				// second the rsvp cutoff based on booking age
@@ -1464,7 +1464,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 				$eme_cancel_rsvp_days = intval( $event['event_properties']['cancel_rsvp_age'] );
 				$cancel_cutofftime->modifyDays( $eme_cancel_rsvp_days );
 				if ( $eme_cancel_rsvp_days && $cancel_cutofftime < $eme_date_obj_now ) {
-					$no_longer_allowed = get_option( 'eme_rsvp_cancel_no_longer_allowed_string' );
+					$no_longer_allowed = eme_translate( get_option( 'eme_rsvp_cancel_no_longer_allowed_string' ) );
 					return "<div class='eme-message-error eme-rsvp-message-error'>" . $no_longer_allowed . '</div>';
 				}
 					$replacement .= eme_replace_booking_placeholders( $tmp_format, $event, $booking );

@@ -743,47 +743,37 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 			}
 			foreach ( $tasks as $count => $task ) {
 				?>
-					<tr id="eme_row_task_<?php echo $count; ?>" >
-					<td>
+				<tr id="eme_row_task_<?php echo $count; ?>" >
+				<td>
 				<?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
-					</td>
-					<td>
+				</td>
+				<td>
 				<?php if ( ! isset( $event['is_duplicate'] ) ) : // we set the task ids only if it is not a duplicate event ?>
-			<input type='hidden' id="eme_tasks[<?php echo $count; ?>][task_id]" name="eme_tasks[<?php echo $count; ?>][task_id]" aria-label="hidden index" size="5" value="
-															<?php
-															if ( isset( $task['task_id'] ) ) {
-																echo $task['task_id'];}
-															?>
-			">
-			<input type='hidden' id="eme_tasks[<?php echo $count; ?>][task_nbr]" name="eme_tasks[<?php echo $count; ?>][task_nbr]" aria-label="hidden index" size="5" value="
-															<?php
-															if ( isset( $task['task_nbr'] ) ) {
-																echo $task['task_nbr'];}
-															?>
-			">
-			<?php endif; ?>
-					</td>
-					<td>
-			<input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][name]" name="eme_tasks[<?php echo $count; ?>][name]" size="12" aria-label="name" value="<?php echo $task['name']; ?>">
-					</td>
-					<td>
-			<input type='hidden' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][task_start]' id='eme_tasks[<?php echo $count; ?>][task_start]'>
-					<input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_start]' id='eme_tasks[<?php echo $count; ?>][dp_task_start]' data-date='<?php if ( $task['task_start'] ) { echo eme_js_datetime( $task['task_start'] );} ?>' data-alt-field='#eme_tasks[<?php echo $count; ?>][task_start]' class='eme_formfield_fdatetime'>
-					</td>
-					<td>
-			<input type='hidden' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][task_end]' id='eme_tasks[<?php echo $count; ?>][task_end]'>
-			<input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_end]' id='eme_tasks[<?php echo $count; ?>][dp_task_end]' data-date='<?php if ( $task['task_end'] ) { echo eme_js_datetime( $task['task_end'] );} ?>' data-alt-field='#eme_tasks[<?php echo $count; ?>][task_end]' class='eme_formfield_fdatetime'>
-					</td>
-					<td>
-			<input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][spaces]" name="eme_tasks[<?php echo $count; ?>][spaces]" size="12" aria-label="spaces" value="<?php echo $task['spaces']; ?>">
-					</td>
-					<td>
-			<textarea id="eme_tasks[<?php echo $count; ?>][description]" name="eme_tasks[<?php echo $count; ?>][description]" ><?php echo eme_esc_html( $task['description'] ); ?></textarea>
-					</td>
-					<td>
-						<a href="#" class='eme_remove_task'><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>
-					</td>
-					</tr>
+					<input type='hidden' id="eme_tasks[<?php echo $count; ?>][task_id]" name="eme_tasks[<?php echo $count; ?>][task_id]" aria-label="hidden index" size="5" value="<?php if ( isset( $task['task_id'] ) ) { echo $task['task_id'];} ?>">
+					<input type='hidden' id="eme_tasks[<?php echo $count; ?>][task_nbr]" name="eme_tasks[<?php echo $count; ?>][task_nbr]" aria-label="hidden index" size="5" value="<?php if ( isset( $task['task_nbr'] ) ) { echo $task['task_nbr'];} ?>">
+				<?php endif; ?>
+				</td>
+				<td>
+				<input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][name]" name="eme_tasks[<?php echo $count; ?>][name]" size="12" aria-label="name" value="<?php echo $task['name']; ?>">
+				</td>
+				<td>
+				<input type='hidden' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][task_start]' id='eme_tasks[<?php echo $count; ?>][task_start]'>
+				<input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_start]' id='eme_tasks[<?php echo $count; ?>][dp_task_start]' data-date='<?php if ( $task['task_start'] ) { echo eme_js_datetime( $task['task_start'] );} ?>' data-alt-field='#eme_tasks[<?php echo $count; ?>][task_start]' class='eme_formfield_fdatetime'>
+				</td>
+				<td>
+				<input type='hidden' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][task_end]' id='eme_tasks[<?php echo $count; ?>][task_end]'>
+				<input <?php echo $required; ?> type='text' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][dp_task_end]' id='eme_tasks[<?php echo $count; ?>][dp_task_end]' data-date='<?php if ( $task['task_end'] ) { echo eme_js_datetime( $task['task_end'] );} ?>' data-alt-field='#eme_tasks[<?php echo $count; ?>][task_end]' class='eme_formfield_fdatetime'>
+				</td>
+				<td>
+				<input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][spaces]" name="eme_tasks[<?php echo $count; ?>][spaces]" size="12" aria-label="spaces" value="<?php echo $task['spaces']; ?>">
+				</td>
+				<td>
+				<textarea id="eme_tasks[<?php echo $count; ?>][description]" name="eme_tasks[<?php echo $count; ?>][description]" ><?php echo eme_esc_html( $task['description'] ); ?></textarea>
+				</td>
+				<td>
+				<a href="#" class='eme_remove_task'><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>
+				</td>
+				</tr>
 				<?php
 			}
 			?>
@@ -792,7 +782,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 		<?php esc_html_e( 'If name, start date or end date of a task is empty, it will be ignored.', 'events-made-easy' ); ?>
 		<?php
 		if ( $edit_recurrence ) {
-				echo "<div style='background-color: lightgrey;'>";
+			echo "<div style='background-color: lightgrey;'>";
 			esc_html_e( 'For recurring events, enter the start and end date of the task as if you would do it for the first event in the series. The tasks for the other events will be adjusted accordingly.', 'events-made-easy' );
 			if ( ! eme_is_empty_date( $event['event_start'] ) ) {
 				echo '<br>';

@@ -2178,16 +2178,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 	<?php if ( $readonly ) { ?>
 	</fieldset>
 	<?php } else { ?>
-	<p class="submit"><input type="submit" class="button-primary" name="submit" value="
-		<?php
-		if ( $action == 'add' ) {
-			esc_html_e( 'Add person', 'events-made-easy' );
-		} else {
-			esc_html_e( 'Update person', 'events-made-easy' );
-		}
-		?>
-																						"></p>
-		</form>
+	<p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add person', 'events-made-easy' ); } else { esc_html_e( 'Update person', 'events-made-easy' ); } ?>"></p>
+	</form>
 	<?php } ?>
 	</div>
 	<?php

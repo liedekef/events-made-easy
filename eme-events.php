@@ -3297,7 +3297,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( preg_match( '/#_EVENTCREATIONDATE\{(.+?)\}$/', $result, $matches ) ) {
-					$replacement = eme_localized_date( $event['creation_date'], EME_TIMEZONE, $matches[1] );
+			$replacement = eme_localized_date( $event['creation_date'], EME_TIMEZONE, $matches[1] );
 		} elseif ( preg_match( '/#_EVENTMODIFDATE\{(.+?)\}/', $result, $matches ) ) {
 			$replacement = eme_localized_date( $event['modif_date'], EME_TIMEZONE, $matches[1] );
 		} elseif ( preg_match( '/#_EVENTCREATIONDATE$/', $result ) ) {

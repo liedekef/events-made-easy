@@ -2998,8 +2998,6 @@ function eme_get_bookings_list_for_wp_id( $wp_id, $scope, $template = '', $templ
 }
 
 function eme_replace_booking_placeholders( $format, $event, $booking, $is_multibooking = 0, $target = 'html', $lang = '', $take_answers_from_post = 0 ) {
-	
-
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {
@@ -3584,7 +3582,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 
 	// now some html
 	if ( $target == 'html' ) {
-			$format = eme_nl2br_save_html( $format );
+		$format = eme_nl2br_save_html( $format );
 	}
 
 	return do_shortcode( $format );

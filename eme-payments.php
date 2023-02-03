@@ -366,12 +366,12 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 
 function eme_payment_allowed_to_pay( $payment_id ) {
 	// avoid that people pay again after pressing "back" and arriving on the payment form again
+	$payment = eme_get_payment ( $payment_id );
 	if ( $payment['target'] == 'member' ) {
 		$member      = eme_get_member_by_paymentid( $payment_id );
 		$membership  = eme_get_membership( $member['membership_id'] );
 		return eme_check_member_allowed_to_pay( $member, $membership );
 	} else {
-		$payment = eme_get_payment ( $payment_id );
 		$payment_paid = eme_get_payment_paid( $payment );
 		if ( $payment_paid ) {
 			$message = get_option( 'eme_payment_booking_already_paid_format' );

@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.49 (2023/02/04) =
+* "groups" is a reserved keyword in some mysql versions, so avoid using that as a table alias
+
 = 2.3.48 (2023/02/02) =
 * Fix an undefined var
 * Translate cancel-not-allowed string for multi-language sites

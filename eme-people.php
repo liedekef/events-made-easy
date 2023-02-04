@@ -1652,7 +1652,7 @@ function eme_render_people_searchfields( $group = [] ) {
 function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize = 0, $sorting = '', $count = 0, $ids_only = 0, $emails_only = 0 ) {
 	global $wpdb;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$answers_table    = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 
@@ -2858,7 +2858,7 @@ function eme_groups_exists( $ids_arr ) {
 
 function eme_get_persongroup_ids( $person_id, $wp_id = 0 ) {
 	global $wpdb;
-	$table        = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$table        = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( $wp_id ) {
 		$sql = $wpdb->prepare( "SELECT DISTINCT group_id FROM $table WHERE person_id IN (SELECT person_id FROM $people_table WHERE wp_id=%d)", $wp_id );
@@ -2870,13 +2870,13 @@ function eme_get_persongroup_ids( $person_id, $wp_id = 0 ) {
 
 function eme_get_persongroup_names( $person_id, $wp_id = 0 ) {
 	global $wpdb;
-	$table        = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$table        = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$groups_table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( $wp_id ) {
-		$sql = $wpdb->prepare( "SELECT DISTINCT groups.name FROM $table AS ugroups,$groups_table AS groups WHERE ugroups.person_id IN (SELECT person_id FROM $people_table WHERE wp_id=%d) AND ugroups.group_id=groups.group_id", $wp_id );
+		$sql = $wpdb->prepare( "SELECT DISTINCT $groups_table.name FROM $table ,$groups_table WHERE $table.person_id IN (SELECT person_id FROM $people_table WHERE wp_id=%d) AND $table.group_id=$groups_table.group_id", $wp_id );
 	} else {
-		$sql = $wpdb->prepare( "SELECT DISTINCT groups.name FROM $table AS ugroups,$groups_table AS groups WHERE ugroups.person_id = %d AND ugroups.group_id=groups.group_id", $person_id );
+		$sql = $wpdb->prepare( "SELECT DISTINCT $groups_table.name FROM $table,$groups_table WHERE $table.person_id = %d AND $table.group_id=$groups_table.group_id", $person_id );
 	}
 	return $wpdb->get_col( $sql );
 }
@@ -2897,7 +2897,7 @@ function eme_get_grouppersons( $group_ids, $order = 'ASC' ) {
 
 function eme_add_persongroups( $person_id, $group_ids, $public = 0 ) {
 	global $wpdb;
-	$table        = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$table        = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( empty( $group_ids ) ) {
 		return;
@@ -2941,7 +2941,7 @@ function eme_add_persongroups( $person_id, $group_ids, $public = 0 ) {
 function eme_get_person_by_email_in_groups( $email, $group_ids ) {
 	global $wpdb;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	if ( empty( $group_ids ) ) {
 		$sql = $wpdb->prepare( "SELECT p.person_id FROM $people_table p WHERE p.email=%s LIMIT 1", $email );
 	} else {
@@ -2964,7 +2964,7 @@ function eme_get_person_by_email_in_groups( $email, $group_ids ) {
 function eme_delete_emailfromgroup( $email, $group_id ) {
 	global $wpdb;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$sql              = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE group_id=%d AND person_id IN (SELECT person_id FROM $people_table WHERE email=%s)", $group_id, $email );
 	$wpdb->query( $sql );
 }
@@ -2972,14 +2972,14 @@ function eme_delete_emailfromgroup( $email, $group_id ) {
 function eme_delete_personfromgroup( $person_id, $group_id ) {
 	global $wpdb;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$sql              = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE group_id=%d AND person_id=%d", $group_id, $person_id );
 	$wpdb->query( $sql );
 }
 
 function eme_update_persongroups( $person_id, $group_ids ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "DELETE from $table WHERE person_id = %d", $person_id );
 	$wpdb->query( $sql );
 	foreach ( $group_ids as $group_id ) {
@@ -2990,7 +2990,7 @@ function eme_update_persongroups( $person_id, $group_ids ) {
 
 function eme_update_grouppersons( $group_id, $person_ids ) {
 	global $wpdb;
-	$table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$sql   = $wpdb->prepare( "DELETE from $table WHERE group_id = %d", $group_id );
 	$wpdb->query( $sql );
 	foreach ( $person_ids as $person_id ) {
@@ -3002,7 +3002,7 @@ function eme_update_grouppersons( $group_id, $person_ids ) {
 function eme_delete_group( $group_id ) {
 	global $wpdb;
 	$groups_table     = EME_DB_PREFIX . EME_GROUPS_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$sql              = $wpdb->prepare( "DELETE FROM $groups_table WHERE group_id = %d", $group_id );
 	$wpdb->query( $sql );
 	$sql = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE group_id = %d", $group_id );
@@ -3012,7 +3012,7 @@ function eme_delete_group( $group_id ) {
 function eme_delete_groups( $group_ids ) {
 	global $wpdb;
 	$groups_table     = EME_DB_PREFIX . EME_GROUPS_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	if ( eme_is_list_of_int( $group_ids ) ) {
 		$wpdb->query("DELETE FROM $groups_table WHERE group_id IN ($group_ids)" );
 		$wpdb->query("DELETE FROM $usergroups_table WHERE group_id IN ($group_ids)" );
@@ -3126,7 +3126,7 @@ function eme_get_massmail_person_ids() {
 function eme_get_groups_person_massemails( $group_ids ) {
 	global $wpdb;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$groups_table     = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	if ( ! eme_is_list_of_int( $group_ids ) ) {
 		return;
@@ -3176,7 +3176,7 @@ function eme_get_groups_person_massemails( $group_ids ) {
 function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
 	global $wpdb;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$groups_table     = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 
 	// in case $extra_sql is not empty, we'll cache the info so we can reuse it
@@ -4439,7 +4439,7 @@ function eme_get_person_answers( $person_id ) {
 
 function eme_delete_person_groups( $person_ids ) {
 	global $wpdb;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
 		$wpdb->query( "DELETE FROM $usergroups_table WHERE person_id IN ($person_ids)" );
 	}
@@ -4812,7 +4812,7 @@ function eme_ajax_people_list( $dynamic_groupname = '' ) {
 function eme_ajax_groups_list() {
 	global $wpdb;
 	$table            = EME_DB_PREFIX . EME_GROUPS_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
@@ -4825,11 +4825,11 @@ function eme_ajax_groups_list() {
 	$sql          = "SELECT COUNT(*) FROM $table";
 	$recordCount  = $wpdb->get_var( $sql );
 
-	$sql        = "SELECT group_id,COUNT(*) AS groupcount FROM $usergroups_table GROUP BY group_id";
+	$sql        = "SELECT group_id,COUNT(*) AS eme_groupcount FROM $usergroups_table GROUP BY group_id";
 	$res        = $wpdb->get_results( $sql, ARRAY_A );
 	$groupcount = [];
 	foreach ( $res as $val ) {
-		$groupcount[ $val['group_id'] ] = $val['groupcount'];
+		$groupcount[ $val['group_id'] ] = $val['eme_groupcount'];
 	}
 
 	$start    = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;

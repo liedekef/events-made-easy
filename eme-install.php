@@ -15,7 +15,7 @@ define( 'EME_LOCATIONS_CF_TBNAME', 'eme_locations_cf' );
 define( 'EME_BOOKINGS_TBNAME', 'eme_bookings' );
 define( 'EME_PEOPLE_TBNAME', 'eme_people' );
 define( 'EME_GROUPS_TBNAME', 'eme_groups' );
-define( 'USEREME_GROUPS_TBNAME', 'eme_usergroups' );
+define( 'EME_USERGROUPS_TBNAME', 'eme_usergroups' );
 define( 'EME_CATEGORIES_TBNAME', 'eme_categories' );
 define( 'EME_HOLIDAYS_TBNAME', 'eme_holidays' );
 define( 'EME_TEMPLATES_TBNAME', 'eme_templates' );
@@ -234,7 +234,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 		eme_drop_table( $db_prefix . EME_BOOKINGS_TBNAME );
 		eme_drop_table( $db_prefix . EME_PEOPLE_TBNAME );
 		eme_drop_table( $db_prefix . EME_GROUPS_TBNAME );
-		eme_drop_table( $db_prefix . USEREME_GROUPS_TBNAME );
+		eme_drop_table( $db_prefix . EME_USERGROUPS_TBNAME );
 		eme_drop_table( $db_prefix . EME_CATEGORIES_TBNAME );
 		eme_drop_table( $db_prefix . EME_HOLIDAYS_TBNAME );
 		eme_drop_table( $db_prefix . EME_TEMPLATES_TBNAME );
@@ -813,7 +813,7 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 	global $wpdb;
 	$table_name          = $db_prefix . EME_PEOPLE_TBNAME;
 	$grouptable_name     = $db_prefix . EME_GROUPS_TBNAME;
-	$usergrouptable_name = $db_prefix . USEREME_GROUPS_TBNAME;
+	$usergrouptable_name = $db_prefix . EME_USERGROUPS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (

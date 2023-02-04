@@ -8,7 +8,7 @@ function eme_cleanup_people() {
 	global $wpdb;
 	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-	$usergroups_table = EME_DB_PREFIX . USEREME_GROUPS_TBNAME;
+	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$tasksignup_table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE person_id NOT IN (SELECT person_id FROM $bookings_table WHERE status != %d) AND person_id NOT IN (SELECT person_id FROM $members_table WHERE status != %d) AND person_id NOT IN (SELECT person_id FROM $usergroups_table) AND person_id NOT IN (SELECT person_id FROM $tasksignup_table) AND status !=%d ", EME_RSVP_STATUS_TRASH, EME_MEMBER_STATUS_EXPIRED, EME_PEOPLE_STATUS_TRASH );

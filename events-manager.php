@@ -149,11 +149,11 @@ define( 'EME_LANGUAGE_REGEX', '[a-z]{2,3}' );
 $upload_info = wp_upload_dir();
 define( 'EME_UPLOAD_DIR', $upload_info['basedir'] . '/events-made-easy' );
 define( 'EME_UPLOAD_URL', $upload_info['baseurl'] . '/events-made-easy' );
-DEFINE( 'EME_PLUGIN_URL',  eme_plugin_url() );
-DEFINE( 'EME_DB_PREFIX',  eme_get_db_prefix() );
-DEFINE( 'EME_WP_DATE_FORMAT', get_option( 'date_format' ) );
-DEFINE( 'EME_WP_TIME_FORMAT', get_option( 'time_format' ) );
-DEFINE( 'EME_TIMEZONE', wp_timezone_string() );
+define( 'EME_PLUGIN_URL',  eme_plugin_url() );
+define( 'EME_DB_PREFIX',  eme_get_db_prefix() );
+define( 'EME_WP_DATE_FORMAT', get_option( 'date_format' ) );
+define( 'EME_WP_TIME_FORMAT', get_option( 'time_format' ) );
+define( 'EME_TIMEZONE', wp_timezone_string() );
 
 function eme_plugin_row_meta( $links, $file ) {
 

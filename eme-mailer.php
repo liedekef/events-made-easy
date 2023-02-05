@@ -26,9 +26,11 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 	// if forced or fromemail is still empty
 	if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
 		$default_sender_address = get_option( 'eme_mail_sender_address' );
-		if ( eme_is_email( $default_sender_address ) && $fromemail != $default_sender_address ) {
+		if ( eme_is_email( $default_sender_address ) ) {
 			$fromemail = $default_sender_address;
-			$fromname  = get_option( 'eme_mail_sender_name' );
+			if ( $fromemail != $default_sender_address ) {
+				$fromname  = get_option( 'eme_mail_sender_name' );
+			}
 		} else {
 			$contact   = eme_get_contact();
 			$fromemail = $contact->user_email;
@@ -381,9 +383,11 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 	// if forced or fromemail is still empty
 	if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
 		$default_sender_address = get_option( 'eme_mail_sender_address' );
-		if ( eme_is_email( $default_sender_address ) && $fromemail != $default_sender_address ) {
+		if ( eme_is_email( $default_sender_address ) ) {
 			$fromemail = $default_sender_address;
-			$fromname  = get_option( 'eme_mail_sender_name' );
+			if ( $fromemail != $default_sender_address ) {
+				$fromname  = get_option( 'eme_mail_sender_name' );
+			}
 		} else {
 			$contact   = eme_get_contact();
 			$fromemail = $contact->user_email;

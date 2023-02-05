@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.49 (2023/02/04) =
 * "groups" is a reserved keyword in some mysql versions, so avoid using that as a table alias
+* Fix 'from'-sender being set incorrectly to blog admin
 
 = 2.3.48 (2023/02/02) =
 * Fix an undefined var

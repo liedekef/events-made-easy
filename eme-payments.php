@@ -3317,9 +3317,9 @@ function eme_get_randompayment_booking_ids( $payment_randomid, $check_trash = 0 
 	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if ( $check_trash ) {
-		$sql = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $payments_table AS payments ON bookings.payment_id=payments.id where bookings.status = %d AND payments.random_id=%s", EME_RSVP_STATUS_TRASH, $payment_randomid );
+		$sql = $wpdb->prepare( "SELECT $bookings_table.booking_id FROM $bookings_table LEFT JOIN $payments_table ON $bookings_table.payment_id=$payments_table.id where $bookings_table.status = %d AND $payments_table.random_id=%s", EME_RSVP_STATUS_TRASH, $payment_randomid );
 	} else {
-		$sql = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $payments_table AS payments ON bookings.payment_id=payments.id where bookings.status IN (%d,%d,%d) AND payments.random_id=%s", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_randomid );
+		$sql = $wpdb->prepare( "SELECT $bookings_table.booking_id FROM $bookings_table LEFT JOIN $payments_table ON $bookings_table.payment_id=$payments_table.id where $bookings_table.status IN (%d,%d,%d) AND $payments_table.random_id=%s", EME_RSVP_STATUS_APPROVED, EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $payment_randomid );
 	}
 	return $wpdb->get_col( $sql );
 }

@@ -66,7 +66,7 @@ function eme_cleanup_unconfirmed( $eme_number ) {
 	}
 	$old_date = $eme_date_obj->minusMinutes( $eme_number )->getDateTime();
 
-	$sql         = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id WHERE bookings.status = %d AND bookings.booking_paid = 0 AND events.event_start > %s AND bookings.creation_date < %s", EME_RSVP_STATUS_USERPENDING, $today, $old_date );
+	$sql         = $wpdb->prepare( "SELECT $bookings_table.booking_id FROM $bookings_table LEFT JOIN $events_table ON $bookings_table.event_id=$events_table.event_id WHERE $bookings_table.status = %d AND $bookings_table.booking_paid = 0 AND $events_table.event_start > %s AND $bookings_table.creation_date < %s", EME_RSVP_STATUS_USERPENDING, $today, $old_date );
 	$booking_ids = $wpdb->get_col( $sql );
 	foreach ( $booking_ids as $booking_id ) {
 		$booking = eme_get_booking( $booking_id );

@@ -501,7 +501,7 @@ function eme_get_queued( $now ) {
 	$mqueue_table   = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 	// we take only the queued mails with status=0 where either the planning date for the mailing has passed (so we know those can be send) or that are not part of a mailing
-	$sql                  = "SELECT mqueue.* FROM $mqueue_table AS mqueue LEFT JOIN $mailings_table AS mailings ON mqueue.mailing_id=mailings.id WHERE mqueue.status=0 AND (mqueue.mailing_id=0 OR (mqueue.mailing_id>0 and mailings.planned_on<'$now'))";
+	$sql                  = "SELECT $mqueue_table.* FROM $mqueue_table LEFT JOIN $mailings_table ON $mqueue_table.mailing_id=$mailings_table.id WHERE $mqueue_table.status=0 AND ($mqueue_table.mailing_id=0 OR ($mqueue_table.mailing_id>0 and $mailings_table.planned_on<'$now'))";
 	$eme_cron_queue_count = intval( get_option( 'eme_cron_queue_count' ) );
 	if ( $eme_cron_queue_count > 0 ) {
 		$sql .= " LIMIT $eme_cron_queue_count";

@@ -694,7 +694,16 @@ function eme_is_events_page() {
 }
 
 function eme_get_events_page_id() {
-	return get_option( 'eme_events_page' );
+	$page_id = get_option( 'eme_events_page' );
+	// if a language is set, then remove it
+	// this needs a bit optimising so it is not executed each time though ...
+	if ( function_exists( 'pll_get_post_language' ) ) {
+		$post_lang = pll_get_post_language($page_id);
+		if (!empty($post_lang)) {
+			pll_set_post_language($page_id,'');
+		}
+	}
+	return $page_id;
 }
 
 function eme_get_events_page( $justurl = 1, $text = '' ) {

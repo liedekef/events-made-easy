@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.50 (2023//) =
+* Remove polylang language from the special events page if set, so the language choosen is taken for that page
+
 = 2.3.49 (2023/02/05) =
 * "groups" is a reserved keyword in some mysql versions, so avoid using that as a table alias
 * Fix 'from'-sender being set incorrectly to blog admin

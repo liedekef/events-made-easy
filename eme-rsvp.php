@@ -2686,7 +2686,7 @@ function eme_get_basic_bookings_on_waitinglist( $event_id ) {
 		$bookings = $wpdb->get_results( $sql, ARRAY_A );
 			wp_cache_add( "eme_basic_bookings_onwaitinglist $event_id", $bookings, '', 5 );
 	}
-		return $bookings;
+	return $bookings;
 }
 
 function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 ) {

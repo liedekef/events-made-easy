@@ -694,15 +694,21 @@ function eme_is_events_page() {
 }
 
 function eme_get_events_page_id() {
-	$page_id = get_option( 'eme_events_page' );
-	// if a language is set, then remove it
-	// this needs a bit optimising so it is not executed each time though ...
-	if ( function_exists( 'pll_get_post_language' ) ) {
-		$post_lang = pll_get_post_language($page_id);
-		if (!empty($post_lang)) {
-			pll_set_post_language($page_id,'');
+	// in theory every call to get_option is cached, but since we also check for polylang translation issues
+	// we don't want to call the pll_ functions too often ...
+	$page_id = wp_cache_get( "eme_page_id" );
+        if ( $page_id === false ) {
+		$page_id = get_option( 'eme_events_page' );
+		// if a language is set, then remove it
+		// this needs a bit optimising so it is not executed each time though ...
+		if ( function_exists( 'pll_get_post_language' ) ) {
+			$post_lang = pll_get_post_language($page_id);
+			if (!empty($post_lang)) {
+				pll_set_post_language($page_id,'');
+			}
 		}
-	}
+		wp_cache_add( "eme_page_id", $page_id, '', 5 );
+        }
 	return $page_id;
 }
 

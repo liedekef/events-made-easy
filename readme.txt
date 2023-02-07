@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.3.50 (2023//) =
 * Remove polylang language from the special events page if set, so the language choosen is taken for that page
 * Translate full name if it contains language tags
+* Interpret language tags in template as early as possible, to avoid nested tags once placeholders get expanded
 
 = 2.3.49 (2023/02/05) =
 * "groups" is a reserved keyword in some mysql versions, so avoid using that as a table alias

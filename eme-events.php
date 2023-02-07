@@ -1990,13 +1990,14 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 					$found = 0;
 			} else {
 				$replacement = 0;
+				$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 				if ( $current_userid ) {
 					$groups_arr = explode( ',', $groups );
 					foreach ( $groups_arr as $group ) {
 						if ( $current_userid ) {
 							$groups_arr = explode( ',', $groups );
 							foreach ( $groups_arr as $group ) {
-								if ( ! empty( eme_get_groups_person_ids( $group, "people.wp_id = $current_userid" ) ) ) {
+								if ( ! empty( eme_get_groups_person_ids( $group, "$people_table.wp_id = $current_userid" ) ) ) {
 									$replacement = 1;
 									break;
 								}
@@ -2053,8 +2054,10 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				if ( $current_userid ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
-							$membership = eme_get_membership( $membership_t );
+						$membership = eme_get_membership( $membership_t );
+						if ($membership) {
 							$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
+						}
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
 							break;

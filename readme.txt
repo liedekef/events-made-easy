@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Translate full name if it contains language tags
 * Interpret language tags in template as early as possible, to avoid nested tags once placeholders get expanded
 * Fix #_IS_USER_IN_GROUP{xx,xx,xx}
+* Upgrade dompdf to 2.0.3
 
 = 2.3.49 (2023/02/05) =
 * "groups" is a reserved keyword in some mysql versions, so avoid using that as a table alias

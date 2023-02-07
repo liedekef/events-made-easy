@@ -6080,7 +6080,7 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 	// the template format needs br-handling, so lets use a handy function
 	$format = eme_get_template_format( $template_id );
 
-	require_once 'dompdf/2.0.2/vendor/autoload.php';
+	require_once 'dompdf/2.0.3/vendor/autoload.php';
 	// instantiate and use the dompdf class
 	$options = new Dompdf\Options();
 	$options->set( 'isRemoteEnabled', true );
@@ -6146,7 +6146,7 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
 	// the template format needs br-handling, so lets use a handy function
 	$format = eme_get_template_format( $template_id );
 
-	require_once 'dompdf/2.0.2/vendor/autoload.php';
+	require_once 'dompdf/2.0.3/vendor/autoload.php';
 	// instantiate and use the dompdf class
 	$options = new Dompdf\Options();
 	$options->set( 'isRemoteEnabled', true );

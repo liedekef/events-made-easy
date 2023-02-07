@@ -2698,7 +2698,7 @@ function eme_options_page() {
 				$now_time         = $eme_date_obj_now->getTime();
 				eme_options_input_text( __( 'EME backend date format', 'events-made-easy' ), 'eme_backend_dateformat', __( 'The date format used in EME tables. Leave this empty to use the WordPress settings.', 'events-made-easy' ) . "<p class='date-time-doc'>" . __( '<a href="https://wordpress.org/support/article/formatting-date-and-time/">Documentation on date and time formatting</a>.' ) . '</p>' );
 				eme_options_input_text( __( 'EME backend time format', 'events-made-easy' ), 'eme_backend_timeformat', __( 'The time format used in EME tables. Leave this empty to use the WordPress settings.', 'events-made-easy' ) . "<p class='date-time-doc'>" . __( '<a href="https://wordpress.org/support/article/formatting-date-and-time/">Documentation on date and time formatting</a>.' ) . '</p>' );
-				require_once 'dompdf/2.0.2/vendor/autoload.php';
+				require_once 'dompdf/2.0.3/vendor/autoload.php';
 				$dompdf                = new Dompdf\Dompdf();
 				$dompdf_fontfamilies   = array_keys( $dompdf->getFontMetrics()->getFontFamilies() );
 				$pdf_font_families_arr = [];

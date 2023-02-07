@@ -3448,7 +3448,7 @@ function eme_format_full_name( $firstname, $lastname ) {
 	if ( eme_is_empty_string( $res ) ) {
 		return '';
 	} else {
-		return $res;
+		return eme_translate($res);
 	}
 }
 

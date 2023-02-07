@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
 "POT-Creation-Date: 2023-01-27 22:51:01+00:00\n"
-"PO-Revision-Date: 2023-01-27 23:59+0100\n"
+"PO-Revision-Date: 2023-02-07 23:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -3145,7 +3145,7 @@ msgstr "Taken e-mail formaat instellingen"
 # File: eme-events.php, line: 6269
 # File: eme-options.php, line: 2025
 msgid "Task Signup Pending Email"
-msgstr "E-mail voor goed te keuren taakaanmelding "
+msgstr "E-mail voor goed te keuren taakaanmelding"
 
 #
 # File: eme-events.php, line: 6273
@@ -5134,7 +5134,7 @@ msgstr ""
 "Als deze optie is ingesteld en de instelling \"Min. aantal te boeken "
 "plaatseb\" is ingesteld op een waarde groter dan 0, dan zal het veld om het "
 "aantal te boeken plaatsen te kiezen worden verborgen en het aantal geboekte "
-"plaatsen zal op 1 ingesteld worden"
+"plaatsen zal op 1 ingesteld worden."
 
 #
 # File: eme-events.php, line: 8530
@@ -15310,7 +15310,7 @@ msgstr ""
 # File: eme-options.php, line: 2030
 # File: eme-tasks.php, line: 539
 msgid "Task Signup Pending Email Body"
-msgstr "E-mail body voor goed te keuren taakaanmelding "
+msgstr "E-mail body voor goed te keuren taakaanmelding"
 
 #
 # File: eme-options.php, line: 2030

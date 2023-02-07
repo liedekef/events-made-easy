@@ -250,6 +250,9 @@ function eme_people_shortcode( $atts ) {
 }
 
 function eme_replace_email_event_placeholders( $format, $email, $lastname, $firstname, $event, $lang = '' ) {
+	// replace EME language tags as early as possible
+        $format = eme_translate_string_nowptrans( $format );
+
 	$needle_offset = 0;
 	preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
@@ -274,7 +277,8 @@ function eme_replace_email_event_placeholders( $format, $email, $lastname, $firs
 }
 
 function eme_replace_people_placeholders( $format, $person, $target = 'html', $lang = '', $do_shortcode = 1 ) {
-	
+	// replace EME language tags as early as possible
+        $format = eme_translate_string_nowptrans( $format );
 
 	$email_target = 0;
 	$orig_target  = $target;

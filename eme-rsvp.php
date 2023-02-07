@@ -2998,6 +2998,9 @@ function eme_get_bookings_list_for_wp_id( $wp_id, $scope, $template = '', $templ
 }
 
 function eme_replace_booking_placeholders( $format, $event, $booking, $is_multibooking = 0, $target = 'html', $lang = '', $take_answers_from_post = 0 ) {
+	// replace EME language tags as early as possible
+        $format = eme_translate_string_nowptrans( $format );
+
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {
@@ -3589,6 +3592,9 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 }
 
 function eme_replace_attendees_placeholders( $format, $event, $person, $target = 'html', $lang = '' ) {
+	// replace EME language tags as early as possible
+        $format = eme_translate_string_nowptrans( $format );
+
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {

@@ -667,6 +667,8 @@ function eme_calendar_ajax() {
 }
 
 function eme_replace_calendar_placeholders( $format, $event, $cal_day, $target = 'html', $lang = '' ) {
+	// replace EME language tags as early as possible
+        $format = eme_translate_string_nowptrans( $format );
 
 	$email_target = 0;
 	$orig_target  = $target;

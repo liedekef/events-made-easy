@@ -4395,6 +4395,9 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 		$target       = 'html';
 	}
 
+	// replace EME language tags as early as possible
+	$format = eme_translate_string_nowptrans( $format );
+
 	if ( $member['person_id'] == -1 ) {
 		// -1 ? then this is from a fake member
 		$person         = eme_add_update_person_from_form( 0, '', '', '', 0, 0, 1 );
@@ -4937,6 +4940,9 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 }
 
 function eme_replace_membership_placeholders( $format, $membership, $target = 'html', $lang = '', $do_shortcode = 1, $recursion_level = 0 ) {
+	// replace EME language tags as early as possible
+	$format = eme_translate_string_nowptrans( $format );
+
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {

@@ -158,6 +158,10 @@ function eme_translate( $value, $lang = '', $use_wp_trans = 1 ) {
 	}
 }
 
+function eme_translate_string_nowptrans( $value, $lang = '' ) {
+	return eme_translate_string( $value, $lang, 0 );
+}
+
 function eme_translate_string( $text, $lang = '', $use_wp_trans = 1 ) {
 	if ( empty( $lang ) ) {
 		$lang = eme_detect_lang();

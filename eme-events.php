@@ -1183,7 +1183,7 @@ function eme_events_page_content() {
 					$format = "<div class='eme-message-success eme-member-message-success'>" . __( 'Payment success for your membership signup for #_MEMBERSHIPNAME', 'events-made-easy' ) . '</div>';
 				}
 			} else {
-					$format = get_option( 'eme_payment_member_fail_format' );
+				$format = get_option( 'eme_payment_member_fail_format' );
 				if ( eme_is_empty_string( $format ) ) {
 					$format = "<div class='eme-message-error eme-member-message-error'>" . __( 'Payment failed for your membership signup for #_MEMBERSHIPNAME', 'events-made-easy' ) . '</div>';
 				}
@@ -1873,7 +1873,8 @@ function eme_add_post_state( $post_states, $post ) {
 add_filter( 'display_post_states', 'eme_add_post_state', 10, 2 );
 
 function eme_replace_generic_placeholders( $format, $target = 'html' ) {
-	
+	// replace EME language tags as early as possible
+        $format = eme_translate_string_nowptrans( $format );
 
 	$email_target = 0;
 	$orig_target  = $target;
@@ -2174,7 +2175,8 @@ function eme_replace_placeholders( $format, $event, $target = 'html', $lang = ''
 }
 
 function eme_replace_event_placeholders( $format, $event, $target = 'html', $lang = '', $do_shortcode = 1, $recursion_level = 0 ) {
-	
+	// replace EME language tags as early as possible
+        $format = eme_translate_string_nowptrans( $format );
 
 	$email_target = 0;
 	$orig_target  = $target;
@@ -3873,6 +3875,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 }
 
 function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' ) {
+	// replace EME language tags as early as possible
+        $format = eme_translate_string_nowptrans( $format );
+
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {
@@ -4562,7 +4567,7 @@ function eme_display_single_event( $event_id, $template_id = 0, $ignore_url = 0 
 	} elseif ( $template_id ) {
 		$single_event_format = eme_get_template_format( $template_id );
 	} elseif ( ! eme_is_empty_string( $event['event_single_event_format'] ) ) {
-			$single_event_format = $event['event_single_event_format'];
+		$single_event_format = $event['event_single_event_format'];
 	} elseif ( $event['event_properties']['event_single_event_format_tpl'] > 0 ) {
 		$single_event_format = eme_get_template_format( $event['event_properties']['event_single_event_format_tpl'] );
 	} else {

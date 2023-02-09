@@ -3204,7 +3204,7 @@ function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
 
 	if ( ! empty( $static_groupids ) && eme_is_numeric_array($static_groupids)) {
 		$ids_list = implode(',', $static_groupids);
-		$sql = $wpdb->prepare( "SELECT people.person_id FROM $people_table LEFT JOIN $usergroups_table ON $people_table.person_id=$usergroups_table.person_id WHERE $people_table.status=%d AND $usergroups_table.group_id IN ($ids_list) $extra_sql", EME_PEOPLE_STATUS_ACTIVE);
+		$sql = $wpdb->prepare( "SELECT $people_table.person_id FROM $people_table LEFT JOIN $usergroups_table ON $people_table.person_id=$usergroups_table.person_id WHERE $people_table.status=%d AND $usergroups_table.group_id IN ($ids_list) $extra_sql", EME_PEOPLE_STATUS_ACTIVE);
 		$res = $wpdb->get_col( $sql );
 	} else {
 		$res = [];

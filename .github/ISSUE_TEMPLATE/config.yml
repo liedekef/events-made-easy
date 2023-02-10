@@ -1,0 +1,7 @@
+contact_links:
+  - name: Events Made Easy Discussions
+    url: https://github.com/liedekef/events-made-easy/discussions/
+    about: You can ask questions and find answers on our github Discussionsn section.
+  - name: Feature request ? Open Ideas discussion
+    url: https://github.com/liedekef/events-made-easy/discussions/new?category=ideas
+    about: Suggest an idea for this project

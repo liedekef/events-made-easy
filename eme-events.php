@@ -353,7 +353,8 @@ function eme_events_page() {
 			}
 		}
 		$orig_event = $event;
-		$post_vars  = [ 'event_name', 'event_seats', 'price', 'rsvp_number_days', 'rsvp_number_hours', 'currency', 'event_author', 'event_contactperson_id', 'event_url', 'event_image_url', 'event_image_id', 'event_prefix', 'event_slug', 'event_page_title_format', 'event_contactperson_email_body', 'event_registration_recorded_ok_html', 'event_respondent_email_body', 'event_registration_pending_email_body', 'event_registration_updated_email_body', 'event_registration_cancelled_email_body', 'event_registration_trashed_email_body', 'event_registration_form_format', 'event_cancel_form_format', 'event_registration_paid_email_body' ];
+		$event[ 'event_name' ] = eme_sanitize_request( $_POST[ 'event_name' ] );
+		$post_vars  = [ 'event_seats', 'price', 'rsvp_number_days', 'rsvp_number_hours', 'currency', 'event_author', 'event_contactperson_id', 'event_url', 'event_image_url', 'event_image_id', 'event_prefix', 'event_slug', 'event_page_title_format', 'event_contactperson_email_body', 'event_registration_recorded_ok_html', 'event_respondent_email_body', 'event_registration_pending_email_body', 'event_registration_updated_email_body', 'event_registration_cancelled_email_body', 'event_registration_trashed_email_body', 'event_registration_form_format', 'event_cancel_form_format', 'event_registration_paid_email_body' ];
 		foreach ( $post_vars as $post_var ) {
 			if ( isset( $_POST[ $post_var ] ) ) {
 				$event[ $post_var ] = eme_kses( $_POST[ $post_var ] );
@@ -383,8 +384,8 @@ function eme_events_page() {
 
 		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 		// we do event_start_date and event_end_date differently
-		if ( isset( $_POST['event_start_date'] ) ) {
-			$event_start_date = eme_kses( $_POST['event_start_date'] );
+		if ( !empty( $_POST['event_start_date'] ) && eme_is_date( $_POST['event_start_date'] ) ) {
+			$event_start_date = eme_sanitize_request( $_POST['event_start_date'] );
 		} else {
 			$event_start_date = $eme_date_obj->startOfDay()->getDate();
 		}
@@ -393,8 +394,8 @@ function eme_events_page() {
 			$duration       = $recurrence['event_duration'] - 1;
 			$end_date_obj   = new ExpressiveDate( $event_start_date, EME_TIMEZONE );
 			$event_end_date = $end_date_obj->addDays( $duration )->getDate();
-		} elseif ( isset( $_POST['event_end_date'] ) ) {
-			$event_end_date = eme_kses( $_POST['event_end_date'] );
+		} elseif ( !empty( $_POST['event_end_date'] ) && eme_is_date( $_POST['event_end_date'] ) ) {
+			$event_end_date = eme_sanitize_request( $_POST['event_end_date'] );
 		} else {
 			$event_end_date = $eme_date_obj->endOfDay()->getDate();
 		}
@@ -4644,6 +4645,7 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 	if ( $only_rsvp ) {
 		$where[] = 'event_rsvp = 1';
 	}
+	$where[] = 'event_status != '.EME_EVENT_STATUS_TRASH;
 
 	$condition = '';
 	if ( ! empty( $where ) ) {

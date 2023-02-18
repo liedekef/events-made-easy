@@ -65,21 +65,21 @@ function eme_formfields_page() {
 				$formfield['admin_values'] = join( '||', eme_sanitize_request( eme_text_split_newlines( $_POST['admin_values'] ) ) );
 				$formfield['admin_tags']   = join( '||', eme_sanitize_request( eme_text_split_newlines( $_POST['admin_tags'] ) ) );
 			} else {
-					$formfield['field_values'] = trim( eme_sanitize_request( $_POST['field_values'] ) );
-					$formfield['field_tags']   = trim( eme_sanitize_request( $_POST['field_tags'] ) );
-					$formfield['admin_values'] = trim( eme_sanitize_request( $_POST['admin_values'] ) );
-					$formfield['admin_tags']   = trim( eme_sanitize_request( $_POST['admin_tags'] ) );
+				$formfield['field_values'] = trim( eme_sanitize_request( $_POST['field_values'] ) );
+				$formfield['field_tags']   = trim( eme_sanitize_request( $_POST['field_tags'] ) );
+				$formfield['admin_values'] = trim( eme_sanitize_request( $_POST['admin_values'] ) );
+				$formfield['admin_tags']   = trim( eme_sanitize_request( $_POST['admin_tags'] ) );
 			}
 			$formfield['field_attributes'] = trim( eme_sanitize_request( $_POST['field_attributes'] ) );
 			// for updates the field_purpose can be empty, so check for this
 			if ( ! empty( $_POST['field_purpose'] ) ) {
-					$formfield['field_purpose'] = trim( eme_sanitize_request( $_POST['field_purpose'] ) );
+				$formfield['field_purpose'] = trim( eme_sanitize_request( $_POST['field_purpose'] ) );
 			}
 			// condition can be null if there was a group assigned and the group got deleted, so let's check for that too
 			// we also remove group:0 from the array in case other groups are choosen too
 			if ( ! empty( $_POST['field_condition'] ) && is_array( $_POST['field_condition'] ) ) {
-					$condition_arr = eme_sanitize_request( $_POST['field_condition'] );
-					//Remove element by value using unset()
+				$condition_arr = eme_sanitize_request( $_POST['field_condition'] );
+				//Remove element by value using unset()
 				if ( ( $key = array_search( 'group:0', $condition_arr ) ) !== false ) {
 					unset( $condition_arr[ $key ] );
 				}
@@ -113,10 +113,10 @@ function eme_formfields_page() {
 				$formfield['export'] = 0;
 			}
 			if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-					// files are not stored in the db, so we can't search on them
-					$formfield['searchable'] = 0;
-					// for type file, we only accept integers here
-					// since we use that as max size
+				// files are not stored in the db, so we can't search on them
+				$formfield['searchable'] = 0;
+				// for type file, we only accept integers here
+				// since we use that as max size
 				if ( ! empty( $formfield['admin_values'] ) ) {
 					$formfield['admin_values'] = intval( $formfield['admin_values'] );
 				}
@@ -125,18 +125,18 @@ function eme_formfields_page() {
 				}
 			}
 			if ( $field_id > 0 ) {
-					$validation_result = $wpdb->update( $formfields_table, $formfield, [ 'field_id' => $field_id ] );
+				$validation_result = $wpdb->update( $formfields_table, $formfield, [ 'field_id' => $field_id ] );
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully edited the field', 'events-made-easy' );
 				} else {
 					$message = __( 'There was a problem editing the field', 'events-made-easy' );
 				}
 				if ( get_option( 'eme_stay_on_edit_page' ) || $validation_result === false ) {
-						eme_formfields_edit_layout( $field_id, $message );
-						return;
+					eme_formfields_edit_layout( $field_id, $message );
+					return;
 				}
 			} else {
-						$validation_result = $wpdb->insert( $formfields_table, $formfield );
+				$validation_result = $wpdb->insert( $formfields_table, $formfield );
 				if ( $validation_result !== false ) {
 					$new_field_id = $wpdb->insert_id;
 					$message      = __( 'Successfully added the field', 'events-made-easy' );
@@ -166,17 +166,17 @@ function eme_formfields_table_layout( $message = '' ) {
 		$hidden_style = '';
 	}
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
-		<div id="icon-edit" class="icon32">
-			<br>
-		</div>
+	<div class="wrap nosubsub">
+	<div id="poststuff">
+	<div id="icon-edit" class="icon32">
+		<br>
+	</div>
 
-		<div id="formfields-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-				<p><?php echo $message; ?></p>
-		</div>
+	<div id="formfields-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
+		<p><?php echo $message; ?></p>
+	</div>
 
-		<h1><?php esc_html_e( 'Form fields', 'events-made-easy' ); ?></h1>
+	<h1><?php esc_html_e( 'Form fields', 'events-made-easy' ); ?></h1>
 
 	<div class="wrap">
 		<form id="formfields-new" method="post" action="<?php echo $destination; ?>">
@@ -3337,7 +3337,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people' ) {
 				$field_id = $formfield['field_id'];
-				// all the people fields are dynamic fields in the backend, and the function eme_store_people_answers searches for that, so we need that name again
+				// all the people fields are dynamic fields in the backend, and the function eme_store_person_answers searches for that, so we need that name again
 				$var_prefix     = "familymember[$counter][";
 				$var_postfix    = ']';
 				$postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
@@ -4441,7 +4441,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people' ) {
 					$field_id = $formfield['field_id'];
-					// all the people fields are dynamic fields in the backend, and the function eme_store_people_answers searches for that, so we need that name again
+					// all the people fields are dynamic fields in the backend, and the function eme_store_person_answers searches for that, so we need that name again
 					$person_id      = $person['person_id'];
 					$var_prefix     = "dynamic_personfields[$person_id][";
 					$var_postfix    = ']';

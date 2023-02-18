@@ -1218,6 +1218,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	}
 	if ( $membership_id ) {
 		eme_membership_store_answers( $membership_id );
+		eme_upload_files( $membership_id, 'memberships' );
 	}
 	return [ $membership_id, $message ];
 }
@@ -2439,9 +2440,10 @@ function eme_meta_box_div_membershipcustomfields( $membership ) {
 	$formfields = eme_get_formfields( '', 'memberships' );
 	$formfields     = apply_filters( 'eme_membership_formfields', $formfields );
 	if ( ! empty( $membership['membership_id'] ) ) {
-			$answers = eme_get_membership_answers( $membership['membership_id'] );
+		$answers = eme_get_membership_answers( $membership['membership_id'] );
+		$files = eme_get_uploaded_files( $membership['membership_id'], 'memberships' );
 	} else {
-			$answers = [];
+		$answers = [];
 	}
 	foreach ( $formfields as $formfield ) {
 		$field_name     = eme_trans_esc_html( $formfield['field_name'] );
@@ -2453,14 +2455,22 @@ function eme_meta_box_div_membershipcustomfields( $membership ) {
 				$entered_val = $answer['answer'];
 			}
 		}
+		if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
+			$entered_files = [];
+			foreach ( $files as $file ) {
+				if ( $file['field_id'] == $field_id ) {
+					$entered_files[] = $file;
+				}
+			}
+			$entered_val = $entered_files;
+		}
+
 		if ( $formfield['field_required'] ) {
 			$required = 1;
 		} else {
 			$required = 0;
 		}
-		if ( $formfield['field_type'] == 'file' ) {
-			$field_html = esc_html__( 'File upload is not allowed here.', 'events-made-easy' );
-		} elseif ( $formfield['field_type'] == 'hidden' ) {
+		if ( $formfield['field_type'] == 'hidden' ) {
 			$field_html = esc_html__( "Custom fields of type 'hidden' are useless here and of course won't be shown.", 'events-made-easy' );
 		} else {
 			$field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
@@ -4952,8 +4962,10 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 
 	if ( ! empty( $membership ) && isset( $membership['membership_id'] ) ) {
 		$answers = eme_get_membership_answers( $membership['membership_id'] );
+		$files   = eme_get_uploaded_files( $membership['membership_id'], 'memberships' );
 	} else {
 		$answers = [];
+		$files   = [];
 	}
 
 	// replace what we can inside curly brackets
@@ -5140,6 +5152,15 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 							$field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
 						} else {
 							$field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+						}
+					}
+				}
+				foreach ( $files as $file ) {
+					if ( $file['field_id'] == $field_id ) {
+						if ( $target == 'html' ) {
+							$field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';
+						} else {
+							$field_replace .= $file['name'] . ' [' . $file['url'] . ']' . "\n";
 						}
 					}
 				}
@@ -5694,14 +5715,23 @@ function eme_ajax_memberships_list() {
 			foreach ( $answers as $val ) {
 				if ( $val['field_id'] == $formfield['field_id'] && $val['answer'] != '' ) {
 					$tmp_answer = eme_answer2readable( $val['answer'], $formfield, 1, ',', 'text', 1 );
-							// the 'FIELD_' value is used by the container-js
-							$key = 'FIELD_' . $val['field_id'];
+					// the 'FIELD_' value is used by the container-js
+					$key = 'FIELD_' . $val['field_id'];
 					if ( isset( $record[ $key ] ) ) {
 						$record[ $key ] .= "<br>$tmp_answer";
 					} else {
 						$record[ $key ] = $tmp_answer;
 					}
 				}
+			}
+		}
+		$files = eme_get_uploaded_files( $item['membership_id'], 'memberships' );
+		foreach ( $files as $file ) {
+			$key = 'FIELD_' . $file['field_id'];
+			if ( isset( $record[ $key ] ) ) {
+				$record[ $key ] .= eme_get_uploaded_file_html( $file );
+			} else {
+				$record[ $key ] = eme_get_uploaded_file_html( $file );
 			}
 		}
 
@@ -5852,9 +5882,9 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 					// the 'FIELD_' value is used by the container-js
 					$key = 'FIELD_' . $val['field_id'];
 					if ( isset( $record[ $key ] ) ) {
-							$record[ $key ] .= "<br>$tmp_answer";
+						$record[ $key ] .= "<br>$tmp_answer";
 					} else {
-									$record[ $key ] = $tmp_answer;
+						$record[ $key ] = $tmp_answer;
 					}
 				}
 			}

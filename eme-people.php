@@ -584,7 +584,6 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 				}
 			}
 		} elseif ( preg_match( '/#_PERSONAL_FILES/', $result ) ) {
-			$files     = eme_get_uploaded_files( $person['person_id'], 'people' );
 			$res_files = [];
 			foreach ( $files as $file ) {
 				if ( $target == 'html' ) {
@@ -2170,7 +2169,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 	endif;
 
 	//if ($action == "edit") {
-		$files_title = esc_html__( 'Uploaded files', 'events-made-easy' );
+		//$files_title = esc_html__( 'Uploaded files', 'events-made-easy' );
 		//print eme_get_uploaded_files_tr($person_id,"people",$files_title);
 	//}
 	?>
@@ -3499,7 +3498,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
 		$updated_personid = eme_db_update_person( $person_id, $person );
 		if ( $updated_personid ) {
 			eme_update_persongroups( $updated_personid, $groups );
-			eme_store_people_answers( $updated_personid, 0, 1 );
+			eme_store_person_answers( $updated_personid, 0, 1 );
 			$failure = eme_upload_files( $updated_personid, 'people' );
 		}
 		$res_id = $updated_personid;
@@ -3514,7 +3513,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
 			$updated_personid = eme_db_update_person( $person_id, $person );
 			if ( $updated_personid ) {
 				eme_update_persongroups( $updated_personid, $groups );
-				eme_store_people_answers( $updated_personid, 0, 1 );
+				eme_store_person_answers( $updated_personid, 0, 1 );
 				$failure = eme_upload_files( $updated_personid, 'people' );
 			}
 			$res_id = $updated_personid;
@@ -3522,7 +3521,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
 			$person_id = eme_db_insert_person( $person );
 			if ( $person_id ) {
 				eme_update_persongroups( $person_id, $groups );
-				eme_store_people_answers( $person_id, 1, 1 );
+				eme_store_person_answers( $person_id, 1, 1 );
 				$failure = eme_upload_files( $person_id, 'people' );
 			}
 			$res_id = $person_id;
@@ -3857,7 +3856,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 
 			$updated_personid = eme_db_update_person( $person_id, $person );
 			if ( $updated_personid ) {
-				eme_store_people_answers( $updated_personid );
+				eme_store_person_answers( $updated_personid );
 				if ( ! empty( $_POST['subscribe_groups'] ) ) {
 					eme_add_persongroups( $updated_personid, eme_sanitize_request( $_POST['subscribe_groups'] ) );
 				}
@@ -3880,7 +3879,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 			}
 			$person_id = eme_db_insert_person( $person );
 			if ( $person_id ) {
-				eme_store_people_answers( $person_id );
+				eme_store_person_answers( $person_id );
 				if ( ! empty( $_POST['subscribe_groups'] ) ) {
 					eme_add_persongroups( $updated_personid, eme_sanitize_request( $_POST['subscribe_groups'] ) );
 				}
@@ -3929,7 +3928,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 		$person['wp_id']  = $person_being_updated['wp_id'];
 		$updated_personid = eme_db_update_person( $person_id, $person );
 		if ( $updated_personid ) {
-			eme_store_people_answers( $updated_personid );
+			eme_store_person_answers( $updated_personid );
 			if ( ! empty( $_POST['subscribe_groups'] ) ) {
 				eme_add_persongroups( $updated_personid, eme_sanitize_request( $_POST['subscribe_groups'] ) );
 			}
@@ -4468,9 +4467,9 @@ function eme_delete_person_memberships( $person_ids ) {
 }
 
 function eme_people_answers( $person_id, $new_person = 0 ) {
-	return eme_store_people_answers( $person_id, $new_person );
+	return eme_store_person_answers( $person_id, $new_person );
 }
-function eme_store_people_answers( $person_id, $new_person = 0, $backend = 0 ) {
+function eme_store_person_answers( $person_id, $new_person = 0, $backend = 0 ) {
 	$all_answers = [];
 	if ( $person_id > 0 ) {
 		$all_answers = eme_get_person_answers( $person_id );
@@ -4785,19 +4784,19 @@ function eme_ajax_people_list( $dynamic_groupname = '' ) {
 			foreach ( $answers as $val ) {
 				if ( $val['field_id'] == $formfield['field_id'] && $val['answer'] != '' ) {
 					$tmp_answer = eme_answer2readable( $val['answer'], $formfield, 1, ',', 'text', 1 );
-								// the 'FIELD_' value is used by the container-js
-								$key = 'FIELD_' . $val['field_id'];
+					// the 'FIELD_' value is used by the container-js
+					$key = 'FIELD_' . $val['field_id'];
 					if ( isset( $record[ $key ] ) ) {
-							$record[ $key ] .= "<br>$tmp_answer";
+						$record[ $key ] .= "<br>$tmp_answer";
 					} else {
-							$record[ $key ] = $tmp_answer;
+						$record[ $key ] = $tmp_answer;
 					}
 				}
 			}
 		}
 		$files = eme_get_uploaded_files( $item['person_id'], 'people' );
 		foreach ( $files as $file ) {
-				$key = 'FIELD_' . $file['field_id'];
+			$key = 'FIELD_' . $file['field_id'];
 			if ( isset( $record[ $key ] ) ) {
 					$record[ $key ] .= eme_get_uploaded_file_html( $file );
 			} else {

@@ -158,24 +158,26 @@ function eme_locations_page() {
 					$new_location_id = eme_insert_location( $location );
 					if ( $new_location_id ) {
 						eme_location_store_cf_answers( $new_location_id );
+						eme_upload_files( $new_location_id, 'locations' );
 						$new_location = eme_get_location( $new_location_id );
 						$message      = __( 'The location has been added.', 'events-made-easy' );
 						if ( get_option( 'eme_stay_on_edit_page' ) ) {
-									eme_locations_edit_layout( $new_location, $message );
-									return;
+							eme_locations_edit_layout( $new_location, $message );
+							return;
 						}
 					} else {
-							$message = __( 'There has been a problem adding the location.', 'events-made-easy' );
+						$message = __( 'There has been a problem adding the location.', 'events-made-easy' );
 					}
 				} elseif ( $action == 'do_editlocation' ) {
 					if ( eme_update_location( $location, $location_id ) ) {
 						eme_location_store_cf_answers( $location_id );
+						eme_upload_files( $location_id, 'locations' );
 						$message = __( 'The location has been updated.', 'events-made-easy' );
 						if ( get_option( 'eme_stay_on_edit_page' ) ) {
-									// for edit, we need a location id
-									$location = eme_get_location( $location_id );
-									eme_locations_edit_layout( $location, $message );
-									return;
+							// for edit, we need a location id
+							$location = eme_get_location( $location_id );
+							eme_locations_edit_layout( $location, $message );
+							return;
 						}
 					} else {
 						$message = __( 'The location update failed.', 'events-made-easy' );
@@ -218,11 +220,11 @@ function eme_import_csv_locations() {
 				return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
 	}
 	// BOM as a string for comparison.
-		$bom = "\xef\xbb\xbf";
-		// Progress file pointer and get first 3 characters to compare to the BOM string.
+	$bom = "\xef\xbb\xbf";
+	// Progress file pointer and get first 3 characters to compare to the BOM string.
 	if ( fgets( $handle, 4 ) !== $bom ) {
-			// BOM not found - rewind pointer to start of file.
-			rewind( $handle );
+		// BOM not found - rewind pointer to start of file.
+		rewind( $handle );
 	}
 
 	if ( ! eme_is_empty_string( $_POST['enclosure'] ) ) {
@@ -244,8 +246,8 @@ function eme_import_csv_locations() {
 	if ( ! in_array( 'location_name', $headers ) || ! in_array( 'location_address1', $headers ) ) {
 		$result = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
-		$empty_props         = [];
-				$empty_props = eme_init_location_props( $empty_props );
+		$empty_props = [];
+		$empty_props = eme_init_location_props( $empty_props );
 		// now loop over the rest
 		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
 			$line = array_combine( $headers, $row );
@@ -256,18 +258,18 @@ function eme_import_csv_locations() {
 				// also import attributes
 				foreach ( $line as $key => $value ) {
 					if ( preg_match( '/^att_(.*)$/', $key, $matches ) ) {
-										$att = $matches[1];
+						$att = $matches[1];
 						if ( ! isset( $line['location_attributes'] ) ) {
 							$line['location_attributes'] = [];
 						}
-										$line['location_attributes'][ $att ] = $value;
+						$line['location_attributes'][ $att ] = $value;
 					}
 				}
 
 				// also import properties
 				foreach ( $line as $key => $value ) {
 					if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
-										$prop = $matches[1];
+						$prop = $matches[1];
 						if ( ! isset( $line['location_properties'] ) ) {
 							$line['location_properties'] = [];
 						}
@@ -313,7 +315,7 @@ function eme_import_csv_locations() {
 							if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
 								$field_id = $formfield['field_id'];
 								$sql      = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='location'", $location_id, $field_id );
-																$wpdb->query( $sql );
+								$wpdb->query( $sql );
 
 								$sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,type) VALUES (%d,%d,%s,%s)", $location_id, $field_id, $value, 'location' );
 								$wpdb->query( $sql );
@@ -365,12 +367,12 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 		<h1>
 		<?php
 		if ( $action == 'add' ) {
-				esc_html_e( 'Insert New Location', 'events-made-easy' );
+			esc_html_e( 'Insert New Location', 'events-made-easy' );
 		} else {
 			echo sprintf( __( "Edit Location '%s'", 'events-made-easy' ), eme_translate( $location['location_name'] ) );
 		}
 		?>
-			</h1>
+		</h1>
 		<div id="poststuff">
 		<div id="post-body" class="metabox-holder columns-2">
 			<!-- MAIN -->
@@ -435,11 +437,11 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 						<p><?php esc_html_e( 'Author of this location: ', 'events-made-easy' ); ?>
 							<?php
 							wp_dropdown_users(
-					    [
+								[
 									'name'     => 'location_author',
 									'selected' => $location_author,
 								]
-					);
+							);
 							?>
 						</p>
 					</div>
@@ -461,7 +463,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 							if ( $location['location_category_ids'] && in_array( $category['category_id'], explode( ',', $location['location_category_ids'] ) ) ) {
 								$selected = "checked='checked'";
 							} else {
-									$selected = '';
+								$selected = '';
 							}
 							?>
 							<input type="checkbox" name="location_category_ids[]" value="<?php echo $category['category_id']; ?>" <?php echo $selected; ?>><?php echo eme_trans_esc_html( $category['category_name'] ); ?><br>
@@ -504,15 +506,15 @@ function eme_meta_box_div_location_name( $location ) {
 	echo trailingslashit( home_url() );
 	$locations_prefixes = get_option( 'eme_permalink_locations_prefix', 'locations' );
 	if ( preg_match( '/,/', $locations_prefixes ) ) {
-			$locations_prefixes     = explode( ',', $locations_prefixes );
-			$locations_prefixes_arr = [];
+		$locations_prefixes     = explode( ',', $locations_prefixes );
+		$locations_prefixes_arr = [];
 		foreach ( $locations_prefixes as $locations_prefix ) {
-				$locations_prefixes_arr[ $locations_prefix ] = eme_permalink_convert( $locations_prefix );
+			$locations_prefixes_arr[ $locations_prefix ] = eme_permalink_convert( $locations_prefix );
 		}
-			$prefix = $location['location_prefix'] ? $location['location_prefix'] : '';
-			echo eme_ui_select( $prefix, 'location_prefix', $locations_prefixes_arr );
+		$prefix = $location['location_prefix'] ? $location['location_prefix'] : '';
+		echo eme_ui_select( $prefix, 'location_prefix', $locations_prefixes_arr );
 	} else {
-			echo eme_permalink_convert( $locations_prefixes );
+		echo eme_permalink_convert( $locations_prefixes );
 	}
 	if ( $action == 'edit' ) {
 		$slug = $location['location_slug'] ? $location['location_slug'] : $location['location_name'];
@@ -613,7 +615,7 @@ function eme_meta_box_div_location_details( $location ) {
 
 		<?php
 		if ( $map_is_active ) :
-			?>
+		?>
 			 
 		<div id="loc_map_icon" class="postbox">
 			<h3>
@@ -630,12 +632,11 @@ function eme_meta_box_div_location_details( $location ) {
 			</div>
 		</div>
 
-				<?php
-				if ( function_exists( 'qtrans_getLanguage' ) || function_exists( 'ppqtrans_getLanguage' ) || defined( 'ICL_LANGUAGE_CODE' ) ) :
-					?>
-			   
-				<div id="loc_qtrans_warning" class="postbox"><?php esc_html_e( "Because qtranslate or a derivate is active, the title of the location might not update automatically in the balloon, so don't panic there.", 'events-made-easy' ); ?> </div>
-			<?php endif; ?>
+		<?php
+		if ( function_exists( 'qtrans_getLanguage' ) || function_exists( 'ppqtrans_getLanguage' ) || defined( 'ICL_LANGUAGE_CODE' ) ) :
+		?>
+		<div id="loc_qtrans_warning" class="postbox"><?php esc_html_e( "Because qtranslate or a derivate is active, the title of the location might not update automatically in the balloon, so don't panic there.", 'events-made-easy' ); ?> </div>
+		<?php endif; ?>
 		<?php endif; ?>
 	<?php
 }
@@ -730,10 +731,10 @@ function eme_meta_box_div_location_url( $location ) {
 function eme_meta_box_div_location_attributes( $location ) {
 	?>
 <div id="div_location_attributes">
-		<br>
-		<?php
-		echo '<b>' . esc_html__( 'Attributes', 'events-made-easy' ) . '</b>';
-		?>
+	<br>
+	<?php
+	echo '<b>' . esc_html__( 'Attributes', 'events-made-easy' ) . '</b>';
+	?>
 	<?php
 	eme_attributes_form( $location );
 	?>
@@ -755,17 +756,20 @@ function eme_meta_box_div_location_customfields( $location ) {
 		echo '</div>';
 	}
 ?>
-		<table style="width: 100%;">
+	<table style="width: 100%;">
 	<?php
 	$formfields = eme_get_formfields( '', 'locations' );
 	$formfields = apply_filters( 'eme_location_formfields', $formfields );
 	// only in case of location duplicate, the cf_answers is set
 	if ( isset( $location['cf_answers'] ) ) {
 		$answers = $location['cf_answers'];
+		$files   = [];
 	} elseif ( ! empty( $location['location_id'] ) ) {
 		$answers = eme_get_location_answers( $location['location_id'] );
+		$files = eme_get_uploaded_files( $location['location_id'], 'locations' );
 	} else {
 		$answers = [];
+		$files   = [];
 	}
 
 	foreach ( $formfields as $formfield ) {
@@ -778,14 +782,22 @@ function eme_meta_box_div_location_customfields( $location ) {
 				$entered_val = $answer['answer'];
 			}
 		}
+		if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
+			$entered_files = [];
+			foreach ( $files as $file ) {
+				if ( $file['field_id'] == $field_id ) {
+					$entered_files[] = $file;
+				}
+			}
+			$entered_val = $entered_files;
+		}
+
 		if ( $formfield['field_required'] ) {
 			$required = 1;
 		} else {
 			$required = 0;
 		}
-		if ( $formfield['field_type'] == 'file' ) {
-			$field_html = __( "File upload is not allowed here, use the regular WP media library to upload files or use the 'Add media' button in the location description.", 'events-made-easy' );
-		} elseif ( $formfield['field_type'] == 'hidden' ) {
+		if ( $formfield['field_type'] == 'hidden' ) {
 			$field_html = __( "Custom fields of type 'hidden' are useless here and of course won't be shown.", 'events-made-easy' );
 		} else {
 			$field_html = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required );
@@ -793,7 +805,7 @@ function eme_meta_box_div_location_customfields( $location ) {
 			echo "<tr><td>$field_name</td><td style='width: 100%;'>$field_html</td></tr>";
 	}
 	?>
-		</table>
+	</table>
 </div>
 	<?php
 }
@@ -805,11 +817,11 @@ function eme_locations_table( $message = '' ) {
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
-		<div id="icon-edit" class="icon32">
-			<br>
-		</div>
+	<div class="wrap nosubsub">
+	<div id="poststuff">
+	<div id="icon-edit" class="icon32">
+		<br>
+	</div>
 		 
 	<?php if ( current_user_can( get_option( 'eme_cap_add_locations' ) ) ) : ?>
 		<h1><?php esc_html_e( 'Add a new location', 'events-made-easy' ); ?></h1>
@@ -1932,6 +1944,8 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 		$format = str_replace( $orig_result, $replacement, $format );
 	}
 
+	$answers             = eme_get_location_answers( $location['location_id'] );
+	$files               = eme_get_uploaded_files( $location['location_id'], 'locations' );
 	$all_categories      = eme_get_cached_categories();
 	$location_categories = null;
 	// and now all the other placeholders
@@ -2437,7 +2451,6 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
 				$field_id      = $formfield['field_id'];
 				$field_replace = '';
-				$answers       = eme_get_location_answers( $location['location_id'] );
 				foreach ( $answers as $answer ) {
 					if ( $answer['field_id'] == $field_id ) {
 						if ( $matches[1] == 'VALUE' ) {
@@ -2447,7 +2460,17 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 						}
 					}
 				}
-					$replacement = eme_translate( $field_replace, $lang );
+				foreach ( $files as $file ) {
+					if ( $file['field_id'] == $field_id ) {
+						if ( $target == 'html' ) {
+							$field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';
+						} else {
+							$field_replace .= $file['name'] . ' [' . $file['url'] . ']' . "\n";
+						}
+					}
+				}
+
+				$replacement = eme_translate( $field_replace, $lang );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} else {
@@ -2952,6 +2975,16 @@ function eme_ajax_locations_list() {
 				}
 			}
 		}
+		$files = eme_get_uploaded_files( $item['location_id'], 'locations' );
+		foreach ( $files as $file ) {
+			$key = 'FIELD_' . $file['field_id'];
+			if ( isset( $record[ $key ] ) ) {
+				$record[ $key ] .= eme_get_uploaded_file_html( $file );
+			} else {
+				$record[ $key ] = eme_get_uploaded_file_html( $file );
+			}
+		}
+
 		$records[] = $record;
 	}
 	$jTableResult['Result']           = 'OK';

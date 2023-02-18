@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.53 (2023//) =
+* Allow file upload for custom fields for events/locations and memberships too. This allows uploads per event that don't clutter the wp media anymore
+
 = 2.3.52 (2023/02/16) =
 * Don't escape the event name too much
 * Don't include trashed events in some searches

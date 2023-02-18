@@ -1453,6 +1453,7 @@ function eme_delete_location( $location_id, $transfer_id = 0 ) {
 	$wpdb->query( $sql );
 
 	eme_delete_location_answers( $location_id );
+	eme_delete_uploaded_files( $location_id, 'locations' );
 }
 
 function eme_delete_location_answers( $location_id ) {

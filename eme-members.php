@@ -598,6 +598,7 @@ function eme_delete_membership( $membership_id ) {
 
 	eme_delete_membership_attendances( $membership_id );
 	eme_delete_membership_answers( $membership_id );
+	eme_delete_uploaded_files( $membership_id, 'memberships' );
 	wp_cache_delete( "eme_membership $membership_id" );
 }
 

@@ -9244,6 +9244,7 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
 		eme_delete_all_bookings_for_event_id( $event_id );
 		eme_delete_event_attendances( $event_id );
 		eme_delete_event_answers( $event_id );
+		eme_delete_uploaded_files( $event_id, 'events' );
 		eme_delete_event_tasks( $event_id );
 	}
 }

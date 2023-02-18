@@ -337,7 +337,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                   <br>' . __( 'This is only really useful for multivalue fields (like e.g. dropdown), in which case the field values should indicate the price for that selection (and the price needs to be unique).', 'events-made-easy' ) . '
                   <br>' . __( "This is ignored for fields with purpose 'Events field', 'Locations field' or 'Memberships field'", 'events-made-easy' ) . "
             </tr>
-            <tr class='form-field'>
+            <tr id='tr_field_values' class='form-field'>
 	       <th scope='row' style='vertical-align:top'><label for='field_values'>" . __( 'Field values', 'events-made-easy' ) . '</label></th>';
 
 	if ( eme_is_multifield( $formfield['field_type'] ) ) {
@@ -804,7 +804,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			}
 			$html .= eme_ui_checkbox( $entered_val, $field_name, $my_arr, true, 0, $class, $field_attributes . ' ' . $disabled );
 			if ( $required ) {
-					$html .= '</div>';
+				$html .= '</div>';
 			}
 			break;
 		case 'checkbox_vertical':
@@ -824,27 +824,27 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			}
 			$html .= eme_ui_checkbox( $entered_val, $field_name, $my_arr, false, 0, $class, $field_attributes . ' ' . $disabled );
 			if ( $required ) {
-					$html .= '</div>';
+				$html .= '</div>';
 			}
 			break;
 		case 'file':
 			// file upload
 			// in the admin interface, no upload is required (otherwise edit will never work as well ...)
 			if ( eme_is_admin_request() ) {
-					$required     = 0;
-					$required_att = '';
+				$required     = 0;
+				$required_att = '';
 			}
 			// only simple field names accepted, that way the upload code can stay simple and we don't need to worry about arrays and such
 			if ( $field_name != $simple_fieldname ) {
-					// the field_name can be something like an array name, so we remove redundant info (like the field id in it) and keep integers
-					$clean      = preg_replace( "/$simple_fieldname/", '', $field_name );
-					$indexes    = preg_replace( '/[^\d]/i', '', $clean );
-					$field_name = $simple_fieldname . '_' . $indexes;
+				// the field_name can be something like an array name, so we remove redundant info (like the field id in it) and keep integers
+				$clean      = preg_replace( "/$simple_fieldname/", '', $field_name );
+				$indexes    = preg_replace( '/[^\d]/i', '', $clean );
+				$field_name = $simple_fieldname . '_' . $indexes;
 			}
 			// if the entered_val is not empty it means the file is already uploaded, so we don't show the form
 			$html = '<span>';
 			if ( ! empty( $entered_val ) ) {
-					$showhide_style = 'style="display:none;"';
+				$showhide_style = 'style="display:none;"';
 			} else {
 				$showhide_style = '';
 			}
@@ -876,9 +876,9 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			// if the entered_val is not empty it means the file is already uploaded, so we don't show the form
 			$html = '<span>';
 			if ( ! empty( $entered_val ) ) {
-					$showhide_style = 'style="display:none;"';
+				$showhide_style = 'style="display:none;"';
 			} else {
-					$showhide_style = '';
+				$showhide_style = '';
 			}
 			$html .= "<input type='file' $disabled $class_att $required_att name='{$field_name}[]' id='$field_name' multiple $showhide_style>";
 			if ( ! empty( $entered_val ) ) {

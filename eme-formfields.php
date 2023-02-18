@@ -848,7 +848,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			} else {
 				$showhide_style = '';
 			}
-			$html .= "<input type='file' $disabled $class_att $required_att name='$field_name' id='$field_name' $showhide_style>";
+			$html .= "<input type='file' $disabled $class_att $required_att name='$field_name' id='$field_name' $showhide_style $field_attributes>";
 			if ( ! empty( $entered_val ) ) {
 				foreach ( $entered_val as $file ) {
 					$html .= eme_get_uploaded_file_linkdelete( $file );
@@ -880,7 +880,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			} else {
 				$showhide_style = '';
 			}
-			$html .= "<input type='file' $disabled $class_att $required_att name='{$field_name}[]' id='$field_name' multiple $showhide_style>";
+			$html .= "<input type='file' $disabled $class_att $required_att name='{$field_name}[]' id='$field_name' multiple $showhide_style $field_attributes>";
 			if ( ! empty( $entered_val ) ) {
 				foreach ( $entered_val as $file ) {
 					$html .= eme_get_uploaded_file_linkdelete( $file );

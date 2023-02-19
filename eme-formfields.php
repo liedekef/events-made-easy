@@ -1037,6 +1037,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms = get_option( 'eme_cfcaptcha_for_forms' );
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -1135,20 +1136,24 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			// #_EMAIL is always required
 			$required = 1;
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
@@ -1220,6 +1225,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 	$eme_recaptcha_for_forms = $event['event_properties']['use_recaptcha'] && ! $eme_is_admin_request;
 	$eme_hcaptcha_for_forms  = $event['event_properties']['use_hcaptcha'] && ! $eme_is_admin_request;
 	$eme_cfcaptcha_for_forms  = $event['event_properties']['use_cfcaptcha'] && ! $eme_is_admin_request;
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -1336,20 +1342,24 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 			}
 			$replacement = "<textarea $required_att name='eme_cancelcomment' placeholder='$placeholder_text'>$bookerCancelComment</textarea>";
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
@@ -1405,6 +1415,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms = get_option( 'eme_cfcaptcha_for_forms' );
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -1470,20 +1481,24 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 					$replacement .= eme_replace_booking_placeholders( $tmp_format, $event, $booking );
 			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
@@ -1584,6 +1599,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 	$eme_recaptcha_for_forms = $event['event_properties']['use_recaptcha'];
 	$eme_hcaptcha_for_forms  = $event['event_properties']['use_hcaptcha'];
 	$eme_cfcaptcha_for_forms  = $event['event_properties']['use_cfcaptcha'];
+	$captcha_set = 0;
 
 	// the 2 placeholders that can contain extra text are treated separately first
 	// the question mark is used for non greedy (minimal) matching
@@ -1844,20 +1860,24 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			}
 			$replacement = "<textarea $required_att name='eme_rsvpcomment' placeholder='$placeholder_text' >$bookerComment</textarea>";
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
@@ -2328,6 +2348,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	$eme_recaptcha_for_forms = $event['event_properties']['use_recaptcha'] && ! $eme_is_admin_request;
 	$eme_hcaptcha_for_forms  = $event['event_properties']['use_hcaptcha'] && ! $eme_is_admin_request;
 	$eme_cfcaptcha_for_forms  = $event['event_properties']['use_cfcaptcha'] && ! $eme_is_admin_request;
+	$captcha_set = 0;
 
 	if ( ! $is_multibooking ) {
 		if ( $eme_recaptcha_for_forms ) {
@@ -2981,20 +3002,24 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				$replacement = "<textarea $required_att name='$fieldname' $dynamic_field_class placeholder='$placeholder_text' >$bookerComment</textarea>";
 			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms && ! $is_multibooking ) {
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets && ! $is_multibooking ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms && ! $is_multibooking ) {
+			if ( $eme_hcaptcha_for_form && ! $captcha_sets && ! $is_multibooking ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms && ! $is_multibooking ) {
+			if ( $eme_recaptcha_for_form && ! $captcha_sets && ! $is_multibooking ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms && ! $is_multibooking ) {
+			if ( $eme_captcha_for_form && ! $captcha_sets && ! $is_multibooking ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
@@ -3864,20 +3889,24 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 				$replacement = "<div id='eme_dyndata'></div>";
 			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				if ( ! $eme_is_admin_request ) {
 						$required = 1;
 				}
@@ -4000,6 +4029,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms  = get_option( 'eme_cfcaptcha_for_forms' );
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -4143,20 +4173,24 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 			}
 			$replacement = eme_ui_checkbox_binary( 0, 'gdpr', $label, 1, 'eme-gdpr-field' );
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -4196,6 +4230,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms  = get_option( 'eme_cfcaptcha_for_forms' );
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -4413,20 +4448,24 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			}
 			$replacement .= eme_ui_select_binary( $selected_massmail, 'massmail' );
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
-					$replacement = eme_load_cfcaptcha_html();
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets ) {
+				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
-					$replacement = eme_load_hcaptcha_html();
+			if ( $eme_hcaptcha_for_form && ! $captcha_sets ) {
+				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
-					$replacement = eme_load_recaptcha_html();
+			if ( $eme_recaptcha_for_form && ! $captcha_sets ) {
+				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
-					$replacement = eme_load_captcha_html();
+			if ( $eme_captcha_for_form && ! $captcha_sets ) {
+				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];

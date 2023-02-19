@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.53 (2023//) =
 * Allow file upload for custom fields for events/locations and memberships too. This allows uploads per event that don't clutter the wp media anymore
+* The placeholder #_FIELDVALUE will return the url of the uploaded file (only for single-file uploads), while #_FIELD will return a clickable url-list
 
 = 2.3.52 (2023/02/16) =
 * Don't escape the event name too much

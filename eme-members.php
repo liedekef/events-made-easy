@@ -1594,7 +1594,7 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 
 
 		<div id="ajax-response"></div>
-		<form name="membershipForm" id="membershipForm" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" class="validate">
+		<form name="membershipForm" id="membershipForm" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>"  enctype="multipart/form-data" class="validate">
 		<?php echo $nonce_field; ?>
 		<?php if ( $is_new_membership == 1 ) { ?>
 		<input type="hidden" name="eme_admin_action" value="do_addmembership">

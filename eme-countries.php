@@ -593,7 +593,7 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
             </tr>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='lang'>" . __( 'Language', 'events-made-easy' ) . "</label></th>
-	       <td><input name='language' id='language' type='text' value='" . _esc_attr( $country['lang'] ) . "' size='40'>
+	       <td><input name='language' id='language' type='text' value='" . esc_attr( $country['lang'] ) . "' size='40'>
                <br>" . __( 'The language should correspond to one of the WordPress languages you want to support, or leave it empty as a default or fallback. Some examples are: nl, fr, en, de', 'events-made-easy' ) . '
                </td>
             </tr>

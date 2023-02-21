@@ -65,21 +65,21 @@ function eme_formfields_page() {
 				$formfield['admin_values'] = join( '||', eme_sanitize_request( eme_text_split_newlines( $_POST['admin_values'] ) ) );
 				$formfield['admin_tags']   = join( '||', eme_sanitize_request( eme_text_split_newlines( $_POST['admin_tags'] ) ) );
 			} else {
-					$formfield['field_values'] = trim( eme_sanitize_request( $_POST['field_values'] ) );
-					$formfield['field_tags']   = trim( eme_sanitize_request( $_POST['field_tags'] ) );
-					$formfield['admin_values'] = trim( eme_sanitize_request( $_POST['admin_values'] ) );
-					$formfield['admin_tags']   = trim( eme_sanitize_request( $_POST['admin_tags'] ) );
+				$formfield['field_values'] = trim( eme_sanitize_request( $_POST['field_values'] ) );
+				$formfield['field_tags']   = trim( eme_sanitize_request( $_POST['field_tags'] ) );
+				$formfield['admin_values'] = trim( eme_sanitize_request( $_POST['admin_values'] ) );
+				$formfield['admin_tags']   = trim( eme_sanitize_request( $_POST['admin_tags'] ) );
 			}
 			$formfield['field_attributes'] = trim( eme_sanitize_request( $_POST['field_attributes'] ) );
 			// for updates the field_purpose can be empty, so check for this
 			if ( ! empty( $_POST['field_purpose'] ) ) {
-					$formfield['field_purpose'] = trim( eme_sanitize_request( $_POST['field_purpose'] ) );
+				$formfield['field_purpose'] = trim( eme_sanitize_request( $_POST['field_purpose'] ) );
 			}
 			// condition can be null if there was a group assigned and the group got deleted, so let's check for that too
 			// we also remove group:0 from the array in case other groups are choosen too
 			if ( ! empty( $_POST['field_condition'] ) && is_array( $_POST['field_condition'] ) ) {
-					$condition_arr = eme_sanitize_request( $_POST['field_condition'] );
-					//Remove element by value using unset()
+				$condition_arr = eme_sanitize_request( $_POST['field_condition'] );
+				//Remove element by value using unset()
 				if ( ( $key = array_search( 'group:0', $condition_arr ) ) !== false ) {
 					unset( $condition_arr[ $key ] );
 				}
@@ -113,10 +113,10 @@ function eme_formfields_page() {
 				$formfield['export'] = 0;
 			}
 			if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-					// files are not stored in the db, so we can't search on them
-					$formfield['searchable'] = 0;
-					// for type file, we only accept integers here
-					// since we use that as max size
+				// files are not stored in the db, so we can't search on them
+				$formfield['searchable'] = 0;
+				// for type file, we only accept integers here
+				// since we use that as max size
 				if ( ! empty( $formfield['admin_values'] ) ) {
 					$formfield['admin_values'] = intval( $formfield['admin_values'] );
 				}
@@ -125,18 +125,18 @@ function eme_formfields_page() {
 				}
 			}
 			if ( $field_id > 0 ) {
-					$validation_result = $wpdb->update( $formfields_table, $formfield, [ 'field_id' => $field_id ] );
+				$validation_result = $wpdb->update( $formfields_table, $formfield, [ 'field_id' => $field_id ] );
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully edited the field', 'events-made-easy' );
 				} else {
 					$message = __( 'There was a problem editing the field', 'events-made-easy' );
 				}
 				if ( get_option( 'eme_stay_on_edit_page' ) || $validation_result === false ) {
-						eme_formfields_edit_layout( $field_id, $message );
-						return;
+					eme_formfields_edit_layout( $field_id, $message );
+					return;
 				}
 			} else {
-						$validation_result = $wpdb->insert( $formfields_table, $formfield );
+				$validation_result = $wpdb->insert( $formfields_table, $formfield );
 				if ( $validation_result !== false ) {
 					$new_field_id = $wpdb->insert_id;
 					$message      = __( 'Successfully added the field', 'events-made-easy' );
@@ -166,17 +166,17 @@ function eme_formfields_table_layout( $message = '' ) {
 		$hidden_style = '';
 	}
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
-		<div id="icon-edit" class="icon32">
-			<br>
-		</div>
+	<div class="wrap nosubsub">
+	<div id="poststuff">
+	<div id="icon-edit" class="icon32">
+		<br>
+	</div>
 
-		<div id="formfields-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-				<p><?php echo $message; ?></p>
-		</div>
+	<div id="formfields-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
+		<p><?php echo $message; ?></p>
+	</div>
 
-		<h1><?php esc_html_e( 'Form fields', 'events-made-easy' ); ?></h1>
+	<h1><?php esc_html_e( 'Form fields', 'events-made-easy' ); ?></h1>
 
 	<div class="wrap">
 		<form id="formfields-new" method="post" action="<?php echo $destination; ?>">
@@ -337,7 +337,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                   <br>' . __( 'This is only really useful for multivalue fields (like e.g. dropdown), in which case the field values should indicate the price for that selection (and the price needs to be unique).', 'events-made-easy' ) . '
                   <br>' . __( "This is ignored for fields with purpose 'Events field', 'Locations field' or 'Memberships field'", 'events-made-easy' ) . "
             </tr>
-            <tr class='form-field'>
+            <tr id='tr_field_values' class='form-field'>
 	       <th scope='row' style='vertical-align:top'><label for='field_values'>" . __( 'Field values', 'events-made-easy' ) . '</label></th>';
 
 	if ( eme_is_multifield( $formfield['field_type'] ) ) {
@@ -804,7 +804,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			}
 			$html .= eme_ui_checkbox( $entered_val, $field_name, $my_arr, true, 0, $class, $field_attributes . ' ' . $disabled );
 			if ( $required ) {
-					$html .= '</div>';
+				$html .= '</div>';
 			}
 			break;
 		case 'checkbox_vertical':
@@ -824,31 +824,31 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			}
 			$html .= eme_ui_checkbox( $entered_val, $field_name, $my_arr, false, 0, $class, $field_attributes . ' ' . $disabled );
 			if ( $required ) {
-					$html .= '</div>';
+				$html .= '</div>';
 			}
 			break;
 		case 'file':
 			// file upload
 			// in the admin interface, no upload is required (otherwise edit will never work as well ...)
 			if ( eme_is_admin_request() ) {
-					$required     = 0;
-					$required_att = '';
+				$required     = 0;
+				$required_att = '';
 			}
 			// only simple field names accepted, that way the upload code can stay simple and we don't need to worry about arrays and such
 			if ( $field_name != $simple_fieldname ) {
-					// the field_name can be something like an array name, so we remove redundant info (like the field id in it) and keep integers
-					$clean      = preg_replace( "/$simple_fieldname/", '', $field_name );
-					$indexes    = preg_replace( '/[^\d]/i', '', $clean );
-					$field_name = $simple_fieldname . '_' . $indexes;
+				// the field_name can be something like an array name, so we remove redundant info (like the field id in it) and keep integers
+				$clean      = preg_replace( "/$simple_fieldname/", '', $field_name );
+				$indexes    = preg_replace( '/[^\d]/i', '', $clean );
+				$field_name = $simple_fieldname . '_' . $indexes;
 			}
 			// if the entered_val is not empty it means the file is already uploaded, so we don't show the form
 			$html = '<span>';
 			if ( ! empty( $entered_val ) ) {
-					$showhide_style = 'style="display:none;"';
+				$showhide_style = 'style="display:none;"';
 			} else {
 				$showhide_style = '';
 			}
-			$html .= "<input type='file' $disabled $class_att $required_att name='$field_name' id='$field_name' $showhide_style>";
+			$html .= "<input type='file' $disabled $class_att $required_att name='$field_name' id='$field_name' $showhide_style $field_attributes>";
 			if ( ! empty( $entered_val ) ) {
 				foreach ( $entered_val as $file ) {
 					$html .= eme_get_uploaded_file_linkdelete( $file );
@@ -876,11 +876,11 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 			// if the entered_val is not empty it means the file is already uploaded, so we don't show the form
 			$html = '<span>';
 			if ( ! empty( $entered_val ) ) {
-					$showhide_style = 'style="display:none;"';
+				$showhide_style = 'style="display:none;"';
 			} else {
-					$showhide_style = '';
+				$showhide_style = '';
 			}
-			$html .= "<input type='file' $disabled $class_att $required_att name='{$field_name}[]' id='$field_name' multiple $showhide_style>";
+			$html .= "<input type='file' $disabled $class_att $required_att name='{$field_name}[]' id='$field_name' multiple $showhide_style $field_attributes>";
 			if ( ! empty( $entered_val ) ) {
 				foreach ( $entered_val as $file ) {
 					$html .= eme_get_uploaded_file_linkdelete( $file );
@@ -1037,6 +1037,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms = get_option( 'eme_cfcaptcha_for_forms' );
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -1135,20 +1136,24 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			// #_EMAIL is always required
 			$required = 1;
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
@@ -1220,6 +1225,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 	$eme_recaptcha_for_forms = $event['event_properties']['use_recaptcha'] && ! $eme_is_admin_request;
 	$eme_hcaptcha_for_forms  = $event['event_properties']['use_hcaptcha'] && ! $eme_is_admin_request;
 	$eme_cfcaptcha_for_forms  = $event['event_properties']['use_cfcaptcha'] && ! $eme_is_admin_request;
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -1336,20 +1342,24 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 			}
 			$replacement = "<textarea $required_att name='eme_cancelcomment' placeholder='$placeholder_text'>$bookerCancelComment</textarea>";
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
@@ -1405,6 +1415,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms = get_option( 'eme_cfcaptcha_for_forms' );
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -1470,20 +1481,24 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 					$replacement .= eme_replace_booking_placeholders( $tmp_format, $event, $booking );
 			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
@@ -1584,6 +1599,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 	$eme_recaptcha_for_forms = $event['event_properties']['use_recaptcha'];
 	$eme_hcaptcha_for_forms  = $event['event_properties']['use_hcaptcha'];
 	$eme_cfcaptcha_for_forms  = $event['event_properties']['use_cfcaptcha'];
+	$captcha_set = 0;
 
 	// the 2 placeholders that can contain extra text are treated separately first
 	// the question mark is used for non greedy (minimal) matching
@@ -1844,20 +1860,24 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			}
 			$replacement = "<textarea $required_att name='eme_rsvpcomment' placeholder='$placeholder_text' >$bookerComment</textarea>";
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
@@ -2328,6 +2348,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	$eme_recaptcha_for_forms = $event['event_properties']['use_recaptcha'] && ! $eme_is_admin_request;
 	$eme_hcaptcha_for_forms  = $event['event_properties']['use_hcaptcha'] && ! $eme_is_admin_request;
 	$eme_cfcaptcha_for_forms  = $event['event_properties']['use_cfcaptcha'] && ! $eme_is_admin_request;
+	$captcha_set = 0;
 
 	if ( ! $is_multibooking ) {
 		if ( $eme_recaptcha_for_forms ) {
@@ -2981,20 +3002,24 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				$replacement = "<textarea $required_att name='$fieldname' $dynamic_field_class placeholder='$placeholder_text' >$bookerComment</textarea>";
 			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms && ! $is_multibooking ) {
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets && ! $is_multibooking ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms && ! $is_multibooking ) {
+			if ( $eme_hcaptcha_for_form && ! $captcha_sets && ! $is_multibooking ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms && ! $is_multibooking ) {
+			if ( $eme_recaptcha_for_form && ! $captcha_sets && ! $is_multibooking ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms && ! $is_multibooking ) {
+			if ( $eme_captcha_for_form && ! $captcha_sets && ! $is_multibooking ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
@@ -3337,7 +3362,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people' ) {
 				$field_id = $formfield['field_id'];
-				// all the people fields are dynamic fields in the backend, and the function eme_store_people_answers searches for that, so we need that name again
+				// all the people fields are dynamic fields in the backend, and the function eme_store_person_answers searches for that, so we need that name again
 				$var_prefix     = "familymember[$counter][";
 				$var_postfix    = ']';
 				$postfield_name = "{$var_prefix}FIELD" . $field_id . $var_postfix;
@@ -3864,20 +3889,24 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 				$replacement = "<div id='eme_dyndata'></div>";
 			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 				if ( ! $eme_is_admin_request ) {
 						$required = 1;
 				}
@@ -4000,6 +4029,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms  = get_option( 'eme_cfcaptcha_for_forms' );
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -4143,20 +4173,24 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 			}
 			$replacement = eme_ui_checkbox_binary( 0, 'gdpr', $label, 1, 'eme-gdpr-field' );
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
+			if ( $eme_hcaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
+			if ( $eme_recaptcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
+			if ( $eme_captcha_for_form && ! $captcha_sets ) {
 				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -4196,6 +4230,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms  = get_option( 'eme_cfcaptcha_for_forms' );
+	$captcha_set = 0;
 	if ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
@@ -4413,20 +4448,24 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			}
 			$replacement .= eme_ui_select_binary( $selected_massmail, 'massmail' );
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-			if ( $eme_cfcaptcha_for_forms ) {
-					$replacement = eme_load_cfcaptcha_html();
+			if ( $eme_cfcaptcha_for_form && ! $captcha_sets ) {
+				$replacement = eme_load_cfcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-			if ( $eme_hcaptcha_for_forms ) {
-					$replacement = eme_load_hcaptcha_html();
+			if ( $eme_hcaptcha_for_form && ! $captcha_sets ) {
+				$replacement = eme_load_hcaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-			if ( $eme_recaptcha_for_forms ) {
-					$replacement = eme_load_recaptcha_html();
+			if ( $eme_recaptcha_for_form && ! $captcha_sets ) {
+				$replacement = eme_load_recaptcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_CAPTCHA/', $result ) ) {
-			if ( $eme_captcha_for_forms ) {
-					$replacement = eme_load_captcha_html();
+			if ( $eme_captcha_for_form && ! $captcha_sets ) {
+				$replacement = eme_load_captcha_html();
+				$captcha_set = 1;
 			}
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
@@ -4441,7 +4480,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people' ) {
 					$field_id = $formfield['field_id'];
-					// all the people fields are dynamic fields in the backend, and the function eme_store_people_answers searches for that, so we need that name again
+					// all the people fields are dynamic fields in the backend, and the function eme_store_person_answers searches for that, so we need that name again
 					$person_id      = $person['person_id'];
 					$var_prefix     = "dynamic_personfields[$person_id][";
 					$var_postfix    = ']';

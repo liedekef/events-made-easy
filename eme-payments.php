@@ -38,7 +38,7 @@ function eme_is_offline_pg( $pg ) {
 	if ( has_filter( 'eme_offline_payment_gateways' ) ) {
 		$pgs = apply_filters( 'eme_offline_payment_gateways', $pgs );
 	}
-	if ( isset( $pgs[ $pg ] ) ) {
+	if ( in_array( $pg, $pgs ) ) {
 		return 1;
 	} else {
 		return 0;

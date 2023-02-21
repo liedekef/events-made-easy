@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.1
-Stable tag: 2.3.51
+Stable tag: 2.3.53
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -40,7 +40,7 @@ Main features:
 * Mailings can be planned in the future, cancelled ... and can include extra attacments
 * Multi-site compatible
 * Several GDPR assistance features (request, view and edit personal info via link; delete old records for mailings, attendances, bookings)
-* Fully localisable and already fully localised in German, Swedish, French and Dutch. Also fully compatible with qtranslate-xt (https://github.com/qtranslate/qtranslate-xt/): most of the settings allow for language tags so you can show your events in different languages to different people. The booking mails also take the choosen language into account. For other multi-lingual plugins, EME provides its own in-text language tags and takes the current chosen language into account.
+* Fully localisable and already fully localised in German, Swedish, French and Dutch. Also fully compatible with polylang and qtranslate-xt (https://github.com/qtranslate/qtranslate-xt/): most of the settings allow for language tags so you can show your events in different languages to different people. The booking mails also take the choosen language into account. For other multi-lingual plugins, EME provides its own in-text language tags and takes the current chosen language into account.
 
 For documentation on all shortcodes and placeholders, visit the [Official site](https://www.e-dynamics.be/wordpress/) .
 
@@ -100,6 +100,18 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.54 (2023//) =
+* Fix editing countries
+
+= 2.3.53 (2023/02/20) =
+* Allow file upload for custom fields for events/locations and memberships too. This allows uploads per event that don't clutter the wp media anymore
+* The placeholder #_FIELDVALUE will return the url of the uploaded file (only for single-file uploads), while #_FIELD will return a clickable url-list
+
+= 2.3.52 (2023/02/16) =
+* Don't escape the event name too much
+* Don't include trashed events in some searches
+* Correctly detect offline payment gateway to show the info
+
 = 2.3.51 (2023/02/10) =
 * Fix group mailing
 

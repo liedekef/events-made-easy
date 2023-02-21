@@ -109,6 +109,9 @@ jQuery(document).ready( function($) {
 			$('tr#tr_extra_charge').hide();
 			$('tr#tr_field_tags').hide();
 			$('tr#tr_admin_tags').hide();
+			$('tr#tr_field_values').hide();
+			$('tr#tr_admin_values').hide();
+			$('tr#tr_searchable').hide();
 		} else {
 			// field_purpose can be a select or hidden field
 			if (jQuery('#field_purpose').val() == 'people') {
@@ -118,6 +121,9 @@ jQuery(document).ready( function($) {
 			}
 			$('tr#tr_field_tags').show();
 			$('tr#tr_admin_tags').show();
+			$('tr#tr_field_values').show();
+			$('tr#tr_admin_values').show();
+			$('tr#tr_searchable').show();
 		}
 	}
 	function updateShowHideFormfields_purpose () {

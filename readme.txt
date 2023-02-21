@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.54 (2023//) =
 * Fix editing countries
+* Fix captcha in forms
 
 = 2.3.53 (2023/02/20) =
 * Allow file upload for custom fields for events/locations and memberships too. This allows uploads per event that don't clutter the wp media anymore

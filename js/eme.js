@@ -932,4 +932,9 @@ jQuery(document).ready( function($) {
 			$('#eme_person_image_button' ).prop("value",emebasic.translate_chooseimg);
 		}
 	}
+
+        // center the payment form, if present on the page
+        if ($('#eme-payment-form').length) {
+                $(document).scrollTop( $('div#eme-payment-form').offset().top - $(window).height()/2 + $('div#eme-payment-form').height()/2);
+        }
 });

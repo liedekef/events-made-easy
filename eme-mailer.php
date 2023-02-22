@@ -990,6 +990,7 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 			}
 		}
 	} elseif ( $conditions['action'] == 'eventmail' ) {
+		$cond_member_ids_arr = [];
 		if ( ! isset( $conditions['rsvp_status'] ) ) {
 			$conditions['rsvp_status'] = 0;
 		}
@@ -1091,6 +1092,9 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 			}
 			foreach ( $member_ids as $member_id ) {
 				$member = eme_get_member( $member_id );
+				if ( in_array( $member['person_id'], $registered_ids ) ) {
+					continue;
+				}
 				$person = eme_get_person( $member['person_id'] );
 				// if corresponding person has no massmail preference, then skip him unless the name was speficially defined as standalone member to mail to
 				if ( ! $ignore_massmail_setting && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids_arr ) ) {

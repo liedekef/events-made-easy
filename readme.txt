@@ -102,6 +102,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.55 (2023//) =
 * Resolve two php notices
+* Resolve a mailing php notice
+* Also exclude mailings to members already subscribed for an event (if the option to do is chosen)
 
 = 2.3.54 (2023/02/21) =
 * Fix editing countries

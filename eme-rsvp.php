@@ -5448,7 +5448,7 @@ function eme_ajax_bookings_list() {
                                 $line['pg'] = 'UNKNOWN';
                         }
 			if ($booking['pg'] == 'payconiq' && !empty($booking['pg_pid'])) {
-				$line['pg'] .= "<button class='button action eme_iban_button' data-pg_pid='".$booking['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$booking['payment_id']."'></span>";
+				$line['pg'] .= "<br><button id='button_".$item['payment_id']."' class='button action eme_iban_button' data-pg_pid='".$booking['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$booking['payment_id']."'></span>";
 			}
                 } else {
                         $line['pg'] = '';

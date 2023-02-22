@@ -447,6 +447,7 @@ jQuery(document).ready(function ($) {
 	       'eme_admin_nonce': eme.translate_adminnonce
 	   };
            $.post(ajaxurl, params, function(data) {
+		   $('#button_'+data.payment_id).hide();
 		   $('span#payconiq_'+data.payment_id).html(data.iban);
            }, 'json');
            // return false to make sure the real form doesn't submit

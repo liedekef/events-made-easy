@@ -1945,8 +1945,13 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 		$format = str_replace( $orig_result, $replacement, $format );
 	}
 
-	$answers             = eme_get_location_answers( $location['location_id'] );
-	$files               = eme_get_uploaded_files( $location['location_id'], 'locations' );
+	if (!empty( $location['location_id'] )) {
+		$answers = eme_get_location_answers( $location['location_id'] );
+		$files   = eme_get_uploaded_files( $location['location_id'], 'locations' );
+	} else {
+		$answers = [];
+		$files = [];
+	}
 	$all_categories      = eme_get_cached_categories();
 	$location_categories = null;
 	// and now all the other placeholders

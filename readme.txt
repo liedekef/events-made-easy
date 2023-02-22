@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.55 (2023//) =
+* Resolve two php notices
+
 = 2.3.54 (2023/02/21) =
 * Fix editing countries
 * Fix captcha in forms

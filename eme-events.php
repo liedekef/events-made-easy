@@ -2279,8 +2279,13 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 		}
 	}
 
-	$answers          = eme_get_event_answers( $event['event_id'] );
-	$files            = eme_get_uploaded_files( $event['event_id'], 'events' );
+	if (!empty( $event['event_id'] )) {
+		$answers = eme_get_event_answers( $event['event_id'] );
+		$files   = eme_get_uploaded_files( $event['event_id'], 'events' );
+	} else {
+		$answers = [];
+		$files = [];
+	}
 
 	// some vars that will get filled when needed/used
 	$all_categories   = eme_get_cached_categories();
@@ -4359,7 +4364,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		$curmonth      = '';
 		$curday        = '';
 		foreach ( $eventful_days as $day_key => $day_events ) {
-			$eme_date_obj                      = new ExpressiveDate( $day_key, EME_TIMEZONE );
+			$eme_date_obj                  = new ExpressiveDate( $day_key, EME_TIMEZONE );
 			[$theyear, $themonth, $theday] = explode( '-', $eme_date_obj->getDate() );
 			if ( $showperiod == 'yearly' && $theyear != $curyear ) {
 				$output .= "<li class='eme_period'>" . eme_localized_date( $day_key, EME_TIMEZONE, get_option( 'eme_show_period_yearly_dateformat' ) ) . '</li>';

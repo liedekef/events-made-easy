@@ -52,7 +52,7 @@ function eme_client_clock_ajax() {
 			$ret = '0';
 		} catch ( Exception $error ) {
 			$client_timeinfo = [];
-			$valid           = false;
+			$valid = false;
 		}
 		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
 			$client_timeinfo['eme_client_unixtime'] = (int) $phptime_obj->format( 'U' );
@@ -275,7 +275,7 @@ function eme_check_recaptcha() {
 		if ( is_wp_error( $response ) ) {
 			return false;
 		} else {
-			$body                = wp_remote_retrieve_body( $response );
+			$body = wp_remote_retrieve_body( $response );
 			$responseCaptchaData = json_decode( $body );
 			if ( $responseCaptchaData->success ) {
 				return true;
@@ -301,7 +301,7 @@ function eme_check_hcaptcha() {
 		if ( is_wp_error( $response ) ) {
 			return false;
 		} else {
-			$body                = wp_remote_retrieve_body( $response );
+			$body = wp_remote_retrieve_body( $response );
 			$responseCaptchaData = json_decode( $body );
 			if ( $responseCaptchaData->success ) {
 				return true;
@@ -327,7 +327,7 @@ function eme_check_cfcaptcha() {
 		if ( is_wp_error( $response ) ) {
 			return false;
 		} else {
-			$body                = wp_remote_retrieve_body( $response );
+			$body = wp_remote_retrieve_body( $response );
 			$responseCaptchaData = json_decode( $body );
 			if ( $responseCaptchaData->success ) {
 				return true;
@@ -511,21 +511,21 @@ function eme_if_shortcode( $atts, $content ) {
 	extract(
 	    shortcode_atts(
 		    [
-				'tag'         => '',
-				'value'       => '',
-				'eq'          => '',
-				'notvalue'    => '',
-				'ne'          => '',
-				'lt'          => '',
-				'le'          => '',
-				'gt'          => '',
-				'ge'          => '',
-				'contains'    => '',
-				'notcontains' => '',
-				'is_empty'    => 0,
-				'incsv'       => '',
-				'notincsv'    => '',
-			],
+			    'tag'         => '',
+			    'value'       => '',
+			    'eq'          => '',
+			    'notvalue'    => '',
+			    'ne'          => '',
+			    'lt'          => '',
+			    'le'          => '',
+			    'gt'          => '',
+			    'ge'          => '',
+			    'contains'    => '',
+			    'notcontains' => '',
+			    'is_empty'    => 0,
+			    'incsv'       => '',
+			    'notincsv'    => '',
+		    ],
 		    $atts
 		)
 	);
@@ -587,7 +587,7 @@ function eme_if_shortcode( $atts, $content ) {
 			}
 		} elseif ( preg_match( '/\+/', $incsv ) ) {
 			$incsv_arr = preg_split( '/\+/', $incsv, 0, PREG_SPLIT_NO_EMPTY );
-			$found     = 1;
+			$found = 1;
 			foreach ( $incsv_arr as $incsv ) {
 				$incsv = trim( $incsv );
 				if ( ! ( in_array( $incsv, explode( ',', $tag ) ) || in_array( $incsv, explode( ', ', $tag ) ) ) ) {
@@ -606,7 +606,7 @@ function eme_if_shortcode( $atts, $content ) {
 	} elseif ( is_numeric( $notincsv ) || ! empty( $notincsv ) ) {
 		if ( preg_match( '/,/', $notincsv ) ) {
 			$notincsv_arr = explode( ',', $notincsv );
-			$found        = 0;
+			$found = 0;
 			foreach ( $notincsv_arr as $notincsv ) {
 				$notincsv = trim( $notincsv );
 				if ( in_array( $notincsv, explode( ',', $tag ) ) || in_array( $notincsv, explode( ', ', $tag ) ) ) {
@@ -618,7 +618,7 @@ function eme_if_shortcode( $atts, $content ) {
 			}
 		} elseif ( preg_match( '/\+/', $notincsv ) ) {
 			$notincsv_arr = preg_split( '/\+/', $notincsv, 0, PREG_SPLIT_NO_EMPTY );
-			$found        = 0;
+			$found = 0;
 			foreach ( $notincsv_arr as $notincsv ) {
 				$notincsv = trim( $notincsv );
 				if ( in_array( $notincsv, explode( ',', $tag ) ) || in_array( $notincsv, explode( ', ', $tag ) ) ) {
@@ -647,13 +647,13 @@ function eme_for_shortcode( $atts, $content ) {
 	extract(
 	    shortcode_atts(
 		    [
-				'min'  => 1,
-				'max'  => 0,
-				'list' => '',
-				'sep'  => ',',
-			],
+			    'min'  => 1,
+			    'max'  => 0,
+			    'list' => '',
+			    'sep'  => ',',
+		    ],
 		    $atts
-		)
+	    )
 	);
 	$min         = intval( $min );
 	$max         = intval( $max );
@@ -812,7 +812,8 @@ function eme_email_obfuscate( $e, $target = 'html' ) {
 			$output = apply_filters( 'eme_email_obfuscate_filter', $e );
 		} else {
 			for ( $i = 0; $i < strlen( $e ); $i++ ) {
-				$output .= '&#' . ord( $e[ $i ] ) . ';'; }
+				$output .= '&#' . ord( $e[ $i ] ) . ';';
+			}
 		}
 		return $output;
 	}
@@ -826,8 +827,8 @@ function eme_unique_slug( $slug, $table, $column, $index_col, $index_colval = 0 
 	$query = $wpdb->prepare( "SELECT $column FROM $table_name WHERE $index_col<> $index_colval AND $column = %s", $slug );
 	// it exists .... so strip of the last numbers and start finding new ones
 	if ( $wpdb->get_var( $query ) ) {
-		$slug    = preg_replace( '/\-\d+$/', '', $slug );
-			$num = 2;
+		$slug = preg_replace( '/\-\d+$/', '', $slug );
+		$num  = 2;
 		do {
 			$alt_slug = $slug . "-$num";
 			++$num;
@@ -878,14 +879,14 @@ function eme_event_url( $event, $language = '' ) {
 		if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() && get_option( 'eme_seo_permalink' ) ) {
 			$events_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
 			if ( ! empty( $event['event_prefix'] ) && in_array( $event['event_prefix'], $events_prefixes ) ) {
-					$events_prefix = eme_permalink_convert( $event['event_prefix'] );
+				$events_prefix = eme_permalink_convert( $event['event_prefix'] );
 			} else {
-					$events_prefix = eme_permalink_convert( $events_prefixes[0] );
+				$events_prefix = eme_permalink_convert( $events_prefixes[0] );
 			}
 			if ( empty( $event['event_slug'] ) ) {
 				$name = $events_prefix . $event['event_id'] . '/' . eme_permalink_convert_noslash( $event['event_name'] );
 			} elseif ( substr( $event['event_slug'], -1 ) == '/' ) { // old style stuff
-					$name = $events_prefix . $event['event_id'] . '/' . eme_permalink_convert_noslash( $event['event_slug'] );
+				$name = $events_prefix . $event['event_id'] . '/' . eme_permalink_convert_noslash( $event['event_slug'] );
 			} else {
 				$name = $events_prefix . eme_permalink_convert_noslash( $event['event_slug'] );
 			}
@@ -921,13 +922,13 @@ function eme_location_url( $location, $language = '' ) {
 		if ( isset( $wp_rewrite ) && $wp_rewrite->using_permalinks() && get_option( 'eme_seo_permalink' ) ) {
 			$locations_prefixes = explode( ',', get_option( 'eme_permalink_locations_prefix', 'locations' ) );
 			if ( ! empty( $location['location_prefix'] ) && in_array( $location['location_prefix'], $locations_prefixes ) ) {
-					$locations_prefix = eme_permalink_convert( $location['location_prefix'] );
+				$locations_prefix = eme_permalink_convert( $location['location_prefix'] );
 			} else {
 				$locations_prefix = eme_permalink_convert( $locations_prefixes[0] );
 			}
 
 			if ( empty( $location['location_slug'] ) ) {
-					$name = $locations_prefix . $location['location_id'] . '/' . eme_permalink_convert_noslash( $location['location_name'] );
+				$name = $locations_prefix . $location['location_id'] . '/' . eme_permalink_convert_noslash( $location['location_name'] );
 			} elseif ( substr( $location['location_slug'], -1 ) == '/' ) {
 				$name = $locations_prefix . $location['location_id'] . '/' . eme_permalink_convert_noslash( $location['location_slug'] );
 			} else {
@@ -956,7 +957,7 @@ function eme_calendar_day_url( $day ) {
 		$cal_prefix_option = get_option( 'eme_permalink_calendar_prefix', '' );
 		if ( empty( $cal_prefix_option ) ) {
 			$events_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
-			$cal_prefix      = eme_permalink_convert( $events_prefixes[0] );
+			$cal_prefix = eme_permalink_convert( $events_prefixes[0] );
 		} else {
 			$cal_prefix = eme_permalink_convert( $cal_prefix_option );
 		}
@@ -987,7 +988,7 @@ function eme_booking_confirm_url( $payment ) {
 	} else {
 		$the_link = eme_get_events_page();
 		$the_link = add_query_arg(
-		    [
+			[
 				'eme_pmt_rndid'    => $payment['random_id'],
 				'eme_rsvp_confirm' => 1,
 			],
@@ -1040,7 +1041,7 @@ function eme_category_url( $category ) {
 		$categories_prefixes = explode( ',', get_option( 'eme_permalink_categories_prefix', '' ) );
 		if ( empty( $categories_prefixes ) ) {
 			$categories_prefixes = explode( ',', get_option( 'eme_permalink_events_prefix', 'events' ) );
-			$extra_prefix        = 'cat/';
+			$extra_prefix = 'cat/';
 		} else {
 			$extra_prefix = '';
 		}
@@ -1142,7 +1143,7 @@ function eme_cpi_url( $person_id, $orig_email ) {
 	);
 	if ( ! empty( $language ) ) {
 		// some plugins add the lang info to the home_url, remove it so we don't get into trouble or add it twice
-		$the_link     = remove_query_arg( 'lang', $the_link );
+		$the_link = remove_query_arg( 'lang', $the_link );
 		$the_link = add_query_arg( [ 'lang' => $language ], $the_link );
 	}
 	return $the_link;
@@ -1159,7 +1160,7 @@ function eme_check_member_url() {
 	} else {
 		return 0;
 	}
-		$nonce_check = wp_hash( $member_id, 'nonce' );
+	$nonce_check = wp_hash( $member_id, 'nonce' );
 	if ( $nonce_check != $nonce_get ) {
 		return 0;
 	} else {

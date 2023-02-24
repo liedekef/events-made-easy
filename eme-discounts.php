@@ -369,7 +369,6 @@ function eme_discounts_main_layout( $message = '' ) {
 	$html                  = "
       <div class='wrap nosubsub'>\n
          <div id='icon-edit' class='icon32'>
-            <br>
          </div>
          <h1>" . __( 'Discount management', 'events-made-easy' ) . '</h1>
    ';
@@ -399,7 +398,6 @@ function eme_manage_discounts_layout( $message = '' ) {
 		<div class="wrap nosubsub">
 		<div id="poststuff">
 		<div id="icon-edit" class="icon32">
-			<br>
 		</div>
 		 
 		<div id="discounts-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
@@ -485,7 +483,6 @@ function eme_manage_dgroups_layout( $message = '' ) {
 		<div class="wrap nosubsub">
 		<div id="poststuff">
 		<div id="icon-edit" class="icon32">
-			<br>
 		</div>
 		 
 	<div id="discountgroups-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
@@ -819,7 +816,6 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 	?>
 	<div class='wrap'>
 		<div id='icon-edit' class='icon32'>
-		<br>
 		</div>
 		 
 		<h1><?php echo $h1_string; ?></h1>
@@ -974,7 +970,6 @@ function eme_dgroups_edit_layout( $dgroup_id = 0, $message = '' ) {
 	?>
 	<div class='wrap'>
 		<div id='icon-edit' class='icon32'>
-		<br>
 		</div>
 		 
 		<h1><?php echo $h1_string; ?></h1>

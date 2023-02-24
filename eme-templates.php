@@ -177,7 +177,6 @@ function eme_templates_table_layout( $message = '' ) {
       <div class='wrap nosubsub'>
       <div id='poststuff'>
          <div id='icon-edit' class='icon32'>
-            <br>
          </div>
          <h1>" . __( 'Manage templates', 'events-made-easy' ) . "</h1>\n ";
 
@@ -256,7 +255,6 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
    <div class='wrap'>
       <div id='poststuff'>
       <div id='icon-edit' class='icon32'>
-         <br>
       </div>
          
       <h1>" . $h1_string . '</h1>';

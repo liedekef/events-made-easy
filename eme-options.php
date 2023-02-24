@@ -1102,7 +1102,7 @@ function eme_admin_tabs( $current = 'homepage' ) {
 	if ( ! get_option( 'eme_tasks_enabled' ) ) {
 		unset( $tabs['tasks'] );
 	}
-	echo '<div id="icon-themes" class="icon32"><br></div>';
+	echo '<div id="icon-themes" class="icon32"></div>';
 	echo '<h1 class="nav-tab-wrapper">';
 	$eme_options_url = admin_url( 'admin.php?page=eme-options' );
 	foreach ( $tabs as $tab => $name ) {
@@ -1217,7 +1217,7 @@ function eme_options_page() {
 	}
 	?>
 <div class="wrap">
-<div id='icon-options-general' class='icon32'><br>
+<div id='icon-options-general' class='icon32'>
 </div>
 <h1><?php esc_html_e( 'Event Manager Options', 'events-made-easy' ); ?></h1>
 <p> 

@@ -91,9 +91,7 @@ function eme_holidays_table_layout( $message = '' ) {
 	$table       = "
       <div class='wrap nosubsub'>\n
       <div id='poststuff'>
-         <div id='icon-edit' class='icon32'>
-            <br>
-         </div>
+         <div id='icon-edit' class='icon32'></div>
          <h1>" . __( 'Manage holidays', 'events-made-easy' ) . "</h1>\n ";
 
 	if ( $message !== '' ) {
@@ -188,7 +186,6 @@ function eme_holidays_edit_layout( $message = '' ) {
 	$layout      = "
    <div class='wrap'>
       <div id='icon-edit' class='icon32'>
-         <br>
       </div>
          
       <h1>" . $h1_string . '</h1>';

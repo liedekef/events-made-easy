@@ -103,7 +103,6 @@ function eme_attendances_table_layout( $message = '' ) {
       <div class='wrap nosubsub'>
       <div id='poststuff'>
          <div id='icon-edit' class='icon32'>
-            <br>
          </div>
          <h1>" . esc_html__( 'Manually add an attendance record', 'events-made-easy' ) . "</h1>
 	 <form action='#' method='post'>$nonce_field

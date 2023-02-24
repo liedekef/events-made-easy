@@ -278,8 +278,7 @@ function eme_cron_form( $message = '' ) {
 	$schedules = wp_get_schedules();
 	?>
 <div class="wrap">
-<div id="icon-events" class="icon32"><br>
-</div>
+<div id="icon-events" class="icon32"></div>
 <h1><?php esc_html_e( 'Scheduled actions', 'events-made-easy' ); ?></h1>
 
 	<?php if ( $message != '' ) { ?>

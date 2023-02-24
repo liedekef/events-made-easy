@@ -5753,9 +5753,7 @@ function eme_events_table( $message = '' ) {
 
 <div class="wrap nosubsub">
 <div id="poststuff">
-	<div id="icon-edit" class="icon32">
-	<br>
-	</div>
+	<div id="icon-edit" class="icon32"></div>
 
 	<div id="events-message" class="updated notice notice-success is-dismissible" style="<?php echo $hidden_style; ?>">
 				<p><?php echo $message; ?></p>
@@ -5938,9 +5936,7 @@ function eme_recurrences_table( $message = '' ) {
 
 <div class="wrap nosubsub">
 <div id="poststuff">
-	<div id="icon-edit" class="icon32">
-	<br>
-	</div>
+	<div id="icon-edit" class="icon32"></div>
 
 	<div id="events-message" class="updated notice notice-success is-dismissible" style="<?php echo $hidden_style; ?>">
 				<p><?php echo $message; ?></p>
@@ -6117,7 +6113,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	<form id="eventForm" name="eventForm" method="post" autocomplete="off" enctype="multipart/form-data" action="<?php echo $form_destination; ?>">
 	<?php echo $nonce_field; ?>
 	<?php echo $hidden_fields; ?>
-		<div id="icon-events" class="icon32"><br></div>
+		<div id="icon-events" class="icon32"></div>
 		<h1><?php echo eme_trans_esc_html( $info['title'] ); ?></h1>
 		<?php
 		if ( $event['recurrence_id'] ) {

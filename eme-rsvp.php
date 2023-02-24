@@ -4601,7 +4601,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	?>
 <div class="wrap">
-<div id="icon-events" class="icon32"><br>
+<div id="icon-events" class="icon32">
 </div>
 <h1>
 	<?php

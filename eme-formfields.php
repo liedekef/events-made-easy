@@ -169,7 +169,6 @@ function eme_formfields_table_layout( $message = '' ) {
 	<div class="wrap nosubsub">
 	<div id="poststuff">
 	<div id="icon-edit" class="icon32">
-		<br>
 	</div>
 
 	<div id="formfields-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
@@ -224,15 +223,15 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
 
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( $field_id > 0 ) {
-		$used              = eme_check_used_formfield( $field_id );
-			$formfield     = eme_get_formfield( $field_id );
-			$h1_string     = __( 'Edit field', 'events-made-easy' );
-			$action_string = __( 'Update field', 'events-made-easy' );
+		$used          = eme_check_used_formfield( $field_id );
+		$formfield     = eme_get_formfield( $field_id );
+		$h1_string     = __( 'Edit field', 'events-made-easy' );
+		$action_string = __( 'Update field', 'events-made-easy' );
 	} else {
-		$used              = 0;
-			$formfield     = eme_new_formfield();
-			$h1_string     = __( 'Create field', 'events-made-easy' );
-			$action_string = __( 'Add field', 'events-made-easy' );
+		$used          = 0;
+		$formfield     = eme_new_formfield();
+		$h1_string     = __( 'Create field', 'events-made-easy' );
+		$action_string = __( 'Add field', 'events-made-easy' );
 	}
 	if ( ! empty( $t_formfield ) ) {
 		$formfield = array_merge( $formfield, $t_formfield );
@@ -240,7 +239,6 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
 	$layout = "
    <div class='wrap'>
       <div id='icon-edit' class='icon32'>
-         <br>
       </div>
          
       <h1>" . $h1_string . '</h1>';

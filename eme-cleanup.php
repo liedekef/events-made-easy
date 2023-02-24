@@ -228,8 +228,7 @@ function eme_cleanup_form( $message = '' ) {
 	$areyousure = esc_html__( 'Are you sure you want to do this?', 'events-made-easy' );
 	?>
 <div class="wrap">
-<div id="icon-events" class="icon32"><br>
-</div>
+<div id="icon-events" class="icon32"></div>
 	<?php if ( $message != '' ) { ?>
 <h1><?php esc_html_e( 'Action info', 'events-made-easy' ); ?></h1>
 	<div id='message' class='updated eme-message-admin'>

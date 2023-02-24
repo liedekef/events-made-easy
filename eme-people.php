@@ -1504,7 +1504,6 @@ function eme_person_verify_layout() {
 		<div class="wrap nosubsub">
 		<div id="poststuff">
 	<div id="icon-edit" class="icon32">
-		<br>
 	</div>
 
 	<h1><?php esc_html_e( 'Verify link between people and WP', 'events-made-easy' ); ?></h1>
@@ -1778,7 +1777,6 @@ function eme_manage_people_layout( $message = '' ) {
 		<div class="wrap nosubsub">
 		<div id="poststuff">
 	<div id="icon-edit" class="icon32">
-		<br>
 	</div>
 
 	<div id="people-message" class="notice is-dismissible eme-message-admin" style="<?php echo esc_attr($hidden_style); ?>">
@@ -1989,7 +1987,6 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 	<div class="wrap">
 		<div id="poststuff">
 	<div id="icon-edit" class="icon32">
-		<br>
 	</div>
 
 	<h1>
@@ -2222,7 +2219,6 @@ function eme_group_edit_layout( $group_id = 0, $message = '' ) {
 	<div class="wrap">
 		<div id="poststuff">
 	<div id="icon-edit" class="icon32">
-		<br>
 	</div>
 
 	<h1>
@@ -2321,7 +2317,6 @@ function eme_manage_groups_layout( $message = '' ) {
 		<div class="wrap nosubsub">
 		<div id="poststuff">
 	<div id="icon-edit" class="icon32">
-		<br>
 	</div>
 
 	<div id="groups-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">

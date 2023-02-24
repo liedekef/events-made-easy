@@ -1237,7 +1237,6 @@ function eme_member_edit_layout( $member, $limited = 0 ) {
 	<div class="wrap">
 		<div id="poststuff">
 		<div id="icon-edit" class="icon32">
-			<br>
 		</div>
 
 		<?php
@@ -1573,7 +1572,6 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 	?>
 	<div class="wrap">
 		<div id="icon-edit" class="icon32">
-			<br>
 		</div>
 
 		<h1>
@@ -2670,7 +2668,6 @@ function eme_manage_members_layout( $message ) {
 	<div class="wrap nosubsub">
 	<div id="poststuff">
 	<div id="icon-edit" class="icon32">
-		<br>
 	</div>
 
 	<div id="members-message" <?php echo $style_class; ?>>
@@ -2849,7 +2846,6 @@ function eme_manage_memberships_layout( $message ) {
 	<div class="wrap nosubsub">
 	<div id="poststuff">
 	<div id="icon-edit" class="icon32">
-		<br>
 	</div>
 
 	<div id="memberships-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">

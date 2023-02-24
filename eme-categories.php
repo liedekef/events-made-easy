@@ -98,7 +98,6 @@ function eme_categories_table_layout( $message = '' ) {
       <div class='wrap nosubsub'>
       <div id='poststuff'>
          <div id='icon-edit' class='icon32'>
-            <br>
          </div>
          <h1>" . __( 'Manage categories', 'events-made-easy' ) . "</h1>\n ";
 
@@ -198,7 +197,6 @@ function eme_categories_edit_layout( $message = '' ) {
 	?>
 	<div class='wrap'>
 		<div id='icon-edit' class='icon32'>
-		<br>
 		</div>
 		 
 		<h1><?php echo $h1_string; ?></h1>   

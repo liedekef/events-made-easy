@@ -412,7 +412,6 @@ function eme_task_signups_table_layout( $message = '' ) {
       <div class='wrap nosubsub'>
       <div id='poststuff'>
          <div id='icon-edit' class='icon32'>
-            <br>
          </div>
          <h1>" . __( 'Manage task signups', 'events-made-easy' ) . "</h1>\n ";
 

@@ -2038,7 +2038,6 @@ function eme_emails_page() {
 		<div class="wrap nosubsub">
 		<div id="poststuff">
 		<div id="icon-edit" class="icon32">
-			<br>
 		</div>
 		<h1><?php esc_html_e( 'Mailing report', 'events-made-easy' ); ?></h1>
 	<form action="#" method="post">
@@ -2058,7 +2057,7 @@ function eme_emails_page() {
 	// now show the form
 	?>
 <div class="wrap">
-<div id="icon-events" class="icon32"><br>
+<div id="icon-events" class="icon32">
 </div>
 <div id="mail-tabs" style="display: none;" <?php echo $data_forced_tab; ?>>
 	<ul>

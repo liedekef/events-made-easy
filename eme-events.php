@@ -841,7 +841,9 @@ function eme_events_page_content() {
 	if ( ! empty( $_GET['eme_cancel_payment'] ) ) {
 		$payment_randomid = eme_sanitize_request( $_REQUEST['eme_cancel_payment'] );
 		return eme_cancel_payment_form( $payment_randomid );
-
+	} elseif ( ! empty( $_GET['eme_cancel'] ) ) {
+		$payment_randomid = eme_sanitize_request( $_REQUEST['eme_cancel'] );
+		return eme_cancel_payment_form( $payment_randomid );
 	} elseif ( ! empty( $_GET['eme_cancel_signup'] ) ) {
 		$signup_randomid = eme_sanitize_request( $_REQUEST['eme_cancel_signup'] );
 		$res             = eme_cancel_task_signup( $signup_randomid );
@@ -1504,8 +1506,10 @@ function eme_page_title( $data, $post_id = null ) {
 			$res = get_option( 'eme_gdpr_page_title' );
 		} elseif ( ! empty( $_GET['eme_cpi'] ) && ! empty( $_GET['eme_cpi_nonce'] ) ) {
 			$res = get_option( 'eme_cpi_page_title' );
-		} elseif ( ! empty( $_GET['eme_cancel_payment'] ) ) {
+		} elseif ( ! empty( $_GET['eme_cancel_payment'] ) || ! empty( $_GET['eme_cancel'] )  ) {
 			$res = __( 'Cancel booking', 'events-made-easy' );
+		} elseif ( ! empty( $_GET['eme_cancel_signup'] ) ) {
+			$res = __( 'Cancel task signup', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
 			$res = __( 'Attendance check', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_check_member' ) && isset( $_GET['member_id'] ) ) {
@@ -1582,8 +1586,10 @@ function eme_html_title( $data ) {
 			return __( 'GDPR', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_cpi'] ) && ! empty( $_GET['eme_cpi_nonce'] ) ) {
 			return __( 'Change personal info', 'events-made-easy' );
-		} elseif ( ! empty( $_GET['eme_cancel_payment'] ) ) {
+		} elseif ( ! empty( $_GET['eme_cancel_payment'] ) || ! empty( $_GET['eme_cancel'] )  ) {
 			return __( 'Cancel booking', 'events-made-easy' );
+		} elseif ( ! empty( $_GET['eme_cancel_signup'] ) ) {
+			$res = __( 'Cancel task signup', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
 			return __( 'Attendance check', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_check_member' ) && ! empty( $_GET['member_id'] ) ) {

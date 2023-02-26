@@ -10480,7 +10480,7 @@ function eme_ajax_events_select2() {
 				( current_user_can( get_option( 'eme_cap_send_mails' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
 			$records[] = [
 				'id'   => $event['event_id'],
-				'text' => trim( eme_esc_html( strip_tags( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ) ),
+				'text' => trim( eme_translate( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ),
 			];
 			++$recordCount;
 		}

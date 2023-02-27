@@ -17125,6 +17125,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the event notes."
@@ -17132,6 +17133,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Ein Dateiupload ist nicht erlaubt hier, nutze die reguläre WordPress "
 #~ "Mediathek für den Dateiupload oder die \"Bild hinzufügen\" Schaltfläche "
 #~ "in der Veranstaltungsbeschreibung."
+#
 #
 #
 #
@@ -17145,13 +17147,16 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Datei-Upload ist hier nicht erlaubt."
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Hochgeladene Dateien"
+#
 #
 #
 #
@@ -17162,8 +17167,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "Die ausgewählten Aufgabenanmeldungen wurden erfolgreich gelöscht."
+#
 #
 #
 #
@@ -17177,8 +17184,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Ungültige IDs geliefert. Bitte versuche es erneut."
+#
 #
 #
 #
@@ -17198,6 +17207,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
@@ -17205,6 +17215,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Die Vorlage sollte mindestens die Platzhalter #_LASTNAME, #_FIRSTNAME, "
 #~ "#_EMAIL und #_SUBMIT beinhalten, ansonsten wird das Formular nicht "
 #~ "angezeigt."
+#
 #
 #
 #

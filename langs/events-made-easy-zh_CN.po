@@ -15603,12 +15603,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the event notes."
 #~ msgstr ""
 #~ "这里不允许上传文件，请使用常规的 WP 媒体库来上传文件，或者使用活动笔记中"
 #~ "的 \"添加媒体\" 按钮。"
+#
 #
 #
 #
@@ -15621,13 +15623,16 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "这里不允许上传文件。"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "上传的文件"
+#
 #
 #
 #
@@ -15638,8 +15643,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "成功地删除了选定的任务报名。"
+#
 #
 #
 #
@@ -15651,6 +15658,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "提供的 ID 不正确。请再试一次。"
 #
@@ -15658,8 +15666,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Your payment failed."
 #~ msgstr "您的付款失败。"
+#
 #
 #
 #

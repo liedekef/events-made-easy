@@ -16666,6 +16666,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the event notes."
@@ -16673,6 +16674,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Nahrávanie súborov tu nie je povolené, na odovzdávanie súborov použite "
 #~ "bežnú knižnicu médií WP alebo použite tlačidlo „Pridať multimédiá“ v "
 #~ "poznámkach podujatia."
+#
 #
 #
 #
@@ -16686,13 +16688,16 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Nahrávanie súborov tu nie je povolené."
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Nahrané súbory"
+#
 #
 #
 #
@@ -16703,8 +16708,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "Úspešne sa odstránili vybrané prihlásenia na úlohu."
+#
 #
 #
 #
@@ -16718,8 +16725,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Dodané nesprávne ID. Skúste to prosím znova."
+#
 #
 #
 #
@@ -16739,12 +16748,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
 #~ msgstr ""
 #~ "Šablóna by mala obsahovať aspoň zástupné výrazy #_LASTNAME, #_FIRSTNAME, "
 #~ "#_EMAIL a #_SUBMIT. Ak nemá, formulár sa nezobrazí."
+#
 #
 #
 #
@@ -16809,12 +16820,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "Single"
 #~ msgid_plural "Plural"
 #~ msgstr[0] "Jednorazové podujatie"
 #~ msgstr[1] "Jednorazové podujatie"
 #~ msgstr[2] "Jednorazové podujatie"
+#
 #
 #
 #
@@ -16877,9 +16890,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "Attribute"
 #~ msgstr "Atribúty"
+#
 #
 #
 #
@@ -16940,6 +16955,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "View details"
 #~ msgstr "Zobraziť podujatie"
@@ -16971,9 +16987,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "More information about %s"
 #~ msgstr "Viac informácií o sviatkoch nájdete na stránke "
+#
 #
 #
 #

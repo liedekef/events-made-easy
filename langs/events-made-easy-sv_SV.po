@@ -15860,6 +15860,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the event notes."
@@ -15867,6 +15868,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Filuppladdning tillåts inte här, använd det vanliga WP mediabiblioteket "
 #~ "för att ladda upp filer eller använd ”Lägg till media”-knappen i "
 #~ "anteckningarna för eventet. "
+#
 #
 #
 #
@@ -15880,13 +15882,16 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Inte tillåtet att ladda upp filer här."
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Uppladdade filer"
+#
 #
 #
 #

@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
 "POT-Creation-Date: 2023-02-26 17:05:05+00:00\n"
-"PO-Revision-Date: 2023-01-21 10:05+0100\n"
+"PO-Revision-Date: 2023-02-27 17:18+0100\n"
 "Last-Translator: Fred17 <f14m07@netc.fr>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -2732,7 +2732,6 @@ msgstr "Réglages du format des e-mails de tâches"
 #
 # File: eme-events.php, line: 6313
 # File: eme-options.php, line: 2025
-#, fuzzy
 msgid "Task Signup Pending Email"
 msgstr "E-mail de rappel de l’inscription à une tâche"
 #
@@ -4490,18 +4489,16 @@ msgid "Only take attendance (0 or 1 seat) for this event"
 msgstr "Uniquement en présence (0 ou 1 place) pour cet évènement"
 #
 # File: eme-events.php, line: 8583
-#, fuzzy
 msgid ""
 "If this option is set and the setting \"Min number of seats to book\" is set "
 "to 0, then the field to choose the number of seats to book will be turned "
 "into a checkbox."
 msgstr ""
 "Si cette option est activée et que le paramètre « Nombre minimal de sièges à "
-"réserver » a une valeur supérieure à 0, le champ permettant de choisir le "
-"nombre de sièges à réserver sera masqué."
+"réserver » est défini sur 0, le champ permettant de choisir le nombre de "
+"sièges à réserver sera transformé en case à cocher."
 #
 # File: eme-events.php, line: 8584
-#, fuzzy
 msgid ""
 "If this option is set and the setting \"Min number of seats to book\" is set "
 "to a value greater than 0, then the field to choose the number of seats to "
@@ -4509,7 +4506,8 @@ msgid ""
 msgstr ""
 "Si cette option est activée et que le paramètre « Nombre minimal de sièges à "
 "réserver » a une valeur supérieure à 0, le champ permettant de choisir le "
-"nombre de sièges à réserver sera masqué."
+"nombre de sièges à réserver sera masqué et le nombre de sièges réservés sera "
+"forcé à 1."
 #
 # File: eme-events.php, line: 8588
 # File: eme-members.php, line: 1944
@@ -5577,7 +5575,7 @@ msgstr "Export CSV"
 # File: eme-events.php, line: 10075
 # File: eme-rsvp.php, line: 5383
 msgid "Task Info: %d tasks"
-msgstr ""
+msgstr "Info sur les tâches : %d tâches"
 #
 # File: eme-events.php, line: 10086
 # File: eme-locations.php, line: 539
@@ -9880,7 +9878,7 @@ msgstr "Ceci est basé sur l’ID de paiement du membre : %d"
 # File: eme-members.php, line: 5878
 # File: eme-rsvp.php, line: 5451
 msgid "Get IBAN"
-msgstr ""
+msgstr "Obtenir l’IBAN"
 #
 # File: eme-members.php, line: 5979
 # File: eme-people.php, line: 4940
@@ -10289,22 +10287,22 @@ msgid "You have successfully cancelled your signup for this task"
 msgstr "Vous avez bien annulé votre inscription à cette tâche."
 #
 # File: eme-options.php, line: 93
-#, fuzzy
 msgid "Approval required for signup for task '#_TASKNAME' for '#_EVENTNAME'"
-msgstr "Nouvelle inscription à la tâche '#_TASKNAME' pour '#_EVENTNAME'."
+msgstr ""
+"Approbation requise pour l’inscription à la tâche ‘#_TASKNAME’ pour "
+"‘#_EVENTNAME’."
 #
 # File: eme-options.php, line: 94
-#, fuzzy
 msgid ""
 "Approval required: #_PERSONFULLNAME (#_PERSONEMAIL) signed up for #_TASKNAME "
 "(#_TASKSTARTDATE) for #_EVENTNAME on #_STARTDATE.<br>Now there are "
 "#_FREETASKSPACES free spaces for this task.<br><br>Yours faithfully,"
 "<br>Events Manager"
 msgstr ""
-"#_PERSONFULLNAME (#_PERSONEMAIL) s’est inscrit pour #_TASKNAME "
-"(#_TASKSTARTDATE) pour #_EVENTNAME le #_STARTDATE.<br>Maintenant il y a des "
-"espaces libres #_FREETASKSPACES pour cette tâche.<br><br>Bien à vous,"
-"<br>L’organisateur des évènements"
+"Approbation requise : #_PERSONFULLNAME (#_PERSONEMAIL) s’est inscrit à "
+"#_TASKNAME (#_TASKSTARTDATE) pour #_EVENTNAME le #_STARTDATE.<br>Il y a "
+"maintenant #_FREETASKSPACES places libres pour cette tâche. "
+"<br><br>Cordialement,<br>Le responsable des évènements"
 #
 # File: eme-options.php, line: 95
 msgid "New signup for task '#_TASKNAME' for '#_EVENTNAME'"
@@ -10338,20 +10336,20 @@ msgstr ""
 "<br>L’organisateur des évènements"
 #
 # File: eme-options.php, line: 99
-#, fuzzy
 msgid "Signup for task '#_TASKNAME' for '#_EVENTNAME' is pending approval"
-msgstr "Inscrivez-vous à la tâche '#_TASKNAME' pour '#_EVENTNAME'."
+msgstr ""
+"L’inscription à la tâche « #_TASKNAME » pour « #_EVENTNAME » est en attente "
+"d’approbation"
 #
 # File: eme-options.php, line: 100
-#, fuzzy
 msgid ""
 "Dear #_PERSONFULLNAME,<br><br>Your signup for #_TASKNAME (#_TASKBEGIN) for "
 "#_EVENTNAME is registered and pending approval.<br><br>Yours faithfully,"
 "<br>#_CONTACTPERSON"
 msgstr ""
-"Cher #_PERSONFULLNAME,<br><br>Votre demande d’inscription à #_TASKNAME "
-"(#_TASKBEGIN) pour #_EVENTNAME a été annulée.<br><br>Sincèrement vôtre,"
-"<br>#_CONTACTPERSON"
+"Cher #_PERSONFULLNAME,<br><br>Votre inscription au #_TASKNAME (#_TASKBEGIN) "
+"pour #_EVENTNAME est enregistrée et en attente d’approbation. "
+"<br><br>Cordialement,<br>#_CONTACTPERSON"
 #
 # File: eme-options.php, line: 101
 msgid "Signup for task '#_TASKNAME' for '#_EVENTNAME'"
@@ -12656,18 +12654,16 @@ msgstr ""
 "connectés puissent s’inscrire à des tâches."
 #
 # File: eme-options.php, line: 1651
-#, fuzzy
 msgid "By default require sign up approval for tasks?"
-msgstr "Par défaut, faut-il une approbation pour les inscriptions ?"
+msgstr "Faut-il, par défaut, une approbation à l’inscription aux tâches?"
 #
 # File: eme-options.php, line: 1651
-#, fuzzy
 msgid ""
 "Check this option if you want by default that signups for tasks need to be "
 "approved."
 msgstr ""
-"Cochez cette option si vous voulez par défaut que les nouveaux "
-"enregistrements nécessitent une approbation."
+"Cochez cette option si vous voulez par défaut que les inscriptions aux "
+"tâches nécessitent une approbation."
 #
 # File: eme-options.php, line: 1652
 # File: eme-tasks.php, line: 814
@@ -13353,68 +13349,63 @@ msgstr ""
 #
 # File: eme-options.php, line: 2029
 # File: eme-tasks.php, line: 529
-#, fuzzy
 msgid "Task Signup Pending Email Subject"
-msgstr "Objet de l’e-mail de rappel de l’inscription à une tâche"
+msgstr "Objet de l’e-mail d’inscription en attente à une tâche"
 #
 # File: eme-options.php, line: 2029
 # File: eme-tasks.php, line: 530
-#, fuzzy
 msgid ""
 "The subject of the email sent to the respondent when that person signs up "
 "for a task that requires approval."
 msgstr ""
-"L’objet de l’e-mail envoyé au répondant lorsque celui-ci s’inscrit à une "
-"tâche."
+"L’objet de l’e-mail envoyé au répondant lorsque cette personne s’inscrit à "
+"une tâche qui doit être approuvée."
 #
 # File: eme-options.php, line: 2030
 # File: eme-tasks.php, line: 538
-#, fuzzy
 msgid "Task Signup Pending Email Body"
-msgstr "Corps de l’e-mail de rappel de l’inscription à une tâche"
+msgstr "Corps de l’e-mail de l’inscription, en attente, à une tâche"
 #
 # File: eme-options.php, line: 2030
 # File: eme-tasks.php, line: 539
-#, fuzzy
 msgid ""
 "The body of the email sent to the respondent when that person signs up for a "
 "task that requires approval."
 msgstr ""
-"Le corps de l’e-mail envoyé au répondant lorsque celui-ci s’inscrit à une "
-"tâche."
+"Le corps de l’e-mail envoyé au répondant lorsque cette personne s’inscrit à "
+"une tâche qui doit être approuvée."
 #
 # File: eme-options.php, line: 2031
 # File: eme-tasks.php, line: 548
-#, fuzzy
 msgid "Contact Person Task Signup Pending Email Subject"
 msgstr ""
-"Objet de l’e-mail à la personne de contact lors d’une inscription à une tâche"
+"Objet de l’e-mail, à la personne de contact, lors d’une inscription en "
+"attente à une tâche"
 #
 # File: eme-options.php, line: 2031
 # File: eme-tasks.php, line: 549
-#, fuzzy
 msgid ""
 "The subject of the email which will be sent to the contact person when "
 "someone signs up for a task that requires approval."
 msgstr ""
-"L’objet de l’e-mail qui sera envoyé à la personne de contact lorsque "
-"quelqu’un s’inscrit à une tâche."
+"L’objet de l’e-mail qui sera envoyé à la personne de contact lorsqu’une "
+"personne s’inscrit à une tâche qui doit être approuvée."
 #
 # File: eme-options.php, line: 2032
 # File: eme-tasks.php, line: 557
-#, fuzzy
 msgid "Contact Person Task Signup Pending Email Body"
-msgstr "Corps de l’e-mail d’inscription à une tâche à la personne de contact"
+msgstr ""
+"Corps de l’e-mail, à la personne de contact, lors d’une inscription en "
+"attente à une tâche"
 #
 # File: eme-options.php, line: 2032
 # File: eme-tasks.php, line: 558
-#, fuzzy
 msgid ""
 "The body of the email which will be sent to the contact person when someone "
 "signs up for a task that requires approval."
 msgstr ""
-"Le corps de l’e-mail qui sera envoyé à la personne de contact lorsque "
-"quelqu’un s’inscrit à une tâche."
+"Le corps de l’e-mail qui sera envoyé à la personne de contact lorsqu’une "
+"personne s’inscrit à une tâche qui doit être approuvée."
 #
 # File: eme-options.php, line: 2042
 # File: eme-tasks.php, line: 487
@@ -14689,13 +14680,13 @@ msgid "Payconiq Merchant ID"
 msgstr "ID de Payconiq Merchant"
 #
 # File: eme-options.php, line: 2400
-#, fuzzy
 msgid ""
 "Info: refunding is implemented but the way payconiq works it might still "
 "require manual transfer of the funds to the relevant bank accounts anyway."
 msgstr ""
-"Info : le remboursement n’est pas mis en œuvre car il nécessite de toute "
-"façon un transfert manuel des fonds vers les comptes bancaires concernés."
+"Info : le remboursement est mis en place mais, vu la façon dont fonctionne "
+"Payconiq, il se peut que le transfert manuel des fonds vers les comptes "
+"bancaires concernés soit nécessaire."
 #
 # File: eme-options.php, line: 2405
 # File: eme-payments.php, line: 16
@@ -16621,9 +16612,8 @@ msgid "Filter task signups"
 msgstr "Filtrer les inscriptions aux tâches"
 #
 # File: eme-tasks.php, line: 470
-#, fuzzy
 msgid "Approve selected task signups"
-msgstr "Supprimer les inscriptions aux tâches sélectionnées"
+msgstr "Approuver les inscriptions aux tâches sélectionnées"
 #
 # File: eme-tasks.php, line: 471
 msgid "Delete selected task signups"
@@ -16732,9 +16722,8 @@ msgid "Require WP membership to be able to sign up for tasks?"
 msgstr "Adhésion WP requise pour pouvoir s’inscrire à des tâches ?"
 #
 # File: eme-tasks.php, line: 810
-#, fuzzy
 msgid "Require approval for task signups?"
-msgstr "Autoriser le chevauchement pour les inscriptions aux tâches ?"
+msgstr "Exiger une approbation pour les inscriptions aux tâches ?"
 #
 # File: eme-tasks.php, line: 1221
 # File: eme-tasks.php, line: 1319
@@ -17156,6 +17145,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the event notes."
@@ -17163,6 +17153,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Le téléversement de fichier n'est pas autorisé ici. Utilisez la "
 #~ "bibliothèque de médias classique WP pour téléverser des fichiers ou "
 #~ "utilisez le bouton \"Ajouter un média\" dans les notes de l' évènement."
+#
 #
 #
 #
@@ -17177,13 +17168,16 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Le téléchargement de fichier n'est pas autorisé ici."
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Fichiers Téléversés"
+#
 #
 #
 #
@@ -17194,10 +17188,12 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr ""
 #~ "La suppression des inscriptions aux tâches sélectionnées a été effectuée "
 #~ "avec succès."
+#
 #
 #
 #
@@ -17211,8 +17207,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Les ID fournis sont incorrects. Veuillez réessayer."
+#
 #
 #
 #
@@ -17232,6 +17230,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
@@ -17239,6 +17238,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Le modèle doit contenir au moins les espaces réservés #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL et #_SUBMIT. Sinon, le formulaire ne sera pas "
 #~ "affiché."
+#
 #
 #
 #
@@ -17279,8 +17279,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Hello World"
 #~ msgstr "Bonjour !"
+#
 #
 #
 #
@@ -17317,6 +17319,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Single Noop"
 #~ msgid_plural "Plural Noop"
 #~ msgstr[0] "Unique"
@@ -17337,9 +17340,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgctxt "Testing"
 #~ msgid "Hello World"
 #~ msgstr "Bonjour le monde"
+#
 #
 #
 #
@@ -17377,6 +17382,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Attribute"
 #~ msgstr "attribut"
 #
@@ -17395,8 +17401,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "HTML"
 #~ msgstr "HTML"
+#
 #
 #
 #
@@ -17432,9 +17440,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgctxt "Testing"
 #~ msgid "HTML"
 #~ msgstr "HTML"
+#
 #
 #
 #
@@ -17469,6 +17479,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "More information about %s"
 #~ msgstr "Plus d'informations sur %s"
 #
@@ -17487,8 +17498,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Check for updates"
 #~ msgstr "Vérifier les mises à jour"
+#
 #
 #
 #
@@ -17524,9 +17537,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgctxt "the plugin title"
 #~ msgid "A new version of the %s plugin is available."
 #~ msgstr "Une nouvelle version de l'extension %s est disponible."
+#
 #
 #
 #
@@ -17563,8 +17578,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Unknown update checker status \"%s\""
 #~ msgstr "Statut inconnu du vérificateur de mise à jour « %s »."
+#
 #
 #
 #

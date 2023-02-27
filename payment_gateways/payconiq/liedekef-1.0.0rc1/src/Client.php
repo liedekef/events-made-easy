@@ -126,11 +126,43 @@ class Client
 	 * 
 	 * @return  array  Response objects by Payconiq
 	 */
-	public function getPaymentsList($reference)
+	public function getPaymentsListByReference($reference)
 	{
 		$response = $this->curl('POST', $this->getEndpoint('/payments/search'), $this->constructHeaders(), [
 			'reference' => $reference
 		]);
+
+		if (empty($response->size))
+			throw new GetPaymentsListFailedException($response->message);
+
+		return $response->details;
+	}
+
+	/**
+	 * Get payments list
+	 *
+	 * @param  string $fromDate	The start date and time to filter the search results.
+	 *				Default: Current date and time minus one day. (Now - 1 day)
+	 *				Format: YYYY-MM-ddTHH:mm:ss.SSSZ
+	 * 
+	 * @param  string $toDate	The end date and time to filter the search results.
+	 *				Default: Current date and time. (Now)
+	 *				Format: YYYY-MM-ddTHH:mm:ss.SSSZ
+	 * 
+	 * @return  array  Response objects by Payconiq
+	 */
+	public function getPaymentsListByDateRange($fromDate='',$toDate='')
+	{
+			#"paymentStatuses" => ["SUCCEEDED"]
+		$param_arr = [
+		];
+		if (!empty($fromDate)) {
+			$param_arr['from'] = $fromDate;
+		}
+		if (!empty($toDate)) {
+			$param_arr['to'] = $toDate;
+		}
+		$response = $this->curl('POST', $this->getEndpoint('/payments/search'), $this->constructHeaders(), $param_arr);
 
 		if (empty($response->size))
 			throw new GetPaymentsListFailedException($response->message);

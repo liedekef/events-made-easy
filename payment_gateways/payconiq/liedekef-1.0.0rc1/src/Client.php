@@ -153,8 +153,8 @@ class Client
 	 */
 	public function getPaymentsListByDateRange($fromDate='',$toDate='')
 	{
-			#"paymentStatuses" => ["SUCCEEDED"]
 		$param_arr = [
+			"paymentStatuses" => ["SUCCEEDED"]
 		];
 		if (!empty($fromDate)) {
 			$param_arr['from'] = $fromDate;

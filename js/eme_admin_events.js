@@ -883,14 +883,15 @@ jQuery(document).ready( function($) {
         $('#event_author.eme_select2_wpuser_class').select2({
                 width: '100%',
                 ajax: {
-                        url: ajaxurl+'?action=eme_wpuser_select2',
+                        url: ajaxurl,
                         dataType: 'json',
                         delay: 1000,
                         data: function (params) {
                                 return {
                                         q: params.term, // search term
-                                        page: params.page,
+                                        page: params.page || 1,
                                         pagesize: 10,
+					action: 'eme_wpuser_select2',
                                         eme_admin_nonce: eme.translate_adminnonce
                                 };
                         },
@@ -913,14 +914,15 @@ jQuery(document).ready( function($) {
         $('#event_contactperson_id.eme_select2_wpuser_class').select2({
                 width: '100%',
                 ajax: {
-                        url: ajaxurl+'?action=eme_wpuser_select2',
+                        url: ajaxurl,
                         dataType: 'json',
                         delay: 1000,
                         data: function (params) {
                                 return {
                                         q: params.term, // search term
-                                        page: params.page,
+                                        page: params.page || 1,
                                         pagesize: 10,
+					action: 'eme_wpuser_select2',
                                         eme_admin_nonce: eme.translate_adminnonce
                                 };
                         },

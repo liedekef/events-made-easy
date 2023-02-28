@@ -9817,8 +9817,6 @@ function eme_countdown_shortcode( $atts ) {
 }
 
 function eme_ajax_events_search() {
-	
-
 	$return = [];
 	if ( isset( $_REQUEST['q'] ) ) {
 		$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
@@ -9857,7 +9855,7 @@ function eme_ajax_wpuser_select2() {
 	$jTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	$pagesize     = intval( $_REQUEST['pagesize'] );
-	$start        = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) * $pagesize : 0;
+	$start        = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;
 
 	$records              = [];
 	[$persons, $total] = eme_get_wp_users( $q, $start, $pagesize );

@@ -817,7 +817,7 @@ jQuery(document).ready( function($) {
 				data: function (params) {
 					return {
 						q: params.term, // search term
-						page: params.page,
+						page: params.page || 1,
 						pagesize: 30,
 						action: 'eme_select_country',
 						eme_frontend_nonce: emebasic.translate_frontendnonce
@@ -861,7 +861,7 @@ jQuery(document).ready( function($) {
 				data: function (params) {
 					return {
 						q: params.term, // search term
-						page: params.page,
+						page: params.page || 1,
 						pagesize: 30,
 						country_code: $('#country_code').val(),
 						action: 'eme_select_state',

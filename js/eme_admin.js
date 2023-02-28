@@ -373,14 +373,15 @@ jQuery(document).ready( function($) {
 	$('.eme_select2_members_class').select2({
 		width: 'style',
 		ajax: {
-			url: ajaxurl+'?action=eme_members_select2',
+			url: ajaxurl,
 			dataType: 'json',
 			delay: 1000,
 			data: function (params) {
 				return {
 					q: params.term, // search term
-					page: params.page,
+					page: params.page || 1,
 					pagesize: 30,
+					action: 'eme_members_select2',
 					eme_admin_nonce: emeadmin.translate_adminnonce
 				};
 			},
@@ -404,14 +405,15 @@ jQuery(document).ready( function($) {
 	$('.eme_select2_people_class').select2({
 		width: 'style',
 		ajax: {
-			url: ajaxurl+'?action=eme_people_select2',
+			url: ajaxurl,
 			dataType: 'json',
 			delay: 1000,
 			data: function (params) {
 				return {
 					q: params.term, // search term
-					page: params.page,
+					page: params.page || 1,
 					pagesize: 30,
+					action: 'eme_people_select2',
 					eme_admin_nonce: emeadmin.translate_adminnonce
 				};
 			},
@@ -454,14 +456,15 @@ jQuery(document).ready( function($) {
 		allowClear: true,
 		placeholder: emeadmin.translate_selectdiscount,
 		ajax: {
-			url: ajaxurl+'?action=eme_discounts_select2',
+			url: ajaxurl,
 			dataType: 'json',
 			delay: 1000,
 			data: function (params) {
 				return {
 					q: params.term, // search term
-					page: params.page,
+					page: params.page || 1,
 					pagesize: 30,
+					action: 'eme_discounts_select2',
 					eme_admin_nonce: emeadmin.translate_adminnonce
 				};
 			},
@@ -488,14 +491,15 @@ jQuery(document).ready( function($) {
 		allowClear: true,
 		placeholder: emeadmin.translate_selectdiscountgroup,
 		ajax: {
-			url: ajaxurl+'?action=eme_dgroups_select2',
+			url: ajaxurl,
 			dataType: 'json',
 			delay: 1000,
 			data: function (params) {
 				return {
 					q: params.term, // search term
-					page: params.page,
+					page: params.page || 1,
 					pagesize: 30,
+					action: 'eme_dgroups_select2',
 					eme_admin_nonce: emeadmin.translate_adminnonce
 				};
 			},

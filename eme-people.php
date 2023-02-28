@@ -4907,7 +4907,7 @@ function eme_ajax_people_select2() {
 		$where = '(1=1)';
 	}
 	$pagesize    = intval( $_REQUEST['pagesize'] );
-	$start       = isset( $_REQUEST['page'] ) ? intval( $_REQUEST['page'] ) * $pagesize : 0;
+	$start       = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;
 	$count_sql   = "SELECT COUNT(*) FROM $table WHERE $where";
 	$recordCount = $wpdb->get_var( $count_sql );
 	$limit       = "LIMIT $start,$pagesize";

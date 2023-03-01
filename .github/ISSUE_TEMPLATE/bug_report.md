@@ -24,6 +24,10 @@ A clear and concise description of what you expected to happen.
 **Screenshots**
 If applicable, add screenshots to help explain your problem.
 
+**Online Demo**
+While screenshots can say something, they don't say everything.
+So, if possible, include a link to a demo page demonstrating the issue.
+
 **Log output**
 If applicable, check your php error logfile and add php errors here
 

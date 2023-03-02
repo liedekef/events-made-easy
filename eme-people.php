@@ -3126,7 +3126,7 @@ function eme_get_massmail_person_ids() {
 	return $wpdb->get_col( $sql );
 }
 
-function eme_get_groups_person_massemails( $group_ids ) {
+function eme_get_groups_person_emails( $group_ids, $massmail_only=1 ) {
 	global $wpdb;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
@@ -3137,11 +3137,17 @@ function eme_get_groups_person_massemails( $group_ids ) {
 	$sql              = "SELECT group_id FROM $groups_table WHERE group_id IN ($group_ids) AND type = 'static'";
 	$static_groupids  = $wpdb->get_col( $sql );
 
+	if ($massmail_only) {
+		$massmail_sql = "AND people.massmail=1";
+	} else {
+		$massmail_sql = "";
+	}
+
 	// for static groups we look at the massmail option, for dynamic groups not
 	$res = [];
 	if ( ! empty( $static_groupids ) && eme_is_numeric_array( $static_groupids ) ) {
 		$ids_list = implode(',', $static_groupids);
-		$sql = $wpdb->prepare("SELECT people.lastname, people.firstname, people.email FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=%d AND people.massmail=1 AND people.email<>'' AND ugroups.group_id IN ($ids_list) GROUP BY people.email", EME_PEOPLE_STATUS_ACTIVE);
+		$sql = $wpdb->prepare("SELECT people.lastname, people.firstname, people.email FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=%d $massmail_sql AND people.email<>'' AND ugroups.group_id IN ($ids_list) GROUP BY people.email", EME_PEOPLE_STATUS_ACTIVE);
 		$res     = $wpdb->get_results( $sql, ARRAY_A );
 	}
 	$emails_seen = [];
@@ -3163,7 +3169,7 @@ function eme_get_groups_person_massemails( $group_ids ) {
 				$sql = eme_get_sql_people_searchfields( $dynamic_group['search_terms'], 0, 0, '', 0, 0, 1 );
 			}
 		} else {
-			$sql = 'SELECT people.lastname, people.firstname, people.email ' . $dynamic_group['stored_sql'] . ' AND people.massmail=1';
+			$sql = 'SELECT people.lastname, people.firstname, people.email ' . $dynamic_group['stored_sql'] . "  $massmail_sql";
 		}
 		$res2 = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $res2 as $entry ) {

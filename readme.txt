@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.57 (2023//) =
+* Add "-a" option to cli_mail.php, to allow people to bypasspass the massmail setting for certain mailgroups
+
 = 2.3.56 (2023/03/01) =
 * Fix an ajax pagination bug
 

@@ -27,6 +27,7 @@ function help( $progname ) {
 	echo "Optional provide --allowed_senders, to indicate specific email addresses that can send to the group (comma-separated) (by default everyone in that group can send to the group)\n";
 	echo "Optional provide --extra_allowed_senders, to allow extra email addresses to send to this group (comma-separated list)\n";
 	echo "Optional provide -f, to indicate the sender email. Normally this is extracted from the email, but programs like postfix can provide this already too and are more suited for email parsing\n";
+	echo "Optional provide -a, to indicate all people in the group should receive the mail, and not only those with the 'massmail' option active.\n";
 	echo "Optional provide --fast: by default the mails are queued inside EME and follow the general queueing rules, if you want these mails to be sent as quickly as possible add --fast\n";
 	echo "Examples:\n";
 	echo "$progname -d mygroup@email\n";
@@ -93,7 +94,7 @@ function mailRead( $iKlimit = '' ) {
 	return $sEmail;
 }
 
-$arguments = getopt( 'hd:f:', [ 'fast', 'allowed_senders:', 'extra_allowed_senders:', 'groupid:' ] );
+$arguments = getopt( 'ahd:f:', [ 'fast', 'allowed_senders:', 'extra_allowed_senders:', 'groupid:' ] );
 if ( ( ! isset( $arguments['groupid'] ) && ! isset( $arguments['d'] ) ) || isset( $arguments['h'] ) ) {
 	help( $argv[0] );
 }
@@ -169,7 +170,11 @@ if ( ! eme_is_email( $from_email ) || ! eme_is_email( $replyto_email ) || empty(
 	exit();
 }
 
-$names_emails = eme_get_groups_person_massemails( $group['group_id'] );
+if (isset( $arguments['a'] )) {
+	$names_emails = eme_get_groups_person_emails( $group['group_id'], 0 );
+} else {
+	$names_emails = eme_get_groups_person_emails( $group['group_id'], 1 );
+}
 // empty list of emails? Then do nothing
 if ( empty( $names_emails ) ) {
 	exit();

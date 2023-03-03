@@ -676,7 +676,7 @@ function eme_admin_notices() {
 			<?php
 		}
 
-		if ( ! $eme_donate_notice_ignore && preg_match( '/^eme-/', $plugin_page ) ) {
+		if ( ! $eme_donate_notice_ignore && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) {
 			?>
 <div class="updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;">
 	<div>

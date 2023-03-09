@@ -2619,7 +2619,7 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 		}
 		// small optimization
 		if ( $search_terms['search_customfields'] == '' ) {
-			$search_customfields = ''
+			$search_customfields = '';
 		} else  {
 			$search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
 		}

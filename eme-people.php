@@ -1721,13 +1721,18 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
 			$group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
 	}
 
-	if ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfields'] ) && $search_terms['search_customfields'] != '' ) {
+	if ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfields'] ) ) {
 		if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
 			$field_ids = join( ',', $search_terms['search_customfieldids'] );
 		} else {
 			$field_ids = join( ',', $field_ids_arr );
 		}
-		$search_customfields = esc_sql($wpdb->esc_like($search_terms['search_customfields']));
+		// small optimization
+		if ( $search_terms['search_customfields'] == '' ) {
+			$search_customfields = ''
+		} else  {
+			$search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
+		}
 		$sql_join            = "
 		   JOIN (SELECT $group_concat_sql related_id FROM $answers_table
 			 WHERE answer LIKE '%$search_customfields%' AND related_id>0 AND field_id IN ($field_ids) AND type='person'

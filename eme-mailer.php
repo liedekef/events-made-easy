@@ -1311,11 +1311,11 @@ function eme_send_mails_ajax_actions( $action ) {
 						$rows = array_reverse( $rows );
 			}
 		} else {
-			$search_text = '%' . esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) ) . '%';
+			$search_text = "'%" . esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) ) . "%'";
 			if ( ! empty( $_POST['search_failed'] ) ) {
 				$where = 'AND status=2';
 			}
-			$sql  = $wpdb->prepare( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where", $search_text, $search_text, $search_text );
+			$sql  = sprintf( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where", $search_text, $search_text, $search_text );
 			$rows = $wpdb->get_results( $sql, ARRAY_A );
 		}
 		if ( empty( $rows ) ) {

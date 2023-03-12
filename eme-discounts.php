@@ -727,22 +727,22 @@ function eme_member_discount( $membership, $member ) {
 }
 
 function eme_update_booking_discount( $booking ) {
-		global $wpdb;
+	global $wpdb;
 
-		$event = eme_get_event( $booking['event_id'] );
+	$event = eme_get_event( $booking['event_id'] );
 	if ( empty( $event ) ) {
 		return;
 	}
-		$calc_discount = eme_booking_discount( $event, $booking );
+	$calc_discount = eme_booking_discount( $event, $booking );
 
-		$bookings_table        = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-		$where                 = [];
-		$fields                = [];
-		$where['booking_id']   = $booking['booking_id'];
-		$fields['discount']    = $calc_discount['discount'];
-		$fields['discountids'] = $calc_discount['discountids'];
-		$fields['dcodes_used'] = eme_serialize( $calc_discount['dcodes_used'] );
-		$fields['dgroupid']    = $calc_discount['dgroupid'];
+	$bookings_table        = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$where                 = [];
+	$fields                = [];
+	$where['booking_id']   = $booking['booking_id'];
+	$fields['discount']    = $calc_discount['discount'];
+	$fields['discountids'] = $calc_discount['discountids'];
+	$fields['dcodes_used'] = eme_serialize( $calc_discount['dcodes_used'] );
+	$fields['dgroupid']    = $calc_discount['dgroupid'];
 	if ( $calc_discount['discount'] != $booking['discount'] ) {
 		// if the discount is not equal to the original, the $calc_discount['discountids'] value will be empty
 		// so we also decrease the usage count of the discount ids
@@ -751,23 +751,23 @@ function eme_update_booking_discount( $booking ) {
 			eme_decrease_discount_booking_count( $discount_id, $booking );
 		}
 	}
-		$wpdb->update( $bookings_table, $fields, $where );
+	$wpdb->update( $bookings_table, $fields, $where );
 }
 
 function eme_update_member_discount( $member ) {
-		global $wpdb;
+	global $wpdb;
 
-		$membership    = eme_get_membership( $member['membership_id'] );
-		$calc_discount = eme_member_discount( $membership, $member );
+	$membership    = eme_get_membership( $member['membership_id'] );
+	$calc_discount = eme_member_discount( $membership, $member );
 
-		$members_table         = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-		$where                 = [];
-		$fields                = [];
-		$where['member_id']    = $member['member_id'];
-		$fields['discount']    = $calc_discount['discount'];
-		$fields['discountids'] = $calc_discount['discountids'];
-		$fields['dcodes_used'] = eme_serialize( $calc_discount['dcodes_used'] );
-		$fields['dgroupid']    = $calc_discount['dgroupid'];
+	$members_table         = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$where                 = [];
+	$fields                = [];
+	$where['member_id']    = $member['member_id'];
+	$fields['discount']    = $calc_discount['discount'];
+	$fields['discountids'] = $calc_discount['discountids'];
+	$fields['dcodes_used'] = eme_serialize( $calc_discount['dcodes_used'] );
+	$fields['dgroupid']    = $calc_discount['dgroupid'];
 	if ( $calc_discount != $member['discount'] ) {
 		// if the discount is not equal to the original, the $calc_discount['discountids'] value will be empty
 		// so we also decrease the usage count of the discount ids
@@ -776,7 +776,7 @@ function eme_update_member_discount( $member ) {
 			eme_decrease_discount_member_count( $discount_id, $member );
 		}
 	}
-		$wpdb->update( $members_table, $fields, $where );
+	$wpdb->update( $members_table, $fields, $where );
 }
 
 function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {

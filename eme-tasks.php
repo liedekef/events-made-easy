@@ -68,6 +68,12 @@ function eme_db_insert_task( $line ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TASKS_TBNAME;
 
+	// first check for task_nbr
+	if (!isset($line['task_nbr'])) {
+		$sql      = $wpdb->prepare( "SELECT IFNULL(max(task_nbr),0) FROM $table WHERE event_id = %d", $line['event_id'] );
+		$task_nbr = intval($wpdb->get_var( $sql ));
+		$line['task_nbr'] = $task_nbr + 1;
+	}
 	$tmp_task = eme_new_task();
 	// we only want the columns that interest us
 	$keys = array_intersect_key( $line, $tmp_task );

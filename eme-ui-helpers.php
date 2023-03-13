@@ -36,8 +36,10 @@ function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
 		if ( in_array( $key, $saved_values ) ) {
 			$checked = "checked='checked'";
 		}
-		$output .= "<input type='checkbox' name='$name' value='" . eme_esc_html( $key ) . "' $checked><label for='$name'>" . eme_esc_html( $item ) . '</label>';
-		if ( ! $horizontal ) {
+		$output .= "<input type='checkbox' name='$name' value='" . eme_esc_html( $key ) . "' $checked>&nbsp;<label for='$name'>" . eme_esc_html( $item ) . '</label>';
+		if ( $horizontal ) {
+			$output .= "&nbsp;";
+		} else {
 			$output .= "<br>\n";
 		}
 	}
@@ -487,8 +489,10 @@ function eme_ui_radio( $option_value, $name, $list, $horizontal = true, $require
 			$t_value = $value;
 		}
 		"$t_key" == $option_value ? $selected = "checked='checked' " : $selected = '';
-		$val                                 .= "<input $required_att type='radio' id='{$name}_{$counter}' name='$name' $class_att value='" . eme_esc_html( $t_key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . eme_esc_html( $t_value ) . '</label>';
-		if ( ! $horizontal ) {
+		$val                                 .= "<input $required_att type='radio' id='{$name}_{$counter}' name='$name' $class_att value='" . eme_esc_html( $t_key ) . "' $selected $extra_attributes>&nbsp;<label for='{$name}_{$counter}'>" . eme_esc_html( $t_value ) . '</label>';
+		if (  $horizontal ) {
+			$val .= "&nbsp;";
+		} else {
 			$val .= "<br>\n";
 		}
 		++$counter;
@@ -518,7 +522,7 @@ function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 
 	$name = wp_strip_all_tags( $name );
 	$val  = "<input $required_att type='checkbox' name='{$name}' id='{$name}' $class_att value='1' $selected $extra_attributes>";
 	if ( ! empty( $label ) ) {
-		$val .= "<label for='{$name}'>" . eme_esc_html( $label ) . '</label>';
+		$val .= "&nbsp;<label for='{$name}'>" . eme_esc_html( $label ) . '</label>';
 	}
 	return $val;
 }
@@ -551,7 +555,9 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
 			"$key" == $option_value ? $selected = "checked='checked' " : $selected = '';
 		}
 		$val .= "<input $required_att type='checkbox' name='{$name}[]' id='{$name}_{$counter}' $class_att value='" . eme_esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . eme_esc_html( $value ) . '</label>';
-		if ( ! $horizontal ) {
+		if ( $horizontal ) {
+			$val .= "&nbsp;";
+		} else {
 			$val .= "<br>\n";
 		}
 		++$counter;

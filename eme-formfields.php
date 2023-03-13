@@ -1791,7 +1791,19 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			} else {
 				$label = '';
 			}
-			$replacement = eme_ui_checkbox_binary( 0, 'gdpr', $label, 1, 'eme-gdpr-field nodynamicupdates' );
+			if ( ! $eme_is_admin_request ) {
+				$replacement = eme_ui_checkbox_binary( 0, 'gdpr', $label, 1, 'eme-gdpr-field nodynamicupdates' );
+			}
+		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$label = substr( $matches[1], 1, -1 );
+			} else {
+				$label = __('Remember me?','events-made-easy');
+			}
+			if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
+				$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+			}
 		} elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
 			if ( is_numeric( $matches[1] ) ) {
 					$group = eme_get_group( $matches[1] );
@@ -2876,6 +2888,18 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 					$replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field nodynamicupdates', $disabled );
 				}
 			}
+		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
+			if ( ! $is_multibooking ) {
+				if ( isset( $matches[1] ) ) {
+					// remove { and } (first and last char of second match)
+					$label = substr( $matches[1], 1, -1 );
+				} else {
+					$label = __('Remember me?','events-made-easy');
+				}
+				if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
+					$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+				}
+			}
 		} elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
 			if ( ! $is_multibooking ) {
 				if ( is_numeric( $matches[1] ) ) {
@@ -3809,6 +3833,16 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			if ( ! $eme_is_admin_request ) {
 					$replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, "eme-gdpr-field nodynamicupdates $personal_info_class", $disabled );
 			}
+		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$label = substr( $matches[1], 1, -1 );
+			} else {
+				$label = __('Remember me?','events-made-easy');
+			}
+			if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
+				$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+			}
 		} elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
 			if ( is_numeric( $matches[1] ) ) {
 				$group = eme_get_group( $matches[1] );
@@ -4021,8 +4055,6 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 }
 
 function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
-	
-
 	$eme_captcha_for_forms   = get_option( 'eme_captcha_for_forms' );
 	$eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
@@ -4170,6 +4202,16 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 				$label = '';
 			}
 			$replacement = eme_ui_checkbox_binary( 0, 'gdpr', $label, 1, 'eme-gdpr-field' );
+		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$label = substr( $matches[1], 1, -1 );
+			} else {
+				$label = __('Remember me?','events-made-easy');
+			}
+			if ( ! is_user_logged_in()) {
+				$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
 			if ( $eme_cfcaptcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_cfcaptcha_html();

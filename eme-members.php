@@ -1507,16 +1507,6 @@ function eme_member_form( $member, $membership_id, $from_backend = 0, $form_id =
 		$form_html .= '</div>';
 		return $form_html;
 	}
-	if ( ! $from_backend ) {
-		// we sleep for 2 microseconds, to be sure that uniqid gives another value
-		usleep( 2 );
-		$form_id    = uniqid();
-		$form_html  = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-		<div id='eme-member-addmessage-ok-$form_id' class='eme-message-success eme-member-message eme-member-message-success eme-hidden'></div><div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message eme-member-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form'></div><div id='div_eme-member-form-$form_id' style='display: none' class='eme-showifjs'><form name='eme-member-form' id='$form_id' method='post' action='#'>";
-		$form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
-		$form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>";
-	}
-	$form_html .= "<input type='hidden' id='membership_id' name='membership_id' value='$membership_id'>";
 	$wp_id      = 0;
 	if ( $member['person_id'] ) {
 		$person = eme_get_person( $member['person_id'] );
@@ -1534,6 +1524,16 @@ function eme_member_form( $member, $membership_id, $from_backend = 0, $form_id =
 	if ( ! $wp_id ) {
 		$wp_id = 0;
 	}
+	if ( ! $from_backend ) {
+		// we sleep for 2 microseconds, to be sure that uniqid gives another value
+		usleep( 2 );
+		$form_id    = uniqid();
+		$form_html  = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
+		<div id='eme-member-addmessage-ok-$form_id' class='eme-message-success eme-member-message eme-member-message-success eme-hidden'></div><div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message eme-member-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form'></div><div id='div_eme-member-form-$form_id' style='display: none' class='eme-showifjs'><form name='eme-member-form' id='$form_id' method='post' action='#'>";
+		$form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
+		$form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>";
+	}
+	$form_html .= "<input type='hidden' id='membership_id' name='membership_id' value='$membership_id'>";
 	$form_html .= "<input type='hidden' name='wp_id' value='$wp_id' class='dynamicupdates'>";
 
 	$format = null;

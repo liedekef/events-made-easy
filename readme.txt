@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.3.57 (2023//) =
 * Add "-a" option to cli_mail.php, to allow people to bypasspass the massmail setting for certain mailgroups
 * Allow to search on empty values for custom fields in members and people overview
+* Update Mollie API to 2.51.0
 
 = 2.3.56 (2023/03/01) =
 * Fix an ajax pagination bug

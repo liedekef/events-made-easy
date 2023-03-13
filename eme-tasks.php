@@ -1251,6 +1251,12 @@ function eme_tasks_signupform_shortcode( $atts ) {
 		$footer = eme_get_template_format( $template_id_footer );
 	}
 
+	$form_class = "";
+	if ( ! eme_is_admin_request() && ! is_user_logged_in() && get_option('eme_rememberme')) {
+		wp_enqueue_script( 'eme-rememberme' );
+		$form_class = "class='eme-rememberme'";
+        }
+
 	$current_userid = get_current_user_id();
 	if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
 		( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
@@ -1263,7 +1269,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 	$nonce   = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	$form_id = uniqid();
 	$result .= "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-        <div id='eme-tasks-message-ok-$form_id' class='eme-message-success eme-tasks-message eme-tasks-message-success eme-hidden'></div><div id='eme-tasks-message-error-$form_id' class='eme-message-error eme-tasks-message eme-tasks-message-error eme-hidden'></div><div id='div_eme-tasks-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-tasks-form' method='post' action='#'>
+        <div id='eme-tasks-message-ok-$form_id' class='eme-message-success eme-tasks-message eme-tasks-message-success eme-hidden'></div><div id='eme-tasks-message-error-$form_id' class='eme-message-error eme-tasks-message eme-tasks-message-error eme-hidden'></div><div id='div_eme-tasks-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-tasks-form' method='post' $form_class action='#'>
                 $nonce
                 <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
                 ";

@@ -43,6 +43,10 @@ jQuery(document).ready( function($) {
 			if ($('input[name=task_email]').length) {
 				localStorage.setItem('eme_email',$('input[name=task_email]').val());
 			}
+		} else {
+			localStorage.removeItem('eme_lastname');
+			localStorage.removeItem('eme_firstname');
+			localStorage.removeItem('eme_email');
 		}
 	});
 });

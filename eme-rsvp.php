@@ -95,6 +95,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 	}
 
 	$registration_wp_users_only = $event['registration_wp_users_only'];
+	$form_class = '';
 	// if we require a user to be WP registered to be able to book
 	// in the backend we should not check this condition
 	if ( ! eme_is_admin_request() ) {
@@ -114,6 +115,10 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 				return $form_html;
 			}
 		}
+		if (! is_user_logged_in() && get_option('eme_rememberme')) {
+			wp_enqueue_script( 'eme-rememberme' );
+			$form_class = "class='eme-rememberme'";
+		}
 	}
 
 	$current_userid = get_current_user_id();
@@ -128,7 +133,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 	usleep( 2 );
 	$form_id   = uniqid();
 	$form_html = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
-<div id='eme-rsvp-addmessage-ok-$form_id' class='eme-message-success eme-rsvp-message eme-rsvp-message-success eme-hidden'></div><div id='eme-rsvp-addmessage-error-$form_id' class='eme-message-error eme-rsvp-message eme-rsvp-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form eme-hidden'></div><div id='div_eme-rsvp-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-rsvp-form' method='post' action='#' >";
+<div id='eme-rsvp-addmessage-ok-$form_id' class='eme-message-success eme-rsvp-message eme-rsvp-message-success eme-hidden'></div><div id='eme-rsvp-addmessage-error-$form_id' class='eme-message-error eme-rsvp-message eme-rsvp-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form eme-hidden'></div><div id='div_eme-rsvp-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-rsvp-form' method='post' $form_class action='#' >";
 	// add a nonce for extra security
 	$form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 	// also add a honeypot field: if it gets completed with data,
@@ -906,7 +911,7 @@ function eme_add_bookings_ajax() {
 			} else {
 				$only_if_not_registered = 0;
 			}
-			if ( ! $only_if_not_registered && get_option( 'eme_rsvp_show_form_after_booking' ) ) {
+			if ( ! $only_if_not_registered && get_option( 'eme_rsvp_show_form_after_booking' ) && ! get_option( 'eme_rememberme' ) ) {
 				echo wp_json_encode(
 				    [
 						'Result'      => 'OK',
@@ -935,7 +940,7 @@ function eme_add_bookings_ajax() {
 		} else {
 			$only_if_not_registered = 0;
 		}
-		if ( ! $only_if_not_registered && get_option( 'eme_rsvp_show_form_after_booking' ) ) {
+		if ( ! $only_if_not_registered && get_option( 'eme_rsvp_show_form_after_booking' ) && ! get_option( 'eme_rememberme' ) ) {
 			echo wp_json_encode(
 			    [
 					'Result'      => 'OK',

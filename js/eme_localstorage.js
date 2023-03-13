@@ -1,4 +1,10 @@
 jQuery(document).ready( function($) {
+	if ($("input#eme_rememberme").length) {
+		var eme_rememberme_checked = localStorage.getItem('eme_rememberme');
+		if (eme_rememberme_checked == 1) {
+			$("input#eme_rememberme").prop("checked",true);
+		}
+	}
 	if ($('input[name=lastname]').length) {
 		$('input[name=lastname]').val(localStorage.getItem('eme_lastname'));
 	}
@@ -25,6 +31,7 @@ jQuery(document).ready( function($) {
 	});
 	$(document).on('submit','form.eme-rememberme',function(){
 		if ($('input#eme_rememberme').prop('checked')) {
+			localStorage.setItem('eme_rememberme',1);
 			if ($('input[name=lastname]').length) {
 				localStorage.setItem('eme_lastname',$('input[name=lastname]').val());
 			}
@@ -47,6 +54,7 @@ jQuery(document).ready( function($) {
 			localStorage.removeItem('eme_lastname');
 			localStorage.removeItem('eme_firstname');
 			localStorage.removeItem('eme_email');
+			localStorage.removeItem('eme_rememberme');
 		}
 	});
 });

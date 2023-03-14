@@ -3562,6 +3562,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	$eme_recaptcha_for_forms = $membership['properties']['use_recaptcha'] && ! $eme_is_admin_request;
 	$eme_hcaptcha_for_forms  = $membership['properties']['use_hcaptcha'] && ! $eme_is_admin_request;
 	$eme_cfcaptcha_for_forms  = $membership['properties']['use_cfcaptcha'] && ! $eme_is_admin_request;
+	$captcha_set = 0;
 
 	if ( $membership['properties']['family_membership'] && ! preg_match( '/#_FAMILYMEMBERS/', $format ) ) {
 		$text = '#_FAMILYMEMBERS';

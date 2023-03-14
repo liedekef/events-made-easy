@@ -1022,7 +1022,6 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 }
 
 function eme_replace_task_signupformfields_placeholders( $format ) {
-	
 	//$eme_is_admin_request = eme_is_admin_request();
 
 	if ( is_user_logged_in() ) {
@@ -1133,6 +1132,15 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			++$email_found;
 			// #_EMAIL is always required
 			$required = 1;
+		} elseif ( preg_match( '/#_COMMENT(\{.+?\})?$/', $result, $matches ) ) {
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_nowptrans_esc_html( $placeholder_text );
+			} else {
+				$placeholder_text = esc_html__( 'Comment', 'events-made-easy' );
+			}
+			$replacement = "<textarea name='task_comment' id='task_comment' placeholder='$placeholder_text' ></textarea>";
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
 			if ( $eme_cfcaptcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_cfcaptcha_html();
@@ -1194,7 +1202,6 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	}
 }
 function eme_replace_cancelformfields_placeholders( $event ) {
-	
 	// not used from the admin backend, but we check to be sure
 	$eme_is_admin_request = eme_is_admin_request();
 	if ( $eme_is_admin_request ) {

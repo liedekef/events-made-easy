@@ -104,7 +104,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Add "-a" option to cli_mail.php, to allow people to bypasspass the massmail setting for certain mailgroups
 * Allow to search on empty values for custom fields in members and people overview
 * Update Mollie API to 2.51.0
-* Add "Remember me" functionality for forms
+* Add "Remember me" functionality for forms, has a #_REMEMBERME placeholder and a setting that needs to be activated.
+  #_REMEMBERME can have an optional lable (#_REMEMBERME{xx}) otherwise "Remember me?" will be used as label
+* A comment can be added to task signups (generic comment, will be added to each signup). For this #_COMMENT can be used in the form and emails
 
 = 2.3.56 (2023/03/01) =
 * Fix an ajax pagination bug

@@ -1523,17 +1523,15 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 }
 
 function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task, $target = 'html', $lang = '' ) {
-	
-
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+		$email_target = 1;
+		$target       = 'html';
 	}
 
 	if ( empty( $lang ) && ! empty( $person['lang'] ) ) {
-			$lang = $person['lang'];
+		$lang = $person['lang'];
 	}
 	if ( empty( $lang ) ) {
 		$lang = eme_detect_lang();
@@ -1551,14 +1549,14 @@ function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event,
 		if ( preg_match( '/#_TASKSIGNUPCANCEL_URL$/', $result ) ) {
 			$replacement = eme_tasksignup_cancel_url( $signup );
 			if ( $target == 'html' ) {
-					$replacement = esc_url( $replacement );
+				$replacement = esc_url( $replacement );
 			}
 		} elseif ( preg_match( '/#_TASKSIGNUPCANCEL_LINK$/', $result ) ) {
 			$url = eme_tasksignup_cancel_url( $signup );
 			if ( $target == 'html' ) {
 				$url = esc_url( $url );
+				$replacement = "<a href='$url'>" . __( 'Cancel task signup', 'events-made-easy' ) . '</a>';
 			}
-			$replacement = "<a href='$url'>" . __( 'Cancel task signup', 'events-made-easy' ) . '</a>';
 		} elseif ( preg_match( '/#_USER_IS_REGISTERED$/', $result ) ) {
 			$wp_id = get_current_user_id();
 			if ( $wp_id > 0 && $wp_id == $person['wp_id'] ) {
@@ -1566,6 +1564,14 @@ function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event,
 			} else {
 				$replacement = 0;
 			}
+		} elseif ( preg_match( '/#_(TASKCOMMENT/', $result ) ) {
+                        $replacement = $signup['comment'];
+                        if ( $target == 'html' ) {
+                                $replacement = eme_esc_html( $replacement );
+                                $replacement = apply_filters( 'eme_general', $replacement );
+                        } else {
+                                $replacement = apply_filters( 'eme_text', $replacement );
+                        }
 		} else {
 			$found = 0;
 		}
@@ -1634,6 +1640,11 @@ function eme_tasks_ajax() {
 	$bookerLastName  = '';
 	$bookerFirstName = '';
 	$bookerEmail     = '';
+	$bookerComment   = '';
+	// comment will be added to each task signup
+	if (isset($_POST['task_comment'])) {
+		$bookerComment = eme_sanitize_textarea( $_POST['task_comment'] );
+	}
 
 	// start with an empty person_id, once needed it will get a real id
 	$person_id = 0;
@@ -1645,7 +1656,7 @@ function eme_tasks_ajax() {
 		$event                 = eme_get_event( $event_id );
 		$allow_overlap         = $event['event_properties']['task_allow_overlap'];
 		$registered_users_only = $event['event_properties']['task_registered_users_only'];
-		$signup_status = ($event['event_properties']['task_requires_approval'])? 0 : 1;
+		$signup_status         = ($event['event_properties']['task_requires_approval'])? 0 : 1;
 		if ( $registered_users_only && ! $booker_wp_id ) {
 			$message .= get_option( 'eme_rsvp_login_required_string' );
 			$nok      = 1;
@@ -1694,6 +1705,7 @@ function eme_tasks_ajax() {
 					'person_id'     => $person_id,
 					'event_id'      => $event_id,
 					'signup_status' => $signup_status,
+					'comment'       => $bookerComment,
 				];
 				eme_db_insert_task_signup( $signup );
 				if ( $signup_status == 0 ) {

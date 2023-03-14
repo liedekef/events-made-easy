@@ -9424,6 +9424,7 @@ function eme_admin_enqueue_js() {
 			'translate_taskname'                   => __( 'Task name', 'events-made-easy' ),
 			'translate_taskstart'                  => __( 'Task start date', 'events-made-easy' ),
 			'translate_taskend'                    => __( 'Task end date', 'events-made-easy' ),
+			'translate_comment'                    => __( 'Comment', 'events-made-easy' ),
 			'translate_event'                      => __( 'Event', 'events-made-easy' ),
 			'translate_person'                     => __( 'Person', 'events-made-easy' ),
 			'translate_csv'                        => __( 'CSV', 'events-made-easy' ),

@@ -56,6 +56,11 @@ jQuery(document).ready( function($) {
                     visibility: 'hidden',
 		    title: emetasks.translate_tasksignup_status
                 },
+		comment: {
+                    title: emetasks.translate_comment,
+                    sorting: false,
+                    visibility: 'hidden'
+                },
                 person_info: {
 		    sorting: false,
 		    title: emetasks.translate_person

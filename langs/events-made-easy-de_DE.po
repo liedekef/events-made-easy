@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
 "POT-Creation-Date: 2023-03-14 19:39:51+00:00\n"
-"PO-Revision-Date: 2023-03-15 09:57+0100\n"
+"PO-Revision-Date: 2023-03-15 10:23+0100\n"
 "Last-Translator: Joerg Knoerchen (Sensorgrafie) <kontakt@sensorgrafie.de>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -6414,9 +6414,8 @@ msgstr "Geburtsort"
 # File: eme-formfields.php, line: 2904
 # File: eme-formfields.php, line: 3849
 # File: eme-formfields.php, line: 4218
-#, fuzzy
 msgid "Remember me?"
-msgstr "Neues Mitglied E-Mail"
+msgstr "Erinnerst du dich an mich?"
 #
 # File: eme-formfields.php, line: 1822
 # File: eme-formfields.php, line: 2919
@@ -10791,7 +10790,7 @@ msgstr "Cloudflare Turnstile Geheimschlüssel"
 #
 # File: eme-options.php, line: 1258
 msgid "Enable Remember-me functionality?"
-msgstr ""
+msgstr "An mich erinnern - Funktionalität aktivieren?"
 #
 # File: eme-options.php, line: 1258
 msgid ""
@@ -10801,6 +10800,13 @@ msgid ""
 "form, and only works for not logged-in users in the frontend. If checked, "
 "the option \"Show the RSVP form again after booking\" will be ignored."
 msgstr ""
+"Aktiviere diese Option, um ein Kontrollkästchen einzublenden, mit dem "
+"Benutzer wählen können, ob sie ihren Nachnamen/Vornamen/E-Mail lokal "
+"speichern möchten, um sie beim nächsten Mal vorausgefüllt zu haben. Dies "
+"erfordert auch die Verwendung eines #_REMEMBERME-Platzhalters in deinem "
+"Formular und funktioniert nur für nicht eingeloggte Benutzer im Frontend. "
+"Wenn diese Option aktiviert ist, wird die Option \"Das RSVP-Formular nach "
+"der Buchung erneut anzeigen\" ignoriert."
 #
 # File: eme-options.php, line: 1260
 msgid "Autocomplete sources"
@@ -17125,10 +17131,6 @@ msgstr "Franky Van Liedekerke"
 msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
 #
-#
-#
-#
-#
 #~ msgid ""
 #~ "If you like Events Made Easy, please leave a <a href=\"%s\" "
 #~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> rating. A huge "
@@ -17138,30 +17140,14 @@ msgstr "https://www.e-dynamics.be/"
 #~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> Bewertung. Ein "
 #~ "großes Dankeschön im Voraus!"
 #
-#
-#
-#
-#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Ungültige IDs geliefert. Bitte versuche es erneut."
-#
-#
-#
-#
 #
 #~ msgid "You have no right to manage task signups!"
 #~ msgstr "Du hast keine Berechtigung, Aufgabenanmeldungen zu verwalten!"
 #
-#
-#
-#
-#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Datei-Upload ist hier nicht erlaubt."
-#
-#
-#
-#
 #
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
@@ -17171,10 +17157,6 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Mediathek für den Dateiupload oder die \"Bild hinzufügen\" Schaltfläche "
 #~ "in der Veranstaltungsbeschreibung."
 #
-#
-#
-#
-#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -17183,16 +17165,8 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Mediathek für den Dateiupload oder die \"Bild hinzufügen\" Schaltfläche "
 #~ "in der Veranstaltungsortbeschreibung."
 #
-#
-#
-#
-#
 #~ msgid "Uploaded files"
 #~ msgstr "Hochgeladene Dateien"
-#
-#
-#
-#
 #
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
@@ -17202,26 +17176,14 @@ msgstr "https://www.e-dynamics.be/"
 #~ "#_EMAIL und #_SUBMIT beinhalten, ansonsten wird das Formular nicht "
 #~ "angezeigt."
 #
-#
-#
-#
-#
 #~ msgid ""
 #~ "There was a problem deleting the selected task signups, please try again."
 #~ msgstr ""
 #~ "Es trat ein Problem beim Löschen der ausgewählten Felder auf, bitte "
 #~ "erneut versuchen."
 #
-#
-#
-#
-#
 #~ msgid "Your payment failed."
 #~ msgstr "Zahlung fehlgeschlagen."
-#
-#
-#
-#
 #
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "Die ausgewählte(n) Rabattgruppe(n) wurde(n) gelöscht."

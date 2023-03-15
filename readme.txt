@@ -107,6 +107,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Add "Remember me" functionality for forms, has a #_REMEMBERME placeholder and a setting that needs to be activated.
   #_REMEMBERME can have an optional lable (#_REMEMBERME{xx}) otherwise "Remember me?" will be used as label
 * A comment can be added to task signups (generic comment, will be added to each signup). For this #_COMMENT can be used in the form and emails
+* Improvement: German language updates, thanks to Joerg Knoerchen
 
 = 2.3.56 (2023/03/01) =
 * Fix an ajax pagination bug

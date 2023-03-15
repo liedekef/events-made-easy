@@ -25,6 +25,8 @@ if [ $? -gt 0 ]; then
 		rm "tmp.po"
 	done
 	rm "$lang_dir/events-made-easy-orig.pot"
+	# to make sure the pot is newer than the po files, touch it now (otherwise upon subsequent runs, we fall into the "else" for each po)
+	touch events-made-easy.pot
 else
 	mv "$lang_dir/events-made-easy-orig.pot" "$lang_dir/events-made-easy.pot"
 	cd "$lang_dir"
@@ -35,7 +37,7 @@ else
 			# first remove old location comments
 			grep -v '^# File:' $i > "tmp.po"
 			# now merge
-			echo "==> Merging pot into new $i"
+			echo "==> Merging pot into new2 $i"
 			msgmerge --strict -o "$i" "tmp.po" events-made-easy.pot
 			rm "tmp.po"
 		fi

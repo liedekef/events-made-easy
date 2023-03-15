@@ -4698,8 +4698,12 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
+function eme_get_events_include_unlisted( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '' ) {
+	return eme_get_events( $o_limit, $scope, $order, $o_offset, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions, $count, $include_customformfields, $search_customfieldids, $search_customfields, 1);
+}
+
 // main function querying the database event table
-function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '' ) {
+function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '', $include_unlisted = 0 ) {
 	global $wpdb;
 
 	$events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
@@ -4790,9 +4794,17 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 	// if we're not in the admin itf, we don't want draft events
 	if ( ! eme_is_admin_request() ) {
 		if ( is_user_logged_in() ) {
-			$conditions[] = 'event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_PRIVATE . ')';
+			if ($include_unlisted) {
+				$conditions[] = 'event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_PRIVATE . ',' . EME_EVENT_STATUS_UNLISTED . ')';
+			} else {
+				$conditions[] = 'event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_PRIVATE . ')';
+			}
 		} else {
-			$conditions[] = 'event_status=' . EME_EVENT_STATUS_PUBLIC;
+			if ($include_unlisted) {
+				$conditions[] = 'event_status IN (' . EME_EVENT_STATUS_PUBLIC . ',' . EME_EVENT_STATUS_UNLISTED . ')';
+			} else {
+				$conditions[] = 'event_status=' . EME_EVENT_STATUS_PUBLIC;
+			}
 		}
 		if ( get_option( 'eme_rsvp_hide_full_events' ) ) {
 			// COALESCE is used in case the SUM returns NULL

@@ -1209,12 +1209,16 @@ function eme_tasks_signupform_shortcode( $atts ) {
 
 	$extra_conditions_arr = [];
 	$extra_conditions     = '';
+	// by default we only show tasks for public events (or private if logged in, see the function eme_get_events)
+	// but if the event_id is not empty we include unlisted (hidden) events too
+	$include_unlisted = 0;
 	if ( ! empty( $event_id ) ) {
 		if ( strstr( ',', $event_id ) ) {
 			$extra_conditions_arr[] = "event_id in ($event_id)";
 		} else {
 			$extra_conditions_arr[] = 'event_id = ' . intval( $event_id );
 		}
+		$include_unlisted = 1;
 	}
 	$extra_conditions_arr[] = 'event_tasks = 1';
 
@@ -1222,7 +1226,11 @@ function eme_tasks_signupform_shortcode( $atts ) {
 		$extra_conditions = '(' . join( ' AND ', $extra_conditions_arr ) . ')';
 	}
 
-	$events = eme_get_events( 0, $scope, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
+	if ($include_unlisted) {
+		$events = eme_get_events_include_unlisted( 0, $scope, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
+	} else {
+		$events = eme_get_events( 0, $scope, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
+	}
 	if ( empty( $events ) ) {
 		$result = "<div id='eme-tasks-message' class='eme-message-info eme-tasks-message eme-no-tasks'>" . __( 'There are no tasks to sign up for right now', 'events-made-easy' ) . '</div>';
 		return $result;

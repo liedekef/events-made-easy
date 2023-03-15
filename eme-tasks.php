@@ -1572,7 +1572,7 @@ function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event,
 			} else {
 				$replacement = 0;
 			}
-		} elseif ( preg_match( '/#_(TASKCOMMENT/', $result ) ) {
+		} elseif ( preg_match( '/#_(TASK)?COMMENT/', $result ) ) {
                         $replacement = $signup['comment'];
                         if ( $target == 'html' ) {
                                 $replacement = eme_esc_html( $replacement );
@@ -1847,6 +1847,7 @@ function eme_ajax_task_signups_list() {
 			$localized_taskend_date      = eme_localized_datetime( $row['task_end'], EME_TIMEZONE, 1 );
 			$rows[ $key ]['event_name']  = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $row['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $row['event_name'] ) . '</a></strong><br>' . $localized_start_date . ' - ' . $localized_end_date;
 			$rows[ $key ]['task_name']   = eme_esc_html( $row['task_name'] );
+			$rows[ $key ]['comment']     = nl2br(eme_esc_html( $row['comment'] ));
 			$rows[ $key ]['task_start']  = $localized_taskstart_date;
 			$rows[ $key ]['task_end']    = $localized_taskend_date;
 			if ( $row['signup_status'] == 1 ) {

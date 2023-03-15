@@ -366,7 +366,7 @@ function eme_manage_countries_layout( $message = '' ) {
 	</form>
 	</div>
 	<br>
-		<?php echo sprintf( __( 'See <a href="%s">here</a> for more info on country code.', 'events-made-easy' ), 'https://en.wikipedia.org/wiki/ISO_3166-1' ); ?>
+		<?php echo sprintf( __( 'See <a href="%s">here</a> for more info on country codes', 'events-made-easy' ), 'https://en.wikipedia.org/wiki/ISO_3166-1' ); ?>
 	<br>
 		<?php esc_html_e( 'The language should correspond to one of the WordPress languages you want to support, or leave it empty as a default or fallback. Some examples are: nl, fr, en, de', 'events-made-easy' ); ?>
 	<br>

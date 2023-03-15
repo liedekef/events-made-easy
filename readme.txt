@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.2
-Stable tag: 2.3.56
+Stable tag: 2.3.57
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,7 +100,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.57 (2023//) =
+= 2.3.57 (2023/03/15) =
 * Add "-a" option to cli_mail.php, to allow people to bypasspass the massmail setting for certain mailgroups
 * Allow to search on empty values for custom fields in members and people overview
 * Update Mollie API to 2.51.0
@@ -108,6 +108,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
   #_REMEMBERME can have an optional lable (#_REMEMBERME{xx}) otherwise "Remember me?" will be used as label
 * A comment can be added to task signups (generic comment, will be added to each signup). For this #_COMMENT can be used in the form and emails
 * Improvement: German language updates, thanks to Joerg Knoerchen
+* Allow to choose wether or not to send mails when approving/deleting task signups
+* Fix: tasks for hidden events were not being rendered on public pages when specifying the event id
 
 = 2.3.56 (2023/03/01) =
 * Fix an ajax pagination bug

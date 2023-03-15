@@ -27,6 +27,19 @@ if [ $? -gt 0 ]; then
 	rm "$lang_dir/events-made-easy-orig.pot"
 else
 	mv "$lang_dir/events-made-easy-orig.pot" "$lang_dir/events-made-easy.pot"
+	cd "$lang_dir"
+	# in case the pot didn't change, but someone mailed/provided a new po: remerge
+	for i in `ls *po`; do
+		j=`echo "${i%.*}"`
+		if [ "$i" -nt "events-made-easy.pot" ]; then
+			# first remove old location comments
+			grep -v '^# File:' $i > "tmp.po"
+			# now merge
+			echo "==> Merging pot into new $i"
+			msgmerge --strict -o "$i" "tmp.po" events-made-easy.pot
+			rm "tmp.po"
+		fi
+	done
 fi
 
 # regenerate mo files if po file is newer

@@ -16688,9 +16688,19 @@ msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "See <a href=\"%s\">here</a> for more info on country code."
 #~ msgstr "Viac informácií o kódoch krajín nájdete <a href=\"%s\">tu</a>"
+#
+#
+#
+#
+#
 #
 #
 #
@@ -16710,6 +16720,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -16717,6 +16732,11 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Nahrávanie súborov tu nie je povolené, na odovzdávanie súborov použite "
 #~ "bežnú knižnicu médií WP alebo použite tlačidlo „Pridať multimédiá“ v "
 #~ "poznámkach miesta."
+#
+#
+#
+#
+#
 #
 #
 #
@@ -16731,8 +16751,18 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Nahrané súbory"
+#
+#
+#
+#
+#
 #
 #
 #
@@ -16749,8 +16779,18 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "Úspešne sa odstránili vybrané prihlásenia na úlohu."
+#
+#
+#
+#
+#
 #
 #
 #
@@ -16770,8 +16810,18 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Dodané nesprávne ID. Skúste to prosím znova."
+#
+#
+#
+#
+#
 #
 #
 #
@@ -16797,12 +16847,22 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
 #~ msgstr ""
 #~ "Šablóna by mala obsahovať aspoň zástupné výrazy #_LASTNAME, #_FIRSTNAME, "
 #~ "#_EMAIL a #_SUBMIT. Ak nemá, formulár sa nezobrazí."
+#
+#
+#
+#
+#
 #
 #
 #
@@ -16873,12 +16933,22 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "Single"
 #~ msgid_plural "Plural"
 #~ msgstr[0] "Jednorazové podujatie"
 #~ msgstr[1] "Jednorazové podujatie"
 #~ msgstr[2] "Jednorazové podujatie"
+#
+#
+#
+#
+#
 #
 #
 #
@@ -16947,9 +17017,19 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "Attribute"
 #~ msgstr "Atribúty"
+#
+#
+#
+#
+#
 #
 #
 #
@@ -17016,6 +17096,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "View details"
 #~ msgstr "Zobraziť podujatie"
@@ -17050,9 +17135,19 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "More information about %s"
 #~ msgstr "Viac informácií o sviatkoch nájdete na stránke "
+#
+#
+#
+#
+#
 #
 #
 #

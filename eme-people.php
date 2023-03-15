@@ -1721,32 +1721,36 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
 			$group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
 	}
 
-	if ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfields'] ) ) {
-		if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
-			$field_ids = join( ',', $search_terms['search_customfieldids'] );
-		} else {
-			$field_ids = join( ',', $field_ids_arr );
-		}
-		// small optimization
-		if ( $search_terms['search_customfields'] == '' ) {
-			$search_customfields = '';
-		} else  {
-			$search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
-		}
-		$sql_join            = "
-		   JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-			 WHERE answer LIKE '%$search_customfields%' AND related_id>0 AND field_id IN ($field_ids) AND type='person'
-			 GROUP BY related_id
-			) ans
-		   ON people.person_id=ans.related_id";
-	} else {
-		$sql_join = "
-		   LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-			 WHERE related_id>0 AND type='person'
-			 GROUP BY related_id
-			) ans
-		   ON people.person_id=ans.related_id";
-	}
+        $search_formfield_sql = '';
+        if ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfields'] ) ) {
+                // small optimization
+                if ( $search_terms['search_customfields'] == '' ) {
+                        $search_customfields = '';
+                        $search_formfield_sql = " AND answer = '' ";
+                } else  {
+                        $search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
+                        $search_formfield_sql = " AND answer LIKE '%$search_customfields%' ";
+                }
+                if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
+                        $field_ids = join( ',', $search_terms['search_customfieldids'] );
+                        $search_formfield_sql .= " AND field_id IN ($field_ids) ";
+                } else {
+                        // we don't search for a specific field, so search in all, but then the search value is not allowed to be empty
+			// so if it is empty, set this var to empty
+                        $field_ids = join( ',', $field_ids_arr );
+                        if ($search_terms['search_customfields'] == '' ) {
+                                $search_formfield_sql = "";
+                        } else {
+                                $search_formfield_sql .= " AND field_id IN ($field_ids) ";
+                        }
+                }
+        }
+        $sql_join = "
+                   LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table
+                         WHERE related_id>0 AND type='person' $search_formfield_sql
+                         GROUP BY related_id
+                        ) ans
+                   ON people.person_id=ans.related_id";
 	if ( $count ) {
 		$sql = "SELECT COUNT(distinct(people.person_id)) FROM $people_table AS people $usergroup_join $member_join $sql_join $where";
 	} elseif ( $ids_only ) {

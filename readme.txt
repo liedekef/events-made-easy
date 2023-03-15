@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.58 (2023/03/15) =
+* Fix searching for empty strings for custom fields
+
 = 2.3.57 (2023/03/15) =
 * Add "-a" option to cli_mail.php, to allow people to bypasspass the massmail setting for certain mailgroups
 * Allow to search on empty values for custom fields in members and people overview

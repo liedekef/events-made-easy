@@ -15882,9 +15882,19 @@ msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
 #
 #
+#
+#
+#
+#
+#
 #, fuzzy
 #~ msgid "See <a href=\"%s\">here</a> for more info on country code."
 #~ msgstr "Läs <a href=\"%s\">här</a> för mer info om landskoder"
+#
+#
+#
+#
+#
 #
 #
 #
@@ -15904,6 +15914,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -15911,6 +15926,11 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Filuppladdning tillåts inte här, använd det vanliga WP mediabiblioteket "
 #~ "för att ladda upp filer eller använd ”Lägg till media”-knappen i "
 #~ "beskrivningen av platsen."
+#
+#
+#
+#
+#
 #
 #
 #
@@ -15925,8 +15945,18 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
+#
+#
+#
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Uppladdade filer"
+#
+#
+#
+#
+#
 #
 #
 #

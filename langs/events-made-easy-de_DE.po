@@ -5,13 +5,15 @@ msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
 "POT-Creation-Date: 2023-03-14 19:39:51+00:00\n"
-"PO-Revision-Date: 2022-11-30 21:44:39+0000\n"
+"PO-Revision-Date: 2023-03-15 10:23+0100\n"
+"Last-Translator: Joerg Knoerchen (Sensorgrafie) <kontakt@sensorgrafie.de>\n"
+"Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: GlotPress/4.0.0-alpha.3\n"
+"X-Generator: Poedit 3.2.2\n"
 #
 #. translators: %s: original email sender name
 # File: cli_mail.php, line: 148
@@ -191,7 +193,7 @@ msgstr ""
 "title='Einstellungen ändern'>Einstellungsseite</a> geworfen? Dort hast Du "
 "die Möglichkeit, das Erscheinungsbild von Veranstaltungen und "
 "Veranstaltungsorten anzupassen.</p><p>Wie? Diese Ratschläge werden langsam "
-"langweilig? Verstanden, <a href='%s' title='Lass diesen Hinweis "
+"langweilig? Verstanden, <a href='%6$s' title='Lass diesen Hinweis "
 "verschwinden!'>hier klicken</a> und Du wirst diese hier nicht wieder sehen!</"
 "p>"
 #
@@ -456,7 +458,7 @@ msgstr ""
 #
 # File: eme-categories.php, line: 68
 msgid "Successfully added the category"
-msgstr "Kategorie erfolgreich hinzugefügt."
+msgstr "Kategorie erfolgreich hinzugefügt"
 #
 # File: eme-categories.php, line: 70
 msgid "There was a problem adding your category, please try again."
@@ -465,7 +467,7 @@ msgstr ""
 #
 # File: eme-categories.php, line: 80
 msgid "Successfully deleted the selected categories."
-msgstr "Die ausgewählte(n) Kategorie(n) wurde(n) gelöscht"
+msgstr "Die ausgewählte(n) Kategorie(n) wurde(n) gelöscht."
 #
 # File: eme-categories.php, line: 82
 msgid "There was a problem deleting the selected categories, please try again."
@@ -955,7 +957,7 @@ msgid ""
 msgstr ""
 "Es ist nur ein Land definiert, aber die Sprache des Landes ist nicht leer "
 "und stimmt nicht mit der von WordPress erkannten Sprache (%s) überein, was "
-"bedeutet, dass es beim Bearbeiten von Personen nicht angezeigt wird. Füge "
+"bedeutet, dass sie beim Bearbeiten von Personen nicht angezeigt wird. Füge "
 "entweder weitere Länder hinzu oder korrigiere die Sprache dieses Landes."
 #
 # File: eme-countries.php, line: 339
@@ -1033,8 +1035,8 @@ msgid ""
 "fr, en, de"
 msgstr ""
 "Die Sprache sollte einer der WordPress-Sprachen entsprechen, die du "
-"unterstützen willst, oder du kannst sie als Standard oder Fallback leer "
-"lassen. Einige Beispiele sind: nl, fr, en, de"
+"unterstützen möchtest, oder du kannst sie als Standard- oder Fallback-"
+"Sprache leer lassen. Einige Beispiele sind: nl, fr, en, de"
 #
 # File: eme-countries.php, line: 378
 # File: eme-countries.php, line: 449
@@ -1251,7 +1253,7 @@ msgid ""
 "%s there will be a check if new events should be mailed to EME registered "
 "people (those will then be queued and send out in batches of %d %s)"
 msgstr ""
-"%s es wird geprüft, ob neue Veranstaltungen an EME-registrierte Personen "
+"%1$s es wird geprüft, ob neue Veranstaltungen an EME-registrierte Personen "
 "geschickt werden sollen (diese werden dann in eine Warteschlange gestellt "
 "und in Stapeln von %d %s verschickt)"
 #
@@ -1313,7 +1315,7 @@ msgstr ""
 #
 # File: eme-cron.php, line: 340
 msgid "Email queue info"
-msgstr "E-Mail-Warteschlangen-Info"
+msgstr "Mail-Warteschlangen-Info"
 #
 # File: eme-cron.php, line: 353
 msgid ""
@@ -1325,7 +1327,7 @@ msgstr ""
 #
 # File: eme-cron.php, line: 359
 msgid "Queued mails will be send out in batches of %d %s"
-msgstr "E-Mails in der Warteschlange werden in Gruppen von %d %s verschickt."
+msgstr "E-Mails in der Warteschlange werden in Gruppen von %d %s verschickt"
 #
 # File: eme-cron.php, line: 371
 # File: eme-options.php, line: 1722
@@ -1353,19 +1355,19 @@ msgstr "Tage"
 #
 # File: eme-cron.php, line: 386
 msgid "Email subject template"
-msgstr "E-Mail Betreff Vorlage"
+msgstr "Vorlage: E-Mail Betreff"
 #
 # File: eme-cron.php, line: 391
 msgid "Email body header"
-msgstr "Nachrichtentext E-Mail Kopfzeile"
+msgstr "Nachrichtentext Kopfzeile"
 #
 # File: eme-cron.php, line: 396
 msgid "Email body single event entry"
-msgstr "E-Mail-Text einzelner Veranstaltungseintrag"
+msgstr "Nachrichtentext für Einträge von Einzelveranstaltungen"
 #
 # File: eme-cron.php, line: 401
 msgid "Email body footer"
-msgstr "Nachrichtentext E-Mail Fußzeile"
+msgstr "Nachrichtentext"
 #
 # File: eme-cron.php, line: 408
 # File: eme-options.php, line: 1699
@@ -1458,7 +1460,7 @@ msgstr "Löschen ausgewählter Rabatte"
 # File: eme-discounts.php, line: 444
 # File: eme-people.php, line: 1866
 msgid "Add to group"
-msgstr "der Gruppe hinzufügen"
+msgstr "Der Gruppe hinzufügen"
 #
 # File: eme-discounts.php, line: 445
 # File: eme-people.php, line: 1867
@@ -1596,7 +1598,7 @@ msgid ""
 "can use this as an \"early bird\" discount"
 msgstr ""
 "Wenn Sie den Gutscheincode leer lassen, aber ein Ablaufdatum für den Rabatt "
-"festlegen, können Sie diesen als Frühbucherrabatt verwenden."
+"festlegen, können Sie diesen als Frühbucherrabatt verwenden"
 #
 # File: eme-discounts.php, line: 864
 # File: eme-events.php, line: 9491
@@ -1610,7 +1612,7 @@ msgid ""
 msgstr ""
 "Wenn gewünscht, kannst Du diesen Rabatt zu einem Teil einer oder mehrerer "
 "Rabattgruppen machen und dann eine Rabattgruppe auf Deine Veranstaltung "
-"anwenden."
+"anwenden"
 #
 # File: eme-discounts.php, line: 870
 # File: eme-events.php, line: 9499
@@ -1914,7 +1916,7 @@ msgstr "Keine Wiederholungen erstellt!"
 #
 # File: eme-events.php, line: 583
 msgid "New recurrence inserted containing %d events"
-msgstr "Neue Veranstaltungsserie mit %d Veranstaltungen erstellt."
+msgstr "Neue Veranstaltungsserie mit %d Veranstaltungen erstellt"
 #
 # File: eme-events.php, line: 585
 # File: eme-events.php, line: 630
@@ -2041,7 +2043,7 @@ msgstr "Dieser Link ist nicht mehr gültig, bitte frage einen neuen Link an."
 # File: eme-events.php, line: 1235
 # File: eme-events.php, line: 1248
 msgid "Nothing linked to this payment id"
-msgstr "Keine Verknüpfung zu dieser Zahlungs-ID."
+msgstr "Keine Verknüpfung zu dieser Zahlungs-ID"
 #
 # File: eme-events.php, line: 932
 msgid "Attendance check only valid for events and bookings, not members"
@@ -2129,17 +2131,17 @@ msgstr "Mitgliedschaftszahlungsseite"
 # File: eme-events.php, line: 1498
 # File: eme-events.php, line: 1578
 msgid "Subscribe confirmation"
-msgstr "Erwartet die Bestätigung des Benutzers"
+msgstr "Abonnement Bestätigung"
 #
 # File: eme-events.php, line: 1500
 # File: eme-events.php, line: 1580
 msgid "Unsubscribe confirmation"
-msgstr "Abmelde E-Mail Nachrichtentext"
+msgstr "Abbestellungsbestätigung"
 #
 # File: eme-events.php, line: 1502
 # File: eme-events.php, line: 1582
 msgid "Unsubscribe from mailings"
-msgstr "Abmelde E-Mail Nachrichtentext"
+msgstr "Abbestellen von Mailings"
 #
 # File: eme-events.php, line: 1510
 # File: eme-events.php, line: 1590
@@ -2487,11 +2489,11 @@ msgstr "Veröffentliche ausgewählte Veranstaltungen"
 #
 # File: eme-events.php, line: 5884
 msgid "Make selected events private"
-msgstr "ändere ausgewählte Veranstaltungen zu Privat"
+msgstr "Ändere ausgewählte Veranstaltungen zu Privat"
 #
 # File: eme-events.php, line: 5885
 msgid "Make selected events draft"
-msgstr "ändere ausgewählte Veranstaltungen zu Entwurf"
+msgstr "Ändere ausgewählte Veranstaltungen zu Entwurf"
 #
 # File: eme-events.php, line: 5886
 msgid "Add selected events to category"
@@ -2549,7 +2551,7 @@ msgstr "Gewählte Wiederholungen zum Entwurf machen"
 #
 # File: eme-events.php, line: 5991
 msgid "Set new start/end date for selected recurrences"
-msgstr "Neues Start-/Enddatum für ausgewählte Wiederholungen festlegen"
+msgstr "Neues Enddatum für ausgewählte Wiederholungen festlegen"
 #
 # File: eme-events.php, line: 5995
 msgid "Select new start date"
@@ -2563,7 +2565,7 @@ msgstr "Neues Enddatum wählen"
 # File: eme-locations.php, line: 75
 # File: eme-templates.php, line: 82
 msgid " (Copy)"
-msgstr "(Kopie)"
+msgstr " (Kopie)"
 #
 # File: eme-events.php, line: 6131
 msgid "WARNING: This is a recurrence."
@@ -2592,7 +2594,7 @@ msgid ""
 "from the recurrence."
 msgstr ""
 "Wenn Du diese Veranstaltung änderst, wird sie zu einer unabhängigen "
-"Veranstaltung und aus den Wiederholungen entfernt. "
+"Veranstaltung und aus den Wiederholungen entfernt."
 #
 # File: eme-events.php, line: 6160
 # File: eme-events.php, line: 9364
@@ -2649,7 +2651,7 @@ msgstr "Anwesenheitseinstellungen"
 #
 # File: eme-events.php, line: 6231
 msgid "RSVP Email format settings"
-msgstr "Buchungs E-Mail-Formateinstellungen"
+msgstr "Einstellungen für das Buchungs-E-Mail-Format"
 #
 # File: eme-events.php, line: 6235
 # File: eme-options.php, line: 1786
@@ -2721,7 +2723,6 @@ msgstr "Aufgaben E-Mail-Formateinstellungen"
 #
 # File: eme-events.php, line: 6313
 # File: eme-options.php, line: 2027
-#, fuzzy
 msgid "Task Signup Pending Email"
 msgstr "Erinnerungs-E-Mail zur Aufgabenanmeldung"
 #
@@ -3006,7 +3007,7 @@ msgstr "Datum der Veranstaltung"
 #
 # File: eme-events.php, line: 6925
 msgid "The event beginning and end date."
-msgstr "Erster und letzter Veranstaltunstag"
+msgstr "Erster und letzter Veranstaltungstag."
 #
 # File: eme-events.php, line: 6929
 msgid "Event duration (in days)"
@@ -3092,7 +3093,7 @@ msgstr "Wiederkehrende Termine"
 #
 # File: eme-events.php, line: 7003
 msgid "The recurrence beginning and end date."
-msgstr "Erster und letzter Veranstaltunstag"
+msgstr "Erster und letzter Veranstaltungstag."
 #
 # File: eme-events.php, line: 7006
 msgid "Select all the dates you want the event to begin on."
@@ -3150,7 +3151,7 @@ msgstr ""
 #
 # File: eme-events.php, line: 7054
 msgid "Holidays: "
-msgstr "Freie Tage:"
+msgstr "Freie Tage: "
 #
 # File: eme-events.php, line: 7059
 msgid ""
@@ -3244,7 +3245,7 @@ msgstr ""
 # File: eme-mailer.php, line: 2358
 # File: eme-widgets.php, line: 227
 msgid "Either choose from a template: "
-msgstr "Wähle entweder aus einer Vorlage:"
+msgstr "Wähle entweder aus einer Vorlage: "
 #
 # File: eme-events.php, line: 7089
 # File: eme-events.php, line: 7124
@@ -3303,8 +3304,8 @@ msgid ""
 "Or enter your own (if anything is entered here, it takes precedence over the "
 "selected template): "
 msgstr ""
-"oder gib ein eigenes Format an (diese Eingabe ersetzt die Angaben aus der "
-"Vorlage):"
+"Oder gib ein eigenes Format an (diese Eingabe ersetzt die Angaben aus der "
+"Vorlage): "
 #
 # File: eme-events.php, line: 7110
 msgid "Single Event"
@@ -3312,7 +3313,7 @@ msgstr "Einmalige Veranstaltung"
 #
 # File: eme-events.php, line: 7113
 msgid "The format of the single event page."
-msgstr "Format: Seite Einzelveranstaltung"
+msgstr "Das Format der Seite Einzelveranstaltung."
 #
 # File: eme-events.php, line: 7117
 msgid ""
@@ -3320,7 +3321,7 @@ msgid ""
 "RSVP form, the map, ... ."
 msgstr ""
 "Hier wird das Layout der Veranstaltung festgelegt (wo die Beschreibung der "
-"Veranstaltung erscheint, das Buchungs-Formular, die Karte, ...) "
+"Veranstaltung erscheint, das Buchungs-Formular, die Karte, … ."
 #
 # File: eme-events.php, line: 7132
 # File: eme-events.php, line: 8190
@@ -3440,9 +3441,9 @@ msgid ""
 "RSVP notifications are not activated, so these mails will not be sent. Go in "
 "the Email settings to activate this if wanted."
 msgstr ""
-"Buchungs-Benachrichtigungen sind nicht aktiviert, so dass diese Mails nicht "
-"gesendet werden. Gehe in die E-Mail-Einstellungen, um dies zu aktivieren, "
-"falls gewünscht."
+"Buchungs-Benachrichtigungen sind nicht aktiviert, daher werden diese Mails "
+"nicht gesendet. Gehe in die Mail-Einstellungen, um dies zu aktivieren, falls "
+"gewünscht."
 #
 # File: eme-events.php, line: 7252
 # File: eme-options.php, line: 1792
@@ -3451,8 +3452,8 @@ msgid ""
 "mails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 "Buchungs-Benachrichtigungen sind für getätigte oder genehmigte Buchungen "
-"nicht aktiviert, so dass diese E-Mails nicht gesendet werden. Gehen in die E-"
-"Mail-Einstellungen, um dies zu aktivieren, falls gewünscht."
+"nicht aktiviert, sodass diese Mails nicht gesendet werden. Gehe in die Mail-"
+"Einstellungen, um dies zu aktivieren, falls gewünscht."
 #
 # File: eme-events.php, line: 7256
 # File: eme-options.php, line: 1798
@@ -3480,7 +3481,7 @@ msgid ""
 "pending) or approved."
 msgstr ""
 "Der E-Mail-Text der Nachricht, die an den Besteller verschickt wird, wenn "
-"eine Buchung getätigt wurde (nicht unbestätigt) oder genehmigt wurde.  "
+"eine Buchung getätigt wurde (nicht unbestätigt) oder genehmigt wurde."
 #
 # File: eme-events.php, line: 7304
 # File: eme-options.php, line: 1800
@@ -3559,8 +3560,8 @@ msgid ""
 "will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 "Buchungs-Benachrichtigungen sind für ausstehende Buchungen nicht aktiviert, "
-"so dass diese Mails nicht gesendet werden. Gehe in die E-Mail-Einstellungen, "
-"um dies zu aktivieren, falls gewünscht."
+"sodass diese Mails nicht gesendet werden. Gehe in die Mail-Einstellungen, um "
+"dies zu aktivieren, falls gewünscht."
 #
 # File: eme-events.php, line: 7388
 # File: eme-options.php, line: 1842
@@ -3726,7 +3727,7 @@ msgid ""
 "of an approved booking."
 msgstr ""
 "Der Betreff der E-Mail, die an den Buchenden als Erinnerung an eine "
-"genehmigte Buchung gesendet wird. "
+"genehmigte Buchung gesendet wird."
 #
 # File: eme-events.php, line: 7687
 # File: eme-options.php, line: 1900
@@ -3740,7 +3741,7 @@ msgid ""
 "an approved booking."
 msgstr ""
 "Der Text der E-Mail, die an den Buchenden als Erinnerung an eine genehmigte "
-"Buchung gesendet wird. "
+"Buchung gesendet wird."
 #
 # File: eme-events.php, line: 7717
 # File: eme-options.php, line: 1912
@@ -3804,9 +3805,9 @@ msgid ""
 "RSVP notifications are not activated for paid bookings, so these mails will "
 "not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
-"Buchungs-Benachrichtigungen sind für bezahlte Buchungen nicht aktiviert, so "
-"dass diese Mails nicht gesendet werden. Gehe in die E-Mail-Einstellungen, um "
-"dies zu aktivieren, falls gewünscht."
+"Buchungs-Benachrichtigungen sind für bezahlte Buchungen nicht aktiviert, "
+"sodass diese Mails nicht gesendet werden. Gehe in die Mail-Einstellungen, um "
+"diese zu aktivieren, falls gewünscht."
 #
 # File: eme-events.php, line: 7823
 # File: eme-options.php, line: 1944
@@ -3951,19 +3952,17 @@ msgstr ""
 #
 # File: eme-events.php, line: 8075
 # File: eme-options.php, line: 1255
-#, fuzzy
 msgid "Use Cloudflare Turnstile for forms?"
-msgstr "Google reCAPTCHA für Formulare verwenden?"
+msgstr "Cloudflare Turnstile für Formulare verwenden?"
 #
 # File: eme-events.php, line: 8076
-#, fuzzy
 msgid ""
 "If this option is checked, make sure to use #_CFCAPTCHA in your booking/"
 "cancel form. If not present, it will be added just above the submit button."
 msgstr ""
-"Wenn diese Option aktiviert ist, stelle sicher, dass #_CAPTCHA in deinem "
-"Buchungs-/Stornierungsformular verwendet wird. Falls nicht vorhanden, wird "
-"es direkt über der Schaltfläche \"Senden\" hinzugefügt."
+"Wenn diese Option aktiviert ist, stelle sicher, dass du #_CFCAPTCHA in "
+"deinem Buchungs-/Stornierungsformular verwendest. Falls nicht vorhanden, "
+"wird es direkt über der Schaltfläche \"Senden\" eingefügt."
 #
 # File: eme-events.php, line: 8081
 # File: eme-options.php, line: 1248
@@ -4117,11 +4116,11 @@ msgstr ""
 #
 # File: eme-events.php, line: 8398
 msgid "Attendance URL (generated by #_ATTENDANCE_URL) is valid from "
-msgstr "Teilnehmer URL (erzeugt durch #_ATTENDANCE_URL) ist gültig von"
+msgstr "Teilnehmer URL (erzeugt durch #_ATTENDANCE_URL) ist gültig von "
 #
 # File: eme-events.php, line: 8400
 msgid "hours before the event starts until "
-msgstr "Stunden vor dem Veranstaltungsstart bis"
+msgstr "Stunden vor dem Veranstaltungsstart bis "
 #
 # File: eme-events.php, line: 8402
 msgid "hours after the event ends."
@@ -4203,7 +4202,7 @@ msgstr "Automatische Buchungsbestätigung nach Bezahlung"
 # File: eme-events.php, line: 8488
 msgid "Consider pending bookings as available seats for new bookings"
 msgstr ""
-"Berücksichtige ausstehende Buchungen als freie Plätze für neue Buchungen."
+"Berücksichtige ausstehende Buchungen als freie Plätze für neue Buchungen"
 #
 # File: eme-events.php, line: 8488
 msgid ""
@@ -4255,12 +4254,12 @@ msgid ""
 "option and use #_ADDBOOKINGFORM_IF_LOGGED_IN to show the form to logged in "
 "users only."
 msgstr ""
-"Damit wird das Buchungsformular nur für angemeldete Benutzer angezeigt und "
-"das Formular mit den persönlichen Daten aus ihrem WordPress-Profil "
-"vorausgefüllt. Diese Daten können dann im Formular nicht mehr geändert "
-"werden. Wenn dies also nicht gewünscht wird, kanne diese Option deaktiviert "
-"und #_ADDBOOKINGFORM_IF_LOGGED_IN verwendet werden, um das Formular nur "
-"angemeldeten Benutzern anzuzeigen."
+"Dies zeigt das Buchungsformular nur für eingeloggte Benutzer an und füllt "
+"das Formular mit den persönlichen Daten aus ihrem WordPress-Profil aus. "
+"Diese Daten können dann im Formular nicht mehr geändert werden. Wenn du das "
+"nicht möchtest, kannst du diese Option deaktivieren und "
+"#_ADDBOOKINGFORM_IF_LOGGED_IN verwenden, um das Formular nur angemeldeten "
+"Benutzern anzuzeigen."
 #
 # File: eme-events.php, line: 8504
 msgid "Create WP user after succesful booking"
@@ -4353,7 +4352,7 @@ msgstr ""
 #
 # File: eme-events.php, line: 8550
 msgid "VAT percentage: "
-msgstr "Prozentsatz der MwSt:"
+msgstr "Prozentsatz der MwSt: "
 #
 # File: eme-events.php, line: 8551
 # File: eme-members.php, line: 1786
@@ -4464,26 +4463,25 @@ msgid "Only take attendance (0 or 1 seat) for this event"
 msgstr "Akzeptiere nur Anzahl (0 oder 1 Platz) für diese Veranstaltung"
 #
 # File: eme-events.php, line: 8583
-#, fuzzy
 msgid ""
 "If this option is set and the setting \"Min number of seats to book\" is set "
 "to 0, then the field to choose the number of seats to book will be turned "
 "into a checkbox."
 msgstr ""
-"Falls diese Option gesetzt ist und die Einstellung \"Min. Anzahl der zu "
-"buchenden Plätze\" auf einen Wert größer als 0 gesetzt ist, wird das Feld "
-"zur Auswahl der Anzahl der zu buchenden Plätze ausgeblendet."
+"Wenn diese Option aktiviert ist und die Einstellung \"Mindestanzahl der zu "
+"buchenden Plätze\" auf 0 gesetzt ist, wird das Feld zur Auswahl der Anzahl "
+"der zu buchenden Plätze in ein Kontrollkästchen umgewandelt."
 #
 # File: eme-events.php, line: 8584
-#, fuzzy
 msgid ""
 "If this option is set and the setting \"Min number of seats to book\" is set "
 "to a value greater than 0, then the field to choose the number of seats to "
 "book will be hidden and the number of seats booked will be forced to 1."
 msgstr ""
-"Falls diese Option gesetzt ist und die Einstellung \"Min. Anzahl der zu "
+"Wenn diese Option aktiviert ist und die Einstellung \"Mindestanzahl der zu "
 "buchenden Plätze\" auf einen Wert größer als 0 gesetzt ist, wird das Feld "
-"zur Auswahl der Anzahl der zu buchenden Plätze ausgeblendet."
+"zur Auswahl der Anzahl der zu buchenden Plätze ausgeblendet und die Anzahl "
+"der gebuchten Plätze wird auf 1 gesetzt."
 #
 # File: eme-events.php, line: 8588
 # File: eme-members.php, line: 1949
@@ -4581,7 +4579,7 @@ msgstr ""
 #
 # File: eme-events.php, line: 8631
 msgid "Allow RSVP from "
-msgstr "Erlaube Buchungen ab"
+msgstr "Erlaube Buchungen ab "
 #
 # File: eme-events.php, line: 8635
 # File: eme-events.php, line: 8651
@@ -4593,7 +4591,7 @@ msgstr "Stunden"
 # File: eme-events.php, line: 8653
 # File: eme-options.php, line: 1598
 msgid "before the event "
-msgstr "bevor die Veranstaltung"
+msgstr "bevor die Veranstaltung "
 #
 # File: eme-events.php, line: 8639
 # File: eme-events.php, line: 8655
@@ -4809,7 +4807,7 @@ msgstr "Drücke die Entfernen Taste zum Löschen"
 # File: eme-events.php, line: 9389
 msgid "Since the event is repeated, you must specify an end date"
 msgstr ""
-"Da dies eine Veranstaltungsreihe ist, muss ein End-Datum angegeben werden."
+"Da dies eine Veranstaltungsreihe ist, muss ein End-Datum angegeben werden"
 #
 # File: eme-events.php, line: 9390
 msgid "In a recurrence, start and end date can't be identical"
@@ -4889,7 +4887,7 @@ msgstr "Bist Du sicher das Du die ausgewählten Einträge löschen möchtest?"
 #
 # File: eme-events.php, line: 9435
 msgid "Press the delete button to remove this record"
-msgstr "Drücke die Löschtaste, um diesen Datensatz zu entfernen."
+msgstr "Drücke die Löschtaste, um diesen Datensatz zu entfernen"
 #
 # File: eme-events.php, line: 9436
 # File: eme-events.php, line: 9458
@@ -5364,7 +5362,7 @@ msgstr "Erinnerungen verschickt"
 # File: eme-people.php, line: 965
 # File: eme-people.php, line: 1266
 msgid "Discount"
-msgstr "Rabatt "
+msgstr "Rabatt"
 #
 # File: eme-events.php, line: 9686
 # File: eme-events.php, line: 9724
@@ -5546,7 +5544,7 @@ msgstr "CSV export"
 # File: eme-events.php, line: 10074
 # File: eme-rsvp.php, line: 5388
 msgid "Task Info: %d tasks"
-msgstr ""
+msgstr "Aufgabeninfo: %d Aufgaben"
 #
 # File: eme-events.php, line: 10085
 # File: eme-locations.php, line: 539
@@ -5689,7 +5687,7 @@ msgstr ""
 #
 # File: eme-formfields.php, line: 130
 msgid "Successfully edited the field"
-msgstr "Feld erfolgreich bearbeitet."
+msgstr "Feld erfolgreich bearbeitet"
 #
 # File: eme-formfields.php, line: 132
 msgid "There was a problem editing the field"
@@ -5697,7 +5695,7 @@ msgstr "Es gab ein Problem bei der Bearbeitung des Feldes"
 #
 # File: eme-formfields.php, line: 142
 msgid "Successfully added the field"
-msgstr "Feld erfolgreich hinzugefügt."
+msgstr "Feld erfolgreich hinzugefügt"
 #
 # File: eme-formfields.php, line: 144
 msgid "There was a problem adding the field"
@@ -5937,10 +5935,10 @@ msgid ""
 "possible when editing the custom field), or use a combination of both "
 "notations."
 msgstr ""
-"Bei Feldern mit mehreren Werten (wie Dropdown-Feldern) kannst du entweder "
-"\"||\" verwenden, um die verschiedenen Werte zu trennen (z. B.: a1||a2|a3), "
-"einen Wert pro Zeile eingeben (nur möglich, wenn du das benutzerdefinierte "
-"Feld bearbeitest) oder eine Kombination aus beiden Schreibweisen verwenden."
+"Für mehrwertige Feldtypen (wie Drop Down) verwende entweder \"||\", um die "
+"verschiedenen Werte zu trennen (z.B.: a1||a2||a3), oder benutze für jeden "
+"Wert eine eigene Zeile (nur bei der Bearbeitung des benutzerdefinierten "
+"Feldes möglich), oder verwende eine Kombination aus beiden Notationen."
 #
 # File: eme-formfields.php, line: 350
 msgid ""
@@ -6049,11 +6047,10 @@ msgid ""
 "format will be used."
 msgstr ""
 "Für die Typen 'Date (Javascript)', 'Datetime (Javascript)' und 'Time "
-"(Javascript)' muss ein gültiges PHP-Format des Datums eingegeben werden, das "
-"bei der Eingabe/Anzeige des Wertes angezeigt werden soll (nicht erkannte "
-"Zeichen im Format führen dazu, dass das Ergebnis leer ist). Wenn nichts "
-"eingegeben wird, werden die WordPress-Einstellungen für das Datumsformat "
-"verwendet."
+"(Javascript)' gib ein gültiges PHP-Format des Datums ein, das du bei der "
+"Eingabe/Anzeige des Wertes sehen möchtest (nicht erkannte Zeichen im Format "
+"führen dazu, dass das Ergebnis leer ist). Wenn du nichts eingibst, werden "
+"die WordPress-Einstellungen für das Datumsformat verwendet."
 #
 # File: eme-formfields.php, line: 409
 # File: eme-options.php, line: 1623
@@ -6170,7 +6167,7 @@ msgstr "Für weitere Informationen zu Formularfeldern konsultiere die "
 # File: eme-options.php, line: 2653
 # File: eme-options.php, line: 2654
 msgid "the documentation"
-msgstr " Dokumentation"
+msgstr "Dokumentation"
 #
 # File: eme-formfields.php, line: 416
 msgid "equal to"
@@ -6280,7 +6277,7 @@ msgstr "Verborgen"
 #
 # File: eme-formfields.php, line: 571
 msgid "Readonly"
-msgstr "schreibgeschützt"
+msgstr "Schreibgeschützt"
 #
 # File: eme-formfields.php, line: 572
 msgid "File upload"
@@ -6417,9 +6414,8 @@ msgstr "Geburtsort"
 # File: eme-formfields.php, line: 2904
 # File: eme-formfields.php, line: 3849
 # File: eme-formfields.php, line: 4218
-#, fuzzy
 msgid "Remember me?"
-msgstr "Neues Mitglied E-Mail"
+msgstr "Erinnerst du dich an mich?"
 #
 # File: eme-formfields.php, line: 1822
 # File: eme-formfields.php, line: 2919
@@ -6688,7 +6684,7 @@ msgid ""
 msgstr ""
 "Die ausgewählte Vorlage wird (basierend auf der Anzahl der unterschiedlichen "
 "vorkommenden Bedingungen, außer für den 'entspricht' Operanden) mehrfach "
-"angezeigt, falls die Wiederholungsoption benutzt wird. "
+"angezeigt, falls die Wiederholungsoption benutzt wird."
 #
 # File: eme-formfields.php, line: 4840
 msgid ""
@@ -6728,9 +6724,8 @@ msgid "Please check the hCaptcha box"
 msgstr "Bitte aktiviere das hCaptcha-Kästchen"
 #
 # File: eme-functions.php, line: 410
-#, fuzzy
 msgid "Please check the Cloudflare Turnstile box"
-msgstr "Bitte aktiviere das Google reCAPTCHA-Feld"
+msgstr "Bitte aktiviere die Cloudflare Turnstile Box"
 #
 # File: eme-functions.php, line: 423
 msgid "You entered an incorrect code"
@@ -6772,7 +6767,7 @@ msgstr "Aktiv"
 # File: eme-functions.php, line: 1414
 # File: eme-members.php, line: 1698
 msgid "Grace period"
-msgstr "Übergangszeit "
+msgstr "Übergangszeit"
 #
 # File: eme-functions.php, line: 1415
 msgid "Expired"
@@ -6916,7 +6911,7 @@ msgstr "U.S. Dollar"
 #
 # File: eme-functions.php, line: 1719
 msgid "Vietnamese dong"
-msgstr "Vietnamesische đong"
+msgstr "Vietnamesische Dong"
 #
 # File: eme-functions.php, line: 1720
 msgid "Vanuatu vatu"
@@ -6951,36 +6946,40 @@ msgstr "Gruppe"
 # File: eme-functions.php, line: 2843
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
+"Die hochgeladene Datei überschreitet die Angabe upload_max_filesize in der "
+"php.ini"
 #
 # File: eme-functions.php, line: 2846
 msgid ""
 "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
 "the HTML form"
 msgstr ""
+"Die hochgeladene Datei überschreitet die im HTML-Formular angegebene Angabe "
+"MAX_FILE_SIZE"
 #
 # File: eme-functions.php, line: 2849
 msgid "The uploaded file was only partially uploaded"
-msgstr ""
+msgstr "Die hochgeladene Datei wurde nur teilweise hochgeladen"
 #
 # File: eme-functions.php, line: 2852
 msgid "No file was uploaded"
-msgstr "Hochladen von Dateien"
+msgstr "Es wurde keine Datei hochgeladen"
 #
 # File: eme-functions.php, line: 2855
 msgid "Missing a temporary folder"
-msgstr ""
+msgstr "Fehlen eines temporären Ordners"
 #
 # File: eme-functions.php, line: 2858
 msgid "Failed to write file to disk"
-msgstr ""
+msgstr "Datei konnte nicht auf die Festplatte geschrieben werden"
 #
 # File: eme-functions.php, line: 2861
 msgid "File upload stopped by extension"
-msgstr "Datei-Upload ist hier nicht erlaubt."
+msgstr "Datei-Upload durch Datei-Erweiterung gestoppt"
 #
 # File: eme-functions.php, line: 2865
 msgid "Unknown upload error"
-msgstr ""
+msgstr "Unbekannter Upload-Fehler"
 #
 # File: eme-functions.php, line: 2907
 msgid "Failure creating upload dir, please check your permissions."
@@ -7127,17 +7126,17 @@ msgstr "Problem bei der Aktualisierung der Person erkannt"
 # File: eme-gdpr.php, line: 415
 # File: eme-options.php, line: 55
 msgid "Last name: "
-msgstr "Nachname:"
+msgstr "Nachname: "
 #
 # File: eme-gdpr.php, line: 416
 # File: eme-options.php, line: 56
 msgid "First name: "
-msgstr "Vorname:"
+msgstr "Vorname: "
 #
 # File: eme-gdpr.php, line: 417
 # File: eme-options.php, line: 57
 msgid "Email: "
-msgstr "E-Mail:"
+msgstr "E-Mail: "
 #
 # File: eme-gdpr.php, line: 467
 msgid "Image"
@@ -7381,7 +7380,7 @@ msgid ""
 "Save when done"
 msgstr ""
 "Die Angaben zum Veranstaltungsort haben sich geändert. Bitte überprüfe die "
-"Koordinaten und klicke danach auf Speichern."
+"Koordinaten und klicke danach auf Speichern"
 #
 # File: eme-locations.php, line: 413
 # File: eme-locations.php, line: 831
@@ -7700,7 +7699,7 @@ msgstr ""
 msgid "No default sender defined and no event contact email found, bailing out"
 msgstr ""
 "Kein Standard-Absender definiert und keine Veranstaltungskontakt-E-Mail "
-"gefunden, Notlösung."
+"gefunden, Notlösung"
 #
 # File: eme-mailer.php, line: 1500
 # File: eme-mailer.php, line: 1662
@@ -7738,7 +7737,7 @@ msgstr "Die folgenden Personen werden die E-Mail nicht erhalten:"
 # File: eme-mailer.php, line: 1591
 # File: eme-mailer.php, line: 1790
 msgid "Email to the following persons has not been sent:"
-msgstr "Die E-Mail an die folgenden Personen wurde nicht gesendet:"
+msgstr "E-Mail an folgende Personen wurde nicht versendet:"
 #
 # File: eme-mailer.php, line: 1634
 # File: eme-rsvp.php, line: 760
@@ -7780,11 +7779,11 @@ msgstr ""
 #
 # File: eme-mailer.php, line: 2064
 msgid "Event related email"
-msgstr "Veranstaltungsbezogene E-Mail"
+msgstr "Veranstaltungsbezogene E-Mails"
 #
 # File: eme-mailer.php, line: 2065
 msgid "Generic email"
-msgstr "Generische E-Mail"
+msgstr "Generische E-Mails"
 #
 # File: eme-mailer.php, line: 2066
 msgid "Mailings"
@@ -7846,7 +7845,7 @@ msgstr "E-Mail an alle in EME registrierten Personen"
 #
 # File: eme-mailer.php, line: 2093
 msgid "Email to people and/or groups registered in EME"
-msgstr "E-Mail an in EME registrierte Personen und/oder Gruppen"
+msgstr "E-Mail an registrierte Personen und/oder Gruppen in EME"
 #
 # File: eme-mailer.php, line: 2094
 msgid "Email to all WP users"
@@ -7882,7 +7881,7 @@ msgstr "E-Mail nur an Besteller versenden, die noch nicht bezahlt haben"
 # File: eme-mailer.php, line: 2183
 # File: eme-mailer.php, line: 2363
 msgid "Or enter your own: "
-msgstr "Eigene angeben:"
+msgstr "Eigene angeben: "
 #
 # File: eme-mailer.php, line: 2176
 # File: eme-mailer.php, line: 2355
@@ -7936,7 +7935,7 @@ msgstr "Du kannst ebenfalls jeden beliebigen Shortcode verwenden."
 # File: eme-mailer.php, line: 2212
 # File: eme-mailer.php, line: 2390
 msgid "Optionally add attachments to your mailing"
-msgstr "Füge optional Anhänge zu Deinem Mailing hinzu."
+msgstr "Füge optional Anhänge zu Deinem Mailing hinzu"
 #
 # File: eme-mailer.php, line: 2225
 # File: eme-mailer.php, line: 2403
@@ -7946,12 +7945,12 @@ msgstr "Definiere Mailingname, Start-Datum und Zeit"
 # File: eme-mailer.php, line: 2226
 # File: eme-mailer.php, line: 2404
 msgid "Mailing name: "
-msgstr "Mailingname:"
+msgstr "Mailingname: "
 #
 # File: eme-mailer.php, line: 2227
 # File: eme-mailer.php, line: 2405
 msgid "Start date and time: "
-msgstr "Startdatum und Zeit:"
+msgstr "Startdatum und Zeit: "
 #
 # File: eme-mailer.php, line: 2229
 # File: eme-mailer.php, line: 2407
@@ -7965,7 +7964,7 @@ msgid ""
 "on each selected date and time)"
 msgstr ""
 "(mehrere Termine können ausgewählt werden, in diesem Fall wird das Mailing "
-"zu jedem ausgewählten Datum und jeder ausgewählten Uhrzeit geplant)."
+"zu jedem ausgewählten Datum und jeder ausgewählten Uhrzeit geplant)"
 #
 # File: eme-mailer.php, line: 2238
 # File: eme-mailer.php, line: 2416
@@ -8008,7 +8007,7 @@ msgstr ""
 "versenden, kann zu einem PHP Timeout führen, so dass nicht alle Personen "
 "erreicht werden können. Dies hängt von der Anzahl der Teilnehmer und der "
 "Last des Servers ab,... . Sollte dies passieren sollte die Warteschlangen-"
-"Funktion konfiguriert und eingeschaltet werden. "
+"Funktion konfiguriert und eingeschaltet werden."
 #
 # File: eme-mailer.php, line: 2264
 # File: eme-mailer.php, line: 2442
@@ -8016,8 +8015,8 @@ msgid ""
 "Email queueing has been activated but not yet configured. Go in the <a "
 "href=\"%s\">Scheduled actions</a> submenu and configure it now."
 msgstr ""
-"Die E-Mail-Warteschlange wurde aktiviert, aber noch nicht konfiguriert. Gehe "
-"in das Untermenü <a href=\"%s\">Geplante Aktionen</a> und konfiguriere diese "
+"Die Mailwarteschlange wurde aktiviert, aber noch nicht konfiguriert. Gehe in "
+"das Untermenü <a href=\"%s\">Geplante Aktionen</a> und konfiguriere diese "
 "jetzt."
 #
 # File: eme-mailer.php, line: 2276
@@ -8045,7 +8044,7 @@ msgid ""
 "Deselect this to select specific groups and/or memberships for your mailing"
 msgstr ""
 "Deaktiviere diese Option, um bestimmte Gruppen und/oder Mitgliedschaften für "
-"dein Mailing auszuwählen."
+"dein Mailing auszuwählen"
 #
 # File: eme-mailer.php, line: 2382
 msgid "People or groups"
@@ -8094,7 +8093,7 @@ msgstr "Gib einen Empfänger an"
 #
 # File: eme-mailer.php, line: 2473
 msgid "Send Email"
-msgstr "Sende E-Mail"
+msgstr "Sende eine E-Mail"
 #
 # File: eme-mailer.php, line: 2493
 msgid "Mailings overview"
@@ -8114,8 +8113,8 @@ msgid ""
 "Email queueing is not activated, so sent mails will only be visible in the "
 "\"Sent emails\" tab"
 msgstr ""
-"Die E-Mail-Warteschlange ist nicht aktiviert, so dass gesendete E-Mails nur "
-"auf der Registerkarte \"Gesendete E-Mails\" angezeigt werden."
+"Die Mail-Warteschlange ist nicht aktiviert, so dass gesendete Mails nur im "
+"Reiter \"Gesendete Mails\" sichtbar sind"
 #
 # File: eme-mailer.php, line: 2509
 # File: eme-mailer.php, line: 2606
@@ -8176,13 +8175,12 @@ msgid "%d mails sent, %d mails failed"
 msgstr "%d E-Mails gesendet, %d E-Mails fehlgeschlagen"
 #
 # File: eme-mailer.php, line: 2564
-#, fuzzy
 msgid "Retry failed mails"
-msgstr "Nur fehlgeschlagene E-Mails anzeigen"
+msgstr "Fehlgeschlagene E-Mails erneut versuchen"
 #
 # File: eme-mailer.php, line: 2598
 msgid "Email archive"
-msgstr "E-Mail-Archiv"
+msgstr "Mailarchiv"
 #
 # File: eme-mailer.php, line: 2600
 msgid "Here you can find an overview of all archived mailings"
@@ -8358,7 +8356,7 @@ msgstr "Mitglied hinzugefügt, aber es gab Probleme beim Hochladen der Dateien"
 #
 # File: eme-members.php, line: 970
 msgid "There were some problems uploading files, please try again"
-msgstr "Es gab Probleme beim hochladen der Dateien, bitte erneut versuchen."
+msgstr "Es gab Probleme beim hochladen der Dateien, bitte erneut versuchen"
 #
 # File: eme-members.php, line: 1030
 # File: eme-members.php, line: 1035
@@ -8400,14 +8398,13 @@ msgstr ""
 # File: eme-members.php, line: 1201
 msgid "The membership price is not a valid price, resetted to 0"
 msgstr ""
-"Der Mitgliedschaftspreis ist kein gültiger Preis, er wird auf 0 "
-"zurückgesetzt."
+"Der Mitgliedschaftspreis ist kein gültiger Preis, er wird auf 0 zurückgesetzt"
 #
 # File: eme-members.php, line: 1209
 msgid "The extra charge for the membership is not a valid price, resetted to 0"
 msgstr ""
 "Der Aufpreis für die Mitgliedschaft ist kein gültiger Preis, er wurde auf 0 "
-"zurückgesetzt."
+"zurückgesetzt"
 #
 # File: eme-members.php, line: 1277
 # File: eme-members.php, line: 2697
@@ -8440,9 +8437,8 @@ msgstr ""
 "Wenn Du möchtest, wähle eine existierende Person aus die Mitglied werden soll"
 #
 # File: eme-members.php, line: 1359
-#, fuzzy
 msgid "Send mail for changed member?"
-msgstr "E-Mail an neues Mitglied senden?"
+msgstr "E-Mail für geändertes Mitglied senden?"
 #
 # File: eme-members.php, line: 1366
 msgid "If you want, select an existing person to transfer this member to"
@@ -8511,7 +8507,7 @@ msgstr "Start-Datum"
 #
 # File: eme-members.php, line: 1435
 msgid "End date"
-msgstr "End-Datum"
+msgstr "Enddatum"
 #
 # File: eme-members.php, line: 1446
 msgid "Member status calculated automatically"
@@ -8750,26 +8746,24 @@ msgstr ""
 #
 # File: eme-members.php, line: 1749
 msgid "Cloudflare Turnstile"
-msgstr ""
+msgstr "Cloudflare Turnstile"
 #
 # File: eme-members.php, line: 1751
-#, fuzzy
 msgid ""
 "Select this option if you want to use Cloudflare Turnstile on the membership "
 "signup form."
 msgstr ""
-"Wähle diese Option falls Du ein Captcha auf dem Formular für "
-"Mitgliedschaften verwenden möchtest.   "
+"Aktiviere diese Option, wenn Cloudflare Turnstile auf dem Anmeldeformular "
+"für die Mitgliedschaft verwendet werden soll."
 #
 # File: eme-members.php, line: 1752
-#, fuzzy
 msgid ""
 "If this option is checked, make sure to use #_CFCAPTCHA in your membership "
 "signup form. If not present, it will be added just above the submit button."
 msgstr ""
-"Falls diese Option aktiviert ist, stelle sicher, dass du #_CAPTCHA in deinem "
-"Anmeldeformular für die Mitgliedschaft verwendest. Falls nicht vorhanden, "
-"wird es direkt über der Schaltfläche \"Senden\" hinzugefügt."
+"Wenn diese Option aktiviert ist, muss #_CFCAPTCHA im Anmeldeformular für die "
+"Mitgliedschaft verwendet werden. Falls nicht vorhanden, wird es direkt über "
+"der Schaltfläche \"Senden\" eingefügt."
 #
 # File: eme-members.php, line: 1757
 msgid "Captcha"
@@ -8781,7 +8775,7 @@ msgid ""
 "form."
 msgstr ""
 "Wähle diese Option falls Du ein Captcha auf dem Formular für "
-"Mitgliedschaften verwenden möchtest.   "
+"Mitgliedschaften verwenden möchtest."
 #
 # File: eme-members.php, line: 1760
 msgid ""
@@ -8883,15 +8877,14 @@ msgstr ""
 "diese Mitgliedschaft anmelden möchte."
 #
 # File: eme-members.php, line: 1829
-#, fuzzy
 msgid ""
 "The template should at least contain the placeholders #_LASTNAME, "
 "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If "
 "empty, a simple default will be used."
 msgstr ""
 "Die Vorlage sollte mindestens die Platzhalter #_LASTNAME, #_FIRSTNAME, "
-"#_EMAIL enthalten. Falls nicht, wird das Formular nicht angezeigt. Falls "
-"leer, wird eine einfache Standardvorlage verwendet."
+"#_EMAIL und #_SUBMIT enthalten. Wenn nicht, wird das Formular nicht "
+"angezeigt. Wenn sie leer ist, wird ein einfacher Standard verwendet."
 #
 # File: eme-members.php, line: 1845
 msgid "Ask for family member info when someone signs up"
@@ -8916,14 +8909,12 @@ msgstr ""
 "zusätzlichen Familienmitglieder zu fragen."
 #
 # File: eme-members.php, line: 1851
-#, fuzzy
 msgid "Maximum number of family members"
-msgstr "Zugehöriges Familienmitglied"
+msgstr "Maximale Anzahl von Familienmitgliedern"
 #
 # File: eme-members.php, line: 1853
-#, fuzzy
 msgid "The maximum number of family members allowed to sign up."
-msgstr "Die maximale Anzahl Personen die pro Buchung erlaubt ist."
+msgstr "Die maximale Anzahl von Familienmitgliedern, die sich anmelden können."
 #
 # File: eme-members.php, line: 1857
 msgid "Family Member Form:"
@@ -9076,7 +9067,7 @@ msgstr ""
 # File: eme-options.php, line: 2653
 # File: eme-options.php, line: 2654
 msgid "For all possible placeholders, see "
-msgstr "Alle möglichen Platzhalter findest Du in der"
+msgstr "Alle möglichen Platzhalter findest Du in der "
 #
 # File: eme-members.php, line: 1895
 msgid "Payment Form Header:"
@@ -9159,37 +9150,35 @@ msgstr ""
 #
 # File: eme-members.php, line: 1998
 msgid "Offline Payment Format:"
-msgstr "E-Mail-Text: Offline-Zahlung"
+msgstr "E-Mail-Text Offline-Zahlung:"
 #
 # File: eme-members.php, line: 2000
 msgid ""
 "The format of the text shown for the offline payment method. Default: empty."
 msgstr ""
 "Das Format des Textes der für die Offline-Zahlungsmethode angezeigt wird. "
-"Standard: Leer"
+"Standard: Leer."
 #
 # File: eme-members.php, line: 2016
-#, fuzzy
 msgid "Skip payment methods after registration:"
-msgstr "Zahlungsarten nach der Buchung überspringen"
+msgstr "Zahlungsarten nach der Buchung überspringen:"
 #
 # File: eme-members.php, line: 2017
-#, fuzzy
 msgid "Skip payment methods"
-msgstr "Stripe-Zahlungsmethoden"
+msgstr "Zahlungsarten überspringen"
 #
 # File: eme-members.php, line: 2018
-#, fuzzy
 msgid ""
 "If you want to skip the possibility to pay immediately after registration, "
 "select this option. This might be useful if you for example want to approve "
 "unpaid members internally and only then send them the payment link using "
 "#_PAYMENT_URL (for example via the Reminder template)."
 msgstr ""
-"Falls du die Möglichkeit, sofort nach der Buchung zu bezahlen, überspringen "
-"möchtest, wähle diese Option. Dies kann nützlich sein, falls du z. B. "
-"unbezahlte Buchungen genehmigen und erst danach den Zahlungslink mit "
-"#_PAYMENT_URL in der gebuchten E-Mail-Nachricht senden möchtest."
+"Wenn du die Möglichkeit, sofort nach der Registrierung zu bezahlen, "
+"auslassen willst, wähle diese Option. Dies kann nützlich sein, wenn du zum "
+"Beispiel unbezahlte Mitglieder intern genehmigen und ihnen erst dann den "
+"Zahlungslink mit #_PAYMENT_URL schicken willst (zum Beispiel über die "
+"Erinnerungsvorlage)."
 #
 # File: eme-members.php, line: 2045
 msgid ""
@@ -9444,7 +9433,7 @@ msgid ""
 msgstr ""
 "Der Betreff der E-Mail, die dem Mitglied zugestellt werden soll, bevor die "
 "Mitgliedschaft ausläuft. Diese Erinnerung wird täglich verschickt, basierend "
-"auf den Erinnerungseinstellungen der Mitgliedschaft. "
+"auf den Erinnerungseinstellungen der Mitgliedschaft."
 #
 # File: eme-members.php, line: 2288
 # File: eme-members.php, line: 2297
@@ -9465,7 +9454,7 @@ msgid ""
 msgstr ""
 "Der E-Mail-Text der Nachricht, die dem Mitglied zugestellt werden soll, "
 "bevor die Mitgliedschaft ausläuft. Diese Erinnerung wird täglich verschickt, "
-"basierend auf den Erinnerungseinstellungen der Mitgliedschaft. "
+"basierend auf den Erinnerungseinstellungen der Mitgliedschaft."
 #
 # File: eme-members.php, line: 2318
 msgid "Membership stopped email"
@@ -9481,7 +9470,7 @@ msgid ""
 "is marked as stopped."
 msgstr ""
 "Der Betreff der E-Mail, die an das Mitglied verschickt wird, wenn eine "
-"Mitgliedschaft abgelaufen, gekündigt oder als beendet gekennzeichnet wurde."
+"Mitgliedschaft gekündigt oder als beendet gekennzeichnet wurde."
 #
 # File: eme-members.php, line: 2326
 # File: eme-members.php, line: 2335
@@ -9504,8 +9493,7 @@ msgid ""
 "marked as stopped."
 msgstr ""
 "Der E-Mail-Text der Nachricht, die an das Mitglied zugestellt wird, wenn "
-"eine Mitgliedschaft abgelaufen, gekündigt oder als beendet gekennzeichnet "
-"wurde\t"
+"eine Mitgliedschaft gekündigt oder als beendet gekennzeichnet wurde."
 #
 # File: eme-members.php, line: 2354
 msgid "Contactperson membership stopped email subject"
@@ -9608,7 +9596,7 @@ msgstr "Importiere Mitglieder"
 msgid "If you want, use this to import members info into the database"
 msgstr ""
 "Falls gewünscht, verwende diese Funktion um Mitglieder in die Datenbank zu "
-"importieren."
+"importieren"
 #
 # File: eme-members.php, line: 2742
 msgid "Import dynamic field answers"
@@ -9841,6 +9829,8 @@ msgid ""
 "No membership form has been defined for this membership, a simple default "
 "will be used."
 msgstr ""
+"Für diese Mitgliedschaft wurde kein Mitgliedschaftsformular definiert, es "
+"wird ein einfacher Standard verwendet."
 #
 # File: eme-members.php, line: 5725
 msgid "%d head of the family accounts + %d family members"
@@ -9871,7 +9861,7 @@ msgstr "Dies basiert auf der Zahlungs-ID des Mitglieds: %d"
 # File: eme-members.php, line: 5888
 # File: eme-rsvp.php, line: 5456
 msgid "Get IBAN"
-msgstr ""
+msgstr "IBAN abrufen"
 #
 # File: eme-members.php, line: 5989
 # File: eme-people.php, line: 4951
@@ -10024,7 +10014,7 @@ msgstr ""
 #
 # File: eme-options.php, line: 16
 msgid "Booking for '#_EVENTNAME' is pending"
-msgstr "Buchung für '#_EVENTNAME' ist unbestätigt."
+msgstr "Buchung für '#_EVENTNAME' ist unbestätigt"
 #
 # File: eme-options.php, line: 17
 msgid ""
@@ -10253,7 +10243,7 @@ msgstr "Buchungen nicht mehr möglich: Keine Plätze mehr frei."
 #
 # File: eme-options.php, line: 77
 msgid "This booking will be put on the waiting list."
-msgstr "Diese Buchung wird auf die Warteliste gesetzt"
+msgstr "Diese Buchung wird auf die Warteliste gesetzt."
 #
 # File: eme-options.php, line: 79
 msgid "Address line 1"
@@ -10269,7 +10259,7 @@ msgid ""
 "href=\"#_PAYMENT_URL\">here</a> to go there immediately"
 msgstr ""
 "Du wirst in wenigen Sekunden auf die Zahlungsseite weitergeleitet, oder "
-"klicke <a href=\"#_PAYMENT_URL\">hier</a>, um sofort dorthin zu gelangen."
+"klicke <a href=\"#_PAYMENT_URL\">hier</a>, um sofort dorthin zu gelangen"
 #
 # File: eme-options.php, line: 82
 # File: eme-options.php, line: 83
@@ -10285,21 +10275,21 @@ msgid "You have successfully cancelled your signup for this task"
 msgstr "Du hast deine Anmeldung für diese Aufgabe erfolgreich storniert"
 #
 # File: eme-options.php, line: 93
-#, fuzzy
 msgid "Approval required for signup for task '#_TASKNAME' for '#_EVENTNAME'"
-msgstr "Neue Anmeldung für Aufgabe '#_TASKNAME' für '#_EVENTNAME'"
+msgstr ""
+"Genehmigung für die Anmeldung zur Aufgabe '#_TASKNAME' für '#_EVENTNAME' "
+"erforderlich"
 #
 # File: eme-options.php, line: 94
-#, fuzzy
 msgid ""
 "Approval required: #_PERSONFULLNAME (#_PERSONEMAIL) signed up for #_TASKNAME "
 "(#_TASKSTARTDATE) for #_EVENTNAME on #_STARTDATE.<br>Now there are "
 "#_FREETASKSPACES free spaces for this task.<br><br>Yours faithfully,"
 "<br>Events Manager"
 msgstr ""
-"#_PERSONFULLNAME (#_PERSONEMAIL) hat sich für #_TASKNAME (#_TASKSTARTDATE) "
-"für #_EVENTNAME am #_STARTDATE angemeldet.<br>Jetzt sind noch "
-"#_FREETASKSPACES für diese Aufgabe frei.<br><br>Mit freundlichen Grüßen,"
+"Genehmigung erforderlich: #_PERSONFULLNAME (#_PERSONEMAIL) hat sich für "
+"#_TASKNAME (#_TASKSTARTDATE) für #_EVENTNAME am #_STARTDATE.<br>Nun sind "
+"#_FREETASKSPACES frei Plätze für diese Aufgabe.<br><br>Herzliche Grüße,"
 "<br>Events Manager"
 #
 # File: eme-options.php, line: 95
@@ -10334,20 +10324,19 @@ msgstr ""
 "freundlichen Grüßen,<br>Events Manager"
 #
 # File: eme-options.php, line: 99
-#, fuzzy
 msgid "Signup for task '#_TASKNAME' for '#_EVENTNAME' is pending approval"
-msgstr "Anmeldung für Aufgabe '#_TASKNAME' für '#_EVENTNAME'"
+msgstr ""
+"Anmeldung für Aufgabe '#_TASKNAME' für '#_EVENTNAME' wartet auf Genehmigung"
 #
 # File: eme-options.php, line: 100
-#, fuzzy
 msgid ""
 "Dear #_PERSONFULLNAME,<br><br>Your signup for #_TASKNAME (#_TASKBEGIN) for "
 "#_EVENTNAME is registered and pending approval.<br><br>Yours faithfully,"
 "<br>#_CONTACTPERSON"
 msgstr ""
 "Liebe/r #_PERSONFULLNAME,<br><br>Deine Anfrage, sich für #_TASKNAME "
-"(#_TASKSTARTDATE) für #_EVENTNAME anzumelden, wurde storniert.<br><br>Liebe "
-"Grüße,<br>#_CONTACTPERSON"
+"(#_TASKSTARTDATE) für #_EVENTNAME anzumelden, wurde angenommen und wartet "
+"nun auf Genehmigung.<br><br>Liebe Grüße,<br>#_CONTACTPERSON"
 #
 # File: eme-options.php, line: 101
 msgid "Signup for task '#_TASKNAME' for '#_EVENTNAME'"
@@ -10517,7 +10506,7 @@ msgstr "E-Mail Vorlagen"
 #
 # File: eme-options.php, line: 1092
 msgid "Data protection"
-msgstr "Datenschutz "
+msgstr "Datenschutz"
 #
 # File: eme-options.php, line: 1093
 msgid "Payments"
@@ -10552,12 +10541,12 @@ msgid ""
 "changing your EME SEO permalink settings or the permalink of the conflicting "
 "page."
 msgstr ""
-"Die EME SEO Permalink-Einstellungen stehen im Konflikt mit einer bestehenden "
-"Seite (die Permalink-Einstellung für Events, Locations oder Kategorien ist "
-"identisch mit dem Permalink einer anderen WordPress-Seite). Dies kann zu "
-"Problemen bei der Darstellung von Events oder dieser Seite führen. Bitte "
-"löse den Konflikt, indem du entweder deine EME SEO Permalink-Einstellungen "
-"oder den Permalink der konfligierenden Seite änderst."
+"Die EME SEO-Permalink-Einstellungen stehen im Konflikt mit einer bestehenden "
+"Seite (die Permalink-Einstellung für Veranstaltungen, Orte oder Kategorien "
+"ist identisch mit dem Permalink einer anderen WordPress-Seite). Dies kann zu "
+"Problemen bei der Darstellung von Veranstaltungen oder dieser Seite führen. "
+"Bitte behebe den Konflikt, indem du entweder deine EME SEO-Permalink-"
+"Einstellungen oder den Permalink der betreffenden Seite änderst."
 #
 # File: eme-options.php, line: 1202
 msgid ""
@@ -10616,8 +10605,8 @@ msgid ""
 "If selected, events and locations will be shown in the link search when "
 "creating links in the WordPress editor."
 msgstr ""
-"Falls ausgewählt, werden Veranstaltungen und Veranstaltungsorte in der "
-"Linksuche des WordPress Editors angezeigt wenn Links eingefügt werden."
+"Wenn diese Option aktiviert ist, werden Ereignisse und Orte bei der "
+"Linksuche angezeigt, wenn Links im WordPress-Editor erstellt werden."
 #
 # File: eme-options.php, line: 1240
 msgid "Use RSVP?"
@@ -10779,30 +10768,29 @@ msgid "hCaptcha secret key"
 msgstr "hCaptcha geheimer Schlüssel"
 #
 # File: eme-options.php, line: 1255
-#, fuzzy
 msgid ""
 "Check this option if you want to use Cloudflare Turnstile on the booking/"
 "cancel/membership forms, to thwart spammers a bit. You can then either add "
 "#_CFCAPTCHA to your form layout yourself or it will automatically added just "
 "above the submit button if not present."
 msgstr ""
-"Aktiviere diese Option, wenn hCaptcha auf den Buchungs-/Stornierungs-/"
-"Mitgliedschaftsformularen verwendet werden soll, um Spammer ein wenig zu "
-"bremsen. Füge dann entweder #_HCAPTCHA zum Layout des Formulars hinzu oder "
-"es wird automatisch über der Schaltfläche \"Senden\" eingefügt, wenn es "
-"nicht vorhanden ist."
+"Aktivieren die Option, wenn du Cloudflare Turnstile auf den Buchungs-/"
+"Stornierungs-/Mitgliedschaftsformularen verwenden möchtest, um Spammer ein "
+"wenig zu bremsen. Du kannst dann entweder selbst #_CFCAPTCHA zu deinem "
+"Formular-Layout hinzufügen oder es wird automatisch über der Schaltfläche "
+"\"Senden\" hinzugefügt, wenn es nicht vorhanden ist."
 #
 # File: eme-options.php, line: 1256
 msgid "Cloudflare Turnstile site key"
-msgstr ""
+msgstr "Cloudflare Turnstile Seitenschlüssel"
 #
 # File: eme-options.php, line: 1257
 msgid "Cloudflare Turnstile secret key"
-msgstr ""
+msgstr "Cloudflare Turnstile Geheimschlüssel"
 #
 # File: eme-options.php, line: 1258
 msgid "Enable Remember-me functionality?"
-msgstr ""
+msgstr "An mich erinnern - Funktionalität aktivieren?"
 #
 # File: eme-options.php, line: 1258
 msgid ""
@@ -10812,6 +10800,13 @@ msgid ""
 "form, and only works for not logged-in users in the frontend. If checked, "
 "the option \"Show the RSVP form again after booking\" will be ignored."
 msgstr ""
+"Aktiviere diese Option, um ein Kontrollkästchen einzublenden, mit dem "
+"Benutzer wählen können, ob sie ihren Nachnamen/Vornamen/E-Mail lokal "
+"speichern möchten, um sie beim nächsten Mal vorausgefüllt zu haben. Dies "
+"erfordert auch die Verwendung eines #_REMEMBERME-Platzhalters in deinem "
+"Formular und funktioniert nur für nicht eingeloggte Benutzer im Frontend. "
+"Wenn diese Option aktiviert ist, wird die Option \"Das RSVP-Formular nach "
+"der Buchung erneut anzeigen\" ignoriert."
 #
 # File: eme-options.php, line: 1260
 msgid "Autocomplete sources"
@@ -10842,11 +10837,10 @@ msgid ""
 "creator or event author)."
 msgstr ""
 "Entscheide, ob die Autovervollständigung in Buchungs- oder "
-"Mitgliedschaftsformularen verwendet werden soll, und wähle aus, ob du in EME-"
-"Personen, WP-Benutzer oder beiden suchen möchtest. Die Autovervollständigung "
-"funktioniert nur für das Feld \"Nachname\" und nur, wenn du über "
-"ausreichende Rechte verfügst (Veranstaltungsersteller oder "
-"Veranstaltungsautor)."
+"Mitgliedschaftsformularen verwendet werden soll, und wähle, ob du EME-"
+"Personen, WP-Benutzer oder beides suchen möchtest. Die Autovervollständigung "
+"funktioniert nur für das Nachnamenfeld und nur falls du über ausreichende "
+"Rechte verfügst (Event-Ersteller oder Event-Autor)."
 #
 # File: eme-options.php, line: 1273
 msgid "Delete all stored EME data when upgrading or deactivating?"
@@ -10920,12 +10914,12 @@ msgid ""
 "longer cache the content (this does not impact browser caching of CSS and JS "
 "files)."
 msgstr ""
-"Im Frontend erlaubt WordPress den Browsern die Zwischenspeicherung von "
-"Inhalten, aber dies kann zu Problemen führen, wenn Du Verknüpfungen hast, "
-"die sich im Laufe der Zeit ändern (wie z.B. Ereignisse). Wenn Du diese "
-"Option aktivierst, werden Nocache-Header gesendet, so dass die Browser den "
-"Inhalt nicht mehr zwischenspeichern (dies hat keine Auswirkungen auf die "
-"Zwischenspeicherung von CSS- und JS-Dateien im Browser)."
+"Im Frontend erlaubt WordPress den Browsern, Inhalte zu cachen, aber das kann "
+"zu Problemen führen, wenn du Shortcodes hast, die sich im Laufe der Zeit "
+"ändern (wie Ereignisse). Wenn du diese Option aktivierst, werden Nocache-"
+"Header gesendet, sodass Browser den Inhalt nicht mehr zwischenspeichern "
+"(dies hat keine Auswirkungen auf das Browser-Caching von CSS- und JS-"
+"Dateien)."
 #
 # File: eme-options.php, line: 1278
 msgid "Use alternative method to set events page title?"
@@ -10938,10 +10932,10 @@ msgid ""
 "the page title, so this provides an alternative method if the page title is "
 "not set to the event title when viewing a single event."
 msgstr ""
-"Eine große Anzahl von Themes verwendet die WordPress-Standards nicht "
-"korrekt, um den Seitentitel zu setzen, daher bietet dies eine alternative "
-"Methode, falls der Seitentitel bei der Anzeige eines einzelnen Ereignisses "
-"nicht auf den Ereignistitel gesetzt werden sollte."
+"Viele Themes verwenden die WordPress-Standards nicht korrekt, um den "
+"Seitentitel zu setzen. Daher bietet dies eine alternative Methode, wenn der "
+"Seitentitel bei der Anzeige eines einzelnen Ereignisses nicht auf den Titel "
+"des Ereignisses gesetzt ist."
 #
 # File: eme-options.php, line: 1287
 msgid "Permalink options"
@@ -10959,7 +10953,7 @@ msgstr ""
 #
 # File: eme-options.php, line: 1291
 msgid "Events permalink prefix"
-msgstr "Permalinks für Veranstaltungen aktivieren?"
+msgstr "Permalinks für Veranstaltungen aktivieren"
 #
 # File: eme-options.php, line: 1291
 msgid ""
@@ -11232,9 +11226,9 @@ msgid ""
 "Permission needed to manage own personal info (the WordPress user logged "
 "needs to be linked to an EME user for this to work). Default: %s"
 msgstr ""
-"Berechtigung erforderlich, um eigene persönliche Informationen zu verwalten "
-"(der protokollierte WordPress-Benutzer muss mit einem EME-Benutzer verknüpft "
-"sein, damit dies funktioniert). Standard: %s"
+"Erforderliche Berechtigung zur Verwaltung eigener persönlicher Daten (der "
+"angemeldete WordPress-Benutzer muss mit einem EME-Benutzer verknüpft sein, "
+"damit dies funktioniert). Standard: %s"
 #
 # File: eme-options.php, line: 1371
 msgid "Edit people and groups"
@@ -11283,9 +11277,9 @@ msgid ""
 "Permission needed to manage own member info (the WordPress user logged needs "
 "to be linked to an EME user for this to work). Default: %s"
 msgstr ""
-"Berechtigung erforderlich, um eigene Mitgliederinformationen zu verwalten "
-"(der protokollierte WordPress-Benutzer muss mit einem EME-Benutzer verknüpft "
-"sein, damit dies funktioniert). Standard: %s"
+"Erforderliche Berechtigung zur Verwaltung eigener Mitgliederdaten (der "
+"angemeldete WordPress-Benutzer muss mit einem EME-Benutzer verknüpft sein, "
+"damit dies funktioniert). Standard: %s"
 #
 # File: eme-options.php, line: 1382
 msgid "Manage members and memberships"
@@ -11455,7 +11449,7 @@ msgid ""
 "import actions. Default: %s"
 msgstr ""
 "Benötigte Berechtigung um Säuberungsaktionen, CRON Einstellungen und "
-"Importaktionen ausführen zu können. Standard %s "
+"Importaktionen ausführen zu können. Standard %s"
 #
 # File: eme-options.php, line: 1435
 # File: events-manager.php, line: 373
@@ -11549,11 +11543,11 @@ msgid ""
 "be added to the mentioned url query string with a parameter called "
 "\"redirect\"."
 msgstr ""
-"Wenn eine Person, die nicht eingeloggt ist, eine private Veranstaltung "
-"ansehen möchte, wird diese Person auf die Anmeldeseite von WordPress "
-"umgeleitet. Wenn Du auf eine andere URL weiterleiten möchtest, gib diese "
-"hier ein. Der Permalink der aktuell besuchten Seite wird mit einem Parameter "
-"namens \"redirect\" der erwähnten Url-Abfragezeichenfolge hinzugefügt."
+"Wenn eine nicht eingeloggte Person ein privates Ereignis ansehen möchte, "
+"wird sie auf die WordPress-Anmeldeseite umgeleitet. Wenn du auf eine andere "
+"URL umleiten möchtest, gib diese hier ein. Der Permalink der aktuell "
+"besuchten Seite wird mit einem Parameter namens \"redirect\" zum genannten "
+"URL-Abfrage-String hinzugefügt."
 #
 # File: eme-options.php, line: 1461
 msgid "Events format"
@@ -11570,7 +11564,7 @@ msgid ""
 msgstr ""
 "Dieser Inhalt wird über deinem Code für das Standard Veranstaltungslisten "
 "Format erscheinen. Wenn Du dies leer lässt wird folgendes verwendet: "
-"<code>%s</code>"
+"<code>%s</code>."
 #
 # File: eme-options.php, line: 1465
 msgid "Default categories event list format header"
@@ -11606,7 +11600,7 @@ msgid ""
 msgstr ""
 "Dieser Inhalt wird unter deinem Code für das Standard Veranstaltungslisten "
 "Format erscheinen. Wenn Du dies leer lässt wird folgendes verwendet: "
-"<code>%s</code>"
+"<code>%s</code>."
 #
 # File: eme-options.php, line: 1468
 msgid "Default categories event list format footer"
@@ -11670,17 +11664,17 @@ msgid ""
 "<code>#_REMOVEBOOKINGFORM</code> to insert a form where users, inserting "
 "their name and email address, can remove their bookings."
 msgstr ""
-"Das Format einer einzelnen Veranstaltungsseite.<br>Befolge die vorherigen "
-"Formatierungsanweisungen. <br>Benutze <code>#_MAP</code> um eine Karte "
-"anzeigen zu lassen.<br>Benutze <code>#_CONTACTNAME</code>, "
-"<code>#_CONTACTEMAIL</code>, <code>#_CONTACTPHONE</code> um jeweils den "
-"Namen, die E-Mail-Adresse und die Telefonnummer der benannten Kontaktperson "
-"anzugeben. <br>Benutze <code>#_ADDBOOKINGFORM</code> um ein Formular "
-"einzufügen, das es dem Benutzer ermöglicht, auf Ihre Veranstaltungen zu "
-"antworten und einen oder mehrere Plätze zu buchen (Buchung).<br>Benutze "
-"<code>#_REMOVEBOOKINGFORM</code> um ein Formular einzufügen, in das die "
-"Benutzer ihren Namen und ihre E-Mail-Adresse eingeben und ihre Buchungen "
-"löschen können."
+"Das Format einer einzelnen Veranstaltungsseite.<br>Folgen Sie den vorherigen "
+"Formatierungsanweisungen. <br>Benutzen Sie <code>#_MAP</code>, um eine Karte "
+"einzufügen.<br>Benutzen Sie <code>#_CONTACTNAME</code>, "
+"<code>#_CONTACTEMAIL</code>, <code>#_CONTACTPHONE</code>, um jeweils den "
+"Namen, die E-Mail-Adresse und die Telefonnummer der angegebenen "
+"Kontaktperson einzugeben. Verwenden Sie <br>Use <code>#_ADDBOOKINGFORM</"
+"code>, um ein Formular einzufügen, mit dem der Benutzer auf die Buchung "
+"eines oder mehrerer Plätze bei Ihren Veranstaltungen reagieren kann "
+"(Buchungsformular).<br> Verwenden Sie <code>#_REMOVEBOOKINGFORM</code>, um "
+"ein Stornierungsformular einzufügen, mit dem Benutzer, die ihren Namen und "
+"ihre E-Mail-Adresse eingeben, ihre Buchungen stornieren können."
 #
 # File: eme-options.php, line: 1471
 msgid ""
@@ -11762,7 +11756,7 @@ msgstr "Meldung falls keine Veranstaltungen vorhanden sind"
 #
 # File: eme-options.php, line: 1475
 msgid "The message displayed when no events are available."
-msgstr "Die Meldung, die angezeigt wird, wenn es keine Veranstaltungen gibt"
+msgstr "Die Meldung, die angezeigt wird, wenn es keine Veranstaltungen gibt."
 #
 # File: eme-options.php, line: 1478
 msgid "Events filtering format"
@@ -11924,7 +11918,7 @@ msgid ""
 "formatting instructions."
 msgstr ""
 "Das Format des Seitentitels für eine HTML-Seite zu einem einzelnen "
-"Veranstaltungsort.<br>Folge den vorausgegangenen Formatierungsanleitungen"
+"Veranstaltungsort.<br>Folge den vorausgegangenen Formatierungsanleitungen."
 #
 # File: eme-options.php, line: 1520
 msgid "Default single location page format"
@@ -11947,7 +11941,7 @@ msgstr ""
 "Das Format der Veranstaltungsliste, die durch<code>#_NEXTEVENTS</code>, "
 "<code>#_PASTEVENTS</code> oder <code>#_ALLEVENTS</code> in die Seite des "
 "Veranstaltungsortes eingebunden wird. <br> Nutze die oben angezeigten "
-"Formatierungshinweise."
+"Formatierungshinweise"
 #
 # File: eme-options.php, line: 1522
 msgid "Default no events message"
@@ -12107,7 +12101,7 @@ msgid ""
 "events RSS feed."
 msgstr ""
 "Zeige das Erstellungs-/Bearbeitungsdatum der Veranstaltung als Information "
-"zum Veröffentlichungsdatum im RSS-feed der Veranstaltung"
+"zum Veröffentlichungsdatum im RSS-feed der Veranstaltung."
 #
 # File: eme-options.php, line: 1556
 msgid "RSS Pubdate is start date"
@@ -12169,7 +12163,7 @@ msgid ""
 "contact person is not explicitly specified for an event"
 msgstr ""
 "Wähle einen Hauptkontakt. Diese Person wird immer dann eingesetzt, wenn es "
-"keinen definierte Kontaktperson für Einzelveranstaltungen gibt."
+"keinen definierte Kontaktperson für Einzelveranstaltungen gibt"
 #
 # File: eme-options.php, line: 1574
 msgid "By default enable registrations for new events?"
@@ -12306,11 +12300,11 @@ msgid ""
 "events is selected, the number of events shown might be less than indicated "
 "with the limit option."
 msgstr ""
-"WARNUNG: Dies könnte den Parameter \"limit\" für den Shortcode eme_events "
-"auslösen, wenn dieser Parameter verwendet wird: Falls die Option zum "
-"Ausblenden von Veranstaltungen mit Buchungs-Ende ausgewählt ist, könnte die "
-"Anzahl der angezeigten Veranstaltungen geringer sein als mit der Option "
-"\"limit\" angegeben."
+"WARNUNG: Bei Verwendung des Parameters \"limit\" für den Platzhalter "
+"eme_events kann dieser Parameter ungültig werden: Wenn die Option zum "
+"Ausblenden von nicht mehr buchbaren Veranstaltungen ausgewählt ist, die "
+"Anzahl der angezeigten Veranstaltungen kann dann geringer sein als mit der "
+"Limit-Option angegeben."
 #
 # File: eme-options.php, line: 1609
 msgid "Add booking form submit text"
@@ -12461,7 +12455,7 @@ msgstr ""
 # File: eme-options.php, line: 1620
 # File: eme-options.php, line: 1623
 msgid "For all placeholders you can use here, see "
-msgstr "Für alle Platzhalter, die Du hier verwenden kannst, konsultiere die"
+msgstr "Für alle Platzhalter, die Du hier verwenden kannst, konsultiere die "
 #
 # File: eme-options.php, line: 1621
 msgid "Attendees list ignore pending"
@@ -12629,7 +12623,7 @@ msgstr ""
 "(und wird für jede Buchung wiederholt) und kann nur in dem oben genannten "
 "'Format Zahlung Stornieren Formular' und unten in 'Format Stornierte "
 "Zahlung' verwendet werden, indem Du den Platzhalter #_CANCEL_PAYMENT_LINE "
-"verwendest."
+"verwendest"
 #
 # File: eme-options.php, line: 1641
 msgid "Cancelled payment format"
@@ -12664,18 +12658,18 @@ msgstr ""
 "angemeldete Benutzer für Aufgaben anmelden können."
 #
 # File: eme-options.php, line: 1653
-#, fuzzy
 msgid "By default require sign up approval for tasks?"
-msgstr "Buchungsbestätigung bei Neu-Buchungen erforderlich?"
+msgstr ""
+"Soll für Aufgaben standardmäßig eine Genehmigung der Anmeldung erforderlich "
+"sein?"
 #
 # File: eme-options.php, line: 1653
-#, fuzzy
 msgid ""
 "Check this option if you want by default that signups for tasks need to be "
 "approved."
 msgstr ""
-"Wähle diese Option, wenn Du eine Bestätigung für eine Buchung als Standard "
-"verlangen möchtest."
+"Aktiviere diese Option, wenn du möchtest, dass Anmeldungen für Aufgaben "
+"standardmäßig genehmigt werden müssen."
 #
 # File: eme-options.php, line: 1654
 # File: eme-tasks.php, line: 820
@@ -12803,7 +12797,7 @@ msgstr "E-Mail Einstellungen"
 #
 # File: eme-options.php, line: 1672
 msgid "Enable the RSVP email notifications?"
-msgstr "E-Mail-Benachrichtigungen für Buchungen aktivieren?"
+msgstr "Buchung E-Mail-Benachrichtigungen aktivieren?"
 #
 # File: eme-options.php, line: 1672
 msgid ""
@@ -12815,7 +12809,7 @@ msgstr ""
 #
 # File: eme-options.php, line: 1677
 msgid "Enable pending RSVP emails?"
-msgstr "E-Mails für ausstehende Buchungen aktivieren?"
+msgstr "E-Mails für noch zu bestätigende Buchungen aktivieren?"
 #
 # File: eme-options.php, line: 1677
 msgid "Check this option if you want to send mails for pending bookings."
@@ -12825,7 +12819,7 @@ msgstr ""
 #
 # File: eme-options.php, line: 1678
 msgid "Enable approved RSVP emails?"
-msgstr "E-Mails für Buchungsbestätigungen aktivieren?"
+msgstr "E-Mails für Bestätigung der Buchung aktivieren?"
 #
 # File: eme-options.php, line: 1678
 msgid "Check this option if you want to send mails for approved bookings."
@@ -12835,7 +12829,7 @@ msgstr ""
 #
 # File: eme-options.php, line: 1679
 msgid "Enable paid RSVP emails?"
-msgstr "Aktiviere Zahlungsbenachrichtigung für Buchungs-E-Mails?"
+msgstr "Aktiviere Zahlungsbenachrichtigung E-Mails?"
 #
 # File: eme-options.php, line: 1679
 msgid ""
@@ -12870,7 +12864,7 @@ msgstr "Es wird empfohlen die Option zu aktivieren."
 #
 # File: eme-options.php, line: 1689
 msgid "Email queue settings"
-msgstr "Einstellungen der E-Mail-Warteschlange"
+msgstr "Einstellungen der Mail-Warteschlange"
 #
 # File: eme-options.php, line: 1694
 msgid "Send out queued mails in batches of "
@@ -12913,11 +12907,11 @@ msgstr ""
 #
 # File: eme-options.php, line: 1714
 msgid "Email queuing"
-msgstr "E-Mail-Warteschlange"
+msgstr "E-Mail-Warteschlangen"
 #
 # File: eme-options.php, line: 1718
 msgid "Read tracking"
-msgstr " Leseverfolgung"
+msgstr "Leseverfolgung"
 #
 # File: eme-options.php, line: 1718
 msgid ""
@@ -12939,11 +12933,11 @@ msgid ""
 "form. Warning: setting this to 'yes' is not GDPR compliant if you don't ask "
 "for a person's mail preferences."
 msgstr ""
-"Sollen neue Personen in der Datenbank für den Massenversand berücksichtigt "
-"werden oder nicht? Diese Einstellung wird verwendet, wenn du nicht nach Opt-"
-"in/Out-Informationen fragst, z. B. im Buchungs-Formular. Achtung: Die "
-"Einstellung \"ja\" ist nicht GDPR-konform, wenn du nicht nach den E-Mail-"
-"Präferenzen einer Person fragst."
+"Soll eine neue Person in der Datenbank für Massennachrichten gekennzeichnet "
+"werden oder nicht? Diese Einstellung wird genutzt falls keine opt-in/out "
+"Information zum Beispiel im Buchungsformular genutzt wird. Warnung: Diese "
+"Einstellung auf \"Ja\" zu setzten ist nicht GDPR Konform, falls nicht nach "
+"der Präferenz der Person gefragt wird."
 #
 # File: eme-options.php, line: 1720
 msgid "Massmail popup"
@@ -12991,8 +12985,8 @@ msgid ""
 msgstr ""
 "Der Standardname in E-Mails, wenn EME Mails bezüglich GDPR, Mailing-"
 "Abonnements/Abbestellungen oder Geburtstagen versendet. Bleibt er leer, wird "
-"der Name der Standard-Kontaktperson für RSVP-Mails verwendet (oder der Blog-"
-"Administrator, falls leer)."
+"der Name der Standard-Kontaktperson für Buchungs-Mails verwendet (oder der "
+"Blog-Administrator, falls leer)."
 #
 # File: eme-options.php, line: 1724
 msgid "Default email sender address"
@@ -13075,7 +13069,7 @@ msgid ""
 "firewall doesn't block this port"
 msgstr ""
 "Der Port, über den E-Mails verschickt werden. Die Firewall darf diesen Port "
-"nicht blockieren."
+"nicht blockieren"
 #
 # File: eme-options.php, line: 1742
 msgid "SMTP encryption method"
@@ -13103,7 +13097,7 @@ msgid ""
 "parameter to Yes"
 msgstr ""
 "Eine SMTP-Authentifizierung wird häufig verlangt. Bei GMail muss dieser "
-"Parameter auf JA sein."
+"Parameter auf JA sein"
 #
 # File: eme-options.php, line: 1755
 msgid "SMTP username"
@@ -13111,7 +13105,7 @@ msgstr "SMTP Benutzername"
 #
 # File: eme-options.php, line: 1755
 msgid "Insert the username to be used to access your SMTP server."
-msgstr "Füge hier den Benutzernamen für SMTP-Authentifizierung ein"
+msgstr "Füge hier den Benutzernamen für SMTP-Authentifizierung ein."
 #
 # File: eme-options.php, line: 1756
 msgid "SMTP password"
@@ -13356,67 +13350,59 @@ msgstr ""
 #
 # File: eme-options.php, line: 2031
 # File: eme-tasks.php, line: 535
-#, fuzzy
 msgid "Task Signup Pending Email Subject"
-msgstr "Aufgabenanmeldung Erinnerungs-E-Mail Betreff"
+msgstr "Aufgabe Anmeldung ausstehend E-Mail Betreff"
 #
 # File: eme-options.php, line: 2031
 # File: eme-tasks.php, line: 536
-#, fuzzy
 msgid ""
 "The subject of the email sent to the respondent when that person signs up "
 "for a task that requires approval."
 msgstr ""
-"Der Betreff der E-Mail, die an den Teilnehmer gesendet wird, wenn er sich "
-"für eine Aufgabe anmeldet."
+"Der Betreff der E-Mail, die an den Befragten gesendet wird, wenn sich diese "
+"Person für eine Aufgabe anmeldet, die eine Genehmigung erfordert."
 #
 # File: eme-options.php, line: 2032
 # File: eme-tasks.php, line: 544
-#, fuzzy
 msgid "Task Signup Pending Email Body"
-msgstr "Aufgabenanmeldung Erinnerungs-E-Mail Haupttext"
+msgstr "Aufgabe Anmeldung ausstehend E-Mail Körper"
 #
 # File: eme-options.php, line: 2032
 # File: eme-tasks.php, line: 545
-#, fuzzy
 msgid ""
 "The body of the email sent to the respondent when that person signs up for a "
 "task that requires approval."
 msgstr ""
-"Der Text der E-Mail, die an den Teilnehmer gesendet wird, wenn er sich für "
-"eine Aufgabe anmeldet."
+"Der Text der E-Mail, die an den Befragten gesendet wird, wenn sich diese "
+"Person für eine Aufgabe anmeldet, die eine Genehmigung erfordert."
 #
 # File: eme-options.php, line: 2033
 # File: eme-tasks.php, line: 554
-#, fuzzy
 msgid "Contact Person Task Signup Pending Email Subject"
-msgstr "Kontaktperson Aufgabenanmeldung erfolgt E-Mail-Betreff"
+msgstr "Kontaktperson Aufgabe Anmeldung ausstehend E-Mail Betreff"
 #
 # File: eme-options.php, line: 2033
 # File: eme-tasks.php, line: 555
-#, fuzzy
 msgid ""
 "The subject of the email which will be sent to the contact person when "
 "someone signs up for a task that requires approval."
 msgstr ""
 "Der Betreff der E-Mail, die an die Kontaktperson gesendet wird, wenn sich "
-"jemand für eine Aufgabe anmeldet."
+"jemand für eine Aufgabe anmeldet, die eine Genehmigung erfordert."
 #
 # File: eme-options.php, line: 2034
 # File: eme-tasks.php, line: 563
-#, fuzzy
 msgid "Contact Person Task Signup Pending Email Body"
-msgstr "Kontaktperson Aufgabenanmeldung erfolgt E-Mail Haupttext"
+msgstr "Kontaktperson Aufgabe Anmeldung ausstehend E-Mail Körper"
 #
 # File: eme-options.php, line: 2034
 # File: eme-tasks.php, line: 564
-#, fuzzy
 msgid ""
 "The body of the email which will be sent to the contact person when someone "
 "signs up for a task that requires approval."
 msgstr ""
 "Der Text der E-Mail, die an die Kontaktperson gesendet wird, wenn sich "
-"jemand für eine Aufgabe anmeldet."
+"jemand für eine Aufgabe anmeldet, die eine Genehmigung erfordert."
 #
 # File: eme-options.php, line: 2044
 # File: eme-tasks.php, line: 493
@@ -13477,23 +13463,24 @@ msgstr ""
 # File: eme-options.php, line: 2057
 # File: eme-tasks.php, line: 665
 msgid "Task Signup Reminder Email Subject"
-msgstr "Aufgabenanmeldung Erinnerungs-E-Mail Betreff"
+msgstr "Aufgabenanmeldung ausstehend E-Mail-Betreff"
 #
 # File: eme-options.php, line: 2057
 # File: eme-tasks.php, line: 666
 msgid "The subject of the reminder email which will be sent to the respondent."
 msgstr ""
-"Der Betreff der Erinnerungs-E-Mail, die an den Buchenden gesendet wird."
+"Das E-Mail-Format des Betreffs der Nachricht die an den Besteller verschickt "
+"wird."
 #
 # File: eme-options.php, line: 2058
 # File: eme-tasks.php, line: 674
 msgid "Task Signup Reminder Email Body"
-msgstr "Aufgabenanmeldung Erinnerungs-E-Mail Haupttext"
+msgstr "Aufgabenanmeldung ausstehend E-Mail Haupttext"
 #
 # File: eme-options.php, line: 2058
 # File: eme-tasks.php, line: 675
 msgid "The body of the reminder email which will be sent to the respondent."
-msgstr "Der Text der Erinnerungs-E-Mail, die an den Buchenden gesendet wird."
+msgstr "Das E-Mail-Format der Nachricht die an den Besteller verschickt wird."
 #
 # File: eme-options.php, line: 2067
 # File: eme-tasks.php, line: 600
@@ -13730,7 +13717,7 @@ msgstr ""
 msgid "Personal info approval email subject"
 msgstr ""
 "Der E-Mail-Betreff der Nachricht, die der Person zugeschickt wird,  mit der "
-"Bitte um Zustimmung zur Speicherung persönlicher Daten."
+"Bitte um Zustimmung zur Speicherung persönlicher Daten"
 #
 # File: eme-options.php, line: 2132
 msgid ""
@@ -14120,7 +14107,7 @@ msgstr ""
 # File: eme-options.php, line: 2175
 # File: eme-options.php, line: 2176
 msgid "If left empty, a default message will be shown."
-msgstr "Falles leer gelassen, wird eine Standardnachricht angezeigt"
+msgstr "Falles leer gelassen, wird eine Standardnachricht angezeigt."
 #
 # File: eme-options.php, line: 2174
 msgid "Payment RSVP failure return page format"
@@ -14183,7 +14170,7 @@ msgid ""
 msgstr ""
 "Text der alle Informationen zum offline Bezahlen enthält, dieser kann, wie "
 "die Einstellungen beim Kopf/Fuß Zahlungsformular, HTML und Platzhalter "
-"enthalten. "
+"enthalten."
 #
 # File: eme-options.php, line: 2191
 # File: eme-payments.php, line: 9
@@ -14243,7 +14230,7 @@ msgid ""
 "a>"
 msgstr ""
 "Für weitere Informationen über PayPal-Apps und Anmeldeinformationen besuche "
-"bitte <a href=\"%s\">diese Seite</a>."
+"bitte <a href=\"%s\">diese Seite</a>"
 #
 # File: eme-options.php, line: 2209
 msgid "PayPal secret"
@@ -14273,7 +14260,7 @@ msgid ""
 "percentage. E.g. 2 or 5%"
 msgstr ""
 "Aufschlag auf den Preis. Dies kann entweder eine absolute Zahl oder ein "
-"Prozentsatz sein zum Beispiel 2 oder 5%."
+"Prozentsatz sein zum Beispiel 2 oder 5%"
 #
 # File: eme-options.php, line: 2212
 # File: eme-options.php, line: 2243
@@ -14313,7 +14300,7 @@ msgid ""
 "a percentage. E.g. 2 or 5%"
 msgstr ""
 "Der zweite Preisaufschlag. Dies kann entweder eine absolute Zahl oder ein "
-"Prozentsatz sein zum Beispiel 2 oder 5%."
+"Prozentsatz sein zum Beispiel 2 oder 5%"
 #
 # File: eme-options.php, line: 2213
 # File: eme-options.php, line: 2244
@@ -14349,7 +14336,7 @@ msgstr "Beschriftungstext Zahlungsschaltfläche"
 # File: eme-options.php, line: 2633
 # File: eme-options.php, line: 2651
 msgid "The text shown inside the payment button"
-msgstr "Der Text der in der Schaltfläche zur Bezahlung erscheinen soll."
+msgstr "Der Text der in der Schaltfläche zur Bezahlung erscheinen soll"
 #
 # File: eme-options.php, line: 2214
 # File: eme-options.php, line: 2245
@@ -14484,7 +14471,7 @@ msgstr "PayPal Händler Info"
 #
 # File: eme-options.php, line: 2239
 msgid "Paypal business ID or email."
-msgstr "Paypal Händler ID oder E-Mail"
+msgstr "Paypal Händler ID oder E-Mail."
 #
 # File: eme-options.php, line: 2240
 msgid "Ignore Paypal tax setting?"
@@ -14560,7 +14547,7 @@ msgstr "2Checkout Secret"
 #
 # File: eme-options.php, line: 2275
 msgid "2Checkout secret."
-msgstr "2Checkout Secret"
+msgstr "2Checkout Secret."
 #
 # File: eme-options.php, line: 2289
 # File: eme-payments.php, line: 12
@@ -14593,7 +14580,7 @@ msgstr "Webmoney Börse"
 #
 # File: eme-options.php, line: 2307
 msgid "Webmoney Purse."
-msgstr "Webmoney Börse"
+msgstr "Webmoney Börse."
 #
 # File: eme-options.php, line: 2308
 msgid "Webmoney Secret"
@@ -14601,7 +14588,7 @@ msgstr "Webmoney Secret"
 #
 # File: eme-options.php, line: 2308
 msgid "Webmoney secret."
-msgstr "Webmoney Secret"
+msgstr "Webmoney Secret."
 #
 # File: eme-options.php, line: 2322
 # File: eme-payments.php, line: 13
@@ -14687,13 +14674,13 @@ msgid "Payconiq Merchant ID"
 msgstr "Payconiq-Händler-ID"
 #
 # File: eme-options.php, line: 2402
-#, fuzzy
 msgid ""
 "Info: refunding is implemented but the way payconiq works it might still "
 "require manual transfer of the funds to the relevant bank accounts anyway."
 msgstr ""
-"Info: Die Erstattung ist nicht implementiert, da sie ohnehin eine manuelle "
-"Überweisung der Mittel auf die entsprechenden Bankkonten erfordert."
+"Info: Die Rückerstattung ist implementiert, aber so wie payconiq "
+"funktioniert, könnte es trotzdem notwendig sein, die Gelder manuell auf die "
+"entsprechenden Bankkonten zu überweisen."
 #
 # File: eme-options.php, line: 2407
 # File: eme-payments.php, line: 16
@@ -14917,7 +14904,7 @@ msgstr "Braintree öffentlicher Schlüssel"
 #
 # File: eme-options.php, line: 2568
 msgid "Braintree Private Key"
-msgstr "Braintree privater Schlüssel."
+msgstr "Braintree privater Schlüssel"
 #
 # File: eme-options.php, line: 2581
 # File: eme-payments.php, line: 21
@@ -15076,7 +15063,7 @@ msgstr ""
 "Diese Option erlaubt es auf der Seite zur Bearbeitung zu bleiben nachdem "
 "Änderungen bei einer Veranstaltung, einem Veranstaltungsort, einer Vorlage, "
 "einem Formularfelder, einer Personen, Gruppen oder Mitgliedschaft "
-"gespeichert wurde"
+"gespeichert wurde."
 #
 # File: eme-options.php, line: 2685
 msgid "Remove leading zeros from minutes?"
@@ -15092,7 +15079,7 @@ msgstr ""
 "PHP Datum/Zeitfunktionen haben keine Notation um Minuten ohne vorangestellte "
 "Null zu zeigen. Bei aktivierter Option wird zum Beispiel 9 für 09 und 'leer' "
 "für 00 angezeigt. Diese Einstellung betrifft sowohl benutzerdefinierte Zeit "
-"Platzhalter als auch die generischen *DATE und *TIME Platzhalter."
+"Platzhalter als auch die generischen *DATE und *TIME Platzhalter"
 #
 # File: eme-options.php, line: 2686
 msgid "CSV separator"
@@ -15104,7 +15091,7 @@ msgstr "Benutzt das angegebene Trennzeichen beim CSV Export."
 #
 # File: eme-options.php, line: 2687
 msgid "Localize price"
-msgstr "Preise Lokalisieren "
+msgstr "Preise Lokalisieren"
 #
 # File: eme-options.php, line: 2687
 msgid ""
@@ -15123,7 +15110,7 @@ msgstr ""
 "Darstellung von Währungssymbolen selbst vorgenommen werden. Diese Option "
 "funktioniert nur dann, wenn die NumberFormatter PHP Klasse vorhanden ist "
 "(dies sollte der Fall sein für alle neueren PHP Versionen allerdings sollte "
-"nicht vergessen werden die INTL Erweiterung in PHP geladen zu werden). "
+"nicht vergessen werden die INTL Erweiterung in PHP geladen zu werden)."
 #
 # File: eme-options.php, line: 2689
 msgid "Decimals accuracy"
@@ -15254,7 +15241,7 @@ msgid ""
 "The date format used in EME tables. Leave this empty to use the WordPress "
 "settings."
 msgstr ""
-"Das in EME-Tabellen verwendete Datumsformat. Lasse dieses leer, um die "
+"Das in EME-Tabellen verwendete Datumsformat. Lasse dies leer, um die "
 "WordPress-Einstellungen zu verwenden."
 #
 # File: eme-options.php, line: 2701
@@ -15275,8 +15262,8 @@ msgid ""
 "The time format used in EME tables. Leave this empty to use the WordPress "
 "settings."
 msgstr ""
-"Das in EME-Tabellen verwendete Zeitformat. Lass dieses leer, um die "
-"WordPress-Einstellungen zu verwenden."
+"Das in EME-Tabellen verwendete Zeitformat. Lasse dies leer, um die WordPress-"
+"Einstellungen zu verwenden."
 #
 # File: eme-options.php, line: 2710
 msgid "PDF font"
@@ -15325,14 +15312,14 @@ msgid ""
 "seperated by \",\". As an example, to allow the iframe tag and some "
 "attributes, you would add: \"iframe,src,height,width,frameborder\" "
 msgstr ""
-"Standardmäßig ist WordPress strikt im Umgang mit HTML-Tags und dessen "
-"Attributen die erlaubt sind. Du kannst hier eine Liste von HTML Tags + "
-"Attributen hinzufügen, die in den EME-Einstellungen zugelassen werden "
-"(zusätzlich zu den Standardeinstellungen wird nichts entfernt). Die Liste "
-"sollte pro Zeile einen Tag enthalten, gefolgt von seinen optionalen "
-"Attributen , die alle durch ein \",\" getrennt werden. Als Beispiel, um das "
-"iframe-Tag und einige Attribute zu erlauben, würde man \"iframe,src,height,"
-"width,frameborder\" hinzufügen."
+"Standardmäßig ist WordPress streng bei der Frage, welche HTML-Tags und -"
+"Attribute erlaubt sind. Du kannst hier eine Liste von Tags und Attributen "
+"hinzufügen, die du in den EME-Einstellungen zulassen möchtest (zusätzlich zu "
+"den Standardwerten, nichts wird entfernt). Die Liste sollte aus einem Tag "
+"pro Zeile bestehen, gefolgt von seinen optionalen Attributen, die alle durch "
+"\",\" getrennt sind. Um zum Beispiel das iframe-Tag und einige Attribute "
+"zuzulassen, würdest du Folgendes hinzufügen: \"iframe,src,height,width,"
+"frameborder\" "
 #
 # File: eme-options.php, line: 2719
 msgid "Extra style attributes"
@@ -15347,14 +15334,14 @@ msgid ""
 "removed). The list should be one attribute per line. As an example, to allow "
 "the visibility attribute for the style tag, you would add: \"visbility\" "
 msgstr ""
-"Während die obige Einstellung das Hinzufügen von zusätzlichen HTML-Tags und "
-"Attributen erlaubt, ist WordPress hinsichtlich der im Style-Tag erlaubten "
-"Attribute noch strenger. Du kannst hier eine Liste von zusätzlich erlaubten "
-"HTML-Style-Attributen hinzufügen, die Du in EME-Einstellungen zulassen "
-"möchtest (zusätzlich zu den Standardeinstellungen wird nichts entfernt). Die "
-"Liste sollte ein Attribut pro Zeile sein. Als Beispiel würdest Du, das "
-"Sichtbarkeitsattribut \"visbility\" als Style-Tag zuzulassen wollen, "
-"müsstest Du \"visbility\" hinzufügen. "
+"Während die obige Einstellung das Hinzufügen zusätzlicher HTML-Tags und -"
+"Attribute erlaubt, ist WordPress noch strenger, was die im style-Tag "
+"erlaubten Attribute angeht. Du kannst hier eine Liste zusätzlicher "
+"Stilattribute hinzufügen, die du in den EME-Einstellungen, die HTML "
+"zulassen, zulassen möchtest (zusätzlich zu den Standardwerten, nichts wird "
+"entfernt). Die Liste sollte ein Attribut pro Zeile enthalten. Um "
+"beispielsweise das Attribut \"Sichtbarkeit\" für das style-Tag zuzulassen, "
+"würdest du Folgendes hinzufügen: \"visbility\". "
 #
 # File: eme-options.php, line: 2722
 msgid "Extra html headers"
@@ -15367,8 +15354,8 @@ msgstr "Zusätzliches HTML für Kopf"
 # File: eme-options.php, line: 2725
 msgid "Here you can define extra html headers, no placeholders can be used."
 msgstr ""
-"Hier kannst Du zusätzliches HTML für den Kopf einfügen, es können hier keine "
-"Platzhalter verwendet werdener kann ebenfalls."
+"Hier kannst du zusätzliche HTML-Kopfzeilen definieren, es können keine "
+"Platzhalter verwendet werden."
 #
 # File: eme-options.php, line: 2726
 msgid "Extra html footer"
@@ -15377,7 +15364,7 @@ msgstr "Zusätzliches HTML für Fuß"
 # File: eme-options.php, line: 2726
 msgid "Here you can define extra html footer, no placeholders can be used."
 msgstr ""
-"Hier kannst Du zusätzliches HTML für den Fuß einfügen, es können hier keine "
+"Hier kannst du eine zusätzliche HTML-Fußzeile definieren, es können keine "
 "Platzhalter verwendet werden."
 #
 # File: eme-options.php, line: 2727
@@ -15432,12 +15419,12 @@ msgstr ""
 "Falls ausgewählt und WordPress Multisite aktiv ist, verwendet diese EME-"
 "Instanz die Datenbanktabellen der Haupt-Multisite-Instanz. Dies führt dazu, "
 "dass alle Ereignisse, Orte, Buchungen, Mitgliedschaften, Vorlagen usw. mit "
-"der Hauptsite geteilt werden. Das Einzige, was lokal bleibt, sind alle EME-"
-"Optionen, die es dir ermöglichen, sprachliche Unterseiten oder andere Dinge "
-"zu erstellen. Beachte auch die geplanten Aktionen: Diese werden nur auf der "
-"Grundlage der auf der Hauptseite eingestellten Optionen ausgeführt, nicht "
-"pro Unterseite. Wenn du keine Daten zwischen Unterseiten austauschen "
-"möchtest, ist diese Option nicht erforderlich."
+"der Hauptseite geteilt werden. Das Einzige, was lokal bleibt, sind alle EME-"
+"Optionen, die es Ihnen ermöglichen, sprachliche Unterseiten oder andere "
+"Dinge zu erstellen. Beachte auch die geplanten Aktionen: Diese werden nur "
+"auf der Grundlage der auf der Hauptseite eingestellten Optionen ausgeführt, "
+"nicht pro Unterseite. Wenn du keine Daten zwischen Unterseiten austauschen "
+"möchtest ist diese Option nicht erforderlich."
 #
 # File: eme-options.php, line: 2745
 msgid "Save Changes"
@@ -15459,7 +15446,7 @@ msgid ""
 "unfortunately all been taken already"
 msgstr ""
 "Zwischen dem Zeitpunkt der Buchung und der Zahlung sind leider alle "
-"verfügbaren Plätze bereits vergeben."
+"verfügbaren Plätze bereits vergeben"
 #
 # File: eme-payments.php, line: 159
 msgid "Payment failed for your booking for #_EVENTNAME, please try again."
@@ -15489,8 +15476,8 @@ msgid ""
 "Your membership is currently active until %s. If you pay the membership fee "
 "again, your membership will be extended until %s"
 msgstr ""
-"Deine Mitgliedschaft ist derzeit bis %s aktiv. Wenn Du den Mitgliedsbeitrag "
-"erneut bezahlst, wird Deine Mitgliedschaft verlängert, bis %s"
+"Deine Mitgliedschaft ist derzeit bis %s aktiv. Wenn du den Mitgliedsbeitrag "
+"erneut bezahlst, wird deine Mitgliedschaft bis %s verlängert"
 #
 # File: eme-payments.php, line: 268
 msgid ""
@@ -15562,7 +15549,7 @@ msgstr "Mercado Pago API gab einen Fehler zurück: "
 # File: eme-payments.php, line: 1941
 # File: eme-payments.php, line: 2018
 msgid "Hash Incorrect"
-msgstr "Hash ist nicht korrekt."
+msgstr "Hash ist nicht korrekt"
 #
 # File: eme-payments.php, line: 1992
 # File: eme-payments.php, line: 2008
@@ -15573,7 +15560,7 @@ msgstr "Ungültige Zahlungs ID."
 msgid "since this is a site running on localhost, no webhook will be created"
 msgstr ""
 "da es sich um eine Website handelt, die auf localhost läuft, wird kein "
-"Webhook erstellt."
+"Webhook erstellt"
 #
 # File: eme-payments.php, line: 2717
 msgid "Booking refunded"
@@ -15661,7 +15648,7 @@ msgstr "Auf der Warteliste"
 # File: eme-people.php, line: 997
 # File: eme-people.php, line: 1313
 msgid "Awaiting user confirmation"
-msgstr "Erwartet die Bestätigung des Benutzers"
+msgstr "(erwartet die Bestätigung durch den Benutzer)"
 #
 # File: eme-people.php, line: 999
 # File: eme-people.php, line: 1315
@@ -15698,21 +15685,21 @@ msgstr "Abwesend"
 #
 # File: eme-people.php, line: 1509
 msgid "Verify link between people and WP"
-msgstr "Überprüfe die Verbindung zwischen Personen und WP."
+msgstr "Überprüfe die Verbindung zwischen Personen und WP"
 #
 # File: eme-people.php, line: 1514
 msgid ""
 "The table below shows the people that are linked to the same WordPress user"
 msgstr ""
-"Die folgende Tabelle zeigt die Personen, die mit dem gleichen Wordpres-"
-"Benutzer verknüpft sind."
+"Die folgende Tabelle zeigt die Personen, die mit demselben WordPress-"
+"Benutzer verknüpft sind"
 #
 # File: eme-people.php, line: 1516
 msgid ""
 "Please correct these errors: a WordPress user should be linked to at most "
 "one EME person."
 msgstr ""
-"Bitte korrigiere diese Fehler: Ein WordPress-Benutzer sollte mit maximal "
+"Bitte korrigiere diese Fehler: ein WordPress-Benutzer sollte mit höchstens "
 "einer EME-Person verknüpft sein."
 #
 # File: eme-people.php, line: 1547
@@ -15818,7 +15805,7 @@ msgstr "Sprache der ausgewählten Personen ändern"
 #
 # File: eme-people.php, line: 1884
 msgid "Change language to: "
-msgstr "Sprache ändern auf:"
+msgstr "Sprache ändern auf: "
 #
 # File: eme-people.php, line: 1888
 msgid ""
@@ -15838,7 +15825,7 @@ msgstr "Person im Papierkorb anzeigen (schreibgeschützt)"
 msgid "Since this person is linked to a WP user, this field is read-only"
 msgstr ""
 "Da diese Person mit einem WP-Benutzer verknüpft ist, ist dieses Feld "
-"schreibgeschützt."
+"schreibgeschützt"
 #
 # File: eme-people.php, line: 2059
 msgid "Related family member"
@@ -16256,7 +16243,7 @@ msgstr "Buchung gelöscht"
 msgid "There are no bookings associated to this name and email"
 msgstr ""
 "Es gibt keine Buchungen, die mit diesem Namen und dieser E-Mail verbunden "
-"sind."
+"sind"
 #
 # File: eme-rsvp.php, line: 1106
 msgid "Password is missing"
@@ -16268,7 +16255,7 @@ msgstr "Falsches Passwort angegeben"
 #
 # File: eme-rsvp.php, line: 1153
 msgid "Please select at least one seat."
-msgstr "Bitte wähle zumindest einen Platz!"
+msgstr "Bitte wählen zumindest 1 Platz."
 #
 # File: eme-rsvp.php, line: 1181
 # File: eme-rsvp.php, line: 1189
@@ -16282,7 +16269,7 @@ msgstr ""
 #
 # File: eme-rsvp.php, line: 1207
 msgid "Please fill out your last name"
-msgstr "Bitte gib Deinen Nachnamen ein."
+msgstr "Bitte gib Deinen Nachnamen ein"
 #
 # File: eme-rsvp.php, line: 1315
 msgid "Massmail"
@@ -16387,7 +16374,7 @@ msgid ""
 "enough free seats available anymore"
 msgstr ""
 "Während Deiner Bearbeitung wurden Plätze gebucht, dadurch stehen keine "
-"ausreichenden Plätze mehr zur Verfügung."
+"ausreichenden Plätze mehr zur Verfügung"
 #
 # File: eme-rsvp.php, line: 4557
 msgid "No linked payment found: %s"
@@ -16396,7 +16383,7 @@ msgstr "Keine verknüpfte Zahlung gefunden: %s"
 # File: eme-rsvp.php, line: 4560
 # File: eme-rsvp.php, line: 4563
 msgid "Field %s not valid: %s"
-msgstr "Feld %s ist nicht gültig: %s"
+msgstr "Feld %s ist nicht gültig: %2$s"
 #
 # File: eme-rsvp.php, line: 4568
 msgid "Already paid in full: %s"
@@ -16422,11 +16409,11 @@ msgstr "Fehlerhafte Einträge"
 #
 # File: eme-rsvp.php, line: 4627
 msgid "Manage pending bookings for %s"
-msgstr "Ausstehende Buchungen verwalten für %s "
+msgstr "Ausstehende Buchungen verwalten für %s"
 #
 # File: eme-rsvp.php, line: 4629
 msgid "Manage approved bookings for %s"
-msgstr "Genehmigte Buchungen verwalten für %s "
+msgstr "Genehmigte Buchungen verwalten für %s"
 #
 # File: eme-rsvp.php, line: 4636
 msgid "Manage trashed bookings"
@@ -16613,9 +16600,8 @@ msgid "Filter task signups"
 msgstr "Filter für Aufgabenanmeldungen"
 #
 # File: eme-tasks.php, line: 476
-#, fuzzy
 msgid "Approve selected task signups"
-msgstr "Ausgewählte Aufgabenanmeldungen löschen"
+msgstr "Ausgewählte Aufgabenanmeldungen genehmigen"
 #
 # File: eme-tasks.php, line: 477
 msgid "Delete selected task signups"
@@ -16726,9 +16712,8 @@ msgstr ""
 "können?"
 #
 # File: eme-tasks.php, line: 816
-#, fuzzy
 msgid "Require approval for task signups?"
-msgstr "Überschneidungen bei Aufgabenanmeldungen zulassen?"
+msgstr "Eine Genehmigung für die Anmeldung von Aufgaben verlangen?"
 #
 # File: eme-tasks.php, line: 1227
 # File: eme-tasks.php, line: 1331
@@ -16737,7 +16722,7 @@ msgstr "Im Moment gibt es keine Aufgaben, für die man sich anmelden kann"
 #
 # File: eme-tasks.php, line: 1623
 msgid "Please select at least one task."
-msgstr "Bitte wähle mindestens eine Aufgabe aus."
+msgstr "Bitte wähle mindestens 1 Aufgabe aus."
 #
 # File: eme-tasks.php, line: 1672
 msgid "No more open spaces for this task"
@@ -16817,7 +16802,7 @@ msgstr ""
 #
 # File: eme-templates.php, line: 152
 msgid "Successfully deleted the selected template(s)."
-msgstr "Die ausgewählte(n) Vorlage(n) wurde(n) gelöscht"
+msgstr "Die ausgewählte(n) Vorlage(n) wurde(n) gelöscht."
 #
 # File: eme-templates.php, line: 154
 msgid ""
@@ -17030,7 +17015,7 @@ msgstr "Auswählen..."
 #
 # File: eme-widgets.php, line: 167
 msgid "Yearly"
-msgstr "jährlich"
+msgstr "Jährlich"
 #
 # File: eme-widgets.php, line: 171
 msgid "Order of the events"
@@ -17146,16 +17131,23 @@ msgstr "Franky Van Liedekerke"
 msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
 #
-#
-#, fuzzy
-#~ msgid "See <a href=\"%s\">here</a> for more info on country code."
+#~ msgid ""
+#~ "If you like Events Made Easy, please leave a <a href=\"%s\" "
+#~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> rating. A huge "
+#~ "thanks in advance!"
 #~ msgstr ""
-#~ "Siehe <a href=\"%s\">hier</a> für weitere Informationen zu Ländercodes"
+#~ "Wenn Dir Events Made Easy gefällt, hinterlasse bitte eine <a href=\"%s\" "
+#~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> Bewertung. Ein "
+#~ "großes Dankeschön im Voraus!"
 #
+#~ msgid "Incorrect IDs supplied. Please try again."
+#~ msgstr "Ungültige IDs geliefert. Bitte versuche es erneut."
 #
+#~ msgid "You have no right to manage task signups!"
+#~ msgstr "Du hast keine Berechtigung, Aufgabenanmeldungen zu verwalten!"
 #
-#
-#
+#~ msgid "File upload is not allowed here."
+#~ msgstr "Datei-Upload ist hier nicht erlaubt."
 #
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
@@ -17165,11 +17157,6 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Mediathek für den Dateiupload oder die \"Bild hinzufügen\" Schaltfläche "
 #~ "in der Veranstaltungsbeschreibung."
 #
-#
-#
-#
-#
-#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -17178,84 +17165,8 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Mediathek für den Dateiupload oder die \"Bild hinzufügen\" Schaltfläche "
 #~ "in der Veranstaltungsortbeschreibung."
 #
-#
-#
-#
-#
-#
-#~ msgid "File upload is not allowed here."
-#~ msgstr "Datei-Upload ist hier nicht erlaubt."
-#
-#
-#
-#
-#
-#
 #~ msgid "Uploaded files"
 #~ msgstr "Hochgeladene Dateien"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "You have no right to manage task signups!"
-#~ msgstr "Du hast keine Berechtigung, Aufgabenanmeldungen zu verwalten!"
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Successfully deleted the selected task signups."
-#~ msgstr "Die ausgewählten Aufgabenanmeldungen wurden erfolgreich gelöscht."
-#
-#
-#
-#
-#
-#
-#
-#~ msgid ""
-#~ "There was a problem deleting the selected task signups, please try again."
-#~ msgstr ""
-#~ "Es gab ein Problem beim Löschen der ausgewählten Aufgabenanmeldungen. "
-#~ "Bitte versuche es erneut."
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Incorrect IDs supplied. Please try again."
-#~ msgstr "Ungültige IDs geliefert. Bitte versuche es erneut."
-#
-#
-#
-#
-#
-#
-#
-#
-#~ msgid "Your payment failed."
-#~ msgstr "Zahlung fehlgeschlagen."
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
@@ -17265,41 +17176,14 @@ msgstr "https://www.e-dynamics.be/"
 #~ "#_EMAIL und #_SUBMIT beinhalten, ansonsten wird das Formular nicht "
 #~ "angezeigt."
 #
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
 #~ msgid ""
-#~ "If you like Events Made Easy, please leave a <a href=\"%s\" "
-#~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> rating. A huge "
-#~ "thanks in advance!"
+#~ "There was a problem deleting the selected task signups, please try again."
 #~ msgstr ""
-#~ "Wenn Dir Events Made Easy gefällt, hinterlasse bitte eine <a href=\"%s\" "
-#~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> Bewertung. Ein "
-#~ "großes Dankeschön im Voraus!"
+#~ "Es trat ein Problem beim Löschen der ausgewählten Felder auf, bitte "
+#~ "erneut versuchen."
+#
+#~ msgid "Your payment failed."
+#~ msgstr "Zahlung fehlgeschlagen."
+#
+#~ msgid "Successfully deleted the selected task signups."
+#~ msgstr "Die ausgewählte(n) Rabattgruppe(n) wurde(n) gelöscht."

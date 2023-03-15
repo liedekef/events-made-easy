@@ -81,11 +81,23 @@ jQuery(document).ready( function($) {
 	   });
         }
  
+        function updateShowHideStuff () {
+	   var action=$('select#eme_admin_action').val();
+           if ($.inArray(action,['approveTaskSignups','deleteTaskSignups']) >= 0) {
+              $('span#span_sendmails').show();
+           } else {
+              $('span#span_sendmails').hide();
+           }
+        }
+        $('select#eme_admin_action').on("change",updateShowHideStuff);
+        updateShowHideStuff();
+
         // Actions button
         $('#TaskSignupsActionsButton').on("click",function (e) {
 	   e.preventDefault();
            var selectedRows = $('#TaskSignupsTableContainer').jtable('selectedRows');
            var do_action = $('#eme_admin_action').val();
+	   var send_mail = $('#send_mail').val();
            var action_ok=1;
            if (selectedRows.length > 0) {
               if ((do_action=='deleteTaskSignups') && !confirm(emetasks.translate_areyousuretodeleteselected)) {
@@ -113,7 +125,7 @@ jQuery(document).ready( function($) {
                     return false;
                  }
 
-                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_task_signups', 'do_action': do_action, 'eme_admin_nonce': emetasks.translate_adminnonce }, function() {
+                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_task_signups', 'send_mail': send_mail, 'do_action': do_action, 'eme_admin_nonce': emetasks.translate_adminnonce }, function() {
 			 $('#TaskSignupsTableContainer').jtable('reload');
 			 $('#TaskSignupsActionsButton').text(emetasks.translate_apply);
 			 if (do_action=='deleteTaskSignups') {

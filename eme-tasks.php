@@ -476,6 +476,12 @@ function eme_task_signups_table_layout( $message = '' ) {
 	<option value="approveTaskSignups"><?php esc_html_e( 'Approve selected task signups', 'events-made-easy' ); ?></option>
 	<option value="deleteTaskSignups"><?php esc_html_e( 'Delete selected task signups', 'events-made-easy' ); ?></option>
 	</select>
+        <span id="span_sendmails" class="eme-hidden">
+        <?php
+        esc_html_e( 'Send mails to people upon changes being made?', 'events-made-easy' );
+        echo eme_ui_select_binary( 1, 'send_mail' );
+        ?>
+        </span>
 	<button id="TaskSignupsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
 	<span class="rightclickhint">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
@@ -1882,19 +1888,20 @@ function eme_ajax_manage_task_signups() {
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$ids_arr   = explode( ',', eme_sanitize_request($_POST['id']) );
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+		$send_mail = ( isset( $_REQUEST['send_mail'] ) ) ? intval( $_REQUEST['send_mail'] ) : 1;
 		switch ( $do_action ) {
 			case 'approveTaskSignups':
-				eme_ajax_action_signup_approve( $ids_arr );
+				eme_ajax_action_signup_approve( $ids_arr, $send_mail );
 				break;
 			case 'deleteTaskSignups':
-				eme_ajax_action_signup_delete( $ids_arr );
+				eme_ajax_action_signup_delete( $ids_arr, $send_mail );
 				break;
 		}
 	}
 	wp_die();
 }
 
-function eme_ajax_action_signup_approve( $ids_arr ) {
+function eme_ajax_action_signup_approve( $ids_arr, $send_mail=1 ) {
 	$action_ok = 1;
 	foreach ( $ids_arr as $signup_id ) {
 		$signup = eme_get_task_signup( $signup_id );
@@ -1902,7 +1909,9 @@ function eme_ajax_action_signup_approve( $ids_arr ) {
 		if ( ! $res ) {
 			$action_ok = 0;
 		} else {
-			eme_email_tasksignup_action( $signup, 'new' );
+			if ($send_mail) {
+				eme_email_tasksignup_action( $signup, 'new' );
+			}
 		}
 	}
 	$ajaxResult = [];
@@ -1916,7 +1925,7 @@ function eme_ajax_action_signup_approve( $ids_arr ) {
 	print wp_json_encode( $ajaxResult );
 }
 
-function eme_ajax_action_signup_delete( $ids_arr ) {
+function eme_ajax_action_signup_delete( $ids_arr, $send_mail=1 ) {
 	$action_ok = 1;
 	foreach ( $ids_arr as $signup_id ) {
 		$signup = eme_get_task_signup( $signup_id );
@@ -1924,7 +1933,9 @@ function eme_ajax_action_signup_delete( $ids_arr ) {
 		if ( ! $res ) {
 			$action_ok = 0;
 		} else {
-			eme_email_tasksignup_action( $signup, 'delete' );
+			if ($send_mail) {
+				eme_email_tasksignup_action( $signup, 'delete' );
+			}
 		}
 	}
 	$ajaxResult = [];

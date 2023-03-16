@@ -2155,9 +2155,15 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			if ( $target == 'html' ) {
 				$replacement = esc_url( $replacement );
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB$/', $result ) ) {
+		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB\{(.+?)\}$/', $result ) ) {
+                        if ( isset( $matches[1] ) ) 
+                                // remove { and } (first and last char of second match)
+                                $thumb_size = substr( $matches[2], 1, -1 );
+			} else {
+				$thumb_size = get_option( 'eme_thumbnail_size' );
+			}
 			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $location['location_image_id'], get_option( 'eme_thumbnail_size' ), 0, [ 'class' => 'eme_location_image' ] );
+				$replacement = wp_get_attachment_image( $location['location_image_id'], $thumb_size, 0, [ 'class' => 'eme_location_image' ] );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -2166,27 +2172,15 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB\{(.+?)\}/', $result, $matches ) ) {
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $location['location_image_id'], $matches[1], 0, [ 'class' => 'eme_location_image' ] );
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
+		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMBURL(\{.+?\})?$/', $result ) ) {
+                        if ( isset( $matches[1] ) ) 
+                                // remove { and } (first and last char of second match)
+                                $thumb_size = substr( $matches[2], 1, -1 );
+			} else {
+				$thumb_size = get_option( 'eme_thumbnail_size' );
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMBURL$/', $result ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image_url( $location['location_image_id'], get_option( 'eme_thumbnail_size' ) );
-				if ( $target == 'html' ) {
-					$replacement = esc_url( $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMBURL\{(.+?)\}/', $result, $matches ) ) {
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image_url( $location['location_image_id'], $matches[1] );
+				$replacement = wp_get_attachment_image_url( $location['location_image_id'], $thumb_size );
 				if ( $target == 'html' ) {
 					$replacement = esc_url( $replacement );
 				}

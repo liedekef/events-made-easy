@@ -9781,7 +9781,7 @@ function eme_admin_enqueue_js() {
 	}
 
 	if ( preg_match( '/^eme-/', $plugin_page ) ) {
-		wp_enqueue_style( 'eme_textsec', EME_PLUGIN_URL . 'css/text-security/text-security-disc.css', [], EME_VERSION );
+		wp_enqueue_style( 'eme_textsec' );
 		wp_enqueue_style( 'eme_stylesheet' );
 		wp_enqueue_style( 'eme_stylesheet_extra' );
 	}

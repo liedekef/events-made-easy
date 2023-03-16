@@ -1141,7 +1141,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			} else {
 				$placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
 			}
-			$replacement = "<input type='tel' id='$fieldname' name='$fieldname' value='' placeholder='$placeholder_text'>";
+			$replacement = "<input type='tel' id='$fieldname' name='$fieldname' value='' placeholder='$placeholder_text' $required_att>";
 		} elseif ( preg_match( '/#_COMMENT(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)

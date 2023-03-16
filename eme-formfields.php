@@ -1132,6 +1132,16 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			++$email_found;
 			// #_EMAIL is always required
 			$required = 1;
+		} elseif ( preg_match( '/#_(PHONE$|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
+			$fieldname = 'phone';
+			if ( isset( $matches[2] ) ) {
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[2], 1, -1 );
+				$placeholder_text = eme_trans_nowptrans_esc_html( $placeholder_text );
+			} else {
+				$placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
+			}
+			$replacement = "<input type='tel' id='$fieldname' name='$fieldname' value='' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_COMMENT(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)
@@ -1141,6 +1151,16 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 				$placeholder_text = esc_html__( 'Comment', 'events-made-easy' );
 			}
 			$replacement = "<textarea name='task_comment' id='task_comment' placeholder='$placeholder_text' ></textarea>";
+		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$label = substr( $matches[1], 1, -1 );
+			} else {
+				$label = __('Remember me?','events-made-easy');
+			}
+			if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
+				$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field' );
+			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
 			if ( $eme_cfcaptcha_for_forms && ! $captcha_set) {
 				$replacement = eme_load_cfcaptcha_html();

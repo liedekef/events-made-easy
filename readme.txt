@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.59 (2023//) =
 * Improvement: French translation updated, thanks to Frédéric M
+* Add #_REMEMBERME and #_PHONE as possible placeholers to task signup form too
 
 = 2.3.58 (2023/03/15) =
 * Fix searching for empty strings for custom fields

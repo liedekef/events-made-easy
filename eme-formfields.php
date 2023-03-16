@@ -1136,7 +1136,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			// #_EMAIL is always required
 			$required = 1;
 		} elseif ( preg_match( '/#_(PHONE$|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
-			$fieldname = 'phone';
+			$fieldname = 'task_phone';
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
 				$placeholder_text = substr( $matches[2], 1, -1 );

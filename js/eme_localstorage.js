@@ -14,6 +14,9 @@ jQuery(document).ready( function($) {
 	if ($('input[name=email]').length) {
 		$('input[name=email]').val(localStorage.getItem('eme_email'));
 	}
+	if ($('input[name=phone]').length) {
+		$('input[name=phone]').val(localStorage.getItem('eme_phone'));
+	}
 	if ($('input[name=task_lastname]').length) {
 		$('input[name=task_lastname]').val(localStorage.getItem('eme_lastname'));
 	}
@@ -22,6 +25,9 @@ jQuery(document).ready( function($) {
 	}
 	if ($('input[name=task_email]').length) {
 		$('input[name=task_email]').val(localStorage.getItem('eme_email'));
+	}
+	if ($('input[name=task_phone]').length) {
+		$('input[name=task_phone]').val(localStorage.getItem('eme_phone'));
 	}
 	$('[name=eme-rsvp-form]').on('submit', function(event) {
 		event.preventDefault();
@@ -41,6 +47,9 @@ jQuery(document).ready( function($) {
 			if ($('input[name=email]').length) {
 				localStorage.setItem('eme_email',$('input[name=email]').val());
 			}
+			if ($('input[name=phone]').length) {
+				localStorage.setItem('eme_phone',$('input[name=phone]').val());
+			}
 			if ($('input[name=task_lastname]').length) {
 				localStorage.setItem('eme_lastname',$('input[name=task_lastname]').val());
 			}
@@ -49,6 +58,9 @@ jQuery(document).ready( function($) {
 			}
 			if ($('input[name=task_email]').length) {
 				localStorage.setItem('eme_email',$('input[name=task_email]').val());
+			}
+			if ($('input[name=task_phone]').length) {
+				localStorage.setItem('eme_phone',$('input[name=task_phone]').val());
 			}
 		} else {
 			localStorage.removeItem('eme_lastname');

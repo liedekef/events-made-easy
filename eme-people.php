@@ -3829,6 +3829,8 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 	}
 	if ( ! empty( $_POST['phone'] ) ) {
 		$person['phone'] = eme_sanitize_request( $_POST['phone'] );
+	} elseif ( ! empty( $_POST['task_phone'] ) ) {
+		$person['phone'] = eme_sanitize_request( $_POST['task_phone'] );
 	}
 	if ( isset( $_POST['properties'] ) ) {
 		$person['properties'] = eme_sanitize_request( $_POST['properties'] );

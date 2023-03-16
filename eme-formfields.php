@@ -1054,6 +1054,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	$bookerLastName  = '';
 	$bookerFirstName = '';
 	$bookerEmail     = '';
+	$bookerPhone     = '';
 	if ( is_user_logged_in() ) {
 		$current_user = wp_get_current_user();
 		$person       = eme_get_person_by_wp_id( $current_user->ID );
@@ -1061,6 +1062,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			$bookerLastName  = $person['lastname'];
 			$bookerFirstName = $person['firstname'];
 			$bookerEmail     = $person['email'];
+			$bookerPhone     = eme_esc_html( $person['phone'] );
 		} else {
 			$bookerLastName = $current_user->user_lastname;
 			if ( empty( $bookerLastName ) ) {
@@ -1068,6 +1070,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			}
 			$bookerFirstName = $current_user->user_firstname;
 			$bookerEmail     = $current_user->user_email;
+			$bookerPhone     = eme_esc_html( eme_get_user_phone( $current_user->ID ) );
 		}
 	}
 
@@ -1141,7 +1144,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			} else {
 				$placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
 			}
-			$replacement = "<input type='tel' id='$fieldname' name='$fieldname' value='' placeholder='$placeholder_text' $required_att>";
+			$replacement = "<input type='tel' id='$fieldname' name='$fieldname' value='$bookerPhone' placeholder='$placeholder_text' $required_att>";
 		} elseif ( preg_match( '/#_COMMENT(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)

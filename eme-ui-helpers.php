@@ -75,10 +75,11 @@ function eme_options_input_int( $title, $name, $description, $type = 'text', $op
 		<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
 		<td>
 		<input name="<?php echo $name; ?>" type="<?php echo $type; ?>" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
-					<?php
-					if ( ! empty( $description ) ) {
-						echo '<br>' . $description;}
-					?>
+		<?php
+			if ( ! empty( $description ) ) {
+				echo '<br>' . $description;
+			}
+		?>
 		</td>
 	</tr>
 	<?php
@@ -90,10 +91,11 @@ function eme_options_input_password( $title, $name, $description ) {
 		<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
 		<td>
 		<input autocomplete="new-password" name="<?php echo $name; ?>" type="password" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( get_option( $name ) ); ?>" size="45">
-					<?php
-					if ( ! empty( $description ) ) {
-						echo '<br>' . $description;}
-					?>
+		<?php
+			if ( ! empty( $description ) ) {
+				echo '<br>' . $description;
+			}
+		?>
 		</td>
 		</tr>
 	<?php
@@ -139,21 +141,12 @@ function eme_options_radio_binary( $title, $name, $description, $option_value = 
 		<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
 			<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
 			<td>
-			<input id="<?php echo $name; ?>_yes" name="<?php echo $name; ?>" type="radio" value="1" 
-									<?php
-									if ( $option_value ) {
-										echo "checked='checked'";}
-									?>
-			><?php esc_html_e( 'Yes', 'events-made-easy' ); ?> <br>
-			<input  id="<?php echo $name; ?>_no" name="<?php echo $name; ?>" type="radio" value="0" 
-									<?php
-									if ( ! $option_value ) {
-										echo "checked='checked'";}
-									?>
-			><?php esc_html_e( 'No', 'events-made-easy' ); ?>
+			<input id="<?php echo $name; ?>_yes" name="<?php echo $name; ?>" type="radio" value="1" <?php if ( $option_value ) { echo "checked='checked'";} ?> ><?php esc_html_e( 'Yes', 'events-made-easy' ); ?> <br>
+			<input  id="<?php echo $name; ?>_no" name="<?php echo $name; ?>" type="radio" value="0" <?php if ( ! $option_value ) { echo "checked='checked'";} ?> ><?php esc_html_e( 'No', 'events-made-easy' ); ?>
 			<?php
 			if ( ! empty( $description ) ) {
-				echo '<br>' . $description;}
+				echo '<br>' . $description;
+			}
 			?>
 		</td>
 		</tr>

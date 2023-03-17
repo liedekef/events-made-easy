@@ -357,7 +357,7 @@ function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiverem
 	return eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id, $person_id, $member_id, $atts, 1 );
 }
 
-function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts = [], $send_immediately = 0 ) {
+function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail = '', $replytoname = '', $mailing_id = 0, $person_id = 0, $member_id = 0, $atts = [], $send_immediately = 0 ) {
 	global $wpdb;
 	$mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
 

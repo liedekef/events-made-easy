@@ -1921,6 +1921,11 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			}
 		}
 	}
+	if (!empty($wp_id)) {
+		$wp_user = get_userdata($wp_id);
+	} else {
+		$wp_user = null;
+	}
 
 	$needle_offset = 0;
 	preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
@@ -1985,8 +1990,18 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			if ( $wp_id ) {
 				$replacement = $wp_id;
 			}
+		} elseif ( preg_match( '/^#_WPUSERDATA{(.+?)\}$/', $result, $matches ) ) {
+			$fieldname = eme_str_only($matches[1]);
+			if ( $wp_user ) {
+				$replacement = $wp_user->$fieldname;
+			}
+		} elseif ( preg_match( '/^#_WPUSERMETA{(.+?)\}$/', $result, $matches ) ) {
+			$fieldname = eme_str_only($matches[1]);
+			if ( $wp_id ) {
+				$replacement = get_user_meta( $wp_id, $fieldname, true );
+			}
 		} elseif ( preg_match( '/^#_USER_HAS_CAP\{(.+?)\}$/', $result, $matches ) ) {
-			$caps = $matches[1];
+			$caps = eme_str_only($matches[1]);
 			if ( preg_match( '/#_/', $caps ) ) {
 				// if it contains another placeholder as value, don't do anything here
 				$found = 0;
@@ -2003,14 +2018,13 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				}
 			}
 		} elseif ( preg_match( '/^#_USER_HAS_ROLE\{(.+?)\}$/', $result, $matches ) ) {
-			$roles = $matches[1];
+			$roles = eme_str_only($matches[1]);
 			if ( preg_match( '/#_/', $roles ) ) {
 				// if it contains another placeholder as value, don't do anything here
 				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $wp_id ) {
-					$wp_user   = get_userdata($wp_id);
+				if ( $wp_user ) {
 					$roles_arr = explode( ',', $roles );
 					foreach ( $roles_arr as $role ) {
 						if ( in_array( $role, (array) $wp_user->roles ) ) {
@@ -2021,7 +2035,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				}
 			}
 		} elseif ( preg_match( '/^#_IS_USER_IN_GROUP\{(.+?)\}$/', $result, $matches ) ) {
-			$groups = $matches[1];
+			$groups = eme_str_only($matches[1]);
 			if ( preg_match( '/#_/', $groups ) ) {
 				// if it contains another placeholder as value, don't do anything here
 				$found = 0;

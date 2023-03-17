@@ -2156,7 +2156,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				$replacement = esc_url( $replacement );
 			}
 		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB\{(.+?)\}$/', $result ) ) {
-                        if ( isset( $matches[1] ) ) 
+                        if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
                                 $thumb_size = substr( $matches[2], 1, -1 );
 			} else {
@@ -2173,7 +2173,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				}
 			}
 		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMBURL(\{.+?\})?$/', $result ) ) {
-                        if ( isset( $matches[1] ) ) 
+                        if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
                                 $thumb_size = substr( $matches[2], 1, -1 );
 			} else {

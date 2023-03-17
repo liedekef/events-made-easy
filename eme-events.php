@@ -1893,8 +1893,41 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 	}
 
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
-	$current_userid   = get_current_user_id();
-	$needle_offset    = 0;
+	$wp_id            = get_current_user_id();
+	$is_admin_request = eme_is_admin_request();
+	// if in the admin interface, use the wp id of the person being edited, where possible
+	if ($is_admin_request && isset( $_GET['eme_admin_action'] ) ) {
+		if ( $_GET['eme_admin_action'] == 'editBooking' && isset( $_GET['booking_id'] ) ) {
+			$booking_id = intval( $_GET['booking_id'] );
+			check_admin_referer( "eme_admin", 'eme_admin_nonce' );
+			if ( current_user_can( get_option( 'eme_cap_registrations' ) ) ) {
+				$booking = eme_get_booking( $booking_id );
+				if ( ! empty( $booking ) ) {
+					$wp_id = eme_get_wpid_by_personid( $booking['person_id'] );
+				}
+			}
+		} elseif ( $_GET['eme_admin_action'] == 'edit_member' && isset( $_GET['member_id'] ) ) {
+			$member_id = intval( $_GET['member_id'] );
+			if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+				$member = eme_get_member( $member_id );
+				if ( ! empty( $member )) {
+					$wp_id = eme_get_wpid_by_personid( $member['person_id'] );
+				}
+			}
+		} elseif ( $_GET['eme_admin_action'] == 'edit_person' && isset( $_GET['person_id'] ) ) {
+			$person_id = intval( $_GET['person_id'] );
+			if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
+				$wp_id = eme_get_wpid_by_personid( $person_id );
+			}
+		}
+	}
+	if (!empty($wp_id)) {
+		$wp_user = get_userdata($wp_id);
+	} else {
+		$wp_user = null;
+	}
+
+	$needle_offset = 0;
 	preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
@@ -1954,20 +1987,30 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/^#_WPID$/', $result, $matches ) ) {
-			if ( $current_userid ) {
-					$replacement = $current_userid;
+			if ( $wp_id ) {
+				$replacement = $wp_id;
+			}
+		} elseif ( preg_match( '/^#_WPUSERDATA{(.+?)\}$/', $result, $matches ) ) {
+			$fieldname = eme_str_only($matches[1]);
+			if ( $wp_user ) {
+				$replacement = $wp_user->$fieldname;
+			}
+		} elseif ( preg_match( '/^#_WPUSERMETA{(.+?)\}$/', $result, $matches ) ) {
+			$fieldname = eme_str_only($matches[1]);
+			if ( $wp_id ) {
+				$replacement = get_user_meta( $wp_id, $fieldname, true );
 			}
 		} elseif ( preg_match( '/^#_USER_HAS_CAP\{(.+?)\}$/', $result, $matches ) ) {
-			$caps = $matches[1];
+			$caps = eme_str_only($matches[1]);
 			if ( preg_match( '/#_/', $caps ) ) {
-					// if it contains another placeholder as value, don't do anything here
-					$found = 0;
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
 			} else {
 				$caps_arr    = explode( ',', $caps );
 				$replacement = 0;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					foreach ( $caps_arr as $cap ) {
-						if ( current_user_can( $cap ) ) {
+						if ( user_can( $wp_id, $cap ) ) {
 							$replacement = 1;
 							break;
 						}
@@ -1975,14 +2018,13 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				}
 			}
 		} elseif ( preg_match( '/^#_USER_HAS_ROLE\{(.+?)\}$/', $result, $matches ) ) {
-			$roles = $matches[1];
+			$roles = eme_str_only($matches[1]);
 			if ( preg_match( '/#_/', $roles ) ) {
-					// if it contains another placeholder as value, don't do anything here
-					$found = 0;
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $current_userid ) {
-					$wp_user   = wp_get_current_user();
+				if ( $wp_user ) {
 					$roles_arr = explode( ',', $roles );
 					foreach ( $roles_arr as $role ) {
 						if ( in_array( $role, (array) $wp_user->roles ) ) {
@@ -1993,10 +2035,10 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				}
 			}
 		} elseif ( preg_match( '/^#_IS_USER_IN_GROUP\{(.+?)\}$/', $result, $matches ) ) {
-			$groups = $matches[1];
+			$groups = eme_str_only($matches[1]);
 			if ( preg_match( '/#_/', $groups ) ) {
-					// if it contains another placeholder as value, don't do anything here
-					$found = 0;
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
 			} else {
 				$replacement = 0;
 				$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
@@ -2018,15 +2060,15 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 		} elseif ( preg_match( '/^#_IS_USER_MEMBER_PENDING\{(.+?)\}$/', $result, $matches ) ) {
 			$memberships = $matches[1];
 			if ( preg_match( '/#_/', $memberships ) ) {
-					// if it contains another placeholder as value, don't do anything here
-					$found = 0;
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
 			} else {
 				$replacement = 0;
 				if ( $current_userid ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
-							$membership = eme_get_membership( $membership_t );
-							$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_PENDING );
+						$membership = eme_get_membership( $membership_t );
+						$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_PENDING );
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
 							break;
@@ -2037,15 +2079,15 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 		} elseif ( preg_match( '/^#_IS_USER_MEMBER_EXPIRED\{(.+?)\}$/', $result, $matches ) ) {
 			$memberships = $matches[1];
 			if ( preg_match( '/#_/', $memberships ) ) {
-					// if it contains another placeholder as value, don't do anything here
-					$found = 0;
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
 			} else {
 				$replacement = 0;
 				if ( $current_userid ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
-							$membership = eme_get_membership( $membership_t );
-							$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_EXPIRED );
+						$membership = eme_get_membership( $membership_t );
+						$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_EXPIRED );
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
 							break;
@@ -2056,8 +2098,8 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 		} elseif ( preg_match( '/^#_IS_USER_MEMBER_OF\{(.+?)\}$/', $result, $matches ) ) {
 			$memberships = $matches[1];
 			if ( preg_match( '/#_/', $memberships ) ) {
-					// if it contains another placeholder as value, don't do anything here
-					$found = 0;
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
 			} else {
 				$replacement = 0;
 				if ( $current_userid ) {
@@ -2065,7 +2107,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
 						if ($membership) {
-							$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
+							$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
 						}
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
@@ -2077,12 +2119,12 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 		} elseif ( preg_match( '/^#_MEMBERSHIP_PAYMENT_URL\{(.+?)\}$|^#_EXPIRED_MEMBERSHIP_PAYMENT_URL\{(.+?)\}$/', $result, $matches ) ) {
 			$match = $matches[1];
 			if ( preg_match( '/#_/', $match ) ) {
-					// if it contains another placeholder as value, don't do anything here
-					$found = 0;
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
 			} elseif ( $current_userid ) {
-					$membership = eme_get_membership( $match );
+				$membership = eme_get_membership( $match );
 				if ( ! empty( $membership ) ) {
-						$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'] );
+					$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'] );
 					if ( ! empty( $member ) ) {
 						// no payment id yet? let's create one (can be old members, older imports, ...)
 						if ( empty( $member['payment_id'] ) ) {
@@ -2099,8 +2141,8 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 		} elseif ( preg_match( '/^#_HAS_USER_TASK_REGISTERED\{(.+?)\}$/', $result, $matches ) ) {
 			$tasks = $matches[1];
 			if ( preg_match( '/#_/', $tasks ) ) {
-					// if it contains another placeholder as value, don't do anything here
-					$found = 0;
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
 			} else {
 				$replacement = 0;
 				if ( $current_userid ) {
@@ -2117,8 +2159,8 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 		} elseif ( preg_match( '/#_INCLUDE_TEMPLATE\{(.+?)\}$/', $result, $matches ) ) {
 			$template_id = $matches[1];
 			if ( preg_match( '/#_/', $template_id ) ) {
-					// if it contains another placeholder as value, don't do anything here
-					$found = 0;
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
 			} else {
 				$replacement = eme_get_template_format( intval( $template_id ) );
 			}

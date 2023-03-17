@@ -673,7 +673,7 @@ function eme_members_page() {
 		} else {
 			$message = __( 'You have no right to manage members!', 'events-made-easy' );
 		}
-	} elseif ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'edit_member' ) {
+	} elseif ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'edit_member' && isset( $_GET['member_id'] ) ) {
 		$member_id = intval( $_GET['member_id'] );
 		$member    = eme_get_member( $member_id );
 		$wp_id     = eme_get_wpid_by_personid( $member['person_id'] );

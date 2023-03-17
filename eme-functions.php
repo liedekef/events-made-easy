@@ -1949,6 +1949,10 @@ function eme_str_numbers_only( $arg ) {
 	return preg_replace( '/[^0-9]/', '', $arg );
 }
 
+function eme_str_only( $arg ) {
+	return preg_replace( '/[^0-9a-z_\.\-]/i', '', $arg );
+}
+
 function eme_is_url( $url ) {
 	if ( eme_is_empty_string( $url ) ) {
 		return false;

@@ -3046,7 +3046,10 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 	// don't let eme_replace_event_placeholders replace other shortcodes yet, let eme_replace_booking_placeholders finish and that will do it
 	// These also replace the generic placeholders, so no need to call eme_replace_generic_placeholders again
 	$format = eme_replace_event_placeholders( $format, $event, $target, $lang, 0 );
-	$format = eme_replace_people_placeholders( $format, $person, $orig_target, $lang, 0 );
+	// if not a fake booking, replace person placeholders
+	if ( $booking['person_id'] != -1 ) {
+		$format = eme_replace_people_placeholders( $format, $person, $orig_target, $lang, 0 );
+	}
 	$format = eme_replace_email_event_placeholders( $format, $person['email'], $person['lastname'], $person['firstname'], $event, $lang );
 
 	$current_userid = get_current_user_id();

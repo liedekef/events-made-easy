@@ -1022,7 +1022,7 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 }
 
 function eme_replace_task_signupformfields_placeholders( $format ) {
-	//$eme_is_admin_request = eme_is_admin_request();
+	$eme_is_admin_request = eme_is_admin_request();
 
 	if ( is_user_logged_in() ) {
 		$readonly = "readonly='readonly'";

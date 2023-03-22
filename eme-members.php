@@ -6352,7 +6352,6 @@ function eme_ajax_action_resend_member_reminders( $ids_arr ) {
 }
 
 function eme_generate_member_pdf( $member, $membership, $template_id ) {
-	
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
 		$format = eme_get_template_format( $template_id );
@@ -6378,6 +6377,8 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 		$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
 		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
+	$extra_html_header = get_option( 'eme_html_header' );
+        $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
 	$html = "<html>
 <head>
 <style>
@@ -6387,6 +6388,7 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
         page-break-before: always;
     }
 </style>$css
+$extra_html_header
 </head>
 <body>
 ";
@@ -6415,7 +6417,6 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 }
 
 function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
-	
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
 		$format = eme_get_template_format( $template_id );
@@ -6443,6 +6444,8 @@ function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_head
 			$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
 			$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
+	$extra_html_header = get_option( 'eme_html_header' );
+        $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
 	$html  = "<html>
 <head>
 <style>
@@ -6452,6 +6455,7 @@ function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_head
         page-break-before: always;
     }
 </style>$css
+$extra_html_header
 </head>
 <body>
 $header
@@ -6480,8 +6484,9 @@ function eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_hea
 	$format = eme_get_template_format( $template_id );
 	$header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
 	$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
-
-	$html  = "<html><body>$header";
+	$extra_html_header = get_option( 'eme_html_header' );
+        $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
+        $html   = "<html><head>$extra_html_header</head><body>$header";
 	$total = count( $ids_arr );
 	$i     = 1;
 	$lang  = eme_detect_lang();

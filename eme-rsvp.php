@@ -6091,7 +6091,6 @@ function eme_ajax_action_mark_pending( $ids_arr, $action, $send_mail, $refund ) 
 }
 
 function eme_generate_booking_pdf( $booking, $event, $template_id ) {
-	
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
 	$format = eme_get_template_format( $template_id );
@@ -6117,6 +6116,8 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 		$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
 		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
+	$extra_html_header = get_option( 'eme_html_header' );
+        $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
 
 	$html = "<html>
 <head>
@@ -6127,14 +6128,15 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
         page-break-before: always;
     }
 </style>$css
+$extra_html_header
 </head>
 <body>
 ";
 	// avoid a loop between eme_replace_booking_placeholders and eme_generate_booking_pdf
 	$format = str_replace( '#_BOOKINGPDF_URL', '', $format );
 
-	$html     .= eme_replace_booking_placeholders( $format, $event, $booking );
-	$html .= '</body></html>';
+	$html .= eme_replace_booking_placeholders( $format, $event, $booking );
+	$html .= "</body></html>";
 	$dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
 	$dompdf->render();
 	// now we know where to store it, so create the dir
@@ -6155,7 +6157,6 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 }
 
 function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
-	
 	$template   = eme_get_template( $template_id );
 	$header = eme_get_template_format( $template_id_header );
 	$footer = eme_get_template_format( $template_id_footer );
@@ -6184,6 +6185,8 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
 		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
 
+	$extra_html_header = get_option( 'eme_html_header' );
+        $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
 	$html  = "<html>
 <head>
 <style>
@@ -6193,6 +6196,7 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
         page-break-before: always;
     }
 </style>$css
+$extra_html_header
 </head>
 <body>
 $header
@@ -6222,7 +6226,9 @@ function eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_he
 	$format     = eme_get_template_format( $template_id );
 	$header = eme_get_template_format( $template_id_header );
 	$footer = eme_get_template_format( $template_id_footer );
-	$html   = "<html><body>$header";
+	$extra_html_header = get_option( 'eme_html_header' );
+        $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
+	$html   = "<html><head>$extra_html_header</head><body>$header";
 	$total  = count( $ids_arr );
 	$i      = 1;
 	foreach ( $ids_arr as $booking_id ) {
@@ -6243,7 +6249,6 @@ function eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_he
 
 // for CRON
 function eme_rsvp_send_pending_reminders() {
-	
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// this gets us future and ongoing events with tasks enabled
 	$events = eme_get_events( 'extra_conditions=' . urlencode( 'event_rsvp=1' ) );
@@ -6269,8 +6274,8 @@ function eme_rsvp_send_pending_reminders() {
 		}
 	}
 }
+
 function eme_rsvp_send_approved_reminders() {
-	
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// this gets us future and ongoing events with tasks enabled
 	$events = eme_get_events( 'extra_conditions=' . urlencode( 'event_rsvp=1' ) );

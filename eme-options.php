@@ -1051,7 +1051,7 @@ function eme_options_register() {
 			//if (in_array($opt,$allow_js_arr))
 			//	register_setting ( 'eme-options', $opt );
 			//else
-				register_setting ( 'eme-options', $opt, 'eme_sanitize_options' );
+			//	register_setting ( 'eme-options', $opt, 'eme_sanitize_options' );
 		//} else {
 			register_setting ( 'eme-options', $opt, 'eme_sanitize_options' );
 		//}

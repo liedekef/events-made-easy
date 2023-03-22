@@ -262,6 +262,11 @@ jQuery(document).ready(function ($) {
 
         function updateShowHideStuff () {
 	   var action=$('select#eme_admin_action').val();
+           if ($.inArray(action,['resendApprovedBooking']) >= 0) {
+              $('span#span_sendtocontact').show();
+           } else {
+              $('span_sendtocontact').hide();
+           }
            if ($.inArray(action,['trashBooking','approveBooking','pendingBooking','unsetwaitinglistBooking','setwaitinglistBooking','markPaid','markUnpaid']) >= 0) {
               $('span#span_sendmails').show();
            } else {
@@ -316,6 +321,7 @@ jQuery(document).ready(function ($) {
            e.preventDefault();
            var selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
            var do_action = $('#eme_admin_action').val();
+           var send_to_contact_too = $('#send_to_contact_too').val();
            var send_mail = $('#send_mail').val();
            var refund = $('#refund').val();
            var partial_amount = $('#partial_amount').val();
@@ -351,6 +357,7 @@ jQuery(document).ready(function ($) {
                         'booking_ids': idsjoined,
                         'action': 'eme_manage_bookings',
                         'do_action': do_action,
+                        'send_to_contact_too': send_to_contact_too,
                         'send_mail': send_mail,
                         'refund': refund,
                         'partial_amount': partial_amount,

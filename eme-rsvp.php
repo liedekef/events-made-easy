@@ -4763,6 +4763,12 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	<option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
 <?php } ?>
 	</select>
+	<span id="span_sendtocontact" class="eme-hidden">
+	<?php
+	esc_html_e( 'Send mails to contact person too?', 'events-made-easy' );
+	echo eme_ui_select_binary( 0, 'send_to_contact_too' );
+	?>
+	</span>
 	<span id="span_sendmails" class="eme-hidden">
 	<?php
 	esc_html_e( 'Send mails to attendees upon changes being made?', 'events-made-easy' );
@@ -5548,7 +5554,12 @@ function eme_ajax_manage_bookings() {
 					eme_ajax_action_mark_booking_unpaid( $ids_arr, 'updateBooking', $send_mail, $refund );
 					break;
 				case 'resendApprovedBooking':
-					eme_ajax_action_resend_booking_mail( $ids_arr, $do_action );
+					$send_to_contact_too = ( isset( $_POST['send_to_contact_too'] ) ) ? intval( $_POST['send_to_contact_too'] ) : 0;
+					if ($send_to_contact_too) {
+						eme_ajax_action_resend_booking_mail( $ids_arr, 'approvedBooking' );
+					} else {
+						eme_ajax_action_resend_booking_mail( $ids_arr, $do_action );
+					}
 					break;
 				case 'resendPendingBooking':
 					eme_ajax_action_resend_booking_mail( $ids_arr, 'pendingBooking' );

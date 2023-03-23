@@ -402,6 +402,8 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		if ( empty( $fromname ) ) {
 			$fromname = get_option( 'blogname' );
 		}
+		$replytoemail = $fromemail;
+		$replytoname = $fromname;
 	}
 	// now the from should never be empty, so just check reply to again
 	if ( empty( $replytoemail ) ) {

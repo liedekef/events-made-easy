@@ -1290,7 +1290,6 @@ function eme_get_discount_by_name( $name ) {
 function eme_calc_booking_discount( $discount, $booking ) {
 	// check valid from/to
 	if ( ! eme_is_empty_datetime( $discount['valid_from'] ) ) {
-		
 		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
 		if ( $eme_valid_from_obj > $eme_date_obj_now ) {
@@ -1298,7 +1297,6 @@ function eme_calc_booking_discount( $discount, $booking ) {
 		}
 	}
 	if ( ! eme_is_empty_datetime( $discount['valid_to'] ) ) {
-		
 		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
 		if ( $eme_valid_to_obj < $eme_date_obj_now ) {
@@ -1417,16 +1415,14 @@ function eme_calc_booking_single_discount( $discount, $booking, $coupon = '' ) {
 
 function eme_calc_member_discount( $discount, $member ) {
 	// check valid from/to
-	if ( ! empty( $discount['valid_from'] ) ) {
-		
+	if ( ! eme_is_empty_datetime( $discount['valid_from'] ) ) {
 		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
 		if ( $eme_valid_from_obj > $eme_date_obj_now ) {
 			return false;
 		}
 	}
-	if ( ! empty( $discount['valid_to'] ) ) {
-		
+	if ( ! eme_is_empty_datetime( $discount['valid_to'] ) ) {
 		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
 		if ( $eme_valid_to_obj < $eme_date_obj_now ) {

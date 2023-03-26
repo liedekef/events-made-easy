@@ -2155,7 +2155,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			if ( $target == 'html' ) {
 				$replacement = esc_url( $replacement );
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB\{(.+?)\}$/', $result ) ) {
+		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB(\{.+?\})?$/', $result ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
                                 $thumb_size = substr( $matches[2], 1, -1 );

@@ -2042,13 +2042,13 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			} else {
 				$replacement = 0;
 				$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$groups_arr = explode( ',', $groups );
 					foreach ( $groups_arr as $group ) {
-						if ( $current_userid ) {
+						if ( $wp_id ) {
 							$groups_arr = explode( ',', $groups );
 							foreach ( $groups_arr as $group ) {
-								if ( ! empty( eme_get_groups_person_ids( $group, "$people_table.wp_id = $current_userid" ) ) ) {
+								if ( ! empty( eme_get_groups_person_ids( $group, "$people_table.wp_id = $wp_id" ) ) ) {
 									$replacement = 1;
 									break;
 								}
@@ -2064,11 +2064,11 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
-						$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_PENDING );
+						$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_PENDING );
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
 							break;
@@ -2083,11 +2083,11 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
-						$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_EXPIRED );
+						$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_EXPIRED );
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
 							break;
@@ -2102,12 +2102,12 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
 						if ($membership) {
-							$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
+							$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
 						}
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
@@ -2121,10 +2121,10 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			if ( preg_match( '/#_/', $match ) ) {
 				// if it contains another placeholder as value, don't do anything here
 				$found = 0;
-			} elseif ( $current_userid ) {
+			} elseif ( $wp_id ) {
 				$membership = eme_get_membership( $match );
 				if ( ! empty( $membership ) ) {
-					$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'] );
+					$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'] );
 					if ( ! empty( $member ) ) {
 						// no payment id yet? let's create one (can be old members, older imports, ...)
 						if ( empty( $member['payment_id'] ) ) {
@@ -2145,10 +2145,10 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$tasks_arr = explode( ',', $tasks );
 					foreach ( $tasks_arr as $task_id ) {
-						$signups = eme_get_task_signups_by( $current_userid, $task_id );
+						$signups = eme_get_task_signups_by( $wp_id, $task_id );
 						if ( ! empty( $signups ) ) {
 							$replacement = 1;
 							break;

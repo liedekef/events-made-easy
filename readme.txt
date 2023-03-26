@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.60 (2023/03/26) =
+* Fix the conditional placeholders #_IS_USER_IN_*
+
 = 2.3.59 (2023/03/25) =
 * Improvement: French translation updated, thanks to Frédéric M
 * Add #_REMEMBERME and #_PHONE as possible placeholers to task signup form too

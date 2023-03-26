@@ -524,9 +524,15 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 					$replacement = esc_url( $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_IMAGETHUMB$/', $result ) ) {
+		} elseif ( $event && preg_match( '/#_IMAGETHUMB(\{.+?\})?$/', $result ) ) {
+                        if ( isset( $matches[1] ) ) {
+                                // remove { and } (first and last char of second match)
+                                $thumb_size = substr( $matches[2], 1, -1 );
+                        } else {
+                                $thumb_size = get_option( 'eme_thumbnail_size' );
+                        }
 			if ( ! empty( $person['properties']['image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $person['properties']['image_id'], get_option( 'eme_thumbnail_size' ), 0, [ 'class' => 'eme_person_image' ] );
+				$replacement = wp_get_attachment_image( $person['properties']['image_id'], $thumb_size, 0, [ 'class' => 'eme_person_image' ] );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -535,27 +541,15 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_IMAGETHUMBURL$/', $result ) ) {
+		} elseif ( preg_match( '/#_IMAGETHUMBURL(\{.+?\})?/', $result, $matches ) ) {
+                        if ( isset( $matches[1] ) ) {
+                                // remove { and } (first and last char of second match)
+                                $thumb_size = substr( $matches[2], 1, -1 );
+                        } else {
+                                $thumb_size = get_option( 'eme_thumbnail_size' );
+                        }
 			if ( ! empty( $person['properties']['image_id'] ) ) {
-				$replacement = wp_get_attachment_image_url( $person['properties']['image_id'], get_option( 'eme_thumbnail_size' ) );
-				if ( $target == 'html' ) {
-					$replacement = esc_url( $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_IMAGETHUMB\{(.+)\}/', $result, $matches ) ) {
-			if ( ! empty( $person['properties']['image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $person['properties']['image_id'], $matches[1], 0, [ 'class' => 'eme_person_image' ] );
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_IMAGETHUMBURL\{(.+)\}/', $result, $matches ) ) {
-			if ( ! empty( $person['properties']['image_id'] ) ) {
-				$replacement = wp_get_attachment_image_url( $person['properties']['image_id'], $matches[1] );
+				$replacement = wp_get_attachment_image_url( $person['properties']['image_id'], $thumb_size );
 				if ( $target == 'html' ) {
 					$replacement = esc_url( $replacement );
 				}

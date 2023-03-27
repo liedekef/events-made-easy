@@ -4942,7 +4942,6 @@ function eme_is_event_multiseats( $event_id ) {
 }
 
 function eme_event_rsvp_status( $event ) {
-	
 	// this functions returns 0 if rsvp is not started yet, 1 if rsvp is allowed and ongoing, 2 if rsvp is ended
 	if ( ! eme_is_event_rsvp( $event ) ) {
 		return 0;
@@ -4995,8 +4994,6 @@ function eme_is_event_rsvp_ended( $event ) {
 }
 
 function eme_is_event_cancelrsvp_ended( $event ) {
-	
-
 	$eme_date_obj_now     = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_cancel_rsvp_days = intval( $event['event_properties']['cancel_rsvp_days'] );
 	$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );

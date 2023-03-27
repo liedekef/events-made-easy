@@ -289,7 +289,9 @@ jQuery(document).ready(function ($) {
 		 	$('#MembershipsActionsButton').prop('disabled', false);
 			$('div#memberships-message').html(data.htmlmessage);
 			$('div#memberships-message').show();
-			$('div#memberships-message').delay(3000).fadeOut('slow');
+			if (do_action!='showMembershipStats') {
+				$('div#memberships-message').delay(3000).fadeOut('slow');
+			}
                  }, 'json');
               }
            }

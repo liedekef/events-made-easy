@@ -414,6 +414,40 @@ function eme_get_membership( $id ) {
 	}
 }
 
+function eme_get_membership_stats( $ids ) {
+	global $wpdb;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	if ( ! eme_is_list_of_int( $ids ) ) {
+		return false;
+	}
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj->startOfMonth()->modifyMonths(-12);
+	$res = '<table>';
+	$counter = 0;
+	while ( $counter <= 12 ) {
+		$limit_start   = $eme_date_obj->format( 'Y-m-d' );
+		$days_in_month = $eme_date_obj->getDaysInMonth();
+		$limit_end     = $eme_date_obj->format( "Y-m-$days_in_month" );
+		if ($counter==12) {
+			$sql = "SELECT count(*) FROM $table WHERE status=1 AND membership_id IN ($ids)";
+			$member_nbr = $wpdb->get_var( $sql );
+		} else {
+			$sql1 = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date<=%s AND (end_date >= %s OR end_date = '0000-00-00') AND membership_id IN ($ids)", $limit_end, $limit_start );
+			$member_nbr_1 = $wpdb->get_var( $sql1 );
+			$sql2 = $wpdb->prepare( "SELECT count(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
+			$member_nbr_2 = $wpdb->get_var( $sql2 );
+			$member_nbr = $member_nbr_1 - $member_nbr_2;
+
+		}
+		$res .= "<tr><td>".$eme_date_obj->format( 'Y-m' )."</td><td>$member_nbr</td></tr>";
+		$eme_date_obj->startOfMonth()->modifyMonths(+1);
+		$counter++;
+	}
+	// now the cur month
+	$res .= '</table>';
+	return $res;
+}
+
 function eme_membership_types() {
 	$type_array = [
 		'fixed'   => __( 'Fixed startdate', 'events-made-easy' ),
@@ -2885,6 +2919,7 @@ function eme_manage_memberships_layout( $message ) {
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
 	<option value="deleteMemberships"><?php esc_html_e( 'Delete selected memberships', 'events-made-easy' ); ?></option>
+	<option value="showMembershipStats"><?php esc_html_e( 'Show membership statistics', 'events-made-easy' ); ?></option>
 	<?php endif; ?>
 	</select>
 	<button id="MembershipsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
@@ -6085,6 +6120,12 @@ function eme_ajax_manage_memberships() {
 			wp_die();
 		}
 		switch ( $do_action ) {
+			case 'showMembershipStats':
+				$membershipstats = eme_get_membership_stats( $ids );
+				$ajaxResult['Result']      = 'OK';
+				$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . $membershipstats . '</p></div>';
+				print wp_json_encode( $ajaxResult );
+				break;
 			case 'deleteMemberships':
 				foreach ( $ids_arr as $membership_id ) {
 						eme_delete_membership( $membership_id );

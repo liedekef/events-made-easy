@@ -2496,7 +2496,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/^#_ADDBOOKINGFORM_IF_USER_HAS_CAP\{(.+?)\}$/', $result, $matches ) ) {
-					$caps = $matches[1];
+			$caps = $matches[1];
 			if ( is_user_logged_in() && $target == 'html' ) {
 				$caps_arr  = explode( ',', $caps );
 				$show_form = 0;
@@ -2527,7 +2527,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/^#_ADDBOOKINGFORM_IF_USER_IN_GROUP\{(.+?)\}$/', $result, $matches ) ) {
-					$groups = $matches[1];
+			$groups = $matches[1];
 			if ( is_user_logged_in() && $target == 'html' ) {
 				$wp_id      = get_current_user_id();
 				$groups_arr = explode( ',', $groups );
@@ -2971,8 +2971,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 		} elseif ( preg_match( '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?$/', $result, $matches ) ) {
 			$field_key = $matches[2];
 			if ( isset( $matches[3] ) ) {
-					// remove { and } (first and last char of second match)
-					$sep = substr( $matches[3], 1, -1 );
+				// remove { and } (first and last char of second match)
+				$sep = substr( $matches[3], 1, -1 );
 			} else {
 				$sep = '||';
 			}
@@ -3127,7 +3127,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			$field = 'price';
 			if ( $event[ $field ] ) {
 				if ( $need_escape ) {
-						$replacement = $event[ $field ];
+					$replacement = $event[ $field ];
 				} else {
 					$replacement = eme_localized_price( $event[ $field ], $event['currency'], $target );
 				}
@@ -3140,7 +3140,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( $event && preg_match( '/#_(EVENT)?PRICE\{(\d+)\}$/', $result, $matches ) ) {
-					$field_id = intval( $matches[2] - 1 );
+			$field_id = intval( $matches[2] - 1 );
 			if ( $event['price'] && eme_is_multi( $event['price'] ) ) {
 				$prices = eme_convert_multi2array( $event['price'] );
 				if ( is_array( $prices ) && array_key_exists( $field_id, $prices ) ) {
@@ -3159,7 +3159,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_EVENTPRICE_NO_VAT$|#_PRICE_NO_VAT$/', $result ) ) {
-					$field = 'price';
+			$field = 'price';
 			if ( $event[ $field ] ) {
 				$price = $event[ $field ];
 				$price = $price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
@@ -3184,7 +3184,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$price = $prices[ $field_id ];
 					$price = $price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
 					if ( $need_escape ) {
-							$replacement = $price;
+						$replacement = $price;
 					} else {
 						$replacement = eme_localized_price( $price, $event['currency'], $target );
 					}
@@ -3198,7 +3198,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( $event && preg_match( '/#_EVENTPRICE_VAT_ONLY$|#_PRICE_VAT_ONLY$/', $result ) ) {
-					$field = 'price';
+			$field = 'price';
 			if ( $event[ $field ] ) {
 				$price = $event[ $field ];
 				$price = $price - $price / ( 1 + $event['event_properties']['vat_pct'] / 100 );
@@ -3216,7 +3216,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_(EVENT)?PRICEDESCRIPTION\{(\d+)\}$/', $result, $matches ) ) {
-					$field_id = intval( $matches[2] - 1 );
+			$field_id = intval( $matches[2] - 1 );
 			if ( $event['price'] && eme_is_multi( $event['price'] ) ) {
 				$prices_desc = eme_convert_multi2array( $event['event_properties']['multiprice_desc'] );
 				if ( is_array( $prices_desc ) && array_key_exists( $field_id, $prices_desc ) ) {
@@ -3231,7 +3231,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_(EVENT)?PRICEDESCRIPTION$/', $result, $matches ) ) {
-				// description can also be used if the price is 0
+			// description can also be used if the price is 0
 			if ( ! eme_is_multi( $event['price'] ) ) {
 				$replacement = $event['event_properties']['price_desc'];
 				if ( $target == 'html' ) {
@@ -3243,8 +3243,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_CURRENCY$/', $result ) ) {
-					$field = 'currency';
-					// currency is only important if the price is not empty as well
+			$field = 'currency';
+			// currency is only important if the price is not empty as well
 			if ( $event['price'] ) {
 				$replacement = $event[ $field ];
 			}
@@ -3256,8 +3256,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( $event && preg_match( '/#_VAT_PCT$/', $result ) ) {
-					// currency is only important if the price is not empty as well
-					$replacement = $event['event_properties']['vat_pct'];
+			// currency is only important if the price is not empty as well
+			$replacement = $event['event_properties']['vat_pct'];
 			if ( $target == 'html' ) {
 				$replacement = apply_filters( 'eme_general', $replacement );
 			} elseif ( $target == 'rss' ) {
@@ -3266,8 +3266,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( $event && preg_match( '/#_CURRENCYSYMBOL$/', $result ) ) {
-					$field = 'currency';
-					// currency is only important if the price is not empty as well
+			$field = 'currency';
+			// currency is only important if the price is not empty as well
 			if ( $event['price'] ) {
 				$replacement = eme_localized_currencysymbol( $event[ $field ] );
 			}
@@ -3279,7 +3279,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( $event && preg_match( '/#_ATTENDEES/', $result ) ) {
-					$replacement = eme_get_attendees_list( $event );
+			$replacement = eme_get_attendees_list( $event );
 			if ( $target == 'html' ) {
 				$replacement = apply_filters( 'eme_general', $replacement );
 			} elseif ( $target == 'rss' ) {
@@ -3288,7 +3288,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( $event && preg_match( '/#_BOOKINGS/', $result ) ) {
-					$replacement = eme_get_bookings_list_for_event( $event );
+			$replacement = eme_get_bookings_list_for_event( $event );
 			if ( $target == 'html' ) {
 				$replacement = apply_filters( 'eme_general', $replacement );
 			} elseif ( $target == 'rss' ) {
@@ -3308,7 +3308,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$t_person  = $contact_person;
 			} else {
 				if ( is_null( $author ) ) {
-								$author = eme_get_author( $event );
+					$author = eme_get_author( $event );
 				}
 				if ( ! empty( $author ) && is_null( $author_person ) ) {
 					$author_person = eme_get_person_by_wp_id( $author->ID );
@@ -3331,7 +3331,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					if ( $t_format == '#_NAME' ) {
 						$t_format = '#_FULLNAME';
 					}
-						$replacement = eme_replace_people_placeholders( $t_format, $t_person, $target, $lang );
+					$replacement = eme_replace_people_placeholders( $t_format, $t_person, $target, $lang );
 				} else {
 					if ( preg_match( '/#_NAME|#_DISPNAME/', $t_format ) ) {
 						$replacement = $t_contact->display_name;
@@ -3339,19 +3339,19 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 							$replacement = eme_trans_esc_html( $replacement, $lang );
 						}
 					} elseif ( preg_match( '/#_LASTNAME/', $t_format ) ) {
-										$replacement = $t_contact->user_lastname;
+						$replacement = $t_contact->user_lastname;
 						if ( $target == 'html' ) {
 							$replacement = eme_trans_esc_html( $replacement, $lang );
 						}
 					} elseif ( preg_match( '/#_FIRSTNAME/', $t_format ) ) {
-															$replacement = $t_contact->user_firstname;
+						$replacement = $t_contact->user_firstname;
 						if ( $target == 'html' ) {
 							$replacement = eme_trans_esc_html( $replacement, $lang );
 						}
 					} elseif ( preg_match( '/#_EMAIL/', $t_format ) ) {
-																				$replacement = $t_contact->user_email;
-																				// ascii encode for primitive harvesting protection ...
-																				$replacement = eme_email_obfuscate( $replacement, $orig_target );
+						$replacement = $t_contact->user_email;
+						// ascii encode for primitive harvesting protection ...
+						$replacement = eme_email_obfuscate( $replacement, $orig_target );
 					} elseif ( preg_match( '/#_PHONE/', $t_format ) ) {
 						$replacement = eme_get_user_phone( $t_contact->ID );
 						if ( $target == 'html' ) {
@@ -3388,8 +3388,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = ltrim( $replacement, '0' );
 			}
 		} elseif ( $event && preg_match( '/#@[A-Za-z]$/', $result ) ) {
-					// matches all PHP time placeholders for enddate-time
-					$replacement = eme_localized_date( $event['event_end'], EME_TIMEZONE, ltrim( $result, '#@' ) );
+			// matches all PHP time placeholders for enddate-time
+			$replacement = eme_localized_date( $event['event_end'], EME_TIMEZONE, ltrim( $result, '#@' ) );
 			if ( get_option( 'eme_time_remove_leading_zeros' ) && $result == '#@i' ) {
 				$replacement = ltrim( $replacement, '0' );
 			}
@@ -3621,7 +3621,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_RECURRENCE_NBR/', $result ) ) {
-					// returns the sequence number of an event in a recurrence series
+			// returns the sequence number of an event in a recurrence series
 			if ( $event ['recurrence_id'] ) {
 				$event_ids = eme_get_recurrence_eventids( $event ['recurrence_id'] );
 				$nbr       = array_search( $event['event_id'], $event_ids );
@@ -3641,7 +3641,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_RSVPSTART/', $result ) ) {
-					// show the end date+time for which a user can rsvp for an event
+			// show the end date+time for which a user can rsvp for an event
 			if ( eme_is_event_rsvp( $event ) ) {
 				$rsvp_number_days  = intval( $event['event_properties']['rsvp_start_number_days'] );
 				$rsvp_number_hours = intval( $event['event_properties']['rsvp_start_number_hours'] );
@@ -3656,7 +3656,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_RSVPEND/', $result ) ) {
-					// show the end date+time for which a user can rsvp for an event
+			// show the end date+time for which a user can rsvp for an event
 			if ( eme_is_event_rsvp( $event ) ) {
 				if ( $event['event_properties']['rsvp_end_target'] == 'start' ) {
 					$rsvp_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
@@ -3669,7 +3669,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE );
 			}
 		} elseif ( $event && preg_match( '/#_CANCELEND/', $result ) ) {
-					// show the end date+time for which a user can cancel an rsvp for an event
+			// show the end date+time for which a user can cancel an rsvp for an event
 			if ( eme_is_event_rsvp( $event ) ) {
 				$eme_cancel_rsvp_days = intval( $event['event_properties']['cancel_rsvp_days'] );
 				$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );

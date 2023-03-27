@@ -869,24 +869,14 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			<tr class='form-field'>
 		<th scope='row' style='vertical-align:top'><label for='dp_valid_from'><?php esc_html_e( 'Valid from', 'events-made-easy' ); ?></label></th>
 			<td><input type='hidden' readonly='readonly' name='valid_from' id='valid_from'>
-			<input type='text' readonly='readonly' name='dp_valid_from' id='dp_valid_from' data-date='
-			<?php
-			if ( $discount['valid_from'] ) {
-				echo eme_js_datetime( $discount['valid_from'] );}
-			?>
-			' data-alt-field='#valid_from' class='eme_formfield_fdatetime'>
+			<input type='text' readonly='readonly' name='dp_valid_from' id='dp_valid_from' data-date='<?php if ( $discount['valid_from'] ) { echo eme_js_datetime( $discount['valid_from'] );} ?>' data-alt-field='#valid_from' class='eme_formfield_fdatetime'>
 			<br><?php esc_html_e( 'An optional coupon start date and time, if entered the coupon is not valid before this date and time.', 'events-made-easy' ); ?>
 				</td>
 			</tr>
 			<tr class='form-field'>
 		<th scope='row' style='vertical-align:top'><label for='dp_valid_to'><?php esc_html_e( 'Valid until', 'events-made-easy' ); ?></label></th>
 			<td><input type='hidden' readonly='readonly' name='valid_to' id='valid_to'>
-			<input type='text' readonly='readonly' name='dp_valid_to' id='dp_valid_to' data-date='
-			<?php
-			if ( $discount['valid_to'] ) {
-				echo eme_js_datetime( $discount['valid_to'] );}
-			?>
-			' data-alt-field='#valid_to' class='eme_formfield_fdatetime'>
+			<input type='text' readonly='readonly' name='dp_valid_to' id='dp_valid_to' data-date='<?php if ( $discount['valid_to'] ) { echo eme_js_datetime( $discount['valid_to'] );} ?>' data-alt-field='#valid_to' class='eme_formfield_fdatetime'>
 			<br><?php esc_html_e( 'An optional coupon expiration date and time, if entered the coupon is not valid after this date and time.', 'events-made-easy' ); ?>
 				</td>
 			</tr>
@@ -1300,7 +1290,6 @@ function eme_get_discount_by_name( $name ) {
 function eme_calc_booking_discount( $discount, $booking ) {
 	// check valid from/to
 	if ( ! eme_is_empty_datetime( $discount['valid_from'] ) ) {
-		
 		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
 		if ( $eme_valid_from_obj > $eme_date_obj_now ) {
@@ -1308,7 +1297,6 @@ function eme_calc_booking_discount( $discount, $booking ) {
 		}
 	}
 	if ( ! eme_is_empty_datetime( $discount['valid_to'] ) ) {
-		
 		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
 		if ( $eme_valid_to_obj < $eme_date_obj_now ) {
@@ -1427,16 +1415,14 @@ function eme_calc_booking_single_discount( $discount, $booking, $coupon = '' ) {
 
 function eme_calc_member_discount( $discount, $member ) {
 	// check valid from/to
-	if ( ! empty( $discount['valid_from'] ) ) {
-		
+	if ( ! eme_is_empty_datetime( $discount['valid_from'] ) ) {
 		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_valid_from_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
 		if ( $eme_valid_from_obj > $eme_date_obj_now ) {
 			return false;
 		}
 	}
-	if ( ! empty( $discount['valid_to'] ) ) {
-		
+	if ( ! eme_is_empty_datetime( $discount['valid_to'] ) ) {
 		$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_valid_to_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
 		if ( $eme_valid_to_obj < $eme_date_obj_now ) {

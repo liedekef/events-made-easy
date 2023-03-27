@@ -2042,13 +2042,13 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			} else {
 				$replacement = 0;
 				$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$groups_arr = explode( ',', $groups );
 					foreach ( $groups_arr as $group ) {
-						if ( $current_userid ) {
+						if ( $wp_id ) {
 							$groups_arr = explode( ',', $groups );
 							foreach ( $groups_arr as $group ) {
-								if ( ! empty( eme_get_groups_person_ids( $group, "$people_table.wp_id = $current_userid" ) ) ) {
+								if ( ! empty( eme_get_groups_person_ids( $group, "$people_table.wp_id = $wp_id" ) ) ) {
 									$replacement = 1;
 									break;
 								}
@@ -2064,11 +2064,11 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
-						$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_PENDING );
+						$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_PENDING );
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
 							break;
@@ -2083,11 +2083,11 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
-						$member     = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_EXPIRED );
+						$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_EXPIRED );
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
 							break;
@@ -2102,12 +2102,12 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
 						if ($membership) {
-							$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
+							$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
 						}
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
@@ -2121,10 +2121,10 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			if ( preg_match( '/#_/', $match ) ) {
 				// if it contains another placeholder as value, don't do anything here
 				$found = 0;
-			} elseif ( $current_userid ) {
+			} elseif ( $wp_id ) {
 				$membership = eme_get_membership( $match );
 				if ( ! empty( $membership ) ) {
-					$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'] );
+					$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'] );
 					if ( ! empty( $member ) ) {
 						// no payment id yet? let's create one (can be old members, older imports, ...)
 						if ( empty( $member['payment_id'] ) ) {
@@ -2145,10 +2145,10 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$found = 0;
 			} else {
 				$replacement = 0;
-				if ( $current_userid ) {
+				if ( $wp_id ) {
 					$tasks_arr = explode( ',', $tasks );
 					foreach ( $tasks_arr as $task_id ) {
-						$signups = eme_get_task_signups_by( $current_userid, $task_id );
+						$signups = eme_get_task_signups_by( $wp_id, $task_id );
 						if ( ! empty( $signups ) ) {
 							$replacement = 1;
 							break;
@@ -2891,9 +2891,15 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			if ( $target == 'html' ) {
 				$replacement = esc_url( $replacement );
 			}
-		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMB$/', $result ) ) {
+		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMB(\{.+?\})?$/', $result ) ) {
+                        if ( isset( $matches[1] ) ) {
+                                // remove { and } (first and last char of second match)
+                                $thumb_size = substr( $matches[2], 1, -1 );
+                        } else {
+                                $thumb_size = get_option( 'eme_thumbnail_size' );
+                        }
 			if ( ! empty( $event['event_image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $event['event_image_id'], get_option( 'eme_thumbnail_size' ), 0, [ 'class' => 'eme_event_image' ] );
+				$replacement = wp_get_attachment_image( $event['event_image_id'], $thumb_size, 0, [ 'class' => 'eme_event_image' ] );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -2902,27 +2908,15 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMBURL$/', $result ) ) {
+		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMBURL(\{.+?\})?$/', $result ) ) {
+                        if ( isset( $matches[1] ) ) {
+                                // remove { and } (first and last char of second match)
+                                $thumb_size = substr( $matches[2], 1, -1 );
+                        } else {
+                                $thumb_size = get_option( 'eme_thumbnail_size' );
+                        }
 			if ( ! empty( $event['event_image_id'] ) ) {
-				$replacement = wp_get_attachment_image_url( $event['event_image_id'], get_option( 'eme_thumbnail_size' ) );
-				if ( $target == 'html' ) {
-					$replacement = esc_url( $replacement );
-				}
-			}
-		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMB\{(.+?)\}$/', $result, $matches ) ) {
-			if ( ! empty( $event['event_image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $event['event_image_id'], $matches[1], 0, [ 'class' => 'eme_event_image' ] );
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
-			}
-		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMBURL\{(.+?)\}$/', $result, $matches ) ) {
-			if ( ! empty( $event['event_image_id'] ) ) {
-				$replacement = wp_get_attachment_image_url( $event['event_image_id'], $matches[1] );
+				$replacement = wp_get_attachment_image_url( $event['event_image_id'], $thumb_size );
 				if ( $target == 'html' ) {
 					$replacement = esc_url( $replacement );
 				}

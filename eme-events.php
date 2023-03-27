@@ -550,11 +550,11 @@ function eme_events_page() {
 			} else {
 				$validation_result = eme_validate_location( $location );
 				if ( $validation_result != 'OK' ) {
-						echo "<div id='message' class='error '>
+					echo "<div id='message' class='error '>
 			     <p>$validation_result</p>
 			     <p>$press_back</p>
 			     </div>";
-						return;
+					return;
 				} else {
 					$new_location_id = eme_insert_location( $location );
 					eme_location_store_cf_answers( $new_location_id );
@@ -565,7 +565,7 @@ function eme_events_page() {
                         </div>";
 						return;
 					}
-						$event['location_id'] = $new_location_id;
+					$event['location_id'] = $new_location_id;
 				}
 			}
 		}
@@ -582,13 +582,13 @@ function eme_events_page() {
 					$count            = eme_recurrence_count( $recurrence_id );
 					$feedback_message = sprintf( __( 'New recurrence inserted containing %d events', 'events-made-easy' ), $count );
 					if ( $stay_on_edit_page ) {
-							$info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
-							$info['feedback'] = $feedback_message;
-							$event            = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_id ) );
+						$info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
+						$info['feedback'] = $feedback_message;
+						$event            = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_id ) );
 						if ( ! empty( $event ) ) {
 							eme_event_form( $event, $info, 1 );
 						}
-							return;
+						return;
 					}
 				}
 			} else {
@@ -627,13 +627,13 @@ function eme_events_page() {
 					if ( $count ) {
 						$feedback_message = sprintf( __( 'Recurrence updated, contains %d events', 'events-made-easy' ), $count );
 						if ( $stay_on_edit_page ) {
-									$info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
-									$info['feedback'] = $feedback_message;
-									$event            = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_ID ) );
+							$info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
+							$info['feedback'] = $feedback_message;
+							$event            = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_ID ) );
 							if ( ! empty( $event ) ) {
 								eme_event_form( $event, $info, 1 );
 							}
-									return;
+							return;
 						}
 					} else {
 						$feedback_message = __( 'Recurrence no longer contains events, so it has been removed', 'events-made-easy' );
@@ -648,17 +648,17 @@ function eme_events_page() {
 					// we go from single event to recurrence: create the recurrence and delete the single event
 					$recurrence_id = eme_db_insert_recurrence( $recurrence, $event );
 					if ( ! $recurrence_id ) {
-									$feedback_message = __( 'No recurrent event created!', 'events-made-easy' );
+						$feedback_message = __( 'No recurrent event created!', 'events-made-easy' );
 					} else {
-								eme_db_delete_event( $orig_event['event_id'] );
-								$count            = eme_recurrence_count( $recurrence_id );
-								$feedback_message = sprintf( __( 'New recurrent event inserted containing %d events', 'events-made-easy' ), $count );
+						eme_db_delete_event( $orig_event['event_id'] );
+						$count            = eme_recurrence_count( $recurrence_id );
+						$feedback_message = sprintf( __( 'New recurrent event inserted containing %d events', 'events-made-easy' ), $count );
 						if ( $stay_on_edit_page ) {
 							$info             = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) ];
 							$info['feedback'] = $feedback_message;
 							$event            = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_id ) );
 							if ( ! empty( $event ) ) {
-									eme_event_form( $event, $info, 1 );
+								eme_event_form( $event, $info, 1 );
 							}
 							return;
 						}
@@ -671,21 +671,21 @@ function eme_events_page() {
 						eme_event_store_cf_answers( $event_ID );
 						eme_upload_files( $event_ID, 'events' );
 						if ( has_action( 'eme_update_event_action' ) ) {
-									$event = eme_get_event( $event_ID );
-									do_action( 'eme_update_event_action', $event );
+							$event = eme_get_event( $event_ID );
+							do_action( 'eme_update_event_action', $event );
 						}
-							$feedback_message = sprintf( __( "Updated '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+						$feedback_message = sprintf( __( "Updated '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
 						if ( $stay_on_edit_page ) {
-									$info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
-									$info['feedback'] = $feedback_message;
-									$event            = eme_get_event( $event_ID );
+							$info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
+							$info['feedback'] = $feedback_message;
+							$event            = eme_get_event( $event_ID );
 							if ( ! empty( $event ) ) {
 								eme_event_form( $event, $info );
 							}
-									return;
+							return;
 						}
 					} else {
-								$feedback_message = sprintf( __( "Failed to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+						$feedback_message = sprintf( __( "Failed to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
 					}
 				}
 			} else {
@@ -835,8 +835,6 @@ function eme_get_all_pages() {
 
 //This is the content of the event page
 function eme_events_page_content() {
-	
-
 	$page_body = '';
 	if ( ! empty( $_GET['eme_cancel_payment'] ) ) {
 		$payment_randomid = eme_sanitize_request( $_REQUEST['eme_cancel_payment'] );
@@ -882,7 +880,7 @@ function eme_events_page_content() {
 			return "<div class='eme-message-error eme-subscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
 		}
 	} elseif ( ! empty( $_GET['eme_unsub_confirm'] ) && ! empty( $_GET['eme_unsub_nonce'] ) ) {
-			$eme_email = eme_sanitize_email( $_GET['eme_unsub_confirm'] );
+		$eme_email = eme_sanitize_email( $_GET['eme_unsub_confirm'] );
 		if ( ! empty( $_GET['g'] ) ) {
 			$eme_email_groups     = eme_sanitize_request( $_GET['g'] );
 			$eme_email_groups_arr = explode( ',', $eme_email_groups );
@@ -1197,7 +1195,7 @@ function eme_events_page_content() {
 		} else {
 			$booking_ids = eme_get_payment_booking_ids( $payment['id'] );
 			if ( count( $booking_ids ) == 1 ) {
-					$is_multi = 0;
+				$is_multi = 0;
 			} else {
 				$is_multi = 1;
 			}
@@ -1446,7 +1444,7 @@ function eme_page_title( $data, $post_id = null ) {
 			$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
 			$payment          = eme_get_payment( 0, $payment_randomid );
 			if ( empty( $payment ) ) {
-					$page_title = get_option( 'eme_events_page_title' );
+				$page_title = get_option( 'eme_events_page_title' );
 			} elseif ( $payment['target'] == 'member' ) {
 				$page_title = eme_sanitize_request( __( 'Membership payment page', 'events-made-easy' ) );
 			} else {
@@ -1473,7 +1471,7 @@ function eme_page_title( $data, $post_id = null ) {
 			$event_id = eme_sanitize_request( get_query_var( 'event_id' ) );
 			$event    = eme_get_event( $event_id );
 			if ( empty( $event ) ) {
-					$res = $data;
+				$res = $data;
 			} else {
 				if ( ! eme_is_empty_string( $event['event_page_title_format'] ) ) {
 					$stored_page_title_format = $event['event_page_title_format'];
@@ -1488,9 +1486,9 @@ function eme_page_title( $data, $post_id = null ) {
 		} elseif ( eme_is_single_location_page() ) {
 			$location = eme_get_location( eme_sanitize_request( get_query_var( 'location_id' ) ) );
 			if ( ! empty( $location ) ) {
-					$stored_page_title_format = get_option( 'eme_location_page_title_format' );
-					$page_title               = eme_replace_locations_placeholders( $stored_page_title_format, $location );
-					$res                      = $page_title;
+				$stored_page_title_format = get_option( 'eme_location_page_title_format' );
+				$page_title               = eme_replace_locations_placeholders( $stored_page_title_format, $location );
+				$res                      = $page_title;
 			} else {
 				$res = $data;
 			}
@@ -1567,7 +1565,7 @@ function eme_html_title( $data ) {
 			$location_id = eme_sanitize_request( get_query_var( 'location_id' ) );
 			$location    = eme_get_location( $location_id );
 			if ( empty( $location ) ) {
-					return $data;
+				return $data;
 			} else {
 				$stored_html_title_format = get_option( 'eme_location_html_title_format' );
 				// no html tags or anything weird in the title: we sanitize it, so it already removes all problems
@@ -1652,12 +1650,12 @@ add_filter( 'pings_open', 'eme_filter_comments_access', 20, 2 );
 
 // Hide existing comments
 function eme_filter_comments_array_access( $data, $post_id ) {
-		$access_allowed = eme_check_access( $post_id );
+	$access_allowed = eme_check_access( $post_id );
 	if ( $access_allowed ) {
-			return $data;
+		return $data;
 	} else {
-			$empty_arr = [];
-			return $empty_arr;
+		$empty_arr = [];
+		return $empty_arr;
 	}
 }
 add_filter( 'comments_array', 'eme_filter_comments_array_access', 10, 2 );
@@ -1765,11 +1763,11 @@ function eme_template_redir() {
 				// if the event is private and not logged in: return
 				$redir_url = get_option( 'eme_redir_priv_event_url' );
 				if ( ! empty( $redir_url ) ) {
-						$page_permalink = get_permalink();
-						$redir_url      = add_query_arg( [ 'redirect' => $page_permalink ], $redir_url );
-						eme_nocache_headers();
-						wp_redirect( esc_url( $redir_url ) );
-						exit;
+					$page_permalink = get_permalink();
+					$redir_url      = add_query_arg( [ 'redirect' => $page_permalink ], $redir_url );
+					eme_nocache_headers();
+					wp_redirect( esc_url( $redir_url ) );
+					exit;
 				} else {
 					auth_redirect();
 				}
@@ -1780,7 +1778,7 @@ function eme_template_redir() {
 				if ( '' != get_404_template() ) {
 					include get_404_template();
 				}
-					exit;
+				exit;
 			}
 		}
 	}
@@ -1822,7 +1820,7 @@ function eme_template_redir() {
 		$nonce  = ( isset( $_GET['eme_bookings_nonce'] ) ) ? eme_sanitize_request( $_GET['eme_bookings_nonce'] ) : '';
 		if ( isset( $_GET['event_id'] ) && isset( $_GET['template_id'] ) && isset( $_GET['template_id_header'] ) ) {
 			if ( is_user_logged_in() && current_user_can( get_option( 'eme_cap_list_registrations' ) ) ) {
-						eme_bookings_frontend_csv_report( intval( $_GET['event_id'] ), intval( $_GET['template_id'] ), intval( $_GET['template_id_header'] ) );
+				eme_bookings_frontend_csv_report( intval( $_GET['event_id'] ), intval( $_GET['template_id'] ), intval( $_GET['template_id_header'] ) );
 			} elseif ( $public && ! empty( $nonce ) && wp_verify_nonce( $nonce, "eme_bookings $public" ) && ! empty( $post->post_password ) && ! post_password_required() ) {
 				eme_bookings_frontend_csv_report( intval( $_GET['event_id'] ), intval( $_GET['template_id'] ), intval( $_GET['template_id_header'] ) );
 			}
@@ -1844,19 +1842,19 @@ function eme_template_redir() {
 	}
 
 	if ( isset( $_GET['eme_members'] ) && $_GET['eme_members'] == 'report' ) {
-			$public             = ( isset( $_GET['public_access'] ) ) ? intval( $_GET['public_access'] ) : 0;
-			$group_id           = ( isset( $_GET['group_id'] ) ) ? intval( $_GET['group_id'] ) : 0;
-			$membership_id      = ( isset( $_GET['membership_id'] ) ) ? intval( $_GET['membership_id'] ) : 0;
-			$template_id        = ( isset( $_GET['template_id'] ) ) ? intval( $_GET['template_id'] ) : 0;
-			$template_id_header = ( isset( $_GET['template_id_header'] ) ) ? intval( $_GET['template_id_header'] ) : 0;
-			$nonce              = ( isset( $_GET['eme_members_nonce'] ) ) ? eme_sanitize_request( $_GET['eme_members_nonce'] ) : '';
+		$public             = ( isset( $_GET['public_access'] ) ) ? intval( $_GET['public_access'] ) : 0;
+		$group_id           = ( isset( $_GET['group_id'] ) ) ? intval( $_GET['group_id'] ) : 0;
+		$membership_id      = ( isset( $_GET['membership_id'] ) ) ? intval( $_GET['membership_id'] ) : 0;
+		$template_id        = ( isset( $_GET['template_id'] ) ) ? intval( $_GET['template_id'] ) : 0;
+		$template_id_header = ( isset( $_GET['template_id_header'] ) ) ? intval( $_GET['template_id_header'] ) : 0;
+		$nonce              = ( isset( $_GET['eme_members_nonce'] ) ) ? eme_sanitize_request( $_GET['eme_members_nonce'] ) : '';
 		if ( is_user_logged_in() && current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
-				eme_members_frontend_csv_report( $group_id, $membership_id, $template_id, $template_id_header );
+			eme_members_frontend_csv_report( $group_id, $membership_id, $template_id, $template_id_header );
 		} elseif ( $public && ! empty( $nonce ) && wp_verify_nonce( $nonce, "eme_members $public" ) && ! empty( $post->post_password ) && ! post_password_required() ) {
 			// $post->post_password not empty means a password is set, post_password_required() returning false means the password is already entered
 			eme_members_frontend_csv_report( $group_id, $membership_id, $template_id, $template_id_header );
 		}
-			exit;
+		exit;
 	}
 
 	if ( eme_is_single_event_page() || eme_is_single_location_page() ) {
@@ -1888,8 +1886,8 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+		$email_target = 1;
+		$target       = 'html';
 	}
 
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
@@ -2235,8 +2233,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+		$email_target = 1;
+		$target       = 'html';
 	}
 
 	if ( empty( $lang ) ) {

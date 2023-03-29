@@ -1989,17 +1989,17 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$replacement = $wp_id;
 			}
 		} elseif ( preg_match( '/^#_WPUSERDATA{(.+?)\}$/', $result, $matches ) ) {
-			$fieldname = eme_str_only($matches[1]);
+			$fieldname = $matches[1];
 			if ( $wp_user ) {
 				$replacement = $wp_user->$fieldname;
 			}
 		} elseif ( preg_match( '/^#_WPUSERMETA{(.+?)\}$/', $result, $matches ) ) {
-			$fieldname = eme_str_only($matches[1]);
+			$fieldname = $matches[1];
 			if ( $wp_id ) {
 				$replacement = get_user_meta( $wp_id, $fieldname, true );
 			}
 		} elseif ( preg_match( '/^#_USER_HAS_CAP\{(.+?)\}$/', $result, $matches ) ) {
-			$caps = eme_str_only($matches[1]);
+			$caps = $matches[1];
 			if ( preg_match( '/#_/', $caps ) ) {
 				// if it contains another placeholder as value, don't do anything here
 				$found = 0;
@@ -2016,7 +2016,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				}
 			}
 		} elseif ( preg_match( '/^#_USER_HAS_ROLE\{(.+?)\}$/', $result, $matches ) ) {
-			$roles = eme_str_only($matches[1]);
+			$roles = $matches[1];
 			if ( preg_match( '/#_/', $roles ) ) {
 				// if it contains another placeholder as value, don't do anything here
 				$found = 0;
@@ -2033,7 +2033,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				}
 			}
 		} elseif ( preg_match( '/^#_IS_USER_IN_GROUP\{(.+?)\}$/', $result, $matches ) ) {
-			$groups = eme_str_only($matches[1]);
+			$groups = $matches[1];
 			if ( preg_match( '/#_/', $groups ) ) {
 				// if it contains another placeholder as value, don't do anything here
 				$found = 0;

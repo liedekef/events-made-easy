@@ -524,7 +524,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 					$replacement = esc_url( $replacement );
 				}
 			}
-		} elseif ( $event && preg_match( '/#_IMAGETHUMB(\{.+?\})?$/', $result ) ) {
+		} elseif ( preg_match( '/#_IMAGETHUMB(\{.+?\})?$/', $result ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
                                 $thumb_size = substr( $matches[2], 1, -1 );

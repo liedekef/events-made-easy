@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.2
-Stable tag: 2.3.60
+Stable tag: 2.3.61
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,6 +100,12 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.61 (2023/03/29) =
+* Really fix the conditional placeholders #_IS_USER_IN_*
+* Mollie update
+* Fix thumb showing for people
+* Add simplistic membership stats
+
 = 2.3.60 (2023/03/26) =
 * Fix the conditional placeholders #_IS_USER_IN_*
 

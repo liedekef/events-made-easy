@@ -5381,7 +5381,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		if ( $search_customfields != '' ) {
 			$search_customfields = esc_sql( $wpdb->esc_like($search_customfields) );
 			$sql_join            = "
-		   JOIN (SELECT related_id FROM $answers_table
+		   INNER JOIN (SELECT related_id FROM $answers_table
 			 WHERE answer LIKE '%$search_customfields%' AND field_id IN ($search_customfieldids) AND type='event'
 			 GROUP BY related_id
 			) ans

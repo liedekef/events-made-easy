@@ -2911,30 +2911,30 @@ function eme_ajax_locations_list() {
 	} else {
 			$field_ids_arr = [];
 		foreach ( $formfields_searchable as $formfield ) {
-				$field_ids_arr[] = $formfield['field_id'];
+			$field_ids_arr[] = $formfield['field_id'];
 		}
 		if ( ! empty( $_REQUEST['search_customfieldids'] ) && eme_is_numeric_array( $_REQUEST['search_customfieldids'] ) ) {
-					$field_ids = join( ',', $_REQUEST['search_customfieldids'] );
+			$field_ids = join( ',', $_REQUEST['search_customfieldids'] );
 		} else {
 			$field_ids = join( ',', $field_ids_arr );
 		}
 		if ( isset( $_REQUEST['search_customfields'] ) && $_REQUEST['search_customfields'] != '' ) {
 			$search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_customfields'] ) ) );
-				$sql_join        = "
-                   JOIN (SELECT related_id FROM $answers_table
+			$sql_join        = "
+                   INNER JOIN (SELECT related_id FROM $answers_table
                          WHERE answer LIKE '%$search_customfields%' AND field_id IN ($field_ids) AND type='location'
                          GROUP BY related_id
                         ) ans
                    ON locations.location_id=ans.related_id";
 		} else {
-				$sql_join = "
+			$sql_join = "
                    LEFT JOIN (SELECT related_id FROM $answers_table WHERE type='location'
                          GROUP BY related_id
                         ) ans
                    ON locations.location_id=ans.related_id";
 		}
-			$count_sql = "SELECT COUNT(*) FROM $table AS locations $sql_join $where";
-		$sql           = "SELECT locations.* FROM $table AS locations $sql_join $where $sorting LIMIT $start,$pagesize";
+		$count_sql = "SELECT COUNT(*) FROM $table AS locations $sql_join $where";
+		$sql       = "SELECT locations.* FROM $table AS locations $sql_join $where $sorting LIMIT $start,$pagesize";
 	}
 
 	$recordCount = $wpdb->get_var( $count_sql );

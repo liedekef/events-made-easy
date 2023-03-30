@@ -1739,12 +1739,21 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
                         }
                 }
         }
-        $sql_join = "
-                   LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table
-                         WHERE related_id>0 AND type='person' $search_formfield_sql
-                         GROUP BY related_id
-                        ) ans
-                   ON people.person_id=ans.related_id";
+	if (!empty($search_formfield_sql)) {
+		$sql_join = "
+		   INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
+			 WHERE related_id>0 AND type='person' $search_formfield_sql
+			 GROUP BY related_id
+			) ans
+		   ON people.person_id=ans.related_id";
+	} else {
+		$sql_join = "
+		   LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table
+			 WHERE related_id>0 AND type='person'
+			 GROUP BY related_id
+			) ans
+		   ON people.person_id=ans.related_id";
+	}
 	if ( $count ) {
 		$sql = "SELECT COUNT(distinct(people.person_id)) FROM $people_table AS people $usergroup_join $member_join $sql_join $where";
 	} elseif ( $ids_only ) {

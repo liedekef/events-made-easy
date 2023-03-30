@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.62 (2023/03/30) =
 * Fix some sql statements when searching for custom fields (could impact the number of results found in dynamics groups for example)
+* Fix THUMB-placeholders
 
 = 2.3.61 (2023/03/29) =
 * Really fix the conditional placeholders #_IS_USER_IN_*

@@ -2889,7 +2889,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			if ( $target == 'html' ) {
 				$replacement = esc_url( $replacement );
 			}
-		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMB(\{.+?\})?$/', $result ) ) {
+		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMB(\{.+?\})?$/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
                                 $thumb_size = substr( $matches[2], 1, -1 );
@@ -2906,7 +2906,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMBURL(\{.+?\})?$/', $result ) ) {
+		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMBURL(\{.+?\})?$/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
                                 $thumb_size = substr( $matches[2], 1, -1 );

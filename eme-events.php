@@ -1984,7 +1984,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/^#_WPID$/', $result, $matches ) ) {
+		} elseif ( preg_match( '/^#_WPID$/', $result ) ) {
 			if ( $wp_id ) {
 				$replacement = $wp_id;
 			}
@@ -2892,7 +2892,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMB(\{.+?\})?$/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
-                                $thumb_size = substr( $matches[2], 1, -1 );
+                                $thumb_size = substr( $matches[1], 1, -1 );
                         } else {
                                 $thumb_size = get_option( 'eme_thumbnail_size' );
                         }
@@ -2909,7 +2909,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 		} elseif ( $event && preg_match( '/#_EVENTIMAGETHUMBURL(\{.+?\})?$/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
-                                $thumb_size = substr( $matches[2], 1, -1 );
+                                $thumb_size = substr( $matches[1], 1, -1 );
                         } else {
                                 $thumb_size = get_option( 'eme_thumbnail_size' );
                         }

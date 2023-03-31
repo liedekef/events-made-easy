@@ -4603,7 +4603,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERLASTSEEN/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_MEMBERLASTSEEN/', $result ) ) {
 			if ( ! eme_is_empty_datetime( $member['last_seen'] ) ) {
 				$replacement = eme_localized_datetime( $member['last_seen'], EME_TIMEZONE );
 			} else {
@@ -4768,14 +4768,14 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = O;
 			}
-		} elseif ( preg_match( '/#_FAMILYCOUNT/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_FAMILYCOUNT/', $result ) ) {
 			$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
 			if ( ! empty( $related_member_ids ) ) {
 				$replacement = count( $related_member_ids );
 			} else {
 				$replacement = 0;
 			}
-		} elseif ( preg_match( '/#_FAMILYMEMBERS/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_FAMILYMEMBERS/', $result ) ) {
 			$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
 			if ( ! empty( $related_member_ids ) ) {
 				$replacement = "<table style='border-collapse: collapse;border: 1px solid black;' class='eme_dyndata_table'>";

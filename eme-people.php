@@ -385,7 +385,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_INITIALS/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_INITIALS/', $result ) ) {
 			$fullname    = eme_format_full_name( $person['firstname'], $person['lastname'] );
 			$replacement = eme_get_initials( $fullname );
 			if ( $target == 'html' ) {
@@ -394,7 +394,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_LASTNAME_INITIALS/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_LASTNAME_INITIALS/', $result ) ) {
 			$replacement = eme_get_initials( $person['lastname'] );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -527,7 +527,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 		} elseif ( preg_match( '/#_IMAGETHUMB(\{.+?\})?$/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
-                                $thumb_size = substr( $matches[2], 1, -1 );
+                                $thumb_size = substr( $matches[1], 1, -1 );
                         } else {
                                 $thumb_size = get_option( 'eme_thumbnail_size' );
                         }
@@ -544,7 +544,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 		} elseif ( preg_match( '/#_IMAGETHUMBURL(\{.+?\})?/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
-                                $thumb_size = substr( $matches[2], 1, -1 );
+                                $thumb_size = substr( $matches[1], 1, -1 );
                         } else {
                                 $thumb_size = get_option( 'eme_thumbnail_size' );
                         }
@@ -691,14 +691,14 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_FAMILYCOUNT/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_FAMILYCOUNT/', $result ) ) {
 			$familymember_person_ids = eme_get_family_person_ids( $person['person_id'] );
 			if ( ! empty( $familymember_person_ids ) ) {
 				$replacement = count( $familymember_person_ids );
 			} else {
 				$replacement = 0;
 			}
-		} elseif ( preg_match( '/#_FAMILYMEMBERS/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_FAMILYMEMBERS/', $result ) ) {
 			$familymember_person_ids = eme_get_family_person_ids( $person['person_id'] );
 			if ( ! empty( $familymember_person_ids ) ) {
 				$replacement = "<table style='border-collapse: collapse;border: 1px solid black;' class='eme_dyndata_table'>";

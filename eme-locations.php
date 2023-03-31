@@ -2158,7 +2158,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB(\{.+?\})?$/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
-                                $thumb_size = substr( $matches[2], 1, -1 );
+                                $thumb_size = substr( $matches[1], 1, -1 );
 			} else {
 				$thumb_size = get_option( 'eme_thumbnail_size' );
 			}
@@ -2175,7 +2175,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMBURL(\{.+?\})?$/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
-                                $thumb_size = substr( $matches[2], 1, -1 );
+                                $thumb_size = substr( $matches[1], 1, -1 );
 			} else {
 				$thumb_size = get_option( 'eme_thumbnail_size' );
 			}

@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.63 (2023/03/31) =
+* Fix THUMB-placeholders (again)
+
 = 2.3.62 (2023/03/30) =
 * Fix some sql statements when searching for custom fields (could impact the number of results found in dynamics groups for example)
 * Fix THUMB-placeholders

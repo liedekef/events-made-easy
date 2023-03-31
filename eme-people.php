@@ -4151,6 +4151,11 @@ function eme_get_wp_users( $search, $offset = 0, $pagesize = 0 ) {
 			'value'   => $search,
 			'compare' => 'LIKE',
 		],
+		[
+			'key'     => 'user_email',
+			'value'   => $search,
+			'compare' => 'LIKE',
+		],
 	];
 	$args       = [
 		'meta_query'  => $meta_query,
@@ -4640,7 +4645,7 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 	}
 
 	if ( $search_tables == 'people' || $search_tables == 'both' ) {
-		$search = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
+		$search = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
 		if ( ! empty( $exclude_personids ) ) {
 			$search .= " AND person_id NOT IN ($exclude_personids)";
 		}
@@ -4922,7 +4927,7 @@ function eme_ajax_people_select2() {
 	$jTableResult = [];
 	$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
-		$where = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
+		$where = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
 	} else {
 		$where = '(1=1)';
 	}

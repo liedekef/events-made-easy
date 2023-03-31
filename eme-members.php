@@ -5619,7 +5619,7 @@ function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
 		return;
 	}
 
-	$search = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
+	$search = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
 	if ( $exclude_personid > 0 ) {
 		$search .= " AND members.person_id<>$exclude_personid";
 	}
@@ -5677,7 +5677,7 @@ function eme_member_main_account_autocomplete_ajax() {
 		wp_die();
 	}
 
-	$search  = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%') AND members.member_id <> $member_id AND members.related_member_id=0 AND members.membership_id=$membership_id";
+	$search  = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%') AND members.member_id <> $member_id AND members.related_member_id=0 AND members.membership_id=$membership_id";
 	$persons = eme_get_members( '', $search );
 	foreach ( $persons as $item ) {
 		$record              = [];
@@ -5993,7 +5993,7 @@ function eme_ajax_members_select2() {
 	$jTableResult      = [];
 	$q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
-			$where = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%')";
+			$where = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
 	} else {
 			$where = '(1=1)';
 	}

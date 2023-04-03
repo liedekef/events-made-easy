@@ -109,7 +109,9 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 	}
 
 	if ( $mailoptions['mail_send_method'] == 'wp_mail' ) {
-		// Set the correct mail headers
+		// Set the correct mail headers (the first 2 are to try to avoid auto-repliers)
+		$headers[] = 'Auto-Submitted: auto-generated';
+		$headers[] = 'X-Auto-Response-Suppress: all';
 		$headers[] = 'From: '.$mailoptions['fromName'].' <'.$mailoptions['fromMail'].'>';
 		if ( !empty($mailoptions['replytoMail']) && eme_is_email($mailoptions['replytoMail'])) {
 			$headers[] = 'Reply-To: '.$mailoptions['replytoName'].' <'.$mailoptions['replytoMail'].'>';
@@ -169,6 +171,9 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		$mail->CharSet = 'utf-8';
 		// avoid the x-mailer header
 		$mail->XMailer = ' ';
+		// Set the correct mail headers (the first 2 are to try to avoid auto-repliers)
+		$mail->addCustomHeader('Auto-Submitted: auto-generated');
+		$mail->addCustomHeader('X-Auto-Response-Suppress: all');
 		// add custom headers
 		if ( ! empty( $custom_headers ) ) {
 			foreach ( $custom_headers as $custom_header ) {

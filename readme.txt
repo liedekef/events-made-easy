@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.64 (2023//) =
+* Add action hook eme_frontend_cancel_booking_action, so you can execute an action before the booking gets cancelled by a user (like e.g. refund)
+
 = 2.3.63 (2023/03/31) =
 * Fix THUMB-placeholders (again)
 

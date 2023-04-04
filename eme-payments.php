@@ -3522,7 +3522,6 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 }
 
 function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $currency, $vat_pct, $target, $lang, $do_shortcode = 1 ) {
-
 	$email_target = 0;
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' ) {
@@ -3662,7 +3661,6 @@ add_action( 'wp_ajax_nopriv_eme_cancel_payment', 'eme_cancel_payment_ajax' );
 add_action( 'wp_ajax_eme_get_payconiq_iban', 'eme_ajax_get_payconiq_iban' );
 
 function eme_cancel_payment_ajax() {
-	
 	$payment_randomid = eme_sanitize_request( $_POST['eme_pmt_rndid'] );
 	if ( get_option( 'eme_honeypot_for_forms' ) ) {
 		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
@@ -3738,6 +3736,9 @@ function eme_cancel_payment_ajax() {
 			continue;
 		}
 
+		if ( has_action( 'eme_frontend_cancel_booking_action' ) ) {
+			do_action( 'eme_frontend_cancel_booking_action', $booking );
+		}
 		// delete the booking before the mail is sent, so free seats are correct
 		eme_trash_booking( $booking_id );
 		eme_manage_waitinglist( $event );
@@ -3805,5 +3806,3 @@ function eme_ajax_get_payconiq_iban() {
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }
-
-

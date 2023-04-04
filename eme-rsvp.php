@@ -1056,6 +1056,9 @@ function eme_cancel_bookings_ajax() {
 			// first get the booking details, then delete it and then send the mail
 			// the mail needs to be sent after the deletion, otherwise the count of free seats is wrong
 			$booking = eme_get_booking( $booking_id );
+			if ( has_action( 'eme_frontend_cancel_booking_action' ) ) {
+				do_action( 'eme_frontend_cancel_booking_action', $booking );
+			}
 			eme_trash_booking( $booking_id );
 			eme_manage_waitinglist( $event );
 			$res = eme_email_booking_action( $booking, 'cancelBooking' );

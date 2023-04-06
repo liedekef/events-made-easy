@@ -420,15 +420,25 @@ function eme_get_membership_stats( $ids ) {
 	if ( ! eme_is_list_of_int( $ids ) ) {
 		return false;
 	}
+
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
-	$eme_date_obj->startOfMonth()->modifyMonths(-12);
+	$remove_expired_days = get_option( 'eme_gdpr_remove_expired_member_days' );
+	if (!empty( $remove_expired_days ) ) {
+		$eme_date_obj->minusDays( $remove_expired_days )->startOfMonth()->addOneMonth();
+		$difference = $eme_date_obj->getDifferenceInMonths($eme_date_obj_now);
+	} else {
+		$eme_date_obj->startOfMonth()->modifyMonths(-12);
+		$difference = 12;
+	}
+
 	$res = '<table>';
 	$counter = 0;
-	while ( $counter <= 12 ) {
+	while ( $counter <= $difference ) {
 		$limit_start   = $eme_date_obj->format( 'Y-m-d' );
 		$days_in_month = $eme_date_obj->getDaysInMonth();
 		$limit_end     = $eme_date_obj->format( "Y-m-$days_in_month" );
-		if ($counter==12) {
+		if ($counter==$difference) {
 			$sql = "SELECT count(*) FROM $table WHERE status=1 AND membership_id IN ($ids)";
 			$member_nbr = $wpdb->get_var( $sql );
 		} else {

@@ -1599,6 +1599,56 @@ function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_stat
 	return $bookings;
 }
 
+function eme_get_bookings_by_person_id( $person_id, $scope, $rsvp_status = 0, $paid_status = 0 ) {
+	global $wpdb;
+	$events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$bookings_table  = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+	$extra_condition = '';
+	if ( $rsvp_status ) {
+		$extra_condition .= " bookings.status=".intval($rsvp_status);
+	} else {
+		$extra_condition .= ' bookings.status!=' . EME_RSVP_STATUS_TRASH;
+	}
+	if ( $paid_status == 1 ) {
+		$extra_condition .= ' AND booking_paid=0';
+	} elseif ( $paid_status == 2 ) {
+		$extra_condition .= ' AND booking_paid=1';
+	}
+
+	if ( ! empty( $extra_condition ) ) {
+		$extra_condition = "$extra_condition AND ";
+	}
+
+	if ( $scope == 1 || $scope == 'future' ) {
+		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$now          = $eme_date_obj->getDateTime();
+		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events WHERE $extra_condition bookings.person_id= %d AND bookings.event_id=events.event_id AND events.event_start>%s ORDER BY events.event_start ASC", $person_id, $now );
+	} elseif ( $scope == 'past' ) {
+		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$now          = $eme_date_obj->getDateTime();
+		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events WHERE $extra_condition bookings.person_id= %d AND bookings.event_id=events.event_id AND events.event_start<=%s ORDER BY events.event_start ASC", $person_id, $now );
+	} elseif ( $scope == 0 || $scope == 'all' ) {
+		$sql = $wpdb->prepare( "SELECT * FROM $bookings_table AS bookings,$events_table AS events WHERE $extra_condition bookings.person_id= %d AND bookings.event_id=events.event_id ORDER BY events.event_start ASC", $person_id );
+	}
+	$bookings = $wpdb->get_results( $sql, ARRAY_A );
+	if ( ! empty( $bookings ) ) {
+		foreach ( $bookings as $key => $booking ) {
+			if ( eme_is_serialized( $booking['dcodes_used'] ) ) {
+				$booking['dcodes_used'] = eme_unserialize( $booking['dcodes_used'] );
+			} else {
+				$booking['dcodes_used'] = [];
+			}
+			if ( eme_is_serialized( $booking['dcodes_entered'] ) ) {
+				$booking['dcodes_entered'] = eme_unserialize( $booking['dcodes_entered'] );
+			} else {
+				$booking['dcodes_entered'] = [];
+			}
+			$bookings[ $key ] = $booking;
+		}
+	}
+	return $bookings;
+}
+
 function eme_get_booking_by_person_event_id( $person_id, $event_id ) {
 	return eme_get_booking_ids_by_person_event_id( $person_id, $event_id );
 }

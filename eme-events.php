@@ -2136,6 +2136,23 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 					}
 				}
 			}
+		} elseif ( preg_match( '/^#_HAS_USER_REGISTERED\{(.+?)\}$/', $result, $matches ) ) {
+			$event_ids = $matches[1];
+			if ( preg_match( '/#_/', $event_ids ) ) {
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
+			} else {
+				$replacement = 0;
+				if ( $wp_id && eme_is_list_of_int( $event_ids ) ) {
+					$eventids_arr = explode( ',', $event_ids );
+					foreach ( $eventids_arr as $event_id ) {
+						if (!empty(eme_get_booking_ids_by_wp_event_id( $wp_id, $event_id ))) {
+							$replacement = 1;
+							break;
+						}
+					}
+				}
+			}
 		} elseif ( preg_match( '/^#_HAS_USER_TASK_REGISTERED\{(.+?)\}$/', $result, $matches ) ) {
 			$tasks = $matches[1];
 			if ( preg_match( '/#_/', $tasks ) ) {

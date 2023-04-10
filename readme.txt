@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.2
-Stable tag: 2.3.63
+Stable tag: 2.3.64
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,10 +100,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.64 (2023//) =
+= 2.3.64 (2023/04/10) =
 * Add action hook eme_frontend_cancel_booking_action, so you can execute an action before the booking gets cancelled by a user (like e.g. refund)
 * Add placeholder #_HAS_USER_REGISTERED{xx} (with 'xx' being one or more event ids, seperated by comma) returns 1 if the current logged in user is registered for one of the mentioned events
 * Add new function eme_get_bookings_by_person_id (see the code for arguments)
+* Mollie update
 
 = 2.3.63 (2023/03/31) =
 * Fix THUMB-placeholders (again)

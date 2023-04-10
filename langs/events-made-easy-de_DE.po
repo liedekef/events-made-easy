@@ -17150,6 +17150,7 @@ msgstr "Franky Van Liedekerke"
 msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
 #
+#
 #~ msgid ""
 #~ "If you like Events Made Easy, please leave a <a href=\"%s\" "
 #~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> rating. A huge "
@@ -17159,14 +17160,18 @@ msgstr "https://www.e-dynamics.be/"
 #~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> Bewertung. Ein "
 #~ "großes Dankeschön im Voraus!"
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Ungültige IDs geliefert. Bitte versuche es erneut."
+#
 #
 #~ msgid "You have no right to manage task signups!"
 #~ msgstr "Du hast keine Berechtigung, Aufgabenanmeldungen zu verwalten!"
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Datei-Upload ist hier nicht erlaubt."
+#
 #
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
@@ -17176,6 +17181,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Mediathek für den Dateiupload oder die \"Bild hinzufügen\" Schaltfläche "
 #~ "in der Veranstaltungsbeschreibung."
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -17184,8 +17190,10 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Mediathek für den Dateiupload oder die \"Bild hinzufügen\" Schaltfläche "
 #~ "in der Veranstaltungsortbeschreibung."
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Hochgeladene Dateien"
+#
 #
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
@@ -17195,14 +17203,17 @@ msgstr "https://www.e-dynamics.be/"
 #~ "#_EMAIL und #_SUBMIT beinhalten, ansonsten wird das Formular nicht "
 #~ "angezeigt."
 #
+#
 #~ msgid ""
 #~ "There was a problem deleting the selected task signups, please try again."
 #~ msgstr ""
 #~ "Es trat ein Problem beim Löschen der ausgewählten Felder auf, bitte "
 #~ "erneut versuchen."
 #
+#
 #~ msgid "Your payment failed."
 #~ msgstr "Zahlung fehlgeschlagen."
+#
 #
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "Die ausgewählte(n) Rabattgruppe(n) wurde(n) gelöscht."

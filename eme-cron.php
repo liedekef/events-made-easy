@@ -166,6 +166,9 @@ function eme_cron_member_daily_actions() {
 	eme_member_recalculate_status();
 	eme_member_send_expiration_reminders();
 	eme_member_remove_pending();
+	if ( has_action( 'eme_members_daily_action' ) ) {
+		do_action( 'eme_members_daily_action' );
+	}
 }
 
 add_action( 'eme_cron_events_daily_actions', 'eme_cron_events_daily_actions' );
@@ -177,6 +180,9 @@ function eme_cron_events_daily_actions() {
 	eme_tasks_send_signup_reminders();
 	eme_rsvp_send_pending_reminders();
 	eme_rsvp_send_approved_reminders();
+	if ( has_action( 'eme_events_daily_action' ) ) {
+		do_action( 'eme_events_daily_action' );
+	}
 }
 
 add_action( 'eme_cron_gdpr_daily_actions', 'eme_cron_gdpr_daily_actions' );
@@ -200,6 +206,9 @@ function eme_cron_daily_actions() {
 		return;
 	}
 	eme_people_birthday_emails();
+	if ( has_action( 'eme_daily_action' ) ) {
+		do_action( 'eme_daily_action' );
+	}
 }
 
 function eme_cron_page() {

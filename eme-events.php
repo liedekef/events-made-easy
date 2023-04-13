@@ -1990,13 +1990,17 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			}
 		} elseif ( preg_match( '/^#_WPUSERDATA{(.+?)\}$/', $result, $matches ) ) {
 			$fieldname = $matches[1];
-			if ( $wp_user ) {
-				$replacement = $wp_user->$fieldname;
+			if ( $wp_user && isset ( $wp_user->$fieldname ) ) {
+				if (is_array( $wp_user->$fieldname ) ) {
+					$replacement = join( ', ', $wp_user->$fieldname );
+				} else {
+					$replacement = $wp_user->$fieldname;
+				}
 			}
 		} elseif ( preg_match( '/^#_WPUSERMETA{(.+?)\}$/', $result, $matches ) ) {
 			$fieldname = $matches[1];
 			if ( $wp_id ) {
-				$replacement = get_user_meta( $wp_id, $fieldname, true );
+				$replacement = join( ', ', get_user_meta( $wp_id, $fieldname ) );
 			}
 		} elseif ( preg_match( '/^#_USER_HAS_CAP\{(.+?)\}$/', $result, $matches ) ) {
 			$caps = $matches[1];

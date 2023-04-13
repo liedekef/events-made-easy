@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.3.65 (2023//) =
 * Added actions eme_events_daily_action, eme_members_daily_action and eme_daily_action, which all 3 run on a daily basis without arguments
   Since all 3 run on a daily basis, you could decice to put everything in eme_daily_action, but the distinction might be usefull.
+* improve on #_WPUSERDATA{xx} and #_WPUSERMETA{xx}: if field doesn't exist, empty string is returned, if result is an array, all values are concatenated with ", " 
 
 = 2.3.64 (2023/04/10) =
 * Add action hook eme_frontend_cancel_booking_action, so you can execute an action before the booking gets cancelled by a user (like e.g. refund)

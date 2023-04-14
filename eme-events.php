@@ -4464,7 +4464,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		$empty_event = eme_new_event();
 		$output      = eme_replace_event_placeholders( $format_header, $empty_event ) . $output . eme_replace_event_placeholders( $format_footer, $empty_event );
 	} elseif ( $template_id_no_events ) {
-			$output = do_shortcode( eme_get_template_format( $template_id_no_events ) );
+		$output = do_shortcode( eme_get_template_format( $template_id_no_events ) );
 	} elseif ( empty( $no_events_message ) ) {
 		$no_events_message = do_shortcode( get_option( 'eme_no_events_message' ) );
 		// this is also used in eme_widgets, so if you change something here, check the code there too

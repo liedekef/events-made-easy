@@ -17151,6 +17151,7 @@ msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
 #
 #
+#
 #~ msgid ""
 #~ "If you like Events Made Easy, please leave a <a href=\"%s\" "
 #~ "target=\"_blank\" style=\"text-decoration:none\">★★★★★</a> rating. A huge "
@@ -17161,16 +17162,20 @@ msgstr "https://www.e-dynamics.be/"
 #~ "großes Dankeschön im Voraus!"
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Ungültige IDs geliefert. Bitte versuche es erneut."
+#
 #
 #
 #~ msgid "You have no right to manage task signups!"
 #~ msgstr "Du hast keine Berechtigung, Aufgabenanmeldungen zu verwalten!"
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Datei-Upload ist hier nicht erlaubt."
+#
 #
 #
 #~ msgid ""
@@ -17182,6 +17187,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "in der Veranstaltungsbeschreibung."
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -17191,8 +17197,10 @@ msgstr "https://www.e-dynamics.be/"
 #~ "in der Veranstaltungsortbeschreibung."
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Hochgeladene Dateien"
+#
 #
 #
 #~ msgid ""
@@ -17204,6 +17212,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "angezeigt."
 #
 #
+#
 #~ msgid ""
 #~ "There was a problem deleting the selected task signups, please try again."
 #~ msgstr ""
@@ -17211,8 +17220,10 @@ msgstr "https://www.e-dynamics.be/"
 #~ "erneut versuchen."
 #
 #
+#
 #~ msgid "Your payment failed."
 #~ msgstr "Zahlung fehlgeschlagen."
+#
 #
 #
 #~ msgid "Successfully deleted the selected task signups."

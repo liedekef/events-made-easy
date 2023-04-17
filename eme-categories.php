@@ -514,11 +514,9 @@ function eme_get_categories_shortcode( $atts ) {
 
 function eme_replace_categories_placeholders( $format, $cat = '', $target = 'html', $do_shortcode = 1, $lang = '' ) {
 
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	$needle_offset = 0;

@@ -3522,11 +3522,9 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 }
 
 function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $currency, $vat_pct, $target, $lang, $do_shortcode = 1 ) {
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	$charge        = eme_payment_gateway_extra_charge( $total_price, $pg );

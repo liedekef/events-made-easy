@@ -1449,11 +1449,9 @@ function eme_email_tasksignup_action( $signup, $action ) {
 }
 
 function eme_replace_task_placeholders( $format, $task, $event, $target = 'html', $lang = '' ) {
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	$used_spaces = eme_count_task_signups( $task['task_id'] );
@@ -1537,11 +1535,9 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 }
 
 function eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task, $target = 'html', $lang = '' ) {
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-		$email_target = 1;
-		$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	if ( empty( $lang ) && ! empty( $person['lang'] ) ) {

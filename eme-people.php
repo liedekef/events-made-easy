@@ -280,11 +280,9 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-		$email_target = 1;
-		$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	if ( ! $person ) {

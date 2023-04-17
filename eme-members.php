@@ -4463,11 +4463,9 @@ function eme_add_member_ajax() {
 }
 
 function eme_replace_member_placeholders( $format, $membership, $member, $target = 'html', $lang = '', $take_answers_from_post = 0 ) {
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-		$email_target = 1;
-		$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	// replace EME language tags as early as possible
@@ -5023,11 +5021,9 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 	// replace EME language tags as early as possible
 	$format = eme_translate_string_nowptrans( $format );
 
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-		$email_target = 1;
-		$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	if ( ! empty( $membership ) && isset( $membership['membership_id'] ) ) {

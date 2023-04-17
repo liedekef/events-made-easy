@@ -1857,11 +1857,9 @@ function eme_replace_event_location_placeholders( $format, $event, $target = 'ht
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	// in the case of the function eme_get_events, the $event contains also the location info
@@ -1888,11 +1886,9 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	// some variables we'll use further down more than once
@@ -2550,11 +2546,9 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	if ( preg_match_all( '/#(ESC)?_(DESCRIPTION|LOCATIONDETAILS|LOCATIONEXCERPT|LOCATIONNOEXCERPT)/', $format, $placeholders, PREG_OFFSET_CAPTURE ) ) {

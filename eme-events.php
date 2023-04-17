@@ -1883,12 +1883,10 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-		$email_target = 1;
-		$target       = 'html';
-	}
+        if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+                $target = 'html';
+        }
 
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$wp_id            = get_current_user_id();
@@ -2251,11 +2249,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-		$email_target = 1;
-		$target       = 'html';
+	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+		$target = 'html';
 	}
 
 	if ( empty( $lang ) ) {
@@ -3951,7 +3947,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 		$format = eme_translate( $format, $lang );
 
 		// now some html
-		if ( $target == 'html' ) {
+		if ( $target == 'html' && $orig_target != 'html_nohtml2br' ) {
 			$format = eme_nl2br_save_html( $format );
 		}
 
@@ -3967,12 +3963,10 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
-	$email_target = 0;
 	$orig_target  = $target;
-	if ( $target == 'htmlmail' ) {
-			$email_target = 1;
-			$target       = 'html';
-	}
+        if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
+                $target = 'html';
+        }
 
 	if ( $event && preg_match_all( '/#(ESC)?_(DETAILS|NOTES|EXCERPT|EVENTDETAILS|NOEXCERPT)/', $format, $placeholders, PREG_OFFSET_CAPTURE ) ) {
 		$needle_offset = 0;

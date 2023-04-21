@@ -2690,14 +2690,14 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 			 WHERE related_id>0 AND type='member' $search_formfield_sql
 			 GROUP BY related_id
 			) ans
-		   ON people.person_id=ans.related_id";
+		   ON members.member_id=ans.related_id";
 	} else {
 		$sql_join = "
 		   LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table
 			 WHERE related_id>0 AND type='member'
 			 GROUP BY related_id
 			) ans
-		   ON people.person_id=ans.related_id";
+		   ON members.member_id=ans.related_id";
 	}
 	if ( $count ) {
 		$sql = "SELECT COUNT(*) FROM $members_table AS members $people_join $sql_join $where";

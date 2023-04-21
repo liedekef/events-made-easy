@@ -3,7 +3,7 @@
         'name' => 'stripe/stripe-php',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '22d95e425c0b99967b50b2fad06d531f8e27720b',
+        'reference' => 'f689d661a4a93c96aa1556785d0459756a0e1a68',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'stripe/stripe-php' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '22d95e425c0b99967b50b2fad06d531f8e27720b',
+            'reference' => 'f689d661a4a93c96aa1556785d0459756a0e1a68',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

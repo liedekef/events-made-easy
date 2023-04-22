@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.2
-Stable tag: 2.3.64
+Stable tag: 2.3.65
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,7 +100,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.65 (2023//) =
+= 2.3.65 (2023/04/22) =
 * Added actions eme_events_daily_action, eme_members_daily_action and eme_daily_action, which all 3 run on a daily basis without arguments
   Since all 3 run on a daily basis, you could decice to put everything in eme_daily_action, but the distinction might be usefull.
 * Fix member dynamic group search (typo resulted in wrong members being returned)

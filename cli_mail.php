@@ -143,7 +143,7 @@ foreach ( $structure as $part_label ) { // Search among each e-mail part
 			$on_behalf_of = strpos( $from, '<' ) ? substr( $from, 0, strpos( $from, '<' ) ) : $from;
 			$on_behalf_of = trim( eme_sanitize_request( $on_behalf_of ) );
 			if ( ! empty( $on_behalf_of ) ) {
-				$on_behalf_of = '(' . sprintf(
+				$on_behalf_of = ' (' . sprintf(
 					/* translators: %s: original email sender name */
 					__( 'on behalf of %s', 'events-made-easy' ),
 				    $on_behalf_of

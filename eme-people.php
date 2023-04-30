@@ -1201,13 +1201,13 @@ function eme_printable_booking_report( $event_id ) {
 			$nbr_columns = 1;
 			?>
 			</th>
-			<th scope='col' class='eme_print_name'>
+			<th scope='col' class='eme_print_name eme_print_lastname'>
 			<?php
 			esc_html_e( 'Last name', 'events-made-easy' );
 			++$nbr_columns;
 			?>
 			</th>
-			<th scope='col' class='eme_print_name'>
+			<th scope='col' class='eme_print_name eme_print_firstname'>
 			<?php
 			esc_html_e( 'First name', 'events-made-easy' );
 			++$nbr_columns;

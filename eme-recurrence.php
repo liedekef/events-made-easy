@@ -483,6 +483,7 @@ function eme_ajax_recurrences_list() {
 
 	$start             = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 	$pagesize          = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
+	$sorting           = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql(eme_sanitize_sql_orderby($_REQUEST['jtSorting'])) : '';
 	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'ongoing';
 	$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_start_date']) ) : '';
@@ -516,11 +517,11 @@ function eme_ajax_recurrences_list() {
 		$events_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 		$count_sql         = "SELECT COUNT(recurrence_id) FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where";
 		$recurrences_count = $wpdb->get_var( $count_sql );
-		$sql               = "SELECT * FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where LIMIT $start,$pagesize";
+		$sql               = "SELECT * FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where $sorting LIMIT $start,$pagesize";
 	} else {
 		$count_sql         = "SELECT COUNT(recurrence_id) FROM $recurrence_table $where";
 		$recurrences_count = $wpdb->get_var( $count_sql );
-		$sql               = "SELECT * FROM $recurrence_table $where LIMIT $start,$pagesize";
+		$sql               = "SELECT * FROM $recurrence_table $where $sorting LIMIT $start,$pagesize";
 	}
 	$recurrences = $wpdb->get_results( $sql, ARRAY_A );
 

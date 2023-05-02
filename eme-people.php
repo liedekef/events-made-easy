@@ -878,8 +878,6 @@ function eme_import_csv_people() {
 }
 
 function eme_csv_booking_report( $event_id ) {
-	
-
 	$event = eme_get_event( $event_id );
 	if ( empty( $event ) ) {
 		return;
@@ -1041,9 +1039,9 @@ function eme_csv_booking_report( $event_id ) {
 		$line[]         = $booking['booking_paid'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 		$line[] = eme_convert_multi2br( eme_localized_price( $booking['received'], $event['currency'] ) );
 		if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
-						$line[] = $line['totalprice'];
+			$line[] = $line['totalprice'];
 		} else {
-				$line[] = eme_localized_price( $booking['remaining'], $event['currency'] );
+			$line[] = eme_localized_price( $booking['remaining'], $event['currency'] );
 		}
 
 		$line[]         = $localized_booking_datetime;
@@ -1125,7 +1123,6 @@ function eme_csv_booking_report( $event_id ) {
 }
 
 function eme_printable_booking_report( $event_id ) {
-	
 	$event = eme_get_event( $event_id );
 	if ( empty( $event ) ) {
 		return;
@@ -1186,12 +1183,12 @@ function eme_printable_booking_report( $event_id ) {
 	if ( $event['price'] ) {
 	}
 	?>
-		<p>
-		<?php
-		esc_html_e( 'Price: ', 'events-made-easy' );
-		echo eme_replace_event_placeholders( '#_PRICE', $event );
-		?>
-		</p>
+	<p>
+	<?php
+	esc_html_e( 'Price: ', 'events-made-easy' );
+	echo eme_replace_event_placeholders( '#_PRICE', $event );
+	?>
+	</p>
 	<h1><?php esc_html_e( 'Bookings data', 'events-made-easy' ); ?></h1>
 	<table id="eme_printable_table">
 		<tr>
@@ -1368,7 +1365,7 @@ function eme_printable_booking_report( $event_id ) {
 					<?php
 					$answers = eme_get_nodyndata_booking_answers( $booking['booking_id'] );
 					foreach ( $answer_fieldids as $field_id ) {
-							$found = 0;
+						$found = 0;
 						foreach ( $answers as $answer ) {
 							if ( $answer['field_id'] == $field_id ) {
 									$class         = 'eme_print_formfield' . $answer['field_id'];
@@ -1392,7 +1389,7 @@ function eme_printable_booking_report( $event_id ) {
 			<td colspan='<?php echo $nbr_columns - 1; ?>' style='text-align: left;' >
 					<?php
 					if ( isset( $event['event_properties']['rsvp_dyndata'] ) ) {
-							$answers = eme_get_dyndata_booking_answers( $booking['booking_id'] );
+						$answers = eme_get_dyndata_booking_answers( $booking['booking_id'] );
 						foreach ( $answers as $answer ) {
 							$grouping      = $answer['eme_grouping'];
 							$occurence     = $answer['occurence'];
@@ -1420,9 +1417,9 @@ function eme_printable_booking_report( $event_id ) {
 			?>
 		</td>
 		</tr>
-			<?php
-			if ( $pending_seats > 0 ) {
-				?>
+		<?php
+		if ( $pending_seats > 0 ) {
+		?>
 		<tr>
 			<td colspan='<?php echo intval($nbr_columns) - 4; ?>'>&nbsp;</td>
 			<td class='total-label'><?php esc_html_e( 'Approved', 'events-made-easy' ); ?>:</td>
@@ -1451,9 +1448,9 @@ function eme_printable_booking_report( $event_id ) {
 					?>
 			</td>
 		</tr>
-				<?php
-			}
-			?>
+		<?php
+		}
+		?>
 		<?php if ( $total_seats > 0 ) { ?>
 		<tr id='eme_printable_available-seats'>
 			<td colspan='<?php echo intval($nbr_columns) - 4; ?>'>&nbsp;</td>
@@ -1473,28 +1470,28 @@ function eme_printable_booking_report( $event_id ) {
 		if ( $event['event_properties']['take_attendance'] ) {
 			$absent_bookings = eme_get_absent_bookings( $event['event_id'] );
 			if ( $absent_bookings > 0 ) {
-				?>
+		?>
 		<tr id='eme_printable_absent-bookings'>
 			<td colspan='<?php echo intval($nbr_columns) - 4; ?>'>&nbsp;</td>
 			<td class='total-label'><?php esc_html_e( 'Absent', 'events-made-easy' ); ?>:</td>
 			<td colspan='3' class='seats-number'><?php print esc_html($absent_bookings); ?></td>
 		</tr>
-				<?php
+		<?php
 			}
 		}
 		?>
 	</table>
 	</div>
-		</body>
-		</html>
+	</body>
+	</html>
 	<?php
-		die();
+	die();
 }
 
 function eme_person_verify_layout() {
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
+	<div class="wrap nosubsub">
+	<div id="poststuff">
 	<div id="icon-edit" class="icon32">
 	</div>
 

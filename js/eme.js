@@ -294,6 +294,7 @@ jQuery(document).ready( function($) {
 	}
 
 	function eme_dynamic_bookingprice_json(form_id) {
+		$('#'+form_id).find(':submit').hide();
 		var alldata = new FormData($('#'+form_id)[0]);
 		// now calculate the price, but only do it if we have a "full" form
 		if ($('#'+form_id).find('span#eme_calc_bookingprice').length) {
@@ -302,14 +303,19 @@ jQuery(document).ready( function($) {
 			$('#'+form_id).find('span#eme_calc_bookingprice').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
 		        $.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
+				$('#'+form_id).find(':submit').show();
 				$('#'+form_id).find('span#eme_calc_bookingprice').html(data.total);
 			})
 			.fail(function(xhr, textStatus, error){
+				$('#'+form_id).find(':submit').show();
 				$('#'+form_id).find('span#eme_calc_bookingprice').html('Invalid reply');
 			});
+		} else {
+			$('#'+form_id).find(':submit').show();
 		}
 	}
 	function eme_dynamic_bookingdata_json(form_id) {
+		$('#'+form_id).find(':submit').hide();
 		var alldata = new FormData($('#'+form_id)[0]);
 		if ($('#'+form_id).find('div#eme_dyndata').length) {
 			$('#'+form_id).find('div#eme_dyndata').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
@@ -317,6 +323,7 @@ jQuery(document).ready( function($) {
 			alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 		        $.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
+				$('#'+form_id).find(':submit').show();
 				$('#'+form_id).find('div#eme_dyndata').html(data.Result);
 				// make sure to init select2 for dynamic added fields
 				if ($('.eme_select2_width50_class.dynamicfield').length) {
@@ -364,12 +371,16 @@ jQuery(document).ready( function($) {
 				}
 
 				eme_dynamic_bookingprice_json(form_id);
+			})
+			.fail(function(xhr, textStatus, error){
+				$('#'+form_id).find(':submit').show();
 			});
 		} else {
 			eme_dynamic_bookingprice_json(form_id);
 		}
 	}
 	function eme_dynamic_memberprice_json(form_id) {
+		$('#'+form_id).find(':submit').hide();
 		var alldata = new FormData($('#'+form_id)[0]);
 		// calculate the price, but only do it if we have a "full" form
 		if ($('#'+form_id).find('span#eme_calc_memberprice').length) {
@@ -378,15 +389,20 @@ jQuery(document).ready( function($) {
 			alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 		        $.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
+				$('#'+form_id).find(':submit').show();
 				$('#'+form_id).find('span#eme_calc_memberprice').html(data.total);
 			})
 			.fail(function(xhr, textStatus, error){
+				$('#'+form_id).find(':submit').show();
 				$('#'+form_id).find('span#eme_calc_memberprice').html('Invalid reply');
 			});
+		} else {
+			$('#'+form_id).find(':submit').show();
 		}
 	}
 
 	function eme_dynamic_familymemberdata_json(form_id) {
+		$('#'+form_id).find(':submit').hide();
 		var alldata = new FormData($('#'+form_id)[0]);
 		if ($('#'+form_id).find('div#eme_dyndata_family').length) {
 			$('#'+form_id).find('div#eme_dyndata_family').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
@@ -394,6 +410,7 @@ jQuery(document).ready( function($) {
 			alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 			$.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
+				$('#'+form_id).find(':submit').show();
 				$('#'+form_id).find('div#eme_dyndata_family').html(data.Result);
 				// make sure to init select2 for dynamic added fields
 				if ($('.eme_select2_width50_class.dynamicfield').length) {
@@ -439,10 +456,16 @@ jQuery(document).ready( function($) {
 						timeFormat: emebasic.translate_ftimeformat
 					});
 				}
+			})
+			.fail(function(xhr, textStatus, error){
+				$('#'+form_id).find(':submit').show();
 			});
+		} else {
+			$('#'+form_id).find(':submit').show();
 		}
 	}
 	function eme_dynamic_memberdata_json(form_id) {
+		$('#'+form_id).find(':submit').hide();
 		var alldata = new FormData($('#'+form_id)[0]);
 		if ($('#'+form_id).find('div#eme_dyndata').length) {
 			$('#'+form_id).find('div#eme_dyndata').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
@@ -450,6 +473,7 @@ jQuery(document).ready( function($) {
 			alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 			$.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 			.done(function(data){
+				$('#'+form_id).find(':submit').show();
 				$('#'+form_id).find('div#eme_dyndata').html(data.Result);
 				// make sure to init select2 for dynamic added fields
 				if ($('.eme_select2_width50_class.dynamicfield').length) {
@@ -496,6 +520,9 @@ jQuery(document).ready( function($) {
 					});
 				}
 				eme_dynamic_memberprice_json(form_id);
+			})
+			.fail(function(xhr, textStatus, error){
+				$('#'+form_id).find(':submit').show();
 			});
 		} else {
 			eme_dynamic_memberprice_json(form_id);
@@ -655,6 +682,7 @@ jQuery(document).ready( function($) {
 			if ($(event.target).is('.nodynamicupdates')) {
 				if ($(event.target).is('.dynamicprice')) {
 					window.clearTimeout(timer);
+					$('#'+form_id).find(':submit').hide();
 					timer = window.setTimeout(function(){
 						eme_dynamic_bookingprice_json(form_id);
 					}, delay);
@@ -667,15 +695,12 @@ jQuery(document).ready( function($) {
 				timer = window.setTimeout(function(){
 					eme_dynamic_bookingdata_json(form_id);
 				}, delay);
-				$('#'+form_id).find(':submit').show();
 			}
 		});
 		$('[name=eme-rsvp-form]').each(function() {
 			var form_id=$(this).attr('id');
 			if ($('#'+form_id).find('div#eme_dyndata').length) {
-				$('#'+form_id).find(':submit').hide();
 				eme_dynamic_bookingdata_json(form_id);
-				$('#'+form_id).find(':submit').show();
 			}
 		});
 	}
@@ -687,6 +712,7 @@ jQuery(document).ready( function($) {
 			if ($(event.target).is('.nodynamicupdates')) {
 				if ($(event.target).is('.dynamicprice')) {
 					window.clearTimeout(timer);
+					$('#'+form_id).find(':submit').hide();
 					timer = window.setTimeout(function(){
 						eme_dynamic_bookingprice_json(form_id);
 					}, delay);
@@ -699,15 +725,12 @@ jQuery(document).ready( function($) {
 				timer = window.setTimeout(function(){
 					eme_dynamic_bookingdata_json(form_id);
 				}, delay);
-				$('#'+form_id).find(':submit').show();
 			}
 		});
 		// the next variable is used to see if this is the first time the admin form is shown
 		// that way we know if we can get the already filled out answers for a booking when first editing it
 		if ($('#eme-rsvp-adminform').find('div#eme_dyndata').length) {
-			$('#eme-rsvp-adminform').find(':submit').hide();
 			eme_dynamic_bookingdata_json('eme-rsvp-adminform');
-			$('#eme-rsvp-adminform').find(':submit').show();
 		}
 	}
 
@@ -718,14 +741,14 @@ jQuery(document).ready( function($) {
 			if ($(event.target).attr('id') == 'familycount' ) {
 				if ($('#'+form_id).find('div#eme_dyndata_family').length) {
 					$('#'+form_id).find(':submit').hide();
+					eme_dynamic_familymemberdata_json(form_id);
 				}
-				eme_dynamic_familymemberdata_json(form_id);
-				$('#'+form_id).find(':submit').show();
 			}
 			// for fields with no dynamic updates, we only consider a possible price change
 			if ($(event.target).is('.nodynamicupdates')) {
 				if ($(event.target).is('.dynamicprice')) {
 					window.clearTimeout(timer);
+					$('#'+form_id).find(':submit').hide();
 					timer = window.setTimeout(function(){
 						eme_dynamic_memberprice_json(form_id);
 					}, delay);
@@ -738,16 +761,13 @@ jQuery(document).ready( function($) {
 				timer = window.setTimeout(function(){
 					eme_dynamic_memberdata_json(form_id);
 				}, delay);
-				$('#'+form_id).find(':submit').show();
 			}
 		});
 		$('[name=eme-member-form]').each(function() {
 			var form_id=$(this).attr('id');
 			if ($('#'+form_id).find('div#eme_dyndata').length || $('#'+form_id).find('div#eme_dyndata_family').length) {
-				$('#'+form_id).find(':submit').hide();
 				eme_dynamic_familymemberdata_json(form_id);
 				eme_dynamic_memberdata_json(form_id);
-				$('#'+form_id).find(':submit').show();
 			}
 		});
 	}
@@ -770,8 +790,8 @@ jQuery(document).ready( function($) {
 				$('#'+form_id).find(':submit').hide();
 				timer = window.setTimeout(function(){
 					eme_dynamic_memberdata_json(form_id);
+					$('#'+form_id).find(':submit').show();
 				}, delay);
-				$('#'+form_id).find(':submit').show();
 			}
 		});
 		if ($('#eme-member-adminform').find('div#eme_dyndata').length) {

@@ -662,13 +662,21 @@ jQuery(document).ready( function($) {
 				return;
 			}
 			window.clearTimeout(timer);
-			timer = window.setTimeout(function(){
-				eme_dynamic_bookingdata_json(form_id);
-			}, delay);
+			if ($('#'+form_id).find('div#eme_dyndata').length) {
+				$('#'+form_id).find(':submit').hide();
+				timer = window.setTimeout(function(){
+					eme_dynamic_bookingdata_json(form_id);
+				}, delay);
+				$('#'+form_id).find(':submit').show();
+			}
 		});
 		$('[name=eme-rsvp-form]').each(function() {
 			var form_id=$(this).attr('id');
-			eme_dynamic_bookingdata_json(form_id);
+			if ($('#'+form_id).find('div#eme_dyndata').length) {
+				$('#'+form_id).find(':submit').hide();
+				eme_dynamic_bookingdata_json(form_id);
+				$('#'+form_id).find(':submit').show();
+			}
 		});
 	}
 	if ($('#eme-rsvp-adminform').length) {
@@ -686,13 +694,21 @@ jQuery(document).ready( function($) {
 				return;
 			}
 			window.clearTimeout(timer);
-			timer = window.setTimeout(function(){
-				eme_dynamic_bookingdata_json(form_id);
-			}, delay);
+			if ($('#'+form_id).find('div#eme_dyndata').length) {
+				$('#'+form_id).find(':submit').hide();
+				timer = window.setTimeout(function(){
+					eme_dynamic_bookingdata_json(form_id);
+				}, delay);
+				$('#'+form_id).find(':submit').show();
+			}
 		});
 		// the next variable is used to see if this is the first time the admin form is shown
 		// that way we know if we can get the already filled out answers for a booking when first editing it
-		eme_dynamic_bookingdata_json('eme-rsvp-adminform');
+		if ($('#eme-rsvp-adminform').find('div#eme_dyndata').length) {
+			$('#eme-rsvp-adminform').find(':submit').hide();
+			eme_dynamic_bookingdata_json('eme-rsvp-adminform');
+			$('#eme-rsvp-adminform').find(':submit').show();
+		}
 	}
 
 	if ($('[name=eme-member-form]').length) {
@@ -700,7 +716,11 @@ jQuery(document).ready( function($) {
 		$('[name=eme-member-form]').on('input', function(event) {
 			var form_id=$(this).attr('id');
 			if ($(event.target).attr('id') == 'familycount' ) {
+				if ($('#'+form_id).find('div#eme_dyndata_family').length) {
+					$('#'+form_id).find(':submit').hide();
+				}
 				eme_dynamic_familymemberdata_json(form_id);
+				$('#'+form_id).find(':submit').show();
 			}
 			// for fields with no dynamic updates, we only consider a possible price change
 			if ($(event.target).is('.nodynamicupdates')) {
@@ -713,14 +733,22 @@ jQuery(document).ready( function($) {
 				return;
 			}
 			window.clearTimeout(timer);
-			timer = window.setTimeout(function(){
-				eme_dynamic_memberdata_json(form_id);
-			}, delay);
+			if ($('#'+form_id).find('div#eme_dyndata').length) {
+				$('#'+form_id).find(':submit').hide();
+				timer = window.setTimeout(function(){
+					eme_dynamic_memberdata_json(form_id);
+				}, delay);
+				$('#'+form_id).find(':submit').show();
+			}
 		});
 		$('[name=eme-member-form]').each(function() {
 			var form_id=$(this).attr('id');
-			eme_dynamic_familymemberdata_json(form_id);
-			eme_dynamic_memberdata_json(form_id);
+			if ($('#'+form_id).find('div#eme_dyndata').length || $('#'+form_id).find('div#eme_dyndata_family').length) {
+				$('#'+form_id).find(':submit').hide();
+				eme_dynamic_familymemberdata_json(form_id);
+				eme_dynamic_memberdata_json(form_id);
+				$('#'+form_id).find(':submit').show();
+			}
 		});
 	}
 	if ($('#eme-member-adminform').length) {
@@ -738,11 +766,19 @@ jQuery(document).ready( function($) {
 				return;
 			}
 			window.clearTimeout(timer);
-			timer = window.setTimeout(function(){
-				eme_dynamic_memberdata_json(form_id);
-			}, delay);
+			if ($('#'+form_id).find('div#eme_dyndata').length) {
+				$('#'+form_id).find(':submit').hide();
+				timer = window.setTimeout(function(){
+					eme_dynamic_memberdata_json(form_id);
+				}, delay);
+				$('#'+form_id).find(':submit').show();
+			}
 		});
+		if ($('#eme-member-adminform').find('div#eme_dyndata').length) {
+			$('#eme-member-adminform').find(':submit').hide();
+		}
 		eme_dynamic_memberdata_json('eme-member-adminform');
+		$('#eme-member-adminform').find(':submit').show();
 	}
         if ($('.eme_formfield_fdatetime').length) {
                 $('.eme_formfield_fdatetime').fdatepicker({

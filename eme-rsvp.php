@@ -363,6 +363,7 @@ function eme_booking_list_shortcode( $atts ) {
 				'rsvp_status'        => 0,
 				'approval_status'    => 0,
 				'paid_status'        => 0,
+				'order'              => '',
 			],
 		    $atts
 		)
@@ -381,7 +382,7 @@ function eme_booking_list_shortcode( $atts ) {
 	}
 	$event = eme_get_event( $id );
 	if ( ! empty( $event ) ) {
-		return eme_get_bookings_list_for_event( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status );
+		return eme_get_bookings_list_for_event( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, 0, $order );
 	} else {
 		return '';
 	}
@@ -423,7 +424,7 @@ function eme_mybooking_list_shortcode( $atts ) {
 		if ( $id && $wp_id ) {
 			$event = eme_get_event( $id );
 			if ( ! empty( $event ) ) {
-					return eme_get_bookings_list_for_event( $event, $template_id, $template_id_header, $template_id_footer, 0, 0, $wp_id );
+					return eme_get_bookings_list_for_event( $event, $template_id, $template_id_header, $template_id_footer, 0, 0, $wp_id, $order );
 			} else {
 				return '';
 			}
@@ -2747,7 +2748,7 @@ function eme_get_basic_bookings_on_waitinglist( $event_id ) {
 	return $bookings;
 }
 
-function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 ) {
+function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0, $order = '' ) {
 	global $wpdb;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
@@ -2777,11 +2778,16 @@ function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 ) 
 	}
 	$where = 'WHERE ' . implode( ' AND ', $where );
 	#$sql = "SELECT * FROM $bookings_table $where ORDER BY booking_id";
-	$sql = "SELECT bookings.* FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id $where ORDER BY people.lastname,people.firstname,bookings.booking_id";
+	$sql = "SELECT bookings.* FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id $where";
+	if ( empty( $order ) ) {
+		$sql .= ' ORDER BY people.lastname ASC, people.firstname ASC, bookings.booking_id ASC';
+	} elseif ( ! empty( $order ) && preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
+		$sql .= " ORDER BY $order";
+	}
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
-function eme_get_bookings_for_event_wp_id( $event_id, $wp_id ) {
+function eme_get_bookings_for_event_wp_id( $event_id, $wp_id, $order = '' ) {
 	global $wpdb;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
@@ -2791,7 +2797,14 @@ function eme_get_bookings_for_event_wp_id( $event_id, $wp_id ) {
 		return $bookings;
 	}
 
-	$sql = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.wp_id = %d ORDER BY people.lastname,people.firstname,bookings.booking_id", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id, $wp_id );
+	$sql = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.wp_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id, $wp_id );
+
+	if ( empty( $order ) ) {
+		$sql .= ' ORDER BY people.lastname ASC, people.firstname ASC, bookings.booking_id ASC';
+	} elseif ( ! empty( $order ) && preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
+		$sql .= " ORDER BY $order";
+	}
+
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
@@ -2968,14 +2981,14 @@ function eme_get_attendees_list( $event, $template_id = 0, $template_id_header =
 	return $res;
 }
 
-function eme_get_bookings_list_for_event( $event, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $rsvp_status = 0, $paid_status = 0, $wp_id = 0 ) {
+function eme_get_bookings_list_for_event( $event, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $rsvp_status = 0, $paid_status = 0, $wp_id = 0, $order = '' ) {
 	if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
 		$rsvp_status = EME_RSVP_STATUS_APPROVED;
 	}
 	if ( $wp_id ) {
-		$bookings = eme_get_bookings_for_event_wp_id( $event['event_id'], $wp_id );
+		$bookings = eme_get_bookings_for_event_wp_id( $event['event_id'], $wp_id, $order );
 	} else {
-		$bookings = eme_get_bookings_for( $event['event_id'], $rsvp_status, $paid_status );
+		$bookings = eme_get_bookings_for( $event['event_id'], $rsvp_status, $paid_status, $order );
 	}
 	$format        = get_option( 'eme_bookings_list_format' );
 	$format_header = get_option( 'eme_bookings_list_header_format' );

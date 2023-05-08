@@ -41,6 +41,21 @@ var eme_CaptchaCallback = function() {
 */
 
 jQuery(document).ready( function($) {
+        if (typeof getQueryParams === 'undefined') {
+                function getQueryParams(qs) {
+                        qs = qs.split('+').join(' ');
+                        var params = {},
+                                tokens,
+                                re = /[?&]?([^=]+)=([^&]*)/g;
+
+                        while (tokens = re.exec(qs)) {
+                                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+                        }
+                        return params;
+                }
+        }
+	var $_GET = getQueryParams(document.location.search);
+
 	function loadCalendar(tableDiv, fullcalendar, htmltable, htmldiv, showlong_events, month, year, cat_chosen, author_chosen, contact_person_chosen, location_chosen, not_cat_chosen,template_chosen,holiday_chosen,weekdays,language) {
 		if (fullcalendar === undefined) {
 			fullcalendar = 0;
@@ -237,6 +252,19 @@ jQuery(document).ready( function($) {
 		$('#'+form_id).find(':submit').hide();
 		alldata = new FormData($('#'+form_id)[0]);
 		alldata.append('action','eme_add_bookings');
+		// we add the following 4 params to the request too, so we can check in the backend if it comes from an invite
+		if (typeof $_GET['eme_invite']!=='undefined') {
+			alldata.append('eme_invite',$_GET['eme_invite']);
+		}
+		if (typeof $_GET['eme_email']!=='undefined') {
+			alldata.append('eme_email',$_GET['eme_email']);
+		}
+		if (typeof $_GET['eme_ln']!=='undefined') {
+			alldata.append('eme_ln',$_GET['eme_ln']);
+		}
+		if (typeof $_GET['eme_fn']!=='undefined') {
+			alldata.append('eme_fn',$_GET['eme_fn']);
+		}
 		$.ajax({url: emebasic.translate_ajax_url, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json' })
 		.done(function(data){
 			if (data.Result=='OK') {

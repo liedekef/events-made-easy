@@ -5,18 +5,18 @@ jQuery(document).ready( function($) {
 			$("form.eme-rememberme input#eme_rememberme").prop("checked",true);
 		}
 	}
-	if ($('form.eme-rememberme input[name=lastname]').length) {
-		$('form.eme-rememberme input[name=lastname]').val(localStorage.getItem('eme_lastname'));
-	}
-	if ($('form.eme-rememberme input[name=firstname]').length) {
-		$('form.eme-rememberme input[name=firstname]').val(localStorage.getItem('eme_firstname'));
-	}
-	if ($('form.eme-rememberme input[name=email]').length) {
-		$('form.eme-rememberme input[name=email]').val(localStorage.getItem('eme_email'));
-	}
-	if ($('form.eme-rememberme input[name=phone]').length) {
-		$('form.eme-rememberme input[name=phone]').val(localStorage.getItem('eme_phone'));
-	}
+        if ($('form.eme-rememberme input[name=lastname]').length && $('form.eme-rememberme input[name=lastname]').val() == '') {
+                $('form.eme-rememberme input[name=lastname]').val(localStorage.getItem('eme_lastname'));
+        }
+        if ($('form.eme-rememberme input[name=firstname]').length && $('form.eme-rememberme input[name=firstname]').val() == '') {
+                $('form.eme-rememberme input[name=firstname]').val(localStorage.getItem('eme_firstname'));
+        }
+        if ($('form.eme-rememberme input[name=email]').length && $('form.eme-rememberme input[name=email]').val() == '') {
+                $('form.eme-rememberme input[name=email]').val(localStorage.getItem('eme_email'));
+        }
+        if ($('form.eme-rememberme input[name=phone]').length && $('form.eme-rememberme input[name=phone]').val() == '') {
+                $('form.eme-rememberme input[name=phone]').val(localStorage.getItem('eme_phone'));
+        }
 	if ($('form.eme-rememberme input[name=task_lastname]').length) {
 		$('form.eme-rememberme input[name=task_lastname]').val(localStorage.getItem('eme_lastname'));
 	}

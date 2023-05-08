@@ -1,15 +1,17 @@
 jQuery(document).ready( function($) {
-   function getQueryParams(qs) {
-                qs = qs.split('+').join(' ');
-                var params = {},
-                        tokens,
-                        re = /[?&]?([^=]+)=([^&]*)/g;
+        if (typeof getQueryParams === 'undefined') {
+                function getQueryParams(qs) {
+                        qs = qs.split('+').join(' ');
+                        var params = {},
+                                tokens,
+                                re = /[?&]?([^=]+)=([^&]*)/g;
 
-                while (tokens = re.exec(qs)) {
-                        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+                        while (tokens = re.exec(qs)) {
+                                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+                        }
+                        return params;
                 }
-                return params;
-   }
+        }
    var $_GET = getQueryParams(document.location.search);
 
    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
@@ -173,11 +175,13 @@ jQuery(document).ready( function($) {
 		   	$('#'+form_id).trigger('reset');
 			// the form reset doesn't reset select2 fields ...
 			// so we call it ourselves
+			$("#event_ids[]").val(null).trigger("change");
 			$("#eme_eventmail_send_persons").val(null).trigger("change");
 			$("#eme_eventmail_send_groups").val(null).trigger("change");
 			$("#eme_eventmail_send_members").val(null).trigger("change");
 			$("#eme_eventmail_send_membergroups").val(null).trigger("change");
 			$("#eme_eventmail_send_memberships").val(null).trigger("change");
+			$("#eme_mail_type").val(null).trigger("change");
 		        $('div#eventmail-message').delay(10000).fadeOut('slow');
 		   }
 		   $('#eventmailButton').text(eme.translate_sendmail);

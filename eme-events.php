@@ -3873,6 +3873,12 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			} else {
 				$replacement = 0;
 			}
+		} elseif ( $event && preg_match( '/#_IS_INVITE_URL/', $result ) ) {
+			if ( eme_check_invite_url( $event['event_id'] ) ) {
+				$replacement = 1;
+			} else {
+				$replacement = 0;
+			}
 		} else {
 			$found = 0;
 		}

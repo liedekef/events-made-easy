@@ -102,6 +102,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.66 (2023//) =
 * Add order option for eme_bookings shortcode. The default order is 'people.lastname ASC, people.firstname ASC, bookings.booking_id ASC'.
+* Added new placeholder #_IS_INVITE_URL so you can check if an event is being booked for via an invite url
+* New option for discounts, so you can chose if a certain discount is only valid for invitation-followed urls
+* Invite urls can be sent for any event, not just those marked 'invite only'
 
 = 2.3.65 (2023/04/22) =
 * Added actions eme_events_daily_action, eme_members_daily_action and eme_daily_action, which all 3 run on a daily basis without arguments

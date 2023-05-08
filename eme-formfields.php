@@ -2344,10 +2344,8 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		$disabled = '';
 	}
 
-	// now one final case: if invite_only, use the set email from the invite link and make the email field readonly
-	// we don't need to check the validity of the invite url content, that already happened
-	if ( $event['event_properties']['invite_only'] && ! $eme_is_admin_request ) {
-		$invite_readonly = "readonly='readonly'";
+	// now one final case: if invite url is followed, use the set email from the invite link and make the email field readonly
+	if ( eme_check_invite_url( $event['event_id'] ) && ! $eme_is_admin_request ) {
 		if ( ! empty( $_GET['eme_email'] ) ) {
 			$bookerEmail = eme_sanitize_email( $_GET['eme_email'] );
 		}
@@ -2357,6 +2355,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		if ( ! empty( $_GET['eme_fn'] ) ) {
 			$bookerFirstName = eme_sanitize_request( $_GET['eme_fn'] );
 		}
+		$invite_readonly = "readonly='readonly'";
 	} else {
 		$invite_readonly = '';
 	}

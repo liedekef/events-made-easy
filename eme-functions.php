@@ -1071,23 +1071,23 @@ function eme_category_url( $category ) {
 }
 
 function eme_check_invite_url( $event_id ) {
-	if ( isset( $_GET['eme_invite'] ) ) {
-		$invite_get = eme_sanitize_request( $_GET['eme_invite'] );
+	if ( isset( $_REQUEST['eme_invite'] ) ) {
+		$invite_get = eme_sanitize_request( $_REQUEST['eme_invite'] );
 	} else {
 		return 0;
 	}
-	if ( isset( $_GET['eme_email'] ) ) {
-		$hash_string = eme_sanitize_email( $_GET['eme_email'] );
+	if ( isset( $_REQUEST['eme_email'] ) ) {
+		$hash_string = eme_sanitize_email( $_REQUEST['eme_email'] );
 	} else {
 		return 0;
 	}
-	if ( ! empty( $_GET['eme_ln'] ) ) {
-		$hash_string .= eme_sanitize_request( $_GET['eme_ln'] );
+	if ( ! empty( $_REQUEST['eme_ln'] ) ) {
+		$hash_string .= eme_sanitize_request( $_REQUEST['eme_ln'] );
 	}
-	if ( ! empty( $_GET['eme_fn'] ) ) {
-		$hash_string .= eme_sanitize_request( $_GET['eme_fn'] );
+	if ( ! empty( $_REQUEST['eme_fn'] ) ) {
+		$hash_string .= eme_sanitize_request( $_REQUEST['eme_fn'] );
 	}
-		$invite_check = wp_hash( $hash_string . '|' . $event_id, 'nonce' );
+	$invite_check = wp_hash( $hash_string . '|' . $event_id, 'nonce' );
 	if ( $invite_check != $invite_get ) {
 		return 0;
 	} else {

@@ -36,6 +36,9 @@ function eme_new_discountgroup() {
 }
 
 function eme_init_discount_props( $props ) {
+	if ( ! isset( $props['invite_only'] ) ) {
+		$props['invite_only'] = 0;
+	}
 	if ( ! isset( $props['wp_users_only'] ) ) {
 		$props['wp_users_only'] = 0;
 	}
@@ -389,7 +392,7 @@ function eme_manage_discounts_layout( $message = '' ) {
 	$dgroups     = eme_get_dgroups();
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-			$hidden_style = 'display:none;';
+		$hidden_style = 'display:none;';
 	} else {
 		$hidden_style = '';
 	}
@@ -475,7 +478,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 	global $plugin_page;
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-			$hidden_style = 'display:none;';
+		$hidden_style = 'display:none;';
 	} else {
 		$hidden_style = '';
 	}
@@ -555,9 +558,9 @@ function eme_booking_discount( $event, $booking ) {
 			$total_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
 			if ( $total_discount != $booking['discount'] ) {
-					$applied_discountids    = [];
-					$discountgroup_id       = 0;
-					$booking['dcodes_used'] = [];
+				$applied_discountids    = [];
+				$discountgroup_id       = 0;
+				$booking['dcodes_used'] = [];
 			}
 		}
 	} elseif ( ! empty( $event['event_properties']['rsvp_discountgroup'] ) ) {
@@ -585,7 +588,7 @@ function eme_booking_discount( $event, $booking ) {
 				$discount    = eme_get_discount( $id );
 				$calc_result = eme_calc_booking_discount( $discount, $booking );
 				if ( $calc_result === false || empty( $calc_result[0] ) ) {
-						$amount = 0;
+					$amount = 0;
 				} else {
 					$amount = $calc_result[0];
 				}
@@ -616,7 +619,7 @@ function eme_booking_discount( $event, $booking ) {
 			$total_discount        = $amount;
 			$applied_discountids[] = $discount['id'];
 			if ( ! empty( $calc_result[1] ) ) {
-					$booking['dcodes_used'] = $calc_result[1];
+				$booking['dcodes_used'] = $calc_result[1];
 			} else {
 				$booking['dcodes_used'] = [];
 			}
@@ -649,9 +652,9 @@ function eme_member_discount( $membership, $member ) {
 			$total_discount = sprintf( '%01.2f', $_POST['DISCOUNT'] );
 			// if there's an amount entered and it is different than what was calculated before, we clear the discount id references
 			if ( $total_discount != $member['discount'] ) {
-					$applied_discountids   = [];
-					$discountgroup_id      = 0;
-					$member['dcodes_used'] = [];
+				$applied_discountids   = [];
+				$discountgroup_id      = 0;
+				$member['dcodes_used'] = [];
 			}
 		}
 	} elseif ( ! empty( $membership['properties']['discountgroup'] ) ) {
@@ -679,7 +682,7 @@ function eme_member_discount( $membership, $member ) {
 				$discount    = eme_get_discount( $id );
 				$calc_result = eme_calc_member_discount( $discount, $member );
 				if ( $calc_result === false || empty( $calc_result[0] ) ) {
-						$amount = 0;
+					$amount = 0;
 				} else {
 					$amount = $calc_result[0];
 				}
@@ -799,12 +802,12 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 				}
 			}
 		}
-			$h1_string     = __( 'Edit discount', 'events-made-easy' );
-			$action_string = __( 'Update discount', 'events-made-easy' );
+		$h1_string     = __( 'Edit discount', 'events-made-easy' );
+		$action_string = __( 'Update discount', 'events-made-easy' );
 	} else {
-			$discount      = eme_new_discount();
-			$h1_string     = __( 'Create discount', 'events-made-easy' );
-			$action_string = __( 'Add discount', 'events-made-easy' );
+		$discount      = eme_new_discount();
+		$h1_string     = __( 'Create discount', 'events-made-easy' );
+		$action_string = __( 'Add discount', 'events-made-easy' );
 	}
 
 	$nonce_field    = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
@@ -832,68 +835,74 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 		<input type='hidden' name='id' value='<?php echo $discount_id; ?>'>
 		<?php echo $nonce_field; ?>
 		<table class='form-table'>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='name'><?php esc_html_e( 'Discount name', 'events-made-easy' ); ?></label></th>
-		<td><input name='name' id='name' required='required' type='text' value='<?php echo eme_esc_html( $discount['name'] ); ?>' size='40'><br>
-		<?php esc_html_e( 'The name of the discount', 'events-made-easy' ); ?></td>
-			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='description'><?php esc_html_e( 'Description', 'events-made-easy' ); ?></label></th>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='name'><?php esc_html_e( 'Discount name', 'events-made-easy' ); ?></label></th>
+			<td><input name='name' id='name' required='required' type='text' value='<?php echo eme_esc_html( $discount['name'] ); ?>' size='40'><br>
+			<?php esc_html_e( 'The name of the discount', 'events-made-easy' ); ?></td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='description'><?php esc_html_e( 'Description', 'events-made-easy' ); ?></label></th>
 			<td><textarea name='description' id='description' rows='5' ><?php echo eme_esc_html( $discount['description'] ); ?></textarea></td>
-			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='type'><?php esc_html_e( 'Type', 'events-made-easy' ); ?></label></th>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='type'><?php esc_html_e( 'Type', 'events-made-easy' ); ?></label></th>
 			<td><?php echo eme_ui_select( $discount['type'], 'type', $discount_types ); ?>
 			<br><?php esc_html_e( 'For type "Code" you have to create your own discount filters, please read the documention for this', 'events-made-easy' ); ?>
-			</tr>
-			<tr class='form-field'>
+		</tr>
+		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='value'><?php esc_html_e( 'Discount value', 'events-made-easy' ); ?></label></th>
 			<td><input name='value' id='value' type='text' value='<?php echo eme_esc_html( $discount['value'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The applied discount value if the correct coupon code is entered (this does not apply to discounts of type "Code")', 'events-made-easy' ); ?>
 			<br><?php esc_html_e( 'For type "Percentage" the value should be >=0 and <=100', 'events-made-easy' ); ?>
 				</td>
-			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='coupon'><?php esc_html_e( 'Coupon code', 'events-made-easy' ); ?></label></th>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='coupon'><?php esc_html_e( 'Coupon code', 'events-made-easy' ); ?></label></th>
 			<td><input name='coupon' id='coupon' type='text' value='<?php echo eme_esc_html( $discount['coupon'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The coupon code to enter for the discount to apply (this does not apply to discounts of type "Code")', 'events-made-easy' ); ?>
 			<br><?php esc_html_e( 'If you leave the coupon code empty but set a discount expiration date, you can use this as an "early bird" discount', 'events-made-easy' ); ?>
-				</td>
-			</tr>
-			<tr class='form-field'>
+			</td>
+		</tr>
+		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='value'><?php esc_html_e( 'Discount groups', 'events-made-easy' ); ?></label></th>
 			<td><?php echo eme_ui_multiselect_key_value( $selected_dgroup_arr, 'dgroup', $dgroups, 'id', 'name', 5, '', 0, 'eme_select2_width50_class' ); ?>
 			<br><?php esc_html_e( 'If wanted, you can make this discount a part of one or more discount groups, and then apply a discount group to your event', 'events-made-easy' ); ?>
-				</td>
-			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='dp_valid_from'><?php esc_html_e( 'Valid from', 'events-made-easy' ); ?></label></th>
+			</td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='dp_valid_from'><?php esc_html_e( 'Valid from', 'events-made-easy' ); ?></label></th>
 			<td><input type='hidden' readonly='readonly' name='valid_from' id='valid_from'>
 			<input type='text' readonly='readonly' name='dp_valid_from' id='dp_valid_from' data-date='<?php if ( $discount['valid_from'] ) { echo eme_js_datetime( $discount['valid_from'] );} ?>' data-alt-field='#valid_from' class='eme_formfield_fdatetime'>
 			<br><?php esc_html_e( 'An optional coupon start date and time, if entered the coupon is not valid before this date and time.', 'events-made-easy' ); ?>
-				</td>
-			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='dp_valid_to'><?php esc_html_e( 'Valid until', 'events-made-easy' ); ?></label></th>
+			</td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='dp_valid_to'><?php esc_html_e( 'Valid until', 'events-made-easy' ); ?></label></th>
 			<td><input type='hidden' readonly='readonly' name='valid_to' id='valid_to'>
 			<input type='text' readonly='readonly' name='dp_valid_to' id='dp_valid_to' data-date='<?php if ( $discount['valid_to'] ) { echo eme_js_datetime( $discount['valid_to'] );} ?>' data-alt-field='#valid_to' class='eme_formfield_fdatetime'>
 			<br><?php esc_html_e( 'An optional coupon expiration date and time, if entered the coupon is not valid after this date and time.', 'events-made-easy' ); ?>
-				</td>
-			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='properties[wp_users_only]'><?php esc_html_e( 'Logged-in users only', 'events-made-easy' ); ?></label></th>
+			</td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='properties[invite_only]'><?php esc_html_e( 'Invited people only', 'events-made-easy' ); ?></label></th>
+			<td><?php echo eme_ui_select_binary( $discount['properties']['invite_only'], 'properties[invite_only]' ); ?>
+			<br><p class='eme_smaller'><?php esc_html_e( 'People need to be invited and click on the invitation URL for this discount to apply.', 'events-made-easy' ); ?></p>
+			</td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='properties[wp_users_only]'><?php esc_html_e( 'Logged-in users only', 'events-made-easy' ); ?></label></th>
 			<td><?php echo eme_ui_select_binary( $discount['properties']['wp_users_only'], 'properties[wp_users_only]' ); ?>
 			<br><p class='eme_smaller'><?php esc_html_e( 'Require users to be logged-in for this discount to apply.', 'events-made-easy' ); ?></p>
-				</td>
-			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='properties[group_ids]'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></th>
+			</td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='properties[group_ids]'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></th>
 			<td><?php echo eme_ui_multiselect_key_value( $discount['properties']['group_ids'], 'properties[group_ids]', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2_width50_class' ); ?>
 			<br><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups for this discount to apply.', 'events-made-easy' ); ?></p>
-				</td>
-			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='properties[membership_ids]'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></th>
+			</td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='properties[membership_ids]'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></th>
 			<td>
 			<?php
 			if ( ! empty( $memberships ) ) {
@@ -903,38 +912,38 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			}
 			?>
 			<br><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships for this discount to apply.', 'events-made-easy' ); ?></p>
-				</td>
-			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='properties[wp_role]'><?php esc_html_e( 'WP role required', 'events-made-easy' ); ?></label></th>
+			</td>
+		</tr>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='properties[wp_role]'><?php esc_html_e( 'WP role required', 'events-made-easy' ); ?></label></th>
 			<td><select id='wp_role' name='properties[wp_role]'><option value=''>&nbsp;</option><?php wp_dropdown_roles( $discount['properties']['wp_role'] ); ?> </select>
 			<br><p class='eme_smaller'><?php esc_html_e( 'Require users to have the selected WP role for the discount to apply.', 'events-made-easy' ); ?></p>
-				</td>
-			</tr>
-			<tr class='form-field'>
+			</td>
+		</tr>
+		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='strcase'><?php esc_html_e( 'Case sensitive?', 'events-made-easy' ); ?></label></th>
 			<td><?php echo eme_ui_select_binary( $discount['strcase'], 'strcase' ); ?></td>
-			</tr>
-			<tr class='form-field'>
+		</tr>
+		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='maxcount'><?php esc_html_e( 'Maximum usage count', 'events-made-easy' ); ?></label></th>
 			<td><input name='maxcount' id='maxcount' type='text' value='<?php echo eme_esc_html( $discount['maxcount'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The maximum number of times this discount can be applied', 'events-made-easy' ); ?>
-				</td>
-			</tr>
+			</td>
+		</tr>
 	<?php if ( $discount_id ) { ?>
-			<tr class='form-field'>
+		<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><label for='count'><?php esc_html_e( 'Current usage count', 'events-made-easy' ); ?></label></th>
 			<td><input name='count' id='count' type='text' value='<?php echo eme_esc_html( $discount['count'] ); ?>' size='40'>
 			<br><?php esc_html_e( 'The current number of times this discount has been applied', 'events-made-easy' ); ?>
-				</td>
-			</tr>
+			</td>
+		</tr>
 	<?php } ?>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='use_per_seat'><?php esc_html_e( 'Count usage per seat?', 'events-made-easy' ); ?></label></th>
+		<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><label for='use_per_seat'><?php esc_html_e( 'Count usage per seat?', 'events-made-easy' ); ?></label></th>
 			<td><?php echo eme_ui_select_binary( $discount['use_per_seat'], 'use_per_seat' ); ?>
 			<br><?php esc_html_e( 'By default the coupon usage count is counted per form submit. If you want, you can augment the usage count by the number of seats booked instead.', 'events-made-easy' ); ?>
-				</td>
-			</tr>
+			</td>
+		</tr>
 		</table>
 	<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo $action_string; ?>'></p>
 		</form>
@@ -1307,6 +1316,11 @@ function eme_calc_booking_discount( $discount, $booking ) {
 
 	// check if not max usage count reached
 	if ( $discount['maxcount'] > 0 && $discount['count'] >= $discount['maxcount'] ) {
+		return false;
+	}
+
+	// check if invitation is required
+	if ( ! empty( $discount['properties']['invite_only'] ) && ! eme_check_invite_url( $booking['event_id'] ) ) {
 		return false;
 	}
 

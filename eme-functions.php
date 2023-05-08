@@ -1087,7 +1087,7 @@ function eme_check_invite_url( $event_id ) {
 	if ( ! empty( $_GET['eme_fn'] ) ) {
 		$hash_string .= eme_sanitize_request( $_GET['eme_fn'] );
 	}
-		$invite_check = wp_hash( $hash_string . '|' . $event_id, 'nonce' );
+	$invite_check = wp_hash( $hash_string . '|' . $event_id, 'nonce' );
 	if ( $invite_check != $invite_get ) {
 		return 0;
 	} else {

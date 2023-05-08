@@ -262,9 +262,7 @@ function eme_replace_email_event_placeholders( $format, $email, $lastname, $firs
 		$replacement        = '';
 		$found              = 1;
 		if ( preg_match( '/#_INVITEURL$/', $result, $matches ) ) {
-			if ( $event['event_properties']['invite_only'] ) {
-				$replacement = eme_invite_url( $event, $email, $lastname, $firstname, $lang );
-			}
+			$replacement = eme_invite_url( $event, $email, $lastname, $firstname, $lang );
 		} else {
 			$found = 0;
 		}
@@ -554,7 +552,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 			}
 		} elseif ( preg_match( '/#_INVITEURL\{(.+)\}/', $result, $matches ) ) {
 			$event = eme_get_event( $matches[1] );
-			if ( ! empty( $event ) && $event['event_properties']['invite_only'] ) {
+			if ( ! empty( $event ) ) {
 				$replacement = eme_invite_url( $event, $person['email'], $person['lastname'], $person['firstname'], $lang );
 				if ( $target == 'html' ) {
 					$replacement = esc_url( $replacement );

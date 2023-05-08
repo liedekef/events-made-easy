@@ -3010,6 +3010,10 @@ function eme_notification_payconiq( $payconiq_paymentid = 0 ) {
 	$payment_id = $payconiq_payment->reference;
 	$eme_price  = eme_get_payment_price( $payment_id );
 	$payment    = eme_get_payment( $payment_id );
+	if ( !$payment ) {
+		// notif for payment that doesn't exist, let's quit
+		return;
+	}
 	if ( $payment['pg_pid'] != $payconiq_paymentid ) {
 		//error_log("EME payment id $payment_id does not match payconiq payment id $payconiq_paymentid");
 		//@ini_set( 'display_errors', $display_errors );

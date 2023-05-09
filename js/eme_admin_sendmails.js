@@ -171,11 +171,12 @@ jQuery(document).ready( function($) {
 	   .done(function(data){
 		   $('div#eventmail-message').html(data.htmlmessage);
 		   $('div#eventmail-message').show();
+		   console.log(data);
 		   if (data.Result=='OK') {
 		   	$('#'+form_id).trigger('reset');
 			// the form reset doesn't reset select2 fields ...
 			// so we call it ourselves
-			$("#event_ids[]").val(null).trigger("change");
+			$('#event_ids').val(null).trigger("change");
 			$("#eme_eventmail_send_persons").val(null).trigger("change");
 			$("#eme_eventmail_send_groups").val(null).trigger("change");
 			$("#eme_eventmail_send_members").val(null).trigger("change");

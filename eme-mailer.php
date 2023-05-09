@@ -2085,7 +2085,7 @@ function eme_emails_page() {
 		<tr>
 		<td><?php esc_html_e( 'Select the event(s)', 'events-made-easy' ); ?></td>
 		<td>
-		<select name="event_ids[]" id="event_ids[]" multiple="multiple" size="5" class='eme_select2_events_class'>
+		<select name="event_ids[]" id="event_ids" multiple="multiple" size="5" class='eme_select2_events_class'>
 			</select>
 		<br><input id="eventsearch_all" name='eventsearch_all' value='1' type='checkbox'> <?php esc_html_e( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ); ?>
 			<p class='eme_smaller'><?php esc_html_e( 'Remark: if you select multiple events, a mailing will be created for each selected event', 'events-made-easy' ); ?></p>

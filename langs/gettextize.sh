@@ -37,7 +37,7 @@ else
 			# first remove old location comments
 			grep -v '^# File:' $i > "tmp.po"
 			# now merge
-			echo "==> Merging pot into new2 $i"
+			echo "==> Merging pot into new $i"
 			msgmerge --strict -o "$i" "tmp.po" events-made-easy.pot
 			rm "tmp.po"
 		fi

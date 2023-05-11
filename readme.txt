@@ -100,6 +100,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.67 (2023//) =
+* Always allow style, span and meta html-tags in formats
+
 = 2.3.66 (2023/05/10) =
 * Add order option for eme_bookings shortcode. The default order is 'people.lastname ASC, people.firstname ASC, bookings.booking_id ASC'.
 * Added new placeholder #_IS_INVITE_URL so you can check if an event is being booked for via an invite url

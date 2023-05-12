@@ -1959,6 +1959,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 		$need_escape        = 0;
 		$need_urlencode     = 0;
 		$found              = 1;
+
 		if ( strstr( $result, '#ESC' ) ) {
 			$result      = str_replace( '#ESC', '#', $result );
 			$need_escape = 1;
@@ -1966,6 +1967,11 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			$result         = str_replace( '#URL', '#', $result );
 			$need_urlencode = 1;
 		}
+
+		# support for #_LOCATION and #_LOCATION_
+                $result = preg_replace( '/#_LOCATION(_)?/', '#_', $result );
+		if ($result == '#_') $result = '#_NAME';
+
 		$replacement = '';
 
 		// echo "RESULT: $result <br>";
@@ -2049,8 +2055,8 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_(NAME|LOCATIONNAME|LOCATION)$/', $result ) ) {
-					$field = 'location_name';
+		} elseif ( preg_match( '/#_NAME$/', $result ) ) {
+			$field = 'location_name';
 			if ( isset( $location[ $field ] ) ) {
 				$replacement = $location[ $field ];
 			}
@@ -2062,7 +2068,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_LOCATIONID/', $result ) ) {
+		} elseif ( preg_match( '/#_ID/', $result ) ) {
 					$field = 'location_id';
 			if ( isset( $location[ $field ] ) ) {
 				$replacement = $location[ $field ];
@@ -2075,7 +2081,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGETITLE$/', $result ) ) {
+		} elseif ( preg_match( '/#_IMAGETITLE$/', $result ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
 				$info        = eme_get_wp_image( $location['location_image_id'] );
 				$replacement = $info['title'];
@@ -2087,7 +2093,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGEALT$/', $result ) ) {
+		} elseif ( preg_match( '/#_IMAGEALT$/', $result ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
 				$info        = eme_get_wp_image( $location['location_image_id'] );
 				$replacement = $info['alt'];
@@ -2099,7 +2105,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGECAPTION$/', $result ) ) {
+		} elseif ( preg_match( '/#_IMAGECAPTION$/', $result ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
 				$info        = eme_get_wp_image( $location['location_image_id'] );
 				$replacement = $info['caption'];
@@ -2111,7 +2117,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGEDESCRIPTION$/', $result ) ) {
+		} elseif ( preg_match( '/#_IMAGEDESCRIPTION$/', $result ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
 				$info        = eme_get_wp_image( $location['location_image_id'] );
 				$replacement = $info['description'];
@@ -2123,7 +2129,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGE$/', $result ) ) {
+		} elseif ( preg_match( '/#_IMAGE$/', $result ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
 				$replacement = wp_get_attachment_image( $location['location_image_id'], 'full', 0, [ 'class' => 'eme_location_image' ] );
 			} elseif ( ! empty( $location['location_image_url'] ) ) {
@@ -2142,7 +2148,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGEURL$/', $result ) ) {
+		} elseif ( preg_match( '/#_IMAGEURL$/', $result ) ) {
 			if ( ! empty( $location['location_image_id'] ) ) {
 				$replacement = wp_get_attachment_image_url( $location['location_image_id'], 'full' );
 			} elseif ( ! empty( $location['location_image_url'] ) ) {
@@ -2151,7 +2157,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			if ( $target == 'html' ) {
 				$replacement = esc_url( $replacement );
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMB(\{.+?\})?$/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_IMAGETHUMB(\{.+?\})?$/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
                                 $thumb_size = substr( $matches[1], 1, -1 );
@@ -2168,7 +2174,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONIMAGETHUMBURL(\{.+?\})?$/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_IMAGETHUMBURL(\{.+?\})?$/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
                                 $thumb_size = substr( $matches[1], 1, -1 );
@@ -2181,7 +2187,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = esc_url( $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONPAGEURL/', $result ) ) {
+		} elseif ( preg_match( '/#_PAGEURL/', $result ) ) {
 			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
 				$replacement = eme_location_url( $location, $lang );
 			}
@@ -2202,7 +2208,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			}
 			# until I find something easy not-google related, this is returning the google form
 
-		} elseif ( preg_match( '/#_LOCATIONDBFIELD\{(.+?)\}/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_DBFIELD\{(.+?)\}/', $result, $matches ) ) {
 			$tmp_attkey = $matches[1];
 			if ( isset( $location[ $tmp_attkey ] ) && ! is_array( $location[ $tmp_attkey ] ) ) {
 				$replacement = $location[ $tmp_attkey ];
@@ -2232,7 +2238,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_CATEGORIES|#_LOCATIONCATEGORIES$/', $result ) && get_option( 'eme_categories_enabled' ) ) {
+		} elseif ( preg_match( '/#_CATEGORIES$/', $result ) && get_option( 'eme_categories_enabled' ) ) {
 			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
 				$sep = ', ';
 				if ( has_filter( 'eme_categories_sep_filter' ) ) {
@@ -2253,7 +2259,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONCATEGORIES_CSS/', $result ) && get_option( 'eme_categories_enabled' ) ) {
+		} elseif ( preg_match( '/#_CATEGORIES_CSS/', $result ) && get_option( 'eme_categories_enabled' ) ) {
 			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
 				if ( is_null( $location_categories ) ) {
 						$location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
@@ -2270,7 +2276,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_LOCATIONCATEGORYDESCRIPTIONS/', $result ) && get_option( 'eme_categories_enabled' ) ) {
+		} elseif ( preg_match( '/#_CATEGORYDESCRIPTIONS/', $result ) && get_option( 'eme_categories_enabled' ) ) {
 			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
 				$sep = ', ';
 				if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
@@ -2291,7 +2297,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( preg_match( '/^#_LOCATIONCATEGORIES\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
+		} elseif ( preg_match( '/^#_CATEGORIES\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
 			$include_cats         = $matches[1];
 			$exclude_cats         = $matches[2];
 			$extra_conditions_arr = [];
@@ -2325,7 +2331,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/^#_LOCATIONCATEGORIES_CSS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
+		} elseif ( preg_match( '/^#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
 			$include_cats         = $matches[1];
 			$exclude_cats         = $matches[2];
 			$extra_conditions_arr = [];
@@ -2349,7 +2355,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				$replacement = eme_translate( join( ' ', $categories ), $lang );
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_LOCATIONCATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
+		} elseif ( preg_match( '/#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
 			$include_cats         = $matches[1];
 			$exclude_cats         = $matches[2];
 			$extra_conditions_arr = [];
@@ -2396,7 +2402,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					}
 				}
 			}
-		} elseif ( $location && preg_match( '/#_LOCATION_EXTERNAL_URL/', $result ) ) {
+		} elseif ( $location && preg_match( '/#_EXTERNAL_URL/', $result ) ) {
 			if ( ! empty( $location['location_url'] ) ) {
 				$replacement = $location['location_url'];
 				if ( $target == 'html' ) {
@@ -2407,7 +2413,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			}
-		} elseif ( $location && preg_match( '/#_LOCATION_EXTERNAL_REF/', $result ) ) {
+		} elseif ( $location && preg_match( '/#_EXTERNAL_REF/', $result ) ) {
 			if ( ! empty( $location['location_external_ref'] ) ) {
 				// remove the 'fb_' prefix
 				$replacement = preg_replace( '/fb_/', '', $location['location_external_ref'] );
@@ -2420,9 +2426,9 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				}
 			}
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+?)\}/', $result, $matches ) ) {
-					$field_key = $matches[1];
-					$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
+			$field_key = $matches[1];
+			$formfield = eme_get_formfield( $field_key );
+			if ( ! empty( $formfield ) ) {
 				if ( $target == 'html' ) {
 					$replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
 					$replacement = apply_filters( 'eme_general', $replacement );
@@ -2431,7 +2437,6 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			} else {
-				// no location custom field? Then leave it alone
 				$found = 0;
 			}
 		} elseif ( preg_match( '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {

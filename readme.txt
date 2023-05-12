@@ -103,6 +103,12 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.3.67 (2023//) =
 * Always allow style, span and meta html-tags in formats
 * Remove confusing nl2br option for templates
+* Placeholders for events can now all start with #_EVENT or #_EVENT_
+* Placeholders for locations can now all start with #_LOCATION or #_LOCATION_
+* Placeholders for memberships can now all start with #_MEMBERSHIP or #_MEMBERSHIP_
+* Placeholders for people can now all start with #_PERSON or #_PERSON_
+* Placeholders for members can now all start with #_MEMBER or #_MEMBER_
+* Placeholders for bookings can now all start with #_BOOKING or #_BOOKING_
 
 = 2.3.66 (2023/05/10) =
 * Add order option for eme_bookings shortcode. The default order is 'people.lastname ASC, people.firstname ASC, bookings.booking_id ASC'.

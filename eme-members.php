@@ -4516,11 +4516,15 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 		$replacement        = '';
 		$found              = 1;
 		$need_escape        = 0;
+
+		# support for #_MEMBERxxx and #_MEMBER_xxx
+                $result = preg_replace( '/#_MEMBER(_)?/', '#_', $result );
+
 		if ( strstr( $result, '#ESC' ) ) {
 			$result      = str_replace( '#ESC', '#', $result );
 			$need_escape = 1;
 		}
-		if ( preg_match( '/#_MEMBERID/', $result ) ) {
+		if ( preg_match( '/#_ID/', $result ) ) {
 			$replacement = $member['member_id'];
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4559,7 +4563,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 		} elseif ( preg_match( '/#_DISCOUNTCODES_VALID|#_DISCOUNTCODES_USED$/', $result ) ) {
 			$dcodes_used = $member['dcodes_used'];
 			$replacement = join( ', ', $dcodes_used );
-		} elseif ( preg_match( '/#_MEMBERPRICE$/', $result ) ) {
+		} elseif ( preg_match( '/#_PRICE$/', $result ) ) {
 			$replacement = eme_localized_price( $total_member_price, $membership['properties']['currency'], $target );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4567,7 +4571,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERPRICE_NO_VAT/', $result ) ) {
+		} elseif ( preg_match( '/#_PRICE_NO_VAT/', $result ) ) {
 			$price       = $total_member_price / ( 1 + $membership['properties']['vat_pct'] / 100 );
 			$replacement = eme_localized_price( $price, $membership['properties']['currency'], $target );
 			if ( $target == 'html' ) {
@@ -4576,7 +4580,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERPRICE_VAT_ONLY/', $result ) ) {
+		} elseif ( preg_match( '/#_PRICE_VAT_ONLY/', $result ) ) {
 			$price       = $total_member_price - $total_member_price / ( 1 + $membership['properties']['vat_pct'] / 100 );
 			$replacement = eme_localized_price( $price, $membership['properties']['currency'], $target );
 			if ( $target == 'html' ) {
@@ -4611,7 +4615,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERLASTSEEN/', $result ) ) {
+		} elseif ( preg_match( '/#_LASTSEEN/', $result ) ) {
 			if ( ! eme_is_empty_datetime( $member['last_seen'] ) ) {
 				$replacement = eme_localized_datetime( $member['last_seen'], EME_TIMEZONE );
 			} else {
@@ -4623,7 +4627,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERCREATIONDATE\{(.+?)\}/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_CREATIONDATE\{(.+?)\}/', $result, $matches ) ) {
 			$replacement = eme_localized_date( $member['creation_date'], EME_TIMEZONE, $matches[1] );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4631,7 +4635,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERSTARTDATE\{(.+?)\}/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_STARTDATE\{(.+?)\}/', $result, $matches ) ) {
 			$replacement = eme_localized_date( $member['start_date'], EME_TIMEZONE, $matches[1] );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4639,7 +4643,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERENDDATE\{(.+?)\}/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_ENDDATE\{(.+?)\}/', $result, $matches ) ) {
 			if ( eme_is_expired_member( $member ) && $need_escape ) {
 				$replacement = 'expired';
 			} elseif ( eme_is_active_member( $member ) && ( $membership['duration_period'] == 'forever' ) ) {
@@ -4657,7 +4661,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERNEXTENDDATE\{(.+?)\}/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_NEXTENDDATE\{(.+?)\}/', $result, $matches ) ) {
 			if ( eme_is_expired_member( $member ) && $need_escape ) {
 				$replacement = 'expired';
 			} elseif ( eme_is_active_member( $member ) && ( $membership['duration_period'] == 'forever' ) ) {
@@ -4680,7 +4684,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERCREATIONDATE$/', $result ) ) {
+		} elseif ( preg_match( '/#_CREATIONDATE$/', $result ) ) {
 			$replacement = eme_localized_date( $member['creation_date'], EME_TIMEZONE );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4688,7 +4692,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERSTARTDATE$/', $result ) ) {
+		} elseif ( preg_match( '/#_STARTDATE$/', $result ) ) {
 			$replacement = eme_localized_date( $member['start_date'], EME_TIMEZONE );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4696,7 +4700,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERENDDATE$/', $result ) ) {
+		} elseif ( preg_match( '/#_ENDDATE$/', $result ) ) {
 			if ( eme_is_expired_member( $member ) && $need_escape ) {
 				$replacement = 'expired';
 			} elseif ( eme_is_active_member( $member ) && ( $membership['duration_period'] == 'forever' ) ) {
@@ -4714,7 +4718,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERNEXTENDDATE$/', $result ) ) {
+		} elseif ( preg_match( '/#_NEXTENDDATE$/', $result ) ) {
 			if ( eme_is_expired_member( $member ) ) {
 				if ( $need_escape ) {
 					$replacement = 'expired';
@@ -4741,15 +4745,15 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERPAYMENTDATE\{(.+?)\}/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_PAYMENTDATE\{(.+?)\}/', $result, $matches ) ) {
 			$replacement = eme_localized_date( $member['payment_date'], EME_TIMEZONE, $matches[1] );
-		} elseif ( preg_match( '/#_MEMBERPAYMENTDATE/', $result ) ) {
+		} elseif ( preg_match( '/#_PAYMENTDATE/', $result ) ) {
 			$replacement = eme_localized_date( $member['payment_date'], EME_TIMEZONE );
-		} elseif ( preg_match( '/#_MEMBERPAYMENTTIME\{(.+?)\}/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_PAYMENTTIME\{(.+?)\}/', $result, $matches ) ) {
 			$replacement = eme_localized_time( $member['payment_date'], EME_TIMEZONE, $matches[1] );
-		} elseif ( preg_match( '/#_MEMBERPAYMENTTIME/', $result ) ) {
+		} elseif ( preg_match( '/#_PAYMENTTIME/', $result ) ) {
 			$replacement = eme_localized_time( $member['payment_date'], EME_TIMEZONE );
-		} elseif ( preg_match( '/#_MEMBER_STATUS$/', $result ) ) {
+		} elseif ( preg_match( '/#_STATUS$/', $result ) ) {
 			$eme_member_status_array = eme_member_status_array();
 			$replacement             = $eme_member_status_array[ $member['status'] ];
 		} elseif ( preg_match( '/#_IS_MEMBER_PENDING$/', $result ) ) {
@@ -4798,7 +4802,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				}
 				$replacement .= '</table>';
 			}
-		} elseif ( preg_match( '/#_MEMBERPDF_URL\{(.+?)\}$/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_PDF_URL\{(.+?)\}$/', $result, $matches ) ) {
 			$template_id = intval( $matches[1] );
 			$targetPath  = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
 			$pdf_path    = '';
@@ -4829,20 +4833,20 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 					$replacement = esc_url( $replacement );
 				}
 			}
-		} elseif ( preg_match( '/#_(MEMBER_)?QRCODE(\{.+?\})?$/', $result, $matches ) ) {
-			if ( isset( $matches[2] ) ) {
+		} elseif ( preg_match( '/#_QRCODE(\{.+?\})?$/', $result, $matches ) ) {
+			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)
-				$size = substr( $matches[2], 1, -1 );
+				$size = substr( $matches[1], 1, -1 );
 			} else {
 				$size = 'medium';
 			}
-			$targetBasePath            = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
-			$targetBaseUrl             = EME_UPLOAD_URL . '/members/' . $member['member_id'];
-			$url_to_encode                 = eme_member_url( $member );
+			$targetBasePath             = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
+			$targetBaseUrl              = EME_UPLOAD_URL . '/members/' . $member['member_id'];
+			$url_to_encode              = eme_member_url( $member );
 			[$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
 			if ( is_file( $target_file ) ) {
 				[$width, $height, $type, $attr] = getimagesize( $target_file );
-				$replacement                        = "<img width='$width' height='$height' src='$target_url'>";
+				$replacement = "<img width='$width' height='$height' src='$target_url'>";
 			}
 		} elseif ( preg_match( '/#_DYNAMICFIELD\{(.+?)\}$/', $result, $matches ) ) {
 			$field_key = $matches[1];
@@ -5075,7 +5079,11 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 		$orig_result_length = strlen( $orig_result[0] );
 		$replacement        = '';
 		$found              = 1;
-		if ( preg_match( '/#_MEMBERSHIPNAME/', $result ) ) {
+
+		# support for #_MEMBERSHIPxxx and #_MEMBERSHIP_xxx
+                $result = preg_replace( '/#_MEMBERSHIP(_)?/', '#_', $result );
+
+		if ( preg_match( '/#_NAME/', $result ) ) {
 			$replacement = $membership['name'];
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -5083,7 +5091,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERSHIPDESCRIPTION/', $result ) ) {
+		} elseif ( preg_match( '/#_DESCRIPTION/', $result ) ) {
 			$replacement = $membership['description'];
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -5091,7 +5099,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERSHIPPRICE$/', $result ) ) {
+		} elseif ( preg_match( '/#_PRICE$/', $result ) ) {
 			$price       = $membership['properties']['price'];
 			$currency    = $membership['properties']['currency'];
 			$replacement = eme_localized_price( $price, $currency );
@@ -5101,7 +5109,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERSHIPPRICE_NO_VAT/', $result ) ) {
+		} elseif ( preg_match( '/#_PRICE_NO_VAT/', $result ) ) {
 			$price       = $membership['properties']['price'] / ( 1 + $membership['properties']['vat_pct'] / 100 );
 			$currency    = $membership['properties']['currency'];
 			$replacement = eme_localized_price( $price, $currency );
@@ -5111,7 +5119,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERSHIPPRICE_VAT_ONLY/', $result ) ) {
+		} elseif ( preg_match( '/#_PRICE_VAT_ONLY/', $result ) ) {
 			$price       = $membership['properties']['price'];
 			$price       = $price - $price / ( 1 + $membership['properties']['vat_pct'] / 100 );
 			$currency    = $membership['properties']['currency'];
@@ -5122,7 +5130,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_MEMBERSHIPPRICE_VAT_PCT/', $result ) ) {
+		} elseif ( preg_match( '/#_PRICE_VAT_PCT/', $result ) ) {
 			$replacement = $membership['properties']['vat_pct'];
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -5188,7 +5196,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+?)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'memberships' ) {
+			if ( ! empty( $formfield ) ) {
 				if ( $target == 'html' ) {
 					$replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
 					$replacement = apply_filters( 'eme_general', $replacement );
@@ -5197,7 +5205,6 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			} else {
-				// no memberships custom field? Then leave it alone
 				$found = 0;
 			}
 		} elseif ( preg_match( '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {

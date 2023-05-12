@@ -299,9 +299,9 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 	$needle_offset = 0;
 	preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
-				$result             = $orig_result[0];
-				$orig_result_needle = $orig_result[1] - $needle_offset;
-				$orig_result_length = strlen( $orig_result[0] );
+		$result             = $orig_result[0];
+		$orig_result_needle = $orig_result[1] - $needle_offset;
+		$orig_result_length = strlen( $orig_result[0] );
 		$replacement                = '';
 		$found                      = 1;
 		$need_escape                = 0;
@@ -316,7 +316,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 		}
 
 		# support for ATTEND, RESP and PERSON
-		$result = preg_replace( '/#_ATTEND|#_RESP|#_PERSON/', '#_', $result );
+		$result = preg_replace( '/#_ATTEND(_)?|#_RESP(_)?|#_PERSON(_)?/', '#_', $result );
 
 		if ( preg_match( '/#_ID/', $result ) ) {
 			$replacement = intval( $person['person_id'] );

@@ -17,9 +17,6 @@ function eme_new_template() {
 }
 
 function eme_init_template_props( $props ) {
-	if ( ! isset( $props['nl2br'] ) ) {
-		$props['nl2br'] = 1;
-	}
 	if ( ! isset( $props['pdf_width'] ) || empty( $props['pdf_width'] ) ) {
 		$props['pdf_width'] = 0;
 	}
@@ -108,10 +105,6 @@ function eme_templates_page() {
 			$template['format']      = eme_kses_maybe_unfiltered( $_POST['template_format'] );
 			if ( isset( $_POST['properties'] ) ) {
 				$properties = eme_sanitize_request( $_POST['properties'] );
-			}
-			// checkboxes that are not checked are not transfered in a POST
-			if ( ! isset( $properties['nl2br'] ) ) {
-				$properties['nl2br'] = 0;
 			}
 			$template['properties'] = eme_serialize( eme_init_template_props( $properties ) );
 
@@ -284,14 +277,14 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 			<tr>
 			<td><?php esc_html_e( 'Format', 'events-made-easy' ); ?></label></td>
 			<td><?php wp_editor( $template['format'], 'template_format', $eme_editor_settings ); ?>
-	<?php
-	if ( current_user_can( 'unfiltered_html' ) ) {
-		echo "<div class='eme_notice_unfiltered_html'>";
-		esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
-		echo '</div>';
-	}
-	?>
-	 
+			<?php
+				if ( current_user_can( 'unfiltered_html' ) ) {
+					echo "<div class='eme_notice_unfiltered_html'>";
+					esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
+					echo '</div>';
+				}
+				esc_html_e( 'Newlines will get translated to HTML br-tags when/where/if appropriate but for templates that will get used in HTML output: be sure to not include newlines (certainly not empty lines) unless wanted.', 'events-made-easy' );
+			?>
 			</td>
 			</tr>
 			<tr>
@@ -302,13 +295,6 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 			<br><?php esc_html_e( "The type 'PDF' is used for PDF templating and allows more settings concerning page size, orientation, ...", 'events-made-easy' ); ?>
 			<br><?php esc_html_e( "If you know the template is only used in/for shortcodes, use the type 'Shortcode'.", 'events-made-easy' ); ?>
 			</td>
-			</tr>
-			<tr>
-			<td style='vertical-align:top'><?php esc_html_e( 'Convert newlines', 'events-made-easy' ); ?></label></td>
-			<td><?php echo eme_ui_select_binary( $template['properties']['nl2br'], 'properties[nl2br]' ); ?>
-		<br><?php esc_html_e( "Normally newlines are converted to br-tags when a template is used, so you don't need to enter your own br-tags.", 'events-made-easy' ); ?>
-		<br><?php esc_html_e( "If you don't want this to happen (for example for a template used in a table-row), deselect this option.", 'events-made-easy' ); ?>
-		<br><?php esc_html_e( 'For mail-type templates, this conversion will only happen if you also want to send html-based mails.', 'events-made-easy' ); ?>
 			</tr>
 		</table>
 
@@ -435,21 +421,19 @@ function eme_get_template_format( $template_id, $nl2br_wanted = 1 ) {
 	}
 	// interpret EME language tags already, so if the format contains placeholders (that - once expanded - might contain other language tags), don't get confused (nested tags not supported yet).
 	$format = eme_translate_string_nowptrans( $format );
-	// check if we don't want nl2br at all
+	// if we don't want nl2br, return the format as is
 	if ( $nl2br_wanted == 0 || empty( $format ) ) {
 		return $format;
 	}
 
 	if ( preg_match( '/mail/', $template['type'] ) ) {
-		if ( $template['properties']['nl2br'] && get_option( 'eme_rsvp_send_html' ) ) {
+		if ( get_option( 'eme_rsvp_send_html' ) ) {
 			return eme_nl2br_save_html( $format );
 		} else {
 			return $format;
 		}
-	} elseif ( $template['properties']['nl2br'] ) {
-		return eme_nl2br_save_html( $format );
 	} else {
-		return $format;
+		return eme_nl2br_save_html( $format );
 	}
 }
 

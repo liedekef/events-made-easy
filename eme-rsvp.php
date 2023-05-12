@@ -3719,7 +3719,7 @@ function eme_replace_attendees_placeholders( $format, $event, $person, $target =
 
 	// now some html
 	if ( $target == 'html' ) {
-			$format = eme_nl2br_save_html( $format );
+		$format = eme_nl2br_save_html( $format );
 	}
 
 	return do_shortcode( $format );

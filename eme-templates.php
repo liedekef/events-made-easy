@@ -447,7 +447,7 @@ function eme_get_template_format( $template_id, $nl2br_wanted = 1 ) {
 			return $format;
 		}
 	} elseif ( $template['properties']['nl2br'] ) {
-			return eme_nl2br_save_html( $format );
+		return eme_nl2br_save_html( $format );
 	} else {
 		return $format;
 	}

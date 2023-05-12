@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.67 (2023//) =
 * Always allow style, span and meta html-tags in formats
+* Remove confusing nl2br option for templates
 
 = 2.3.66 (2023/05/10) =
 * Add order option for eme_bookings shortcode. The default order is 'people.lastname ASC, people.firstname ASC, bookings.booking_id ASC'.

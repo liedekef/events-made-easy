@@ -1941,7 +1941,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 		} elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) ) {
+			if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'people' ] ) ) {
 				$field_id       = $formfield['field_id'];
 				$postfield_name = 'FIELD' . $field_id;
 				$entered_val    = '';
@@ -2034,7 +2034,7 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
 		} elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) ) {
+			if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'people' ] ) ) {
 				$field_id       = $formfield['field_id'];
 				$var_prefix     = "dynamic_bookings[$event_id][$grouping][$i][";
 				$var_postfix    = ']';
@@ -2146,7 +2146,7 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 		} elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) ) {
+			if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'members', 'people' ] ) ) {
 				$field_id       = $formfield['field_id'];
 				$var_prefix     = "dynamic_member[$membership_id][$grouping][$i][";
 				$var_postfix    = ']';
@@ -3084,7 +3084,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		} elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) ) {
+			if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp', 'people' ] ) ) {
 				if ( ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) && $is_multibooking ) {
 					// for file uploads we expect just FIELDxx as name (also for members, see function eme_upload_files), so not allowed for multibooking
 					$replacement = '';
@@ -4000,7 +4000,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		} elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) ) {
+			if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'members', 'people' ] ) ) {
 				$field_id       = $formfield['field_id'];
 				$fieldname      = 'FIELD' . $field_id;
 				$entered_val    = '';

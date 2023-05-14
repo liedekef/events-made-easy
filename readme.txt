@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.3.67 (2023//) =
 * Always allow style, span and meta html-tags in formats
 * Remove confusing nl2br option for templates
+* Reuse mailing for event mails now fills out all mail options too
 * Placeholders for events can now all start with #_EVENT or #_EVENT_
 * Placeholders for locations can now all start with #_LOCATION or #_LOCATION_
 * Placeholders for memberships can now all start with #_MEMBERSHIP or #_MEMBERSHIP_

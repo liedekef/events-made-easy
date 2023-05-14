@@ -1017,13 +1017,6 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 		if ( ! isset( $conditions['exclude_registered'] ) ) {
 			$conditions['exclude_registered'] = 0;
 		}
-		$event = eme_get_event( $conditions['event_id'] );
-		if ( ! empty( $event ) ) {
-			$event_name = $event['event_name'];
-		} else {
-			$event_name = '';
-		}
-
 		if ( isset( $conditions['eme_eventmail_attach_ids'] ) ) {
 			$attachment_ids = $conditions['eme_eventmail_attach_ids'];
 		}
@@ -1033,30 +1026,18 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 			$attachment_id_arr = [];
 		}
 
-		if ( empty( $event ) ) {
-			$res['mail_problems'] = 1;
-		} elseif ( $conditions['eme_mail_type'] == 'attendees' ) {
-			$attendee_ids = eme_get_attendee_ids( $conditions['event_id'], $conditions['rsvp_status'], $conditions['only_unpaid'] );
-			foreach ( $attendee_ids as $attendee_id ) {
-				$attendee    = eme_get_person( $attendee_id );
-				$tmp_subject = eme_replace_attendees_placeholders( $mail_subject, $event, $attendee, 'text' );
-				$tmp_message = eme_replace_attendees_placeholders( $mail_message, $event, $attendee, $mail_text_html );
-				$person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
-				$person_id   = $attendee['person_id'];
-				$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
-				if ( ! $mail_res ) {
-					$res['mail_problems'] = 1;
-					$not_sent[]           = $person_name;
-				}
-			}
-		} elseif ( $conditions['eme_mail_type'] == 'bookings' ) {
-			$bookings = eme_get_bookings_for( $conditions['event_id'], $conditions['rsvp_status'], $conditions['only_unpaid'] );
-			foreach ( $bookings as $booking ) {
-				// we use the language done in the booking for the mails, not the attendee lang in this case
-				$attendee = eme_get_person( $booking['person_id'] );
-				if ( $attendee && is_array( $attendee ) ) {
-					$tmp_subject = eme_replace_booking_placeholders( $mail_subject, $event, $booking, 0, 'text' );
-					$tmp_message = eme_replace_booking_placeholders( $mail_message, $event, $booking, 0, $mail_text_html );
+		// conditions event_id can be multiple ids
+		$event_ids = explode( ',', $conditions['event_id'] );
+		foreach ($event_ids as $event_id) {
+			$event = eme_get_event( $event_id );
+			if ( empty( $event ) ) {
+				$res['mail_problems'] = 1;
+			} elseif ( $conditions['eme_mail_type'] == 'attendees' ) {
+				$attendee_ids = eme_get_attendee_ids( $event_id, $conditions['rsvp_status'], $conditions['only_unpaid'] );
+				foreach ( $attendee_ids as $attendee_id ) {
+					$attendee    = eme_get_person( $attendee_id );
+					$tmp_subject = eme_replace_attendees_placeholders( $mail_subject, $event, $attendee, 'text' );
+					$tmp_message = eme_replace_attendees_placeholders( $mail_message, $event, $attendee, $mail_text_html );
 					$person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
 					$person_id   = $attendee['person_id'];
 					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
@@ -1065,89 +1046,80 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 						$not_sent[]           = $person_name;
 					}
 				}
-			}
-		} elseif ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'people_and_groups' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
-			$person_ids = [];
-			$member_ids = [];
-			if ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
-				// although we check later on the massmail preference per person too, we optimize the sql load a bit
-				if ( $ignore_massmail_setting ) {
-					$person_ids = eme_get_allmail_person_ids();
+			} elseif ( $conditions['eme_mail_type'] == 'bookings' ) {
+				$bookings = eme_get_bookings_for( $event_id, $conditions['rsvp_status'], $conditions['only_unpaid'] );
+				foreach ( $bookings as $booking ) {
+					// we use the language done in the booking for the mails, not the attendee lang in this case
+					$attendee = eme_get_person( $booking['person_id'] );
+					if ( $attendee && is_array( $attendee ) ) {
+						$tmp_subject = eme_replace_booking_placeholders( $mail_subject, $event, $booking, 0, 'text' );
+						$tmp_message = eme_replace_booking_placeholders( $mail_message, $event, $booking, 0, $mail_text_html );
+						$person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
+						$person_id   = $attendee['person_id'];
+						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+						if ( ! $mail_res ) {
+							$res['mail_problems'] = 1;
+							$not_sent[]           = $person_name;
+						}
+					}
+				}
+			} elseif ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'people_and_groups' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
+				$person_ids = [];
+				$member_ids = [];
+				if ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
+					// although we check later on the massmail preference per person too, we optimize the sql load a bit
+					if ( $ignore_massmail_setting ) {
+						$person_ids = eme_get_allmail_person_ids();
+					} else {
+						$person_ids = eme_get_massmail_person_ids();
+					}
+				} elseif ( $conditions['eme_mail_type'] == 'people_and_groups' ) {
+					if ( ! empty( $conditions['eme_eventmail_send_persons'] ) ) {
+						$person_ids = explode( ',', $conditions['eme_eventmail_send_persons'] );
+					}
+					if ( ! empty( $conditions['eme_eventmail_send_groups'] ) ) {
+						$person_ids = array_unique( array_merge( $person_ids, eme_get_groups_person_ids( $conditions['eme_eventmail_send_groups'] ) ) );
+					}
+					if ( ! empty( $conditions['eme_eventmail_send_members'] ) ) {
+						$cond_member_ids_arr = explode( ',', $conditions['eme_eventmail_send_members'] );
+						$member_ids          = $cond_member_ids_arr;
+					}
+					if ( ! empty( $conditions['eme_eventmail_send_membergroups'] ) ) {
+						$member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_eventmail_send_membergroups'] ) ) );
+					}
+					if ( ! empty( $conditions['eme_eventmail_send_memberships'] ) ) {
+						$member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_eventmail_send_memberships'] ) ) );
+					}
+				}
+				if ( ! empty( $conditions['exclude_registered'] ) || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
+					$registered_ids = eme_get_attendee_ids( $event_id );
 				} else {
-					$person_ids = eme_get_massmail_person_ids();
+					$registered_ids = [];
 				}
-			} elseif ( $conditions['eme_mail_type'] == 'people_and_groups' ) {
-				if ( ! empty( $conditions['eme_eventmail_send_persons'] ) ) {
-					$person_ids = explode( ',', $conditions['eme_eventmail_send_persons'] );
-				}
-				if ( ! empty( $conditions['eme_eventmail_send_groups'] ) ) {
-					$person_ids = array_unique( array_merge( $person_ids, eme_get_groups_person_ids( $conditions['eme_eventmail_send_groups'] ) ) );
-				}
-				if ( ! empty( $conditions['eme_eventmail_send_members'] ) ) {
-					$cond_member_ids_arr = explode( ',', $conditions['eme_eventmail_send_members'] );
-					$member_ids          = $cond_member_ids_arr;
-				}
-				if ( ! empty( $conditions['eme_eventmail_send_membergroups'] ) ) {
-					$member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_eventmail_send_membergroups'] ) ) );
-				}
-				if ( ! empty( $conditions['eme_eventmail_send_memberships'] ) ) {
-					$member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_eventmail_send_memberships'] ) ) );
-				}
-			}
-			if ( ! empty( $conditions['exclude_registered'] ) || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
-				$registered_ids = eme_get_attendee_ids( $conditions['event_id'] );
-			} else {
-				$registered_ids = [];
-			}
-			foreach ( $member_ids as $member_id ) {
-				$member = eme_get_member( $member_id );
-				if ( in_array( $member['person_id'], $registered_ids ) ) {
-					continue;
-				}
-				$person = eme_get_person( $member['person_id'] );
-				// if corresponding person has no massmail preference, then skip him unless the name was speficially defined as standalone member to mail to
-				if ( ! $ignore_massmail_setting && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids_arr ) ) {
-					continue;
-				}
-				$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
-
-				// we will NOT ignore double emails for member-related mails
-				// we could postpone the placeholder replacement until the moment of actual sending (for large number of mails)
-				// but that complicates the queue-code and is in fact ugly (I did it, but removed it on 2017-12-04)
-				// Once I hit execution timeouts I'll rethink it again
-				$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
-				$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
-				$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $person['email'], $person['lastname'], $person['firstname'], $event );
-				$membership  = eme_get_membership( $member['membership_id'] );
-				$tmp_subject = eme_replace_member_placeholders( $tmp_subject, $membership, $member, 'text' );
-				$tmp_message = eme_replace_member_placeholders( $tmp_message, $membership, $member, $mail_text_html );
-				$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $attachment_id_arr );
-
-				if ( ! $mail_res ) {
-					$res['mail_problems'] = 1;
-					$not_sent[]           = $person_name;
-				} else {
-					$emails_handled[] = $person['email'];
-				}
-			}
-			foreach ( $person_ids as $person_id ) {
-				if ( in_array( $person_id, $registered_ids ) ) {
-					continue;
-				}
-				$person = eme_get_person( $person_id );
-				// we will ignore double emails
-				if ( ! in_array( $person['email'], $emails_handled ) ) {
-					if ( ! $ignore_massmail_setting && ! $person['massmail'] ) {
+				foreach ( $member_ids as $member_id ) {
+					$member = eme_get_member( $member_id );
+					if ( in_array( $member['person_id'], $registered_ids ) ) {
 						continue;
 					}
+					$person = eme_get_person( $member['person_id'] );
+					// if corresponding person has no massmail preference, then skip him unless the name was speficially defined as standalone member to mail to
+					if ( ! $ignore_massmail_setting && ! $person['massmail'] && ! in_array( $member_id, $cond_member_ids_arr ) ) {
+						continue;
+					}
+					$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+
+					// we will NOT ignore double emails for member-related mails
+					// we could postpone the placeholder replacement until the moment of actual sending (for large number of mails)
+					// but that complicates the queue-code and is in fact ugly (I did it, but removed it on 2017-12-04)
+					// Once I hit execution timeouts I'll rethink it again
 					$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
 					$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
 					$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $person['email'], $person['lastname'], $person['firstname'], $event );
-					$tmp_subject = eme_replace_people_placeholders( $tmp_subject, $person, 'text' );
-					$tmp_message = eme_replace_people_placeholders( $tmp_message, $person, $mail_text_html );
-					$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
-					$person_id   = $person['person_id'];
-					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+					$membership  = eme_get_membership( $member['membership_id'] );
+					$tmp_subject = eme_replace_member_placeholders( $tmp_subject, $membership, $member, 'text' );
+					$tmp_message = eme_replace_member_placeholders( $tmp_message, $membership, $member, $mail_text_html );
+					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $attachment_id_arr );
+
 					if ( ! $mail_res ) {
 						$res['mail_problems'] = 1;
 						$not_sent[]           = $person_name;
@@ -1155,31 +1127,57 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 						$emails_handled[] = $person['email'];
 					}
 				}
-			}
-		} elseif ( $conditions['eme_mail_type'] == 'all_wp' || $conditions['eme_mail_type'] == 'all_wp_not_registered' ) {
-			$wp_users = get_users();
-			if ( $conditions['eme_mail_type'] == 'all_wp_not_registered' || $conditions['exclude_registered'] ) {
-				$attendee_wp_ids = eme_get_wp_ids_for( $conditions['event_id'] );
-			} else {
-				$attendee_wp_ids = [];
-			}
-			$lang = eme_detect_lang();
-			foreach ( $wp_users as $wp_user ) {
-				if ( in_array( $wp_user->user_email, $emails_handled ) ) {
-					continue;
+				foreach ( $person_ids as $person_id ) {
+					if ( in_array( $person_id, $registered_ids ) ) {
+						continue;
+					}
+					$person = eme_get_person( $person_id );
+					// we will ignore double emails
+					if ( ! in_array( $person['email'], $emails_handled ) ) {
+						if ( ! $ignore_massmail_setting && ! $person['massmail'] ) {
+							continue;
+						}
+						$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
+						$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
+						$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $person['email'], $person['lastname'], $person['firstname'], $event );
+						$tmp_subject = eme_replace_people_placeholders( $tmp_subject, $person, 'text' );
+						$tmp_message = eme_replace_people_placeholders( $tmp_message, $person, $mail_text_html );
+						$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+						$person_id   = $person['person_id'];
+						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+						if ( ! $mail_res ) {
+							$res['mail_problems'] = 1;
+							$not_sent[]           = $person_name;
+						} else {
+							$emails_handled[] = $person['email'];
+						}
+					}
 				}
-				if ( in_array( $wp_user->ID, $attendee_wp_ids ) ) {
-					continue;
-				}
-				$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $lang, 0 );
-				$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $lang, 0 );
-				$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $wp_user->user_firstname, $wp_user->display_name, $wp_user->display_name, $event );
-				$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $attachment_id_arr );
-				if ( ! $mail_res ) {
-					$res['mail_problems'] = 1;
-					$not_sent[]           = $person_name;
+			} elseif ( $conditions['eme_mail_type'] == 'all_wp' || $conditions['eme_mail_type'] == 'all_wp_not_registered' ) {
+				$wp_users = get_users();
+				if ( $conditions['eme_mail_type'] == 'all_wp_not_registered' || $conditions['exclude_registered'] ) {
+					$attendee_wp_ids = eme_get_wp_ids_for( $event_id );
 				} else {
-					$emails_handled[] = $person['email'];
+					$attendee_wp_ids = [];
+				}
+				$lang = eme_detect_lang();
+				foreach ( $wp_users as $wp_user ) {
+					if ( in_array( $wp_user->user_email, $emails_handled ) ) {
+						continue;
+					}
+					if ( in_array( $wp_user->ID, $attendee_wp_ids ) ) {
+						continue;
+					}
+					$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $lang, 0 );
+					$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $lang, 0 );
+					$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $wp_user->user_firstname, $wp_user->display_name, $wp_user->display_name, $event );
+					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $attachment_id_arr );
+					if ( ! $mail_res ) {
+						$res['mail_problems'] = 1;
+						$not_sent[]           = $person_name;
+					} else {
+						$emails_handled[] = $person['email'];
+					}
 				}
 			}
 		}
@@ -1749,7 +1747,6 @@ function eme_send_mails_ajax_actions( $action ) {
 			}
 			if ( current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
 				( current_user_can( get_option( 'eme_cap_send_mails' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
-				$event_name     = $event['event_name'];
 				$contact        = eme_get_event_contact( $event );
 				$contact_email  = $contact->user_email;
 				$contact_name   = $contact->display_name;
@@ -1817,7 +1814,9 @@ function eme_emails_page() {
 
 	$mygroups        = [];
 	$mymembergroups  = [];
+	$myevents        = [];
 	$person_ids      = [];
+	$event_ids       = [];
 	$membership_ids  = [];
 	$persongroup_ids = [];
 	$membergroup_ids = [];
@@ -1862,10 +1861,13 @@ function eme_emails_page() {
 	} else {
 		$data_forced_tab = '';
 	}
+	$exclude_registered_checked = '';
+	$only_unpaid_checked = '';
 	$send_to_all_people_checked = '';
 	$ignore_massmail_setting    = '';
 	$event_mail_subject         = '';
 	$event_mail_message         = '';
+	$eme_mail_type              = '';
 	$generic_mail_subject       = '';
 	$generic_mail_message       = '';
 
@@ -1906,14 +1908,14 @@ function eme_emails_page() {
 			$generic_mail_from_name  = $mail['fromname'];
 			$generic_mail_from_email = $mail['fromemail'];
 			if ( $mail['person_id'] > 0 ) {
-				$person_ids[]                     = $mail['person_id'];
-				$person                           = eme_get_person( $mail['person_id'] );
+				$person_ids[] = $mail['person_id'];
+				$person       = eme_get_person( $mail['person_id'] );
 				if ( !empty( $person ) ) {
 					$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
 				}
 			} elseif ( $mail['member_id'] > 0 ) {
-				$member_ids[]                           = $mail['member_id'];
-				$member                                 = eme_get_member( $mail['member_id'] );
+				$member_ids[] = $mail['member_id'];
+				$member       = eme_get_member( $mail['member_id'] );
 				if (! empty( $member ) ) {
 					$person = eme_get_person( $member['person_id'] );
 					if ( !empty( $person ) ) {
@@ -2004,7 +2006,46 @@ function eme_emails_page() {
 			} elseif ( $conditions['action'] == 'eventmail' ) {
 				$event_mail_subject = $mailing['subject'];
 				$event_mail_message = $mailing['body'];
+				if ( ! empty( $conditions['eme_mail_type'] ) ) {
+                                        $eme_mail_type = $conditions['eme_mail_type'];
+				}
+				if ( ! empty( $conditions['exclude_registered'] ) ) {
+                                        $exclude_registered_checked = "checked='checked'";
+				}
+				if ( ! empty( $conditions['only_unpaid'] ) ) {
+                                        $only_unpaid_checked = "checked='checked'";
+				}
 				$data_forced_tab    = 'data-showtab=0';
+				if ( ! empty( $conditions['event_id'] ) ) {
+					$event_ids = explode( ',', $conditions['event_id'] );
+					$events    = eme_get_events(  'extra_conditions=' . urlencode( 'event_id IN ('.$conditions['event_id'].')' ) );
+					foreach ( $events as $event ) {
+						$myevents[ $event['event_id'] ] = $event['event_name']. ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')';
+					}
+				}
+				if ( ! empty( $conditions['eme_eventmail_send_persons'] ) ) {
+					$person_ids = explode( ',', $conditions['eme_eventmail_send_persons'] );
+					$persons    = eme_get_persons( $person_ids );
+					foreach ( $persons as $person ) {
+						$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+					}
+				}
+				if ( ! empty( $conditions['eme_eventmail_send_members'] ) ) {
+					$member_ids = explode( ',', $conditions['eme_eventmail_send_members'] );
+					$members    = eme_get_members( $member_ids );
+					foreach ( $members as $member ) {
+						$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'] );
+					}
+				}
+				if ( ! empty( $conditions['eme_eventmail_send_groups'] ) ) {
+					$persongroup_ids = explode( ',', $conditions['eme_eventmail_send_groups'] );
+				}
+				if ( ! empty( $conditions['eme_eventmail_send_membergroups'] ) ) {
+					$membergroup_ids = explode( ',', $conditions['eme_eventmail_send_membergroups'] );
+				}
+				if ( ! empty( $conditions['eme_eventmail_send_memberships'] ) ) {
+					$membership_ids = explode( ',', $conditions['eme_eventmail_send_memberships'] );
+				}
 				// reuse the attachments too
 				if ( ! empty( $conditions['eme_eventmail_attach_ids'] ) ) {
 					$attachment_ids     = $conditions['eme_eventmail_attach_ids'];
@@ -2083,10 +2124,13 @@ function eme_emails_page() {
 	<div id='send_event_mail_div'>
 		<table>
 		<tr>
-		<td><?php esc_html_e( 'Select the event(s)', 'events-made-easy' ); ?></td>
-		<td>
-		<select name="event_ids[]" id="event_ids" multiple="multiple" size="5" class='eme_select2_events_class'>
-			</select>
+		<td><?php
+		$label      = eme_esc_html( 'Select the event(s)', 'events-made-easy' );
+		$aria_label = 'aria-label="' . $label . '"';
+		echo $label;
+		?>
+		</td>
+		<td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 0, 'eme_select2_events_class', $aria_label ); ?></td>
 		<br><input id="eventsearch_all" name='eventsearch_all' value='1' type='checkbox'> <?php esc_html_e( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ); ?>
 			<p class='eme_smaller'><?php esc_html_e( 'Remark: if you select multiple events, a mailing will be created for each selected event', 'events-made-easy' ); ?></p>
 		</td>
@@ -2094,14 +2138,16 @@ function eme_emails_page() {
 		<tr>
 		<td><?php esc_html_e( 'Select the type of mail', 'events-made-easy' ); ?></td>
 		<td>
-			<select name="eme_mail_type" required='required'>
-			<option value=''>&nbsp;</option>
-			<option value='attendees'><?php esc_html_e( 'Attendee mails', 'events-made-easy' ); ?></option>
-			<option value='bookings'><?php esc_html_e( 'Booking mails', 'events-made-easy' ); ?></option>
-			<option value='all_people'><?php esc_html_e( 'Email to all people registered in EME', 'events-made-easy' ); ?></option>
-			<option value='people_and_groups'><?php esc_html_e( 'Email to people and/or groups registered in EME', 'events-made-easy' ); ?></option>
-			<option value='all_wp'><?php esc_html_e( 'Email to all WP users', 'events-made-easy' ); ?></option>
-			</select>
+			<?php
+				$eme_mail_type_arr = [
+					'attendees' => __( 'Attendee mails', 'events-made-easy' ),
+					'bookings' => __('Booking mails', 'events-made-easy'),
+					'all_people' => __('Email to all people registered in EME', 'events-made-easy'),
+					'people_and_groups' => __('Email to people and/or groups registered in EME', 'events-made-easy'),
+					'all_wp' => __('Email to all WP users', 'events-made-easy'),
+				];
+				echo eme_ui_select( $eme_mail_type, 'eme_mail_type', $eme_mail_type_arr, $add_empty_first = '&nbsp;', $required = 1);
+			?>
 		</td>
 		</tr>
 		<tr id="eme_rsvp_status_row">
@@ -2117,13 +2163,13 @@ function eme_emails_page() {
 		<tr id="eme_exclude_registered_row">
 		<td><?php esc_html_e( 'Exclude people already registered for the selected event(s)', 'events-made-easy' ); ?>&nbsp;</td>
 		<td>
-			<input type="checkbox" name="exclude_registered" value="1">
+		<input type="checkbox" name="exclude_registered" value="1" <?php echo $exclude_registered_checked; ?>>
 		</td>
 		</tr>
 		<tr id="eme_only_unpaid_row">
 		<td><?php esc_html_e( 'Only send mails to attendees who did not pay yet', 'events-made-easy' ); ?>&nbsp;</td>
 		<td>
-			<input type="checkbox" name="only_unpaid" value="1">
+			<input type="checkbox" name="only_unpaid" value="1" <?php echo $only_unpaid_checked; ?>>
 		</td>
 		</tr>
 		<tr id="eme_people_row">

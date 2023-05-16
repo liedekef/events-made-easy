@@ -698,7 +698,7 @@ function eme_members_page() {
 		}
 	} elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_editmember' ) {
 		$member_id = intval( $_POST['member_id'] );
-		$send_mail = intval( $_POST['send_mail'] );
+		$send_mail = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 0;
 		$member    = eme_get_member( $member_id );
 		$wp_id     = eme_get_wpid_by_personid( $member['person_id'] );
 		if ( $member && ( current_user_can( get_option( 'eme_cap_edit_members' ) ) || ( current_user_can( get_option( 'eme_cap_author_members' ) ) && $wp_id == $current_userid ) ) ) {

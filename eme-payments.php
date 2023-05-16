@@ -375,7 +375,6 @@ function eme_payment_allowed_to_pay( $payment_id ) {
 		$payment_paid = eme_get_payment_paid( $payment );
 		if ( $payment_paid ) {
 			$message = get_option( 'eme_payment_booking_already_paid_format' );
-			$message = eme_replace_booking_placeholders( $message, $event, $booking, $is_multi );
 			return "<div class='eme-already-paid'>" . $message . '</div>';
 		}
 	}

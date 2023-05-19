@@ -4343,15 +4343,15 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 
 		// to prevent going on indefinitely and thus allowing search bots to go on for ever,
 		// we stop providing links if there are no more events left
-		$older_events = eme_get_events( 1, '--' . $limit_start, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
-		$newer_events = eme_get_events( 1, '++' . $limit_end, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
-		if ( count( $older_events ) > 0 ) {
+		$count_older_events = eme_get_events( 1, '--' . $limit_start, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions, 1 );
+                $count_newer_events = eme_get_events( 1, '++' . $limit_end, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions, 1 );
+		if ( $count_older_events > 0 ) {
 			$pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
 		} else {
 			$pagination_top .= "<a class='eme_nav_left' $nav_hidden_class href='#'>&lt;&lt; $prev_text</a>";
 		}
 
-		if ( count( $newer_events ) > 0 ) {
+		if ( $count_newer_events > 0 ) {
 			$pagination_top .= "<a class='eme_nav_right' href='" . add_query_arg( [ 'eme_offset' => $next_offset ], $this_page_url ) . "'>$next_text &gt;&gt;</a>";
 		} else {
 			$pagination_top .= "<a class='eme_nav_right' $nav_hidden_class href='#'>$next_text &gt;&gt;</a>";

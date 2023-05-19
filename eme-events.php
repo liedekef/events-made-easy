@@ -4875,16 +4875,16 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 
 	if ( preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $scope ) ) {
 		if ( $show_ongoing ) {
-			$conditions[] = "((event_start LIKE '$scope%') OR (event_start <= '$scope' AND event_end >= '$scope'))";
+			$conditions[] = "((event_start LIKE '$scope%') OR (event_start <= '$scope 00:00:00' AND event_end >= '$scope 00:00:00'))";
 		} else {
 			$conditions[] = "(event_start LIKE '$scope%') ";
 		}
 	} elseif ( preg_match( '/^--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
 		$limit_start = $matches[1];
 		if ( $show_ongoing ) {
-			$conditions[] = "(event_start < '$limit_start') ";
+			$conditions[] = "(event_start < '$limit_start 00:00:00') ";
 		} else {
-			$conditions[] = "(event_end < '$limit_start') ";
+			$conditions[] = "(event_end < '$limit_start 00:00:00') ";
 		}
 	} elseif ( preg_match( '/^\+\+([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
 		$limit_start  = $matches[1];

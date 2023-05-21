@@ -4875,7 +4875,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 
 	if ( preg_match( '/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $scope ) ) {
 		if ( $show_ongoing ) {
-			$conditions[] = "((event_start LIKE '$scope%') OR (event_start <= '$scope 00:00:00' AND event_end >= '$scope 00:00:00'))";
+			$conditions[] = "((event_start LIKE '$scope%') OR (event_start <= '$scope 23:59:59' AND event_end >= '$scope 00:00:00'))";
 		} else {
 			$conditions[] = "(event_start LIKE '$scope%') ";
 		}

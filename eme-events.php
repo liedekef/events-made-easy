@@ -995,23 +995,31 @@ function eme_events_page_content() {
 			$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 			$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'No entry allowed anymore', 'events-made-easy' ) . '</div>';
 		} else {
-			eme_update_attendance_count( $booking_id );
-			$attendance_count = eme_get_attendance_count( $booking_id );
-			$seats_booked     = $booking['booking_seats'];
-			if ( $attendance_count > $seats_booked ) {
+			$update_res = eme_update_attendance_count( $booking_id );
+			if ($update_res === false ) {
 				$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
-				$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
+				$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: error updating attendance count', 'events-made-easy' ) ) . '</div>';
 			} else {
-				$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
-				$format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked );
-				$format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), eme_esc_html( $event['event_name'] ) );
-				if ( $event['event_properties']['attendancerecord'] ) {
-					$res = eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );
-					if ( $res ) {
-						$format .= '<br>' . __( 'Attendance record added', 'events-made-easy' );
+				$attendance_count = eme_get_attendance_count( $booking_id );
+				$seats_booked     = $booking['booking_seats'];
+				if ( $attendance_count == 0 ) {
+					$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
+					$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: attendance count is 0', 'events-made-easy' ) ) . '</div>';
+				} elseif ( $attendance_count > $seats_booked ) {
+					$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
+					$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . sprintf( __( 'Access denied: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked ) . '</div>';
+				} else {
+					$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/good-48.png'>";
+					$format .= "<div class='eme-message-success eme-attendance-message-success'>$img" . sprintf( __( 'Access granted: scan count=%d, max count=%d', 'events-made-easy' ), $attendance_count, $seats_booked );
+					$format .= '<br>' . sprintf( __( 'Event : %s', 'events-made-easy' ), eme_esc_html( $event['event_name'] ) );
+					if ( $event['event_properties']['attendancerecord'] ) {
+						$res = eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );
+						if ( $res ) {
+							$format .= '<br>' . __( 'Attendance record added', 'events-made-easy' );
+						}
 					}
+					$format .= '</div>';
 				}
-				$format .= '</div>';
 			}
 		}
 		return $format;

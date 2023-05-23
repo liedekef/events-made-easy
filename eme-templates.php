@@ -389,7 +389,7 @@ function eme_get_template( $template_id ) {
 				$template['properties'] = [];
 			}
 			$template['properties'] = eme_init_template_props( eme_unserialize( $template['properties'] ) );
-			wp_cache_add( "eme_template $template_id", $template, '', 10 );
+			wp_cache_set( "eme_template $template_id", $template, '', 10 );
 		}
 	}
 	return $template;

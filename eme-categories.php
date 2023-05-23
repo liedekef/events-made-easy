@@ -275,7 +275,7 @@ function eme_get_cached_categories() {
 	$cats = wp_cache_get( 'eme_all_cats' );
 	if ( $cats === false ) {
 		$cats = eme_get_categories();
-		wp_cache_add( 'eme_all_cats', $cats, '', 60 );
+		wp_cache_set( 'eme_all_cats', $cats, '', 60 );
 	}
 	return $cats;
 }

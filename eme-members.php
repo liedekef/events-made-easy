@@ -6594,9 +6594,9 @@ function eme_get_membership_answers( $membership_id ) {
 	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$cf            = wp_cache_get( "eme_membership_cf $membership_id" );
 	if ( $cf === false ) {
-		$sql    = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='membership'", $membership_id );
-			$cf = $wpdb->get_results( $sql, ARRAY_A );
-			wp_cache_add( "eme_membership_cf $membership_id", $cf, '', 60 );
+		$sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='membership'", $membership_id );
+		$cf  = $wpdb->get_results( $sql, ARRAY_A );
+		wp_cache_set( "eme_membership_cf $membership_id", $cf, '', 60 );
 	}
 	return $cf;
 }

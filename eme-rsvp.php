@@ -2743,7 +2743,7 @@ function eme_get_basic_bookings_on_waitinglist( $event_id ) {
 	if ( $bookings === false ) {
 		$sql      = $wpdb->prepare( "SELECT booking_id, booking_seats, booking_seats_mp, remaining FROM $bookings_table WHERE event_id=%d AND waitinglist=1 ORDER BY creation_date ASC", $event_id );
 		$bookings = $wpdb->get_results( $sql, ARRAY_A );
-			wp_cache_add( "eme_basic_bookings_onwaitinglist $event_id", $bookings, '', 5 );
+		wp_cache_set( "eme_basic_bookings_onwaitinglist $event_id", $bookings, '', 5 );
 	}
 	return $bookings;
 }

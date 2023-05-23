@@ -1212,7 +1212,7 @@ function eme_get_location( $location_id ) {
 			if ( $location ) {
 				$location = eme_get_extra_location_data( $location );
 				//$wpdb->print_error();
-				wp_cache_add( "eme_location $location_id", $location, '', 60 );
+				wp_cache_set( "eme_location $location_id", $location, '', 60 );
 			}
 		}
 
@@ -3060,9 +3060,9 @@ function eme_get_location_answers( $location_id ) {
 	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$cf            = wp_cache_get( "eme_location_cf $location_id" );
 	if ( $cf === false ) {
-		$sql    = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='location'", $location_id );
-			$cf = $wpdb->get_results( $sql, ARRAY_A );
-		wp_cache_add( "eme_location_cf $location_id", $cf, '', 60 );
+		$sql = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND type='location'", $location_id );
+		$cf  = $wpdb->get_results( $sql, ARRAY_A );
+		wp_cache_set( "eme_location_cf $location_id", $cf, '', 60 );
 	}
 	return $cf;
 }

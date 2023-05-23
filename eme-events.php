@@ -5440,7 +5440,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 	if ( $res === false ) {
 		if ( $count ) {
 			$count = $wpdb->get_var( $sql );
-			wp_cache_add( "eme_events $sql_md5", $count, '', 10 );
+			wp_cache_set( "eme_events $sql_md5", $count, '', 10 );
 			return $count;
 		} else {
 			$events          = $wpdb->get_results( $sql, ARRAY_A );
@@ -5478,7 +5478,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 					$inflated_events = apply_filters( 'eme_event_list_filter', $inflated_events );
 				}
 			}
-			wp_cache_add( "eme_events $sql_md5", $inflated_events, '', 10 );
+			wp_cache_set( "eme_events $sql_md5", $inflated_events, '', 10 );
 			return $inflated_events;
 		}
 	} else {

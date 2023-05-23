@@ -707,7 +707,7 @@ function eme_get_events_page_id() {
 				pll_set_post_language($page_id,'');
 			}
 		}
-		wp_cache_add( "eme_page_id", $page_id, '', 5 );
+		wp_cache_set( "eme_page_id", $page_id, '', 5 );
         }
 	return $page_id;
 }
@@ -3387,7 +3387,7 @@ function eme_excerpt( $text, $cache_id = '' ) {
 		$excerpt = apply_filters( 'the_content', $excerpt );
 		$excerpt = str_replace( ']]>', ']]&gt;', $excerpt );
 		if ( ! empty( $cache_id ) ) {
-			wp_cache_add( $cache_id, $excerpt, '', 5 );
+			wp_cache_set( $cache_id, $excerpt, '', 5 );
 		}
 	}
 	return $excerpt;

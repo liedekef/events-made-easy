@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Remove confusing nl2br option for templates
 * Reuse mailing for event mails now fills out all mail options too
 * Added action hook eme_delete_member_action (executed just before the member gets deleted). 1 param: $member (array)
+* Action hook eme_ipn_member_action fires for members after payment arrives through a payment gateway (like eme_ipn_action for bookings)
 * Placeholders for events can now all start with #_EVENT or #_EVENT_
 * Placeholders for locations can now all start with #_LOCATION or #_LOCATION_
 * Placeholders for memberships can now all start with #_MEMBERSHIP or #_MEMBERSHIP_

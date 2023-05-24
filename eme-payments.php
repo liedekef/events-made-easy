@@ -3478,6 +3478,9 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 		if ( $is_ipn ) {
 			$member = eme_get_member_by_paymentid( $payment_id );
 			eme_email_member_action( $member, 'ipnReceived' );
+			if ( has_action( 'eme_ipn_member_action' ) ) {
+				do_action( 'eme_ipn_member_action', $booking );
+			}
 		}
 	} else {
 		$booking_ids = eme_get_payment_booking_ids( $payment_id );

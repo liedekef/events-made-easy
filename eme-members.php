@@ -3811,7 +3811,11 @@ function eme_member_set_status( $member_id, $status ) {
 	$where['member_id'] = $member_id;
 
 	$fields['status'] = $status;
-	return $wpdb->update( $table, $fields, $where );
+	$res = $wpdb->update( $table, $fields, $where );
+	if ( has_action( 'eme_member_status_change_action' ) ) {
+                do_action( 'eme_member_status_change_action', $member_id, $status );
+        }
+	return $res;
 }
 
 function eme_stop_member( $member_id ) {
@@ -3848,6 +3852,9 @@ function eme_stop_member( $member_id ) {
 	// we set the paid status to 0 so a call to eme_member_payment_url will show the payment form again for an expired member too
 	$fields['paid'] = 0;
 	$res = $wpdb->update( $table, $fields, $where );
+	if ( has_action( 'eme_member_status_change_action' ) ) {
+                do_action( 'eme_member_status_change_action', $member_id, EME_MEMBER_STATUS_EXPIRED );
+        }
 
 	// now that this is done, work on the family members
 	if ( $res === false ) {
@@ -3859,6 +3866,9 @@ function eme_stop_member( $member_id ) {
 			foreach ( $related_member_ids as $related_member_id ) {
 				$where2['member_id'] = $related_member_id;
 				$wpdb->update( $table, $fields, $where2 );
+				if ( has_action( 'eme_member_status_change_action' ) ) {
+					do_action( 'eme_member_status_change_action', $related_member_id, EME_MEMBER_STATUS_EXPIRED );
+				}
 			}
 		}
 		return true;

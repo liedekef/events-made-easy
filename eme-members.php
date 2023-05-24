@@ -607,6 +607,10 @@ function eme_delete_member( $member_id ) {
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	if ( ! empty( $member_id ) ) {
+		if ( has_action( 'eme_delete_member_action' ) ) {
+			$member = eme_get_member($member_id);
+			do_action( 'eme_delete_member_action', $member );
+		}
 		// do the related member ids before deletion the head of the family
 		$related_member_ids = eme_get_family_member_ids( $member_id );
 		if ( ! empty( $related_member_ids ) ) {

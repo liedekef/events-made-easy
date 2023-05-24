@@ -104,6 +104,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Always allow style, span and meta html-tags in formats
 * Remove confusing nl2br option for templates
 * Reuse mailing for event mails now fills out all mail options too
+* Added action hook eme_delete_member_action (executed just before the member gets deleted). 1 param: $member (array)
 * Placeholders for events can now all start with #_EVENT or #_EVENT_
 * Placeholders for locations can now all start with #_LOCATION or #_LOCATION_
 * Placeholders for memberships can now all start with #_MEMBERSHIP or #_MEMBERSHIP_

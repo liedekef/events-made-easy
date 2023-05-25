@@ -4669,9 +4669,10 @@ function eme_find_required_formfields( $format ) {
 	return $result;
 }
 
-function eme_answer2readable( $answer, $formfield, $convert_val = 1, $sep = '||', $target = 'html', $from_backend = 0 ) {
-	
-	//   $formfield=eme_get_formfield($answer['field_id']);
+function eme_answer2readable( $answer, $formfield=[], $convert_val = 1, $sep = '||', $target = 'html', $from_backend = 0 ) {
+	if (empty($formfield)) {
+		$formfield=eme_get_formfield($answer['field_id']);
+	}
 	$field_values = $formfield['field_values'];
 	$field_tags   = $formfield['field_tags'];
 

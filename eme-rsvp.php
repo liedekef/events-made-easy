@@ -4875,7 +4875,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	</form>
 	</div>
 	<?php
-	$formfields               = eme_get_formfields( '', 'rsvp,generic' );
+	$formfields               = eme_get_formfields( '', 'rsvp,generic,events' );
 	$extrafields_arr          = [];
 	$extrafieldnames_arr      = [];
 	$extrafieldsearchable_arr = [];
@@ -5290,8 +5290,20 @@ function eme_ajax_bookings_list() {
 	$wp_users    = eme_get_indexed_users();
 	$pgs         = eme_payment_gateways();
 
-	$formfields = eme_get_formfields( '', 'rsvp,generic' );
-	$rows       = [];
+	$formfields = eme_get_formfields( '', 'rsvp,generic,events' );
+	$events_to_get = [];
+	foreach ( $bookings as $booking ) {
+		$events_to_get[$booking['event_id']]=1;
+	}
+	$answers = [];
+	$events = [];
+	if (!empty($events_to_get)) {
+		$events = eme_get_events_assoc(array_keys($events_to_get));
+		foreach ($events as $event_id=>$event) {
+			$answers = array_merge($answers,eme_get_event_answers( $event_id ));
+		}
+	}
+	$rows = [];
 	// the array $event_name_info will be used to store the event info for bookings, so we don't need to recalculate that for each booking
 	$event_name_info = [];
 	foreach ( $bookings as $booking ) {
@@ -5316,23 +5328,15 @@ function eme_ajax_bookings_list() {
 			$line['wp_user'] = '';
 		}
 
-		$event = eme_get_event( $booking_event_id );
-		if ( empty( $event ) ) {
+		if (empty($events[$booking_event_id])) {
 			continue;
 		}
-		if ( isset( $event['event_id'] ) ) {
-			$date_obj             = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-			$localized_start_date = eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 );
-			$localized_start_time = eme_localized_time( $event['event_start'], EME_TIMEZONE, 1 );
-			$localized_end_date   = eme_localized_date( $event['event_end'], EME_TIMEZONE, 1 );
-			$localized_end_time   = eme_localized_time( $event['event_end'], EME_TIMEZONE, 1 );
-		} else {
-			$date_obj             = $eme_date_obj_now;
-			$localized_start_date = '';
-			$localized_start_time = '';
-			$localized_end_date   = '';
-			$localized_end_time   = '';
-		}
+		$event = $events[$booking_event_id];
+		$date_obj             = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+		$localized_start_date = eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 );
+		$localized_start_time = eme_localized_time( $event['event_start'], EME_TIMEZONE, 1 );
+		$localized_end_date   = eme_localized_date( $event['event_end'], EME_TIMEZONE, 1 );
+		$localized_end_time   = eme_localized_time( $event['event_end'], EME_TIMEZONE, 1 );
 		$localized_booking_datetime = eme_localized_datetime( $booking['creation_date'], EME_TIMEZONE, 1 );
 		$localized_payment_datetime = eme_localized_datetime( $booking['payment_date'], EME_TIMEZONE, 1 );
 		if ( $booking['reminder'] > 0 ) {
@@ -5360,10 +5364,10 @@ function eme_ajax_bookings_list() {
 		} else {
 			$add_event_info = 0;
 		}
-		if ( isset( $event['event_id'] ) && $add_event_info ) {
+		if ( $add_event_info ) {
 			$event_name_info[ $booking_event_id ] .= "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
 		}
-		if ( isset( $event['event_id'] ) && $event['event_rsvp'] ) {
+		if ( $event['event_rsvp'] ) {
 			if ( $add_event_info ) {
 				$event_name_info[ $booking_event_id ] .= '<br>' . esc_html__( 'RSVP Info: ', 'events-made-easy' );
 				$booked_seats  = eme_get_approved_seats( $event['event_id'] );
@@ -5437,7 +5441,7 @@ function eme_ajax_bookings_list() {
 		} else {
 			$line['rsvp'] = '';
 		}
-		if ( isset( $event['event_id'] ) && $event['event_tasks'] && $add_event_info ) {
+		if ( $event['event_tasks'] && $add_event_info ) {
 			$tasks = eme_get_event_tasks( $event['event_id'] );
 			$task_count = count($tasks);
 			if ( $add_event_info && $task_count>0 ) {
@@ -5462,6 +5466,7 @@ function eme_ajax_bookings_list() {
 		}
 
 		$line['event_name'] = $event_name_info[ $booking_event_id ];
+		$line['event_id']   = $booking_event_id;
 		$line['event_cats'] = join( '<br>', eme_get_event_category_names( $booking_event_id ) );
 
 		$line['datetime'] = $localized_start_date;
@@ -5530,17 +5535,17 @@ function eme_ajax_bookings_list() {
 		$line['pg_pid']          = eme_esc_html( $booking['pg_pid'] );
 		$line['attend_count']    = intval( $booking['attend_count'] );
 		$line['booking_comment'] = eme_esc_html( $booking['booking_comment'] );
-		$answers                 = eme_get_booking_answers( $booking['booking_id'] );
+		$tmp_answers             = array_merge($answers,eme_get_booking_answers( $booking['booking_id'] ));
 		foreach ( $formfields as $formfield ) {
-			foreach ( $answers as $val ) {
-				if ( $val['field_id'] == $formfield['field_id'] && $val['answer'] != '' ) {
-					$tmp_answer = eme_answer2readable( $val['answer'], $formfield, 1, ',', 'text', 1 );
+			foreach ( $tmp_answers as $tmp_answer ) {
+				if ( $tmp_answer['field_id'] == $formfield['field_id'] && $tmp_answer['answer'] != '' ) {
+					$val = eme_answer2readable( $tmp_answer['answer'], $formfield, 1, ',', 'text', 1 );
 					// the 'FIELD_' value is used by the container-js
-					$key = 'FIELD_' . $val['field_id'];
+					$key = 'FIELD_' . $tmp_answer['field_id'];
 					if ( isset( $line[ $key ] ) ) {
-						$line[ $key ] .= "<br>$tmp_answer";
+						$line[ $key ] .= "<br>$val";
 					} else {
-						$line[ $key ] = $tmp_answer;
+						$line[ $key ] = $val;
 					}
 				}
 			}

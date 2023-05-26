@@ -4793,6 +4793,11 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 			'notcategory'                => $notcategory,
 			'show_recurrent_events_once' => $show_recurrent_events_once,
 			'extra_conditions'           => $extra_conditions,
+			'count'		             => $count,
+			'include_customformfields'   => $include_customformfields,
+			'search_customfieldids'      => $search_customfieldids,
+			'search_customfields'        => $search_customfields,
+			'include_unlisted'           => $include_unlistedsearch_customfields,
 		];
 
 		$r = wp_parse_args( $o_limit, $defaults );
@@ -5483,6 +5488,22 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		}
 	} else {
 		return $res;
+	}
+}
+
+function eme_get_events_assoc( $event_ids_arr = []) {
+	global $wpdb;
+	$events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+	$inflated_events = [];
+	if ( eme_is_numeric_array( $event_ids_arr ) ) {
+		$event_ids = join(',', $event_ids_arr);
+		$sql = "SELECT * from $events_table WHERE event_id IN ( $event_ids )";
+		$events = $wpdb->get_results( $sql, ARRAY_A );
+		foreach ( $events as $this_event ) {
+			$this_event = eme_get_extra_event_data( $this_event );
+			$this_event = eme_get_extra_location_data( $this_event );
+			$inflated_events[$this_event['event_id']] = $this_event;
+		}
 	}
 }
 
@@ -9775,6 +9796,7 @@ function eme_admin_enqueue_js() {
 			'translate_nomatchevent'               => __( 'No matching event found', 'events-made-easy' ),
 			'translate_bookings'                   => __( 'Bookings', 'events-made-easy' ),
 			'translate_id'                         => __( 'ID', 'events-made-easy' ),
+			'translate_event_id'                   => __( 'Event ID', 'events-made-easy' ),
 			'translate_rsvp'                       => __( 'RSVP', 'events-made-easy' ),
 			'translate_eventinfo'                  => __( 'Event info', 'events-made-easy' ),
 			'translate_datetime'                   => __( 'Date and time', 'events-made-easy' ),

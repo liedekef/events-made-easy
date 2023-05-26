@@ -11,6 +11,11 @@ jQuery(document).ready(function ($) {
                 event_name: {
                     title: eme.translate_eventinfo
                 },
+                event_id: {
+                    title: eme.translate_event_id,
+                    sorting: false,
+	            visibility: 'hidden'
+                },
                 rsvp: {
                     title: eme.translate_rsvp,
                     sorting: false,

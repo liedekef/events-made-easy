@@ -1174,19 +1174,30 @@ function eme_printable_booking_report( $event_id ) {
 	<?php
 	if ( $event['location_id'] ) {
 		$location = eme_get_location( $event['location_id'] );
-		echo eme_replace_locations_placeholders( '#_LOCATIONNAME, #_ADDRESS, #_TOWN', $location );}
-	?>
-		</p>
-	<?php
-	if ( $event['price'] ) {
+		echo eme_replace_locations_placeholders( '#_LOCATIONNAME, #_ADDRESS, #_TOWN', $location );
 	}
 	?>
-	<p>
-	<?php
-	esc_html_e( 'Price: ', 'events-made-easy' );
-	echo eme_replace_event_placeholders( '#_PRICE', $event );
-	?>
 	</p>
+	<?php
+	if ( $event['price'] ) {
+		print "<p>";
+		esc_html_e( 'Price: ', 'events-made-easy' );
+		if ($is_multiprice && !eme_is_empty_string($event['event_properties']['multiprice_desc'])) {
+			$price_arr = eme_convert_multi2array( $event['price'] );
+			$multprice_desc_arr = eme_convert_multi2array( $event['event_properties']['multiprice_desc'] );
+			foreach ($price_arr as $key=>$price) {
+                                $res_arr[] = eme_localized_price( $price, $event['currency']) . " " . esc_html($multprice_desc_arr[$key]);
+                        }
+                        echo join('||',$res_arr);
+		} else {
+			echo eme_localized_price( $event['price'], $event['currency']);
+			if (!empty($event['event_properties']['price_desc'])) {
+				echo " ".esc_html($event['event_properties']['price_desc']);
+			}
+		}
+		print "</p>";
+	}
+	?>
 	<h1><?php esc_html_e( 'Bookings data', 'events-made-easy' ); ?></h1>
 	<table id="eme_printable_table">
 		<tr>

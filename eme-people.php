@@ -1354,7 +1354,7 @@ function eme_printable_booking_report( $event_id ) {
 						}
 					}
 				}
-				echo eme_localized_price( $booking['discount'], $event['currency'] ) .esc_html($discount_name);
+				echo eme_localized_price( $booking['discount'], $event['currency'] ) .$discount_name;
 				?>
 			</td>
 			<td class='eme_print_total_price'><?php echo eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'] ); ?></td>

@@ -100,7 +100,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.67 (2023//) =
+= 2.3.67 (2023/05/27) =
 * Always allow style, span and meta html-tags in formats
 * Remove confusing nl2br option for templates
 * Reuse mailing for event mails now fills out all mail options too

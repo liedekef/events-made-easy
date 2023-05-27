@@ -5505,6 +5505,7 @@ function eme_get_events_assoc( $event_ids_arr = []) {
 			$inflated_events[$this_event['event_id']] = $this_event;
 		}
 	}
+	return $inflated_events;
 }
 
 function eme_get_eventids_by_author( $author_id, $scope, $event_id ) {

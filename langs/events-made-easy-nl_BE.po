@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-05-27 19:27:05+00:00\n"
+"POT-Creation-Date: 2023-05-27 21:52:19+00:00\n"
 "PO-Revision-Date: 2023-05-27 21:34+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -33,9 +33,9 @@ msgstr "in naam van %s"
 # File: eme-countries.php, line: 988
 # File: eme-discounts.php, line: 1640
 # File: eme-discounts.php, line: 1683
-# File: eme-events.php, line: 9989
-# File: eme-events.php, line: 10320
-# File: eme-events.php, line: 10564
+# File: eme-events.php, line: 9990
+# File: eme-events.php, line: 10321
+# File: eme-events.php, line: 10565
 # File: eme-formfields.php, line: 4938
 # File: eme-formfields.php, line: 4990
 # File: eme-formfields.php, line: 5001
@@ -82,26 +82,26 @@ msgid "Access denied!"
 msgstr "Toegang geweigerd!"
 #
 # File: eme-actions.php, line: 323
-# File: eme-events.php, line: 6258
-# File: eme-events.php, line: 9529
+# File: eme-events.php, line: 6259
+# File: eme-events.php, line: 9530
 # File: eme-templates.php, line: 41
 msgid "Event"
 msgstr "Evenement"
 #
 # File: eme-actions.php, line: 332
-# File: eme-events.php, line: 6259
-# File: eme-events.php, line: 8224
-# File: eme-events.php, line: 9475
+# File: eme-events.php, line: 6260
+# File: eme-events.php, line: 8225
+# File: eme-events.php, line: 9476
 # File: eme-locations.php, line: 382
 msgid "Location"
 msgstr "Locatie"
 #
 # File: eme-actions.php, line: 454
-# File: eme-events.php, line: 9393
-# File: eme-events.php, line: 9628
-# File: eme-events.php, line: 9661
-# File: eme-events.php, line: 9696
-# File: eme-events.php, line: 9760
+# File: eme-events.php, line: 9394
+# File: eme-events.php, line: 9629
+# File: eme-events.php, line: 9662
+# File: eme-events.php, line: 9697
+# File: eme-events.php, line: 9761
 # File: eme-gdpr.php, line: 460
 # File: eme-gdpr.php, line: 605
 # File: eme-locations.php, line: 575
@@ -113,11 +113,11 @@ msgstr "Staat/Provincie"
 #
 # File: eme-actions.php, line: 455
 # File: eme-countries.php, line: 519
-# File: eme-events.php, line: 9394
-# File: eme-events.php, line: 9627
-# File: eme-events.php, line: 9662
-# File: eme-events.php, line: 9697
-# File: eme-events.php, line: 9761
+# File: eme-events.php, line: 9395
+# File: eme-events.php, line: 9628
+# File: eme-events.php, line: 9663
+# File: eme-events.php, line: 9698
+# File: eme-events.php, line: 9762
 # File: eme-gdpr.php, line: 461
 # File: eme-gdpr.php, line: 609
 # File: eme-locations.php, line: 583
@@ -128,7 +128,7 @@ msgid "Country"
 msgstr "Land"
 #
 # File: eme-actions.php, line: 457
-# File: eme-events.php, line: 9396
+# File: eme-events.php, line: 9397
 msgid "An error has occurred"
 msgstr "Een fout is opgetreden"
 #
@@ -137,17 +137,17 @@ msgid "Clear"
 msgstr "Leegmaken"
 #
 # File: eme-actions.php, line: 459
-# File: eme-events.php, line: 9397
+# File: eme-events.php, line: 9398
 msgid "Mailing preferences"
 msgstr "Mailing voorkeuren"
 #
 # File: eme-actions.php, line: 460
-# File: eme-events.php, line: 9398
+# File: eme-events.php, line: 9399
 msgid "Yes, I'm sure"
 msgstr "Ja, ik ben zeker"
 #
 # File: eme-actions.php, line: 461
-# File: eme-events.php, line: 9399
+# File: eme-events.php, line: 9400
 msgid "I want to receive mails"
 msgstr "Ik wil e-mails ontvangen"
 #
@@ -215,7 +215,7 @@ msgid "Any"
 msgstr "Elke"
 #
 # File: eme-attendances.php, line: 80
-# File: eme-events.php, line: 9463
+# File: eme-events.php, line: 9464
 # File: eme-install.php, line: 1670
 # File: eme-options.php, line: 145
 # File: eme-options.php, line: 146
@@ -227,7 +227,7 @@ msgid "Events"
 msgstr "Evenementen"
 #
 # File: eme-attendances.php, line: 81
-# File: eme-events.php, line: 9741
+# File: eme-events.php, line: 9742
 # File: eme-gdpr.php, line: 487
 # File: eme-options.php, line: 1376
 # File: events-manager.php, line: 366
@@ -285,16 +285,16 @@ msgstr ""
 "rechten, wordt een aanwezigheidsrecord toegevoegd aan deze tabel."
 #
 # File: eme-attendances.php, line: 137
-# File: eme-events.php, line: 5933
-# File: eme-events.php, line: 6080
+# File: eme-events.php, line: 5934
+# File: eme-events.php, line: 6081
 # File: eme-rsvp.php, line: 4771
 # File: eme-tasks.php, line: 465
 msgid "Filter on start date"
 msgstr "Filter op start datum"
 #
 # File: eme-attendances.php, line: 139
-# File: eme-events.php, line: 5935
-# File: eme-events.php, line: 6082
+# File: eme-events.php, line: 5936
+# File: eme-events.php, line: 6083
 # File: eme-rsvp.php, line: 4773
 # File: eme-tasks.php, line: 467
 msgid "Filter on end date"
@@ -309,8 +309,8 @@ msgstr "Filter aanwezigen"
 # File: eme-countries.php, line: 454
 # File: eme-discounts.php, line: 468
 # File: eme-discounts.php, line: 535
-# File: eme-events.php, line: 6001
-# File: eme-events.php, line: 6102
+# File: eme-events.php, line: 6002
+# File: eme-events.php, line: 6103
 # File: eme-formfields.php, line: 203
 # File: eme-locations.php, line: 899
 # File: eme-members.php, line: 2879
@@ -342,13 +342,13 @@ msgid "Edit person"
 msgstr "Pas persoon aan"
 #
 # File: eme-attendances.php, line: 223
-# File: eme-events.php, line: 10254
+# File: eme-events.php, line: 10255
 # File: eme-rsvp.php, line: 5478
 msgid "All day"
 msgstr "Hele dag"
 #
 # File: eme-attendances.php, line: 269
-# File: eme-events.php, line: 10362
+# File: eme-events.php, line: 10363
 msgid "Events deleted"
 msgstr "Evenementen verwijderd"
 #
@@ -361,7 +361,7 @@ msgid "Attribute Name"
 msgstr "Naam Attribuut"
 #
 # File: eme-attributes.php, line: 96
-# File: eme-events.php, line: 9596
+# File: eme-events.php, line: 9597
 msgid "Value"
 msgstr "Waarde"
 #
@@ -391,43 +391,43 @@ msgstr ""
 "attributes\" in de documentatie op de website van de plugin."
 #
 # File: eme-calendar.php, line: 573
-# File: eme-events.php, line: 7077
+# File: eme-events.php, line: 7078
 # File: eme-recurrence.php, line: 378
 msgid "Sunday"
 msgstr "Zondag"
 #
 # File: eme-calendar.php, line: 573
-# File: eme-events.php, line: 7071
+# File: eme-events.php, line: 7072
 # File: eme-recurrence.php, line: 378
 msgid "Monday"
 msgstr "Maandag"
 #
 # File: eme-calendar.php, line: 573
-# File: eme-events.php, line: 7072
+# File: eme-events.php, line: 7073
 # File: eme-recurrence.php, line: 378
 msgid "Tuesday"
 msgstr "Dinsdag"
 #
 # File: eme-calendar.php, line: 573
-# File: eme-events.php, line: 7073
+# File: eme-events.php, line: 7074
 # File: eme-recurrence.php, line: 378
 msgid "Wednesday"
 msgstr "Woensdag"
 #
 # File: eme-calendar.php, line: 573
-# File: eme-events.php, line: 7074
+# File: eme-events.php, line: 7075
 # File: eme-recurrence.php, line: 378
 msgid "Thursday"
 msgstr "Donderdag"
 #
 # File: eme-calendar.php, line: 573
-# File: eme-events.php, line: 7075
+# File: eme-events.php, line: 7076
 # File: eme-recurrence.php, line: 378
 msgid "Friday"
 msgstr "Vrijdag"
 #
 # File: eme-calendar.php, line: 573
-# File: eme-events.php, line: 7076
+# File: eme-events.php, line: 7077
 # File: eme-recurrence.php, line: 378
 msgid "Saturday"
 msgstr "Zaterdag"
@@ -483,16 +483,16 @@ msgstr "Voeg categorie toe"
 #
 # File: eme-categories.php, line: 129
 # File: eme-categories.php, line: 136
-# File: eme-events.php, line: 9467
-# File: eme-events.php, line: 9507
-# File: eme-events.php, line: 9523
-# File: eme-events.php, line: 9547
-# File: eme-events.php, line: 9568
-# File: eme-events.php, line: 9590
-# File: eme-events.php, line: 9623
-# File: eme-events.php, line: 9651
-# File: eme-events.php, line: 9744
-# File: eme-events.php, line: 9798
+# File: eme-events.php, line: 9468
+# File: eme-events.php, line: 9508
+# File: eme-events.php, line: 9524
+# File: eme-events.php, line: 9548
+# File: eme-events.php, line: 9569
+# File: eme-events.php, line: 9591
+# File: eme-events.php, line: 9624
+# File: eme-events.php, line: 9652
+# File: eme-events.php, line: 9745
+# File: eme-events.php, line: 9799
 # File: eme-gdpr.php, line: 452
 # File: eme-gdpr.php, line: 492
 # File: eme-holidays.php, line: 122
@@ -506,15 +506,15 @@ msgstr "ID"
 #
 # File: eme-categories.php, line: 130
 # File: eme-categories.php, line: 137
-# File: eme-events.php, line: 9468
-# File: eme-events.php, line: 9549
-# File: eme-events.php, line: 9569
-# File: eme-events.php, line: 9589
-# File: eme-events.php, line: 9624
-# File: eme-events.php, line: 9652
-# File: eme-events.php, line: 9689
-# File: eme-events.php, line: 9749
-# File: eme-events.php, line: 9853
+# File: eme-events.php, line: 9469
+# File: eme-events.php, line: 9550
+# File: eme-events.php, line: 9570
+# File: eme-events.php, line: 9590
+# File: eme-events.php, line: 9625
+# File: eme-events.php, line: 9653
+# File: eme-events.php, line: 9690
+# File: eme-events.php, line: 9750
+# File: eme-events.php, line: 9854
 # File: eme-holidays.php, line: 123
 # File: eme-holidays.php, line: 130
 # File: eme-mailer.php, line: 1337
@@ -528,7 +528,7 @@ msgid "Name"
 msgstr "Naam"
 #
 # File: eme-categories.php, line: 143
-# File: eme-events.php, line: 10085
+# File: eme-events.php, line: 10086
 # File: eme-formfields.php, line: 4975
 # File: eme-holidays.php, line: 136
 # File: eme-locations.php, line: 2945
@@ -551,7 +551,7 @@ msgid "Delete"
 msgstr "Verwijder"
 #
 # File: eme-categories.php, line: 168
-# File: eme-events.php, line: 6579
+# File: eme-events.php, line: 6580
 # File: eme-locations.php, line: 459
 msgid "No categories defined."
 msgstr "Geen categorieën gedefinieerd."
@@ -565,7 +565,7 @@ msgid "Update category"
 msgstr "Werk categorie bij"
 #
 # File: eme-categories.php, line: 185
-# File: eme-events.php, line: 6952
+# File: eme-events.php, line: 6953
 # File: eme-locations.php, line: 502
 msgid "Permalink: "
 msgstr "Permalink: "
@@ -575,7 +575,7 @@ msgid "Create category"
 msgstr "Maak categorie aan"
 #
 # File: eme-categories.php, line: 192
-# File: eme-events.php, line: 6954
+# File: eme-events.php, line: 6955
 # File: eme-locations.php, line: 504
 msgid "Permalink prefix: "
 msgstr "Permalink voorvoegsel: "
@@ -691,18 +691,18 @@ msgstr "Maand(en)"
 # File: eme-cron.php, line: 426
 # File: eme-discounts.php, line: 466
 # File: eme-discounts.php, line: 533
-# File: eme-events.php, line: 5999
-# File: eme-events.php, line: 6100
-# File: eme-events.php, line: 9485
-# File: eme-events.php, line: 9534
-# File: eme-events.php, line: 9554
-# File: eme-events.php, line: 9578
-# File: eme-events.php, line: 9612
-# File: eme-events.php, line: 9640
-# File: eme-events.php, line: 9668
-# File: eme-events.php, line: 9705
-# File: eme-events.php, line: 9763
-# File: eme-events.php, line: 9828
+# File: eme-events.php, line: 6000
+# File: eme-events.php, line: 6101
+# File: eme-events.php, line: 9486
+# File: eme-events.php, line: 9535
+# File: eme-events.php, line: 9555
+# File: eme-events.php, line: 9579
+# File: eme-events.php, line: 9613
+# File: eme-events.php, line: 9641
+# File: eme-events.php, line: 9669
+# File: eme-events.php, line: 9706
+# File: eme-events.php, line: 9764
+# File: eme-events.php, line: 9829
 # File: eme-formfields.php, line: 201
 # File: eme-locations.php, line: 897
 # File: eme-mailer.php, line: 2567
@@ -792,7 +792,7 @@ msgstr "U heeft geen rechten om kortingen te beheren!"
 # File: eme-countries.php, line: 108
 # File: eme-discounts.php, line: 81
 # File: eme-discounts.php, line: 174
-# File: eme-events.php, line: 5668
+# File: eme-events.php, line: 5669
 # File: eme-locations.php, line: 220
 # File: eme-members.php, line: 5318
 # File: eme-members.php, line: 5488
@@ -807,7 +807,7 @@ msgstr ""
 # File: eme-countries.php, line: 133
 # File: eme-discounts.php, line: 106
 # File: eme-discounts.php, line: 199
-# File: eme-events.php, line: 5695
+# File: eme-events.php, line: 5696
 # File: eme-locations.php, line: 247
 # File: eme-members.php, line: 5344
 # File: eme-members.php, line: 5514
@@ -835,7 +835,7 @@ msgstr "Import gedaan: %d toevoegingen, %d fouten"
 # File: eme-countries.php, line: 153
 # File: eme-discounts.php, line: 160
 # File: eme-discounts.php, line: 219
-# File: eme-events.php, line: 5659
+# File: eme-events.php, line: 5660
 # File: eme-locations.php, line: 211
 # File: eme-members.php, line: 5310
 # File: eme-members.php, line: 5481
@@ -848,7 +848,7 @@ msgstr "Probleem ondervonden tijdens het uploaden van de file"
 # File: eme-countries.php, line: 156
 # File: eme-discounts.php, line: 163
 # File: eme-discounts.php, line: 222
-# File: eme-events.php, line: 5656
+# File: eme-events.php, line: 5657
 # File: eme-locations.php, line: 208
 # File: eme-members.php, line: 5307
 # File: eme-members.php, line: 5478
@@ -969,7 +969,7 @@ msgstr "Voeg land toe"
 # File: eme-countries.php, line: 423
 # File: eme-discounts.php, line: 423
 # File: eme-discounts.php, line: 508
-# File: eme-events.php, line: 5889
+# File: eme-events.php, line: 5890
 # File: eme-locations.php, line: 845
 # File: eme-members.php, line: 2772
 # File: eme-people.php, line: 1811
@@ -980,7 +980,7 @@ msgstr "Klik op het pictogram om het importeer-formulier te tonen"
 # File: eme-countries.php, line: 430
 # File: eme-discounts.php, line: 430
 # File: eme-discounts.php, line: 515
-# File: eme-events.php, line: 5896
+# File: eme-events.php, line: 5897
 # File: eme-locations.php, line: 852
 # File: eme-members.php, line: 2779
 # File: eme-members.php, line: 2794
@@ -993,7 +993,7 @@ msgstr "Scheidingsteken:"
 # File: eme-countries.php, line: 432
 # File: eme-discounts.php, line: 432
 # File: eme-discounts.php, line: 517
-# File: eme-events.php, line: 5898
+# File: eme-events.php, line: 5899
 # File: eme-locations.php, line: 854
 # File: eme-members.php, line: 2781
 # File: eme-members.php, line: 2796
@@ -1006,7 +1006,7 @@ msgstr "Omsluiting:"
 # File: eme-countries.php, line: 435
 # File: eme-discounts.php, line: 435
 # File: eme-discounts.php, line: 520
-# File: eme-events.php, line: 5901
+# File: eme-events.php, line: 5902
 # File: eme-locations.php, line: 857
 # File: eme-people.php, line: 1827
 # File: eme-rsvp.php, line: 4728
@@ -1037,8 +1037,8 @@ msgstr ""
 # File: eme-countries.php, line: 449
 # File: eme-discounts.php, line: 445
 # File: eme-discounts.php, line: 530
-# File: eme-events.php, line: 5978
-# File: eme-events.php, line: 6087
+# File: eme-events.php, line: 5979
+# File: eme-events.php, line: 6088
 # File: eme-formfields.php, line: 198
 # File: eme-locations.php, line: 889
 # File: eme-mailer.php, line: 2563
@@ -1112,8 +1112,8 @@ msgstr "De staat/provincie naam"
 #
 # File: eme-countries.php, line: 512
 # File: eme-discounts.php, line: 1547
-# File: eme-events.php, line: 9610
-# File: eme-events.php, line: 9635
+# File: eme-events.php, line: 9611
+# File: eme-events.php, line: 9636
 msgid "Code"
 msgstr "Code"
 #
@@ -1140,23 +1140,23 @@ msgid "The name of the country"
 msgstr "De naam van het land"
 #
 # File: eme-countries.php, line: 579
-# File: eme-events.php, line: 9636
+# File: eme-events.php, line: 9637
 msgid "Alpha-2"
 msgstr "Alpha-2"
 #
 # File: eme-countries.php, line: 583
-# File: eme-events.php, line: 9637
+# File: eme-events.php, line: 9638
 msgid "Alpha-3"
 msgstr "Alpha-3"
 #
 # File: eme-countries.php, line: 587
-# File: eme-events.php, line: 9638
+# File: eme-events.php, line: 9639
 msgid "Num-3"
 msgstr "Num-3"
 #
 # File: eme-countries.php, line: 591
-# File: eme-events.php, line: 9629
-# File: eme-events.php, line: 9702
+# File: eme-events.php, line: 9630
+# File: eme-events.php, line: 9703
 # File: eme-people.php, line: 2132
 msgid "Language"
 msgstr "Taal"
@@ -1336,9 +1336,9 @@ msgstr ""
 "die ingepland zijn voor de komende"
 #
 # File: eme-cron.php, line: 392
-# File: eme-events.php, line: 7127
-# File: eme-events.php, line: 8734
-# File: eme-events.php, line: 8750
+# File: eme-events.php, line: 7128
+# File: eme-events.php, line: 8735
+# File: eme-events.php, line: 8751
 # File: eme-options.php, line: 1592
 # File: eme-recurrence.php, line: 550
 msgid "days"
@@ -1523,10 +1523,10 @@ msgstr "De naam van de korting"
 #
 # File: eme-discounts.php, line: 844
 # File: eme-discounts.php, line: 994
-# File: eme-events.php, line: 9550
-# File: eme-events.php, line: 9591
-# File: eme-events.php, line: 9688
-# File: eme-events.php, line: 9743
+# File: eme-events.php, line: 9551
+# File: eme-events.php, line: 9592
+# File: eme-events.php, line: 9689
+# File: eme-events.php, line: 9744
 # File: eme-members.php, line: 1719
 # File: eme-people.php, line: 2263
 # File: eme-tasks.php, line: 741
@@ -1535,10 +1535,10 @@ msgid "Description"
 msgstr "Beschrijving"
 #
 # File: eme-discounts.php, line: 848
-# File: eme-events.php, line: 9508
-# File: eme-events.php, line: 9551
-# File: eme-events.php, line: 9570
-# File: eme-events.php, line: 9597
+# File: eme-events.php, line: 9509
+# File: eme-events.php, line: 9552
+# File: eme-events.php, line: 9571
+# File: eme-events.php, line: 9598
 # File: eme-members.php, line: 1723
 # File: eme-templates.php, line: 291
 msgid "Type"
@@ -1589,7 +1589,7 @@ msgstr ""
 "dit gebruiken als korting voor \"vroege vogels\""
 #
 # File: eme-discounts.php, line: 867
-# File: eme-events.php, line: 9592
+# File: eme-events.php, line: 9593
 msgid "Discount groups"
 msgstr "Kortinggroepen"
 #
@@ -1602,7 +1602,7 @@ msgstr ""
 "kortingsgroepen en vervolgens de kortingsgroep op uw evenement toepassen"
 #
 # File: eme-discounts.php, line: 873
-# File: eme-events.php, line: 9600
+# File: eme-events.php, line: 9601
 msgid "Valid from"
 msgstr "Geldig vanaf"
 #
@@ -1615,7 +1615,7 @@ msgstr ""
 "coupon niet geldig vóór deze datum en tijd."
 #
 # File: eme-discounts.php, line: 880
-# File: eme-events.php, line: 9601
+# File: eme-events.php, line: 9602
 msgid "Valid until"
 msgstr "Geldig tot"
 #
@@ -1759,17 +1759,17 @@ msgstr ""
 "kortingsboncodes invult, kan het gebruik beperkt worden tot slechts 3 of zo."
 #
 # File: eme-discounts.php, line: 1545
-# File: eme-events.php, line: 9607
+# File: eme-events.php, line: 9608
 msgid "Fixed"
 msgstr "Vast"
 #
 # File: eme-discounts.php, line: 1546
-# File: eme-events.php, line: 9609
+# File: eme-events.php, line: 9610
 msgid "Percentage"
 msgstr "Percentage"
 #
 # File: eme-discounts.php, line: 1548
-# File: eme-events.php, line: 9608
+# File: eme-events.php, line: 9609
 msgid "Fixed per seat"
 msgstr "Vast per plaats"
 #
@@ -1919,8 +1919,8 @@ msgstr "Nieuwe herhaling aangemaakt die %d evenementen bevat"
 # File: eme-events.php, line: 630
 # File: eme-events.php, line: 657
 # File: eme-events.php, line: 800
-# File: eme-events.php, line: 6241
-# File: eme-events.php, line: 10271
+# File: eme-events.php, line: 6242
+# File: eme-events.php, line: 10272
 msgid "Edit Recurrence"
 msgstr "Bewerk terugkerend item"
 #
@@ -1935,7 +1935,7 @@ msgstr "Nieuw evenement met succes aangemaakt!"
 # File: eme-events.php, line: 609
 # File: eme-events.php, line: 679
 # File: eme-events.php, line: 738
-# File: eme-events.php, line: 9470
+# File: eme-events.php, line: 9471
 msgid "Edit Event '%s'"
 msgstr "Bewerk evenement '%s'"
 #
@@ -1972,7 +1972,7 @@ msgid "Failed to update '%s'"
 msgstr "Bijwerken '%s' mislukt"
 #
 # File: eme-events.php, line: 709
-# File: eme-events.php, line: 9469
+# File: eme-events.php, line: 9470
 msgid "Insert New Event"
 msgstr "Maak een nieuw evenement aan"
 #
@@ -2176,7 +2176,7 @@ msgid "GDPR approval"
 msgstr "GDPR goedkeuring"
 #
 # File: eme-events.php, line: 1592
-# File: eme-events.php, line: 9716
+# File: eme-events.php, line: 9717
 msgid "GDPR"
 msgstr "GDPR"
 #
@@ -2189,12 +2189,12 @@ msgid "Events Made Easy plugin page"
 msgstr "Events Made Easy plugin pagina"
 #
 # File: eme-events.php, line: 2401
-# File: eme-events.php, line: 9552
-# File: eme-events.php, line: 9576
-# File: eme-events.php, line: 9603
-# File: eme-events.php, line: 9630
-# File: eme-events.php, line: 9768
-# File: eme-events.php, line: 9820
+# File: eme-events.php, line: 9553
+# File: eme-events.php, line: 9577
+# File: eme-events.php, line: 9604
+# File: eme-events.php, line: 9631
+# File: eme-events.php, line: 9769
+# File: eme-events.php, line: 9821
 # File: eme-locations.php, line: 2392
 # File: eme-rsvp.php, line: 5359
 msgid "Edit"
@@ -2307,13 +2307,13 @@ msgstr "Volgende  pagina"
 msgid "Page %d"
 msgstr "Pagina %d"
 #
-# File: eme-events.php, line: 5724
-# File: eme-events.php, line: 5730
+# File: eme-events.php, line: 5725
+# File: eme-events.php, line: 5731
 msgid "Location not imported: %s"
 msgstr "Locatie niet geïmporteerd: %s"
 #
-# File: eme-events.php, line: 5754
-# File: eme-events.php, line: 5757
+# File: eme-events.php, line: 5755
+# File: eme-events.php, line: 5758
 # File: eme-members.php, line: 5361
 # File: eme-members.php, line: 5364
 # File: eme-members.php, line: 5367
@@ -2322,19 +2322,19 @@ msgstr "Locatie niet geïmporteerd: %s"
 msgid "Not imported (field %s not valid): %s"
 msgstr "Niet geïmporteerd (veld %s niet geldig): %s"
 #
-# File: eme-events.php, line: 5799
+# File: eme-events.php, line: 5800
 msgid "Not imported (problem updating the event in the db): %s"
 msgstr ""
 "Niet geïmporteerd (probleem bij het updaten van het evenement in de "
 "database): %s"
 #
-# File: eme-events.php, line: 5807
+# File: eme-events.php, line: 5808
 msgid "Not imported (problem inserting the event in the db): %s"
 msgstr ""
 "Niet geïmporteerd (probleem bij het invoegen van het evenement in de "
 "database): %s"
 #
-# File: eme-events.php, line: 5829
+# File: eme-events.php, line: 5830
 # File: eme-locations.php, line: 328
 # File: eme-members.php, line: 5454
 # File: eme-members.php, line: 5594
@@ -2342,95 +2342,95 @@ msgstr ""
 msgid "Not imported (not all required fields are present): %s"
 msgstr "Niet geïmporteerd (niet alle vereiste velden zijn aanwezig): %s"
 #
-# File: eme-events.php, line: 5832
+# File: eme-events.php, line: 5833
 # File: eme-locations.php, line: 331
 # File: eme-members.php, line: 5459
 # File: eme-people.php, line: 871
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr "Import gedaan: %d toevoegingen, %d aanpassingen, %d fouten"
 #
-# File: eme-events.php, line: 5851
+# File: eme-events.php, line: 5852
 # File: eme-rsvp.php, line: 4659
 # File: eme-tasks.php, line: 440
 msgid "Past events"
 msgstr "Voorbije evenementen"
 #
-# File: eme-events.php, line: 5852
+# File: eme-events.php, line: 5853
 # File: eme-rsvp.php, line: 4660
 # File: eme-tasks.php, line: 441
 # File: events-manager.php, line: 347
 msgid "All events"
 msgstr "Alle evenementen"
 #
-# File: eme-events.php, line: 5853
+# File: eme-events.php, line: 5854
 # File: eme-rsvp.php, line: 4661
 # File: eme-tasks.php, line: 442
 msgid "Future events"
 msgstr "Komende evenementen"
 #
-# File: eme-events.php, line: 5870
+# File: eme-events.php, line: 5871
 msgid "Add a new event"
 msgstr "Voeg een nieuw evenement toe"
 #
-# File: eme-events.php, line: 5874
+# File: eme-events.php, line: 5875
 # File: eme-options.php, line: 1314
 msgid "Add event"
 msgstr "Voeg een evenement toe"
 #
-# File: eme-events.php, line: 5879
-# File: eme-events.php, line: 6063
+# File: eme-events.php, line: 5880
+# File: eme-events.php, line: 6064
 msgid "Manage events"
 msgstr "Beheer evenementen"
 #
-# File: eme-events.php, line: 5880
-# File: eme-events.php, line: 6062
+# File: eme-events.php, line: 5881
+# File: eme-events.php, line: 6063
 msgid "Manage recurrences"
 msgstr "Beheer herhalingen"
 #
-# File: eme-events.php, line: 5884
+# File: eme-events.php, line: 5885
 # File: eme-people.php, line: 1806
 # File: eme-rsvp.php, line: 4711
 msgid "Show regular content"
 msgstr "Toon de gewone inhoud"
 #
-# File: eme-events.php, line: 5886
+# File: eme-events.php, line: 5887
 # File: eme-people.php, line: 1808
 # File: eme-rsvp.php, line: 4713
 msgid "Show trash content"
 msgstr "Toon inhoud prullenbak"
 #
-# File: eme-events.php, line: 5902
+# File: eme-events.php, line: 5903
 msgid "If you want, use this to import events into the database"
 msgstr "Gebruik dit eventueel om evenementen te importeren in de database"
 #
-# File: eme-events.php, line: 5923
+# File: eme-events.php, line: 5924
 # File: eme-rsvp.php, line: 4761
 msgid "All categories"
 msgstr "Alle categorieën"
 #
-# File: eme-events.php, line: 5924
+# File: eme-events.php, line: 5925
 # File: eme-rsvp.php, line: 4762
 msgid "Events without category"
 msgstr "Evenementen zonder categorie"
 #
-# File: eme-events.php, line: 5931
-# File: eme-events.php, line: 6078
-# File: eme-events.php, line: 6947
+# File: eme-events.php, line: 5932
+# File: eme-events.php, line: 6079
+# File: eme-events.php, line: 6948
 # File: eme-tasks.php, line: 432
 msgid "Event name"
 msgstr "Naam van het evenement"
 #
-# File: eme-events.php, line: 5936
+# File: eme-events.php, line: 5937
 # File: eme-rsvp.php, line: 4778
 msgid "Show/hide extra filters"
 msgstr "Toon/verberg extra filters"
 #
-# File: eme-events.php, line: 5939
-# File: eme-events.php, line: 6493
+# File: eme-events.php, line: 5940
+# File: eme-events.php, line: 6494
 msgid "Event Status"
 msgstr "Status evenement"
 #
-# File: eme-events.php, line: 5954
+# File: eme-events.php, line: 5955
 # File: eme-locations.php, line: 869
 # File: eme-members.php, line: 2582
 # File: eme-members.php, line: 2587
@@ -2439,11 +2439,11 @@ msgstr "Status evenement"
 msgid "Custom field value to search"
 msgstr "Aangepaste veldwaarden om te zoeken"
 #
-# File: eme-events.php, line: 5959
+# File: eme-events.php, line: 5960
 msgid "Filter events"
 msgstr "Filter evenementen"
 #
-# File: eme-events.php, line: 5964
+# File: eme-events.php, line: 5965
 # File: eme-locations.php, line: 878
 # File: eme-members.php, line: 2825
 # File: eme-people.php, line: 1849
@@ -2456,7 +2456,7 @@ msgstr ""
 "welke aangepaste velden u wilt doorzoeken in het selectievakje \"Aangepaste "
 "velden om te filteren\"."
 #
-# File: eme-events.php, line: 5965
+# File: eme-events.php, line: 5966
 # File: eme-locations.php, line: 879
 # File: eme-members.php, line: 2826
 # File: eme-people.php, line: 1850
@@ -2469,107 +2469,107 @@ msgstr ""
 "velden om te filteren\", moet u het in de velddefinitie als \"doorzoekbaar\" "
 "markeren."
 #
-# File: eme-events.php, line: 5980
+# File: eme-events.php, line: 5981
 msgid "Restore selected events (to draft status)"
 msgstr "Herstel geselecteerde evenementen (naar conceptstatus)"
 #
-# File: eme-events.php, line: 5981
+# File: eme-events.php, line: 5982
 msgid "Permanently delete selected events"
 msgstr "Verwijder geselecteerde evenementen permanent"
 #
-# File: eme-events.php, line: 5983
+# File: eme-events.php, line: 5984
 msgid "Delete selected events (move to trash)"
 msgstr "Verwijder geselecteerde evenementen (verplaats naar prullenbak)"
 #
-# File: eme-events.php, line: 5984
+# File: eme-events.php, line: 5985
 msgid "Publish selected events"
 msgstr "Publiceer geselecteerde evenementen"
 #
-# File: eme-events.php, line: 5985
+# File: eme-events.php, line: 5986
 msgid "Make selected events private"
 msgstr "Maak geselecteerde evenementen privé"
 #
-# File: eme-events.php, line: 5986
+# File: eme-events.php, line: 5987
 msgid "Make selected events draft"
 msgstr "Maak geselecteerde evenementen concept"
 #
-# File: eme-events.php, line: 5987
+# File: eme-events.php, line: 5988
 msgid "Add selected events to category"
 msgstr "Voeg geselecteerde evenementen toe aan categorie"
 #
-# File: eme-events.php, line: 5992
+# File: eme-events.php, line: 5993
 msgid "Send mails for cancelled bookings too?"
 msgstr "Verstuur ook e-mail voor geannuleerde boekingen?"
 #
-# File: eme-events.php, line: 5997
+# File: eme-events.php, line: 5998
 msgid "Please select a category"
 msgstr "Selecteer een categorie aub"
 #
-# File: eme-events.php, line: 6037
+# File: eme-events.php, line: 6038
 msgid "Past recurrences"
 msgstr "Voorbije herhalingen"
 #
-# File: eme-events.php, line: 6038
+# File: eme-events.php, line: 6039
 msgid "All recurrences"
 msgstr "Alle herhalingen"
 #
-# File: eme-events.php, line: 6039
+# File: eme-events.php, line: 6040
 msgid "Ongoing recurrences"
 msgstr "Lopende herhalingen"
 #
-# File: eme-events.php, line: 6053
+# File: eme-events.php, line: 6054
 msgid "Add a new recurrence"
 msgstr "Voeg een nieuwe herhaling toe"
 #
-# File: eme-events.php, line: 6057
+# File: eme-events.php, line: 6058
 msgid "Add recurrence"
 msgstr "Voeg herhaling toe"
 #
-# File: eme-events.php, line: 6083
+# File: eme-events.php, line: 6084
 msgid "Filter recurrences"
 msgstr "Filter herhalingen"
 #
-# File: eme-events.php, line: 6088
+# File: eme-events.php, line: 6089
 msgid "Delete selected recurrences (and move events to trash)"
 msgstr ""
 "Verwijder geselecteerde herhalingen (en verplaats evenementen naar "
 "prullenbak)"
 #
-# File: eme-events.php, line: 6089
+# File: eme-events.php, line: 6090
 msgid "Publish selected recurrences"
 msgstr "Geselecteerde herhalingen publiek maken"
 #
-# File: eme-events.php, line: 6090
+# File: eme-events.php, line: 6091
 msgid "Make selected recurrences private"
 msgstr "Geselecteerde herhalingen privé maken"
 #
-# File: eme-events.php, line: 6091
+# File: eme-events.php, line: 6092
 msgid "Make selected recurrences draft"
 msgstr "Geselecteerde herhalingen als concept aanduiden"
 #
-# File: eme-events.php, line: 6092
+# File: eme-events.php, line: 6093
 msgid "Set new start/end date for selected recurrences"
 msgstr "Stel nieuwe start-/einddatum in voor geselecteerde herhalingen"
 #
-# File: eme-events.php, line: 6096
+# File: eme-events.php, line: 6097
 msgid "Select new start date"
 msgstr "Selecteer een nieuwe startdatum"
 #
-# File: eme-events.php, line: 6098
+# File: eme-events.php, line: 6099
 msgid "Select new end date"
 msgstr "Selecteer nieuwe einddatum"
 #
-# File: eme-events.php, line: 6131
+# File: eme-events.php, line: 6132
 # File: eme-locations.php, line: 75
 # File: eme-templates.php, line: 79
 msgid " (Copy)"
 msgstr " (Kopiëer)"
 #
-# File: eme-events.php, line: 6232
+# File: eme-events.php, line: 6233
 msgid "WARNING: This is a recurrence."
 msgstr "LET OP: dit is een terugkeer patroon."
 #
-# File: eme-events.php, line: 6234
+# File: eme-events.php, line: 6235
 msgid ""
 "If you change this recurrence, events with a start day no longer matching "
 "the defined days will be removed while missing events will get added. "
@@ -2582,11 +2582,11 @@ msgstr ""
 "nog steeds overeenkomen met de gedefinieerde dagen, worden bijgewerkt, maar "
 "je verliest geen boekingen."
 #
-# File: eme-events.php, line: 6237
+# File: eme-events.php, line: 6238
 msgid "WARNING: This event is part of a recurrence."
 msgstr "WAARSCHUWIING: dit evenement maakt deel uit van een herhaling."
 #
-# File: eme-events.php, line: 6239
+# File: eme-events.php, line: 6240
 msgid ""
 "If you change this event, it will become an independent event and be removed "
 "from the recurrence."
@@ -2594,29 +2594,29 @@ msgstr ""
 "Als u dit evenement wijzigt, wordt deze een onafhankelijk evenement en wordt "
 "deze uit de herhaling verwijderd."
 #
-# File: eme-events.php, line: 6261
-# File: eme-events.php, line: 9465
-# File: eme-events.php, line: 9800
-# File: eme-events.php, line: 10224
+# File: eme-events.php, line: 6262
+# File: eme-events.php, line: 9466
+# File: eme-events.php, line: 9801
+# File: eme-events.php, line: 10225
 # File: eme-options.php, line: 1089
 # File: eme-rsvp.php, line: 5437
 msgid "RSVP"
 msgstr "RSVP"
 #
-# File: eme-events.php, line: 6264
-# File: eme-events.php, line: 6388
+# File: eme-events.php, line: 6265
+# File: eme-events.php, line: 6389
 msgid "Tasks"
 msgstr "Taken"
 #
-# File: eme-events.php, line: 6267
-# File: eme-events.php, line: 8336
+# File: eme-events.php, line: 6268
+# File: eme-events.php, line: 8337
 # File: eme-locations.php, line: 384
 # File: eme-locations.php, line: 736
 msgid "Attributes"
 msgstr "Attributen"
 #
-# File: eme-events.php, line: 6269
-# File: eme-events.php, line: 8348
+# File: eme-events.php, line: 6270
+# File: eme-events.php, line: 8349
 # File: eme-locations.php, line: 386
 # File: eme-locations.php, line: 748
 # File: eme-members.php, line: 1665
@@ -2625,131 +2625,131 @@ msgstr "Attributen"
 msgid "Custom fields"
 msgstr "Eigen aangemaakte velden"
 #
-# File: eme-events.php, line: 6294
+# File: eme-events.php, line: 6295
 msgid "Generic RSVP info"
 msgstr "Algemene RSVP info"
 #
-# File: eme-events.php, line: 6298
+# File: eme-events.php, line: 6299
 # File: eme-members.php, line: 2007
 msgid "Payment methods"
 msgstr "Betaalmethodes"
 #
-# File: eme-events.php, line: 6302
+# File: eme-events.php, line: 6303
 msgid "Dynamic data"
 msgstr "Dynamische data"
 #
-# File: eme-events.php, line: 6318
+# File: eme-events.php, line: 6319
 # File: eme-options.php, line: 1635
 msgid "RSVP forms format"
 msgstr "RSVP formulier formaat"
 #
-# File: eme-events.php, line: 6325
+# File: eme-events.php, line: 6326
 msgid "Attendance settings"
 msgstr "Aanwezigheidsinstellingen"
 #
-# File: eme-events.php, line: 6332
+# File: eme-events.php, line: 6333
 msgid "RSVP Email format settings"
 msgstr "RSVP e-mail formaat instellingen"
 #
-# File: eme-events.php, line: 6336
+# File: eme-events.php, line: 6337
 # File: eme-options.php, line: 1787
 msgid "Booking Made or Approved Email"
 msgstr "Boeking gemaakt of goedgekeurd e-mail"
 #
-# File: eme-events.php, line: 6340
+# File: eme-events.php, line: 6341
 msgid "Booking Awaiting User Confirmation Email"
 msgstr "Boeking Wachtend op Gebruiker Bevestiging E-mail"
 #
-# File: eme-events.php, line: 6344
+# File: eme-events.php, line: 6345
 # File: eme-options.php, line: 1832
 msgid "Booking Pending Email"
 msgstr "Boeking goed te keuren e-mail"
 #
-# File: eme-events.php, line: 6348
+# File: eme-events.php, line: 6349
 # File: eme-options.php, line: 1878
 msgid "Booking Updated Email"
 msgstr "Boeking aangepast e-mail"
 #
-# File: eme-events.php, line: 6352
+# File: eme-events.php, line: 6353
 # File: eme-options.php, line: 1891
 msgid "Booking Reminder Email"
 msgstr "Boeking herinneringsmail"
 #
-# File: eme-events.php, line: 6356
+# File: eme-events.php, line: 6357
 # File: eme-options.php, line: 1906
 msgid "Booking Cancelled Email"
 msgstr "Boeking geannuleerd e-mail"
 #
-# File: eme-events.php, line: 6360
+# File: eme-events.php, line: 6361
 # File: eme-options.php, line: 1921
 msgid "Booking Deleted Email"
 msgstr "Boeking verwijderd e-mail"
 #
-# File: eme-events.php, line: 6364
+# File: eme-events.php, line: 6365
 # File: eme-options.php, line: 1934
 msgid "Booking Paid Email"
 msgstr "Boeking betaald e-mail"
 #
-# File: eme-events.php, line: 6368
+# File: eme-events.php, line: 6369
 # File: eme-options.php, line: 1977
 msgid "Booking Payment Gateway Notification Email"
 msgstr "Boeking betalingsgateway-melding e-mail"
 #
-# File: eme-events.php, line: 6384
+# File: eme-events.php, line: 6385
 msgid "Enable tasks for this event"
 msgstr "Activeer taken voor dit evenement"
 #
-# File: eme-events.php, line: 6390
+# File: eme-events.php, line: 6391
 msgid "List of tasks"
 msgstr "Lijst van taken"
 #
-# File: eme-events.php, line: 6396
+# File: eme-events.php, line: 6397
 msgid "Tasks settings"
 msgstr "Taken instellingen"
 #
-# File: eme-events.php, line: 6398
+# File: eme-events.php, line: 6399
 msgid "Tasks generic settings"
 msgstr "Taken algemene instellingen"
 #
-# File: eme-events.php, line: 6402
+# File: eme-events.php, line: 6403
 msgid "Tasks form format"
 msgstr "Taken formulier opmaak"
 #
-# File: eme-events.php, line: 6410
+# File: eme-events.php, line: 6411
 msgid "Tasks Email format settings"
 msgstr "Taken e-mail formaat instellingen"
 #
-# File: eme-events.php, line: 6414
+# File: eme-events.php, line: 6415
 # File: eme-options.php, line: 2028
 msgid "Task Signup Pending Email"
 msgstr "E-mail voor goed te keuren taakaanmelding"
 #
-# File: eme-events.php, line: 6418
+# File: eme-events.php, line: 6419
 # File: eme-options.php, line: 2041
 msgid "Task Signup Made Email"
 msgstr "Taakaanmelding Gebeurd e-mail"
 #
-# File: eme-events.php, line: 6422
+# File: eme-events.php, line: 6423
 # File: eme-options.php, line: 2054
 msgid "Task Signup Reminder Email"
 msgstr "Taakaanmelding herinneringsmail"
 #
-# File: eme-events.php, line: 6426
+# File: eme-events.php, line: 6427
 # File: eme-options.php, line: 2064
 msgid "Task Signup Cancelled Email"
 msgstr "Taakaanmelding Geannuleerd e-mail"
 #
-# File: eme-events.php, line: 6430
+# File: eme-events.php, line: 6431
 # File: eme-options.php, line: 2076
 msgid "Task Signup Deleted Email"
 msgstr "Taak Inschrijving Verwijderd e-mail inhoud"
 #
-# File: eme-events.php, line: 6456
+# File: eme-events.php, line: 6457
 msgid "Save"
 msgstr "Opslaan"
 #
-# File: eme-events.php, line: 6457
-# File: eme-events.php, line: 6477
+# File: eme-events.php, line: 6458
+# File: eme-events.php, line: 6478
 msgid ""
 "If pressing save or update does not seem to be doing anything, then check "
 "all other tabs to make sure all required fields are filled out."
@@ -2757,41 +2757,41 @@ msgstr ""
 "Als op opslaan of bijwerken drukken niets lijkt te doen, controleert u alle "
 "andere tabbladen om te zien of alle verplichte velden zijn ingevuld."
 #
-# File: eme-events.php, line: 6460
+# File: eme-events.php, line: 6461
 msgid "Are you sure you want to delete this event?"
 msgstr "Weet je zeker dat je dit evenement wilt verwijderen?"
 #
-# File: eme-events.php, line: 6461
+# File: eme-events.php, line: 6462
 msgid "Are you sure you want to delete this recurrence?"
 msgstr "Weet je zeker dat je deze herhaling wilt verwijderen?"
 #
-# File: eme-events.php, line: 6463
+# File: eme-events.php, line: 6464
 msgid "Update"
 msgstr "Update"
 #
-# File: eme-events.php, line: 6465
+# File: eme-events.php, line: 6466
 msgid "Delete Event"
 msgstr "Verwijder evenement"
 #
-# File: eme-events.php, line: 6467
-# File: eme-events.php, line: 9656
+# File: eme-events.php, line: 6468
+# File: eme-events.php, line: 9657
 msgid "View"
 msgstr "Bekijk"
 #
 #. translators: Accessibility text.
-# File: eme-events.php, line: 6472
+# File: eme-events.php, line: 6473
 msgid "(opens in a new tab)"
 msgstr "(opent in een nieuwe tab)"
 #
-# File: eme-events.php, line: 6480
+# File: eme-events.php, line: 6481
 msgid "Delete Recurrence"
 msgstr "Verwijder herhaling"
 #
-# File: eme-events.php, line: 6496
-# File: eme-events.php, line: 9471
-# File: eme-events.php, line: 9540
-# File: eme-events.php, line: 9782
-# File: eme-events.php, line: 9855
+# File: eme-events.php, line: 6497
+# File: eme-events.php, line: 9472
+# File: eme-events.php, line: 9541
+# File: eme-events.php, line: 9783
+# File: eme-events.php, line: 9856
 # File: eme-mailer.php, line: 1340
 # File: eme-mailer.php, line: 2579
 # File: eme-people.php, line: 948
@@ -2799,7 +2799,7 @@ msgstr "Verwijder herhaling"
 msgid "Status"
 msgstr "Status"
 #
-# File: eme-events.php, line: 6510
+# File: eme-events.php, line: 6511
 msgid ""
 "Private events are only visible for logged in users, draft events are not "
 "visible from the front end."
@@ -2807,26 +2807,26 @@ msgstr ""
 "Privé evenementen zijn uitsluitend zichtbaar voor ingelogde gebruikers, "
 "concept-evenementen zijn niet zichtbaar in de front-end."
 #
-# File: eme-events.php, line: 6527
+# File: eme-events.php, line: 6528
 # File: eme-locations.php, line: 434
 # File: eme-widgets.php, line: 208
 # File: eme-widgets.php, line: 380
 msgid "Author"
 msgstr "Auteur"
 #
-# File: eme-events.php, line: 6530
+# File: eme-events.php, line: 6531
 msgid "Author of this event: "
 msgstr "Auteur van dit evenement: "
 #
-# File: eme-events.php, line: 6547
+# File: eme-events.php, line: 6548
 msgid "Contact Person"
 msgstr "Contactpersoon"
 #
-# File: eme-events.php, line: 6550
+# File: eme-events.php, line: 6551
 msgid "If you leave this empty, the author will be used as contact person."
 msgstr "Als u dit leeg laat, wordt de auteur als contactpersoon gebruikt."
 #
-# File: eme-events.php, line: 6563
+# File: eme-events.php, line: 6564
 msgid ""
 "Since the author is undefined for this event, any reference to the contact "
 "person (like when using #_CONTACTPERSON when sending mails), will use the "
@@ -2836,9 +2836,9 @@ msgstr ""
 "naar de contactpersoon (bv. #_CONTACTPERSON in te versturen e-mails) de info "
 "van de administrator gebruiken."
 #
-# File: eme-events.php, line: 6572
-# File: eme-events.php, line: 9808
-# File: eme-events.php, line: 10093
+# File: eme-events.php, line: 6573
+# File: eme-events.php, line: 9809
+# File: eme-events.php, line: 10094
 # File: eme-locations.php, line: 452
 # File: eme-recurrence.php, line: 583
 # File: eme-widgets.php, line: 181
@@ -2846,15 +2846,15 @@ msgstr ""
 msgid "Category"
 msgstr "Categorie"
 #
-# File: eme-events.php, line: 6599
+# File: eme-events.php, line: 6600
 msgid "WP Page template"
 msgstr "WP Paginatemplate"
 #
-# File: eme-events.php, line: 6604
+# File: eme-events.php, line: 6605
 msgid "Default Template"
 msgstr "Standaard template"
 #
-# File: eme-events.php, line: 6605
+# File: eme-events.php, line: 6606
 msgid ""
 "By default the event uses the same WP page template as the defined special "
 "events page. If your theme provides several different page templates, chose "
@@ -2864,29 +2864,29 @@ msgstr ""
 "gedefinieerde speciale evenementenpagina. Als uw thema verschillende "
 "paginatemplates biedt, kiest u desgewenst een andere."
 #
-# File: eme-events.php, line: 6624
+# File: eme-events.php, line: 6625
 msgid "The event name"
 msgstr "Naam van evenement"
 #
-# File: eme-events.php, line: 6625
+# File: eme-events.php, line: 6626
 msgid "The start date"
 msgstr "De startdatum"
 #
-# File: eme-events.php, line: 6629
-# File: eme-events.php, line: 6632
+# File: eme-events.php, line: 6630
+# File: eme-events.php, line: 6633
 # File: eme-locations.php, line: 1345
 # File: eme-locations.php, line: 1349
 # File: eme-locations.php, line: 1352
 msgid "%s is missing!"
 msgstr "%s ontbreekt!"
 #
-# File: eme-events.php, line: 6635
+# File: eme-events.php, line: 6636
 msgid ""
 "Since the event is repeated, you must specify an event date for the "
 "recurrence."
 msgstr "Omdat het evenement wordt herhaald, dien je een datum in te vullen."
 #
-# File: eme-events.php, line: 6640
+# File: eme-events.php, line: 6641
 msgid ""
 "Since the event contains multiple seat categories (multiseat), you must "
 "specify the price per category (multiprice) as well."
@@ -2894,7 +2894,7 @@ msgstr ""
 "Aangezien het evenement verschillende zitplaats-categorieën bevat "
 "(multiseat), moet u de prijs per categorie (multiprice) vermelden."
 #
-# File: eme-events.php, line: 6646
+# File: eme-events.php, line: 6647
 msgid ""
 "Since the event contains multiple seat categories (multiseat), you must "
 "specify the exact same amount of prices (multiprice) as well."
@@ -2903,7 +2903,7 @@ msgstr ""
 "(multiseat), moet u exact dezelfde hoeveelheid prijzen (multiprice) "
 "vermelden."
 #
-# File: eme-events.php, line: 6673
+# File: eme-events.php, line: 6674
 msgid ""
 "Your event seems to have multiple price categories, so you can't use #_SEATS "
 "(or #_SPACES) in your event RSVP form format. Please correct the RSVP form "
@@ -2913,15 +2913,15 @@ msgstr ""
 "(of #_SPACES) niet gebruiken in je RSVP-formulier. Corrigeer het RSVP-"
 "formulier om de notatie #_SEATS{xx} te gebruiken."
 #
-# File: eme-events.php, line: 6689
+# File: eme-events.php, line: 6690
 msgid "Please correct the RSVP form format to use #_EMAIL."
 msgstr "Corrigeer de opmaak van het RSVP-formulier om #_EMAIL te gebruiken."
 #
-# File: eme-events.php, line: 6692
+# File: eme-events.php, line: 6693
 msgid "Please correct the RSVP form format to use #_LASTNAME."
 msgstr "Corrigeer de opmaak van het RSVP-formulier om #_LASTNAME te gebruiken."
 #
-# File: eme-events.php, line: 6695
+# File: eme-events.php, line: 6696
 msgid ""
 "You have indicated you want to use a password but your event RSVP form "
 "format doesn't contain #_PASSWORD. Please correct the RSVP form format to "
@@ -2931,7 +2931,7 @@ msgstr ""
 "je evenement-RSVP-formulier bevat geen #_PASSWORD. Corrigeer de opmaak van "
 "het RSVP-formulier om #_PASSWORD te gebruiken."
 #
-# File: eme-events.php, line: 6699
+# File: eme-events.php, line: 6700
 msgid ""
 "The min amount of seats to book should not be bigger than the max amount of "
 "seats to book."
@@ -2939,7 +2939,7 @@ msgstr ""
 "Het minimum aantal te boeken plaatsen mag niet groter zijn dan het maximum "
 "aantal te boeken plaatsen."
 #
-# File: eme-events.php, line: 6706
+# File: eme-events.php, line: 6707
 msgid ""
 "If specified, the max amount of seats to book should consist of integers "
 "only."
@@ -2947,7 +2947,7 @@ msgstr ""
 "Indien gebruikt moet het maximum aantal plaatsen te boeken uit enkel "
 "getallen bestaan."
 #
-# File: eme-events.php, line: 6709
+# File: eme-events.php, line: 6710
 msgid ""
 "Since this is a multiprice event and you decided to limit the max amount of "
 "seats to book (for one booking) per price category, you must specify the "
@@ -2958,12 +2958,12 @@ msgstr ""
 "hetzelfde aantal \"max te reserveren plaatsen\" vermelden als er prijzen "
 "zijn."
 #
-# File: eme-events.php, line: 6712
+# File: eme-events.php, line: 6713
 msgid "If specified, the max amount of seats to book should be an integer."
 msgstr ""
 "Indien gebruikt moet het maximum aantal plaatsen te boeken een getal zijn."
 #
-# File: eme-events.php, line: 6719
+# File: eme-events.php, line: 6720
 msgid ""
 "If specified, the min amount of seats to book should consist of integers "
 "only."
@@ -2971,7 +2971,7 @@ msgstr ""
 "Indien gebruikt moet het minimum aantal plaatsen te boeken uit enkel "
 "getallen bestaan."
 #
-# File: eme-events.php, line: 6722
+# File: eme-events.php, line: 6723
 msgid ""
 "Since this is a multiprice event and you decided to limit the min amount of "
 "seats to book (for one booking) per price category, you must specify the "
@@ -2982,49 +2982,49 @@ msgstr ""
 "hetzelfde aantal \"min te reserveren plaatsen\" vermelden als er prijzen "
 "zijn."
 #
-# File: eme-events.php, line: 6725
+# File: eme-events.php, line: 6726
 msgid "If specified, the min amount of seats to book should be an integer."
 msgstr ""
 "Indien gebruikt moet het minimum aantal plaatsen te boeken een getal zijn."
 #
-# File: eme-events.php, line: 6737
+# File: eme-events.php, line: 6738
 # File: eme-locations.php, line: 1359
 msgid "Ach, some problems here:"
 msgstr "Helaas, er zijn hier wat problemen:"
 #
-# File: eme-events.php, line: 7020
+# File: eme-events.php, line: 7021
 msgid "Event date"
 msgstr "Datum van het evenement"
 #
-# File: eme-events.php, line: 7026
+# File: eme-events.php, line: 7027
 msgid "The event beginning and end date."
 msgstr "De begin-en einddatum van het evenement."
 #
-# File: eme-events.php, line: 7030
+# File: eme-events.php, line: 7031
 msgid "Event duration (in days)"
 msgstr "Evenement duurtijd (in dagen)"
 #
-# File: eme-events.php, line: 7031
+# File: eme-events.php, line: 7032
 msgid "day(s)"
 msgstr "dag(en)"
 #
-# File: eme-events.php, line: 7035
+# File: eme-events.php, line: 7036
 msgid "Event time"
 msgstr "Evenement tijd"
 #
-# File: eme-events.php, line: 7041
+# File: eme-events.php, line: 7042
 msgid "The time of the event beginning and end"
 msgstr "De begin- en eindtijd van het evenement"
 #
-# File: eme-events.php, line: 7045
+# File: eme-events.php, line: 7046
 msgid "This event lasts all day"
 msgstr "Dit evenement duurt de hele dag"
 #
-# File: eme-events.php, line: 7051
+# File: eme-events.php, line: 7052
 msgid "Check if your event happens more than once."
 msgstr "Vink aan als je evenement meer dan eens plaatsvindt."
 #
-# File: eme-events.php, line: 7055
+# File: eme-events.php, line: 7056
 msgid ""
 "Bookings found for this event, so not possible to convert to a recurring "
 "event."
@@ -3032,95 +3032,95 @@ msgstr ""
 "Boekingen gevonden voor dit evenement, dus niet om te zetten naar een "
 "terugkerend evenement."
 #
-# File: eme-events.php, line: 7065
+# File: eme-events.php, line: 7066
 # File: eme-widgets.php, line: 165
 msgid "Daily"
 msgstr "Dagelijks"
 #
-# File: eme-events.php, line: 7066
+# File: eme-events.php, line: 7067
 msgid "Weekly"
 msgstr "Wekelijks"
 #
-# File: eme-events.php, line: 7067
+# File: eme-events.php, line: 7068
 # File: eme-widgets.php, line: 166
 msgid "Monthly"
 msgstr "Maandelijks"
 #
-# File: eme-events.php, line: 7068
+# File: eme-events.php, line: 7069
 msgid "Specific days"
 msgstr "Specifieke dagen"
 #
-# File: eme-events.php, line: 7081
+# File: eme-events.php, line: 7082
 msgid "first"
 msgstr "eerste"
 #
-# File: eme-events.php, line: 7082
+# File: eme-events.php, line: 7083
 msgid "second"
 msgstr "tweede"
 #
-# File: eme-events.php, line: 7083
+# File: eme-events.php, line: 7084
 msgid "third"
 msgstr "derde"
 #
-# File: eme-events.php, line: 7084
+# File: eme-events.php, line: 7085
 msgid "fourth"
 msgstr "vierde"
 #
-# File: eme-events.php, line: 7085
+# File: eme-events.php, line: 7086
 msgid "fifth"
 msgstr "vijfde"
 #
-# File: eme-events.php, line: 7086
+# File: eme-events.php, line: 7087
 msgid "last"
 msgstr "laatste"
 #
-# File: eme-events.php, line: 7087
+# File: eme-events.php, line: 7088
 msgid "Start day"
 msgstr "Start dag"
 #
-# File: eme-events.php, line: 7098
+# File: eme-events.php, line: 7099
 msgid "Recurrence dates"
 msgstr "Terugkerende datums"
 #
-# File: eme-events.php, line: 7104
+# File: eme-events.php, line: 7105
 msgid "The recurrence beginning and end date."
 msgstr "De begin-en einddatum van het terugkerend evenement."
 #
-# File: eme-events.php, line: 7107
+# File: eme-events.php, line: 7108
 msgid "Select all the dates you want the event to begin on."
 msgstr "Kies alle dagen waarop u wenst dat het evenement begint."
 #
-# File: eme-events.php, line: 7112
+# File: eme-events.php, line: 7113
 msgid "Frequency:"
 msgstr "Frequency:"
 #
-# File: eme-events.php, line: 7118
-# File: eme-events.php, line: 7139
+# File: eme-events.php, line: 7119
+# File: eme-events.php, line: 7140
 msgid "Every"
 msgstr "Iedere"
 #
-# File: eme-events.php, line: 7126
+# File: eme-events.php, line: 7127
 # File: eme-recurrence.php, line: 552
 msgid "day"
 msgstr "dag"
 #
-# File: eme-events.php, line: 7128
+# File: eme-events.php, line: 7129
 msgid "week"
 msgstr "week"
 #
-# File: eme-events.php, line: 7129
+# File: eme-events.php, line: 7130
 msgid "weeks"
 msgstr "weken"
 #
-# File: eme-events.php, line: 7130
+# File: eme-events.php, line: 7131
 msgid "month"
 msgstr "maand"
 #
-# File: eme-events.php, line: 7131
+# File: eme-events.php, line: 7132
 msgid "months"
 msgstr "maanden"
 #
-# File: eme-events.php, line: 7136
+# File: eme-events.php, line: 7137
 msgid ""
 "If you leave this empty, the recurrence start date will be used as a "
 "reference."
@@ -3128,11 +3128,11 @@ msgstr ""
 "Als je dit leeg laat zal de startdatum van het evenement gebruikt worden als "
 "referentie."
 #
-# File: eme-events.php, line: 7146
+# File: eme-events.php, line: 7147
 msgid "Day of month"
 msgstr "Dag van de maand"
 #
-# File: eme-events.php, line: 7148
+# File: eme-events.php, line: 7149
 msgid ""
 "If you use \"Start day\" as day of the month, the recurrence start date will "
 "be used as a reference."
@@ -3140,95 +3140,95 @@ msgstr ""
 "Als je \"Startdag\" gebruikt als dag van de maand, zal de startdatum van de "
 "herhaling gebruikt worden als referentie."
 #
-# File: eme-events.php, line: 7155
+# File: eme-events.php, line: 7156
 msgid "Holidays: "
 msgstr "Vakanties: "
 #
-# File: eme-events.php, line: 7160
+# File: eme-events.php, line: 7161
 msgid ""
 "No events will be created on days matching an entry in the holidays list"
 msgstr ""
 "Er worden geen evenementen gemaakt op dagen die overeenkomen met een "
 "vermelding in de vakantielijst"
 #
-# File: eme-events.php, line: 7181
+# File: eme-events.php, line: 7182
 msgid "Single Event Title"
 msgstr "Enkel evenement Titel"
 #
-# File: eme-events.php, line: 7183
-# File: eme-events.php, line: 7216
-# File: eme-events.php, line: 7255
-# File: eme-events.php, line: 7277
-# File: eme-events.php, line: 7323
-# File: eme-events.php, line: 7360
-# File: eme-events.php, line: 7382
-# File: eme-events.php, line: 7408
-# File: eme-events.php, line: 7430
-# File: eme-events.php, line: 7468
-# File: eme-events.php, line: 7492
-# File: eme-events.php, line: 7514
-# File: eme-events.php, line: 7550
-# File: eme-events.php, line: 7572
-# File: eme-events.php, line: 7598
-# File: eme-events.php, line: 7620
-# File: eme-events.php, line: 7658
-# File: eme-events.php, line: 7676
-# File: eme-events.php, line: 7698
-# File: eme-events.php, line: 7728
-# File: eme-events.php, line: 7750
-# File: eme-events.php, line: 7769
-# File: eme-events.php, line: 7791
-# File: eme-events.php, line: 7821
-# File: eme-events.php, line: 7843
-# File: eme-events.php, line: 7869
-# File: eme-events.php, line: 7891
-# File: eme-events.php, line: 7927
-# File: eme-events.php, line: 7949
-# File: eme-events.php, line: 7975
-# File: eme-events.php, line: 7997
-# File: eme-events.php, line: 8034
-# File: eme-events.php, line: 8051
-# File: eme-events.php, line: 8073
-# File: eme-events.php, line: 8102
-# File: eme-events.php, line: 8132
+# File: eme-events.php, line: 7184
+# File: eme-events.php, line: 7217
+# File: eme-events.php, line: 7256
+# File: eme-events.php, line: 7278
+# File: eme-events.php, line: 7324
+# File: eme-events.php, line: 7361
+# File: eme-events.php, line: 7383
+# File: eme-events.php, line: 7409
+# File: eme-events.php, line: 7431
+# File: eme-events.php, line: 7469
+# File: eme-events.php, line: 7493
+# File: eme-events.php, line: 7515
+# File: eme-events.php, line: 7551
+# File: eme-events.php, line: 7573
+# File: eme-events.php, line: 7599
+# File: eme-events.php, line: 7621
+# File: eme-events.php, line: 7659
+# File: eme-events.php, line: 7677
+# File: eme-events.php, line: 7699
+# File: eme-events.php, line: 7729
+# File: eme-events.php, line: 7751
+# File: eme-events.php, line: 7770
+# File: eme-events.php, line: 7792
+# File: eme-events.php, line: 7822
+# File: eme-events.php, line: 7844
+# File: eme-events.php, line: 7870
+# File: eme-events.php, line: 7892
+# File: eme-events.php, line: 7928
+# File: eme-events.php, line: 7950
+# File: eme-events.php, line: 7976
+# File: eme-events.php, line: 7998
+# File: eme-events.php, line: 8035
+# File: eme-events.php, line: 8052
+# File: eme-events.php, line: 8074
+# File: eme-events.php, line: 8103
+# File: eme-events.php, line: 8133
 msgid "Only fill this in if you want to override the default settings."
 msgstr "Vul dit alleen in als je standaard-instellingen wilt overschrijven."
 #
-# File: eme-events.php, line: 7186
-# File: eme-events.php, line: 7221
-# File: eme-events.php, line: 7258
-# File: eme-events.php, line: 7280
-# File: eme-events.php, line: 7326
-# File: eme-events.php, line: 7363
-# File: eme-events.php, line: 7385
-# File: eme-events.php, line: 7411
-# File: eme-events.php, line: 7433
-# File: eme-events.php, line: 7495
-# File: eme-events.php, line: 7517
-# File: eme-events.php, line: 7553
-# File: eme-events.php, line: 7575
-# File: eme-events.php, line: 7601
-# File: eme-events.php, line: 7623
-# File: eme-events.php, line: 7679
-# File: eme-events.php, line: 7701
-# File: eme-events.php, line: 7731
-# File: eme-events.php, line: 7753
-# File: eme-events.php, line: 7772
-# File: eme-events.php, line: 7794
-# File: eme-events.php, line: 7824
-# File: eme-events.php, line: 7846
-# File: eme-events.php, line: 7872
-# File: eme-events.php, line: 7894
-# File: eme-events.php, line: 7930
-# File: eme-events.php, line: 7952
-# File: eme-events.php, line: 7978
-# File: eme-events.php, line: 8000
-# File: eme-events.php, line: 8054
-# File: eme-events.php, line: 8076
-# File: eme-events.php, line: 8105
-# File: eme-events.php, line: 8135
-# File: eme-events.php, line: 8511
-# File: eme-events.php, line: 8526
+# File: eme-events.php, line: 7187
+# File: eme-events.php, line: 7222
+# File: eme-events.php, line: 7259
+# File: eme-events.php, line: 7281
+# File: eme-events.php, line: 7327
+# File: eme-events.php, line: 7364
+# File: eme-events.php, line: 7386
+# File: eme-events.php, line: 7412
+# File: eme-events.php, line: 7434
+# File: eme-events.php, line: 7496
+# File: eme-events.php, line: 7518
+# File: eme-events.php, line: 7554
+# File: eme-events.php, line: 7576
+# File: eme-events.php, line: 7602
+# File: eme-events.php, line: 7624
+# File: eme-events.php, line: 7680
+# File: eme-events.php, line: 7702
+# File: eme-events.php, line: 7732
+# File: eme-events.php, line: 7754
+# File: eme-events.php, line: 7773
+# File: eme-events.php, line: 7795
+# File: eme-events.php, line: 7825
+# File: eme-events.php, line: 7847
+# File: eme-events.php, line: 7873
+# File: eme-events.php, line: 7895
+# File: eme-events.php, line: 7931
+# File: eme-events.php, line: 7953
+# File: eme-events.php, line: 7979
+# File: eme-events.php, line: 8001
+# File: eme-events.php, line: 8055
+# File: eme-events.php, line: 8077
+# File: eme-events.php, line: 8106
+# File: eme-events.php, line: 8136
+# File: eme-events.php, line: 8512
+# File: eme-events.php, line: 8527
 # File: eme-mailer.php, line: 2223
 # File: eme-mailer.php, line: 2233
 # File: eme-mailer.php, line: 2413
@@ -3236,41 +3236,41 @@ msgstr "Vul dit alleen in als je standaard-instellingen wilt overschrijven."
 msgid "Either choose from a template: "
 msgstr "Ofwel kies uit een template: "
 #
-# File: eme-events.php, line: 7190
-# File: eme-events.php, line: 7225
-# File: eme-events.php, line: 7262
-# File: eme-events.php, line: 7284
-# File: eme-events.php, line: 7330
-# File: eme-events.php, line: 7367
-# File: eme-events.php, line: 7389
-# File: eme-events.php, line: 7415
-# File: eme-events.php, line: 7437
-# File: eme-events.php, line: 7499
-# File: eme-events.php, line: 7521
-# File: eme-events.php, line: 7557
-# File: eme-events.php, line: 7579
-# File: eme-events.php, line: 7605
-# File: eme-events.php, line: 7627
-# File: eme-events.php, line: 7683
-# File: eme-events.php, line: 7705
-# File: eme-events.php, line: 7735
-# File: eme-events.php, line: 7757
-# File: eme-events.php, line: 7776
-# File: eme-events.php, line: 7798
-# File: eme-events.php, line: 7828
-# File: eme-events.php, line: 7850
-# File: eme-events.php, line: 7876
-# File: eme-events.php, line: 7898
-# File: eme-events.php, line: 7934
-# File: eme-events.php, line: 7956
-# File: eme-events.php, line: 7982
-# File: eme-events.php, line: 8004
-# File: eme-events.php, line: 8058
-# File: eme-events.php, line: 8080
-# File: eme-events.php, line: 8109
-# File: eme-events.php, line: 8139
-# File: eme-events.php, line: 8515
-# File: eme-events.php, line: 8530
+# File: eme-events.php, line: 7191
+# File: eme-events.php, line: 7226
+# File: eme-events.php, line: 7263
+# File: eme-events.php, line: 7285
+# File: eme-events.php, line: 7331
+# File: eme-events.php, line: 7368
+# File: eme-events.php, line: 7390
+# File: eme-events.php, line: 7416
+# File: eme-events.php, line: 7438
+# File: eme-events.php, line: 7500
+# File: eme-events.php, line: 7522
+# File: eme-events.php, line: 7558
+# File: eme-events.php, line: 7580
+# File: eme-events.php, line: 7606
+# File: eme-events.php, line: 7628
+# File: eme-events.php, line: 7684
+# File: eme-events.php, line: 7706
+# File: eme-events.php, line: 7736
+# File: eme-events.php, line: 7758
+# File: eme-events.php, line: 7777
+# File: eme-events.php, line: 7799
+# File: eme-events.php, line: 7829
+# File: eme-events.php, line: 7851
+# File: eme-events.php, line: 7877
+# File: eme-events.php, line: 7899
+# File: eme-events.php, line: 7935
+# File: eme-events.php, line: 7957
+# File: eme-events.php, line: 7983
+# File: eme-events.php, line: 8005
+# File: eme-events.php, line: 8059
+# File: eme-events.php, line: 8081
+# File: eme-events.php, line: 8110
+# File: eme-events.php, line: 8140
+# File: eme-events.php, line: 8516
+# File: eme-events.php, line: 8531
 # File: eme-members.php, line: 1878
 # File: eme-members.php, line: 1910
 # File: eme-members.php, line: 1928
@@ -3296,16 +3296,16 @@ msgstr ""
 "Of voer zelf een in (als hier iets wordt ingevoerd, gaat dat voor het "
 "geselecteerde template): "
 #
-# File: eme-events.php, line: 7211
+# File: eme-events.php, line: 7212
 msgid "Single Event"
 msgstr "Enkel evenement"
 #
-# File: eme-events.php, line: 7214
+# File: eme-events.php, line: 7215
 msgid "The format of the single event page."
 msgstr ""
 "Opmaak van de  evenementenpagina als een enkel evenement getoond wordt."
 #
-# File: eme-events.php, line: 7218
+# File: eme-events.php, line: 7219
 msgid ""
 "This defines the layout of your event (where the event description goes, the "
 "RSVP form, the map, ... ."
@@ -3313,9 +3313,9 @@ msgstr ""
 "Dit bepaalt de lay-out van uw evenement (waar de evenementbeschrijving komt "
 "te staan, het RSVP-formulier, de kaart, ...."
 #
-# File: eme-events.php, line: 7233
-# File: eme-events.php, line: 8291
-# File: eme-events.php, line: 8356
+# File: eme-events.php, line: 7234
+# File: eme-events.php, line: 8292
+# File: eme-events.php, line: 8357
 # File: eme-locations.php, line: 659
 # File: eme-locations.php, line: 755
 # File: eme-mailer.php, line: 2245
@@ -3329,11 +3329,11 @@ msgstr ""
 "Je account heeft de mogelijkheid om hier onbeperkte HTML inhoud te plaatsen, "
 "behalve javascript."
 #
-# File: eme-events.php, line: 7252
+# File: eme-events.php, line: 7253
 msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr "Contactpersoon betalingsgateway-melding e-mail onderwerp"
 #
-# File: eme-events.php, line: 7253
+# File: eme-events.php, line: 7254
 # File: eme-members.php, line: 2441
 # File: eme-options.php, line: 1984
 msgid ""
@@ -3343,11 +3343,11 @@ msgstr ""
 "Het onderwerp van de e-mail die naar de contactpersoon wordt verzonden "
 "wanneer een betalingskennisgeving via een betalingsportaal wordt ontvangen."
 #
-# File: eme-events.php, line: 7273
+# File: eme-events.php, line: 7274
 msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr "Contactpersoon betalingsgateway-melding e-mail inhoud"
 #
-# File: eme-events.php, line: 7275
+# File: eme-events.php, line: 7276
 # File: eme-members.php, line: 2448
 # File: eme-options.php, line: 1985
 msgid ""
@@ -3357,12 +3357,12 @@ msgstr ""
 "De inhoud van de e-mail die naar de contactpersoon wordt verzonden wanneer "
 "een betalingskennisgeving via een betalingsportaal wordt ontvangen."
 #
-# File: eme-events.php, line: 7299
+# File: eme-events.php, line: 7300
 # File: eme-members.php, line: 2091
 msgid "Dynamic data check on every field"
 msgstr "Dynamische gegevenscontrole voor elk veld"
 #
-# File: eme-events.php, line: 7301
+# File: eme-events.php, line: 7302
 msgid ""
 "By default the dynamic data check only happens for the fields mentioned in "
 "your dynamic data condition if those are present in your RSVP form "
@@ -3377,7 +3377,7 @@ msgstr ""
 "gedefinieerd. Het kleine nadeel is dat er meer verzoeken aan de backend "
 "worden gedaan, dus gebruik deze alleen wanneer dit absoluut noodzakelijk is."
 #
-# File: eme-events.php, line: 7302
+# File: eme-events.php, line: 7303
 msgid ""
 "If your event uses a discount of type code and you want the dynamic price "
 "(using #_DYNAMICPRICE) to be updated taking that discount into account too, "
@@ -3387,12 +3387,12 @@ msgstr ""
 "prijs (met #_DYNAMICPRICE) ook met die korting wordt bijgewerkt, vink dan "
 "ook deze optie aan."
 #
-# File: eme-events.php, line: 7319
+# File: eme-events.php, line: 7320
 # File: eme-options.php, line: 1629
 msgid "Booking recorded message"
 msgstr "Reservering gelukt boodschap"
 #
-# File: eme-events.php, line: 7321
+# File: eme-events.php, line: 7322
 # File: eme-options.php, line: 1629
 msgid ""
 "The text (html allowed) shown to the user when the booking has been made "
@@ -3401,7 +3401,7 @@ msgstr ""
 "De aan de gebruiker getoonde tekst (html toegestaan) als de reservering "
 "gelukt is."
 #
-# File: eme-events.php, line: 7349
+# File: eme-events.php, line: 7350
 # File: eme-options.php, line: 1795
 msgid ""
 "When an event is configured to auto-approve bookings after payment and you "
@@ -3415,10 +3415,10 @@ msgstr ""
 "maar wordt de e-mail met betrekking tot een te betalen boeking verzonden "
 "wanneer een lopende boeking is gemarkeerd als betaald."
 #
-# File: eme-events.php, line: 7351
-# File: eme-events.php, line: 7482
-# File: eme-events.php, line: 7540
-# File: eme-events.php, line: 7917
+# File: eme-events.php, line: 7352
+# File: eme-events.php, line: 7483
+# File: eme-events.php, line: 7541
+# File: eme-events.php, line: 7918
 # File: eme-options.php, line: 1791
 # File: eme-options.php, line: 1836
 # File: eme-options.php, line: 1883
@@ -3434,7 +3434,7 @@ msgstr ""
 "RSVP-meldingen zijn niet geactiveerd, dus deze mails worden niet verzonden. "
 "Ga naar de Mail-instellingen om dit desgewenst te activeren."
 #
-# File: eme-events.php, line: 7353
+# File: eme-events.php, line: 7354
 # File: eme-options.php, line: 1793
 msgid ""
 "RSVP notifications are not activated for bookings made or approved, so these "
@@ -3444,12 +3444,12 @@ msgstr ""
 "boekingen, dus deze mails worden niet verzonden. Ga naar de Mail-"
 "instellingen om dit desgewenst te activeren."
 #
-# File: eme-events.php, line: 7357
+# File: eme-events.php, line: 7358
 # File: eme-options.php, line: 1799
 msgid "Booking Made Email Subject"
 msgstr "Boeking gemaakt e-mail onderwerp"
 #
-# File: eme-events.php, line: 7358
+# File: eme-events.php, line: 7359
 # File: eme-options.php, line: 1799
 msgid ""
 "The subject of the email sent to the respondent when a booking is made (not "
@@ -3458,12 +3458,12 @@ msgstr ""
 "Het onderwerp van de e-mail verstuurd naar de aanmelder als een boeking "
 "gemaakt (niet nog goed te keuren) of goedkeurd is."
 #
-# File: eme-events.php, line: 7379
+# File: eme-events.php, line: 7380
 # File: eme-options.php, line: 1800
 msgid "Booking Made Email Body"
 msgstr "Boeking gemaakt e-mail inhoud"
 #
-# File: eme-events.php, line: 7380
+# File: eme-events.php, line: 7381
 # File: eme-options.php, line: 1800
 msgid ""
 "The body of the email sent to the respondent when a booking is made (not "
@@ -3472,12 +3472,12 @@ msgstr ""
 "De inhoud van de e-mail verstuurd naar de aanmelder als een boeking gemaakt "
 "(niet nog goed te keuren) of goedkeurd is."
 #
-# File: eme-events.php, line: 7405
+# File: eme-events.php, line: 7406
 # File: eme-options.php, line: 1801
 msgid "Contact Person Booking Made Email Subject"
 msgstr "Contactpersoon boeking gemaakt e-mail onderwerp"
 #
-# File: eme-events.php, line: 7406
+# File: eme-events.php, line: 7407
 # File: eme-options.php, line: 1801
 msgid ""
 "The subject of the email which will be sent to the contact person when a "
@@ -3486,12 +3486,12 @@ msgstr ""
 "Het onderwerp van de e-mail die zal gestuurd worden naar de contactpersoon "
 "als een boeking gemaakt is."
 #
-# File: eme-events.php, line: 7427
+# File: eme-events.php, line: 7428
 # File: eme-options.php, line: 1802
 msgid "Contact Person Booking Made Email Body"
 msgstr "Contactpersoon boeking gemaakt e-mail inhoud"
 #
-# File: eme-events.php, line: 7428
+# File: eme-events.php, line: 7429
 # File: eme-options.php, line: 1802
 msgid ""
 "The body of the email which will be sent to the contact person when a "
@@ -3500,17 +3500,17 @@ msgstr ""
 "De inhoud van de e-mail die zal gestuurd worden naar de contactpersoon als "
 "een boeking gemaakt is."
 #
-# File: eme-events.php, line: 7446
+# File: eme-events.php, line: 7447
 # File: eme-options.php, line: 1805
 msgid "Booking made mail attachments"
 msgstr "Boeking gemaakt e-mail bijlagen"
 #
-# File: eme-events.php, line: 7465
-# File: eme-events.php, line: 7655
-# File: eme-events.php, line: 8031
-# File: eme-events.php, line: 9422
-# File: eme-events.php, line: 9785
-# File: eme-events.php, line: 9860
+# File: eme-events.php, line: 7466
+# File: eme-events.php, line: 7656
+# File: eme-events.php, line: 8032
+# File: eme-events.php, line: 9423
+# File: eme-events.php, line: 9786
+# File: eme-events.php, line: 9861
 # File: eme-mailer.php, line: 2270
 # File: eme-mailer.php, line: 2448
 # File: eme-members.php, line: 2159
@@ -3521,9 +3521,9 @@ msgstr "Boeking gemaakt e-mail bijlagen"
 msgid "Add attachments"
 msgstr "Voeg bijlagen toe"
 #
-# File: eme-events.php, line: 7466
-# File: eme-events.php, line: 7656
-# File: eme-events.php, line: 8032
+# File: eme-events.php, line: 7467
+# File: eme-events.php, line: 7657
+# File: eme-events.php, line: 8033
 # File: eme-mailer.php, line: 2271
 # File: eme-mailer.php, line: 2449
 # File: eme-members.php, line: 2160
@@ -3534,16 +3534,16 @@ msgstr "Voeg bijlagen toe"
 msgid "Remove attachments"
 msgstr "Verwijder bijlagen"
 #
-# File: eme-events.php, line: 7467
+# File: eme-events.php, line: 7468
 # File: eme-options.php, line: 1827
 msgid "Optionally add attachments to the mail when a new booking is made."
 msgstr ""
 "Voeg optioneel bijlagen toe aan de e-mail wanneer een nieuwe boeking gemaakt "
 "wordt."
 #
-# File: eme-events.php, line: 7484
-# File: eme-events.php, line: 7542
-# File: eme-events.php, line: 8577
+# File: eme-events.php, line: 7485
+# File: eme-events.php, line: 7543
+# File: eme-events.php, line: 8578
 # File: eme-options.php, line: 1838
 msgid ""
 "RSVP notifications are not activated for pending bookings, so these mails "
@@ -3553,12 +3553,12 @@ msgstr ""
 "mails worden niet verzonden. Ga naar de Mail-instellingen om dit desgewenst "
 "te activeren."
 #
-# File: eme-events.php, line: 7489
+# File: eme-events.php, line: 7490
 # File: eme-options.php, line: 1843
 msgid "Booking Awaiting User Confirmation Email Subject"
 msgstr "Boeking Wachtend op Gebruiker Bevestiging E-mail Onderwerp"
 #
-# File: eme-events.php, line: 7490
+# File: eme-events.php, line: 7491
 # File: eme-options.php, line: 1843
 msgid ""
 "The subject of the email which will be sent to the respondent if the booking "
@@ -3567,12 +3567,12 @@ msgstr ""
 "Het onderwerp van de e-mail die zal worden verstuurd naar de aanmelder als "
 "de boeking gebruikersbevestiging vereist."
 #
-# File: eme-events.php, line: 7510
+# File: eme-events.php, line: 7511
 # File: eme-options.php, line: 1844
 msgid "Booking Awaiting User Confirmation Email Body"
 msgstr "Boeking Wachtend op Gebruiker Bevestiging E-mail inhoud"
 #
-# File: eme-events.php, line: 7512
+# File: eme-events.php, line: 7513
 # File: eme-options.php, line: 1844
 msgid ""
 "The body of the email which will be sent to the respondent if the booking "
@@ -3581,12 +3581,12 @@ msgstr ""
 "De inhoud van de e-mail die zal worden verstuurd naar de aanmelder als de "
 "boeking gebruikersbevestiging vereist."
 #
-# File: eme-events.php, line: 7547
+# File: eme-events.php, line: 7548
 # File: eme-options.php, line: 1845
 msgid "Booking Pending Email Subject"
 msgstr "Goed te keuren boeking e-mail onderwerp"
 #
-# File: eme-events.php, line: 7548
+# File: eme-events.php, line: 7549
 # File: eme-options.php, line: 1845
 msgid ""
 "The subject of the email which will be sent to the respondent if the booking "
@@ -3595,12 +3595,12 @@ msgstr ""
 "Het onderwerp van de e-mail die naar de aanmelder gestuurd wordt als de "
 "boeking moet goedgekeurd worden."
 #
-# File: eme-events.php, line: 7568
+# File: eme-events.php, line: 7569
 # File: eme-options.php, line: 1846
 msgid "Booking Pending Email Body"
 msgstr "Goed te keuren boeking e-mail inhoud"
 #
-# File: eme-events.php, line: 7570
+# File: eme-events.php, line: 7571
 # File: eme-options.php, line: 1846
 msgid ""
 "The body of the email which will be sent to the respondent if the booking "
@@ -3609,12 +3609,12 @@ msgstr ""
 "De inhoud van de e-mail die naar de aanmelder gestuurd wordt als de boeking "
 "moet goedgekeurd worden."
 #
-# File: eme-events.php, line: 7595
+# File: eme-events.php, line: 7596
 # File: eme-options.php, line: 1847
 msgid "Contact Person Pending Booking Email Subject"
 msgstr "Contactpersoon goed te keuren boeking e-mail onderwerp"
 #
-# File: eme-events.php, line: 7596
+# File: eme-events.php, line: 7597
 # File: eme-options.php, line: 1847
 msgid ""
 "The subject of the email which will be sent to the contact person if a "
@@ -3623,12 +3623,12 @@ msgstr ""
 "Het onderwerp van de e-mail die verstuurd wordt naar de contactpersoon als "
 "een boeking goedkeuring vereist."
 #
-# File: eme-events.php, line: 7617
+# File: eme-events.php, line: 7618
 # File: eme-options.php, line: 1848
 msgid "Contact Person Pending Booking Email Body"
 msgstr "Contactpersoon goed te keuren boeking e-mail inhoud"
 #
-# File: eme-events.php, line: 7618
+# File: eme-events.php, line: 7619
 # File: eme-options.php, line: 1848
 msgid ""
 "The body of the email which will be sent to the contact person if a booking "
@@ -3637,23 +3637,23 @@ msgstr ""
 "De inhoud van de e-mail die verstuurd wordt naar de contactpersoon als een "
 "boeking goedkeuring vereist."
 #
-# File: eme-events.php, line: 7636
+# File: eme-events.php, line: 7637
 # File: eme-options.php, line: 1851
 msgid "Pending mail attachments"
 msgstr "Goed te keuren e-mail bijlagen"
 #
-# File: eme-events.php, line: 7657
+# File: eme-events.php, line: 7658
 # File: eme-options.php, line: 1873
 msgid "Optionally add attachments to the mail when a booking is approved."
 msgstr ""
 "Voeg optioneel bijlagen toe aan de e-mail wanneer een boeking goedgekeurd is."
 #
-# File: eme-events.php, line: 7673
+# File: eme-events.php, line: 7674
 # File: eme-options.php, line: 1885
 msgid "Booking Updated Email Subject"
 msgstr "Boeking aangepast e-mail onderwerp"
 #
-# File: eme-events.php, line: 7674
+# File: eme-events.php, line: 7675
 # File: eme-options.php, line: 1885
 msgid ""
 "The subject of the email which will be sent to the respondent if the booking "
@@ -3662,12 +3662,12 @@ msgstr ""
 "Het onderwerp van de e-mail die zal verstuurd worden naar de aanmelder als "
 "de boeking aangepast is door een beheerder."
 #
-# File: eme-events.php, line: 7695
+# File: eme-events.php, line: 7696
 # File: eme-options.php, line: 1886
 msgid "Booking Updated Email Body"
 msgstr "Boeking aangepast e-mail inhoud"
 #
-# File: eme-events.php, line: 7696
+# File: eme-events.php, line: 7697
 # File: eme-options.php, line: 1886
 msgid ""
 "The body of the email which will be sent to the respondent if the booking "
@@ -3676,12 +3676,12 @@ msgstr ""
 "Opmaal van de inhoud van de e-mail die naar de aanmelder gestuurd wordt als "
 "de boeking bijgewerkt is door een admin."
 #
-# File: eme-events.php, line: 7725
+# File: eme-events.php, line: 7726
 # File: eme-options.php, line: 1898
 msgid "Pending Booking Reminder Email Subject"
 msgstr "Goed te keuren boeking herinneringsmail onderwerp"
 #
-# File: eme-events.php, line: 7726
+# File: eme-events.php, line: 7727
 # File: eme-options.php, line: 1898
 msgid ""
 "The subject of the email which will be sent to the respondent as a reminder "
@@ -3690,12 +3690,12 @@ msgstr ""
 "Het onderwerp van de e-mail die zal worden verstuurd naar de aanmelder als "
 "herinnering voor een goed te keuren boeking."
 #
-# File: eme-events.php, line: 7747
+# File: eme-events.php, line: 7748
 # File: eme-options.php, line: 1899
 msgid "Pending Booking Reminder Email Body"
 msgstr "Goed te keuren boeking herinneringsmail inhoud"
 #
-# File: eme-events.php, line: 7748
+# File: eme-events.php, line: 7749
 # File: eme-options.php, line: 1899
 msgid ""
 "The body of the email which will be sent to the respondent as a reminder of "
@@ -3704,12 +3704,12 @@ msgstr ""
 "De inhoud van de e-mail die zal worden verstuurd naar de aanmelder als "
 "herinnering voor een goed te keuren boeking."
 #
-# File: eme-events.php, line: 7766
+# File: eme-events.php, line: 7767
 # File: eme-options.php, line: 1900
 msgid "Accepted Booking Reminder Email Subject"
 msgstr "Goedgekeurde boeking herinneringsmail onderwerp"
 #
-# File: eme-events.php, line: 7767
+# File: eme-events.php, line: 7768
 # File: eme-options.php, line: 1900
 msgid ""
 "The subject of the email which will be sent to the respondent as a reminder "
@@ -3718,12 +3718,12 @@ msgstr ""
 "Het onderwerp van de e-mail die zal worden verstuurd naar de aanmelder als "
 "herinnering voor een goedgekeurde boeking."
 #
-# File: eme-events.php, line: 7788
+# File: eme-events.php, line: 7789
 # File: eme-options.php, line: 1901
 msgid "Accepted Booking Reminder Email Body"
 msgstr "Goedgekeurde boeking herinneringsmail inhoud"
 #
-# File: eme-events.php, line: 7789
+# File: eme-events.php, line: 7790
 # File: eme-options.php, line: 1901
 msgid ""
 "The body of the email which will be sent to the respondent as a reminder of "
@@ -3732,12 +3732,12 @@ msgstr ""
 "De inhoud van de e-mail die zal worden verstuurd naar de aanmelder als "
 "herinnering voor een goedgekeurde boeking."
 #
-# File: eme-events.php, line: 7818
+# File: eme-events.php, line: 7819
 # File: eme-options.php, line: 1913
 msgid "Booking Cancelled Email Subject"
 msgstr "Boeking geannuleerd e-mail onderwerp"
 #
-# File: eme-events.php, line: 7819
+# File: eme-events.php, line: 7820
 # File: eme-options.php, line: 1913
 msgid ""
 "The subject of the email which will be sent to the respondent when he "
@@ -3746,12 +3746,12 @@ msgstr ""
 "Het onderwerp van de e-mail die zal verstuurd worden naar de aanmelder als "
 "hij al zijn boekingen voor een evenement annuleert."
 #
-# File: eme-events.php, line: 7840
+# File: eme-events.php, line: 7841
 # File: eme-options.php, line: 1914
 msgid "Booking Cancelled Email Body"
 msgstr "Boeking geannuleerd e-mail inhoud"
 #
-# File: eme-events.php, line: 7841
+# File: eme-events.php, line: 7842
 # File: eme-options.php, line: 1914
 msgid ""
 "The body of the email which will be sent to the respondent when he cancels "
@@ -3760,12 +3760,12 @@ msgstr ""
 "De inhoud van de e-mail die zal verstuurd worden naar de aanmelder als hij "
 "al zijn boekingen voor een evenement annuleert."
 #
-# File: eme-events.php, line: 7866
+# File: eme-events.php, line: 7867
 # File: eme-options.php, line: 1915
 msgid "Contact Person Cancelled Booking Email Subject"
 msgstr "Contactpersoon geannuleerde boeking e-mail onderwerp"
 #
-# File: eme-events.php, line: 7867
+# File: eme-events.php, line: 7868
 # File: eme-options.php, line: 1915
 msgid ""
 "The subject of the email which will be sent to the contact person when a "
@@ -3774,12 +3774,12 @@ msgstr ""
 "Het onderwerp van de e-mail die verstuurd wordt naar de contactpersoon als "
 "een persoon al zijn boekingen voor een evenenement annuleert."
 #
-# File: eme-events.php, line: 7888
+# File: eme-events.php, line: 7889
 # File: eme-options.php, line: 1916
 msgid "Contact Person Cancelled Booking Email Body"
 msgstr "Contactpersoon geannuleerde boeking e-mail inhoud"
 #
-# File: eme-events.php, line: 7889
+# File: eme-events.php, line: 7890
 # File: eme-options.php, line: 1916
 msgid ""
 "The body of the email which will be sent to the contact person when a "
@@ -3788,7 +3788,7 @@ msgstr ""
 "De inhoud van de e-mail die verstuurd wordt naar de contactpersoon als een "
 "persoon al zijn boekingen voor een evenenement annuleert."
 #
-# File: eme-events.php, line: 7919
+# File: eme-events.php, line: 7920
 # File: eme-options.php, line: 1940
 msgid ""
 "RSVP notifications are not activated for paid bookings, so these mails will "
@@ -3798,12 +3798,12 @@ msgstr ""
 "worden niet verzonden. Ga naar de Mail-instellingen om dit desgewenst te "
 "activeren."
 #
-# File: eme-events.php, line: 7924
+# File: eme-events.php, line: 7925
 # File: eme-options.php, line: 1945
 msgid "Booking Paid Email Subject"
 msgstr "Boeking betaald e-mail onderwerp"
 #
-# File: eme-events.php, line: 7925
+# File: eme-events.php, line: 7926
 # File: eme-options.php, line: 1945
 msgid ""
 "The subject of the email which will be sent to the respondent when a booking "
@@ -3812,12 +3812,12 @@ msgstr ""
 "Het onderwerp van de e-mail die zal verstuurd worden naar de aanmelder als "
 "de boeking betaald is."
 #
-# File: eme-events.php, line: 7946
+# File: eme-events.php, line: 7947
 # File: eme-options.php, line: 1946
 msgid "Booking Paid Email Body"
 msgstr "Boeking betaald e-mail inhoud"
 #
-# File: eme-events.php, line: 7947
+# File: eme-events.php, line: 7948
 # File: eme-options.php, line: 1946
 msgid ""
 "The body of the email which will be sent to the respondent when a booking is "
@@ -3826,11 +3826,11 @@ msgstr ""
 "De inhoud van de e-mail die zal verstuurd worden naar de aanmelder als de "
 "boeking betaald is."
 #
-# File: eme-events.php, line: 7972
+# File: eme-events.php, line: 7973
 msgid "Contact Person Booking Paid Email Subject"
 msgstr "Contactpersoon boeking betaald e-mail onderwerp"
 #
-# File: eme-events.php, line: 7973
+# File: eme-events.php, line: 7974
 # File: eme-options.php, line: 1947
 msgid ""
 "The subject of the email which will be sent to the contact person when a "
@@ -3840,11 +3840,11 @@ msgstr ""
 "wanneer een boeking als betaald wordt gemarkeerd (niet via een "
 "betalingsgateway)."
 #
-# File: eme-events.php, line: 7993
+# File: eme-events.php, line: 7994
 msgid "Contact Person Booking Paid Email Body"
 msgstr "Contactpersoon boeking betaald e-mail inhoud"
 #
-# File: eme-events.php, line: 7995
+# File: eme-events.php, line: 7996
 # File: eme-options.php, line: 1948
 msgid ""
 "The body of the email which will be sent to the contact person when a "
@@ -3853,23 +3853,23 @@ msgstr ""
 "De inhoud van de e-mail die naar de contactpersoon wordt verzonden wanneer "
 "een boeking als betaald wordt gemarkeerd (niet via een betalings-gateway)."
 #
-# File: eme-events.php, line: 8012
+# File: eme-events.php, line: 8013
 # File: eme-options.php, line: 1950
 msgid "Booking paid mail attachments"
 msgstr "Boeking betaald e-mail bijlagen"
 #
-# File: eme-events.php, line: 8033
+# File: eme-events.php, line: 8034
 # File: eme-options.php, line: 1972
 msgid "Optionally add attachments to the mail when a booking is paid."
 msgstr ""
 "Voeg optioneel bijlagen toe aan de e-mail wanneer een boeking betaald is."
 #
-# File: eme-events.php, line: 8048
+# File: eme-events.php, line: 8049
 # File: eme-options.php, line: 1928
 msgid "Booking Deleted Email Subject"
 msgstr "Boeking verwijderd e-mail onderwerp"
 #
-# File: eme-events.php, line: 8049
+# File: eme-events.php, line: 8050
 # File: eme-options.php, line: 1928
 msgid ""
 "The subject of the email which will be sent to the respondent if the booking "
@@ -3878,12 +3878,12 @@ msgstr ""
 "Het onderwerp van de e-mail die zal worden verstuurd naar de aanmelder als "
 "de boeking verwijderd is."
 #
-# File: eme-events.php, line: 8070
+# File: eme-events.php, line: 8071
 # File: eme-options.php, line: 1929
 msgid "Booking Deleted Email Body"
 msgstr "Boeking verwijderd e-mail inhoud"
 #
-# File: eme-events.php, line: 8071
+# File: eme-events.php, line: 8072
 # File: eme-options.php, line: 1929
 msgid ""
 "The body of the email which will be sent to the respondent if the booking is "
@@ -3892,32 +3892,32 @@ msgstr ""
 "De opmaak van de inhoud van de e-mail die zal worden verstuurd naar de "
 "aanmelder als de boeking verwijderd is door een beheerder."
 #
-# File: eme-events.php, line: 8099
+# File: eme-events.php, line: 8100
 msgid "Booking Form"
 msgstr "Boekingsformulier"
 #
-# File: eme-events.php, line: 8100
+# File: eme-events.php, line: 8101
 msgid "The booking form format."
 msgstr "Opmaak van het boekingsformulier."
 #
-# File: eme-events.php, line: 8129
+# File: eme-events.php, line: 8130
 msgid "Cancel Booking Form"
 msgstr "Boeking annulatieformulier"
 #
-# File: eme-events.php, line: 8130
+# File: eme-events.php, line: 8131
 msgid "The cancel booking form format."
 msgstr "Opmaak van het annulatieformulier."
 #
-# File: eme-events.php, line: 8158
+# File: eme-events.php, line: 8159
 msgid "Captcha settings"
 msgstr "Captcha instellingen"
 #
-# File: eme-events.php, line: 8162
+# File: eme-events.php, line: 8163
 # File: eme-options.php, line: 1250
 msgid "Use Google reCAPTCHA for forms?"
 msgstr "Google reCAPTCHA voor formulieren gebruiken?"
 #
-# File: eme-events.php, line: 8163
+# File: eme-events.php, line: 8164
 msgid ""
 "If this option is checked, make sure to use #_RECAPTCHA in your booking/"
 "cancel form. If not present, it will be added just above the submit button."
@@ -3926,12 +3926,12 @@ msgstr ""
 "in je boeking/annulatie formulier. Als dit niet aanwezig is, wordt het net "
 "boven de verzendknop toegevoegd."
 #
-# File: eme-events.php, line: 8169
+# File: eme-events.php, line: 8170
 # File: eme-options.php, line: 1253
 msgid "Use hCaptcha for forms?"
 msgstr "Gebruik hCaptcha voor formulieren?"
 #
-# File: eme-events.php, line: 8170
+# File: eme-events.php, line: 8171
 msgid ""
 "If this option is checked, make sure to use #_HCAPTCHA in your booking/"
 "cancel form. If not present, it will be added just above the submit button."
@@ -3940,12 +3940,12 @@ msgstr ""
 "je boeking/annulatie formulier. Als dit niet aanwezig is, wordt het net "
 "boven de verzendknop toegevoegd."
 #
-# File: eme-events.php, line: 8176
+# File: eme-events.php, line: 8177
 # File: eme-options.php, line: 1256
 msgid "Use Cloudflare Turnstile for forms?"
 msgstr "Cloudflare Turnstile voor formulieren gebruiken?"
 #
-# File: eme-events.php, line: 8177
+# File: eme-events.php, line: 8178
 msgid ""
 "If this option is checked, make sure to use #_CFCAPTCHA in your booking/"
 "cancel form. If not present, it will be added just above the submit button."
@@ -3954,12 +3954,12 @@ msgstr ""
 "in je boeking/annulatie formulier. Als dit niet aanwezig is, wordt het net "
 "boven de verzendknop toegevoegd."
 #
-# File: eme-events.php, line: 8182
+# File: eme-events.php, line: 8183
 # File: eme-options.php, line: 1249
 msgid "Use EME captcha for forms?"
 msgstr "Gebruik EME captcha voor formulieren?"
 #
-# File: eme-events.php, line: 8183
+# File: eme-events.php, line: 8184
 msgid ""
 "If this option is checked, make sure to use #_CAPTCHA in your booking/cancel "
 "form. If not present, it will be added just above the submit button."
@@ -3968,16 +3968,16 @@ msgstr ""
 "je boeking/annulatie formulier. Als dit niet aanwezig is, wordt het net "
 "boven de verzendknop toegevoegd."
 #
-# File: eme-events.php, line: 8258
+# File: eme-events.php, line: 8259
 # File: eme-locations.php, line: 606
 msgid "Map not found"
 msgstr "Kaart niet gevonden"
 #
-# File: eme-events.php, line: 8282
+# File: eme-events.php, line: 8283
 msgid "Event description"
 msgstr "Beschrijving van het evenement"
 #
-# File: eme-events.php, line: 8284
+# File: eme-events.php, line: 8285
 msgid ""
 "The event description. This is also used in html meta tags and google tags "
 "to show the event info."
@@ -3985,28 +3985,28 @@ msgstr ""
 "Beschrijving van het evemenent. Dit wordt ook gebruikt in html-metatags en "
 "google-tags om de evenementinformatie weer te geven."
 #
-# File: eme-events.php, line: 8307
-# File: eme-events.php, line: 8311
-# File: eme-events.php, line: 8314
+# File: eme-events.php, line: 8308
+# File: eme-events.php, line: 8312
+# File: eme-events.php, line: 8315
 msgid "Event image"
 msgstr "Afbeelding evenement"
 #
-# File: eme-events.php, line: 8324
+# File: eme-events.php, line: 8325
 # File: eme-locations.php, line: 696
 msgid "Set a featured image"
 msgstr "Stel uitgelichte afbeelding in"
 #
-# File: eme-events.php, line: 8325
+# File: eme-events.php, line: 8326
 # File: eme-locations.php, line: 697
 msgid "Unset featured image"
 msgstr "Zet uitgelichte afbeelding uit"
 #
-# File: eme-events.php, line: 8349
+# File: eme-events.php, line: 8350
 msgid "Here custom fields of type 'events' are shown."
 msgstr ""
 "Hier worden eigen aangemaakte velden van het type 'evenementen' getoond."
 #
-# File: eme-events.php, line: 8350
+# File: eme-events.php, line: 8351
 msgid ""
 "The difference with event attributes is that attributes need to be defined "
 "in your format first and can only be text, here you can first create custom "
@@ -4016,7 +4016,7 @@ msgstr ""
 "moeten worden gedefinieerd en alleen tekst kunnen zijn, hier kan je eigen "
 "aangemaakte velden van elk soort gebruiken wat je meer mogelijkheden biedt."
 #
-# File: eme-events.php, line: 8351
+# File: eme-events.php, line: 8352
 msgid ""
 "If a custom field with name 'performer' exists, it's value here will be used "
 "for the google 'performer' header when showing the event in google search "
@@ -4026,7 +4026,7 @@ msgstr ""
 "hier gebruikt voor de google 'performer'-header wanneer het evenement wordt "
 "weergegeven in de zoekresultaten van Google."
 #
-# File: eme-events.php, line: 8405
+# File: eme-events.php, line: 8406
 # File: eme-locations.php, line: 801
 # File: eme-members.php, line: 2526
 msgid ""
@@ -4035,13 +4035,13 @@ msgstr ""
 "Aangepaste velden van het type \"verborgen\" zijn hier nutteloos en zullen "
 "uiteraard niet getoond worden."
 #
-# File: eme-events.php, line: 8421
-# File: eme-events.php, line: 9665
+# File: eme-events.php, line: 8422
+# File: eme-events.php, line: 9666
 # File: eme-locations.php, line: 715
 msgid "External URL"
 msgstr "Externe URL"
 #
-# File: eme-events.php, line: 8425
+# File: eme-events.php, line: 8426
 msgid ""
 "If this is filled in, the single event URL will point to this url instead of "
 "the standard event page."
@@ -4049,11 +4049,11 @@ msgstr ""
 "Als dit ingevuld is zal de URL van dit enkele evenement doorlinken naar deze "
 "URL, in plaats van de standaard evenementenpagina."
 #
-# File: eme-events.php, line: 8434
+# File: eme-events.php, line: 8435
 msgid "Enable bookings for this event"
 msgstr "Boekingen voor dit evenement inschakelen"
 #
-# File: eme-events.php, line: 8446
+# File: eme-events.php, line: 8447
 msgid ""
 "If no payment method is selected, the \"Booking Recorded Message\" (defined "
 "in the RSVP Form format settings) will be shown. Otherwise the \"Booking "
@@ -4068,7 +4068,7 @@ msgstr ""
 "(zie de generieke EME-instellingen over de time-out voor omleiding en meer "
 "betalingsinstellingen)."
 #
-# File: eme-events.php, line: 8466
+# File: eme-events.php, line: 8467
 # File: eme-members.php, line: 2038
 msgid ""
 "No payment methods configured yet. Go in the EME payment settings and "
@@ -4077,11 +4077,11 @@ msgstr ""
 "Er zijn nog geen betaalmethoden geconfigureerd. Ga naar de EME-"
 "betalingsinstellingen en configureer er een paar."
 #
-# File: eme-events.php, line: 8471
+# File: eme-events.php, line: 8472
 msgid "Skip payment methods after booking"
 msgstr "Sla betalingsmethoden over na het boeken"
 #
-# File: eme-events.php, line: 8473
+# File: eme-events.php, line: 8474
 msgid ""
 "If you want to skip the possibility to pay immediately after booking, select "
 "this option. This might be useful if you for example want to approve unpaid "
@@ -4093,7 +4093,7 @@ msgstr ""
 "boekingen wilt goedkeuren en pas daarna de betaallink wilt sturen met "
 "#_PAYMENT_URL in het geboekte e-mailbericht."
 #
-# File: eme-events.php, line: 8496
+# File: eme-events.php, line: 8497
 msgid ""
 "Select this option if you want an attendance record to be kept everytime the "
 "RSVP attendance QRCODE is scanned by an authorized user."
@@ -4102,19 +4102,19 @@ msgstr ""
 "bijgehouden telkens wanneer de QRCODE voor RSVP-aanwezigheid wordt gescand "
 "door een geauthoriseerde gebruiker."
 #
-# File: eme-events.php, line: 8499
+# File: eme-events.php, line: 8500
 msgid "Attendance URL (generated by #_ATTENDANCE_URL) is valid from "
 msgstr "Aanwezigheid URL (gegenereerd door #_ATTENDANCE_URL) is geldig van "
 #
-# File: eme-events.php, line: 8501
+# File: eme-events.php, line: 8502
 msgid "hours before the event starts until "
 msgstr "uren voor het evenement start tot "
 #
-# File: eme-events.php, line: 8503
+# File: eme-events.php, line: 8504
 msgid "hours after the event ends."
 msgstr "uren na het evenement eindigt."
 #
-# File: eme-events.php, line: 8504
+# File: eme-events.php, line: 8505
 msgid ""
 "When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can "
 "also decide to use this as entry ticket. This option then allows to define "
@@ -4129,11 +4129,11 @@ msgstr ""
 "een geautoriseerde gebruiker en een waarschuwing geven als dit aantal groter "
 "is dan het aantal geboekte plaatsen."
 #
-# File: eme-events.php, line: 8508
+# File: eme-events.php, line: 8509
 msgid "Extra attendance info for not authorized users"
 msgstr "Extra aanwezigheidsinformatie voor niet geautoriseerde gebruikers"
 #
-# File: eme-events.php, line: 8509
+# File: eme-events.php, line: 8510
 msgid ""
 "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a not "
 "authorized user, only info concerning the payment status is shown. If you "
@@ -4146,11 +4146,11 @@ msgstr ""
 "evenementnaam of wat boekingsinfo), kan je dat in deze template definiëren. "
 "Alle evenement en RSVP plaatshouders zijn toegestaan."
 #
-# File: eme-events.php, line: 8523
+# File: eme-events.php, line: 8524
 msgid "Extra attendance info for authorized users"
 msgstr "Extra aanwezigheidsinformatie voor geautoriseerde gebruikers"
 #
-# File: eme-events.php, line: 8524
+# File: eme-events.php, line: 8525
 msgid ""
 "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a "
 "authorized user, only info concerning the payment status is shown, next to "
@@ -4165,15 +4165,15 @@ msgstr ""
 "boekingsinfo), kan je dat in deze template definiëren. Alle evenement en "
 "RSVP plaatshouders zijn toegestaan."
 #
-# File: eme-events.php, line: 8573
+# File: eme-events.php, line: 8574
 msgid "Require booking approval"
 msgstr "Goedkeuring voor boeking benodigd"
 #
-# File: eme-events.php, line: 8582
+# File: eme-events.php, line: 8583
 msgid "Require user confirmation after booking"
 msgstr "Gebruikersbevestiging vereist na boeking"
 #
-# File: eme-events.php, line: 8583
+# File: eme-events.php, line: 8584
 msgid ""
 "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent "
 "to a booker."
@@ -4181,17 +4181,17 @@ msgstr ""
 "Indien actief, vergeet dan niet #_BOOKING_CONFIRM_URL te gebruiken in de "
 "mail die naar een boeker wordt gestuurd."
 #
-# File: eme-events.php, line: 8586
+# File: eme-events.php, line: 8587
 msgid "Auto-approve booking upon payment"
 msgstr "Keur boekingen automatisch goed na betaling"
 #
-# File: eme-events.php, line: 8589
+# File: eme-events.php, line: 8590
 msgid "Consider pending bookings as available seats for new bookings"
 msgstr ""
 "Beschouw boekingen die in de wacht staan als beschikbare plaatsen voor "
 "nieuwe boekingen"
 #
-# File: eme-events.php, line: 8589
+# File: eme-events.php, line: 8590
 msgid ""
 "In case online payments are possible, pending bookings younger than 5 "
 "minutes will count as occupied too, to be able to allow people to finish "
@@ -4200,7 +4200,7 @@ msgstr ""
 "Als online betalingen mogelijk zijn, tellen lopende boekingen jonger dan 5 "
 "minuten ook als bezet, zodat mensen online betalingen kunnen afronden."
 #
-# File: eme-events.php, line: 8593
+# File: eme-events.php, line: 8594
 # File: eme-options.php, line: 1578
 msgid ""
 "Set the number of days before reminder emails will be sent for pending "
@@ -4213,7 +4213,7 @@ msgstr ""
 "Als je meerdere herinneringen wilt versturen, scheid dan de dagen hier met "
 "komma's. Laat leeg voor geen herinneringsmails."
 #
-# File: eme-events.php, line: 8597
+# File: eme-events.php, line: 8598
 # File: eme-options.php, line: 1579
 msgid ""
 "Set the number of days before reminder emails will be sent for approved "
@@ -4226,11 +4226,11 @@ msgstr ""
 "Als je meerdere herinneringen wilt versturen, scheid dan de dagen hier met "
 "komma's. Laat leeg voor geen herinneringsmails."
 #
-# File: eme-events.php, line: 8601
+# File: eme-events.php, line: 8602
 msgid "Require WP membership for booking"
 msgstr "Eis lidmaatschap van WP voor boeking"
 #
-# File: eme-events.php, line: 8602
+# File: eme-events.php, line: 8603
 msgid ""
 "This will only show the booking form for logged in users and prefill the "
 "form with the personal data from their WordPress profile. That data can't be "
@@ -4244,11 +4244,11 @@ msgstr ""
 "niet wilt, kunt u deze optie deactiveren en #_ADDBOOKINGFORM_IF_LOGGED_IN "
 "gebruiken om het formulier alleen aan ingelogde gebruikers te tonen."
 #
-# File: eme-events.php, line: 8605
+# File: eme-events.php, line: 8606
 msgid "Create WP user after succesful booking"
 msgstr "Maak WP gebruiker aan na geslaagde boeking"
 #
-# File: eme-events.php, line: 8606
+# File: eme-events.php, line: 8607
 msgid ""
 "This will create a WP user after the booking is completed, as if the person "
 "registered in WP itself. This will only create a user if the booker was not "
@@ -4259,29 +4259,29 @@ msgstr ""
 "alleen een WP-gebruiker toegevoegd als de aanmelder niet was ingelogd en het "
 "e-mailadres nog niet eerder is geregistreerd door een andere WP-gebruiker."
 #
-# File: eme-events.php, line: 8609
+# File: eme-events.php, line: 8610
 msgid "Allow only 1 booking per unique email address"
 msgstr "Sta enkel 1 boeking toe per uniek e-mail adres"
 #
-# File: eme-events.php, line: 8612
+# File: eme-events.php, line: 8613
 msgid "Allow only 1 booking per person (combo email/last name/first name)"
 msgstr ""
 "Sta enkel 1 boeking per persoon toe (combinatie e-mail/achternaam/voornaam)"
 #
-# File: eme-events.php, line: 8616
-# File: eme-events.php, line: 9806
+# File: eme-events.php, line: 8617
+# File: eme-events.php, line: 9807
 # File: eme-options.php, line: 38
 # File: eme-people.php, line: 946
 # File: eme-people.php, line: 1228
 msgid "Seats"
 msgstr "Plaatsen"
 #
-# File: eme-events.php, line: 8617
+# File: eme-events.php, line: 8618
 # File: eme-options.php, line: 1582
 msgid "Enter 0 for no limit"
 msgstr "Vul 0 in om geen limiet te hebben"
 #
-# File: eme-events.php, line: 8618
+# File: eme-events.php, line: 8619
 msgid ""
 "The max available seats for this event. Enter 0 for no limit. For multiseat "
 "events, separate the values by '||'"
@@ -4290,39 +4290,39 @@ msgstr ""
 "limiet. Voor evenementen met meerdere categorieën, scheidt u de waarden door "
 "'||'"
 #
-# File: eme-events.php, line: 8622
+# File: eme-events.php, line: 8623
 # File: eme-people.php, line: 1186
 msgid "Price: "
 msgstr "Prijs: "
 #
-# File: eme-events.php, line: 8623
-# File: eme-events.php, line: 8638
+# File: eme-events.php, line: 8624
+# File: eme-events.php, line: 8639
 msgid "For multiprice events, separate the values by '||'"
 msgstr "Bij evenementen met meerdere prijzen, scheidt de waardes met '||'"
 #
-# File: eme-events.php, line: 8639
+# File: eme-events.php, line: 8640
 # File: eme-members.php, line: 1820
 # File: eme-members.php, line: 1826
 # File: eme-options.php, line: 2162
 msgid "Use the point as decimal separator"
 msgstr "Gebruik de punt als decimaal scheidingsteken"
 #
-# File: eme-events.php, line: 8643
+# File: eme-events.php, line: 8644
 msgid "Price description"
 msgstr "Prijsomschrijving"
 #
-# File: eme-events.php, line: 8644
+# File: eme-events.php, line: 8645
 msgid ""
 "Add an optional description for the price (which can be used in templates)."
 msgstr ""
 "Voeg een optionele beschrijving voor de prijs toe (die in templates kan "
 "worden gebruikt)."
 #
-# File: eme-events.php, line: 8647
+# File: eme-events.php, line: 8648
 msgid "Price Categories descriptions"
 msgstr "Prijscategorieën beschrijvingen"
 #
-# File: eme-events.php, line: 8648
+# File: eme-events.php, line: 8649
 msgid ""
 "Add an optional description for each price category (one price description "
 "per line)."
@@ -4330,16 +4330,16 @@ msgstr ""
 "Voeg een optionele beschrijving toe voor elke prijscategorie (één "
 "prijsbeschrijving per regel)."
 #
-# File: eme-events.php, line: 8651
+# File: eme-events.php, line: 8652
 msgid "VAT percentage: "
 msgstr "BTW-percentage: "
 #
-# File: eme-events.php, line: 8652
+# File: eme-events.php, line: 8653
 # File: eme-members.php, line: 1834
 msgid "VAT percentage"
 msgstr "BTW-percentage"
 #
-# File: eme-events.php, line: 8653
+# File: eme-events.php, line: 8654
 msgid ""
 "The price you indicate for events is VAT included, special placeholders are "
 "foreseen to indicate the price without VAT."
@@ -4347,12 +4347,12 @@ msgstr ""
 "De prijs die u aangeeft voor evenementen is inclusief BTW, er zijn speciale "
 "placeholders voorzien om de prijs exclusief BTW aan te geven."
 #
-# File: eme-events.php, line: 8657
+# File: eme-events.php, line: 8658
 # File: eme-members.php, line: 1840
 msgid "Discount to apply"
 msgstr "Toe te passen korting"
 #
-# File: eme-events.php, line: 8658
+# File: eme-events.php, line: 8659
 # File: eme-members.php, line: 1841
 msgid ""
 "The discount name you want to apply (is overridden by discount group if "
@@ -4361,30 +4361,30 @@ msgstr ""
 "The discount name you want to apply (is overridden by discount group if "
 "used)."
 #
-# File: eme-events.php, line: 8661
+# File: eme-events.php, line: 8662
 # File: eme-members.php, line: 1844
 msgid "Discount group to apply"
 msgstr "Toe te passen kortingsgroep"
 #
-# File: eme-events.php, line: 8662
+# File: eme-events.php, line: 8663
 # File: eme-members.php, line: 1845
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr "The discount group name you want applied (overrides the discount)."
 #
-# File: eme-events.php, line: 8665
+# File: eme-events.php, line: 8666
 msgid "Waitinglist seats"
 msgstr "Plaatsen op de wachtlijst"
 #
-# File: eme-events.php, line: 8666
+# File: eme-events.php, line: 8667
 msgid "The number of seats considered to be a waiting list."
 msgstr "Het aantal plaaten beschouwd als zijnde de wachtlijst."
 #
-# File: eme-events.php, line: 8669
+# File: eme-events.php, line: 8670
 # File: eme-options.php, line: 1627
 msgid "Check waitinglist when seats become available"
 msgstr "Controleer de wachtlijst wanneer er plaatsen vrijkomen"
 #
-# File: eme-events.php, line: 8671
+# File: eme-events.php, line: 8672
 # File: eme-options.php, line: 1627
 msgid ""
 "Automatically take a booking from the waiting list when seats become "
@@ -4393,23 +4393,23 @@ msgstr ""
 "Automatisch een boeking van de wachtlijst halen wanneer er weer plaatsen "
 "vrijkomen"
 #
-# File: eme-events.php, line: 8674
+# File: eme-events.php, line: 8675
 # File: eme-options.php, line: 1584
 msgid "Max number of seats to book"
 msgstr "Max aantal te reserveren plaatsen"
 #
-# File: eme-events.php, line: 8675
+# File: eme-events.php, line: 8676
 # File: eme-options.php, line: 1584
 msgid "The maximum number of seats a person can book in one go."
 msgstr "Het maximum aantal plaatsen dat iemand in één keer kan reserveren."
 #
-# File: eme-events.php, line: 8675
-# File: eme-events.php, line: 8679
+# File: eme-events.php, line: 8676
+# File: eme-events.php, line: 8680
 msgid "(is multi-compatible)"
 msgstr "(is multi-compatibel)"
 #
-# File: eme-events.php, line: 8675
-# File: eme-events.php, line: 8679
+# File: eme-events.php, line: 8676
+# File: eme-events.php, line: 8680
 msgid ""
 "If the min and max number of seats to book are identical, then the field to "
 "choose the number of seats to book will be hidden."
@@ -4417,12 +4417,12 @@ msgstr ""
 "Indien het min. en max. aantal te boeken stoelen identiek zijn, dan zal het "
 "veld om het aantal te boeken stoelen te kiezen verborgen zijn."
 #
-# File: eme-events.php, line: 8678
+# File: eme-events.php, line: 8679
 # File: eme-options.php, line: 1583
 msgid "Min number of seats to book"
 msgstr "Min aantal te reserveren plaatsen"
 #
-# File: eme-events.php, line: 8679
+# File: eme-events.php, line: 8680
 # File: eme-options.php, line: 1583
 msgid ""
 "The minimum number of seats a person can book in one go (it can be 0, for e."
@@ -4431,15 +4431,15 @@ msgstr ""
 "Het minimum aantal plaatsen dat iemand in één keer kan reserveren (dit kan 0 "
 "zijn, voor e.g. een aanwezigheidslijst)."
 #
-# File: eme-events.php, line: 8682
+# File: eme-events.php, line: 8683
 msgid "Attendance-only event?"
 msgstr "Alleen-aanwezigheid event?"
 #
-# File: eme-events.php, line: 8683
+# File: eme-events.php, line: 8684
 msgid "Only take attendance (0 or 1 seat) for this event"
 msgstr "Neem alleen aanwezigheid waar (0 of 1 plaatsen) voor dit evemenent"
 #
-# File: eme-events.php, line: 8684
+# File: eme-events.php, line: 8685
 msgid ""
 "If this option is set and the setting \"Min number of seats to book\" is set "
 "to 0, then the field to choose the number of seats to book will be turned "
@@ -4449,7 +4449,7 @@ msgstr ""
 "stoelen\" is ingesteld op 0, dan zal het veld om het aantal te boeken "
 "stoelen te kiezen veranderd worden in een checkbox."
 #
-# File: eme-events.php, line: 8685
+# File: eme-events.php, line: 8686
 msgid ""
 "If this option is set and the setting \"Min number of seats to book\" is set "
 "to a value greater than 0, then the field to choose the number of seats to "
@@ -4460,23 +4460,23 @@ msgstr ""
 "aantal te boeken plaatsen te kiezen worden verborgen en het aantal geboekte "
 "plaatsen zal op 1 ingesteld worden."
 #
-# File: eme-events.php, line: 8689
+# File: eme-events.php, line: 8690
 # File: eme-members.php, line: 1997
 msgid "Group to add people to"
 msgstr "Groep om mensen aan toe te voegen"
 #
-# File: eme-events.php, line: 8690
+# File: eme-events.php, line: 8691
 # File: eme-members.php, line: 1998
 msgid ""
 "The group you want people to automatically become a member of when they "
 "subscribe."
 msgstr "De groep waar mensen automatisch lid van worden als ze inschrijven."
 #
-# File: eme-events.php, line: 8693
+# File: eme-events.php, line: 8694
 msgid "RSVP Password"
 msgstr "RSVP Wachtwoord"
 #
-# File: eme-events.php, line: 8694
+# File: eme-events.php, line: 8695
 msgid ""
 "A password required for RSVP submit to succeed. If used, #_PASSWORD is "
 "required in the RSVP form too."
@@ -4484,15 +4484,15 @@ msgstr ""
 "Een wachtwoord vereist om het RSVP-formulier te kunnen indienen. Indien "
 "gebruikt, is #_PASSWORD ook vereist in het RSVP-formulier."
 #
-# File: eme-events.php, line: 8698
+# File: eme-events.php, line: 8699
 msgid "Invite-only event?"
 msgstr "Event op uitnoding alleen?"
 #
-# File: eme-events.php, line: 8699
+# File: eme-events.php, line: 8700
 msgid "Require an invitation"
 msgstr "Uitnodiging vereist"
 #
-# File: eme-events.php, line: 8700
+# File: eme-events.php, line: 8701
 msgid ""
 "Allow only bookings done if someone visits the event via the invite url "
 "generated by #_INVITEURL."
@@ -4500,11 +4500,11 @@ msgstr ""
 "Sta alleen boekingen toe die zijn gedaan als iemand het evenement bezoekt "
 "via de uitnodigings-URL die is gegenereerd door #_INVITEURL."
 #
-# File: eme-events.php, line: 8705
+# File: eme-events.php, line: 8706
 msgid "Ticket PDF template"
 msgstr "Ticket PDF template"
 #
-# File: eme-events.php, line: 8707
+# File: eme-events.php, line: 8708
 msgid ""
 "This optional template is used to send a PDF attachment in the mail when the "
 "booking is approved or paid (see the next seting to configure when the "
@@ -4514,7 +4514,7 @@ msgstr ""
 "mail als de boeking is goedgekeurd of betaald (zie de volgende instelling om "
 "te configureren wanneer het aanhangsel moet bijgevoegd worden)."
 #
-# File: eme-events.php, line: 8708
+# File: eme-events.php, line: 8709
 msgid ""
 "No template shown in the list? Then go in the section Templates and create a "
 "PDF template."
@@ -4522,27 +4522,27 @@ msgstr ""
 "Geen template getoond in de lijst? Ga dan in de sectie Templates en maak een "
 "PDF template aan."
 #
-# File: eme-events.php, line: 8711
+# File: eme-events.php, line: 8712
 msgid "Ticket mail preference"
 msgstr "Ticket e-mail voorkeur"
 #
-# File: eme-events.php, line: 8717
+# File: eme-events.php, line: 8718
 msgid "At booking time"
 msgstr "Op het moment van de boeking"
 #
-# File: eme-events.php, line: 8718
+# File: eme-events.php, line: 8719
 msgid "Upon approval"
 msgstr "Bij goedkeuring"
 #
-# File: eme-events.php, line: 8719
+# File: eme-events.php, line: 8720
 msgid "Upon payment"
 msgstr "Bij betaling"
 #
-# File: eme-events.php, line: 8720
+# File: eme-events.php, line: 8721
 msgid "All of the above"
 msgstr "Al het vorige"
 #
-# File: eme-events.php, line: 8727
+# File: eme-events.php, line: 8728
 msgid ""
 "Configure in which mail you want the optional PDF attachment to be included: "
 "when the booking is made, when it is approved or when the booking is paid "
@@ -4552,159 +4552,148 @@ msgstr ""
 "de boeking is gemaakt, wanneer deze is goedgekeurd of wanneer de boeking is "
 "betaald."
 #
-# File: eme-events.php, line: 8732
+# File: eme-events.php, line: 8733
 msgid "Allow RSVP from "
 msgstr "Laat reservaties toe vanaf "
 #
-# File: eme-events.php, line: 8736
-# File: eme-events.php, line: 8752
+# File: eme-events.php, line: 8737
+# File: eme-events.php, line: 8753
 # File: eme-options.php, line: 1593
 msgid "hours"
 msgstr "uren"
 #
-# File: eme-events.php, line: 8738
-# File: eme-events.php, line: 8754
+# File: eme-events.php, line: 8739
+# File: eme-events.php, line: 8755
 # File: eme-options.php, line: 1599
 msgid "before the event "
 msgstr "voor het evenement "
 #
-# File: eme-events.php, line: 8740
-# File: eme-events.php, line: 8756
+# File: eme-events.php, line: 8741
+# File: eme-events.php, line: 8757
 # File: eme-options.php, line: 1596
 msgid "starts"
 msgstr "begint"
 #
-# File: eme-events.php, line: 8741
-# File: eme-events.php, line: 8757
+# File: eme-events.php, line: 8742
+# File: eme-events.php, line: 8758
 # File: eme-options.php, line: 1597
 msgid "ends"
 msgstr "eindigt"
 #
-# File: eme-events.php, line: 8745
+# File: eme-events.php, line: 8746
 msgid "(Leave empty to disable this limit)"
 msgstr "(Laat leeg om deze limiet uit te schakelen)"
 #
-# File: eme-events.php, line: 8748
+# File: eme-events.php, line: 8749
 msgid "Allow RSVP until "
 msgstr "Sta RSVP toe tot "
 #
-# File: eme-events.php, line: 8763
+# File: eme-events.php, line: 8764
 # File: eme-options.php, line: 1605
 msgid "RSVP cancel cutoff before event starts"
 msgstr "RSVP annulatie afsluiting vooraleer evenement begint"
 #
-# File: eme-events.php, line: 8765
+# File: eme-events.php, line: 8766
 # File: eme-options.php, line: 1605
 msgid "Allow RSVP cancellation until this many days before the event starts."
 msgstr "Sta RSVP-annulering toe tot zoveel dagen voordat het evenement begint."
 #
-# File: eme-events.php, line: 8767
+# File: eme-events.php, line: 8768
 # File: eme-options.php, line: 1606
 msgid "RSVP cancel cutoff booking age"
 msgstr "RSVP annulatie afsluiting boeking ouderdom"
 #
-# File: eme-events.php, line: 8769
+# File: eme-events.php, line: 8770
 # File: eme-options.php, line: 1606
 msgid ""
 "Allow RSVP cancellation until this many days after the booking has been made."
 msgstr ""
 "Sta RSVP annulaties toe tot dit aantal dagen nadat de boeking gemaakt is."
 #
-# File: eme-events.php, line: 9405
+# File: eme-events.php, line: 9406
 msgid "Select the image to be used as person image"
 msgstr ""
 "Selecteer de afbeelding om gebruikt te worden als afbeelding voor deze "
 "persoon"
 #
-# File: eme-events.php, line: 9406
+# File: eme-events.php, line: 9407
 msgid "Set image"
 msgstr "Zet afbeelding"
 #
-# File: eme-events.php, line: 9407
+# File: eme-events.php, line: 9408
 # File: eme-people.php, line: 2371
 msgid "Choose image"
 msgstr "Kies afbeelding"
 #
-# File: eme-events.php, line: 9408
+# File: eme-events.php, line: 9409
 msgid "Replace image"
 msgstr "Vervang afbeelding"
 #
-# File: eme-events.php, line: 9413
-# File: eme-events.php, line: 9489
-# File: eme-events.php, line: 9669
+# File: eme-events.php, line: 9414
+# File: eme-events.php, line: 9490
+# File: eme-events.php, line: 9670
 msgid "Are you sure you want to delete the selected records?"
 msgstr "Bent u zeker dat u de geselecteerde records wil verwijderen?"
 #
-# File: eme-events.php, line: 9414
+# File: eme-events.php, line: 9415
 msgid "Are you sure you want to delete this file?"
 msgstr "Weet je zeker dat je dit bestand wilt verwijderen?"
 #
-# File: eme-events.php, line: 9415
+# File: eme-events.php, line: 9416
 msgid "Select one or more persons"
 msgstr "Selecteer één of meerdere personen"
 #
-# File: eme-events.php, line: 9416
+# File: eme-events.php, line: 9417
 msgid "Select one or more members"
 msgstr "Selecteer één of meerdere leden"
 #
-# File: eme-events.php, line: 9417
+# File: eme-events.php, line: 9418
 msgid "Select one or more groups"
 msgstr "Selecteer één of meerdere groepen"
 #
-# File: eme-events.php, line: 9418
+# File: eme-events.php, line: 9419
 msgid "Any group"
 msgstr "Elke groep"
 #
-# File: eme-events.php, line: 9419
+# File: eme-events.php, line: 9420
 msgid "Filter on membership"
 msgstr "Filter op lidmaatschap"
 #
-# File: eme-events.php, line: 9420
+# File: eme-events.php, line: 9421
 msgid "Filter on member status"
 msgstr "Filter op leden status"
 #
-# File: eme-events.php, line: 9421
+# File: eme-events.php, line: 9422
 msgid "Custom fields to filter on"
 msgstr "Aangepaste velden om op te filteren"
 #
-# File: eme-events.php, line: 9423
+# File: eme-events.php, line: 9424
 msgid "Select a discount"
 msgstr "Selecteer een korting"
 #
-# File: eme-events.php, line: 9424
+# File: eme-events.php, line: 9425
 msgid "Select a discountgroup"
 msgstr "Selecteer een kortingsgroep"
 #
-# File: eme-events.php, line: 9461
-# File: eme-events.php, line: 9796
+# File: eme-events.php, line: 9462
+# File: eme-events.php, line: 9797
 msgid "No matching event found"
 msgstr "Geen overeenkomende gebeurtenis gevonden."
 #
-# File: eme-events.php, line: 9464
+# File: eme-events.php, line: 9465
 msgid "Recurrences"
 msgstr "Herhalingen"
 #
-# File: eme-events.php, line: 9466
-# File: eme-events.php, line: 9807
+# File: eme-events.php, line: 9467
+# File: eme-events.php, line: 9808
 msgid "Event price"
 msgstr "Prijs evenement"
 #
-# File: eme-events.php, line: 9472
-# File: eme-events.php, line: 9560
-# File: eme-events.php, line: 9655
+# File: eme-events.php, line: 9473
+# File: eme-events.php, line: 9561
+# File: eme-events.php, line: 9656
 msgid "Copy"
 msgstr "Kopieer"
-#
-# File: eme-events.php, line: 9473
-# File: eme-events.php, line: 9512
-# File: eme-events.php, line: 9531
-# File: eme-events.php, line: 9555
-# File: eme-events.php, line: 9670
-# File: eme-events.php, line: 9711
-# File: eme-events.php, line: 9765
-# File: eme-events.php, line: 9821
-msgid "CSV"
-msgstr "CSV"
 #
 # File: eme-events.php, line: 9474
 # File: eme-events.php, line: 9513
@@ -4714,131 +4703,142 @@ msgstr "CSV"
 # File: eme-events.php, line: 9712
 # File: eme-events.php, line: 9766
 # File: eme-events.php, line: 9822
+msgid "CSV"
+msgstr "CSV"
+#
+# File: eme-events.php, line: 9475
+# File: eme-events.php, line: 9514
+# File: eme-events.php, line: 9533
+# File: eme-events.php, line: 9557
+# File: eme-events.php, line: 9672
+# File: eme-events.php, line: 9713
+# File: eme-events.php, line: 9767
+# File: eme-events.php, line: 9823
 msgid "Print"
 msgstr "Print"
 #
-# File: eme-events.php, line: 9476
+# File: eme-events.php, line: 9477
 msgid "Recurrence info"
 msgstr "Herhaling info"
 #
-# File: eme-events.php, line: 9477
+# File: eme-events.php, line: 9478
 msgid "Single event duration"
 msgstr "Duur van een evenement"
 #
-# File: eme-events.php, line: 9478
+# File: eme-events.php, line: 9479
 msgid "Date"
 msgstr "Datum"
 #
-# File: eme-events.php, line: 9479
-# File: eme-events.php, line: 9802
+# File: eme-events.php, line: 9480
+# File: eme-events.php, line: 9803
 msgid "Date and time"
 msgstr "Datum en tijd"
 #
-# File: eme-events.php, line: 9481
-# File: eme-events.php, line: 9861
+# File: eme-events.php, line: 9482
+# File: eme-events.php, line: 9862
 msgid "Selected dates:"
 msgstr "Geselecteerde datums:"
 #
-# File: eme-events.php, line: 9482
-# File: eme-events.php, line: 9718
+# File: eme-events.php, line: 9483
+# File: eme-events.php, line: 9719
 msgid "Created on"
 msgstr "Aangemaakt op"
 #
-# File: eme-events.php, line: 9483
-# File: eme-events.php, line: 9719
+# File: eme-events.php, line: 9484
+# File: eme-events.php, line: 9720
 msgid "Modified on"
 msgstr "Gewijzigd op"
 #
-# File: eme-events.php, line: 9484
-# File: eme-events.php, line: 9533
-# File: eme-events.php, line: 9553
-# File: eme-events.php, line: 9577
-# File: eme-events.php, line: 9611
-# File: eme-events.php, line: 9639
-# File: eme-events.php, line: 9667
-# File: eme-events.php, line: 9704
-# File: eme-events.php, line: 9762
-# File: eme-events.php, line: 9827
-# File: eme-events.php, line: 9844
+# File: eme-events.php, line: 9485
+# File: eme-events.php, line: 9534
+# File: eme-events.php, line: 9554
+# File: eme-events.php, line: 9578
+# File: eme-events.php, line: 9612
+# File: eme-events.php, line: 9640
+# File: eme-events.php, line: 9668
+# File: eme-events.php, line: 9705
+# File: eme-events.php, line: 9763
+# File: eme-events.php, line: 9828
+# File: eme-events.php, line: 9845
 msgid "Please wait"
 msgstr "Wacht aub"
 #
-# File: eme-events.php, line: 9486
-# File: eme-events.php, line: 9672
+# File: eme-events.php, line: 9487
+# File: eme-events.php, line: 9673
 msgid "Select the image to be used as featured image"
 msgstr "Selecteer de als uitgelichte afbeelding in te stellen afbeelding"
 #
-# File: eme-events.php, line: 9487
-# File: eme-events.php, line: 9673
+# File: eme-events.php, line: 9488
+# File: eme-events.php, line: 9674
 msgid "Set featured image"
 msgstr "Uitgelichte afbeelding instellen"
 #
-# File: eme-events.php, line: 9488
-# File: eme-events.php, line: 9558
-# File: eme-events.php, line: 9580
-# File: eme-events.php, line: 9614
+# File: eme-events.php, line: 9489
+# File: eme-events.php, line: 9559
+# File: eme-events.php, line: 9581
+# File: eme-events.php, line: 9615
 msgid "Press the delete button to remove"
 msgstr "Druk op de delete knop om te verwijderen"
 #
-# File: eme-events.php, line: 9490
+# File: eme-events.php, line: 9491
 msgid "Since the event is repeated, you must specify an end date"
 msgstr "Omdat het evenement wordt herhaald, dien je een einddatum in te vullen"
 #
-# File: eme-events.php, line: 9491
+# File: eme-events.php, line: 9492
 msgid "In a recurrence, start and end date can't be identical"
 msgstr ""
 "Bij terugkerende evenementen mogen start- en einddatum niet gelijk zijn"
 #
-# File: eme-events.php, line: 9493
+# File: eme-events.php, line: 9494
 # File: eme-filters.php, line: 376
 # File: eme-options.php, line: 1572
 msgid "Event author"
 msgstr "Evenement auteur"
 #
-# File: eme-events.php, line: 9509
+# File: eme-events.php, line: 9510
 msgid "Recorded on"
 msgstr "Genoteerd op"
 #
-# File: eme-events.php, line: 9510
-# File: eme-events.php, line: 9530
+# File: eme-events.php, line: 9511
+# File: eme-events.php, line: 9531
 msgid "Person"
 msgstr "Persoon"
 #
-# File: eme-events.php, line: 9511
+# File: eme-events.php, line: 9512
 msgid "Attendance reports"
 msgstr "Aanwezigheidsrapporten"
 #
-# File: eme-events.php, line: 9514
+# File: eme-events.php, line: 9515
 msgid "Are you sure to delete this record?"
 msgstr "Weet u zeker dat u dit record wilt verwijderen?"
 #
-# File: eme-events.php, line: 9515
-# File: eme-events.php, line: 9682
-# File: eme-events.php, line: 9737
-# File: eme-events.php, line: 9852
+# File: eme-events.php, line: 9516
+# File: eme-events.php, line: 9683
+# File: eme-events.php, line: 9738
+# File: eme-events.php, line: 9853
 msgid "No matching person found"
 msgstr "Geen overeenkomende persoon gevonden."
 #
-# File: eme-events.php, line: 9524
+# File: eme-events.php, line: 9525
 # File: events-manager.php, line: 361
 msgid "Task signups"
 msgstr "Taakaanmeldingen"
 #
-# File: eme-events.php, line: 9525
+# File: eme-events.php, line: 9526
 # File: eme-tasks.php, line: 430
 msgid "Task name"
 msgstr "Taak naam"
 #
-# File: eme-events.php, line: 9526
+# File: eme-events.php, line: 9527
 msgid "Task start date"
 msgstr "Taak startdatum"
 #
-# File: eme-events.php, line: 9527
+# File: eme-events.php, line: 9528
 msgid "Task end date"
 msgstr "Taak einddatum"
 #
-# File: eme-events.php, line: 9528
-# File: eme-events.php, line: 9823
+# File: eme-events.php, line: 9529
+# File: eme-events.php, line: 9824
 # File: eme-formfields.php, line: 1154
 # File: eme-formfields.php, line: 1899
 # File: eme-formfields.php, line: 3051
@@ -4849,36 +4849,36 @@ msgstr "Taak einddatum"
 msgid "Comment"
 msgstr "Reactie"
 #
-# File: eme-events.php, line: 9535
-# File: eme-events.php, line: 9557
-# File: eme-events.php, line: 9579
-# File: eme-events.php, line: 9613
-# File: eme-events.php, line: 9641
-# File: eme-events.php, line: 9706
-# File: eme-events.php, line: 9764
-# File: eme-events.php, line: 9829
+# File: eme-events.php, line: 9536
+# File: eme-events.php, line: 9558
+# File: eme-events.php, line: 9580
+# File: eme-events.php, line: 9614
+# File: eme-events.php, line: 9642
+# File: eme-events.php, line: 9707
+# File: eme-events.php, line: 9765
+# File: eme-events.php, line: 9830
 msgid "Are you sure to delete the selected records?"
 msgstr "Bent u zeker dat u de geselecteerde records wil verwijderen?"
 #
-# File: eme-events.php, line: 9536
+# File: eme-events.php, line: 9537
 msgid "Press the delete button to remove this record"
 msgstr "Druk op de delete-knop om dit record te verwijderen"
 #
-# File: eme-events.php, line: 9537
-# File: eme-events.php, line: 9559
-# File: eme-events.php, line: 9606
-# File: eme-events.php, line: 9634
+# File: eme-events.php, line: 9538
+# File: eme-events.php, line: 9560
+# File: eme-events.php, line: 9607
+# File: eme-events.php, line: 9635
 msgid "Records deleted"
 msgstr "Records verwijderd"
 #
-# File: eme-events.php, line: 9548
+# File: eme-events.php, line: 9549
 # File: eme-formfields.php, line: 4787
 # File: eme-options.php, line: 1349
 # File: events-manager.php, line: 354
 msgid "Templates"
 msgstr "Templates"
 #
-# File: eme-events.php, line: 9571
+# File: eme-events.php, line: 9572
 # File: eme-formfields.php, line: 332
 # File: eme-options.php, line: 2212
 # File: eme-options.php, line: 2243
@@ -4898,77 +4898,77 @@ msgstr "Templates"
 msgid "Extra charge"
 msgstr "Extra prijstoeslag"
 #
-# File: eme-events.php, line: 9572
+# File: eme-events.php, line: 9573
 msgid "Searchable"
 msgstr "Doorzoekbaar"
 #
-# File: eme-events.php, line: 9573
+# File: eme-events.php, line: 9574
 msgid "Purpose"
 msgstr "Doel"
 #
-# File: eme-events.php, line: 9574
+# File: eme-events.php, line: 9575
 msgid "Used in replies"
 msgstr "Gebruikt in antwoorden"
 #
-# File: eme-events.php, line: 9575
+# File: eme-events.php, line: 9576
 msgid "Required"
 msgstr "Vereist"
 #
-# File: eme-events.php, line: 9588
+# File: eme-events.php, line: 9589
 # File: eme-options.php, line: 1357
 # File: events-manager.php, line: 356
 msgid "Discounts"
 msgstr "Kortingen"
 #
-# File: eme-events.php, line: 9593
+# File: eme-events.php, line: 9594
 msgid "Coupon"
 msgstr "Coupon"
 #
-# File: eme-events.php, line: 9594
+# File: eme-events.php, line: 9595
 msgid "Case sensitive"
 msgstr "Hoofdlettergevoelig"
 #
-# File: eme-events.php, line: 9595
+# File: eme-events.php, line: 9596
 msgid "Track discount usage per booked seat"
 msgstr "Verander het gebruik van discount codes per geboekte plaats"
 #
-# File: eme-events.php, line: 9598
+# File: eme-events.php, line: 9599
 msgid "Max Usage"
 msgstr "Max Gebruik"
 #
-# File: eme-events.php, line: 9599
+# File: eme-events.php, line: 9600
 msgid "Usage"
 msgstr "Gebruik"
 #
-# File: eme-events.php, line: 9602
+# File: eme-events.php, line: 9603
 msgid "Max Discounts"
 msgstr "Max Kortingen"
-#
-# File: eme-events.php, line: 9604
-# File: eme-events.php, line: 9632
-# File: eme-events.php, line: 9714
-msgid "Record added"
-msgstr "Record toegevoegd"
 #
 # File: eme-events.php, line: 9605
 # File: eme-events.php, line: 9633
 # File: eme-events.php, line: 9715
+msgid "Record added"
+msgstr "Record toegevoegd"
+#
+# File: eme-events.php, line: 9606
+# File: eme-events.php, line: 9634
+# File: eme-events.php, line: 9716
 msgid "Record updated"
 msgstr "Record aangepast"
 #
-# File: eme-events.php, line: 9622
+# File: eme-events.php, line: 9623
 msgid "Countries"
 msgstr "Landen"
 #
-# File: eme-events.php, line: 9625
+# File: eme-events.php, line: 9626
 msgid "Country ID"
 msgstr "Land ID"
 #
-# File: eme-events.php, line: 9626
+# File: eme-events.php, line: 9627
 msgid "States"
 msgstr "Provincies/staten"
 #
-# File: eme-events.php, line: 9631
+# File: eme-events.php, line: 9632
 msgid ""
 "No country associated with this state, it will not show up in dropdown "
 "lists. Please edit this state and correct the country info."
@@ -4976,30 +4976,30 @@ msgstr ""
 "Geen land geassocieerd met deze provincie, deze zal niet getoond worden in "
 "dropdown lijsten. Pas deze provincie aan met de correcte land info."
 #
-# File: eme-events.php, line: 9649
+# File: eme-events.php, line: 9650
 msgid "No matching location found"
 msgstr "Geen overeenkomende locatie gevonden."
 #
-# File: eme-events.php, line: 9650
+# File: eme-events.php, line: 9651
 # File: eme-options.php, line: 1085
 # File: eme-options.php, line: 1322
 # File: events-manager.php, line: 348
 msgid "Locations"
 msgstr "Locaties"
 #
-# File: eme-events.php, line: 9653
+# File: eme-events.php, line: 9654
 # File: eme-locations.php, line: 370
 msgid "Insert New Location"
 msgstr "Invoegen Nieuwe Locatie"
 #
-# File: eme-events.php, line: 9654
+# File: eme-events.php, line: 9655
 # File: eme-locations.php, line: 372
 msgid "Edit Location '%s'"
 msgstr "Bewerk locatie '%s'"
 #
-# File: eme-events.php, line: 9659
-# File: eme-events.php, line: 9694
-# File: eme-events.php, line: 9758
+# File: eme-events.php, line: 9660
+# File: eme-events.php, line: 9695
+# File: eme-events.php, line: 9759
 # File: eme-formfields.php, line: 1747
 # File: eme-formfields.php, line: 2797
 # File: eme-formfields.php, line: 3775
@@ -5013,9 +5013,9 @@ msgstr "Bewerk locatie '%s'"
 msgid "City"
 msgstr "Stad"
 #
-# File: eme-events.php, line: 9660
-# File: eme-events.php, line: 9695
-# File: eme-events.php, line: 9759
+# File: eme-events.php, line: 9661
+# File: eme-events.php, line: 9696
+# File: eme-events.php, line: 9760
 # File: eme-formfields.php, line: 1763
 # File: eme-formfields.php, line: 2809
 # File: eme-formfields.php, line: 3785
@@ -5029,45 +5029,45 @@ msgstr "Stad"
 msgid "Postal code"
 msgstr "Postcode"
 #
-# File: eme-events.php, line: 9663
+# File: eme-events.php, line: 9664
 # File: eme-locations.php, line: 592
 msgid "Latitude"
 msgstr "Breedtegraad"
 #
-# File: eme-events.php, line: 9664
+# File: eme-events.php, line: 9665
 # File: eme-locations.php, line: 596
 msgid "Longitude"
 msgstr "Lengtegraad"
 #
-# File: eme-events.php, line: 9666
+# File: eme-events.php, line: 9667
 msgid "Online only"
 msgstr "Alleen online"
 #
-# File: eme-events.php, line: 9684
-# File: eme-events.php, line: 9746
+# File: eme-events.php, line: 9685
+# File: eme-events.php, line: 9747
 # File: eme-gdpr.php, line: 573
 msgid "Person ID"
 msgstr "Persoon ID"
 #
-# File: eme-events.php, line: 9685
+# File: eme-events.php, line: 9686
 msgid "Group ID"
 msgstr "Groeps-ID"
 #
-# File: eme-events.php, line: 9686
+# File: eme-events.php, line: 9687
 # File: eme-people.php, line: 2280
 # File: events-manager.php, line: 363
 msgid "People"
 msgstr "Personen"
 #
-# File: eme-events.php, line: 9687
-# File: eme-events.php, line: 9709
+# File: eme-events.php, line: 9688
+# File: eme-events.php, line: 9710
 # File: eme-people.php, line: 2149
 # File: events-manager.php, line: 364
 msgid "Groups"
 msgstr "Groepen"
 #
-# File: eme-events.php, line: 9690
-# File: eme-events.php, line: 9750
+# File: eme-events.php, line: 9691
+# File: eme-events.php, line: 9751
 # File: eme-formfields.php, line: 1107
 # File: eme-formfields.php, line: 1336
 # File: eme-formfields.php, line: 1685
@@ -5093,8 +5093,8 @@ msgstr "Groepen"
 msgid "Last name"
 msgstr "Achternaam"
 #
-# File: eme-events.php, line: 9691
-# File: eme-events.php, line: 9751
+# File: eme-events.php, line: 9692
+# File: eme-events.php, line: 9752
 # File: eme-formfields.php, line: 1123
 # File: eme-formfields.php, line: 1348
 # File: eme-formfields.php, line: 1701
@@ -5122,9 +5122,9 @@ msgstr "Achternaam"
 msgid "First name"
 msgstr "Voornaam"
 #
-# File: eme-events.php, line: 9698
-# File: eme-events.php, line: 9752
-# File: eme-events.php, line: 9854
+# File: eme-events.php, line: 9699
+# File: eme-events.php, line: 9753
+# File: eme-events.php, line: 9855
 # File: eme-formfields.php, line: 1132
 # File: eme-formfields.php, line: 1357
 # File: eme-formfields.php, line: 1796
@@ -5154,7 +5154,7 @@ msgstr "Voornaam"
 msgid "Email"
 msgstr "E-mail"
 #
-# File: eme-events.php, line: 9699
+# File: eme-events.php, line: 9700
 # File: eme-formfields.php, line: 1145
 # File: eme-formfields.php, line: 1881
 # File: eme-formfields.php, line: 1890
@@ -5173,51 +5173,51 @@ msgstr "E-mail"
 msgid "Phone number"
 msgstr "Telefoonnummer"
 #
-# File: eme-events.php, line: 9700
-# File: eme-events.php, line: 9756
+# File: eme-events.php, line: 9701
+# File: eme-events.php, line: 9757
 msgid "Birth date"
 msgstr "Geboortedatum"
 #
-# File: eme-events.php, line: 9701
-# File: eme-events.php, line: 9757
+# File: eme-events.php, line: 9702
+# File: eme-events.php, line: 9758
 msgid "Birth place"
 msgstr "Geboorteplaats"
 #
-# File: eme-events.php, line: 9703
-# File: eme-events.php, line: 9747
-# File: eme-events.php, line: 9804
+# File: eme-events.php, line: 9704
+# File: eme-events.php, line: 9748
+# File: eme-events.php, line: 9805
 # File: eme-people.php, line: 1514
 # File: eme-people.php, line: 2156
 msgid "Linked WP user"
 msgstr "Corresponderende WP gebruiker"
 #
-# File: eme-events.php, line: 9707
+# File: eme-events.php, line: 9708
 msgid "Show all bookings"
 msgstr "Toon alle boekingen"
 #
-# File: eme-events.php, line: 9708
+# File: eme-events.php, line: 9709
 msgid "Member of"
 msgstr "Lid van"
 #
-# File: eme-events.php, line: 9710
+# File: eme-events.php, line: 9711
 msgid "Bookings made"
 msgstr "Gemaakte boekingen"
 #
-# File: eme-events.php, line: 9713
-# File: eme-events.php, line: 9767
+# File: eme-events.php, line: 9714
+# File: eme-events.php, line: 9768
 msgid "Answers"
 msgstr "Antwoorden"
 #
-# File: eme-events.php, line: 9717
+# File: eme-events.php, line: 9718
 msgid "GDPR modification date"
 msgstr "Wijzigingsdatum GDPR"
 #
-# File: eme-events.php, line: 9720
-# File: eme-events.php, line: 9753
+# File: eme-events.php, line: 9721
+# File: eme-events.php, line: 9754
 msgid "Related to"
 msgstr "Verwant met"
 #
-# File: eme-events.php, line: 9721
+# File: eme-events.php, line: 9722
 # File: eme-gdpr.php, line: 463
 # File: eme-gdpr.php, line: 617
 # File: eme-options.php, line: 1720
@@ -5226,313 +5226,313 @@ msgstr "Verwant met"
 msgid "MassMail"
 msgstr "MassMail"
 #
-# File: eme-events.php, line: 9722
+# File: eme-events.php, line: 9723
 # File: eme-options.php, line: 2086
 msgid "Birthday Email"
 msgstr "Verjaardag e-mail"
 #
-# File: eme-events.php, line: 9723
+# File: eme-events.php, line: 9724
 msgid "Public group"
 msgstr "Openbare groepen"
 #
-# File: eme-events.php, line: 9724
+# File: eme-events.php, line: 9725
 msgid "Nbr People"
 msgstr "Aantal personen"
 #
-# File: eme-events.php, line: 9738
+# File: eme-events.php, line: 9739
 msgid "No matching member found"
 msgstr "Geen overeenkomend lid gevonden."
 #
-# File: eme-events.php, line: 9740
+# File: eme-events.php, line: 9741
 # File: eme-options.php, line: 1086
 # File: events-manager.php, line: 365
 msgid "Members"
 msgstr "Leden"
 #
-# File: eme-events.php, line: 9742
+# File: eme-events.php, line: 9743
 # File: eme-gdpr.php, line: 493
 # File: eme-gdpr.php, line: 677
 # File: eme-members.php, line: 1434
 msgid "Membership"
 msgstr "Lidmaatschap"
 #
-# File: eme-events.php, line: 9745
+# File: eme-events.php, line: 9746
 # File: eme-gdpr.php, line: 673
 msgid "Member ID"
 msgstr "Lid ID"
 #
-# File: eme-events.php, line: 9748
+# File: eme-events.php, line: 9749
 msgid "Contact"
 msgstr "Contact"
 #
-# File: eme-events.php, line: 9769
+# File: eme-events.php, line: 9770
 msgid "Nbr Active Members"
 msgstr "Aantal actieve leden"
 #
-# File: eme-events.php, line: 9770
+# File: eme-events.php, line: 9771
 # File: eme-gdpr.php, line: 494
 # File: eme-gdpr.php, line: 681
 msgid "Start"
 msgstr "Begin"
 #
-# File: eme-events.php, line: 9771
+# File: eme-events.php, line: 9772
 # File: eme-gdpr.php, line: 495
 # File: eme-gdpr.php, line: 685
 # File: eme-tasks.php, line: 739
 msgid "End"
 msgstr "Einde"
 #
-# File: eme-events.php, line: 9772
+# File: eme-events.php, line: 9773
 msgid "Registered on"
 msgstr "Geregistreerd op"
 #
-# File: eme-events.php, line: 9773
+# File: eme-events.php, line: 9774
 msgid "Last seen on"
 msgstr "Laatst gezien op"
 #
-# File: eme-events.php, line: 9774
+# File: eme-events.php, line: 9775
 msgid "Paid on"
 msgstr "Betaald op"
 #
-# File: eme-events.php, line: 9775
-# File: eme-events.php, line: 9810
+# File: eme-events.php, line: 9776
+# File: eme-events.php, line: 9811
 # File: eme-people.php, line: 955
 # File: eme-people.php, line: 1265
 msgid "Unique nbr"
 msgstr "Uniek nr"
 #
-# File: eme-events.php, line: 9776
-# File: eme-events.php, line: 9811
+# File: eme-events.php, line: 9777
+# File: eme-events.php, line: 9812
 msgid "Payment ID"
 msgstr "Betalings ID"
 #
-# File: eme-events.php, line: 9777
-# File: eme-events.php, line: 9812
+# File: eme-events.php, line: 9778
+# File: eme-events.php, line: 9813
 # File: eme-people.php, line: 949
 # File: eme-people.php, line: 1241
 msgid "Paid"
 msgstr "Betaald"
 #
-# File: eme-events.php, line: 9778
-# File: eme-events.php, line: 9815
+# File: eme-events.php, line: 9779
+# File: eme-events.php, line: 9816
 msgid "Payment GW"
 msgstr "Payment GW"
 #
-# File: eme-events.php, line: 9779
-# File: eme-events.php, line: 9816
+# File: eme-events.php, line: 9780
+# File: eme-events.php, line: 9817
 msgid "Payment GW ID"
 msgstr "Payment GW ID"
 #
-# File: eme-events.php, line: 9780
-# File: eme-events.php, line: 9824
+# File: eme-events.php, line: 9781
+# File: eme-events.php, line: 9825
 msgid "Last reminder"
 msgstr "Laatste herinnering"
 #
-# File: eme-events.php, line: 9781
+# File: eme-events.php, line: 9782
 msgid "Reminders sent"
 msgstr "Herinneringen verstuurd"
 #
-# File: eme-events.php, line: 9786
-# File: eme-events.php, line: 9825
+# File: eme-events.php, line: 9787
+# File: eme-events.php, line: 9826
 # File: eme-people.php, line: 953
 # File: eme-people.php, line: 1253
 msgid "Discount"
 msgstr "Korting"
 #
-# File: eme-events.php, line: 9787
-# File: eme-events.php, line: 9826
+# File: eme-events.php, line: 9788
+# File: eme-events.php, line: 9827
 msgid "Used discount codes"
 msgstr "Gebruikte kortingcodes"
 #
-# File: eme-events.php, line: 9788
-# File: eme-events.php, line: 9809
+# File: eme-events.php, line: 9789
+# File: eme-events.php, line: 9810
 # File: eme-people.php, line: 954
 # File: eme-people.php, line: 1259
 msgid "Total price"
 msgstr "Totale prijs"
 #
-# File: eme-events.php, line: 9789
+# File: eme-events.php, line: 9790
 msgid "Membership price"
 msgstr "Lidmaatschapsprijs"
 #
-# File: eme-events.php, line: 9797
+# File: eme-events.php, line: 9798
 # File: eme-options.php, line: 1388
 msgid "Bookings"
 msgstr "Reserveringen"
 #
-# File: eme-events.php, line: 9799
+# File: eme-events.php, line: 9800
 msgid "Event ID"
 msgstr "Evenement ID"
 #
-# File: eme-events.php, line: 9801
+# File: eme-events.php, line: 9802
 msgid "Event info"
 msgstr "Evenement informatie"
 #
-# File: eme-events.php, line: 9803
+# File: eme-events.php, line: 9804
 msgid "Booker"
 msgstr "Aanmelder"
 #
-# File: eme-events.php, line: 9805
+# File: eme-events.php, line: 9806
 # File: eme-people.php, line: 952
 # File: eme-people.php, line: 1247
 msgid "Booking date"
 msgstr "Boekingsdatum"
 #
-# File: eme-events.php, line: 9813
+# File: eme-events.php, line: 9814
 # File: eme-people.php, line: 951
 msgid "Remaining"
 msgstr "Resterend"
 #
-# File: eme-events.php, line: 9814
+# File: eme-events.php, line: 9815
 # File: eme-people.php, line: 950
 msgid "Received"
 msgstr "Ontvangen"
 #
-# File: eme-events.php, line: 9817
+# File: eme-events.php, line: 9818
 msgid "Payment date"
 msgstr "Betaaldatum"
 #
-# File: eme-events.php, line: 9818
+# File: eme-events.php, line: 9819
 msgid "Mark paid and approve"
 msgstr "Markeer als betaald en keur goed"
 #
-# File: eme-events.php, line: 9819
+# File: eme-events.php, line: 9820
 # File: eme-rsvp.php, line: 4806
 # File: eme-rsvp.php, line: 4821
 msgid "Mark paid"
 msgstr "Markeer betaald"
 #
-# File: eme-events.php, line: 9833
+# File: eme-events.php, line: 9834
 # File: eme-people.php, line: 956
 msgid "Attendance count"
 msgstr "Aantal aanwezigen"
 #
-# File: eme-events.php, line: 9834
+# File: eme-events.php, line: 9835
 msgid "Please select only one record in order to do partial payments"
 msgstr "Selecteer slechts één record om gedeeltelijke betalingen te doen"
 #
-# File: eme-events.php, line: 9845
+# File: eme-events.php, line: 9846
 # File: eme-mailer.php, line: 2305
 # File: eme-mailer.php, line: 2483
 msgid "Send email"
 msgstr "Verstuur e-mail"
 #
-# File: eme-events.php, line: 9846
+# File: eme-events.php, line: 9847
 msgid "Queue email"
 msgstr "Zet email in de wachtrij"
 #
-# File: eme-events.php, line: 9847
+# File: eme-events.php, line: 9848
 # File: eme-mailer.php, line: 1342
 msgid "Sent on"
 msgstr "Verzonden op"
 #
-# File: eme-events.php, line: 9848
+# File: eme-events.php, line: 9849
 # File: eme-mailer.php, line: 1343
 msgid "First read on"
 msgstr "Voor het eerst gelezen op"
 #
-# File: eme-events.php, line: 9849
+# File: eme-events.php, line: 9850
 # File: eme-mailer.php, line: 1344
 msgid "Last read on"
 msgstr "Voor het laatst gelezen op"
 #
-# File: eme-events.php, line: 9850
+# File: eme-events.php, line: 9851
 # File: eme-mailer.php, line: 1345
 # File: eme-mailer.php, line: 2581
 # File: eme-mailer.php, line: 2676
 msgid "Read count"
 msgstr "Aantal keer gelezen"
 #
-# File: eme-events.php, line: 9851
+# File: eme-events.php, line: 9852
 # File: eme-mailer.php, line: 1346
 msgid "Error message"
 msgstr "Foutmelding"
 #
-# File: eme-events.php, line: 9856
+# File: eme-events.php, line: 9857
 # File: eme-mailer.php, line: 1347
 # File: eme-mailer.php, line: 2584
 # File: eme-mailer.php, line: 2678
 msgid "Action"
 msgstr "Actie"
 #
-# File: eme-events.php, line: 9857
+# File: eme-events.php, line: 9858
 # File: eme-mailer.php, line: 2092
 msgid "Mailing report"
 msgstr "Mailing rapport"
 #
-# File: eme-events.php, line: 9858
+# File: eme-events.php, line: 9859
 msgid "Select one or more events"
 msgstr "Selecteer één of meerdere evenementen"
 #
-# File: eme-events.php, line: 10089
+# File: eme-events.php, line: 10090
 # File: eme-rsvp.php, line: 5368
 # File: eme-tasks.php, line: 1850
 msgid "Edit event"
 msgstr "Wijzig activiteit"
 #
-# File: eme-events.php, line: 10105
+# File: eme-events.php, line: 10106
 # File: eme-rsvp.php, line: 5372
 msgid "RSVP Info: "
 msgstr "RSVP info: "
 #
-# File: eme-events.php, line: 10133
+# File: eme-events.php, line: 10134
 # File: eme-rsvp.php, line: 5401
 msgid "Free: "
 msgstr "Vrij: "
 #
-# File: eme-events.php, line: 10134
-# File: eme-events.php, line: 10137
-# File: eme-events.php, line: 10180
+# File: eme-events.php, line: 10135
+# File: eme-events.php, line: 10138
+# File: eme-events.php, line: 10181
 # File: eme-rsvp.php, line: 5375
 # File: eme-rsvp.php, line: 5464
 msgid "Approved:"
 msgstr "Goedgekeurd:"
 #
-# File: eme-events.php, line: 10141
-# File: eme-events.php, line: 10178
+# File: eme-events.php, line: 10142
+# File: eme-events.php, line: 10179
 # File: eme-rsvp.php, line: 5462
 msgid "Pending:"
 msgstr "Goed te keuren:"
 #
-# File: eme-events.php, line: 10146
+# File: eme-events.php, line: 10147
 # File: eme-rsvp.php, line: 5414
 msgid "Absent:"
 msgstr "Afwezig:"
 #
-# File: eme-events.php, line: 10149
+# File: eme-events.php, line: 10150
 # File: eme-recurrence.php, line: 571
 # File: eme-rsvp.php, line: 5417
 msgid "Max: "
 msgstr "Max: "
 #
-# File: eme-events.php, line: 10152
+# File: eme-events.php, line: 10153
 # File: eme-rsvp.php, line: 5420
 msgid "(%d waiting list seats included)"
 msgstr "(%d plaatsen op de wachtlijst inbegrepen)"
 #
-# File: eme-events.php, line: 10157
+# File: eme-events.php, line: 10158
 # File: eme-rsvp.php, line: 5426
 msgid "Printable view"
 msgstr "Afdrukvoorbeeld"
 #
-# File: eme-events.php, line: 10158
+# File: eme-events.php, line: 10159
 # File: eme-rsvp.php, line: 5427
 msgid "CSV export"
 msgstr "CSV export"
 #
-# File: eme-events.php, line: 10176
+# File: eme-events.php, line: 10177
 # File: eme-rsvp.php, line: 5460
 msgid "Task Info: %d tasks"
 msgstr "Taak Info: %d taken"
 #
-# File: eme-events.php, line: 10187
+# File: eme-events.php, line: 10188
 # File: eme-locations.php, line: 539
 # File: eme-locations.php, line: 2949
 # File: eme-recurrence.php, line: 601
 msgid "Edit location"
 msgstr "Wijzig locatie"
 #
-# File: eme-events.php, line: 10189
+# File: eme-events.php, line: 10190
 # File: eme-locations.php, line: 2951
 # File: eme-recurrence.php, line: 603
 msgid ""
@@ -5542,51 +5542,51 @@ msgstr ""
 "Geen geo-coördinaten aanwezig! Corrigeer dit voor deze locatie, anders is de "
 "data op je site incorrect."
 #
-# File: eme-events.php, line: 10208
+# File: eme-events.php, line: 10209
 msgid "Preview event"
 msgstr "Evenement bekijken"
 #
-# File: eme-events.php, line: 10210
+# File: eme-events.php, line: 10211
 msgid "View event"
 msgstr "Bekijk evenement"
 #
-# File: eme-events.php, line: 10215
+# File: eme-events.php, line: 10216
 msgid "Duplicate this event"
 msgstr "Dupliceer dit evenement"
 #
-# File: eme-events.php, line: 10224
+# File: eme-events.php, line: 10225
 # File: eme-rsvp.php, line: 5437
 msgid "Add booking for this event"
 msgstr "Voeg boeking toe voor dit evenement"
 #
-# File: eme-events.php, line: 10226
+# File: eme-events.php, line: 10227
 # File: eme-rsvp.php, line: 5439
 msgid "Password protected"
 msgstr "Beschermd met wachtwoord"
 #
-# File: eme-events.php, line: 10234
+# File: eme-events.php, line: 10235
 # File: eme-recurrence.php, line: 573
 msgid "Free"
 msgstr "Gratis"
 #
-# File: eme-events.php, line: 10352
+# File: eme-events.php, line: 10353
 # File: eme-recurrence.php, line: 668
 msgid "No action defined!"
 msgstr "Geen actie gedefineerd!"
 #
-# File: eme-events.php, line: 10370
+# File: eme-events.php, line: 10371
 msgid "Events moved to trash"
 msgstr "Evenementen verplaatst naar prullenbak"
 #
-# File: eme-events.php, line: 10378
+# File: eme-events.php, line: 10379
 msgid "Restored selected events to draft status"
 msgstr "Geselecteerde evenementen hersteld naar conceptstatus"
 #
-# File: eme-events.php, line: 10386
+# File: eme-events.php, line: 10387
 msgid "Events status updated"
 msgstr "Status van evenementen ge-updated"
 #
-# File: eme-events.php, line: 10399
+# File: eme-events.php, line: 10400
 msgid "Events added to category"
 msgstr "Evenementen toegevoegd aan categorie"
 #
@@ -7155,7 +7155,7 @@ msgstr ""
 "datum en tijd om rekening te houden met tijdverschillen tussen client en "
 "server als evenement datums en tijden getoond worden."
 #
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.66)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.3.67)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 # File: eme-gdpr.php, line: 547
 # File: eme-gdpr.php, line: 553
@@ -16937,13 +16937,16 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Select the event(s)"
 #~ msgstr "Selecteer evenement(en)"
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "Converteer het einde van een lijn"
+#
 #
 #
 #
@@ -16956,12 +16959,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
 #~ msgstr ""
 #~ "Als je niet wil dat dit gebeurt (bv. voor een template die je gebruikt in "
 #~ "een tabel-rij), deselecteer deze optie."
+#
 #
 #
 #
@@ -16994,9 +16999,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "See <a href=\"%s\">here</a> for more info on country code."
 #~ msgstr "Zie <a href=\"%s\">hier</a> voor meer info over landcodes"
+#
 #
 #
 #
@@ -17058,6 +17065,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -17065,6 +17073,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Bestand uploaden is hier niet toegestaan, gebruik de normale WP "
 #~ "mediabibliotheek om bestanden te uploaden of gebruik de knop 'Media "
 #~ "toevoegen' in de locatiebeschrijving."
+#
 #
 #
 #
@@ -17121,8 +17130,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Geüploade bestanden"
+#
 #
 #
 #
@@ -17181,8 +17192,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "De geselecteerde taakaanmeldingen zijn succesvol verwijderd."
+#
 #
 #
 #
@@ -17244,8 +17257,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Onjuist IDs meegegeven. Probeer het nog eens."
+#
 #
 #
 #
@@ -17313,6 +17328,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
@@ -17320,6 +17336,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "De template moet minstens de placeholders #_LASTNAME, #_FIRSTNAME, "
 #~ "#_EMAIL en #_SUBMIT bevatten. Anders zal het formulier niet getoond "
 #~ "worden."
+#
 #
 #
 #

@@ -9,8 +9,8 @@ fi
 
 # first create a minimal zip of the previous release
 cd /home/liedekef/wordpress/git
-zip -r events-made-easy-minimal.zip events-made-easy -x '*.git*' 'events-made-easy/langs/*.po' 'events-made-easy/langs/pot_gen*' 'events-made-easy/langs/*.pot' 'events-made-easy/langs/gettextize.sh' 'events-made-easy/screenshot*' -x 'events-made-easy/dist*' -x 'events-made-easy/changelog.txt' -x 'events-made-easy/script*' -x 'events-made-easy/dompdf*' -x 'events-made-easy/payment_gateways*'
-mv events-made-easy-minimal.zip events-made-easy/dist
+#zip -r events-made-easy-minimal.zip events-made-easy -x '*.git*' 'events-made-easy/langs/*.po' 'events-made-easy/langs/pot_gen*' 'events-made-easy/langs/*.pot' 'events-made-easy/langs/gettextize.sh' 'events-made-easy/screenshot*' -x 'events-made-easy/dist*' -x 'events-made-easy/changelog.txt' -x 'events-made-easy/script*' -x 'events-made-easy/dompdf*' -x 'events-made-easy/payment_gateways*'
+#mv events-made-easy-minimal.zip events-made-easy/dist
 
 
 # If wanted, automate language file updates

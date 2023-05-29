@@ -4875,10 +4875,21 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	</form>
 	</div>
 	<?php
-	$formfields               = eme_get_formfields( '', 'rsvp,generic,events' );
+	$formfields               = eme_get_formfields( '', 'rsvp,generic' );
 	$extrafields_arr          = [];
 	$extrafieldnames_arr      = [];
 	$extrafieldsearchable_arr = [];
+	foreach ( $formfields as $formfield ) {
+		$extrafields_arr[]          = $formfield['field_id'];
+		$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
+		$extrafieldsearchable_arr[] = $formfield['searchable'];
+	}
+	// add the formfields of events as last
+	// first a separator (will be used in the js)
+	$extrafields_arr[]          = 'SEPARATOR';
+	$extrafieldnames_arr[]      = '<b>'.__('Event fields','events-made-easy').'</b>';
+	$extrafieldsearchable_arr[] = 0;
+	$formfields               = eme_get_formfields( '', 'events' );
 	foreach ( $formfields as $formfield ) {
 		$extrafields_arr[]          = $formfield['field_id'];
 		$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );

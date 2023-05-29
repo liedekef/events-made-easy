@@ -142,7 +142,17 @@ jQuery(document).ready(function ($) {
                 var extrafieldnames=$('#BookingsTableContainer').data('extrafieldnames').toString().split(',');
                 var extrafieldsearchable=$('#BookingsTableContainer').data('extrafieldsearchable').toString().split(',');
                 $.each(extrafields, function( index, value ) {
-                        if (value != '') {
+                        if (value == 'SEPARATOR') {
+                                var fieldindex='SEPARATOR_'+index;
+                                var extrafield = {};
+                                extrafield[fieldindex] = {
+                                        title: extrafieldnames[index],
+                                        sorting: false,
+                                        visibility: 'separator'
+                                };
+		console.log(extrafield);
+                                $.extend(rsvpfields,extrafield);
+			} else if (value != '') {
                                 var fieldindex='FIELD_'+value;
                                 var extrafield = {};
                                 if (extrafieldsearchable[index]=='1') {
@@ -158,6 +168,7 @@ jQuery(document).ready(function ($) {
                                 $.extend(rsvpfields,extrafield);
                         }
                 });
+		console.log(rsvpfields);
 		$.extend(rsvpfields,editfield);
 
 		$('#BookingsTableContainer').jtable({

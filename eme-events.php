@@ -5501,7 +5501,6 @@ function eme_get_events_assoc( $event_ids_arr = []) {
 		$events = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $events as $this_event ) {
 			$this_event = eme_get_extra_event_data( $this_event );
-			$this_event = eme_get_extra_location_data( $this_event );
 			$inflated_events[$this_event['event_id']] = $this_event;
 		}
 	}

@@ -9161,13 +9161,13 @@ function eme_sanitize_event( $event ) {
 		}
 	}
 
-	if ( empty( get_option( 'eme_recaptcha_for_forms' ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_recaptcha_for_forms' ) ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
 		$event_properties['use_recaptcha'] = 0;
 	}
-	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
 		$event_properties['use_hcaptcha'] = 0;
 	}
-	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
 		$event_properties['use_cfcaptcha'] = 0;
 	}
 

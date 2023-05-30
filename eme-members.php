@@ -1236,13 +1236,13 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	}
 	$membership['properties']['remove_pending_days'] = intval( $membership['properties']['remove_pending_days'] );
 
-	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
 		$membership['properties']['use_hcaptcha'] = 0;
 	}
-	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
 		$membership['properties']['use_cfcaptcha'] = 0;
 	}
-	if ( empty( get_option( 'eme_recaptcha_for_forms' ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_recaptcha_for_forms' ) ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
 		$membership['properties']['use_recaptcha'] = 0;
 	}
 

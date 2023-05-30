@@ -168,6 +168,9 @@ function eme_init_event_props( $props = [] ) {
 	if ( ! isset( $props['use_captcha'] ) ) {
 		$props['use_captcha'] = get_option( 'eme_captcha_for_forms' ) ? 1 : 0;
 	}
+	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
+		$props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) ? 1 : 0;
+	}
 	if ( ! isset( $props['dyndata_all_fields'] ) ) {
 		$props['dyndata_all_fields'] = 0;
 	}
@@ -488,7 +491,7 @@ function eme_events_page() {
 				$event_properties[ 'use_' . $pg ] = 0;
 			}
 		}
-		$select_event_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'dyndata_all_fields', 'all_day' ];
+		$select_event_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'captcha_only_logged_out', 'dyndata_all_fields', 'all_day' ];
 		foreach ( $select_event_post_vars as $post_var ) {
 			if ( ! isset( $_POST[ 'eme_prop_' . $post_var ] ) ) {
 				$event_properties[ $post_var ] = 0;
@@ -8148,40 +8151,46 @@ function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
 
 function eme_meta_box_div_event_captcha_settings( $event ) {
 	
+	$eme_prop_captcha_only_logged_out   = ( $event['event_properties']['captcha_only_logged_out'] ) ? "checked='checked'" : '';
 	$eme_prop_use_captcha   = ( $event['event_properties']['use_captcha'] ) ? "checked='checked'" : '';
 	$eme_prop_use_recaptcha = ( $event['event_properties']['use_recaptcha'] ) ? "checked='checked'" : '';
 	$eme_prop_use_hcaptcha  = ( $event['event_properties']['use_hcaptcha'] ) ? "checked='checked'" : '';
 	$eme_prop_use_cfcaptcha  = ( $event['event_properties']['use_cfcaptcha'] ) ? "checked='checked'" : '';
 	?>
 <div id="div_event_captcha_settings">
-		<br>
+	<br>
 	<b><?php esc_html_e( 'Captcha settings', 'events-made-easy' ); ?></b>
 	<?php if ( ! empty( get_option( 'eme_recaptcha_for_forms' ) ) && ! empty( get_option( 'eme_recaptcha_site_key' ) ) ) : ?>
 	<p id='p_use_recaptcha'>
 		<input id="eme_prop_use_recaptcha" name='eme_prop_use_recaptcha' value='1' type='checkbox' <?php echo $eme_prop_use_recaptcha; ?>>
 		<label for="eme_prop_use_recaptcha"><?php esc_html_e( 'Use Google reCAPTCHA for forms?', 'events-made-easy' ); ?></label>
 		<span class="eme_smaller"><br><?php esc_html_e( 'If this option is checked, make sure to use #_RECAPTCHA in your booking/cancel form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span>
-		</p>
-<?php endif; ?>
+	</p>
+	<?php endif; ?>
 	<?php if ( ! empty( get_option( 'eme_hcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_hcaptcha_site_key' ) ) ) : ?>
 	<p id='p_use_hcaptcha'>
 		<input id="eme_prop_use_hcaptcha" name='eme_prop_use_hcaptcha' value='1' type='checkbox' <?php echo $eme_prop_use_hcaptcha; ?>>
 		<label for="eme_prop_use_hcaptcha"><?php esc_html_e( 'Use hCaptcha for forms?', 'events-made-easy' ); ?></label>
 		<span class="eme_smaller"><br><?php esc_html_e( 'If this option is checked, make sure to use #_HCAPTCHA in your booking/cancel form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span>
-		</p>
-<?php endif; ?>
+	</p>
+	<?php endif; ?>
 	<?php if ( ! empty( get_option( 'eme_cfcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) : ?>
 	<p id='p_use_cfcaptcha'>
 		<input id="eme_prop_use_cfcaptcha" name='eme_prop_use_cfcaptcha' value='1' type='checkbox' <?php echo $eme_prop_use_cfcaptcha; ?>>
 		<label for="eme_prop_use_cfcaptcha"><?php esc_html_e( 'Use Cloudflare Turnstile for forms?', 'events-made-easy' ); ?></label>
 		<span class="eme_smaller"><br><?php esc_html_e( 'If this option is checked, make sure to use #_CFCAPTCHA in your booking/cancel form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span>
-		</p>
-<?php endif; ?>
+	</p>
+	<?php endif; ?>
 	<p id='p_use_captcha'>
 		<input id="eme_prop_use_captcha" name='eme_prop_use_captcha' value='1' type='checkbox' <?php echo $eme_prop_use_captcha; ?>>
 		<label for="eme_prop_use_captcha"><?php esc_html_e( 'Use EME captcha for forms?', 'events-made-easy' ); ?></label>
 		<span class="eme_smaller"><br><?php esc_html_e( 'If this option is checked, make sure to use #_CAPTCHA in your booking/cancel form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span>
-		</p>
+	</p>
+	<p id='p_captcha_only_logged_out'>
+		<input id="eme_prop_captcha_only_logged_out" name='eme_prop_captcha_only_logged_out' value='1' type='checkbox' <?php echo $eme_prop_captcha_only_logged_out; ?>>
+		<label for="eme_prop_captcha_only_logged_out"><?php esc_html_e( 'Only use captcha for logged out users?', 'events-made-easy' ); ?></label>
+		<span class="eme_smaller"><br><?php esc_html_e( 'If this option is checked, the captcha will only be used for logged out users.', 'events-made-easy' ); ?></span>
+	</p>
 </div>
 	<?php
 }
@@ -9152,13 +9161,13 @@ function eme_sanitize_event( $event ) {
 		}
 	}
 
-	if ( empty( get_option( 'eme_recaptcha_for_forms' ) ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_recaptcha_for_forms' ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
 		$event_properties['use_recaptcha'] = 0;
 	}
-	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
 		$event_properties['use_hcaptcha'] = 0;
 	}
-	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
 		$event_properties['use_cfcaptcha'] = 0;
 	}
 

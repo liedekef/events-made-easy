@@ -111,6 +111,9 @@ function eme_init_membership_props( $props = [] ) {
 	if ( ! isset( $props['use_captcha'] ) ) {
 		$props['use_captcha'] = get_option( 'eme_captcha_for_forms' ) ? 1 : 0;
 	}
+	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
+                $props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) ? 1 : 0;
+        }
 	if ( ! isset( $props['create_wp_user'] ) ) {
 		$props['create_wp_user'] = 0;
 	}
@@ -1203,7 +1206,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
 		$membership['properties'] = eme_kses( $_POST['properties'] );
 	}
 	// now for the select boxes, we need to set to 0 if not in the _POST
-	$select_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'create_wp_user' ];
+	$select_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'captcha_only_logged_out', 'create_wp_user' ];
 	foreach ( $select_post_vars as $post_var ) {
 		if ( ! isset( $_POST['properties'][ $post_var ] ) ) {
 			$membership['properties'][ $post_var ] = 0;
@@ -1233,13 +1236,13 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	}
 	$membership['properties']['remove_pending_days'] = intval( $membership['properties']['remove_pending_days'] );
 
-	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
 		$membership['properties']['use_hcaptcha'] = 0;
 	}
-	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
 		$membership['properties']['use_cfcaptcha'] = 0;
 	}
-	if ( empty( get_option( 'eme_recaptcha_for_forms' ) ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
+	if ( empty( get_option( 'eme_recaptcha_for_forms' ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
 		$membership['properties']['use_recaptcha'] = 0;
 	}
 
@@ -1690,6 +1693,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	$type_array                 = eme_membership_types();
 	$duration_array             = eme_membership_durations();
 	$registration_wp_users_only = ( $membership['properties']['registration_wp_users_only'] ) ? "checked='checked'" : '';
+	$captcha_only_logged_out    = ( $membership['properties']['captcha_only_logged_out'] ) ? "checked='checked'" : '';
 	$use_captcha                = ( $membership['properties']['use_captcha'] ) ? "checked='checked'" : '';
 	$use_recaptcha              = ( $membership['properties']['use_recaptcha'] ) ? "checked='checked'" : '';
 	$use_hcaptcha               = ( $membership['properties']['use_hcaptcha'] ) ? "checked='checked'" : '';
@@ -1788,7 +1792,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><label for="use_hcaptcha"><?php esc_html_e( 'hCaptcha', 'events-made-easy' ); ?></label></td>
 	<td><input id="use_hcaptcha" name="properties[use_hcaptcha]" type="checkbox" <?php echo $use_hcaptcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the hCaptcha on the membership signup form.', 'events-made-easy' ); ?>
-		<br><?php esc_html_e( 'If this option is checked, make sure to use #_HCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
+		<br><?php esc_html_e( 'If this option is checked, make sure to use #_HCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
 <?php endif; ?>
@@ -1797,7 +1801,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><label for="use_cfcaptcha"><?php esc_html_e( 'Cloudflare Turnstile', 'events-made-easy' ); ?></label></td>
 	<td><input id="use_cfcaptcha" name="properties[use_cfcaptcha]" type="checkbox" <?php echo $use_cfcaptcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use Cloudflare Turnstile on the membership signup form.', 'events-made-easy' ); ?>
-		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CFCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
+		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CFCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
 <?php endif; ?>
@@ -1805,7 +1809,13 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><label for="use_captcha"><?php esc_html_e( 'Captcha', 'events-made-easy' ); ?></label></td>
 	<td><input id="use_captcha" name="properties[use_captcha]" type="checkbox" <?php echo $use_captcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the captcha on the membership signup form.', 'events-made-easy' ); ?>
-		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
+		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></p>
+	</td>
+	</tr>
+	<tr>
+	<td><label for="captcha_only_logged_out"><?php esc_html_e( 'Only use captcha for logged out users?', 'events-made-easy' ); ?></label></td>
+	<td><input id="captcha_only_logged_out" name="properties[captcha_only_logged_out]" type="checkbox" <?php echo $captcha_only_logged_out; ?>>
+		<br><p class='eme_smaller'><?php esc_html_e( 'If this option is checked, the captcha will only be used for logged out users.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
 	<tr>

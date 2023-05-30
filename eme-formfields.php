@@ -1035,7 +1035,9 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms = get_option( 'eme_cfcaptcha_for_forms' );
 	$captcha_set = 0;
-	if ( $eme_recaptcha_for_forms ) {
+	if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
+		$format = eme_add_captcha_submit( $format );
+	} elseif ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'hcaptcha' );
@@ -1254,7 +1256,9 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 	$eme_hcaptcha_for_forms  = $event['event_properties']['use_hcaptcha'] && ! $eme_is_admin_request;
 	$eme_cfcaptcha_for_forms  = $event['event_properties']['use_cfcaptcha'] && ! $eme_is_admin_request;
 	$captcha_set = 0;
-	if ( $eme_recaptcha_for_forms ) {
+	if ( is_user_logged_in() && $event['event_properties']['captcha_only_logged_out'] ) {
+		$format = eme_add_captcha_submit( $format );
+	} elseif ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'hcaptcha' );
@@ -1444,7 +1448,9 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms = get_option( 'eme_cfcaptcha_for_forms' );
 	$captcha_set = 0;
-	if ( $eme_recaptcha_for_forms ) {
+	if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
+		$format = eme_add_captcha_submit( $format );
+	} elseif ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'hcaptcha' );
@@ -2390,7 +2396,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	$captcha_set = 0;
 
 	if ( ! $is_multibooking ) {
-		if ( $eme_recaptcha_for_forms ) {
+		if ( is_user_logged_in() && $event['event_properties']['captcha_only_logged_out'] ) {
+			$format = eme_add_captcha_submit( $format );
+		} elseif ( $eme_recaptcha_for_forms ) {
 			$format = eme_add_captcha_submit( $format, 'recaptcha', $add_dyndadata );
 		} elseif ( $eme_hcaptcha_for_forms ) {
 			$format = eme_add_captcha_submit( $format, 'hcaptcha', $add_dyndadata );
@@ -3595,7 +3603,9 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		}
 	}
 
-	if ( $eme_recaptcha_for_forms ) {
+	if ( is_user_logged_in() && $membership['properties']['captcha_only_logged_out'] ) {
+                $format = eme_add_captcha_submit( $format, '', $add_dyndata );
+        } elseif ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha', $add_dyndadata );
 	} elseif ( $eme_hcaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'hcaptcha', $add_dyndadata );
@@ -4090,7 +4100,9 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms  = get_option( 'eme_cfcaptcha_for_forms' );
 	$captcha_set = 0;
-	if ( $eme_recaptcha_for_forms ) {
+	if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
+		$format = eme_add_captcha_submit( $format );
+	} elseif ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'hcaptcha' );
@@ -4301,7 +4313,9 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 	$eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
 	$eme_cfcaptcha_for_forms  = get_option( 'eme_cfcaptcha_for_forms' );
 	$captcha_set = 0;
-	if ( $eme_recaptcha_for_forms ) {
+	if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
+		$format = eme_add_captcha_submit( $format );
+	} elseif ( $eme_recaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'recaptcha' );
 	} elseif ( $eme_hcaptcha_for_forms ) {
 		$format = eme_add_captcha_submit( $format, 'hcaptcha' );

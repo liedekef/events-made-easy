@@ -378,6 +378,12 @@ function eme_check_captcha( $remove_upon_success = 0 ) {
 
 function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 	$captcha_res = false;
+	if ( (! empty( $properties ) && !empty($properties['captcha_only_logged_out'])) ||
+		(empty( $properties ) && get_option( 'eme_captcha_only_logged_out' ) ) ) 	 {
+		if (is_user_logged_in()) {
+			return true;
+		}
+	}
 	if ( ( ! empty( $properties ) && $properties['use_recaptcha'] ) || ( empty( $properties ) && get_option( 'eme_recaptcha_for_forms' ) ) ) {
 		$captcha_res = eme_check_recaptcha();
 		if ( ! $captcha_res ) {
@@ -434,6 +440,9 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 }
 
 function eme_generate_captchas_html() {
+	if ( get_option( 'eme_captcha_only_logged_out' ) && is_user_logged_in() ) {
+		return '';
+	}
 	$eme_captcha_for_forms   = get_option( 'eme_captcha_for_forms' );
         $eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
         $eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );

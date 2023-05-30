@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.69 (2023//) =
+* Allow to use captcha only for logged out users
+
 = 2.3.68 (2023/05/27) =
 * List of bookings was empty due to new function being used, fixed now
 

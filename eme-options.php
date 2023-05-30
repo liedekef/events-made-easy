@@ -160,6 +160,7 @@ function eme_add_options( $reset = 0 ) {
 		'eme_permalink_payments_prefix'                   => '',
 		'eme_default_contact_person'                      => -1,
 		'eme_honeypot_for_forms'                          => 1,
+		'eme_captcha_only_logged_out'                     => 0,
 		'eme_hcaptcha_for_forms'                          => 0,
 		'eme_hcaptcha_site_key'                           => '',
 		'eme_hcaptcha_secret_key'                         => '',
@@ -996,7 +997,7 @@ function eme_options_register() {
 	$tab     = isset( $_POST['tab'] ) ? eme_sanitize_request( $_POST['tab'] ) : 'general';
 	switch ( $tab ) {
 		case 'general':
-				$options = [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_honeypot_for_forms', 'eme_frontend_nocache', 'eme_use_is_page_for_title', 'eme_rememberme' ];
+				$options = [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_honeypot_for_forms', 'eme_captcha_only_logged_out', 'eme_frontend_nocache', 'eme_use_is_page_for_title', 'eme_rememberme' ];
 			break;
 		case 'seo':
 				$options = [ 'eme_seo_permalink', 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ];
@@ -1256,6 +1257,7 @@ function eme_options_page() {
 				eme_options_radio_binary( __( 'Use Cloudflare Turnstile for forms?', 'events-made-easy' ), 'eme_cfcaptcha_for_forms', __( 'Check this option if you want to use Cloudflare Turnstile on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CFCAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present.', 'events-made-easy' ) );
 				eme_options_input_text( __( 'Cloudflare Turnstile site key', 'events-made-easy' ), 'eme_cfcaptcha_site_key', __( 'This field is required', 'events-made-easy' ) );
 				eme_options_input_text( __( 'Cloudflare Turnstile secret key', 'events-made-easy' ), 'eme_cfcaptcha_secret_key', __( 'This field is required', 'events-made-easy' ) );
+				eme_options_radio_binary( __( 'Only use captcha for logged out users?', 'events-made-easy' ), 'eme_captcha_only_logged_out', __( 'If this option is checked, the captcha will only be used for logged out users.', 'events-made-easy' ) );
 				eme_options_radio_binary( __( 'Enable Remember-me functionality?', 'events-made-easy' ), 'eme_rememberme', __( 'Check this option to show a checkbox that allows people to choose if they want their lastname/firstname/email stored locallly, to have it prefilled next time. This also requires the use of a #_REMEMBERME placeholder in your form, and only works for not logged-in users in the frontend. If checked, the option "Show the RSVP form again after booking" will be ignored.', 'events-made-easy' ) );
 				eme_options_select(
 				    __( 'Autocomplete sources', 'events-made-easy' ),

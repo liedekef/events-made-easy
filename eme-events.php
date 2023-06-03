@@ -4800,7 +4800,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 			'include_customformfields'   => $include_customformfields,
 			'search_customfieldids'      => $search_customfieldids,
 			'search_customfields'        => $search_customfields,
-			'include_unlisted'           => $include_unlistedsearch_customfields,
+			'include_unlisted'           => $include_unlisted,
 		];
 
 		$r = wp_parse_args( $o_limit, $defaults );

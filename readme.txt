@@ -100,6 +100,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.69 (2023//) =
 * Allow to use captcha only for logged out users
+* Show price description in printable booking report
+* No longer show the unique payment number in printable booking reports (only usefull in Belgium and for wired transfers anyway)
+* Fixed showing the discount name in the printable booking report
+* Fixed some php warnings
 
 = 2.3.68 (2023/05/27) =
 * List of bookings was empty due to new function being used, fixed now

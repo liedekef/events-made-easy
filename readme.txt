@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.2
-Stable tag: 2.3.68
+Stable tag: 2.3.69
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.69 (2023//) =
+= 2.3.69 (2023/06/03) =
 * Allow to use captcha only for logged out users
 * Show price description in printable booking report
 * No longer show the unique payment number in printable booking reports (only usefull in Belgium and for wired transfers anyway)

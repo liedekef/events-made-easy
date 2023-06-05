@@ -80,6 +80,7 @@ jQuery(document).ready( function($) {
 							    lastname: eme_htmlDecode(item.lastname),
 							    firstname: eme_htmlDecode(item.firstname),
 							    email: eme_htmlDecode(item.email),
+							    phone: eme_htmlDecode(item.phone)
 						    };
 					    }));
 				    }, "json");

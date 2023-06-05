@@ -4,6 +4,7 @@ jQuery(document).ready( function($) {
                         $('input[name=task_lastname]').attr('readonly', false).removeClass('clearable');
                         $('input[name=task_firstname]').val('').attr('readonly', false);
                         $('input[name=task_email]').val('').attr('readonly', false);
+                        $('input[name=task_phone]').val('').attr('readonly', false);
                 }
                 if ($('input[name=task_lastname]').val()!='') {
                         $('input[name=task_lastname]').addClass('clearable x');
@@ -88,6 +89,7 @@ jQuery(document).ready( function($) {
 			    $('input[name=task_lastname]').attr('readonly', true).val(ui.item.lastname);
 			    $('input[name=task_firstname]').attr('readonly', true).val(ui.item.firstname);
 			    $('input[name=task_email]').attr('readonly', true).val(ui.item.email);
+			    $('input[name=task_phone]').attr('readonly', true).val(ui.item.phone);
 			    $('input[name=task_lastname]').addClass('clearable x');
 			    return false;
 		    },

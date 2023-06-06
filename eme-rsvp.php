@@ -4886,14 +4886,16 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	}
 	// add the formfields of events as last
 	// first a separator (will be used in the js)
-	$extrafields_arr[]          = 'SEPARATOR';
-	$extrafieldnames_arr[]      = '<b>'.__('Event fields','events-made-easy').'</b>';
-	$extrafieldsearchable_arr[] = 0;
 	$formfields               = eme_get_formfields( '', 'events' );
-	foreach ( $formfields as $formfield ) {
-		$extrafields_arr[]          = $formfield['field_id'];
-		$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
-		$extrafieldsearchable_arr[] = $formfield['searchable'];
+	if (!empty($formfields)) {
+		$extrafields_arr[]          = 'SEPARATOR';
+		$extrafieldnames_arr[]      = '<b>'.__('Event fields','events-made-easy').'</b>';
+		$extrafieldsearchable_arr[] = 0;
+		foreach ( $formfields as $formfield ) {
+			$extrafields_arr[]          = $formfield['field_id'];
+			$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
+			$extrafieldsearchable_arr[] = $formfield['searchable'];
+		}
 	}
 	// these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns
 	$extrafields          = join( ',', $extrafields_arr );

@@ -47,6 +47,9 @@ function eme_new_group() {
 }
 
 function eme_init_person_props( $props ) {
+	if ( ! isset( $props['wp_delete_user'] ) ) {
+		$props['wp_delete_user'] = 0;
+	}
 	if ( ! isset( $props['image_id'] ) ) {
 		$props['image_id'] = 0;
 	}
@@ -2174,7 +2177,16 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 			<br>
 			<?php esc_html_e( "Linking an EME person with a WP user will not be allowed if there's another EME person matching the WP user's firstname/lastname/email.", 'events-made-easy' ); ?><br>
 			<?php esc_html_e( "Linking an EME person with a WP user will change the person firstname/lastname/email to the WP user's firstname/lastname/email and those fields can then only be changed via the WP profile of that person.", 'events-made-easy' ); ?>
-			</td>
+		</td>
+		</tr>
+		<tr>
+		<td style="vertical-align:top"><label for="wpid"><?php esc_html_e( 'Delete linked WP user?', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_select_binary( $person['properties']['wp_delete_user'], "properties[wp_delete_user]" ); ?>
+			<br>
+			<?php esc_html_e( "Set this to yes if you want the linked WP user to be deleted when the EME person gets removed (moved to trash bin).", 'events-made-easy' ); ?><br>
+			<?php esc_html_e( "By default, this is only set to true when a WP user is created by EME (when creating a member or doing a reservation for an event and the option to create a WP user is set). An admin will never be deleted.", 'events-made-easy' ); ?>
+		</td>
+		</td>
 		</tr>
 		<?php
 	endif;
@@ -2632,11 +2644,16 @@ function eme_trash_people( $person_ids ) {
 	if ( ! eme_is_list_of_int( $person_ids ) ) {
 		return;
 	}
-	if ( has_action( 'eme_trash_person_action' ) ) {
-		$ids_arr = explode(',',$person_ids);
-		foreach ( $ids_arr as $person_id ) {
-			$person = eme_get_person( $person_id );
-			do_action( 'eme_trash_person_action', $person );
+	$ids_arr = explode(',',$person_ids);
+	foreach ( $ids_arr as $person_id ) {
+		$person = eme_get_person( $person_id );
+		do_action( 'eme_trash_person_action', $person );
+		// now delete the wp user if desired and not an admin
+		if ($person['properties']['wp_delete_user'] && !empty($person['wp_id'])) {
+			$user = get_userdata($person['wp_id']);
+			if (!empty($user) && !in_array('administrator',$user->roles )) {
+				wp_delete_user($person['wp_id']);
+			}
 		}
 	}
 	eme_trash_person_bookings_future_events( $person_ids );
@@ -3300,11 +3317,11 @@ function eme_db_insert_person( $line ) {
 		$new_line = apply_filters( 'eme_insert_person_filter', $new_line );
 	}
 
-	// some properties validation: only image_id as int is allowed
+	// some properties validation: only image_id or wp_delete_user as int is allowed
 	$props                  = eme_unserialize( $new_line['properties'] );
 	$new_line['properties'] = [];
 	foreach ( $props as $key => $val ) {
-		if ( $key == 'image_id' ) {
+		if ( $key == 'image_id' || $key == 'wp_delete_user' ) {
 			$new_line['properties'][ $key ] = intval( $val );
 		}
 	}
@@ -3367,11 +3384,11 @@ function eme_db_update_person( $person_id, $line ) {
 	$new_line               = array_merge( $person, $keys );
 	$new_line['properties'] = eme_serialize( $new_line['properties'] );
 
-	// some properties validation: only image_id as int is allowed
+	// some properties validation: only image_id or wp_delete_user as int is allowed
 	$props                  = eme_unserialize( $new_line['properties'] );
 	$new_line['properties'] = [];
 	foreach ( $props as $key => $val ) {
-		if ( $key == 'image_id' ) {
+		if ( $key == 'image_id' || $key == 'wp_delete_user' ) {
 			$new_line['properties'][ $key ] = intval( $val );
 		}
 	}

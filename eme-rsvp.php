@@ -94,18 +94,42 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 		return;
 	}
 
+	$current_userid = get_current_user_id();
 	$registration_wp_users_only = $event['registration_wp_users_only'];
 	$form_class = '';
 	// if we require a user to be WP registered to be able to book
 	// in the backend we should not check this condition
 	if ( ! eme_is_admin_request() ) {
-		if ( ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT ) && ! is_user_logged_in() ) {
+		if ( ( $registration_wp_users_only || ! empty( $event['event_properties']['rsvp_required_group_ids']) || ! empty( $event['event_properties']['rsvp_required_membership_ids']) || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT ) && ! is_user_logged_in() ) {
 			$form_html  = "<div class='eme-message-error eme-rsvp-message eme-rsvp-message-error'>";
 			$format     = get_option( 'eme_rsvp_login_required_string' );
 			$form_html .= eme_replace_event_placeholders( $format, $event );
 			$form_html .= '</div>';
 			return $form_html;
 		}
+
+		// check group memberships
+		if ( ! empty( $event['event_properties']['rsvp_required_group_ids'] ) ) {
+			$person = eme_get_person_by_wp_id( $current_userid );
+			if ( empty( $person ) ) {
+				return '';
+			}
+			$person_groupids = eme_get_persongroup_ids( $person['person_id'] );
+			$res_intersect   = array_intersect( $person_groupids, $event['event_properties']['rsvp_required_group_ids'] );
+			if ( empty( $person_groupids ) || empty( $res_intersect ) ) {
+				return '';
+			}
+		}
+
+		// check memberships
+		if ( ! empty( $event['event_properties']['rsvp_required_membership_ids'] ) ) {
+			$membershipids = eme_get_active_membershipids_by_wpid( $current_userid );
+			$res_intersect = array_intersect( $membershipids, $event['event_properties']['rsvp_required_membership_ids'] );
+			if ( empty( $membershipids ) || empty( $res_intersect ) ) {
+				return '';
+			}
+		}
+
 		if ( $event['event_properties']['invite_only'] ) {
 			if ( ! eme_check_invite_url( $event['event_id'] ) ) {
 				$form_html  = "<div class='eme-message-error eme-rsvp-message eme-rsvp-message-error'>";
@@ -121,7 +145,6 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 		}
 	}
 
-	$current_userid = get_current_user_id();
 	if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
 		( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
 		$search_tables = get_option( 'eme_autocomplete_sources' );

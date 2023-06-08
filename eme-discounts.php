@@ -906,7 +906,7 @@ function eme_discounts_edit_layout( $discount_id = 0, $message = '' ) {
 			<td>
 			<?php
 			if ( ! empty( $memberships ) ) {
-				echo eme_ui_multiselect_key_value( $discount['properties']['membership_ids'], 'properties[membership_ids]', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2_discount_class' );
+				echo eme_ui_multiselect_key_value( $discount['properties']['membership_ids'], 'properties[membership_ids]', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class' );
 			} else {
 				esc_html_e( 'No memberships defined yet!', 'events-made-easy' );
 			}

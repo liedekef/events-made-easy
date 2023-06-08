@@ -120,6 +120,12 @@ function eme_init_event_props( $props = [] ) {
 	if ( ! isset( $props['rsvp_discountgroup'] ) ) {
 		$props['rsvp_discountgroup'] = '';
 	}
+	if ( ! isset( $props['rsvp_required_group_ids'] ) ) {
+		$props['rsvp_required_group_ids'] = [];
+	}
+	if ( ! isset( $props['rsvp_required_membership_ids'] ) ) {
+		$props['rsvp_required_membership_ids'] = [];
+	}
 	if ( ! isset( $props['rsvp_addpersontogroup'] ) ) {
 		$props['rsvp_addpersontogroup'] = [];
 	}
@@ -2587,8 +2593,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$membership = eme_get_membership( $membership_t );
 					$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
 					if ( ! empty( $member ) ) {
-							$show_form = 1;
-							break;
+						$show_form = 1;
+						break;
 					}
 				}
 				if ( $show_form ) {
@@ -2622,7 +2628,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				if ( isset( $_POST['eme_eventAction'] ) && eme_sanitize_request( $_POST['eme_eventAction']) == 'pay_bookings' && isset( $_POST['eme_message'] ) && isset( $_POST['eme_payment_id'] ) ) {
 					$replacement = '';
 				} elseif ( isset( $_POST['eme_eventAction'] ) && eme_sanitize_request( $_POST['eme_eventAction']) == 'delmessage' ) {
-						$replacement = eme_cancel_bookings_form( $event['event_id'] );
+					$replacement = eme_cancel_bookings_form( $event['event_id'] );
 				} elseif ( $event && eme_get_booking_ids_by_wp_event_id( $current_userid, $event['event_id'] ) ) {
 					$replacement = eme_cancel_bookings_form( $event['event_id'] );
 				}
@@ -6210,7 +6216,6 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		$recurrence['recurrence_end_date']   = eme_get_date_from_dt( $event['event_end'] );
 	}
 
-	$registration_wp_users_only     = ( $event['registration_wp_users_only'] ) ? "checked='checked'" : '';
 	$registration_requires_approval = ( $event['registration_requires_approval'] ) ? "checked='checked'" : '';
 
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
@@ -8550,12 +8555,10 @@ function eme_meta_box_div_event_rsvp( $event ) {
 	
 	$currency_array                 = eme_currency_array();
 	$event_number_seats             = $event['event_seats'];
-	$registration_wp_users_only     = ( $event['registration_wp_users_only'] ) ? "checked='checked'" : '';
 	$registration_requires_approval = ( $event['registration_requires_approval'] ) ? "checked='checked'" : '';
 
 	$eme_prop_rsvp_discount               = ( $event['event_properties']['rsvp_discount'] ) ? $event['event_properties']['rsvp_discount'] : '';
 	$eme_prop_rsvp_discountgroup          = ( $event['event_properties']['rsvp_discountgroup'] ) ? $event['event_properties']['rsvp_discountgroup'] : '';
-	$eme_prop_rsvp_addpersontogroup       = ( $event['event_properties']['rsvp_addpersontogroup'] ) ? $event['event_properties']['rsvp_addpersontogroup'] : [];
 	$eme_prop_rsvp_password               = ( $event['event_properties']['rsvp_password'] ) ? $event['event_properties']['rsvp_password'] : '';
 	$eme_prop_waitinglist_seats           = ( $event['event_properties']['waitinglist_seats'] ) ? $event['event_properties']['waitinglist_seats'] : 0;
 	$eme_prop_cancel_rsvp_days            = $event['event_properties']['cancel_rsvp_days'];
@@ -8577,206 +8580,195 @@ function eme_meta_box_div_event_rsvp( $event ) {
 
 	?>
 <div id="div_event_rsvp">
-							<p id='p_approval_required'>
-								<input id="approval_required-checkbox" name='registration_requires_approval' value='1' type='checkbox' <?php echo $registration_requires_approval; ?>>
-								<label for="approval_required-checkbox"><?php esc_html_e( 'Require booking approval', 'events-made-easy' ); ?></label>
-					<br>
+	<p id='p_approval_required'>
+		<input id="approval_required-checkbox" name='registration_requires_approval' value='1' type='checkbox' <?php echo $registration_requires_approval; ?>>
+		<label for="approval_required-checkbox"><?php esc_html_e( 'Require booking approval', 'events-made-easy' ); ?></label>
+		<br>
 	<?php
 	if ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
 				print "<span id='span_approval_required_mail_warning'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</span>';
 	}
 	?>
-							</p>
-							<p id='p_user_confirmation_required'>
-					<?php echo eme_ui_checkbox_binary( $event['event_properties']['require_user_confirmation'], 'eme_prop_require_user_confirmation', __( 'Require user confirmation after booking', 'events-made-easy' ) ); ?>
-								<span class="eme_smaller"><br><?php esc_html_e( "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent to a booker.", 'events-made-easy' ); ?></span>
-							</p>
-				<p id='p_auto_approve'>
-					<?php echo eme_ui_checkbox_binary( $event['event_properties']['auto_approve'], 'eme_prop_auto_approve', __( 'Auto-approve booking upon payment', 'events-made-easy' ) ); ?>
-							</p>
-				<p id='p_ignore_pending'>
-					<?php echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending'], 'eme_prop_ignore_pending', __( 'Consider pending bookings as available seats for new bookings', 'events-made-easy' ) . '<br>' . __( 'In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments.', 'events-made-easy' ) ); ?>
-							</p>
-							<p id='p_rsvp_pending_reminder_days'>
-								<input id="eme_prop_rsvp_pending_reminder_days" name='eme_prop_rsvp_pending_reminder_days' type='text' value="<?php echo eme_esc_html( $eme_prop_rsvp_pending_reminder_days ); ?>">
-								<label for="eme_prop_rsvp_pending_reminder_days"><?php esc_html_e( 'Set the number of days before reminder emails will be sent for pending bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
-							</p>
-							<p id='p_rsvp_approved_reminder_days'>
-								<input id="eme_prop_rsvp_approved_reminder_days" name='eme_prop_rsvp_approved_reminder_days' type='text' value="<?php echo eme_esc_html( $eme_prop_rsvp_approved_reminder_days ); ?>">
-								<label for="eme_prop_rsvp_approved_reminder_days"><?php esc_html_e( 'Set the number of days before reminder emails will be sent for approved bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
-							</p>
-				<p id='p_wp_member_required'>
-								<input id="wp_member_required-checkbox" name='registration_wp_users_only' value='1' type='checkbox' <?php echo $registration_wp_users_only; ?>>
-								<label for="wp_member_required-checkbox"><?php esc_html_e( 'Require WP membership for booking', 'events-made-easy' ); ?></label>
-								<span class="eme_smaller"><br><?php esc_html_e( "This will only show the booking form for logged in users and prefill the form with the personal data from their WordPress profile. That data can't be changed in the form then, so if you don't want this, you can deactivate this option and use #_ADDBOOKINGFORM_IF_LOGGED_IN to show the form to logged in users only.", 'events-made-easy' ); ?></span>
-							</p>
-				<p id='p_create_wp_user'>
-					<?php echo eme_ui_checkbox_binary( $event['event_properties']['create_wp_user'], 'eme_prop_create_wp_user', __( 'Create WP user after succesful booking', 'events-made-easy' ) ); ?>
-								<span class="eme_smaller"><br><?php esc_html_e( 'This will create a WP user after the booking is completed, as if the person registered in WP itself. This will only create a user if the booker was not logged in and the email is not yet taken by another WP user.', 'events-made-easy' ); ?></span>
-							</p>
-				<p id='p_email_only_once'>
-					<?php echo eme_ui_checkbox_binary( $event['event_properties']['email_only_once'], 'eme_prop_email_only_once', __( 'Allow only 1 booking per unique email address', 'events-made-easy' ) ); ?>
-				</p>
-				<p id='p_person_only_once'>
-					<?php echo eme_ui_checkbox_binary( $event['event_properties']['person_only_once'], 'eme_prop_person_only_once', __( 'Allow only 1 booking per person (combo email/last name/first name)', 'events-made-easy' ) ); ?>
-				</p>
-				<table class="eme_event_admin_table">
-								<tr id='row_seats'>
-								<td><label for='seats-input'><?php esc_html_e( 'Seats', 'events-made-easy' ); ?> :</label></td>
-								<td><input id="seats-input" type="text" name="event_seats" size='8' title="<?php echo esc_html__( 'Enter 0 for no limit', 'events-made-easy' ) . "\n" . esc_html( 'For multiseat events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event_number_seats ); ?>">
-								<span class="eme_smaller"><br><?php esc_html_e( 'The max available seats for this event. Enter 0 for no limit. For multiseat events, separate the values by \'||\'', 'events-made-easy' ); ?></span>
-								</td>
-								</tr>
-								<tr id='row_price'>
-								<td><label for='price'><?php esc_html_e( 'Price: ', 'events-made-easy' ); ?></label></td>
-								<td><input id="price" type="text" name="price" size='8' title="<?php esc_html_e( 'For multiprice events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['price'] ); ?>">
-								<select id="currency" name="currency">
-								<?php
-								foreach ( $currency_array as $key => $value ) {
-									if ( $event['currency'] && ( $event['currency'] == $key ) ) {
-										$selected = "selected='selected'";
-									} elseif ( ! $event['currency'] && ( $key == get_option( 'eme_default_currency' ) ) ) {
-										$selected = "selected='selected'";
-									} else {
-										$selected = '';
-									}
-									echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
-								}
-								?>
-					</select>
-								<span class="eme_smaller"><br><?php esc_html_e( 'For multiprice events, separate the values by \'||\'', 'events-made-easy' ); ?></span>
-								<span class="eme_smaller"><br><?php esc_html_e( 'Use the point as decimal separator', 'events-made-easy' ); ?></span>
-								</td>
-								</tr>
-								<tr id='row_price_desc'>
-								<td><label for='eme_prop_price_desc'><?php esc_html_e( 'Price description', 'events-made-easy' ); ?> :</label></td>
-								<td><input name="eme_prop_price_desc" id="eme_prop_price_desc" value="<?php echo eme_esc_html( $event['event_properties']['price_desc'] ); ?>"><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for the price (which can be used in templates).', 'events-made-easy' ); ?></p></td>
-								</tr>
-								<tr id='row_multiprice_desc'>
-								<td><label for='eme_prop_multiprice_desc'><?php esc_html_e( 'Price Categories descriptions', 'events-made-easy' ); ?> :</label></td>
-								<td><textarea name="eme_prop_multiprice_desc" id="eme_prop_multiprice_desc" rows="6" ><?php echo str_replace( '||', "\n", eme_esc_html( $event['event_properties']['multiprice_desc'] ) ); ?></textarea><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for each price category (one price description per line).', 'events-made-easy' ); ?></p></td>
-								</tr>
-								<tr id='row_vat'>
-								<td><label for='eme_prop_vat_pct'><?php esc_html_e( 'VAT percentage: ', 'events-made-easy' ); ?></label></td>
-								<td><input id="eme_prop_vat_pct" type="text" name="eme_prop_vat_pct" size='8' title="<?php esc_html_e( 'VAT percentage', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['vat_pct'] ); ?>">%
-						<br><p class='eme_smaller'><?php esc_html_e( 'The price you indicate for events is VAT included, special placeholders are foreseen to indicate the price without VAT.', 'events-made-easy' ); ?></p>
-								</td>
-								</tr>
-								<tr id='row_discount'>
-								<td><label for='eme_prop_rsvp_discount'><?php esc_html_e( 'Discount to apply', 'events-made-easy' ); ?></label></td>
-					<td><?php echo eme_ui_select( $event['event_properties']['rsvp_discount'], 'eme_prop_rsvp_discount', $discount_arr, '', 0, 'eme_select2_discounts_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount name you want to apply (is overridden by discount group if used).', 'events-made-easy' ); ?></p></td>
-								</tr>
-								<tr id='row_discountgroup'>
-								<td><label for='eme_prop_rsvp_discountgroup'><?php esc_html_e( 'Discount group to apply', 'events-made-easy' ); ?></label></td>
-					<td><?php echo eme_ui_select( $event['event_properties']['rsvp_discountgroup'], 'eme_prop_rsvp_discountgroup', $dgroup_arr, '', 0, 'eme_select2_dgroups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount group name you want applied (overrides the discount).', 'events-made-easy' ); ?></p></td>
-								</tr>
-								<tr id='row_waitinglist_seats'>
-								<td><label for='eme_prop_waitinglist_seats'><?php esc_html_e( 'Waitinglist seats', 'events-made-easy' ); ?></label></td>
-					<td><input id="eme_prop_waitinglist_seats" type="text" name="eme_prop_waitinglist_seats" size='8' title="<?php esc_html_e( 'The number of seats considered to be a waiting list.', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['waitinglist_seats'] ); ?>"><br><span class="eme_smaller"><?php esc_html_e( 'The number of seats considered to be a waiting list.', 'events-made-easy' ); ?></span></td>
-								</tr>
-								<tr id='row_check_free_waiting'>
-								<td><label for='eme_prop_check_free_waiting'><?php esc_html_e( 'Check waitinglist when seats become available', 'events-made-easy' ); ?></label></td>
-					<td><?php echo eme_ui_checkbox_binary( $event['event_properties']['check_free_waiting'], 'eme_prop_check_free_waiting' ); ?>
-								<span class="eme_smaller"><br><?php esc_html_e( 'Automatically take a booking from the waiting list when seats become available again', 'events-made-easy' ); ?></span></td>
-								</tr>
-								<tr id='row_max_allowed'>
-								<td><label for='eme_prop_max_allowed'><?php esc_html_e( 'Max number of seats to book', 'events-made-easy' ); ?></label></td>
-								<td><input id="eme_prop_max_allowed" type="text" name="eme_prop_max_allowed" size='8' title="<?php esc_html_e( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) . ' ' . esc_html_e( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['max_allowed'] ); ?>"><br><span class="eme_smaller"><?php echo esc_html__( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ) . '<br>' . esc_html__( 'If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden.', 'events-made-easy' ); ?></span></td>
-								</tr>
-								<tr id='row_min_allowed'>
-								<td><label for='eme_prop_min_allowed'><?php esc_html_e( 'Min number of seats to book', 'events-made-easy' ); ?></label></td>
-								<td><input id="eme_prop_min_allowed" type="text" name="eme_prop_min_allowed" size='8' title="<?php echo esc_html__( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['min_allowed'] ); ?>"><br><span class="eme_smaller"><?php echo esc_html__( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ) . '<br>' . esc_html__( 'If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden.', 'events-made-easy' ); ?></span></td>
-								</tr>
-								<tr id='row_take_attendance'>
-								<td><label for='eme_prop_take_attendance'><?php esc_html_e( 'Attendance-only event?', 'events-made-easy' ); ?></label></td>
-					<td><?php echo eme_ui_checkbox_binary( $event['event_properties']['take_attendance'], 'eme_prop_take_attendance', __( 'Only take attendance (0 or 1 seat) for this event', 'events-made-easy' ) ); ?>
-								<span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox.', 'events-made-easy' ); ?></span><br />
-								<span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1.', 'events-made-easy' ); ?></span>
-								</td>
-								</tr>
-								<tr id='row_addpersontogroup'>
-								<td><label for='eme_prop_rsvp_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
-								<td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
-								</tr>
-								<tr id='row_rsvppassword'>
-								<td><label for='eme_prop_rsvp_password'><?php esc_html_e( 'RSVP Password', 'events-made-easy' ); ?></label></td>
-					<td><input id="eme_prop_rsvp_password" type="text" class="eme_passwordfield" autocomplete='off' name="eme_prop_rsvp_password" size='20' value="<?php echo eme_esc_html( $event['event_properties']['rsvp_password'] ); ?>"><p class="eme_smaller"><?php esc_html_e( 'A password required for RSVP submit to succeed. If used, #_PASSWORD is required in the RSVP form too.', 'events-made-easy' ); ?></p></td>
-					</tr>
-								</tr>
-								<tr id='row_inviteonly'>
-								<td><label for='eme_prop_invite_only'><?php esc_html_e( 'Invite-only event?', 'events-made-easy' ); ?></label></td>
-					<td><?php echo eme_ui_checkbox_binary( $event['event_properties']['invite_only'], 'eme_prop_invite_only', __( 'Require an invitation', 'events-made-easy' ) ); ?>
-								<span class="eme_smaller"><br><?php esc_html_e( 'Allow only bookings done if someone visits the event via the invite url generated by #_INVITEURL.', 'events-made-easy' ); ?>
-								</span></td>
-					</tr>
-								<tr><td colspan="2">&nbsp;</td></tr>
-								<tr id='row_ticket'>
-								<td><label for='eme_prop_ticket_template_id'><?php esc_html_e( 'Ticket PDF template', 'events-made-easy' ); ?></label></td>
-								<td><?php echo eme_ui_select_key_value( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdftemplates, 'id', 'name', '&nbsp;' ); ?>
-									<p class="eme_smaller"><?php esc_html_e( 'This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included).', 'events-made-easy' ); ?><br>
-								<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a PDF template.', 'events-made-easy' ); ?></p></td>
-					</tr>
-								<tr id='row_ticketmail'>
-								<td><label for='eme_prop_ticket_mail'><?php esc_html_e( 'Ticket mail preference', 'events-made-easy' ); ?>                            								<td>
-																						<?php
-																						echo eme_ui_select(
-								    $event['event_properties']['ticket_mail'],
-								    'eme_prop_ticket_mail',
-								    [
-																								'booking'  => __( 'At booking time', 'events-made-easy' ),
-																								'approval' => __( 'Upon approval', 'events-made-easy' ),
-																								'payment'  => __( 'Upon payment', 'events-made-easy' ),
-																								'always'   => __(
-																								    'All of the above',
-																								    'events-made-easy'
-																								),
-																							]
-								);
-																						?>
-									<p class="eme_smaller"><?php esc_html_e( 'Configure in which mail you want the optional PDF attachment to be included: when the booking is made, when it is approved or when the booking is paid for.', 'events-made-easy' ); ?><br>
-					</tr>
-								<tr><td colspan="2">&nbsp;</td></tr>
-								</table>
-				<p id='span_rsvp_allowed_from'>
-								<?php esc_html_e( 'Allow RSVP from ', 'events-made-easy' ); ?>
-								<input id="eme_prop_rsvp_start_number_days" type="text" name="eme_prop_rsvp_start_number_days" maxlength='4' size='4' value="<?php echo $event['event_properties']['rsvp_start_number_days']; ?>">
-								<?php esc_html_e( 'days', 'events-made-easy' ); ?>
-								<input id="eme_prop_rsvp_start_number_hours" type="text" name="eme_prop_rsvp_start_number_hours" maxlength='3' size='2' value="<?php echo $event['event_properties']['rsvp_start_number_hours']; ?>">
-								<?php esc_html_e( 'hours', 'events-made-easy' ); ?>
-								<?php
-								esc_html_e( 'before the event ', 'events-made-easy' );
-								$eme_rsvp_start_target_list = [
-									'start' => __( 'starts', 'events-made-easy' ),
-									'end'   => __( 'ends', 'events-made-easy' ),
-								];
-								echo eme_ui_select( $event['event_properties']['rsvp_start_target'], 'eme_prop_rsvp_start_target', $eme_rsvp_start_target_list );
-								?>
-								&nbsp;<?php esc_html_e( '(Leave empty to disable this limit)', 'events-made-easy' ); ?>
-				</p>
-				<p id='span_rsvp_allowed_until'>
-								<?php esc_html_e( 'Allow RSVP until ', 'events-made-easy' ); ?>
-								<input id="rsvp_number_days" type="text" name="rsvp_number_days" maxlength='4' size='4' value="<?php echo $event['rsvp_number_days']; ?>">
-								<?php esc_html_e( 'days', 'events-made-easy' ); ?>
-								<input id="rsvp_number_hours" type="text" name="rsvp_number_hours" maxlength='4' size='4' value="<?php echo $event['rsvp_number_hours']; ?>">
-								<?php esc_html_e( 'hours', 'events-made-easy' ); ?>
-								<?php
-								esc_html_e( 'before the event ', 'events-made-easy' );
-								$eme_rsvp_end_target_list = [
-									'start' => __( 'starts', 'events-made-easy' ),
-									'end'   => __( 'ends', 'events-made-easy' ),
-								];
-								echo eme_ui_select( $event['event_properties']['rsvp_end_target'], 'eme_prop_rsvp_end_target', $eme_rsvp_end_target_list );
-								?>
-				</p>
-				<p id='span_rsvp_cutoff'>
-								<?php esc_html_e( 'RSVP cancel cutoff before event starts', 'events-made-easy' ); ?>
-								<input id="eme_prop_cancel_rsvp_days" type="text" name="eme_prop_cancel_rsvp_days" maxlength='4' size='4' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_days'] ); ?>">
-								<span class="eme_smaller"><?php esc_html_e( 'Allow RSVP cancellation until this many days before the event starts.', 'events-made-easy' ); ?></span>
-					<br>
-								<?php esc_html_e( 'RSVP cancel cutoff booking age', 'events-made-easy' ); ?>
-								<input id="eme_prop_cancel_rsvp_age" type="text" name="eme_prop_cancel_rsvp_age" maxlength='3' size='2' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_age'] ); ?>">
-								<span class="eme_smaller"><?php esc_html_e( 'Allow RSVP cancellation until this many days after the booking has been made.', 'events-made-easy' ); ?></span>
-				</p>
+	</p>
+	<p id='p_user_confirmation_required'>
+		<?php echo eme_ui_checkbox_binary( $event['event_properties']['require_user_confirmation'], 'eme_prop_require_user_confirmation', __( 'Require user confirmation after booking', 'events-made-easy' ) ); ?>
+		<span class="eme_smaller"><br><?php esc_html_e( "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent to a booker.", 'events-made-easy' ); ?></span>
+	</p>
+	<p id='p_auto_approve'>
+		<?php echo eme_ui_checkbox_binary( $event['event_properties']['auto_approve'], 'eme_prop_auto_approve', __( 'Auto-approve booking upon payment', 'events-made-easy' ) ); ?>
+	</p>
+	<p id='p_ignore_pending'>
+		<?php echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending'], 'eme_prop_ignore_pending', __( 'Consider pending bookings as available seats for new bookings', 'events-made-easy' ) . '<br>' . __( 'In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments.', 'events-made-easy' ) ); ?>
+	</p>
+		<p id='p_rsvp_pending_reminder_days'>
+		<input id="eme_prop_rsvp_pending_reminder_days" name='eme_prop_rsvp_pending_reminder_days' type='text' value="<?php echo eme_esc_html( $eme_prop_rsvp_pending_reminder_days ); ?>">
+		<label for="eme_prop_rsvp_pending_reminder_days"><?php esc_html_e( 'Set the number of days before reminder emails will be sent for pending bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
+	</p>
+	<p id='p_rsvp_approved_reminder_days'>
+		<input id="eme_prop_rsvp_approved_reminder_days" name='eme_prop_rsvp_approved_reminder_days' type='text' value="<?php echo eme_esc_html( $eme_prop_rsvp_approved_reminder_days ); ?>">
+		<label for="eme_prop_rsvp_approved_reminder_days"><?php esc_html_e( 'Set the number of days before reminder emails will be sent for approved bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
+	</p>
+	<p id='p_create_wp_user'>
+		<?php echo eme_ui_checkbox_binary( $event['event_properties']['create_wp_user'], 'eme_prop_create_wp_user', __( 'Create WP user after succesful booking', 'events-made-easy' ) ); ?>
+		<span class="eme_smaller"><br><?php esc_html_e( 'This will create a WP user after the booking is completed, as if the person registered in WP itself. This will only create a user if the booker was not logged in and the email is not yet taken by another WP user.', 'events-made-easy' ); ?></span>
+	</p>
+	<p id='p_email_only_once'>
+		<?php echo eme_ui_checkbox_binary( $event['event_properties']['email_only_once'], 'eme_prop_email_only_once', __( 'Allow only 1 booking per unique email address', 'events-made-easy' ) ); ?>
+	</p>
+	<p id='p_person_only_once'>
+		<?php echo eme_ui_checkbox_binary( $event['event_properties']['person_only_once'], 'eme_prop_person_only_once', __( 'Allow only 1 booking per person (combo email/last name/first name)', 'events-made-easy' ) ); ?>
+	</p>
+	<table class="eme_event_admin_table">
+	<tr id='row_seats'>
+		<td><label for='seats-input'><?php esc_html_e( 'Seats', 'events-made-easy' ); ?> :</label></td>
+		<td><input id="seats-input" type="text" name="event_seats" size='8' title="<?php echo esc_html__( 'Enter 0 for no limit', 'events-made-easy' ) . "\n" . esc_html( 'For multiseat events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event_number_seats ); ?>">
+			<span class="eme_smaller"><br><?php esc_html_e( 'The max available seats for this event. Enter 0 for no limit. For multiseat events, separate the values by \'||\'', 'events-made-easy' ); ?></span>
+		</td>
+	</tr>
+	<tr id='row_price'>
+		<td><label for='price'><?php esc_html_e( 'Price: ', 'events-made-easy' ); ?></label></td>
+		<td><input id="price" type="text" name="price" size='8' title="<?php esc_html_e( 'For multiprice events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['price'] ); ?>">
+			<select id="currency" name="currency">
+			<?php
+			foreach ( $currency_array as $key => $value ) {
+				if ( $event['currency'] && ( $event['currency'] == $key ) ) {
+					$selected = "selected='selected'";
+				} elseif ( ! $event['currency'] && ( $key == get_option( 'eme_default_currency' ) ) ) {
+					$selected = "selected='selected'";
+				} else {
+					$selected = '';
+				}
+				echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
+			}
+			?>
+			</select>
+			<span class="eme_smaller"><br><?php esc_html_e( 'For multiprice events, separate the values by \'||\'', 'events-made-easy' ); ?></span>
+			<span class="eme_smaller"><br><?php esc_html_e( 'Use the point as decimal separator', 'events-made-easy' ); ?></span>
+		</td>
+	</tr>
+	<tr id='row_price_desc'>
+		<td><label for='eme_prop_price_desc'><?php esc_html_e( 'Price description', 'events-made-easy' ); ?> :</label></td>
+		<td><input name="eme_prop_price_desc" id="eme_prop_price_desc" value="<?php echo eme_esc_html( $event['event_properties']['price_desc'] ); ?>"><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for the price (which can be used in templates).', 'events-made-easy' ); ?></p></td>
+	</tr>
+	<tr id='row_multiprice_desc'>
+		<td><label for='eme_prop_multiprice_desc'><?php esc_html_e( 'Price Categories descriptions', 'events-made-easy' ); ?> :</label></td>
+		<td><textarea name="eme_prop_multiprice_desc" id="eme_prop_multiprice_desc" rows="6" ><?php echo str_replace( '||', "\n", eme_esc_html( $event['event_properties']['multiprice_desc'] ) ); ?></textarea><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for each price category (one price description per line).', 'events-made-easy' ); ?></p></td>
+	</tr>
+	<tr id='row_vat'>
+		<td><label for='eme_prop_vat_pct'><?php esc_html_e( 'VAT percentage: ', 'events-made-easy' ); ?></label></td>
+		<td><input id="eme_prop_vat_pct" type="text" name="eme_prop_vat_pct" size='8' title="<?php esc_html_e( 'VAT percentage', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['vat_pct'] ); ?>">%
+		<br><p class='eme_smaller'><?php esc_html_e( 'The price you indicate for events is VAT included, special placeholders are foreseen to indicate the price without VAT.', 'events-made-easy' ); ?></p>
+		</td>
+	</tr>
+	<tr id='row_discount'>
+		<td><label for='eme_prop_rsvp_discount'><?php esc_html_e( 'Discount to apply', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_select( $event['event_properties']['rsvp_discount'], 'eme_prop_rsvp_discount', $discount_arr, '', 0, 'eme_select2_discounts_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount name you want to apply (is overridden by discount group if used).', 'events-made-easy' ); ?></p></td>
+	</tr>
+	<tr id='row_discountgroup'>
+		<td><label for='eme_prop_rsvp_discountgroup'><?php esc_html_e( 'Discount group to apply', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_select( $event['event_properties']['rsvp_discountgroup'], 'eme_prop_rsvp_discountgroup', $dgroup_arr, '', 0, 'eme_select2_dgroups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The discount group name you want applied (overrides the discount).', 'events-made-easy' ); ?></p></td>
+	</tr>
+	<tr id='row_waitinglist_seats'>
+		<td><label for='eme_prop_waitinglist_seats'><?php esc_html_e( 'Waitinglist seats', 'events-made-easy' ); ?></label></td>
+		<td><input id="eme_prop_waitinglist_seats" type="text" name="eme_prop_waitinglist_seats" size='8' title="<?php esc_html_e( 'The number of seats considered to be a waiting list.', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['waitinglist_seats'] ); ?>"><br><span class="eme_smaller"><?php esc_html_e( 'The number of seats considered to be a waiting list.', 'events-made-easy' ); ?></span></td>
+	</tr>
+	<tr id='row_check_free_waiting'>
+		<td><label for='eme_prop_check_free_waiting'><?php esc_html_e( 'Check waitinglist when seats become available', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_checkbox_binary( $event['event_properties']['check_free_waiting'], 'eme_prop_check_free_waiting' ); ?>
+			<span class="eme_smaller"><br><?php esc_html_e( 'Automatically take a booking from the waiting list when seats become available again', 'events-made-easy' ); ?></span></td>
+	</tr>
+	<tr id='row_max_allowed'>
+		<td><label for='eme_prop_max_allowed'><?php esc_html_e( 'Max number of seats to book', 'events-made-easy' ); ?></label></td>
+		<td><input id="eme_prop_max_allowed" type="text" name="eme_prop_max_allowed" size='8' title="<?php esc_html_e( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) . ' ' . esc_html_e( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['max_allowed'] ); ?>"><br><span class="eme_smaller"><?php echo esc_html__( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ) . '<br>' . esc_html__( 'If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden.', 'events-made-easy' ); ?></span></td>
+	</tr>
+	<tr id='row_min_allowed'>
+		<td><label for='eme_prop_min_allowed'><?php esc_html_e( 'Min number of seats to book', 'events-made-easy' ); ?></label></td>
+		<td><input id="eme_prop_min_allowed" type="text" name="eme_prop_min_allowed" size='8' title="<?php echo esc_html__( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['event_properties']['min_allowed'] ); ?>"><br><span class="eme_smaller"><?php echo esc_html__( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) . ' ' . esc_html__( '(is multi-compatible)', 'events-made-easy' ) . '<br>' . esc_html__( 'If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden.', 'events-made-easy' ); ?></span></td>
+	</tr>
+	<tr id='row_take_attendance'>
+		<td><label for='eme_prop_take_attendance'><?php esc_html_e( 'Attendance-only event?', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_checkbox_binary( $event['event_properties']['take_attendance'], 'eme_prop_take_attendance', __( 'Only take attendance (0 or 1 seat) for this event', 'events-made-easy' ) ); ?>
+			<span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox.', 'events-made-easy' ); ?></span><br />
+			<span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1.', 'events-made-easy' ); ?></span>
+		</td>
+	</tr>
+	<tr id='p_wp_member_required'>
+                <td><label for='registration_wp_users_only'><?php esc_html_e( 'Require WP membership for booking', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_checkbox_binary($event['registration_wp_users_only'], 'registration_wp_users_only'); ?>
+		<span class="eme_smaller"><br><?php esc_html_e( "This will only show the booking form for logged in users and prefill the form with the personal data from their WordPress profile. That data can't be changed in the form then, so if you don't want this, you can deactivate this option and use #_ADDBOOKINGFORM_IF_LOGGED_IN to show the form to logged in users only.", 'events-made-easy' ); ?></span>
+		</td>
+	</tr>
+	<tr id='row_require_eme_group'>
+                <td><label for='eme_prop_required_group_ids'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+                </td>
+        </tr>
+        <tr id='row_require_eme_memberships'>
+                <td><label for='eme_prop_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></td>
+                <td>
+                <?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
+                </td>
+        </tr>
+	<tr id='row_addpersontogroup'>
+		<td><label for='eme_prop_rsvp_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_addpersontogroup'], 'eme_prop_rsvp_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p></td>
+	</tr>
+	<tr id='row_rsvppassword'>
+		<td><label for='eme_prop_rsvp_password'><?php esc_html_e( 'RSVP Password', 'events-made-easy' ); ?></label></td>
+		<td><input id="eme_prop_rsvp_password" type="text" class="eme_passwordfield" autocomplete='off' name="eme_prop_rsvp_password" size='20' value="<?php echo eme_esc_html( $event['event_properties']['rsvp_password'] ); ?>"><p class="eme_smaller"><?php esc_html_e( 'A password required for RSVP submit to succeed. If used, #_PASSWORD is required in the RSVP form too.', 'events-made-easy' ); ?></p></td>
+	</tr>
+	<tr id='row_inviteonly'>
+		<td><label for='eme_prop_invite_only'><?php esc_html_e( 'Invite-only event?', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_checkbox_binary( $event['event_properties']['invite_only'], 'eme_prop_invite_only', __( 'Require an invitation', 'events-made-easy' ) ); ?>
+			<span class="eme_smaller"><br><?php esc_html_e( 'Allow only bookings done if someone visits the event via the invite url generated by #_INVITEURL.', 'events-made-easy' ); ?></span>
+		</td>
+	</tr>
+	<tr><td colspan="2">&nbsp;</td></tr>
+	<tr id='row_ticket'>
+		<td><label for='eme_prop_ticket_template_id'><?php esc_html_e( 'Ticket PDF template', 'events-made-easy' ); ?></label></td>
+		<td><?php echo eme_ui_select_key_value( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdftemplates, 'id', 'name', '&nbsp;' ); ?>
+			<p class="eme_smaller"><?php esc_html_e( 'This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included).', 'events-made-easy' ); ?><br>
+			<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a PDF template.', 'events-made-easy' ); ?></p>
+		</td>
+	</tr>
+	<tr id='row_ticketmail'>
+		<td><label for='eme_prop_ticket_mail'><?php esc_html_e( 'Ticket mail preference', 'events-made-easy' ); ?></td>
+		<td> <?php echo eme_ui_select( $event['event_properties']['ticket_mail'], 'eme_prop_ticket_mail', [ 'booking'  => __( 'At booking time', 'events-made-easy' ), 'approval' => __( 'Upon approval', 'events-made-easy' ), 'payment'  => __( 'Upon payment', 'events-made-easy' ), 'always'   => __( 'All of the above', 'events-made-easy'), ]); ?>
+			<p class="eme_smaller"><?php esc_html_e( 'Configure in which mail you want the optional PDF attachment to be included: when the booking is made, when it is approved or when the booking is paid for.', 'events-made-easy' ); ?>
+		</td>
+	</tr>
+	<tr><td colspan="2">&nbsp;</td></tr>
+	</table>
+	<p id='span_rsvp_allowed_from'>
+		<?php esc_html_e( 'Allow RSVP from ', 'events-made-easy' ); ?>
+		<input id="eme_prop_rsvp_start_number_days" type="text" name="eme_prop_rsvp_start_number_days" maxlength='4' size='4' value="<?php echo $event['event_properties']['rsvp_start_number_days']; ?>">
+		<?php esc_html_e( 'days', 'events-made-easy' ); ?>
+		<input id="eme_prop_rsvp_start_number_hours" type="text" name="eme_prop_rsvp_start_number_hours" maxlength='3' size='2' value="<?php echo $event['event_properties']['rsvp_start_number_hours']; ?>">
+		<?php esc_html_e( 'hours', 'events-made-easy' ); ?>
+		<?php esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_start_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
+			echo eme_ui_select( $event['event_properties']['rsvp_start_target'], 'eme_prop_rsvp_start_target', $eme_rsvp_start_target_list );
+		?>
+		&nbsp;<?php esc_html_e( '(Leave empty to disable this limit)', 'events-made-easy' ); ?>
+	</p>
+	<p id='span_rsvp_allowed_until'>
+		<?php esc_html_e( 'Allow RSVP until ', 'events-made-easy' ); ?>
+		<input id="rsvp_number_days" type="text" name="rsvp_number_days" maxlength='4' size='4' value="<?php echo $event['rsvp_number_days']; ?>">
+		<?php esc_html_e( 'days', 'events-made-easy' ); ?>
+		<input id="rsvp_number_hours" type="text" name="rsvp_number_hours" maxlength='4' size='4' value="<?php echo $event['rsvp_number_hours']; ?>">
+		<?php esc_html_e( 'hours', 'events-made-easy' ); ?>
+		<?php esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_end_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
+		echo eme_ui_select( $event['event_properties']['rsvp_end_target'], 'eme_prop_rsvp_end_target', $eme_rsvp_end_target_list );
+		?>
+	</p>
+	<p id='span_rsvp_cutoff'>
+		<?php esc_html_e( 'RSVP cancel cutoff before event starts', 'events-made-easy' ); ?>
+		<input id="eme_prop_cancel_rsvp_days" type="text" name="eme_prop_cancel_rsvp_days" maxlength='4' size='4' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_days'] ); ?>">
+		<span class="eme_smaller"><?php esc_html_e( 'Allow RSVP cancellation until this many days before the event starts.', 'events-made-easy' ); ?></span>
+		<br>
+		<?php esc_html_e( 'RSVP cancel cutoff booking age', 'events-made-easy' ); ?>
+		<input id="eme_prop_cancel_rsvp_age" type="text" name="eme_prop_cancel_rsvp_age" maxlength='3' size='2' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_age'] ); ?>">
+		<span class="eme_smaller"><?php esc_html_e( 'Allow RSVP cancellation until this many days after the booking has been made.', 'events-made-easy' ); ?></span>
+	</p>
 </div>
 	<?php
 }
@@ -10150,7 +10142,7 @@ function eme_ajax_events_list() {
 				$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string</a>";
 			}
 			if ( $event['event_properties']['take_attendance'] ) {
-					$absent_bookings = eme_get_absent_bookings( $event['event_id'] );
+				$absent_bookings = eme_get_absent_bookings( $event['event_id'] );
 				if ( $absent_bookings > 0 ) {
 					$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
 				}

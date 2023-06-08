@@ -100,6 +100,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.70 (2023//) =
 * A new option is added to a EME person to delete the linked WP user when the user gets trashed
+* You can now require in the RSVP settings that a logged in user must be member of a EME group or membership in order to be able to book.
+  This avoids the need of using eme_if or the #_ADDBOOKINGFORM_IF_USER_IN_GROUP and #_ADDBOOKINGFORM_IF_USER_IS_MEMBER_OF (which still work btw)
 
 = 2.3.69 (2023/06/03) =
 * Allow to use captcha only for logged out users

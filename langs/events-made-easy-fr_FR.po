@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
 "POT-Creation-Date: 2023-06-03 19:09:09+00:00\n"
-"PO-Revision-Date: 2023-05-10 22:36+0200\n"
+"PO-Revision-Date: 2023-06-08 17:38+0200\n"
 "Last-Translator: Fred17 <f14m07@netc.fr>\n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -2085,14 +2085,12 @@ msgid "No entry allowed anymore"
 msgstr "Aucune entrée supplémentaire autorisée"
 #
 # File: eme-events.php, line: 1004
-#, fuzzy
 msgid "Access denied: error updating attendance count"
-msgstr "Accès refusé : nombre scanné =%d, nombre max =%d"
+msgstr "Accès refusé : erreur dans la mise à jour du décompte des présences"
 #
 # File: eme-events.php, line: 1010
-#, fuzzy
 msgid "Access denied: attendance count is 0"
-msgstr "Accès refusé : nombre scanné =%d, nombre max =%d"
+msgstr "Accès refusé : le nombre de présences est de 0"
 #
 # File: eme-events.php, line: 1013
 msgid "Access denied: scan count=%d, max count=%d"
@@ -4024,7 +4022,7 @@ msgstr ""
 # File: eme-members.php, line: 1816
 # File: eme-options.php, line: 1260
 msgid "Only use captcha for logged out users?"
-msgstr ""
+msgstr "Utiliser captcha uniquement pour les utilisateurs déconnectés ?"
 #
 # File: eme-events.php, line: 8192
 # File: eme-members.php, line: 1818
@@ -4033,6 +4031,8 @@ msgid ""
 "If this option is checked, the captcha will only be used for logged out "
 "users."
 msgstr ""
+"Si cette option est cochée, le captcha ne sera utilisé que pour les "
+"utilisateurs déconnectés."
 #
 # File: eme-events.php, line: 8267
 # File: eme-locations.php, line: 606
@@ -5446,9 +5446,8 @@ msgid "Bookings"
 msgstr "Les réservations"
 #
 # File: eme-events.php, line: 9808
-#, fuzzy
 msgid "Event ID"
-msgstr "Évènement"
+msgstr "ID de l’évènement"
 #
 # File: eme-events.php, line: 9810
 msgid "Event info"
@@ -16621,9 +16620,8 @@ msgid "Partial payment amount"
 msgstr "Montant du paiement partiel"
 #
 # File: eme-rsvp.php, line: 4890
-#, fuzzy
 msgid "Event fields"
-msgstr "Champ évènements"
+msgstr "Champs d’Informations sur l’événement"
 #
 # File: eme-rsvp.php, line: 5336
 msgid ""
@@ -16976,6 +16974,10 @@ msgid ""
 "for templates that will get used in HTML output: be sure to not include "
 "newlines (certainly not empty lines) unless wanted."
 msgstr ""
+"Les nouvelles lignes seront traduites en balises HTML br quand/où/si cela "
+"est approprié, mais pour les modèles qui seront utilisés dans la sortie "
+"HTML : assurez-vous de ne pas inclure de nouvelles lignes (et certainement "
+"pas des lignes vides) à moins que cela ne soit nécessaire."
 #
 # File: eme-templates.php, line: 293
 msgid ""
@@ -17215,14 +17217,17 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Select the event(s)"
 #~ msgstr "Sélectionner l’(les) évènement(s) "
 #
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "Convertir les nouvelles lignes"
+#
 #
 #
 #
@@ -17238,6 +17243,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
@@ -17248,12 +17254,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "For mail-type templates, this conversion will only happen if you also "
 #~ "want to send html-based mails."
 #~ msgstr ""
 #~ "Pour les modèles d’e-mail, cette conversion ne se produira que si vous "
 #~ "souhaitez également envoyer des e-mails en HTML."
+#
 #
 #
 #
@@ -17303,6 +17311,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the event notes."
@@ -17310,6 +17319,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Le téléversement de fichier n'est pas autorisé ici. Utilisez la "
 #~ "bibliothèque de médias classique WP pour téléverser des fichiers ou "
 #~ "utilisez le bouton \"Ajouter un média\" dans les notes de l' évènement."
+#
 #
 #
 #
@@ -17366,6 +17376,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Le téléchargement de fichier n'est pas autorisé ici."
 #
@@ -17392,8 +17403,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Fichiers Téléversés"
+#
 #
 #
 #
@@ -17446,10 +17459,12 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr ""
 #~ "La suppression des inscriptions aux tâches sélectionnées a été effectuée "
 #~ "avec succès."
+#
 #
 #
 #
@@ -17505,8 +17520,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Les ID fournis sont incorrects. Veuillez réessayer."
+#
 #
 #
 #
@@ -17568,6 +17585,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
@@ -17575,6 +17593,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Le modèle doit contenir au moins les espaces réservés #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL et #_SUBMIT. Sinon, le formulaire ne sera pas "
 #~ "affiché."
+#
 #
 #
 #
@@ -17657,8 +17676,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Hello World"
 #~ msgstr "Bonjour !"
+#
 #
 #
 #
@@ -17737,6 +17758,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Single Noop"
 #~ msgid_plural "Plural Noop"
 #~ msgstr[0] "Unique"
@@ -17778,9 +17800,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgctxt "Testing"
 #~ msgid "Hello World"
 #~ msgstr "Bonjour le monde"
+#
 #
 #
 #
@@ -17860,6 +17884,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Attribute"
 #~ msgstr "attribut"
 #
@@ -17899,8 +17924,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "HTML"
 #~ msgstr "HTML"
+#
 #
 #
 #
@@ -17978,9 +18005,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgctxt "Testing"
 #~ msgid "HTML"
 #~ msgstr "HTML"
+#
 #
 #
 #
@@ -18057,6 +18086,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "More information about %s"
 #~ msgstr "Plus d'informations sur %s"
 #
@@ -18096,8 +18126,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Check for updates"
 #~ msgstr "Vérifier les mises à jour"
+#
 #
 #
 #
@@ -18175,9 +18207,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgctxt "the plugin title"
 #~ msgid "A new version of the %s plugin is available."
 #~ msgstr "Une nouvelle version de l'extension %s est disponible."
+#
 #
 #
 #
@@ -18256,8 +18290,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Unknown update checker status \"%s\""
 #~ msgstr "Statut inconnu du vérificateur de mise à jour « %s »."
+#
 #
 #
 #

@@ -115,8 +115,12 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 				return '';
 			}
 			$person_groupids = eme_get_persongroup_ids( $person['person_id'] );
-			$res_intersect   = array_intersect( $person_groupids, $event['event_properties']['rsvp_required_group_ids'] );
-			if ( empty( $person_groupids ) || empty( $res_intersect ) ) {
+			if ( ! empty( $person_groupids ) ) {
+				$res_intersect   = array_intersect( $person_groupids, $event['event_properties']['rsvp_required_group_ids'] );
+			} else {
+				$res_intersect = 0;
+			}
+			if ( empty( $res_intersect ) ) {
 				return '';
 			}
 		}
@@ -124,8 +128,12 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 		// check memberships
 		if ( ! empty( $event['event_properties']['rsvp_required_membership_ids'] ) ) {
 			$membershipids = eme_get_active_membershipids_by_wpid( $current_userid );
-			$res_intersect = array_intersect( $membershipids, $event['event_properties']['rsvp_required_membership_ids'] );
-			if ( empty( $membershipids ) || empty( $res_intersect ) ) {
+			if ( ! empty( $membershipids ) ) {
+				$res_intersect = array_intersect( $membershipids, $event['event_properties']['rsvp_required_membership_ids'] );
+			} else {
+				$res_intersect = 0;
+			}
+			if ( empty( $res_intersect ) ) {
 				return '';
 			}
 		}

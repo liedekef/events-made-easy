@@ -1351,8 +1351,12 @@ function eme_calc_booking_discount( $discount, $booking ) {
 			return false;
 		}
 		$person_groupids = eme_get_persongroup_ids( $person['person_id'] );
-		$res_intersect   = array_intersect( $person_groupids, $discount['properties']['group_ids'] );
-		if ( empty( $person_groupids ) || empty( $res_intersect ) ) {
+		if ( ! empty($person_groupids ) ) {
+			$res_intersect = array_intersect( $person_groupids, $discount['properties']['group_ids'] );
+		} else {
+			$res_intersect = 0;
+		}
+		if ( empty( $res_intersect ) ) {
 			return false;
 		}
 	}
@@ -1364,8 +1368,12 @@ function eme_calc_booking_discount( $discount, $booking ) {
 		}
 		$current_userid = get_current_user_id();
 		$membershipids  = eme_get_active_membershipids_by_wpid( $current_userid );
-		$res_intersect  = array_intersect( $membershipids, $discount['properties']['membership_ids'] );
-		if ( empty( $membershipids ) || empty( $res_intersect ) ) {
+		if ( ! empty($membershipids ) ) {
+			$res_intersect = array_intersect( $membershipids, $discount['properties']['membership_ids'] );
+		} else {
+			$res_intersect = 0;
+		}
+		if ( empty( $res_intersect ) ) {
 			return false;
 		}
 	}

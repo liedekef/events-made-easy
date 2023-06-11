@@ -3782,14 +3782,18 @@ function eme_check_access( $post_id ) {
 						$access_allowed = 0;
 					} else {
 						$person_membershipids = eme_get_active_membershipids_by_wpid( $wp_id );
-						$res_intersect        = array_intersect( $person_membershipids, $existing_membershipids );
-						if ( empty( $person_membershipids ) || empty( $res_intersect ) ) {
+						if ( ! empty( $person_membershipids ) ) {
+							$res_intersect = array_intersect( $person_membershipids, $existing_membershipids );
+						} else {
+							$res_intersect = 0;
+						}
+						if ( empty( $res_intersect ) ) {
 							$access_allowed = 0;
 						} elseif ( $eme_drip_counter ) {
-								// if we need to drip content, get the member and check the payment date
-								$person_id        = eme_get_personid_by_wpid( $wp_id );
-								$show_content     = 0;
-								$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+							// if we need to drip content, get the member and check the payment date
+							$person_id        = eme_get_personid_by_wpid( $wp_id );
+							$show_content     = 0;
+							$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 							foreach ( $res_intersect as $membership_id ) {
 								$member = eme_get_active_member_by_personid_membershipid( $person_id, $membership_id );
 								if ( ! empty( $member ) ) {
@@ -3817,8 +3821,12 @@ function eme_check_access( $post_id ) {
 						$access_allowed = 0;
 					} else {
 						$person_groupids = eme_get_persongroup_ids( 0, $wp_id );
-						$res_intersect   = array_intersect( $person_groupids, $existing_groupids );
-						if ( empty( $person_groupids ) || empty( $res_intersect ) ) {
+						if ( ! empty( $person_groupids ) ) {
+							$res_intersect = array_intersect( $person_groupids, $existing_groupids );
+						} else {
+							$res_intersect = 0;
+						}
+						if ( empty( $res_intersect ) ) {
 							$access_allowed = 0;
 						}
 					}

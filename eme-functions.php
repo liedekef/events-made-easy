@@ -669,7 +669,8 @@ function eme_for_shortcode( $atts, $content ) {
 	$result      = '';
 	$loopcounter = 1;
 	if ( ! empty( $list ) ) {
-		$search       = [ '#_LOOPVALUE', '#URL_LOOPVALUE', '#_LOOPCOUNTER' ];
+		$list   = eme_replace_generic_placeholders($list); // currently mainly usefull to loop over all categories when using #_ALLCATEGORYIDS
+		$search = [ '#_LOOPVALUE', '#URL_LOOPVALUE', '#_LOOPCOUNTER' ];
 		$array_values = explode( $sep, $list );
 		foreach ( $array_values as $val ) {
 			$url_val     = rawurlencode( $val );

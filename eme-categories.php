@@ -426,7 +426,7 @@ function eme_get_location_category_names( $location_id, $extra_conditions = '', 
 	if ( $order_by != '' ) {
 		$order_by = " ORDER BY $order_by";
 	}
-	$sql = $wpdb->prepare( "SELECT $categories_table.category_name FROM $categories_table, $locations_table where location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
+	$sql = $wpdb->prepare( "SELECT $categories_table.category_name FROM $categories_table, $locations_table WHERE location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
 	return $wpdb->get_col( $sql );
 }
 
@@ -440,7 +440,7 @@ function eme_get_location_category_descriptions( $location_id, $extra_conditions
 	if ( $order_by != '' ) {
 		$order_by = " ORDER BY $order_by";
 	}
-	$sql = $wpdb->prepare( "SELECT $categories_table.description FROM $categories_table, $locations_table where location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
+	$sql = $wpdb->prepare( "SELECT $categories_table.description FROM $categories_table, $locations_table WHERE location_id = %d AND FIND_IN_SET(category_id,location_category_ids) $extra_conditions $order_by", $location_id );
 	return $wpdb->get_col( $sql );
 }
 
@@ -449,9 +449,11 @@ function eme_get_category_ids( $cat_slug ) {
 	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
 	$cat_ids          = [];
 	if ( ! empty( $cat_slug ) ) {
-		$sql     = $wpdb->prepare( "SELECT DISTINCT category_id FROM $categories_table WHERE category_slug = %s", $cat_slug );
-		$cat_ids = $wpdb->get_col( $sql );
+		$sql = $wpdb->prepare( "SELECT DISTINCT category_id FROM $categories_table WHERE category_slug = %s", $cat_slug );
+	} else {
+		$sql = "SELECT category_id FROM $categories_table ORDER BY category_id";
 	}
+	$cat_ids = $wpdb->get_col( $sql );
 	return $cat_ids;
 }
 

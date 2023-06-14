@@ -240,7 +240,7 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
 		$member['end_date'] = '0000-00-00';
 	}
 
-	if ( ! empty($membership['properties']['turns'] ) {
+	if ( ! empty($membership['properties']['turns'] ) ) {
 		$member['properties']['turns'] = $membership['properties']['turns'];
 	}
 

@@ -42,7 +42,15 @@ function eme_new_member() {
 		'dcodes_used'       => [],
 		'dgroupid'          => 0,
 	];
+	$member['properties'] = eme_init_member_props();
 	return $member;
+}
+
+function eme_init_member_props( $props = [] ) {
+	if ( ! isset( $props['turns'] ) ) {
+		$props['turns'] = 0;
+	}
+	return $props;
 }
 
 function eme_init_membership_props( $props = [] ) {
@@ -53,6 +61,9 @@ function eme_init_membership_props( $props = [] ) {
 		if ( ! eme_is_numeric_array( $test_arr ) ) {
 			$props['reminder_days'] = '';
 		}
+	}
+	if ( ! isset( $props['turns'] ) ) {
+		$props['turns'] = 0;
 	}
 	if ( ! isset( $props['remove_pending_days'] ) ) {
 		$props['remove_pending_days'] = 0;
@@ -229,6 +240,10 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
 		$member['end_date'] = '0000-00-00';
 	}
 
+	if ( ! empty($membership['properties']['turns'] ) {
+		$member['properties']['turns'] = $membership['properties']['turns'];
+	}
+
 	if ( has_filter( 'eme_insert_member_filter' ) ) {
 		$member = apply_filters( 'eme_insert_member_filter', $member );
 	}
@@ -242,6 +257,7 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
 	// eme_serialize if needed
 	$member['dcodes_entered'] = eme_serialize( $member['dcodes_entered'] );
 	$member['dcodes_used']    = eme_serialize( $member['dcodes_used'] );
+	$member['properties']     = eme_serialize( $member['properties'] );
 
 	// add the memberid if wanted
 	if ( ! empty( $member_id ) ) {
@@ -289,6 +305,7 @@ function eme_db_update_member( $member_id, $line, $membership, $update_answers =
 	// eme_serialize if needed
 	$member['dcodes_entered'] = eme_serialize( $member['dcodes_entered'] );
 	$member['dcodes_used']    = eme_serialize( $member['dcodes_used'] );
+	$member['properties']     = eme_serialize( $member['properties'] );
 
 	if ( ! empty( $member ) && $wpdb->update( $table, $member, $where ) === false ) {
 		return false;
@@ -382,6 +399,7 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
 		} else {
 			$member['dcodes_entered'] = [];
 		}
+		$member['properties'] = eme_init_member_props( eme_unserialize( $member['properties'] ) );
 		$members[ $key ] = $member;
 	}
 	return $members;
@@ -510,6 +528,7 @@ function eme_get_member( $id ) {
 		} else {
 			$member['dcodes_entered'] = [];
 		}
+		$member['properties'] = eme_init_member_props( eme_unserialize( $member['properties'] ) );
 	}
 	return $member;
 }
@@ -532,6 +551,7 @@ function eme_get_active_member_by_personid_membershipid( $person_id, $membership
 		} else {
 			$member['dcodes_entered'] = [];
 		}
+		$member['properties'] = eme_init_member_props( eme_unserialize( $member['properties'] ) );
 	}
 	return $member;
 }
@@ -562,6 +582,7 @@ function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = 
 		} else {
 			$member['dcodes_entered'] = [];
 		}
+		$member['properties'] = eme_init_member_props( eme_unserialize( $member['properties'] ) );
 	}
 
 	return $member;
@@ -619,6 +640,7 @@ function eme_get_member_by_paymentid( $id ) {
 		} else {
 			$member['dcodes_entered'] = [];
 		}
+		$member['properties'] = eme_init_member_props( eme_unserialize( $member['properties'] ) );
 	}
 
 	return $member;
@@ -868,6 +890,9 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 		}
 		if ( eme_is_datetime( $_POST['payment_date'] ) ) {
 			$member['payment_date'] = eme_sanitize_request( $_POST['payment_date'] );
+		}
+		if ( isset( $_POST['properties'] ) ) {
+			$member['properties'] = eme_kses( $_POST['properties'] );
 		}
 		if ( empty( $membership['properties']['family_membership'] ) ) {
 			$member['related_member_id'] = 0;

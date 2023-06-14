@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 370 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 371 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -1479,6 +1479,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          dcodes_entered tinytext,
          dcodes_used tinytext,
          dgroupid INT(11) DEFAULT 0,
+         properties text,
          UNIQUE KEY  (member_id),
          KEY  (related_member_id)
          ) $charset $collate;";
@@ -1502,6 +1503,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid INT(11) DEFAULT 0;" );
 		maybe_add_column( $table_name, 'dcodes_entered', "ALTER TABLE $table_name ADD dcodes_entered tinytext ;" );
 		maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used tinytext ;" );
+		maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
 		if ( eme_column_exists( $table_name, 'transfer_nbr_be97' ) ) {
 			$wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" );
 		} else {

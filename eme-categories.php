@@ -444,7 +444,7 @@ function eme_get_location_category_descriptions( $location_id, $extra_conditions
 	return $wpdb->get_col( $sql );
 }
 
-function eme_get_category_ids( $cat_slug ) {
+function eme_get_category_ids( $cat_slug = '' ) {
 	global $wpdb;
 	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
 	$cat_ids          = [];

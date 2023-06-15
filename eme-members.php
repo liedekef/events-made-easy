@@ -363,6 +363,9 @@ function eme_update_member_lastseen( $member_id ) {
 
 function eme_update_member_turns( $member ) {
 	$membership = eme_get_membership( $member['membership_id'] );
+	if ($membership['properties']['turns'] == 0 ){
+		return;
+	}
 	$member['properties']['turns'] ++;
 	eme_db_update_member( $member['member_id'], $member, $membership );
 	// max number of turns reached? Then set expired
@@ -1220,13 +1223,18 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	// now for the select boxes, we need to set to 0 if not in the _POST
 	$select_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'captcha_only_logged_out', 'create_wp_user' ];
 	foreach ( $select_post_vars as $post_var ) {
-		if ( ! isset( $_POST['properties'][ $post_var ] ) ) {
+		if ( isset( $_POST['properties'][ $post_var ] ) ) {
+			$membership['properties'][ $post_var ] = intval( $_POST['properties'][ $post_var ] );
+		} else {
 			$membership['properties'][ $post_var ] = 0;
 		}
 	}
 	if ( $membership['properties']['use_captcha'] && ! function_exists( 'imagecreatetruecolor' ) ) {
 		$membership['properties']['use_captcha'] = 0;
 	}
+
+	// turns needs to be an int
+	$membership['properties']['turns'] = intval( $membership['properties']['turns'] );
 
 	if ( isset( $_POST['start_date'] ) && eme_is_date( $_POST['start_date'] ) ) {
 		$membership['start_date'] = eme_sanitize_request( $_POST['start_date'] );
@@ -1763,6 +1771,12 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><input type="text" id="properties[grace_period]" name="properties[grace_period]" value="<?php echo $membership['properties']['grace_period']; ?>" size="40">
 		<br><p class='eme_smaller'><?php esc_html_e( 'After a membership has expired, people can still be considered as a member until this many days have passed.', 'events-made-easy' ); ?>
 		<br><?php esc_html_e( 'After the mentioned number of days have passed, the membership will be set to expired.', 'events-made-easy' ); ?></p>
+	</td>
+	</tr>
+	<tr>
+	<td><label for="turns_count"><?php esc_html_e( 'Max turns usage', 'events-made-easy' ); ?></label></td>
+	<td><input type="integer" id="properties[turns]" name="properties[turns]" value="<?php echo $membership['properties']['turns']; ?>" size="40">
+		<br><p class='eme_smaller'><?php esc_html_e( 'If set to something bigger than 0, this will indicate the maximum times a member can RSVP to an event that requires this membership.', 'events-made-easy' ); ?>
 	</td>
 	</tr>
 	<tr id='reminder'>
@@ -3501,15 +3515,22 @@ function eme_member_recalculate_status( $member_id = 0 ) {
 	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	// we only recalculate member status if status_automatic=1 and the member has paid
 	if ( $member_id ) {
-		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE a.member_id=$member_id AND a.status_automatic=1 AND a.paid=1 AND related_member_id=0";
+		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, a.properties as memberprops, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE a.member_id=$member_id AND a.status_automatic=1 AND a.paid=1 AND related_member_id=0";
 	} else {
-		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE a.status_automatic=1 AND a.paid=1 AND related_member_id=0";
+		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, a.properties as memberprops, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE a.status_automatic=1 AND a.paid=1 AND related_member_id=0";
 	}
 	$rows = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $rows as $item ) {
 		$properties        = eme_init_membership_props( eme_unserialize( $item['properties'] ) );
 		$grace_period      = intval( $properties['grace_period'] );
 		$status_calculated = eme_member_calc_status( $item['start_date'], $item['end_date'], $item['duration_period'], $grace_period );
+		if ($properties['turns'] > 0 ) {
+			$memberprops = eme_unserialize( $item['memberprops'] ) );
+			if ($memberprops['turns'] >= $properties['turns'] ) {
+				$status_calculated = EME_MEMBER_STATUS_EXPIRED;
+			}
+		}
+
 		if ( $item['status'] != $status_calculated ) {
 			$related_member_ids = eme_get_family_member_ids( $item['member_id'] );
 			if ( $status_calculated == EME_MEMBER_STATUS_EXPIRED ) {

@@ -4929,7 +4929,8 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	<span id="span_partialpayment" class="eme-hidden">
 	<?php
 	esc_html_e( 'Partial payment amount', 'events-made-easy' );
-	echo eme_ui_number( 0, 'partial_amount' );
+	$label = eme_esc_html('Partial payment amount', 'events-made-easy' );
+	echo eme_ui_number( 0, 'partial_amount', 0, '', 'aria-label="' . $label . '"' );
 	?>
 	</span>
 	<span id="span_rsvpmailtemplate" class="eme-hidden">

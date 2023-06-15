@@ -47,8 +47,8 @@ function eme_new_member() {
 }
 
 function eme_init_member_props( $props = [] ) {
-	if ( ! isset( $props['turns'] ) ) {
-		$props['turns'] = 0;
+	if ( ! isset( $props['usage_count'] ) ) {
+		$props['usage_count'] = 0;
 	}
 	return $props;
 }
@@ -62,8 +62,8 @@ function eme_init_membership_props( $props = [] ) {
 			$props['reminder_days'] = '';
 		}
 	}
-	if ( ! isset( $props['turns'] ) ) {
-		$props['turns'] = 0;
+	if ( ! isset( $props['max_usage_count'] ) ) {
+		$props['max_usage_count'] = 0;
 	}
 	if ( ! isset( $props['remove_pending_days'] ) ) {
 		$props['remove_pending_days'] = 0;
@@ -240,10 +240,6 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
 		$member['end_date'] = '0000-00-00';
 	}
 
-	if ( ! empty($membership['properties']['turns'] ) ) {
-		$member['properties']['turns'] = $membership['properties']['turns'];
-	}
-
 	if ( has_filter( 'eme_insert_member_filter' ) ) {
 		$member = apply_filters( 'eme_insert_member_filter', $member );
 	}
@@ -361,17 +357,14 @@ function eme_update_member_lastseen( $member_id ) {
 	$wpdb->update( $table, $fields, $where );
 }
 
-function eme_update_member_turns( $member ) {
+function eme_update_member_usage_count( $member ) {
 	$membership = eme_get_membership( $member['membership_id'] );
-	if ($membership['properties']['turns'] == 0 ){
+	if ($membership['properties']['max_usage_count'] == 0 ){
 		return;
 	}
-	$member['properties']['turns'] ++;
+	$member['properties']['usage_count'] ++;
 	eme_db_update_member( $member['member_id'], $member, $membership );
-	// max number of turns reached? Then set expired
-	if ($member['properties']['turns'] >= $membership['properties']['turns'] ) {
-		eme_member_set_status( $member['member_id'], EME_MEMBER_STATUS_EXPIRED );
-	}
+	eme_member_recalculate_status ( $member['member_id'] );
 }
 
 function eme_get_members( $member_ids, $extra_search = '' ) {
@@ -856,6 +849,12 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 		} else {
 			$member['end_date'] = eme_get_next_end_date( $membership, $member['start_date'] );
 		}
+		if ( isset( $_POST['properties'] ) ) {
+			$member['properties'] = eme_kses( $_POST['properties'] );
+		}
+		// usage_count needs to be an int
+		$member['properties']['usage_count'] = intval( $member['properties']['usage_count'] );
+
 		if ( isset( $_POST['paid'] ) ) {
 			$member['paid'] = intval( $_POST['paid'] );
 		}
@@ -1233,8 +1232,8 @@ function eme_add_update_membership( $membership_id = 0 ) {
 		$membership['properties']['use_captcha'] = 0;
 	}
 
-	// turns needs to be an int
-	$membership['properties']['turns'] = intval( $membership['properties']['turns'] );
+	// max_usage_count needs to be an int
+	$membership['properties']['max_usage_count'] = intval( $membership['properties']['max_usage_count'] );
 
 	if ( isset( $_POST['start_date'] ) && eme_is_date( $_POST['start_date'] ) ) {
 		$membership['start_date'] = eme_sanitize_request( $_POST['start_date'] );
@@ -1514,6 +1513,20 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			<input type='text' readonly='readonly' name='dp_end_date' id='dp_end_date' data-date='<?php echo eme_js_datetime( $member['end_date'] ); ?>' data-alt-field='end_date' class='eme_formfield_fdate'>
 		<?php } ?>
 	</td></tr>
+<?php if ( $membership['properties']['max_usage_count'] > 0 ) { ?>
+	<tr>
+	<td><label for="properties[usage_count]"><?php esc_html_e( 'Usage count', 'events-made-easy' ); ?></label></td>
+	<td><input type="integer" id="properties[usage_count]" name="properties[usage_count]" value="<?php echo $member['properties']['usage_count']; ?>" size="40">
+		<br><p class='eme_smaller'><?php esc_html_e( 'This indicates the amount of times this member has RSVP-ed to an event that requires this membership.', 'events-made-easy' ); ?>
+		<?php 
+			if ( $member['properties']['usage_count'] >= $membership['properties']['max_usage_count'] ) {
+				echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: usage count is at its maximum, the status will therefore always be set to Expired!', 'events-made-easy' );
+			}
+		?>
+		</p>
+	</td>
+	</tr>
+<?php } ?>
 	<tr><td><?php esc_html_e( 'Member status calculated automatically', 'events-made-easy' ); ?></td>
 	<td><?php echo eme_ui_select_binary( $member['status_automatic'], 'status_automatic', 0, 'nodynamicupdates', $disabled ); ?>
 		<?php
@@ -1774,8 +1787,8 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	</td>
 	</tr>
 	<tr>
-	<td><label for="turns_count"><?php esc_html_e( 'Max turns usage', 'events-made-easy' ); ?></label></td>
-	<td><input type="integer" id="properties[turns]" name="properties[turns]" value="<?php echo $membership['properties']['turns']; ?>" size="40">
+	<td><label for="properties[max_usage_count]"><?php esc_html_e( 'Maximum usage', 'events-made-easy' ); ?></label></td>
+	<td><input type="integer" id="properties[max_usage_count]" name="properties[max_usage_count]" value="<?php echo $membership['properties']['max_usage_count']; ?>" size="40">
 		<br><p class='eme_smaller'><?php esc_html_e( 'If set to something bigger than 0, this will indicate the maximum times a member can RSVP to an event that requires this membership.', 'events-made-easy' ); ?>
 	</td>
 	</tr>
@@ -3524,9 +3537,9 @@ function eme_member_recalculate_status( $member_id = 0 ) {
 		$properties        = eme_init_membership_props( eme_unserialize( $item['properties'] ) );
 		$grace_period      = intval( $properties['grace_period'] );
 		$status_calculated = eme_member_calc_status( $item['start_date'], $item['end_date'], $item['duration_period'], $grace_period );
-		if ($properties['turns'] > 0 ) {
-			$memberprops = eme_unserialize( $item['memberprops'] ) );
-			if ($memberprops['turns'] >= $properties['turns'] ) {
+		if ($properties['max_usage_count'] > 0 ) {
+			$memberprops = eme_unserialize( $item['memberprops'] );
+			if ($memberprops['usage_count'] >= $properties['max_usage_count'] ) {
 				$status_calculated = EME_MEMBER_STATUS_EXPIRED;
 			}
 		}
@@ -3824,8 +3837,8 @@ function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
 	$fields['status_automatic'] = 1;
 	$fields['status']           = eme_member_calc_status( $fields['start_date'], $fields['end_date'], $membership['duration_period'], $membership['properties']['grace_period'] );
 
-	// also set the turns propertie to 0
-	$member['properties']['turns'] = 0;
+	// also set the usage_count propertie to 0
+	$member['properties']['usage_count'] = 0;
 	$fields['properties']     = eme_serialize( $member['properties'] );
 
 	// now update
@@ -5933,6 +5946,7 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 	$records = [];
 	foreach ( $rows as $item ) {
 		$record     = [];
+		$item = eme_get_extra_member_data( $item );
 		$membership = eme_get_membership( $item['membership_id'] );
 		// we can sort on member_id, but in our constructed sql , we have members.member_id and ans.member_id
 		// some mysql databases don't like it if you then just sort on member_id, so we'll change it to members.member_id
@@ -5979,6 +5993,7 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 		}
 		$record['start_date']      = eme_localized_date( $item['start_date'], EME_TIMEZONE, 1 );
 		$record['end_date']        = eme_localized_date( $item['end_date'], EME_TIMEZONE, 1 );
+		$record['usage_count']     = intval( $item['properties']['usage_count'] ) .' ('. __( 'Max: ', 'events-made-easy' ) .$membership['properties']['max_usage_count']. ')';
 		$record['creation_date']   = eme_localized_datetime( $item['creation_date'], EME_TIMEZONE, 1 );
 		$record['last_seen']       = eme_localized_datetime( $item['last_seen'], EME_TIMEZONE, 1 );
 		$record['payment_date']    = eme_localized_datetime( $item['payment_date'], EME_TIMEZONE, 1 );
@@ -5995,8 +6010,6 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 		$record['unique_nbr']    = "<span title='" . sprintf( __( 'This is based on the payment ID of the member: %d', 'events-made-easy' ), $item['payment_id'] ) . "'>" . eme_esc_html( eme_unique_nbr_formatted( $item['unique_nbr'] ) ) . '</span>';
 		$record['status']        = $eme_member_status_array[ $item['status'] ];
 		$record['wp_id']         = eme_esc_html( $item['wp_id'] );
-		$record['wp_nickname']   = '';
-		$record['wp_dispname']   = '';
 		if ( $item['wp_id'] && isset( $wp_users[ $record['wp_id'] ] ) ) {
 			$record['wp_user'] = eme_esc_html( $wp_users[ $record['wp_id'] ] );
 		} else {

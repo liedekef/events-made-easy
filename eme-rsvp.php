@@ -816,7 +816,7 @@ function eme_add_bookings_ajax() {
 
 	// check membership requirement
 	$memberships_failed = 0;
-	$turns_update_needed_for = [];
+	$usage_count_update_needed_for = [];
 	foreach ($events as $event) {
 		if ( ! empty( $event['event_properties']['rsvp_required_membership_ids'] ) ) {
 			// membership required? Then the user is also required to be logged in
@@ -835,23 +835,33 @@ function eme_add_bookings_ajax() {
 				$memberships_failed = 1;
 				continue;
                         }
-			// now check the turns: if we find 1 membership still "ok", we use that
-			$turns_failed = 1;
+			// now check the usage_count: if we find 1 membership still "ok", we use that
+			$usage_count_failed = 1;
 			foreach ( $res_intersect as $membership_id ) {
 				$membership = eme_get_membership( $membership_id );
 				$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
-				if ($member['properties']['turns']<$membership['properties']['turns']) {
+				if ($member['properties']['usage_count']<$membership['properties']['max_usage_count']) {
 					// if a member needs a turn update, we only do it once for the whole multibooking
-					$turns_update_needed_for[$member['member_id']] = $member;
-					$turns_failed = 0;
+					$usage_count_update_needed_for[$member['member_id']] = $member;
+					$usage_count_failed = 0;
 					continue;
 				}
 			}
-			if ($turns_failed>0) {
+			if ($usage_count_failed>0) {
 				$memberships_failed = 1;
 				continue;
 			}
 		}
+	}
+	if ( $memberships_failed == 1 ) {
+		$form_html = __( 'No valid membership found.', 'events-made-easy' );
+		echo wp_json_encode(
+			[
+				'Result'      => 'NOK',
+				'htmlmessage' => $form_html,
+			]
+		);
+		wp_die();
 	}
 
 	$event       = $events[0];
@@ -905,10 +915,10 @@ function eme_add_bookings_ajax() {
 		}
 		$form_result_message = $booking_res[0];
 		$payment_id          = $booking_res[1];
-		// booking done, now update the turns for the members needed
-		if (!empty($turns_update_needed_for)) {
-			foreach ($turns_update_needed_for as $member) {
-				eme_update_member_turns( $member );
+		// booking done, now update the usage_count for the members needed
+		if (!empty($usage_count_update_needed_for)) {
+			foreach ($usage_count_update_needed_for as $member) {
+				eme_update_member_usage_count( $member );
 			}
 		}
 	}

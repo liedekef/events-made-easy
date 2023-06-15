@@ -163,6 +163,9 @@ function eme_translate_string_nowptrans( $value, $lang = '' ) {
 }
 
 function eme_translate_string( $text, $lang = '', $use_wp_trans = 1 ) {
+	if ( empty( $text ) ) {
+		return $text;
+	}
 	if ( empty( $lang ) ) {
 		$lang = eme_detect_lang();
 	}

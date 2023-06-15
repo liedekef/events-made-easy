@@ -1897,6 +1897,9 @@ function eme_add_post_state( $post_states, $post ) {
 add_filter( 'display_post_states', 'eme_add_post_state', 10, 2 );
 
 function eme_replace_generic_placeholders( $format, $target = 'html' ) {
+	if (empty( $format ) ) {
+		return $format;
+	}
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
@@ -9774,6 +9777,7 @@ function eme_admin_enqueue_js() {
 			'translate_membercount'                => __( 'Nbr Active Members', 'events-made-easy' ),
 			'translate_startdate'                  => __( 'Start', 'events-made-easy' ),
 			'translate_enddate'                    => __( 'End', 'events-made-easy' ),
+			'translate_usage_count'                => __( 'Usage count', 'events-made-easy' ),
 			'translate_registrationdate'           => __( 'Registered on', 'events-made-easy' ),
 			'translate_last_seen'                  => __( 'Last seen on', 'events-made-easy' ),
 			'translate_paymentdate'                => __( 'Paid on', 'events-made-easy' ),

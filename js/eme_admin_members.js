@@ -87,6 +87,11 @@ jQuery(document).ready(function ($) {
 		    title: eme.translate_enddate,
                     visibility: 'hidden'
                 },
+                usage_count: {
+		    title: eme.translate_usage_count,
+                    visibility: 'hidden',
+                    sorting: false
+                },
                 creation_date: {
 		    title: eme.translate_registrationdate,
                     visibility: 'hidden'

@@ -3803,7 +3803,14 @@ function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
 	$fields['status_automatic'] = 1;
 	$fields['status']           = eme_member_calc_status( $fields['start_date'], $fields['end_date'], $membership['duration_period'], $membership['properties']['grace_period'] );
 
+	// also set the turns propertie to 0
+	$member['properties']['turns'] = 0;
+	$fields['properties']     = eme_serialize( $member['properties'] );
+
+	// now update
 	$res                = $wpdb->update( $table, $fields, $where );
+
+	// do the family members too
 	$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
 	if ( ! empty( $related_member_ids ) ) {
 		foreach ( $related_member_ids as $related_member_id ) {

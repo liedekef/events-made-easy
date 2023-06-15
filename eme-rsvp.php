@@ -799,17 +799,58 @@ function eme_add_bookings_ajax() {
 		wp_die();
 	}
 
+	$events = [];
 	if ( !empty( $_POST['eme_event_ids'] ) && eme_is_numeric_array( $_POST['eme_event_ids'] ) ) {
 		$events = eme_get_event_arr( $_POST['eme_event_ids'] );
-		if ( empty( $events ) ) {
-			$form_html = __( 'Please select at least one event.', 'events-made-easy' );
-			echo wp_json_encode(
-				[
-					'Result'      => 'NOK',
-					'htmlmessage' => $form_html,
-				]
-			);
-			wp_die();
+	}
+	if ( empty( $events ) ) {
+		$form_html = __( 'Please select at least one event.', 'events-made-easy' );
+		echo wp_json_encode(
+			[
+				'Result'      => 'NOK',
+				'htmlmessage' => $form_html,
+			]
+		);
+		wp_die();
+	}
+
+	// check membership requirement
+	$memberships_failed = 0;
+	$turns_update_needed_for = [];
+	foreach ($events as $event) {
+		if ( ! empty( $event['event_properties']['rsvp_required_membership_ids'] ) ) {
+			// membership required? Then the user is also required to be logged in
+			if (! is_user_logged_in() ) {
+				$memberships_failed = 1;
+				continue;
+			}
+			$current_userid = get_current_user_id();
+                        $membership_ids = eme_get_active_membershipids_by_wpid( $current_userid );
+                        if ( ! empty( $membership_ids ) ) {
+                                $res_intersect = array_intersect( $membership_ids, $event['event_properties']['rsvp_required_membership_ids'] );
+                        } else {
+                                $res_intersect = 0;
+                        }
+                        if ( empty( $res_intersect ) ) {
+				$memberships_failed = 1;
+				continue;
+                        }
+			// now check the turns: if we find 1 membership still "ok", we use that
+			$turns_failed = 1;
+			foreach ( $res_intersect as $membership_id ) {
+				$membership = eme_get_membership( $membership_id );
+				$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
+				if ($member['properties']['turns']<$membership['properties']['turns']) {
+					// if a member needs a turn update, we only do it once for the whole multibooking
+					$turns_update_needed_for[$member['member_id']] = $member;
+					$turns_failed = 0;
+					continue;
+				}
+			}
+			if ($turns_failed>0) {
+				$memberships_failed = 1;
+				continue;
+			}
 		}
 	}
 
@@ -864,6 +905,12 @@ function eme_add_bookings_ajax() {
 		}
 		$form_result_message = $booking_res[0];
 		$payment_id          = $booking_res[1];
+		// booking done, now update the turns for the members needed
+		if (!empty($turns_update_needed_for)) {
+			foreach ($turns_update_needed_for as $member) {
+				eme_update_member_turns( $member );
+			}
+		}
 	}
 
 	// let's decide for the first event wether or not payment is needed

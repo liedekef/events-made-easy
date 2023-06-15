@@ -558,8 +558,23 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
 	return $val;
 }
 
-function eme_ui_number( $option_value, $name ) {
+function eme_ui_number( $option_value, $name, $required = 0, $class = '', $extra_attributes = '' ) {
+        if ( $required ) {
+                $required_att = "required='required'";
+        } else {
+                $required_att = '';
+        }
+        if ( $class ) {
+                $class_att = "class='$class'";
+        } else {
+                $class_att = '';
+        }
+
+        if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+                $extra_attributes .= ' aria-label="' . $name . '"';
+        }
+
 	$name = wp_strip_all_tags( $name );
-	return "<input type='number' name='{$name}' id='{$name}' value='$option_value'>";
+	return "<input type='number' $required_att $class_att $extra_attributes name='{$name}' id='{$name}' value='$option_value'>";
 }
 ?>

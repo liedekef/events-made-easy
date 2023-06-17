@@ -100,8 +100,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.3.70 (2023//) =
 * A new option is added to a EME person to delete the linked WP user when the user gets trashed
+  This option is on by default if EME created the WP user, but a WP admin will never be deleted.
 * You can now require in the RSVP settings that a logged in user must be member of a EME group or membership in order to be able to book.
   This avoids the need of using eme_if or the #_ADDBOOKINGFORM_IF_USER_IN_GROUP and #_ADDBOOKINGFORM_IF_USER_IS_MEMBER_OF (which still work btw)
+  Thanks to this, a new option can be added to members (see below: 'max usage'), so we can now use a turns-based membership
 * New generic placeholder #_ALLCATEGORYIDS and allow eme_for to use this as list-value, so people can loop over categories
 * New option for memberships: max usage. If set to something bigger than 0, this will indicate the maximum times a member can RSVP to an event that requires this membership.
 

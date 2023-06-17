@@ -3475,8 +3475,6 @@ function eme_format_full_name( $firstname, $lastname ) {
 }
 
 function eme_extra_event_headers( $event ) {
-	
-
 	if ( $event['event_status'] != EME_EVENT_STATUS_PUBLIC && ! is_user_logged_in() ) {
 		return;
 	}

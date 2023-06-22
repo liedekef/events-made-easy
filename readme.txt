@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.2
-Stable tag: 2.3.69
+Stable tag: 2.3.70
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.70 (2023//) =
+= 2.3.70 (2023/06/22) =
 * A new option is added to a EME person to delete the linked WP user when the user gets trashed
   This option is on by default if EME created the WP user, but a WP admin will never be deleted.
 * You can now require in the RSVP settings that a logged in user must be member of a EME group or membership in order to be able to book.

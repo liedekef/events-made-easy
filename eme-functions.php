@@ -751,7 +751,11 @@ function eme_get_contact( $contact_id = 0 ) {
 	if ( ! $contact_id || ! get_userdata( $contact_id ) ) {
 		$contact_id = intval(get_option( 'eme_default_contact_person',0) );
 	}
-	if ( $contact_id < 1 ) {
+	$userinfo = false;
+	if ( $contact_id > 0 ) {
+		$userinfo = get_userdata( $contact_id );
+	}
+	if ( $contact_id < 1 || $userinfo === false ) {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			$thisblog = get_current_blog_id();
 			$userinfo = get_user_by( 'email', get_blog_option( $thisblog, 'admin_email' ) );
@@ -765,8 +769,6 @@ function eme_get_contact( $contact_id = 0 ) {
 				$userinfo = get_user_by( 'login', $eme_super_admins[0] );
 			}
 		}
-	} else {
-		$userinfo = get_userdata( $contact_id );
 	}
 	return $userinfo;
 }

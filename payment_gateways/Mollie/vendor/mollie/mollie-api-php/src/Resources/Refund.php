@@ -8,11 +8,6 @@ use Mollie\Api\Types\RefundStatus;
 class Refund extends BaseResource
 {
     /**
-     * @var string
-     */
-    public $resource;
-
-    /**
      * Id of the payment method.
      *
      * @var string
@@ -94,6 +89,14 @@ class Refund extends BaseResource
      * @var \stdClass|null
      */
     public $metadata;
+
+    /**
+     * @return bool
+     */
+    public function canBeCanceled()
+    {
+        return $this->isQueued() || $this->isPending();
+    }
 
     /**
      * Is this refund queued?

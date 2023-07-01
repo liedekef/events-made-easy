@@ -4752,7 +4752,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 
 	$pdftemplates     = eme_get_templates( 'pdf', 1 );
 	$htmltemplates    = eme_get_templates( 'html', 1 );
-	$rsvptemplates    = eme_get_templates( 'rsvpmail', 1 );
+	$rsvptemplates    = eme_get_templates( 'rsvpmail' );
 	$mailing_pending  = get_option( 'eme_rsvp_mail_notify_pending' );
 	$mailing_approved = get_option( 'eme_rsvp_mail_notify_approved' );
 

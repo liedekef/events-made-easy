@@ -2776,7 +2776,7 @@ function eme_manage_members_layout( $message ) {
 	$memberships     = eme_get_memberships();
 	$pdftemplates    = eme_get_templates( 'pdf', 1 );
 	$htmltemplates   = eme_get_templates( 'html', 1 );
-	$membertemplates = eme_get_templates( 'membershipmail', 1 );
+	$membertemplates = eme_get_templates( 'membershipmail' );
 	$nonce_field     = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 	if ( empty( $message ) ) {

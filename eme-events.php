@@ -4996,7 +4996,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		}
 	} elseif ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--today$/', $scope, $matches ) ) {
 		$limit_start = $matches[1] . ' 00:00:00';
-		$limit_end   = $eme_date_obj->endOfDay()->getDateTime();
+		$limit_end   = $today . ' 23:59:59';
 		if ( $show_ongoing ) {
 			$conditions[] = "((event_start BETWEEN '$limit_start' AND '$limit_end') OR (event_end BETWEEN '$limit_start' AND '$limit_end') OR (event_start <= '$limit_start' AND event_end >= '$limit_end'))";
 		} else {
@@ -5011,7 +5011,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 			$conditions[] = "(event_start BETWEEN '$limit_start' AND '$limit_end')";
 		}
 	} elseif ( preg_match( '/^today--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
-		$limit_start = $eme_date_obj->startOfDay()->getDateTime();
+		$limit_start = $today . ' 00:00:00';
 		$limit_end   = $matches[1] . ' 23:59:59';
 		if ( $show_ongoing ) {
 			$conditions[] = "((event_start BETWEEN '$limit_start' AND '$limit_end') OR (event_end BETWEEN '$limit_start' AND '$limit_end') OR (event_start <= '$limit_start' AND event_end >= '$limit_end'))";
@@ -5020,7 +5020,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		}
 	} elseif ( preg_match( '/^\+(\d+)d$/', $scope, $matches ) ) {
 		$days        = $matches[1];
-		$limit_start = $eme_date_obj->startOfDay()->getDateTime();
+		$limit_start = $today . ' 00:00:00';
 		$limit_end   = $eme_date_obj->addDays( $days )->endOfDay()->getDateTime();
 		if ( $show_ongoing ) {
 			$conditions[] = "((event_start BETWEEN '$limit_start' AND '$limit_end') OR (event_end BETWEEN '$limit_start' AND '$limit_end') OR (event_start <= '$limit_start' AND event_end >= '$limit_end'))";

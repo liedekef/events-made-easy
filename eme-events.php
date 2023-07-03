@@ -4490,14 +4490,23 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		}
 
 		//Add headers and footers to output
-		$empty_event = eme_new_event();
-		$output      = eme_replace_event_placeholders( $format_header, $empty_event ) . $output . eme_replace_event_placeholders( $format_footer, $empty_event );
-	} elseif ( $template_id_no_events ) {
-		$output = do_shortcode( eme_get_template_format( $template_id_no_events ) );
-	} elseif ( empty( $no_events_message ) ) {
-		$no_events_message = do_shortcode( get_option( 'eme_no_events_message' ) );
-		// this is also used in eme_widgets, so if you change something here, check the code there too
-		$output = "<span class='events-no-events'>" . $no_events_message . '</span>';
+		if (!empty($output)) {
+			$empty_event = eme_new_event();
+			$output      = eme_replace_event_placeholders( $format_header, $empty_event ) . $output . eme_replace_event_placeholders( $format_footer, $empty_event );
+		} else {
+			// the output can be empty due to conditionals in the format, so we set the events_count to 0
+			$events_count = 0;
+		}
+	}
+
+	if ($events_count == 0) {
+		if ( $template_id_no_events ) {
+			$output = do_shortcode( eme_get_template_format( $template_id_no_events ) );
+		} elseif ( $no_events_message == 'NO EVENTS' ) {
+			$no_events_message = do_shortcode( get_option( 'eme_no_events_message' ) );
+			// this is also used in eme_widgets, so if you change something here, check the code there too
+			$output = "<span class='events-no-events'>" . $no_events_message . '</span>';
+		}
 	}
 
 	// add the pagination if needed
@@ -4538,7 +4547,7 @@ function eme_get_events_list_shortcode( $atts ) {
 				'template_id'                => 0,
 				'template_id_header'         => 0,
 				'template_id_footer'         => 0,
-				'no_events_message'          => '',
+				'no_events_message'          => 'NO EVENTS',
 				'template_id_no_events'      => 0,
 				'ignore_filter'              => 0,
 				'offset'                     => 0,

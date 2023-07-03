@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.3.71 (2023//) =
+* make sure no newsletter is sent even due to empty number of entries after conditional placeholders
+
 = 2.3.70 (2023/06/22) =
 * A new option is added to a EME person to delete the linked WP user when the user gets trashed
   This option is on by default if EME created the WP user, but a WP admin will never be deleted.

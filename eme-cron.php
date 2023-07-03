@@ -90,8 +90,16 @@ function eme_cron_send_new_events_function() {
 	$header       = eme_get_template_format_plain( get_option( 'eme_cron_new_events_header' ) );
 	$entry        = eme_get_template_format_plain( get_option( 'eme_cron_new_events_entry' ) );
 	$footer       = eme_get_template_format_plain( get_option( 'eme_cron_new_events_footer' ) );
-	// get templates, replace people placeholders and then:
-	$mail_message = eme_get_events_list( 0, '+' . $days . 'd', 'ASC', $entry, $header, $footer );
+
+	$limit = 0;
+	$scope = '+' . $days . 'd';
+	$no_events_message = '';
+	$mail_message = eme_get_events_list( "limit=$limit&scope=$scope&format=$entry&format_header=$header&format_footer=$footer&no_events_message=$no_events_message");
+	// thanks to no_events_message being empty, in case no events are found the result is empty and then we don't send a mail
+	// the call eme_are_events_available checks for just scope, but inside the entry-format there can be conditional placeholders too resulting in an empty mail
+	if ( empty($mail_message) ) {
+		return;
+	}
 
 	$person_ids           = eme_get_newsletter_person_ids();
 	$eme_cron_queue_count = intval( get_option( 'eme_cron_queue_count' ) );

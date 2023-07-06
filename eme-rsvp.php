@@ -841,7 +841,8 @@ function eme_add_bookings_ajax() {
 				$membership = eme_get_membership( $membership_id );
 				$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
 				# max_usage_count = 0 is unlimited, so check that (the case where a member had a usage count before and then the membership max was later set to 0)
-				if ($membership['properties']['max_usage_count']>0 && $member['properties']['usage_count']<$membership['properties']['max_usage_count']) {
+				if ($membership['properties']['max_usage_count'] == 0 || 
+					($membership['properties']['max_usage_count']>0 && $member['properties']['usage_count']<$membership['properties']['max_usage_count'])) {
 					// if a member needs a turn update, we only do it once for the whole multibooking
 					$usage_count_update_needed_for[$member['member_id']] = $member;
 					$usage_count_failed = 0;

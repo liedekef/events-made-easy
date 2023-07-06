@@ -359,7 +359,12 @@ function eme_update_member_lastseen( $member_id ) {
 
 function eme_update_member_usage_count( $member ) {
 	$membership = eme_get_membership( $member['membership_id'] );
-	if ($membership['properties']['max_usage_count'] == 0 ){
+	if ( $membership['properties']['max_usage_count'] == 0 ) {
+		// in case the usage count was > 0, set it to 0
+		if ( $member['properties']['usage_count'] > 0 ) {
+			$member['properties']['usage_count'] = 0;
+			eme_db_update_member( $member['member_id'], $member, $membership );
+		}
 		return;
 	}
 	$member['properties']['usage_count'] ++;

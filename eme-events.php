@@ -4490,7 +4490,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		}
 
 		//Add headers and footers to output
-		if (!empty($output)) {
+		if (!eme_is_empty_string($output)) {
 			$empty_event = eme_new_event();
 			$output      = eme_replace_event_placeholders( $format_header, $empty_event ) . $output . eme_replace_event_placeholders( $format_footer, $empty_event );
 		} else {

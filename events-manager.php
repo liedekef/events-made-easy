@@ -320,14 +320,14 @@ function eme_create_events_submenu() {
 			$pending_members_count  = 0;
 		}
 		$pending_count          = $pending_bookings_count + $pending_members_count;
-		$pending_bookings_title = esc_attr( sprintf( __( '%d pending bookings', 'events-made-easy' ), $pending_bookings_count ) );
-		$pending_members_title  = esc_attr( sprintf( __( '%d pending members', 'events-made-easy' ), $pending_members_count ) );
+		$pending_bookings_title = esc_attr( sprintf(_n( '%d pending booking', '%d pending bookings', $pending_bookings_count, 'events-made-easy' ), number_format_i18n($pending_bookings_count ) ));
+		$pending_members_title  = esc_attr( sprintf(_n( '%d pending member', '%d pending members', $pending_members_count, 'events-made-easy' ), number_format_i18n($pending_members_count ) ));
 		// we can't use the global var $plugin_page yet, so we check using _GET
 		if ( !empty($_GET['page']) && preg_match( '/^eme-/', eme_sanitize_request($_GET['page']) ) ) {
 			$main_menu_label = '';
 		} else {
 			// show the count on the main menu if we're not in the EME menu
-			$main_menu_label = " <span class='update-plugins count-$pending_count'<span class='update-count'>" . number_format_i18n( $pending_count ) . '</span></span>';
+			$main_menu_label = " <span class='update-plugins count-$pending_count'><span class='update-count'>" . number_format_i18n( $pending_count ) . '</span></span>';
 		}
 		if ( $pending_bookings_count ) {
 			$pending_bookings_menu_label = " <span class='update-plugins count-$pending_bookings_count' title='$pending_bookings_title'><span class='update-count'>" . number_format_i18n( $pending_bookings_count ) . '</span></span>';

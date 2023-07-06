@@ -99,7 +99,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 
 == Changelog ==
 = 2.3.71 (2023//) =
-* make sure no newsletter is sent even due to empty number of entries after conditional placeholders
+* Make sure no newsletter is sent even due to empty number of entries after conditional placeholders
+* When setting max usage count to 0 for a membership (if it was non-zero before), check that it is 0 when doing RSVP too
+  (a member could have a usage count >0 beforehand and that would cause booking failures in certain cases)
 
 = 2.3.70 (2023/06/22) =
 * A new option is added to a EME person to delete the linked WP user when the user gets trashed

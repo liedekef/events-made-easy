@@ -2127,7 +2127,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
 						if ($membership) {
-							$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
+							$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'] );
 						}
 						if ( ! empty( $member ) ) {
 							$replacement = 1;
@@ -2144,7 +2144,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			} elseif ( $wp_id ) {
 				$membership = eme_get_membership( $match );
 				if ( ! empty( $membership ) ) {
-					$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'] );
+					$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], "all" );
 					if ( ! empty( $member ) ) {
 						// no payment id yet? let's create one (can be old members, older imports, ...)
 						if ( empty( $member['payment_id'] ) ) {
@@ -2598,7 +2598,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$show_form       = 0;
 				foreach ( $memberships_arr as $membership_t ) {
 					$membership = eme_get_membership( $membership_t );
-					$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
+					$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'] );
 					if ( ! empty( $member ) ) {
 						$show_form = 1;
 						break;

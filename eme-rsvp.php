@@ -839,7 +839,7 @@ function eme_add_bookings_ajax() {
 			$usage_count_failed = 1;
 			foreach ( $res_intersect as $membership_id ) {
 				$membership = eme_get_membership( $membership_id );
-				$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'], EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE );
+				$member = eme_get_member_by_wpid_membershipid( $current_userid, $membership['membership_id'] );
 				# max_usage_count = 0 is unlimited, so check that (the case where a member had a usage count before and then the membership max was later set to 0)
 				if ($membership['properties']['max_usage_count'] == 0 || 
 					($membership['properties']['max_usage_count']>0 && $member['properties']['usage_count']<$membership['properties']['max_usage_count'])) {

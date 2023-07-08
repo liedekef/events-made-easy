@@ -365,11 +365,11 @@ function eme_update_member_usage_count( $member ) {
 			$member['properties']['usage_count'] = 0;
 			eme_db_update_member( $member['member_id'], $member, $membership );
 		}
-		return;
+	} else {
+		$member['properties']['usage_count'] ++;
+		eme_db_update_member( $member['member_id'], $member, $membership );
+		eme_member_recalculate_status ( $member['member_id'] );
 	}
-	$member['properties']['usage_count'] ++;
-	eme_db_update_member( $member['member_id'], $member, $membership );
-	eme_member_recalculate_status ( $member['member_id'] );
 }
 
 function eme_get_members( $member_ids, $extra_search = '' ) {

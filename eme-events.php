@@ -1356,7 +1356,7 @@ function eme_events_page_content() {
 		$author         = str_replace( '_MYSELF', '#_MYSELF', $author );
 		$contact_person = str_replace( '_MYSELF', '#_MYSELF', $contact_person );
 
-		$page_body = eme_get_events_list( "limit=0&scope=$scope&category=$category&author=$author&contact_person=$contact_person&location_id=$location_id&notcategory=$notcategory" );
+		$page_body = eme_get_events_list( limit: 0, scope: $scope, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory );
 		return $page_body;
 	} else {
 		// Defaults events page
@@ -1365,7 +1365,7 @@ function eme_events_page_content() {
 		}
 		if ( get_option( 'eme_display_events_in_events_page' ) ) {
 			$scope      = isset( $_GET['scope'] ) ? urlencode( eme_sanitize_request( $_GET['scope'] ) ) : 'future';
-			$page_body .= eme_get_events_list( "scope=$scope" );
+			$page_body .= eme_get_events_list( scope: $scope );
 		}
 		return $page_body;
 	}
@@ -1823,7 +1823,7 @@ function eme_template_redir() {
 		$author         = str_replace( '_MYSELF', '#_MYSELF', $author );
 		$contact_person = str_replace( '_MYSELF', '#_MYSELF', $contact_person );
 
-		$events = eme_get_events( "limit=0&scope=$scope&category=$category&author=$author&contact_person=$contact_person&location_id=$location_id&notcategory=$notcategory" );
+		$event = eme_get_events( limit: 0, scope: $scope, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory );
 		if ( count( $events ) == 1 ) {
 			$event = $events[0];
 			eme_nocache_headers();
@@ -4099,44 +4099,6 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 	if ( $limit === '' ) {
 		$limit = get_option( 'eme_event_list_number_items' );
 	}
-	if ( strpos( $limit, '=' ) ) {
-		// allows the use of arguments without breaking the legacy code
-		$eme_event_list_number_events = get_option( 'eme_event_list_number_items' );
-		$defaults                     = [
-			'limit'                      => $eme_event_list_number_events,
-			'scope'                      => $scope,
-			'order'                      => $order,
-			'format'                     => $format,
-			'format_header'              => $format_header,
-			'format_footer'              => $format_footer,
-			'echo'                       => $echo,
-			'category'                   => $category,
-			'showperiod'                 => $showperiod,
-			'author'                     => $author,
-			'contact_person'             => $contact_person,
-			'paging'                     => $paging,
-			'long_events'                => $long_events,
-			'event_ids'                  => $event_ids,
-			'location_id'                => $location_id,
-			'show_ongoing'               => $show_ongoing,
-			'user_registered_only'       => $user_registered_only,
-			'link_showperiod'            => $link_showperiod,
-			'notcategory'                => $notcategory,
-			'show_recurrent_events_once' => $show_recurrent_events_once,
-			'template_id'                => $template_id,
-			'template_id_header'         => $template_id_header,
-			'template_id_footer'         => $template_id_footer,
-			'no_events_message'          => $no_events_message,
-			'template_id_no_events'      => $template_id_no_events,
-		];
-		$r = wp_parse_args( $limit, $defaults );
-		extract( $r );
-		// for some params (like AND categories): the user enters "+" and this gets translated to " " by wp_parse_args
-		// so we fix it again
-		$scope       = preg_replace( '/ /', '+', $scope );
-		$category    = preg_replace( '/ /', '+', $category );
-		$notcategory = preg_replace( '/ /', '+', $notcategory );
-	}
 	$echo         = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
 	$long_events  = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
 	$paging       = filter_var( $paging, FILTER_VALIDATE_BOOLEAN );
@@ -4804,31 +4766,6 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 	$bookings_table  = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 
-	if ( strpos( $o_limit, '=' ) ) {
-		// allows the use of arguments
-		$defaults = [
-			'o_limit'                    => 0,
-			'scope'                      => $scope,
-			'order'                      => $order,
-			'o_offset'                   => $o_offset,
-			'location_id'                => $location_id,
-			'category'                   => $category,
-			'author'                     => $author,
-			'contact_person'             => $contact_person,
-			'show_ongoing'               => $show_ongoing,
-			'notcategory'                => $notcategory,
-			'show_recurrent_events_once' => $show_recurrent_events_once,
-			'extra_conditions'           => $extra_conditions,
-			'count'		             => $count,
-			'include_customformfields'   => $include_customformfields,
-			'search_customfieldids'      => $search_customfieldids,
-			'search_customfields'        => $search_customfields,
-			'include_unlisted'           => $include_unlisted,
-		];
-
-		$r = wp_parse_args( $o_limit, $defaults );
-		extract( $r );
-	}
 	if ( $o_limit === '' ) {
 		$o_limit = get_option( 'eme_event_list_number_items' );
 	}
@@ -8791,27 +8728,6 @@ function eme_meta_box_div_event_rsvp( $event ) {
 }
 
 function eme_rss_link( $justurl = 0, $echo = 0, $text = 'RSS', $scope = 'future', $order = 'ASC', $show_ongoing = 1, $category = '', $author = '', $contact_person = '', $limit = 5, $location_id = '', $title = '' ) {
-	if ( strpos( $justurl, '=' ) ) {
-		// allows the use of arguments without breaking the legacy code
-		$defaults = [
-			'justurl'        => 0,
-			'show_ongoing'   => $show_ongoing,
-			'echo'           => $echo,
-			'text'           => $text,
-			'scope'          => $scope,
-			'order'          => $order,
-			'category'       => $category,
-			'author'         => $author,
-			'contact_person' => $contact_person,
-			'limit'          => $limit,
-			'location_id'    => $location_id,
-			'title'          => $title,
-		];
-
-		$r = wp_parse_args( $justurl, $defaults );
-		extract( $r );
-		$echo = $r['echo'];
-	}
 	$echo = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
 	if ( $text == '' ) {
 		$text = 'RSS';
@@ -8850,7 +8766,7 @@ function eme_rss_link_shortcode( $atts ) {
 		    $atts
 		)
 	);
-	$result = eme_rss_link( "justurl=$justurl&show_ongoing=$show_ongoing&text=$text&limit=$limit&scope=$scope&order=$order&category=$category&author=$author&contact_person=$contact_person&location_id=$location_id&title=" . urlencode( $title ) );
+	$result = eme_rss_link( justurl: $justurl, show_ongoing: $show_ongoing, text: $text, limit: $limit, scope: $scope, order: $order, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, title=: $title );
 	return $result;
 }
 

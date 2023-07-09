@@ -63,7 +63,7 @@ class WP_Widget_eme_list extends WP_Widget {
 			$notcategory = implode( '+', $notcategory );
 		}
 
-		$events_list = eme_get_events_list( "limit=$limit&scope=$scope&order=$order&format=$format&category=$category&showperiod=$showperiod&author=$author&show_ongoing=$show_ongoing&show_recurrent_events_once=$recurrence_only_once&notcategory=$notcategory&template_id=$format_tpl" );
+		$events_list = eme_get_events_list( limit: $limit, scope: scope, order: $order, format: $format, category: $category, showperiod: $showperiod, author: $author, show_ongoing: $show_ongoing, show_recurrent_events_once: $recurrence_only_once, notcategory: $notcategory, template_id: $format_tpl );
 		if ( strstr( $events_list, 'events-no-events' ) ) {
 			echo $events_list;
 		} else {

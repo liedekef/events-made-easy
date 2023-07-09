@@ -2018,7 +2018,7 @@ function eme_emails_page() {
 				$data_forced_tab    = 'data-showtab=0';
 				if ( ! empty( $conditions['event_id'] ) ) {
 					$event_ids = explode( ',', $conditions['event_id'] );
-					$events    = eme_get_events(  'extra_conditions=' . urlencode( 'event_id IN ('.$conditions['event_id'].')' ) );
+					$events    = eme_get_events(  extra_conditions: 'event_id IN ('.$conditions['event_id'].')' );
 					foreach ( $events as $event ) {
 						$myevents[ $event['event_id'] ] = $event['event_name']. ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')';
 					}

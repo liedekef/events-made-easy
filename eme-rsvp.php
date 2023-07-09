@@ -641,7 +641,7 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 }
 
 function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $event_template_id, $attend_template_id ) {
-	$events = eme_get_events( "scope=$scope&category=$category&notcategory=$notcategory" );
+	$events = eme_get_events( scope: $scope, category: $category, notcategory: $notcategory );
 	// we really don't want nl2br to happen for csv output
 	$attend_format = eme_get_template_format( $attend_template_id, 0 );
 	$event_format  = eme_get_template_format( $event_template_id, 0 );
@@ -6422,7 +6422,7 @@ function eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_he
 function eme_rsvp_send_pending_reminders() {
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// this gets us future and ongoing events with tasks enabled
-	$events = eme_get_events( 'extra_conditions=' . urlencode( 'event_rsvp=1' ) );
+	$events = eme_get_events( extra_conditions: 'event_rsvp=1' );
 	foreach ( $events as $event ) {
 		if ( eme_is_empty_string( $event['event_properties']['rsvp_pending_reminder_days'] ) ) {
 			continue;
@@ -6449,7 +6449,7 @@ function eme_rsvp_send_pending_reminders() {
 function eme_rsvp_send_approved_reminders() {
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// this gets us future and ongoing events with tasks enabled
-	$events = eme_get_events( 'extra_conditions=' . urlencode( 'event_rsvp=1' ) );
+	$events = eme_get_events( extra_conditions: 'event_rsvp=1' );
 	foreach ( $events as $event ) {
 		if ( eme_is_empty_string( $event['event_properties']['rsvp_approved_reminder_days'] ) ) {
 			continue;

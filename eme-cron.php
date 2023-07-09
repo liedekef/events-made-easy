@@ -79,9 +79,10 @@ function eme_cron_send_new_events_function() {
 	}
 
 	$days = intval( get_option( 'eme_cron_new_events_days' ) );
+	$scope = '+' . $days . 'd';
 
 	// make sure no mail is sent if no events are planned
-	$check_for_events = eme_are_events_available( '+' . $days . 'd' );
+	$check_for_events = eme_are_events_available( $scope );
 	if ( ! $check_for_events ) {
 		return;
 	}
@@ -92,9 +93,8 @@ function eme_cron_send_new_events_function() {
 	$footer       = eme_get_template_format_plain( get_option( 'eme_cron_new_events_footer' ) );
 
 	$limit = 0;
-	$scope = '+' . $days . 'd';
 	$no_events_message = '';
-	$mail_message = eme_get_events_list( "limit=$limit&scope=$scope&format=$entry&format_header=$header&format_footer=$footer&no_events_message=$no_events_message");
+	$mail_message = eme_get_events_list( limit: $limit, scope: $scope, format: $entry, format_header: $header, format_footer: $footer, no_events_message: $no_events_message);
 	// thanks to no_events_message being empty, in case no events are found the result is empty and then we don't send a mail
 	// the call eme_are_events_available checks for just scope, but inside the entry-format there can be conditional placeholders too resulting in an empty mail
 	if ( empty($mail_message) ) {

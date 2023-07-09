@@ -118,23 +118,6 @@ function eme_ical_single_event( $event, $title_format, $description_format, $loc
 function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '', $location_id = '', $scope = 'future', $author = '', $contact_person = '', $notcategory = '' ) {
 	$language = eme_detect_lang();
 
-	if ( strpos( $justurl, '=' ) ) {
-		// allows the use of arguments without breaking the legacy code
-		$defaults = [
-			'justurl'        => 0,
-			'echo'           => $echo,
-			'text'           => $text,
-			'scope'          => $scope,
-			'category'       => $category,
-			'author'         => $author,
-			'contact_person' => $contact_person,
-			'location_id'    => $location_id,
-			'notcategory'    => $notcategory,
-		];
-
-		$r = wp_parse_args( $justurl, $defaults );
-		extract( $r );
-	}
 	$echo    = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
 	$justurl = filter_var( $justurl, FILTER_VALIDATE_BOOLEAN );
 

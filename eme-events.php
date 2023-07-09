@@ -4131,8 +4131,9 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		];
 		$r = wp_parse_args( $limit, $defaults );
 		extract( $r );
-		// for AND categories: the user enters "+" and this gets translated to " " by wp_parse_args
+		// for some params (like AND categories): the user enters "+" and this gets translated to " " by wp_parse_args
 		// so we fix it again
+		$scope       = preg_replace( '/ /', '+', $scope );
 		$category    = preg_replace( '/ /', '+', $category );
 		$notcategory = preg_replace( '/ /', '+', $notcategory );
 	}

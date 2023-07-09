@@ -1345,14 +1345,13 @@ function eme_events_page_content() {
 		$event_id = eme_sanitize_request( get_query_var( 'event_id' ) );
 		return eme_display_single_event( $event_id );
 	} elseif ( get_query_var( 'calendar_day' ) ) {
-		// we don't use urldecode on the _GET params, since we pass them the url-way to eme_get_events_list
-		$scope          = urlencode( eme_sanitize_request( get_query_var( 'calendar_day' ) ) );
-		$location_id    = isset( $_GET['location_id'] ) ? eme_sanitize_request( $_GET['location_id'] ) : '';
-		$category       = isset( $_GET['category'] ) ? eme_sanitize_request( $_GET['category'] ) : '';
-		$notcategory    = isset( $_GET['notcategory'] ) ? eme_sanitize_request( $_GET['notcategory'] ) : '';
-		$author         = isset( $_GET['author'] ) ? eme_sanitize_request( $_GET['author'] ) : '';
-		$contact_person = isset( $_GET['contact_person'] ) ? eme_sanitize_request( $_GET['contact_person'] ) : '';
-		// the hash char and everything following it in a GET is not getting through a browszr request, so if it passed through via the calendar, we used _MYSELF, and here we restore it again
+		$scope          = eme_sanitize_request( get_query_var( 'calendar_day' ) );
+		$location_id    = isset( $_GET['location_id'] ) ? eme_sanitize_request( urldecode( $_GET['location_id'] ) ) : '';
+		$category       = isset( $_GET['category'] ) ? eme_sanitize_request( urldecode( $_GET['category'] ) ) : '';
+		$notcategory    = isset( $_GET['notcategory'] ) ? eme_sanitize_request( urldecode( $_GET['notcategory'] ) ) : '';
+		$author         = isset( $_GET['author'] ) ? eme_sanitize_request( urldecode( $_GET['author'] ) ) : '';
+		$contact_person = isset( $_GET['contact_person'] ) ? eme_sanitize_request( urldecode( $_GET['contact_person'] ) ) : '';
+		// the hash char and everything following it in a GET is not getting through a browser request, so if it passed through via the calendar, we used _MYSELF, and here we restore it again
 		$author         = str_replace( '_MYSELF', '#_MYSELF', $author );
 		$contact_person = str_replace( '_MYSELF', '#_MYSELF', $contact_person );
 
@@ -1364,7 +1363,7 @@ function eme_events_page_content() {
 			$page_body = eme_get_calendar( 'full=1' );
 		}
 		if ( get_option( 'eme_display_events_in_events_page' ) ) {
-			$scope      = isset( $_GET['scope'] ) ? urlencode( eme_sanitize_request( $_GET['scope'] ) ) : 'future';
+			$scope      = isset( $_GET['scope'] ) ? urlencode( eme_sanitize_request( urldecode( $_GET['scope'] ) ) ) : 'future';
 			$page_body .= eme_get_events_list( scope: $scope );
 		}
 		return $page_body;

@@ -8766,7 +8766,7 @@ function eme_rss_link_shortcode( $atts ) {
 		    $atts
 		)
 	);
-	$result = eme_rss_link( justurl: $justurl, show_ongoing: $show_ongoing, text: $text, limit: $limit, scope: $scope, order: $order, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, title=: $title );
+	$result = eme_rss_link( justurl: $justurl, show_ongoing: $show_ongoing, text: $text, limit: $limit, scope: $scope, order: $order, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, title: $title );
 	return $result;
 }
 

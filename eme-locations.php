@@ -1646,7 +1646,7 @@ function eme_global_map_shortcode( $atts ) {
 		$limit         = 0;
 		$ignore_filter = false;
 		$random_order  = false;
-		$locations     = eme_get_locations( $eventful, $scope, $category, $notcategory, $limit, $ignore_filter, $random_order, $author, $contact_person );
+		$locations     = eme_get_locations( eventful: $eventful, scope: $scope, category: $category, notcategory: $notcategory, limit: $limit, ignore_filter: $ignore_filter, random_order: $random_order, author: $author, contact_person: $contact_person );
 		$id_base       = preg_replace( '/\D/', '_', microtime( 1 ) );
 		$id_base       = rand() . '_' . $id_base;
 		if ( ! preg_match( '/\%$|px$/', $width ) ) {
@@ -1814,7 +1814,7 @@ function eme_get_locations_shortcode( $atts ) {
 	$ignore_filter = filter_var( $ignore_filter, FILTER_VALIDATE_BOOLEAN );
 	$random_order  = filter_var( $random_order, FILTER_VALIDATE_BOOLEAN );
 
-	$locations = eme_get_locations( $eventful, $scope, $category, $notcategory, $limit, $ignore_filter, $random_order, $author, $contact_person );
+	$locations = eme_get_locations( eventful: $eventful, scope: $scope, category: $category, notcategory: $notcategory, limit: $limit, ignore_filter: $ignore_filter, random_order: $random_order, author: $author, contact_person: $contact_person );
 
 	// format is not a locations shortcode, so we need to set the value to "" here, to avoid php warnings
 	$format            = '';

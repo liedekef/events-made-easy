@@ -228,8 +228,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$label = __( 'Select a location', 'events-made-easy' );
 			}
 			$aria_label = 'aria-label="' . eme_esc_html( $label ) . '"';
-			$locations  = eme_get_locations( $eventful, 'future', '', '', 0, true );
-
+			$locations  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
 			if ( ! empty( $locations ) ) {
 				$loc_list = [];
 				foreach ( $locations as $this_location ) {
@@ -259,7 +258,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$label = __( 'Select a city', 'events-made-easy' );
 			}
 			$aria_label = 'aria-label="' . eme_esc_html( $label ) . '"';
-			$cities     = eme_get_locations( $eventful, 'future', '', '', 0, true );
+			$cities     = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
 			if ( ! empty( $cities ) ) {
 				$city_list = [];
 				foreach ( $cities as $this_city ) {
@@ -289,8 +288,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				$label = __( 'Select a country', 'events-made-easy' );
 			}
 			$aria_label = 'aria-label="' . eme_esc_html( $label ) . '"';
-
-			$countries = eme_get_locations( $eventful, 'future', '', '', 0, true );
+			$countries  = eme_get_locations( eventful: $eventful, scope: 'future', ignore_filter: true );
 			if ( ! empty( $countries ) ) {
 				$country_list = [];
 				foreach ( $countries as $this_country ) {

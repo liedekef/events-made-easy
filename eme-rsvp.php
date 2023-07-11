@@ -328,7 +328,7 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 		$ids    = eme_get_recurrence_eventids( $recurrence_id, 1 );
 		$events = eme_get_event_arr( $ids );
 	} elseif ( ! empty( $category_id ) || ! empty( $scope ) ) {
-		$events = eme_get_events( 0, $scope, $order, 0, '', $category_id );
+		$events = eme_get_events( scope: $scope, order: $order, category: $category_id );
 	} else {
 		$events = eme_get_event_arr( $ids );
 	}

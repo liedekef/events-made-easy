@@ -1284,7 +1284,8 @@ function eme_events_page_content() {
 			if ( eme_is_empty_string( $format_footer ) ) {
 				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
 			}
-			$page_body = eme_get_events_list( get_option( 'eme_event_list_number_items' ), 'future', 'ASC', $stored_format, $format_header, $format_footer, 0, '', '', 0, '', '', 0, 0, $location_ids );
+			$limit = get_option( 'eme_event_list_number_items' );
+			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_id: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
 		}
@@ -1303,7 +1304,8 @@ function eme_events_page_content() {
 			if ( eme_is_empty_string( $format_footer ) ) {
 				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
 			}
-			$page_body = eme_get_events_list( get_option( 'eme_event_list_number_items' ), 'future', 'ASC', $stored_format, $format_header, $format_footer, 0, '', '', 0, '', '', 0, 0, $location_ids );
+			$limit = get_option( 'eme_event_list_number_items' );
+			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_id: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
 		}
@@ -1332,7 +1334,8 @@ function eme_events_page_content() {
 		$cat_ids       = join( ',', eme_get_category_ids( $eme_event_cat ) );
 		$stored_format = get_option( 'eme_event_list_item_format' );
 		if ( ! empty( $cat_ids ) ) {
-			$page_body = eme_get_events_list( get_option( 'eme_event_list_number_items' ), 'future', 'ASC', $stored_format, $format_header, $format_footer, 0, $cat_ids );
+			$limit = get_option( 'eme_event_list_number_items' );
+			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, category: $cat_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
 		}
@@ -1364,7 +1367,7 @@ function eme_events_page_content() {
 		}
 		if ( get_option( 'eme_display_events_in_events_page' ) ) {
 			$scope      = isset( $_GET['scope'] ) ? urlencode( eme_sanitize_request( urldecode( $_GET['scope'] ) ) ) : 'future';
-			$page_body .= eme_get_events_list( scope: $scope );
+			$page_body .= eme_get_events_list( limit: 0, scope: $scope );
 		}
 		return $page_body;
 	}

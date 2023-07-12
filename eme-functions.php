@@ -3445,7 +3445,7 @@ function eme_create_wp_user( $person ) {
 		// now link the wp user to the EME person
 		$person['wp_id'] = $user_id;
 		$person['properties']['wp_delete_user'] = 1;
-		eme_db_update_person( $person_id['person_id'], $person );
+		eme_db_update_person( $person['person_id'], $person );
 		return $user_id;
 	} else {
 		return 0;

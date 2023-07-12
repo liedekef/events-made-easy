@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.3.73 (2023//) =
 * PHP 8 is now the minimal requirement
 * Move to named arguments, cleaner code
+* Fix creating WP user after creating member/booking (if so configured for the membership/event)
 
 = 2.3.72 (2023/07/08) =
 * Make sure no newsletter is sent even due to empty number of entries after conditional placeholders

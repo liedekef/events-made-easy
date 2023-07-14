@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.2
-Stable tag: 2.3.72
+Stable tag: 2.4.0
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.3.73 (2023//) =
+= 2.4.0 (2023/07/14) =
 * PHP 8 is now the minimal requirement
 * Move to named arguments, cleaner code
 * Fix creating WP user after creating member/booking (if so configured for the membership/event)

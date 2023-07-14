@@ -1227,7 +1227,8 @@ function eme_add_update_membership( $membership_id = 0 ) {
 		$membership['properties'] = eme_kses( $_POST['properties'] );
 	}
 	// now for the select boxes, we need to set to 0 if not in the _POST
-	$select_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'captcha_only_logged_out', 'create_wp_user' ];
+	$select_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'captcha_only_logged_out', 'create_wp_user', 'registration_wp_users_only', 'attendancerecord', 'family_membership', 'dyndata_all_fields' ];
+
 	foreach ( $select_post_vars as $post_var ) {
 		if ( isset( $_POST['properties'][ $post_var ] ) ) {
 			$membership['properties'][ $post_var ] = intval( $_POST['properties'][ $post_var ] );
@@ -1744,6 +1745,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	$create_wp_user             = ( $membership['properties']['create_wp_user'] ) ? "checked='checked'" : '';
 	$membership_discount        = ( $membership['properties']['discount'] ) ? $membership['properties']['discount'] : '';
 	$membership_discountgroup   = ( $membership['properties']['discountgroup'] ) ? $membership['properties']['discountgroup'] : '';
+	$dyndata_all_fields         = ( $membership['properties']['dyndata_all_fields'] ) ? "checked='checked'" : '';
 	$discount_arr               = [];
 	$dgroup_arr                 = [];
 	if ( ! empty( $membership_discount ) ) {
@@ -1827,7 +1829,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<?php if ( ! empty( get_option( 'eme_recaptcha_for_forms' ) ) && ! empty( get_option( 'eme_recaptcha_site_key' ) ) ) : ?>
 	<tr>
 	<td><label for="properties[use_recaptcha]"><?php esc_html_e( 'Google reCAPTCHA', 'events-made-easy' ); ?></label></td>
-	<td><input id="use_recaptcha" name="properties[use_recaptcha]" type="checkbox" <?php echo $use_recaptcha; ?>>
+	<td><input id="use_recaptcha" name="properties[use_recaptcha]" type="checkbox" value='1' <?php echo $use_recaptcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the Google reCAPTCHA on the membership signup form.', 'events-made-easy' ); ?>
 		<br><?php esc_html_e( 'If this option is checked, make sure to use #_RECAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
 	</td>
@@ -1836,7 +1838,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<?php if ( ! empty( get_option( 'eme_hcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_hcaptcha_site_key' ) ) ) : ?>
 	<tr>
 	<td><label for="use_hcaptcha"><?php esc_html_e( 'hCaptcha', 'events-made-easy' ); ?></label></td>
-	<td><input id="use_hcaptcha" name="properties[use_hcaptcha]" type="checkbox" <?php echo $use_hcaptcha; ?>>
+	<td><input id="use_hcaptcha" name="properties[use_hcaptcha]" type="checkbox" value='1' <?php echo $use_hcaptcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the hCaptcha on the membership signup form.', 'events-made-easy' ); ?>
 		<br><?php esc_html_e( 'If this option is checked, make sure to use #_HCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></p>
 	</td>
@@ -1845,7 +1847,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<?php if ( ! empty( get_option( 'eme_cfcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) : ?>
 	<tr>
 	<td><label for="use_cfcaptcha"><?php esc_html_e( 'Cloudflare Turnstile', 'events-made-easy' ); ?></label></td>
-	<td><input id="use_cfcaptcha" name="properties[use_cfcaptcha]" type="checkbox" <?php echo $use_cfcaptcha; ?>>
+	<td><input id="use_cfcaptcha" name="properties[use_cfcaptcha]" type="checkbox" value='1' <?php echo $use_cfcaptcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use Cloudflare Turnstile on the membership signup form.', 'events-made-easy' ); ?>
 		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CFCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></p>
 	</td>
@@ -1853,20 +1855,20 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 <?php endif; ?>
 	<tr>
 	<td><label for="use_captcha"><?php esc_html_e( 'Captcha', 'events-made-easy' ); ?></label></td>
-	<td><input id="use_captcha" name="properties[use_captcha]" type="checkbox" <?php echo $use_captcha; ?>>
+	<td><input id="use_captcha" name="properties[use_captcha]" type="checkbox" value='1' <?php echo $use_captcha; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the captcha on the membership signup form.', 'events-made-easy' ); ?>
 		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
 	<tr>
 	<td><label for="captcha_only_logged_out"><?php esc_html_e( 'Only use captcha for logged out users?', 'events-made-easy' ); ?></label></td>
-	<td><input id="captcha_only_logged_out" name="properties[captcha_only_logged_out]" type="checkbox" <?php echo $captcha_only_logged_out; ?>>
+	<td><input id="captcha_only_logged_out" name="properties[captcha_only_logged_out]" type="checkbox" value='1' <?php echo $captcha_only_logged_out; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'If this option is checked, the captcha will only be used for logged out users.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
 	<tr>
 	<td><label for="create_wp_user"><?php esc_html_e( 'Create WP user after signup', 'events-made-easy' ); ?></label></td>
-	<td><input id="create_wp_user" name="properties[create_wp_user]" type="checkbox" <?php echo $create_wp_user; ?>>
+	<td><input id="create_wp_user" name="properties[create_wp_user]" type="checkbox" value='1' <?php echo $create_wp_user; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'This will create a WP user after the membership signup is completed, as if the person registered in WP itself. This will only create a user if the person signing up was not logged in and the email is not yet taken by another WP user.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
@@ -1922,7 +1924,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	</tr>
 	<tr id='attendancerecord'>
 	<td><label for="attendancerecord"><?php esc_html_e( 'Keep attendance records?', 'events-made-easy' ); ?></label></td>
-	<td><input id="attendancerecord" name="properties[attendancerecord]" type="checkbox" <?php echo $attendancerecord; ?>>
+	<td><input id="attendancerecord" name="properties[attendancerecord]" type="checkbox" value='1' <?php echo $attendancerecord; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want an attendance record to be kept everytime the member QRCODE is scanned by an EME admin.', 'events-made-easy' ); ?>
 	</td>
 	</tr>
@@ -1947,7 +1949,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	</tr>
 	<tr>
 	<td><label for="family_membership"><?php esc_html_e( 'Ask for family member info when someone signs up', 'events-made-easy' ); ?></label></td>
-	<td><input id="family_membership" name="properties[family_membership]" type="checkbox" <?php echo $family_membership; ?>>
+	<td><input id="family_membership" name="properties[family_membership]" type="checkbox" value='1' <?php echo $family_membership; ?>>
 		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to ask for extra info for each family member of the person that signs up. These will also become a member but payment will only be handled by the initial member that signs up. The membership member form must include the placeholder "#_FAMILYCOUNT" to ask for the number of extra family members and "#_FAMILYMEMBERS" to ask for the extra family members info.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
@@ -2140,12 +2142,11 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		$used_groupingids = [];
 	}
 	eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids );
-	$eme_membership_dyndata_all_fields = ( $membership['properties']['dyndata_all_fields'] ) ? "checked='checked'" : '';
 	?>
 	<div>
 		<br>
 		<b><?php esc_html_e( 'Dynamic data check on every field', 'events-made-easy' ); ?></b>
-		<input id="properties[dyndata_all_fields]" name='properties[dyndata_all_fields]' value='1' type='checkbox' <?php echo $eme_membership_dyndata_all_fields; ?>>
+		<input id="properties[dyndata_all_fields]" name='properties[dyndata_all_fields]' value='1' type='checkbox' <?php echo $dyndata_all_fields; ?>>
 		<span class="eme_smaller"><br><?php esc_html_e( 'By default the dynamic data check only happens for the fields mentioned in your dynamic data condition if those are present in your membership form definition. Using this option, you can use all membership placeholders, even if not defined in your membership form. The small disadvantage is that more requests will be made to the backend, so use only when absolutely needed.', 'events-made-easy' ); ?>
 		<br><?php esc_html_e( 'If your membership uses a discount of type code and you want the dynamic price (using #_DYNAMICPRICE) to be updated taking that discount into account too, then also check this option.', 'events-made-easy' ); ?>
 		</span>

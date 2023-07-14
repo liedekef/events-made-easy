@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.1 (2023/07/14) =
+* Widget fix that caused php error
+
 = 2.4.0 (2023/07/14) =
 * PHP 8 is now the minimal requirement
 * Move to named arguments, cleaner code

@@ -860,7 +860,9 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 			$member['properties'] = eme_kses( $_POST['properties'] );
 		}
 		// usage_count needs to be an int
-		$member['properties']['usage_count'] = intval( $member['properties']['usage_count'] );
+		if ( isset( $member['properties']['usage_count'] ) ) {
+			$member['properties']['usage_count'] = intval( $member['properties']['usage_count'] );
+		}
 
 		if ( isset( $_POST['paid'] ) ) {
 			$member['paid'] = intval( $_POST['paid'] );

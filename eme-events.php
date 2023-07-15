@@ -3889,11 +3889,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				}
 			}
 		} elseif ( $event && preg_match( '/#_IS_LAST_RECURRENCE/', $result ) ) {
-					// returns 1 if the event is the last event in a recurrence series
+			// returns 1 if the event is the last event in a recurrence series
 			if ( $event ['recurrence_id'] ) {
 				$event_ids  = eme_get_recurrence_eventids( $event ['recurrence_id'] );
 				$nbr        = array_search( $event['event_id'], $event_ids );
-				$last_index = count( $events ) - 1;
+				$last_index = count( $event_ids ) - 1;
 				if ( $nbr !== false && $nbr == $last_index ) {
 					$replacement = 1;
 				}

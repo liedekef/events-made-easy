@@ -31,5 +31,9 @@ So, if possible, include a link to a demo page demonstrating the issue.
 **Log output**
 If applicable, check your php error logfile and add php errors here
 
+**Version info**
+PHP version:
+EME version:
+
 **Additional context**
 Add any other context about the problem here.

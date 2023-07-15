@@ -26,7 +26,7 @@ class WP_Widget_eme_list extends WP_Widget {
 		//$title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 		$title                = apply_filters( 'widget_title', $instance['title'] );
 		$limit                = isset( $instance['limit'] ) ? intval( $instance['limit'] ) : 5;
-		$scope                = empty( $instance['scope'] ) ? 'future' : urlencode( $instance['scope'] );
+		$scope                = empty( $instance['scope'] ) ? 'future' : $instance['scope'];
 		$showperiod           = empty( $instance['showperiod'] ) ? '' : $instance['showperiod'];
 		$show_ongoing         = empty( $instance['show_ongoing'] ) ? false : true;
 		$order                = empty( $instance['order'] ) ? 'ASC' : $instance['order'];
@@ -42,7 +42,6 @@ class WP_Widget_eme_list extends WP_Widget {
 		} else {
 			$format = $instance['format'];
 		}
-		$format     = urlencode( $format );
 		$format_tpl = isset( $instance['format_tpl'] ) ? intval( $instance['format_tpl'] ) : 0;
 
 		if ( $instance['authorid'] == -1 ) {

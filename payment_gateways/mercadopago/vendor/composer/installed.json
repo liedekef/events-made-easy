@@ -175,31 +175,35 @@
         },
         {
             "name": "doctrine/deprecations",
-            "version": "v1.0.0",
-            "version_normalized": "1.0.0.0",
+            "version": "v1.1.1",
+            "version_normalized": "1.1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/deprecations.git",
-                "reference": "0e2a4f1f8cdfc7a92ec3b01c9334898c806b30de"
+                "reference": "612a3ee5ab0d5dd97b7cf3874a6efe24325efac3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/0e2a4f1f8cdfc7a92ec3b01c9334898c806b30de",
-                "reference": "0e2a4f1f8cdfc7a92ec3b01c9334898c806b30de",
+                "url": "https://api.github.com/repos/doctrine/deprecations/zipball/612a3ee5ab0d5dd97b7cf3874a6efe24325efac3",
+                "reference": "612a3ee5ab0d5dd97b7cf3874a6efe24325efac3",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1|^8.0"
+                "php": "^7.1 || ^8.0"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^9",
-                "phpunit/phpunit": "^7.5|^8.5|^9.5",
-                "psr/log": "^1|^2|^3"
+                "phpstan/phpstan": "1.4.10 || 1.10.15",
+                "phpstan/phpstan-phpunit": "^1.0",
+                "phpunit/phpunit": "^7.5 || ^8.5 || ^9.5",
+                "psalm/plugin-phpunit": "0.18.4",
+                "psr/log": "^1 || ^2 || ^3",
+                "vimeo/psalm": "4.30.0 || 5.12.0"
             },
             "suggest": {
                 "psr/log": "Allows logging deprecations via PSR-3 logger implementation"
             },
-            "time": "2022-05-02T15:47:09+00:00",
+            "time": "2023-06-03T09:27:29+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -215,7 +219,7 @@
             "homepage": "https://www.doctrine-project.org/",
             "support": {
                 "issues": "https://github.com/doctrine/deprecations/issues",
-                "source": "https://github.com/doctrine/deprecations/tree/v1.0.0"
+                "source": "https://github.com/doctrine/deprecations/tree/v1.1.1"
             },
             "install-path": "../doctrine/deprecations"
         },
@@ -396,17 +400,17 @@
         },
         {
             "name": "doctrine/persistence",
-            "version": "3.1.4",
-            "version_normalized": "3.1.4.0",
+            "version": "3.2.0",
+            "version_normalized": "3.2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/persistence.git",
-                "reference": "8bf8ab15960787f1a49d405f6eb8c787b4841119"
+                "reference": "63fee8c33bef740db6730eb2a750cd3da6495603"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/persistence/zipball/8bf8ab15960787f1a49d405f6eb8c787b4841119",
-                "reference": "8bf8ab15960787f1a49d405f6eb8c787b4841119",
+                "url": "https://api.github.com/repos/doctrine/persistence/zipball/63fee8c33bef740db6730eb2a750cd3da6495603",
+                "reference": "63fee8c33bef740db6730eb2a750cd3da6495603",
                 "shasum": ""
             },
             "require": {
@@ -428,7 +432,7 @@
                 "symfony/cache": "^4.4 || ^5.4 || ^6.0",
                 "vimeo/psalm": "4.30.0 || 5.3.0"
             },
-            "time": "2023-02-03T11:13:07+00:00",
+            "time": "2023-05-17T18:32:04+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -477,7 +481,7 @@
             ],
             "support": {
                 "issues": "https://github.com/doctrine/persistence/issues",
-                "source": "https://github.com/doctrine/persistence/tree/3.1.4"
+                "source": "https://github.com/doctrine/persistence/tree/3.2.0"
             },
             "funding": [
                 {
@@ -497,17 +501,17 @@
         },
         {
             "name": "mercadopago/dx-php",
-            "version": "2.5.3",
-            "version_normalized": "2.5.3.0",
+            "version": "2.5.4",
+            "version_normalized": "2.5.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mercadopago/sdk-php.git",
-                "reference": "c41853bde4a85742fd3b6741effde34c6919da2d"
+                "reference": "e31d4cf9a11b8b785e683d655b2f7cd78019e5aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/c41853bde4a85742fd3b6741effde34c6919da2d",
-                "reference": "c41853bde4a85742fd3b6741effde34c6919da2d",
+                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/e31d4cf9a11b8b785e683d655b2f7cd78019e5aa",
+                "reference": "e31d4cf9a11b8b785e683d655b2f7cd78019e5aa",
                 "shasum": ""
             },
             "require": {
@@ -516,7 +520,7 @@
                 "php": ">=7.1.0"
             },
             "require-dev": {
-                "doctrine/orm": "~2.3",
+                "doctrine/orm": "^2.3",
                 "phpmd/phpmd": "@stable",
                 "phpunit/phpunit": "^7",
                 "sebastian/phpcpd": "*",
@@ -524,7 +528,7 @@
                 "symfony/yaml": "~2.5",
                 "vlucas/phpdotenv": "^2.5"
             },
-            "time": "2022-11-30T12:55:58+00:00",
+            "time": "2023-07-12T17:10:23+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -545,7 +549,7 @@
             "description": "Mercado Pago PHP SDK",
             "homepage": "https://github.com/mercadopago/sdk-php",
             "support": {
-                "source": "https://github.com/mercadopago/sdk-php/tree/2.5.3"
+                "source": "https://github.com/mercadopago/sdk-php/tree/2.5.4"
             },
             "install-path": "../mercadopago/dx-php"
         },

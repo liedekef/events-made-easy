@@ -4,7 +4,7 @@
   "type": "library",
   "homepage": "https://github.com/mercadopago/sdk-php",
   "license": "MIT",
-  "version": "2.5.3",
+  "version": "2.5.4",
   "config": {
     "platform": {
         "php": "7.1"
@@ -21,7 +21,7 @@
     "phpmd/phpmd": "@stable",
     "squizlabs/php_codesniffer": "2.8.1",
     "sebastian/phpcpd": "*",
-    "doctrine/orm": "~2.3",
+    "doctrine/orm": "^2.3",
     "vlucas/phpdotenv": "^2.5"
   },
   "autoload": {

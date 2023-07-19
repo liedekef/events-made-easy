@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.3 (2023//) =
 * Fix placeholder #_IS_LAST_RECURRENCE
+* New events scope option: format being: YYYY-MM-DD HH:MM:SS--YYYY-MM-DD HH:MM:SS, so eme_get_events function can search for events in that range (not just days, but taking hour/min/sec into account too);
 
 = 2.4.2 (2023/07/15) =
 * Event list widget was showing urlencoded text (due to the new php-8 function call method, urlencode was no longer needed but forgot to remove it)

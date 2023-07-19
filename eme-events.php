@@ -4943,6 +4943,14 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		} else {
 			$conditions[] = "(event_start BETWEEN '$limit_start' AND '$limit_end')";
 		}
+	} elseif ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})--([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2})$/', $scope, $matches ) ) {
+		$limit_start = $matches[1];
+		$limit_end   = $matches[2];
+		if ( $show_ongoing ) {
+			$conditions[] = "((event_start BETWEEN '$limit_start' AND '$limit_end') OR (event_end BETWEEN '$limit_start' AND '$limit_end') OR (event_start <= '$limit_start' AND event_end >= '$limit_end'))";
+		} else {
+			$conditions[] = "(event_start BETWEEN '$limit_start' AND '$limit_end')";
+		}
 	} elseif ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--today$/', $scope, $matches ) ) {
 		$limit_start = $matches[1] . ' 00:00:00';
 		$limit_end   = $today . ' 23:59:59';

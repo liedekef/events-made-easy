@@ -38,6 +38,9 @@ function eme_init_location_props( $props = [] ) {
 	if ( ! isset( $props['online_only'] ) ) {
 		$props['online_only'] = 0;
 	}
+	if ( ! isset( $props['max_capacity'] ) ) {
+		$props['max_capacity'] = 0;
+	}
 	return $props;
 }
 
@@ -638,6 +641,20 @@ function eme_meta_box_div_location_details( $location ) {
 		<div id="loc_qtrans_warning" class="postbox"><?php esc_html_e( "Because qtranslate or a derivate is active, the title of the location might not update automatically in the balloon, so don't panic there.", 'events-made-easy' ); ?> </div>
 		<?php endif; ?>
 		<?php endif; ?>
+
+		<div id="loc_max_capacity" class="postbox">
+			<h3>
+			<?php esc_html_e( 'Location maximum capacity', 'events-made-easy' ); ?>
+			</h3>
+			<div class="inside">
+			<table><tr>
+			<td><label for="eme_loc_prop_max_capacity"><?php esc_html_e( 'Max capacity', 'events-made-easy' ); ?></label></td>
+		<td><input id="eme_loc_prop_max_capacity" name="eme_loc_prop_max_capacity" type="text" value="<?php echo intval( $location['location_properties']['max_capacity'] ); ?>" size="40">
+		<br><?php esc_html_e( "If setting the max capacity to something else than 0, then - for all events that are happening at the same time at this location - a check will be done to see if the location still allows extra people inside.", 'events-made-easy' ); ?>
+			</td>
+			</tr></table>
+			</div>
+		</div>
 	<?php
 }
 
@@ -3065,6 +3082,19 @@ function eme_get_location_answers( $location_id ) {
 		wp_cache_set( "eme_location_cf $location_id", $cf, '', 60 );
 	}
 	return $cf;
+}
+
+function eme_get_location_used_capacity( $location_id ) {
+	$location = eme_get_location( $location_id );
+	$used_capacity = 0;
+	if (!empty($location) && !empty($location['location_properties']['max_capacity'])) {
+		$scope=$event['event_start'].'--'.$event['event_end'];
+		$tmp_events = eme_get_events(scope: $scope, show_ongoing: 1, location_id: $event['location_id']);
+		foreach ($tmp_events as $tmp_event) {
+			$used_capacity += eme_get_booked_seats( $event['event_id'] );
+		}
+	}
+	return $used_capacity;
 }
 
 function eme_location_store_cf_answers( $location_id ) {

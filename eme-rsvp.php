@@ -855,6 +855,7 @@ function eme_add_bookings_ajax() {
 			}
 		}
 	}
+
 	if ( $memberships_failed == 1 ) {
 		$form_html = __( 'No valid membership found.', 'events-made-easy' );
 		echo wp_json_encode(
@@ -917,8 +918,8 @@ function eme_add_bookings_ajax() {
 		}
 		$form_result_message = $booking_res[0];
 		$payment_id          = $booking_res[1];
-		// booking done, now update the usage_count for the members needed
-		if (!empty($usage_count_update_needed_for)) {
+		// booking done, now update the usage_count for the members needed (if booking succeeded, meaning payment id is not empty)
+		if ($payment_id && !empty($usage_count_update_needed_for)) {
 			foreach ($usage_count_update_needed_for as $member) {
 				eme_update_member_usage_count( $member );
 			}
@@ -1245,7 +1246,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 			// only add the message if not multibooking and the min allowed number of seats is >0
 			if ( ! $is_multibooking && ! eme_is_multi( $min_allowed ) && $min_allowed > 0 ) {
 				$form_html .= __( 'Please select at least one seat.', 'events-made-easy' );
-					continue;
+				continue;
 			} elseif ( $is_multibooking ) {
 				continue;
 			}
@@ -1448,6 +1449,18 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 				if ( ! $tmp_booking['discount'] || empty( $dcodes_used ) || count( $dcodes_used ) != count( $dcodes_entered ) ) {
 					$form_html .= __( 'You did not enter a valid discount code', 'events-made-easy' );
 					continue;
+				}
+			}
+
+			// check for location capacity
+			if (! empty( $event['location_id'] ) ) {
+				$location = eme_get_location( $event['location_id'] );
+				if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
+					$used_capacity = eme_get_location_used_capacity( $event['location_id'] );
+					if ($used_capacity + $bookedSeats > $location['location_properties']['max_capacity']) {
+						$form_html .= __( 'The location does not allow this many people to be present at the same time.', 'events-made-easy' );
+						continue;
+					}
 				}
 			}
 		}

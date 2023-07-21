@@ -1212,6 +1212,8 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 		}
 	}
 
+	$booking_info_to_be_made = [];
+	$bookedSeats_per_location = [];
 	// now do regular checks
 	foreach ( $events as $event ) {
 		$event_id = $event['event_id'];
@@ -1224,6 +1226,15 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 		$tmp_booking    = eme_booking_from_form( $event );
 		$bookedSeats    = $tmp_booking['booking_seats'];
 		$bookedSeats_mp = eme_convert_multi2array( $tmp_booking['booking_seats_mp'] );
+
+		if (!empty($event['location_id'])) {
+			$location_id = $event['location_id'];
+			if (!isset($bookedSeats_per_location[$location_id])) {
+				$bookedSeats_per_location[$location_id] = $bookedSeats;
+			} else {
+				$bookedSeats_per_location[$location_id] += $bookedSeats;
+			}
+		}
 
 		$min_allowed     = $event['event_properties']['min_allowed'];
 		$max_allowed     = $event['event_properties']['max_allowed'];
@@ -1451,18 +1462,6 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 					continue;
 				}
 			}
-
-			// check for location capacity
-			if (! empty( $event['location_id'] ) ) {
-				$location = eme_get_location( $event['location_id'] );
-				if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
-					$used_capacity = eme_get_location_used_capacity( $event['location_id'] );
-					if ($used_capacity + $bookedSeats > $location['location_properties']['max_capacity']) {
-						$form_html .= __( 'The location does not allow this many people to be present at the same time.', 'events-made-easy' );
-						continue;
-					}
-				}
-			}
 		}
 
 		if ( has_filter( 'eme_eval_booking_filter' ) ) {
@@ -1498,56 +1497,90 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 				$seats_available = eme_are_seats_available_for( $event_id, $bookedSeats );
 			}
 
-			if ( $seats_available || $allow_overbooking ) {
-				$res       = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $booker_wp_id, $event['event_properties']['create_wp_user'] );
-				$person_id = $res[0];
-				// ok, just to be safe: check the person_id of the booker
-				if ( $person_id ) {
-					$booker = eme_get_person( $person_id );
-					// if the user is logged in and the phone field is not empty, update that in the user profile
-					if ( ! empty( $booker['wp_id'] ) && ! eme_is_empty_string( $booker['phone'] ) ) {
-						eme_update_user_phone( $booker['wp_id'], $booker['phone'] );
-					}
-					$booking_id = eme_db_insert_booking( $event, $booker, $tmp_booking );
-					if ( $booking_id ) {
-						// now upload the wanted files. If uploading fails, show that and delete the booking
-						$booking         = eme_get_booking( $booking_id );
-						$upload_failures = eme_upload_files( $booking_id, 'bookings' );
-						if ( $upload_failures ) {
-							// uploading failed, so show why, try to refund if paid online and delete the booking
-							$form_html .= $upload_failures;
-							eme_refund_booking( $booking );
-							eme_delete_booking( $booking_id );
-						} else {
-							$booking_ids[] = $booking_id;
-							// make sure to update the discount count if applied
-							if ( ! $eme_is_admin_request && ! empty( $booking['discountids'] ) ) {
-								$discount_ids = explode( ',', $booking['discountids'] );
-								foreach ( $discount_ids as $discount_id ) {
-									eme_increase_discount_booking_count( $discount_id, $booking );
-								}
-							}
-
-							// everything ok? So then we add the user in WP if desired
-							// this will only do it if the booker is not logged in and his email doesn't exist in wp yet
-							if ( $event['event_properties']['create_wp_user'] > 0 && ! $booker_wp_id && ! email_exists( $booker['email'] ) ) {
-								//$wp_userid=eme_create_wp_user($booker);
-								eme_create_wp_user( $booker );
-							}
-							// now everything is done, so execute the hook if present
-							if ( has_action( 'eme_insert_rsvp_action' ) ) {
-								do_action( 'eme_insert_rsvp_action', $booking );
-							}
-						}
-					}
-				} else {
-					$form_html .= $res[1];
-				}
-			} else {
+			if ( ! ( $seats_available || $allow_overbooking )) {
 				$form_html .= __( 'Booking cannot be made: not enough seats available!', 'events-made-easy' );
+			} else {
+				$t_info = [
+					'bookerLastName' =>$bookerLastName,
+					'bookerFirstName' => $bookerFirstName,
+					'bookerEmail' => $bookerEmail,
+					'booker_wp_id' => $booker_wp_id,
+					'event' => $event,
+					'tmp_booking' => $tmp_booking
+				];
+				$booking_info_to_be_made[] = $t_info;
 			}
 		}
 	} // end foreach ($events as $event)
+
+	// now we also know how many seats are booked per location, so we can check for the location capacity too
+	foreach ( $bookedSeats_per_location as $location_id=>$bookedSeats ) {
+		$location = eme_get_location( $location_id );
+		if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
+			$used_capacity = eme_get_location_used_capacity( $location_id );
+			if ($used_capacity + $bookedSeats > $location['location_properties']['max_capacity']) {
+				$form_html .= __( 'The location does not allow this many people to be present at the same time.', 'events-made-easy' );
+				continue;
+			}
+		}
+	}
+
+	// if form_html is not empty, return here already and don't do anything
+	if ( ! empty( $form_html ) ) {
+		return [
+			0 => $form_html,
+			1 => $booking_ids,
+		];
+	}
+
+	// now we have all booking info ready to be made without errors
+	foreach ($booking_info_to_be_made as $t_info) {
+		extract($t_info);
+		$res       = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $booker_wp_id, $event['event_properties']['create_wp_user'] );
+		$person_id = $res[0];
+		// ok, just to be safe: check the person_id of the booker
+		if ( $person_id ) {
+			$booker = eme_get_person( $person_id );
+			// if the user is logged in and the phone field is not empty, update that in the user profile
+			if ( ! empty( $booker['wp_id'] ) && ! eme_is_empty_string( $booker['phone'] ) ) {
+				eme_update_user_phone( $booker['wp_id'], $booker['phone'] );
+			}
+			$booking_id = eme_db_insert_booking( $event, $booker, $tmp_booking );
+			if ( $booking_id ) {
+				// now upload the wanted files. If uploading fails, show that and delete the booking
+				$booking         = eme_get_booking( $booking_id );
+				$upload_failures = eme_upload_files( $booking_id, 'bookings' );
+				if ( $upload_failures ) {
+					// uploading failed, so show why, try to refund if paid online and delete the booking
+					$form_html .= $upload_failures;
+					eme_refund_booking( $booking );
+					eme_delete_booking( $booking_id );
+				} else {
+					$booking_ids[] = $booking_id;
+					// make sure to update the discount count if applied
+					if ( ! $eme_is_admin_request && ! empty( $booking['discountids'] ) ) {
+						$discount_ids = explode( ',', $booking['discountids'] );
+						foreach ( $discount_ids as $discount_id ) {
+							eme_increase_discount_booking_count( $discount_id, $booking );
+						}
+					}
+
+					// everything ok? So then we add the user in WP if desired
+					// this will only do it if the booker is not logged in and his email doesn't exist in wp yet
+					if ( $event['event_properties']['create_wp_user'] > 0 && ! $booker_wp_id && ! email_exists( $booker['email'] ) ) {
+						//$wp_userid=eme_create_wp_user($booker);
+						eme_create_wp_user( $booker );
+					}
+					// now everything is done, so execute the hook if present
+					if ( has_action( 'eme_insert_rsvp_action' ) ) {
+						do_action( 'eme_insert_rsvp_action', $booking );
+					}
+				}
+			}
+		} else {
+			$form_html .= $res[1];
+		}
+	}
 
 	if ( ! empty( $booking_ids ) ) {
 		// the payment needs to be created before the mail is sent or placeholders replaced, otherwise you can't send a link to the payment ...

@@ -24,7 +24,7 @@ define( 'EME_FIELDTYPES_TBNAME', 'eme_fieldtypes' );
 define( 'EME_ANSWERS_TBNAME', 'eme_answers' );
 define( 'EME_PAYMENTS_TBNAME', 'eme_payments' );
 define( 'EME_DISCOUNTS_TBNAME', 'eme_discounts' );
-define( 'DISCOUNTEME_GROUPS_TBNAME', 'eme_dgroups' );
+define( 'EME_DISCOUNTGROUPS_TBNAME', 'eme_dgroups' );
 define( 'EME_MQUEUE_TBNAME', 'eme_mqueue' );
 define( 'EME_MAILINGS_TBNAME', 'eme_mailings' );
 define( 'EME_MEMBERS_TBNAME', 'eme_members' );
@@ -243,7 +243,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 		eme_drop_table( $db_prefix . EME_ANSWERS_TBNAME );
 		eme_drop_table( $db_prefix . EME_PAYMENTS_TBNAME );
 		eme_drop_table( $db_prefix . EME_DISCOUNTS_TBNAME );
-		eme_drop_table( $db_prefix . DISCOUNTEME_GROUPS_TBNAME );
+		eme_drop_table( $db_prefix . EME_DISCOUNTGROUPS_TBNAME );
 		eme_drop_table( $db_prefix . EME_MQUEUE_TBNAME );
 		eme_drop_table( $db_prefix . EME_MAILINGS_TBNAME );
 		eme_drop_table( $db_prefix . EME_MEMBERS_TBNAME );
@@ -1290,7 +1290,7 @@ function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix
 
 function eme_create_discountgroups_table( $charset, $collate, $db_version, $db_prefix ) {
 	global $wpdb;
-	$table_name = $db_prefix . DISCOUNTEME_GROUPS_TBNAME;
+	$table_name = $db_prefix . EME_DISCOUNTGROUPS_TBNAME;
 
 	// column maxdiscounts: max number of discounts in a group that can
 	// be used, 0 for no max (this to avoid hackers from adding discount fields

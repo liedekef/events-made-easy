@@ -2549,6 +2549,19 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			$real_max_allowed = $avail_seats;
 		}
 
+		// limit to free location capacity too
+		$location = eme_get_location( $event['location_id'] );
+		if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
+                        $used_capacity = eme_get_location_used_capacity( $location_id );
+			$free_location_capacity = $location['location_properties']['max_capacity'] - $used_capacity;
+			if ($free_location_capacity < 0) {
+				$free_location_capacity=0;
+			}
+                        if ($real_max_allowed > $free_location_capacity) {
+				$real_max_allowed = $free_location_capacity;
+                        }
+                }
+
 		// 0 means no limit, but we need a sensible max to show ...
 		if ( $event_seats == 0 && $real_max_allowed == 0 ) {
 			$real_max_allowed = 10;

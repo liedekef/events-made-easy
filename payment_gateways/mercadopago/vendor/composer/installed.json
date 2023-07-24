@@ -501,17 +501,17 @@
         },
         {
             "name": "mercadopago/dx-php",
-            "version": "2.5.4",
-            "version_normalized": "2.5.4.0",
+            "version": "2.5.5",
+            "version_normalized": "2.5.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mercadopago/sdk-php.git",
-                "reference": "e31d4cf9a11b8b785e683d655b2f7cd78019e5aa"
+                "reference": "dea9c19fd1f1bfc0af92ab037f4533b46267b7bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/e31d4cf9a11b8b785e683d655b2f7cd78019e5aa",
-                "reference": "e31d4cf9a11b8b785e683d655b2f7cd78019e5aa",
+                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/dea9c19fd1f1bfc0af92ab037f4533b46267b7bb",
+                "reference": "dea9c19fd1f1bfc0af92ab037f4533b46267b7bb",
                 "shasum": ""
             },
             "require": {
@@ -528,7 +528,7 @@
                 "symfony/yaml": "~2.5",
                 "vlucas/phpdotenv": "^2.5"
             },
-            "time": "2023-07-12T17:10:23+00:00",
+            "time": "2023-07-19T19:03:51+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -549,7 +549,7 @@
             "description": "Mercado Pago PHP SDK",
             "homepage": "https://github.com/mercadopago/sdk-php",
             "support": {
-                "source": "https://github.com/mercadopago/sdk-php/tree/2.5.4"
+                "source": "https://github.com/mercadopago/sdk-php/tree/2.5.5"
             },
             "install-path": "../mercadopago/dx-php"
         },

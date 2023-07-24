@@ -81,17 +81,17 @@
         },
         {
             "name": "mollie/mollie-api-php",
-            "version": "v2.58.0",
-            "version_normalized": "2.58.0.0",
+            "version": "v2.59.0",
+            "version_normalized": "2.59.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mollie/mollie-api-php.git",
-                "reference": "5120e5b3e4622a290b64acf87266ea47d10d7301"
+                "reference": "9834e5779c695d1cc278b2c78ee514de9434b084"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/5120e5b3e4622a290b64acf87266ea47d10d7301",
-                "reference": "5120e5b3e4622a290b64acf87266ea47d10d7301",
+                "url": "https://api.github.com/repos/mollie/mollie-api-php/zipball/9834e5779c695d1cc278b2c78ee514de9434b084",
+                "reference": "9834e5779c695d1cc278b2c78ee514de9434b084",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
             "suggest": {
                 "mollie/oauth2-mollie-php": "Use OAuth to authenticate with the Mollie API. This is needed for some endpoints. Visit https://docs.mollie.com/ for more information."
             },
-            "time": "2023-07-11T12:01:27+00:00",
+            "time": "2023-07-18T13:41:40+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -170,7 +170,7 @@
             ],
             "support": {
                 "issues": "https://github.com/mollie/mollie-api-php/issues",
-                "source": "https://github.com/mollie/mollie-api-php/tree/v2.58.0"
+                "source": "https://github.com/mollie/mollie-api-php/tree/v2.59.0"
             },
             "install-path": "../mollie/mollie-api-php"
         }

@@ -1,5 +1,5 @@
 {
     "require": {
-        "mercadopago/dx-php": "2.5.4"
+        "mercadopago/dx-php": "2.5.5"
     }
 }

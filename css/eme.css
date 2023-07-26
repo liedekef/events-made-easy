@@ -37,6 +37,9 @@
 	font-size: smaller;
 	margin-bottom: 0em; margin-top: 0em;
 }
+.eme_small {
+	font-size:.7em;
+}
 
 table.eme_event_admin_table td {
 	vertical-align: top;
@@ -392,10 +395,6 @@ div.dt-buttons {
 .jtable-main-container {
 	float: left;
 	width: 100%;
-}
-
-.eme_categories_small {
-	font-size:.7em;
 }
 
 /* clear X */

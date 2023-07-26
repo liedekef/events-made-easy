@@ -2953,31 +2953,50 @@ function eme_ajax_locations_list() {
 	$recordCount = $wpdb->get_var( $count_sql );
 	$rows        = $wpdb->get_results( $sql, ARRAY_A );
 	$records     = [];
-	foreach ( $rows as $item ) {
-		$item = eme_get_extra_location_data( $item );
-		if ( empty( $item['location_name'] ) ) {
-			$item['location_name'] = __( 'No name', 'events-made-easy' );
+	foreach ( $rows as $location ) {
+		$location = eme_get_extra_location_data( $location );
+		if ( empty( $location['location_name'] ) ) {
+			$location['location_name'] = __( 'No name', 'events-made-easy' );
 		}
 		$record                  = [];
-		$record['location_id']   = $item['location_id'];
-		$record['location_name'] = "<a href='" . admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $item['location_id'] ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $item['location_name'] ) . '</a>';
-		if ( ! $item['location_latitude'] && ! $item['location_longitude'] && get_option( 'eme_map_is_active' ) && ! $item['location_properties']['online_only'] ) {
+		$record['location_id']   = $location['location_id'];
+		$record['location_name'] = "<a href='" . admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $location['location_id'] ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $location['location_name'] ) . '</a>';
+		if ( ! $location['location_latitude'] && ! $location['location_longitude'] && get_option( 'eme_map_is_active' ) && ! $location['location_properties']['online_only'] ) {
 			$record['location_name'] .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_attr__( 'Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website.', 'events-made-easy' ) . "'>";
 		}
-		$record['location_address1']  = eme_trans_esc_html( $item['location_address1'] );
-		$record['location_address2']  = eme_trans_esc_html( $item['location_address2'] );
-		$record['location_city']      = eme_trans_esc_html( $item['location_city'] );
-		$record['location_state']     = eme_trans_esc_html( $item['location_state'] );
-		$record['location_zip']       = eme_trans_esc_html( $item['location_zip'] );
-		$record['location_country']   = eme_trans_esc_html( $item['location_country'] );
-		$record['location_latitude']  = eme_trans_esc_html( $item['location_latitude'] );
-		$record['location_longitude'] = eme_trans_esc_html( $item['location_longitude'] );
-		$record['external_url']       = eme_trans_esc_html( $item['location_url'] );
-		$record['online_only']        = $item['location_properties']['online_only'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-		$location_url                 = eme_location_url( $item );
+		if ( ! empty( $location['location_category_ids'] ) ) {
+                        $categories            = explode( ',', $location['location_category_ids'] );
+                        $record['location_name'] .= "<br><span class='eme_small' title='" . __( 'Category', 'events-made-easy' ) . "'>";
+                        $cat_names             = [];
+                        foreach ( $categories as $cat ) {
+                                $category = eme_get_category( $cat );
+                                if ( $category ) {
+                                        $cat_names[] = eme_trans_esc_html( $category['category_name'] );
+                                }
+                        }
+                        $record['location_name'] .= implode( ', ', $cat_names );
+                        $record['location_name'] .= '</span>';
+                }
+		if ( ! empty( $location['location_properties']['max_capacity'] ) ) {
+                        $record['location_name'] .= "<br><span class='eme_small' title='" . __( 'Max capacity', 'events-made-easy' ) . "'>";
+			$record['location_name'] .= __( 'Max capacity', 'events-made-easy' ) . " ".$location['location_properties']['max_capacity'];
+                        $record['location_name'] .= '</span>';
+		}
+
+		$record['location_address1']  = eme_trans_esc_html( $location['location_address1'] );
+		$record['location_address2']  = eme_trans_esc_html( $location['location_address2'] );
+		$record['location_city']      = eme_trans_esc_html( $location['location_city'] );
+		$record['location_state']     = eme_trans_esc_html( $location['location_state'] );
+		$record['location_zip']       = eme_trans_esc_html( $location['location_zip'] );
+		$record['location_country']   = eme_trans_esc_html( $location['location_country'] );
+		$record['location_latitude']  = eme_trans_esc_html( $location['location_latitude'] );
+		$record['location_longitude'] = eme_trans_esc_html( $location['location_longitude'] );
+		$record['external_url']       = eme_trans_esc_html( $location['location_url'] );
+		$record['online_only']        = $location['location_properties']['online_only'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+		$location_url                 = eme_location_url( $location );
 		$record['view']               = "<a href='$location_url'>" . __( 'View location', 'events-made-easy' ) . '</a>';
-		$record['copy']               = "<a href='" . admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=copy_location&amp;location_id=' . $item['location_id'] ) . "' title='" . __( 'Duplicate this location', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_16.png'></a>";
-		$location_cf_values           = eme_get_location_answers( $item['location_id'] );
+		$record['copy']               = "<a href='" . admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=copy_location&amp;location_id=' . $location['location_id'] ) . "' title='" . __( 'Duplicate this location', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_16.png'></a>";
+		$location_cf_values           = eme_get_location_answers( $location['location_id'] );
 		foreach ( $formfields as $formfield ) {
 			foreach ( $location_cf_values as $val ) {
 				if ( $val['field_id'] == $formfield['field_id'] && ! empty( $val['answer'] ) ) {
@@ -2992,7 +3011,7 @@ function eme_ajax_locations_list() {
 				}
 			}
 		}
-		$files = eme_get_uploaded_files( $item['location_id'], 'locations' );
+		$files = eme_get_uploaded_files( $location['location_id'], 'locations' );
 		foreach ( $files as $file ) {
 			$key = 'FIELD_' . $file['field_id'];
 			if ( isset( $record[ $key ] ) ) {

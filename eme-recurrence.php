@@ -580,7 +580,7 @@ function eme_ajax_recurrences_list() {
 
 		if ( ! empty( $event['event_category_ids'] ) ) {
 			$categories            = explode( ',', $event['event_category_ids'] );
-			$record['event_name'] .= "<br><span class='eme_categories_small' title='" . __( 'Category', 'events-made-easy' ) . "'>";
+			$record['event_name'] .= "<br><span class='eme_small' title='" . __( 'Category', 'events-made-easy' ) . "'>";
 			$cat_names             = [];
 			foreach ( $categories as $cat ) {
 				$category = eme_get_category( $cat );

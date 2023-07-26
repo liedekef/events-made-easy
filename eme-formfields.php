@@ -2476,7 +2476,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			}
 
 			if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
-				$used_capacity = eme_get_location_used_capacity( $location_id );
+				$used_capacity = eme_get_event_location_used_capacity( $event );
 				$free_location_capacity = $location['location_properties']['max_capacity'] - $used_capacity;
 				if ($free_location_capacity < 0) {
 					$free_location_capacity=0;
@@ -2529,7 +2529,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 
 			// limit to free location capacity too
 			if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
-				$used_capacity = eme_get_location_used_capacity( $location_id );
+				$used_capacity = eme_get_event_location_used_capacity( $event );
 				$free_location_capacity = $location['location_properties']['max_capacity'] - $used_capacity;
 				if ($free_location_capacity < 0) {
 					$free_location_capacity=0;
@@ -2579,7 +2579,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 
 		// limit to free location capacity too
 		if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
-                        $used_capacity = eme_get_location_used_capacity( $location_id );
+                        $used_capacity = eme_get_event_location_used_capacity( $event );
 			$free_location_capacity = $location['location_properties']['max_capacity'] - $used_capacity;
 			if ($free_location_capacity < 0) {
 				$free_location_capacity=0;

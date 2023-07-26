@@ -3084,19 +3084,6 @@ function eme_get_location_answers( $location_id ) {
 	return $cf;
 }
 
-function eme_get_location_used_capacity( $location_id ) {
-	$location = eme_get_location( $location_id );
-	$used_capacity = 0;
-	if (!empty($location) && !empty($location['location_properties']['max_capacity'])) {
-		$scope=$event['event_start'].'--'.$event['event_end'];
-		$tmp_events = eme_get_events(scope: $scope, show_ongoing: 1, location_id: $event['location_id']);
-		foreach ($tmp_events as $tmp_event) {
-			$used_capacity += eme_get_booked_seats( $event['event_id'] );
-		}
-	}
-	return $used_capacity;
-}
-
 function eme_location_store_cf_answers( $location_id ) {
 	$answer_ids_seen = [];
 

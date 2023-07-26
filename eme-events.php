@@ -10544,4 +10544,13 @@ function eme_get_event_cf_answers_groupingids( $event_id ) {
 	$sql            = $wpdb->prepare( "SELECT DISTINCT a.eme_grouping FROM $answers_table a LEFT JOIN $bookings_table b ON b.booking_id=a.related_id WHERE b.event_id=%d AND a.type='booking'", $event_id );
 	return $wpdb->get_col( $sql );
 }
-?>
+
+function eme_get_event_location_used_capacity( $event ) {
+        $used_capacity = 0;
+        $scope=$event['event_start'].'--'.$event['event_end'];
+        $tmp_events = eme_get_events(scope: $scope, show_ongoing: 1, location_id: $event['location_id']);
+        foreach ($tmp_events as $tmp_event) {
+                $used_capacity += eme_get_booked_seats( $event['event_id'] );
+        }
+        return $used_capacity;
+}

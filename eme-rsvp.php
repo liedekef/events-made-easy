@@ -1515,6 +1515,8 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 		extract($t_info);
 		if (!empty($event['location_id'])) {
 			$location = eme_get_location($event['location_id']);
+		} else {
+			$location = [];
 		}
 		if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
 			$used_capacity = eme_get_event_location_used_capacity( $event );
@@ -2568,19 +2570,35 @@ function eme_get_available_seats( $event_id, $exclude_waiting_list = 0, $exclude
 		return 0;
 	}
 	if ( eme_is_multi( $event['event_seats'] ) ) {
-		return array_sum( eme_get_available_multiseats( $event_id, $exclude_waiting_list, $exclude_pending_booking_id ) );
+		$available_seats = array_sum( eme_get_available_multiseats( $event_id, $exclude_waiting_list, $exclude_pending_booking_id ) );
+	} else {
+		if ( $event['event_properties']['ignore_pending'] == 1 ) {
+			$available_seats = $event['event_seats'] - eme_get_approved_seats( $event_id );
+			if ( eme_event_has_pgs_configured( $event ) ) {
+				$available_seats -= eme_get_young_pending_seats( $event_id, $exclude_pending_booking_id );
+			}
+		} else {
+			$available_seats = $event['event_seats'] - eme_get_booked_seats( $event_id, $exclude_waiting_list );
+		}
+		if ( $exclude_waiting_list ) {
+			$available_seats -= $event['event_properties']['waitinglist_seats'];
+		}
 	}
 
-	if ( $event['event_properties']['ignore_pending'] == 1 ) {
-		$available_seats = $event['event_seats'] - eme_get_approved_seats( $event_id );
-		if ( eme_event_has_pgs_configured( $event ) ) {
-			$available_seats -= eme_get_young_pending_seats( $event_id, $exclude_pending_booking_id );
-		}
+	if (!empty($event['location_id'])) {
+		$location = eme_get_location($event['location_id']);
 	} else {
-		$available_seats = $event['event_seats'] - eme_get_booked_seats( $event_id, $exclude_waiting_list );
+		$location = [];
 	}
-	if ( $exclude_waiting_list ) {
-		$available_seats -= $event['event_properties']['waitinglist_seats'];
+	if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
+		$used_capacity = eme_get_event_location_used_capacity( $event );
+		$free_location_capacity = $location['location_properties']['max_capacity'] - $used_capacity;
+		if ($free_location_capacity < 0) {
+			$free_location_capacity=0;
+		}
+		if ($available_seats > $free_location_capacity) {
+			$available_seats = $free_location_capacity;
+		}
 	}
 
 	// the number of seats left can be <0 if more than one booking happened at the same time and people fill in things slowly
@@ -2592,6 +2610,11 @@ function eme_get_available_seats( $event_id, $exclude_waiting_list = 0, $exclude
 
 function eme_get_available_multiseats( $event_id, $exclude_waiting_list = 0, $exclude_pending_booking_id = 0 ) {
 	$event = eme_get_event( $event_id );
+	if (!empty($event['location_id'])) {
+		$location = eme_get_location($event['location_id']);
+	} else {
+		$location = [];
+	}
 	if ( empty( $event ) ) {
 		return 0;
 	}
@@ -2622,6 +2645,16 @@ function eme_get_available_multiseats( $event_id, $exclude_waiting_list = 0, $ex
 			$available_seats[ $key ] -= $waitinglist_multiseats[ $key ];
 		}
 
+		if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
+			$used_capacity = eme_get_event_location_used_capacity( $event );
+			$free_location_capacity = $location['location_properties']['max_capacity'] - $used_capacity;
+			if ($free_location_capacity < 0) {
+				$free_location_capacity=0;
+			}
+			if ($available_seats[ $key ] > $free_location_capacity) {
+				$available_seats[ $key ] = $free_location_capacity;
+			}
+		}
 		// the number of seats left can be <0 if more than one booking happened at the same time and people fill in things slowly
 		if ( $available_seats[ $key ] < 0 ) {
 			$available_seats[ $key ] = 0;

@@ -10546,11 +10546,20 @@ function eme_get_event_cf_answers_groupingids( $event_id ) {
 }
 
 function eme_get_event_location_used_capacity( $event ) {
-        $used_capacity = 0;
-        $scope=$event['event_start'].'--'.$event['event_end'];
-        $tmp_events = eme_get_events(scope: $scope, show_ongoing: 1, location_id: $event['location_id']);
-        foreach ($tmp_events as $tmp_event) {
-                $used_capacity += eme_get_booked_seats( $event['event_id'] );
-        }
-        return $used_capacity;
+	if (empty($event['event_id'])) {
+		return 0;
+	}
+	$res     = wp_cache_get( "eme_event_cap ".$event['event_id'] );
+	if ( $res === false ) {
+		$used_capacity = 0;
+	        $scope=$event['event_start'].'--'.$event['event_end'];
+		$tmp_events = eme_get_events(scope: $scope, show_ongoing: 1, location_id: $event['location_id']);
+		foreach ($tmp_events as $tmp_event) {
+               		$used_capacity += eme_get_booked_seats( $event['event_id'] );
+        	}
+		wp_cache_set( "eme_event_cap ".$event['event_id'], $used_capacity, '', 10 );
+        	return $used_capacity;
+	} else {
+		return $res;
+	}
 }

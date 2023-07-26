@@ -1201,6 +1201,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 
 function eme_get_location( $location_id ) {
 	global $wpdb;
+	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 
 	if ( is_string( $location_id ) && $location_id == '#_SINGLE_EVENTPAGE_LOCATIONID' && eme_is_single_event_page() ) {
 			$eventid_or_slug = eme_sanitize_request( get_query_var( 'event_id' ) );
@@ -1210,29 +1211,25 @@ function eme_get_location( $location_id ) {
 		}
 	}
 	if ( is_string( $location_id ) && $location_id == '#_SINGLE_LOCATIONPAGE_LOCATIONID' && eme_is_single_location_page() ) {
-			$location_id = eme_sanitize_request( get_query_var( 'location_id' ) );
+		$location_id = eme_sanitize_request( get_query_var( 'location_id' ) );
 	}
 
 	if ( empty( $location_id ) ) {
 		return false;
 	} else {
-		$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-		if ( is_numeric( $location_id ) ) {
-			$sql = $wpdb->prepare( "SELECT * from $locations_table WHERE location_id = %d", $location_id );
-		} else {
-			$sql = $wpdb->prepare( "SELECT * from $locations_table WHERE location_slug = %s", $location_id );
-		}
 		$location = wp_cache_get( "eme_location $location_id" );
 		if ( $location === false ) {
-			//$wpdb->show_errors(true);
+			if ( is_numeric( $location_id ) ) {
+				$sql = $wpdb->prepare( "SELECT * from $locations_table WHERE location_id = %d", $location_id );
+			} else {
+				$sql = $wpdb->prepare( "SELECT * from $locations_table WHERE location_slug = %s", $location_id );
+			}
 			$location = $wpdb->get_row( $sql, ARRAY_A );
 			if ( $location ) {
 				$location = eme_get_extra_location_data( $location );
-				//$wpdb->print_error();
 				wp_cache_set( "eme_location $location_id", $location, '', 60 );
 			}
 		}
-
 		return $location;
 	}
 }

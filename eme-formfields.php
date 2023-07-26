@@ -2226,7 +2226,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	} else {
 		$event_id = 0;
 	}
-	if (!empty$event['location_id'] )) {
+	if (!empty($event['location_id'] )) {
 		$location = eme_get_location( $event['location_id'] );
 	} else {
 		$location = [];

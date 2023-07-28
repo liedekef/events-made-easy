@@ -11,7 +11,7 @@ jQuery(document).ready(function($) {
 	var divs = document.getElementsByTagName('div');
 	// create the tile layer with correct attribution
 	var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-	var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+	var osmAttrib='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 	var div_arr_map = new Array();
 	for (var i = 0; i < divs.length; i++) {
 		var divname = divs[i].id; 
@@ -151,7 +151,6 @@ jQuery(document).ready(function($) {
 	
 		// and now for the normal maps (if any)
 		if(divname.indexOf("eme-location-map_") === 0) { 
-
 			lat_id=parseFloat($(divs[i]).data('lat'));
 			lon_id=parseFloat($(divs[i]).data('lon'));
 			map_icon=$(divs[i]).data('map_icon');

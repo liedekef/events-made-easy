@@ -104,6 +104,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Added location capacity, which limits the number of people present at a location. This will be checked for each overlapping event/booking at a location
 * Mollie update to 2.59
 * Mercadopago update to 2.5.5
+* Leaflet update to 1.9.4
 
 = 2.4.2 (2023/07/15) =
 * Event list widget was showing urlencoded text (due to the new php-8 function call method, urlencode was no longer needed but forgot to remove it)

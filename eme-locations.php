@@ -1528,12 +1528,7 @@ function eme_location_has_events( $location_id ) {
 	return ( $affected_events > 0 );
 }
 
-function eme_global_map( $atts ) {
-	return eme_global_map_shortcode( $atts );
-}
-
 function eme_global_map_shortcode( $atts ) {
-	
 	eme_enqueue_frontend();
 
 	if ( get_option( 'eme_map_is_active' ) ) {

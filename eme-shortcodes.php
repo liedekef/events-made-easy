@@ -75,7 +75,7 @@ add_shortcode( 'events_if4', 'eme_if_shortcode' );
 add_shortcode( 'events_if5', 'eme_if_shortcode' );
 add_shortcode( 'events_if6', 'eme_if_shortcode' );
 add_shortcode( 'events_ical_link', 'eme_ical_link_shortcode' );
-add_shortcode( 'locations_map', 'eme_global_map' );
+add_shortcode( 'locations_map', 'eme_global_map_shortcode' );
 add_shortcode( 'display_single_location', 'eme_single_location_map_shortcode' );
 add_shortcode( 'events_locations', 'eme_get_locations_shortcode' );
 add_shortcode( 'events_add_booking_form', 'eme_add_booking_form_shortcode' );

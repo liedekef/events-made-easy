@@ -150,7 +150,6 @@ jQuery(document).ready(function ($) {
                                         sorting: false,
                                         visibility: 'separator'
                                 };
-		console.log(extrafield);
                                 $.extend(rsvpfields,extrafield);
 			} else if (value != '') {
                                 var fieldindex='FIELD_'+value;
@@ -168,8 +167,9 @@ jQuery(document).ready(function ($) {
                                 $.extend(rsvpfields,extrafield);
                         }
                 });
-		console.log(rsvpfields);
-		$.extend(rsvpfields,editfield);
+		if (typeof $_GET['trash']==='undefined' || $_GET['trash']==0) {
+			$.extend(rsvpfields,editfield);
+		}
 
 		$('#BookingsTableContainer').jtable({
 			title: eme.translate_bookings,

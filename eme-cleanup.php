@@ -48,6 +48,34 @@ function eme_cleanup_trashed_people( $eme_number, $eme_period ) {
 	return $count;
 }
 
+function eme_cleanup_trashed_bookings( $eme_number, $eme_period ) {
+	global $wpdb;
+
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+
+	if ( $eme_number < 1 ) {
+		$eme_number = 1;
+	}
+	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	switch ( $eme_period ) {
+		case 'day':
+			$eme_date_obj->minusDays( $eme_number );
+			break;
+		case 'week':
+			$eme_date_obj->minusWeeks( $eme_number );
+			break;
+		default:
+			$eme_date_obj->minusMonths( $eme_number );
+			break;
+	}
+	$datetime = $eme_date_obj->getDateTime();
+	$sql      = $wpdb->prepare("SELECT count(*) FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
+	$count    = $wpdb->get_col( $sql );
+        $sql      = $wpdb->prepare("DELETE FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
+	$wpdb->query( $sql );
+	return $count;
+}
+
 function eme_cleanup_unconfirmed( $eme_number ) {
 	global $wpdb;
 
@@ -202,8 +230,25 @@ function eme_cleanup_page() {
 					$message = sprintf( __( 'Cleanup done: unconfirmed bookings older than %d minutes have been removed.', 'events-made-easy' ), $eme_number );
 				}
 			} elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_trashed_people' ) {
-				$count   = eme_cleanup_trashed_people();
-				$message = sprintf( __( 'Cleanup done: %d people removed from trash.', 'events-made-easy' ), $count );
+                                $eme_number = intval( $_POST['eme_number'] );
+                                $eme_period = eme_sanitize_request( $_POST['eme_period'] );
+                                if ( ! in_array( $eme_period, [ 'day', 'week', 'month' ] ) ) {
+                                        $eme_period = 'month';
+                                }
+				if ( $eme_number > 0 ) {
+					$count   = eme_cleanup_trashed_people( $eme_number, $eme_period );
+					$message = sprintf( __( 'Cleanup done: %d people removed from trash.', 'events-made-easy' ), $count );
+				}
+			} elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_trashed_bookings' ) {
+                                $eme_number = intval( $_POST['eme_number'] );
+                                $eme_period = eme_sanitize_request( $_POST['eme_period'] );
+                                if ( ! in_array( $eme_period, [ 'day', 'week', 'month' ] ) ) {
+                                        $eme_period = 'month';
+                                }
+				if ( $eme_number > 0 ) {
+					$count   = eme_cleanup_trashed_bookings( $eme_number, $eme_period );
+					$message = sprintf( __( 'Cleanup done: %d bookings removed from trash.', 'events-made-easy' ), $count );
+				}
 			} elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_people' ) {
 				$count   = eme_cleanup_people();
 				$message = sprintf( __( 'Cleanup done: %d people who are no longer referenced in bookings, memberships or groups are now trashed.', 'events-made-easy' ), $count );
@@ -288,6 +333,21 @@ function eme_cleanup_form( $message = '' ) {
 	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_trashed_people'>
+	<input type="number" id="eme_number" name="eme_number" size="3" maxlength="3" min="1" max="999" step="1" >
+	<select name="eme_period">
+	<option value="day" selected="selected"><?php esc_html_e( 'Day(s)', 'events-made-easy' ); ?></option>
+	<option value="week"><?php esc_html_e( 'Week(s)', 'events-made-easy' ); ?></option>
+	<option value="month"><?php esc_html_e( 'Month(s)', 'events-made-easy' ); ?></option>
+	</select>
+	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
+	</form>
+   
+<br><br>
+	<form action="" method="post">
+	<label for="eme_number"><?php esc_html_e( 'Remove bookings in thrash older than', 'events-made-easy' ); ?></label>
+	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
+	<input type='hidden' name='page' value='eme-cleanup'>
+	<input type='hidden' name='eme_admin_action' value='eme_cleanup_trashed_bookings'>
 	<input type="number" id="eme_number" name="eme_number" size="3" maxlength="3" min="1" max="999" step="1" >
 	<select name="eme_period">
 	<option value="day" selected="selected"><?php esc_html_e( 'Day(s)', 'events-made-easy' ); ?></option>

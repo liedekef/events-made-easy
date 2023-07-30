@@ -4756,36 +4756,36 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
-function eme_get_events_include_unlisted( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '' ) {
-	return eme_get_events( $o_limit, $scope, $order, $o_offset, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions, $count, $include_customformfields, $search_customfieldids, $search_customfields, 1);
+function eme_get_events_include_unlisted( $limit = 0, $scope = 'future', $order = 'ASC', $offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '' ) {
+	return eme_get_events( $limit, $scope, $order, $offset, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions, $count, $include_customformfields, $search_customfieldids, $search_customfields, 1);
 }
 
 // main function querying the database event table
-function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '', $include_unlisted = 0 ) {
+function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '', $include_unlisted = 0 ) {
 	global $wpdb;
 
 	$events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$bookings_table  = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 
-	if ( $o_limit === '' ) {
-		$o_limit = get_option( 'eme_event_list_number_items' );
+	if ( $limit === '' ) {
+		$limit = get_option( 'eme_event_list_number_items' );
 	}
-	if ( $o_limit > 0 ) {
-		$event_limit = intval( $o_limit );
-		$limit       = "LIMIT $event_limit";
+	if ( $limit > 0 ) {
+		$limit_string = "LIMIT $event_limit";
+		$event_limit  = intval( $limit );
 	} else {
-		$limit       = '';
-		$event_limit = 0;
+		$limit_string = '';
+		$event_limit  = 0;
 	}
-	if ( $o_offset > 0 ) {
-		if ( $o_limit == 0 ) {
-			$limit       = 'LIMIT ' . intval( $o_offset );
-			$event_limit = intval( $o_offset );
+	if ( $offset > 0 ) {
+		if ( $limit == 0 ) {
+			$limit_string = 'LIMIT ' . intval( $offset );
+			$event_limit  = intval( $offset );
 		}
-		$offset = 'OFFSET ' . intval( $o_offset );
+		$offset_string = 'OFFSET ' . intval( $offset );
 	} else {
-		$offset = '';
+		$offset_string = '';
 	}
 
 	// we can provide our own order statements
@@ -5376,13 +5376,13 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		// for show_recurrent_events_once: first we count the number of recurrent events that match, and then we increase the limit by that number
 		// This will allow the sql to show all events relevant
 		// Later on we we loop over the events and show only the amount wanted
-		if ( ! empty( $limit ) ) {
+		if ( ! empty( $limit_string ) ) {
 				$count_sql = "SELECT COUNT(*) FROM $events_table $count_where";
 				$t_count   = $wpdb->get_var( $count_sql );
 				// now increase the $limit with the number of events found
 				// we don't change $event_limit because we need that later on
 				$t_limit = $event_limit + intval( $t_count );
-				$limit   = "LIMIT $t_limit";
+				$limit_string = "LIMIT $t_limit";
 		}
 	} elseif ( $include_customformfields ) {
 		$formfields_searchable = eme_get_formfields( $search_customfieldids );
@@ -5411,7 +5411,7 @@ function eme_get_events( $o_limit = 0, $scope = 'future', $order = 'ASC', $o_off
 		$where = ' WHERE ' . $where;
 	}
 	$sql = "SELECT $columns FROM $events_table LEFT JOIN $locations_table ON $events_table.location_id=$locations_table.location_id
-	   $sql_join $where $orderby $limit $offset";
+	   $sql_join $where $orderby $limit_string $offset_string";
 
 	$sql_md5 = md5( $sql );
 	$res     = wp_cache_get( "eme_events $sql_md5" );

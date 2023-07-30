@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-07-28 11:24:36+00:00\n"
+"POT-Creation-Date: 2023-07-30 20:11:36+00:00\n"
 "PO-Revision-Date: 2023-06-22 18:41+0200\n"
 "Last-Translator: Fred17 <f14m07@netc.fr>\n"
 "Language-Team: \n"
@@ -598,7 +598,7 @@ msgstr "Description de la catégorie"
 msgid "The description of the category"
 msgstr "La description de la catégorie"
 #
-# File: eme-cleanup.php, line: 184
+# File: eme-cleanup.php, line: 212
 msgid ""
 "Cleanup done: events (and corresponding booking data) older than %d %s(s) "
 "have been removed."
@@ -606,25 +606,30 @@ msgstr ""
 "Nettoyage fait : les évènements (et les données de réservation "
 "correspondantes) âgés de plus de %d %s(s) ont été supprimés."
 #
-# File: eme-cleanup.php, line: 193
+# File: eme-cleanup.php, line: 221
 msgid ""
 "Cleanup done: unpaid pending bookings older than %d minutes have been "
 "removed."
 msgstr ""
 "Nettoyage fait: réservations impayées datant de %d heures on été supprimées."
 #
-# File: eme-cleanup.php, line: 202
+# File: eme-cleanup.php, line: 230
 msgid ""
 "Cleanup done: unconfirmed bookings older than %d minutes have been removed."
 msgstr ""
 "Le nettoyage est terminé : les réservations non confirmées datant de plus de "
 "%d minutes ont été supprimées."
 #
-# File: eme-cleanup.php, line: 206
+# File: eme-cleanup.php, line: 240
 msgid "Cleanup done: %d people removed from trash."
 msgstr "Nettoyage terminé : %d personnes retirées de la corbeille."
 #
-# File: eme-cleanup.php, line: 209
+# File: eme-cleanup.php, line: 250
+#, fuzzy
+msgid "Cleanup done: %d bookings removed from trash."
+msgstr "Nettoyage terminé : %d personnes retirées de la corbeille."
+#
+# File: eme-cleanup.php, line: 254
 msgid ""
 "Cleanup done: %d people who are no longer referenced in bookings, "
 "memberships or groups are now trashed."
@@ -633,11 +638,11 @@ msgstr ""
 "les réservations, les adhésions ou les groupes sont maintenant mises à la "
 "corbeille."
 #
-# File: eme-cleanup.php, line: 212
+# File: eme-cleanup.php, line: 257
 msgid "The mail queue has been cleared."
 msgstr "La file d’attente de courrier a été effacée."
 #
-# File: eme-cleanup.php, line: 219
+# File: eme-cleanup.php, line: 264
 msgid ""
 "Cleanup done: all data concerning events, locations and bookings have been "
 "removed."
@@ -645,47 +650,51 @@ msgstr ""
 "Nettoyage effectué : toutes les données concernant les évènements, les lieux "
 "et les réservations ont été retirées."
 #
-# File: eme-cleanup.php, line: 228
+# File: eme-cleanup.php, line: 273
 # File: eme-mailer.php, line: 2572
 # File: eme-mailer.php, line: 2668
 msgid "Are you sure you want to do this?"
 msgstr "Confirmez-vous vouloir faire cela ?"
 #
-# File: eme-cleanup.php, line: 233
+# File: eme-cleanup.php, line: 278
 msgid "Action info"
 msgstr "Action info"
 #
-# File: eme-cleanup.php, line: 238
+# File: eme-cleanup.php, line: 283
 # File: events-manager.php, line: 371
 msgid "Cleanup actions"
 msgstr "Action de nettoyage"
 #
-# File: eme-cleanup.php, line: 240
+# File: eme-cleanup.php, line: 285
 msgid "Remove events older than"
 msgstr "Supprimer les évènements plus vieux que"
 #
-# File: eme-cleanup.php, line: 246
-# File: eme-cleanup.php, line: 293
+# File: eme-cleanup.php, line: 291
+# File: eme-cleanup.php, line: 338
+# File: eme-cleanup.php, line: 353
 msgid "Day(s)"
 msgstr "Jour(s)"
 #
-# File: eme-cleanup.php, line: 247
-# File: eme-cleanup.php, line: 294
+# File: eme-cleanup.php, line: 292
+# File: eme-cleanup.php, line: 339
+# File: eme-cleanup.php, line: 354
 msgid "Week(s)"
 msgstr "Semaine(s)"
 #
-# File: eme-cleanup.php, line: 248
-# File: eme-cleanup.php, line: 295
+# File: eme-cleanup.php, line: 293
+# File: eme-cleanup.php, line: 340
+# File: eme-cleanup.php, line: 355
 msgid "Month(s)"
 msgstr "Mois"
 #
-# File: eme-cleanup.php, line: 250
-# File: eme-cleanup.php, line: 261
-# File: eme-cleanup.php, line: 272
-# File: eme-cleanup.php, line: 281
-# File: eme-cleanup.php, line: 297
-# File: eme-cleanup.php, line: 307
+# File: eme-cleanup.php, line: 295
+# File: eme-cleanup.php, line: 306
+# File: eme-cleanup.php, line: 317
 # File: eme-cleanup.php, line: 326
+# File: eme-cleanup.php, line: 342
+# File: eme-cleanup.php, line: 357
+# File: eme-cleanup.php, line: 367
+# File: eme-cleanup.php, line: 386
 # File: eme-countries.php, line: 381
 # File: eme-countries.php, line: 452
 # File: eme-cron.php, line: 340
@@ -719,20 +728,20 @@ msgstr "Mois"
 msgid "Apply"
 msgstr "Appliquer"
 #
-# File: eme-cleanup.php, line: 255
+# File: eme-cleanup.php, line: 300
 msgid "Remove unpaid pending bookings older than"
 msgstr "Supprimer les réservations en attente non payées antérieures à"
 #
-# File: eme-cleanup.php, line: 260
-# File: eme-cleanup.php, line: 271
+# File: eme-cleanup.php, line: 305
+# File: eme-cleanup.php, line: 316
 msgid "minutes"
 msgstr "minutes"
 #
-# File: eme-cleanup.php, line: 266
+# File: eme-cleanup.php, line: 311
 msgid "Remove unconfirmed bookings older than"
 msgstr "Retirer les réservations non confirmées datant de plus de"
 #
-# File: eme-cleanup.php, line: 277
+# File: eme-cleanup.php, line: 322
 msgid ""
 "Set status of people who are no longer referenced in bookings, groups or "
 "memberships to trash"
@@ -740,7 +749,7 @@ msgstr ""
 "Mettre à la corbeille l’état des personnes qui ne sont plus référencées dans "
 "les réservations, les groupes ou les adhésions"
 #
-# File: eme-cleanup.php, line: 282
+# File: eme-cleanup.php, line: 327
 msgid ""
 "Tip: If you want to avoid certain people from being trashed through "
 "automatic cleanup, put them in a group."
@@ -748,11 +757,16 @@ msgstr ""
 "Conseil : si vous voulez éviter que certaines personnes soient mises à la "
 "corbeille par le nettoyage automatique, mettez-les dans un groupe."
 #
-# File: eme-cleanup.php, line: 287
+# File: eme-cleanup.php, line: 332
 msgid "Remove people in thrash older than"
 msgstr "Retirer les personnes de la corbeille depuis plus de "
 #
-# File: eme-cleanup.php, line: 302
+# File: eme-cleanup.php, line: 347
+#, fuzzy
+msgid "Remove bookings in thrash older than"
+msgstr "Retirer les personnes de la corbeille depuis plus de "
+#
+# File: eme-cleanup.php, line: 362
 msgid ""
 "Remove all data concerning events, locations, memberships, people and "
 "bookings"
@@ -760,28 +774,28 @@ msgstr ""
 "Retirer toutes les données concernant les évènements, les emplacements, les "
 "personnes et les réservations"
 #
-# File: eme-cleanup.php, line: 306
+# File: eme-cleanup.php, line: 366
 msgid "Also delete defined categories, templates, holidays and form fields"
 msgstr ""
 "Supprimez également les catégories, modèles, jours fériés et champs de "
 "formulaire créés"
 #
-# File: eme-cleanup.php, line: 314
+# File: eme-cleanup.php, line: 374
 # File: eme-cron.php, line: 361
 msgid "There are %d messages in the mail queue."
 msgstr "Il y a %d messages dans la file d’attente de messagerie."
 #
-# File: eme-cleanup.php, line: 316
+# File: eme-cleanup.php, line: 376
 # File: eme-cron.php, line: 363
 msgid "There is 1 message in the mail queue."
 msgstr "Il y a 1 message dans la file d’attente de messagerie."
 #
-# File: eme-cleanup.php, line: 318
+# File: eme-cleanup.php, line: 378
 # File: eme-cron.php, line: 365
 msgid "There are no messages in the mail queue."
 msgstr "Il n’y a aucun message dans la file d’attente de messagerie."
 #
-# File: eme-cleanup.php, line: 323
+# File: eme-cleanup.php, line: 383
 msgid "Empty the mail queue"
 msgstr "Vider la file d’attente de courrier"
 #
@@ -7290,7 +7304,7 @@ msgstr ""
 "client afin d'ajuster les différences de temps client / serveur lors de "
 "l'affichage des dates et heures des événements."
 #
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.2)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.3)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 # File: eme-gdpr.php, line: 547
 # File: eme-gdpr.php, line: 553
@@ -17330,6 +17344,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Select the event(s)"
 #~ msgstr "Sélectionner l’(les) évènement(s) "
 #
@@ -17340,8 +17355,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "Convertir les nouvelles lignes"
+#
 #
 #
 #
@@ -17365,6 +17382,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
@@ -17379,12 +17397,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "For mail-type templates, this conversion will only happen if you also "
 #~ "want to send html-based mails."
 #~ msgstr ""
 #~ "Pour les modèles d’e-mail, cette conversion ne se produira que si vous "
 #~ "souhaitez également envoyer des e-mails en HTML."
+#
 #
 #
 #
@@ -17442,6 +17462,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the event notes."
@@ -17449,6 +17470,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Le téléversement de fichier n'est pas autorisé ici. Utilisez la "
 #~ "bibliothèque de médias classique WP pour téléverser des fichiers ou "
 #~ "utilisez le bouton \"Ajouter un média\" dans les notes de l' évènement."
+#
 #
 #
 #
@@ -17513,6 +17535,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Le téléchargement de fichier n'est pas autorisé ici."
 #
@@ -17543,8 +17566,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Fichiers Téléversés"
+#
 #
 #
 #
@@ -17605,10 +17630,12 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr ""
 #~ "La suppression des inscriptions aux tâches sélectionnées a été effectuée "
 #~ "avec succès."
+#
 #
 #
 #
@@ -17672,8 +17699,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Les ID fournis sont incorrects. Veuillez réessayer."
+#
 #
 #
 #
@@ -17743,6 +17772,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
@@ -17750,6 +17780,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Le modèle doit contenir au moins les espaces réservés #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL et #_SUBMIT. Sinon, le formulaire ne sera pas "
 #~ "affiché."
+#
 #
 #
 #
@@ -17840,8 +17871,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Hello World"
 #~ msgstr "Bonjour !"
+#
 #
 #
 #
@@ -17928,6 +17961,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Single Noop"
 #~ msgid_plural "Plural Noop"
 #~ msgstr[0] "Unique"
@@ -17973,9 +18007,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgctxt "Testing"
 #~ msgid "Hello World"
 #~ msgstr "Bonjour le monde"
+#
 #
 #
 #
@@ -18063,6 +18099,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Attribute"
 #~ msgstr "attribut"
 #
@@ -18106,8 +18143,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "HTML"
 #~ msgstr "HTML"
+#
 #
 #
 #
@@ -18193,9 +18232,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgctxt "Testing"
 #~ msgid "HTML"
 #~ msgstr "HTML"
+#
 #
 #
 #
@@ -18280,6 +18321,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "More information about %s"
 #~ msgstr "Plus d'informations sur %s"
 #
@@ -18323,8 +18365,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Check for updates"
 #~ msgstr "Vérifier les mises à jour"
+#
 #
 #
 #
@@ -18410,9 +18454,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgctxt "the plugin title"
 #~ msgid "A new version of the %s plugin is available."
 #~ msgstr "Une nouvelle version de l'extension %s est disponible."
+#
 #
 #
 #
@@ -18499,8 +18545,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Unknown update checker status \"%s\""
 #~ msgstr "Statut inconnu du vérificateur de mise à jour « %s »."
+#
 #
 #
 #

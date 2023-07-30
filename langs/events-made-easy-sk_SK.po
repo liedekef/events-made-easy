@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-07-28 11:24:36+00:00\n"
+"POT-Creation-Date: 2023-07-30 20:11:36+00:00\n"
 "PO-Revision-Date: 2023-06-04 21:49+0200\n"
 "Last-Translator: Jozef Gaal <preklady@mayday.sk>\n"
 "Language-Team: Jozef Gaal (preklady@mayday.sk)\n"
@@ -594,7 +594,7 @@ msgstr "Popis kategórie"
 msgid "The description of the category"
 msgstr "Popis kategórie"
 #
-# File: eme-cleanup.php, line: 184
+# File: eme-cleanup.php, line: 212
 msgid ""
 "Cleanup done: events (and corresponding booking data) older than %d %s(s) "
 "have been removed."
@@ -602,7 +602,7 @@ msgstr ""
 "Čistenie vykonané: podujatia (a zodpovedajúce rezervačné údaje) staršie ako "
 "%d %s(s) boli odstránené."
 #
-# File: eme-cleanup.php, line: 193
+# File: eme-cleanup.php, line: 221
 msgid ""
 "Cleanup done: unpaid pending bookings older than %d minutes have been "
 "removed."
@@ -610,18 +610,23 @@ msgstr ""
 "Čistenie vykonané: neuhradené čakajúce rezervácie staršie ako %d minút boli "
 "odstránené."
 #
-# File: eme-cleanup.php, line: 202
+# File: eme-cleanup.php, line: 230
 msgid ""
 "Cleanup done: unconfirmed bookings older than %d minutes have been removed."
 msgstr ""
 "Čistenie dokončené: nepotvrdené rezervácie staršie ako %d minút boli "
 "odstránené."
 #
-# File: eme-cleanup.php, line: 206
+# File: eme-cleanup.php, line: 240
 msgid "Cleanup done: %d people removed from trash."
 msgstr "Čistenie dokončené: %d ľudí odstránených z koša."
 #
-# File: eme-cleanup.php, line: 209
+# File: eme-cleanup.php, line: 250
+#, fuzzy
+msgid "Cleanup done: %d bookings removed from trash."
+msgstr "Čistenie dokončené: %d ľudí odstránených z koša."
+#
+# File: eme-cleanup.php, line: 254
 msgid ""
 "Cleanup done: %d people who are no longer referenced in bookings, "
 "memberships or groups are now trashed."
@@ -629,11 +634,11 @@ msgstr ""
 "Vyčistenie dokončené: %d ľudí, na ktorých sa už neodkazuje v rezerváciách, "
 "členstvách alebo skupinách, je teraz vymazaných."
 #
-# File: eme-cleanup.php, line: 212
+# File: eme-cleanup.php, line: 257
 msgid "The mail queue has been cleared."
 msgstr "Emailový poradovník bol vyčistený."
 #
-# File: eme-cleanup.php, line: 219
+# File: eme-cleanup.php, line: 264
 msgid ""
 "Cleanup done: all data concerning events, locations and bookings have been "
 "removed."
@@ -641,47 +646,51 @@ msgstr ""
 "Čistenie vykonané: všetky údaje týkajúce sa podujatí, miest a rezervácií "
 "boli odstránené."
 #
-# File: eme-cleanup.php, line: 228
+# File: eme-cleanup.php, line: 273
 # File: eme-mailer.php, line: 2572
 # File: eme-mailer.php, line: 2668
 msgid "Are you sure you want to do this?"
 msgstr "Ste si istí, že to chcete urobiť?"
 #
-# File: eme-cleanup.php, line: 233
+# File: eme-cleanup.php, line: 278
 msgid "Action info"
 msgstr "Info o akcii"
 #
-# File: eme-cleanup.php, line: 238
+# File: eme-cleanup.php, line: 283
 # File: events-manager.php, line: 371
 msgid "Cleanup actions"
 msgstr "Prečistenie"
 #
-# File: eme-cleanup.php, line: 240
+# File: eme-cleanup.php, line: 285
 msgid "Remove events older than"
 msgstr "Odstrániť podujatia staršie ako"
 #
-# File: eme-cleanup.php, line: 246
-# File: eme-cleanup.php, line: 293
+# File: eme-cleanup.php, line: 291
+# File: eme-cleanup.php, line: 338
+# File: eme-cleanup.php, line: 353
 msgid "Day(s)"
 msgstr "Dní"
 #
-# File: eme-cleanup.php, line: 247
-# File: eme-cleanup.php, line: 294
+# File: eme-cleanup.php, line: 292
+# File: eme-cleanup.php, line: 339
+# File: eme-cleanup.php, line: 354
 msgid "Week(s)"
 msgstr "Týždňov"
 #
-# File: eme-cleanup.php, line: 248
-# File: eme-cleanup.php, line: 295
+# File: eme-cleanup.php, line: 293
+# File: eme-cleanup.php, line: 340
+# File: eme-cleanup.php, line: 355
 msgid "Month(s)"
 msgstr "Mesiacov"
 #
-# File: eme-cleanup.php, line: 250
-# File: eme-cleanup.php, line: 261
-# File: eme-cleanup.php, line: 272
-# File: eme-cleanup.php, line: 281
-# File: eme-cleanup.php, line: 297
-# File: eme-cleanup.php, line: 307
+# File: eme-cleanup.php, line: 295
+# File: eme-cleanup.php, line: 306
+# File: eme-cleanup.php, line: 317
 # File: eme-cleanup.php, line: 326
+# File: eme-cleanup.php, line: 342
+# File: eme-cleanup.php, line: 357
+# File: eme-cleanup.php, line: 367
+# File: eme-cleanup.php, line: 386
 # File: eme-countries.php, line: 381
 # File: eme-countries.php, line: 452
 # File: eme-cron.php, line: 340
@@ -715,20 +724,20 @@ msgstr "Mesiacov"
 msgid "Apply"
 msgstr "Vykonať"
 #
-# File: eme-cleanup.php, line: 255
+# File: eme-cleanup.php, line: 300
 msgid "Remove unpaid pending bookings older than"
 msgstr "Odstráňte nezaplatené nevybavené rezervácie staršie ako"
 #
-# File: eme-cleanup.php, line: 260
-# File: eme-cleanup.php, line: 271
+# File: eme-cleanup.php, line: 305
+# File: eme-cleanup.php, line: 316
 msgid "minutes"
 msgstr "minút"
 #
-# File: eme-cleanup.php, line: 266
+# File: eme-cleanup.php, line: 311
 msgid "Remove unconfirmed bookings older than"
 msgstr "Odstrániť nepotvrdené rezervácie staršie ako"
 #
-# File: eme-cleanup.php, line: 277
+# File: eme-cleanup.php, line: 322
 msgid ""
 "Set status of people who are no longer referenced in bookings, groups or "
 "memberships to trash"
@@ -736,7 +745,7 @@ msgstr ""
 "Nastaviť stav osôb, na ktoré sa už neodkazuje v rezerváciách, skupinách "
 "alebo členstvách, na vymazané"
 #
-# File: eme-cleanup.php, line: 282
+# File: eme-cleanup.php, line: 327
 msgid ""
 "Tip: If you want to avoid certain people from being trashed through "
 "automatic cleanup, put them in a group."
@@ -744,11 +753,16 @@ msgstr ""
 "Tip: Ak chcete zabrániť vymazaniu niektorých ľudí prostredníctvom "
 "automatického čistenia, zaraďte ich do skupiny."
 #
-# File: eme-cleanup.php, line: 287
+# File: eme-cleanup.php, line: 332
 msgid "Remove people in thrash older than"
 msgstr "Odstrániť ľudí z koša starších ako"
 #
-# File: eme-cleanup.php, line: 302
+# File: eme-cleanup.php, line: 347
+#, fuzzy
+msgid "Remove bookings in thrash older than"
+msgstr "Odstrániť ľudí z koša starších ako"
+#
+# File: eme-cleanup.php, line: 362
 msgid ""
 "Remove all data concerning events, locations, memberships, people and "
 "bookings"
@@ -756,26 +770,26 @@ msgstr ""
 "Odstrániť všetky údaje týkajúce sa podujatí, miest, členstiev, osôb a "
 "rezervácií"
 #
-# File: eme-cleanup.php, line: 306
+# File: eme-cleanup.php, line: 366
 msgid "Also delete defined categories, templates, holidays and form fields"
 msgstr "Tiež vymazať definované kategórie, šablóny, sviatky a polia formulárov"
 #
-# File: eme-cleanup.php, line: 314
+# File: eme-cleanup.php, line: 374
 # File: eme-cron.php, line: 361
 msgid "There are %d messages in the mail queue."
 msgstr "V emailovom poradovníku je %d správ."
 #
-# File: eme-cleanup.php, line: 316
+# File: eme-cleanup.php, line: 376
 # File: eme-cron.php, line: 363
 msgid "There is 1 message in the mail queue."
 msgstr "V emailovom poradovníku je 1 správa."
 #
-# File: eme-cleanup.php, line: 318
+# File: eme-cleanup.php, line: 378
 # File: eme-cron.php, line: 365
 msgid "There are no messages in the mail queue."
 msgstr "V poradovníku emailov nie sú žiadne správy."
 #
-# File: eme-cleanup.php, line: 323
+# File: eme-cleanup.php, line: 383
 msgid "Empty the mail queue"
 msgstr "Vyprázdniť poradovník emailov"
 #
@@ -7141,7 +7155,7 @@ msgstr ""
 "sa pri zobrazovaní dátumov a časov podujatí prispôsobili časovým rozdielom "
 "medzi klientom a serverom."
 #
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.2)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.3)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 # File: eme-gdpr.php, line: 547
 # File: eme-gdpr.php, line: 553
@@ -16902,6 +16916,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Select the event(s)"
 #~ msgstr "Vybrať podujatie(a)"
 #
@@ -16912,8 +16927,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "Konverzia nových riadkov"
+#
 #
 #
 #
@@ -16936,12 +16953,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
 #~ msgstr ""
 #~ "Ak nechcete, aby sa to stalo (napríklad pre šablónu použitú v riadku "
 #~ "tabuľky), zrušte výber tejto možnosti."
+#
 #
 #
 #
@@ -16971,10 +16990,12 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "See <a href=\"%s\">here</a> for more info on country codes"
 #~ msgid "See <a href=\"%s\">here</a> for more info on country code."
 #~ msgstr "Viac informácií o kódoch krajín nájdete <a href=\"%s\">tu</a>"
+#
 #
 #
 #
@@ -17012,6 +17033,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -17019,6 +17041,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Nahrávanie súborov tu nie je povolené, na odovzdávanie súborov použite "
 #~ "bežnú knižnicu médií WP alebo použite tlačidlo „Pridať multimédiá“ v "
 #~ "poznámkach miesta."
+#
 #
 #
 #
@@ -17051,8 +17074,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Nahrané súbory"
+#
 #
 #
 #
@@ -17085,8 +17110,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "Úspešne sa odstránili vybrané prihlásenia na úlohu."
+#
 #
 #
 #
@@ -17122,8 +17149,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Dodané nesprávne ID. Skúste to prosím znova."
+#
 #
 #
 #
@@ -17156,12 +17185,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
 #~ msgstr ""
 #~ "Šablóna by mala obsahovať aspoň zástupné výrazy #_LASTNAME, #_FIRSTNAME, "
 #~ "#_EMAIL a #_SUBMIT. Ak nemá, formulár sa nezobrazí."
+#
 #
 #
 #
@@ -17200,6 +17231,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "Single Event"
 #~ msgid "Single"
@@ -17207,6 +17239,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ msgstr[0] "Jednorazové podujatie"
 #~ msgstr[1] "Jednorazové podujatie"
 #~ msgstr[2] "Jednorazové podujatie"
+#
 #
 #
 #
@@ -17244,10 +17277,12 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "Attributes"
 #~ msgid "Attribute"
 #~ msgstr "Atribúty"
+#
 #
 #
 #
@@ -17283,6 +17318,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "View event"
 #~ msgid "View details"
@@ -17302,10 +17338,12 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "For more information about holidays, see "
 #~ msgid "More information about %s"
 #~ msgstr "Viac informácií o sviatkoch nájdete na stránke "
+#
 #
 #
 #

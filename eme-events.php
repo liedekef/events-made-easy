@@ -1825,7 +1825,7 @@ function eme_template_redir() {
 		$author         = str_replace( '_MYSELF', '#_MYSELF', $author );
 		$contact_person = str_replace( '_MYSELF', '#_MYSELF', $contact_person );
 
-		$event = eme_get_events( limit: 0, scope: $scope, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory );
+		$events = eme_get_events( limit: 0, scope: $scope, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory );
 		if ( count( $events ) == 1 ) {
 			$event = $events[0];
 			eme_nocache_headers();
@@ -4771,12 +4771,12 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 	if ( $limit === '' ) {
 		$limit = get_option( 'eme_event_list_number_items' );
 	}
-	if ( $limit > 0 ) {
-		$limit_string = "LIMIT $event_limit";
+	if ( !empty($limit) ) {
 		$event_limit  = intval( $limit );
+		$limit_string = "LIMIT $event_limit";
 	} else {
-		$limit_string = '';
 		$event_limit  = 0;
+		$limit_string = '';
 	}
 	if ( $offset > 0 ) {
 		if ( $limit == 0 ) {

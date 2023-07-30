@@ -99,7 +99,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 
 == Changelog ==
 = 2.4.4 (2023/07/30) =
-* Fix booking for events
+* Fix showing a single event from the calendar
 
 = 2.4.3 (2023/07/28) =
 * Fix placeholder #_IS_LAST_RECURRENCE

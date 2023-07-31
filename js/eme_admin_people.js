@@ -302,7 +302,7 @@ jQuery(document).ready(function ($) {
            var selectedRows = $('#GroupsTableContainer').jtable('selectedRows');
            var do_action = $('#eme_admin_action').val();
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteGroups') && !confirm(eme.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
@@ -338,7 +338,7 @@ jQuery(document).ready(function ($) {
            var do_action = $('#eme_admin_action').val();
 
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deletePeople') && !confirm(eme.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }

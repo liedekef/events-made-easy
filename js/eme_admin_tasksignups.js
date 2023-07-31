@@ -99,7 +99,7 @@ jQuery(document).ready( function($) {
            var do_action = $('#eme_admin_action').val();
 	   var send_mail = $('#send_mail').val();
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteTaskSignups') && !confirm(emetasks.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }

@@ -640,7 +640,7 @@ jQuery(document).ready( function($) {
 	   var addtocategory = $('#addtocategory').val();
 
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteEvents' || do_action=='deleteRecurrences') && !confirm(eme.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
@@ -752,7 +752,7 @@ jQuery(document).ready( function($) {
 	   var rec_new_end_date = $('#rec_new_end_date').val();
 
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if (do_action=='deleteRecurrences' && !confirm(eme.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }

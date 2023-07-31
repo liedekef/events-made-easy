@@ -67,7 +67,7 @@ jQuery(document).ready( function($) {
            var selectedRows = $('#FormfieldsTableContainer').jtable('selectedRows');
            var do_action = $('#eme_admin_action').val();
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteFormfields') && !confirm(emeformfields.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }

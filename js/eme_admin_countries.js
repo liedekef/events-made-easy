@@ -96,7 +96,7 @@
            var selectedRows = $('#CountriesTableContainer').jtable('selectedRows');
            var do_action = $('#eme_admin_action').val();
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteCountries') && !confirm(emecountries.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
@@ -129,7 +129,7 @@
            var selectedRows = $('#StatesTableContainer').jtable('selectedRows');
            var do_action = $('#eme_admin_action').val();
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteStates') && !confirm(emecountries.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }

@@ -275,7 +275,7 @@ jQuery(document).ready(function ($) {
            var selectedRows = $('#MembershipsTableContainer').jtable('selectedRows');
            var do_action = $('#eme_admin_action').val();
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteMemberships') && !confirm(eme.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
@@ -321,7 +321,7 @@ jQuery(document).ready(function ($) {
            var html_template_footer = $('#html_template_footer').val();
 
            var action_ok=1;
-           if (selectedRows.length > 0) {
+           if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteMembers') && !confirm(eme.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }

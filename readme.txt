@@ -98,6 +98,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.5 (2023//) =
+* Fix 2 php warnings
+* Mollie update to 2.60
+
 = 2.4.4 (2023/07/30) =
 * Fix showing a single event from the calendar
 

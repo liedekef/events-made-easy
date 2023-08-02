@@ -5719,7 +5719,7 @@ function eme_ajax_bookings_list() {
 		foreach ( $formfields as $formfield ) {
 			foreach ( $answers as $answer ) {
 				if ( $answer['field_id'] == $formfield['field_id'] && $answer['answer'] != '' ) {
-					$val = eme_answer2readable( $tmp_answer['answer'], $formfield, 1, ',', 'text', 1 );
+					$val = eme_answer2readable( $answer['answer'], $formfield, 1, ',', 'text', 1 );
 					// the 'FIELD_' value is used by the container-js
 					$key = 'FIELD_' . $answer['field_id'];
 					if ( isset( $line[ $key ] ) ) {

@@ -1181,16 +1181,16 @@ function eme_check_member_allowed_to_pay( $member, $membership ) {
                         }
 
                         if ( $member['status'] == EME_MEMBER_STATUS_ACTIVE && $too_soon_to_pay ) {
-                                $end_date    = eme_localized_date( $member['end_date'], EME_TIMEZONE );
-                                $ret_string .= "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. It is not allowed to extend the membership yet (too soon).', 'events-made-easy' ), $end_date ) . '</div>';
+                                $end_date   = eme_localized_date( $member['end_date'], EME_TIMEZONE );
+                                $ret_string = "<div class='eme-message-success eme-rsvp-message-success'>" . sprintf( __( 'Your membership is currently active until %s. It is not allowed to extend the membership yet (too soon).', 'events-made-easy' ), $end_date ) . '</div>';
                                 return $ret_string;
 			}
 		}
 	}
 	if ( ! $membership['properties']['allow_renewal'] && $member['status'] == EME_MEMBER_STATUS_EXPIRED ) {
-                $contact         = eme_get_contact( $membership['properties']['contact_id'] );
-                $contact_name    = $contact->display_name;
-		$ret_string .= "<div class='eme-message-error eme-rsvp-message-error'>" . sprintf( __( 'Your membership has expired but renewal is not allowed, please contact %s.', 'events-made-easy' ), $contact_name ) . '</div>';
+                $contact      = eme_get_contact( $membership['properties']['contact_id'] );
+                $contact_name = $contact->display_name;
+		$ret_string   = "<div class='eme-message-error eme-rsvp-message-error'>" . sprintf( __( 'Your membership has expired but renewal is not allowed, please contact %s.', 'events-made-easy' ), $contact_name ) . '</div>';
                 return $ret_string;
         }
 

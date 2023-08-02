@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.4.5 (2023//) =
 * Fix 2 php warnings
 * Mollie update to 2.60
+* Don't show all event custom field answers for all bookings
 
 = 2.4.4 (2023/07/30) =
 * Fix showing a single event from the calendar

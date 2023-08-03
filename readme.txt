@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.6 (2023//) =
+* Fix php warning when adding/updating a member via the admin backend with empty end-date
+
 = 2.4.5 (2023/08/03) =
 * Fix 3 php warnings
 * Mollie update to 2.60

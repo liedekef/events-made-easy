@@ -154,7 +154,7 @@ function eme_init_membership_props( $props = [] ) {
 	foreach ( $payment_gateways as $pg => $desc ) {
 		// the properties for payment gateways alsways have "use_" in front of them, so add it
 		if ( ! isset( $props[ 'use_' . $pg ] ) ) {
-				$props[ 'use_' . $pg ] = 0;
+			$props[ 'use_' . $pg ] = 0;
 		}
 	}
 
@@ -472,7 +472,7 @@ function eme_get_membership_stats( $ids ) {
 		$limit_start   = $eme_date_obj->format( 'Y-m-d' );
 		$days_in_month = $eme_date_obj->getDaysInMonth();
 		$limit_end     = $eme_date_obj->format( "Y-m-$days_in_month" );
-		if ($counter==$difference) {
+		if ( $counter == $difference ) {
 			$sql = "SELECT count(*) FROM $table WHERE status=1 AND membership_id IN ($ids)";
 			$member_nbr = $wpdb->get_var( $sql );
 		} else {
@@ -3850,10 +3850,10 @@ function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
 
 	// also set the usage_count propertie to 0
 	$member['properties']['usage_count'] = 0;
-	$fields['properties']     = eme_serialize( $member['properties'] );
+	$fields['properties'] = eme_serialize( $member['properties'] );
 
 	// now update
-	$res                = $wpdb->update( $table, $fields, $where );
+	$res = $wpdb->update( $table, $fields, $where );
 
 	// do the family members too
 	$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
@@ -4224,7 +4224,7 @@ function eme_members_shortcode( $atts ) {
 	$format            = '';
 	$eme_format_header = '';
 	$eme_format_footer = '';
-	$format                = eme_get_template_format( $template_id );
+	$format            = eme_get_template_format( $template_id );
 	if ( $template_id_header ) {
 		$eme_format_header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
 	}
@@ -4232,7 +4232,7 @@ function eme_members_shortcode( $atts ) {
 		$eme_format_footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
 	}
 	$output = '';
-	$lang       = eme_detect_lang();
+	$lang   = eme_detect_lang();
 	foreach ( $member_ids as $member_id ) {
 		$member     = eme_get_member( $member_id );
 		$membership = eme_get_membership( $member['membership_id'] );
@@ -4268,7 +4268,7 @@ function eme_members_frontend_csv_report( $group_id, $membership_id, $template_i
 	if ( $template_id_header ) {
 		// no nl2br for csv output
 		$eme_format_header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header, 0 ) ) );
-		$headers               = explode( ',', $eme_format_header );
+		$headers           = explode( ',', $eme_format_header );
 		eme_fputcsv( $fp, $headers );
 	}
 
@@ -4495,10 +4495,10 @@ function eme_add_member_ajax() {
 					]
 				);
 			} elseif ( get_option( 'eme_payment_redirect' ) ) {
-				$payment     = eme_get_payment( $payment_id );
-				$payment_url = eme_payment_url( $payment );
-				$waitperiod      = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
-				$redirect_msg    = get_option( 'eme_payment_redirect_msg' );
+				$payment      = eme_get_payment( $payment_id );
+				$payment_url  = eme_payment_url( $payment );
+				$waitperiod   = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
+				$redirect_msg = get_option( 'eme_payment_redirect_msg' );
 				if ( ! empty( $redirect_msg ) ) {
 					$redirect_msg         = str_replace( '#_PAYMENT_URL', $payment_url, $redirect_msg );
 					$form_result_message .= '<br>' . $redirect_msg;

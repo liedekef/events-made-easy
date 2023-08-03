@@ -1915,38 +1915,39 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 	}
 
 	// then we do the custom attributes, since these can contain other placeholders
-	preg_match_all( '/#(ESC|URL)?_ATT\{.+?\}(\{.+?\})?/', $format, $results );
-	foreach ( $results[0] as $resultKey => $result ) {
-		$need_escape    = 0;
-		$need_urlencode = 0;
-		$orig_result    = $result;
-		if ( strstr( $result, '#ESC' ) ) {
-			$result      = str_replace( '#ESC', '#', $result );
-			$need_escape = 1;
-		} elseif ( strstr( $result, '#URL' ) ) {
-			$result         = str_replace( '#URL', '#', $result );
-			$need_urlencode = 1;
-		}
-		$replacement = '';
-		//Strip string of placeholder and just leave the reference
-		$attRef = substr( substr( $result, 0, strpos( $result, '}' ) ), 6 );
-		if ( isset( $location['location_attributes'][ $attRef ] ) ) {
-			$replacement = $location['location_attributes'][ $attRef ];
-		}
-		if ( trim( $replacement ) == ''
-			&& isset( $results[2][ $resultKey ] )
-			&& $results[2][ $resultKey ] != '' ) {
-			//Check to see if we have a second set of braces;
-			$replacement = substr( $results[2][ $resultKey ], 1, strlen( trim( $results[2][ $resultKey ] ) ) - 2 );
-		}
+	if ($location && preg_match_all( '/#(ESC|URL)?_ATT\{.+?\}(\{.+?\})?/', $format, $results )) {
+		foreach ( $results[0] as $resultKey => $result ) {
+			$need_escape    = 0;
+			$need_urlencode = 0;
+			$orig_result    = $result;
+			if ( strstr( $result, '#ESC' ) ) {
+				$result      = str_replace( '#ESC', '#', $result );
+				$need_escape = 1;
+			} elseif ( strstr( $result, '#URL' ) ) {
+				$result         = str_replace( '#URL', '#', $result );
+				$need_urlencode = 1;
+			}
+			$replacement = '';
+			//Strip string of placeholder and just leave the reference
+			$attRef = substr( substr( $result, 0, strpos( $result, '}' ) ), 6 );
+			if ( isset( $location['location_attributes'][ $attRef ] ) ) {
+				$replacement = $location['location_attributes'][ $attRef ];
+			}
+			if ( trim( $replacement ) == ''
+				&& isset( $results[2][ $resultKey ] )
+				&& $results[2][ $resultKey ] != '' ) {
+				//Check to see if we have a second set of braces;
+				$replacement = substr( $results[2][ $resultKey ], 1, strlen( trim( $results[2][ $resultKey ] ) ) - 2 );
+			}
 
-		if ( $need_escape ) {
-			$replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+			if ( $need_escape ) {
+				$replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+			}
+			if ( $need_urlencode ) {
+				$replacement = rawurlencode( $replacement );
+			}
+			$format = str_replace( $orig_result, $replacement, $format );
 		}
-		if ( $need_urlencode ) {
-			$replacement = rawurlencode( $replacement );
-		}
-		$format = str_replace( $orig_result, $replacement, $format );
 	}
 
 	if (!empty( $location['location_id'] )) {
@@ -1959,461 +1960,380 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 	$all_categories      = eme_get_cached_categories();
 	$location_categories = null;
 	// and now all the other placeholders
-	$needle_offset = 0;
-	preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
-	foreach ( $placeholders[0] as $orig_result ) {
-		$result             = $orig_result[0];
-		$orig_result_needle = $orig_result[1] - $needle_offset;
-		$orig_result_length = strlen( $orig_result[0] );
-		$need_escape        = 0;
-		$need_urlencode     = 0;
-		$found              = 1;
+	if ($location && preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE )) {
+		$needle_offset = 0;
+		foreach ( $placeholders[0] as $orig_result ) {
+			$result             = $orig_result[0];
+			$orig_result_needle = $orig_result[1] - $needle_offset;
+			$orig_result_length = strlen( $orig_result[0] );
+			$need_escape        = 0;
+			$need_urlencode     = 0;
+			$found              = 1;
 
-		if ( strstr( $result, '#ESC' ) ) {
-			$result      = str_replace( '#ESC', '#', $result );
-			$need_escape = 1;
-		} elseif ( strstr( $result, '#URL' ) ) {
-			$result         = str_replace( '#URL', '#', $result );
-			$need_urlencode = 1;
-		}
+			if ( strstr( $result, '#ESC' ) ) {
+				$result      = str_replace( '#ESC', '#', $result );
+				$need_escape = 1;
+			} elseif ( strstr( $result, '#URL' ) ) {
+				$result         = str_replace( '#URL', '#', $result );
+				$need_urlencode = 1;
+			}
 
-		# support for #_LOCATION and #_LOCATION_
-                $result = preg_replace( '/#_LOCATION(_)?/', '#_', $result );
-		if ($result == '#_') $result = '#_NAME';
+			# support for #_LOCATION and #_LOCATION_
+			$result = preg_replace( '/#_LOCATION(_)?/', '#_', $result );
+			if ($result == '#_') $result = '#_NAME';
 
-		$replacement = '';
+			$replacement = '';
 
-		// echo "RESULT: $result <br>";
-		// matches alla fields placeholder
-		if ( preg_match( '/#_MAP/', $result ) ) {
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				if ( $target == 'html' && get_option( 'eme_map_is_active' ) ) {
+			// echo "RESULT: $result <br>";
+			// matches alla fields placeholder
+			if ( preg_match( '/#_MAP/', $result ) ) {
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					if ( $target == 'html' && get_option( 'eme_map_is_active' ) ) {
 						$replacement = eme_single_location_map( $location );
+					}
 				}
-			}
-		} elseif ( preg_match( '/#_PASTEVENTS(\{.+?\})?$/', $result, $matches ) ) {
-			if ( isset( $matches[1] ) ) {
-				// remove { and } (first and last char of second match)
-				$order = substr( $matches[1], 1, -1 );
-			} else {
-				$order = '';
-			}
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				$replacement = eme_events_in_location_list( $location, 'past', $order );
-			}
-			if ( $target == 'html' ) {
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/#_NEXTEVENTS(\{.+?\})?$/', $result, $matches ) ) {
-			if ( isset( $matches[1] ) ) {
-				// remove { and } (first and last char of second match)
-				$order = substr( $matches[1], 1, -1 );
-			} else {
-				$order = '';
-			}
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				$replacement = eme_events_in_location_list( $location, 'future', $order );
-			}
-			if ( $target == 'html' ) {
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/#_ALLEVENTS(\{.+?\})?$/', $result, $matches ) ) {
-			if ( isset( $matches[1] ) ) {
-				// remove { and } (first and last char of second match)
-				$order = substr( $matches[1], 1, -1 );
-			} else {
-				$order = '';
-			}
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				$replacement = eme_events_in_location_list( $location, 'all', $order );
-			}
-			if ( $target == 'html' ) {
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/#_(ADDRESS|TOWN|CITY|STATE|ZIP|COUNTRY|LATITUDE|LONGITUDE|POSTAL)/', $result ) ) {
-					$field = 'location_' . ltrim( strtolower( $result ), '#_' );
-			if ( $field == 'location_address' ) {
-				$field = 'location_address1';
-			}
-			if ( $field == 'location_town' ) {
-				$field = 'location_city';
-			}
-			if ( $field == 'location_postal' ) {
-				$field = 'location_zip';
-			}
-			if ( isset( $location[ $field ] ) ) {
-				$replacement = $location[ $field ];
-			}
-			$replacement = eme_trans_esc_html( $replacement, $lang );
-			if ( $target == 'html' ) {
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/#_NAME$/', $result ) ) {
-			$field = 'location_name';
-			if ( isset( $location[ $field ] ) ) {
-				$replacement = $location[ $field ];
-			}
-			$replacement = eme_trans_esc_html( $replacement, $lang );
-			if ( $target == 'html' ) {
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/#_ID/', $result ) ) {
-					$field = 'location_id';
-			if ( isset( $location[ $field ] ) ) {
-				$replacement = $location[ $field ];
-			}
-			$replacement = eme_trans_esc_html( $replacement, $lang );
-			if ( $target == 'html' ) {
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/#_IMAGETITLE$/', $result ) ) {
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$info        = eme_get_wp_image( $location['location_image_id'] );
-				$replacement = $info['title'];
+			} elseif ( preg_match( '/#_PASTEVENTS(\{.+?\})?$/', $result, $matches ) ) {
+				if ( isset( $matches[1] ) ) {
+					// remove { and } (first and last char of second match)
+					$order = substr( $matches[1], 1, -1 );
+				} else {
+					$order = '';
+				}
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					$replacement = eme_events_in_location_list( $location, 'past', $order );
+				}
 				if ( $target == 'html' ) {
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = apply_filters( 'eme_text', $replacement );
+				}
+			} elseif ( preg_match( '/#_NEXTEVENTS(\{.+?\})?$/', $result, $matches ) ) {
+				if ( isset( $matches[1] ) ) {
+					// remove { and } (first and last char of second match)
+					$order = substr( $matches[1], 1, -1 );
+				} else {
+					$order = '';
+				}
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					$replacement = eme_events_in_location_list( $location, 'future', $order );
+				}
+				if ( $target == 'html' ) {
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = apply_filters( 'eme_text', $replacement );
+				}
+			} elseif ( preg_match( '/#_ALLEVENTS(\{.+?\})?$/', $result, $matches ) ) {
+				if ( isset( $matches[1] ) ) {
+					// remove { and } (first and last char of second match)
+					$order = substr( $matches[1], 1, -1 );
+				} else {
+					$order = '';
+				}
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					$replacement = eme_events_in_location_list( $location, 'all', $order );
+				}
+				if ( $target == 'html' ) {
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = apply_filters( 'eme_text', $replacement );
+				}
+			} elseif ( preg_match( '/#_(ADDRESS|TOWN|CITY|STATE|ZIP|COUNTRY|LATITUDE|LONGITUDE|POSTAL)/', $result ) ) {
+				$field = 'location_' . ltrim( strtolower( $result ), '#_' );
+				if ( $field == 'location_address' ) {
+					$field = 'location_address1';
+				}
+				if ( $field == 'location_town' ) {
+					$field = 'location_city';
+				}
+				if ( $field == 'location_postal' ) {
+					$field = 'location_zip';
+				}
+				if ( isset( $location[ $field ] ) ) {
+					$replacement = $location[ $field ];
+				}
+				$replacement = eme_trans_esc_html( $replacement, $lang );
+				if ( $target == 'html' ) {
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = apply_filters( 'eme_text', $replacement );
+				}
+			} elseif ( preg_match( '/#_NAME$/', $result ) ) {
+				$field = 'location_name';
+				if ( isset( $location[ $field ] ) ) {
+					$replacement = $location[ $field ];
+				}
+				$replacement = eme_trans_esc_html( $replacement, $lang );
+				if ( $target == 'html' ) {
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = apply_filters( 'eme_text', $replacement );
+				}
+			} elseif ( preg_match( '/#_ID/', $result ) ) {
+				$field = 'location_id';
+				if ( isset( $location[ $field ] ) ) {
+					$replacement = $location[ $field ];
+				}
+				$replacement = eme_trans_esc_html( $replacement, $lang );
+				if ( $target == 'html' ) {
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = apply_filters( 'eme_text', $replacement );
+				}
+			} elseif ( preg_match( '/#_IMAGETITLE$/', $result ) ) {
+				if ( ! empty( $location['location_image_id'] ) ) {
+					$info        = eme_get_wp_image( $location['location_image_id'] );
+					$replacement = $info['title'];
+					if ( $target == 'html' ) {
 						$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
 				}
-			}
-		} elseif ( preg_match( '/#_IMAGEALT$/', $result ) ) {
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$info        = eme_get_wp_image( $location['location_image_id'] );
-				$replacement = $info['alt'];
-				if ( $target == 'html' ) {
+			} elseif ( preg_match( '/#_IMAGEALT$/', $result ) ) {
+				if ( ! empty( $location['location_image_id'] ) ) {
+					$info        = eme_get_wp_image( $location['location_image_id'] );
+					$replacement = $info['alt'];
+					if ( $target == 'html' ) {
 						$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
 				}
-			}
-		} elseif ( preg_match( '/#_IMAGECAPTION$/', $result ) ) {
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$info        = eme_get_wp_image( $location['location_image_id'] );
-				$replacement = $info['caption'];
-				if ( $target == 'html' ) {
+			} elseif ( preg_match( '/#_IMAGECAPTION$/', $result ) ) {
+				if ( ! empty( $location['location_image_id'] ) ) {
+					$info        = eme_get_wp_image( $location['location_image_id'] );
+					$replacement = $info['caption'];
+					if ( $target == 'html' ) {
 						$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
 				}
-			}
-		} elseif ( preg_match( '/#_IMAGEDESCRIPTION$/', $result ) ) {
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$info        = eme_get_wp_image( $location['location_image_id'] );
-				$replacement = $info['description'];
-				if ( $target == 'html' ) {
+			} elseif ( preg_match( '/#_IMAGEDESCRIPTION$/', $result ) ) {
+				if ( ! empty( $location['location_image_id'] ) ) {
+					$info        = eme_get_wp_image( $location['location_image_id'] );
+					$replacement = $info['description'];
+					if ( $target == 'html' ) {
 						$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
 				}
-			}
-		} elseif ( preg_match( '/#_IMAGE$/', $result ) ) {
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $location['location_image_id'], 'full', 0, [ 'class' => 'eme_location_image' ] );
-			} elseif ( ! empty( $location['location_image_url'] ) ) {
-				$url = $location['location_image_url'];
-				if ( $target == 'html' ) {
-					$url = esc_url( $url );
-				}
-				$replacement = "<img src='$url' alt='" . eme_trans_esc_html( $location['location_name'], $lang ) . "'>";
-			}
-			if ( ! empty( $replacement ) ) {
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_IMAGEURL$/', $result ) ) {
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image_url( $location['location_image_id'], 'full' );
-			} elseif ( ! empty( $location['location_image_url'] ) ) {
-				$replacement = $location['location_image_url'];
-			}
-			if ( $target == 'html' ) {
-				$replacement = esc_url( $replacement );
-			}
-		} elseif ( preg_match( '/#_IMAGETHUMB(\{.+?\})?$/', $result, $matches ) ) {
-                        if ( isset( $matches[1] ) ) {
-                                // remove { and } (first and last char of second match)
-                                $thumb_size = substr( $matches[1], 1, -1 );
-			} else {
-				$thumb_size = get_option( 'eme_thumbnail_size' );
-			}
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image( $location['location_image_id'], $thumb_size, 0, [ 'class' => 'eme_location_image' ] );
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_IMAGETHUMBURL(\{.+?\})?$/', $result, $matches ) ) {
-                        if ( isset( $matches[1] ) ) {
-                                // remove { and } (first and last char of second match)
-                                $thumb_size = substr( $matches[1], 1, -1 );
-			} else {
-				$thumb_size = get_option( 'eme_thumbnail_size' );
-			}
-			if ( ! empty( $location['location_image_id'] ) ) {
-				$replacement = wp_get_attachment_image_url( $location['location_image_id'], $thumb_size );
-				if ( $target == 'html' ) {
-					$replacement = esc_url( $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_PAGEURL/', $result ) ) {
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				$replacement = eme_location_url( $location, $lang );
-			}
-			if ( $target == 'html' ) {
-				if ( $target == 'html' ) {
-					$replacement = esc_url( $replacement );
-				}
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/#_DIRECTIONS/', $result ) ) {
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 && $target == 'html' ) {
-				$replacement = eme_add_directions_form( $location );
-				$replacement = apply_filters( 'eme_general', $replacement );
-			}
-			# until I find something easy not-google related, this is returning the google form
-
-		} elseif ( preg_match( '/#_DBFIELD\{(.+?)\}/', $result, $matches ) ) {
-			$tmp_attkey = $matches[1];
-			if ( isset( $location[ $tmp_attkey ] ) && ! is_array( $location[ $tmp_attkey ] ) ) {
-				$replacement = $location[ $tmp_attkey ];
-				if ( $target == 'html' ) {
-					$replacement = eme_trans_esc_html( $replacement, $lang );
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = eme_translate( $replacement, $lang );
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = eme_translate( $replacement, $lang );
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_MYLOCATIONATT\{(.+?)\}/', $result, $matches ) ) {
-					$tmp_attkey = $matches[1];
-			if ( isset( $location['location_attributes'][ $tmp_attkey ] ) ) {
-				$replacement = $location['location_attributes'][ $tmp_attkey ];
-				if ( $target == 'html' ) {
-					$replacement = eme_trans_esc_html( $replacement, $lang );
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = eme_translate( $replacement, $lang );
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = eme_translate( $replacement, $lang );
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_CATEGORIES$/', $result ) && get_option( 'eme_categories_enabled' ) ) {
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				$sep = ', ';
-				if ( has_filter( 'eme_categories_sep_filter' ) ) {
-					$sep = apply_filters( 'eme_categories_sep_filter', $sep );
-				}
-				if ( is_null( $location_categories ) ) {
-						$location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
-				}
-				$cat_names = array_column( $location_categories, 'category_name' );
-				if ( $target == 'html' ) {
-					$replacement = eme_trans_esc_html( join( $sep, $cat_names ), $lang );
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = eme_translate( join( $sep, $cat_names ), $lang );
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = eme_translate( join( $sep, $cat_names ), $lang );
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_CATEGORIES_CSS/', $result ) && get_option( 'eme_categories_enabled' ) ) {
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				if ( is_null( $location_categories ) ) {
-						$location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
-				}
-				$cat_names = array_column( $location_categories, 'category_name' );
-				if ( $target == 'html' ) {
-					$replacement = eme_trans_esc_html( join( ' ', $cat_names ), $lang );
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = eme_translate( join( ' ', $cat_names ), $lang );
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = eme_translate( join( ' ', $cat_names ), $lang );
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
-			}
-		} elseif ( preg_match( '/#_CATEGORYDESCRIPTIONS/', $result ) && get_option( 'eme_categories_enabled' ) ) {
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				$sep = ', ';
-				if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
-					$sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
-				}
-				if ( is_null( $location_categories ) ) {
-						$location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
-				}
-				$cat_descs = array_column( $location_categories, 'description' );
-				if ( $target == 'html' ) {
-					$replacement = eme_trans_esc_html( join( $sep, $cat_descs ), $lang );
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = eme_translate( join( $sep, $cat_descs ), $lang );
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = eme_translate( join( $sep, $cat_descs ), $lang );
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
-			}
-		} elseif ( preg_match( '/^#_CATEGORIES\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
-			$include_cats         = $matches[1];
-			$exclude_cats         = $matches[2];
-			$extra_conditions_arr = [];
-			$order_by             = '';
-			if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
-				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
-				$order_by = "FIELD(category_id,$include_cats)";
-			}
-			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
-				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
-			}
-			$extra_conditions = join( ' AND ', $extra_conditions_arr );
-			$categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
-			$cat_names        = [];
-			foreach ( $categories as $cat_name ) {
-				if ( $target == 'html' ) {
-					array_push( $cat_names, eme_trans_esc_html( $cat_name, $lang ) );
-				} else {
-					array_push( $cat_names, eme_translate( $cat_name, $lang ) );
-				}
-			}
-			$sep = ', ';
-			if ( has_filter( 'eme_categories_sep_filter' ) ) {
-				$sep = apply_filters( 'eme_categories_sep_filter', $sep );
-			}
-			$replacement = join( $sep, $cat_names );
-			if ( $target == 'html' ) {
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/^#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
-			$include_cats         = $matches[1];
-			$exclude_cats         = $matches[2];
-			$extra_conditions_arr = [];
-			$order_by             = '';
-			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
-				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
-				$order_by = "FIELD(category_id,$include_cats)";
-			}
-			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
-				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
-			}
-			$extra_conditions = join( ' AND ', $extra_conditions_arr );
-			$categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
-			if ( $target == 'html' ) {
-				$replacement = eme_trans_esc_html( join( ' ', $categories ), $lang );
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = eme_translate( join( ' ', $categories ), $lang );
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = eme_translate( join( ' ', $categories ), $lang );
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
-			$include_cats         = $matches[1];
-			$exclude_cats         = $matches[2];
-			$extra_conditions_arr = [];
-			$order_by             = '';
-			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
-				array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
-				$order_by = "FIELD(category_id,$include_cats)";
-			}
-			if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
-				array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
-			}
-			$extra_conditions = join( ' AND ', $extra_conditions_arr );
-			$categories       = eme_get_location_category_descriptions( $location['location_id'], $extra_conditions, $order_by );
-			$sep              = ', ';
-			if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
-				$sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
-			}
-			$replacement = eme_translate( join( $sep, $categories ), $lang );
-			if ( $target == 'html' ) {
-				$replacement = apply_filters( 'eme_general', $replacement );
-			} elseif ( $target == 'rss' ) {
-				$replacement = apply_filters( 'the_content_rss', $replacement );
-			} else {
-				$replacement = apply_filters( 'eme_text', $replacement );
-			}
-		} elseif ( preg_match( '/#_EDITLOCATIONLINK/', $result ) ) {
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				if ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
-				( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) {
-					$url = admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $location['location_id'] );
+			} elseif ( preg_match( '/#_IMAGE$/', $result ) ) {
+				if ( ! empty( $location['location_image_id'] ) ) {
+					$replacement = wp_get_attachment_image( $location['location_image_id'], 'full', 0, [ 'class' => 'eme_location_image' ] );
+				} elseif ( ! empty( $location['location_image_url'] ) ) {
+					$url = $location['location_image_url'];
 					if ( $target == 'html' ) {
 						$url = esc_url( $url );
 					}
-					$replacement = "<a href='$url'>" . __( 'Edit', 'events-made-easy' ) . '</a>';
+					$replacement = "<img src='$url' alt='" . eme_trans_esc_html( $location['location_name'], $lang ) . "'>";
 				}
-			}
-		} elseif ( preg_match( '/#_EDITLOCATIONURL/', $result ) ) {
-			if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
-				if ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
-				( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) {
-					$replacement = admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $location['location_id'] );
+				if ( ! empty( $replacement ) ) {
+					if ( $target == 'html' ) {
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				}
+			} elseif ( preg_match( '/#_IMAGEURL$/', $result ) ) {
+				if ( ! empty( $location['location_image_id'] ) ) {
+					$replacement = wp_get_attachment_image_url( $location['location_image_id'], 'full' );
+				} elseif ( ! empty( $location['location_image_url'] ) ) {
+					$replacement = $location['location_image_url'];
+				}
+				if ( $target == 'html' ) {
+					$replacement = esc_url( $replacement );
+				}
+			} elseif ( preg_match( '/#_IMAGETHUMB(\{.+?\})?$/', $result, $matches ) ) {
+				if ( isset( $matches[1] ) ) {
+					// remove { and } (first and last char of second match)
+					$thumb_size = substr( $matches[1], 1, -1 );
+				} else {
+					$thumb_size = get_option( 'eme_thumbnail_size' );
+				}
+				if ( ! empty( $location['location_image_id'] ) ) {
+					$replacement = wp_get_attachment_image( $location['location_image_id'], $thumb_size, 0, [ 'class' => 'eme_location_image' ] );
+					if ( $target == 'html' ) {
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				}
+			} elseif ( preg_match( '/#_IMAGETHUMBURL(\{.+?\})?$/', $result, $matches ) ) {
+				if ( isset( $matches[1] ) ) {
+					// remove { and } (first and last char of second match)
+					$thumb_size = substr( $matches[1], 1, -1 );
+				} else {
+					$thumb_size = get_option( 'eme_thumbnail_size' );
+				}
+				if ( ! empty( $location['location_image_id'] ) ) {
+					$replacement = wp_get_attachment_image_url( $location['location_image_id'], $thumb_size );
 					if ( $target == 'html' ) {
 						$replacement = esc_url( $replacement );
 					}
 				}
-			}
-		} elseif ( $location && preg_match( '/#_EXTERNAL_URL/', $result ) ) {
-			if ( ! empty( $location['location_url'] ) ) {
-				$replacement = $location['location_url'];
+			} elseif ( preg_match( '/#_PAGEURL/', $result ) ) {
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					$replacement = eme_location_url( $location, $lang );
+				}
+				if ( $target == 'html' ) {
+					if ( $target == 'html' ) {
+						$replacement = esc_url( $replacement );
+					}
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = apply_filters( 'eme_text', $replacement );
+				}
+			} elseif ( preg_match( '/#_DIRECTIONS/', $result ) ) {
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 && $target == 'html' ) {
+					$replacement = eme_add_directions_form( $location );
+					$replacement = apply_filters( 'eme_general', $replacement );
+				}
+				# until I find something easy not-google related, this is returning the google form
+
+			} elseif ( preg_match( '/#_DBFIELD\{(.+?)\}/', $result, $matches ) ) {
+				$tmp_attkey = $matches[1];
+				if ( isset( $location[ $tmp_attkey ] ) && ! is_array( $location[ $tmp_attkey ] ) ) {
+					$replacement = $location[ $tmp_attkey ];
+					if ( $target == 'html' ) {
+						$replacement = eme_trans_esc_html( $replacement, $lang );
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = eme_translate( $replacement, $lang );
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = eme_translate( $replacement, $lang );
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				}
+			} elseif ( preg_match( '/#_MYLOCATIONATT\{(.+?)\}/', $result, $matches ) ) {
+				$tmp_attkey = $matches[1];
+				if ( isset( $location['location_attributes'][ $tmp_attkey ] ) ) {
+					$replacement = $location['location_attributes'][ $tmp_attkey ];
+					if ( $target == 'html' ) {
+						$replacement = eme_trans_esc_html( $replacement, $lang );
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = eme_translate( $replacement, $lang );
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = eme_translate( $replacement, $lang );
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				}
+			} elseif ( preg_match( '/#_CATEGORIES$/', $result ) && get_option( 'eme_categories_enabled' ) ) {
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					$sep = ', ';
+					if ( has_filter( 'eme_categories_sep_filter' ) ) {
+						$sep = apply_filters( 'eme_categories_sep_filter', $sep );
+					}
+					if ( is_null( $location_categories ) ) {
+						$location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
+					}
+					$cat_names = array_column( $location_categories, 'category_name' );
+					if ( $target == 'html' ) {
+						$replacement = eme_trans_esc_html( join( $sep, $cat_names ), $lang );
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = eme_translate( join( $sep, $cat_names ), $lang );
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = eme_translate( join( $sep, $cat_names ), $lang );
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				}
+			} elseif ( preg_match( '/#_CATEGORIES_CSS/', $result ) && get_option( 'eme_categories_enabled' ) ) {
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					if ( is_null( $location_categories ) ) {
+						$location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
+					}
+					$cat_names = array_column( $location_categories, 'category_name' );
+					if ( $target == 'html' ) {
+						$replacement = eme_trans_esc_html( join( ' ', $cat_names ), $lang );
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = eme_translate( join( ' ', $cat_names ), $lang );
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = eme_translate( join( ' ', $cat_names ), $lang );
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				}
+			} elseif ( preg_match( '/#_CATEGORYDESCRIPTIONS/', $result ) && get_option( 'eme_categories_enabled' ) ) {
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					$sep = ', ';
+					if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
+						$sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
+					}
+					if ( is_null( $location_categories ) ) {
+						$location_categories = eme_get_categories_filtered( $location['location_category_ids'], $all_categories );
+					}
+					$cat_descs = array_column( $location_categories, 'description' );
+					if ( $target == 'html' ) {
+						$replacement = eme_trans_esc_html( join( $sep, $cat_descs ), $lang );
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = eme_translate( join( $sep, $cat_descs ), $lang );
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = eme_translate( join( $sep, $cat_descs ), $lang );
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				}
+			} elseif ( preg_match( '/^#_CATEGORIES\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
+				$include_cats         = $matches[1];
+				$exclude_cats         = $matches[2];
+				$extra_conditions_arr = [];
+				$order_by             = '';
+				if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
+					array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
+					$order_by = "FIELD(category_id,$include_cats)";
+				}
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
+					array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
+				}
+				$extra_conditions = join( ' AND ', $extra_conditions_arr );
+				$categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
+				$cat_names        = [];
+				foreach ( $categories as $cat_name ) {
+					if ( $target == 'html' ) {
+						array_push( $cat_names, eme_trans_esc_html( $cat_name, $lang ) );
+					} else {
+						array_push( $cat_names, eme_translate( $cat_name, $lang ) );
+					}
+				}
+				$sep = ', ';
+				if ( has_filter( 'eme_categories_sep_filter' ) ) {
+					$sep = apply_filters( 'eme_categories_sep_filter', $sep );
+				}
+				$replacement = join( $sep, $cat_names );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -2421,11 +2341,49 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				} else {
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
-			}
-		} elseif ( $location && preg_match( '/#_EXTERNAL_REF/', $result ) ) {
-			if ( ! empty( $location['location_external_ref'] ) ) {
-				// remove the 'fb_' prefix
-				$replacement = preg_replace( '/fb_/', '', $location['location_external_ref'] );
+			} elseif ( preg_match( '/^#_CATEGORIES_CSS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
+				$include_cats         = $matches[1];
+				$exclude_cats         = $matches[2];
+				$extra_conditions_arr = [];
+				$order_by             = '';
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
+					array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
+					$order_by = "FIELD(category_id,$include_cats)";
+				}
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
+					array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
+				}
+				$extra_conditions = join( ' AND ', $extra_conditions_arr );
+				$categories       = eme_get_location_category_names( $location['location_id'], $extra_conditions, $order_by );
+				if ( $target == 'html' ) {
+					$replacement = eme_trans_esc_html( join( ' ', $categories ), $lang );
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = eme_translate( join( ' ', $categories ), $lang );
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = eme_translate( join( ' ', $categories ), $lang );
+					$replacement = apply_filters( 'eme_text', $replacement );
+				}
+			} elseif ( preg_match( '/#_CATEGORYDESCRIPTIONS\{(.*?)\}\{(.*?)\}/', $result, $matches ) && get_option( 'eme_categories_enabled' ) ) {
+				$include_cats         = $matches[1];
+				$exclude_cats         = $matches[2];
+				$extra_conditions_arr = [];
+				$order_by             = '';
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
+					array_push( $extra_conditions_arr, "category_id IN ($include_cats)" );
+					$order_by = "FIELD(category_id,$include_cats)";
+				}
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
+					array_push( $extra_conditions_arr, "category_id NOT IN ($exclude_cats)" );
+				}
+				$extra_conditions = join( ' AND ', $extra_conditions_arr );
+				$categories       = eme_get_location_category_descriptions( $location['location_id'], $extra_conditions, $order_by );
+				$sep              = ', ';
+				if ( has_filter( 'eme_categorydescriptions_sep_filter' ) ) {
+					$sep = apply_filters( 'eme_categorydescriptions_sep_filter', $sep );
+				}
+				$replacement = eme_translate( join( $sep, $categories ), $lang );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -2433,98 +2391,142 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				} else {
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
-			}
-		} elseif ( preg_match( '/#_FIELDNAME\{(.+?)\}/', $result, $matches ) ) {
-			$field_key = $matches[1];
-			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) ) {
-				if ( $target == 'html' ) {
-					$replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} else {
-					$replacement = eme_translate( $formfield['field_name'], $lang );
-					$replacement = apply_filters( 'eme_text', $replacement );
+			} elseif ( preg_match( '/#_EDITLOCATIONLINK/', $result ) ) {
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					if ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
+						( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) {
+						$url = admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $location['location_id'] );
+						if ( $target == 'html' ) {
+							$url = esc_url( $url );
+						}
+						$replacement = "<a href='$url'>" . __( 'Edit', 'events-made-easy' ) . '</a>';
+					}
 				}
-			} else {
-				$found = 0;
-			}
-		} elseif ( preg_match( '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
-			$field_key = $matches[2];
-			if ( isset( $matches[3] ) ) {
-				// remove { and } (first and last char of second match)
-				$sep = substr( $matches[3], 1, -1 );
-			} else {
-				$sep = '||';
-			}
-			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
-				$field_id      = $formfield['field_id'];
-				$field_replace = '';
-				foreach ( $answers as $answer ) {
-					if ( $answer['field_id'] == $field_id ) {
-						if ( $matches[1] == 'VALUE' ) {
-							$field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
-						} else {
-							$field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+			} elseif ( preg_match( '/#_EDITLOCATIONURL/', $result ) ) {
+				if ( isset( $location['location_id'] ) && $location['location_id'] > 0 ) {
+					if ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
+						( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) {
+						$replacement = admin_url( 'admin.php?page=eme-locations&amp;eme_admin_action=edit_location&amp;location_id=' . $location['location_id'] );
+						if ( $target == 'html' ) {
+							$replacement = esc_url( $replacement );
 						}
 					}
 				}
-				foreach ( $files as $file ) {
-					if ( $file['field_id'] == $field_id ) {
-						if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
-							// for file, we can show the url. For multifile this would not make any sense
-							$field_replace = $file['url'] ;
-						} else {
-							if ( $target == 'html' ) {
-								$field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';
+			} elseif ( $location && preg_match( '/#_EXTERNAL_URL/', $result ) ) {
+				if ( ! empty( $location['location_url'] ) ) {
+					$replacement = $location['location_url'];
+					if ( $target == 'html' ) {
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				}
+			} elseif ( $location && preg_match( '/#_EXTERNAL_REF/', $result ) ) {
+				if ( ! empty( $location['location_external_ref'] ) ) {
+					// remove the 'fb_' prefix
+					$replacement = preg_replace( '/fb_/', '', $location['location_external_ref'] );
+					if ( $target == 'html' ) {
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				}
+			} elseif ( preg_match( '/#_FIELDNAME\{(.+?)\}/', $result, $matches ) ) {
+				$field_key = $matches[1];
+				$formfield = eme_get_formfield( $field_key );
+				if ( ! empty( $formfield ) ) {
+					if ( $target == 'html' ) {
+						$replacement = eme_trans_esc_html( $formfield['field_name'], $lang );
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} else {
+						$replacement = eme_translate( $formfield['field_name'], $lang );
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
+				} else {
+					$found = 0;
+				}
+			} elseif ( preg_match( '/#_FIELD(VALUE)?\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
+				$field_key = $matches[2];
+				if ( isset( $matches[3] ) ) {
+					// remove { and } (first and last char of second match)
+					$sep = substr( $matches[3], 1, -1 );
+				} else {
+					$sep = '||';
+				}
+				$formfield = eme_get_formfield( $field_key );
+				if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {
+					$field_id      = $formfield['field_id'];
+					$field_replace = '';
+					foreach ( $answers as $answer ) {
+						if ( $answer['field_id'] == $field_id ) {
+							if ( $matches[1] == 'VALUE' ) {
+								$field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
 							} else {
-								$field_replace .= $file['name'] . ' [' . $file['url'] . ']' . "\n";
+								$field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
 							}
 						}
 					}
-				}
+					foreach ( $files as $file ) {
+						if ( $file['field_id'] == $field_id ) {
+							if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
+								// for file, we can show the url. For multifile this would not make any sense
+								$field_replace = $file['url'] ;
+							} else {
+								if ( $target == 'html' ) {
+									$field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';
+								} else {
+									$field_replace .= $file['name'] . ' [' . $file['url'] . ']' . "\n";
+								}
+							}
+						}
+					}
 
-				$replacement = eme_translate( $field_replace, $lang );
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
+					$replacement = eme_translate( $field_replace, $lang );
+					if ( $target == 'html' ) {
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
 				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+					// no location custom field? Then leave it alone
+					$found = 0;
+				}
+			} elseif ( preg_match( '/#_IS_SINGLE_LOC/', $result ) ) {
+				if ( eme_is_single_location_page() ) {
+					$replacement = 1;
+				} else {
+					$replacement = 0;
+				}
+			} elseif ( preg_match( '/#_IS_LOGGED_IN/', $result ) ) {
+				if ( is_user_logged_in() ) {
+					$replacement = 1;
+				} else {
+					$replacement = 0;
+				}
+			} elseif ( preg_match( '/#_IS_ADMIN_PAGE/', $result ) ) {
+				if ( eme_is_admin_request() ) {
+					$replacement = 1;
+				} else {
+					$replacement = 0;
 				}
 			} else {
-				// no location custom field? Then leave it alone
 				$found = 0;
 			}
-		} elseif ( preg_match( '/#_IS_SINGLE_LOC/', $result ) ) {
-			if ( eme_is_single_location_page() ) {
-				$replacement = 1;
-			} else {
-				$replacement = 0;
-			}
-		} elseif ( preg_match( '/#_IS_LOGGED_IN/', $result ) ) {
-			if ( is_user_logged_in() ) {
-				$replacement = 1;
-			} else {
-				$replacement = 0;
-			}
-		} elseif ( preg_match( '/#_IS_ADMIN_PAGE/', $result ) ) {
-			if ( eme_is_admin_request() ) {
-				$replacement = 1;
-			} else {
-				$replacement = 0;
-			}
-		} else {
-			$found = 0;
-		}
 
-		if ( $found ) {
-			if ( $need_escape ) {
-				$replacement = eme_sanitize_request( eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) ) );
+			if ( $found ) {
+				if ( $need_escape ) {
+					$replacement = eme_sanitize_request( eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) ) );
+				}
+				if ( $need_urlencode ) {
+					$replacement = rawurlencode( $replacement );
+				}
+				$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
+				$needle_offset += $orig_result_length - strlen( $replacement );
 			}
-			if ( $need_urlencode ) {
-				$replacement = rawurlencode( $replacement );
-			}
-			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
 	}
 
@@ -2565,7 +2567,7 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
 		$target = 'html';
 	}
 
-	if ( preg_match_all( '/#(ESC)?_(DESCRIPTION|LOCATIONDETAILS|LOCATIONEXCERPT|LOCATIONNOEXCERPT)/', $format, $placeholders, PREG_OFFSET_CAPTURE ) ) {
+	if ( $location && preg_match_all( '/#(ESC)?_(DESCRIPTION|LOCATIONDETAILS|LOCATIONEXCERPT|LOCATIONNOEXCERPT)/', $format, $placeholders, PREG_OFFSET_CAPTURE ) ) {
 		$needle_offset = 0;
 		foreach ( $placeholders[0] as $orig_result ) {
 			$result             = $orig_result[0];

@@ -1563,53 +1563,11 @@ function eme_convert_localized_time( $time_format, $mytime ) {
 	return $date_obj->format( 'H:i:00' );
 }
 
-// the eme_localized_db_* functions are no longer used, but let's keep them as a reference
-function eme_localized_db_datetime( $mydate ) {
-	return eme_localized_db_date( $mydate ) . ' ' . eme_localized_db_time( $mydate );
-}
-function eme_localized_db_date( $mydate, $date_format = '' ) {
-	$eme_db_time_diff = eme_get_db_time_diff();
-
-	if ( empty( $date_format ) ) {
-		$date_format = EME_WP_DATE_FORMAT;
-	}
-	$eme_date_obj = new ExpressiveDate( $mydate, EME_TIMEZONE );
-	// account for the difference stored in the db (we claim that $mydate is in timezone eme_timezone, but the db might be in a different tz)
-	$eme_date_obj->addSeconds( $eme_db_time_diff );
-	// rest is taken from eme_localize_date
-	if ( function_exists( 'wp_date' ) ) {
-		$eme_tz_obj = new DateTimeZone( EME_TIMEZONE );
-		$result     = wp_date( $date_format, $eme_date_obj->getTimestamp(), $eme_tz_obj );
-	} else {
-		$wp_date = new ExpressiveDate( $eme_date_obj->getDateTime(), date_default_timezone_get() );
-		$tz_diff = $eme_date_obj->getOffset() - $wp_date->getOffset();
-		$result  = date_i18n( $date_format, $eme_date_obj->getTimestamp() + $tz_diff );
-	}
-	return $result;
-}
-
-function eme_localized_db_time( $mydate ) {
-	$result = eme_localized_db_date( $mydate, EME_WP_TIME_FORMAT );
-	if ( get_option( 'eme_time_remove_leading_zeros' ) ) {
-		$result = str_replace( ':00', '', $result );
-		$result = str_replace( ':0', ':', $result );
-	}
-	return $result;
-}
-
 // the following is the same as eme_localized_date, but for rfc822 format
 function eme_rfc822_date( $mydate, $tz ) {
 	//$result = date('r', strtotime($mydate));
 	$eme_date_obj = new ExpressiveDate( $mydate, $tz );
 	return $eme_date_obj->format( 'r' );
-}
-
-function eme_get_db_time_diff() {
-	global $wpdb;
-	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
-	$db_diff      = $wpdb->get_var( "select time_to_sec(time_format(timediff(now(),UTC_TIMESTAMP),'%H:%i'))" );
-	$tz_diff      = $eme_date_obj->getOffset() - $db_diff;
-	return $tz_diff;
 }
 
 function eme_localized_currencysymbol( $cur, $target = 'html' ) {

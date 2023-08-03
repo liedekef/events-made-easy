@@ -1520,7 +1520,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 		}
 		if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
 			$used_capacity = eme_get_event_location_used_capacity( $event );
-			$boooked_cap = 0;
+			$booked_cap = 0;
 			foreach ($bookedSeats_for_capacity_check as $t2_info) {
 				if ($event['location_id'] != $t2_info['location_id']) {
 					continue;

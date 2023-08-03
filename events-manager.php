@@ -182,8 +182,9 @@ register_deactivation_hook( __FILE__, 'eme_uninstall' );
 // when a new blog is added for network installation and the plugin is network activated
 add_action( 'wpmu_new_blog', 'eme_new_blog', 10, 6 );
 
-// filters for general events field (corresponding to those of "the_title")
+// filters for general events field
 add_filter( 'eme_general', 'wptexturize' );
+//add_filter( 'eme_general', 'convert_smilies' );
 add_filter( 'eme_general', 'convert_chars' );
 add_filter( 'eme_general', 'trim' );
 

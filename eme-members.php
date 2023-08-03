@@ -852,8 +852,9 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 			$membership         = eme_get_membership( $membership_id );
 			$member['end_date'] = eme_get_next_end_date( $membership, $member['start_date'] );
 		} elseif ( eme_is_date( $_POST['end_date'] ) ) {
-				$member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
+			$member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
 		} else {
+			$membership         = eme_get_membership( $membership_id );
 			$member['end_date'] = eme_get_next_end_date( $membership, $member['start_date'] );
 		}
 		if ( isset( $_POST['properties'] ) ) {

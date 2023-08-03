@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.3
-Stable tag: 2.4.4
+Stable tag: 2.4.5
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,10 +98,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.5 (2023//) =
-* Fix 2 php warnings
+= 2.4.5 (2023/08/03) =
+* Fix 3 php warnings
 * Mollie update to 2.60
-* Don't show all event custom field answers for all bookings
+* Don't show all event custom field answers for every booking in the list of bookings
 
 = 2.4.4 (2023/07/30) =
 * Fix showing a single event from the calendar

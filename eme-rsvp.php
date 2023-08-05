@@ -333,7 +333,7 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 		$events = eme_get_event_arr( $ids );
 	}
 	//if ($ids && $template_id_header && $template_id && $template_id_footer)
-	if ( $ids ) {
+	if ( ! empty( $events ) ) {
 		return eme_add_multibooking_form( $events, $template_id_header, $template_id, 0, $template_id_footer, $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, 1 );
 	}
 }
@@ -377,7 +377,7 @@ function eme_add_multibooking_form_shortcode( $atts ) {
 		$events = eme_get_event_arr( $ids );
 	}
 	//if ($ids && $template_id_header && $template_id && $template_id_footer)
-	if ( ! empty( $ids ) ) {
+	if ( ! empty( $events ) ) {
 		return eme_add_multibooking_form( $events, $template_id_header, $template_id, $multiprice_template_id, $template_id_footer, $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, $simple );
 	}
 }

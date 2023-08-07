@@ -41,6 +41,9 @@ function eme_init_location_props( $props = [] ) {
 	if ( ! isset( $props['max_capacity'] ) ) {
 		$props['max_capacity'] = 0;
 	}
+	if ( ! isset( $props['override_loc'] ) ) {
+		$props['override_loc'] = 0;
+	}
 	return $props;
 }
 
@@ -141,7 +144,7 @@ function eme_locations_page() {
 			$location_properties = [];
 			$location_properties = eme_init_location_props( $location_properties );
 			// now for the select boxes, we need to set to 0 if not in the _POST
-			$select_location_post_vars = [ 'online_only' ];
+			$select_location_post_vars = [ 'online_only', 'override_loc' ];
 			foreach ( $select_location_post_vars as $post_var ) {
 				if ( ! isset( $_POST[ 'eme_loc_prop_' . $post_var ] ) ) {
 					$location_properties[ $post_var ] = 0;
@@ -556,6 +559,7 @@ function eme_meta_box_div_location_name_for_event( $location ) {
 
 function eme_meta_box_div_location_details( $location ) {
 	$map_is_active = get_option( 'eme_map_is_active' );
+	$eme_loc_prop_override_loc_checked = ( $location['location_properties']['override_loc'] ) ? "checked='checked'" : '';
 	?>
 		<div id="loc_address" class="postbox" style="overflow: hidden;">
 			<h3>
@@ -590,6 +594,10 @@ function eme_meta_box_div_location_details( $location ) {
 			<td colspan='2'>
 			<?php esc_html_e( "If you're are really serious about the correct location, specify the latitude and longitude coordinates.", 'events-made-easy' ); ?>
 			</td>
+			</tr>
+			<tr>
+        		<td><label for="eme_loc_prop_override_loc"><?php esc_html_e( 'Override location coordinates', 'events-made-easy' ); ?></label></td>
+		        <td><input id="eme_loc_prop_override_loc" name='eme_loc_prop_override_loc' value='1' type='checkbox' <?php echo $eme_loc_prop_override_loc_checked; ?>>
 			</tr>
 			<tr>
 			<td><label for="location_latitude"><?php esc_html_e( 'Latitude', 'events-made-easy' ); ?></label></td>

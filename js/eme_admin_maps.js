@@ -2,7 +2,7 @@
 var map;
 // create the tile layer with correct attribution
 var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+var osmAttrib='Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
 var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 
          function eme_displayAddress(ignore_coord){
@@ -16,7 +16,7 @@ var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
                eventZip = jQuery('input#location_zip').val() || '';
                eventCountry = jQuery('input#location_country').val() || '';
                map_icon = jQuery('input#eme_loc_prop_map_icon').val() || '';
-               if (ignore_coord) {
+	       if (ignore_coord && !jQuery('input#eme_loc_prop_override_loc').is(':checked')) {
                   eventLat = 0;
                   eventLong = 0;
                } else {
@@ -201,6 +201,15 @@ var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 		       eme_displayAddress(0);
 	       }
 	    }
+            function updateOverrideLoc() {
+	       if ($('input#eme_loc_prop_override_loc').is(':checked')) {
+		       $('input#location_latitude').attr('readonly', false);
+		       $('input#location_longitude').attr('readonly', false);
+	       } else {
+		       $('input#location_latitude').attr('readonly', true);
+		       $('input#location_longitude').attr('readonly', true);
+	       }
+	    }
             $('#eme-admin-location-map').hide();
             $('#eme-admin-map-not-found').show();
             eme_displayAddress(0);
@@ -236,4 +245,6 @@ var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
             });
             $('input#eme_loc_prop_online_only').on("change",updateOnlineOnly);
             updateOnlineOnly();
+            $('input#eme_loc_prop_override_loc').on("change",updateOverrideLoc);
+            updateOverrideLoc();
          }); 

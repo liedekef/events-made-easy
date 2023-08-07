@@ -3140,7 +3140,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				if ( isset( $matches[1] ) ) {
 					$diff_format = substr( $matches[1], 1, -1 );
 				} else {
-					$diff_format = 'd';
+					$diff_format = '%d';
 				}
 				$eme_date_obj_start = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 				$eme_date_obj_end   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );

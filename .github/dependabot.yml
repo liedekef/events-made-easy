@@ -33,3 +33,7 @@ updates:
     directory: "/payment_gateways/sumup" # Location of package manifests
     schedule:
       interval: "weekly"
+  - package-ecosystem: "composer" # See documentation for possible values
+    directory: "/dompdf" # Location of package manifests
+    schedule:
+      interval: "weekly"

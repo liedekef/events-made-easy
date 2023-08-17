@@ -195,7 +195,6 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 		$form_html .= eme_replace_extra_multibooking_formfields_placeholders( $format_header, $event );
 	}
 
-	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	if ( $is_multibooking && $only_one_event && ! $simple ) {
 		$form_html .= "<select name='eme_event_ids[]'>";
 	}
@@ -733,7 +732,6 @@ function eme_cancel_bookings_form( $event_id ) {
 		$no_longer_allowed = get_option( 'eme_rsvp_cancel_no_longer_allowed_string' );
 		$form_html         = "<div class='eme-message-error eme-cancel-bookings-message-error'>" . $no_longer_allowed . '</div>';
 	} else {
-		$current_userid = get_current_user_id();
 		usleep( 2 );
 		$form_id = uniqid();
 		$nonce   = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
@@ -1377,7 +1375,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 							array_push( $missing_required_fields, $eme_address1_string );
 						}
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) && $fieldname == 'address2' ) {
-							array_push( $missing_required_fields, $eme_address1_string );
+							array_push( $missing_required_fields, $eme_address2_string );
 						}
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) && $fieldname == 'city' ) {
 							array_push( $missing_required_fields, __( 'City', 'events-made-easy' ) );
@@ -1944,7 +1942,6 @@ function eme_db_insert_booking( $event, $booker, $booking ) {
 	global $wpdb, $plugin_page;
 	$eme_is_admin_request = eme_is_admin_request();
 	$bookings_table       = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$event_id             = $event['event_id'];
 	$booking['person_id'] = intval( $booker['person_id'] );
 
 	if ( ! $eme_is_admin_request && $booking['waitinglist'] ) {
@@ -2117,13 +2114,11 @@ function eme_booking_answers( $booking, $do_update = 1 ) {
 }
 function eme_store_booking_answers( $booking, $do_update = 1 ) {
 	global $wpdb;
-	$fields_seen = [];
 	if ( empty( $booking['booking_id'] ) ) {
 		$do_update = 0;
 	}
 
 	$extra_charge = 0;
-	$event_id     = $booking['event_id'];
 	$person_id    = $booking['person_id'];
 	$all_answers  = [];
 	if ( $do_update ) {
@@ -2269,7 +2264,7 @@ function eme_trash_booking( $booking_id ) {
 	global $wpdb;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if ( has_action( 'eme_trash_rsvp_action' ) ) {
-		$booking = eme_get_booking( $line['booking_id'] );
+		$booking = eme_get_booking( $booking_id );
 		do_action( 'eme_trash_rsvp_action', $booking );
 	}
 	$where               = [];
@@ -3379,7 +3374,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 				foreach ( $dyn_answers as $answer ) {
 					$grouping      = $answer['eme_grouping'];
 					$occurence     = $answer['occurence'];
-					$class         = 'eme_print_formfield' . $answer['field_id'];
+					//$class         = 'eme_print_formfield' . $answer['field_id'];
 					$tmp_formfield = eme_get_formfield( $answer['field_id'] );
 					if ( ! empty( $tmp_formfield ) ) {
 						if ( $target == 'html' ) {
@@ -3631,7 +3626,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			[$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
 			if ( is_file( $target_file ) ) {
 				[$width, $height, $type, $attr] = getimagesize( $target_file );
-				$replacement                        = "<img width='$width' height='$height' src='$target_url'>";
+				$replacement                    = "<img width='$width' height='$height' src='$target_url'>";
 			}
 		} elseif ( $payment && preg_match( '/#_ATTENDANCE_URL$/', $result ) ) {
 			$replacement = eme_check_rsvp_url( $payment, $booking['booking_id'] );
@@ -4595,7 +4590,6 @@ function eme_registration_seats_page( $pending = 0 ) {
 				$booking['booking_comment'] = eme_sanitize_textarea( $_POST['eme_rsvpcomment'] );
 			}
 
-			$booking_updated = 1;
 			$update_message  = '';
 			$enough_seats    = 1;
 			$total_seats     = eme_get_total_seats( $event_id );
@@ -5627,13 +5621,13 @@ function eme_ajax_bookings_list() {
 			if ( $add_event_info && $task_count>0 ) {
 				$pending_spaces = 0;
                                 $used_spaces = 0;
-                                $total_spaces = 0;
+                                //$total_spaces = 0;
                                 foreach ( $tasks as $task ) {
 					if ( $event['event_properties']['task_requires_approval'] ) {
 						$pending_spaces += eme_count_task_pending_signups( $task['task_id'] );
 					}
                                         $used_spaces += eme_count_task_approved_signups( $task['task_id'] );
-                                        $total_spaces += $task['spaces'];
+                                        //$total_spaces += $task['spaces'];
                                 }
                                 #$free_spaces = $total_spaces - $used_spaces;
                                 #$event_name_info[ $event_id ] .= '<br>' . esc_html__( sprintf( 'Task Info: %d tasks, %d/%d/%d free/used/total slots', 'events-made-easy' ), $task_count, $free_spaces, $used_spaces, $total_spaces );
@@ -6359,7 +6353,6 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 	$css = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
 	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
-		$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
 		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
 	$extra_html_header = get_option( 'eme_html_header' );
@@ -6427,7 +6420,6 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
 	$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
 	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
-		$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
 		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
 
@@ -6510,7 +6502,7 @@ function eme_rsvp_send_pending_reminders() {
 		$eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 		$days_diff    = intval( $eme_date_obj_now->startOfDay()->getDifferenceInDays( $eme_date_obj->startOfDay() ) );
 		foreach ( $bookings as $booking ) {
-			foreach ( $task_reminder_days as $reminder_day ) {
+			foreach ( $reminder_days as $reminder_day ) {
 				$reminder_day = intval( $reminder_day );
 				if ( $days_diff == $reminder_day ) {
 					eme_email_booking_action( $booking, 'reminderPendingBooking' );

@@ -700,7 +700,6 @@ function eme_archive_old_mailings() {
 		$archive_old_mailings_days = abs( $archive_old_mailings_days );
 	}
 	$eme_date_obj   = new ExpressiveDate( 'now', EME_TIMEZONE );
-	$now            = $eme_date_obj->getDateTime();
 	$old_date       = $eme_date_obj->minusDays( $archive_old_mailings_days )->getDateTime();
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 	$sql            = "SELECT id from $mailings_table WHERE creation_date < '$old_date' AND (status='completed' OR status='cancelled')";
@@ -913,7 +912,6 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 		$ignore_massmail_setting = 0;
 	}
 
-	$atts           = [];
 	$attachment_ids = '';
 	if ( $conditions['action'] == 'genericmail' ) {
 		$person_ids          = [];
@@ -1207,7 +1205,7 @@ function eme_mailingreport_list() {
 	$search_name = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$where       = '';
 	$where_arr   = [];
-	$where_arr[] = '(mailing_id=' . intval( $_REQUEST['mailing_id'] ) . ')';
+	$where_arr[] = '(mailing_id=' . $mailing_id . ')';
 	if ( ! empty( $search_name ) ) {
 		$where_arr[] = "(receivername like '%$search_name%' OR receiveremail like '%$search_name%')";
 	}
@@ -2146,7 +2144,7 @@ function eme_emails_page() {
 					'people_and_groups' => __('Email to people and/or groups registered in EME', 'events-made-easy'),
 					'all_wp' => __('Email to all WP users', 'events-made-easy'),
 				];
-				echo eme_ui_select( $eme_mail_type, 'eme_mail_type', $eme_mail_type_arr, $add_empty_first = '&nbsp;', $required = 1);
+				echo eme_ui_select( $eme_mail_type, 'eme_mail_type', $eme_mail_type_arr, '&nbsp;', 1);
 			?>
 		</td>
 		</tr>
@@ -2155,8 +2153,8 @@ function eme_emails_page() {
 		<td>
 			<select name="rsvp_status">
 			<option value=0><?php esc_html_e( 'All registered persons', 'events-made-easy' ); ?></option>
-		<option value=<?php echo EME_RSVP_STATUS_APPROVED; ?>><?php esc_html_e( 'Only approved bookings', 'events-made-easy' ); ?></option>
-		<option value=<?php echo EME_RSVP_STATUS_PENDING; ?>><?php esc_html_e( 'Only pending bookings', 'events-made-easy' ); ?></option>
+			<option value=<?php echo EME_RSVP_STATUS_APPROVED; ?>><?php esc_html_e( 'Only approved bookings', 'events-made-easy' ); ?></option>
+			<option value=<?php echo EME_RSVP_STATUS_PENDING; ?>><?php esc_html_e( 'Only pending bookings', 'events-made-easy' ); ?></option>
 			</select>
 		</td>
 		</tr>

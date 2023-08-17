@@ -75,7 +75,7 @@ function eme_add_options( $reset = 0 ) {
 	$eme_rsvp_cancel_no_longer_allowed_localizable     = __( 'Cancellations no longer allowed on this date.', 'events-made-easy' );
 	$eme_rsvp_full_localizable                         = __( 'Bookings no longer possible: no seats available anymore.', 'events-made-easy' );
 	$eme_rsvp_on_waiting_list_localizable              = __( 'This booking will be put on the waiting list.', 'events-made-easy' );
-	$eme_rsvp_required_field_localizable               = __( 'Required field', 'events-made-easy' );
+	$eme_form_required_field_string_localizable        = __( 'Required field', 'events-made-easy' );
 	$eme_address1_localizable                          = __( 'Address line 1', 'events-made-easy' );
 	$eme_address2_localizable                          = __( 'Address line 2', 'events-made-easy' );
 	$eme_payment_redirect_msg_localizable              = __( 'You will be redirected to the payment page in a few seconds, or click <a href="#_PAYMENT_URL">here</a> to go there immediately', 'events-made-easy' );
@@ -127,6 +127,7 @@ function eme_add_options( $reset = 0 ) {
 		'eme_filter_form_format'                          => DEFAULT_FILTER_FORM_FORMAT,
 		'eme_events_page_title'                           => DEFAULT_EVENTS_PAGE_TITLE,
 		'eme_no_events_message'                           => __( 'No events', 'events-made-easy' ),
+		'eme_form_required_field_string'                  => $eme_form_required_field_string_localizable,
 		'eme_location_page_title_format'                  => '#_LOCATIONNAME',
 		'eme_location_html_title_format'                  => DEFAULT_LOCATION_HTML_TITLE_FORMAT,
 		'eme_location_baloon_format'                      => "<strong>#_LOCATIONNAME</strong><br>#_ADDRESS - #_TOWN<br><a href='#_LOCATIONPAGEURL'>Details</a>",
@@ -843,7 +844,7 @@ function eme_add_option( $key, $value, $reset ) {
 ////////////////////////////////////
 function eme_options_delete() {
 	$all_options = wp_load_alloptions();
-	foreach ( $all_options as $name => $value ) {
+	foreach ( array_keys($all_options) as $name ) {
 		if ( preg_match( '/^eme_/', $name ) ) {
 			delete_option( $name );
 		}
@@ -2699,17 +2700,15 @@ function eme_options_page() {
 				eme_options_radio_binary( __( 'By default send out birthday email for new persons?', 'events-made-easy' ), 'eme_bd_email', __( 'If selected, new persons registered with a non-empty birthday will get a birthday email. Go in the Email Templates settings to change the look and feel of that email.', 'events-made-easy' ) );
 				eme_options_radio_binary( __( 'Limit birthday emails to active members?', 'events-made-easy' ), 'eme_bd_email_members_only', __( 'If selected and birthday emails are to be send, only persons with an active membership will get a birthday email.', 'events-made-easy' ) );
 				$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
-				$now_date         = $eme_date_obj_now->getDate();
-				$now_time         = $eme_date_obj_now->getTime();
 				eme_options_input_text( __( 'EME backend date format', 'events-made-easy' ), 'eme_backend_dateformat', __( 'The date format used in EME tables. Leave this empty to use the WordPress settings.', 'events-made-easy' ) . "<p class='date-time-doc'>" . __( '<a href="https://wordpress.org/support/article/formatting-date-and-time/">Documentation on date and time formatting</a>.' ) . '</p>' );
 				eme_options_input_text( __( 'EME backend time format', 'events-made-easy' ), 'eme_backend_timeformat', __( 'The time format used in EME tables. Leave this empty to use the WordPress settings.', 'events-made-easy' ) . "<p class='date-time-doc'>" . __( '<a href="https://wordpress.org/support/article/formatting-date-and-time/">Documentation on date and time formatting</a>.' ) . '</p>' );
 				require_once 'dompdf/vendor/autoload.php';
 				$dompdf                = new Dompdf\Dompdf();
 				$dompdf_fontfamilies   = array_keys( $dompdf->getFontMetrics()->getFontFamilies() );
 				$pdf_font_families_arr = [];
-			foreach ( $dompdf_fontfamilies as $font ) {
-				$pdf_font_families_arr[ $font ] = ucwords( $font );
-			}
+				foreach ( $dompdf_fontfamilies as $font ) {
+					$pdf_font_families_arr[ $font ] = ucwords( $font );
+				}
 				eme_options_select( __( 'PDF font', 'events-made-easy' ), 'eme_pdf_font', $pdf_font_families_arr, __( 'Set the font to be used in generated PDF files. Sometimes you need to use a different font because not all characters might be defined in the current selected font.', 'events-made-easy' ) );
 				eme_options_input_int( __( 'EME DB version', 'events-made-easy' ), 'eme_version', __( "This is the current EME database version, you can use this to put the version back to an older version; upon saving EME will then redo the missed database upgrades from that version onwards if they didn't happen correctly and reset the value to the latest version. In any normal situation, you never need to change this value.", 'events-made-easy' ) );
 			?>

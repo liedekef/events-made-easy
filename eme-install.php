@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 371 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 372 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -336,8 +336,6 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 
 	$table_name = $db_prefix . EME_EVENTS_TBNAME;
 
-	$default_current_ts = 'DEFAULT CURRENT_TIMESTAMP';
-	$update_current_ts  = 'DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP';
 	if ( ! eme_table_exists( $table_name ) ) {
 		// Creating the events table
 		$sql = 'CREATE TABLE ' . $table_name . " (
@@ -971,7 +969,6 @@ function eme_create_categories_table( $charset, $collate, $db_version, $db_prefi
 }
 
 function eme_create_holidays_table( $charset, $collate, $db_version, $db_prefix ) {
-	global $wpdb;
 	$table_name = $db_prefix . EME_HOLIDAYS_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {
@@ -1289,7 +1286,6 @@ function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix
 }
 
 function eme_create_discountgroups_table( $charset, $collate, $db_version, $db_prefix ) {
-	global $wpdb;
 	$table_name = $db_prefix . EME_DISCOUNTGROUPS_TBNAME;
 
 	// column maxdiscounts: max number of discounts in a group that can
@@ -1580,7 +1576,6 @@ function eme_create_countries_table( $charset, $collate, $db_version, $db_prefix
 }
 
 function eme_create_states_table( $charset, $collate, $db_version, $db_prefix ) {
-	global $wpdb;
 	$table_name = $db_prefix . EME_STATES_TBNAME;
 
 	if ( ! eme_table_exists( $table_name ) ) {

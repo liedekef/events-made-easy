@@ -1776,8 +1776,6 @@ function eme_manage_people_layout( $message = '' ) {
 	$groups                  = eme_get_static_groups();
 	$pdftemplates            = eme_get_templates( 'pdf', 1 );
 	$htmltemplates           = eme_get_templates( 'html', 1 );
-	$memberships             = eme_get_memberships();
-	$eme_member_status_array = eme_member_status_array();
 
 	if ( empty( $message ) ) {
 		$hidden_style = 'display:none;';
@@ -2551,7 +2549,6 @@ function eme_get_people_by_wp_ids( $wp_ids ) {
 	global $wpdb;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( eme_is_list_of_int( $wp_ids ) ) {
-	$ids_arr = explode(',', $wp_ids);
 		$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE wp_id IN ($wp_ids) AND status= %d ORDER BY wp_id", EME_PEOPLE_STATUS_ACTIVE);
 		return $wpdb->get_results( $sql, ARRAY_A );
 	} else {
@@ -2927,7 +2924,6 @@ function eme_get_grouppersons( $group_ids, $order = 'ASC' ) {
 function eme_add_persongroups( $person_id, $group_ids, $public = 0 ) {
 	global $wpdb;
 	$table        = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
-	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( empty( $group_ids ) ) {
 		return;
 	}
@@ -3000,7 +2996,6 @@ function eme_delete_emailfromgroup( $email, $group_id ) {
 
 function eme_delete_personfromgroup( $person_id, $group_id ) {
 	global $wpdb;
-	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$sql              = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE group_id=%d AND person_id=%d", $group_id, $person_id );
 	$wpdb->query( $sql );
@@ -3121,7 +3116,7 @@ function eme_get_persons( $person_ids = '', $extra_search = '', $limit = '', $or
 		$sql_join = '';
 	}
 
-	$sql = "SELECT * FROM $people_table $where $orderby $limit";
+	$sql = "SELECT * FROM $people_table $sql_join $where $orderby $limit";
 
 	$persons = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $persons as $key => $person ) {
@@ -4122,7 +4117,7 @@ function eme_update_people_bdemail( $person_ids, $bd_email = 1 ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
-		$sql = $wpdb->prepare( "UPDATE $table SET bd_mail=%d WHERE person_id IN ($person_ids)", $bd_mail );
+		$sql = $wpdb->prepare( "UPDATE $table SET bd_mail=%d WHERE person_id IN ($person_ids)", $bd_email );
 		$wpdb->query( $sql );
 	}
 }
@@ -5275,8 +5270,6 @@ function eme_ajax_generate_people_html( $ids_arr, $template_id, $template_id_hea
 	$header = eme_get_template_format( $template_id_header );
 	$footer = eme_get_template_format( $template_id_footer );
 	$html   = "<html><body>$header";
-	$total  = count( $ids_arr );
-	$i      = 1;
 	foreach ( $ids_arr as $person_id ) {
 		$person = eme_get_person( $person_id );
 		$html  .= eme_replace_people_placeholders( $format, $person );

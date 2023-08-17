@@ -403,8 +403,6 @@ function eme_task_signups_page() {
 }
 
 function eme_task_signups_table_layout( $message = '' ) {
-	global $plugin_page;
-
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
 			$hidden_style = 'display:none;';

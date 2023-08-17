@@ -84,8 +84,6 @@ function eme_attendance_types() {
 }
 
 function eme_attendances_table_layout( $message = '' ) {
-	global $plugin_page;
-
 	if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_attendance' && ! empty( $_POST['person_id'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		if ( current_user_can( get_option( 'eme_cap_manage_attendances' ) ) ) {

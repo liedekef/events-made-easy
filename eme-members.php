@@ -151,7 +151,7 @@ function eme_init_membership_props( $props = [] ) {
 	}
 
 	$payment_gateways = eme_payment_gateways();
-	foreach ( $payment_gateways as $pg => $desc ) {
+	foreach ( array_keys($payment_gateways) as $pg ) {
 		// the properties for payment gateways alsways have "use_" in front of them, so add it
 		if ( ! isset( $props[ 'use_' . $pg ] ) ) {
 			$props[ 'use_' . $pg ] = 0;
@@ -377,7 +377,6 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
 	$people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-	$lines             = [];
 	if ( ! empty( $member_ids ) && eme_is_numeric_array( $member_ids ) ) {
 		$ids_list = implode(',', $member_ids);
 		$sql     = "SELECT members.*, people.lastname, people.firstname, people.email, memberships.name AS membership_name
@@ -560,7 +559,6 @@ function eme_get_activemembership_names_by_personid( $person_id ) {
 	$status_grace      = EME_MEMBER_STATUS_GRACE;
 	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-	$people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql               = $wpdb->prepare( "SELECT DISTINCT memberships.name FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN ($status_active,$status_grace)", $person_id );
 	return $wpdb->get_col( $sql );
 }
@@ -620,7 +618,6 @@ function eme_get_extra_member_data( $member ) {
 function eme_delete_member( $member_id ) {
 	global $wpdb;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	if ( ! empty( $member_id ) ) {
 		if ( has_action( 'eme_delete_member_action' ) ) {
 			$member = eme_get_member($member_id);
@@ -1008,7 +1005,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 					$payment_id = $existing_member['payment_id'];
 					// no payment id yet? Then let's create a payment (can be old members, older imports, ...)
 					if ( empty( $payment_id ) ) {
-						$payment_id = eme_create_member_payment( $existing_memberid );
+						$payment_id = eme_create_member_payment( $member_id );
 					}
 					$payment = eme_get_payment( $payment_id );
 					if ( ! empty( $payment ) ) {
@@ -6525,7 +6522,6 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 	$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
 	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
-		$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
 		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
 	$extra_html_header = get_option( 'eme_html_header' );
@@ -6589,11 +6585,10 @@ function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_head
 	}
 
 	$dompdf->setPaper( $pagesize, $orientation );
-		$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
-		$eme_css_name = get_stylesheet_directory() . '/eme.css';
+	$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
+	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
-			$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
-			$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
+		$css  .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
 	$extra_html_header = get_option( 'eme_html_header' );
         $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
@@ -6638,8 +6633,6 @@ function eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_hea
 	$extra_html_header = get_option( 'eme_html_header' );
         $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
         $html   = "<html><head>$extra_html_header</head><body>$header";
-	$total = count( $ids_arr );
-	$i     = 1;
 	$lang  = eme_detect_lang();
 	foreach ( $ids_arr as $member_id ) {
 		$member     = eme_get_member( $member_id );

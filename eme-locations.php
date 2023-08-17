@@ -537,12 +537,11 @@ function eme_meta_box_div_location_name( $location ) {
 function eme_meta_box_div_location_name_for_event( $location ) {
 	
 	if ( empty( $location['location_id'] ) ) {
-		$action                  = 'add';
+		$edit_link = "<img id='img_edit_location' name='img_edit_location' src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Add location', 'events-made-easy' ) . "' title='" . __( 'Add location', 'events-made-easy' ) . "' style='cursor: pointer;'>";
 		$location['location_id'] = 0;
 	} else {
-		$action = 'edit';
+		$edit_link = "<img id='img_edit_location' name='img_edit_location' src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit location', 'events-made-easy' ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "' style='cursor: pointer;'>";
 	}
-	$edit_link = "<img id='img_edit_location' name='img_edit_location' src='" . esc_url(EME_PLUGIN_URL) . "images/edit.png' alt='" . esc_attr__( 'Edit location', 'events-made-easy' ) . "' title='" . __( 'Edit location', 'events-made-easy' ) . "' style='cursor: pointer;'>";
 	echo "<input type='hidden' id='location_id' name='location_id' value='" . intval( $location['location_id'] ) . "'>";
 	?>
 		<div id="loc_name" class="postbox">
@@ -838,7 +837,6 @@ function eme_meta_box_div_location_customfields( $location ) {
 
 function eme_locations_table( $message = '' ) {
 	
-	$locations   = eme_get_locations();
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 	?>
@@ -992,7 +990,6 @@ function eme_get_locations_by_distance( $longitude, $latitude, $distance, $locat
 function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $notcategory = '', $limit = 0, $ignore_filter = false, $random_order = false, $author = '', $contact_person = '' ) {
 	global $wpdb;
 	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-	$events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$locations       = [];
 
 	$location_id_arr = [];
@@ -1583,7 +1580,6 @@ function eme_global_map_shortcode( $atts ) {
 		}
 		wp_enqueue_script( 'eme-location-map' );
 
-		$events_page_link = eme_get_events_page();
 		$result           = '';
 		$prev_text        = '';
 		$next_text        = '';
@@ -3036,9 +3032,7 @@ function eme_ajax_locations_list() {
 }
 
 function eme_ajax_manage_locations() {
-	global $wpdb;
 	$current_userid = get_current_user_id();
-	$table          = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$jTableResult = [];
 	if ( isset( $_POST['do_action'] ) ) {

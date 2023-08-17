@@ -1605,15 +1605,11 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			$bookerAddress2     = eme_esc_html( $person['address2'] );
 			$bookerCity         = eme_esc_html( $person['city'] );
 			$bookerZip          = eme_esc_html( $person['zip'] );
-			$bookerState        = eme_esc_html( $person['state'] );
 			$bookerState_code   = eme_esc_html( $person['state_code'] );
-			$bookerCountry      = eme_esc_html( $person['country'] );
 			$bookerCountry_code = eme_esc_html( $person['country_code'] );
 			$bookerEmail        = eme_esc_html( $person['email'] );
 			$bookerPhone        = eme_esc_html( $person['phone'] );
-			$massmail           = intval( $person['massmail'] );
 			$bd_email           = intval( $person['bd_email'] );
-			$gdpr               = intval( $person['gdpr'] );
 		} else {
 			$bookerLastName = eme_esc_html( $current_user->user_lastname );
 			if ( empty( $bookerLastName ) ) {
@@ -2265,9 +2261,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	$bookerAddress2     = '';
 	$bookerCity         = '';
 	$bookerZip          = '';
-	$bookerState        = '';
 	$bookerState_code   = '';
-	$bookerCountry      = '';
 	$bookerCountry_code = '';
 	// if only 1 country, set it as default
 	$countries_alpha2 = eme_get_countries_alpha2();
@@ -2295,9 +2289,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			$bookerAddress2       = eme_esc_html( $person['address2'] );
 			$bookerCity           = eme_esc_html( $person['city'] );
 			$bookerZip            = eme_esc_html( $person['zip'] );
-			$bookerState          = eme_esc_html( $person['state'] );
 			$bookerState_code     = eme_esc_html( $person['state_code'] );
-			$bookerCountry        = eme_esc_html( $person['country'] );
 			$bookerCountry_code   = eme_esc_html( $person['country_code'] );
 			$bookerEmail          = eme_esc_html( $person['email'] );
 			$bookerPhone          = eme_esc_html( $person['phone'] );
@@ -2327,9 +2319,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			$bookerAddress2     = eme_esc_html( $person['address2'] );
 			$bookerCity         = eme_esc_html( $person['city'] );
 			$bookerZip          = eme_esc_html( $person['zip'] );
-			$bookerState        = eme_esc_html( $person['state'] );
 			$bookerState_code   = eme_esc_html( $person['state_code'] );
-			$bookerCountry      = eme_esc_html( $person['country'] );
 			$bookerCountry_code = eme_esc_html( $person['country_code'] );
 			$bookerEmail        = eme_esc_html( $person['email'] );
 			$bookerPhone        = eme_esc_html( $person['phone'] );
@@ -3534,9 +3524,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	$bookerAddress2     = '';
 	$bookerCity         = '';
 	$bookerZip          = '';
-	$bookerState        = '';
 	$bookerState_code   = '';
-	$bookerCountry      = '';
 	$bookerCountry_code = '';
 	// if only 1 country, set it as default
 	$countries_alpha2 = eme_get_countries_alpha2();
@@ -3545,7 +3533,6 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	}
 	$bookerEmail = '';
 	$bookerPhone = '';
-	$bookedSeats = 0;
 	$massmail    = null;
 	$bd_email    = 0;
 	$gdpr        = 0;
@@ -3564,9 +3551,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			$bookerAddress2     = eme_esc_html( $person['address2'] );
 			$bookerCity         = eme_esc_html( $person['city'] );
 			$bookerZip          = eme_esc_html( $person['zip'] );
-			$bookerState        = eme_esc_html( $person['state'] );
 			$bookerState_code   = eme_esc_html( $person['state_code'] );
-			$bookerCountry      = eme_esc_html( $person['country'] );
 			$bookerCountry_code = eme_esc_html( $person['country_code'] );
 			$bookerEmail        = eme_esc_html( $person['email'] );
 			$bookerPhone        = eme_esc_html( $person['phone'] );
@@ -3594,9 +3579,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		$bookerAddress2     = eme_esc_html( $person['address2'] );
 		$bookerCity         = eme_esc_html( $person['city'] );
 		$bookerZip          = eme_esc_html( $person['zip'] );
-		$bookerState        = eme_esc_html( $person['state'] );
 		$bookerState_code   = eme_esc_html( $person['state_code'] );
-		$bookerCountry      = eme_esc_html( $person['country'] );
 		$bookerCountry_code = eme_esc_html( $person['country_code'] );
 		$bookerEmail        = eme_esc_html( $person['email'] );
 		$bookerPhone        = eme_esc_html( $person['phone'] );
@@ -3623,9 +3606,9 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		}
 	}
 	if ( ! empty( $eme_dyndatafields ) ) {
-			$add_dyndadata = 1;
+		$add_dyndata = 1;
 	} else {
-		$add_dyndadata = 0;
+		$add_dyndata = 0;
 	}
 
 	$eme_captcha_for_forms   = $membership['properties']['use_captcha'] && ! $eme_is_admin_request;
@@ -3716,11 +3699,9 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 
 		// check for dynamic field class
 		if ( $dynamic_data_wanted && ( in_array( $result, $eme_dyndatafields ) || $membership['properties']['dyndata_all_fields'] ) ) {
-			$dynamic_field_class               = "class='dynamicupdates'";
 			$dynamic_field_personal_info_class = "class='dynamicupdates $personal_info_class'";
 			$dynamic_field_class_basic         = 'dynamicupdates';
 		} else {
-			$dynamic_field_class               = "class='nodynamicupdates'";
 			$dynamic_field_personal_info_class = "class='nodynamicupdates $personal_info_class'";
 			$dynamic_field_class_basic         = 'nodynamicupdates';
 		}
@@ -3885,7 +3866,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			}
 			$replacement = "<input $required_att type='tel' id='$fieldname' name='$fieldname' value='$bookerPhone' $readonly $dynamic_field_personal_info_class placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
-			$replacement = eme_ui_select_binary( $bd_email, 'bd_email', 0, "$dynamic_field_class_basic $personal_info_class", $disabled );
+			$replacement = eme_ui_select_binary( $bd_email, 'bd_email', 0, "$dynamic_field_personal_info_class", $disabled );
 		} elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
 			$selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
 			$fieldname         = 'massmail';
@@ -3893,7 +3874,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 					$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
 					$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
 			}
-			$replacement .= eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class", $disabled );
+			$replacement .= eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_personal_info_class", $disabled );
 		} elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
 			$selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
 			$fieldname         = 'massmail';
@@ -3901,7 +3882,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 				$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
 				$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
 			}
-			$replacement .= eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_class_basic $personal_info_class", $disabled );
+			$replacement .= eme_ui_select_binary( $selected_massmail, $fieldname, 0, "$dynamic_field_personal_info_class", $disabled );
 		} elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)
@@ -4375,9 +4356,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 	$bookerAddress2     = eme_esc_html( $person['address2'] );
 	$bookerCity         = eme_esc_html( $person['city'] );
 	$bookerZip          = eme_esc_html( $person['zip'] );
-	$bookerState        = eme_esc_html( $person['state'] );
 	$bookerState_code   = eme_esc_html( $person['state_code'] );
-	$bookerCountry      = eme_esc_html( $person['country'] );
 	$bookerCountry_code = eme_esc_html( $person['country_code'] );
 	$bookerEmail        = eme_esc_html( $person['email'] );
 	$bookerPhone        = eme_esc_html( $person['phone'] );

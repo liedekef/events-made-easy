@@ -24,7 +24,6 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
 		return $eme_tasks_arr;
 	}
 	$seq_nbr       = 1;
-	$task_nbr      = 1;
 	$task_nbr_seen = 0;
 	foreach ( $_POST['eme_tasks'] as $eme_task ) {
 		if ( ! empty( $eme_task['task_nbr'] ) && intval( $eme_task['task_nbr'] ) > $task_nbr_seen ) {
@@ -406,7 +405,6 @@ function eme_task_signups_page() {
 function eme_task_signups_table_layout( $message = '' ) {
 	global $plugin_page;
 
-	$destination = admin_url( "admin.php?page=$plugin_page" );
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
 			$hidden_style = 'display:none;';

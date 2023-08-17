@@ -416,7 +416,6 @@ function eme_admin_register_scripts() {
 	wp_register_style( 'eme_stylesheet', EME_PLUGIN_URL . 'css/eme.css', [], EME_VERSION );
 	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
-		$eme_css_url = get_stylesheet_directory_uri() . '/eme.css';
 		wp_register_style( 'eme_stylesheet_extra', get_stylesheet_directory_uri() . '/eme.css', [ 'eme_stylesheet' ], EME_VERSION );
 	}
 	wp_register_style( 'eme-jquery-ui-autocomplete', EME_PLUGIN_URL . 'css/jquery.autocomplete.css' );

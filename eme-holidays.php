@@ -311,8 +311,11 @@ function eme_holidays_shortcode( $atts ) {
 		if ( $scope === 'past' && $eme_date_obj > $eme_date_obj_now ) {
 			continue;
 		}
-		print '<span id="eme_holidays_date">' . eme_localized_date( $day, EME_TIMEZONE ) . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
+		if (!empty($class)) {
+			print '<span class="'.$class.'" id="eme_holidays_date">' . eme_localized_date( $day, EME_TIMEZONE ) . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		} else {
+			print '<span id="eme_holidays_date">' . eme_localized_date( $day, EME_TIMEZONE ) . '</span>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
 		print '&nbsp; <span id="eme_holidays_name">' . eme_trans_esc_html( $name ) . '</span><br>'; //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 	print '</div>';

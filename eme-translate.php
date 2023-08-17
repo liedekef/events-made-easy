@@ -56,8 +56,8 @@ function eme_lang_url_mode() {
 	if ( isset( $_GET['lang'] ) ) {
 		$url_mode = 1;
 	} elseif ( function_exists( 'mqtranslate_conf' ) ) {
-			// only some functions in mqtrans are different, but the options are named the same as for qtranslate
-			$url_mode = get_option( 'mqtranslate_url_mode' );
+		// only some functions in mqtrans are different, but the options are named the same as for qtranslate
+		$url_mode = get_option( 'mqtranslate_url_mode' );
 	} elseif ( function_exists( 'qtrans_getLanguage' ) ) {
 		$url_mode = get_option( 'qtranslate_url_mode' );
 	} elseif ( function_exists( 'ppqtrans_getLanguage' ) ) {
@@ -74,7 +74,7 @@ function eme_lang_url_mode() {
 		$lang_code = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
 		$url       = eme_current_page_url();
 		$home_url  = preg_quote( preg_replace( "/\/$lang_code\/?$/", '', home_url() ), '/' );
-		if ( preg_match( "/$home_url\/($lang_code)\//", $url, $matches ) ) {
+		if ( preg_match( "/$home_url\/($lang_code)\//", $url ) ) {
 			$url_mode = 2;
 		}
 	}

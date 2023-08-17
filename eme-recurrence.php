@@ -21,7 +21,6 @@ function eme_new_recurrence() {
 
 function eme_get_recurrence( $recurrence_id ) {
 	global $wpdb;
-	$events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT * FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id );
 	$recurrence       = $wpdb->get_row( $sql, ARRAY_A );
@@ -29,8 +28,6 @@ function eme_get_recurrence( $recurrence_id ) {
 }
 
 function eme_get_recurrence_days( $recurrence ) {
-	
-
 	$matching_days = [];
 
 	if ( $recurrence['recurrence_freq'] == 'specific' ) {
@@ -187,8 +184,6 @@ function eme_db_insert_recurrence( $recurrence, $event ) {
 }
 
 function eme_insert_events_for_recurrence( $recurrence, $event ) {
-	global $wpdb;
-	$events_table  = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$matching_days = eme_get_recurrence_days( $recurrence );
 	sort( $matching_days );
 	$count = 0;
@@ -367,7 +362,6 @@ function eme_get_recurrence_eventids( $recurrence_id, $future_only = 0 ) {
 
 function eme_get_recurrence_desc( $recurrence_id ) {
 	global $wpdb;
-	$events_table     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT * FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id );
 	$recurrence       = $wpdb->get_row( $sql, ARRAY_A );

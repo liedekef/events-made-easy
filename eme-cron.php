@@ -102,7 +102,6 @@ function eme_cron_send_new_events_function() {
 	}
 
 	$person_ids           = eme_get_newsletter_person_ids();
-	$eme_cron_queue_count = intval( get_option( 'eme_cron_queue_count' ) );
 	$mail_text_html       = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
 	$contact              = eme_get_event_contact();
 	$contact_email        = $contact->user_email;
@@ -220,8 +219,6 @@ function eme_cron_daily_actions() {
 }
 
 function eme_cron_page() {
-	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-
 	$message = '';
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		// do the actions if required
@@ -389,7 +386,6 @@ function eme_cron_form( $message = '' ) {
 	<form action="" method="post">
 		<?php
 		echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
-		$eme_cron_new_events = intval( get_option( 'eme_cron_new_events' ) );
 		$days                = intval( get_option( 'eme_cron_new_events_days' ) );
 		$subject             = intval( get_option( 'eme_cron_new_events_subject' ) );
 		$header              = intval( get_option( 'eme_cron_new_events_header' ) );

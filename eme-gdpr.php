@@ -590,7 +590,7 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 				'value' => $person['address1'],
 			];
 			$data[]   = [
-				'name'  => $eme_address1_string,
+				'name'  => $eme_address2_string,
 				'value' => $person['address2'],
 			];
 			$data[]   = [
@@ -687,14 +687,16 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 					];
 					$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
 					if ( ! empty( $related_member_ids ) ) {
-						$related_member = eme_get_member( $related_member_id );
-						if ( $related_member ) {
-							$related_person = eme_get_person( $related_member['person_id'] );
-							if ( $related_person ) {
-								$data[] = [
-									'name'  => __( 'Main family account for', 'events-made-easy' ),
-									'value' => eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) . ' (' . $related_person['email'] . ')',
-								];
+						foreach ( $related_member_ids as $related_member_id ) {
+							$related_member = eme_get_member( $related_member_id );
+							if ( $related_member ) {
+								$related_person = eme_get_person( $related_member['person_id'] );
+								if ( $related_person ) {
+									$data[] = [
+										'name'  => __( 'Main family account for', 'events-made-easy' ),
+										'value' => eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) . ' (' . $related_person['email'] . ')',
+									];
+								}
 							}
 						}
 					}

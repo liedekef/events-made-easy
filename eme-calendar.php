@@ -670,7 +670,6 @@ function eme_replace_calendar_placeholders( $format, $event, $cal_day, $target =
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
-	$orig_target  = $target;
 	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
 		$target = 'html';
 	}

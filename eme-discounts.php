@@ -55,8 +55,6 @@ function eme_init_discount_props( $props ) {
 }
 
 function eme_discounts_page() {
-	global $wpdb;
-
 	if ( ! current_user_can( get_option( 'eme_cap_discounts' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
 		$message = __( 'You have no right to manage discounts!', 'events-made-easy' );
 		eme_discounts_main_layout( $message );
@@ -366,7 +364,6 @@ function eme_discounts_page() {
 }
 
 function eme_discounts_main_layout( $message = '' ) {
-	$nonce_field           = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	$discounts_destination = admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=discounts' );
 	$dgroups_destination   = admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=dgroups' );
 	$html                  = "
@@ -543,7 +540,6 @@ function eme_manage_dgroups_layout( $message = '' ) {
 
 function eme_booking_discount( $event, $booking ) {
 	$discountgroup_id = $booking['dgroupid'];
-	$event_id         = $event['event_id'];
 	$total_discount   = 0;
 	// make sure to not store an empty discount name:
 	// explode on an empty string creates a empty first array element
@@ -637,7 +633,6 @@ function eme_booking_discount( $event, $booking ) {
 
 function eme_member_discount( $membership, $member ) {
 	$discountgroup_id = $member['dgroupid'];
-	$membership_id    = $membership['membership_id'];
 	$total_discount   = 0;
 	// make sure to not store an empty discount name:
 	// explode on an empty string creates a empty first array element

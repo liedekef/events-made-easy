@@ -279,7 +279,6 @@ function eme_countries_page() {
 }
 
 function eme_countries_main_layout( $message = '' ) {
-	$nonce_field           = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	$countries_destination = admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=countries' );
 	$states_destination    = admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=states' );
 	$html                  = "
@@ -529,22 +528,21 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
 
 function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
 	global $plugin_page;
-	$lang = eme_detect_lang();
 
 	if ( ! empty( $country_id ) ) {
-		$country           = eme_get_country( $country_id );
-			$h1_string     = __( 'Edit country', 'events-made-easy' );
-			$action_string = __( 'Update country', 'events-made-easy' );
+		$country       = eme_get_country( $country_id );
+		$h1_string     = __( 'Edit country', 'events-made-easy' );
+		$action_string = __( 'Update country', 'events-made-easy' );
 	} elseif ( isset( $_GET['id'] ) ) {
-			$country_id    = intval( $_GET['id'] );
-		$country           = eme_get_country( $country_id );
-			$h1_string     = __( 'Edit country', 'events-made-easy' );
-			$action_string = __( 'Update country', 'events-made-easy' );
+		$country_id    = intval( $_GET['id'] );
+		$country       = eme_get_country( $country_id );
+		$h1_string     = __( 'Edit country', 'events-made-easy' );
+		$action_string = __( 'Update country', 'events-made-easy' );
 	} else {
-			$country_id    = 0;
-			$country       = eme_new_country();
-			$h1_string     = __( 'Create country', 'events-made-easy' );
-			$action_string = __( 'Add country', 'events-made-easy' );
+		$country_id    = 0;
+		$country       = eme_new_country();
+		$h1_string     = __( 'Create country', 'events-made-easy' );
+		$action_string = __( 'Add country', 'events-made-easy' );
 	}
 
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
@@ -840,7 +838,6 @@ function eme_get_state_name( $code, $country_code, $lang = '' ) {
 function eme_get_countries_lang() {
 	global $wpdb;
 	$table        = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
-	$jTableResult = [];
 	$sql          = "SELECT id, CONCAT (name, ' (', lang, ')') AS name FROM $table";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
@@ -1004,7 +1001,7 @@ function eme_ajax_state_edit() {
 		$state  = eme_new_state();
 		$update = 0;
 	}
-	foreach ( $state as $key => $val ) {
+	foreach ( array_keys($state) as $key ) {
 		if ( isset( $_POST[ $key ] ) ) {
 			$state[ $key ] = eme_sanitize_request( $_POST[ $key ] );
 		}

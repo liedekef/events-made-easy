@@ -75,7 +75,7 @@ function eme_attendances_page() {
 }
 
 function eme_attendance_types() {
-	$att_names               = [];
+	$att_types               = [];
 	$att_types['any']        = __( 'Any', 'events-made-easy' );
 	$att_types['event']      = __( 'Events', 'events-made-easy' );
 	$att_types['membership'] = __( 'Memberships', 'events-made-easy' );
@@ -97,7 +97,6 @@ function eme_attendances_table_layout( $message = '' ) {
 			$message = __( 'You have no right to add attendance records!', 'events-made-easy' );
 		}
 	}
-	$destination = admin_url( "admin.php?page=$plugin_page" );
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	echo "
       <div class='wrap nosubsub'>
@@ -167,15 +166,12 @@ function eme_ajax_attendances_list() {
 	if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
 		$where_arr[] = "creation_date >= '$search_start_date'";
 		$where_arr[] = "creation_date <= '$search_end_date'";
-		$scope       = 'all';
 	} elseif ( ! empty( $search_start_date ) ) {
 		$where_arr[] = "creation_date >= '$search_start_date 00:00:00'";
 		$where_arr[] = "creation_date <= '$search_start_date 23:59:59'";
-		$scope       = 'all';
 	} elseif ( ! empty( $search_end_date ) ) {
 		$where_arr[] = "creation_date >= '$search_end_date 00:00:00'";
 		$where_arr[] = "creation_date <= '$search_end_date 23:59:59'";
-		$scope       = 'all';
 	}
 
 	if ( ! empty( $search_type ) && $search_type != 'any' ) {
@@ -250,7 +246,6 @@ function eme_ajax_manage_attendances() {
 	if ( ! current_user_can( get_option( 'eme_cap_list_attendances' ) ) ) {
 		wp_die();
 	}
-	$ajaxResult = [];
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {

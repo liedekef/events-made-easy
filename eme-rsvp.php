@@ -714,7 +714,6 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
 
 function eme_cancel_bookings_form( $event_id ) {
 	$form_html           = '';
-	$form_result_message = '';
 	$event               = eme_get_event( $event_id );
 	// rsvp not active or no rsvp for this event, then return
 	if ( empty( $event ) || ! eme_is_event_rsvp( $event ) ) {

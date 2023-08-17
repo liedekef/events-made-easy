@@ -264,7 +264,7 @@ function eme_replace_email_event_placeholders( $format, $email, $lastname, $firs
 		$orig_result_length = strlen( $orig_result[0] );
 		$replacement        = '';
 		$found              = 1;
-		if ( preg_match( '/#_INVITEURL$/', $result, $matches ) ) {
+		if ( preg_match( '/#_INVITEURL$/', $result ) ) {
 			$replacement = eme_invite_url( $event, $email, $lastname, $firstname, $lang );
 		} else {
 			$found = 0;

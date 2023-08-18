@@ -511,7 +511,7 @@ function eme_add_captcha_submit( $format, $captcha = '', $add_dyndadata = 0 ) {
 }
 
 function eme_captcha_remove( $captcha_file ) {
-	if ( ! empty( $captcha ) && is_string( $captcha_file ) && file_exists( $captcha_file ) ) {
+	if ( ! empty( $captcha_file ) && is_string( $captcha_file ) && file_exists( $captcha_file ) ) {
 		wp_delete_file( $captcha_file );
 	}
 }
@@ -675,7 +675,7 @@ function eme_for_shortcode( $atts, $content ) {
 		foreach ( $array_values as $val ) {
 			$url_val     = rawurlencode( $val );
 			$esc_val     = eme_sanitize_request( eme_esc_html( preg_replace( '/\n|\r/', '', $val ) ) );
-			$replace     = [ $val, $url_val, $loopcounter ];
+			$replace     = [ $esc_val, $url_val, $loopcounter ];
 			$tmp_content = str_replace( $search, $replace, $content );
 			$result     .= do_shortcode( $tmp_content );
 			++$loopcounter;
@@ -1388,7 +1388,6 @@ function eme_capNamesCB( $cap ) {
 }
 function eme_get_all_caps() {
 	global $wp_roles;
-	$caps         = [];
 	$capabilities = [];
 
 	foreach ( $wp_roles->roles as $role ) {
@@ -1945,7 +1944,8 @@ function eme_is_email( $email, $extra_checks_required = 0 ) {
 		$email_regex_ok = 1;
 	} elseif ( preg_match( '/^[\w\-\.\+]+@([\w\-]+\.)+[\w\-]{2,63}$/u', $email ) ) {
 		$email_regex_ok = 1;
-	} else {
+	}
+	if (!$email_regex_ok) {
 		return false;
 	}
 
@@ -1966,7 +1966,8 @@ function eme_is_email( $email, $extra_checks_required = 0 ) {
 		$fqdn = substr( strrchr( $email, '@' ), 1 );
 		// add trailing '.'
 		$fqdn .= ( substr( $fqdn, -1 ) == '.' ? '' : '.' );
-		if ( $result = getmxrr( $fqdn, $mx_records, $mx_weight ) ) {
+		$mx_records = [];
+		if ( $result = getmxrr( $fqdn, $mx_records ) ) {
 			if ( ! isset( $mx_records ) || ( count( $mx_records ) == 0 ) ) {
 				$result = false;
 			}
@@ -2141,7 +2142,6 @@ function eme_calc_bookingprice_ajax() {
 	$cur   = '';
 	// in the admin interface, we have a booking id, so we use the currently applied discount
 	if ( ! empty( $_POST['booking_id'] ) ) {
-		$booking_id = intval( $_POST['booking_id'] );
 		check_admin_referer( "eme_admin", 'eme_admin_nonce' );
 	}
 

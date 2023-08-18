@@ -345,36 +345,32 @@ function eme_create_events_submenu() {
 		add_menu_page( __( 'Events Made Easy', 'events-made-easy' ), __( 'Events Made Easy', 'events-made-easy' ) . $main_menu_label, get_option( 'eme_cap_list_events' ), 'eme-manager', 'eme_events_page', EME_PLUGIN_URL . 'images/calendar-16.png', 40 );
 		// Add a submenu to the custom top-level menu:
 		// edit event also needs just "add" as capability, otherwise you will not be able to edit own created events
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'All events', 'events-made-easy' ), __( 'Events', 'events-made-easy' ), get_option( 'eme_cap_list_events' ), 'eme-manager', 'eme_events_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Locations', 'events-made-easy' ), __( 'Locations', 'events-made-easy' ), get_option( 'eme_cap_list_locations' ), 'eme-locations', 'eme_locations_page' );
+		add_submenu_page( 'eme-manager', __( 'All events', 'events-made-easy' ), __( 'Events', 'events-made-easy' ), get_option( 'eme_cap_list_events' ), 'eme-manager', 'eme_events_page' );
+		add_submenu_page( 'eme-manager', __( 'Locations', 'events-made-easy' ), __( 'Locations', 'events-made-easy' ), get_option( 'eme_cap_list_locations' ), 'eme-locations', 'eme_locations_page' );
 		if ( get_option( 'eme_categories_enabled' ) ) {
-			$plugin_page = add_submenu_page( 'eme-manager', __( 'Categories', 'events-made-easy' ), __( 'Categories', 'events-made-easy' ), get_option( 'eme_cap_categories' ), 'eme-categories', 'eme_categories_page' );
+			add_submenu_page( 'eme-manager', __( 'Categories', 'events-made-easy' ), __( 'Categories', 'events-made-easy' ), get_option( 'eme_cap_categories' ), 'eme-categories', 'eme_categories_page' );
 		}
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Holidays', 'events-made-easy' ), __( 'Holidays', 'events-made-easy' ), get_option( 'eme_cap_holidays' ), 'eme-holidays', 'eme_holidays_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Custom Fields', 'events-made-easy' ), __( 'Custom Fields', 'events-made-easy' ), get_option( 'eme_cap_forms' ), 'eme-formfields', 'eme_formfields_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Templates', 'events-made-easy' ), __( 'Templates', 'events-made-easy' ), get_option( 'eme_cap_templates' ), 'eme-templates', 'eme_templates_page' );
+		add_submenu_page( 'eme-manager', __( 'Holidays', 'events-made-easy' ), __( 'Holidays', 'events-made-easy' ), get_option( 'eme_cap_holidays' ), 'eme-holidays', 'eme_holidays_page' );
+		add_submenu_page( 'eme-manager', __( 'Custom Fields', 'events-made-easy' ), __( 'Custom Fields', 'events-made-easy' ), get_option( 'eme_cap_forms' ), 'eme-formfields', 'eme_formfields_page' );
+		add_submenu_page( 'eme-manager', __( 'Templates', 'events-made-easy' ), __( 'Templates', 'events-made-easy' ), get_option( 'eme_cap_templates' ), 'eme-templates', 'eme_templates_page' );
 		if ( get_option( 'eme_rsvp_enabled' ) ) {
-			$plugin_page = add_submenu_page( 'eme-manager', __( 'Discounts', 'events-made-easy' ), __( 'Discounts', 'events-made-easy' ), get_option( 'eme_cap_discounts' ), 'eme-discounts', 'eme_discounts_page' );
-			$plugin_page = add_submenu_page( 'eme-manager', __( 'Pending Bookings', 'events-made-easy' ), __( 'Pending Bookings', 'events-made-easy' ) . $pending_bookings_menu_label, get_option( 'eme_cap_list_approve' ), 'eme-registration-approval', 'eme_registration_approval_page' );
-			$plugin_page = add_submenu_page( 'eme-manager', __( 'Approved Bookings', 'events-made-easy' ), __( 'Approved Bookings', 'events-made-easy' ), get_option( 'eme_cap_list_registrations' ), 'eme-registration-seats', 'eme_registration_seats_page' );
+			add_submenu_page( 'eme-manager', __( 'Discounts', 'events-made-easy' ), __( 'Discounts', 'events-made-easy' ), get_option( 'eme_cap_discounts' ), 'eme-discounts', 'eme_discounts_page' );
+			add_submenu_page( 'eme-manager', __( 'Pending Bookings', 'events-made-easy' ), __( 'Pending Bookings', 'events-made-easy' ) . $pending_bookings_menu_label, get_option( 'eme_cap_list_approve' ), 'eme-registration-approval', 'eme_registration_approval_page' );
+			add_submenu_page( 'eme-manager', __( 'Approved Bookings', 'events-made-easy' ), __( 'Approved Bookings', 'events-made-easy' ), get_option( 'eme_cap_list_registrations' ), 'eme-registration-seats', 'eme_registration_seats_page' );
 		}
 		if ( get_option( 'eme_tasks_enabled' ) ) {
-			$plugin_page = add_submenu_page( 'eme-manager', __( 'Task signups', 'events-made-easy' ), __( 'Task signups', 'events-made-easy' ), get_option( 'eme_cap_manage_task_signups' ), 'eme-task-signups', 'eme_task_signups_page' );
+			add_submenu_page( 'eme-manager', __( 'Task signups', 'events-made-easy' ), __( 'Task signups', 'events-made-easy' ), get_option( 'eme_cap_manage_task_signups' ), 'eme-task-signups', 'eme_task_signups_page' );
 		}
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'People', 'events-made-easy' ), __( 'People', 'events-made-easy' ), get_option( 'eme_cap_access_people' ), 'eme-people', 'eme_people_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Groups', 'events-made-easy' ), __( 'Groups', 'events-made-easy' ), get_option( 'eme_cap_access_people' ), 'eme-groups', 'eme_groups_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Members', 'events-made-easy' ), __( 'Members', 'events-made-easy' ) . $members_menu_label, get_option( 'eme_cap_access_members' ), 'eme-members', 'eme_members_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Memberships', 'events-made-easy' ), __( 'Memberships', 'events-made-easy' ), get_option( 'eme_cap_access_members' ), 'eme-memberships', 'eme_memberships_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Countries/states', 'events-made-easy' ), __( 'Countries/states', 'events-made-easy' ), $cap_settings, 'eme-countries', 'eme_countries_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Email management', 'events-made-easy' ), __( 'Email management', 'events-made-easy' ), get_option( 'eme_cap_send_mails' ), 'eme-emails', 'eme_emails_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Attendance Reports', 'events-made-easy' ), __( 'Attendance Reports', 'events-made-easy' ), get_option( 'eme_cap_list_events' ), 'eme-attendance-reports', 'eme_attendances_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Scheduled actions', 'events-made-easy' ), __( 'Scheduled actions', 'events-made-easy' ), $cap_settings, 'eme-cron', 'eme_cron_page' );
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Cleanup actions', 'events-made-easy' ), __( 'Cleanup actions', 'events-made-easy' ), get_option( 'eme_cap_cleanup' ), 'eme-cleanup', 'eme_cleanup_page' );
-
-		$plugin_page = add_submenu_page( 'eme-manager', __( 'Events Made Easy Settings', 'events-made-easy' ), __( 'Settings', 'events-made-easy' ), $cap_settings, 'eme-options', 'eme_options_page' );
-		//add_action( 'admin_head-'. $plugin_page, 'eme_admin_options_script' );
-		// do some option checking after the options have been updated
-		// add_action( 'load-'. $plugin_page, 'eme_admin_options_save');
+		add_submenu_page( 'eme-manager', __( 'People', 'events-made-easy' ), __( 'People', 'events-made-easy' ), get_option( 'eme_cap_access_people' ), 'eme-people', 'eme_people_page' );
+		add_submenu_page( 'eme-manager', __( 'Groups', 'events-made-easy' ), __( 'Groups', 'events-made-easy' ), get_option( 'eme_cap_access_people' ), 'eme-groups', 'eme_groups_page' );
+		add_submenu_page( 'eme-manager', __( 'Members', 'events-made-easy' ), __( 'Members', 'events-made-easy' ) . $members_menu_label, get_option( 'eme_cap_access_members' ), 'eme-members', 'eme_members_page' );
+		add_submenu_page( 'eme-manager', __( 'Memberships', 'events-made-easy' ), __( 'Memberships', 'events-made-easy' ), get_option( 'eme_cap_access_members' ), 'eme-memberships', 'eme_memberships_page' );
+		add_submenu_page( 'eme-manager', __( 'Countries/states', 'events-made-easy' ), __( 'Countries/states', 'events-made-easy' ), $cap_settings, 'eme-countries', 'eme_countries_page' );
+		add_submenu_page( 'eme-manager', __( 'Email management', 'events-made-easy' ), __( 'Email management', 'events-made-easy' ), get_option( 'eme_cap_send_mails' ), 'eme-emails', 'eme_emails_page' );
+		add_submenu_page( 'eme-manager', __( 'Attendance Reports', 'events-made-easy' ), __( 'Attendance Reports', 'events-made-easy' ), get_option( 'eme_cap_list_events' ), 'eme-attendance-reports', 'eme_attendances_page' );
+		add_submenu_page( 'eme-manager', __( 'Scheduled actions', 'events-made-easy' ), __( 'Scheduled actions', 'events-made-easy' ), $cap_settings, 'eme-cron', 'eme_cron_page' );
+		add_submenu_page( 'eme-manager', __( 'Cleanup actions', 'events-made-easy' ), __( 'Cleanup actions', 'events-made-easy' ), get_option( 'eme_cap_cleanup' ), 'eme-cleanup', 'eme_cleanup_page' );
+		add_submenu_page( 'eme-manager', __( 'Events Made Easy Settings', 'events-made-easy' ), __( 'Settings', 'events-made-easy' ), $cap_settings, 'eme-options', 'eme_options_page' );
 	}
 }
 

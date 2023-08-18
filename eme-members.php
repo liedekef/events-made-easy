@@ -821,7 +821,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 		$orig_membership_id = $membership_id;
 		$membership_id      = intval( $_POST['transferto_membershipid'] );
 		// move all data from the original membership in $_POST to the new membership id too, so other membership code (like eme_store_member_answers) can work as expected with the new membership id
-		foreach ( $_POST as $key => $val ) {
+		foreach ( array_keys($_POST) as $key ) {
 			$key = eme_sanitize_request( $key );
 			if ( is_array( $_POST[ $key ] ) && isset( $_POST[ $key ][ $orig_membership_id ] ) ) {
 				$_POST[ $key ][ $membership_id ] = eme_sanitize_request( $_POST[ $key ][ $orig_membership_id ] );
@@ -1215,7 +1215,6 @@ function eme_memberships_exists( $ids_arr ) {
 
 function eme_add_update_membership( $membership_id = 0 ) {
 	$membership = [];
-	$properties = [];
 	$message    = '';
 
 	$membership['name']            = isset( $_POST['name'] ) ? eme_sanitize_request( $_POST['name'] ) : '';
@@ -1303,14 +1302,11 @@ function eme_add_update_membership( $membership_id = 0 ) {
 }
 
 function eme_member_edit_layout( $member, $limited = 0 ) {
-	global $plugin_page;
-
 	if ( ! isset( $member['member_id'] ) ) {
 		$action = 'add';
 	} else {
 		$action = 'edit';
 	}
-	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	?>
 	<div class="wrap">
 		<div id="poststuff">
@@ -2655,12 +2651,9 @@ function eme_render_members_searchfields( $group = [] ) {
 function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize = 0, $sorting = '', $count = 0, $memberids_only = 0, $peopleids_only = 0, $emails_only = 0 ) {
 	global $wpdb;
 	$members_table           = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-	$memberships_table       = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	$people_table            = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$answers_table           = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-	$eme_member_status_array = eme_member_status_array();
 
-	$answer_member_ids = [];
 	$where_arr         = [];
 
 	$people_join = "LEFT JOIN $people_table AS people ON members.person_id=people.person_id";
@@ -3046,7 +3039,7 @@ function eme_member_from_form( $membership ) {
 	$dcodes_entered = [];
 	if ( isset( $_POST['members'] ) ) {
 		foreach ( $_POST['members'][ $membership_id ] as $key => $value ) {
-			if ( preg_match( '/^DISCOUNT/', $key, $matches ) ) {
+			if ( preg_match( '/^DISCOUNT/', $key ) ) {
 				$discount_value = eme_sanitize_request( $value );
 				if ( ! empty( $value ) ) {
 					$dcodes_entered[] = $discount_value;
@@ -3139,8 +3132,6 @@ function eme_dyndata_member_ajax() {
 		$member = [];
 	}
 
-	$total     = 0;
-	$cur       = '';
 	$form_html = '';
 	if ( $membership_id ) {
 		$membership = eme_get_membership( $membership_id );
@@ -3254,7 +3245,6 @@ function eme_dyndata_member_ajax() {
 
 function eme_get_member_post_answers( $member, $include_dynamicdata = 1 ) {
 	$answers = [];
-	//$fields_seen=array();
 	$membership_id = $member['membership_id'];
 
 	// do the dynamic answers if any
@@ -3267,7 +3257,6 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1 ) {
 					if ( preg_match( '/^FIELD(\d+)$/', $key, $matches ) ) {
 						$field_id = intval( $matches[1] );
 						// we don't store the field ids seen here, reason: you can and are allowed to use the same fields in the main form and in dynamic fields too
-												// $fields_seen[]=$field_id;
 						$formfield = eme_get_formfield( $field_id );
 						if ( ! empty( $formfield ) ) {
 							// for multivalue fields like checkbox, the value is in fact an array
@@ -3344,10 +3333,8 @@ function eme_member_answers( $member, $membership, $do_update = 1 ) {
 }
 function eme_store_member_answers( $member, $do_update = 1 ) {
 	global $wpdb;
-	$fields_seen = [];
 
 	$extra_charge   = 0;
-	$membership_id  = $member['membership_id'];
 	$member_answers = [];
 	$person_answers = [];
 	$all_answers    = [];
@@ -3419,9 +3406,8 @@ function eme_get_member_answers( $member_id ) {
 
 function eme_get_nodyndata_member_answers( $member_id ) {
 	global $wpdb;
-	$answers_table        = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-	$formfield_table_name = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
-	$sql                  = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=0 AND type='member'", $member_id );
+	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+	$sql           = $wpdb->prepare( "SELECT * FROM $answers_table WHERE related_id=%d AND eme_grouping=0 AND type='member'", $member_id );
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
@@ -3447,7 +3433,7 @@ function eme_delete_member_answers( $member_id ) {
 function eme_delete_membership_answers( $membership_id ) {
 	global $wpdb;
 	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='membership'", $member_id );
+	$sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d AND type='membership'", $membership_id );
 	$wpdb->query( $sql );
 }
 
@@ -4967,7 +4953,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				foreach ( $dyn_answers as $answer ) {
 					$grouping      = $answer['eme_grouping'];
 					$occurence     = $answer['occurence'];
-					$class         = 'eme_print_formfield' . $answer['field_id'];
+					//$class         = 'eme_print_formfield' . $answer['field_id'];
 					$tmp_formfield = eme_get_formfield( $answer['field_id'] );
 					if ( ! empty( $tmp_formfield ) ) {
 						if ( $target == 'html' ) {
@@ -6084,7 +6070,6 @@ function eme_ajax_members_select2() {
 			wp_die();
 	}
 
-	$table             = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
@@ -6287,7 +6272,6 @@ function eme_ajax_action_send_member_mails( $ids_arr, $subject_template_id, $bod
 }
 
 function eme_ajax_action_delete_members( $ids_arr, $trash_person = 0 ) {
-	global $wpdb;
 	if ( $trash_person ) {
 		$ids        = join( ',', $ids_arr );
 		$person_ids = eme_get_person_ids_from_member_ids( $ids );
@@ -6409,7 +6393,6 @@ function eme_accept_member_payment( $payment_id, $pg = '', $pg_pid = '' ) {
 }
 
 function eme_ajax_action_payment_membership( $ids_arr, $send_mail ) {
-	$action_ok = 1;
 	foreach ( $ids_arr as $member_id ) {
 		$member = eme_get_member( $member_id );
 		// no payment id yet? let's create one (can be old members, older imports, ...)
@@ -6486,11 +6469,10 @@ function eme_ajax_action_resend_pending_member( $ids_arr, $action ) {
 }
 
 function eme_ajax_action_resend_member_reminders( $ids_arr ) {
-	$mails_ok = 1;
 	foreach ( $ids_arr as $member_id ) {
 		$member = eme_get_member( $member_id );
 		if ( ( $member['status'] == EME_MEMBER_STATUS_ACTIVE || $member['status'] == EME_MEMBER_STATUS_GRACE ) && ! $member['related_member_id'] ) {
-				eme_member_send_expiration_reminder( $member_id );
+			eme_member_send_expiration_reminder( $member_id );
 		}
 	}
 	$ajaxResult                = [];

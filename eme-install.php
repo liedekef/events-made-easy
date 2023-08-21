@@ -1627,7 +1627,7 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
          task_id mediumint(9) NOT NULL,
          person_id mediumint(9) NOT NULL,
          event_id mediumint(9) NOT NULL,
-         signup_status BOOL DEFAULT 1;
+         signup_status BOOL DEFAULT 1,
          comment text,
          random_id varchar(50),
          UNIQUE KEY  (id),

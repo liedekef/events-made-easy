@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 372 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 373 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -695,21 +695,21 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
          waitinglist bool DEFAULT 0,
          booking_comment text,
          event_price text,
-         extra_charge tinytext,
+         extra_charge text,
          creation_date datetime,
          modif_date datetime,
          payment_date datetime DEFAULT '0000-00-00 00:00:00',
          booking_paid bool DEFAULT 0,
-         received tinytext,
-         remaining tinytext,
-         pg tinytext,
-         pg_pid tinytext,
+         received text,
+         remaining text,
+         pg text,
+         pg_pid text,
          reminder INT(11) DEFAULT 0,
          unique_nbr varchar(20),
-         discount tinytext,
-         discountids tinytext,
-         dcodes_entered tinytext,
-         dcodes_used tinytext,
+         discount text,
+         discountids text,
+         dcodes_entered text,
+         dcodes_used text,
          dgroupid INT(11) DEFAULT 0,
          attend_count INT(11) DEFAULT 0,
          UNIQUE KEY  (booking_id),
@@ -730,26 +730,26 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 		eme_maybe_drop_column( $table_name, 'ip' );
 		eme_maybe_drop_column( $table_name, 'wp_id' );
 		eme_maybe_drop_column( $table_name, 'lang' );
-		maybe_add_column( $table_name, 'extra_charge', "ALTER TABLE $table_name ADD extra_charge tinytext;" );
-		maybe_add_column( $table_name, 'discount', "ALTER TABLE $table_name ADD discount tinytext;" );
-		maybe_add_column( $table_name, 'dcodes_entered', "ALTER TABLE $table_name ADD dcodes_entered tinytext ;" );
-		maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used tinytext ;" );
+		maybe_add_column( $table_name, 'extra_charge', "ALTER TABLE $table_name ADD extra_charge text;" );
+		maybe_add_column( $table_name, 'discount', "ALTER TABLE $table_name ADD discount text;" );
+		maybe_add_column( $table_name, 'dcodes_entered', "ALTER TABLE $table_name ADD dcodes_entered text ;" );
+		maybe_add_column( $table_name, 'dcodes_used', "ALTER TABLE $table_name ADD dcodes_used text ;" );
 		maybe_add_column( $table_name, 'dgroupid', "ALTER TABLE $table_name ADD dgroupid INT(11) DEFAULT 0;" );
 		maybe_add_column( $table_name, 'reminder', "ALTER TABLE $table_name ADD reminder INT(11) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'received', "ALTER TABLE $table_name ADD received tinytext;" );
-		maybe_add_column( $table_name, 'remaining', "ALTER TABLE $table_name ADD remaining tinytext;" );
+		maybe_add_column( $table_name, 'received', "ALTER TABLE $table_name ADD received text;" );
+		maybe_add_column( $table_name, 'remaining', "ALTER TABLE $table_name ADD remaining text;" );
 		if ( eme_column_exists( $table_name, 'discountid' ) ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE discountid discountids tinytext;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE discountid discountids text;" );
 		} else {
-			maybe_add_column( $table_name, 'discountids', "ALTER TABLE $table_name ADD discountids tinytext;" );
+			maybe_add_column( $table_name, 'discountids', "ALTER TABLE $table_name ADD discountids text;" );
 		}
 		if ( eme_column_exists( $table_name, 'transfer_nbr_be97' ) ) {
 			$wpdb->query( "ALTER TABLE $table_name CHANGE transfer_nbr_be97 unique_nbr varchar(20);" );
 		} else {
 			maybe_add_column( $table_name, 'unique_nbr', "ALTER TABLE $table_name ADD unique_nbr varchar(20);" );
 		}
-		maybe_add_column( $table_name, 'pg', "ALTER TABLE $table_name ADD pg tinytext;" );
-		maybe_add_column( $table_name, 'pg_pid', "ALTER TABLE $table_name ADD pg_pid tinytext;" );
+		maybe_add_column( $table_name, 'pg', "ALTER TABLE $table_name ADD pg text;" );
+		maybe_add_column( $table_name, 'pg_pid', "ALTER TABLE $table_name ADD pg_pid text;" );
 
 		if ( $db_version < 3 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY event_id mediumint(9) NOT NULL;" );
@@ -804,6 +804,17 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
 			$wpdb->query( $sql );
 			eme_maybe_drop_column( $table_name, 'booking_approved' );
 		}
+		if ( $db_version < 373 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY extra_charge text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY received text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY remaining text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY pg text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY pg_pid text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY discount text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY discountids text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY dcodes_entered text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY dcodes_used text;" );
+		}
 	}
 }
 
@@ -817,20 +828,20 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		$sql = 'CREATE TABLE ' . $table_name . " (
          person_id mediumint(9) NOT NULL AUTO_INCREMENT,
          related_person_id mediumint(9) DEFAULT 0,
-         lastname tinytext, 
-         firstname tinytext, 
-         email tinytext NOT NULL,
+         lastname text, 
+         firstname text, 
+         email text,
          status tinyint DEFAULT 1,
-         phone tinytext,
+         phone text,
          wp_id bigint(20) unsigned DEFAULT NULL,
-         address1 tinytext, 
-         address2 tinytext, 
-         city tinytext, 
-         zip tinytext, 
-         state tinytext, 
-         country tinytext, 
-         state_code tinytext,
-         country_code tinytext,
+         address1 text, 
+         address2 text, 
+         city text, 
+         zip text, 
+         state text, 
+         country text, 
+         state_code text,
+         country_code text,
          birthdate date,
          bd_email bool DEFAULT 0,
          birthplace varchar(50) DEFAULT '',
@@ -854,16 +865,16 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'birthdate', "ALTER TABLE $table_name ADD birthdate date;" );
 		maybe_add_column( $table_name, 'birthplace', "ALTER TABLE $table_name ADD birthplace varchar(50) DEFAULT '';" );
 		maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinyint DEFAULT 1;" );
-		maybe_add_column( $table_name, 'state_code', "ALTER TABLE $table_name ADD state_code tinytext;" );
-		maybe_add_column( $table_name, 'country_code', "ALTER TABLE $table_name ADD country_code tinytext;" );
+		maybe_add_column( $table_name, 'state_code', "ALTER TABLE $table_name ADD state_code text;" );
+		maybe_add_column( $table_name, 'country_code', "ALTER TABLE $table_name ADD country_code text;" );
 		maybe_add_column( $table_name, 'wp_id', "ALTER TABLE $table_name ADD wp_id bigint(20) unsigned DEFAULT NULL;" );
-		maybe_add_column( $table_name, 'firstname', "ALTER TABLE $table_name ADD firstname tinytext;" );
-		maybe_add_column( $table_name, 'address1', "ALTER TABLE $table_name ADD address1 tinytext;" );
-		maybe_add_column( $table_name, 'address2', "ALTER TABLE $table_name ADD address2 tinytext;" );
-		maybe_add_column( $table_name, 'city', "ALTER TABLE $table_name ADD city tinytext;" );
-		maybe_add_column( $table_name, 'state', "ALTER TABLE $table_name ADD state tinytext;" );
-		maybe_add_column( $table_name, 'zip', "ALTER TABLE $table_name ADD zip tinytext;" );
-		maybe_add_column( $table_name, 'country', "ALTER TABLE $table_name ADD country tinytext;" );
+		maybe_add_column( $table_name, 'firstname', "ALTER TABLE $table_name ADD firstname text;" );
+		maybe_add_column( $table_name, 'address1', "ALTER TABLE $table_name ADD address1 text;" );
+		maybe_add_column( $table_name, 'address2', "ALTER TABLE $table_name ADD address2 text;" );
+		maybe_add_column( $table_name, 'city', "ALTER TABLE $table_name ADD city text;" );
+		maybe_add_column( $table_name, 'state', "ALTER TABLE $table_name ADD state text;" );
+		maybe_add_column( $table_name, 'zip', "ALTER TABLE $table_name ADD zip text;" );
+		maybe_add_column( $table_name, 'country', "ALTER TABLE $table_name ADD country text;" );
 		maybe_add_column( $table_name, 'lang', "ALTER TABLE $table_name ADD lang varchar(10) DEFAULT '';" );
 		// for existing installations, we set massmail and newsletter=1 if the col was missing, to reflect old behaviour
 		maybe_add_column( $table_name, 'massmail', "ALTER TABLE $table_name ADD massmail bool DEFAULT 1;" );
@@ -874,12 +885,12 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'related_person_id', "ALTER TABLE $table_name ADD related_person_id mediumint(9) DEFAULT 0;" );
 		maybe_add_column( $table_name, 'bd_email', "ALTER TABLE $table_name ADD bd_email bool DEFAULT 0;" );
 		if ( $db_version < 10 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY person_phone tinytext;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY person_phone text;" );
 		}
 		if ( $db_version < 78 ) {
-			$wpdb->query( "ALTER TABLE $table_name CHANGE person_phone phone tinytext;" );
-			$wpdb->query( "ALTER TABLE $table_name CHANGE person_name lastname tinytext NOT NULL;" );
-			$wpdb->query( "ALTER TABLE $table_name CHANGE person_email email tinytext NOT NULL;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE person_phone phone text;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE person_name lastname text;" );
+			$wpdb->query( "ALTER TABLE $table_name CHANGE person_email email text;" );
 		}
 		if ( $db_version < 163 ) {
 			eme_maybe_drop_column( $table_name, 'image_id' );
@@ -894,6 +905,20 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		if ( $db_version < 306 ) {
 			$wpdb->query( "ALTER TABLE `$table_name` ADD INDEX ( `related_person_id` )" );
 		}
+		if ( $db_version < 373 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY lastname text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY firstname text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY email text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY phone text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY address1 text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY address2 text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY city text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY zip text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY state text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY country text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY state_code text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY country_code text;" );
+		}
 	}
 
 	// now the groups table
@@ -901,9 +926,9 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 		$sql = 'CREATE TABLE ' . $grouptable_name . " (
          group_id int(11) NOT NULL auto_increment,
          name varchar(50) DEFAULT NULL,
-         email tinytext,
-         description tinytext,
-         type tinytext,
+         email text,
+         description text,
+         type text,
          public bool DEFAULT 0,
          stored_sql text,
          search_terms text,
@@ -911,8 +936,8 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
          ) $charset $collate;";
 		maybe_create_table( $grouptable_name, $sql );
 	} else {
-		maybe_add_column( $grouptable_name, 'type', "ALTER TABLE $grouptable_name ADD type tinytext;" );
-		maybe_add_column( $grouptable_name, 'email', "ALTER TABLE $grouptable_name ADD email tinytext;" );
+		maybe_add_column( $grouptable_name, 'type', "ALTER TABLE $grouptable_name ADD type text;" );
+		maybe_add_column( $grouptable_name, 'email', "ALTER TABLE $grouptable_name ADD email text;" );
 		maybe_add_column( $grouptable_name, 'stored_sql', "ALTER TABLE $grouptable_name ADD stored_sql text;" );
 		maybe_add_column( $grouptable_name, 'search_terms', "ALTER TABLE $grouptable_name ADD search_terms text;" );
 		if ( $db_version < 175 ) {
@@ -922,6 +947,11 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 			$wpdb->query( "ALTER TABLE $grouptable_name CHANGE mail_only public bool DEFAULT 0;" );
 		} else {
 			maybe_add_column( $grouptable_name, 'public', "ALTER TABLE $grouptable_name ADD public bool DEFAULT 0;" );
+		}
+		if ( $db_version < 373 ) {
+			$wpdb->query( "ALTER TABLE $table_name MODIFY email text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY description text;" );
+			$wpdb->query( "ALTER TABLE $table_name MODIFY type text;" );
 		}
 	}
 
@@ -1627,7 +1657,7 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
          task_id mediumint(9) NOT NULL,
          person_id mediumint(9) NOT NULL,
          event_id mediumint(9) NOT NULL,
-         signup_status BOOL DEFAULT 1;
+         signup_status BOOL DEFAULT 1,
          comment text,
          random_id varchar(50),
          UNIQUE KEY  (id),

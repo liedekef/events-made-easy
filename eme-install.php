@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 372 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 373 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -1627,7 +1627,7 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
          task_id mediumint(9) NOT NULL,
          person_id mediumint(9) NOT NULL,
          event_id mediumint(9) NOT NULL,
-         signup_status BOOL DEFAULT 1;
+         signup_status BOOL DEFAULT 1,
          comment text,
          random_id varchar(50),
          UNIQUE KEY  (id),

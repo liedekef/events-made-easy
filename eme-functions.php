@@ -2405,6 +2405,9 @@ function eme_safe_css_remove_attributes( $array ) {
 }
 
 function _eme_kses_single( $value, $allow_unfiltered ) {
+	if ( empty( $value ) ) {
+		return $value;
+	}
 	$value = eme_strip_weird( $value );
 	// To filter out JS, we should use domdocument, but the problem is that sometimes the
 	// html is intentional incomplete, which would cause issues with domdocument
@@ -2474,6 +2477,9 @@ function eme_strip_js( $value ) {
 }
 
 function eme_strip_weird( $value ) {
+	if ( empty( $value ) ) {
+		return $value;
+	}
 	if ( is_array( $value ) ) {
 		return array_map( 'eme_strip_weird', $value );
 	} else {
@@ -2509,7 +2515,7 @@ function eme_get_editor_settings( $tinymce = true, $quicktags = true, $media_but
 }
 
 function eme_nl2br_save_html( $string ) {
-	if ( ! $string ) {
+	if ( empty($string) ) {
 		return $string;
 	}
 	// no \n found: do nothing (this also allow this function to be called multiple times on the same string without doing anything on subsequent calls

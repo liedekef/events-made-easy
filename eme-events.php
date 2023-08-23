@@ -9430,6 +9430,7 @@ function eme_admin_enqueue_js() {
 			'translate_type'                   => __( 'Type', 'events-made-easy' ),
 			'translate_attendancedate'         => __( 'Recorded on', 'events-made-easy' ),
 			'translate_personinfo'             => __( 'Person', 'events-made-easy' ),
+			'translate_name'                   => __( 'Event/Membership name', 'events-made-easy' ),
 			'translate_attendance_reports'     => __( 'Attendance reports', 'events-made-easy' ),
 			'translate_csv'                    => __( 'CSV', 'events-made-easy' ),
 			'translate_print'                  => __( 'Print', 'events-made-easy' ),

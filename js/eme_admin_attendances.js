@@ -34,7 +34,8 @@ jQuery(document).ready( function($) {
 		    title: emeattendances.translate_personinfo
                 },
                 related_name: {
-		    title: ''
+                    sorting: false,
+		    title: emeattendances.translate_name
                 },
             },
             toolbar: {

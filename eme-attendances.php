@@ -226,6 +226,8 @@ function eme_ajax_attendances_list() {
 				if ( $membership ) {
 					$rows[ $key ]['related_name'] = eme_trans_esc_html( $membership['name'] );
 				}
+			} else {
+				$rows[ $key ]['related_name'] = __( 'Manual entry', 'events-made-easy' );
 			}
 		}
 		$jTableResult['Result']           = 'OK';

@@ -1491,8 +1491,8 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 			++$line_found;
 			$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 			foreach ( $booking_ids as $booking_id ) {
-					$booking = eme_get_booking( $booking_id );
-					$event   = eme_get_event( $booking['event_id'] );
+				$booking = eme_get_booking( $booking_id );
+				$event   = eme_get_event( $booking['event_id'] );
 				if ( empty( $event ) ) {
 					continue;
 				}

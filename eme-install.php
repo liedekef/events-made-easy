@@ -494,8 +494,8 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		}
 		if ( $db_version < 11 ) {
 			if ( eme_column_exists( $table_name, 'event_creator_id' ) ) {
-					eme_maybe_drop_column( $table_name, 'event_author' );
-					$wpdb->query( "ALTER TABLE $table_name CHANGE event_creator_id event_author mediumint(9) DEFAULT 0;" );
+				eme_maybe_drop_column( $table_name, 'event_author' );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE event_creator_id event_author mediumint(9) DEFAULT 0;" );
 			}
 			// in case event_creator_id didn't exist ...
 			maybe_add_column( $table_name, 'event_author', "ALTER TABLE $table_name ADD event_author mediumint(9) DEFAULT 0;" );
@@ -515,7 +515,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		}
 		if ( $db_version < 247 ) {
 			if ( eme_column_exists( $table_name, 'event_registration_denied_email_body' ) && ! eme_column_exists( $table_name, 'event_registration_trashed_email_body' ) ) {
-					$wpdb->query( "ALTER TABLE $table_name CHANGE event_registration_denied_email_body event_registration_trashed_email_body text;" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE event_registration_denied_email_body event_registration_trashed_email_body text;" );
 			}
 			maybe_add_column( $table_name, 'event_registration_trashed_email_body', "ALTER TABLE $table_name ADD event_registration_trashed_email_body text;" );
 		}
@@ -1014,8 +1014,8 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
 		}
 		if ( $db_version < 151 ) {
 			if ( ! eme_column_exists( $table_name, 'name' ) ) {
-					maybe_add_column( $table_name, 'name', "ALTER TABLE $table_name ADD name tinytext;" );
-					$wpdb->query( "UPDATE $table_name SET name = description;" );
+				maybe_add_column( $table_name, 'name', "ALTER TABLE $table_name ADD name tinytext;" );
+				$wpdb->query( "UPDATE $table_name SET name = description;" );
 			}
 		}
 	}
@@ -1150,7 +1150,7 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 		}
 		if ( $db_version < 279 ) {
 			if ( eme_column_exists( $table_name, 'grouping' ) ) {
-					$wpdb->query( "ALTER TABLE $table_name CHANGE grouping eme_grouping INT(11) DEFAULT 0;" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE grouping eme_grouping INT(11) DEFAULT 0;" );
 			}
 			maybe_add_column( $table_name, 'eme_grouping', "ALTER TABLE $table_name ADD eme_grouping INT(11) DEFAULT 0;" );
 		}
@@ -1167,8 +1167,8 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 			eme_maybe_drop_column( $table_name, 'booking_id' );
 			$cf_table_name = $db_prefix . EME_MEMBERSHIPS_CF_TBNAME;
 			if ( eme_table_exists( $cf_table_name ) ) {
-					$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`membership_id`,`answer`,'membership' FROM $cf_table_name" );
-					eme_drop_table( $cf_table_name );
+				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`membership_id`,`answer`,'membership' FROM $cf_table_name" );
+				eme_drop_table( $cf_table_name );
 			}
 			$cf_table_name = $db_prefix . EME_EVENTS_CF_TBNAME;
 			if ( eme_table_exists( $cf_table_name ) ) {
@@ -1177,8 +1177,8 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 			}
 			$cf_table_name = $db_prefix . EME_LOCATIONS_CF_TBNAME;
 			if ( eme_table_exists( $cf_table_name ) ) {
-					$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`location_id`,`answer`,'location' FROM $cf_table_name" );
-					eme_drop_table( $cf_table_name );
+				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`location_id`,`answer`,'location' FROM $cf_table_name" );
+				eme_drop_table( $cf_table_name );
 			}
 		}
 	}
@@ -1229,7 +1229,7 @@ function eme_create_payments_table( $charset, $collate, $db_version, $db_prefix 
 		if ( $db_version < 325 ) {
 			// else if pg_pids exists: rename to pg_pid and change type to varchar, otherwise create it
 			if ( eme_column_exists( $table_name, 'pg_pids' ) ) {
-					$wpdb->query( "ALTER TABLE $table_name CHANGE pg_pids pg_pid varchar(256);" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE pg_pids pg_pid varchar(256);" );
 			} else {
 				maybe_add_column( $table_name, 'pg_pid', "ALTER TABLE $table_name ADD pg_pid varchar(256);" );
 			}
@@ -1278,8 +1278,8 @@ function eme_create_discounts_table( $charset, $collate, $db_version, $db_prefix
 		eme_maybe_drop_column( $table_name, 'modif_date' );
 		if ( $db_version < 254 ) {
 			if ( eme_column_exists( $table_name, 'expire' ) ) {
-					$wpdb->query( "UPDATE $table_name SET valid_to=CONCAT(expire,' 23:59:00') WHERE expire IS NOT NULL;" );
-					eme_maybe_drop_column( $table_name, 'expire' );
+				$wpdb->query( "UPDATE $table_name SET valid_to=CONCAT(expire,' 23:59:00') WHERE expire IS NOT NULL;" );
+				eme_maybe_drop_column( $table_name, 'expire' );
 			}
 		}
 	}
@@ -1364,7 +1364,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		}
 		if ( $db_version < 293 ) {
 			if ( eme_column_exists( $table_name, 'read_datetime' ) ) {
-					$wpdb->query( "ALTER TABLE $table_name CHANGE read_datetime first_read_on datetime NOT NULL DEFAULT '0000-00-00 00:00:00';" );
+				$wpdb->query( "ALTER TABLE $table_name CHANGE read_datetime first_read_on datetime NOT NULL DEFAULT '0000-00-00 00:00:00';" );
 			} else {
 				maybe_add_column( $table_name, 'first_read_on', "ALTER TABLE $table_name ADD first_read_on datetime NOT NULL DEFAULT '0000-00-00 00:00:00';" );
 			}

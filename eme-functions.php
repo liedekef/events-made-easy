@@ -57,25 +57,25 @@ function eme_client_clock_ajax() {
 		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
 			$client_timeinfo['eme_client_unixtime'] = (int) $phptime_obj->format( 'U' );
 		}
-		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
+		if ( ! isset( $client_timeinfo['eme_client_seconds'] ) ) {
 			$client_timeinfo['eme_client_seconds'] = (int) $phptime_obj->format( 's' );
 		}
-		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
+		if ( ! isset( $client_timeinfo['eme_client_minutes'] ) ) {
 			$client_timeinfo['eme_client_minutes'] = (int) $phptime_obj->format( 'i' );
 		}
-		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
+		if ( ! isset( $client_timeinfo['eme_client_hours'] ) ) {
 			$client_timeinfo['eme_client_hours'] = (int) $phptime_obj->format( 'h' );
 		}
-		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
+		if ( ! isset( $client_timeinfo['eme_client_wday'] ) ) {
 			$client_timeinfo['eme_client_wday'] = (int) $phptime_obj->format( 'w' );
 		}
-		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
+		if ( ! isset( $client_timeinfo['eme_client_mday'] ) ) {
 			$client_timeinfo['eme_client_mday'] = (int) $phptime_obj->format( 'j' );
 		}
-		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
+		if ( ! isset( $client_timeinfo['eme_client_month'] ) ) {
 			$client_timeinfo['eme_client_month'] = (int) $phptime_obj->format( 'n' );
 		}
-		if ( ! isset( $client_timeinfo['eme_client_unixtime'] ) ) {
+		if ( ! isset( $client_timeinfo['eme_client_fullyear'] ) ) {
 			$client_timeinfo['eme_client_fullyear'] = (int) $phptime_obj->format( 'Y' );
 		}
 	}

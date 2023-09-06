@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Development (trunk)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-08-21 19:35:33+00:00\n"
+"POT-Creation-Date: 2023-09-06 10:31:30+00:00\n"
 "PO-Revision-Date: 2022-09-26 01:16:56+0000\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr ""
 # File: eme-actions.php, line: 126
 # File: eme-actions.php, line: 134
 # File: eme-actions.php, line: 144
-# File: eme-attendances.php, line: 236
+# File: eme-attendances.php, line: 238
 # File: eme-countries.php, line: 887
 # File: eme-countries.php, line: 920
 # File: eme-countries.php, line: 929
@@ -31,19 +31,19 @@ msgstr ""
 # File: eme-countries.php, line: 985
 # File: eme-discounts.php, line: 1643
 # File: eme-discounts.php, line: 1686
-# File: eme-events.php, line: 9912
-# File: eme-events.php, line: 10243
-# File: eme-events.php, line: 10484
+# File: eme-events.php, line: 9913
+# File: eme-events.php, line: 10244
+# File: eme-events.php, line: 10485
 # File: eme-formfields.php, line: 4971
 # File: eme-formfields.php, line: 5023
 # File: eme-formfields.php, line: 5034
 # File: eme-formfields.php, line: 5035
 # File: eme-formfields.php, line: 5057
 # File: eme-formfields.php, line: 5058
-# File: eme-functions.php, line: 3235
-# File: eme-functions.php, line: 3256
-# File: eme-functions.php, line: 3257
-# File: eme-functions.php, line: 3301
+# File: eme-functions.php, line: 3241
+# File: eme-functions.php, line: 3262
+# File: eme-functions.php, line: 3263
+# File: eme-functions.php, line: 3307
 # File: eme-locations.php, line: 2882
 # File: eme-mailer.php, line: 1195
 # File: eme-mailer.php, line: 2540
@@ -81,7 +81,7 @@ msgstr "拒绝访问!"
 #
 # File: eme-actions.php, line: 323
 # File: eme-events.php, line: 6215
-# File: eme-events.php, line: 9451
+# File: eme-events.php, line: 9452
 # File: eme-templates.php, line: 41
 msgid "Event"
 msgstr "活动"
@@ -96,10 +96,10 @@ msgstr "地点"
 #
 # File: eme-actions.php, line: 453
 # File: eme-events.php, line: 9315
-# File: eme-events.php, line: 9550
-# File: eme-events.php, line: 9583
-# File: eme-events.php, line: 9618
-# File: eme-events.php, line: 9682
+# File: eme-events.php, line: 9551
+# File: eme-events.php, line: 9584
+# File: eme-events.php, line: 9619
+# File: eme-events.php, line: 9683
 # File: eme-gdpr.php, line: 460
 # File: eme-gdpr.php, line: 605
 # File: eme-locations.php, line: 581
@@ -112,10 +112,10 @@ msgstr "州/省"
 # File: eme-actions.php, line: 454
 # File: eme-countries.php, line: 518
 # File: eme-events.php, line: 9316
-# File: eme-events.php, line: 9549
-# File: eme-events.php, line: 9584
-# File: eme-events.php, line: 9619
-# File: eme-events.php, line: 9683
+# File: eme-events.php, line: 9550
+# File: eme-events.php, line: 9585
+# File: eme-events.php, line: 9620
+# File: eme-events.php, line: 9684
 # File: eme-gdpr.php, line: 461
 # File: eme-gdpr.php, line: 609
 # File: eme-locations.php, line: 589
@@ -211,7 +211,7 @@ msgid "Events"
 msgstr "活动"
 #
 # File: eme-attendances.php, line: 81
-# File: eme-events.php, line: 9663
+# File: eme-events.php, line: 9664
 # File: eme-gdpr.php, line: 487
 # File: eme-options.php, line: 1379
 # File: events-manager.php, line: 367
@@ -325,13 +325,18 @@ msgid "Edit person"
 msgstr "编辑人员"
 #
 # File: eme-attendances.php, line: 217
-# File: eme-events.php, line: 10177
+# File: eme-events.php, line: 10178
 # File: eme-rsvp.php, line: 5652
 msgid "All day"
 msgstr "全天"
 #
-# File: eme-attendances.php, line: 262
-# File: eme-events.php, line: 10285
+# File: eme-attendances.php, line: 230
+#, fuzzy
+msgid "Manual entry"
+msgstr "手动"
+#
+# File: eme-attendances.php, line: 264
+# File: eme-events.php, line: 10286
 msgid "Events deleted"
 msgstr "活动已删除"
 #
@@ -344,7 +349,7 @@ msgid "Attribute Name"
 msgstr "属性名称"
 #
 # File: eme-attributes.php, line: 96
-# File: eme-events.php, line: 9518
+# File: eme-events.php, line: 9519
 msgid "Value"
 msgstr "值"
 #
@@ -461,14 +466,14 @@ msgstr "添加分类"
 # File: eme-categories.php, line: 136
 # File: eme-events.php, line: 9389
 # File: eme-events.php, line: 9429
-# File: eme-events.php, line: 9445
-# File: eme-events.php, line: 9469
-# File: eme-events.php, line: 9490
-# File: eme-events.php, line: 9512
-# File: eme-events.php, line: 9545
-# File: eme-events.php, line: 9573
-# File: eme-events.php, line: 9666
-# File: eme-events.php, line: 9721
+# File: eme-events.php, line: 9446
+# File: eme-events.php, line: 9470
+# File: eme-events.php, line: 9491
+# File: eme-events.php, line: 9513
+# File: eme-events.php, line: 9546
+# File: eme-events.php, line: 9574
+# File: eme-events.php, line: 9667
+# File: eme-events.php, line: 9722
 # File: eme-gdpr.php, line: 452
 # File: eme-gdpr.php, line: 492
 # File: eme-holidays.php, line: 122
@@ -483,14 +488,14 @@ msgstr "ID"
 # File: eme-categories.php, line: 130
 # File: eme-categories.php, line: 137
 # File: eme-events.php, line: 9390
-# File: eme-events.php, line: 9471
-# File: eme-events.php, line: 9491
-# File: eme-events.php, line: 9511
-# File: eme-events.php, line: 9546
-# File: eme-events.php, line: 9574
-# File: eme-events.php, line: 9611
-# File: eme-events.php, line: 9671
-# File: eme-events.php, line: 9776
+# File: eme-events.php, line: 9472
+# File: eme-events.php, line: 9492
+# File: eme-events.php, line: 9512
+# File: eme-events.php, line: 9547
+# File: eme-events.php, line: 9575
+# File: eme-events.php, line: 9612
+# File: eme-events.php, line: 9672
+# File: eme-events.php, line: 9777
 # File: eme-holidays.php, line: 123
 # File: eme-holidays.php, line: 130
 # File: eme-mailer.php, line: 1335
@@ -504,7 +509,7 @@ msgid "Name"
 msgstr "名字"
 #
 # File: eme-categories.php, line: 143
-# File: eme-events.php, line: 10008
+# File: eme-events.php, line: 10009
 # File: eme-formfields.php, line: 5008
 # File: eme-holidays.php, line: 136
 # File: eme-locations.php, line: 2959
@@ -670,15 +675,15 @@ msgstr "月"
 # File: eme-events.php, line: 5974
 # File: eme-events.php, line: 6074
 # File: eme-events.php, line: 9407
-# File: eme-events.php, line: 9456
-# File: eme-events.php, line: 9476
-# File: eme-events.php, line: 9500
-# File: eme-events.php, line: 9534
-# File: eme-events.php, line: 9562
-# File: eme-events.php, line: 9590
-# File: eme-events.php, line: 9627
-# File: eme-events.php, line: 9685
-# File: eme-events.php, line: 9751
+# File: eme-events.php, line: 9457
+# File: eme-events.php, line: 9477
+# File: eme-events.php, line: 9501
+# File: eme-events.php, line: 9535
+# File: eme-events.php, line: 9563
+# File: eme-events.php, line: 9591
+# File: eme-events.php, line: 9628
+# File: eme-events.php, line: 9686
+# File: eme-events.php, line: 9752
 # File: eme-formfields.php, line: 201
 # File: eme-locations.php, line: 920
 # File: eme-mailer.php, line: 2565
@@ -1062,8 +1067,8 @@ msgstr "州的名称"
 #
 # File: eme-countries.php, line: 511
 # File: eme-discounts.php, line: 1550
-# File: eme-events.php, line: 9532
-# File: eme-events.php, line: 9557
+# File: eme-events.php, line: 9533
+# File: eme-events.php, line: 9558
 msgid "Code"
 msgstr "代码"
 #
@@ -1090,23 +1095,23 @@ msgid "The name of the country"
 msgstr "国家的名称"
 #
 # File: eme-countries.php, line: 577
-# File: eme-events.php, line: 9558
+# File: eme-events.php, line: 9559
 msgid "Alpha-2"
 msgstr "Alpha-2"
 #
 # File: eme-countries.php, line: 581
-# File: eme-events.php, line: 9559
+# File: eme-events.php, line: 9560
 msgid "Alpha-3"
 msgstr "Alpha-3"
 #
 # File: eme-countries.php, line: 585
-# File: eme-events.php, line: 9560
+# File: eme-events.php, line: 9561
 msgid "Num-3"
 msgstr "Num-3"
 #
 # File: eme-countries.php, line: 589
-# File: eme-events.php, line: 9551
-# File: eme-events.php, line: 9624
+# File: eme-events.php, line: 9552
+# File: eme-events.php, line: 9625
 # File: eme-people.php, line: 2137
 msgid "Language"
 msgstr "语言"
@@ -1140,12 +1145,12 @@ msgid "Incorrect country selection"
 msgstr "国家选择不正确"
 #
 # File: eme-countries.php, line: 1032
-# File: eme-functions.php, line: 3283
+# File: eme-functions.php, line: 3289
 msgid "Update failed: "
 msgstr "更新失败："
 #
 # File: eme-countries.php, line: 1034
-# File: eme-functions.php, line: 3285
+# File: eme-functions.php, line: 3291
 msgid "Insert failed: "
 msgstr "插入失败："
 #
@@ -1447,10 +1452,10 @@ msgstr "折扣的名称"
 #
 # File: eme-discounts.php, line: 839
 # File: eme-discounts.php, line: 989
-# File: eme-events.php, line: 9472
-# File: eme-events.php, line: 9513
-# File: eme-events.php, line: 9610
-# File: eme-events.php, line: 9665
+# File: eme-events.php, line: 9473
+# File: eme-events.php, line: 9514
+# File: eme-events.php, line: 9611
+# File: eme-events.php, line: 9666
 # File: eme-members.php, line: 1761
 # File: eme-people.php, line: 2277
 # File: eme-tasks.php, line: 737
@@ -1460,9 +1465,9 @@ msgstr "描述"
 #
 # File: eme-discounts.php, line: 843
 # File: eme-events.php, line: 9430
-# File: eme-events.php, line: 9473
-# File: eme-events.php, line: 9492
-# File: eme-events.php, line: 9519
+# File: eme-events.php, line: 9474
+# File: eme-events.php, line: 9493
+# File: eme-events.php, line: 9520
 # File: eme-members.php, line: 1765
 # File: eme-templates.php, line: 291
 msgid "Type"
@@ -1509,7 +1514,7 @@ msgstr ""
 "扣使用"
 #
 # File: eme-discounts.php, line: 862
-# File: eme-events.php, line: 9514
+# File: eme-events.php, line: 9515
 msgid "Discount groups"
 msgstr "折扣群组"
 #
@@ -1522,7 +1527,7 @@ msgstr ""
 "到您的活动上"
 #
 # File: eme-discounts.php, line: 868
-# File: eme-events.php, line: 9522
+# File: eme-events.php, line: 9523
 msgid "Valid from"
 msgstr "有效期从"
 #
@@ -1534,7 +1539,7 @@ msgstr ""
 "可选的优惠券开始的日期和时间，如果输入的优惠券在此日期和时间之前是无效的。"
 #
 # File: eme-discounts.php, line: 875
-# File: eme-events.php, line: 9523
+# File: eme-events.php, line: 9524
 msgid "Valid until"
 msgstr "有效期至"
 #
@@ -1669,17 +1674,17 @@ msgstr ""
 "的优惠券代码，您也可以将其使用限制在 3 个左右。"
 #
 # File: eme-discounts.php, line: 1548
-# File: eme-events.php, line: 9529
+# File: eme-events.php, line: 9530
 msgid "Fixed"
 msgstr "已修复"
 #
 # File: eme-discounts.php, line: 1549
-# File: eme-events.php, line: 9531
+# File: eme-events.php, line: 9532
 msgid "Percentage"
 msgstr "百分比"
 #
 # File: eme-discounts.php, line: 1551
-# File: eme-events.php, line: 9530
+# File: eme-events.php, line: 9531
 msgid "Fixed per seat"
 msgstr "每个座位固定"
 #
@@ -1826,7 +1831,7 @@ msgstr "新插入的循环包含 %d 活动"
 # File: eme-events.php, line: 664
 # File: eme-events.php, line: 807
 # File: eme-events.php, line: 6198
-# File: eme-events.php, line: 10194
+# File: eme-events.php, line: 10195
 msgid "Edit Recurrence"
 msgstr "编辑循环"
 #
@@ -2080,7 +2085,7 @@ msgid "GDPR approval"
 msgstr "GDPR 批准"
 #
 # File: eme-events.php, line: 1601
-# File: eme-events.php, line: 9638
+# File: eme-events.php, line: 9639
 msgid "GDPR"
 msgstr "GDPR"
 #
@@ -2093,12 +2098,12 @@ msgid "Events Made Easy plugin page"
 msgstr "Events Made Easy 的插件页面"
 #
 # File: eme-events.php, line: 2420
-# File: eme-events.php, line: 9474
-# File: eme-events.php, line: 9498
-# File: eme-events.php, line: 9525
-# File: eme-events.php, line: 9552
-# File: eme-events.php, line: 9690
-# File: eme-events.php, line: 9743
+# File: eme-events.php, line: 9475
+# File: eme-events.php, line: 9499
+# File: eme-events.php, line: 9526
+# File: eme-events.php, line: 9553
+# File: eme-events.php, line: 9691
+# File: eme-events.php, line: 9744
 # File: eme-locations.php, line: 2406
 # File: eme-rsvp.php, line: 5533
 msgid "Edit"
@@ -2483,8 +2488,8 @@ msgstr "如果您改变这个活动，它将成为一个独立的活动，并从
 #
 # File: eme-events.php, line: 6218
 # File: eme-events.php, line: 9387
-# File: eme-events.php, line: 9723
-# File: eme-events.php, line: 10147
+# File: eme-events.php, line: 9724
+# File: eme-events.php, line: 10148
 # File: eme-options.php, line: 1091
 # File: eme-rsvp.php, line: 5611
 msgid "RSVP"
@@ -2662,7 +2667,7 @@ msgid "Delete Event"
 msgstr "删除活动"
 #
 # File: eme-events.php, line: 6424
-# File: eme-events.php, line: 9578
+# File: eme-events.php, line: 9579
 msgid "View"
 msgstr "查看"
 #
@@ -2677,9 +2682,9 @@ msgstr "删除循环"
 #
 # File: eme-events.php, line: 6453
 # File: eme-events.php, line: 9393
-# File: eme-events.php, line: 9462
-# File: eme-events.php, line: 9705
-# File: eme-events.php, line: 9778
+# File: eme-events.php, line: 9463
+# File: eme-events.php, line: 9706
+# File: eme-events.php, line: 9779
 # File: eme-mailer.php, line: 1338
 # File: eme-mailer.php, line: 2577
 # File: eme-people.php, line: 951
@@ -2722,8 +2727,8 @@ msgstr ""
 "#_CONTACTPERSON），都将使用管理用户信息。"
 #
 # File: eme-events.php, line: 6529
-# File: eme-events.php, line: 9731
-# File: eme-events.php, line: 10016
+# File: eme-events.php, line: 9732
+# File: eme-events.php, line: 10017
 # File: eme-locations.php, line: 458
 # File: eme-locations.php, line: 2969
 # File: eme-recurrence.php, line: 577
@@ -3340,8 +3345,8 @@ msgstr "预订的邮件附件"
 # File: eme-events.php, line: 7610
 # File: eme-events.php, line: 7986
 # File: eme-events.php, line: 9344
-# File: eme-events.php, line: 9708
-# File: eme-events.php, line: 9783
+# File: eme-events.php, line: 9709
+# File: eme-events.php, line: 9784
 # File: eme-mailer.php, line: 2268
 # File: eme-mailer.php, line: 2446
 # File: eme-members.php, line: 2212
@@ -3821,7 +3826,7 @@ msgid ""
 msgstr "“隐藏\" 类型的自定义字段在这里是无用的，当然也不会被显示。"
 #
 # File: eme-events.php, line: 8382
-# File: eme-events.php, line: 9587
+# File: eme-events.php, line: 9588
 # File: eme-locations.php, line: 739
 msgid "External URL"
 msgstr "外部链接"
@@ -4009,7 +4014,7 @@ msgid "Allow only 1 booking per person (combo email/last name/first name)"
 msgstr "每个人只允许有一个预订（组合电子邮件、姓氏、名字）"
 #
 # File: eme-events.php, line: 8565
-# File: eme-events.php, line: 9729
+# File: eme-events.php, line: 9730
 # File: eme-options.php, line: 38
 # File: eme-people.php, line: 949
 # File: eme-people.php, line: 1242
@@ -4373,7 +4378,7 @@ msgstr "更换图像"
 #
 # File: eme-events.php, line: 9335
 # File: eme-events.php, line: 9411
-# File: eme-events.php, line: 9591
+# File: eme-events.php, line: 9592
 msgid "Are you sure you want to delete the selected records?"
 msgstr "您确定要删除选定的记录吗？"
 #
@@ -4418,7 +4423,7 @@ msgid "Select a discountgroup"
 msgstr "选择一个折扣群组"
 #
 # File: eme-events.php, line: 9383
-# File: eme-events.php, line: 9719
+# File: eme-events.php, line: 9720
 msgid "No matching event found"
 msgstr "没有找到匹配的活动"
 #
@@ -4427,28 +4432,17 @@ msgid "Recurrences"
 msgstr "循环"
 #
 # File: eme-events.php, line: 9388
-# File: eme-events.php, line: 9730
+# File: eme-events.php, line: 9731
 msgid "Event price"
 msgstr "活动价格"
 #
 # File: eme-events.php, line: 9394
-# File: eme-events.php, line: 9482
-# File: eme-events.php, line: 9577
+# File: eme-events.php, line: 9483
+# File: eme-events.php, line: 9578
 msgid "Copy"
 msgstr "复制"
 #
 # File: eme-events.php, line: 9395
-# File: eme-events.php, line: 9434
-# File: eme-events.php, line: 9453
-# File: eme-events.php, line: 9477
-# File: eme-events.php, line: 9592
-# File: eme-events.php, line: 9633
-# File: eme-events.php, line: 9687
-# File: eme-events.php, line: 9744
-msgid "CSV"
-msgstr "CSV"
-#
-# File: eme-events.php, line: 9396
 # File: eme-events.php, line: 9435
 # File: eme-events.php, line: 9454
 # File: eme-events.php, line: 9478
@@ -4456,6 +4450,17 @@ msgstr "CSV"
 # File: eme-events.php, line: 9634
 # File: eme-events.php, line: 9688
 # File: eme-events.php, line: 9745
+msgid "CSV"
+msgstr "CSV"
+#
+# File: eme-events.php, line: 9396
+# File: eme-events.php, line: 9436
+# File: eme-events.php, line: 9455
+# File: eme-events.php, line: 9479
+# File: eme-events.php, line: 9594
+# File: eme-events.php, line: 9635
+# File: eme-events.php, line: 9689
+# File: eme-events.php, line: 9746
 msgid "Print"
 msgstr "打印"
 #
@@ -4472,53 +4477,53 @@ msgid "Date"
 msgstr "日期"
 #
 # File: eme-events.php, line: 9401
-# File: eme-events.php, line: 9725
+# File: eme-events.php, line: 9726
 msgid "Date and time"
 msgstr "日期和时间"
 #
 # File: eme-events.php, line: 9403
-# File: eme-events.php, line: 9784
+# File: eme-events.php, line: 9785
 msgid "Selected dates:"
 msgstr "选定的日期："
 #
 # File: eme-events.php, line: 9404
-# File: eme-events.php, line: 9640
+# File: eme-events.php, line: 9641
 msgid "Created on"
 msgstr "创建于"
 #
 # File: eme-events.php, line: 9405
-# File: eme-events.php, line: 9641
+# File: eme-events.php, line: 9642
 msgid "Modified on"
 msgstr "修改于"
 #
 # File: eme-events.php, line: 9406
-# File: eme-events.php, line: 9455
-# File: eme-events.php, line: 9475
-# File: eme-events.php, line: 9499
-# File: eme-events.php, line: 9533
-# File: eme-events.php, line: 9561
-# File: eme-events.php, line: 9589
-# File: eme-events.php, line: 9626
-# File: eme-events.php, line: 9684
-# File: eme-events.php, line: 9750
-# File: eme-events.php, line: 9767
+# File: eme-events.php, line: 9456
+# File: eme-events.php, line: 9476
+# File: eme-events.php, line: 9500
+# File: eme-events.php, line: 9534
+# File: eme-events.php, line: 9562
+# File: eme-events.php, line: 9590
+# File: eme-events.php, line: 9627
+# File: eme-events.php, line: 9685
+# File: eme-events.php, line: 9751
+# File: eme-events.php, line: 9768
 msgid "Please wait"
 msgstr "请稍候"
 #
 # File: eme-events.php, line: 9408
-# File: eme-events.php, line: 9594
+# File: eme-events.php, line: 9595
 msgid "Select the image to be used as featured image"
 msgstr "选择要作为特色图片的图像"
 #
 # File: eme-events.php, line: 9409
-# File: eme-events.php, line: 9595
+# File: eme-events.php, line: 9596
 msgid "Set featured image"
 msgstr "设置特色图像"
 #
 # File: eme-events.php, line: 9410
-# File: eme-events.php, line: 9480
-# File: eme-events.php, line: 9502
-# File: eme-events.php, line: 9536
+# File: eme-events.php, line: 9481
+# File: eme-events.php, line: 9503
+# File: eme-events.php, line: 9537
 msgid "Press the delete button to remove"
 msgstr "按下删除按钮以移除"
 #
@@ -4541,45 +4546,50 @@ msgid "Recorded on"
 msgstr "录制于"
 #
 # File: eme-events.php, line: 9432
-# File: eme-events.php, line: 9452
+# File: eme-events.php, line: 9453
 msgid "Person"
 msgstr "个人"
 #
 # File: eme-events.php, line: 9433
+#, fuzzy
+msgid "Event/Membership name"
+msgstr "已添加会籍"
+#
+# File: eme-events.php, line: 9434
 msgid "Attendance reports"
 msgstr "出席报告"
 #
-# File: eme-events.php, line: 9436
+# File: eme-events.php, line: 9437
 msgid "Are you sure to delete this record?"
 msgstr "您确定要删除这个记录吗？"
 #
-# File: eme-events.php, line: 9437
-# File: eme-events.php, line: 9604
-# File: eme-events.php, line: 9659
-# File: eme-events.php, line: 9775
+# File: eme-events.php, line: 9438
+# File: eme-events.php, line: 9605
+# File: eme-events.php, line: 9660
+# File: eme-events.php, line: 9776
 msgid "No matching person found"
 msgstr "没有找到匹配的人"
 #
-# File: eme-events.php, line: 9446
+# File: eme-events.php, line: 9447
 # File: events-manager.php, line: 362
 msgid "Task signups"
 msgstr "任务报名"
 #
-# File: eme-events.php, line: 9447
+# File: eme-events.php, line: 9448
 # File: eme-tasks.php, line: 426
 msgid "Task name"
 msgstr "任务名称"
 #
-# File: eme-events.php, line: 9448
+# File: eme-events.php, line: 9449
 msgid "Task start date"
 msgstr "任务开始日期"
 #
-# File: eme-events.php, line: 9449
+# File: eme-events.php, line: 9450
 msgid "Task end date"
 msgstr "任务结束日期"
 #
-# File: eme-events.php, line: 9450
-# File: eme-events.php, line: 9746
+# File: eme-events.php, line: 9451
+# File: eme-events.php, line: 9747
 # File: eme-formfields.php, line: 1156
 # File: eme-formfields.php, line: 1901
 # File: eme-formfields.php, line: 3089
@@ -4590,36 +4600,36 @@ msgstr "任务结束日期"
 msgid "Comment"
 msgstr "评论"
 #
-# File: eme-events.php, line: 9457
-# File: eme-events.php, line: 9479
-# File: eme-events.php, line: 9501
-# File: eme-events.php, line: 9535
-# File: eme-events.php, line: 9563
-# File: eme-events.php, line: 9628
-# File: eme-events.php, line: 9686
-# File: eme-events.php, line: 9752
+# File: eme-events.php, line: 9458
+# File: eme-events.php, line: 9480
+# File: eme-events.php, line: 9502
+# File: eme-events.php, line: 9536
+# File: eme-events.php, line: 9564
+# File: eme-events.php, line: 9629
+# File: eme-events.php, line: 9687
+# File: eme-events.php, line: 9753
 msgid "Are you sure to delete the selected records?"
 msgstr "您确定要删除选定的记录吗？"
 #
-# File: eme-events.php, line: 9458
+# File: eme-events.php, line: 9459
 msgid "Press the delete button to remove this record"
 msgstr "按下删除按钮以删除此记录"
 #
-# File: eme-events.php, line: 9459
-# File: eme-events.php, line: 9481
-# File: eme-events.php, line: 9528
-# File: eme-events.php, line: 9556
+# File: eme-events.php, line: 9460
+# File: eme-events.php, line: 9482
+# File: eme-events.php, line: 9529
+# File: eme-events.php, line: 9557
 msgid "Records deleted"
 msgstr "已删除记录"
 #
-# File: eme-events.php, line: 9470
+# File: eme-events.php, line: 9471
 # File: eme-formfields.php, line: 4820
 # File: eme-options.php, line: 1352
 # File: events-manager.php, line: 355
 msgid "Templates"
 msgstr "模版"
 #
-# File: eme-events.php, line: 9493
+# File: eme-events.php, line: 9494
 # File: eme-formfields.php, line: 332
 # File: eme-options.php, line: 2215
 # File: eme-options.php, line: 2246
@@ -4639,107 +4649,107 @@ msgstr "模版"
 msgid "Extra charge"
 msgstr "额外收费"
 #
-# File: eme-events.php, line: 9494
+# File: eme-events.php, line: 9495
 msgid "Searchable"
 msgstr "可搜索"
 #
-# File: eme-events.php, line: 9495
+# File: eme-events.php, line: 9496
 msgid "Purpose"
 msgstr "目的"
 #
-# File: eme-events.php, line: 9496
+# File: eme-events.php, line: 9497
 msgid "Used in replies"
 msgstr "在答复中使用"
 #
-# File: eme-events.php, line: 9497
+# File: eme-events.php, line: 9498
 msgid "Required"
 msgstr "必需"
 #
-# File: eme-events.php, line: 9510
+# File: eme-events.php, line: 9511
 # File: eme-options.php, line: 1360
 # File: events-manager.php, line: 357
 msgid "Discounts"
 msgstr "折扣"
 #
-# File: eme-events.php, line: 9515
+# File: eme-events.php, line: 9516
 msgid "Coupon"
 msgstr "优惠券"
 #
-# File: eme-events.php, line: 9516
+# File: eme-events.php, line: 9517
 msgid "Case sensitive"
 msgstr "区分大小写"
 #
-# File: eme-events.php, line: 9517
+# File: eme-events.php, line: 9518
 msgid "Track discount usage per booked seat"
 msgstr "跟踪每个预订座位的折扣使用情况"
 #
-# File: eme-events.php, line: 9520
+# File: eme-events.php, line: 9521
 msgid "Max Usage"
 msgstr "最大使用量"
 #
-# File: eme-events.php, line: 9521
+# File: eme-events.php, line: 9522
 msgid "Usage"
 msgstr "使用情况"
 #
-# File: eme-events.php, line: 9524
+# File: eme-events.php, line: 9525
 msgid "Max Discounts"
 msgstr "最大折扣"
-#
-# File: eme-events.php, line: 9526
-# File: eme-events.php, line: 9554
-# File: eme-events.php, line: 9636
-msgid "Record added"
-msgstr "已添加记录"
 #
 # File: eme-events.php, line: 9527
 # File: eme-events.php, line: 9555
 # File: eme-events.php, line: 9637
+msgid "Record added"
+msgstr "已添加记录"
+#
+# File: eme-events.php, line: 9528
+# File: eme-events.php, line: 9556
+# File: eme-events.php, line: 9638
 msgid "Record updated"
 msgstr "已更新记录"
 #
-# File: eme-events.php, line: 9544
+# File: eme-events.php, line: 9545
 msgid "Countries"
 msgstr "国家"
 #
-# File: eme-events.php, line: 9547
+# File: eme-events.php, line: 9548
 msgid "Country ID"
 msgstr "国家 ID"
 #
-# File: eme-events.php, line: 9548
+# File: eme-events.php, line: 9549
 msgid "States"
 msgstr "州"
 #
-# File: eme-events.php, line: 9553
+# File: eme-events.php, line: 9554
 msgid ""
 "No country associated with this state, it will not show up in dropdown "
 "lists. Please edit this state and correct the country info."
 msgstr ""
 "没有与该州相关的国家，它将不会显示在下拉列表中。请编辑该州并纠正国家信息。"
 #
-# File: eme-events.php, line: 9571
+# File: eme-events.php, line: 9572
 msgid "No matching location found"
 msgstr "没有找到匹配的地点"
 #
-# File: eme-events.php, line: 9572
+# File: eme-events.php, line: 9573
 # File: eme-options.php, line: 1087
 # File: eme-options.php, line: 1325
 # File: events-manager.php, line: 349
 msgid "Locations"
 msgstr "地點"
 #
-# File: eme-events.php, line: 9575
+# File: eme-events.php, line: 9576
 # File: eme-locations.php, line: 376
 msgid "Insert New Location"
 msgstr "插入新的地点"
 #
-# File: eme-events.php, line: 9576
+# File: eme-events.php, line: 9577
 # File: eme-locations.php, line: 378
 msgid "Edit Location '%s'"
 msgstr "编辑地点 “%s”。"
 #
-# File: eme-events.php, line: 9581
-# File: eme-events.php, line: 9616
-# File: eme-events.php, line: 9680
+# File: eme-events.php, line: 9582
+# File: eme-events.php, line: 9617
+# File: eme-events.php, line: 9681
 # File: eme-formfields.php, line: 1749
 # File: eme-formfields.php, line: 2835
 # File: eme-formfields.php, line: 3806
@@ -4753,9 +4763,9 @@ msgstr "编辑地点 “%s”。"
 msgid "City"
 msgstr "城市"
 #
-# File: eme-events.php, line: 9582
-# File: eme-events.php, line: 9617
-# File: eme-events.php, line: 9681
+# File: eme-events.php, line: 9583
+# File: eme-events.php, line: 9618
+# File: eme-events.php, line: 9682
 # File: eme-formfields.php, line: 1765
 # File: eme-formfields.php, line: 2847
 # File: eme-formfields.php, line: 3816
@@ -4769,45 +4779,45 @@ msgstr "城市"
 msgid "Postal code"
 msgstr "邮政编码"
 #
-# File: eme-events.php, line: 9585
+# File: eme-events.php, line: 9586
 # File: eme-locations.php, line: 602
 msgid "Latitude"
 msgstr "纬度"
 #
-# File: eme-events.php, line: 9586
+# File: eme-events.php, line: 9587
 # File: eme-locations.php, line: 606
 msgid "Longitude"
 msgstr "经度"
 #
-# File: eme-events.php, line: 9588
+# File: eme-events.php, line: 9589
 msgid "Online only"
 msgstr "仅限在线"
 #
-# File: eme-events.php, line: 9606
-# File: eme-events.php, line: 9668
+# File: eme-events.php, line: 9607
+# File: eme-events.php, line: 9669
 # File: eme-gdpr.php, line: 573
 msgid "Person ID"
 msgstr "个人 ID"
 #
-# File: eme-events.php, line: 9607
+# File: eme-events.php, line: 9608
 msgid "Group ID"
 msgstr "群组 ID"
 #
-# File: eme-events.php, line: 9608
+# File: eme-events.php, line: 9609
 # File: eme-people.php, line: 2294
 # File: events-manager.php, line: 364
 msgid "People"
 msgstr "人员"
 #
-# File: eme-events.php, line: 9609
-# File: eme-events.php, line: 9631
+# File: eme-events.php, line: 9610
+# File: eme-events.php, line: 9632
 # File: eme-people.php, line: 2154
 # File: events-manager.php, line: 365
 msgid "Groups"
 msgstr "群组"
 #
-# File: eme-events.php, line: 9612
-# File: eme-events.php, line: 9672
+# File: eme-events.php, line: 9613
+# File: eme-events.php, line: 9673
 # File: eme-formfields.php, line: 1109
 # File: eme-formfields.php, line: 1340
 # File: eme-formfields.php, line: 1687
@@ -4833,8 +4843,8 @@ msgstr "群组"
 msgid "Last name"
 msgstr "姓氏"
 #
-# File: eme-events.php, line: 9613
-# File: eme-events.php, line: 9673
+# File: eme-events.php, line: 9614
+# File: eme-events.php, line: 9674
 # File: eme-formfields.php, line: 1125
 # File: eme-formfields.php, line: 1352
 # File: eme-formfields.php, line: 1703
@@ -4862,9 +4872,9 @@ msgstr "姓氏"
 msgid "First name"
 msgstr "名字"
 #
-# File: eme-events.php, line: 9620
-# File: eme-events.php, line: 9674
-# File: eme-events.php, line: 9777
+# File: eme-events.php, line: 9621
+# File: eme-events.php, line: 9675
+# File: eme-events.php, line: 9778
 # File: eme-formfields.php, line: 1134
 # File: eme-formfields.php, line: 1361
 # File: eme-formfields.php, line: 1798
@@ -4894,7 +4904,7 @@ msgstr "名字"
 msgid "Email"
 msgstr "电子邮件"
 #
-# File: eme-events.php, line: 9621
+# File: eme-events.php, line: 9622
 # File: eme-formfields.php, line: 1147
 # File: eme-formfields.php, line: 1883
 # File: eme-formfields.php, line: 1892
@@ -4913,51 +4923,51 @@ msgstr "电子邮件"
 msgid "Phone number"
 msgstr "电话号码"
 #
-# File: eme-events.php, line: 9622
-# File: eme-events.php, line: 9678
+# File: eme-events.php, line: 9623
+# File: eme-events.php, line: 9679
 msgid "Birth date"
 msgstr "出生日期"
 #
-# File: eme-events.php, line: 9623
-# File: eme-events.php, line: 9679
+# File: eme-events.php, line: 9624
+# File: eme-events.php, line: 9680
 msgid "Birth place"
 msgstr "出生地"
 #
-# File: eme-events.php, line: 9625
-# File: eme-events.php, line: 9669
-# File: eme-events.php, line: 9727
+# File: eme-events.php, line: 9626
+# File: eme-events.php, line: 9670
+# File: eme-events.php, line: 9728
 # File: eme-people.php, line: 1521
 # File: eme-people.php, line: 2161
 msgid "Linked WP user"
 msgstr "链接的 WP 用户"
 #
-# File: eme-events.php, line: 9629
+# File: eme-events.php, line: 9630
 msgid "Show all bookings"
 msgstr "显示所有预订"
 #
-# File: eme-events.php, line: 9630
+# File: eme-events.php, line: 9631
 msgid "Member of"
 msgstr "会员属于"
 #
-# File: eme-events.php, line: 9632
+# File: eme-events.php, line: 9633
 msgid "Bookings made"
 msgstr "已预订"
 #
-# File: eme-events.php, line: 9635
-# File: eme-events.php, line: 9689
+# File: eme-events.php, line: 9636
+# File: eme-events.php, line: 9690
 msgid "Answers"
 msgstr "答案"
 #
-# File: eme-events.php, line: 9639
+# File: eme-events.php, line: 9640
 msgid "GDPR modification date"
 msgstr "GDPR 的修改日期"
 #
-# File: eme-events.php, line: 9642
-# File: eme-events.php, line: 9675
+# File: eme-events.php, line: 9643
+# File: eme-events.php, line: 9676
 msgid "Related to"
 msgstr "与之相关"
 #
-# File: eme-events.php, line: 9643
+# File: eme-events.php, line: 9644
 # File: eme-gdpr.php, line: 463
 # File: eme-gdpr.php, line: 617
 # File: eme-options.php, line: 1723
@@ -4966,320 +4976,320 @@ msgstr "与之相关"
 msgid "MassMail"
 msgstr "群邮"
 #
-# File: eme-events.php, line: 9644
+# File: eme-events.php, line: 9645
 # File: eme-options.php, line: 2089
 msgid "Birthday Email"
 msgstr "生日电子邮件"
 #
-# File: eme-events.php, line: 9645
+# File: eme-events.php, line: 9646
 msgid "Public group"
 msgstr "公共群组"
 #
-# File: eme-events.php, line: 9646
+# File: eme-events.php, line: 9647
 msgid "Nbr People"
 msgstr "Nbr 人员"
 #
-# File: eme-events.php, line: 9660
+# File: eme-events.php, line: 9661
 msgid "No matching member found"
 msgstr "没有找到匹配的成员"
 #
-# File: eme-events.php, line: 9662
+# File: eme-events.php, line: 9663
 # File: eme-options.php, line: 1088
 # File: events-manager.php, line: 366
 msgid "Members"
 msgstr "会员"
 #
-# File: eme-events.php, line: 9664
+# File: eme-events.php, line: 9665
 # File: eme-gdpr.php, line: 493
 # File: eme-gdpr.php, line: 677
 # File: eme-members.php, line: 1460
 msgid "Membership"
 msgstr "会籍"
 #
-# File: eme-events.php, line: 9667
+# File: eme-events.php, line: 9668
 # File: eme-gdpr.php, line: 673
 msgid "Member ID"
 msgstr "会员 ID"
 #
-# File: eme-events.php, line: 9670
+# File: eme-events.php, line: 9671
 msgid "Contact"
 msgstr "联系"
 #
-# File: eme-events.php, line: 9691
+# File: eme-events.php, line: 9692
 msgid "Nbr Active Members"
 msgstr "Nbr 有效会员"
 #
-# File: eme-events.php, line: 9692
+# File: eme-events.php, line: 9693
 # File: eme-gdpr.php, line: 494
 # File: eme-gdpr.php, line: 681
 msgid "Start"
 msgstr "开始"
 #
-# File: eme-events.php, line: 9693
+# File: eme-events.php, line: 9694
 # File: eme-gdpr.php, line: 495
 # File: eme-gdpr.php, line: 685
 # File: eme-tasks.php, line: 735
 msgid "End"
 msgstr "结束"
 #
-# File: eme-events.php, line: 9694
+# File: eme-events.php, line: 9695
 # File: eme-members.php, line: 1522
 #, fuzzy
 msgid "Usage count"
 msgstr "更新国家"
 #
-# File: eme-events.php, line: 9695
+# File: eme-events.php, line: 9696
 msgid "Registered on"
 msgstr "注册日期"
 #
-# File: eme-events.php, line: 9696
+# File: eme-events.php, line: 9697
 msgid "Last seen on"
 msgstr "最后一次出现在"
 #
-# File: eme-events.php, line: 9697
+# File: eme-events.php, line: 9698
 msgid "Paid on"
 msgstr "付款日期"
 #
-# File: eme-events.php, line: 9698
-# File: eme-events.php, line: 9733
+# File: eme-events.php, line: 9699
+# File: eme-events.php, line: 9734
 # File: eme-people.php, line: 958
 msgid "Unique nbr"
 msgstr "独特的 nbr"
 #
-# File: eme-events.php, line: 9699
-# File: eme-events.php, line: 9734
+# File: eme-events.php, line: 9700
+# File: eme-events.php, line: 9735
 msgid "Payment ID"
 msgstr "付款 ID"
 #
-# File: eme-events.php, line: 9700
-# File: eme-events.php, line: 9735
+# File: eme-events.php, line: 9701
+# File: eme-events.php, line: 9736
 # File: eme-people.php, line: 952
 # File: eme-people.php, line: 1255
 msgid "Paid"
 msgstr "已付款"
 #
-# File: eme-events.php, line: 9701
-# File: eme-events.php, line: 9738
+# File: eme-events.php, line: 9702
+# File: eme-events.php, line: 9739
 msgid "Payment GW"
 msgstr "付款 GW"
 #
-# File: eme-events.php, line: 9702
-# File: eme-events.php, line: 9739
+# File: eme-events.php, line: 9703
+# File: eme-events.php, line: 9740
 msgid "Payment GW ID"
 msgstr "付款 GW ID"
 #
-# File: eme-events.php, line: 9703
-# File: eme-events.php, line: 9747
+# File: eme-events.php, line: 9704
+# File: eme-events.php, line: 9748
 msgid "Last reminder"
 msgstr "最后提醒"
 #
-# File: eme-events.php, line: 9704
+# File: eme-events.php, line: 9705
 msgid "Reminders sent"
 msgstr "发送提醒"
 #
-# File: eme-events.php, line: 9709
-# File: eme-events.php, line: 9748
+# File: eme-events.php, line: 9710
+# File: eme-events.php, line: 9749
 # File: eme-people.php, line: 956
 # File: eme-people.php, line: 1267
 msgid "Discount"
 msgstr "折扣"
 #
-# File: eme-events.php, line: 9710
-# File: eme-events.php, line: 9749
+# File: eme-events.php, line: 9711
+# File: eme-events.php, line: 9750
 msgid "Used discount codes"
 msgstr "已使用的折扣代码"
 #
-# File: eme-events.php, line: 9711
-# File: eme-events.php, line: 9732
+# File: eme-events.php, line: 9712
+# File: eme-events.php, line: 9733
 # File: eme-people.php, line: 957
 # File: eme-people.php, line: 1273
 msgid "Total price"
 msgstr "总价"
 #
-# File: eme-events.php, line: 9712
+# File: eme-events.php, line: 9713
 msgid "Membership price"
 msgstr "会员价格"
 #
-# File: eme-events.php, line: 9720
+# File: eme-events.php, line: 9721
 # File: eme-options.php, line: 1391
 msgid "Bookings"
 msgstr "预订"
 #
-# File: eme-events.php, line: 9722
+# File: eme-events.php, line: 9723
 #, fuzzy
 msgid "Event ID"
 msgstr "活动"
 #
-# File: eme-events.php, line: 9724
+# File: eme-events.php, line: 9725
 msgid "Event info"
 msgstr "活动信息"
 #
-# File: eme-events.php, line: 9726
+# File: eme-events.php, line: 9727
 msgid "Booker"
 msgstr "预订者"
 #
-# File: eme-events.php, line: 9728
+# File: eme-events.php, line: 9729
 # File: eme-people.php, line: 955
 # File: eme-people.php, line: 1261
 msgid "Booking date"
 msgstr "预订日期"
 #
-# File: eme-events.php, line: 9736
+# File: eme-events.php, line: 9737
 # File: eme-people.php, line: 954
 msgid "Remaining"
 msgstr "剩余的"
 #
-# File: eme-events.php, line: 9737
+# File: eme-events.php, line: 9738
 # File: eme-people.php, line: 953
 msgid "Received"
 msgstr "已收到"
 #
-# File: eme-events.php, line: 9740
+# File: eme-events.php, line: 9741
 msgid "Payment date"
 msgstr "付款日期"
 #
-# File: eme-events.php, line: 9741
+# File: eme-events.php, line: 9742
 msgid "Mark paid and approve"
 msgstr "标记已支付并已批准"
 #
-# File: eme-events.php, line: 9742
+# File: eme-events.php, line: 9743
 # File: eme-rsvp.php, line: 4980
 # File: eme-rsvp.php, line: 4995
 msgid "Mark paid"
 msgstr "标记为已支付"
 #
-# File: eme-events.php, line: 9756
+# File: eme-events.php, line: 9757
 # File: eme-people.php, line: 959
 msgid "Attendance count"
 msgstr "出席统计"
 #
-# File: eme-events.php, line: 9757
+# File: eme-events.php, line: 9758
 msgid "Please select only one record in order to do partial payments"
 msgstr "请只选择一条记录，以便进行部分支付"
 #
-# File: eme-events.php, line: 9768
+# File: eme-events.php, line: 9769
 # File: eme-mailer.php, line: 2303
 # File: eme-mailer.php, line: 2481
 msgid "Send email"
 msgstr "发送电子邮件"
 #
-# File: eme-events.php, line: 9769
+# File: eme-events.php, line: 9770
 msgid "Queue email"
 msgstr "队列电子邮件"
 #
-# File: eme-events.php, line: 9770
+# File: eme-events.php, line: 9771
 # File: eme-mailer.php, line: 1340
 msgid "Sent on"
 msgstr "发送日期"
 #
-# File: eme-events.php, line: 9771
+# File: eme-events.php, line: 9772
 # File: eme-mailer.php, line: 1341
 msgid "First read on"
 msgstr "初次阅读是在"
 #
-# File: eme-events.php, line: 9772
+# File: eme-events.php, line: 9773
 # File: eme-mailer.php, line: 1342
 msgid "Last read on"
 msgstr "最后一次阅读是在"
 #
-# File: eme-events.php, line: 9773
+# File: eme-events.php, line: 9774
 # File: eme-mailer.php, line: 1343
 # File: eme-mailer.php, line: 2579
 # File: eme-mailer.php, line: 2674
 msgid "Read count"
 msgstr "阅读次数"
 #
-# File: eme-events.php, line: 9774
+# File: eme-events.php, line: 9775
 # File: eme-mailer.php, line: 1344
 msgid "Error message"
 msgstr "错误信息"
 #
-# File: eme-events.php, line: 9779
+# File: eme-events.php, line: 9780
 # File: eme-mailer.php, line: 1345
 # File: eme-mailer.php, line: 2582
 # File: eme-mailer.php, line: 2676
 msgid "Action"
 msgstr "行动"
 #
-# File: eme-events.php, line: 9780
+# File: eme-events.php, line: 9781
 # File: eme-mailer.php, line: 2090
 msgid "Mailing report"
 msgstr "邮寄报告"
 #
-# File: eme-events.php, line: 9781
+# File: eme-events.php, line: 9782
 msgid "Select one or more events"
 msgstr "选择一个或多个活动"
 #
-# File: eme-events.php, line: 10012
+# File: eme-events.php, line: 10013
 # File: eme-rsvp.php, line: 5542
 # File: eme-tasks.php, line: 1846
 msgid "Edit event"
 msgstr "编辑活动"
 #
-# File: eme-events.php, line: 10028
+# File: eme-events.php, line: 10029
 # File: eme-rsvp.php, line: 5546
 msgid "RSVP Info: "
 msgstr "RSVP 的信息："
 #
-# File: eme-events.php, line: 10056
+# File: eme-events.php, line: 10057
 # File: eme-rsvp.php, line: 5575
 msgid "Free: "
 msgstr "免费："
 #
-# File: eme-events.php, line: 10057
-# File: eme-events.php, line: 10060
-# File: eme-events.php, line: 10103
+# File: eme-events.php, line: 10058
+# File: eme-events.php, line: 10061
+# File: eme-events.php, line: 10104
 # File: eme-rsvp.php, line: 5549
 # File: eme-rsvp.php, line: 5638
 msgid "Approved:"
 msgstr "已批准："
 #
-# File: eme-events.php, line: 10064
-# File: eme-events.php, line: 10101
+# File: eme-events.php, line: 10065
+# File: eme-events.php, line: 10102
 # File: eme-rsvp.php, line: 5636
 msgid "Pending:"
 msgstr "待订："
 #
-# File: eme-events.php, line: 10069
+# File: eme-events.php, line: 10070
 # File: eme-rsvp.php, line: 5588
 msgid "Absent:"
 msgstr "缺席："
 #
-# File: eme-events.php, line: 10072
+# File: eme-events.php, line: 10073
 # File: eme-members.php, line: 5990
 # File: eme-recurrence.php, line: 565
 # File: eme-rsvp.php, line: 5591
 msgid "Max: "
 msgstr "最大："
 #
-# File: eme-events.php, line: 10075
+# File: eme-events.php, line: 10076
 # File: eme-rsvp.php, line: 5594
 msgid "(%d waiting list seats included)"
 msgstr "(包括 %d 个等待名单的席位)"
 #
-# File: eme-events.php, line: 10080
+# File: eme-events.php, line: 10081
 # File: eme-rsvp.php, line: 5600
 msgid "Printable view"
 msgstr "可打印的视图"
 #
-# File: eme-events.php, line: 10081
+# File: eme-events.php, line: 10082
 # File: eme-rsvp.php, line: 5601
 msgid "CSV export"
 msgstr "CSV 导出"
 #
-# File: eme-events.php, line: 10099
+# File: eme-events.php, line: 10100
 # File: eme-rsvp.php, line: 5634
 msgid "Task Info: %d tasks"
 msgstr ""
 #
-# File: eme-events.php, line: 10110
+# File: eme-events.php, line: 10111
 # File: eme-locations.php, line: 543
 # File: eme-locations.php, line: 2963
 # File: eme-recurrence.php, line: 595
 msgid "Edit location"
 msgstr "编辑地点"
 #
-# File: eme-events.php, line: 10112
+# File: eme-events.php, line: 10113
 # File: eme-locations.php, line: 2965
 # File: eme-recurrence.php, line: 597
 msgid ""
@@ -5288,51 +5298,51 @@ msgid ""
 msgstr ""
 "地点地图坐标为空! 请编辑位置以纠正这一点，否则它将无法在您的网站上正确显示。"
 #
-# File: eme-events.php, line: 10131
+# File: eme-events.php, line: 10132
 msgid "Preview event"
 msgstr "预览活动"
 #
-# File: eme-events.php, line: 10133
+# File: eme-events.php, line: 10134
 msgid "View event"
 msgstr "查看活动"
 #
-# File: eme-events.php, line: 10138
+# File: eme-events.php, line: 10139
 msgid "Duplicate this event"
 msgstr "复制此活动"
 #
-# File: eme-events.php, line: 10147
+# File: eme-events.php, line: 10148
 # File: eme-rsvp.php, line: 5611
 msgid "Add booking for this event"
 msgstr "为该活动添加预订"
 #
-# File: eme-events.php, line: 10149
+# File: eme-events.php, line: 10150
 # File: eme-rsvp.php, line: 5613
 msgid "Password protected"
 msgstr "被密码保护"
 #
-# File: eme-events.php, line: 10157
+# File: eme-events.php, line: 10158
 # File: eme-recurrence.php, line: 567
 msgid "Free"
 msgstr "免费"
 #
-# File: eme-events.php, line: 10275
+# File: eme-events.php, line: 10276
 # File: eme-recurrence.php, line: 662
 msgid "No action defined!"
 msgstr "没有定义行动!"
 #
-# File: eme-events.php, line: 10293
+# File: eme-events.php, line: 10294
 msgid "Events moved to trash"
 msgstr "活动移至回收站"
 #
-# File: eme-events.php, line: 10301
+# File: eme-events.php, line: 10302
 msgid "Restored selected events to draft status"
 msgstr "将选定的活动恢复到草稿状态"
 #
-# File: eme-events.php, line: 10309
+# File: eme-events.php, line: 10310
 msgid "Events status updated"
 msgstr "活动状态已更新"
 #
-# File: eme-events.php, line: 10322
+# File: eme-events.php, line: 10323
 msgid "Events added to category"
 msgstr "活动已添加到分类"
 #
@@ -6354,7 +6364,7 @@ msgstr "使用占位符 #_DYNAMICDATA 来显示您表格中的动态表格。"
 #
 # File: eme-formfields.php, line: 5044
 # File: eme-formfields.php, line: 5054
-# File: eme-functions.php, line: 3253
+# File: eme-functions.php, line: 3259
 msgid "Records deleted!"
 msgstr "记录已被删除!"
 #
@@ -6593,79 +6603,79 @@ msgstr "额外信息"
 msgid "Group"
 msgstr "群组"
 #
-# File: eme-functions.php, line: 2822
+# File: eme-functions.php, line: 2828
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 #
-# File: eme-functions.php, line: 2825
+# File: eme-functions.php, line: 2831
 msgid ""
 "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in "
 "the HTML form"
 msgstr ""
 #
-# File: eme-functions.php, line: 2828
+# File: eme-functions.php, line: 2834
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 #
-# File: eme-functions.php, line: 2831
+# File: eme-functions.php, line: 2837
 msgid "No file was uploaded"
 msgstr ""
 #
-# File: eme-functions.php, line: 2834
+# File: eme-functions.php, line: 2840
 msgid "Missing a temporary folder"
 msgstr ""
 #
-# File: eme-functions.php, line: 2837
+# File: eme-functions.php, line: 2843
 msgid "Failed to write file to disk"
 msgstr ""
 #
-# File: eme-functions.php, line: 2840
+# File: eme-functions.php, line: 2846
 msgid "File upload stopped by extension"
 msgstr ""
 #
-# File: eme-functions.php, line: 2844
+# File: eme-functions.php, line: 2850
 msgid "Unknown upload error"
 msgstr ""
 #
-# File: eme-functions.php, line: 2886
+# File: eme-functions.php, line: 2892
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "创建上传目录失败，请检查您的权限。"
 #
-# File: eme-functions.php, line: 2925
-# File: eme-functions.php, line: 2986
+# File: eme-functions.php, line: 2931
+# File: eme-functions.php, line: 2992
 msgid "File upload is required."
 msgstr "需要上传文件。"
 #
-# File: eme-functions.php, line: 2933
-# File: eme-functions.php, line: 2994
+# File: eme-functions.php, line: 2939
+# File: eme-functions.php, line: 3000
 msgid "Illegal filename."
 msgstr "文件名不合法。"
 #
-# File: eme-functions.php, line: 2939
-# File: eme-functions.php, line: 3000
+# File: eme-functions.php, line: 2945
+# File: eme-functions.php, line: 3006
 msgid "File already exists."
 msgstr "文件已经存在。"
 #
-# File: eme-functions.php, line: 2945
-# File: eme-functions.php, line: 3006
+# File: eme-functions.php, line: 2951
+# File: eme-functions.php, line: 3012
 msgid "File too large."
 msgstr "文件太大。"
 #
-# File: eme-functions.php, line: 2961
-# File: eme-functions.php, line: 3022
+# File: eme-functions.php, line: 2967
+# File: eme-functions.php, line: 3028
 msgid "Incorrect file type."
 msgstr "文件类型不正确。"
 #
-# File: eme-functions.php, line: 2966
-# File: eme-functions.php, line: 3027
+# File: eme-functions.php, line: 2972
+# File: eme-functions.php, line: 3033
 msgid "Upload failed."
 msgstr "上传失败。"
 #
-# File: eme-functions.php, line: 3034
+# File: eme-functions.php, line: 3040
 msgid "Errors encountered while uploading files"
 msgstr "上传文件时遇到的错误"
 #
-# File: eme-functions.php, line: 3269
+# File: eme-functions.php, line: 3275
 msgid "No such record"
 msgstr "没有这样的记录"
 #
@@ -6814,7 +6824,7 @@ msgstr ""
 "EME 有选择地使用一个 cookie 来存储客户端的日期和时间，以便在显示活动日期和时"
 "间时调整客户端或服务器的时间差异。"
 #
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.5)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.7)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 # File: eme-gdpr.php, line: 547
 # File: eme-gdpr.php, line: 553
@@ -15787,6 +15797,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Select the event(s)"
 #~ msgstr "选择活动"
 #
@@ -15798,8 +15809,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "转换新行"
+#
 #
 #
 #
@@ -15824,12 +15837,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
 #~ msgstr ""
 #~ "如果您不希望发生这种情况（例如，对于在表格行中使用的模板），取消选择这个选"
 #~ "项。"
+#
 #
 #
 #
@@ -15865,9 +15880,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "See <a href=\"%s\">here</a> for more info on country code."
 #~ msgstr "请参阅<a href=\"%s\">这里</a>，了解更多关于国家代码的信息。"
+#
 #
 #
 #
@@ -15924,12 +15941,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
 #~ msgstr ""
 #~ "这里不允许上传文件，请使用常规的 WP 媒体库来上传文件，或者使用地点描述中"
 #~ "的 \"添加媒体\" 按钮。"
+#
 #
 #
 #
@@ -15982,8 +16001,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "上传的文件"
+#
 #
 #
 #
@@ -16038,8 +16059,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "成功地删除了选定的任务报名。"
+#
 #
 #
 #
@@ -16095,6 +16118,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "提供的 ID 不正确。请再试一次。"
 #
@@ -16124,8 +16148,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Your payment failed."
 #~ msgstr "您的付款失败。"
+#
 #
 #
 #

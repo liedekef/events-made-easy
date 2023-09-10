@@ -587,8 +587,13 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 		return '';
 	}
 
-		$format            = '';
-		$eme_format_header = '';
+	$separator = get_option( 'eme_csv_separator' );
+        if ( eme_is_empty_string( $separator ) ) {
+                $separator = ',';
+        }
+
+	$format            = '';
+	$eme_format_header = '';
 	// no nl2br for csv output
 	$format = eme_get_template_format( $template_id, 0 );
 
@@ -599,9 +604,9 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 
 	if ( $template_id_header ) {
 		// no nl2br for csv output
-			$eme_format_header = eme_get_template_format( $template_id_header, 0 );
-		$headers               = explode( ',', $eme_format_header );
-		eme_fputcsv( $fp, $headers );
+		$eme_format_header = eme_get_template_format( $template_id_header, 0 );
+		$headers           = explode( ',', $eme_format_header );
+		eme_fputcsv( $fp, $headers, $separator );
 	}
 
 	$event = eme_get_event( $event_id );
@@ -631,7 +636,7 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 						$output[] = '';
 					}
 				}
-				eme_fputcsv( $fp, $output );
+				eme_fputcsv( $fp, $output, $separator );
 			}
 		}
 	}

@@ -270,7 +270,7 @@ function eme_cron_page() {
 							update_option( 'eme_cron_new_events_header', $eme_cron_new_events_header );
 							update_option( 'eme_cron_new_events_entry', $eme_cron_new_events_entry );
 							update_option( 'eme_cron_new_events_footer', $eme_cron_new_events_footer );
-							$eme_cron_queue_count     = get_option( 'eme_cron_queue_count' );
+							$eme_cron_queue_count     = intval(get_option( 'eme_cron_queue_count' ));
 							$eme_cron_queued_schedule = wp_get_schedule( 'eme_cron_send_queued' );
 							$mail_schedule            = $schedules[ $eme_cron_queued_schedule ];
 							$message                  = sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count, $mail_schedule['display'] );

@@ -86,10 +86,10 @@ function eme_init_event_props( $props = [] ) {
 		}
 	}
 	if ( ! isset( $props['min_allowed'] ) ) {
-		$props['min_allowed'] = get_option( 'eme_rsvp_addbooking_min_spaces' );
+		$props['min_allowed'] = intval(get_option( 'eme_rsvp_addbooking_min_spaces' ));
 	}
 	if ( ! isset( $props['max_allowed'] ) ) {
-		$props['max_allowed'] = get_option( 'eme_rsvp_addbooking_max_spaces' );
+		$props['max_allowed'] = intval(get_option( 'eme_rsvp_addbooking_max_spaces' ));
 	}
 	if ( ! isset( $props['rsvp_start_number_days'] ) ) {
 		$props['rsvp_start_number_days'] = '';
@@ -1282,7 +1282,7 @@ function eme_events_page_content() {
 			if ( eme_is_empty_string( $format_footer ) ) {
 				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
 			}
-			$limit = get_option( 'eme_event_list_number_items' );
+			$limit = intval(get_option( 'eme_event_list_number_items' ));
 			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_id: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
@@ -1302,7 +1302,7 @@ function eme_events_page_content() {
 			if ( eme_is_empty_string( $format_footer ) ) {
 				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
 			}
-			$limit = get_option( 'eme_event_list_number_items' );
+			$limit = intval(get_option( 'eme_event_list_number_items' ));
 			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_id: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
@@ -1332,7 +1332,7 @@ function eme_events_page_content() {
 		$cat_ids       = join( ',', eme_get_category_ids( $eme_event_cat ) );
 		$stored_format = get_option( 'eme_event_list_item_format' );
 		if ( ! empty( $cat_ids ) ) {
-			$limit = get_option( 'eme_event_list_number_items' );
+			$limit = intval(get_option( 'eme_event_list_number_items' ));
 			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, category: $cat_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
@@ -4107,8 +4107,11 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
 function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format = '', $format_header = '', $format_footer = '', $echo = 0, $category = '', $showperiod = '', $long_events = 0, $author = '', $contact_person = '', $paging = 0, $event_ids = '', $location_id = '', $user_registered_only = 0, $show_ongoing = 1, $link_showperiod = 0, $notcategory = '', $show_recurrent_events_once = 0, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $no_events_message = '', $template_id_no_events = 0, $limit_offset = 0 ) {
 	global $post;
 	if ( $limit === '' ) {
-		$limit = get_option( 'eme_event_list_number_items' );
+		$limit = intval(get_option( 'eme_event_list_number_items' ));
 	}
+	// now make sure limit is an int, this solves a prob if the option eme_event_list_number_items is empty
+	$limit = intval($limit);
+
 	$echo         = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
 	$long_events  = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
 	$paging       = filter_var( $paging, FILTER_VALIDATE_BOOLEAN );
@@ -4497,7 +4500,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 
 function eme_get_events_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	$eme_event_list_number_events = get_option( 'eme_event_list_number_items' );
+	$eme_event_list_number_events = intval(get_option( 'eme_event_list_number_items' ));
 	extract(
 	    shortcode_atts(
 		    [
@@ -4777,7 +4780,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 	$locations_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 
 	if ( $limit === '' ) {
-		$limit = get_option( 'eme_event_list_number_items' );
+		$limit = intval(get_option( 'eme_event_list_number_items' ));
 	}
 	if ( !empty($limit) ) {
 		$event_limit  = intval( $limit );

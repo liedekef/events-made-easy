@@ -1036,17 +1036,17 @@ function eme_db_insert_discount( $line ) {
 	$keys     = array_intersect_key( $line, $discount );
 	$new_line = array_merge( $discount, $keys );
 	if ( has_filter( 'eme_insert_discount_filter' ) ) {
-				$new_line = apply_filters( 'eme_insert_discount_filter', $new_line );
+		$new_line = apply_filters( 'eme_insert_discount_filter', $new_line );
 	}
 
 	if ( ! eme_is_serialized( $new_line['properties'] ) ) {
-			$new_line['properties'] = eme_serialize( $new_line['properties'] );
+		$new_line['properties'] = eme_serialize( $new_line['properties'] );
 	}
 
 	if ( $wpdb->insert( $table, $new_line ) === false ) {
-			return false;
+		return false;
 	} else {
-			return $wpdb->insert_id;
+		return $wpdb->insert_id;
 	}
 }
 

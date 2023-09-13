@@ -984,6 +984,12 @@ function eme_options_postsave_actions() {
 			update_option( 'eme_mail_sleep', 0 );
 		}
 	}
+	if ( $tab == 'events' ) {
+		$eme_event_list_number_items = get_option( 'eme_event_list_number_items', 10 );
+		if ( ! is_numeric( $eme_event_list_number_items ) ) {
+			update_option( 'eme_event_list_number_items', 10 );
+		}
+	}
 }
 
 function eme_options_register() {

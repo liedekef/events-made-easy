@@ -752,6 +752,9 @@ jQuery(document).ready( function($) {
 	//$("input[placeholder]").each(function () {
 	//	$(this).attr('size', $(this).attr('placeholder').length);
 	//});
+
+	// tooltip where wanted
+	$( ".eme-tooltip" ).tooltip();
 });
 
 // the next is a Jtable CSV export function

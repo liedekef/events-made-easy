@@ -2624,7 +2624,12 @@ function eme_ajax_mailings_div() {
 		print '<td>' . eme_esc_html( $status ) . '</td>';
 		print '<td>' . intval( $mailing['read_count'] ) . '</td>';
 		print '<td>' . intval( $mailing['total_read_count'] ) . '</td>';
-		print '<td>' . eme_esc_html( $extra ) . '</td>';
+		if ( $mailing['status'] == 'planned' ) {
+                        $planned_estimation_title = eme_esc_html( __('The number of emails to be sent is an estimation and will be reevaluated at send time','events-made-easy') ) ;
+                        print '<td>' . eme_esc_html( $extra ) . "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='$planned_estimation_title'>" . '</td>';
+                } else {
+                        print '<td>' . eme_esc_html( $extra ) . '</td>';
+                }
 		if ( $mailing['status'] == 'archived' ) {
 			print '<td>&nbsp;</td>';
 		} else {

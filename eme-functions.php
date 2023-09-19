@@ -463,8 +463,8 @@ function eme_generate_captchas_html() {
 	return $captcha_html;
 }
 
-function eme_add_captcha_submit( $format, $captcha = '', $add_dyndadata = 0 ) {
-	if ( $add_dyndadata && ! preg_match( '/#_DYNAMICDATA/', $format ) ) {
+function eme_add_captcha_submit( $format, $captcha = '', $add_dyndata = 0 ) {
+	if ( $add_dyndata && ! preg_match( '/#_DYNAMICDATA/', $format ) ) {
 		$text = '#_DYNAMICDATA';
 		if ( preg_match( '/#_SUBMIT/', $format ) ) {
 			$format = preg_replace( '/#_SUBMIT/', "$text<br>#_SUBMIT", $format );

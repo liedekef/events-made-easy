@@ -2379,9 +2379,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		}
 	}
 	if ( ! empty( $eme_dyndatafields ) ) {
-		$add_dyndadata = 1;
+		$add_dyndata = 1;
 	} else {
-		$add_dyndadata = 0;
+		$add_dyndata = 0;
 	}
 
 	$eme_captcha_for_forms   = $event['event_properties']['use_captcha'] && ! $eme_is_admin_request;
@@ -2394,15 +2394,15 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		if ( is_user_logged_in() && $event['event_properties']['captcha_only_logged_out'] ) {
 			$format = eme_add_captcha_submit( $format );
 		} elseif ( $eme_recaptcha_for_forms ) {
-			$format = eme_add_captcha_submit( $format, 'recaptcha', $add_dyndadata );
+			$format = eme_add_captcha_submit( $format, 'recaptcha', $add_dyndata );
 		} elseif ( $eme_hcaptcha_for_forms ) {
-			$format = eme_add_captcha_submit( $format, 'hcaptcha', $add_dyndadata );
+			$format = eme_add_captcha_submit( $format, 'hcaptcha', $add_dyndata );
 		} elseif ( $eme_cfcaptcha_for_forms ) {
-			$format = eme_add_captcha_submit( $format, 'cfcaptcha', $add_dyndadata );
+			$format = eme_add_captcha_submit( $format, 'cfcaptcha', $add_dyndata );
 		} elseif ( $eme_captcha_for_forms ) {
-			$format = eme_add_captcha_submit( $format, 'captcha', $add_dyndadata );
+			$format = eme_add_captcha_submit( $format, 'captcha', $add_dyndata );
 		} else {
-			$format = eme_add_captcha_submit( $format, '', $add_dyndadata );
+			$format = eme_add_captcha_submit( $format, '', $add_dyndata );
 		}
 	}
 
@@ -3629,15 +3629,15 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	if ( is_user_logged_in() && $membership['properties']['captcha_only_logged_out'] ) {
                 $format = eme_add_captcha_submit( $format, '', $add_dyndata );
         } elseif ( $eme_recaptcha_for_forms ) {
-		$format = eme_add_captcha_submit( $format, 'recaptcha', $add_dyndadata );
+		$format = eme_add_captcha_submit( $format, 'recaptcha', $add_dyndata );
 	} elseif ( $eme_hcaptcha_for_forms ) {
-		$format = eme_add_captcha_submit( $format, 'hcaptcha', $add_dyndadata );
+		$format = eme_add_captcha_submit( $format, 'hcaptcha', $add_dyndata );
 	} elseif ( $eme_cfcaptcha_for_forms ) {
-		$format = eme_add_captcha_submit( $format, 'cfcaptcha', $add_dyndadata );
+		$format = eme_add_captcha_submit( $format, 'cfcaptcha', $add_dyndata );
 	} elseif ( $eme_captcha_for_forms ) {
-		$format = eme_add_captcha_submit( $format, 'captcha', $add_dyndadata );
+		$format = eme_add_captcha_submit( $format, 'captcha', $add_dyndata );
 	} else {
-		$format = eme_add_captcha_submit( $format, '', $add_dyndadata );
+		$format = eme_add_captcha_submit( $format, '', $add_dyndata );
 	}
 
 	// the placeholders that can contain extra text are treated separately first

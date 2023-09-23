@@ -9348,6 +9348,7 @@ function eme_admin_enqueue_js() {
 			'translate_selectdiscount'             => __( 'Select a discount', 'events-made-easy' ),
 			'translate_selectdiscountgroup'        => __( 'Select a discountgroup', 'events-made-easy' ),
 			'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
+			'translate_separator'                  => get_option( 'eme_csv_separator', ',' ),
 			'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
 			'translate_flanguage'                  => $language,
 			'translate_minutesStep'                => get_option( 'eme_timepicker_minutesstep' ),

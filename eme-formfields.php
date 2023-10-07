@@ -1055,16 +1055,43 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 
 	$bookerLastName  = '';
 	$bookerFirstName = '';
-	$bookerEmail     = '';
-	$bookerPhone     = '';
+	$bookerBirthdate    = '';
+	$bookerBirthplace   = '';
+	$bookerAddress1     = '';
+	$bookerAddress2     = '';
+	$bookerCity         = '';
+	$bookerZip          = '';
+	$bookerState_code   = '';
+	$bookerCountry_code = '';
+	// if only 1 country, set it as default
+	$countries_alpha2 = eme_get_countries_alpha2();
+	if ( count( $countries_alpha2 ) == 1 ) {
+		$bookerCountry_code = $countries_alpha2[0];
+	}
+	$bookerEmail   = '';
+	$bookerComment = '';
+	$bookerPhone   = '';
+	$bd_email      = 0;
+	$gdpr          = 0;
 	if ( is_user_logged_in() ) {
 		$current_user = wp_get_current_user();
 		$person       = eme_get_person_by_wp_id( $current_user->ID );
 		if ( ! empty( $person ) ) {
-			$bookerLastName  = $person['lastname'];
-			$bookerFirstName = $person['firstname'];
-			$bookerEmail     = $person['email'];
-			$bookerPhone     = eme_esc_html( $person['phone'] );
+			$bookerLastName     = eme_esc_html( $person['lastname'] );
+                        $bookerFirstName    = eme_esc_html( $person['firstname'] );
+                        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
+                        $bookerBirthplace   = eme_esc_html( $person['birthplace'] );
+                        $bookerAddress1     = eme_esc_html( $person['address1'] );
+                        $bookerAddress2     = eme_esc_html( $person['address2'] );
+                        $bookerCity         = eme_esc_html( $person['city'] );
+                        $bookerZip          = eme_esc_html( $person['zip'] );
+                        $bookerState_code   = eme_esc_html( $person['state_code'] );
+                        $bookerCountry_code = eme_esc_html( $person['country_code'] );
+                        $bookerEmail        = eme_esc_html( $person['email'] );
+                        $bookerPhone        = eme_esc_html( $person['phone'] );
+                        $bd_email           = intval( $person['bd_email'] );
+                        $gdpr               = intval( $person['gdpr'] );
+
 		} else {
 			$bookerLastName = $current_user->user_lastname;
 			if ( empty( $bookerLastName ) ) {
@@ -1137,7 +1164,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			++$email_found;
 			// #_EMAIL is always required
 			$required = 1;
-		} elseif ( preg_match( '/#_(PHONE$|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
 			$fieldname = 'task_phone';
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
@@ -1165,6 +1192,112 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			}
 			if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
 				$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field' );
+			}
+		} elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_nowptrans_esc_html( $placeholder_text );
+			} else {
+				$placeholder_text = esc_html__( 'Date of birth', 'events-made-easy' );
+			}
+			$fieldname    = 'task_birthdate';
+			$replacement  = "<input type='hidden' name='$fieldname' id='$fieldname' value='$bookerBirthdate'>";
+			$replacement .= "<input $required_att readonly='readonly' type='text' name='dp_{$fieldname}' id='dp_{$fieldname}' data-date='$bookerBirthdate' data-date-format='".EME_WP_DATE_FORMAT."' data-view='years' data-alt-field='#birthdate' class='eme_formfield_fdate' placeholder='$placeholder_text'>";
+		} elseif ( preg_match( '/#_BIRTHPLACE(\{.+?\})?$/', $result, $matches ) ) {
+			$fieldname = 'task_birthplace';
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_nowptrans_esc_html( $placeholder_text );
+			} else {
+				$placeholder_text = esc_html__( 'Place of birth', 'events-made-easy' );
+			}
+			$replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerBirthplace' placeholder='$placeholder_text'>";
+		} elseif ( preg_match( '/#_ADDRESS1(\{.+?\})?$/', $result, $matches ) ) {
+			$fieldname = 'task_address1';
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_nowptrans_esc_html( $placeholder_text );
+			} else {
+				$placeholder_text = eme_trans_esc_html( get_option( 'eme_address1_string' ) );
+			}
+			$replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress1' placeholder='$placeholder_text' >";
+		} elseif ( preg_match( '/#_ADDRESS2(\{.+?\})?$/', $result, $matches ) ) {
+			$fieldname = 'task_address2';
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_nowptrans_esc_html( $placeholder_text );
+			} else {
+				$placeholder_text = eme_trans_esc_html( get_option( 'eme_address2_string' ) );
+			}
+			$replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerAddress2' placeholder='$placeholder_text' $readonly >";
+		} elseif ( preg_match( '/#_CITY(\{.+?\})?$/', $result, $matches ) ) {
+			$fieldname = 'task_city';
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[1], 1, -1 );
+				$placeholder_text = eme_trans_nowptrans_esc_html( $placeholder_text );
+			} else {
+				$placeholder_text = esc_html__( 'City', 'events-made-easy' );
+			}
+			$replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerCity' placeholder='$placeholder_text' $readonly >";
+		} elseif ( preg_match( '/#_(ZIP|POSTAL)(\{.+?\})?$/', $result, $matches ) ) {
+			$fieldname = 'task_zip';
+			if ( isset( $matches[2] ) ) {
+				// remove { and } (first and last char of second match)
+				$placeholder_text = substr( $matches[2], 1, -1 );
+				$placeholder_text = eme_trans_nowptrans_esc_html( $placeholder_text );
+			} else {
+				$placeholder_text = esc_html__( 'Postal code', 'events-made-easy' );
+			}
+			$replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerZip' placeholder='$placeholder_text' $readonly >";
+		} elseif ( preg_match( '/#_STATE$/', $result ) ) {
+			$fieldname = 'task_state_code';
+			if ( ! empty( $bookerState_code ) ) {
+				$state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
+			} else {
+				$state_arr = [];
+			}
+			$replacement = eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, "eme_select2_state_class" );
+		} elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
+			$fieldname = 'task_country_code';
+			if ( ! empty( $bookerCountry_code ) ) {
+				$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
+			} else {
+				$country_arr = [];
+			}
+			$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, "eme_select2_country_class" );
+		} elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
+			$replacement = eme_ui_select_binary( $bd_email, 'task_bd_email' );
+		} elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
+			$selected_massmail = ( isset( $massmail ) ) ? $massmail : 1;
+			$fieldname         = 'task_massmail';
+			if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
+				$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+				$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
+			}
+			$replacement .= eme_ui_select_binary( $selected_massmail, $fieldname, 0 );
+		} elseif ( preg_match( '/#_OPT_IN$/', $result ) ) {
+			$selected_massmail = ( isset( $massmail ) ) ? $massmail : 0;
+			$fieldname         = 'task_massmail';
+			if ( ! $eme_is_admin_request && get_option( 'eme_massmail_popup' ) ) {
+				$popup       = eme_esc_html( get_option( 'eme_massmail_popup_text' ) );
+				$replacement = "<div id='MassMailDialog'><p><span class='ui-icon ui-icon-alert' style='float:left; margin:12px 12px 20px 0;'></span>$popup</p></div>";
+			}
+			$replacement .= eme_ui_select_binary( $selected_massmail, $fieldname );
+		} elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {
+			if ( isset( $matches[1] ) ) {
+				// remove { and } (first and last char of second match)
+				$label = substr( $matches[1], 1, -1 );
+			} else {
+				$label = '';
+			}
+			$fieldname = 'task_gdpr';
+			if ( ! $eme_is_admin_request ) {
+				$replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field' );
 			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
 			if ( $eme_cfcaptcha_for_forms && ! $captcha_set) {
@@ -1589,6 +1722,8 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 	$bookerEmail   = '';
 	$bookerComment = '';
 	$bookerPhone   = '';
+	$bd_email      = 0;
+	$gdpr          = 0;
 
 	$eme_is_admin_request = eme_is_admin_request();
 
@@ -1610,6 +1745,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			$bookerEmail        = eme_esc_html( $person['email'] );
 			$bookerPhone        = eme_esc_html( $person['phone'] );
 			$bd_email           = intval( $person['bd_email'] );
+			$gdpr               = intval( $person['gdpr'] );
 		} else {
 			$bookerLastName = eme_esc_html( $current_user->user_lastname );
 			if ( empty( $bookerLastName ) ) {
@@ -1824,7 +1960,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 				$label = '';
 			}
 			if ( ! $eme_is_admin_request ) {
-				$replacement = eme_ui_checkbox_binary( 0, 'gdpr', $label, 1, 'eme-gdpr-field nodynamicupdates' );
+				$replacement = eme_ui_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field nodynamicupdates' );
 			}
 		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -3350,7 +3486,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 			$replacement = "<input required='required' type='text' name='familymember[$counter][firstname]' id='familymember[$counter][firstname]' value='$entered_val' $dynamic_field_class placeholder='$placeholder_text'>";
 			++$firstname_found;
 			$required = 1;
-		} elseif ( preg_match( '/#_(PHONE$|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
 			$postvar_arr = [ 'familymember', $counter, 'phone' ];
 			$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
 			if ( $entered_val === false ) {
@@ -3855,7 +3991,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			}
 			$replacement = "<input $required_att type='email' id='$fieldname' name='$fieldname' value='$bookerEmail' $this_readonly $dynamic_field_personal_info_class placeholder='$placeholder_text'>";
 			++$email_found;
-		} elseif ( preg_match( '/#_(PHONE$|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
 			$fieldname = 'phone';
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
@@ -4152,6 +4288,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 	$bookerFirstName = '';
 	$bookerEmail     = '';
 	$readonly        = '';
+	$gdpr            = 0;
 	if ( is_user_logged_in() ) {
 		$readonly     = "readonly='readonly'";
 		$current_user = wp_get_current_user();
@@ -4160,6 +4297,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 			$bookerLastName  = $person['lastname'];
 			$bookerFirstName = $person['firstname'];
 			$bookerEmail     = $person['email'];
+			$gdpr            = intval( $person['gdpr'] );
 		} else {
 			$bookerLastName = $current_user->user_lastname;
 			if ( empty( $bookerLastName ) ) {
@@ -4264,7 +4402,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 			} else {
 				$label = '';
 			}
-			$replacement = eme_ui_checkbox_binary( 0, 'gdpr', $label, 1, 'eme-gdpr-field' );
+			$replacement = eme_ui_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field' );
 		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)
@@ -4516,7 +4654,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			}
 			++$email_found;
 			$required = 1;
-		} elseif ( preg_match( '/#_(PHONE$|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
 				$placeholder_text = substr( $matches[2], 1, -1 );

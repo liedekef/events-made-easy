@@ -3783,6 +3783,19 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 		];
 	}
 
+	
+	// sanitize all in one go and rename task_ to regular fields
+	$post_values = eme_sanitize_request($_POST);
+	foreach ($post_values as $key => $value) {
+		# If the key name contains 'task_'
+		if (strpos($key, 'task_') !== false) {
+			# Create a new, renamed, key. Then assign it the value from before
+			$post_values[str_replace('task_', '', $key)] = $value;
+			# Destroy the old key/value pair
+			unset($post_values[$key]);
+		}
+	}
+
 	// check for correct country value
 	// This to take autocomplete field values into account, or people just submitting too fast
 	$country_code = '';
@@ -3841,8 +3854,6 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 	}
 	if ( ! empty( $_POST['phone'] ) ) {
 		$person['phone'] = eme_sanitize_request( $_POST['phone'] );
-	} elseif ( ! empty( $_POST['task_phone'] ) ) {
-		$person['phone'] = eme_sanitize_request( $_POST['task_phone'] );
 	}
 	if ( isset( $_POST['properties'] ) ) {
 		$person['properties'] = eme_sanitize_request( $_POST['properties'] );

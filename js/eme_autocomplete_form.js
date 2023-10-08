@@ -1,14 +1,16 @@
 jQuery(document).ready( function($) {
     function eme_tasklastname_clearable() {
                 if ($('input[name=task_lastname]').val()=='') {
-			form_id = $(this).closest("form").attr('id')
-			$(':input', '#'+form_id)
-				.not(':button, :submit, :reset, :hidden')
-				.val('')
-				.prop('readonly', false)
-				.prop('checked', false)
-				.prop('selected', false);
-                        $('input[name=task_lastname]').removeClass('clearable');
+			$('input[name=task_lastname]').attr('readonly', false).removeClass('clearable');
+                        $('input[name=task_firstname]').val('').attr('readonly', false);
+                        $('input[name=task_address1]').val('').attr('readonly', false);
+                        $('input[name=task_address2]').val('').attr('readonly', false);
+                        $('input[name=task_city]').val('').attr('readonly', false);
+                        $('input[name=task_state]').val('').attr('readonly', false);
+                        $('input[name=task_zip]').val('').attr('readonly', false);
+                        $('input[name=task_country]').val('').attr('readonly', false);
+                        $('input[name=task_email]').val('').attr('readonly', false);
+                        $('input[name=task_phone]').val('').attr('readonly', false);
                 }
                 if ($('input[name=task_lastname]').val()!='') {
                         $('input[name=task_lastname]').addClass('clearable x');

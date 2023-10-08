@@ -5,17 +5,19 @@ function eme_htmlDecode(value){
 // this function is being called in multiple js files, so needs to be global
 function eme_lastname_clearable() {
 		if (jQuery('input[name=lastname]').val()=='') {
-			form_id = jQuery(this).closest("form").attr('id')
-                        jQuery(':input', '#'+form_id)
-                                .not(':button, :submit, :reset, :hidden')
-                                .val('')
-                                .prop('readonly', false)
-                                .prop('checked', false)
-                                .prop('selected', false);
-			jQuery('input[name=lastname]').removeClass('clearable');
-			// also reset person_id and wp_id (hidden fields)
-			jQuery('input[name=person_id]').val('');
-			jQuery('input[name=wp_id]').val('').trigger('input');
+			jQuery('input[name=lastname]').attr('readonly', false).removeClass('clearable');
+                        jQuery('input[name=firstname]').val('').attr('readonly', false);
+                        jQuery('input[name=address1]').val('').attr('readonly', false);
+                        jQuery('input[name=address2]').val('').attr('readonly', false);
+                        jQuery('input[name=city]').val('').attr('readonly', false);
+                        jQuery('input[name=state]').val('').attr('readonly', false);
+                        jQuery('input[name=zip]').val('').attr('readonly', false);
+                        jQuery('input[name=country]').val('').attr('readonly', false);
+                        jQuery('input[name=email]').val('').attr('readonly', false);
+                        jQuery('input[name=phone]').val('').attr('readonly', false);
+                        jQuery('input[name=wp_id]').val('');
+                        jQuery('input[name=person_id]').val('');
+                        jQuery('input[name=wp_id]').trigger('input');
 		}
 		if (jQuery('input[name=lastname]').val()!='') {
 			jQuery('input[name=lastname]').addClass('clearable x');

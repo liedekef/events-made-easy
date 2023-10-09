@@ -6189,7 +6189,7 @@ function eme_ajax_manage_members() {
 				$template_id_header = ( isset( $_POST['html_template_header'] ) ) ? intval( $_POST['html_template_header'] ) : 0;
 				$template_id_footer = ( isset( $_POST['html_template_footer'] ) ) ? intval( $_POST['html_template_footer'] ) : 0;
 				if ( $template_id ) {
-						eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_header, $template_id_footer );
+					eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_header, $template_id_footer );
 				}
 				break;
 		}
@@ -6220,7 +6220,7 @@ function eme_ajax_manage_memberships() {
 				break;
 			case 'deleteMemberships':
 				foreach ( $ids_arr as $membership_id ) {
-						eme_delete_membership( $membership_id );
+					eme_delete_membership( $membership_id );
 				}
 				$ajaxResult['Result']      = 'OK';
 				$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Memberships deleted.', 'events-made-easy' ) . '</p></div>';
@@ -6248,13 +6248,13 @@ function eme_ajax_action_send_member_mails( $ids_arr, $subject_template_id, $bod
 		$person     = eme_get_person( $member['person_id'] );
 		$membership = eme_get_membership( $member['membership_id'] );
 		if ( $person && is_array( $person ) ) {
-			$contact           = eme_get_contact( $membership['properties']['contact_id'] );
-				$contact_email = $contact->user_email;
-				$contact_name  = $contact->display_name;
-				$tmp_subject   = eme_replace_member_placeholders( $subject, $membership, $member, $mail_text_html );
-				$tmp_message   = eme_replace_member_placeholders( $body, $membership, $member, $mail_text_html );
-				$person_name   = eme_format_full_name( $person['firstname'], $person['lastname'] );
-				$mail_res      = eme_queue_mail( $tmp_subject, $tmp_message, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, 0, $member['member_id'] );
+			$contact       = eme_get_contact( $membership['properties']['contact_id'] );
+			$contact_email = $contact->user_email;
+			$contact_name  = $contact->display_name;
+			$tmp_subject   = eme_replace_member_placeholders( $subject, $membership, $member, $mail_text_html );
+			$tmp_message   = eme_replace_member_placeholders( $body, $membership, $member, $mail_text_html );
+			$person_name   = eme_format_full_name( $person['firstname'], $person['lastname'] );
+			$mail_res      = eme_queue_mail( $tmp_subject, $tmp_message, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, 0, $member['member_id'] );
 			if ( ! $mail_res ) {
 				$mail_ok = 0;
 			}
@@ -6302,14 +6302,14 @@ function eme_ajax_action_set_member_unpaid( $ids_arr, $action, $send_mail ) {
 		$res    = eme_member_set_unpaid( $member );
 		if ( $res ) {
 			if ( $send_mail ) {
-					$member = eme_get_member( $member_id );
-					$res2   = eme_email_member_action( $member, $action );
+				$member = eme_get_member( $member_id );
+				$res2   = eme_email_member_action( $member, $action );
 				if ( ! $res2 ) {
 					$mails_ok = 0;
 				}
 			}
 		} else {
-				$action_ok = 0;
+			$action_ok = 0;
 		}
 	}
 	$ajaxResult = [];
@@ -6389,7 +6389,7 @@ function eme_accept_member_payment( $payment_id, $pg = '', $pg_pid = '' ) {
 			}
 		}
 	}
-		return $res;
+	return $res;
 }
 
 function eme_ajax_action_payment_membership( $ids_arr, $send_mail ) {
@@ -6415,8 +6415,8 @@ function eme_ajax_action_stop_membership( $ids_arr, $action, $send_mail ) {
 		$res = eme_stop_member( $member_id );
 		if ( $res ) {
 			if ( $send_mail ) {
-					$member = eme_get_member( $member_id );
-					$res2   = eme_email_member_action( $member, $action );
+				$member = eme_get_member( $member_id );
+				$res2   = eme_email_member_action( $member, $action );
 				if ( ! $res2 ) {
 					$mails_ok = 0;
 				}
@@ -6429,7 +6429,7 @@ function eme_ajax_action_stop_membership( $ids_arr, $action, $send_mail ) {
 				}
 			}
 		} else {
-				$action_ok = 0;
+			$action_ok = 0;
 		}
 	}
 	$ajaxResult = [];
@@ -6451,7 +6451,7 @@ function eme_ajax_action_resend_pending_member( $ids_arr, $action ) {
 	foreach ( $ids_arr as $member_id ) {
 		$member = eme_get_member( $member_id );
 		if ( $member['status'] == EME_MEMBER_STATUS_PENDING && ! $member['related_member_id'] ) {
-				$res2 = eme_email_member_action( $member, $action );
+			$res2 = eme_email_member_action( $member, $action );
 			if ( ! $res2 ) {
 				$mails_ok = 0;
 			}
@@ -6504,7 +6504,7 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 	$css          = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
 	$eme_css_name = get_stylesheet_directory() . '/eme.css';
 	if ( file_exists( $eme_css_name ) ) {
-		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
+		$css  .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
 	}
 	$extra_html_header = get_option( 'eme_html_header' );
         $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
@@ -6539,7 +6539,7 @@ $extra_html_header
 	// unlink old pdf
 	array_map( 'wp_delete_file', glob( "$targetPath/member-$template_id-*.pdf" ) );
 	// now put new one
-	$rand_id         = eme_random_id();
+	$rand_id     = eme_random_id();
 	$target_file = $targetPath . "/member-$template_id-$rand_id.pdf";
 	file_put_contents( $target_file, $dompdf->output() );
 	return $target_file;
@@ -6548,9 +6548,9 @@ $extra_html_header
 function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
-		$format = eme_get_template_format( $template_id );
-	$header     = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
-		$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
+	$format = eme_get_template_format( $template_id );
+	$header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
+	$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
 
 	require_once 'dompdf/vendor/autoload.php';
 	// instantiate and use the dompdf class
@@ -6614,7 +6614,7 @@ function eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_hea
 	$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
 	$extra_html_header = get_option( 'eme_html_header' );
         $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
-        $html   = "<html><head>$extra_html_header</head><body>$header";
+        $html  = "<html><head>$extra_html_header</head><body>$header";
 	$lang  = eme_detect_lang();
 	foreach ( $ids_arr as $member_id ) {
 		$member     = eme_get_member( $member_id );
@@ -6723,11 +6723,11 @@ function eme_get_cf_membership_ids( $val, $field_id, $is_multi = 0 ) {
 }
 
 function eme_get_membership_cf_answers_groupingids( $membership_id ) {
-		global $wpdb;
+	global $wpdb;
 	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-		$sql       = $wpdb->prepare( "select distinct a.eme_grouping from $answers_table a left join $members_table m on m.member_id=a.related_id where m.membership_id=%d AND a.type='member'", $membership_id );
-		return $wpdb->get_col( $sql );
+	$sql       = $wpdb->prepare( "select distinct a.eme_grouping from $answers_table a left join $members_table m on m.member_id=a.related_id where m.membership_id=%d AND a.type='member'", $membership_id );
+	return $wpdb->get_col( $sql );
 }
 
 ?>

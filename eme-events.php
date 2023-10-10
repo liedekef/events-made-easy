@@ -9201,22 +9201,24 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 	$event = eme_new_event();
 	// we only want the columns that interest us
 	// we need to do this since this function is also called for csv import
-	$keys                         = array_intersect_key( $line, $event );
-	$new_line                     = array_merge( $event, $keys );
-	$new_line['event_attributes'] = eme_serialize( $new_line['event_attributes'] );
-	$new_line['event_properties'] = eme_serialize( $new_line['event_properties'] );
+	$keys                              = array_intersect_key( $line, $event );
+	$updated_event                     = array_merge( $event, $keys );
+	$updated_event['event_attributes'] = eme_serialize( $updated_event['event_attributes'] );
+	$updated_event['event_properties'] = eme_serialize( $updated_event['event_properties'] );
 
-	$new_line['modif_date'] = current_time( 'mysql', false );
+	$updated_event['modif_date'] = current_time( 'mysql', false );
 
 	$where = [ 'event_id' => $event_id ];
 	$wpdb->show_errors( true );
-	if ( $wpdb->update( $table_name, $new_line, $where ) === false ) {
+	if ( $wpdb->update( $table_name, $updated_event, $where ) === false ) {
 		$wpdb->print_error();
 		$wpdb->show_errors( false );
 		return false;
 	} else {
-		$new_line['event_id'] = $event_id;
-		$task_ids             = eme_handle_tasks_post_adminform( $event_id, $day_difference );
+		$updated_event['event_id'] = $event_id;
+		// manage waitinglist
+		eme_manage_waitinglist($updated_event);
+		$task_ids = eme_handle_tasks_post_adminform( $event_id, $day_difference );
 		if ( ! empty( $task_ids ) ) {
 			eme_delete_event_old_tasks( $event_id, $task_ids );
 		} else {

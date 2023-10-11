@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-09-19 20:11:25+00:00\n"
+"POT-Creation-Date: 2023-10-11 21:23:45+00:00\n"
 "PO-Revision-Date: 2023-06-04 21:49+0200\n"
 "Last-Translator: Jozef Gaal <preklady@mayday.sk>\n"
 "Language-Team: Jozef Gaal (preklady@mayday.sk)\n"
@@ -34,15 +34,15 @@ msgstr "v mene %s"
 # File: eme-countries.php, line: 985
 # File: eme-discounts.php, line: 1643
 # File: eme-discounts.php, line: 1686
-# File: eme-events.php, line: 9916
-# File: eme-events.php, line: 10247
-# File: eme-events.php, line: 10488
-# File: eme-formfields.php, line: 4971
-# File: eme-formfields.php, line: 5023
-# File: eme-formfields.php, line: 5034
-# File: eme-formfields.php, line: 5035
-# File: eme-formfields.php, line: 5057
-# File: eme-formfields.php, line: 5058
+# File: eme-events.php, line: 9919
+# File: eme-events.php, line: 10250
+# File: eme-events.php, line: 10491
+# File: eme-formfields.php, line: 5109
+# File: eme-formfields.php, line: 5161
+# File: eme-formfields.php, line: 5172
+# File: eme-formfields.php, line: 5173
+# File: eme-formfields.php, line: 5195
+# File: eme-formfields.php, line: 5196
 # File: eme-functions.php, line: 3241
 # File: eme-functions.php, line: 3262
 # File: eme-functions.php, line: 3263
@@ -59,12 +59,12 @@ msgstr "v mene %s"
 # File: eme-options.php, line: 138
 # File: eme-payments.php, line: 3786
 # File: eme-people.php, line: 3634
-# File: eme-people.php, line: 4727
-# File: eme-people.php, line: 4857
-# File: eme-people.php, line: 4929
-# File: eme-people.php, line: 4968
-# File: eme-people.php, line: 4991
-# File: eme-people.php, line: 5073
+# File: eme-people.php, line: 4738
+# File: eme-people.php, line: 4868
+# File: eme-people.php, line: 4940
+# File: eme-people.php, line: 4979
+# File: eme-people.php, line: 5002
+# File: eme-people.php, line: 5084
 # File: eme-recurrence.php, line: 469
 # File: eme-recurrence.php, line: 638
 # File: eme-rsvp.php, line: 1193
@@ -84,7 +84,7 @@ msgstr "Prístup zamietnutý!"
 #
 # File: eme-actions.php, line: 323
 # File: eme-events.php, line: 6218
-# File: eme-events.php, line: 9455
+# File: eme-events.php, line: 9458
 # File: eme-templates.php, line: 41
 msgid "Event"
 msgstr "Podujatie"
@@ -92,17 +92,17 @@ msgstr "Podujatie"
 # File: eme-actions.php, line: 332
 # File: eme-events.php, line: 6219
 # File: eme-events.php, line: 8188
-# File: eme-events.php, line: 9400
+# File: eme-events.php, line: 9403
 # File: eme-locations.php, line: 388
 msgid "Location"
 msgstr "Miesto"
 #
 # File: eme-actions.php, line: 453
-# File: eme-events.php, line: 9318
-# File: eme-events.php, line: 9554
-# File: eme-events.php, line: 9587
-# File: eme-events.php, line: 9622
-# File: eme-events.php, line: 9686
+# File: eme-events.php, line: 9320
+# File: eme-events.php, line: 9557
+# File: eme-events.php, line: 9590
+# File: eme-events.php, line: 9625
+# File: eme-events.php, line: 9689
 # File: eme-gdpr.php, line: 460
 # File: eme-gdpr.php, line: 605
 # File: eme-locations.php, line: 581
@@ -114,11 +114,11 @@ msgstr "Štát"
 #
 # File: eme-actions.php, line: 454
 # File: eme-countries.php, line: 518
-# File: eme-events.php, line: 9319
-# File: eme-events.php, line: 9553
-# File: eme-events.php, line: 9588
-# File: eme-events.php, line: 9623
-# File: eme-events.php, line: 9687
+# File: eme-events.php, line: 9321
+# File: eme-events.php, line: 9556
+# File: eme-events.php, line: 9591
+# File: eme-events.php, line: 9626
+# File: eme-events.php, line: 9690
 # File: eme-gdpr.php, line: 461
 # File: eme-gdpr.php, line: 609
 # File: eme-locations.php, line: 589
@@ -129,7 +129,7 @@ msgid "Country"
 msgstr "Krajina"
 #
 # File: eme-actions.php, line: 456
-# File: eme-events.php, line: 9321
+# File: eme-events.php, line: 9323
 msgid "An error has occurred"
 msgstr "Vyskytla sa chyba"
 #
@@ -138,17 +138,17 @@ msgid "Clear"
 msgstr "Vyčistiť"
 #
 # File: eme-actions.php, line: 458
-# File: eme-events.php, line: 9322
+# File: eme-events.php, line: 9324
 msgid "Mailing preferences"
 msgstr "Nastavenia emailov"
 #
 # File: eme-actions.php, line: 459
-# File: eme-events.php, line: 9323
+# File: eme-events.php, line: 9325
 msgid "Yes, I'm sure"
 msgstr "Áno, som si istý"
 #
 # File: eme-actions.php, line: 460
-# File: eme-events.php, line: 9324
+# File: eme-events.php, line: 9326
 msgid "I want to receive mails"
 msgstr "Chcem dostávať emaily"
 #
@@ -213,7 +213,7 @@ msgid "Any"
 msgstr "Akékoľvek"
 #
 # File: eme-attendances.php, line: 80
-# File: eme-events.php, line: 9388
+# File: eme-events.php, line: 9391
 # File: eme-install.php, line: 1667
 # File: eme-options.php, line: 146
 # File: eme-options.php, line: 147
@@ -225,7 +225,7 @@ msgid "Events"
 msgstr "Podujatia"
 #
 # File: eme-attendances.php, line: 81
-# File: eme-events.php, line: 9667
+# File: eme-events.php, line: 9670
 # File: eme-gdpr.php, line: 487
 # File: eme-options.php, line: 1385
 # File: events-manager.php, line: 367
@@ -333,16 +333,16 @@ msgstr ""
 # File: eme-people.php, line: 2009
 # File: eme-people.php, line: 2069
 # File: eme-people.php, line: 2083
-# File: eme-people.php, line: 4768
-# File: eme-people.php, line: 4782
-# File: eme-people.php, line: 4783
-# File: eme-people.php, line: 4784
+# File: eme-people.php, line: 4779
+# File: eme-people.php, line: 4793
+# File: eme-people.php, line: 4794
+# File: eme-people.php, line: 4795
 # File: eme-tasks.php, line: 1856
 msgid "Edit person"
 msgstr "Upraviť osobu"
 #
 # File: eme-attendances.php, line: 217
-# File: eme-events.php, line: 10181
+# File: eme-events.php, line: 10184
 # File: eme-rsvp.php, line: 5657
 msgid "All day"
 msgstr "Celý deň"
@@ -353,7 +353,7 @@ msgid "Manual entry"
 msgstr "Manuálne"
 #
 # File: eme-attendances.php, line: 264
-# File: eme-events.php, line: 10289
+# File: eme-events.php, line: 10292
 msgid "Events deleted"
 msgstr "Podujatia vymazané"
 #
@@ -366,7 +366,7 @@ msgid "Attribute Name"
 msgstr "Názov doplnku"
 #
 # File: eme-attributes.php, line: 96
-# File: eme-events.php, line: 9522
+# File: eme-events.php, line: 9525
 msgid "Value"
 msgstr "Hodnota"
 #
@@ -376,7 +376,7 @@ msgstr "Nie je definované v šablónach"
 #
 # File: eme-attributes.php, line: 121
 # File: eme-attributes.php, line: 141
-# File: eme-formfields.php, line: 4876
+# File: eme-formfields.php, line: 5014
 # File: eme-tasks.php, line: 781
 msgid "Remove"
 msgstr "Odstrániť"
@@ -486,16 +486,16 @@ msgstr "Pridať kategóriu"
 #
 # File: eme-categories.php, line: 129
 # File: eme-categories.php, line: 136
-# File: eme-events.php, line: 9392
-# File: eme-events.php, line: 9432
-# File: eme-events.php, line: 9449
-# File: eme-events.php, line: 9473
-# File: eme-events.php, line: 9494
-# File: eme-events.php, line: 9516
-# File: eme-events.php, line: 9549
-# File: eme-events.php, line: 9577
-# File: eme-events.php, line: 9670
-# File: eme-events.php, line: 9725
+# File: eme-events.php, line: 9395
+# File: eme-events.php, line: 9435
+# File: eme-events.php, line: 9452
+# File: eme-events.php, line: 9476
+# File: eme-events.php, line: 9497
+# File: eme-events.php, line: 9519
+# File: eme-events.php, line: 9552
+# File: eme-events.php, line: 9580
+# File: eme-events.php, line: 9673
+# File: eme-events.php, line: 9728
 # File: eme-gdpr.php, line: 452
 # File: eme-gdpr.php, line: 492
 # File: eme-holidays.php, line: 122
@@ -509,15 +509,15 @@ msgstr "ID záznamu"
 #
 # File: eme-categories.php, line: 130
 # File: eme-categories.php, line: 137
-# File: eme-events.php, line: 9393
-# File: eme-events.php, line: 9475
-# File: eme-events.php, line: 9495
-# File: eme-events.php, line: 9515
-# File: eme-events.php, line: 9550
-# File: eme-events.php, line: 9578
-# File: eme-events.php, line: 9615
-# File: eme-events.php, line: 9675
-# File: eme-events.php, line: 9780
+# File: eme-events.php, line: 9396
+# File: eme-events.php, line: 9478
+# File: eme-events.php, line: 9498
+# File: eme-events.php, line: 9518
+# File: eme-events.php, line: 9553
+# File: eme-events.php, line: 9581
+# File: eme-events.php, line: 9618
+# File: eme-events.php, line: 9678
+# File: eme-events.php, line: 9783
 # File: eme-holidays.php, line: 123
 # File: eme-holidays.php, line: 130
 # File: eme-mailer.php, line: 1335
@@ -531,12 +531,12 @@ msgid "Name"
 msgstr "Názov"
 #
 # File: eme-categories.php, line: 143
-# File: eme-events.php, line: 10012
-# File: eme-formfields.php, line: 5008
+# File: eme-events.php, line: 10015
+# File: eme-formfields.php, line: 5146
 # File: eme-holidays.php, line: 136
 # File: eme-locations.php, line: 2959
 # File: eme-members.php, line: 5829
-# File: eme-people.php, line: 4881
+# File: eme-people.php, line: 4892
 # File: eme-templates.php, line: 481
 msgid "No name"
 msgstr "Žiadne meno"
@@ -705,16 +705,16 @@ msgstr "Mesiacov"
 # File: eme-discounts.php, line: 530
 # File: eme-events.php, line: 5977
 # File: eme-events.php, line: 6077
-# File: eme-events.php, line: 9410
-# File: eme-events.php, line: 9460
-# File: eme-events.php, line: 9480
-# File: eme-events.php, line: 9504
-# File: eme-events.php, line: 9538
-# File: eme-events.php, line: 9566
-# File: eme-events.php, line: 9594
-# File: eme-events.php, line: 9631
-# File: eme-events.php, line: 9689
-# File: eme-events.php, line: 9755
+# File: eme-events.php, line: 9413
+# File: eme-events.php, line: 9463
+# File: eme-events.php, line: 9483
+# File: eme-events.php, line: 9507
+# File: eme-events.php, line: 9541
+# File: eme-events.php, line: 9569
+# File: eme-events.php, line: 9597
+# File: eme-events.php, line: 9634
+# File: eme-events.php, line: 9692
+# File: eme-events.php, line: 9758
 # File: eme-formfields.php, line: 201
 # File: eme-locations.php, line: 920
 # File: eme-mailer.php, line: 2565
@@ -1119,8 +1119,8 @@ msgstr "Názov štátu"
 #
 # File: eme-countries.php, line: 511
 # File: eme-discounts.php, line: 1550
-# File: eme-events.php, line: 9536
-# File: eme-events.php, line: 9561
+# File: eme-events.php, line: 9539
+# File: eme-events.php, line: 9564
 msgid "Code"
 msgstr "Kód"
 #
@@ -1147,23 +1147,23 @@ msgid "The name of the country"
 msgstr "Názov krajiny"
 #
 # File: eme-countries.php, line: 577
-# File: eme-events.php, line: 9562
+# File: eme-events.php, line: 9565
 msgid "Alpha-2"
 msgstr "Alpha-2"
 #
 # File: eme-countries.php, line: 581
-# File: eme-events.php, line: 9563
+# File: eme-events.php, line: 9566
 msgid "Alpha-3"
 msgstr "Alpha-3"
 #
 # File: eme-countries.php, line: 585
-# File: eme-events.php, line: 9564
+# File: eme-events.php, line: 9567
 msgid "Num-3"
 msgstr "Num-3"
 #
 # File: eme-countries.php, line: 589
-# File: eme-events.php, line: 9555
-# File: eme-events.php, line: 9628
+# File: eme-events.php, line: 9558
+# File: eme-events.php, line: 9631
 # File: eme-people.php, line: 2137
 msgid "Language"
 msgstr "Jazyk"
@@ -1521,10 +1521,10 @@ msgstr "Názov zľavy"
 #
 # File: eme-discounts.php, line: 839
 # File: eme-discounts.php, line: 989
-# File: eme-events.php, line: 9476
-# File: eme-events.php, line: 9517
-# File: eme-events.php, line: 9614
-# File: eme-events.php, line: 9669
+# File: eme-events.php, line: 9479
+# File: eme-events.php, line: 9520
+# File: eme-events.php, line: 9617
+# File: eme-events.php, line: 9672
 # File: eme-members.php, line: 1761
 # File: eme-people.php, line: 2277
 # File: eme-tasks.php, line: 737
@@ -1533,10 +1533,10 @@ msgid "Description"
 msgstr "Popis"
 #
 # File: eme-discounts.php, line: 843
-# File: eme-events.php, line: 9433
-# File: eme-events.php, line: 9477
-# File: eme-events.php, line: 9496
-# File: eme-events.php, line: 9523
+# File: eme-events.php, line: 9436
+# File: eme-events.php, line: 9480
+# File: eme-events.php, line: 9499
+# File: eme-events.php, line: 9526
 # File: eme-members.php, line: 1765
 # File: eme-templates.php, line: 291
 msgid "Type"
@@ -1586,7 +1586,7 @@ msgstr ""
 "môžete ho použiť ako zľavu typu „ranné vtáča“"
 #
 # File: eme-discounts.php, line: 862
-# File: eme-events.php, line: 9518
+# File: eme-events.php, line: 9521
 msgid "Discount groups"
 msgstr "Skupiny zliav"
 #
@@ -1599,7 +1599,7 @@ msgstr ""
 "skupín a potom na svoje podujatie uplatniť zľavovú skupinu"
 #
 # File: eme-discounts.php, line: 868
-# File: eme-events.php, line: 9526
+# File: eme-events.php, line: 9529
 msgid "Valid from"
 msgstr "Platné od"
 #
@@ -1612,7 +1612,7 @@ msgstr ""
 "platný pred týmto dátumom a časom."
 #
 # File: eme-discounts.php, line: 875
-# File: eme-events.php, line: 9527
+# File: eme-events.php, line: 9530
 msgid "Valid until"
 msgstr "Platné do"
 #
@@ -1758,26 +1758,26 @@ msgstr ""
 "podobne."
 #
 # File: eme-discounts.php, line: 1548
-# File: eme-events.php, line: 9533
+# File: eme-events.php, line: 9536
 msgid "Fixed"
 msgstr "Pevná"
 #
 # File: eme-discounts.php, line: 1549
-# File: eme-events.php, line: 9535
+# File: eme-events.php, line: 9538
 msgid "Percentage"
 msgstr "Percentuálna"
 #
 # File: eme-discounts.php, line: 1551
-# File: eme-events.php, line: 9534
+# File: eme-events.php, line: 9537
 msgid "Fixed per seat"
 msgstr "Pevná na miesto"
 #
 # File: eme-discounts.php, line: 1634
 # File: eme-discounts.php, line: 1635
-# File: eme-formfields.php, line: 5011
-# File: eme-formfields.php, line: 5013
-# File: eme-formfields.php, line: 5014
-# File: eme-formfields.php, line: 5015
+# File: eme-formfields.php, line: 5149
+# File: eme-formfields.php, line: 5151
+# File: eme-formfields.php, line: 5152
+# File: eme-formfields.php, line: 5153
 # File: eme-gdpr.php, line: 449
 # File: eme-gdpr.php, line: 450
 # File: eme-gdpr.php, line: 569
@@ -1791,10 +1791,10 @@ msgstr "Pevná na miesto"
 # File: eme-people.php, line: 1005
 # File: eme-people.php, line: 1040
 # File: eme-people.php, line: 1336
-# File: eme-people.php, line: 4787
-# File: eme-people.php, line: 4804
-# File: eme-people.php, line: 4805
-# File: eme-people.php, line: 4884
+# File: eme-people.php, line: 4798
+# File: eme-people.php, line: 4815
+# File: eme-people.php, line: 4816
+# File: eme-people.php, line: 4895
 # File: eme-rsvp.php, line: 3706
 # File: eme-rsvp.php, line: 5694
 # File: eme-ui-helpers.php, line: 144
@@ -1804,10 +1804,10 @@ msgstr "Áno"
 #
 # File: eme-discounts.php, line: 1634
 # File: eme-discounts.php, line: 1635
-# File: eme-formfields.php, line: 5011
-# File: eme-formfields.php, line: 5013
-# File: eme-formfields.php, line: 5014
-# File: eme-formfields.php, line: 5015
+# File: eme-formfields.php, line: 5149
+# File: eme-formfields.php, line: 5151
+# File: eme-formfields.php, line: 5152
+# File: eme-formfields.php, line: 5153
 # File: eme-gdpr.php, line: 449
 # File: eme-gdpr.php, line: 450
 # File: eme-gdpr.php, line: 569
@@ -1821,10 +1821,10 @@ msgstr "Áno"
 # File: eme-people.php, line: 1005
 # File: eme-people.php, line: 1040
 # File: eme-people.php, line: 1338
-# File: eme-people.php, line: 4787
-# File: eme-people.php, line: 4804
-# File: eme-people.php, line: 4805
-# File: eme-people.php, line: 4884
+# File: eme-people.php, line: 4798
+# File: eme-people.php, line: 4815
+# File: eme-people.php, line: 4816
+# File: eme-people.php, line: 4895
 # File: eme-rsvp.php, line: 3706
 # File: eme-rsvp.php, line: 5694
 # File: eme-ui-helpers.php, line: 145
@@ -1919,7 +1919,7 @@ msgstr "Nové opakované vložené, ktoré obsahuje %d podujatia"
 # File: eme-events.php, line: 664
 # File: eme-events.php, line: 807
 # File: eme-events.php, line: 6201
-# File: eme-events.php, line: 10198
+# File: eme-events.php, line: 10201
 msgid "Edit Recurrence"
 msgstr "Upraviť opakovanie"
 #
@@ -1934,7 +1934,7 @@ msgstr "Nové podujatie úspešne pridané!"
 # File: eme-events.php, line: 616
 # File: eme-events.php, line: 686
 # File: eme-events.php, line: 745
-# File: eme-events.php, line: 9395
+# File: eme-events.php, line: 9398
 msgid "Edit Event '%s'"
 msgstr "Upraviť podujatie '%s'"
 #
@@ -1970,7 +1970,7 @@ msgid "Failed to update '%s'"
 msgstr "Zlyhala aktualizácia '%s'"
 #
 # File: eme-events.php, line: 716
-# File: eme-events.php, line: 9394
+# File: eme-events.php, line: 9397
 msgid "Insert New Event"
 msgstr "Pridať nové podujatie"
 #
@@ -2172,7 +2172,7 @@ msgid "GDPR approval"
 msgstr "Súhlas s GDPR"
 #
 # File: eme-events.php, line: 1601
-# File: eme-events.php, line: 9642
+# File: eme-events.php, line: 9645
 msgid "GDPR"
 msgstr "GDPR"
 #
@@ -2185,12 +2185,12 @@ msgid "Events Made Easy plugin page"
 msgstr "Stránka pluginu Events Made Easy"
 #
 # File: eme-events.php, line: 2420
-# File: eme-events.php, line: 9478
-# File: eme-events.php, line: 9502
-# File: eme-events.php, line: 9529
-# File: eme-events.php, line: 9556
-# File: eme-events.php, line: 9694
-# File: eme-events.php, line: 9747
+# File: eme-events.php, line: 9481
+# File: eme-events.php, line: 9505
+# File: eme-events.php, line: 9532
+# File: eme-events.php, line: 9559
+# File: eme-events.php, line: 9697
+# File: eme-events.php, line: 9750
 # File: eme-locations.php, line: 2406
 # File: eme-rsvp.php, line: 5538
 msgid "Edit"
@@ -2589,9 +2589,9 @@ msgstr ""
 "opakovania."
 #
 # File: eme-events.php, line: 6221
-# File: eme-events.php, line: 9390
-# File: eme-events.php, line: 9727
-# File: eme-events.php, line: 10151
+# File: eme-events.php, line: 9393
+# File: eme-events.php, line: 9730
+# File: eme-events.php, line: 10154
 # File: eme-options.php, line: 1097
 # File: eme-rsvp.php, line: 5616
 msgid "RSVP"
@@ -2768,7 +2768,7 @@ msgid "Delete Event"
 msgstr "Vymazať podujatie"
 #
 # File: eme-events.php, line: 6427
-# File: eme-events.php, line: 9582
+# File: eme-events.php, line: 9585
 msgid "View"
 msgstr "Zobraziť"
 #
@@ -2782,10 +2782,10 @@ msgid "Delete Recurrence"
 msgstr "Vymazať opakovanie"
 #
 # File: eme-events.php, line: 6456
-# File: eme-events.php, line: 9396
-# File: eme-events.php, line: 9466
-# File: eme-events.php, line: 9709
-# File: eme-events.php, line: 9782
+# File: eme-events.php, line: 9399
+# File: eme-events.php, line: 9469
+# File: eme-events.php, line: 9712
+# File: eme-events.php, line: 9785
 # File: eme-mailer.php, line: 1338
 # File: eme-mailer.php, line: 2577
 # File: eme-people.php, line: 951
@@ -2831,8 +2831,8 @@ msgstr ""
 "mailov) sa použijú informácie o používateľovi admin."
 #
 # File: eme-events.php, line: 6532
-# File: eme-events.php, line: 9735
-# File: eme-events.php, line: 10020
+# File: eme-events.php, line: 9738
+# File: eme-events.php, line: 10023
 # File: eme-locations.php, line: 458
 # File: eme-locations.php, line: 2969
 # File: eme-recurrence.php, line: 577
@@ -3503,9 +3503,9 @@ msgstr "Prílohy emailu o vykonanej rezervácii"
 # File: eme-events.php, line: 7423
 # File: eme-events.php, line: 7613
 # File: eme-events.php, line: 7989
-# File: eme-events.php, line: 9347
-# File: eme-events.php, line: 9712
-# File: eme-events.php, line: 9787
+# File: eme-events.php, line: 9349
+# File: eme-events.php, line: 9715
+# File: eme-events.php, line: 9790
 # File: eme-mailer.php, line: 2268
 # File: eme-mailer.php, line: 2446
 # File: eme-members.php, line: 2212
@@ -4041,7 +4041,7 @@ msgstr ""
 "Vlastné polia typu „skryté“ sú tu zbytočné a samozrejme sa nebudú zobrazovať."
 #
 # File: eme-events.php, line: 8385
-# File: eme-events.php, line: 9591
+# File: eme-events.php, line: 9594
 # File: eme-locations.php, line: 739
 msgid "External URL"
 msgstr "Externá URL"
@@ -4255,7 +4255,7 @@ msgstr ""
 "Povoliť iba 1 rezerváciu na osobu (kombinácia email/priezvisko/krstné meno)"
 #
 # File: eme-events.php, line: 8568
-# File: eme-events.php, line: 9733
+# File: eme-events.php, line: 9736
 # File: eme-options.php, line: 38
 # File: eme-people.php, line: 949
 # File: eme-people.php, line: 1242
@@ -4632,240 +4632,240 @@ msgstr ""
 "Povoľte zrušenie rezervácie až do uvedeného počtu dní od vykonania "
 "rezervácie."
 #
-# File: eme-events.php, line: 9330
+# File: eme-events.php, line: 9332
 msgid "Select the image to be used as person image"
 msgstr "Vyberte obrázok, ktorý sa má použiť ako obrázok osoby"
 #
-# File: eme-events.php, line: 9331
+# File: eme-events.php, line: 9333
 msgid "Set image"
 msgstr "Nastaviť obrázok"
 #
-# File: eme-events.php, line: 9332
+# File: eme-events.php, line: 9334
 # File: eme-people.php, line: 2385
 msgid "Choose image"
 msgstr "Vybrať obrázok"
 #
-# File: eme-events.php, line: 9333
+# File: eme-events.php, line: 9335
 msgid "Replace image"
 msgstr "Nahradiť obrázok"
 #
-# File: eme-events.php, line: 9338
-# File: eme-events.php, line: 9414
-# File: eme-events.php, line: 9595
+# File: eme-events.php, line: 9340
+# File: eme-events.php, line: 9417
+# File: eme-events.php, line: 9598
 msgid "Are you sure you want to delete the selected records?"
 msgstr "Určite chcete vymazať vybrané záznamy?"
 #
-# File: eme-events.php, line: 9339
+# File: eme-events.php, line: 9341
 msgid "Are you sure you want to delete this file?"
 msgstr "Určite chcete tento súbor odstrániť?"
 #
-# File: eme-events.php, line: 9340
+# File: eme-events.php, line: 9342
 msgid "Select one or more persons"
 msgstr "Vybrať jednu alebo viac osôb"
 #
-# File: eme-events.php, line: 9341
+# File: eme-events.php, line: 9343
 msgid "Select one or more members"
 msgstr "Vybrať jedného alebo viac členov"
 #
-# File: eme-events.php, line: 9342
+# File: eme-events.php, line: 9344
 msgid "Select one or more groups"
 msgstr "Vybrať jednu alebo viac skupín"
 #
-# File: eme-events.php, line: 9343
+# File: eme-events.php, line: 9345
 msgid "Any group"
 msgstr "Akákoľvek skupina"
 #
-# File: eme-events.php, line: 9344
+# File: eme-events.php, line: 9346
 msgid "Filter on membership"
 msgstr "Filtrovať členstvo"
 #
-# File: eme-events.php, line: 9345
+# File: eme-events.php, line: 9347
 msgid "Filter on member status"
 msgstr "Filtrovať stav člena"
 #
-# File: eme-events.php, line: 9346
+# File: eme-events.php, line: 9348
 msgid "Custom fields to filter on"
 msgstr "Vlastné polia na filtrovanie"
 #
-# File: eme-events.php, line: 9348
+# File: eme-events.php, line: 9350
 msgid "Select a discount"
 msgstr "Vybrať zľavu"
 #
-# File: eme-events.php, line: 9349
+# File: eme-events.php, line: 9351
 msgid "Select a discountgroup"
 msgstr "Vybrať zľavovú skupinu"
 #
-# File: eme-events.php, line: 9386
-# File: eme-events.php, line: 9723
+# File: eme-events.php, line: 9389
+# File: eme-events.php, line: 9726
 msgid "No matching event found"
 msgstr "Nenašli sa vyhovujúce podujatia"
 #
-# File: eme-events.php, line: 9389
+# File: eme-events.php, line: 9392
 msgid "Recurrences"
 msgstr "Opakovania"
 #
-# File: eme-events.php, line: 9391
-# File: eme-events.php, line: 9734
+# File: eme-events.php, line: 9394
+# File: eme-events.php, line: 9737
 msgid "Event price"
 msgstr "Cena podujatia"
 #
-# File: eme-events.php, line: 9397
-# File: eme-events.php, line: 9486
-# File: eme-events.php, line: 9581
+# File: eme-events.php, line: 9400
+# File: eme-events.php, line: 9489
+# File: eme-events.php, line: 9584
 msgid "Copy"
 msgstr "Kopírovať"
 #
-# File: eme-events.php, line: 9398
-# File: eme-events.php, line: 9438
-# File: eme-events.php, line: 9457
-# File: eme-events.php, line: 9481
-# File: eme-events.php, line: 9596
-# File: eme-events.php, line: 9637
-# File: eme-events.php, line: 9691
-# File: eme-events.php, line: 9748
+# File: eme-events.php, line: 9401
+# File: eme-events.php, line: 9441
+# File: eme-events.php, line: 9460
+# File: eme-events.php, line: 9484
+# File: eme-events.php, line: 9599
+# File: eme-events.php, line: 9640
+# File: eme-events.php, line: 9694
+# File: eme-events.php, line: 9751
 msgid "CSV"
 msgstr "CSV"
 #
-# File: eme-events.php, line: 9399
-# File: eme-events.php, line: 9439
-# File: eme-events.php, line: 9458
-# File: eme-events.php, line: 9482
-# File: eme-events.php, line: 9597
-# File: eme-events.php, line: 9638
-# File: eme-events.php, line: 9692
-# File: eme-events.php, line: 9749
+# File: eme-events.php, line: 9402
+# File: eme-events.php, line: 9442
+# File: eme-events.php, line: 9461
+# File: eme-events.php, line: 9485
+# File: eme-events.php, line: 9600
+# File: eme-events.php, line: 9641
+# File: eme-events.php, line: 9695
+# File: eme-events.php, line: 9752
 msgid "Print"
 msgstr "Vytlačiť"
 #
-# File: eme-events.php, line: 9401
+# File: eme-events.php, line: 9404
 msgid "Recurrence info"
 msgstr "Info opakovania"
 #
-# File: eme-events.php, line: 9402
+# File: eme-events.php, line: 9405
 msgid "Single event duration"
 msgstr "Trvanie jednorazového podujatia"
 #
-# File: eme-events.php, line: 9403
+# File: eme-events.php, line: 9406
 msgid "Date"
 msgstr "Dátum"
 #
-# File: eme-events.php, line: 9404
-# File: eme-events.php, line: 9729
+# File: eme-events.php, line: 9407
+# File: eme-events.php, line: 9732
 msgid "Date and time"
 msgstr "Dátum a čas"
 #
-# File: eme-events.php, line: 9406
-# File: eme-events.php, line: 9788
+# File: eme-events.php, line: 9409
+# File: eme-events.php, line: 9791
 msgid "Selected dates:"
 msgstr "Vybrané dátumy:"
 #
-# File: eme-events.php, line: 9407
-# File: eme-events.php, line: 9644
+# File: eme-events.php, line: 9410
+# File: eme-events.php, line: 9647
 msgid "Created on"
 msgstr "Vytvorené dňa"
 #
-# File: eme-events.php, line: 9408
-# File: eme-events.php, line: 9645
+# File: eme-events.php, line: 9411
+# File: eme-events.php, line: 9648
 msgid "Modified on"
 msgstr "Zmenené"
 #
-# File: eme-events.php, line: 9409
-# File: eme-events.php, line: 9459
-# File: eme-events.php, line: 9479
-# File: eme-events.php, line: 9503
-# File: eme-events.php, line: 9537
-# File: eme-events.php, line: 9565
-# File: eme-events.php, line: 9593
-# File: eme-events.php, line: 9630
-# File: eme-events.php, line: 9688
-# File: eme-events.php, line: 9754
-# File: eme-events.php, line: 9771
+# File: eme-events.php, line: 9412
+# File: eme-events.php, line: 9462
+# File: eme-events.php, line: 9482
+# File: eme-events.php, line: 9506
+# File: eme-events.php, line: 9540
+# File: eme-events.php, line: 9568
+# File: eme-events.php, line: 9596
+# File: eme-events.php, line: 9633
+# File: eme-events.php, line: 9691
+# File: eme-events.php, line: 9757
+# File: eme-events.php, line: 9774
 msgid "Please wait"
 msgstr "Prosím čakajte"
 #
-# File: eme-events.php, line: 9411
-# File: eme-events.php, line: 9598
+# File: eme-events.php, line: 9414
+# File: eme-events.php, line: 9601
 msgid "Select the image to be used as featured image"
 msgstr "Nastaviť obrázok, ktorý bude použitý ako ilustračný"
 #
-# File: eme-events.php, line: 9412
-# File: eme-events.php, line: 9599
+# File: eme-events.php, line: 9415
+# File: eme-events.php, line: 9602
 msgid "Set featured image"
 msgstr "Nastaviť ilustračný obrázok"
 #
-# File: eme-events.php, line: 9413
-# File: eme-events.php, line: 9484
-# File: eme-events.php, line: 9506
-# File: eme-events.php, line: 9540
+# File: eme-events.php, line: 9416
+# File: eme-events.php, line: 9487
+# File: eme-events.php, line: 9509
+# File: eme-events.php, line: 9543
 msgid "Press the delete button to remove"
 msgstr "Stlačte tlačidlo vymazať pre odstránenie"
 #
-# File: eme-events.php, line: 9415
+# File: eme-events.php, line: 9418
 msgid "Since the event is repeated, you must specify an end date"
 msgstr "Keďže sa podujatie opakuje, musíte zadať dátum ukončenia"
 #
-# File: eme-events.php, line: 9416
+# File: eme-events.php, line: 9419
 msgid "In a recurrence, start and end date can't be identical"
 msgstr "V prípade opakovania nemôže byť začiatočný a konečný dátum totožný"
 #
-# File: eme-events.php, line: 9418
+# File: eme-events.php, line: 9421
 # File: eme-filters.php, line: 374
 # File: eme-options.php, line: 1581
 msgid "Event author"
 msgstr "Autor podujatia"
 #
-# File: eme-events.php, line: 9434
+# File: eme-events.php, line: 9437
 msgid "Recorded on"
 msgstr "Zaznamenané dňa"
 #
-# File: eme-events.php, line: 9435
-# File: eme-events.php, line: 9456
+# File: eme-events.php, line: 9438
+# File: eme-events.php, line: 9459
 msgid "Person"
 msgstr "Osoba"
 #
-# File: eme-events.php, line: 9436
+# File: eme-events.php, line: 9439
 #, fuzzy
 msgid "Event/Membership name"
 msgstr "Členstvo pridané"
 #
-# File: eme-events.php, line: 9437
+# File: eme-events.php, line: 9440
 msgid "Attendance reports"
 msgstr "Prehľady o účasti"
 #
-# File: eme-events.php, line: 9440
+# File: eme-events.php, line: 9443
 msgid "Are you sure to delete this record?"
 msgstr "Určite chcete vymazať tento záznam?"
 #
-# File: eme-events.php, line: 9441
-# File: eme-events.php, line: 9608
-# File: eme-events.php, line: 9663
-# File: eme-events.php, line: 9779
+# File: eme-events.php, line: 9444
+# File: eme-events.php, line: 9611
+# File: eme-events.php, line: 9666
+# File: eme-events.php, line: 9782
 msgid "No matching person found"
 msgstr "Nenašla sa vyhovujúca osoba"
 #
-# File: eme-events.php, line: 9450
+# File: eme-events.php, line: 9453
 # File: events-manager.php, line: 362
 msgid "Task signups"
 msgstr "Prihlasovanie na úlohy"
 #
-# File: eme-events.php, line: 9451
+# File: eme-events.php, line: 9454
 # File: eme-tasks.php, line: 426
 msgid "Task name"
 msgstr "Názov úlohy"
 #
-# File: eme-events.php, line: 9452
+# File: eme-events.php, line: 9455
 msgid "Task start date"
 msgstr "Dátum začiatku úlohy"
 #
-# File: eme-events.php, line: 9453
+# File: eme-events.php, line: 9456
 msgid "Task end date"
 msgstr "Dátum ukončenia úlohy"
 #
-# File: eme-events.php, line: 9454
-# File: eme-events.php, line: 9750
-# File: eme-formfields.php, line: 1156
-# File: eme-formfields.php, line: 1901
-# File: eme-formfields.php, line: 3089
+# File: eme-events.php, line: 9457
+# File: eme-events.php, line: 9753
+# File: eme-formfields.php, line: 1183
+# File: eme-formfields.php, line: 2037
+# File: eme-formfields.php, line: 3225
 # File: eme-options.php, line: 39
 # File: eme-people.php, line: 960
 # File: eme-people.php, line: 1279
@@ -4873,36 +4873,36 @@ msgstr "Dátum ukončenia úlohy"
 msgid "Comment"
 msgstr "Komentár"
 #
-# File: eme-events.php, line: 9461
-# File: eme-events.php, line: 9483
-# File: eme-events.php, line: 9505
-# File: eme-events.php, line: 9539
-# File: eme-events.php, line: 9567
-# File: eme-events.php, line: 9632
-# File: eme-events.php, line: 9690
-# File: eme-events.php, line: 9756
+# File: eme-events.php, line: 9464
+# File: eme-events.php, line: 9486
+# File: eme-events.php, line: 9508
+# File: eme-events.php, line: 9542
+# File: eme-events.php, line: 9570
+# File: eme-events.php, line: 9635
+# File: eme-events.php, line: 9693
+# File: eme-events.php, line: 9759
 msgid "Are you sure to delete the selected records?"
 msgstr "Určite chcete vymazať vybrané záznamy?"
 #
-# File: eme-events.php, line: 9462
+# File: eme-events.php, line: 9465
 msgid "Press the delete button to remove this record"
 msgstr "Stlačením tlačidla vymazať odstránite tento záznam"
 #
-# File: eme-events.php, line: 9463
-# File: eme-events.php, line: 9485
-# File: eme-events.php, line: 9532
-# File: eme-events.php, line: 9560
+# File: eme-events.php, line: 9466
+# File: eme-events.php, line: 9488
+# File: eme-events.php, line: 9535
+# File: eme-events.php, line: 9563
 msgid "Records deleted"
 msgstr "Záznamy vymazané"
 #
-# File: eme-events.php, line: 9474
-# File: eme-formfields.php, line: 4820
+# File: eme-events.php, line: 9477
+# File: eme-formfields.php, line: 4958
 # File: eme-options.php, line: 1358
 # File: events-manager.php, line: 355
 msgid "Templates"
 msgstr "Šablóny"
 #
-# File: eme-events.php, line: 9497
+# File: eme-events.php, line: 9500
 # File: eme-formfields.php, line: 332
 # File: eme-options.php, line: 2221
 # File: eme-options.php, line: 2252
@@ -4922,77 +4922,77 @@ msgstr "Šablóny"
 msgid "Extra charge"
 msgstr "Extra poplatok"
 #
-# File: eme-events.php, line: 9498
+# File: eme-events.php, line: 9501
 msgid "Searchable"
 msgstr "Vyhľadateľné"
 #
-# File: eme-events.php, line: 9499
+# File: eme-events.php, line: 9502
 msgid "Purpose"
 msgstr "Účel"
 #
-# File: eme-events.php, line: 9500
+# File: eme-events.php, line: 9503
 msgid "Used in replies"
 msgstr "Použité pri odpovedí"
 #
-# File: eme-events.php, line: 9501
+# File: eme-events.php, line: 9504
 msgid "Required"
 msgstr "Povinné"
 #
-# File: eme-events.php, line: 9514
+# File: eme-events.php, line: 9517
 # File: eme-options.php, line: 1366
 # File: events-manager.php, line: 357
 msgid "Discounts"
 msgstr "Zľavy"
 #
-# File: eme-events.php, line: 9519
+# File: eme-events.php, line: 9522
 msgid "Coupon"
 msgstr "Kupón"
 #
-# File: eme-events.php, line: 9520
+# File: eme-events.php, line: 9523
 msgid "Case sensitive"
 msgstr "Malé a veľké písmená"
 #
-# File: eme-events.php, line: 9521
+# File: eme-events.php, line: 9524
 msgid "Track discount usage per booked seat"
 msgstr "Sledovať využitie zľavy na rezervované miesto"
 #
-# File: eme-events.php, line: 9524
+# File: eme-events.php, line: 9527
 msgid "Max Usage"
 msgstr "Max. použitie"
 #
-# File: eme-events.php, line: 9525
+# File: eme-events.php, line: 9528
 msgid "Usage"
 msgstr "Použitie"
 #
-# File: eme-events.php, line: 9528
+# File: eme-events.php, line: 9531
 msgid "Max Discounts"
 msgstr "Max. zľavy"
 #
-# File: eme-events.php, line: 9530
-# File: eme-events.php, line: 9558
-# File: eme-events.php, line: 9640
+# File: eme-events.php, line: 9533
+# File: eme-events.php, line: 9561
+# File: eme-events.php, line: 9643
 msgid "Record added"
 msgstr "Záznam pridaný"
 #
-# File: eme-events.php, line: 9531
-# File: eme-events.php, line: 9559
-# File: eme-events.php, line: 9641
+# File: eme-events.php, line: 9534
+# File: eme-events.php, line: 9562
+# File: eme-events.php, line: 9644
 msgid "Record updated"
 msgstr "Záznam upravený"
 #
-# File: eme-events.php, line: 9548
+# File: eme-events.php, line: 9551
 msgid "Countries"
 msgstr "Krajiny"
 #
-# File: eme-events.php, line: 9551
+# File: eme-events.php, line: 9554
 msgid "Country ID"
 msgstr "ID krajiny"
 #
-# File: eme-events.php, line: 9552
+# File: eme-events.php, line: 9555
 msgid "States"
 msgstr "Štáty"
 #
-# File: eme-events.php, line: 9557
+# File: eme-events.php, line: 9560
 msgid ""
 "No country associated with this state, it will not show up in dropdown "
 "lists. Please edit this state and correct the country info."
@@ -5000,34 +5000,35 @@ msgstr ""
 "K tomuto štátu nie je priradená žiadna krajina, nebude sa zobrazovať v "
 "rozbaľovacích zoznamoch. Upravte tento stav a opravte informácie o krajine."
 #
-# File: eme-events.php, line: 9575
+# File: eme-events.php, line: 9578
 msgid "No matching location found"
 msgstr "Nenašli sa vyhovujúce miesta"
 #
-# File: eme-events.php, line: 9576
+# File: eme-events.php, line: 9579
 # File: eme-options.php, line: 1093
 # File: eme-options.php, line: 1331
 # File: events-manager.php, line: 349
 msgid "Locations"
 msgstr "Miesta"
 #
-# File: eme-events.php, line: 9579
+# File: eme-events.php, line: 9582
 # File: eme-locations.php, line: 376
 msgid "Insert New Location"
 msgstr "Vložiť nové miesto"
 #
-# File: eme-events.php, line: 9580
+# File: eme-events.php, line: 9583
 # File: eme-locations.php, line: 378
 msgid "Edit Location '%s'"
 msgstr "Upraviť miesto '%s'"
 #
-# File: eme-events.php, line: 9585
-# File: eme-events.php, line: 9620
-# File: eme-events.php, line: 9684
-# File: eme-formfields.php, line: 1749
-# File: eme-formfields.php, line: 2835
-# File: eme-formfields.php, line: 3806
-# File: eme-formfields.php, line: 4466
+# File: eme-events.php, line: 9588
+# File: eme-events.php, line: 9623
+# File: eme-events.php, line: 9687
+# File: eme-formfields.php, line: 1244
+# File: eme-formfields.php, line: 1885
+# File: eme-formfields.php, line: 2971
+# File: eme-formfields.php, line: 3942
+# File: eme-formfields.php, line: 4604
 # File: eme-gdpr.php, line: 458
 # File: eme-gdpr.php, line: 597
 # File: eme-locations.php, line: 577
@@ -5037,13 +5038,14 @@ msgstr "Upraviť miesto '%s'"
 msgid "City"
 msgstr "Mesto"
 #
-# File: eme-events.php, line: 9586
-# File: eme-events.php, line: 9621
-# File: eme-events.php, line: 9685
-# File: eme-formfields.php, line: 1765
-# File: eme-formfields.php, line: 2847
-# File: eme-formfields.php, line: 3816
-# File: eme-formfields.php, line: 4482
+# File: eme-events.php, line: 9589
+# File: eme-events.php, line: 9624
+# File: eme-events.php, line: 9688
+# File: eme-formfields.php, line: 1254
+# File: eme-formfields.php, line: 1901
+# File: eme-formfields.php, line: 2983
+# File: eme-formfields.php, line: 3952
+# File: eme-formfields.php, line: 4620
 # File: eme-gdpr.php, line: 459
 # File: eme-gdpr.php, line: 601
 # File: eme-locations.php, line: 585
@@ -5053,53 +5055,53 @@ msgstr "Mesto"
 msgid "Postal code"
 msgstr "PSČ"
 #
-# File: eme-events.php, line: 9589
+# File: eme-events.php, line: 9592
 # File: eme-locations.php, line: 602
 msgid "Latitude"
 msgstr "Zemepisná šírka"
 #
-# File: eme-events.php, line: 9590
+# File: eme-events.php, line: 9593
 # File: eme-locations.php, line: 606
 msgid "Longitude"
 msgstr "Zemepisná dĺžka"
 #
-# File: eme-events.php, line: 9592
+# File: eme-events.php, line: 9595
 msgid "Online only"
 msgstr "Iba virtuálne"
 #
-# File: eme-events.php, line: 9610
-# File: eme-events.php, line: 9672
+# File: eme-events.php, line: 9613
+# File: eme-events.php, line: 9675
 # File: eme-gdpr.php, line: 573
 msgid "Person ID"
 msgstr "ID osoby"
 #
-# File: eme-events.php, line: 9611
+# File: eme-events.php, line: 9614
 msgid "Group ID"
 msgstr "ID skupiny"
 #
-# File: eme-events.php, line: 9612
+# File: eme-events.php, line: 9615
 # File: eme-people.php, line: 2294
 # File: events-manager.php, line: 364
 msgid "People"
 msgstr "Ľudia"
 #
-# File: eme-events.php, line: 9613
-# File: eme-events.php, line: 9635
+# File: eme-events.php, line: 9616
+# File: eme-events.php, line: 9638
 # File: eme-people.php, line: 2154
 # File: events-manager.php, line: 365
 msgid "Groups"
 msgstr "Skupiny"
 #
-# File: eme-events.php, line: 9616
-# File: eme-events.php, line: 9676
-# File: eme-formfields.php, line: 1109
-# File: eme-formfields.php, line: 1340
-# File: eme-formfields.php, line: 1687
-# File: eme-formfields.php, line: 2747
-# File: eme-formfields.php, line: 3332
-# File: eme-formfields.php, line: 3730
-# File: eme-formfields.php, line: 4203
-# File: eme-formfields.php, line: 4400
+# File: eme-events.php, line: 9619
+# File: eme-events.php, line: 9679
+# File: eme-formfields.php, line: 1136
+# File: eme-formfields.php, line: 1473
+# File: eme-formfields.php, line: 1823
+# File: eme-formfields.php, line: 2883
+# File: eme-formfields.php, line: 3468
+# File: eme-formfields.php, line: 3866
+# File: eme-formfields.php, line: 4341
+# File: eme-formfields.php, line: 4538
 # File: eme-gdpr.php, line: 273
 # File: eme-gdpr.php, line: 453
 # File: eme-gdpr.php, line: 577
@@ -5117,17 +5119,17 @@ msgstr "Skupiny"
 msgid "Last name"
 msgstr "Priezvisko"
 #
-# File: eme-events.php, line: 9617
-# File: eme-events.php, line: 9677
-# File: eme-formfields.php, line: 1125
-# File: eme-formfields.php, line: 1352
-# File: eme-formfields.php, line: 1703
-# File: eme-formfields.php, line: 2774
-# File: eme-formfields.php, line: 3005
-# File: eme-formfields.php, line: 3348
-# File: eme-formfields.php, line: 3754
-# File: eme-formfields.php, line: 4217
-# File: eme-formfields.php, line: 4415
+# File: eme-events.php, line: 9620
+# File: eme-events.php, line: 9680
+# File: eme-formfields.php, line: 1152
+# File: eme-formfields.php, line: 1485
+# File: eme-formfields.php, line: 1839
+# File: eme-formfields.php, line: 2910
+# File: eme-formfields.php, line: 3141
+# File: eme-formfields.php, line: 3484
+# File: eme-formfields.php, line: 3890
+# File: eme-formfields.php, line: 4355
+# File: eme-formfields.php, line: 4553
 # File: eme-gdpr.php, line: 273
 # File: eme-gdpr.php, line: 454
 # File: eme-gdpr.php, line: 581
@@ -5146,17 +5148,17 @@ msgstr "Priezvisko"
 msgid "First name"
 msgstr "Krstné meno"
 #
-# File: eme-events.php, line: 9624
-# File: eme-events.php, line: 9678
-# File: eme-events.php, line: 9781
-# File: eme-formfields.php, line: 1134
-# File: eme-formfields.php, line: 1361
-# File: eme-formfields.php, line: 1798
-# File: eme-formfields.php, line: 2888
-# File: eme-formfields.php, line: 3379
-# File: eme-formfields.php, line: 3854
-# File: eme-formfields.php, line: 4230
-# File: eme-formfields.php, line: 4511
+# File: eme-events.php, line: 9627
+# File: eme-events.php, line: 9681
+# File: eme-events.php, line: 9784
+# File: eme-formfields.php, line: 1161
+# File: eme-formfields.php, line: 1494
+# File: eme-formfields.php, line: 1934
+# File: eme-formfields.php, line: 3024
+# File: eme-formfields.php, line: 3515
+# File: eme-formfields.php, line: 3990
+# File: eme-formfields.php, line: 4368
+# File: eme-formfields.php, line: 4649
 # File: eme-gdpr.php, line: 135
 # File: eme-gdpr.php, line: 219
 # File: eme-gdpr.php, line: 342
@@ -5178,70 +5180,70 @@ msgstr "Krstné meno"
 msgid "Email"
 msgstr "Email"
 #
-# File: eme-events.php, line: 9625
-# File: eme-formfields.php, line: 1147
-# File: eme-formfields.php, line: 1883
-# File: eme-formfields.php, line: 1892
-# File: eme-formfields.php, line: 2907
-# File: eme-formfields.php, line: 2919
-# File: eme-formfields.php, line: 3364
-# File: eme-formfields.php, line: 3865
-# File: eme-formfields.php, line: 4525
+# File: eme-events.php, line: 9628
+# File: eme-formfields.php, line: 1174
+# File: eme-formfields.php, line: 2019
+# File: eme-formfields.php, line: 2028
+# File: eme-formfields.php, line: 3043
+# File: eme-formfields.php, line: 3055
+# File: eme-formfields.php, line: 3500
+# File: eme-formfields.php, line: 4001
+# File: eme-formfields.php, line: 4663
 # File: eme-gdpr.php, line: 462
 # File: eme-gdpr.php, line: 613
 # File: eme-options.php, line: 37
 # File: eme-people.php, line: 929
 # File: eme-people.php, line: 1233
-# File: eme-people.php, line: 3992
+# File: eme-people.php, line: 4003
 # File: eme-rsvp.php, line: 1365
 msgid "Phone number"
 msgstr "Telefón"
 #
-# File: eme-events.php, line: 9626
-# File: eme-events.php, line: 9682
+# File: eme-events.php, line: 9629
+# File: eme-events.php, line: 9685
 msgid "Birth date"
 msgstr "Dátum narodenia"
 #
-# File: eme-events.php, line: 9627
-# File: eme-events.php, line: 9683
+# File: eme-events.php, line: 9630
+# File: eme-events.php, line: 9686
 msgid "Birth place"
 msgstr "Miesto narodenia"
 #
-# File: eme-events.php, line: 9629
-# File: eme-events.php, line: 9673
-# File: eme-events.php, line: 9731
+# File: eme-events.php, line: 9632
+# File: eme-events.php, line: 9676
+# File: eme-events.php, line: 9734
 # File: eme-people.php, line: 1521
 # File: eme-people.php, line: 2161
 msgid "Linked WP user"
 msgstr "Prepojený používateľ WP"
 #
-# File: eme-events.php, line: 9633
+# File: eme-events.php, line: 9636
 msgid "Show all bookings"
 msgstr "Zobraziť všetky rezervácie"
 #
-# File: eme-events.php, line: 9634
+# File: eme-events.php, line: 9637
 msgid "Member of"
 msgstr "Člen"
 #
-# File: eme-events.php, line: 9636
+# File: eme-events.php, line: 9639
 msgid "Bookings made"
 msgstr "Uskutočnené rezervácie"
 #
-# File: eme-events.php, line: 9639
-# File: eme-events.php, line: 9693
+# File: eme-events.php, line: 9642
+# File: eme-events.php, line: 9696
 msgid "Answers"
 msgstr "Odpovede"
 #
-# File: eme-events.php, line: 9643
+# File: eme-events.php, line: 9646
 msgid "GDPR modification date"
 msgstr "Dátum úpravy GDPR"
 #
-# File: eme-events.php, line: 9646
-# File: eme-events.php, line: 9679
+# File: eme-events.php, line: 9649
+# File: eme-events.php, line: 9682
 msgid "Related to"
 msgstr "Príbuzný s"
 #
-# File: eme-events.php, line: 9647
+# File: eme-events.php, line: 9650
 # File: eme-gdpr.php, line: 463
 # File: eme-gdpr.php, line: 617
 # File: eme-options.php, line: 1729
@@ -5250,319 +5252,319 @@ msgstr "Príbuzný s"
 msgid "MassMail"
 msgstr "Hromadný email"
 #
-# File: eme-events.php, line: 9648
+# File: eme-events.php, line: 9651
 # File: eme-options.php, line: 2095
 msgid "Birthday Email"
 msgstr "Narodeninový email"
 #
-# File: eme-events.php, line: 9649
+# File: eme-events.php, line: 9652
 msgid "Public group"
 msgstr "Verejná skupina"
 #
-# File: eme-events.php, line: 9650
+# File: eme-events.php, line: 9653
 msgid "Nbr People"
 msgstr "Počet ľudí"
 #
-# File: eme-events.php, line: 9664
+# File: eme-events.php, line: 9667
 msgid "No matching member found"
 msgstr "Nenašiel sa žiadny vyhovujúci člen"
 #
-# File: eme-events.php, line: 9666
+# File: eme-events.php, line: 9669
 # File: eme-options.php, line: 1094
 # File: events-manager.php, line: 366
 msgid "Members"
 msgstr "Členovia"
 #
-# File: eme-events.php, line: 9668
+# File: eme-events.php, line: 9671
 # File: eme-gdpr.php, line: 493
 # File: eme-gdpr.php, line: 677
 # File: eme-members.php, line: 1460
 msgid "Membership"
 msgstr "Členstvo"
 #
-# File: eme-events.php, line: 9671
+# File: eme-events.php, line: 9674
 # File: eme-gdpr.php, line: 673
 msgid "Member ID"
 msgstr "ID člena"
 #
-# File: eme-events.php, line: 9674
+# File: eme-events.php, line: 9677
 msgid "Contact"
 msgstr "Kontakt"
 #
-# File: eme-events.php, line: 9695
+# File: eme-events.php, line: 9698
 msgid "Nbr Active Members"
 msgstr "Počet aktívnych členov"
 #
-# File: eme-events.php, line: 9696
+# File: eme-events.php, line: 9699
 # File: eme-gdpr.php, line: 494
 # File: eme-gdpr.php, line: 681
 msgid "Start"
 msgstr "Začiatok"
 #
-# File: eme-events.php, line: 9697
+# File: eme-events.php, line: 9700
 # File: eme-gdpr.php, line: 495
 # File: eme-gdpr.php, line: 685
 # File: eme-tasks.php, line: 735
 msgid "End"
 msgstr "Koniec"
 #
-# File: eme-events.php, line: 9698
+# File: eme-events.php, line: 9701
 # File: eme-members.php, line: 1522
 #, fuzzy
 msgid "Usage count"
 msgstr "Aktualizovať krajinu"
 #
-# File: eme-events.php, line: 9699
+# File: eme-events.php, line: 9702
 msgid "Registered on"
 msgstr "Zaregistrovaný dňa"
 #
-# File: eme-events.php, line: 9700
+# File: eme-events.php, line: 9703
 msgid "Last seen on"
 msgstr "Naposledy online"
 #
-# File: eme-events.php, line: 9701
+# File: eme-events.php, line: 9704
 msgid "Paid on"
 msgstr "Zaplatené dňa"
 #
-# File: eme-events.php, line: 9702
-# File: eme-events.php, line: 9737
+# File: eme-events.php, line: 9705
+# File: eme-events.php, line: 9740
 # File: eme-people.php, line: 958
 msgid "Unique nbr"
 msgstr "Identifikátor"
 #
-# File: eme-events.php, line: 9703
-# File: eme-events.php, line: 9738
+# File: eme-events.php, line: 9706
+# File: eme-events.php, line: 9741
 msgid "Payment ID"
 msgstr "ID platby"
 #
-# File: eme-events.php, line: 9704
-# File: eme-events.php, line: 9739
+# File: eme-events.php, line: 9707
+# File: eme-events.php, line: 9742
 # File: eme-people.php, line: 952
 # File: eme-people.php, line: 1255
 msgid "Paid"
 msgstr "Zaplatené"
 #
-# File: eme-events.php, line: 9705
-# File: eme-events.php, line: 9742
+# File: eme-events.php, line: 9708
+# File: eme-events.php, line: 9745
 msgid "Payment GW"
 msgstr "Payment GW"
 #
-# File: eme-events.php, line: 9706
-# File: eme-events.php, line: 9743
+# File: eme-events.php, line: 9709
+# File: eme-events.php, line: 9746
 msgid "Payment GW ID"
 msgstr "Payment GW ID"
 #
-# File: eme-events.php, line: 9707
-# File: eme-events.php, line: 9751
+# File: eme-events.php, line: 9710
+# File: eme-events.php, line: 9754
 msgid "Last reminder"
 msgstr "Posledná pripomienka"
 #
-# File: eme-events.php, line: 9708
+# File: eme-events.php, line: 9711
 msgid "Reminders sent"
 msgstr "Pripomienky odoslané"
 #
-# File: eme-events.php, line: 9713
-# File: eme-events.php, line: 9752
+# File: eme-events.php, line: 9716
+# File: eme-events.php, line: 9755
 # File: eme-people.php, line: 956
 # File: eme-people.php, line: 1267
 msgid "Discount"
 msgstr "Zľava"
 #
-# File: eme-events.php, line: 9714
-# File: eme-events.php, line: 9753
+# File: eme-events.php, line: 9717
+# File: eme-events.php, line: 9756
 msgid "Used discount codes"
 msgstr "Použité zľavové kódy"
 #
-# File: eme-events.php, line: 9715
-# File: eme-events.php, line: 9736
+# File: eme-events.php, line: 9718
+# File: eme-events.php, line: 9739
 # File: eme-people.php, line: 957
 # File: eme-people.php, line: 1273
 msgid "Total price"
 msgstr "Cena celkom"
 #
-# File: eme-events.php, line: 9716
+# File: eme-events.php, line: 9719
 msgid "Membership price"
 msgstr "Cena členského"
 #
-# File: eme-events.php, line: 9724
+# File: eme-events.php, line: 9727
 # File: eme-options.php, line: 1397
 msgid "Bookings"
 msgstr "Rezervácie"
 #
-# File: eme-events.php, line: 9726
+# File: eme-events.php, line: 9729
 msgid "Event ID"
 msgstr "ID podujatia"
 #
-# File: eme-events.php, line: 9728
+# File: eme-events.php, line: 9731
 msgid "Event info"
 msgstr "Info o podujatí"
 #
-# File: eme-events.php, line: 9730
+# File: eme-events.php, line: 9733
 msgid "Booker"
 msgstr "Meno rezervujúceho"
 #
-# File: eme-events.php, line: 9732
+# File: eme-events.php, line: 9735
 # File: eme-people.php, line: 955
 # File: eme-people.php, line: 1261
 msgid "Booking date"
 msgstr "Dátum rezervácie"
 #
-# File: eme-events.php, line: 9740
+# File: eme-events.php, line: 9743
 # File: eme-people.php, line: 954
 msgid "Remaining"
 msgstr "Zostáva"
 #
-# File: eme-events.php, line: 9741
+# File: eme-events.php, line: 9744
 # File: eme-people.php, line: 953
 msgid "Received"
 msgstr "Prijaté"
 #
-# File: eme-events.php, line: 9744
+# File: eme-events.php, line: 9747
 msgid "Payment date"
 msgstr "Dátum platby"
 #
-# File: eme-events.php, line: 9745
+# File: eme-events.php, line: 9748
 msgid "Mark paid and approve"
 msgstr "Označiť ako zaplatené a schválené"
 #
-# File: eme-events.php, line: 9746
+# File: eme-events.php, line: 9749
 # File: eme-rsvp.php, line: 4985
 # File: eme-rsvp.php, line: 5000
 msgid "Mark paid"
 msgstr "Označiť ako zaplatené"
 #
-# File: eme-events.php, line: 9760
+# File: eme-events.php, line: 9763
 # File: eme-people.php, line: 959
 msgid "Attendance count"
 msgstr "Zrátanie účasti"
 #
-# File: eme-events.php, line: 9761
+# File: eme-events.php, line: 9764
 msgid "Please select only one record in order to do partial payments"
 msgstr "Ak chcete vykonať čiastočné platby, vyberte prosím iba jeden záznam"
 #
-# File: eme-events.php, line: 9772
+# File: eme-events.php, line: 9775
 # File: eme-mailer.php, line: 2303
 # File: eme-mailer.php, line: 2481
 msgid "Send email"
 msgstr "Poslať email"
 #
-# File: eme-events.php, line: 9773
+# File: eme-events.php, line: 9776
 msgid "Queue email"
 msgstr "Zaradiť do poradia"
 #
-# File: eme-events.php, line: 9774
+# File: eme-events.php, line: 9777
 # File: eme-mailer.php, line: 1340
 msgid "Sent on"
 msgstr "Odoslané"
 #
-# File: eme-events.php, line: 9775
+# File: eme-events.php, line: 9778
 # File: eme-mailer.php, line: 1341
 msgid "First read on"
 msgstr "Prvýkrát prečítané"
 #
-# File: eme-events.php, line: 9776
+# File: eme-events.php, line: 9779
 # File: eme-mailer.php, line: 1342
 msgid "Last read on"
 msgstr "Naposledy prečítané"
 #
-# File: eme-events.php, line: 9777
+# File: eme-events.php, line: 9780
 # File: eme-mailer.php, line: 1343
 # File: eme-mailer.php, line: 2579
 # File: eme-mailer.php, line: 2679
 msgid "Read count"
 msgstr "Počet prečítaní"
 #
-# File: eme-events.php, line: 9778
+# File: eme-events.php, line: 9781
 # File: eme-mailer.php, line: 1344
 msgid "Error message"
 msgstr "Chybová správa"
 #
-# File: eme-events.php, line: 9783
+# File: eme-events.php, line: 9786
 # File: eme-mailer.php, line: 1345
 # File: eme-mailer.php, line: 2582
 # File: eme-mailer.php, line: 2681
 msgid "Action"
 msgstr "Akcia"
 #
-# File: eme-events.php, line: 9784
+# File: eme-events.php, line: 9787
 # File: eme-mailer.php, line: 2090
 msgid "Mailing report"
 msgstr "Správa o mailingu"
 #
-# File: eme-events.php, line: 9785
+# File: eme-events.php, line: 9788
 msgid "Select one or more events"
 msgstr "Vybrať jedno alebo viac podujatí"
 #
-# File: eme-events.php, line: 10016
+# File: eme-events.php, line: 10019
 # File: eme-rsvp.php, line: 5547
 # File: eme-tasks.php, line: 1846
 msgid "Edit event"
 msgstr "Upraviť podujatie"
 #
-# File: eme-events.php, line: 10032
+# File: eme-events.php, line: 10035
 # File: eme-rsvp.php, line: 5551
 msgid "RSVP Info: "
 msgstr "Rezervácie: "
 #
-# File: eme-events.php, line: 10060
+# File: eme-events.php, line: 10063
 # File: eme-rsvp.php, line: 5580
 msgid "Free: "
 msgstr "Voľné: "
 #
-# File: eme-events.php, line: 10061
 # File: eme-events.php, line: 10064
-# File: eme-events.php, line: 10107
+# File: eme-events.php, line: 10067
+# File: eme-events.php, line: 10110
 # File: eme-rsvp.php, line: 5554
 # File: eme-rsvp.php, line: 5643
 msgid "Approved:"
 msgstr "Schválené:"
 #
-# File: eme-events.php, line: 10068
-# File: eme-events.php, line: 10105
+# File: eme-events.php, line: 10071
+# File: eme-events.php, line: 10108
 # File: eme-rsvp.php, line: 5641
 msgid "Pending:"
 msgstr "Čakajúce:"
 #
-# File: eme-events.php, line: 10073
+# File: eme-events.php, line: 10076
 # File: eme-rsvp.php, line: 5593
 msgid "Absent:"
 msgstr "Neprítomní:"
 #
-# File: eme-events.php, line: 10076
+# File: eme-events.php, line: 10079
 # File: eme-members.php, line: 5990
 # File: eme-recurrence.php, line: 565
 # File: eme-rsvp.php, line: 5596
 msgid "Max: "
 msgstr "Max: "
 #
-# File: eme-events.php, line: 10079
+# File: eme-events.php, line: 10082
 # File: eme-rsvp.php, line: 5599
 msgid "(%d waiting list seats included)"
 msgstr "(%d vrátanie miest na čakacej listine)"
 #
-# File: eme-events.php, line: 10084
+# File: eme-events.php, line: 10087
 # File: eme-rsvp.php, line: 5605
 msgid "Printable view"
 msgstr "Tlačiteľné zobrazenie"
 #
-# File: eme-events.php, line: 10085
+# File: eme-events.php, line: 10088
 # File: eme-rsvp.php, line: 5606
 msgid "CSV export"
 msgstr "CSV export"
 #
-# File: eme-events.php, line: 10103
+# File: eme-events.php, line: 10106
 # File: eme-rsvp.php, line: 5639
 msgid "Task Info: %d tasks"
 msgstr "Informácie o úlohe: %d úloh"
 #
-# File: eme-events.php, line: 10114
+# File: eme-events.php, line: 10117
 # File: eme-locations.php, line: 543
 # File: eme-locations.php, line: 2963
 # File: eme-recurrence.php, line: 595
 msgid "Edit location"
 msgstr "Upraviť polohu"
 #
-# File: eme-events.php, line: 10116
+# File: eme-events.php, line: 10119
 # File: eme-locations.php, line: 2965
 # File: eme-recurrence.php, line: 597
 msgid ""
@@ -5572,51 +5574,51 @@ msgstr ""
 "Súradnice mapy polohy sú prázdne! Upravte toto miesto, aby ste to opravili, "
 "inak sa na vašom webe nezobrazí správne."
 #
-# File: eme-events.php, line: 10135
+# File: eme-events.php, line: 10138
 msgid "Preview event"
 msgstr "Náhľad podujatia"
 #
-# File: eme-events.php, line: 10137
+# File: eme-events.php, line: 10140
 msgid "View event"
 msgstr "Zobraziť podujatie"
 #
-# File: eme-events.php, line: 10142
+# File: eme-events.php, line: 10145
 msgid "Duplicate this event"
 msgstr "Duplikovať toto podujatie"
 #
-# File: eme-events.php, line: 10151
+# File: eme-events.php, line: 10154
 # File: eme-rsvp.php, line: 5616
 msgid "Add booking for this event"
 msgstr "Pridať rezerváciu pre toto podujatie"
 #
-# File: eme-events.php, line: 10153
+# File: eme-events.php, line: 10156
 # File: eme-rsvp.php, line: 5618
 msgid "Password protected"
 msgstr "Chránené heslom"
 #
-# File: eme-events.php, line: 10161
+# File: eme-events.php, line: 10164
 # File: eme-recurrence.php, line: 567
 msgid "Free"
 msgstr "Zadarmo"
 #
-# File: eme-events.php, line: 10279
+# File: eme-events.php, line: 10282
 # File: eme-recurrence.php, line: 662
 msgid "No action defined!"
 msgstr "Žiadna akcia nebola definovaná!"
 #
-# File: eme-events.php, line: 10297
+# File: eme-events.php, line: 10300
 msgid "Events moved to trash"
 msgstr "Podujatia presunuté do koša"
 #
-# File: eme-events.php, line: 10305
+# File: eme-events.php, line: 10308
 msgid "Restored selected events to draft status"
 msgstr "Obnoviť vybrané podujatia na stav konceptu"
 #
-# File: eme-events.php, line: 10313
+# File: eme-events.php, line: 10316
 msgid "Events status updated"
 msgstr "Stav podujatia aktualizovaný"
 #
-# File: eme-events.php, line: 10326
+# File: eme-events.php, line: 10329
 msgid "Events added to category"
 msgstr "Podujatia pridané do kategórie"
 #
@@ -6262,8 +6264,8 @@ msgid "Checkbox (vertical)"
 msgstr "Prepínač (zvislý)"
 #
 # File: eme-formfields.php, line: 569
-# File: eme-formfields.php, line: 1871
-# File: eme-formfields.php, line: 3007
+# File: eme-formfields.php, line: 2007
+# File: eme-formfields.php, line: 3143
 msgid "Password"
 msgstr "Heslo"
 #
@@ -6347,8 +6349,8 @@ msgstr ""
 "Toto pole je skryté, ale v administrácii sa zobrazuje ako text, takže "
 "administrátor môže vidieť jeho hodnotu a prípadne ju zmeniť"
 #
-# File: eme-formfields.php, line: 1113
-# File: eme-formfields.php, line: 2751
+# File: eme-formfields.php, line: 1140
+# File: eme-formfields.php, line: 2887
 msgid ""
 "Notice: since you're logged in as a person with the right to edit or author "
 "this event, the 'Last name' field is also an autocomplete field so you can "
@@ -6359,21 +6361,43 @@ msgstr ""
 "dopĺňania, takže podľa potreby môžete vybrať existujúcich ľudí. Alebo len "
 "vymažte pole a začnite písať."
 #
-# File: eme-formfields.php, line: 1164
-# File: eme-formfields.php, line: 1834
-# File: eme-formfields.php, line: 2964
-# File: eme-formfields.php, line: 3902
-# File: eme-formfields.php, line: 4273
+# File: eme-formfields.php, line: 1191
+# File: eme-formfields.php, line: 1970
+# File: eme-formfields.php, line: 3100
+# File: eme-formfields.php, line: 4038
+# File: eme-formfields.php, line: 4411
 msgid "Remember me?"
 msgstr "Zapamätať si ma?"
 #
-# File: eme-formfields.php, line: 1195
-# File: eme-formfields.php, line: 4305
+# File: eme-formfields.php, line: 1202
+# File: eme-formfields.php, line: 1848
+# File: eme-formfields.php, line: 2921
+# File: eme-formfields.php, line: 3572
+# File: eme-formfields.php, line: 3901
+# File: eme-formfields.php, line: 4567
+# File: eme-people.php, line: 2119
+# File: eme-rsvp.php, line: 1392
+msgid "Date of birth"
+msgstr "Deň narodenia"
+#
+# File: eme-formfields.php, line: 1214
+# File: eme-formfields.php, line: 1858
+# File: eme-formfields.php, line: 2935
+# File: eme-formfields.php, line: 3556
+# File: eme-formfields.php, line: 3912
+# File: eme-formfields.php, line: 4578
+# File: eme-people.php, line: 2133
+# File: eme-rsvp.php, line: 1395
+msgid "Place of birth"
+msgstr "Miesto narodenia"
+#
+# File: eme-formfields.php, line: 1328
+# File: eme-formfields.php, line: 4443
 msgid "Subscribe"
 msgstr "Prihlásenie"
 #
-# File: eme-formfields.php, line: 1224
-# File: eme-formfields.php, line: 1434
+# File: eme-formfields.php, line: 1357
+# File: eme-formfields.php, line: 1567
 msgid ""
 "Not all required fields are present in the form. We need at least #_LASTNAME "
 "and #_EMAIL placeholders."
@@ -6381,11 +6405,11 @@ msgstr ""
 "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme minimálne "
 "zástupné výrazy #_LASTNAME a #_EMAIL."
 #
-# File: eme-formfields.php, line: 1373
+# File: eme-formfields.php, line: 1506
 msgid "Cancel reason"
 msgstr "Dôvod zrušenia"
 #
-# File: eme-formfields.php, line: 1566
+# File: eme-formfields.php, line: 1699
 msgid ""
 "Not all required fields are present in the form. We need at least "
 "#_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders."
@@ -6393,39 +6417,19 @@ msgstr ""
 "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň "
 "#_CANCEL_PAYMENT_LINE a #_SUBMIT (alebo podobné) zástupné výrazy."
 #
-# File: eme-formfields.php, line: 1712
-# File: eme-formfields.php, line: 2785
-# File: eme-formfields.php, line: 3436
-# File: eme-formfields.php, line: 3765
-# File: eme-formfields.php, line: 4429
-# File: eme-people.php, line: 2119
-# File: eme-rsvp.php, line: 1392
-msgid "Date of birth"
-msgstr "Deň narodenia"
-#
-# File: eme-formfields.php, line: 1722
-# File: eme-formfields.php, line: 2799
-# File: eme-formfields.php, line: 3420
-# File: eme-formfields.php, line: 3776
-# File: eme-formfields.php, line: 4440
-# File: eme-people.php, line: 2133
-# File: eme-rsvp.php, line: 1395
-msgid "Place of birth"
-msgstr "Miesto narodenia"
-#
-# File: eme-formfields.php, line: 1847
-# File: eme-formfields.php, line: 2979
-# File: eme-formfields.php, line: 3915
+# File: eme-formfields.php, line: 1983
+# File: eme-formfields.php, line: 3115
+# File: eme-formfields.php, line: 4051
 msgid "Group is not public"
 msgstr "Skupina nie je verejná"
 #
-# File: eme-formfields.php, line: 1862
-# File: eme-formfields.php, line: 2994
-# File: eme-formfields.php, line: 3930
+# File: eme-formfields.php, line: 1998
+# File: eme-formfields.php, line: 3130
+# File: eme-formfields.php, line: 4066
 msgid "Group does not exist"
 msgstr "Skupina neexistuje"
 #
-# File: eme-formfields.php, line: 3064
+# File: eme-formfields.php, line: 3200
 msgid ""
 "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP "
 "template, but you have not defined a price for each category in your event "
@@ -6435,13 +6439,13 @@ msgstr ""
 "kategórií miest, ale nastaveniach rezervácie podujatia ste nedefinovali cenu "
 "pre každú kategóriu. Prosím opravte nastavenia rezervácie podujatia."
 #
-# File: eme-formfields.php, line: 3205
-# File: eme-formfields.php, line: 3946
+# File: eme-formfields.php, line: 3341
+# File: eme-formfields.php, line: 4082
 msgid "Discount code"
 msgstr "Zľavový kód"
 #
-# File: eme-formfields.php, line: 3211
-# File: eme-formfields.php, line: 3952
+# File: eme-formfields.php, line: 3347
+# File: eme-formfields.php, line: 4088
 msgid ""
 "Enter a new fixed discount value if wanted, or leave as is to keep the "
 "calculated value %s based on the following applied discounts:"
@@ -6449,27 +6453,27 @@ msgstr ""
 "Ak chcete, zadajte novú pevnú hodnotu zľavy alebo ponechajte vypočítanú "
 "hodnotu %s na základe nasledujúcich uplatnených zliav:"
 #
-# File: eme-formfields.php, line: 3213
-# File: eme-formfields.php, line: 3954
+# File: eme-formfields.php, line: 3349
+# File: eme-formfields.php, line: 4090
 msgid "Enter a fixed discount value if wanted"
 msgstr "Ak chcete, zadajte pevnú hodnotu zľavy"
 #
-# File: eme-formfields.php, line: 3218
-# File: eme-formfields.php, line: 3959
+# File: eme-formfields.php, line: 3354
+# File: eme-formfields.php, line: 4095
 # File: eme-people.php, line: 1053
 # File: eme-people.php, line: 1349
 msgid "Discountgroup %s"
 msgstr "Skupina zľavy %s"
 #
-# File: eme-formfields.php, line: 3220
-# File: eme-formfields.php, line: 3961
+# File: eme-formfields.php, line: 3356
+# File: eme-formfields.php, line: 4097
 # File: eme-people.php, line: 1055
 # File: eme-people.php, line: 1351
 msgid "Applied discount group %d no longer exists"
 msgstr "Použitá skupina zliav %d už neexistuje"
 #
-# File: eme-formfields.php, line: 3230
-# File: eme-formfields.php, line: 3971
+# File: eme-formfields.php, line: 3366
+# File: eme-formfields.php, line: 4107
 # File: eme-members.php, line: 4621
 # File: eme-people.php, line: 1065
 # File: eme-people.php, line: 1361
@@ -6477,8 +6481,8 @@ msgstr "Použitá skupina zliav %d už neexistuje"
 msgid "Applied discount %d no longer exists"
 msgstr "Použitá zľava %d už neexistuje"
 #
-# File: eme-formfields.php, line: 3234
-# File: eme-formfields.php, line: 3975
+# File: eme-formfields.php, line: 3370
+# File: eme-formfields.php, line: 4111
 msgid ""
 "Only one discount field can be used in the admin backend, the others are not "
 "rendered"
@@ -6486,11 +6490,11 @@ msgstr ""
 "V backende administrátora je možné použiť iba jedno pole zľavy, ostatné nie "
 "sú zobrazené"
 #
-# File: eme-formfields.php, line: 3240
+# File: eme-formfields.php, line: 3376
 msgid "Update booking"
 msgstr "Aktualizovať rezerváciu"
 #
-# File: eme-formfields.php, line: 3284
+# File: eme-formfields.php, line: 3420
 msgid ""
 "Not all required fields are present in the form. We need at least "
 "#_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
@@ -6498,7 +6502,7 @@ msgstr ""
 "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň "
 "#_LASTNAME, #_EMAIL, #_SEATS a #_SUBMIT (alebo podobné) zástupné výrazy."
 #
-# File: eme-formfields.php, line: 3287
+# File: eme-formfields.php, line: 3423
 msgid ""
 "Since this is a multiprice event, make sure you changed the setting 'Booking "
 "Form' for the event to include #_SEAT{xx} placeholders for each price."
@@ -6507,11 +6511,11 @@ msgstr ""
 "„Rezervačný formulár“ pre podujatie tak, aby zahŕňalo zástupné výrazy "
 "#_SEAT{xx} pre každú cenu."
 #
-# File: eme-formfields.php, line: 3290
+# File: eme-formfields.php, line: 3426
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr "Skontrolujte, či je vo formulári prítomný zástupný výraz #_PASSWORD."
 #
-# File: eme-formfields.php, line: 3489
+# File: eme-formfields.php, line: 3625
 msgid ""
 "Not all required fields are present in the form. We need at least #_LASTNAME "
 "and #_FIRSTNAME placeholders."
@@ -6519,7 +6523,7 @@ msgstr ""
 "Vo formulári sa nenachádzajú všetky povinné polia. Potrebujeme aspoň "
 "#_LASTNAME a #_FIRSTNAME zástupné výrazy."
 #
-# File: eme-formfields.php, line: 3734
+# File: eme-formfields.php, line: 3870
 msgid ""
 "Notice: since you're logged in as a person with the right to manage members "
 "and memberships, the 'Last name' field is also an autocomplete field so you "
@@ -6531,7 +6535,7 @@ msgstr ""
 "podľa potreby môžete vybrať existujúcich ľudí. Alebo len vymažte pole a "
 "začnite písať."
 #
-# File: eme-formfields.php, line: 4017
+# File: eme-formfields.php, line: 4153
 msgid ""
 "In the backend you can't add or edit family member info, use the frontend "
 "form for that."
@@ -6539,16 +6543,16 @@ msgstr ""
 "V administrátorskej časti nemôžete pridávať ani upravovať informácie o "
 "členoch rodiny, na to použite formulár vo frontende."
 #
-# File: eme-formfields.php, line: 4079
+# File: eme-formfields.php, line: 4215
 msgid "Update member"
 msgstr "Aktualizovať člena"
 #
-# File: eme-formfields.php, line: 4084
+# File: eme-formfields.php, line: 4220
 msgid "Become member"
 msgstr "Stať sa členom"
 #
-# File: eme-formfields.php, line: 4112
-# File: eme-formfields.php, line: 4656
+# File: eme-formfields.php, line: 4248
+# File: eme-formfields.php, line: 4794
 msgid ""
 "Not all required fields are present in the form. We need at least "
 "#_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
@@ -6556,36 +6560,36 @@ msgstr ""
 "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň "
 "#_LASTNAME, #_FIRSTNAME, #_EMAIL a #_SUBMIT (alebo podobné) zástupné výrazy."
 #
-# File: eme-formfields.php, line: 4140
+# File: eme-formfields.php, line: 4276
 # File: eme-tasks.php, line: 450
 # File: eme-templates.php, line: 40
 msgid "All"
 msgstr "Všetky"
 #
-# File: eme-formfields.php, line: 4145
+# File: eme-formfields.php, line: 4281
 msgid "Newsletter concerning new events"
 msgstr "Informačné novinky o nových podujatiach"
 #
-# File: eme-formfields.php, line: 4207
-# File: eme-formfields.php, line: 4404
+# File: eme-formfields.php, line: 4345
+# File: eme-formfields.php, line: 4542
 msgid "You can change your last name in your WP profile."
 msgstr "Svoje priezvisko si môžete zmeniť vo svojom WP profile."
 #
-# File: eme-formfields.php, line: 4221
-# File: eme-formfields.php, line: 4419
+# File: eme-formfields.php, line: 4359
+# File: eme-formfields.php, line: 4557
 msgid "You can change your first name in your WP profile."
 msgstr "Svoje meno si môžete zmeniť vo svojom WP profile."
 #
-# File: eme-formfields.php, line: 4234
-# File: eme-formfields.php, line: 4515
+# File: eme-formfields.php, line: 4372
+# File: eme-formfields.php, line: 4653
 msgid "You can change your email in your WP profile."
 msgstr "Svoj e-mail môžete zmeniť vo svojom WP profile."
 #
-# File: eme-formfields.php, line: 4303
+# File: eme-formfields.php, line: 4441
 msgid "Unsubscribe"
 msgstr "Odhlásenie"
 #
-# File: eme-formfields.php, line: 4324
+# File: eme-formfields.php, line: 4462
 msgid ""
 "Not all required fields are present in the form. We need at least #_EMAIL "
 "and #_SUBMIT (or similar) placeholders."
@@ -6593,56 +6597,56 @@ msgstr ""
 "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_EMAIL "
 "a #_SUBMIT (alebo podobné) zástupné výrazy."
 #
-# File: eme-formfields.php, line: 4631
+# File: eme-formfields.php, line: 4769
 msgid "Save personal info"
 msgstr "Uložiť osobné údaje"
 #
-# File: eme-formfields.php, line: 4811
+# File: eme-formfields.php, line: 4949
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Dynamicky zobrazovať polia na základe viacerých podmienok"
 #
-# File: eme-formfields.php, line: 4816
+# File: eme-formfields.php, line: 4954
 msgid "Index"
 msgstr "Index"
 #
-# File: eme-formfields.php, line: 4817
+# File: eme-formfields.php, line: 4955
 msgid "Field"
 msgstr "Pole"
 #
-# File: eme-formfields.php, line: 4818
+# File: eme-formfields.php, line: 4956
 msgid "Condition"
 msgstr "Podmienka"
 #
-# File: eme-formfields.php, line: 4819
+# File: eme-formfields.php, line: 4957
 msgid "Condition value"
 msgstr "Hodnota podmienky"
 #
-# File: eme-formfields.php, line: 4821
+# File: eme-formfields.php, line: 4959
 msgid "Repeat"
 msgstr "Opakovať"
 #
-# File: eme-formfields.php, line: 4849
+# File: eme-formfields.php, line: 4987
 # File: eme-tasks.php, line: 755
 msgid "Reorder"
 msgstr "Zmeniť poradie"
 #
-# File: eme-formfields.php, line: 4867
+# File: eme-formfields.php, line: 5005
 msgid "Header template"
 msgstr "Šablóna hlavičky"
 #
-# File: eme-formfields.php, line: 4868
+# File: eme-formfields.php, line: 5006
 msgid "Template"
 msgstr "Šablóna"
 #
-# File: eme-formfields.php, line: 4869
+# File: eme-formfields.php, line: 5007
 msgid "Footer template"
 msgstr "Šablóna pätičky"
 #
-# File: eme-formfields.php, line: 4876
+# File: eme-formfields.php, line: 5014
 msgid "Add new condition"
 msgstr "Pridať novú podmienku"
 #
-# File: eme-formfields.php, line: 4879
+# File: eme-formfields.php, line: 5017
 msgid ""
 "Warning: there are already answers entered based on this condition, changing "
 "or removing this condition might lead to unwanted side effects."
@@ -6650,14 +6654,14 @@ msgstr ""
 "Varovanie: Na základe tejto podmienky sú už zadané odpovede, zmena alebo "
 "odstránenie tejto podmienky by mohli viesť k nežiaducim vedľajším účinkom."
 #
-# File: eme-formfields.php, line: 4890
+# File: eme-formfields.php, line: 5028
 msgid ""
 "This will additionally show the selected template in the form if the "
 "condition is met."
 msgstr ""
 "Ak je splnená podmienka, vo formulári sa navyše zobrazí vybratá šablóna."
 #
-# File: eme-formfields.php, line: 4892
+# File: eme-formfields.php, line: 5030
 msgid ""
 "The 'Field' parameter is to be filled out with any valid placeholder allowed "
 "in the form."
@@ -6665,7 +6669,7 @@ msgstr ""
 "Parameter „Pole“ sa vyplní akýmkoľvek platným zástupným výrazom povoleným vo "
 "formulári."
 #
-# File: eme-formfields.php, line: 4894
+# File: eme-formfields.php, line: 5032
 msgid ""
 "The selected template will be shown several times if the repeat option is "
 "used (based on the number of times the field is different from the condition "
@@ -6675,7 +6679,7 @@ msgstr ""
 "(na základe toho, koľkokrát sa pole líši od hodnoty podmienky. Toto sa "
 "nepoužije pri výbere podmienky „rovnaké ako“)."
 #
-# File: eme-formfields.php, line: 4896
+# File: eme-formfields.php, line: 5034
 msgid ""
 "The selected template can contain html and also have placeholders for custom "
 "form fields (no other placeholders allowed)."
@@ -6683,15 +6687,15 @@ msgstr ""
 "Vybraná šablóna môže obsahovať html a tiež mať zástupné výrazy pre vlastné "
 "polia formulárov (nie sú povolené žiadne iné zástupné výrazy)."
 #
-# File: eme-formfields.php, line: 4897
+# File: eme-formfields.php, line: 5035
 msgid ""
 "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr ""
 "Použite zástupný výraz #_DYNAMICDATA na zobrazenie dynamických formulárov vo "
 "vašom formulári."
 #
-# File: eme-formfields.php, line: 5044
-# File: eme-formfields.php, line: 5054
+# File: eme-formfields.php, line: 5182
+# File: eme-formfields.php, line: 5192
 # File: eme-functions.php, line: 3259
 msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
@@ -7016,8 +7020,8 @@ msgstr "Taký záznam neexistuje"
 # File: eme-gdpr.php, line: 356
 # File: eme-members.php, line: 4389
 # File: eme-payments.php, line: 3675
-# File: eme-people.php, line: 4194
-# File: eme-people.php, line: 4280
+# File: eme-people.php, line: 4205
+# File: eme-people.php, line: 4291
 # File: eme-rsvp.php, line: 772
 # File: eme-rsvp.php, line: 1072
 # File: eme-tasks.php, line: 1608
@@ -7035,8 +7039,8 @@ msgstr ""
 # File: eme-gdpr.php, line: 378
 # File: eme-members.php, line: 4401
 # File: eme-payments.php, line: 3686
-# File: eme-people.php, line: 4205
-# File: eme-people.php, line: 4292
+# File: eme-people.php, line: 4216
+# File: eme-people.php, line: 4303
 # File: eme-rsvp.php, line: 784
 # File: eme-rsvp.php, line: 1084
 # File: eme-tasks.php, line: 1619
@@ -7057,8 +7061,8 @@ msgstr "Ďakujeme za vašu žiadosť, pošleme vám e-mail s ďalšími informá
 # File: eme-gdpr.php, line: 338
 # File: eme-gdpr.php, line: 422
 # File: eme-members.php, line: 1624
-# File: eme-people.php, line: 4266
-# File: eme-people.php, line: 4351
+# File: eme-people.php, line: 4277
+# File: eme-people.php, line: 4362
 # File: eme-rsvp.php, line: 166
 # File: eme-rsvp.php, line: 744
 # File: eme-tasks.php, line: 1281
@@ -7165,7 +7169,7 @@ msgstr ""
 "sa pri zobrazovaní dátumov a časov podujatí prispôsobili časovým rozdielom "
 "medzi klientom a serverom."
 #
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.8)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.9)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 # File: eme-gdpr.php, line: 547
 # File: eme-gdpr.php, line: 553
@@ -7656,9 +7660,9 @@ msgstr ""
 # File: eme-people.php, line: 3515
 # File: eme-people.php, line: 3653
 # File: eme-people.php, line: 3756
-# File: eme-people.php, line: 3945
-# File: eme-people.php, line: 4239
-# File: eme-people.php, line: 4324
+# File: eme-people.php, line: 3956
+# File: eme-people.php, line: 4250
+# File: eme-people.php, line: 4335
 # File: eme-rsvp.php, line: 1316
 msgid "Please enter a valid email address"
 msgstr "Vložte prosím platnú e-mailovú adresu"
@@ -9775,12 +9779,12 @@ msgid "%d head of the family accounts + %d family members"
 msgstr "%d účtov hlavy rodiny + %d rodinných príslušníkov"
 #
 # File: eme-members.php, line: 5913
-# File: eme-people.php, line: 4735
+# File: eme-people.php, line: 4746
 msgid "(Dynamic)"
 msgstr "(Dynamické)"
 #
 # File: eme-members.php, line: 5950
-# File: eme-people.php, line: 4769
+# File: eme-people.php, line: 4780
 msgid "(family member)"
 msgstr "(člen rodiny)"
 #
@@ -9802,12 +9806,12 @@ msgid "Get IBAN"
 msgstr "Získať IBAN"
 #
 # File: eme-members.php, line: 6120
-# File: eme-people.php, line: 4974
+# File: eme-people.php, line: 4985
 msgid "Dynamic group added"
 msgstr "Dynamická skupina pridaná"
 #
 # File: eme-members.php, line: 6122
-# File: eme-people.php, line: 4976
+# File: eme-people.php, line: 4987
 msgid "Please enter a name for the group"
 msgstr "Prosím, vložte meno pre skupinu"
 #
@@ -10065,7 +10069,7 @@ msgid "You're about to cancel the following bookings:"
 msgstr "Chystáte sa zrušiť nasledujúce rezervácie:"
 #
 # File: eme-options.php, line: 51
-# File: eme-people.php, line: 3979
+# File: eme-people.php, line: 3990
 msgid "seats"
 msgstr "miest"
 #
@@ -15698,7 +15702,7 @@ msgid "Add group"
 msgstr "Pridať skupinu"
 #
 # File: eme-people.php, line: 2248
-# File: eme-people.php, line: 4886
+# File: eme-people.php, line: 4897
 msgid "Edit group"
 msgstr "Upraviť skupinu"
 #
@@ -15771,18 +15775,18 @@ msgid "Person image"
 msgstr "Obrázok osoby"
 #
 # File: eme-people.php, line: 3664
-# File: eme-people.php, line: 3795
+# File: eme-people.php, line: 3808
 msgid "Invalid country code"
 msgstr "Neplatný kód krajiny"
 #
 # File: eme-people.php, line: 3675
-# File: eme-people.php, line: 3806
+# File: eme-people.php, line: 3819
 msgid "Invalid state code"
 msgstr "Neplatný kód štátu"
 #
 # File: eme-people.php, line: 3766
-# File: eme-people.php, line: 3899
-# File: eme-people.php, line: 3971
+# File: eme-people.php, line: 3910
+# File: eme-people.php, line: 3982
 msgid "Error encountered while updating person"
 msgstr "Pri aktualizovaní osoby sa vyskytol problém"
 #
@@ -15794,11 +15798,11 @@ msgstr ""
 "E-mailová adresa patrí existujúcemu používateľovi. Najskôr sa prosím "
 "prihláste, pred pokračovaním v registrácii pomocou tejto e-mailovej adresy."
 #
-# File: eme-people.php, line: 3922
+# File: eme-people.php, line: 3933
 msgid "Error encountered while adding person"
 msgstr "Pri pridávaní osoby sa vyskytol problém"
 #
-# File: eme-people.php, line: 3953
+# File: eme-people.php, line: 3964
 msgid ""
 "Conflict with info from other person, please use another lastname, firstname "
 "or email"
@@ -15806,11 +15810,11 @@ msgstr ""
 "Konflikt s informáciami od inej osoby, použite iné priezvisko, meno alebo e-"
 "mail"
 #
-# File: eme-people.php, line: 3989
+# File: eme-people.php, line: 4000
 msgid "Events Made Easy settings"
 msgstr "Nastavenia Events Made Easy"
 #
-# File: eme-people.php, line: 3994
+# File: eme-people.php, line: 4005
 msgid ""
 "The phone number used by Events Made Easy when the user is indicated as the "
 "contact person for an event."
@@ -15818,20 +15822,20 @@ msgstr ""
 "Telefónne číslo, ktoré sa používa v Events Made Easy, ak je používateľ "
 "označený ako kontaktná osoba pre podujatie."
 #
-# File: eme-people.php, line: 3997
+# File: eme-people.php, line: 4008
 msgid "Bookings made for future events"
 msgstr "Rezervácie na budúce podujatia"
 #
-# File: eme-people.php, line: 4001
+# File: eme-people.php, line: 4012
 msgid "Active memberships"
 msgstr "Aktívne členstvá"
 #
-# File: eme-people.php, line: 4231
-# File: eme-people.php, line: 4316
+# File: eme-people.php, line: 4242
+# File: eme-people.php, line: 4327
 msgid "A request for confirmation has been sent to the given email address."
 msgstr "Na uvedenú e-mailovú adresu bola odoslaná žiadosť o potvrdenie."
 #
-# File: eme-people.php, line: 4257
+# File: eme-people.php, line: 4268
 msgid ""
 "If you want to subscribe to future mailings, please do so by entering your "
 "email here."
@@ -15839,11 +15843,11 @@ msgstr ""
 "Ak sa chcete prihlásiť na odber budúcich emailov, urobte to tak, že sem "
 "zadáte svoj email."
 #
-# File: eme-people.php, line: 4260
+# File: eme-people.php, line: 4271
 msgid "Please select the groups you wish to subscribe to."
 msgstr "Vyberte skupiny, ku ktorým sa chcete prihlásiť na odber."
 #
-# File: eme-people.php, line: 4342
+# File: eme-people.php, line: 4353
 msgid ""
 "If you want to unsubscribe from future mailings, please do so by entering "
 "your email here."
@@ -15851,49 +15855,49 @@ msgstr ""
 "Ak sa chcete odhlásiť z odberu budúcich emailov, prosím spravte tak zadaním "
 "svojho emailu sem."
 #
-# File: eme-people.php, line: 4345
+# File: eme-people.php, line: 4356
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr "Prosím vyberte skupiny, z ktorých sa chcete odhlásiť z odberu."
 #
-# File: eme-people.php, line: 4763
+# File: eme-people.php, line: 4774
 msgid "No surname"
 msgstr "Žiadne priezvisko"
 #
-# File: eme-people.php, line: 4892
+# File: eme-people.php, line: 4903
 msgid "Dynamic group of people"
 msgstr "Dynamická skupina ľudí"
 #
-# File: eme-people.php, line: 4898
+# File: eme-people.php, line: 4909
 msgid "(1 person)"
 msgid_plural "(%d persons)"
 msgstr[0] "(1 osoba)"
 msgstr[1] "(%d osoby)"
 msgstr[2] "(%d osôb)"
 #
-# File: eme-people.php, line: 4902
+# File: eme-people.php, line: 4913
 msgid "Dynamic group of members"
 msgstr "Dynamická skupina členov"
 #
-# File: eme-people.php, line: 4908
+# File: eme-people.php, line: 4919
 msgid "(1 member)"
 msgid_plural "(%d members)"
 msgstr[0] "(1 člen)"
 msgstr[1] "(%d členovia)"
 msgstr[2] "(%d členov)"
 #
-# File: eme-people.php, line: 5090
+# File: eme-people.php, line: 5101
 msgid "People recovered from trash bin."
 msgstr "Ľudia obnovení z koša."
 #
-# File: eme-people.php, line: 5102
+# File: eme-people.php, line: 5113
 msgid "People moved to trash bin."
 msgstr "Ľudia presunutý do koša."
 #
-# File: eme-people.php, line: 5110
+# File: eme-people.php, line: 5121
 msgid "Personal data removed and moved to trash bin."
 msgstr "Osobné údaje boli odstránené a presunuté do koša."
 #
-# File: eme-people.php, line: 5118
+# File: eme-people.php, line: 5129
 msgid ""
 "GDPR approval set to \"Yes\" (make sure the selected persons are aware of "
 "this)."
@@ -15901,7 +15905,7 @@ msgstr ""
 "Schválenie GDPR nastavené na „Áno“ (uistite sa, že vybrané osoby sú si toho "
 "vedomé)."
 #
-# File: eme-people.php, line: 5126
+# File: eme-people.php, line: 5137
 msgid ""
 "GDPR approval set to \"No\" (make sure the selected persons are aware of "
 "this)."
@@ -15909,45 +15913,45 @@ msgstr ""
 "Súhlas s GDPR nastavený na \"Nie\" (uistite sa, že vybrané osoby sú o tom "
 "informované)."
 #
-# File: eme-people.php, line: 5134
+# File: eme-people.php, line: 5145
 msgid ""
 "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr ""
 "Hromadná pošta je nastavená na \"Áno\" (uistite sa, že vybrané osoby o tom "
 "vedia)."
 #
-# File: eme-people.php, line: 5142
+# File: eme-people.php, line: 5153
 msgid ""
 "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr ""
 "Hromadná pošta nastavená na \"Nie\" (uistite sa, že vybrané osoby sú o tom "
 "informované)."
 #
-# File: eme-people.php, line: 5150
+# File: eme-people.php, line: 5161
 msgid "Birthday email set to \"Yes\"."
 msgstr "Narodeninový e-mail nastavený na \"Áno\"."
 #
-# File: eme-people.php, line: 5158
+# File: eme-people.php, line: 5169
 msgid "Birthday email set to \"No\"."
 msgstr "Narodeninový e-mail nastavený na \"Nie\"."
 #
-# File: eme-people.php, line: 5167
+# File: eme-people.php, line: 5178
 msgid "Language updated."
 msgstr "Jazyk bol aktualizovaný."
 #
-# File: eme-people.php, line: 5180
+# File: eme-people.php, line: 5191
 msgid "People deleted."
 msgstr "Ľudia vymazaní."
 #
-# File: eme-people.php, line: 5190
+# File: eme-people.php, line: 5201
 msgid "People added to group."
 msgstr "Ľudia pridaný do skupiny."
 #
-# File: eme-people.php, line: 5201
+# File: eme-people.php, line: 5212
 msgid "People removed from group."
 msgstr "Ľudia odstránení zo skupiny."
 #
-# File: eme-people.php, line: 5210
+# File: eme-people.php, line: 5221
 msgid "Groups deleted."
 msgstr "Skupiny vymazané."
 #
@@ -16942,6 +16946,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Select the event(s)"
 #~ msgstr "Vybrať podujatie(a)"
 #
@@ -16956,8 +16961,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "Konverzia nových riadkov"
+#
 #
 #
 #
@@ -16988,12 +16995,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
 #~ msgstr ""
 #~ "Ak nechcete, aby sa to stalo (napríklad pre šablónu použitú v riadku "
 #~ "tabuľky), zrušte výber tejto možnosti."
+#
 #
 #
 #
@@ -17031,10 +17040,12 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "See <a href=\"%s\">here</a> for more info on country codes"
 #~ msgid "See <a href=\"%s\">here</a> for more info on country code."
 #~ msgstr "Viac informácií o kódoch krajín nájdete <a href=\"%s\">tu</a>"
+#
 #
 #
 #
@@ -17080,6 +17091,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -17087,6 +17099,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Nahrávanie súborov tu nie je povolené, na odovzdávanie súborov použite "
 #~ "bežnú knižnicu médií WP alebo použite tlačidlo „Pridať multimédiá“ v "
 #~ "poznámkach miesta."
+#
 #
 #
 #
@@ -17127,8 +17140,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Nahrané súbory"
+#
 #
 #
 #
@@ -17169,8 +17184,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "Úspešne sa odstránili vybrané prihlásenia na úlohu."
+#
 #
 #
 #
@@ -17214,8 +17231,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Dodané nesprávne ID. Skúste to prosím znova."
+#
 #
 #
 #
@@ -17256,12 +17275,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
 #~ msgstr ""
 #~ "Šablóna by mala obsahovať aspoň zástupné výrazy #_LASTNAME, #_FIRSTNAME, "
 #~ "#_EMAIL a #_SUBMIT. Ak nemá, formulár sa nezobrazí."
+#
 #
 #
 #
@@ -17308,6 +17329,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "Single Event"
 #~ msgid "Single"
@@ -17315,6 +17337,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ msgstr[0] "Jednorazové podujatie"
 #~ msgstr[1] "Jednorazové podujatie"
 #~ msgstr[2] "Jednorazové podujatie"
+#
 #
 #
 #
@@ -17360,10 +17383,12 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "Attributes"
 #~ msgid "Attribute"
 #~ msgstr "Atribúty"
+#
 #
 #
 #
@@ -17407,6 +17432,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "View event"
 #~ msgid "View details"
@@ -17430,10 +17456,12 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~| msgid "For more information about holidays, see "
 #~ msgid "More information about %s"
 #~ msgstr "Viac informácií o sviatkoch nájdete na stránke "
+#
 #
 #
 #

@@ -8644,12 +8644,12 @@ function eme_meta_box_div_event_rsvp( $event ) {
 		</td>
 	</tr>
 	<tr id='row_require_eme_group'>
-                <td><label for='eme_prop_required_group_ids'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></td>
+                <td><label for='eme_prop_rsvp_required_group_ids'><?php esc_html_e( 'Require EME groups', 'events-made-easy' ); ?></label></td>
 		<td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_group_ids'], 'eme_prop_rsvp_required_group_ids', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.', 'events-made-easy' ); ?></p>
                 </td>
         </tr>
         <tr id='row_require_eme_memberships'>
-                <td><label for='eme_prop_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></td>
+                <td><label for='eme_prop_rsvp_required_membership_ids'><?php esc_html_e( 'Require EME membership', 'events-made-easy' ); ?></label></td>
                 <td>
                 <?php echo eme_ui_multiselect_key_value( $event['event_properties']['rsvp_required_membership_ids'], 'eme_prop_rsvp_required_membership_ids', eme_get_memberships(), 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class' ); ?><p class='eme_smaller'><?php esc_html_e( 'Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event.', 'events-made-easy' ); ?></p>
                 </td>
@@ -9215,8 +9215,9 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 		$wpdb->show_errors( false );
 		return false;
 	} else {
-		$updated_event['event_id'] = $event_id;
+		wp_cache_delete( "eme_event $event_id" );
 		// manage waitinglist
+		$updated_event = eme_get_event($event_id);
 		eme_manage_waitinglist($updated_event);
 		$task_ids = eme_handle_tasks_post_adminform( $event_id, $day_difference );
 		if ( ! empty( $task_ids ) ) {
@@ -9225,7 +9226,6 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 			eme_delete_event_tasks( $event_id );
 		}
 		$wpdb->show_errors( false );
-		wp_cache_delete( "eme_event $event_id" );
 		return true;
 	}
 }

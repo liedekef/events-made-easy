@@ -36,7 +36,8 @@ function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
 		if ( in_array( $key, $saved_values ) ) {
 			$checked = "checked='checked'";
 		}
-		$output .= "<input type='checkbox' name='$name' value='" . eme_esc_html( $key ) . "' $checked>&nbsp;<label for='$name'>" . eme_esc_html( $item ) . '</label>';
+		$id = esc_attr( eme_get_field_id( $name, $key ));
+		$output .= "<input type='checkbox' name='$name' id='$id' value='" . eme_esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . eme_esc_html( $item ) . '</label>';
 		if ( $horizontal ) {
 			$output .= "&nbsp;";
 		} else {
@@ -164,17 +165,17 @@ function eme_options_select( $title, $name, $list, $description, $option_value =
 		$option_value = get_option( $name );
 	}
 	?>
-		<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-		<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
-		<td>
-		<?php
-			echo eme_ui_select( $option_value, $name, $list );
-		if ( ! empty( $description ) ) {
-			echo '<br>' . $description;
-		}
-		?>
-		</td>
-		</tr>
+	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
+	<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
+	<td>
+	<?php
+	echo eme_ui_select( $option_value, $name, $list );
+	if ( ! empty( $description ) ) {
+		echo '<br>' . $description;
+	}
+	?>
+	</td>
+	</tr>
 	<?php
 }
 
@@ -198,17 +199,17 @@ function eme_options_multiselect( $title, $name, $list, $description, $option_va
 		$option_value_arr = $option_value;
 	}
 	?>
-		<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-		<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
-		<td>
-		<?php
-			echo eme_ui_multiselect( $option_value_arr, $name, $list, 5, '', 0, $class );
-		if ( ! empty( $description ) ) {
-			echo '<br>' . $description;
-		}
-		?>
-		</td>
-		</tr>
+	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
+	<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
+	<td>
+	<?php
+	echo eme_ui_multiselect( $option_value_arr, $name, $list, 5, '', 0, $class );
+	if ( ! empty( $description ) ) {
+		echo '<br>' . $description;
+	}
+	?>
+	</td>
+	</tr>
 	<?php
 }
 
@@ -576,5 +577,11 @@ function eme_ui_number( $option_value, $name, $required = 0, $class = '', $extra
 
 	$name = wp_strip_all_tags( $name );
 	return "<input type='number' $required_att $class_att $extra_attributes name='{$name}' id='{$name}' value='$option_value'>";
+}
+
+function eme_get_field_id ( $field_name, $number = 1) {
+	$field_name = str_replace( array( '[]', '[', ']' ), array( '', '-', '' ), $field_name );
+	$field_name = trim( $field_name, '-' );
+	return 'emefield-' . $number . '-' . $field_name;
 }
 ?>

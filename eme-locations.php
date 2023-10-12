@@ -2689,8 +2689,9 @@ function eme_global_map_json( $locations, $marker_clustering, $letter_icons ) {
 
 		# first we set the balloon info
 		$tmp_loc = eme_replace_locations_placeholders( get_option( 'eme_location_baloon_format' ), $location );
-		# no newlines allowed, otherwise no map is shown
-		$tmp_loc = eme_nl2br( $tmp_loc );
+		// newlines are already replaced by eme_replace_locations_placeholders
+                //    no newlines allowed, otherwise no map is shown
+                //    $tmp_loc = eme_nl2br( $tmp_loc );
 		# no other white chars but spaces allowed (wp_json_encode allows them, but the JS-json parses fails)
 		$tmp_loc                           = preg_replace( '/\s+/', ' ', $tmp_loc );
 		$json_location['location_balloon'] = eme_trans_esc_html( $tmp_loc );
@@ -2728,8 +2729,9 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
 	}
 
 	$map_text = eme_replace_locations_placeholders( get_option( 'eme_location_baloon_format' ), $location );
-	// no newlines allowed, otherwise no map is shown
-	$map_text = eme_nl2br( $map_text );
+	// newlines are already replaced by eme_replace_locations_placeholders
+	//    no newlines allowed, otherwise no map is shown
+	//    $map_text = eme_nl2br_save_html( $map_text );
 	// no other white chars but spaces allowed (wp_json_encode allows them, but the JS-json parses fails)
 	$map_text = preg_replace( '/\s+/', ' ', $map_text );
 	// if map is not active: we don't show the map
@@ -2771,7 +2773,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
 		} else {
 			$style = '';
 		}
-		$data    = " data-lat='" . $location['location_latitude'] . "'";
+		$data    = "data-lat='" . $location['location_latitude'] . "'";
 		$data   .= " data-lon='" . $location['location_longitude'] . "'";
 		$data   .= " data-map_icon='" . $location['location_properties']['map_icon'] . "'";
 		$data   .= " data-map_text='" . eme_esc_html( $map_text ) . "'";

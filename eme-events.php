@@ -206,6 +206,9 @@ function eme_init_event_props( $props = [] ) {
 	if ( ! isset( $props['task_registered_users_only'] ) ) {
 		$props['task_registered_users_only'] = get_option( 'eme_task_registered_users_only' );
 	}
+	if ( ! isset( $props['task_addpersontogroup'] ) ) {
+		$props['task_addpersontogroup'] = [];
+	}
 	if ( ! isset( $props['task_requires_approval'] ) ) {
 		$props['task_requires_approval'] = get_option( 'eme_task_requires_approval' );
 	}

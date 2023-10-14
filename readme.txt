@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.12 (2023/10/12) =
+* Add a setting to allow people signing up for tasks to be assigned to groups too
+
 = 2.4.11 (2023/10/12) =
 * Fix an error when saving an event
 

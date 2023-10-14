@@ -813,6 +813,9 @@ function eme_meta_box_div_event_task_settings( $event ) {
 			<input id="eme_prop_task_registered_users_only" name='eme_prop_task_registered_users_only' value='1' type='checkbox' <?php echo $eme_prop_task_registered_users_only; ?>>
 		<label for="eme_prop_task_registered_users_only"><?php esc_html_e( 'Require WP membership to be able to sign up for tasks?', 'events-made-easy' ); ?></label>
 		</p>
+		<p id='p_task_addpersontogroup'>
+                <label for='eme_prop_task_addpersontogroup'><?php esc_html_e( 'Group to add people to', 'events-made-easy' ); ?></label></td>
+                <td><?php echo eme_ui_multiselect_key_value( $event['event_properties']['task_addpersontogroup'], 'eme_prop_task_addpersontogroup', eme_get_static_groups(), 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class' ); ?><p class="eme_smaller"><?php esc_html_e( 'The group you want people to automatically become a member of when they subscribe.', 'events-made-easy' ); ?></p>
 		<p id='p_task_requires_approval'>
 			<input id="eme_prop_task_requires_approval" name='eme_prop_task_requires_approval' value='1' type='checkbox' <?php echo $eme_prop_task_requires_approval; ?>>
 		<label for="eme_prop_task_requires_approval"><?php esc_html_e( 'Require approval for task signups?', 'events-made-easy' ); ?></label>
@@ -1718,6 +1721,8 @@ function eme_tasks_ajax() {
 					eme_email_tasksignup_action( $signup, 'pending' );
 				} else {
 					eme_email_tasksignup_action( $signup, 'new' );
+					// we'll add the person to the group of choice if the task doesn't require approval
+					eme_add_persongroups( $person_id, $event['event_properties']['task_addpersontogroup'] );
 				}
 				$message .= __( 'Signup done', 'events-made-easy' );
 				$message .= '<br>';
@@ -1901,6 +1906,8 @@ function eme_ajax_action_signup_approve( $ids_arr, $send_mail=1 ) {
 		if ( ! $res ) {
 			$action_ok = 0;
 		} else {
+			$event = eme_get_event($signup['event_id']);
+			eme_add_persongroups( $signup['person_id'], $event['event_properties']['task_addpersontogroup'] );
 			if ($send_mail) {
 				eme_email_tasksignup_action( $signup, 'new' );
 			}

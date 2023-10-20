@@ -844,7 +844,7 @@ jQuery(document).ready( function($) {
 	$('#event_remove_image_button').on("click",function(e) {
 		$('#event_image_url').val('');
 		$('#event_image_id').val('');
-		$('#eme_event_image_example' ).attr('src','');
+		$('#eme_event_image_example' ).attr('src','').hide();
 		$('#event_image_button' ).show();
 		$('#event_remove_image_button' ).hide();
 	});
@@ -868,7 +868,7 @@ jQuery(document).ready( function($) {
 				attachment = attach.toJSON();
 				$('#event_image_url').val(attachment.url);
 				$('#event_image_id').val(attachment.id);
-				$('#eme_event_image_example' ).attr('src',attachment.url);
+				$('#eme_event_image_example' ).attr('src',attachment.url).show();
 				$('#event_image_button' ).hide();
 				$('#event_remove_image_button' ).show();
 			});
@@ -877,9 +877,11 @@ jQuery(document).ready( function($) {
 	if ($('#event_image_url').val() != '') {
 		$('#event_image_button' ).hide();
 		$('#event_remove_image_button' ).show();
+		$('#eme_event_image_example' ).show();
 	} else {
 		$('#event_image_button' ).show();
 		$('#event_remove_image_button' ).hide();
+		$('#eme_event_image_example' ).hide();
 	}
 
         $('#event_author.eme_select2_wpuser_class').select2({

@@ -275,7 +275,7 @@ jQuery(document).ready(function ($) {
 	$('#location_remove_image_button').on("click",function(e) {
 		$('#location_image_url').val('');
 		$('#location_image_id').val('');
-		$('#eme_location_image_example' ).attr("src",'');
+		$('#eme_location_image_example' ).attr("src",'').hide();
 		$('#location_image_button' ).show();
 		$('#location_remove_image_button' ).hide();
 	});
@@ -300,7 +300,7 @@ jQuery(document).ready(function ($) {
                                 attachment = attach.toJSON();
 				$('#location_image_url').val(attachment.url);
 				$('#location_image_id').val(attachment.id);
-				$('#eme_location_image_example' ).attr("src",attachment.url);
+				$('#eme_location_image_example' ).attr("src",attachment.url).show();
 				$('#location_image_button' ).hide();
 				$('#location_remove_image_button' ).show();
 			});
@@ -309,9 +309,11 @@ jQuery(document).ready(function ($) {
 	if ($('#location_image_url').val() != '') {
 		$('#location_image_button' ).hide();
 		$('#location_remove_image_button' ).show();
+		$('#eme_location_image_example' ).show();
 	} else {
 		$('#location_image_button' ).show();
 		$('#location_remove_image_button' ).hide();
+		$('#eme_location_image_example' ).hide();
 	}
 
 

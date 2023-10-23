@@ -526,6 +526,9 @@ function eme_send_queued() {
 	// we'll build in a safety precaution to make sure to never surpass the schedule duration
 	$start_time   = time();
 	$scheduled    = wp_get_schedule( 'eme_cron_send_queued' );
+	if (!$scheduled) { // issue with wp cron? Then take 1 hour, to make sure this still runs ok
+		$scheduled = 3600;
+	}
 	$wp_schedules = wp_get_schedules();
 	$interval     = $wp_schedules[ $scheduled ]['interval'];
 	// let's keep 5 seconds to ourselves (see at the end of this function)

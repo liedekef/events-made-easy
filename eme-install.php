@@ -899,7 +899,7 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 	// now the groups table
 	if ( ! eme_table_exists( $grouptable_name ) ) {
 		$sql = 'CREATE TABLE ' . $grouptable_name . " (
-         group_id int(11) NOT NULL auto_increment,
+	 group_id int(11) NOT NULL auto_increment,
          name varchar(50) DEFAULT NULL,
          email tinytext,
          description tinytext,
@@ -928,9 +928,9 @@ function eme_create_people_table( $charset, $collate, $db_version, $db_prefix ) 
 	// now the table defining group members
 	if ( ! eme_table_exists( $usergrouptable_name ) ) {
 		$sql = 'CREATE TABLE ' . $usergrouptable_name . " (
-         person_id int(11),
-         group_id int(11)
-         ) $charset $collate;";
+			person_id int(11),
+			group_id int(11)
+			) $charset $collate;";
 		maybe_create_table( $usergrouptable_name, $sql );
 	}
 }
@@ -941,12 +941,12 @@ function eme_create_categories_table( $charset, $collate, $db_version, $db_prefi
 
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
-         category_id int(11) NOT NULL auto_increment,
-         category_name tinytext NOT NULL,
-         description text,
-         category_prefix text,
-         category_slug text,
-         UNIQUE KEY  (category_id)
+	 category_id int(11) NOT NULL auto_increment,
+	 category_name tinytext NOT NULL,
+	 description text,
+	 category_prefix text,
+	 category_slug text,
+	 UNIQUE KEY  (category_id)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {

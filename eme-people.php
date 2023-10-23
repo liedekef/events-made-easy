@@ -2923,7 +2923,7 @@ function eme_get_grouppersons( $group_ids, $order = 'ASC' ) {
 
 function eme_add_persongroups( $person_id, $group_ids, $public = 0 ) {
 	global $wpdb;
-	$table        = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
+	$table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	if ( empty( $group_ids ) ) {
 		return;
 	}

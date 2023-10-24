@@ -2691,7 +2691,7 @@ function eme_get_booked_multiseats( $event_id, $exclude_waiting_list = 0, $only_
 	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$exclude          = ( $exclude_waiting_list == 1 ) ? 'AND waitinglist=0' : '';
 	$waiting          = ( $only_waiting_list == 1 ) ? 'AND waitinglist=1' : '';
-	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d $exclude $waiting", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
+	$sql              = $wpdb->prepare( "SELECT COALESCE(NULLIF(booking_seats_mp, 0), booking_seats) FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d $exclude $waiting", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
 	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {
@@ -2731,10 +2731,13 @@ function eme_get_paid_seats( $event_id ) {
 function eme_get_paid_multiseats( $event_id ) {
 	global $wpdb;
 	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d and booking_paid=1", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
+	$sql              = $wpdb->prepare( "SELECT COALESCE(NULLIF(booking_seats_mp, 0), booking_seats) FROM $bookings_table WHERE status IN (%d,%d,%d) AND event_id = %d and booking_paid=1", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
 	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {
+		if ( empty( $booked_seats ) ) {
+			continue;
+		}
 		$multiseats = eme_convert_multi2array( $booked_seats );
 		foreach ( $multiseats as $key => $value ) {
 			if ( ! isset( $result[ $key ] ) ) {
@@ -2760,10 +2763,13 @@ function eme_get_approved_seats( $event_id ) {
 function eme_get_approved_multiseats( $event_id ) {
 	global $wpdb;
 	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status=%d AND event_id = %d", EME_RSVP_STATUS_APPROVED, $event_id );
+	$sql              = $wpdb->prepare( "SELECT COALESCE(NULLIF(booking_seats_mp, 0), booking_seats) FROM $bookings_table WHERE status=%d AND event_id = %d", EME_RSVP_STATUS_APPROVED, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
 	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {
+		if ( empty( $booked_seats ) ) {
+			continue;
+		}
 		$multiseats = eme_convert_multi2array( $booked_seats );
 		foreach ( $multiseats as $key => $value ) {
 			if ( ! isset( $result[ $key ] ) ) {

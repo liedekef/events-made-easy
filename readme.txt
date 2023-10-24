@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.12 (2023//) =
 * Add a setting to allow people signing up for tasks to be assigned to groups too
+* Take into account case where bookings are already made and then event switches from single to multiprice
 
 = 2.4.11 (2023/10/12) =
 * Fix an error when saving an event

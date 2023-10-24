@@ -2840,7 +2840,7 @@ function eme_get_pending_multiseats( $event_id, $old_date = '', $exclude_booking
 	} else {
 		$exclude_booking = "AND booking_id != $exclude_booking_id";
 	}
-	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table WHERE status IN (%d,%d) AND event_id = %d $younger_than $exclude_booking", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $event_id );
+	$sql              = $wpdb->prepare( "SELECT COALESCE(NULLIF(booking_seats_mp, 0), booking_seats) FROM $bookings_table WHERE status IN (%d,%d) AND event_id = %d $younger_than $exclude_booking", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
 	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {

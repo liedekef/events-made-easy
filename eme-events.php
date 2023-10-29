@@ -5559,8 +5559,8 @@ function eme_get_event( $event_id ) {
 	return $event;
 }
 
-
-function eme_get_event_arr( $event_ids ) {
+// the next function is only called to get a list of events that are also rsvp-able
+function eme_get_rsvp_event_arr( $event_ids ) {
 	global $wpdb;
 
 	// remove possible empty elements
@@ -5583,6 +5583,8 @@ function eme_get_event_arr( $event_ids ) {
 	$conditions       = [];
 	$event_ids_joined = join( ',', $event_ids );
 	$conditions[]     = "event_id IN ($event_ids_joined)";
+	// rsvp is required
+	$conditions[]     = 'event_rsvp = 1';
 
 	// in the frontend and not logged in, only show public events
 	// since this function is only called from the frontend for the multibooking form, we can drop the is_admin, but hey ...

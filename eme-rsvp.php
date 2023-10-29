@@ -72,7 +72,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 		}
 	}
 	if ( has_filter( 'eme_add_booking_form_prefilter' ) ) {
-			$format_entry = apply_filters( 'eme_add_booking_form_prefilter', $format_entry );
+		$format_entry = apply_filters( 'eme_add_booking_form_prefilter', $format_entry );
 		if ( ! empty( $multiprice_format_entry ) ) {
 			$multiprice_format_entry = apply_filters( 'eme_add_booking_form_prefilter', $multiprice_format_entry );
 		}
@@ -325,11 +325,11 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 	if ( ! empty( $recurrence_id ) ) {
 		// we only want future events, so set the second arg to 1
 		$ids    = eme_get_recurrence_eventids( $recurrence_id, 1 );
-		$events = eme_get_event_arr( $ids );
+		$events = eme_get_rsvp_event_arr( $ids );
 	} elseif ( ! empty( $category_id ) || ! empty( $scope ) ) {
 		$events = eme_get_events( scope: $scope, order: $order, category: $category_id );
 	} else {
-		$events = eme_get_event_arr( $ids );
+		$events = eme_get_rsvp_event_arr( $ids );
 	}
 	//if ($ids && $template_id_header && $template_id && $template_id_footer)
 	if ( ! empty( $events ) ) {
@@ -369,11 +369,11 @@ function eme_add_multibooking_form_shortcode( $atts ) {
 	if ( ! empty( $recurrence_id ) ) {
 		// we only want future events, so set the second arg to 1
 		$ids    = eme_get_recurrence_eventids( $recurrence_id, 1 );
-		$events = eme_get_event_arr( $ids );
+		$events = eme_get_rsvp_event_arr( $ids );
 	} elseif ( ! empty( $category_id ) || ! empty( $scope ) ) {
 		$events = eme_get_events( scope: $scope, order: $order, category: $category_id, extra_conditions: 'event_rsvp=1' );
 	} else {
-		$events = eme_get_event_arr( $ids );
+		$events = eme_get_rsvp_event_arr( $ids );
 	}
 	//if ($ids && $template_id_header && $template_id && $template_id_footer)
 	if ( ! empty( $events ) ) {
@@ -803,7 +803,7 @@ function eme_add_bookings_ajax() {
 
 	$events = [];
 	if ( !empty( $_POST['eme_event_ids'] ) && eme_is_numeric_array( $_POST['eme_event_ids'] ) ) {
-		$events = eme_get_event_arr( $_POST['eme_event_ids'] );
+		$events = eme_get_rsvp_event_arr( $_POST['eme_event_ids'] );
 	}
 	if ( empty( $events ) ) {
 		$form_html = __( 'Please select at least one event.', 'events-made-easy' );

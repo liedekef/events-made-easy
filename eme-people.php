@@ -2253,7 +2253,13 @@ function eme_group_edit_layout( $group_id = 0, $message = '' ) {
 	if ( $action == 'add' ) {
 		esc_html_e( 'Add group', 'events-made-easy' );
 	} else {
-		esc_html_e( 'Edit group', 'events-made-easy' );
+		if ( $group['type'] == 'dynamic_people' ) {
+			esc_html_e( 'Edit dynamic group of people', 'events-made-easy' );
+		} elseif ( $group['type'] == 'dynamic_people' ) {
+			esc_html_e( 'Edit dynamic group of members', 'events-made-easy' );
+		} else {
+			esc_html_e( 'Edit group', 'events-made-easy' );
+		}
 	}
 	?>
 	</h1>

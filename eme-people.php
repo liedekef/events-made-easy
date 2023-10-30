@@ -162,6 +162,22 @@ function eme_groups_page() {
 			eme_group_edit_layout( $group_id, $message );
 			return;
 		}
+	} elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_dynamic_people_group' ) {
+		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+		if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
+			eme_group_edit_layout(group_type: 'dynamic_people');
+			return;
+		} else {
+			$message = esc_html__( 'You have no right to add groups!', 'events-made-easy' );
+		}
+	} elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_dynamic_members_group' ) {
+		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+		if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
+			eme_group_edit_layout(group_type: 'dynamic_members');
+			return;
+		} else {
+			$message = esc_html__( 'You have no right to add groups!', 'events-made-easy' );
+		}
 	} elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_group' ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
@@ -2217,7 +2233,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 	<?php
 }
 
-function eme_group_edit_layout( $group_id = 0, $message = '' ) {
+function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'static'  ) {
 	global $plugin_page;
 
 	$grouppersons = [];
@@ -2225,6 +2241,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '' ) {
 	if ( ! $group_id ) {
 		$action = 'add';
 		$group  = eme_new_group();
+		$group['type'] = $group_type;
 	} else {
 		$action  = 'edit';
 		$group   = eme_get_group( $group_id );
@@ -2251,11 +2268,17 @@ function eme_group_edit_layout( $group_id = 0, $message = '' ) {
 	<h1>
 	<?php
 	if ( $action == 'add' ) {
-		esc_html_e( 'Add group', 'events-made-easy' );
+		if ( $group['type'] == 'dynamic_people' ) {
+			esc_html_e( 'Add dynamic group of people', 'events-made-easy' );
+		} elseif ( $group['type'] == 'dynamic_members' ) {
+			esc_html_e( 'Add dynamic group of members', 'events-made-easy' );
+		} else {
+			esc_html_e( 'Add group', 'events-made-easy' );
+		}
 	} else {
 		if ( $group['type'] == 'dynamic_people' ) {
 			esc_html_e( 'Edit dynamic group of people', 'events-made-easy' );
-		} elseif ( $group['type'] == 'dynamic_people' ) {
+		} elseif ( $group['type'] == 'dynamic_members' ) {
 			esc_html_e( 'Edit dynamic group of members', 'events-made-easy' );
 		} else {
 			esc_html_e( 'Edit group', 'events-made-easy' );
@@ -2310,12 +2333,12 @@ function eme_group_edit_layout( $group_id = 0, $message = '' ) {
 		</tr>
 			<?php
 		} elseif ( $group['type'] == 'dynamic_people' ) {
-			if ( empty( $group['search_terms'] ) ) {
+			if ( empty( $group['search_terms'] ) && $action == 'edit' ) {
 				echo "<tr><td colspan=2><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: this group is using an older method of defining the criteria for the members in it. Upon saving this group, you will lose that info, so make sure to reenter the criteria in the fields below', 'events-made-easy' ) . '</td></tr>';
 			}
 			eme_render_people_searchfields( $group );
 		} elseif ( $group['type'] == 'dynamic_members' ) {
-			if ( empty( $group['search_terms'] ) ) {
+			if ( empty( $group['search_terms'] ) && $action == 'edit' ) {
 				echo "<tr><td colspan=2><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: this group is using an older method of defining the criteria for the members in it. Upon saving this group, you will lose that info, so make sure to reenter the criteria in the fields below', 'events-made-easy' ) . '</td></tr>';
 			}
 			eme_render_members_searchfields( $group );
@@ -2359,10 +2382,12 @@ function eme_manage_groups_layout( $message = '' ) {
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
 	<h1><?php esc_html_e( 'Add a new group', 'events-made-easy' ); ?></h1>
 	<div class="wrap">
-	<form id="groups-filter" method="post" action="<?php echo admin_url( 'admin.php?page=eme-groups' ); ?>">
+	<form id="add-group" method="post" action="<?php echo admin_url( 'admin.php?page=eme-groups' ); ?>">
 		<?php echo $nonce_field; ?>
 		<input type="hidden" name="eme_admin_action" value="add_group">
-		<input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add group', 'events-made-easy' ); ?>">
+		<button type="submit" class="button-primary" name="eme_admin_action" value="add_group"><?php esc_html_e( 'Add group', 'events-made-easy' ); ?></button>
+		<button type="submit" class="button-primary" name="eme_admin_action" value="add_dynamic_people_group"><?php esc_html_e( 'Add dynamic group of people', 'events-made-easy' ); ?></button>
+		<button type="submit" class="button-primary" name="eme_admin_action" value="add_dynamic_members_group"><?php esc_html_e( 'Add dynamic group of members', 'events-made-easy' ); ?></button>
 	</form>
 	</div>
 <?php endif; ?>

@@ -1593,13 +1593,14 @@ function eme_render_people_searchfields( $group = [] ) {
 	$memberships             = eme_get_memberships();
 	$groups                  = eme_get_static_groups();
 
-	$value = '';
 	if ( ! empty( $group ) ) {
 		$edit_group   = 1;
 		$search_terms = eme_unserialize( $group['search_terms'] );
 	} else {
 		$edit_group = 0;
 	}
+
+	$value = '';
 	if ( $edit_group ) {
 		echo '</td></tr><tr><td>' . esc_html__( 'Filter on person', 'events-made-easy' ) . '</td><td>';
 		if ( isset( $search_terms['search_person'] ) ) {
@@ -1607,6 +1608,8 @@ function eme_render_people_searchfields( $group = [] ) {
 		}
 	}
 	echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_person" id="search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
+
+	$value = '';
 	if ( $edit_group ) {
 		echo '</td></tr><tr><td>' . esc_html__( 'Filter on group', 'events-made-easy' ) . '</td><td>';
 		if ( isset( $search_terms['search_groups'] ) ) {
@@ -1615,6 +1618,7 @@ function eme_render_people_searchfields( $group = [] ) {
 	}
 	echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2_people_groups_class' );
 
+	$value = '';
 	if ( $edit_group ) {
 		echo '<tr><td>' . esc_html__( 'Select memberships', 'events-made-easy' ) . '</td><td>';
 		if ( isset( $search_terms['search_membershipids'] ) ) {
@@ -1623,6 +1627,7 @@ function eme_render_people_searchfields( $group = [] ) {
 	}
 	echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class' );
 
+	$value = '';
 	if ( $edit_group ) {
 		echo '</td></tr><tr><td>' . esc_html__( 'Select member status', 'events-made-easy' ) . '</td><td>';
 		if ( isset( $search_terms['search_memberstatus'] ) ) {
@@ -1633,6 +1638,7 @@ function eme_render_people_searchfields( $group = [] ) {
 
 	$formfields_searchable = eme_get_searchable_formfields( 'people' );
 	if ( ! empty( $formfields_searchable ) ) {
+		$value = '';
 		if ( $edit_group ) {
 			echo '</td></tr><tr><td>' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '</td><td>';
 			if ( isset( $search_terms['search_customfields'] ) ) {
@@ -1640,6 +1646,8 @@ function eme_render_people_searchfields( $group = [] ) {
 			}
 		}
 		echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_customfields" id="search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
+
+		$value = '';
 		if ( $edit_group ) {
 			echo '</td></tr><tr><td>' . esc_html__( 'Custom field to search', 'events-made-easy' ) . '</td><td>';
 			if ( isset( $search_terms['search_customfieldids'] ) ) {
@@ -4255,11 +4263,10 @@ function eme_subscribe_ajax() {
 			]
 		);
 	}
-		wp_die();
+	wp_die();
 }
 
 function eme_subform_shortcode( $atts ) {
-	
 	eme_enqueue_frontend();
 	$atts = shortcode_atts( [ 'template_id' => 0 ], $atts );
 	if ( !empty($atts['template_id']) ) {
@@ -4344,7 +4351,6 @@ function eme_unsubscribe_ajax() {
 }
 
 function eme_unsubform_shortcode( $atts ) {
-	
 	eme_enqueue_frontend();
 	$atts = shortcode_atts( [ 'template_id' => 0 ], $atts );
 	if ( !empty($atts['template_id']) ) {

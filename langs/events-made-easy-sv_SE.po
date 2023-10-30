@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2023-10-30 11:30:12+00:00\n"
+"POT-Creation-Date: 2023-10-30 12:27:08+00:00\n"
 "PO-Revision-Date: 2022-12-05 11:58:21+0000\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -54,13 +54,13 @@ msgstr ""
 # File: eme-members.php, line: 6210
 # File: eme-options.php, line: 138
 # File: eme-payments.php, line: 3786
-# File: eme-people.php, line: 3648
-# File: eme-people.php, line: 4750
-# File: eme-people.php, line: 4880
-# File: eme-people.php, line: 4952
-# File: eme-people.php, line: 4991
-# File: eme-people.php, line: 5014
-# File: eme-people.php, line: 5096
+# File: eme-people.php, line: 3673
+# File: eme-people.php, line: 4775
+# File: eme-people.php, line: 4905
+# File: eme-people.php, line: 4977
+# File: eme-people.php, line: 5016
+# File: eme-people.php, line: 5039
+# File: eme-people.php, line: 5121
 # File: eme-recurrence.php, line: 469
 # File: eme-recurrence.php, line: 638
 # File: eme-rsvp.php, line: 1193
@@ -102,8 +102,8 @@ msgstr "Plats"
 # File: eme-gdpr.php, line: 460
 # File: eme-gdpr.php, line: 605
 # File: eme-locations.php, line: 581
-# File: eme-people.php, line: 926
-# File: eme-people.php, line: 2119
+# File: eme-people.php, line: 942
+# File: eme-people.php, line: 2135
 # File: eme-rsvp.php, line: 1400
 msgid "State"
 msgstr "Stat"
@@ -118,8 +118,8 @@ msgstr "Stat"
 # File: eme-gdpr.php, line: 461
 # File: eme-gdpr.php, line: 609
 # File: eme-locations.php, line: 589
-# File: eme-people.php, line: 927
-# File: eme-people.php, line: 2123
+# File: eme-people.php, line: 943
+# File: eme-people.php, line: 2139
 # File: eme-rsvp.php, line: 1405
 msgid "Country"
 msgstr "Land"
@@ -244,8 +244,8 @@ msgstr "Lägg till en närvaropost manuellt"
 # File: eme-members.php, line: 1420
 # File: eme-members.php, line: 1442
 # File: eme-members.php, line: 1486
-# File: eme-people.php, line: 1903
-# File: eme-people.php, line: 2074
+# File: eme-people.php, line: 1919
+# File: eme-people.php, line: 2090
 msgid "Start typing a name"
 msgstr "Börja skriv ett namn"
 #
@@ -300,8 +300,8 @@ msgstr ""
 # File: eme-locations.php, line: 922
 # File: eme-members.php, line: 2929
 # File: eme-members.php, line: 3000
-# File: eme-people.php, line: 1923
-# File: eme-people.php, line: 2382
+# File: eme-people.php, line: 1939
+# File: eme-people.php, line: 2407
 # File: eme-rsvp.php, line: 5059
 # File: eme-tasks.php, line: 483
 # File: eme-templates.php, line: 203
@@ -309,19 +309,19 @@ msgid "Hint: rightclick on the column headers to show/hide columns"
 msgstr "Tips: högerklicka på kolumnrubrikerna för att visa/dölja kolumner"
 #
 # File: eme-attendances.php, line: 202
-# File: eme-people.php, line: 1526
-# File: eme-people.php, line: 1527
-# File: eme-people.php, line: 1528
-# File: eme-people.php, line: 1571
-# File: eme-people.php, line: 1572
-# File: eme-people.php, line: 1573
-# File: eme-people.php, line: 2017
-# File: eme-people.php, line: 2077
-# File: eme-people.php, line: 2091
-# File: eme-people.php, line: 4791
-# File: eme-people.php, line: 4805
-# File: eme-people.php, line: 4806
-# File: eme-people.php, line: 4807
+# File: eme-people.php, line: 1542
+# File: eme-people.php, line: 1543
+# File: eme-people.php, line: 1544
+# File: eme-people.php, line: 1587
+# File: eme-people.php, line: 1588
+# File: eme-people.php, line: 1589
+# File: eme-people.php, line: 2033
+# File: eme-people.php, line: 2093
+# File: eme-people.php, line: 2107
+# File: eme-people.php, line: 4816
+# File: eme-people.php, line: 4830
+# File: eme-people.php, line: 4831
+# File: eme-people.php, line: 4832
 # File: eme-tasks.php, line: 1861
 msgid "Edit person"
 msgstr "Redigera person"
@@ -488,10 +488,10 @@ msgstr "Lägg till kategori"
 # File: eme-gdpr.php, line: 492
 # File: eme-holidays.php, line: 122
 # File: eme-holidays.php, line: 129
-# File: eme-people.php, line: 919
-# File: eme-people.php, line: 1209
-# File: eme-people.php, line: 1517
-# File: eme-people.php, line: 1563
+# File: eme-people.php, line: 935
+# File: eme-people.php, line: 1225
+# File: eme-people.php, line: 1533
+# File: eme-people.php, line: 1579
 msgid "ID"
 msgstr "ID"
 #
@@ -512,7 +512,7 @@ msgstr "ID"
 # File: eme-mailer.php, line: 2577
 # File: eme-mailer.php, line: 2678
 # File: eme-members.php, line: 1757
-# File: eme-people.php, line: 2287
+# File: eme-people.php, line: 2310
 # File: eme-tasks.php, line: 733
 # File: eme-templates.php, line: 270
 msgid "Name"
@@ -524,7 +524,7 @@ msgstr "Namn"
 # File: eme-holidays.php, line: 136
 # File: eme-locations.php, line: 2961
 # File: eme-members.php, line: 5829
-# File: eme-people.php, line: 4904
+# File: eme-people.php, line: 4929
 # File: eme-templates.php, line: 481
 msgid "No name"
 msgstr "Inget namn"
@@ -706,8 +706,8 @@ msgstr "Månad(er)"
 # File: eme-mailer.php, line: 2669
 # File: eme-members.php, line: 2927
 # File: eme-members.php, line: 2998
-# File: eme-people.php, line: 1921
-# File: eme-people.php, line: 2380
+# File: eme-people.php, line: 1937
+# File: eme-people.php, line: 2405
 # File: eme-rsvp.php, line: 5057
 # File: eme-tasks.php, line: 481
 # File: eme-templates.php, line: 201
@@ -791,7 +791,7 @@ msgstr "Du har inte behörighet att hantera rabatter!"
 # File: eme-locations.php, line: 226
 # File: eme-members.php, line: 5375
 # File: eme-members.php, line: 5545
-# File: eme-people.php, line: 761
+# File: eme-people.php, line: 777
 # File: eme-rsvp.php, line: 4740
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
 msgstr ""
@@ -805,7 +805,7 @@ msgstr ""
 # File: eme-locations.php, line: 253
 # File: eme-members.php, line: 5401
 # File: eme-members.php, line: 5571
-# File: eme-people.php, line: 788
+# File: eme-people.php, line: 804
 # File: eme-rsvp.php, line: 4767
 msgid "Not all required fields present."
 msgstr "Alla obligatoriska fält finns inte med."
@@ -833,7 +833,7 @@ msgstr ""
 # File: eme-locations.php, line: 217
 # File: eme-members.php, line: 5367
 # File: eme-members.php, line: 5538
-# File: eme-people.php, line: 752
+# File: eme-people.php, line: 768
 # File: eme-rsvp.php, line: 4730
 msgid "Problem detected while uploading the file"
 msgstr "Ett problem upptäcktes vid uppladdning av filen"
@@ -846,7 +846,7 @@ msgstr "Ett problem upptäcktes vid uppladdning av filen"
 # File: eme-locations.php, line: 214
 # File: eme-members.php, line: 5364
 # File: eme-members.php, line: 5535
-# File: eme-people.php, line: 749
+# File: eme-people.php, line: 765
 # File: eme-rsvp.php, line: 4727
 msgid "No CSV file detected: %s"
 msgstr "Ingen CSV-fil hittades: %s"
@@ -956,7 +956,7 @@ msgstr "Lägg till land"
 # File: eme-events.php, line: 5872
 # File: eme-locations.php, line: 868
 # File: eme-members.php, line: 2822
-# File: eme-people.php, line: 1824
+# File: eme-people.php, line: 1840
 msgid "Click on the icon to show the import form"
 msgstr "Klicka på ikonen för att visa importformuläret"
 #
@@ -968,7 +968,7 @@ msgstr "Klicka på ikonen för att visa importformuläret"
 # File: eme-locations.php, line: 875
 # File: eme-members.php, line: 2829
 # File: eme-members.php, line: 2844
-# File: eme-people.php, line: 1831
+# File: eme-people.php, line: 1847
 # File: eme-rsvp.php, line: 4908
 msgid "Delimiter:"
 msgstr "Avgränsare:"
@@ -981,7 +981,7 @@ msgstr "Avgränsare:"
 # File: eme-locations.php, line: 877
 # File: eme-members.php, line: 2831
 # File: eme-members.php, line: 2846
-# File: eme-people.php, line: 1833
+# File: eme-people.php, line: 1849
 # File: eme-rsvp.php, line: 4910
 msgid "Enclosure:"
 msgstr "Bilaga:"
@@ -992,7 +992,7 @@ msgstr "Bilaga:"
 # File: eme-discounts.php, line: 517
 # File: eme-events.php, line: 5884
 # File: eme-locations.php, line: 880
-# File: eme-people.php, line: 1840
+# File: eme-people.php, line: 1856
 # File: eme-rsvp.php, line: 4913
 msgid "Import"
 msgstr "Importera"
@@ -1026,8 +1026,8 @@ msgstr ""
 # File: eme-mailer.php, line: 2666
 # File: eme-members.php, line: 2886
 # File: eme-members.php, line: 2992
-# File: eme-people.php, line: 1873
-# File: eme-people.php, line: 2375
+# File: eme-people.php, line: 1889
+# File: eme-people.php, line: 2400
 # File: eme-rsvp.php, line: 4979
 # File: eme-tasks.php, line: 470
 # File: eme-templates.php, line: 198
@@ -1138,7 +1138,7 @@ msgstr "Num-3"
 # File: eme-countries.php, line: 589
 # File: eme-events.php, line: 9563
 # File: eme-events.php, line: 9636
-# File: eme-people.php, line: 2145
+# File: eme-people.php, line: 2161
 msgid "Language"
 msgstr "Språk"
 #
@@ -1292,8 +1292,8 @@ msgstr "Sänd köad e-post i grupper om"
 #
 # File: eme-cron.php, line: 385
 # File: eme-options.php, line: 1732
-# File: eme-people.php, line: 931
-# File: eme-people.php, line: 2154
+# File: eme-people.php, line: 947
+# File: eme-people.php, line: 2170
 msgid "Newsletter"
 msgstr "Nyhetsbrev"
 #
@@ -1417,12 +1417,12 @@ msgid "Delete selected discounts"
 msgstr "Ta bort markerade rabatter"
 #
 # File: eme-discounts.php, line: 444
-# File: eme-people.php, line: 1879
+# File: eme-people.php, line: 1895
 msgid "Add to group"
 msgstr "Lägg till i gruppen"
 #
 # File: eme-discounts.php, line: 445
-# File: eme-people.php, line: 1880
+# File: eme-people.php, line: 1896
 msgid "Remove from group"
 msgstr ""
 #
@@ -1436,8 +1436,8 @@ msgstr ""
 #
 # File: eme-discounts.php, line: 450
 # File: eme-discounts.php, line: 453
-# File: eme-people.php, line: 1906
-# File: eme-people.php, line: 1909
+# File: eme-people.php, line: 1922
+# File: eme-people.php, line: 1925
 msgid "Select a group"
 msgstr "Välj en grupp"
 #
@@ -1497,7 +1497,7 @@ msgstr "Namnet på rabatten"
 # File: eme-events.php, line: 9622
 # File: eme-events.php, line: 9677
 # File: eme-members.php, line: 1761
-# File: eme-people.php, line: 2291
+# File: eme-people.php, line: 2314
 # File: eme-tasks.php, line: 737
 # File: eme-templates.php, line: 274
 msgid "Description"
@@ -1753,17 +1753,17 @@ msgstr "Fast per plats"
 # File: eme-gdpr.php, line: 570
 # File: eme-locations.php, line: 2997
 # File: eme-members.php, line: 6002
-# File: eme-people.php, line: 437
-# File: eme-people.php, line: 445
 # File: eme-people.php, line: 453
-# File: eme-people.php, line: 1004
-# File: eme-people.php, line: 1005
-# File: eme-people.php, line: 1040
-# File: eme-people.php, line: 1336
-# File: eme-people.php, line: 4810
-# File: eme-people.php, line: 4827
-# File: eme-people.php, line: 4828
-# File: eme-people.php, line: 4907
+# File: eme-people.php, line: 461
+# File: eme-people.php, line: 469
+# File: eme-people.php, line: 1020
+# File: eme-people.php, line: 1021
+# File: eme-people.php, line: 1056
+# File: eme-people.php, line: 1352
+# File: eme-people.php, line: 4835
+# File: eme-people.php, line: 4852
+# File: eme-people.php, line: 4853
+# File: eme-people.php, line: 4932
 # File: eme-rsvp.php, line: 3712
 # File: eme-rsvp.php, line: 5700
 # File: eme-ui-helpers.php, line: 145
@@ -1783,17 +1783,17 @@ msgstr "Ja"
 # File: eme-gdpr.php, line: 570
 # File: eme-locations.php, line: 2997
 # File: eme-members.php, line: 6002
-# File: eme-people.php, line: 437
-# File: eme-people.php, line: 445
 # File: eme-people.php, line: 453
-# File: eme-people.php, line: 1004
-# File: eme-people.php, line: 1005
-# File: eme-people.php, line: 1040
-# File: eme-people.php, line: 1338
-# File: eme-people.php, line: 4810
-# File: eme-people.php, line: 4827
-# File: eme-people.php, line: 4828
-# File: eme-people.php, line: 4907
+# File: eme-people.php, line: 461
+# File: eme-people.php, line: 469
+# File: eme-people.php, line: 1020
+# File: eme-people.php, line: 1021
+# File: eme-people.php, line: 1056
+# File: eme-people.php, line: 1354
+# File: eme-people.php, line: 4835
+# File: eme-people.php, line: 4852
+# File: eme-people.php, line: 4853
+# File: eme-people.php, line: 4932
 # File: eme-rsvp.php, line: 3712
 # File: eme-rsvp.php, line: 5700
 # File: eme-ui-helpers.php, line: 146
@@ -2137,7 +2137,7 @@ msgstr ""
 # File: eme-gdpr.php, line: 464
 # File: eme-gdpr.php, line: 621
 # File: eme-options.php, line: 62
-# File: eme-people.php, line: 2158
+# File: eme-people.php, line: 2174
 msgid "GDPR approval"
 msgstr "GDPR-godkännande"
 #
@@ -2284,7 +2284,7 @@ msgstr "Plats importerades inte: %s"
 # File: eme-members.php, line: 5421
 # File: eme-members.php, line: 5424
 # File: eme-members.php, line: 5427
-# File: eme-people.php, line: 808
+# File: eme-people.php, line: 824
 #, fuzzy
 msgid "Not imported (field %s not valid): %s"
 msgstr "Inte importerad (medlem finns inte): %s"
@@ -2301,14 +2301,14 @@ msgstr ""
 # File: eme-locations.php, line: 334
 # File: eme-members.php, line: 5511
 # File: eme-members.php, line: 5651
-# File: eme-people.php, line: 869
+# File: eme-people.php, line: 885
 msgid "Not imported (not all required fields are present): %s"
 msgstr ""
 #
 # File: eme-events.php, line: 5815
 # File: eme-locations.php, line: 337
 # File: eme-members.php, line: 5516
-# File: eme-people.php, line: 874
+# File: eme-people.php, line: 890
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr ""
 #
@@ -2351,13 +2351,13 @@ msgid "Manage recurrences"
 msgstr "Hantera återkommande"
 #
 # File: eme-events.php, line: 5867
-# File: eme-people.php, line: 1819
+# File: eme-people.php, line: 1835
 # File: eme-rsvp.php, line: 4896
 msgid "Show regular content"
 msgstr "Visa vanliga innehållet"
 #
 # File: eme-events.php, line: 5869
-# File: eme-people.php, line: 1821
+# File: eme-people.php, line: 1837
 # File: eme-rsvp.php, line: 4898
 msgid "Show trash content"
 msgstr "Visa innehållet i papperskorgen"
@@ -2397,8 +2397,8 @@ msgstr "Eventstatus"
 # File: eme-locations.php, line: 892
 # File: eme-members.php, line: 2635
 # File: eme-members.php, line: 2640
-# File: eme-people.php, line: 1643
-# File: eme-people.php, line: 1648
+# File: eme-people.php, line: 1659
+# File: eme-people.php, line: 1664
 msgid "Custom field value to search"
 msgstr "Anpassat fältvärde att söka efter"
 #
@@ -2409,7 +2409,7 @@ msgstr "Filtrera event"
 # File: eme-events.php, line: 5947
 # File: eme-locations.php, line: 901
 # File: eme-members.php, line: 2875
-# File: eme-people.php, line: 1862
+# File: eme-people.php, line: 1878
 msgid ""
 "Hint: when searching for custom field values, you can optionally limit which "
 "custom fields you want to search in the \"Custom fields to filter on\" "
@@ -2422,7 +2422,7 @@ msgstr ""
 # File: eme-events.php, line: 5948
 # File: eme-locations.php, line: 902
 # File: eme-members.php, line: 2876
-# File: eme-people.php, line: 1863
+# File: eme-people.php, line: 1879
 msgid ""
 "If you can't see your custom field in the \"Custom fields to filter on\" "
 "select-box, make sure you marked it as \"searchable\" in the field "
@@ -2750,8 +2750,8 @@ msgstr "Radera återkommande"
 # File: eme-events.php, line: 9790
 # File: eme-mailer.php, line: 1341
 # File: eme-mailer.php, line: 2580
-# File: eme-people.php, line: 951
-# File: eme-people.php, line: 1249
+# File: eme-people.php, line: 967
+# File: eme-people.php, line: 1265
 msgid "Status"
 msgstr "Status"
 #
@@ -4103,8 +4103,8 @@ msgstr ""
 # File: eme-events.php, line: 8573
 # File: eme-events.php, line: 9741
 # File: eme-options.php, line: 38
-# File: eme-people.php, line: 949
-# File: eme-people.php, line: 1242
+# File: eme-people.php, line: 965
+# File: eme-people.php, line: 1258
 msgid "Seats"
 msgstr "Platser"
 #
@@ -4120,7 +4120,7 @@ msgid ""
 msgstr ""
 #
 # File: eme-events.php, line: 8579
-# File: eme-people.php, line: 1187
+# File: eme-people.php, line: 1203
 msgid "Price: "
 msgstr "Pris:"
 #
@@ -4463,7 +4463,7 @@ msgid "Set image"
 msgstr "Välj bild"
 #
 # File: eme-events.php, line: 9339
-# File: eme-people.php, line: 2399
+# File: eme-people.php, line: 2424
 msgid "Choose image"
 msgstr ""
 #
@@ -4689,8 +4689,8 @@ msgstr ""
 # File: eme-formfields.php, line: 2037
 # File: eme-formfields.php, line: 3225
 # File: eme-options.php, line: 39
-# File: eme-people.php, line: 960
-# File: eme-people.php, line: 1279
+# File: eme-people.php, line: 976
+# File: eme-people.php, line: 1295
 # File: eme-rsvp.php, line: 1409
 msgid "Comment"
 msgstr "Kommentera"
@@ -4854,8 +4854,8 @@ msgstr "Redigera platsen ”%s”"
 # File: eme-gdpr.php, line: 458
 # File: eme-gdpr.php, line: 597
 # File: eme-locations.php, line: 577
-# File: eme-people.php, line: 924
-# File: eme-people.php, line: 2111
+# File: eme-people.php, line: 940
+# File: eme-people.php, line: 2127
 # File: eme-rsvp.php, line: 1386
 msgid "City"
 msgstr "Ort"
@@ -4871,8 +4871,8 @@ msgstr "Ort"
 # File: eme-gdpr.php, line: 459
 # File: eme-gdpr.php, line: 601
 # File: eme-locations.php, line: 585
-# File: eme-people.php, line: 925
-# File: eme-people.php, line: 2115
+# File: eme-people.php, line: 941
+# File: eme-people.php, line: 2131
 # File: eme-rsvp.php, line: 1389
 msgid "Postal code"
 msgstr ""
@@ -4902,14 +4902,14 @@ msgid "Group ID"
 msgstr "Grupp-ID"
 #
 # File: eme-events.php, line: 9620
-# File: eme-people.php, line: 2308
+# File: eme-people.php, line: 2331
 # File: events-manager.php, line: 364
 msgid "People"
 msgstr "Personer"
 #
 # File: eme-events.php, line: 9621
 # File: eme-events.php, line: 9643
-# File: eme-people.php, line: 2162
+# File: eme-people.php, line: 2178
 # File: events-manager.php, line: 365
 msgid "Groups"
 msgstr "Grupper"
@@ -4932,11 +4932,11 @@ msgstr "Grupper"
 # File: eme-options.php, line: 34
 # File: eme-options.php, line: 44
 # File: eme-options.php, line: 87
-# File: eme-people.php, line: 920
-# File: eme-people.php, line: 1215
-# File: eme-people.php, line: 1518
-# File: eme-people.php, line: 1564
-# File: eme-people.php, line: 2045
+# File: eme-people.php, line: 936
+# File: eme-people.php, line: 1231
+# File: eme-people.php, line: 1534
+# File: eme-people.php, line: 1580
+# File: eme-people.php, line: 2061
 # File: eme-rsvp.php, line: 71
 msgid "Last name"
 msgstr "Efternamn"
@@ -4960,11 +4960,11 @@ msgstr "Efternamn"
 # File: eme-options.php, line: 35
 # File: eme-options.php, line: 45
 # File: eme-options.php, line: 88
-# File: eme-people.php, line: 921
-# File: eme-people.php, line: 1221
-# File: eme-people.php, line: 1519
-# File: eme-people.php, line: 1565
-# File: eme-people.php, line: 2054
+# File: eme-people.php, line: 937
+# File: eme-people.php, line: 1237
+# File: eme-people.php, line: 1535
+# File: eme-people.php, line: 1581
+# File: eme-people.php, line: 2070
 # File: eme-rsvp.php, line: 71
 # File: eme-rsvp.php, line: 1372
 msgid "First name"
@@ -4993,11 +4993,11 @@ msgstr "Förnamn"
 # File: eme-options.php, line: 46
 # File: eme-options.php, line: 89
 # File: eme-options.php, line: 1099
-# File: eme-people.php, line: 928
-# File: eme-people.php, line: 1227
-# File: eme-people.php, line: 1520
-# File: eme-people.php, line: 1566
-# File: eme-people.php, line: 2063
+# File: eme-people.php, line: 944
+# File: eme-people.php, line: 1243
+# File: eme-people.php, line: 1536
+# File: eme-people.php, line: 1582
+# File: eme-people.php, line: 2079
 # File: eme-rsvp.php, line: 71
 msgid "Email"
 msgstr "E-post"
@@ -5014,9 +5014,9 @@ msgstr "E-post"
 # File: eme-gdpr.php, line: 462
 # File: eme-gdpr.php, line: 613
 # File: eme-options.php, line: 37
-# File: eme-people.php, line: 929
-# File: eme-people.php, line: 1233
-# File: eme-people.php, line: 4017
+# File: eme-people.php, line: 945
+# File: eme-people.php, line: 1249
+# File: eme-people.php, line: 4042
 # File: eme-rsvp.php, line: 1365
 msgid "Phone number"
 msgstr "Telefonnummer"
@@ -5034,8 +5034,8 @@ msgstr ""
 # File: eme-events.php, line: 9637
 # File: eme-events.php, line: 9681
 # File: eme-events.php, line: 9739
-# File: eme-people.php, line: 1521
-# File: eme-people.php, line: 2169
+# File: eme-people.php, line: 1537
+# File: eme-people.php, line: 2185
 msgid "Linked WP user"
 msgstr "Länkad WP-användare"
 #
@@ -5069,8 +5069,8 @@ msgstr ""
 # File: eme-gdpr.php, line: 463
 # File: eme-gdpr.php, line: 617
 # File: eme-options.php, line: 1729
-# File: eme-people.php, line: 930
-# File: eme-people.php, line: 2150
+# File: eme-people.php, line: 946
+# File: eme-people.php, line: 2166
 msgid "MassMail"
 msgstr "Massutskick av e-post"
 #
@@ -5150,7 +5150,7 @@ msgstr "Betalat den"
 #
 # File: eme-events.php, line: 9710
 # File: eme-events.php, line: 9745
-# File: eme-people.php, line: 958
+# File: eme-people.php, line: 974
 msgid "Unique nbr"
 msgstr "Unikt nummer"
 #
@@ -5161,8 +5161,8 @@ msgstr "Betalnings-ID"
 #
 # File: eme-events.php, line: 9712
 # File: eme-events.php, line: 9747
-# File: eme-people.php, line: 952
-# File: eme-people.php, line: 1255
+# File: eme-people.php, line: 968
+# File: eme-people.php, line: 1271
 msgid "Paid"
 msgstr "Betald"
 #
@@ -5187,8 +5187,8 @@ msgstr "Påminnelser sända"
 #
 # File: eme-events.php, line: 9721
 # File: eme-events.php, line: 9760
-# File: eme-people.php, line: 956
-# File: eme-people.php, line: 1267
+# File: eme-people.php, line: 972
+# File: eme-people.php, line: 1283
 msgid "Discount"
 msgstr "Rabatt"
 #
@@ -5199,8 +5199,8 @@ msgstr ""
 #
 # File: eme-events.php, line: 9723
 # File: eme-events.php, line: 9744
-# File: eme-people.php, line: 957
-# File: eme-people.php, line: 1273
+# File: eme-people.php, line: 973
+# File: eme-people.php, line: 1289
 msgid "Total price"
 msgstr "Totalpris"
 #
@@ -5227,18 +5227,18 @@ msgid "Booker"
 msgstr "Bokare"
 #
 # File: eme-events.php, line: 9740
-# File: eme-people.php, line: 955
-# File: eme-people.php, line: 1261
+# File: eme-people.php, line: 971
+# File: eme-people.php, line: 1277
 msgid "Booking date"
 msgstr "Bokningsdatum"
 #
 # File: eme-events.php, line: 9748
-# File: eme-people.php, line: 954
+# File: eme-people.php, line: 970
 msgid "Remaining"
 msgstr "Återstår"
 #
 # File: eme-events.php, line: 9749
-# File: eme-people.php, line: 953
+# File: eme-people.php, line: 969
 msgid "Received"
 msgstr "Mottaget"
 #
@@ -5257,7 +5257,7 @@ msgid "Mark paid"
 msgstr "Markera som betald"
 #
 # File: eme-events.php, line: 9768
-# File: eme-people.php, line: 959
+# File: eme-people.php, line: 975
 msgid "Attendance count"
 msgstr ""
 #
@@ -6176,7 +6176,7 @@ msgstr "E-post om ny medlem"
 # File: eme-formfields.php, line: 3572
 # File: eme-formfields.php, line: 3901
 # File: eme-formfields.php, line: 4567
-# File: eme-people.php, line: 2127
+# File: eme-people.php, line: 2143
 # File: eme-rsvp.php, line: 1392
 msgid "Date of birth"
 msgstr ""
@@ -6187,7 +6187,7 @@ msgstr ""
 # File: eme-formfields.php, line: 3556
 # File: eme-formfields.php, line: 3912
 # File: eme-formfields.php, line: 4578
-# File: eme-people.php, line: 2141
+# File: eme-people.php, line: 2157
 # File: eme-rsvp.php, line: 1395
 msgid "Place of birth"
 msgstr ""
@@ -6257,23 +6257,23 @@ msgstr "Ange ett fast rabattvärde om så önskas"
 #
 # File: eme-formfields.php, line: 3354
 # File: eme-formfields.php, line: 4095
-# File: eme-people.php, line: 1053
-# File: eme-people.php, line: 1349
+# File: eme-people.php, line: 1069
+# File: eme-people.php, line: 1365
 msgid "Discountgroup %s"
 msgstr "Rabattgrupp %s"
 #
 # File: eme-formfields.php, line: 3356
 # File: eme-formfields.php, line: 4097
-# File: eme-people.php, line: 1055
-# File: eme-people.php, line: 1351
+# File: eme-people.php, line: 1071
+# File: eme-people.php, line: 1367
 msgid "Applied discount group %d no longer exists"
 msgstr "Använd rabattgrupp %d finns inte längre"
 #
 # File: eme-formfields.php, line: 3366
 # File: eme-formfields.php, line: 4107
 # File: eme-members.php, line: 4621
-# File: eme-people.php, line: 1065
-# File: eme-people.php, line: 1361
+# File: eme-people.php, line: 1081
+# File: eme-people.php, line: 1377
 # File: eme-rsvp.php, line: 3460
 msgid "Applied discount %d no longer exists"
 msgstr "Använd rabatt %d finns inte längre "
@@ -6539,9 +6539,9 @@ msgid "Draft"
 msgstr "Utkast"
 #
 # File: eme-functions.php, line: 1423
-# File: eme-people.php, line: 986
-# File: eme-people.php, line: 1306
-# File: eme-people.php, line: 1445
+# File: eme-people.php, line: 1002
+# File: eme-people.php, line: 1322
+# File: eme-people.php, line: 1461
 # File: eme-tasks.php, line: 451
 # File: eme-tasks.php, line: 1859
 msgid "Pending"
@@ -6814,8 +6814,8 @@ msgstr "Ingen sådan post"
 # File: eme-gdpr.php, line: 356
 # File: eme-members.php, line: 4389
 # File: eme-payments.php, line: 3675
-# File: eme-people.php, line: 4219
-# File: eme-people.php, line: 4304
+# File: eme-people.php, line: 4244
+# File: eme-people.php, line: 4329
 # File: eme-rsvp.php, line: 772
 # File: eme-rsvp.php, line: 1072
 # File: eme-tasks.php, line: 1611
@@ -6833,8 +6833,8 @@ msgstr ""
 # File: eme-gdpr.php, line: 378
 # File: eme-members.php, line: 4401
 # File: eme-payments.php, line: 3686
-# File: eme-people.php, line: 4230
-# File: eme-people.php, line: 4316
+# File: eme-people.php, line: 4255
+# File: eme-people.php, line: 4341
 # File: eme-rsvp.php, line: 784
 # File: eme-rsvp.php, line: 1084
 # File: eme-tasks.php, line: 1622
@@ -6856,8 +6856,8 @@ msgstr ""
 # File: eme-gdpr.php, line: 338
 # File: eme-gdpr.php, line: 422
 # File: eme-members.php, line: 1624
-# File: eme-people.php, line: 4290
-# File: eme-people.php, line: 4374
+# File: eme-people.php, line: 4315
+# File: eme-people.php, line: 4399
 # File: eme-rsvp.php, line: 166
 # File: eme-rsvp.php, line: 744
 # File: eme-tasks.php, line: 1284
@@ -7442,12 +7442,12 @@ msgstr ""
 # File: eme-mailer.php, line: 1408
 # File: eme-members.php, line: 964
 # File: eme-members.php, line: 967
-# File: eme-people.php, line: 3529
-# File: eme-people.php, line: 3667
-# File: eme-people.php, line: 3770
-# File: eme-people.php, line: 3970
-# File: eme-people.php, line: 4264
-# File: eme-people.php, line: 4348
+# File: eme-people.php, line: 3554
+# File: eme-people.php, line: 3692
+# File: eme-people.php, line: 3795
+# File: eme-people.php, line: 3995
+# File: eme-people.php, line: 4289
+# File: eme-people.php, line: 4373
 # File: eme-rsvp.php, line: 1316
 msgid "Please enter a valid email address"
 msgstr ""
@@ -8187,7 +8187,7 @@ msgid "This member is head of the family for other members."
 msgstr ""
 #
 # File: eme-members.php, line: 1474
-# File: eme-people.php, line: 2083
+# File: eme-people.php, line: 2099
 msgid "Family members:"
 msgstr ""
 #
@@ -8547,8 +8547,8 @@ msgstr "Medlemskapsformulär:"
 # File: eme-members.php, line: 1960
 # File: eme-members.php, line: 2919
 # File: eme-members.php, line: 2924
-# File: eme-people.php, line: 1913
-# File: eme-people.php, line: 1918
+# File: eme-people.php, line: 1929
+# File: eme-people.php, line: 1934
 # File: eme-rsvp.php, line: 5049
 # File: eme-rsvp.php, line: 5054
 msgid "Please select a template"
@@ -9146,19 +9146,19 @@ msgid "Here custom fields of type 'Membership' are shown."
 msgstr "Här visas anpassade fält av typen ”Medlemskap”."
 #
 # File: eme-members.php, line: 2602
-# File: eme-people.php, line: 1623
+# File: eme-people.php, line: 1639
 msgid "Select memberships"
 msgstr ""
 #
 # File: eme-members.php, line: 2609
-# File: eme-people.php, line: 1632
+# File: eme-people.php, line: 1648
 msgid "Select member status"
 msgstr ""
 #
 # File: eme-members.php, line: 2616
 # File: eme-members.php, line: 2621
-# File: eme-people.php, line: 1605
-# File: eme-people.php, line: 1610
+# File: eme-people.php, line: 1621
+# File: eme-people.php, line: 1626
 # File: eme-rsvp.php, line: 4966
 msgid "Filter on person"
 msgstr "Filtrera på person"
@@ -9179,7 +9179,7 @@ msgid "Filter on payment GW id"
 msgstr ""
 #
 # File: eme-members.php, line: 2642
-# File: eme-people.php, line: 1652
+# File: eme-people.php, line: 1668
 msgid "Custom field to search"
 msgstr ""
 #
@@ -9193,7 +9193,7 @@ msgstr "Hantera medlemmar"
 #
 # File: eme-members.php, line: 2835
 # File: eme-members.php, line: 2850
-# File: eme-people.php, line: 1837
+# File: eme-people.php, line: 1853
 msgid "Allow empty email?"
 msgstr "Tillåt tomma e-postmeddelanden?"
 #
@@ -9222,17 +9222,17 @@ msgid "Filter members"
 msgstr "Filtrera medlemmar"
 #
 # File: eme-members.php, line: 2866
-# File: eme-people.php, line: 1853
+# File: eme-people.php, line: 1869
 msgid "Store result as dynamic group"
 msgstr "Lagra resultatet som en dynamisk grupp"
 #
 # File: eme-members.php, line: 2867
-# File: eme-people.php, line: 1854
+# File: eme-people.php, line: 1870
 msgid "Enter a name for this dynamic group"
 msgstr "Ange ett namn för denna dynamiska grupp"
 #
 # File: eme-members.php, line: 2868
-# File: eme-people.php, line: 1855
+# File: eme-people.php, line: 1871
 msgid "Store dynamic group"
 msgstr "Lagra dynamisk grupp"
 #
@@ -9265,7 +9265,7 @@ msgid "Resend the expiration reminder mail"
 msgstr ""
 #
 # File: eme-members.php, line: 2895
-# File: eme-people.php, line: 1878
+# File: eme-people.php, line: 1894
 # File: eme-rsvp.php, line: 4996
 # File: eme-rsvp.php, line: 5010
 # File: eme-tasks.php, line: 471
@@ -9277,14 +9277,14 @@ msgid "Send membership related email to selected members"
 msgstr ""
 #
 # File: eme-members.php, line: 2898
-# File: eme-people.php, line: 1892
+# File: eme-people.php, line: 1908
 # File: eme-rsvp.php, line: 4998
 # File: eme-rsvp.php, line: 5012
 msgid "PDF output"
 msgstr "PDF-utmatning"
 #
 # File: eme-members.php, line: 2899
-# File: eme-people.php, line: 1893
+# File: eme-people.php, line: 1909
 # File: eme-rsvp.php, line: 4999
 # File: eme-rsvp.php, line: 5013
 msgid "HTML output"
@@ -9310,8 +9310,8 @@ msgstr "Välj en innehållsmall"
 #
 # File: eme-members.php, line: 2918
 # File: eme-members.php, line: 2923
-# File: eme-people.php, line: 1912
-# File: eme-people.php, line: 1917
+# File: eme-people.php, line: 1928
+# File: eme-people.php, line: 1933
 # File: eme-rsvp.php, line: 5048
 # File: eme-rsvp.php, line: 5053
 msgid "Select an optional header template"
@@ -9319,8 +9319,8 @@ msgstr "Välj en valfri sidhuvudsmall"
 #
 # File: eme-members.php, line: 2920
 # File: eme-members.php, line: 2925
-# File: eme-people.php, line: 1914
-# File: eme-people.php, line: 1919
+# File: eme-people.php, line: 1930
+# File: eme-people.php, line: 1935
 # File: eme-rsvp.php, line: 5050
 # File: eme-rsvp.php, line: 5055
 msgid "Select an optional footer template"
@@ -9402,7 +9402,7 @@ msgid "Access denied"
 msgstr "Åtkomst nekad"
 #
 # File: eme-members.php, line: 5449
-# File: eme-people.php, line: 834
+# File: eme-people.php, line: 850
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr ""
 #
@@ -9438,12 +9438,12 @@ msgid "%d head of the family accounts + %d family members"
 msgstr ""
 #
 # File: eme-members.php, line: 5913
-# File: eme-people.php, line: 4758
+# File: eme-people.php, line: 4783
 msgid "(Dynamic)"
 msgstr "(Dynamisk)"
 #
 # File: eme-members.php, line: 5950
-# File: eme-people.php, line: 4792
+# File: eme-people.php, line: 4817
 msgid "(family member)"
 msgstr ""
 #
@@ -9465,12 +9465,12 @@ msgid "Get IBAN"
 msgstr ""
 #
 # File: eme-members.php, line: 6120
-# File: eme-people.php, line: 4997
+# File: eme-people.php, line: 5022
 msgid "Dynamic group added"
 msgstr "Dynamisk grupp tillagd"
 #
 # File: eme-members.php, line: 6122
-# File: eme-people.php, line: 4999
+# File: eme-people.php, line: 5024
 msgid "Please enter a name for the group"
 msgstr "Vänligen ange ett namn för gruppen"
 #
@@ -9689,7 +9689,7 @@ msgid "You're about to cancel the following bookings:"
 msgstr "Du håller på att avboka följande bokningar:"
 #
 # File: eme-options.php, line: 51
-# File: eme-people.php, line: 4004
+# File: eme-people.php, line: 4029
 msgid "seats"
 msgstr "platser"
 #
@@ -14608,219 +14608,221 @@ msgid "Problem detected while updating group"
 msgstr "Ett problem upptäcktes när gruppen skulle uppdateras"
 #
 # File: eme-people.php, line: 171
+# File: eme-people.php, line: 179
+# File: eme-people.php, line: 187
 msgid "You have no right to add groups!"
 msgstr "Du har inte behörighet att lägga till grupper!"
 #
-# File: eme-people.php, line: 179
+# File: eme-people.php, line: 195
 msgid "You have no right to update groups!"
 msgstr "Du har inte behörighet att uppdatera grupper!"
 #
-# File: eme-people.php, line: 842
+# File: eme-people.php, line: 858
 msgid "Not imported (problem inserting the person in the db): %s"
 msgstr ""
 #
-# File: eme-people.php, line: 943
+# File: eme-people.php, line: 959
 msgid "Seats \"%s\""
 msgstr "Platser ”%s”"
 #
-# File: eme-people.php, line: 945
+# File: eme-people.php, line: 961
 msgid "Seats category %d"
 msgstr "Platskategori %d"
 #
-# File: eme-people.php, line: 984
-# File: eme-people.php, line: 1304
+# File: eme-people.php, line: 1000
+# File: eme-people.php, line: 1320
 msgid "On waiting list"
 msgstr ""
 #
-# File: eme-people.php, line: 988
-# File: eme-people.php, line: 1308
+# File: eme-people.php, line: 1004
+# File: eme-people.php, line: 1324
 msgid "Awaiting user confirmation"
 msgstr ""
 #
-# File: eme-people.php, line: 990
-# File: eme-people.php, line: 1310
-# File: eme-people.php, line: 1430
+# File: eme-people.php, line: 1006
+# File: eme-people.php, line: 1326
+# File: eme-people.php, line: 1446
 # File: eme-tasks.php, line: 452
 # File: eme-tasks.php, line: 1857
 msgid "Approved"
 msgstr "Godkänd"
 #
-# File: eme-people.php, line: 1159
-# File: eme-people.php, line: 1174
+# File: eme-people.php, line: 1175
+# File: eme-people.php, line: 1190
 msgid "Bookings for"
 msgstr "Bokningar till"
 #
-# File: eme-people.php, line: 1204
+# File: eme-people.php, line: 1220
 msgid "Bookings data"
 msgstr "Bokningsdata"
 #
-# File: eme-people.php, line: 1240
+# File: eme-people.php, line: 1256
 msgid "Seats (Multiprice)"
 msgstr "Platser (Multipris)"
 #
-# File: eme-people.php, line: 1414
+# File: eme-people.php, line: 1430
 msgid "Booked"
 msgstr "Bokat"
 #
-# File: eme-people.php, line: 1462
+# File: eme-people.php, line: 1478
 msgid "Available"
 msgstr "Tillgängligt"
 #
-# File: eme-people.php, line: 1481
+# File: eme-people.php, line: 1497
 msgid "Absent"
 msgstr ""
 #
-# File: eme-people.php, line: 1503
+# File: eme-people.php, line: 1519
 msgid "Verify link between people and WP"
 msgstr "Verifiera länk mellan personer och WP"
 #
-# File: eme-people.php, line: 1508
+# File: eme-people.php, line: 1524
 msgid ""
 "The table below shows the people that are linked to the same WordPress user"
 msgstr ""
 #
-# File: eme-people.php, line: 1510
+# File: eme-people.php, line: 1526
 msgid ""
 "Please correct these errors: a WordPress user should be linked to at most "
 "one EME person."
 msgstr ""
 #
-# File: eme-people.php, line: 1541
-# File: eme-people.php, line: 1581
+# File: eme-people.php, line: 1557
+# File: eme-people.php, line: 1597
 msgid "No issues found"
 msgstr "Inga problem funna"
 #
-# File: eme-people.php, line: 1546
+# File: eme-people.php, line: 1562
 msgid "Verify unique emails"
 msgstr ""
 #
-# File: eme-people.php, line: 1551
+# File: eme-people.php, line: 1567
 msgid ""
 "The table below shows the people that have identical emails while you "
 "require a unique email per person"
 msgstr ""
 #
-# File: eme-people.php, line: 1553
+# File: eme-people.php, line: 1569
 msgid "Please correct these errors: all EME people should have a unique email."
 msgstr ""
 #
-# File: eme-people.php, line: 1614
+# File: eme-people.php, line: 1630
 msgid "Filter on group"
 msgstr ""
 #
-# File: eme-people.php, line: 1805
+# File: eme-people.php, line: 1821
 msgid "Add a new person"
 msgstr "Lägg till en ny person"
 #
-# File: eme-people.php, line: 1810
-# File: eme-people.php, line: 2013
-# File: eme-people.php, line: 2213
+# File: eme-people.php, line: 1826
+# File: eme-people.php, line: 2029
+# File: eme-people.php, line: 2229
 msgid "Add person"
 msgstr "Lägg till person"
 #
-# File: eme-people.php, line: 1815
+# File: eme-people.php, line: 1831
 msgid "Manage people"
 msgstr "Hantera personer"
 #
-# File: eme-people.php, line: 1816
+# File: eme-people.php, line: 1832
 msgid "Click <a href='%s'>here</a> to verify the integrity of EME people"
 msgstr ""
 #
-# File: eme-people.php, line: 1841
+# File: eme-people.php, line: 1857
 msgid "If you want, use this to import people info into the database"
 msgstr "Om du vill, använd detta för att importera personinfo i databasen"
 #
-# File: eme-people.php, line: 1852
+# File: eme-people.php, line: 1868
 msgid "Filter people"
 msgstr "Filtrera personer"
 #
-# File: eme-people.php, line: 1875
+# File: eme-people.php, line: 1891
 msgid "Restore selected persons"
 msgstr "Återställ markerade personer"
 #
-# File: eme-people.php, line: 1876
+# File: eme-people.php, line: 1892
 msgid "Permanently delete selected persons"
 msgstr "Permanent borttagning av valda personer"
 #
-# File: eme-people.php, line: 1881
+# File: eme-people.php, line: 1897
 msgid "Set GDPR approval to yes"
 msgstr "Sätt GDPR-godkännande till ja"
 #
-# File: eme-people.php, line: 1882
+# File: eme-people.php, line: 1898
 msgid "Set GDPR approval to no"
 msgstr ""
 #
-# File: eme-people.php, line: 1883
+# File: eme-people.php, line: 1899
 msgid "Set Massmail to yes"
 msgstr ""
 #
-# File: eme-people.php, line: 1884
+# File: eme-people.php, line: 1900
 msgid "Set Massmail to no"
 msgstr ""
 #
-# File: eme-people.php, line: 1885
+# File: eme-people.php, line: 1901
 msgid "Set Birthday email to yes"
 msgstr ""
 #
-# File: eme-people.php, line: 1886
+# File: eme-people.php, line: 1902
 msgid "Set Birthday email to no"
 msgstr ""
 #
-# File: eme-people.php, line: 1888
+# File: eme-people.php, line: 1904
 msgid "Delete selected persons (move to trash)"
 msgstr "Ta bort valda personer (flytta till papperskorgen)"
 #
-# File: eme-people.php, line: 1889
+# File: eme-people.php, line: 1905
 msgid "Remove personal data (and move to trash bin)"
 msgstr "Ta bort persondata (och flytta till papperskorg)"
 #
-# File: eme-people.php, line: 1891
+# File: eme-people.php, line: 1907
 msgid "Change language of selected persons"
 msgstr ""
 #
-# File: eme-people.php, line: 1897
+# File: eme-people.php, line: 1913
 msgid "Change language to: "
 msgstr ""
 #
-# File: eme-people.php, line: 1901
+# File: eme-people.php, line: 1917
 msgid ""
 "Transfer associated bookings to (leave empty for moving bookings for future "
 "events to trash too):"
 msgstr ""
 #
-# File: eme-people.php, line: 2015
+# File: eme-people.php, line: 2031
 msgid "View person in trash (read-only)"
 msgstr "Visa person från papperskorgen (endast läsa)"
 #
-# File: eme-people.php, line: 2049
-# File: eme-people.php, line: 2058
-# File: eme-people.php, line: 2067
+# File: eme-people.php, line: 2065
+# File: eme-people.php, line: 2074
+# File: eme-people.php, line: 2083
 msgid "Since this person is linked to a WP user, this field is read-only"
 msgstr ""
 "Eftersom denna person är länkad till en WP-användare, är detta fält inte "
 "skrivbart"
 #
-# File: eme-people.php, line: 2072
+# File: eme-people.php, line: 2088
 msgid "Related family member"
 msgstr ""
 #
-# File: eme-people.php, line: 2077
+# File: eme-people.php, line: 2093
 msgid "Click here to edit that person"
 msgstr ""
 #
-# File: eme-people.php, line: 2099
+# File: eme-people.php, line: 2115
 msgid "Phone Number"
 msgstr "Telefonnummer"
 #
-# File: eme-people.php, line: 2132
+# File: eme-people.php, line: 2148
 msgid "Birthday email"
 msgstr ""
 #
-# File: eme-people.php, line: 2136
+# File: eme-people.php, line: 2152
 msgid "If active, the person will receive a birthday email."
 msgstr ""
 #
-# File: eme-people.php, line: 2164
+# File: eme-people.php, line: 2180
 msgid ""
 "Don't forget that you can define custom fields with purpose 'People' that "
 "will allow extra info based on the group the person is in."
@@ -14828,157 +14830,169 @@ msgstr ""
 "Glöm inte att du kan definiera anpassade fält med syfte ”Personer” som "
 "tillåter extra info baserat på vilken grupp personen är medlem i."
 #
-# File: eme-people.php, line: 2184
+# File: eme-people.php, line: 2200
 msgid ""
 "Linking an EME person with a WP user will not be allowed if there's another "
 "EME person matching the WP user's firstname/lastname/email."
 msgstr ""
 #
-# File: eme-people.php, line: 2185
+# File: eme-people.php, line: 2201
 msgid ""
 "Linking an EME person with a WP user will change the person firstname/"
 "lastname/email to the WP user's firstname/lastname/email and those fields "
 "can then only be changed via the WP profile of that person."
 msgstr ""
 #
-# File: eme-people.php, line: 2189
+# File: eme-people.php, line: 2205
 #, fuzzy
 msgid "Delete linked WP user?"
 msgstr "Länkad WP-användare"
 #
-# File: eme-people.php, line: 2192
+# File: eme-people.php, line: 2208
 msgid ""
 "Set this to yes if you want the linked WP user to be deleted when the EME "
 "person gets removed (moved to trash bin)."
 msgstr ""
 #
-# File: eme-people.php, line: 2193
+# File: eme-people.php, line: 2209
 msgid ""
 "By default, this is only set to true when a WP user is created by EME (when "
 "creating a member or doing a reservation for an event and the option to "
 "create a WP user is set). An admin will never be deleted."
 msgstr ""
 #
-# File: eme-people.php, line: 2213
+# File: eme-people.php, line: 2229
 msgid "Update person"
 msgstr "Uppdatera person"
 #
-# File: eme-people.php, line: 2254
-# File: eme-people.php, line: 2330
-# File: eme-people.php, line: 2365
+# File: eme-people.php, line: 2272
+# File: eme-people.php, line: 2389
+#, fuzzy
+msgid "Add dynamic group of people"
+msgstr "Dynamisk grupp av personer"
+#
+# File: eme-people.php, line: 2274
+# File: eme-people.php, line: 2390
+#, fuzzy
+msgid "Add dynamic group of members"
+msgstr "Medlemmar i dynamisk grupp"
+#
+# File: eme-people.php, line: 2276
+# File: eme-people.php, line: 2353
+# File: eme-people.php, line: 2388
 msgid "Add group"
 msgstr "Lägg till grupp"
 #
-# File: eme-people.php, line: 2257
+# File: eme-people.php, line: 2280
 #, fuzzy
 msgid "Edit dynamic group of people"
 msgstr "Dynamisk grupp av personer"
 #
-# File: eme-people.php, line: 2259
+# File: eme-people.php, line: 2282
 #, fuzzy
 msgid "Edit dynamic group of members"
 msgstr "Medlemmar i dynamisk grupp"
 #
-# File: eme-people.php, line: 2261
-# File: eme-people.php, line: 4909
+# File: eme-people.php, line: 2284
+# File: eme-people.php, line: 4934
 msgid "Edit group"
 msgstr "Redigera grupp"
 #
-# File: eme-people.php, line: 2295
+# File: eme-people.php, line: 2318
 msgid "Group email"
 msgstr ""
 #
-# File: eme-people.php, line: 2297
+# File: eme-people.php, line: 2320
 msgid ""
 "If you want to be able to send mail to this group via your mail client (and "
 "not just via EME), you need to configure the cli_mail method (see doc) and "
 "enter a unique email address for this group. This can be left empty."
 msgstr ""
 #
-# File: eme-people.php, line: 2302
+# File: eme-people.php, line: 2325
 msgid "Public?"
 msgstr ""
 #
-# File: eme-people.php, line: 2304
+# File: eme-people.php, line: 2327
 msgid ""
 "If you chose for this group to be a public group, then this group will "
 "appear in the list of groups to subscribe/unsubscribe in the eme_subform and "
 "eme_unsubform shortcodes (and the form generated by #_UNSUB_URL)."
 msgstr ""
 #
-# File: eme-people.php, line: 2314
-# File: eme-people.php, line: 2319
+# File: eme-people.php, line: 2337
+# File: eme-people.php, line: 2342
 msgid ""
 "Warning: this group is using an older method of defining the criteria for "
 "the members in it. Upon saving this group, you will lose that info, so make "
 "sure to reenter the criteria in the fields below"
 msgstr ""
 #
-# File: eme-people.php, line: 2332
+# File: eme-people.php, line: 2355
 msgid "Update group"
 msgstr "Uppdatera grupp"
 #
-# File: eme-people.php, line: 2360
+# File: eme-people.php, line: 2383
 msgid "Add a new group"
 msgstr "Lägg till en ny grupp"
 #
-# File: eme-people.php, line: 2370
+# File: eme-people.php, line: 2395
 msgid "Manage groups"
 msgstr "Hantera grupper"
 #
-# File: eme-people.php, line: 2377
+# File: eme-people.php, line: 2402
 msgid "Delete selected groups"
 msgstr "Ta bort markerade grupper"
 #
-# File: eme-people.php, line: 2398
+# File: eme-people.php, line: 2423
 msgid "No image set"
 msgstr "Ingen bild vald"
 #
-# File: eme-people.php, line: 2400
+# File: eme-people.php, line: 2425
 msgid "Remove image"
 msgstr ""
 #
-# File: eme-people.php, line: 2401
+# File: eme-people.php, line: 2426
 msgid "Person image"
 msgstr "Personbild"
 #
-# File: eme-people.php, line: 3678
-# File: eme-people.php, line: 3822
+# File: eme-people.php, line: 3703
+# File: eme-people.php, line: 3847
 msgid "Invalid country code"
 msgstr "Ogiltig landskod"
 #
-# File: eme-people.php, line: 3689
-# File: eme-people.php, line: 3833
+# File: eme-people.php, line: 3714
+# File: eme-people.php, line: 3858
 msgid "Invalid state code"
 msgstr "Ogiltig statskod"
 #
-# File: eme-people.php, line: 3780
-# File: eme-people.php, line: 3924
-# File: eme-people.php, line: 3996
+# File: eme-people.php, line: 3805
+# File: eme-people.php, line: 3949
+# File: eme-people.php, line: 4021
 msgid "Error encountered while updating person"
 msgstr "Ett fel uppstod vid uppdatering av personen"
 #
-# File: eme-people.php, line: 3796
+# File: eme-people.php, line: 3821
 msgid ""
 "The email address belongs to an existing user. Please log in first before "
 "continuing to register with this email address."
 msgstr ""
 #
-# File: eme-people.php, line: 3947
+# File: eme-people.php, line: 3972
 msgid "Error encountered while adding person"
 msgstr "Ett fel uppstod när personen skulle läggas till"
 #
-# File: eme-people.php, line: 3978
+# File: eme-people.php, line: 4003
 msgid ""
 "Conflict with info from other person, please use another lastname, firstname "
 "or email"
 msgstr ""
 #
-# File: eme-people.php, line: 4014
+# File: eme-people.php, line: 4039
 msgid "Events Made Easy settings"
 msgstr "Inställningar för Events Made Easy"
 #
-# File: eme-people.php, line: 4019
+# File: eme-people.php, line: 4044
 msgid ""
 "The phone number used by Events Made Easy when the user is indicated as the "
 "contact person for an event."
@@ -14986,21 +15000,21 @@ msgstr ""
 "Telefonnumret som används av Events Made Easy när användaren är angiven som "
 "kontaktperson för ett event."
 #
-# File: eme-people.php, line: 4022
+# File: eme-people.php, line: 4047
 msgid "Bookings made for future events"
 msgstr ""
 #
-# File: eme-people.php, line: 4026
+# File: eme-people.php, line: 4051
 msgid "Active memberships"
 msgstr "Aktiva medlemskap"
 #
-# File: eme-people.php, line: 4256
-# File: eme-people.php, line: 4340
+# File: eme-people.php, line: 4281
+# File: eme-people.php, line: 4365
 msgid "A request for confirmation has been sent to the given email address."
 msgstr ""
 "En begäran om bekräftelse har skickats till den angivna e-postadressen."
 #
-# File: eme-people.php, line: 4281
+# File: eme-people.php, line: 4306
 msgid ""
 "If you want to subscribe to future mailings, please do so by entering your "
 "email here."
@@ -15008,11 +15022,11 @@ msgstr ""
 "Om du vil prenumerera på framtida utskick, vänligen fyll i din e-postadress "
 "här."
 #
-# File: eme-people.php, line: 4284
+# File: eme-people.php, line: 4309
 msgid "Please select the groups you wish to subscribe to."
 msgstr "Vänligen välj vilka grupper du vill prenumerera på."
 #
-# File: eme-people.php, line: 4365
+# File: eme-people.php, line: 4390
 msgid ""
 "If you want to unsubscribe from future mailings, please do so by entering "
 "your email here."
@@ -15020,47 +15034,47 @@ msgstr ""
 "Om du vill avsluta prenumeration för framtida utskick, vänligen gör så genom "
 "att ange din e-postadress här."
 #
-# File: eme-people.php, line: 4368
+# File: eme-people.php, line: 4393
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr "Vänligen välj de grupper du vill avsluta prenumeration för."
 #
-# File: eme-people.php, line: 4786
+# File: eme-people.php, line: 4811
 msgid "No surname"
 msgstr "Inget efternamn"
 #
-# File: eme-people.php, line: 4915
+# File: eme-people.php, line: 4940
 msgid "Dynamic group of people"
 msgstr "Dynamisk grupp av personer"
 #
-# File: eme-people.php, line: 4921
+# File: eme-people.php, line: 4946
 msgid "(1 person)"
 msgid_plural "(%d persons)"
 msgstr[0] ""
 msgstr[1] ""
 #
-# File: eme-people.php, line: 4925
+# File: eme-people.php, line: 4950
 msgid "Dynamic group of members"
 msgstr "Medlemmar i dynamisk grupp"
 #
-# File: eme-people.php, line: 4931
+# File: eme-people.php, line: 4956
 msgid "(1 member)"
 msgid_plural "(%d members)"
 msgstr[0] ""
 msgstr[1] ""
 #
-# File: eme-people.php, line: 5113
+# File: eme-people.php, line: 5138
 msgid "People recovered from trash bin."
 msgstr "Personer återskapade från papperskorgen."
 #
-# File: eme-people.php, line: 5125
+# File: eme-people.php, line: 5150
 msgid "People moved to trash bin."
 msgstr "Personer flyttade till papperskorgen."
 #
-# File: eme-people.php, line: 5133
+# File: eme-people.php, line: 5158
 msgid "Personal data removed and moved to trash bin."
 msgstr "Persondata borttagen och flyttad till papperskorgen."
 #
-# File: eme-people.php, line: 5141
+# File: eme-people.php, line: 5166
 msgid ""
 "GDPR approval set to \"Yes\" (make sure the selected persons are aware of "
 "this)."
@@ -15068,47 +15082,47 @@ msgstr ""
 "Sätt GDPR-godkännande till ”Ja” (säkerställ att markerade personer är "
 "medvetna om detta)."
 #
-# File: eme-people.php, line: 5149
+# File: eme-people.php, line: 5174
 msgid ""
 "GDPR approval set to \"No\" (make sure the selected persons are aware of "
 "this)."
 msgstr ""
 #
-# File: eme-people.php, line: 5157
+# File: eme-people.php, line: 5182
 msgid ""
 "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr ""
 #
-# File: eme-people.php, line: 5165
+# File: eme-people.php, line: 5190
 msgid ""
 "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr ""
 #
-# File: eme-people.php, line: 5173
+# File: eme-people.php, line: 5198
 msgid "Birthday email set to \"Yes\"."
 msgstr ""
 #
-# File: eme-people.php, line: 5181
+# File: eme-people.php, line: 5206
 msgid "Birthday email set to \"No\"."
 msgstr ""
 #
-# File: eme-people.php, line: 5190
+# File: eme-people.php, line: 5215
 msgid "Language updated."
 msgstr ""
 #
-# File: eme-people.php, line: 5203
+# File: eme-people.php, line: 5228
 msgid "People deleted."
 msgstr "Personer har tagits bort."
 #
-# File: eme-people.php, line: 5213
+# File: eme-people.php, line: 5238
 msgid "People added to group."
 msgstr "Personer tillagda i gruppen."
 #
-# File: eme-people.php, line: 5224
+# File: eme-people.php, line: 5249
 msgid "People removed from group."
 msgstr ""
 #
-# File: eme-people.php, line: 5233
+# File: eme-people.php, line: 5258
 msgid "Groups deleted."
 msgstr "Grupper borttagna"
 #
@@ -16085,6 +16099,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Select the event(s)"
 #~ msgstr "Välj event"
 #
@@ -16101,8 +16116,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "Konvertera radbrytningar"
+#
 #
 #
 #
@@ -16137,12 +16154,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
 #~ msgstr ""
 #~ "Om du inte vill att detta ska hända (t.ex. för en mall som används i en "
 #~ "tabellrad) avmarkera detta alternativ."
+#
 #
 #
 #
@@ -16177,8 +16196,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Inte tillåtet att ladda upp filer här."
+#
 #
 #
 #
@@ -16214,6 +16235,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the event notes."
@@ -16235,8 +16257,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Uppladdade filer"
+#
 #
 #
 #

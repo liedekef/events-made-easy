@@ -3479,7 +3479,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 			$member = eme_get_member_by_paymentid( $payment_id );
 			eme_email_member_action( $member, 'ipnReceived' );
 			if ( has_action( 'eme_ipn_member_action' ) ) {
-				do_action( 'eme_ipn_member_action', $booking );
+				do_action( 'eme_ipn_member_action', $member );
 			}
 		}
 	} else {

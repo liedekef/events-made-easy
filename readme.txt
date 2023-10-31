@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.4.14 (2023//) =
 * Fix dynamic group editing
 * Allow adding of dynamic groups of type people or members, and make it more clear which type of group we're editing
+* Fix eme_ipn_member_action hook (need to use $member, not $booking)
 
 = 2.4.13 (2023/10/24) =
 * Fix for case where bookings are already made and then event switches from single to multiprice

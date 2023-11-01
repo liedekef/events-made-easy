@@ -1933,7 +1933,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_form_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['member_form_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -1965,7 +1965,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_familymember_form_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['familymember_form_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -1983,7 +1983,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_member_added_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['member_added_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2001,7 +2001,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_header_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['payment_form_header_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2019,7 +2019,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_form_footer_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['payment_form_footer_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2037,7 +2037,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_payment_success_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['payment_success_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2075,21 +2075,21 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		if ( $pg == 'offline' ) {
 			continue;
 		}
-			// if it is a new membership and there's only one pg configured, select it by default
+		// if it is a new membership and there's only one pg configured, select it by default
 		if ( $is_new_membership && $count_configured_pgs == 1 && $found_methods[0] == $pg ) {
-				$membership['properties'][ 'use_' . $pg ] = 1;
+			$membership['properties'][ 'use_' . $pg ] = 1;
 		}
 		if ( ! in_array( $pg, $found_methods ) ) {
-				continue;
+			continue;
 		}
 		echo eme_ui_checkbox_binary( $membership['properties'][ 'use_' . $pg ], 'properties[use_' . $pg . ']', $pg_desc );
-			echo '<br>';
+		echo '<br>';
 	}
 
 	echo eme_ui_checkbox_binary( $membership['properties']['use_offline'], 'properties[use_offline]', __( 'Offline', 'events-made-easy' ) );
 	echo '<br>';
 	if ( empty( $found_methods ) ) {
-			esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
+		esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
 	}
 
 	?>
@@ -2104,7 +2104,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_offline_payment_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['offline_payment_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2117,6 +2117,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<tr id="tr_skippaymentoptions">
 	<td><label for="properties[skippaymentoptions]"><?php esc_html_e( 'Skip payment methods after registration:', 'events-made-easy' ); ?></label></td>
 	<td><?php echo eme_ui_checkbox_binary( $membership['properties']['skippaymentoptions'], 'properties[skippaymentoptions]', __( 'Skip payment methods', 'events-made-easy' ) );
+		  echo "<br>";
                   esc_html_e( 'If you want to skip the possibility to pay immediately after registration, select this option. This might be useful if you for example want to approve unpaid members internally and only then send them the payment link using #_PAYMENT_URL (for example via the Reminder template).', 'events-made-easy' ); ?>
 	</td>
 	</tr>
@@ -2151,7 +2152,6 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 }
 
 function eme_meta_box_div_membershipmailformats( $membership ) {
-	
 	$templates_array = eme_get_templates_array_by_id( 'membershipmail' );
 	?>
 <div id="tab-mailformats">
@@ -2231,7 +2231,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_new_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['contact_new_body_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2266,7 +2266,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_updated_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['updated_body_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2301,7 +2301,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_extended_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['extended_body_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2336,7 +2336,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_paid_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['paid_body_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2364,7 +2364,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_paid_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['contact_paid_body_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2402,7 +2402,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_reminder_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['reminder_body_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2440,7 +2440,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['stop_body_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2471,7 +2471,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['contact_stop_body_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}
@@ -2505,7 +2505,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_ipn_body_text" style="cursor: pointer; vertical-align: middle; ">
 		<?php
 		if ( eme_is_empty_string( $membership['properties']['contact_ipn_body_text'] ) ) {
-				$showhide_style = 'style="display:none; width:100%;"';
+			$showhide_style = 'style="display:none; width:100%;"';
 		} else {
 			$showhide_style = 'style="width:100%;"';
 		}

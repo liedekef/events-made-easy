@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.4
-Stable tag: 2.4.13
+Stable tag: 2.4.14
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.14 (2023//) =
+= 2.4.14 (2023/11/03) =
 * Fix dynamic group editing
 * Allow adding of dynamic groups of type people or members, and make it more clear which type of group we're editing
 * Fix eme_ipn_member_action hook (need to use $member, not $booking)

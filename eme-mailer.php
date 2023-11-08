@@ -181,7 +181,6 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 			}
 		}
 		$mail->SetLanguage( 'en', __DIR__ . '/' );
-		$mail->PluginDir = __DIR__ . '/';
 
 		if ( $mailoptions['mail_send_method'] == 'qmail' ) {
 			$mail->IsQmail();

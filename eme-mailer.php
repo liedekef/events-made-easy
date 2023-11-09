@@ -1415,7 +1415,7 @@ function eme_send_mails_ajax_actions( $action ) {
 		$contact_name  = $contact->display_name;
 		$person_name   = 'test recipient EME';
 		$tmp_subject   = 'test subject EME';
-		$tmp_message   = 'test message EME';
+		$tmp_message   = 'This is a test message from EME.';
 		$mail_res_arr  = eme_send_mail( $tmp_subject, $tmp_message, $testmail_to, $person_name, $contact_email, $contact_name );
 		$mail_res      = $mail_res_arr[0];
 		$extra_html    = eme_esc_html( $mail_res_arr[1] );

@@ -171,7 +171,6 @@ jQuery(document).ready( function($) {
 	   .done(function(data){
 		   $('div#eventmail-message').html(data.htmlmessage);
 		   $('div#eventmail-message').show();
-		   console.log(data);
 		   if (data.Result=='OK') {
 		   	$('#'+form_id).trigger('reset');
 			// the form reset doesn't reset select2 fields ...
@@ -304,6 +303,8 @@ jQuery(document).ready( function($) {
 	   var alldata = new FormData($('#'+form_id)[0]);
 	   alldata.append('action', 'eme_testmail');
 	   alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+	   $('#testmailButton').text(eme.translate_pleasewait);
+	   $('#testmailButton').prop('disabled', true);
 	   $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 	   .done(function(data){
 		   $('div#testmail-message').html(data.htmlmessage);
@@ -311,6 +312,8 @@ jQuery(document).ready( function($) {
 		   if (data.Result=='OK') {
 		   	$('#'+form_id).trigger('reset');
 		   }
+		   $('#testmailButton').text(eme.translate_sendmail);
+		   $('#testmailButton').prop('disabled', false);
 	   });
            return false;
    });

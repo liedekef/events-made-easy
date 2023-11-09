@@ -180,7 +180,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 				$mail->addCustomHeader( $custom_header );
 			}
 		}
-		$mail->SetLanguage( 'en', __DIR__ . '/' );
+		//$mail->SetLanguage( 'en', __DIR__ . '/' );
 
 		if ( $mailoptions['mail_send_method'] == 'qmail' ) {
 			$mail->IsQmail();

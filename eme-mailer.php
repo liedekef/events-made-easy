@@ -1413,9 +1413,9 @@ function eme_send_mails_ajax_actions( $action ) {
 		$contact       = eme_get_contact();
 		$contact_email = $contact->user_email;
 		$contact_name  = $contact->display_name;
-		$person_name   = 'test recipient EME';
-		$tmp_subject   = 'test subject EME';
-		$tmp_message   = 'This is a test message from EME.';
+		$person_name   = 'EME test recipient';
+		$tmp_subject   = 'EME test subject';
+		$tmp_message   = 'This is a test message from Events Made Easy.';
 		$mail_res_arr  = eme_send_mail( $tmp_subject, $tmp_message, $testmail_to, $person_name, $contact_email, $contact_name );
 		$mail_res      = $mail_res_arr[0];
 		$extra_html    = eme_esc_html( $mail_res_arr[1] );

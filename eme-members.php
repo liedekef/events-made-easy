@@ -2958,19 +2958,18 @@ function eme_manage_memberships_layout( $message ) {
 	global $plugin_page;
 
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
-	if ( empty( $message ) ) {
-		$hidden_style = 'display:none;';
-	} else {
-		$hidden_style = '';
-	}
 	?>
 	<div class="wrap nosubsub">
 	<div id="poststuff">
 	<div id="icon-edit" class="icon32">
 	</div>
 
-	<div id="memberships-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-		<p><?php echo $message; ?></p>
+	<?php
+	if ( !empty( $message ) ) {
+		print '<div class="notice is-dismissible eme-message-admin"><p>'.$message.'</p></div>';
+	}
+	?>
+	<div id="memberships-message" style="display:none;">
 	</div>
 
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>

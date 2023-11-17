@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.4.16 (2023/11/10) =
 * Add scope and always_header_footer param to eme_bookings shortcode
 * Add #_FREESPACES as alias for #_AVAILABLESPACES
+* When clicking on a location in the location list generated beneath a map, jump to the map
 
 = 2.4.15 (2023/11/10) =
 * Fix a php warning when sending email, due to newer wp phpmailer version

@@ -14,9 +14,9 @@ jQuery(document).ready(function($) {
 	var osmAttrib='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 	var div_arr_map = new Array();
 	for (var i = 0; i < divs.length; i++) {
-		var divname = divs[i].id; 
-		if (divname.indexOf("eme_global_map_") === 0) { 
-			var map_id = divname.replace("eme_global_map_","");
+		var div_id = divs[i].id; 
+		if (div_id.indexOf("eme_global_map_") === 0) { 
+			var map_id = div_id.replace("eme_global_map_","");
 			var data = window['global_map_info_'+map_id];
 			var marker_clustering = data.marker_clustering;
 			var locations = data.locations;
@@ -76,7 +76,7 @@ jQuery(document).ready(function($) {
 			// so: we can't just reuse the same name here (like e.g.: var mymap=L.map ....,
 			// since "mymap" was already used in the loop before and adding "var" does not reinit the variable)
 			// The simple solution: use an array to store your stuff
-			div_arr_map[i] = L.map(divname, myOptions);
+			div_arr_map[i] = L.map(div_id, myOptions);
 			// add the title layer, we also add a class that can switch to darkmode (css) if needed
 			L.tileLayer(osmUrl, {attribution: osmAttrib, className: 'eme-map-tiles'}).addTo(div_arr_map[i]);
 			// if a popup contains an image, the size might be wrong, try to rectify with a popup update
@@ -128,6 +128,7 @@ jQuery(document).ready(function($) {
 				markersList[item.location_id] = marker;
 				if ($('li#location-'+item.location_id+"_"+map_id).length) {
 					$('li#location-'+item.location_id+"_"+map_id+' a').on('click',function() {
+						$(document).scrollTop( $('div#eme_global_map_'+map_id).offset().top - $(window).height()/2 + $('div#eme_global_map_'+map_id).height()/2);
 						if (marker_clustering == 'true' ) {
 							var m = markersList[item.location_id];
 							markers.zoomToShowLayer(m, function() {
@@ -150,7 +151,7 @@ jQuery(document).ready(function($) {
 		}
 	
 		// and now for the normal maps (if any)
-		if(divname.indexOf("eme-location-map_") === 0) { 
+		if(div_id.indexOf("eme-location-map_") === 0) { 
 			lat_id=parseFloat($(divs[i]).data('lat'));
 			lon_id=parseFloat($(divs[i]).data('lon'));
 			map_icon=$(divs[i]).data('map_icon');
@@ -174,7 +175,7 @@ jQuery(document).ready(function($) {
 			// so: we can't just reuse the same name here (like e.g.: var mymap=L.map ....,
 			// since "mymap" was already used in the loop before and adding "var" does not reinit the variable)
 			// The simple solution: use an array to store your stuff
-			div_arr_map[i] = L.map(divname, myOptions);
+			div_arr_map[i] = L.map(div_id, myOptions);
 			// add the title layer, we also add a class that can switch to darkmode (css) if needed
 			L.tileLayer(osmUrl, {attribution: osmAttrib, className: 'eme-map-tiles'}).addTo(div_arr_map[i]);
 			// if a popup contains an image, the size might be wrong, try to rectify with a popup update

@@ -2694,13 +2694,13 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$replacement = 0;
 					}
 				}
-			} elseif ( preg_match( '/#_(FREESPACES|AVAILABLESPACES|AVAILABLESEATS)$/', $result ) ) {
+			} elseif ( preg_match( '/#_(FREESPACES|FREESEATS|AVAILABLESPACES|AVAILABLESEATS)$/', $result ) ) {
 				if ( $total_seats == 0 ) {
 					$replacement = '&infin;';
 				} else {
 					$replacement = eme_get_available_seats( $event['event_id'], 1 ); // this is without the waiting list seats
 				}
-			} elseif ( preg_match( '/#_(FREESPACES|AVAILABLESPACES|AVAILABLESEATS)\{(\d+)\}$/', $result, $matches ) ) {
+			} elseif ( preg_match( '/#_(FREESPACES|FREESEATS|AVAILABLESPACES|AVAILABLESEATS)\{(\d+)\}$/', $result, $matches ) ) {
 				if ( $total_seats == 0 ) {
 					if ( $target == 'html' ) {
 						$replacement = '&infin;';

@@ -1805,6 +1805,14 @@ function eme_unique_nbr( $my_nbr ) {
 	return $unique_nbr_main . $unique_nbr_check;
 }
 
+function eme_array_has_dupes($my_arr) {
+	if (!empty($my_arr) && is_array($my_arr)) {
+		return count($my_arr) !== count(array_unique($my_arr));
+	} else {
+		return false;
+	}
+}
+
 function eme_unique_nbr_formatted( $my_nbr ) {
 	if ( empty( $my_nbr ) ) {
 		return $my_nbr;

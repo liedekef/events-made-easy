@@ -149,7 +149,18 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 	$selected_location = isset( $_REQUEST[ $loc_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $loc_post_name ] ) : 0;
 	$selected_city     = isset( $_REQUEST[ $city_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $city_post_name ] ) : 0;
 	$selected_country  = isset( $_REQUEST[ $country_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $country_post_name ] ) : 0;
-	$selected_category = isset( $_REQUEST[ $cat_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $cat_post_name ] ) : 0;
+	$selected_category = 0;
+	if (isset( $_REQUEST[ $cat_post_name ] )) {
+		$val = eme_sanitize_request( $_REQUEST[ $cat_post_name ] );
+		if (is_numeric($val)) {
+			$selected_category = $val;
+		} else {
+			$cat_id = eme_get_category_id_by_name_slug($val);
+			if (!empty($cat_id)) {
+				$selected_category = $cat_id;
+			}
+		}
+	}
 	$selected_author   = isset( $_REQUEST[ $author_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $author_post_name ] ) : 0;
 	$selected_contact  = isset( $_REQUEST[ $contact_post_name ] ) ? eme_sanitize_request( $_REQUEST[ $contact_post_name ] ) : 0;
 

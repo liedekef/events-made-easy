@@ -518,7 +518,7 @@ function eme_events_page() {
 			if ( preg_match( '/eme_prop_(.+)/', eme_sanitize_request( $key ), $matches ) ) {
 				$found_key = $matches[1];
 				if ( $found_key == 'multiprice_desc' ) {
-					$event_properties[ $found_key ] = join( '||', eme_sanitize_request( eme_text_split_newlines( $value ) ) );
+					$event_properties[ $found_key ] = eme_convert_array2multi( eme_sanitize_request( eme_text_split_newlines( $value ) ) );
 				} else {
 					$event_properties[ $found_key ] = eme_kses( $value );
 				}
@@ -5319,6 +5319,11 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 					$category_conditions[] = "FIND_IN_SET($cat,event_category_ids)";
 				} elseif ( $cat == 'none' ) {
 					$category_conditions[] = "event_category_ids = ''";
+				} else {
+					$cat_id = eme_get_category_id_by_name_slug($category);
+					if (!empty($cat_id)) {
+						$category_conditions[] = "FIND_IN_SET($cat_id,event_category_ids)";
+					}
 				}
 			}
 			$conditions[] = '(' . implode( ' OR ', $category_conditions ) . ')';
@@ -5328,9 +5333,19 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 			foreach ( $category as $cat ) {
 				if ( is_numeric( $cat ) && $cat > 0 ) {
 					$category_conditions[] = "FIND_IN_SET($cat,event_category_ids)";
+				} else {
+					$cat_id = eme_get_category_id_by_name_slug($category);
+					if (!empty($cat_id)) {
+						$category_conditions[] = "FIND_IN_SET($cat_id,event_category_ids)";
+					}
 				}
 			}
 			$conditions[] = '(' . implode( ' AND ', $category_conditions ) . ')';
+		} else {
+			$cat_id = eme_get_category_id_by_name_slug($category);
+			if (!empty($cat_id)) {
+				$category_conditions[] = "FIND_IN_SET($cat_id,event_category_ids)";
+			}
 		}
 
 		if ( is_numeric( $notcategory ) ) {
@@ -5347,6 +5362,11 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 					$category_conditions[] = "(NOT FIND_IN_SET($cat,event_category_ids) OR event_category_ids IS NULL)";
 				} elseif ( $cat == 'none' ) {
 					$category_conditions[] = "event_category_ids != ''";
+				} else {
+					$cat_id = eme_get_category_id_by_name_slug($category);
+					if (!empty($cat_id)) {
+						$category_conditions[] = "(NOT FIND_IN_SET($cat_id,event_category_ids) OR event_category_ids IS NULL)";
+					}
 				}
 			}
 			$conditions[] = '(' . implode( ' OR ', $category_conditions ) . ')';
@@ -5357,9 +5377,19 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 			foreach ( $notcategory as $cat ) {
 				if ( is_numeric( $cat ) && $cat > 0 ) {
 					$category_conditions[] = "(NOT FIND_IN_SET($cat,event_category_ids) OR event_category_ids IS NULL)";
+				} else {
+					$cat_id = eme_get_category_id_by_name_slug($category);
+					if (!empty($cat_id)) {
+						$category_conditions[] = "(NOT FIND_IN_SET($cat_id,event_category_ids) OR event_category_ids IS NULL)";
+					}
 				}
 			}
 			$conditions[] = '(' . implode( ' AND ', $category_conditions ) . ')';
+		} else {
+			$cat_id = eme_get_category_id_by_name_slug($category);
+			if (!empty($cat_id)) {
+				$category_conditions[] = "(NOT FIND_IN_SET($cat_id,event_category_ids) OR event_category_ids IS NULL)";
+			}
 		}
 	}
 

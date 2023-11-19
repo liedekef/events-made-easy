@@ -60,42 +60,58 @@ function eme_formfields_page() {
 			$formfield['searchable']     = intval( $_POST['searchable'] );
 			$formfield['field_required'] = intval( $_POST['field_required'] );
 			if ( eme_is_multifield( $formfield['field_type'] ) ) {
-				$field_values_arr = eme_sanitize_request( eme_text_split_newlines( $_POST['field_values'] ) );
-				$field_tags_arr = eme_sanitize_request( eme_text_split_newlines( $_POST['field_tags'] ) );
-				$admin_values_arr = eme_sanitize_request( eme_text_split_newlines( $_POST['admin_values'] ) );
-				$admin_tags_arr = eme_sanitize_request( eme_text_split_newlines( $_POST['admin_tags'] ) );
+				if (eme_is_empty_string($_POST['field_values'] )) {
+					$field_values_arr = array();
+				} else {
+					$field_values_arr = eme_sanitize_request( eme_convert_multi2array(eme_convert_array2multi(eme_text_split_newlines( $_POST['field_values'] ) )));
+				}
+				if (eme_is_empty_string($_POST['field_tags'] )) {
+					$field_tags_arr = array();
+				} else {
+					$field_tags_arr = eme_sanitize_request( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['field_tags'] ) )));
+				}
+				if (eme_is_empty_string($_POST['admin_values'] )) {
+					$admin_values_arr = array();
+				} else {
+					$admin_values_arr = eme_sanitize_request( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['admin_values'] ) )));
+				}
+				if (eme_is_empty_string($_POST['admin_tags'] )) {
+					$admin_tags_arr = array();
+				} else {
+					$admin_tags_arr = eme_sanitize_request( eme_convert_multi2array(eme_convert_array2multi( eme_text_split_newlines( $_POST['admin_tags'] ) )));
+				}
 
 				// some sanity checks
 				if (empty($field_values_arr)) {
-					$message = __( 'Error: the field value can not be empty for this type of field.', 'events-made-easy' );
+					$message = "<div id='message' class='eme-message-error'>".__( 'Error: the field value can not be empty for this type of field.', 'events-made-easy' )."</div>";
 					eme_formfields_edit_layout( $field_id, $message, $formfield );
 					return;
 				}
 				if (eme_array_has_dupes($field_values_arr) || eme_array_has_dupes($admin_values_arr)) {
-					$message = __( 'Error: the field values need to be unique for this type of field.', 'events-made-easy' );
+					$message = "<div id='message' class='eme-message-error'>".__( 'Error: the field values need to be unique for this type of field.', 'events-made-easy' )."</div>";
 					eme_formfields_edit_layout( $field_id, $message, $formfield );
 					return;
 				}
 				if (eme_array_has_dupes($field_tags_arr) || eme_array_has_dupes($admin_tags_arr)) {
-					$message = __( 'Error: the field tags need to be unique for this type of field.', 'events-made-easy' );
+					$message = "<div id='message' class='eme-message-error'>".__( 'Error: the field tags need to be unique for this type of field.', 'events-made-easy' )."</div>";
 					eme_formfields_edit_layout( $field_id, $message, $formfield );
 					return;
 				}
 				if (! empty( $field_tags_arr ) && count( $field_values_arr ) != count( $field_tags_arr ) ) {
-					$message = __( 'Error: if you specify field tags, there need to be exact the same amount of tags as values.', 'events-made-easy' );
+					$message = "<div id='message' class='eme-message-error'>".__( 'Error: if you specify field tags, there need to be exact the same amount of tags as values.', 'events-made-easy' )."</div>";
 					eme_formfields_edit_layout( $field_id, $message, $formfield );
 					return;
 				}
 				if (! empty( $admin_tags_arr ) && count( $admin_values_arr ) != count( $admin_tags_arr ) ) {
-					$message = __( 'Error: if you specify field tags, there need to be exact the same amount of tags as values.', 'events-made-easy' );
+					$message = "<div id='message' class='eme-message-error'>".__( 'Error: if you specify field tags, there need to be exact the same amount of tags as values.', 'events-made-easy' )."</div>";
 					eme_formfields_edit_layout( $field_id, $message, $formfield );
 					return;
 				}
 
-				$formfield['field_values'] = join( '||', $field_values_arr );
-				$formfield['field_tags'] = join( '||', $field_tags_arr );
-				$formfield['admin_values'] = join( '||', $admin_values_arr );
-				$formfield['admin_tags'] = join( '||', $admin_tags_arr );
+				$formfield['field_values'] = eme_convert_array2multi( $field_values_arr );
+				$formfield['field_tags'] = eme_convert_array2multi( $field_tags_arr );
+				$formfield['admin_values'] = eme_convert_array2multi( $admin_values_arr );
+				$formfield['admin_tags'] = eme_convert_array2multi( $admin_tags_arr );
 			} else {
 				$formfield['field_values'] = trim( eme_sanitize_request( $_POST['field_values'] ) );
 				$formfield['field_tags']   = trim( eme_sanitize_request( $_POST['field_tags'] ) );

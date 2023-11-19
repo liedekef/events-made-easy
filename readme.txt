@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Add scope and always_header_footer param to eme_bookings shortcode
 * Add #_FREESPACES and #_FREESEATS as aliases for #_AVAILABLESPACES
 * When clicking on a location in the location list generated beneath a map, jump to the map
+* eme_cat_filter now also supports the category name/slug as param value
 
 = 2.4.15 (2023/11/10) =
 * Fix a php warning when sending email, due to newer wp phpmailer version

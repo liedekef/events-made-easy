@@ -9207,13 +9207,8 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 	}
 
 	$orig_event = eme_get_event( $event_id );
-	// if the orig event and the new event have the same slug basis, we won't change the slug of course
 	if ( ! empty( $orig_event['event_slug'] ) ) {
-		$orig_slug_base = preg_replace( '/\-\d+$/', '', $orig_event['event_slug'] );
-		$new_slug_base  = preg_replace( '/\-\d+$/', '', $line['event_slug'] );
-		if ( $orig_slug_base == $new_slug_base ) {
-			$line['event_slug'] = $orig_event['event_slug'];
-		} else {
+		if ( $orig_event['event_slug'] != $line['event_slug'] ) {
 			$line['event_slug'] = eme_unique_slug( $line['event_slug'], EME_EVENTS_TBNAME, 'event_slug', 'event_id', $event_id );
 		}
 	} else {

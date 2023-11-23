@@ -394,7 +394,7 @@ function eme_booking_list_shortcode( $atts ) {
 				'approval_status'    => 0,
 				'paid_status'        => 0,
 				'order'              => '',
-				'scope'              => '',
+				'scope'              => 'future',
 				'always_header_footer' => 0,
 			],
 		    $atts
@@ -491,10 +491,13 @@ function eme_attendee_list_shortcode( $atts ) {
 				'approval_status'    => 0,
 				'paid_status'        => 0,
 				'order'              => '',
+				'scope'              => 'future',
+				'always_header_footer' => 0,
 			],
 		    $atts
 		)
 	);
+	$always_header_footer = intval( $always_header_footer );
 	$approval_status = intval( $approval_status );
 	$rsvp_status     = intval( $rsvp_status );
 	if ( $approval_status == 1 ) {
@@ -507,9 +510,18 @@ function eme_attendee_list_shortcode( $atts ) {
 	if ( empty( $id ) && eme_is_single_event_page() ) {
 		$id = eme_sanitize_request( get_query_var( 'event_id' ) );
 	}
-	$event = eme_get_event( $id );
-	if ( ! empty( $event ) ) {
-		return eme_get_attendees_list( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, $order );
+	if ( !empty( $id ) ) {
+		$event = eme_get_event( $id );
+		if ( ! empty( $event ) ) {
+			return eme_get_attendees_list( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, $order, $always_header_footer );
+		}
+	} elseif (!empty($scope)) {
+		$events = eme_get_events( scope: $scope, extra_conditions: 'event_rsvp=1' );
+		$res = '';
+		foreach ($events as $event) {
+			$res .= eme_get_attendees_list( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, $order, $always_header_footer );
+		}
+		return $res;
 	} else {
 		return '';
 	}
@@ -3137,7 +3149,7 @@ function eme_get_attendees_list_for( $event, $template_id = 0, $template_id_head
 	return eme_get_attendees_list( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, $order );
 }
 
-function eme_get_attendees_list( $event, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $rsvp_status = 0, $paid_status = 0, $order = '' ) {
+function eme_get_attendees_list( $event, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $rsvp_status = 0, $paid_status = 0, $order = '', $always_header_footer=0 ) {
 	if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
 		$rsvp_status = EME_RSVP_STATUS_APPROVED;
 	}
@@ -3174,7 +3186,11 @@ function eme_get_attendees_list( $event, $template_id = 0, $template_id_header =
 		}
 		$res .= $eme_format_footer;
 	} else {
-		$res = "<p class='eme_no_bookings'>" . __( 'No bookings made yet.', 'events-made-easy' ) . '</p>';
+		if ($always_header_footer)
+			$res  .= $eme_format_header;
+		$res .= "<p class='eme_no_bookings'>" . __( 'No responses yet!', 'events-made-easy' ) . '</p>';
+		if ($always_header_footer)
+			$res  .= $eme_format_footer;
 	}
 	return $res;
 }

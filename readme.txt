@@ -98,8 +98,8 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.16 (2023/11/10) =
-* Add scope and always_header_footer param to eme_bookings shortcode
+= 2.4.16 (2023//) =
+* Add scope and always_header_footer param to eme_bookings and eme_attendees shortcodes
 * Add #_FREESPACES and #_FREESEATS as aliases for #_AVAILABLESPACES
 * When clicking on a location in the location list generated beneath a map, jump to the map
 * eme_cat_filter now also supports the category name/slug as param value

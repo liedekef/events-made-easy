@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.4.1
-Stable tag: 2.4.15
+Stable tag: 2.4.16
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.16 (2023//) =
+= 2.4.16 (2023/11/23) =
 * Add scope and always_header_footer param to eme_bookings and eme_attendees shortcodes
 * Add #_FREESPACES and #_FREESEATS as aliases for #_AVAILABLESPACES
 * When clicking on a location in the location list generated beneath a map, jump to the map

@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.17 (2023//) =
+* Documented #_YOUNGPENDINGSEATS and #_YOUNGPENDINGSEATS{xx}
+
 = 2.4.16 (2023/11/23) =
 * Add scope and always_header_footer param to eme_bookings and eme_attendees shortcodes
 * Add #_FREESPACES and #_FREESEATS as aliases for #_AVAILABLESPACES

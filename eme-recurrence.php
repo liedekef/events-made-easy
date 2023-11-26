@@ -52,8 +52,8 @@ function eme_get_recurrence_days( $recurrence ) {
 
 	$counter        = 0;
 	$daycounter     = 0;
-	$weekcounter    = 0;
-	$monthcounter   = 0;
+	$weekcounter    = $start_date_obj->format('W');
+	$monthcounter   = $start_date_obj->format('n');
 	$start_monthday = $start_date_obj->format( 'j' );
 	$cycle_date_obj = $start_date_obj->copy();
 

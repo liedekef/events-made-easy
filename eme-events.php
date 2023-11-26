@@ -2820,6 +2820,15 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$replacement = $open_tasks_found;
 					}
 				}
+			} elseif ( preg_match( '/#_EVENTLINK|#_EVENTURL/', $result ) ) {
+				$replacement = esc_url(eme_event_url( $event, $lang ));
+				if ( $target == 'html' ) {
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = apply_filters( 'eme_text', $replacement );
+				}
 			} elseif ( preg_match( '/#_LINKEDNAME/', $result ) ) {
 				$event_link = eme_event_url( $event, $lang );
 				// if the url is externnal, we'll open a new window/tab
@@ -7111,12 +7120,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 							<p>
 								<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
 								<input id="recurrence-interval" name='recurrence_interval'
-								size='2' value='
-								<?php
-								if ( isset( $recurrence['recurrence_interval'] ) ) {
-									echo $recurrence['recurrence_interval'];}
-								?>
-								'>
+								size='2' value='<?php if ( isset( $recurrence['recurrence_interval'] ) ) { echo $recurrence['recurrence_interval'];} ?>'>
 					<span class='interval-desc' id="interval-daily-singular"> <?php esc_html_e( 'day', 'events-made-easy' ); ?></span>
 					<span class='interval-desc' id="interval-daily-plural"> <?php esc_html_e( 'days', 'events-made-easy' ); ?></span>
 								<span class='interval-desc' id="interval-weekly-singular"> <?php esc_html_e( 'week', 'events-made-easy' ); ?></span>

@@ -101,7 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.4.17 (2023//) =
 * Documented #_YOUNGPENDINGSEATS and #_YOUNGPENDINGSEATS{xx}
 * Added #_EVENTLINK (or #_EVENTURL) to just get a link to the event (needs to be made clickable by yourself)
-* Recurrences by month and set to "every x month" will look at the month the recurrence starts on
+* When updating a recurrence, existing events with bookings will not get removed even if they no longer match the recurrence
 
 = 2.4.16 (2023/11/23) =
 * Add scope and always_header_footer param to eme_bookings and eme_attendees shortcodes

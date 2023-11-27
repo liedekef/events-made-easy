@@ -52,13 +52,12 @@ function eme_get_recurrence_days( $recurrence ) {
 
 	$counter        = 0;
 	$daycounter     = 0;
-	$weekcounter    = $start_date_obj->format('W');
-	$monthcounter   = $start_date_obj->format('n');
+	$weekcounter    = 0;
+	$monthcounter   = 0;
 	$start_monthday = $start_date_obj->format( 'j' );
 	$cycle_date_obj = $start_date_obj->copy();
 
 	while ( $cycle_date_obj <= $end_date_obj ) {
-		$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
 		$ymd       = $cycle_date_obj->getDate();
 
 		// skip holidays
@@ -104,6 +103,7 @@ function eme_get_recurrence_days( $recurrence ) {
 					++$counter;
 				}
 			} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $weekdays ) ) {
+				$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
 				if ( ( $recurrence['recurrence_byweekno'] == -1 ) && ( $monthday >= $last_week_start[ $month - 1 ] ) ) {
 					if ( $monthcounter % $recurrence['recurrence_interval'] == 0 ) {
 						array_push( $matching_days, $ymd );
@@ -261,7 +261,7 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	sort( $matching_days );
 
 	// 2 steps for updating events for a recurrence:
-	// First step: check the existing events and if they still match the recurrence days, update them
+	// First step: check the existing events and if they still match the recurrence days or they have existing bookings, update them
 	//       otherwise delete the old event
 	// Reason for doing this: we want to keep possible booking data for a recurrent event as well
 	// and just deleting all current events for a recurrence and inserting new ones would break the link
@@ -280,7 +280,8 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	foreach ( $events as $existing_event ) {
 		$day       = eme_get_date_from_dt( $existing_event['event_start'] );
 		$array_key = array_search( $day, $matching_days );
-		if ( $array_key !== false ) {
+		$bookings_count = eme_count_bookings_for($existing_event['event_id']);
+		if ( $array_key !== false || $bookings_count>0) {
 			if ( ! $only_change_recdates ) {
 				$event['event_start'] = "$day $event_start_time";
 				$eme_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
@@ -293,10 +294,10 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 					eme_event_store_cf_answers( $existing_event['event_id'] );
 				}
 			}
-				// we handled a specific day, so remove it from the array
-				// in step 2 we count on the fact that $matching_days only contains days not existing
-				unset( $matching_days[ $array_key ] );
-				++$count;
+			// we handled a specific day, so remove it from the array
+			// in step 2 we count on the fact that $matching_days only contains days not existing
+			unset( $matching_days[ $array_key ] );
+			++$count;
 		} else {
 			eme_db_delete_event( $existing_event['event_id'], 1 );
 		}

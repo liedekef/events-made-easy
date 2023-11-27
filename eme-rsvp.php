@@ -2958,6 +2958,39 @@ function eme_get_basic_bookings_on_waitinglist( $event_id ) {
 	return $bookings;
 }
 
+function eme_count_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0 ) {
+	global $wpdb;
+	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+
+	$bookings = [];
+	if ( ! $event_ids ) {
+		return $bookings;
+	}
+
+	$where = [];
+	if ( is_array( $event_ids ) && eme_is_numeric_array( $event_ids ) ) {
+		$where[] = 'bookings.event_id IN (' . join( ',', $event_ids ) . ')';
+	} elseif ( is_numeric( $event_ids ) ) {
+		$where[] = "bookings.event_id = $event_ids";
+	} else {
+		$where[] = 'bookings.event_id = 0';
+	}
+	if ( $rsvp_status ) {
+		$where[] = "bookings.status=$rsvp_status";
+	} else {
+		$where[] = 'bookings.status!=' . EME_RSVP_STATUS_TRASH;
+	}
+	if ( $paid_status == 1 ) {
+		$where[] = 'bookings.booking_paid=0';
+	} elseif ( $paid_status == 2 ) {
+		$where[] = 'bookings.booking_paid=1';
+	}
+	$where = 'WHERE ' . implode( ' AND ', $where );
+	#$sql = "SELECT * FROM $bookings_table $where ORDER BY booking_id";
+	$sql = "SELECT COUNT(*) FROM $bookings_table AS bookings $where";
+	return $wpdb->get_var( $sql );
+}
+
 function eme_get_bookings_for( $event_ids, $rsvp_status = 0, $paid_status = 0, $order = '' ) {
 	global $wpdb;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;

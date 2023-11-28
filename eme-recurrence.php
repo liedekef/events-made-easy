@@ -261,8 +261,9 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	sort( $matching_days );
 
 	// 2 steps for updating events for a recurrence:
-	// First step: check the existing events and if they still match the recurrence days or they have existing bookings, update them
-	//       otherwise delete the old event
+	// First step: check the existing events and
+	//       if they still match the recurrence days or they have existing bookings (future events only), update them
+	// 	otherwise delete the old event
 	// Reason for doing this: we want to keep possible booking data for a recurrent event as well
 	// and just deleting all current events for a recurrence and inserting new ones would break the link
 	// between booking id and event id
@@ -271,6 +272,7 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	$events = $wpdb->get_results( $sql, ARRAY_A );
 
 	// in order to take tasks into account for recurring events, we need to know the difference in days between the events
+	$eme_date_obj_now  = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_date_obj_orig = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 	$event_start_time  = eme_get_time_from_dt( $event['event_start'] );
 	$event_end_time    = eme_get_time_from_dt( $event['event_end'] );
@@ -280,7 +282,13 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	foreach ( $events as $existing_event ) {
 		$day       = eme_get_date_from_dt( $existing_event['event_start'] );
 		$array_key = array_search( $day, $matching_days );
-		$bookings_count = eme_count_bookings_for($existing_event['event_id']);
+		$existing_event_start_obj = new ExpressiveDate( $existing_event['event_start'], EME_TIMEZONE );
+		// if future events in the recurrence have bookings, we won't delete those but keep them in the recurrence series
+		if ($existing_event_start_obj >= $eme_date_obj_now) {
+			$bookings_count = eme_count_bookings_for($existing_event['event_id']);
+		} else {
+			$bookings_count = 0;
+		}
 		if ( $array_key !== false || $bookings_count>0) {
 			if ( ! $only_change_recdates ) {
 				$event['event_start'] = "$day $event_start_time";

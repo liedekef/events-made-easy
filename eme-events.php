@@ -2820,7 +2820,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$replacement = $open_tasks_found;
 					}
 				}
-			} elseif ( preg_match( '/#_EVENTLINK|#_EVENTURL/', $result ) ) {
+			} elseif ( preg_match( '/#_LINK$|#_URL$/', $result ) ) {
 				$replacement = esc_url(eme_event_url( $event, $lang ));
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );

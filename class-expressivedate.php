@@ -127,17 +127,17 @@ class ExpressiveDate extends DateTime {
 	}
 
 	public static function createFromFormat( $format, $datestring, $timezone = null ): ExpressiveDate {
-			$parent_date = parent::createFromFormat( $format, $datestring );
+		$parent_date = parent::createFromFormat( $format, $datestring );
 		if ( $parent_date !== false ) {
-				$year  = $parent_date->format( 'Y' );
-				$month = $parent_date->format( 'n' );
-				$day   = $parent_date->format( 'j' );
-				$hour  = $parent_date->format( 'G' );
-				$min   = $parent_date->format( 'i' );
-				$sec   = $parent_date->format( 's' );
-				return static::makeFromDateTime( $year, $month, $day, $hour, $min, $sec, $timezone );
+			$year  = $parent_date->format( 'Y' );
+			$month = $parent_date->format( 'n' );
+			$day   = $parent_date->format( 'j' );
+			$hour  = $parent_date->format( 'G' );
+			$min   = $parent_date->format( 'i' );
+			$sec   = $parent_date->format( 's' );
+			return static::makeFromDateTime( $year, $month, $day, $hour, $min, $sec, $timezone );
 		} else {
-				return false;
+			return false;
 		}
 	}
 
@@ -445,8 +445,8 @@ class ExpressiveDate extends DateTime {
 	public function minusYears( $amount ) {
 		// minusYears and a negative amount is in fact addYears
 		if ( $amount < 0 ) {
-						$amount = abs( $amount );
-						return $this->modifyYears( $amount );
+			$amount = abs( $amount );
+			return $this->modifyYears( $amount );
 		} else {
 			return $this->modifyYears( $amount, true );
 		}

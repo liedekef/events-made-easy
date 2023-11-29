@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 373 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 375 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -1320,6 +1320,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
          member_id int(11) DEFAULT 0,
          status tinyint DEFAULT 0,
          creation_date datetime,
+         created_by bigint(20) unsigned DEFAULT NULL,
          sent_datetime datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
          first_read_on datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
          last_read_on datetime NOT NULL DEFAULT '0000-00-00 00:00:00', 
@@ -1350,6 +1351,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'attachments', "ALTER TABLE $table_name ADD attachments text;" );
 		maybe_add_column( $table_name, 'fromname', "ALTER TABLE $table_name ADD fromname tinytext;" );
 		maybe_add_column( $table_name, 'fromemail', "ALTER TABLE $table_name ADD fromemail tinytext;" );
+		maybe_add_column( $table_name, 'created_by', "ALTER TABLE $table_name ADD created_by bigint(20) unsigned DEFAULT NULL;" );
 		if ( $db_version < 140 ) {
 			$wpdb->query( "ALTER TABLE $table_name DROP KEY is_sent;" );
 			$wpdb->query( "ALTER TABLE $table_name CHANGE is_sent state tinyint DEFAULT 0;" );
@@ -1382,6 +1384,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
          name varchar(255) DEFAULT NULL,
 	 planned_on datetime DEFAULT '0000-00-00 00:00:00', 
          creation_date datetime,
+         created_by bigint(20) unsigned DEFAULT NULL,
          read_count int DEFAULT 0,
          total_read_count int DEFAULT 0,
          subject tinytext,
@@ -1410,6 +1413,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'conditions', "ALTER TABLE $table_name ADD conditions text ;" );
 		maybe_add_column( $table_name, 'read_count', "ALTER TABLE $table_name ADD read_count int DEFAULT 0;" );
 		maybe_add_column( $table_name, 'total_read_count', "ALTER TABLE $table_name ADD total_read_count int DEFAULT 0;" );
+		maybe_add_column( $table_name, 'created_by', "ALTER TABLE $table_name ADD created_by bigint(20) unsigned DEFAULT NULL;" );
 		if ( $db_version < 176 ) {
 			$wpdb->query( "UPDATE $table_name set status='cancelled' where cancelled=1;" );
 			eme_maybe_drop_column( $table_name, 'cancelled' );

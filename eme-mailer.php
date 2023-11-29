@@ -312,6 +312,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions = [] ) {
 	global $wpdb;
 	$mailing_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
+	$current_userid = get_current_user_id();
 	$now           = current_time( 'mysql', false );
 	$mailing       = [
 		'name'           => mb_substr( $mailing_name, 0, 255 ),
@@ -327,6 +328,9 @@ function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromema
 		'creation_date'  => $now,
 		'conditions'     => eme_serialize( $conditions ),
 	];
+	if (!empty($current_userid)) {
+		$mailing['created_by'] = $current_userid;
+	}
 	if ( $wpdb->insert( $mailing_table, $mailing ) === false ) {
 		return false;
 	} else {
@@ -337,6 +341,7 @@ function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromema
 function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions ) {
 	global $wpdb;
 	$mailing_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
+	$current_userid = get_current_user_id();
 	$now           = current_time( 'mysql', false );
 	$mailing       = [
 		'name'           => mb_substr( $mailing_name, 0, 255 ),
@@ -352,6 +357,9 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 		'creation_date'  => $now,
 		'conditions'     => eme_serialize( $conditions ),
 	];
+	if (!empty($current_userid)) {
+		$mailing['created_by'] = $current_userid;
+	}
 	if ( $wpdb->insert( $mailing_table, $mailing ) === false ) {
 		return false;
 	} else {
@@ -366,6 +374,7 @@ function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiverem
 function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail = '', $replytoname = '', $mailing_id = 0, $person_id = 0, $member_id = 0, $atts = [], $send_immediately = 0 ) {
 	global $wpdb;
 	$mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+	$current_userid = get_current_user_id();
 
 	if ( eme_is_empty_string( $subject ) || eme_is_empty_string( $body ) ) {
 		// no mail to be sent: fake it
@@ -434,6 +443,9 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		'creation_date' => $now,
 		'random_id'     => $random_id,
 	];
+	if (!empty($current_userid)) {
+		$mail['created_by'] = $current_userid;
+	}
 	if ( $send_immediately ) {
 		// we add the mail to the queue as sent and send it immediately
 		$mail['status']        = 1;
@@ -441,7 +453,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		$wpdb->insert( $mqueue_table, $mail );
 		return eme_send_mail( $subject, $body, $receiveremail, $receivername, $replytoemail, $replytoname, $fromemail, $fromname, $atts, $custom_headers );
 	} elseif ( $wpdb->insert( $mqueue_table, $mail ) === false ) {
-			return false;
+		return false;
 	} else {
 		return true;
 	}
@@ -1191,7 +1203,7 @@ function eme_mailingreport_list() {
 	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+	if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
 			$ajaxResult            = [];
 			$ajaxResult['Result']  = 'Error';
 			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
@@ -1276,29 +1288,58 @@ add_action( 'wp_ajax_eme_searchmail', 'eme_send_mails_ajax_action_searchmail' );
 add_action( 'wp_ajax_eme_eventmail', 'eme_send_mails_ajax_action_eventmail' );
 
 function eme_send_mails_ajax_action_searchmail() {
+	if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+		wp_die();
+	}
 	eme_send_mails_ajax_actions( 'searchmail' );
 }
 function eme_send_mails_ajax_action_testmail() {
+	if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+		wp_die();
+	}
 	eme_send_mails_ajax_actions( 'testmail' );
 }
 function eme_send_mails_ajax_action_eventmail() {
-	eme_send_mails_ajax_actions( 'eventmail' );
+	if ( current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
+	     current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+		eme_send_mails_ajax_actions( 'eventmail' );
+	} else {
+		wp_die();
+	}
 }
 function eme_send_mails_ajax_action_genericmail() {
+	if ( !current_user_can( get_option( 'eme_cap_send_generic_mails' ) )) {
+		wp_die();
+	}
 	eme_send_mails_ajax_actions( 'genericmail' );
 }
 function eme_send_mails_ajax_action_previewmail() {
+	if ( !current_user_can( get_option( 'eme_cap_send_generic_mails' ) )) {
+		wp_die();
+	}
 	eme_send_mails_ajax_actions( 'previewmail' );
 }
 function eme_send_mails_ajax_action_previeweventmail() {
-	eme_send_mails_ajax_actions( 'previeweventmail' );
+	if ( current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
+		current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+		eme_send_mails_ajax_actions( 'previeweventmail' );
+	} else {
+		wp_die();
+	}
 }
 
 function eme_send_mails_ajax_actions( $action ) {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+	if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
+		print "<div class='eme-message-admin'><p>";
+		esc_html_e( 'Access denied!', 'events-made-easy' );
 		wp_die();
+	}
+	if (current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+		$actions_allowed = 1;
+	} else {
+		$actions_allowed = 0;
 	}
 	$event_ids        = isset( $_POST['event_ids'] ) ? wp_parse_id_list($_POST['event_ids']) : 0;
 	$ajaxResult       = [];
@@ -1315,7 +1356,7 @@ function eme_send_mails_ajax_actions( $action ) {
 			$sql  = "SELECT * FROM $table $where ORDER BY id DESC LIMIT 100";
 			$rows = $wpdb->get_results( $sql, ARRAY_A );
 			if ( ! empty( $rows ) ) {
-						$rows = array_reverse( $rows );
+				$rows = array_reverse( $rows );
 			}
 		} else {
 			$search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
@@ -1327,7 +1368,6 @@ function eme_send_mails_ajax_actions( $action ) {
 		}
 		if ( empty( $rows ) ) {
 			$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'No results found', 'events-made-easy' ) . '</p></div>';
-			$ajaxResult['Result']      = 'ERROR';
 			echo wp_json_encode( $ajaxResult );
 			wp_die();
 		}
@@ -1343,9 +1383,10 @@ function eme_send_mails_ajax_actions( $action ) {
 			'<th>' . __( 'First read on', 'events-made-easy' ) . '</th>' .
 			'<th>' . __( 'Last read on', 'events-made-easy' ) . '</th>' .
 			'<th>' . __( 'Read count', 'events-made-easy' ) . '</th>' .
-			'<th>' . __( 'Error message', 'events-made-easy' ) . '</th>' .
-			'<th>' . __( 'Action', 'events-made-easy' ) . '</th>' .
-			'</tr>';
+			'<th>' . __( 'Error message', 'events-made-easy' ) . '</th>' ;
+		if ($actions_allowed)
+			$res .= '<th>' . __( 'Action', 'events-made-easy' ) . '</th>' ;
+		$res .= '</tr>';
 
 		$states = eme_mail_localizedstates();
 		foreach ( $rows as $item ) {
@@ -1378,7 +1419,8 @@ function eme_send_mails_ajax_actions( $action ) {
 					$row .= '<td>&nbsp;</td>';
 				}
 				$row .= '<td>' . eme_esc_html( $item['error_msg'] ) . '</td>';
-				$row .= "<td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a></td>';
+				if ($actions_allowed)
+					$row .= "<td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a></td>';
 			} else {
 				$row .= '<td>&nbsp;</td>';
 				$row .= '<td>&nbsp;</td>';
@@ -1386,7 +1428,7 @@ function eme_send_mails_ajax_actions( $action ) {
 				$row .= '<td>&nbsp;</td>';
 				$row .= '<td>&nbsp;</td>';
 				// if the mail is not part of a mailing, allow to cancel it (otherwise it will be re-added anyway by eme_check_mailing_receivers)
-				if ( $item['mailing_id'] == 0 ) {
+				if ( $actions_allowed && $item['mailing_id'] == 0 ) {
 					$row .= "<td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . "</a><br><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a></td>';
 				} else {
 					$row .= '<td>' . __( 'This mail is part of a mailing, cancel the corresponding mailing if you want to cancel this mail.', 'events-made-easy' ) . '</td>';
@@ -1507,20 +1549,20 @@ function eme_send_mails_ajax_actions( $action ) {
 				$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select a person to send the preview mail to.', 'events-made-easy' ) . '</p></div>';
 				$ajaxResult['Result']      = 'ERROR';
 			} else {
-				$person                  = eme_get_person( $preview_mail_to );
-							$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
-				$mail_subject            = eme_replace_generic_placeholders( $mail_subject, 'text' );
-				$mail_message            = eme_replace_generic_placeholders( $mail_message, $mail_text_html );
-				$mail_subject            = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
-				$mail_message            = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
+				$person       = eme_get_person( $preview_mail_to );
+				$person_name  = eme_format_full_name( $person['firstname'], $person['lastname'] );
+				$mail_subject = eme_replace_generic_placeholders( $mail_subject, 'text' );
+				$mail_message = eme_replace_generic_placeholders( $mail_message, $mail_text_html );
+				$mail_subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
+				$mail_message = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
 				// no queueing for preview email
-							$res = eme_send_mail( $mail_subject, $mail_message, $person['email'], $person_name, $contact_email, $contact_name, $contact_email, $contact_name, $attachment_ids_arr );
+				$res = eme_send_mail( $mail_subject, $mail_message, $person['email'], $person_name, $contact_email, $contact_name, $contact_email, $contact_name, $attachment_ids_arr );
 				if ( $res ) {
-						$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
-						$ajaxResult['Result']      = 'OK';
+					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . '</p></div>';
+					$ajaxResult['Result']      = 'OK';
 				} else {
-						$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
-						$ajaxResult['Result']      = 'ERROR';
+					$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
+					$ajaxResult['Result']      = 'ERROR';
 				}
 			}
 			echo wp_json_encode( $ajaxResult );
@@ -1631,10 +1673,10 @@ function eme_send_mails_ajax_actions( $action ) {
 		$mail_message = apply_filters( 'eme_event_email_body_filter', $mail_message );
 
 		if ( empty( $mail_subject ) || empty( $mail_message ) ) {
-				$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter both subject and message for the mail to be sent.', 'events-made-easy' ) . '</p></div>';
-				$ajaxResult['Result']      = 'ERROR';
-				echo wp_json_encode( $ajaxResult );
-				wp_die();
+			$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter both subject and message for the mail to be sent.', 'events-made-easy' ) . '</p></div>';
+			$ajaxResult['Result']      = 'ERROR';
+			echo wp_json_encode( $ajaxResult );
+			wp_die();
 		}
 
 		if ( ! eme_is_numeric_array( $event_ids ) ) {
@@ -1669,9 +1711,9 @@ function eme_send_mails_ajax_actions( $action ) {
 				$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please select a person to send the preview mail to.', 'events-made-easy' ) . '</p></div>';
 				$ajaxResult['Result']      = 'ERROR';
 			} else {
-				$person                  = eme_get_person( $preview_mail_to );
-							$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
-				$event                   = eme_get_event( $event_ids[0] );
+				$person      = eme_get_person( $preview_mail_to );
+				$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+				$event       = eme_get_event( $event_ids[0] );
 				if ( ! empty( $event ) ) {
 					$contact       = eme_get_event_contact( $event );
 					$contact_email = $contact->user_email;
@@ -2365,7 +2407,7 @@ function eme_emails_page() {
 		echo $label;
 		?>
 		</td>
-				<td><?php echo eme_ui_multiselect( $member_ids, 'eme_send_members', $mymembergroups, 5, '', 0, 'eme_select2_members_class', $aria_label ); ?></td></tr>
+		<td><?php echo eme_ui_multiselect( $member_ids, 'eme_send_members', $mymembergroups, 5, '', 0, 'eme_select2_members_class', $aria_label ); ?></td></tr>
 		<tr><td width='20%'>
 		<?php
 		$label      = eme_esc_html( 'Send to a number of member groups', 'events-made-easy' );
@@ -2382,7 +2424,7 @@ function eme_emails_page() {
 		?>
 		</td>
 		<td><?php echo eme_ui_multiselect_key_value( $membership_ids, 'eme_send_memberships', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class', $aria_label ); ?></td></tr>
-				</table>
+		</table>
 		</div>
 		</div>
 		<div class="form-field">
@@ -2537,10 +2579,15 @@ function eme_emails_page() {
 add_action( 'wp_ajax_eme_get_mailings_div', 'eme_ajax_mailings_div' );
 function eme_ajax_mailings_div() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+	if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
 		print "<div class='eme-message-admin'><p>";
 		esc_html_e( 'Access denied!', 'events-made-easy' );
 		wp_die();
+	}
+	if (current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+		$actions_allowed = 1;
+	} else {
+		$actions_allowed = 0;
 	}
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
@@ -2559,12 +2606,14 @@ function eme_ajax_mailings_div() {
 
 	<form action="#" method="post">
 	<?php echo $nonce_field; ?>
+        <?php if ($actions_allowed) { ?>
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteMailings"><?php esc_html_e( 'Delete selected mailings', 'events-made-easy' ); ?></option>
 	<option value="archiveMailings"><?php esc_html_e( 'Archive selected mailings', 'events-made-easy' ); ?></option>
 	</select>
 	<button id="MailingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
+        <?php } ?>
 
 	<?php
 	$archive    = 0;
@@ -2581,7 +2630,8 @@ function eme_ajax_mailings_div() {
 	print '<th>' . __( 'Read count', 'events-made-easy' ) . '</th>';
 	print '<th>' . __( 'Extra info', 'events-made-easy' ) . '</th>';
 	print '<th>' . __( 'Report', 'events-made-easy' ) . '</th>';
-	print '<th>' . __( 'Action', 'events-made-easy' ) . '</th>';
+	if ($actions_allowed)
+		print '<th>' . __( 'Action', 'events-made-easy' ) . '</th>';
 	print '</tr></thead><tbody>';
 	foreach ( $mailings as $mailing ) {
 		$id = $mailing['id'];
@@ -2637,7 +2687,8 @@ function eme_ajax_mailings_div() {
 		} else {
 			print "<td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=report_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Report', 'events-made-easy' ) . '</a></td>';
 		}
-		print '<td>' . $action . '</td>';
+		if ($actions_allowed)
+			print '<td>' . $action . '</td>';
 		print '</tr>';
 	}
 	print '</tbody></table></form>';
@@ -2647,10 +2698,15 @@ function eme_ajax_mailings_div() {
 add_action( 'wp_ajax_eme_get_mail_archive_div', 'eme_ajax_mail_archive_div' );
 function eme_ajax_mail_archive_div() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+	if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
 		print "<div class='eme-message-admin'><p>";
 		esc_html_e( 'Access denied!', 'events-made-easy' );
 		wp_die();
+	}
+	if (current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+		$actions_allowed = 1;
+	} else {
+		$actions_allowed = 0;
 	}
 
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
@@ -2661,11 +2717,13 @@ function eme_ajax_mail_archive_div() {
 	?>
 	<form action="#" method="post">
 	<?php echo $nonce_field; ?>
+        <?php if ($actions_allowed) { ?>
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="deleteMailings"><?php esc_html_e( 'Delete selected mailings', 'events-made-easy' ); ?></option>
 	</select>
 	<button id="MailingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
+        <?php } ?>
 
 	<?php
 	$archive    = 1;
@@ -2680,7 +2738,8 @@ function eme_ajax_mail_archive_div() {
 	print '<th>' . __( 'Unique read count', 'events-made-easy' ) . '</th>';
 	print '<th>' . __( 'Read count', 'events-made-easy' ) . '</th>';
 	print '<th>' . __( 'Extra info', 'events-made-easy' ) . '</th>';
-	print '<th>' . __( 'Action', 'events-made-easy' ) . '</th>';
+	if ($actions_allowed)
+		print '<th>' . __( 'Action', 'events-made-easy' ) . '</th>';
 	print '</tr></thead><tbody>';
 	foreach ( $mailings as $mailing ) {
 		$id     = $mailing['id'];
@@ -2698,7 +2757,8 @@ function eme_ajax_mail_archive_div() {
 		print '<td>' . intval( $mailing['read_count'] ) . '</td>';
 		print '<td>' . intval( $mailing['total_read_count'] ) . '</td>';
 		print '<td>' . eme_esc_html( $extra ) . '</td>';
-		print '<td>' . $action . '</td>';
+		if ($actions_allowed)
+			print '<td>' . $action . '</td>';
 		print '</tr>';
 	}
 	print '</tbody></table></form>';

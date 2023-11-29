@@ -526,7 +526,12 @@ function eme_ajax_manage_templates() {
 function eme_ajax_get_template() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	// only used when sending mail, so limit to that
-	if ( ! current_user_can( get_option( 'eme_cap_send_mails' ) ) ) {
+	if ( ! (
+		current_user_can( get_option( 'eme_cap_send_mails' ) ) || 
+		current_user_can( get_option( 'eme_cap_send_other_mails' ) ) || 
+		current_user_can( get_option( 'eme_cap_send_generic_mails' ) ) || 
+		current_user_can( get_option( 'eme_cap_send_manage_mails' ) )
+	) {
 		wp_die();
 	}
 	$return = [];

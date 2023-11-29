@@ -358,6 +358,9 @@ function eme_add_options( $reset = 0 ) {
 		'eme_cap_settings'                                => DEFAULT_CAP_SETTINGS,
 		'eme_cap_send_mails'                              => DEFAULT_CAP_SEND_MAILS,
 		'eme_cap_send_other_mails'                        => DEFAULT_CAP_SEND_OTHER_MAILS,
+		'eme_cap_send_generic_mails'                      => DEFAULT_CAP_SEND_GENERIC_MAILS,
+		'eme_cap_view_mails'                              => DEFAULT_CAP_VIEW_MAILS,
+		'eme_cap_manage_mails'                            => DEFAULT_CAP_MANAGE_MAILS,
 		'eme_cap_list_attendances'                        => DEFAULT_CAP_LIST_ATTENDANCES,
 		'eme_cap_manage_attendances'                      => DEFAULT_CAP_MANAGE_ATTENDANCES,
 		'eme_html_header'                                 => '',
@@ -1412,8 +1415,11 @@ function eme_options_page() {
 <div>
 <table class="form-table">
 			<?php
-			eme_options_select( __( 'Send Emails', 'events-made-easy' ), 'eme_cap_send_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send mails for own events. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_MAILS ) ) );
-			eme_options_select( __( 'Send Other Emails', 'events-made-easy' ), 'eme_cap_send_other_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send mails for any event. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_OTHER_MAILS ) ) );
+			eme_options_select( __( 'Send emails for own events', 'events-made-easy' ), 'eme_cap_send_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send mails for own events and be able to access the mailing submenu. Default: %s.', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_MAILS ) ) );
+			eme_options_select( __( 'Send emails for any event', 'events-made-easy' ), 'eme_cap_send_other_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send mails for any event. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_OTHER_MAILS ) ) );
+			eme_options_select( __( 'Send generic emails', 'events-made-easy' ), 'eme_cap_send_generic_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send generic mails. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_GENERIC_MAILS ) ) );
+			eme_options_select( __( 'View mailings and mail queue', 'events-made-easy' ), 'eme_cap_send_other_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to view planned mailings and the mail queue. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_VIEW_MAILS ) ) );
+			eme_options_select( __( 'Manage mailings and mail queue', 'events-made-easy' ), 'eme_cap_send_other_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to manage planned mailings and the mail queue. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_MANAGE_MAILS ) ) );
 			?>
 </table>
 </div>

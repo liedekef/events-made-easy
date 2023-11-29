@@ -103,6 +103,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Added #_EVENTLINK (or #_EVENTURL) to just get a link to the event (needs to be made clickable by yourself)
 * When updating a recurrence, existing events with bookings will not get removed even if they no longer match the recurrence
 * More granular permissions for mail sending/viewing
+* event scope "0000-MM" will now show events for the specified month in the future (not necessarily the current year)
+* Added event scope "0000-MM--relative+Xm" to show events from a specified month in the future till X months later
 
 = 2.4.16 (2023/11/23) =
 * Add scope and always_header_footer param to eme_bookings and eme_attendees shortcodes

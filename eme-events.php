@@ -4890,9 +4890,29 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 		$limit_start  = $matches[1];
 		$conditions[] = " (event_start > '$limit_start 23:59:59') ";
 	} elseif ( preg_match( '/^0000-([0-9]{2})$/', $scope, $matches ) ) {
-		$month = $matches[1];
-		$eme_date_obj->setMonth( $month );
+		$start_month = $matches[1];
+		$cur_month = $eme_date_obj->getMonth();
+		if ($cur_month>$start_month) {
+			$eme_date_obj->addOneYear();
+		}
+		$eme_date_obj->setMonth( $start_month );
 		$limit_start = $eme_date_obj->startOfMonth()->getDateTime();
+		$limit_end   = $eme_date_obj->endOfMonth()->getDateTime();
+		if ( $show_ongoing ) {
+			$conditions[] = "((event_start BETWEEN '$limit_start' AND '$limit_end') OR (event_end BETWEEN '$limit_start' AND '$limit_end') OR (event_start <= '$limit_start' AND event_end >= '$limit_end'))";
+		} else {
+			$conditions[] = "(event_start BETWEEN '$limit_start' AND '$limit_end')";
+		}
+	} elseif ( preg_match( '/^0000-([0-9]{2})--relative\+(\d+)m$/', $scope, $matches ) ) {
+		$start_month = $matches[1];
+                $rel_months = $matches[2];
+		$cur_month = $eme_date_obj->getMonth();
+		if ($cur_month>$start_month+$rel_months) {
+			$eme_date_obj->addOneYear();
+		}
+		$eme_date_obj->setMonth( $start_month );
+		$limit_start = $eme_date_obj->startOfMonth()->getDateTime();
+		$eme_date_obj->addMonths( abs($rel_months) );
 		$limit_end   = $eme_date_obj->endOfMonth()->getDateTime();
 		if ( $show_ongoing ) {
 			$conditions[] = "((event_start BETWEEN '$limit_start' AND '$limit_end') OR (event_end BETWEEN '$limit_start' AND '$limit_end') OR (event_start <= '$limit_start' AND event_end >= '$limit_end'))";
@@ -5025,7 +5045,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 		} else {
 			$conditions[] = "(event_start BETWEEN '$limit_start' AND '$limit_end')";
 		}
-	} elseif ( preg_match( '/^relative\-(\d+)d--([0-9]{4}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
+	} elseif ( preg_match( '/^relative\-(\d+)d--([1-9][0-9]{3}-[0-9]{2}-[0-9]{2})$/', $scope, $matches ) ) {
 		$days      = $matches[1];
 		$limit_end = $matches[2] . ' 23:59:59';
 		$eme_date_obj->setTimestampFromString( $limit_end . ' ' . EME_TIMEZONE );
@@ -5035,7 +5055,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 		} else {
 			$conditions[] = "(event_start BETWEEN '$limit_start' AND '$limit_end')";
 		}
-	} elseif ( preg_match( '/^([0-9]{4}-[0-9]{2}-[0-9]{2})--relative\+(\d+)d$/', $scope, $matches ) ) {
+	} elseif ( preg_match( '/^([1-9][0-9]{3}-[0-9]{2}-[0-9]{2})--relative\+(\d+)d$/', $scope, $matches ) ) {
 		$limit_start = $matches[1] . ' 00:00:00';
 		$days        = $matches[2];
 		$eme_date_obj->setTimestampFromString( $limit_start . ' ' . EME_TIMEZONE );

@@ -37,22 +37,22 @@ For documentation on all shortcodes and placeholders, visit the [Official site](
 
 Always take a backup of your db before doing the upgrade, just in case ...  
 
-#### For existing wordpress users that have version 2.3.18 or older:
-
-1. Download the zip "events-made-easy.zip" from the [latest release on github](https://github.com/liedekef/events-made-easy/releases)
-2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
-3. Select the zip you downloaded, this will upload the zip and replace the existing installation without losing data  
-   If the file is too big, or you needrto use FTP/SSH: use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory (remove the old files first)
-4. After that, updating the plugin will be as usual in the backend
-
 #### For new users:
 
 1. Download the zip "events-made-easy.zip" from the [latest release on github](https://github.com/liedekef/events-made-easy/releases)
 2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
 3. Select the zip you downloaded  
-   If the file is too big, or you needrto use FTP/SSH: use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory (remove the old files first)
+   If the file is too big, or you need to use FTP/SSH: use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory (remove the old files first)
 4. Activate the plugin through the 'Plugins' menu in WordPress (make sure your configured database user has the right to create/modify tables and columns) 
 5. Add events list or calendars following the instructions in the Usage section.  
+
+#### For existing wordpress users that have version 2.3.18 or older:
+
+1. Download the zip "events-made-easy.zip" from the [latest release on github](https://github.com/liedekef/events-made-easy/releases)
+2. Go in the Wordpress 'Plugins' menu, and click on "Add new"
+3. Select the zip you downloaded, this will upload the zip and replace the existing installation without losing data  
+   If the file is too big, or you need to use FTP/SSH: use your favorite upload tool to upload the contents of the zip file to the `/wp-content/plugins/events-made-easy` directory (remove the old files first)
+4. After that, updating the plugin will be as usual in the backend
 
 ## Usage
 

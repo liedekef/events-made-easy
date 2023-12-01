@@ -1636,7 +1636,17 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 	$form_html .= "<input type='hidden' id='membership_id' name='membership_id' value='$membership_id'>";
 	$form_html .= "<input type='hidden' name='wp_id' value='$wp_id' class='dynamicupdates'>";
 
-	$format = '';
+	if (!empty($member['member_id'])) {
+		$format_prefix = "<table class='eme-rsvp-form'>
+			<tr><th scope='row'>" . esc_html__( 'Start date', 'events-made-easy' ) . ":</th><td>#_STARTDATE</td></tr>
+			<tr><th scope='row'>" . esc_html__( 'End date', 'events-made-easy' ) . ":</th><td>#_ENDDATE</td></tr>
+			<tr><th scope='row'>" . esc_html__( 'Status', 'events-made-easy' ) . ":</th><td>#_STATUS</td></tr>
+			</table>";
+		$format_prefix = eme_replace_member_placeholders( $format_prefix, $membership, $member);
+	} else {
+		$format_prefix = '';
+	}
+
 	if ( ! eme_is_empty_string( $membership['properties']['member_form_text'] ) ) {
 		$format = $membership['properties']['member_form_text'];
 	} elseif ( ! empty( $membership['properties']['member_form_tpl'] ) ) {
@@ -1652,7 +1662,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
             ";
 	}
 
-	$form_html .= eme_replace_membership_formfields_placeholders( $membership, $member, $format );
+	$form_html .= eme_replace_membership_formfields_placeholders( $membership, $member, $format_prefix.$format );
 
 	if ( ! $from_backend ) {
 		if (!empty($member['member_id'])) {

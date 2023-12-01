@@ -2399,15 +2399,17 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		return '';
 	}
 
-	$current_user = wp_get_current_user();
 	$allow_clear  = 0;
-	if ( ! empty( $current_user ) ) {
+	if ( is_user_logged_in() ) {
+		$current_user = wp_get_current_user();
 		if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_user->ID || $event['event_contactperson_id'] == $current_user->ID ) ) ) {
 			$allow_clear = 1;
 		} elseif ( ! $registration_wp_users_only ) {
 			$allow_clear = 1;
 		}
+	} else {
+		$current_user = 0;
 	}
 	if ( $eme_is_admin_request && ! empty( $booking['booking_id'] ) ) {
 		$editing_booking_from_backend = 1;
@@ -3663,24 +3665,27 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	$eme_is_admin_request = eme_is_admin_request();
 	$membership_id        = $membership['membership_id'];
 
+	// check if logged in if required
 	$registration_wp_users_only = $membership['properties']['registration_wp_users_only'];
-	if ( $registration_wp_users_only && ! is_user_logged_in() ) {
+	if ( !$eme_is_admin_request && $registration_wp_users_only && ! is_user_logged_in() ) {
 		return '';
 	}
 
-	$current_user = wp_get_current_user();
-	$allow_clear  = 0;
-	if ( ! empty( $current_user ) ) {
-		if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-			$allow_clear = 1;
-		} elseif ( ! $registration_wp_users_only ) {
+	// format is required
+	if ( eme_is_empty_string( $format ) ) {
+		return;
+	}
+
+	$allow_clear    = 0;
+	$editing_member = 0;
+	$current_userid = get_current_user_id();
+	if ( !empty($current_userid) ) {
+		if (current_user_can( get_option( 'eme_cap_edit_members' ) ) && ! empty( $member['member_id'] ) && !empty( $member['person_id'] )) {
+			$editing_member = 1;
+		}
+		if ( !$editing_member && (! $registration_wp_users_only || current_user_can( get_option( 'eme_cap_edit_members' ))) ) {
 			$allow_clear = 1;
 		}
-	}
-	if ( $eme_is_admin_request && ! empty( $member['member_id'] ) ) {
-		$editing_from_backend = 1;
-	} else {
-		$editing_from_backend = 0;
 	}
 
 	$bookerLastName     = '';
@@ -3707,37 +3712,14 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	// don't fill out the basic info if in the backend, but do it only if in the frontend
 	$readonly = '';
 	$disabled = '';
-	if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-		$person = eme_get_person_by_wp_id( $current_user->ID );
-		if ( ! empty( $person ) ) {
-			$bookerLastName     = eme_esc_html( $person['lastname'] );
-			$bookerFirstName    = eme_esc_html( $person['firstname'] );
-			$bookerBirthdate        = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-			$bookerBirthplace       = eme_esc_html( $person['birthplace'] );
-			$bookerAddress1     = eme_esc_html( $person['address1'] );
-			$bookerAddress2     = eme_esc_html( $person['address2'] );
-			$bookerCity         = eme_esc_html( $person['city'] );
-			$bookerZip          = eme_esc_html( $person['zip'] );
-			$bookerState_code   = eme_esc_html( $person['state_code'] );
-			$bookerCountry_code = eme_esc_html( $person['country_code'] );
-			$bookerEmail        = eme_esc_html( $person['email'] );
-			$bookerPhone        = eme_esc_html( $person['phone'] );
-			$massmail           = intval( $person['massmail'] );
-			$bd_email           = intval( $person['bd_email'] );
-			$gdpr               = intval( $person['gdpr'] );
-		} else {
-			$bookerLastName = eme_esc_html( $current_user->user_lastname );
-			if ( empty( $bookerLastName ) ) {
-				$bookerLastName = eme_esc_html( $current_user->display_name );
-			}
-			$bookerFirstName = eme_esc_html( $current_user->user_firstname );
-			$bookerEmail     = eme_esc_html( $current_user->user_email );
-			$bookerPhone     = eme_esc_html( eme_get_user_phone( $current_user->ID ) );
-		}
+	$person = [];
+	if ($editing_member) {
+		$person = eme_get_person( $member['person_id'] );
+	} elseif (! empty( $current_userid )) {
+		// this will also fill person with wp info if logged in and person doesn't exist in EME
+		$person = eme_get_person_by_wp_id( $current_userid );
 	}
-
-	if ( $editing_from_backend ) {
-		$person             = eme_get_person( $member['person_id'] );
+	if ( ! empty( $person ) ) {
 		$bookerLastName     = eme_esc_html( $person['lastname'] );
 		$bookerFirstName    = eme_esc_html( $person['firstname'] );
 		$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
@@ -3753,16 +3735,14 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		$massmail           = intval( $person['massmail'] );
 		$bd_email           = intval( $person['bd_email'] );
 		$gdpr               = intval( $person['gdpr'] );
+	}
 
-		// when editing an existing member via backend (not a new)
+	if ( $editing_member ) {
+		// when editing an existing member (not a new)
 		// we disable the editing of person info completely
 		// we also set the width to 100% because otherwise the size of the placeholder is used to render the width of readonly fields ...
 		$readonly = "readonly='readonly' style='width: 100%;'";
 		$disabled = "disabled='disabled'";
-	}
-
-	if ( eme_is_empty_string( $format ) ) {
-		return;
 	}
 
 	// check which fields are used in the event definition for dynamic data
@@ -3829,11 +3809,11 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 
 	# first we check if people desire dynamic pricing on it's own, if not: we set the relevant price class to empty
 	if ( strstr( $format, '#_DYNAMICPRICE' ) ) {
-			$dynamic_price_class       = "class='dynamicprice'";
-			$dynamic_price_class_basic = 'dynamicprice';
+		$dynamic_price_class       = "class='dynamicprice'";
+		$dynamic_price_class_basic = 'dynamicprice';
 	} else {
-			$dynamic_price_class       = '';
-			$dynamic_price_class_basic = '';
+		$dynamic_price_class       = '';
+		$dynamic_price_class_basic = '';
 	}
 
 	# check also if dynamic data is requested
@@ -3898,7 +3878,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 			}
 			$replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerLastName' $this_readonly $dynamic_field_personal_info_class placeholder='$placeholder_text'>";
 			if ( wp_script_is( 'eme-autocomplete-form', 'enqueued' ) && get_option( 'eme_autocomplete_sources' ) != 'none' ) {
-					$replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
+				$replacement .= "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='" . esc_html__( "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing.", 'events-made-easy' ) . "'>";
 			}
 			++$lastname_found;
 		} elseif ( preg_match( '/#_FIRSTNAME(\{.+?\})?$/', $result, $matches ) ) {
@@ -4203,13 +4183,13 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 				$fieldname      = 'FIELD' . $field_id;
 				$entered_val    = '';
 				$field_readonly = 0;
-				if ( $editing_from_backend ) {
+				if ( $editing_member ) {
 					if ( $formfield['field_purpose'] == 'people' ) {
-							$answers        = eme_get_person_answers( $member['person_id'] );
-							$field_readonly = 1;
+						$answers        = eme_get_person_answers( $member['person_id'] );
+						$field_readonly = 1;
 					} else {
-							$answers        = eme_get_nodyndata_member_answers( $member['member_id'] );
-							$field_readonly = 0;
+						$answers        = eme_get_nodyndata_member_answers( $member['member_id'] );
+						$field_readonly = 0;
 					}
 					foreach ( $answers as $answer ) {
 						if ( $answer['field_id'] == $field_id ) {
@@ -4218,7 +4198,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 						}
 					}
 				} elseif ( $formfield['field_purpose'] == 'people' && is_user_logged_in() && ! empty( $person['person_id'] ) ) {
-						$answers = eme_get_person_answers( $person['person_id'] );
+					$answers = eme_get_person_answers( $person['person_id'] );
 					foreach ( $answers as $answer ) {
 						if ( $answer['field_id'] == $field_id ) {
 							$entered_val = $answer['answer'];
@@ -4242,7 +4222,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 				$found = 0;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
-			if ( $editing_from_backend ) {
+			if ( $editing_member ) {
 				$label = __( 'Update member', 'events-made-easy' );
 			} elseif ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)
@@ -4258,7 +4238,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		if ( $required ) {
 			$eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
 			if ( ! empty( $eme_form_required_field_string ) ) {
-					$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
+				$replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
 			}
 		}
 

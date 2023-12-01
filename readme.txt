@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * More granular permissions for mail sending/viewing
 * event scope "0000-MM" will now show events for the specified month in the future (not necessarily the current year)
 * Added event scope "0000-MM--relative+Xm" to show events from a specified month in the future till X months later
+* Add new shortcode eme_edit_member_form, which (for logged in user with the needed permissions) allows to edit a member from the frontend (not personal info nor membership info, but only member-entered info concerning the membership which are in fact just custom fields)
 
 = 2.4.16 (2023/11/23) =
 * Add scope and always_header_footer param to eme_bookings and eme_attendees shortcodes

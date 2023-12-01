@@ -831,8 +831,15 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 	}
 
 	$eme_is_admin_request = eme_is_admin_request();
-	if ( $eme_is_admin_request ) {
-		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( $eme_is_admin_request) {
+		if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
+			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
+			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
+			
+			echo __( 'Access denied!', 'events-made-easy' );
+			wp_die();
+		}
+
 		if ( isset( $_POST['status'] ) ) {
 			$member['status'] = intval( $_POST['status'] );
 		}
@@ -1332,8 +1339,6 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 	global $plugin_page;
 	$nonce_field             = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	$eme_member_status_array = eme_member_status_array();
-	usleep( 2 );
-	$form_id = uniqid();
 
 	$membership = eme_get_membership( $membership_id );
 	if ( ! empty( $membership['properties']['family_membership'] ) && ! empty( $member['related_member_id'] ) ) {
@@ -1573,15 +1578,20 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 		<?php
 		esc_html_e( 'Member info', 'events-made-easy' );
 		echo '<br>';
-		echo eme_member_form( $member, $membership_id, 1, $form_id );
+		echo eme_member_form( $member, $membership_id, 1 );
 		?>
 		</form>
 	<?php
 }
 
-function eme_member_form( $member, $membership_id, $from_backend = 0, $form_id = 0 ) {
+function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 	$form_html  = '';
 	$membership = eme_get_membership( $membership_id );
+
+	// we sleep for 2 microseconds, to be sure that uniqid gives another value
+	usleep( 2 );
+	$form_id = uniqid();
+
 	if ( empty( $membership ) ) {
 		$form_html  = "<div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message-error'>";
 		$form_html .= sprintf( __( 'No membership with ID %d found', 'events-made-easy' ), $membership_id );
@@ -1618,9 +1628,6 @@ function eme_member_form( $member, $membership_id, $from_backend = 0, $form_id =
 		$wp_id = 0;
 	}
 	if ( ! $from_backend ) {
-		// we sleep for 2 microseconds, to be sure that uniqid gives another value
-		usleep( 2 );
-		$form_id    = uniqid();
 		$form_html  = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
 		<div id='eme-member-addmessage-ok-$form_id' class='eme-message-success eme-member-message eme-member-message-success eme-hidden'></div><div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message eme-member-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form'></div><div id='div_eme-member-form-$form_id' style='display: none' class='eme-showifjs'><form name='eme-member-form' id='$form_id' method='post' $form_class action='#'>";
 		$form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
@@ -1629,7 +1636,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0, $form_id =
 	$form_html .= "<input type='hidden' id='membership_id' name='membership_id' value='$membership_id'>";
 	$form_html .= "<input type='hidden' name='wp_id' value='$wp_id' class='dynamicupdates'>";
 
-	$format = null;
+	$format = '';
 	if ( ! eme_is_empty_string( $membership['properties']['member_form_text'] ) ) {
 		$format = $membership['properties']['member_form_text'];
 	} elseif ( ! empty( $membership['properties']['member_form_tpl'] ) ) {
@@ -1648,6 +1655,9 @@ function eme_member_form( $member, $membership_id, $from_backend = 0, $form_id =
 	$form_html .= eme_replace_membership_formfields_placeholders( $membership, $member, $format );
 
 	if ( ! $from_backend ) {
+		if (!empty($member['member_id'])) {
+			$form_html .= "<input type='hidden' name='member_id' value='".$member['member_id']."' >";
+		}
 		$form_html .= '</form></div>';
 	}
 	return $form_html;
@@ -4094,6 +4104,37 @@ function eme_add_member_form_shortcode( $atts ) {
 	}
 }
 
+function eme_edit_member_form_shortcode( ) {
+	if ( ! is_user_logged_in() ) {
+		// url not empty, so we redirect to it
+                $page_body = '<script type="text/javascript">window.location.href="' . wp_login_url(get_permalink()) . '";</script>';
+		return $page_body;
+	}
+	if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+		return;
+	}
+	eme_enqueue_frontend();
+	$member_id = isset( $_POST['id'] ) ? intval( $_POST['id'] ) : 0;
+	if ( empty( $member_id ) ) {
+		$nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
+		return '
+			<form action="#" method="post"><input name="id" type="number" placeholder="member ID">
+			<input name="eme_submit_button" class="eme_submit_button" type="submit">
+			' . $nonce .'
+			</form>
+			';
+	} else {
+		if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
+			echo esc_html( __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' ));
+			wp_die();
+		}
+		$member = eme_get_member( $member_id );
+		if ( ! empty( $member ) ) {
+			return eme_member_form( $member, $member['membership_id'] );
+		}
+	}
+}
+
 function eme_mymemberships_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
@@ -4448,18 +4489,23 @@ function eme_add_member_ajax() {
 		];
 	}
 
+	if (isset($_POST['member_id']) && current_user_can(get_option( 'eme_cap_edit_members' ))) {
+		$member_id = intval( $_POST['member_id'] );
+	} else {
+		$member_id = 0;
+	}
 	if ( is_array( $eval_filter_return ) && ! $eval_filter_return[0] ) {
 		// the result of own eval rules failed, so let's use that as a result
 		$form_result_message = $eval_filter_return[1];
 		$payment_id          = 0;
 	} else {
-		$member_res          = eme_add_update_member();
+		$member_res          = eme_add_update_member( $member_id );
 		$form_result_message = $member_res[0];
 		$payment_id          = $member_res[1];
 	}
 
-	// let's decide for the first event wether or not payment is needed
-	if ( $payment_id && eme_membership_has_pgs_configured( $membership ) && !$membership['properties']['skippaymentoptions']) {
+	// let's decide for the first event wether or not payment is needed, but not when editing a member in the frontend
+	if ( !$member_id && $payment_id && eme_membership_has_pgs_configured( $membership ) && !$membership['properties']['skippaymentoptions']) {
 		eme_captcha_remove( $captcha_res );
 		$total_price = eme_get_member_payment_price( $payment_id );
 
@@ -4512,7 +4558,7 @@ function eme_add_member_ajax() {
 				]
 			);
 		}
-	} elseif ( $payment_id ) {
+	} elseif ( $member_id || $payment_id ) {
 		eme_captcha_remove( $captcha_res );
 		echo wp_json_encode(
 			[

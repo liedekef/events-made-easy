@@ -52,6 +52,7 @@ add_shortcode( 'eme_people', 'eme_people_shortcode' );
 add_shortcode( 'eme_members', 'eme_members_shortcode' );
 add_shortcode( 'eme_person', 'eme_person_shortcode' );
 add_shortcode( 'eme_add_member_form', 'eme_add_member_form_shortcode' );
+add_shortcode( 'eme_edit_member_form', 'eme_edit_member_form_shortcode' );
 add_shortcode( 'eme_change_personal_info', 'eme_cpi_shortcode' );
 add_shortcode( 'eme_request_personal_info', 'eme_rpi_shortcode' );
 add_shortcode( 'eme_gdpr', 'eme_rpi_shortcode' );

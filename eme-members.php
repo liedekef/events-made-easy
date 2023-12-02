@@ -717,7 +717,7 @@ function eme_members_page() {
 		$send_mail = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 0;
 		$member    = eme_get_member( $member_id );
 		$wp_id     = eme_get_wpid_by_personid( $member['person_id'] );
-		if ( $member && ( current_user_can( get_option( 'eme_cap_edit_members' ) ) || ( current_user_can( get_option( 'eme_cap_author_members' ) ) && $wp_id == $current_userid ) ) ) {
+		if ( $member && ( current_user_can( get_option( 'eme_cap_edit_members' ) ) || ( current_user_can( get_option( 'eme_cap_author_member' ) ) && $wp_id == $current_userid ) ) ) {
 			check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 			$res     = eme_add_update_member( $member_id, $send_mail );
 			$message = $res[0];
@@ -737,7 +737,7 @@ function eme_members_page() {
 		$member_id = intval( $_GET['member_id'] );
 		$member    = eme_get_member( $member_id );
 		$wp_id     = eme_get_wpid_by_personid( $member['person_id'] );
-		if ( $member && ( current_user_can( get_option( 'eme_cap_edit_members' ) ) || ( current_user_can( get_option( 'eme_cap_author_members' ) ) && $wp_id == $current_userid ) ) ) {
+		if ( $member && ( current_user_can( get_option( 'eme_cap_edit_members' ) ) || ( current_user_can( get_option( 'eme_cap_author_member' ) ) && $wp_id == $current_userid ) ) ) {
 			if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 				eme_member_edit_layout( $member );
 			} else {
@@ -812,10 +812,21 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 	$payment_id    = 0;
 	$membership_id = 0;
 	$transfer      = 0;
+	if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+		$res = [
+			0 => __( 'You have no right to manage members!', 'events-made-easy' ),
+			1 => 0
+		];
+		return $res;
+	}
 	if ( ! empty( $_POST['membership_id'] ) ) {
 		$membership_id = intval( $_POST['membership_id'] );
 	} else {
-		return __( 'No valid membership selected', 'events-made-easy' );
+		$res = [
+			0 => __( 'No valid membership selected!', 'events-made-easy' ),
+			1 => 0
+		];
+		return $res;
 	}
 	if ( ! empty( $_POST['transferto_membershipid'] ) ) {
 		$orig_membership_id = $membership_id;
@@ -832,13 +843,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 
 	$eme_is_admin_request = eme_is_admin_request();
 	if ( $eme_is_admin_request) {
-		if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
-			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
-			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
-			
-			echo __( 'Access denied!', 'events-made-easy' );
-			wp_die();
-		}
+		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 
 		if ( isset( $_POST['status'] ) ) {
 			$member['status'] = intval( $_POST['status'] );
@@ -903,6 +908,16 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 				$member['status']           = $related_member['status'];
 				$member['status_automatic'] = $related_member['status_automatic'];
 			}
+		}
+	} else {
+		// when coming from the frontend, also check the frontend nonce
+		if ( ! isset( $_POST['eme_frontend_nonce'] ) ||
+		       ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
+		       $res = [
+			       0 => __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", "events-made-easy" ),
+			       1 => 0
+		       ];
+		       return $res;
 		}
 	}
 	// even though we got the membership in the previous if-structure, the membership id could've been changed if the person was designated as being a family member
@@ -1126,7 +1141,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 	}
 	$res = [
 		0 => $result,
-		1 => $payment_id,
+		1 => $payment_id
 	];
 	return $res;
 }

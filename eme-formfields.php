@@ -4987,8 +4987,10 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 				];
 				$eme_data = [ $info ];
 				$required = '';
+				$dyn_count_total = 0;
 			} else {
 				$required = "required='required'";
+				$dyn_count_total = count( $eme_data);
 			}
 			foreach ( $eme_data as $count => $info ) {
 				$grouping_used = in_array( $info['grouping'], $used_groupingids ) ? 1 : 0;
@@ -4998,10 +5000,14 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 				<?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
 					</td>
 					<td>
-				<?php echo $info['grouping']; ?>
 			<!-- the grouping index parameter should be a unique index per condition. This is used to set/retrieve all the entered info based on this condition in the database (so once set, always keep it to the same value for that condition) -->
-			<!-- Since it is too complicated to explain that, but we still need it: keep it a hidden field, the value for new rows is set via php anyway -->
-			<input type='hidden' id="eme_dyndata[<?php echo $count; ?>][grouping]" name="eme_dyndata[<?php echo $count; ?>][grouping]" aria-label="hidden grouping index" size="5" value="<?php echo $info['grouping']; ?>">
+			<!-- Since it is too complicated to explain that, but we still need it: keep it a hidden field if possible, the value for new rows is set via php anyway -->
+                        <?php if ($dyn_count_total>0 && $grouping_used==0) : ?>
+                        <input type='text' id="eme_dyndata[<?php echo $count; ?>][grouping]" name="eme_dyndata[<?php echo $count; ?>][grouping]" aria-label="hidden grouping index" size="5" maxlength="5" value="<?php echo $info['grouping']; ?>">
+                        <?php else : ?>
+                        <?php if ($dyn_count_total>0) echo $info['grouping']; ?>
+                        <input type='hidden' id="eme_dyndata[<?php echo $count; ?>][grouping]" name="eme_dyndata[<?php echo $count; ?>][grouping]" aria-label="hidden grouping index" size="5" maxlength="5" value="<?php echo $info['grouping']; ?>">
+                        <?php endif; ?>
 					</td>
 					<td>
 			<input <?php echo $required; ?> id="eme_dyndata[<?php echo $count; ?>][field]" name="eme_dyndata[<?php echo $count; ?>][field]" size="12" aria-label="field" value="<?php echo $info['field']; ?>">

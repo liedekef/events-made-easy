@@ -3219,6 +3219,7 @@ function eme_get_attendees_list( $event, $template_id = 0, $template_id_header =
 		}
 		$res .= $eme_format_footer;
 	} else {
+		$res = "";
 		if ($always_header_footer)
 			$res  .= $eme_format_header;
 		$res .= "<p class='eme_no_bookings'>" . __( 'No responses yet!', 'events-made-easy' ) . '</p>';

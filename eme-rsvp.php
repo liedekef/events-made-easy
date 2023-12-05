@@ -242,15 +242,13 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 			if ( $is_multibooking && $only_one_event ) {
 				if ( $simple ) {
 					$value      = eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event );
-					$list       = [ $event_id => $value ];
 					$form_html .= "<input type='radio' id='eme_event_{$event_id}' name='eme_event_ids[]' value='$event_id'> <label for='eme_event_{$event_id}'>" . eme_esc_html( $value ) . '</label>';
 				} else {
 					$form_html .= "<option value='$event_id'>" . eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event ) . '</option>';
 				}
 			} elseif ( $is_multibooking && $simple ) {
 				$value      = eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event );
-				$list       = [ $event_id => $value ];
-				$form_html .= eme_ui_checkbox( 0, 'eme_event_ids', $list );
+				$form_html .= "<input type='checkbox' name='eme_event_ids[]' id='eme_event_ids_{$event_id}' value='$event_id'> <label for='eme_event_ids_{$event_id}'>" . eme_esc_html( $value ) . '</label>';
 			} else {
 				$form_html .= "<input type='hidden' name='eme_event_ids[]' value='$event_id'>";
 			}
@@ -1636,7 +1634,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 				if ( $send_mail && ! eme_is_empty_string( $bookerEmail ) ) {
 					// leave the action empty, then regular approval flow is followed (even in admin)
 					$action        = '';
-					$email_success = eme_email_booking_action( $booking, $action );
+					$email_success = eme_email_booking_action( $booking, $action, $is_multibooking );
 				}
 				$event      = eme_get_event( $booking['event_id'] );
 				$form_html .= eme_replace_booking_placeholders( $ok_format, $event, $booking, 0, 'html', $lang );

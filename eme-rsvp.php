@@ -1628,13 +1628,14 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 		if ( $simple ) {
 			$ok_format = eme_nl2br_save_html( get_option( 'eme_registration_recorded_ok_html' ) );
 			$lang      = eme_detect_lang();
+			// in simple form: we send all mails (even user confirmation required) for each booking
 			foreach ( $booking_ids as $booking_id ) {
 				$email_success = true;
 				$booking       = eme_get_booking( $booking_id );
 				if ( $send_mail && ! eme_is_empty_string( $bookerEmail ) ) {
 					// leave the action empty, then regular approval flow is followed (even in admin)
 					$action        = '';
-					$email_success = eme_email_booking_action( $booking, $action, $is_multibooking );
+					$email_success = eme_email_booking_action( $booking, $action );
 				}
 				$event      = eme_get_event( $booking['event_id'] );
 				$form_html .= eme_replace_booking_placeholders( $ok_format, $event, $booking, 0, 'html', $lang );
@@ -2527,7 +2528,8 @@ function eme_userconfirm_bookings( $booking_ids_arr, $price, $is_multibooking = 
 		} else {
 			$res = eme_mark_booking_pending( $booking_id );
 			if ( $res ) {
-				$action = 'pendingBooking';
+			        // action should just be some value (but not "pendingBooking" since that is only called from the backend and then no contact person email will get sent)
+                                $action = 'userconfirmedBooking';
 			}
 		}
 	}

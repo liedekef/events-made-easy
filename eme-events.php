@@ -1460,7 +1460,11 @@ function eme_page_title( $data, $post_id = null ) {
 	// make sure we only replace the title for the events page, not anything
 	if ( ( $data == $events_page_title ) && eme_is_events_page() &&
 		( ( ! $eme_use_is_page_for_title && in_the_loop() ) || $eme_use_is_page_for_title ) ) {
-		if ( get_query_var( 'eme_pmt_rndid' ) ) {
+		if ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
+			$res = __( 'Attendance check', 'events-made-easy' );
+		} elseif ( get_query_var( 'eme_rsvp_confirm' ) && get_query_var( 'eme_pmt_rndid' ) ) {
+			$res = __( 'Booking confirmation', 'events-made-easy' );
+		} elseif ( get_query_var( 'eme_pmt_rndid' ) ) {
 			$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
 			$payment          = eme_get_payment( 0, $payment_randomid );
 			if ( empty( $payment ) ) {
@@ -1528,8 +1532,6 @@ function eme_page_title( $data, $post_id = null ) {
 			$res = __( 'Cancel booking', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_cancel_signup'] ) ) {
 			$res = __( 'Cancel task signup', 'events-made-easy' );
-		} elseif ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
-			$res = __( 'Attendance check', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_check_member' ) && isset( $_GET['member_id'] ) ) {
 			$res = __( 'Membership check', 'events-made-easy' );
 		} else {
@@ -1547,13 +1549,17 @@ function eme_page_title( $data, $post_id = null ) {
 
 function eme_html_title( $data ) {
 	if ( eme_is_events_page() ) {
-		if ( get_query_var( 'eme_pmt_rndid' ) ) {
+		if ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
+			return __( 'Attendance check', 'events-made-easy' );
+		} elseif ( get_query_var( 'eme_rsvp_confirm' ) && get_query_var( 'eme_pmt_rndid' ) ) {
+			return __( 'Booking confirmation', 'events-made-easy' );
+		} elseif ( get_query_var( 'eme_pmt_rndid' ) ) {
 			$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
 			$payment          = eme_get_payment( 0, $payment_randomid );
 			if ( empty( $payment ) ) {
-					$html_title = get_option( 'eme_events_page_title' );
+				$html_title = get_option( 'eme_events_page_title' );
 			} elseif ( $payment['target'] == 'member' ) {
-					$html_title = eme_sanitize_request( __( 'Membership payment page', 'events-made-easy' ) );
+				$html_title = eme_sanitize_request( __( 'Membership payment page', 'events-made-easy' ) );
 			} else {
 				$booking_ids = eme_get_payment_booking_ids( $payment['id'] );
 				if ( count( $booking_ids ) == 1 ) {
@@ -1607,9 +1613,7 @@ function eme_html_title( $data ) {
 		} elseif ( ! empty( $_GET['eme_cancel_payment'] ) || ! empty( $_GET['eme_cancel'] )  ) {
 			return __( 'Cancel booking', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_cancel_signup'] ) ) {
-			$res = __( 'Cancel task signup', 'events-made-easy' );
-		} elseif ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
-			return __( 'Attendance check', 'events-made-easy' );
+			return __( 'Cancel task signup', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_check_member' ) && ! empty( $_GET['member_id'] ) ) {
 			return __( 'Membership check', 'events-made-easy' );
 		} else {

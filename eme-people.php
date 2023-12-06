@@ -1056,7 +1056,7 @@ function eme_csv_booking_report( $event_id ) {
 		$line[]         = $booking['booking_paid'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 		$line[] = eme_convert_multi2br( eme_localized_price( $booking['received'], $event['currency'] ) );
 		if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
-			$line[] = $line['totalprice'];
+			$line[] = $booking['totalprice'];
 		} else {
 			$line[] = eme_localized_price( $booking['remaining'], $event['currency'] );
 		}

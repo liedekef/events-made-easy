@@ -2824,15 +2824,6 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$replacement = $open_tasks_found;
 					}
 				}
-			} elseif ( preg_match( '/#_LINK$|#_URL$/', $result ) ) {
-				$replacement = esc_url(eme_event_url( $event, $lang ));
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
-				}
 			} elseif ( preg_match( '/#_LINKEDNAME/', $result ) ) {
 				$event_link = eme_event_url( $event, $lang );
 				// if the url is externnal, we'll open a new window/tab
@@ -3086,10 +3077,15 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				if ( $target == 'html' ) {
 					$replacement = esc_url( $replacement );
 				}
-			} elseif ( preg_match( '/#_PAGEURL$/', $result ) ) {
-				$replacement = eme_event_url( $event, $lang );
+			} elseif ( preg_match( '/#_PAGEURL|#_LINK$|#_URL$/', $result ) ) {
+				$replacement = esc_url(eme_event_url( $event, $lang ));
 				if ( $target == 'html' ) {
 					$replacement = esc_url( $replacement );
+					$replacement = apply_filters( 'eme_general', $replacement );
+				} elseif ( $target == 'rss' ) {
+					$replacement = apply_filters( 'the_content_rss', $replacement );
+				} else {
+					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			} elseif ( preg_match( '/#_NAME$/', $result ) ) {
 				$field = 'event_name';

@@ -573,13 +573,15 @@ function eme_send_queued() {
 		eme_mark_mailing_ongoing( $mailing_id );
 	}
 
-	// now handle any queued mails
-	$mails = eme_get_queued( $now );
+	// check if tracking is required and possible (meaning: only for html mails)
 	if ( $eme_rsvp_send_html && get_option( 'eme_mail_tracking' ) ) {
 		$add_tracking = true;
 	} else {
 		$add_tracking = false;
 	}
+
+	// now handle any queued mails
+	$mails = eme_get_queued( $now );
 	foreach ( $mails as $mail ) {
 		if ( empty( $mail['receiveremail'] ) ) {
 			eme_mark_mail_ignored( $mail['id'] );
@@ -2658,7 +2660,6 @@ function eme_ajax_mailings_div() {
 		} elseif ( $mailing['status'] == 'completed' || $mailing['status'] == '' ) {
 			$status = __( 'Completed', 'events-made-easy' );
 			$stats  = eme_unserialize( $mailing['stats'] );
-			$stats  = eme_get_mailing_stats( $id );
 			$extra  = sprintf( __( '%d mails sent, %d mails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
 			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=archive_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Archive', 'events-made-easy' ) . '</a>';
 		}

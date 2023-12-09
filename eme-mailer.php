@@ -2595,10 +2595,17 @@ function eme_ajax_mailings_div() {
 
 	?>
 	<h1><?php esc_html_e( 'Mailings overview', 'events-made-easy' ); ?></h1>
+	<div><p>
 	<?php
 	esc_html_e( 'Here you can find an overview of all planned, ongoing or completed mailings. For an overview of all emails, check the "Sent emails" tab.', 'events-made-easy' );
-	print '<br>';
+	?>
+	</p></div>
+	<div class='eme-message-admin'><p>
+	<?php
 	esc_html_e( 'If you want to archive old mailings and clean up old mails automatically, check the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME', 'events-made-easy' );
+	?>
+	</p></div>
+	<?php
 	if ( ! get_option( 'eme_queue_mails' ) ) {
 		print "<div class='eme-message-admin'><p>";
 		esc_html_e( 'Email queueing is not activated, so sent mails will only be visible in the "Sent emails" tab', 'events-made-easy' );

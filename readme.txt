@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.18 (2023//) =
+* Fix a php warning
+
 = 2.4.17 (2023/12/07) =
 * Documented #_YOUNGPENDINGSEATS and #_YOUNGPENDINGSEATS{xx}
 * Added #_EVENTLINK (or #_EVENTURL) to just get a link to the event (needs to be made clickable by yourself)

@@ -1052,11 +1052,11 @@ function eme_csv_booking_report( $event_id ) {
 		} else {
 			$line[] = $booking['booking_seats'];
 		}
-		$line[]         = $status_string;
-		$line[]         = $booking['booking_paid'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+		$line[] = $status_string;
+		$line[] = $booking['booking_paid'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 		$line[] = eme_convert_multi2br( eme_localized_price( $booking['received'], $event['currency'] ) );
 		if ( empty( $booking['remaining'] ) && empty( $booking['received'] ) ) {
-			$line[] = $booking['totalprice'];
+			$line[] = eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'] );
 		} else {
 			$line[] = eme_localized_price( $booking['remaining'], $event['currency'] );
 		}

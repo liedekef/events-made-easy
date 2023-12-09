@@ -767,6 +767,8 @@ function eme_meta_box_div_location_attributes( $location ) {
 }
 
 function eme_meta_box_div_location_customfields( $location ) {
+	$formfields = eme_get_formfields( '', 'locations' );
+	$formfields = apply_filters( 'eme_location_formfields', $formfields );
 	?>
 <div id="div_location_customfields">
 		<br><b> <?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?> </b>
@@ -774,7 +776,7 @@ function eme_meta_box_div_location_customfields( $location ) {
 		<br><?php esc_html_e( 'The difference with location attributes is that attributes need to be defined in your format first and can only be text, here you can first create custom fields of any kind which allows more freedom.', 'events-made-easy' ); ?>
 		</p>
 <?php
-	if ( current_user_can( 'unfiltered_html' ) ) {
+	if ( current_user_can( 'unfiltered_html' ) && !empty($formfields) ) {
 		echo "<div class='eme_notice_unfiltered_html'>";
 		esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
 		echo '</div>';
@@ -782,8 +784,6 @@ function eme_meta_box_div_location_customfields( $location ) {
 ?>
 	<table style="width: 100%;">
 	<?php
-	$formfields = eme_get_formfields( '', 'locations' );
-	$formfields = apply_filters( 'eme_location_formfields', $formfields );
 	// only in case of location duplicate, the cf_answers is set
 	if ( isset( $location['cf_answers'] ) ) {
 		$answers = $location['cf_answers'];

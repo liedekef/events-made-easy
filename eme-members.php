@@ -2560,6 +2560,8 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 }
 
 function eme_meta_box_div_membershipcustomfields( $membership ) {
+	$formfields = eme_get_formfields( '', 'memberships' );
+	$formfields = apply_filters( 'eme_membership_formfields', $formfields );
 ?>
 <div id="div_membership_customfields">
 	<br><b>
@@ -2569,7 +2571,7 @@ function eme_meta_box_div_membershipcustomfields( $membership ) {
 	</b>
 	<p><?php echo esc_html__( "Here custom fields of type 'Membership' are shown.", 'events-made-easy' ); ?></p>
 	<?php
-		if ( current_user_can( 'unfiltered_html' ) ) {
+		if ( current_user_can( 'unfiltered_html' ) && !empty($formfields) ) {
 			echo "<div class='eme_notice_unfiltered_html'>";
 			esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
 			echo '</div>';
@@ -2577,8 +2579,6 @@ function eme_meta_box_div_membershipcustomfields( $membership ) {
 	?>
 	<table style='width: 100%;'>
 	<?php
-	$formfields = eme_get_formfields( '', 'memberships' );
-	$formfields     = apply_filters( 'eme_membership_formfields', $formfields );
 	if ( ! empty( $membership['membership_id'] ) ) {
 		$answers = eme_get_membership_answers( $membership['membership_id'] );
 		$files = eme_get_uploaded_files( $membership['membership_id'], 'memberships' );

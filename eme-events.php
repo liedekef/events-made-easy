@@ -8366,6 +8366,8 @@ function eme_meta_box_div_event_attributes( $event ) {
 }
 
 function eme_meta_box_div_event_customfields( $event ) {
+	$formfields = eme_get_formfields( '', 'events' );
+	$formfields = apply_filters( 'eme_event_formfields', $formfields );
 	?>
 <div id="div_event_customfields">
 	<br><b> <?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?> </b>
@@ -8374,7 +8376,7 @@ function eme_meta_box_div_event_customfields( $event ) {
 	<br><?php esc_html_e( "If a custom field with name 'performer' exists, it's value here will be used for the google 'performer' header when showing the event in google search results.", 'events-made-easy' ); ?>
 	</p>
 	<?php
-	if ( current_user_can( 'unfiltered_html' ) ) {
+	if ( current_user_can( 'unfiltered_html' ) && !empty($formfields) ) {
 		echo "<div class='eme_notice_unfiltered_html'>";
 		esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
 		echo '</div>';
@@ -8382,8 +8384,6 @@ function eme_meta_box_div_event_customfields( $event ) {
 	?>
 	<table style='width: 100%;'>
 	<?php
-	$formfields     = eme_get_formfields( '', 'events' );
-	$formfields = apply_filters( 'eme_event_formfields', $formfields );
 	// only in case of event duplicate, the cf_answers is set
 	if ( isset( $event['cf_answers'] ) ) {
 		$answers = $event['cf_answers'];

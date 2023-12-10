@@ -3422,7 +3422,7 @@ function eme_update_attendance_count( $booking_id ) {
 	global $wpdb;
 	if ( $booking_id ) {
 		$table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-		$sql   = "UPDATE $table SET attend_count=attend_count+1 WHERE booking_id=$booking_id";
+		$sql   = $wpdb->prepare( "UPDATE $table SET attend_count=attend_count+1 WHERE booking_id=%d",$booking_id);
 		return $wpdb->query( $sql );
 	} else {
 		return false;
@@ -3433,7 +3433,7 @@ function eme_get_attendance_count( $booking_id ) {
 	global $wpdb;
 	if ( $booking_id ) {
 		$table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-		$sql   = "SELECT attend_count FROM $table WHERE booking_id=$booking_id";
+		$sql   = $wpdb->prepare( "SELECT attend_count FROM $table WHERE booking_id=%d", $booking_id );
 		return $wpdb->get_var( $sql );
 	} else {
 		return 0;

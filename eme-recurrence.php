@@ -12,7 +12,8 @@ function eme_new_recurrence() {
 		'recurrence_freq'          => '',
 		'recurrence_byday'         => '',
 		'recurrence_byweekno'      => '',
-		'recurrence_specific_days' => '',
+		'specific_months'          => '',
+		'specific_days'            => '',
 		'event_duration'           => 1,
 		'holidays_id'              => 0,
 	];
@@ -31,7 +32,7 @@ function eme_get_recurrence_days( $recurrence ) {
 	$matching_days = [];
 
 	if ( $recurrence['recurrence_freq'] == 'specific' ) {
-		$specific_days = explode( ',', $recurrence['recurrence_specific_days'] );
+		$specific_days = explode( ',', $recurrence['specific_days'] );
 		asort( $specific_days );
 		foreach ( $specific_days as $day ) {
 			array_push( $matching_days, $day );
@@ -47,15 +48,23 @@ function eme_get_recurrence_days( $recurrence ) {
 		$holidays = eme_get_holiday_listinfo( $recurrence['holidays_id'] );
 	}
 
-	$last_week_start = [ 25, 22, 25, 24, 25, 24, 25, 25, 24, 25, 24, 25 ];
-	$weekdays        = explode( ',', $recurrence['recurrence_byday'] );
+	$last_week_start  = [ 25, 22, 25, 24, 25, 24, 25, 25, 24, 25, 24, 25 ];
+	if (empty($recurrence['recurrence_byday'])) {
+		$choosen_weekdays = [];
+	} else {
+		$choosen_weekdays = explode( ',', $recurrence['recurrence_byday'] );
+	}
+	if (empty($recurrence['specific_months'])) {
+		$choosen_months = [];
+	} else {
+		$choosen_months = explode( ',', $recurrence['specific_months'] );
+	}
 
-	$counter        = 0;
-	$daycounter     = 0;
-	$weekcounter    = 0;
-	$monthcounter   = 0;
-	$start_monthday = $start_date_obj->format( 'j' );
-	$cycle_date_obj = $start_date_obj->copy();
+	$daycounter       = 0;
+	$weekcounter      = 0;
+	$monthcounter     = 0;
+	$start_monthday   = $start_date_obj->format( 'j' );
+	$cycle_date_obj   = $start_date_obj->copy();
 
 	while ( $cycle_date_obj <= $end_date_obj ) {
 		$ymd       = $cycle_date_obj->getDate();
@@ -63,6 +72,13 @@ function eme_get_recurrence_days( $recurrence ) {
 		// skip holidays
 		if ( ! empty( $holidays ) && isset( $holidays[ $ymd ] ) ) {
 			$cycle_date_obj->addOneDay();
+			++$daycounter;
+			if ( $daycounter % 7 == 0 ) {
+				++$weekcounter;
+			}
+			if ( $cycle_date_obj->format( 'j' ) == 1 ) {
+				++$monthcounter;
+			}
 			continue;
 		}
 
@@ -77,15 +93,11 @@ function eme_get_recurrence_days( $recurrence ) {
 		}
 
 		if ( $recurrence['recurrence_freq'] == 'weekly' ) {
-			if ( ! $recurrence['recurrence_byday'] && eme_N_weekday( $cycle_date_obj ) == eme_N_weekday( $start_date_obj ) ) {
-				// no specific days given, so we use 7 days as interval
-				//if($daycounter % 7*$recurrence['recurrence_interval'] == 0 ) {
-				if ( $weekcounter % $recurrence['recurrence_interval'] == 0 ) {
+			if ( $weekcounter % $recurrence['recurrence_interval'] == 0 ) {
+				if ( ! $recurrence['recurrence_byday'] && eme_N_weekday( $cycle_date_obj ) == eme_N_weekday( $start_date_obj ) ) {
 					array_push( $matching_days, $ymd );
-				}
-			} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $weekdays ) ) {
-				// specific days, so we only check for those days
-				if ( $weekcounter % $recurrence['recurrence_interval'] == 0 ) {
+				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
+					// specific days, so we only check for those days
 					array_push( $matching_days, $ymd );
 				}
 			}
@@ -94,26 +106,39 @@ function eme_get_recurrence_days( $recurrence ) {
 		if ( $recurrence['recurrence_freq'] == 'monthly' ) {
 			$monthday = $cycle_date_obj->format( 'j' );
 			$month    = $cycle_date_obj->format( 'n' );
-			// if recurrence_byweekno=0 ==> means to use the startday as repeating day
-			if ( $recurrence['recurrence_byweekno'] == 0 ) {
-				if ( $monthday == $start_monthday ) {
-					if ( $monthcounter % $recurrence['recurrence_interval'] == 0 ) {
+			if ( $monthcounter % $recurrence['recurrence_interval'] == 0 ) {
+				// if recurrence_byweekno=0 ==> means to use the startday as repeating day
+				if ( $recurrence['recurrence_byweekno'] == 0 ) {
+					if ( $monthday == $start_monthday ) {
 						array_push( $matching_days, $ymd );
 					}
-					++$counter;
-				}
-			} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $weekdays ) ) {
-				$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
-				if ( ( $recurrence['recurrence_byweekno'] == -1 ) && ( $monthday >= $last_week_start[ $month - 1 ] ) ) {
-					if ( $monthcounter % $recurrence['recurrence_interval'] == 0 ) {
+				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
+					$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
+					if ( ( $recurrence['recurrence_byweekno'] == -1 ) && ( $monthday >= $last_week_start[ $month - 1 ] ) ) {
 						array_push( $matching_days, $ymd );
-					}
-				} elseif ( $recurrence['recurrence_byweekno'] == $monthweek ) {
-					if ( $monthcounter % $recurrence['recurrence_interval'] == 0 ) {
+					} elseif ( $recurrence['recurrence_byweekno'] == $monthweek ) {
 						array_push( $matching_days, $ymd );
 					}
 				}
-				++$counter;
+			}
+		}
+		if ( $recurrence['recurrence_freq'] == 'specific_months' ) {
+			$monthday = $cycle_date_obj->format( 'j' );
+			$month    = $cycle_date_obj->format( 'n' );
+			if ( in_array( $month, $choosen_months ) ) {
+				// if recurrence_byweekno=0 ==> means to use the startday as repeating day
+				if ( $recurrence['recurrence_byweekno'] == 0 ) {
+					if ( $monthday == $start_monthday ) {
+						array_push( $matching_days, $ymd );
+					}
+				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
+					$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
+					if ( ( $recurrence['recurrence_byweekno'] == -1 ) && ( $monthday >= $last_week_start[ $month - 1 ] ) ) {
+						array_push( $matching_days, $ymd );
+					} elseif ( $recurrence['recurrence_byweekno'] == $monthweek ) {
+						array_push( $matching_days, $ymd );
+					}
+				}
 			}
 		}
 		$cycle_date_obj->addOneDay();
@@ -370,7 +395,7 @@ function eme_get_recurrence_eventids( $recurrence_id, $future_only = 0 ) {
 }
 
 function eme_get_recurrence_desc( $recurrence_id ) {
-	global $wpdb;
+	global $wpdb, $wp_locale;
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 	$sql              = $wpdb->prepare( "SELECT * FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id );
 	$recurrence       = $wpdb->get_row( $sql, ARRAY_A );
@@ -431,6 +456,23 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 			$freq_desc .= ', ' . sprintf( __( 'every %s months', 'events-made-easy' ), $recurrence['recurrence_interval'] );
 		} else {
 			$freq_desc .= ', ' . __( 'every month', 'events-made-easy' );
+		}
+	} elseif ( $recurrence['recurrence_freq'] == 'specific_months' ) {
+		if ( ! $recurrence['recurrence_byday'] ) {
+			# no monthday given for the recurrence, so we use the
+			# day of the month of the startdate as reference
+			$recurrence['recurrence_byday'] = eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE, 'e' );
+		}
+		$weekday_array = explode( ',', $recurrence['recurrence_byday'] );
+		$natural_days  = [];
+		foreach ( $weekday_array as $day ) {
+			array_push( $natural_days, $weekdays_name[ $day - 1 ] );
+		}
+		$and_string = __( ' and ', 'events-made-easy' );
+		$freq_desc  = sprintf( ( $monthweek_name[ $recurrence['recurrence_byweekno'] ] ), implode( $and_string, $natural_days ) );
+		$choosen_months = explode( ',', $recurrence['specific_months'] );
+		foreach ($choosen_months as $month_no) {
+			$freq_desc .= ', ' . $wp_locale->get_month_abbrev( $wp_locale->get_month( $month_no ) );
 		}
 	} elseif ( $recurrence['recurrence_freq'] == 'specific' ) {
 		$specific_days    = eme_get_recurrence_days( $recurrence );

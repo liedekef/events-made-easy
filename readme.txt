@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.19 (2023//) =
+* Added a new recurrence period "specific months", so you can choose on which months something transpires and repeat per year
+
 = 2.4.18 (2023/12/10) =
 * Fix a php warning
 * Fix registering members from frontend again

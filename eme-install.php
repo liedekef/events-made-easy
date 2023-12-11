@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 375 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 376 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -566,7 +566,8 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 			recurrence_byday tinytext NOT NULL,
 			recurrence_byweekno tinyint NOT NULL,
 			event_duration mediumint(9) DEFAULT 0,
-			recurrence_specific_days text,
+			specific_days text,
+			specific_months varchar(256),
 			holidays_id mediumint(9) DEFAULT 0,
 			UNIQUE KEY (recurrence_id)
 	 	) $charset $collate;";
@@ -576,7 +577,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 		eme_maybe_drop_column( $table_name, 'creation_date_gmt' );
 		eme_maybe_drop_column( $table_name, 'modif_date' );
 		eme_maybe_drop_column( $table_name, 'creation_date' );
-		maybe_add_column( $table_name, 'recurrence_specific_days', "ALTER TABLE $table_name ADD recurrence_specific_days text;" );
+		maybe_add_column( $table_name, 'specific_months', "ALTER TABLE $table_name ADD specific_months varchar(256);" );
 		maybe_add_column( $table_name, 'holidays_id', "ALTER TABLE $table_name ADD holidays_id mediumint(9) DEFAULT 0;" );
 		if ( $db_version < 3 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_byday tinytext NOT NULL ;" );
@@ -594,6 +595,13 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 			eme_maybe_drop_column( $table_name, 'event_contactperson_email_body' );
 			eme_maybe_drop_column( $table_name, 'event_respondent_email_body' );
 			eme_maybe_drop_column( $table_name, 'registration_requires_approval' );
+		}
+		if ( $db_version < 376 ) {
+			if ( eme_column_exists( $table_name, 'recurrence_specific_days' ) ) {
+				$wpdb->query( "ALTER TABLE $table_name CHANGE recurrence_specific_days specific_days text;" );
+			} else {
+				maybe_add_column( $table_name, 'specific_days', "ALTER TABLE $table_name ADD specific_days text;" );
+			}
 		}
 	}
 }

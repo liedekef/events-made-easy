@@ -16,6 +16,15 @@ jQuery(document).ready( function($) {
 
    function updateIntervalDescriptor () { 
       $('.interval-desc').hide();
+      // for specific months, we just hide and return
+      if ($('select#recurrence-frequency').val() == 'specific_months') {
+	      $('input#recurrence-interval').hide();
+	      $('span#specific_months_span').show();
+	      return;
+      } else {
+	      $('input#recurrence-interval').show();
+	      $('span#specific_months_span').hide();
+      }
       var number = '-plural';
       if ($('input#recurrence-interval').val() == 1 || $('input#recurrence-interval').val() == '') {
          number = '-singular';
@@ -413,14 +422,14 @@ jQuery(document).ready( function($) {
 	   });
    }
 
-   updateIntervalDescriptor(); 
-   updateIntervalSelectors();
    updateShowHideRecurrence();
    updateShowHideRsvp();
    updateShowHideTasks();
    updateShowHideRsvpAutoApprove();
    if ($('select#recurrence-frequency').length) {
-      updateShowHideRecurrenceSpecificDays();
+	   updateIntervalDescriptor(); 
+	   updateIntervalSelectors();
+	   updateShowHideRecurrenceSpecificDays();
    }
    updateShowHideTime();
    updateShowHideMultiPriceDescription();

@@ -327,7 +327,7 @@ function eme_events_page() {
 		if ( ! ( current_user_can( get_option( 'eme_cap_add_event' ) ) || current_user_can( get_option( 'eme_cap_edit_events' ) ) ) ) {
 			$feedback_message = __( 'You have no right to insert or update events', 'events-made-easy' );
 			if ( $action == 'update_recurrence' ) {
-					eme_recurrences_table( $feedback_message );
+				eme_recurrences_table( $feedback_message );
 			} else {
 				eme_events_table( $feedback_message );
 			}
@@ -340,7 +340,7 @@ function eme_events_page() {
 		} elseif ( $action == 'update_event' && $event_ID ) {
 			$event = eme_get_event( $event_ID );
 			if ( ! empty( $event ) ) {
-					$location = eme_get_location( $event['location_id'] );
+				$location = eme_get_location( $event['location_id'] );
 				if ( empty( $location ) ) {
 					$location = eme_new_location();
 				}
@@ -351,7 +351,7 @@ function eme_events_page() {
 		} elseif ( $action == 'update_recurrence' && $recurrence_ID ) {
 			$event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_ID ) );
 			if ( ! empty( $event ) ) {
-					$location = eme_get_location( $event['location_id'] );
+				$location = eme_get_location( $event['location_id'] );
 				if ( empty( $location ) ) {
 					$location = eme_new_location();
 				}
@@ -427,11 +427,11 @@ function eme_events_page() {
 		$event['event_end']            = "$event_end_date $event_end_time";
 		$recurrence['recurrence_freq'] = isset( $_POST['recurrence_freq'] ) ? eme_sanitize_request( $_POST['recurrence_freq'] ) : '';
 		if ( $recurrence['recurrence_freq'] == 'specific' ) {
-			$recurrence['recurrence_specific_days'] = isset( $_POST['recurrence_start_date'] ) ? eme_sanitize_request( $_POST['recurrence_start_date'] ) : $event_start_date;
+			$recurrence['specific_days'] = isset( $_POST['recurrence_start_date'] ) ? eme_sanitize_request( $_POST['recurrence_start_date'] ) : $event_start_date;
 			$recurrence['recurrence_start_date']    = '';
 			$recurrence['recurrence_end_date']      = '';
 		} else {
-			$recurrence['recurrence_specific_days'] = '';
+			$recurrence['specific_days'] = '';
 			$recurrence['recurrence_start_date']    = isset( $_POST['recurrence_start_date'] ) ? eme_sanitize_request( $_POST['recurrence_start_date'] ) : $event_start_date;
 			$recurrence['recurrence_end_date']      = isset( $_POST['recurrence_end_date'] ) ? eme_sanitize_request( $_POST['recurrence_end_date'] ) : $event_end_date;
 		}
@@ -441,8 +441,8 @@ function eme_events_page() {
 		if ( ! eme_is_date( $recurrence['recurrence_end_date'] ) ) {
 			$recurrence['recurrence_end_date'] = $recurrence['recurrence_start_date'];
 		}
-		if ( ! eme_are_dates_valid( $recurrence['recurrence_specific_days'] ) ) {
-			$recurrence['recurrence_specific_days'] = '';
+		if ( ! eme_are_dates_valid( $recurrence['specific_days'] ) ) {
+			$recurrence['specific_days'] = '';
 		}
 		if ( $recurrence['recurrence_freq'] == 'weekly' ) {
 			if ( isset( $_POST['recurrence_bydays'] ) ) {
@@ -451,7 +451,7 @@ function eme_events_page() {
 				$recurrence['recurrence_byday'] = '';
 			}
 		} elseif ( isset( $_POST['recurrence_byday'] ) ) {
-				$recurrence['recurrence_byday'] = eme_sanitize_request( $_POST['recurrence_byday'] );
+			$recurrence['recurrence_byday'] = eme_sanitize_request( $_POST['recurrence_byday'] );
 		} else {
 			$recurrence['recurrence_byday'] = '';
 		}
@@ -461,6 +461,7 @@ function eme_events_page() {
 		}
 		$recurrence['recurrence_byweekno'] = isset( $_POST['recurrence_byweekno'] ) ? eme_sanitize_request( $_POST['recurrence_byweekno'] ) : '';
 		$recurrence['holidays_id']         = isset( $_POST['holidays_id'] ) ? intval( $_POST['holidays_id'] ) : 0;
+		$recurrence['specific_months']     = isset( $_POST['specific_months'] ) ? implode(',',eme_sanitize_request( $_POST['specific_months'] )) : '';
 
 		// set the location info
 		$post_vars = [ 'location_name', 'location_address1', 'location_address2', 'location_city', 'location_state', 'location_zip', 'location_country', 'location_latitude', 'location_longitude', 'location_url' ];
@@ -7089,6 +7090,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 		'weekly'   => __( 'Weekly', 'events-made-easy' ),
 		'monthly'  => __( 'Monthly', 'events-made-easy' ),
 		'specific' => __( 'Specific days', 'events-made-easy' ),
+		'specific_months' => __( 'Specific months', 'events-made-easy' ),
 	];
 	$days_names           = [
 		1 => $wp_locale->get_weekday_abbrev( __( 'Monday' ) ),
@@ -7099,7 +7101,20 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 		6 => $wp_locale->get_weekday_abbrev( __( 'Saturday' ) ),
 		7 => $wp_locale->get_weekday_abbrev( __( 'Sunday' ) ),
 	];
-	$saved_bydays         = explode( ',', $recurrence['recurrence_byday'] );
+	$month_names = [];
+	for ($i=1;$i<=12;$i++) {
+		$month_names[$i] = $wp_locale->get_month_abbrev( $wp_locale->get_month( $i ));
+	}
+	if (empty($recurrence['recurrence_byday'])) {
+		$saved_bydays = [];
+	} else {
+		$saved_bydays = explode( ',', $recurrence['recurrence_byday'] );
+	}
+	if (empty($recurrence['specific_months'])) {
+		$choosen_months = [];
+	} else {
+		$choosen_months = explode( ',', $recurrence['specific_months'] );
+	}
 	$weekno_options       = [
 		'1'  => __( 'first', 'events-made-easy' ),
 		'2'  => __( 'second', 'events-made-easy' ),
@@ -7111,7 +7126,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 	];
 	$holidays_array_by_id = eme_get_holidays_array_by_id();
 	if ( $edit_recurrence && $recurrence['recurrence_freq'] == 'specific' ) {
-		$recurrence_start_date = $recurrence['recurrence_specific_days'];
+		$recurrence_start_date = $recurrence['specific_days'];
 	} else {
 		$recurrence_start_date = $recurrence['recurrence_start_date'];
 	}
@@ -7140,6 +7155,9 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 			<p>
 			<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
 			<input id="recurrence-interval" name='recurrence_interval' size='2' value='<?php if ( isset( $recurrence['recurrence_interval'] ) ) { echo $recurrence['recurrence_interval'];} ?>'>
+			<span id="specific_months_span">
+			<?php eme_checkbox_items( 'specific_months[]', $month_names, $choosen_months ); ?>
+			</span>
 			<span class='interval-desc' id="interval-daily-singular"> <?php esc_html_e( 'day', 'events-made-easy' ); ?></span>
 			<span class='interval-desc' id="interval-daily-plural"> <?php esc_html_e( 'days', 'events-made-easy' ); ?></span>
 			<span class='interval-desc' id="interval-weekly-singular"> <?php esc_html_e( 'week', 'events-made-easy' ); ?></span>
@@ -7153,6 +7171,19 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 				<?php esc_html_e( 'If you leave this empty, the recurrence start date will be used as a reference.', 'events-made-easy' ); ?>
 			</span>
 			<span class="alternate-selector" id="monthly-selector">
+				<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
+				<select id="monthly-modifier" name="recurrence_byweekno">
+					<?php eme_option_items( $weekno_options, $recurrence['recurrence_byweekno'] ); ?>
+				</select>
+				<select id="recurrence-weekday" name="recurrence_byday">
+					<?php eme_option_items( $days_names, $recurrence['recurrence_byday'] ); ?>
+				</select>
+				<?php esc_html_e( 'Day of month', 'events-made-easy' ); ?>
+				<br>
+				<?php esc_html_e( 'If you use "Start day" as day of the month, the recurrence start date will be used as a reference.', 'events-made-easy' ); ?>
+				&nbsp;
+			</span>
+			<span class="alternate-selector" id="specific_months-selector">
 				<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
 				<select id="monthly-modifier" name="recurrence_byweekno">
 					<?php eme_option_items( $weekno_options, $recurrence['recurrence_byweekno'] ); ?>

@@ -7137,57 +7137,55 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 			<?php eme_option_items( $freq_options, $recurrence['recurrence_freq'] ); ?>
 		</select>
 		<div id="recurrence-intervals">
-							<p>
-								<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
-								<input id="recurrence-interval" name='recurrence_interval'
-								size='2' value='<?php if ( isset( $recurrence['recurrence_interval'] ) ) { echo $recurrence['recurrence_interval'];} ?>'>
-					<span class='interval-desc' id="interval-daily-singular"> <?php esc_html_e( 'day', 'events-made-easy' ); ?></span>
-					<span class='interval-desc' id="interval-daily-plural"> <?php esc_html_e( 'days', 'events-made-easy' ); ?></span>
-								<span class='interval-desc' id="interval-weekly-singular"> <?php esc_html_e( 'week', 'events-made-easy' ); ?></span>
-								<span class='interval-desc' id="interval-weekly-plural"> <?php esc_html_e( 'weeks', 'events-made-easy' ); ?></span>
-								<span class='interval-desc' id="interval-monthly-singular"> <?php esc_html_e( 'month', 'events-made-easy' ); ?></span>
-								<span class='interval-desc' id="interval-monthly-plural"> <?php esc_html_e( 'months', 'events-made-easy' ); ?></span>
-								<br>
-							<span class="alternate-selector" id="weekly-selector">
-								<?php eme_checkbox_items( 'recurrence_bydays[]', $days_names, $saved_bydays ); ?>
-								<br>
-								<?php esc_html_e( 'If you leave this empty, the recurrence start date will be used as a reference.', 'events-made-easy' ); ?>
-							</span>
-							<span class="alternate-selector" id="monthly-selector">
-								<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
-								<select id="monthly-modifier" name="recurrence_byweekno">
-								<?php eme_option_items( $weekno_options, $recurrence['recurrence_byweekno'] ); ?>
-								</select>
-								<select id="recurrence-weekday" name="recurrence_byday">
-								<?php eme_option_items( $days_names, $recurrence['recurrence_byday'] ); ?>
-								</select>
-								<?php esc_html_e( 'Day of month', 'events-made-easy' ); ?>
-								<br>
-								<?php esc_html_e( 'If you use "Start day" as day of the month, the recurrence start date will be used as a reference.', 'events-made-easy' ); ?>
-								&nbsp;
-							</span>
-							</p>
-	</div>
-	<?php
-	if ( ! empty( $holidays_array_by_id ) ) {
-		esc_html_e( 'Holidays: ', 'events-made-easy' );
-		echo eme_ui_select( $recurrence['holidays_id'], 'holidays_id', $holidays_array_by_id );
-		?>
-	<p class="eme_smaller">
+			<p>
+			<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
+			<input id="recurrence-interval" name='recurrence_interval' size='2' value='<?php if ( isset( $recurrence['recurrence_interval'] ) ) { echo $recurrence['recurrence_interval'];} ?>'>
+			<span class='interval-desc' id="interval-daily-singular"> <?php esc_html_e( 'day', 'events-made-easy' ); ?></span>
+			<span class='interval-desc' id="interval-daily-plural"> <?php esc_html_e( 'days', 'events-made-easy' ); ?></span>
+			<span class='interval-desc' id="interval-weekly-singular"> <?php esc_html_e( 'week', 'events-made-easy' ); ?></span>
+			<span class='interval-desc' id="interval-weekly-plural"> <?php esc_html_e( 'weeks', 'events-made-easy' ); ?></span>
+			<span class='interval-desc' id="interval-monthly-singular"> <?php esc_html_e( 'month', 'events-made-easy' ); ?></span>
+			<span class='interval-desc' id="interval-monthly-plural"> <?php esc_html_e( 'months', 'events-made-easy' ); ?></span>
+			<br>
+			<span class="alternate-selector" id="weekly-selector">
+				<?php eme_checkbox_items( 'recurrence_bydays[]', $days_names, $saved_bydays ); ?>
+				<br>
+				<?php esc_html_e( 'If you leave this empty, the recurrence start date will be used as a reference.', 'events-made-easy' ); ?>
+			</span>
+			<span class="alternate-selector" id="monthly-selector">
+				<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
+				<select id="monthly-modifier" name="recurrence_byweekno">
+					<?php eme_option_items( $weekno_options, $recurrence['recurrence_byweekno'] ); ?>
+				</select>
+				<select id="recurrence-weekday" name="recurrence_byday">
+					<?php eme_option_items( $days_names, $recurrence['recurrence_byday'] ); ?>
+				</select>
+				<?php esc_html_e( 'Day of month', 'events-made-easy' ); ?>
+				<br>
+				<?php esc_html_e( 'If you use "Start day" as day of the month, the recurrence start date will be used as a reference.', 'events-made-easy' ); ?>
+				&nbsp;
+			</span>
+			</p>
+		</div>
 		<?php
-		esc_html_e( 'No events will be created on days matching an entry in the holidays list', 'events-made-easy' );
+		if ( ! empty( $holidays_array_by_id ) ) {
+			esc_html_e( 'Holidays: ', 'events-made-easy' );
+			echo eme_ui_select( $recurrence['holidays_id'], 'holidays_id', $holidays_array_by_id );
 		?>
-	</p>
+			<p class="eme_smaller">
+			<?php
+			esc_html_e( 'No events will be created on days matching an entry in the holidays list', 'events-made-easy' );
+			?>
+			</p>
 		<?php
-	}
-	?>
+		}
+		?>
 	</div>
 </div>
 	<?php
 }
 
 function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
-	
 	if ( eme_is_empty_string( $event['event_page_title_format'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7216,18 +7214,17 @@ function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
 }
 
 function eme_meta_box_div_event_single_event_format( $event, $templates_array ) {
-	
 	if ( eme_is_empty_string( $event['event_single_event_format'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
 		$showhide_style = 'style="width:100%;"';
 	}
 	?>
-<div id="div_event_single_event_format">
-		<br>
-		<?php
-		echo '<b>' . esc_html__( 'Single Event', 'events-made-easy' ) . '</b>';
-		?>
+	<div id="div_event_single_event_format">
+	<br>
+	<?php
+	echo '<b>' . esc_html__( 'Single Event', 'events-made-easy' ) . '</b>';
+	?>
 	<p class="eme_smaller">
 	<?php esc_html_e( 'The format of the single event page.', 'events-made-easy' ); ?>
 	<br>
@@ -7253,12 +7250,11 @@ function eme_meta_box_div_event_single_event_format( $event, $templates_array ) 
 	}
 	?>
 	</div>
-</div>
+	</div>
 	<?php
 }
 
 function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_array ) {
-	
 	if ( eme_is_empty_string( $event['event_properties']['contactperson_registration_ipn_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {

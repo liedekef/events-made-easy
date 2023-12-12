@@ -2097,55 +2097,66 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				}
 			} elseif ( preg_match( '/#_IMAGETITLE$/', $result ) ) {
 				if ( ! empty( $location['location_image_id'] ) ) {
-					$info        = eme_get_wp_image( $location['location_image_id'] );
-					$replacement = $info['title'];
-					if ( $target == 'html' ) {
-						$replacement = apply_filters( 'eme_general', $replacement );
-					} elseif ( $target == 'rss' ) {
-						$replacement = apply_filters( 'the_content_rss', $replacement );
-					} else {
-						$replacement = apply_filters( 'eme_text', $replacement );
+					$info = eme_get_wp_image( $location['location_image_id'] );
+					if (!empty($info)) {
+						$replacement = $info['title'];
+						if ( $target == 'html' ) {
+							$replacement = apply_filters( 'eme_general', $replacement );
+						} elseif ( $target == 'rss' ) {
+							$replacement = apply_filters( 'the_content_rss', $replacement );
+						} else {
+							$replacement = apply_filters( 'eme_text', $replacement );
+						}
 					}
 				}
 			} elseif ( preg_match( '/#_IMAGEALT$/', $result ) ) {
 				if ( ! empty( $location['location_image_id'] ) ) {
-					$info        = eme_get_wp_image( $location['location_image_id'] );
-					$replacement = $info['alt'];
-					if ( $target == 'html' ) {
-						$replacement = apply_filters( 'eme_general', $replacement );
-					} elseif ( $target == 'rss' ) {
-						$replacement = apply_filters( 'the_content_rss', $replacement );
-					} else {
-						$replacement = apply_filters( 'eme_text', $replacement );
+					$info = eme_get_wp_image( $location['location_image_id'] );
+					if (!empty($info)) {
+						$replacement = $info['alt'];
+						if ( $target == 'html' ) {
+							$replacement = apply_filters( 'eme_general', $replacement );
+						} elseif ( $target == 'rss' ) {
+							$replacement = apply_filters( 'the_content_rss', $replacement );
+						} else {
+							$replacement = apply_filters( 'eme_text', $replacement );
+						}
 					}
 				}
 			} elseif ( preg_match( '/#_IMAGECAPTION$/', $result ) ) {
 				if ( ! empty( $location['location_image_id'] ) ) {
-					$info        = eme_get_wp_image( $location['location_image_id'] );
-					$replacement = $info['caption'];
-					if ( $target == 'html' ) {
-						$replacement = apply_filters( 'eme_general', $replacement );
-					} elseif ( $target == 'rss' ) {
-						$replacement = apply_filters( 'the_content_rss', $replacement );
-					} else {
-						$replacement = apply_filters( 'eme_text', $replacement );
+					$info = eme_get_wp_image( $location['location_image_id'] );
+					if (!empty($info)) {
+						$replacement = $info['caption'];
+						if ( $target == 'html' ) {
+							$replacement = apply_filters( 'eme_general', $replacement );
+						} elseif ( $target == 'rss' ) {
+							$replacement = apply_filters( 'the_content_rss', $replacement );
+						} else {
+							$replacement = apply_filters( 'eme_text', $replacement );
+						}
 					}
 				}
 			} elseif ( preg_match( '/#_IMAGEDESCRIPTION$/', $result ) ) {
 				if ( ! empty( $location['location_image_id'] ) ) {
-					$info        = eme_get_wp_image( $location['location_image_id'] );
-					$replacement = $info['description'];
-					if ( $target == 'html' ) {
-						$replacement = apply_filters( 'eme_general', $replacement );
-					} elseif ( $target == 'rss' ) {
-						$replacement = apply_filters( 'the_content_rss', $replacement );
-					} else {
-						$replacement = apply_filters( 'eme_text', $replacement );
+					$info = eme_get_wp_image( $location['location_image_id'] );
+					if (!empty($info)) {
+						$replacement = $info['description'];
+						if ( $target == 'html' ) {
+							$replacement = apply_filters( 'eme_general', $replacement );
+						} elseif ( $target == 'rss' ) {
+							$replacement = apply_filters( 'the_content_rss', $replacement );
+						} else {
+							$replacement = apply_filters( 'eme_text', $replacement );
+						}
 					}
 				}
 			} elseif ( preg_match( '/#_IMAGE$/', $result ) ) {
 				if ( ! empty( $location['location_image_id'] ) ) {
 					$replacement = wp_get_attachment_image( $location['location_image_id'], 'full', 0, [ 'class' => 'eme_location_image' ] );
+					if (empty($replacement)) {
+						$replacement = "";
+					}
 				} elseif ( ! empty( $location['location_image_url'] ) ) {
 					$url = $location['location_image_url'];
 					if ( $target == 'html' ) {
@@ -2165,6 +2176,9 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			} elseif ( preg_match( '/#_IMAGEURL$/', $result ) ) {
 				if ( ! empty( $location['location_image_id'] ) ) {
 					$replacement = wp_get_attachment_image_url( $location['location_image_id'], 'full' );
+					if (empty($replacement)) {
+						$replacement = "";
+					}
 				} elseif ( ! empty( $location['location_image_url'] ) ) {
 					$replacement = $location['location_image_url'];
 				}
@@ -2180,6 +2194,9 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				}
 				if ( ! empty( $location['location_image_id'] ) ) {
 					$replacement = wp_get_attachment_image( $location['location_image_id'], $thumb_size, 0, [ 'class' => 'eme_location_image' ] );
+					if (empty($replacement)) {
+						$replacement = "";
+					}
 					if ( $target == 'html' ) {
 						$replacement = apply_filters( 'eme_general', $replacement );
 					} elseif ( $target == 'rss' ) {
@@ -2197,6 +2214,9 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				}
 				if ( ! empty( $location['location_image_id'] ) ) {
 					$replacement = wp_get_attachment_image_url( $location['location_image_id'], $thumb_size );
+					if (empty($replacement)) {
+						$replacement = "";
+					}
 					if ( $target == 'html' ) {
 						$replacement = esc_url( $replacement );
 					}
@@ -2522,8 +2542,12 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 			}
 
 			if ( $found ) {
+				// to be sure
+				if (is_null($replacement)) {
+					$replacement = "";
+				}
 				if ( $need_escape ) {
-					$replacement = eme_sanitize_request( eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) ) );
+					$replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
 				}
 				if ( $need_urlencode ) {
 					$replacement = rawurlencode( $replacement );
@@ -2645,6 +2669,10 @@ function eme_replace_locationnotes_placeholders( $format, $location, $target = '
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 			if ( $found ) {
+				// to be sure
+				if (is_null($replacement)) {
+					$replacement = "";
+				}
 				if ( $need_escape ) {
 					$replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
 				}

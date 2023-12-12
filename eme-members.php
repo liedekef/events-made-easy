@@ -5141,6 +5141,10 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			$found = 0;
 		}
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format     = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -5200,6 +5204,10 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 				$found = 0;
 			}
 			if ( $found ) {
+				// to be sure
+				if (is_null($replacement)) {
+					$replacement = "";
+				}
 				$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 				$needle_offset += $orig_result_length - strlen( $replacement );
 			}
@@ -5396,6 +5404,10 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 			$found = 0;
 		}
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}

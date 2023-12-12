@@ -1038,6 +1038,10 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -1371,6 +1375,10 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -1578,6 +1586,10 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -1712,6 +1724,10 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -2137,6 +2153,10 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -2260,6 +2280,10 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -2373,6 +2397,10 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -3427,6 +3455,10 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -3644,6 +3676,10 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 			}
 		}
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -4243,6 +4279,10 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -4459,6 +4499,10 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -4791,6 +4835,10 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			}
 		}
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}

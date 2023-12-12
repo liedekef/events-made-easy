@@ -286,6 +286,10 @@ function eme_replace_email_event_placeholders( $format, $email, $lastname, $firs
 			$found = 0;
 		}
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
@@ -475,55 +479,66 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 			}
 		} elseif ( preg_match( '/#_IMAGETITLE$/', $result ) ) {
 			if ( ! empty( $person['properties']['image_id'] ) ) {
-				$info        = eme_get_wp_image( $person['properties']['image_id'] );
-				$replacement = $info['title'];
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+				$info = eme_get_wp_image( $person['properties']['image_id'] );
+				if (!empty($info)) {
+					$replacement = $info['title'];
+					if ( $target == 'html' ) {
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
 				}
 			}
 		} elseif ( preg_match( '/#_IMAGEALT$/', $result ) ) {
 			if ( ! empty( $person['properties']['image_id'] ) ) {
-				$info        = eme_get_wp_image( $person['properties']['image_id'] );
-				$replacement = $info['alt'];
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+				$info = eme_get_wp_image( $person['properties']['image_id'] );
+				if (!empty($info)) {
+					$replacement = $info['alt'];
+					if ( $target == 'html' ) {
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
 				}
 			}
 		} elseif ( preg_match( '/#_IMAGECAPTION$/', $result ) ) {
 			if ( ! empty( $person['properties']['image_id'] ) ) {
-				$info        = eme_get_wp_image( $person['properties']['image_id'] );
-				$replacement = $info['caption'];
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+				$info = eme_get_wp_image( $person['properties']['image_id'] );
+				if (!empty($info)) {
+					$replacement = $info['caption'];
+					if ( $target == 'html' ) {
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
 				}
 			}
 		} elseif ( preg_match( '/#_IMAGEDESCRIPTION$/', $result ) ) {
 			if ( ! empty( $person['properties']['image_id'] ) ) {
-				$info        = eme_get_wp_image( $person['properties']['image_id'] );
-				$replacement = $info['description'];
-				if ( $target == 'html' ) {
-					$replacement = apply_filters( 'eme_general', $replacement );
-				} elseif ( $target == 'rss' ) {
-					$replacement = apply_filters( 'the_content_rss', $replacement );
-				} else {
-					$replacement = apply_filters( 'eme_text', $replacement );
+				$info = eme_get_wp_image( $person['properties']['image_id'] );
+				if (!empty($info)) {
+					$replacement = $info['description'];
+					if ( $target == 'html' ) {
+						$replacement = apply_filters( 'eme_general', $replacement );
+					} elseif ( $target == 'rss' ) {
+						$replacement = apply_filters( 'the_content_rss', $replacement );
+					} else {
+						$replacement = apply_filters( 'eme_text', $replacement );
+					}
 				}
 			}
 		} elseif ( preg_match( '/#_IMAGE$/', $result ) ) {
 			if ( ! empty( $person['properties']['image_id'] ) ) {
 				$replacement = wp_get_attachment_image( $person['properties']['image_id'], 'full', 0, [ 'class' => 'eme_person_image' ] );
+				if (empty($replacement)) {
+					$replacement = "";
+				}
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -535,6 +550,9 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 		} elseif ( preg_match( '/#_IMAGEURL$/', $result ) ) {
 			if ( ! empty( $person['properties']['image_id'] ) ) {
 				$replacement = wp_get_attachment_image_url( $person['properties']['image_id'], 'full' );
+				if (empty($replacement)) {
+					$replacement = "";
+				}
 				if ( $target == 'html' ) {
 					$replacement = esc_url( $replacement );
 				}
@@ -548,6 +566,9 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                         }
 			if ( ! empty( $person['properties']['image_id'] ) ) {
 				$replacement = wp_get_attachment_image( $person['properties']['image_id'], $thumb_size, 0, [ 'class' => 'eme_person_image' ] );
+				if (empty($replacement)) {
+					$replacement = "";
+				}
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -565,6 +586,9 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                         }
 			if ( ! empty( $person['properties']['image_id'] ) ) {
 				$replacement = wp_get_attachment_image_url( $person['properties']['image_id'], $thumb_size );
+				if (empty($replacement)) {
+					$replacement = "";
+				}
 				if ( $target == 'html' ) {
 					$replacement = esc_url( $replacement );
 				}
@@ -730,14 +754,18 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 		}
 
 		if ( $found ) {
+			// to be sure
+			if (is_null($replacement)) {
+				$replacement = "";
+			}
 			if ( $need_escape ) {
 				$replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
 			}
 			if ( $need_urlencode ) {
 				$replacement = rawurlencode( $replacement );
 			}
-			$format                     = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
-						$needle_offset += $orig_result_length - strlen( $replacement );
+			$format = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
+			$needle_offset += $orig_result_length - strlen( $replacement );
 		}
 	}
 

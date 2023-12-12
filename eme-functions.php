@@ -2666,6 +2666,9 @@ function eme_getValueFromPath( $arr, $path ) {
 
 function eme_get_wp_image( $image_id ) {
 	$image = get_post( $image_id );
+	if (empty($image)) {
+		return false;
+	}
 	return [
 		'alt'         => get_post_meta( $image->ID, '_wp_attachment_image_alt', true ),
 		'caption'     => $image->post_excerpt,

@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.4.2
-Stable tag: 2.4.18
+Stable tag: 2.4.19
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.19 (2023//) =
+= 2.4.19 (2023/12/12) =
 * Added a new recurrence period "specific months", so you can choose on which months something transpires and repeat per year
 * Avoid php warnings if an image for an event/person/location/... no longer exists
 * Avoid possible XSS via shortcode eme_events and the format option

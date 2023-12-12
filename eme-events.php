@@ -4694,6 +4694,9 @@ function eme_get_events_list_shortcode( $atts ) {
 
 	// if format is given as argument, sometimes people need url-encoded strings inside so WordPress doesn't get confused, so we decode them here again
 	$format = urldecode( $format );
+	// to avoid shortcode-XSS by a contributor (eme_strip_js is identical to eme_kses, so we call that)
+	$format = eme_kses( $format );
+
 	// for format: sometimes people want to give placeholders as options, but when using the shortcode inside
 	// another (e.g. when putting[eme_events format="#_EVENTNAME"] inside the "display single event" setting,
 	// the replacement of the placeholders happens too soon (placeholders get replaced first, before any other

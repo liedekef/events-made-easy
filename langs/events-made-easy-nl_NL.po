@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
 "POT-Creation-Date: 2023-12-12 18:54:08+00:00\n"
-"PO-Revision-Date: 2023-12-05 18:30+0100\n"
+"PO-Revision-Date: 2023-12-12 23:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -3077,9 +3077,8 @@ msgid "Specific days"
 msgstr "Specifieke dagen"
 #
 # File: eme-events.php, line: 7134
-#, fuzzy
 msgid "Specific months"
-msgstr "Specifieke dagen"
+msgstr "Specifieke maanden"
 #
 # File: eme-events.php, line: 7160
 msgid "first"
@@ -17182,8 +17181,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Send Emails"
 #~ msgstr "Verstuur e-mails"
+#
 #
 #
 #
@@ -17197,8 +17198,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "No bookings made yet."
 #~ msgstr "Nog geen boekingen gemaakt."
+#
 #
 #
 #
@@ -17259,8 +17262,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "Converteer het einde van een lijn"
+#
 #
 #
 #
@@ -17325,12 +17330,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
 #~ msgstr ""
 #~ "Als je niet wil dat dit gebeurt (bv. voor een template die je gebruikt in "
 #~ "een tabel-rij), deselecteer deze optie."
+#
 #
 #
 #
@@ -17415,9 +17422,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "See <a href=\"%s\">here</a> for more info on country code."
 #~ msgstr "Zie <a href=\"%s\">hier</a> voor meer info over landcodes"
+#
 #
 #
 #
@@ -17531,6 +17540,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -17538,6 +17548,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Bestand uploaden is hier niet toegestaan, gebruik de normale WP "
 #~ "mediabibliotheek om bestanden te uploaden of gebruik de knop 'Media "
 #~ "toevoegen' in de locatiebeschrijving."
+#
 #
 #
 #
@@ -17646,8 +17657,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Geüploade bestanden"
+#
 #
 #
 #
@@ -17758,8 +17771,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "De geselecteerde taakaanmeldingen zijn succesvol verwijderd."
+#
 #
 #
 #
@@ -17873,8 +17888,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Onjuist IDs meegegeven. Probeer het nog eens."
+#
 #
 #
 #
@@ -17994,6 +18011,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
@@ -18001,6 +18019,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "De template moet minstens de placeholders #_LASTNAME, #_FIRSTNAME, "
 #~ "#_EMAIL en #_SUBMIT bevatten. Anders zal het formulier niet getoond "
 #~ "worden."
+#
 #
 #
 #

@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.20 (2023//) =
+* Avoid being able to create an identical person (same name/email) in the backend
+
 = 2.4.19 (2023/12/12) =
 * Added a new recurrence period "specific months", so you can choose on which months something transpires and repeat per year
 * Avoid php warnings if an image for an event/person/location/... no longer exists

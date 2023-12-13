@@ -3589,6 +3589,18 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
 	}
 	$failure = '';
 	if ( $person_id ) {
+		// first check if some exists by name and email, if so: refuse
+		$t_person = eme_get_person_by_name_and_email( $person['lastname'], $person['firstname'], $person['email'] );
+		if ($t_person) {
+			$failure   = '<p>' . esc_html__( 'A person with this name and email already exists', 'events-made-easy' ) . '</p>';
+			$person_id = 0;
+			$res       = [
+				0 => $failure,
+				1 => $person_id,
+			];
+			return $res;
+		}
+
 		$updated_personid = eme_db_update_person( $person_id, $person );
 		if ( $updated_personid ) {
 			eme_update_persongroups( $updated_personid, $groups );

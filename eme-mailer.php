@@ -2154,7 +2154,7 @@ function eme_emails_page() {
 <div class="wrap">
 <div id="icon-events" class="icon32">
 </div>
-<div id="mail-tabs" style="display: none;" <?php echo $data_forced_tab; ?>>
+<div id="mail-tabs" style="display: none; width: fit-content; min-width: 100%;" <?php echo $data_forced_tab; ?>>
 	<ul>
 	<li><a href="#tab-eventmails"><?php esc_html_e( 'Event related email', 'events-made-easy' ); ?></a></li>
 	<li><a href="#tab-genericmails"><?php esc_html_e( 'Generic email', 'events-made-easy' ); ?></a></li>

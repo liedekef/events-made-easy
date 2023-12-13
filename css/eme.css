@@ -231,8 +231,8 @@ table.eme-calendar-table thead {
 	font-weight: bold;
 }
 table.eme-calendar-table th.month_name, div.month_name {
-	text-align:center;
-	vertical-align:middle;
+	text-align: center;
+	vertical-align: middle;
 }
 
 /*
@@ -241,9 +241,9 @@ table.eme-calendar-table th.month_name, div.month_name {
 }
 */
 table.fullcalendar {
-	table-layout:fixed;
-	border-collapse:collapse;
-	width:100%;
+	table-layout: fixed;
+	border-collapse: collapse;
+	width: 100%;
 }
 #content table.fullcalendar td {
 	border:1px solid #000;
@@ -271,9 +271,9 @@ table.fullcalendar a.next-month img, table.smallcalendar a.next-month img {
 	display: inline;
 }
 table.fullcalendar tr.days-names td, div.days-names {
-	height:1.4em;
-	text-align:center;
-	vertical-align:middle;
+	height: 1.4em;
+	text-align: center;
+	vertical-align: middle;
 }
 table.fullcalendar tbody td {
 	height:4em;

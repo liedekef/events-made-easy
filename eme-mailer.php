@@ -1373,7 +1373,7 @@ function eme_send_mails_ajax_actions( $action ) {
 			echo wp_json_encode( $ajaxResult );
 			wp_die();
 		}
-		$res = '<table class="eme_mailings_table"><tr>' .
+		$res = '<table class="eme_mailings_table"><thead><tr>' .
 			'<th>' . __( 'Sender name', 'events-made-easy' ) . '</th>' .
 			'<th>' . __( 'Sender email', 'events-made-easy' ) . '</th>' .
 			'<th>' . __( 'Name', 'events-made-easy' ) . '</th>' .
@@ -1388,7 +1388,7 @@ function eme_send_mails_ajax_actions( $action ) {
 			'<th>' . __( 'Error message', 'events-made-easy' ) . '</th>' ;
 		if ($actions_allowed)
 			$res .= '<th>' . __( 'Action', 'events-made-easy' ) . '</th>' ;
-		$res .= '</tr>';
+		$res .= '</tr></thead><tbody>';
 
 		$states = eme_mail_localizedstates();
 		foreach ( $rows as $item ) {
@@ -1439,6 +1439,7 @@ function eme_send_mails_ajax_actions( $action ) {
 			$row .= '</tr>';
 			$res .= $row;
 		}
+		$res .= '</tbody></table>';
 		$ajaxResult['htmlmessage'] = $res;
 		$ajaxResult['Result']      = 'OK';
 		echo wp_json_encode( $ajaxResult );
@@ -2174,7 +2175,7 @@ function eme_emails_page() {
 		echo $label;
 		?>
 		</td>
-		<td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 0, 'eme_select2_events_class', $aria_label ); ?></td>
+		<td><?php echo eme_ui_multiselect( $event_ids, 'event_ids', $myevents, 5, '', 0, 'eme_select2_events_class', $aria_label ); ?>
 		<br><input id="eventsearch_all" name='eventsearch_all' value='1' type='checkbox'> <?php esc_html_e( 'Check this box to search through all events and not just future ones.', 'events-made-easy' ); ?>
 			<p class='eme_smaller'><?php esc_html_e( 'Remark: if you select multiple events, a mailing will be created for each selected event', 'events-made-easy' ); ?></p>
 		</td>
@@ -2280,20 +2281,23 @@ function eme_emails_page() {
 		<br>
 		<?php
 		esc_html_e( 'Or enter your own: ', 'events-made-easy' );
+		?>
+		</p>
+		<?php
 		if ( get_option( 'eme_rsvp_send_html' ) ) {
 			// for mails, let enable the full html editor
 			$eme_editor_settings = eme_get_editor_settings( true );
 			wp_editor( $event_mail_message, 'event_mail_message', $eme_editor_settings );
 			if ( current_user_can( 'unfiltered_html' ) ) {
-						echo "<div class='eme_notice_unfiltered_html'>";
-						esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
-						echo '</div>';
+				echo "<div class='eme_notice_unfiltered_html'>";
+				esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
+				echo '</div>';
 			}
 		} else {
 			echo "<textarea name='event_mail_message' id='event_mail_message' rows='10' required='required'>" . eme_esc_html( $event_mail_message ) . '</textarea>';
 		}
 		?>
-			</p></div>
+		</div>
 		<div><p>
 		<?php
 		esc_html_e( 'You can use any placeholders mentioned here:', 'events-made-easy' );
@@ -2311,9 +2315,9 @@ function eme_emails_page() {
 		<b><?php esc_html_e( 'Optionally add attachments to your mailing', 'events-made-easy' ); ?></b><br>
 		<span id="eventmail_attach_links"><?php echo $attach_url_string; ?></span>
 		<input type="hidden" name="eme_eventmail_attach_ids" id="eme_eventmail_attach_ids" value="<?php echo $attachment_ids; ?>">
-			<input type="button" name="eventmail_attach_button" id="eventmail_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
-			<input type="button" name="eventmail_remove_attach_button" id="eventmail_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
-			</p>
+		<input type="button" name="eventmail_attach_button" id="eventmail_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
+		<input type="button" name="eventmail_remove_attach_button" id="eventmail_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
+		</p>
 		</div>
 		<?php
 		if ( $eme_queue_mails ) {
@@ -2460,6 +2464,9 @@ function eme_emails_page() {
 		<br>
 		<?php
 		esc_html_e( 'Or enter your own: ', 'events-made-easy' );
+		?>
+		</p>
+		<?php
 		if ( get_option( 'eme_rsvp_send_html' ) ) {
 			// for mails, let enable the full html editor
 			$eme_editor_settings = eme_get_editor_settings( true );
@@ -2473,7 +2480,6 @@ function eme_emails_page() {
 			echo "<textarea name='generic_mail_message' id='generic_mail_message' rows='10' required='required'>" . eme_esc_html( $generic_mail_message ) . '</textarea>';
 		}
 		?>
-		</p>
 		</div>
 		<div>
 		<?php

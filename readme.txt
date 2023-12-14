@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * More verifications done when checking for people integrity
 * Better person image representation in the backend
 * Make frontend member editing also work for dynamic data
+* Upgrade dompdf to fix a small security issue
 
 = 2.4.19 (2023/12/12) =
 * Added a new recurrence period "specific months", so you can choose on which months something transpires and repeat per year

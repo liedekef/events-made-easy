@@ -1645,11 +1645,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 	if ( ! $from_backend ) {
 		$form_html  = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
 		<div id='eme-member-addmessage-ok-$form_id' class='eme-message-success eme-member-message eme-member-message-success eme-hidden'></div><div id='eme-member-addmessage-error-$form_id' class='eme-message-error eme-member-message eme-member-message-error eme-hidden'></div><div id='div_eme-payment-form-$form_id' class='eme-payment-form'></div><div id='div_eme-member-form-$form_id' style='display: none' class='eme-showifjs'><form name='eme-member-form' id='$form_id' method='post' $form_class action='#'>";
-		if (empty($member['member_id'])) {
-			$form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
-		} else {
-			$form_html .= wp_nonce_field( 'eme_frontend '.$member['member_id'], 'eme_frontend_nonce', false, false );
-		}
+		$form_html .= wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
 		$form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>";
 	}
 	$form_html .= "<input type='hidden' id='membership_id' name='membership_id' value='$membership_id'>";
@@ -3163,7 +3159,14 @@ function eme_dyndata_member_ajax() {
 	}
 
 	if ( ! empty( $_POST['member_id'] ) ) {
-		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+		if (eme_is_admin_request()) {
+                        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+                } else {
+                        check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
+                }
+                if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
+                        wp_die();
+                }
 		$member        = eme_get_member( intval( $_POST['member_id'] ) );
 		$membership_id = $member['membership_id'];
 	} else {
@@ -3190,11 +3193,11 @@ function eme_dyndata_member_ajax() {
 					$grouping = intval( $condition['grouping'] );
 				}
 				if ( $condition['field'] == '#_GROUPS' ) {
-								$wp_id = eme_get_wpid_by_post();
-					$entered_val       = join( ',', eme_esc_html( eme_get_persongroup_names( 0, $wp_id ) ) );
+					$wp_id 	     = eme_get_wpid_by_post();
+					$entered_val = join( ',', eme_esc_html( eme_get_persongroup_names( 0, $wp_id ) ) );
 				} else {
 					// indicate "1" to make sure the answers are taken from the POST, and not from the existing member
-						$entered_val = eme_replace_member_placeholders( $condition['field'], $membership, $member, 'html', '', 1 );
+					$entered_val = eme_replace_member_placeholders( $condition['field'], $membership, $member, 'html', '', 1 );
 				}
 
 				if ( $condition['condition'] == 'eq' && $entered_val == $condition['condval'] ) {
@@ -4467,8 +4470,7 @@ function eme_add_member_ajax() {
 	}
 
 	if ( ! isset( $_POST['eme_frontend_nonce'] ) || 
-	     ( isset( $_POST['member_id'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend '.intval($_POST['member_id']) ) ) ||
-	     ( !isset( $_POST['member_id'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend') ) ) {
+	     ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend') ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			[

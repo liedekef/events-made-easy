@@ -2294,22 +2294,19 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
 }
 
 function eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $format, $grouping, $i = 0 ) {
-	$eme_is_admin_request = eme_is_admin_request();
 	$membership_id        = $membership['membership_id'];
 	$dynamic_price_class  = 'dynamicprice';
 	// the dynamic field class is used to indicate this is a dynamically added field and we don't allow extra dynamic actions on it (except the price)
 	// this helps limitting the amount of ajax requests
 	$dynamic_field_class = 'nodynamicupdates dynamicfield';
-	if ( $eme_is_admin_request && ! empty( $member['member_id'] ) ) {
-		$editing_member_from_backend = 1;
-		$dyn_answers                 = eme_get_dyndata_member_answer( $member['member_id'], $grouping, $i );
-		$files1                      = eme_get_uploaded_files( $member['person_id'], 'people' );
-		$files2                      = eme_get_uploaded_files( $member['member_id'], 'members' );
-		$files                       = array_merge( $files1, $files2 );
+	if ( ! empty( $member['member_id'] ) && current_user_can(get_option( 'eme_cap_edit_members' ) ) ) {
+		$dyn_answers = eme_get_dyndata_member_answer( $member['member_id'], $grouping, $i );
+		$files1      = eme_get_uploaded_files( $member['person_id'], 'people' );
+		$files2      = eme_get_uploaded_files( $member['member_id'], 'members' );
+		$files       = array_merge( $files1, $files2 );
 	} else {
-		$editing_member_from_backend = 0;
-		$dyn_answers                 = [];
-		$files                       = [];
+		$dyn_answers = [];
+		$files       = [];
 	}
 
 	$needle_offset = 0;
@@ -2349,8 +2346,8 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 				// when we edit a booking, there's nothing in $_POST until a field condition changes
 				// so the first time entered_val=''
 				$entered_val = eme_getValueFromPath( $_POST, $postvar_arr );
-				// if from backend and entered_val ===false, then get it from the stored answer
-				if ( $editing_member_from_backend && $entered_val === false ) {
+				// if entered_val ===false, then get it from the stored answer
+				if ( $entered_val === false ) {
 					foreach ( $dyn_answers as $answer ) {
 						if ( $answer['field_id'] == $field_id ) {
 							$entered_val = $answer['answer'];
@@ -2358,16 +2355,14 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 					}
 				}
 
-				if ( $editing_member_from_backend ) {
-					if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
-						$entered_files = [];
-						foreach ( $files as $file ) {
-							if ( $file['field_id'] == $field_id && $file['extra_id'] == "$membership_id$grouping$i" ) {
-								$entered_files[] = $file;
-							}
+				if ( $formfield['field_type'] == 'file' || $formfield['field_type'] == 'multifile' ) {
+					$entered_files = [];
+					foreach ( $files as $file ) {
+						if ( $file['field_id'] == $field_id && $file['extra_id'] == "$membership_id$grouping$i" ) {
+							$entered_files[] = $file;
 						}
-						$entered_val = $entered_files;
 					}
+					$entered_val = $entered_files;
 				}
 
 				if ( $formfield['field_required'] ) {

@@ -147,7 +147,7 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 		$url = add_query_arg( [ 'lang' => $language ], $url );
 	}
 
-	$link = "<a href='$url'>$text</a>";
+	$link = "<a href='$url'>".eme_trans_esc_html($text)."</a>";
 
 	if ( $justurl ) {
 		$result = $url;

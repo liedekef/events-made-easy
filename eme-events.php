@@ -8851,7 +8851,7 @@ function eme_rss_link( $justurl = 0, $echo = 0, $text = 'RSS', $scope = 'future'
 		$text = 'RSS';
 	}
 	$url  = site_url( "/?eme_rss=main&scope=$scope&show_ongoing=$show_ongoing&order=$order&category=$category&author=$author&contact_person=$contact_person&limit=$limit&location_id=$location_id&title=" . urlencode( $title ) );
-	$link = "<a href='$url'>$text</a>";
+	$link = "<a href='$url'>".eme_trans_esc_html($text)."</a>";
 
 	if ( $justurl ) {
 		$result = $url;
@@ -8884,13 +8884,23 @@ function eme_rss_link_shortcode( $atts ) {
 		    $atts
 		)
 	);
+	$limit = intval( $limit );
+	$justurl = filter_var( $justurl, FILTER_VALIDATE_BOOLEAN );
+	$show_ongoing = filter_var( $show_ongoing, FILTER_VALIDATE_BOOLEAN );
+	$text = eme_sanitize_request($text);
+	$scope = eme_sanitize_request($scope);
+	$order = eme_sanitize_request($order);
+	$category = eme_sanitize_request($category);
+	$author = eme_sanitize_request($author);
+	$contact_person = eme_sanitize_request($contact_person);
+	$location_id = eme_sanitize_request($location_id);
+	$title = eme_sanitize_request($title);
+
 	$result = eme_rss_link( justurl: $justurl, show_ongoing: $show_ongoing, text: $text, limit: $limit, scope: $scope, order: $order, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, title: $title );
 	return $result;
 }
 
 function eme_rss() {
-		
-
 	if ( isset( $_GET['limit'] ) ) {
 		$limit = intval( $_GET['limit'] );
 	} else {

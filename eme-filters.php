@@ -21,6 +21,12 @@ function eme_filter_form_shortcode( $atts ) {
 		)
 	);
 	$multiple = filter_var( $multiple, FILTER_VALIDATE_BOOLEAN );
+	$multisize = intval($multisize);
+	$scope_count = intval($scope_count);
+	$template_id = intval($template_id);
+	$category = eme_sanitize_request($category);
+	$notcategory = eme_sanitize_request($notcategory);
+	$submit = eme_trans_esc_html($submit);
 
 	if ( $template_id ) {
 		// when using a template, don't bother with fields, the template should contain the things needed
@@ -54,7 +60,6 @@ function eme_filter_form_shortcode( $atts ) {
 }
 
 function eme_create_week_scope( $count, $eventful = 0 ) {
-	
 	$start_of_week = get_option( 'start_of_week' );
 	$eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_date_obj->setWeekStartDay( $start_of_week );
@@ -80,7 +85,6 @@ function eme_create_week_scope( $count, $eventful = 0 ) {
 }
 
 function eme_create_month_scope( $count, $eventful = 0 ) {
-	
 	$scope        = [];
 	$scope[0]     = __( 'Select Month', 'events-made-easy' );
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );

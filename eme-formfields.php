@@ -629,7 +629,7 @@ function eme_is_multifield( $type ) {
 	return in_array( $type, [ 'dropdown', 'dropdown_multi', 'radiobox', 'radiobox_vertical', 'checkbox', 'checkbox_vertical' ] );
 }
 
-function eme_get_formfield_html( $formfield, $field_name, $entered_val, $required, $class = '', $ro = 0, $force_single = 0 ) {
+function eme_get_formfield_html( $formfield, $field_name, $entered_val, $required, $class = '', $ro = 0, $force_single = 0, $force_edit = 0 ) {
 	if ( empty( $formfield ) ) {
 		return;
 	}
@@ -670,7 +670,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 		$required_att = '';
 	}
 
-	if ( is_admin() && isset( $_REQUEST['eme_admin_action'] ) ) {
+	if ( (is_admin() && isset( $_REQUEST['eme_admin_action'] )) || $force_edit ) {
 		// fields can have a different value for front/backend for multi-fields
 		if ( ! empty( $formfield['admin_values'] ) ) {
 			$field_values = $formfield['admin_values'];
@@ -2304,9 +2304,11 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 		$files1      = eme_get_uploaded_files( $member['person_id'], 'people' );
 		$files2      = eme_get_uploaded_files( $member['member_id'], 'members' );
 		$files       = array_merge( $files1, $files2 );
+		$member_edit = 1;
 	} else {
 		$dyn_answers = [];
 		$files       = [];
+		$member_edit = 0;
 	}
 
 	$needle_offset = 0;
@@ -2369,9 +2371,9 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 					$required = 1;
 				}
 				if ( $formfield['extra_charge'] ) {
-					$replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_price_class . ' ' . $dynamic_field_class );
+					$replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_price_class . ' ' . $dynamic_field_class, 0, 0, $member_edit );
 				} else {
-					$replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_field_class );
+					$replacement = eme_get_formfield_html( $formfield, $postfield_name, $entered_val, $required, $dynamic_field_class, 0, 0, $member_edit );
 				}
 			} else {
 				$found = 0;

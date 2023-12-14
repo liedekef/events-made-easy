@@ -137,7 +137,6 @@ function eme_create_year_scope( $count, $eventful = 0 ) {
 }
 
 function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $scope_count, $category, $notcategory ) {
-
 	// if one of these changes, also the eme_events.php needs changing for the "Next page" part
 	$author_post_name          = 'eme_author_filter';
 	$contact_post_name         = 'eme_contact_filter';
@@ -254,7 +253,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				if ( ! empty( $loc_list ) ) {
 					asort( $loc_list );
 					if ( $multiple ) {
-							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, '', $aria_label );
+						$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, '', $aria_label );
 					} else {
 						$replacement = eme_ui_select( $selected_location, $loc_post_name, $loc_list, $label, 0, '', $aria_label );
 					}
@@ -284,7 +283,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				if ( ! empty( $city_list ) ) {
 					asort( $city_list );
 					if ( $multiple ) {
-							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, '', $aria_label );
+						$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, '', $aria_label );
 					} else {
 						$replacement = eme_ui_select( $selected_city, $city_post_name, $city_list, $label, 0, '', $aria_label );
 					}
@@ -314,7 +313,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				if ( ! empty( $country_list ) ) {
 					asort( $country_list );
 					if ( $multiple ) {
-							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, '', $aria_label );
+						$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, '', $aria_label );
 					} else {
 						$replacement = eme_ui_select( $selected_country, $country_post_name, $country_list, $label, 0, '', $aria_label );
 					}
@@ -378,7 +377,7 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 			}
 			// other arguments can be changed via the filter
 			if ( has_filter( 'eme_filter_searchfilter_contact' ) ) {
-					$args = apply_filters( 'eme_filter_searchfilter_contact', $args );
+				$args = apply_filters( 'eme_filter_searchfilter_contact', $args );
 			}
 			$replacement = wp_dropdown_users( $args );
 		} elseif ( preg_match( '/#_FILTER_AUTHOR(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
@@ -400,20 +399,20 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				// check if all integers
 				$exclude_arr = explode( ',', $exclude );
 				if ( eme_is_numeric_array( $exclude_arr ) ) {
-						$args['exclude'] = $exclude_arr;
+					$args['exclude'] = $exclude_arr;
 				}
 			}
 			// other arguments can be changed via the filter
 			if ( has_filter( 'eme_filter_searchfilter_author' ) ) {
-					$args = apply_filters( 'eme_filter_searchfilter_author', $args );
+				$args = apply_filters( 'eme_filter_searchfilter_author', $args );
 			}
 			$replacement = wp_dropdown_users( $args );
 		} elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) ) {
-					$postfield_name = $customfield_post_name . $formfield['field_id'];
-					$entered_val    = '';
+				$postfield_name = $customfield_post_name . $formfield['field_id'];
+				$entered_val    = '';
 				if ( isset( $_REQUEST[ $postfield_name ] ) ) {
 					$entered_val = eme_sanitize_request( $_REQUEST[ $postfield_name ] );
 				}

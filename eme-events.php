@@ -4334,7 +4334,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 					$item = join( ',', $item );
 				}
 				if ( ! empty( $item ) ) {
-						$this_page_url = add_query_arg( [ $key => $item ], $this_page_url );
+					$this_page_url = add_query_arg( [ $key => $item ], $this_page_url );
 				}
 			}
 		}
@@ -4387,7 +4387,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 					$item = join( ',', $item );
 				}
 				if ( ! empty( $item ) ) {
-						$this_page_url = add_query_arg( [ $key => $item ], $this_page_url );
+					$this_page_url = add_query_arg( [ $key => $item ], $this_page_url );
 				}
 			}
 		}
@@ -4621,7 +4621,7 @@ function eme_get_events_list_shortcode( $atts ) {
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-					$location_id = -1;
+				$location_id = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_country_filter'] ) ) {
@@ -4633,7 +4633,7 @@ function eme_get_events_list_shortcode( $atts ) {
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-					$location_id = -1;
+				$location_id = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_cat_filter'] ) ) {

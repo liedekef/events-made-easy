@@ -670,7 +670,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 		$required_att = '';
 	}
 
-	if ( (is_admin() && isset( $_REQUEST['eme_admin_action'] )) || $force_edit ) {
+	if ( (eme_is_admin_request() && isset( $_REQUEST['eme_admin_action'] )) || $force_edit ) {
 		// fields can have a different value for front/backend for multi-fields
 		if ( ! empty( $formfield['admin_values'] ) ) {
 			$field_values = $formfield['admin_values'];
@@ -722,7 +722,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 				$value = $field_values;
 			}
 			$value = eme_esc_html( $value );
-			if ( is_admin() ) {
+			if ( eme_is_admin_request() ) {
 					$html  = "<input $readonly $required_att type='text' name='$field_name' id='$field_name' value='$value' $field_attributes $class_att><br>";
 					$html .= __( 'This is a hidden field, but in the backend it is shown as text so an admin can see its value and optionally change it', 'events-made-easy' );
 			} else {
@@ -859,7 +859,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 		case 'file':
 			// file upload
 			// in the admin interface, no upload is required (otherwise edit will never work as well ...)
-			if ( eme_is_admin_request() ) {
+			if ( eme_is_admin_request() || $force_edit ) {
 				$required     = 0;
 				$required_att = '';
 			}
@@ -891,7 +891,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 		case 'multifile':
 			// file upload
 			// in the admin interface, no upload is required (otherwise edit will never work as well ...)
-			if ( eme_is_admin_request() ) {
+			if ( eme_is_admin_request() || $force_edit ) {
 					$required     = 0;
 					$required_att = '';
 			}
@@ -4250,7 +4250,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 				if ( $formfield['extra_charge'] ) {
 					$class .= " $dynamic_price_class_basic";
 				}
-				$replacement = eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $class, $field_readonly );
+				$replacement = eme_get_formfield_html( $formfield, $fieldname, $entered_val, $required, $class, $field_readonly, 0, $editing_member );
 			} else {
 				$found = 0;
 			}

@@ -2145,7 +2145,10 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 				if ( ! empty( $wp_readonly ) ) {
 					esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );}
 				?>
-			</td>
+		</td>
+		<td rowspan=10>
+		<?php echo eme_person_replace_image_input( $person ); ?>
+		</td>
 		</tr>
 		<tr>
 		<td style="vertical-align:top"><label for="firstname"><?php esc_html_e( 'First name', 'events-made-easy' ); ?></label></td>
@@ -2154,7 +2157,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 				if ( ! empty( $wp_readonly ) ) {
 					esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );}
 				?>
-			</td>
+		</td>
+		<td></td>
 		</tr>
 		<tr>
 		<td style="vertical-align:top"><label for="email"><?php esc_html_e( 'Email', 'events-made-easy' ); ?></label></td>
@@ -2164,6 +2168,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 					esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );}
 				?>
 			</td>
+		<td></td>
 		</tr>
 		<tr>
 		<td style="vertical-align:top"><label for="chooserelatedperson"><?php esc_html_e( 'Related family member', 'events-made-easy' ); ?></label></td>
@@ -2175,6 +2180,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 			}
 			?>
 			</td>
+		<td></td>
 		</tr>
 		<tr>
 		<td style="vertical-align:top"><label for="chooserelatedperson"><?php esc_html_e( 'Family members:', 'events-made-easy' ); ?></label></td>
@@ -2191,43 +2197,49 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 	}
 	?>
 			</td>
+		<td></td>
 		</tr>
 		<tr>
 		<td><label for="phone"><?php esc_html_e( 'Phone Number', 'events-made-easy' ); ?></label></td>
 		<td><input id="phone" name="phone" type="text" value="<?php echo eme_esc_html( $person['phone'] ); ?>" size="40"></td>
+		<td></td>
 		</tr>
 		<tr>
 		<td><label for="address1"><?php echo get_option( 'eme_address1_string' ); ?></label></td>
 		<td><input id="address1" name="address1" type="text" value="<?php echo eme_esc_html( $person['address1'] ); ?>" size="40"></td>
+		<td></td>
 		</tr>
 		<tr>
 		<td><label for="address2"><?php echo get_option( 'eme_address2_string' ); ?></label></td>
 		<td><input id="address2" name="address2" type="text" value="<?php echo eme_esc_html( $person['address2'] ); ?>" size="40"></td>
+		<td></td>
 		</tr>
 		<tr>
 		<td><label for="city"><?php esc_html_e( 'City', 'events-made-easy' ); ?></label></td>
 		<td><input name="city" id="city" type="text" value="<?php echo eme_esc_html( $person['city'] ); ?>" size="40"></td>
+		<td></td>
 		</tr>
 		<tr>
 		<td><label for="zip"><?php esc_html_e( 'Postal code', 'events-made-easy' ); ?></label></td>
 		<td><input name="zip" id="zip" type="text" value="<?php echo eme_esc_html( $person['zip'] ); ?>" size="40"></td>
+		<td></td>
 		</tr>
 		<tr>
 		<td><label for="state"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_select2_state_class' ); ?></td>
+		<td colspan=2><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_select2_state_class' ); ?></td>
 		</tr>
 		<tr>
 		<td><label for="country"><?php esc_html_e( 'Country', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_select2_country_class' ); ?></td>
+		<td colspan=2><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_select2_country_class' ); ?></td>
 		</tr>
 		<tr>
 		<td><label for="birthdate"><?php esc_html_e( 'Date of birth', 'events-made-easy' ); ?></label></td>
-		<td><input type='hidden' name='birthdate' id='birthdate' value='<?php echo eme_esc_html( $person['birthdate'] ); ?>'>
+		<td colspan=2><input type='hidden' name='birthdate' id='birthdate' value='<?php echo eme_esc_html( $person['birthdate'] ); ?>'>
 		<input readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='<?php echo eme_esc_html( $person['birthdate'] ); ?>' data-date-format='<?php echo EME_WP_DATE_FORMAT; ?>' data-alt-field='#birthdate' class='eme_formfield_fdate'>
 		</tr>
 		<tr>
 		<td><label for="bd_email"><?php esc_html_e( 'Birthday email', 'events-made-easy' ); ?></label></td>
-		<td>
+		<td colspan=2>
 		<?php
 			echo eme_ui_select_binary( $person['bd_email'], 'bd_email' );
 			esc_html_e( 'If active, the person will receive a birthday email.', 'events-made-easy' );
@@ -2236,38 +2248,38 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		</tr>
 		<tr>
 		<td><label for="birthplace"><?php esc_html_e( 'Place of birth', 'events-made-easy' ); ?></label></td>
-		<td><input id="birthplace" name="birthplace" type="text" value="<?php echo eme_esc_html( $person['birthplace'] ); ?>" size="40"></td>
+		<td colspan=2><input id="birthplace" name="birthplace" type="text" value="<?php echo eme_esc_html( $person['birthplace'] ); ?>" size="40"></td>
 		</tr>
 		<tr>
 		<td><label for="lang"><?php esc_html_e( 'Language', 'events-made-easy' ); ?></label></td>
-		<td><input id="language" name="language" type="text" value="<?php echo eme_esc_html( $person['lang'] ); ?>" size="40" maxlength="7"></td>
+		<td colspan=2><input id="language" name="language" type="text" value="<?php echo eme_esc_html( $person['lang'] ); ?>" size="40" maxlength="7"></td>
 		</tr>
 		<tr>
 		<tr>
 		<td><label for="massmail"><?php esc_html_e( 'MassMail', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_select_binary( $person['massmail'], 'massmail' ); ?></td>
+		<td colspan=2><?php echo eme_ui_select_binary( $person['massmail'], 'massmail' ); ?></td>
 		</tr>
 		<tr>
 		<td><label for="newsletter"><?php esc_html_e( 'Newsletter', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_select_binary( $person['newsletter'], 'newsletter' ); ?></td>
+		<td colspan=2><?php echo eme_ui_select_binary( $person['newsletter'], 'newsletter' ); ?></td>
 		</tr>
 		<tr>
 		<td><label for="gdpr"><?php esc_html_e( 'GDPR approval', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_select_binary( $person['gdpr'], 'gdpr' ); ?></td>
+		<td colspan=2><?php echo eme_ui_select_binary( $person['gdpr'], 'gdpr' ); ?></td>
 		</tr>
 		<tr>
 		<td><label for="groups"><?php esc_html_e( 'Groups', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'groups', $groups, 'group_id', 'name', 5, '', 0, 'dyngroups eme_select2_width50_class' ); ?><br>
+		<td colspan=2><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'groups', $groups, 'group_id', 'name', 5, '', 0, 'dyngroups eme_select2_width50_class' ); ?><br>
 		<?php esc_html_e( "Don't forget that you can define custom fields with purpose 'People' that will allow extra info based on the group the person is in.", 'events-made-easy' ); ?>
 		</td>
 		</tr>
 	<?php 
-		$membership_names = eme_get_activemembership_names_by_personid( $item['person_id'] );
+		$membership_names = eme_get_activemembership_names_by_personid( $person['person_id'] );
 		if ( ! empty( $membership_names ) ) :
 	?>
 		<tr>
 		<td><?php esc_html_e( 'Active memberships', 'events-made-easy' ); ?></td>
-		<td><?php echo $membership_names; ?></td>
+		<td colspan=2><?php echo $membership_names; ?></td>
 		</tr>
 	<?php
 		endif;
@@ -2275,7 +2287,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
 		<tr>
 		<td style="vertical-align:top"><label for="wpid"><?php esc_html_e( 'Linked WP user', 'events-made-easy' ); ?></label></td>
-		<td>
+		<td colspan=2>
 		<?php
 		$used_wp_ids = eme_get_used_wpids( $person['wp_id'] );
 			$exclude = join( ',', $used_wp_ids );
@@ -2295,7 +2307,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		</tr>
 		<tr>
 		<td style="vertical-align:top"><label for="wpid"><?php esc_html_e( 'Delete linked WP user?', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_select_binary( $person['properties']['wp_delete_user'], "properties[wp_delete_user]" ); ?>
+		<td colspan=2><?php echo eme_ui_select_binary( $person['properties']['wp_delete_user'], "properties[wp_delete_user]" ); ?>
 			<br>
 			<?php esc_html_e( "Set this to yes if you want the linked WP user to be deleted when the EME person gets removed (moved to trash bin).", 'events-made-easy' ); ?><br>
 			<?php esc_html_e( "By default, this is only set to true when a WP user is created by EME (when creating a member or doing a reservation for an event and the option to create a WP user is set). An admin will never be deleted.", 'events-made-easy' ); ?>
@@ -2312,7 +2324,6 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 	?>
 		</table>
 		</div>
-		<?php echo eme_person_image_div( $person ); ?>
 		<div class='inside' id='eme_dynpersondata'></div>
 	</div>
 	<?php if ( $readonly ) { ?>
@@ -2505,7 +2516,7 @@ function eme_manage_groups_layout( $message = '' ) {
 	<?php
 }
 
-function eme_person_image_div( $person, $relative_div = 0 ) {
+function eme_person_replace_image_input_div( $person, $relative_div = 0 ) {
 	wp_enqueue_media();
 	if ( $person['properties']['image_id'] > 0 ) {
 		$image_url = esc_url( wp_get_attachment_image_url( $person['properties']['image_id'], 'full' ) );
@@ -2525,7 +2536,7 @@ function eme_person_image_div( $person, $relative_div = 0 ) {
 	}
 	$output = "
 <div id='{$div_class}'>
-      <br>{$person_image_bold}</b>
+      <br>{$person_image_bold}
    <div id='eme_person_no_image' class='postarea'>
       {$no_image}
    </div>
@@ -2540,6 +2551,34 @@ function eme_person_image_div( $person, $relative_div = 0 ) {
    <input type='button' id='eme_person_remove_old_image' name='remove_old_image' value='{$unset_image}' class='button-secondary'>
    </div>
 </div>
+";
+	return $output;
+}
+
+function eme_person_replace_image_input( $person, $relative_div = 0 ) {
+	wp_enqueue_media();
+	if ( $person['properties']['image_id'] > 0 ) {
+		$image_url = esc_url( wp_get_attachment_image_url( $person['properties']['image_id'], 'full' ) );
+	} else {
+		$image_url = '';
+	}
+	$no_image     = esc_html__( 'No image set', 'events-made-easy' );
+	$set_image    = esc_html__( 'Choose image', 'events-made-easy' );
+	$unset_image  = esc_html__( 'Remove image', 'events-made-easy' );
+	$person_image = esc_html__( 'Person image', 'events-made-easy' );
+	$output = "
+      <b>{$person_image}</b><br>
+   <span id='eme_person_no_image' class='postarea'>
+      {$no_image}
+   </span>
+   <span id='eme_person_current_image' class='postarea'>
+   <img id='eme_person_image_example' alt='{$person_image}' title='{$person_image}' src='$image_url'>
+   <input type='hidden' name='properties[image_id]' id='eme_person_image_id' value='{$person['properties']['image_id']}'>
+   </span>
+   <br>
+
+   <input type='button' name='image_button' id='eme_person_image_button' value='{$set_image}' class='button-secondary'>
+   <input type='button' id='eme_person_remove_old_image' name='remove_old_image' value='{$unset_image}' class='button-secondary'>
 ";
 	return $output;
 }
@@ -2595,23 +2634,28 @@ function eme_get_person_by_email_only( $email ) {
 	return $res;
 }
 
-function eme_get_person_by_name_and_email( $lastname, $firstname, $email ) {
+function eme_get_person_by_name_and_email( $lastname, $firstname, $email, $skip_personid=0 ) {
 	// INFO: database searches are case insensitive
 	// we order by "wp_id DESC" so if someone matches with and without wp_id, the one with wp_id wins
 	// we also search for lastname+firstname in the wrong order (if someone missed and switched last/firstname)
 	global $wpdb;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	if ( ! empty( $firstname ) ) {
-		$sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE ((lastname = %s AND firstname = %s) OR (firstname = %s AND lastname = %s)) AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', $lastname, $firstname, $lastname, $firstname, $email );
+	if (!empty($skip_personid)) {
+		$extra_sql = "person_id != ".intval($skip_personid). " AND";
 	} else {
-		$sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE lastname = %s AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', $lastname, $email );
+		$extra_sql = "";
+	}
+	if ( ! empty( $firstname ) ) {
+		$sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql ((lastname = %s AND firstname = %s) OR (firstname = %s AND lastname = %s)) AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', $lastname, $firstname, $lastname, $firstname, $email );
+	} else {
+		$sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql lastname = %s AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', $lastname, $email );
 	}
 	$res = $wpdb->get_row( $sql, ARRAY_A );
 	if ( ! $res && get_option( 'eme_rsvp_check_without_accents' ) ) {
 		if ( ! empty( $firstname ) ) {
-			$sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE ((lastname = %s AND firstname = %s) OR (firstname = %s AND lastname = %s)) AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', remove_accents( $lastname ), remove_accents( $firstname ), remove_accents( $lastname ), remove_accents( $firstname ), $email );
+			$sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql ((lastname = %s AND firstname = %s) OR (firstname = %s AND lastname = %s)) AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', remove_accents( $lastname ), remove_accents( $firstname ), remove_accents( $lastname ), remove_accents( $firstname ), $email );
 		} else {
-			$sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE lastname = %s AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', remove_accents( $lastname ), $email );
+			$sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE $extra_sql lastname = %s AND email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' ORDER BY wp_id DESC', remove_accents( $lastname ), $email );
 		}
 		$res = $wpdb->get_row( $sql, ARRAY_A );
 	}
@@ -3640,7 +3684,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
 	$failure = '';
 	if ( $person_id ) {
 		// first check if some exists by name and email, if so: refuse
-		$t_person = eme_get_person_by_name_and_email( $person['lastname'], $person['firstname'], $person['email'] );
+		$t_person = eme_get_person_by_name_and_email( $person['lastname'], $person['firstname'], $person['email'], $person_id );
 		if ($t_person) {
 			$failure   = '<p>' . esc_html__( 'A person with this name and email already exists', 'events-made-easy' ) . '</p>';
 			$person_id = 0;

@@ -4720,7 +4720,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 			$replacement = "<input $required_att type='tel' id='phone' name='phone' value='$bookerPhone' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_IMAGE/', $result ) ) {
 			// add the 1 as second argument to have a relative positioned div, by default it is absolute
-			$replacement = eme_person_image_div( $person, 1 );
+			$replacement = eme_person_replace_image_input_div( $person, 1 );
 		} elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
 			$replacement = eme_ui_select_binary( $bd_email, 'bd_email' );
 		} elseif ( preg_match( '/#_MASSMAIL$/', $result ) ) {

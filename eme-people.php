@@ -446,7 +446,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
 		} elseif ( preg_match( '/#_MEMBERSHIPS/', $result ) ) {
-			$replacement = join( ', ', eme_get_activemembership_names_by_personid( $person['person_id'] ) );
+			$replacement = eme_get_activemembership_names_by_personid( $person['person_id'] );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
 				$replacement = apply_filters( 'eme_general', $replacement );
@@ -1546,14 +1546,12 @@ function eme_person_verify_layout() {
 
 	<h1><?php esc_html_e( 'Verify link between people and WP', 'events-made-easy' ); ?></h1>
 	<?php
-	// the next function returns a array containing wp_ids linked to multiple EME persons
-	$wp_ids_arr = eme_find_persons_double_wp();
-	if ( count( $wp_ids_arr ) > 0 ) {
+	// the next function returns a row containing multiple person ids per line (csv), lastname,firstname,email,wp_id
+	$res_arr = eme_find_persons_double_wp();
+	if ( count( $res_arr ) > 0 ) {
 		esc_html_e( 'The table below shows the people that are linked to the same WordPress user', 'events-made-easy' );
 		print '<br>';
 		esc_html_e( 'Please correct these errors: a WordPress user should be linked to at most one EME person.', 'events-made-easy' );
-		$wp_ids   = join( ',', $wp_ids_arr );
-		$people   = eme_get_people_by_wp_ids( $wp_ids );
 		$wp_users = eme_get_indexed_users();
 
 		print "<table class='eme_admin_table'>";
@@ -1563,22 +1561,32 @@ function eme_person_verify_layout() {
 		print '<th>' . esc_html__( 'First name', 'events-made-easy' ) . '</th>';
 		print '<th>' . esc_html__( 'Email', 'events-made-easy' ) . '</th>';
 		print '<th>' . esc_html__( 'Linked WP user', 'events-made-easy' ) . '</th>';
+		print '<th>' . esc_html__( 'Active memberships', 'events-made-easy' ) . '</th>';
+		print '<th>' . esc_html__( 'Future bookings made?', 'events-made-easy' ) . '</th>';
 		print '</tr>';
-		foreach ( $people as $person ) {
-			print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
-			print '<td>' . $person['person_id'] . '</td>';
-			$lastname  = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person['person_id'] ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person['lastname'] ) . '</a>';
-			$firstname = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person['person_id'] ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person['firstname'] ) . '</a>';
-			$email     = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person['person_id'] ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person['email'] ) . '</a>';
-			print "<td>$lastname</td>";
-			print "<td>$firstname</td>";
-			print "<td>$email</td>";
-			if ( $person['wp_id'] && isset( $wp_users[ $person['wp_id'] ] ) ) {
-				print '<td>' . eme_esc_html( $wp_users[ $person['wp_id'] ] ) . '</td>';
-			} else {
-				print '<td></td>';
+		foreach ( $res_arr as $row ) {
+			$person_ids = explode(',',$row['person_ids']);
+			foreach ($person_ids as $person_id) {
+				print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
+				print '<td>' . $person_id . '</td>';
+				print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['lastname'] ) . '</a></td>';
+				print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['firstname'] ) . '</a></td>';
+				print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['email'] ) . '</a></td>';
+				if ( $row['wp_id'] && isset( $wp_users[ $row['wp_id'] ] ) ) {
+					print '<td>' . eme_esc_html( $wp_users[ $row['wp_id'] ] ) . '</td>';
+				} else {
+					print '<td>NON EXISTING WP USER linked</td>';
+				}
+				$membership_names = eme_get_activemembership_names_by_personid( $person_id );
+				print "<td>$membership_names</td>";
+				$future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
+				if (!empty($future_bookings)) {
+					print "<td>".__('Yes','events_made_easy')."</td>";
+				} else {
+					print "<td>".__('No','events_made_easy')."</td>";
+				}
+				print '</tr>';
 			}
-			print '</tr>';
 		}
 		print '</table>';
 	} else {
@@ -1589,42 +1597,87 @@ function eme_person_verify_layout() {
 		?>
 	<h1><?php esc_html_e( 'Verify unique emails', 'events-made-easy' ); ?></h1>
 		<?php
-		// the next function returns a row containing person ids linked to multiple emails
-		$emails_arr = eme_find_persons_double_email();
-		if ( count( $emails_arr ) > 0 ) {
+		// the next function returns a row containing multiple person ids per line (csv), lastname,firstname,email
+		$res_arr = eme_find_persons_double_email();
+		if ( count( $res_arr ) > 0 ) {
 			esc_html_e( 'The table below shows the people that have identical emails while you require a unique email per person', 'events-made-easy' );
 			print '<br>';
 			esc_html_e( 'Please correct these errors: all EME people should have a unique email.', 'events-made-easy' );
-			$people = [];
-			foreach ( $emails_arr as $email ) {
-				$person_ids_arr = eme_get_personids_by_email( $email );
-				$person_ids     = join( ',', $person_ids_arr );
-				$people         = array_merge( $people, eme_get_people_by_ids( $person_ids ) );
-			}
-
 			print "<table class='eme_admin_table'>";
 			print '<tr>';
 			print '<th>' . esc_html__( 'ID', 'events-made-easy' ) . '</th>';
 			print '<th>' . esc_html__( 'Last name', 'events-made-easy' ) . '</th>';
 			print '<th>' . esc_html__( 'First name', 'events-made-easy' ) . '</th>';
 			print '<th>' . esc_html__( 'Email', 'events-made-easy' ) . '</th>';
+			print '<th>' . esc_html__( 'Active memberships', 'events-made-easy' ) . '</th>';
+			print '<th>' . esc_html__( 'Future bookings made?', 'events-made-easy' ) . '</th>';
 			print '</tr>';
-			foreach ( $people as $person ) {
-				print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
-				print '<td>' . $person['person_id'] . '</td>';
-				$lastname  = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person['person_id'] ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person['lastname'] ) . '</a>';
-				$firstname = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person['person_id'] ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person['firstname'] ) . '</a>';
-				$email     = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person['person_id'] ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $person['email'] ) . '</a>';
-				print "<td>$lastname</td>";
-				print "<td>$firstname</td>";
-				print "<td>$email</td>";
-				print '</tr>';
+			foreach ( $res_arr as $row ) {
+				$person_ids = explode(',',$row['person_ids']);
+				foreach ($person_ids as $person_id) {
+					print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
+					print '<td>' . $person_id . '</td>';
+					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['lastname'] ) . '</a></td>';
+					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['firstname'] ) . '</a></td>';
+					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['email'] ) . '</a></td>';
+					$membership_names = eme_get_activemembership_names_by_personid( $person_id );
+					print "<td>$membership_names</td>";
+					$future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
+					if (!empty($future_bookings)) {
+						print "<td>".__('Yes','events_made_easy')."</td>";
+					} else {
+						print "<td>".__('No','events_made_easy')."</td>";
+					}
+					print '</tr>';
+				}
 			}
 			print '</table>';
 		} else {
 			esc_html_e( 'No issues found', 'events-made-easy' );
 		}
 
+	else :
+	?>
+	<h1><?php esc_html_e( 'Verify unique name/email combinations', 'events-made-easy' ); ?></h1>
+		<?php
+		// the next function returns a row containing multiple person ids per line (csv), lastname,firstname,email
+		$res_arr = eme_find_persons_double_name_email();
+		if ( count( $res_arr ) > 0 ) {
+			esc_html_e( 'The table below shows the people that have an identical name and email', 'events-made-easy' );
+			print '<br>';
+			esc_html_e( 'Please correct these errors: all EME people should have an unique name and email combination.', 'events-made-easy' );
+			print "<table class='eme_admin_table'>";
+			print '<tr>';
+			print '<th>' . esc_html__( 'ID', 'events-made-easy' ) . '</th>';
+			print '<th>' . esc_html__( 'Last name', 'events-made-easy' ) . '</th>';
+			print '<th>' . esc_html__( 'First name', 'events-made-easy' ) . '</th>';
+			print '<th>' . esc_html__( 'Email', 'events-made-easy' ) . '</th>';
+			print '<th>' . esc_html__( 'Active memberships', 'events-made-easy' ) . '</th>';
+			print '<th>' . esc_html__( 'Future bookings made?', 'events-made-easy' ) . '</th>';
+			print '</tr>';
+			foreach ( $res_arr as $row ) {
+				$person_ids = explode(',',$row['person_ids']);
+				foreach ($person_ids as $person_id) {
+					print "<tr style='border-collapse: collapse;border: 1px solid black;'>";
+					print '<td>' . $person_id . '</td>';
+					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['lastname'] ) . '</a></td>';
+					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['firstname'] ) . '</a></td>';
+					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['email'] ) . '</a></td>';
+					$membership_names = eme_get_activemembership_names_by_personid( $person_id );
+					print "<td>$membership_names</td>";
+					$future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
+					if (!empty($future_bookings)) {
+						print "<td>".__('Yes','events_made_easy')."</td>";
+					} else {
+						print "<td>".__('No','events_made_easy')."</td>";
+					}
+					print '</tr>';
+				}
+			}
+			print '</table>';
+		} else {
+			esc_html_e( 'No issues found', 'events-made-easy' );
+		}
 	endif;
 	?>
 	</div>
@@ -2208,6 +2261,17 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		<?php esc_html_e( "Don't forget that you can define custom fields with purpose 'People' that will allow extra info based on the group the person is in.", 'events-made-easy' ); ?>
 		</td>
 		</tr>
+	<?php 
+		$membership_names = eme_get_activemembership_names_by_personid( $item['person_id'] );
+		if ( ! empty( $membership_names ) ) :
+	?>
+		<tr>
+		<td><?php esc_html_e( 'Active memberships', 'events-made-easy' ); ?></td>
+		<td><?php echo $membership_names; ?></td>
+		</tr>
+	<?php
+		endif;
+	?>
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
 		<tr>
 		<td style="vertical-align:top"><label for="wpid"><?php esc_html_e( 'Linked WP user', 'events-made-easy' ); ?></label></td>
@@ -2570,28 +2634,35 @@ function eme_get_wpid_by_personid( $person_id ) {
 	return intval( $wpdb->get_var( $sql ) );
 }
 function eme_get_used_wpids( $exclude_id = 0 ) {
-		global $wpdb;
-		$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	global $wpdb;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	if ( ! empty( $exclude_id ) ) {
-			$sql = $wpdb->prepare( "SELECT DISTINCT wp_id FROM $people_table WHERE wp_id <> %d", $exclude_id );
+		$sql = $wpdb->prepare( "SELECT DISTINCT wp_id FROM $people_table WHERE wp_id <> %d", $exclude_id );
 	} else {
 		$sql = "SELECT DISTINCT wp_id FROM $people_table";
 	}
-		return $wpdb->get_col( $sql );
+	return $wpdb->get_col( $sql );
+}
+
+function eme_find_persons_double_name_email() {
+	global $wpdb;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$sql          = $wpdb->prepare("SELECT GROUP_CONCAT(person_id) as person_ids, lastname,firstname,email FROM $people_table WHERE status=%d GROUP BY lastname,firstname,email HAVING COUNT(*)>1", EME_PEOPLE_STATUS_ACTIVE);
+	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_find_persons_double_email() {
 	global $wpdb;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$sql          = $wpdb->prepare("SELECT email FROM $people_table WHERE status=%d GROUP BY email HAVING COUNT(*)>1", EME_PEOPLE_STATUS_ACTIVE);
-	return $wpdb->get_col( $sql );
+	$sql          = $wpdb->prepare("SELECT GROUP_CONCAT(person_id) as person_ids, lastname,firstname,email FROM $people_table WHERE status=%d GROUP BY email HAVING COUNT(*)>1", EME_PEOPLE_STATUS_ACTIVE);
+	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_find_persons_double_wp() {
 	global $wpdb;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$sql = $wpdb->prepare("SELECT wp_id FROM $people_table WHERE status= %d AND wp_id>0 AND wp_id IS NOT NULL GROUP BY wp_id HAVING COUNT(*)>1", EME_PEOPLE_STATUS_ACTIVE);
-	return $wpdb->get_col( $sql );
+	$sql = $wpdb->prepare("SELECT GROUP_CONCAT(person_id) as person_ids, wp_id,lastname,firstname,email FROM $people_table WHERE status= %d AND wp_id>0 AND wp_id IS NOT NULL GROUP BY wp_id HAVING COUNT(*)>1", EME_PEOPLE_STATUS_ACTIVE);
+	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
 function eme_count_persons_with_wp_id( $wp_id ) {
@@ -2599,28 +2670,6 @@ function eme_count_persons_with_wp_id( $wp_id ) {
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$sql          = $wpdb->prepare( "SELECT COUNT(*) FROM $people_table WHERE wp_id = %d AND status= %d ", $wp_id, EME_PEOPLE_STATUS_ACTIVE);
 	return $wpdb->get_var( $sql );
-}
-
-function eme_get_people_by_ids( $ids ) {
-	global $wpdb;
-	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	if ( eme_is_list_of_int( $ids ) ) {
-		$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE person_id IN ($ids) AND status= %d ORDER BY person_id", EME_PEOPLE_STATUS_ACTIVE);
-		return $wpdb->get_results( $sql, ARRAY_A );
-	} else {
-		return false;
-	}
-}
-
-function eme_get_people_by_wp_ids( $wp_ids ) {
-	global $wpdb;
-	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	if ( eme_is_list_of_int( $wp_ids ) ) {
-		$sql = $wpdb->prepare("SELECT * FROM $people_table WHERE wp_id IN ($wp_ids) AND status= %d ORDER BY wp_id", EME_PEOPLE_STATUS_ACTIVE);
-		return $wpdb->get_results( $sql, ARRAY_A );
-	} else {
-		return false;
-	}
 }
 
 function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
@@ -2691,6 +2740,7 @@ function eme_get_person_by_randomid( $random_id ) {
 	}
 	return $person;
 }
+
 function eme_get_person( $person_id ) {
 	global $wpdb;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
@@ -4068,13 +4118,7 @@ function eme_user_profile( $user ) {
 	// define a simple template
 	$template    = '#_STARTDATE #_STARTTIME: #_EVENTNAME (#_RESPSEATS ' . esc_html__( 'seats', 'events-made-easy' ) . '). #_CANCEL_LINK<br>';
 	$person_id   = eme_get_personid_by_wpid( $user->ID );
-	$memberships = eme_get_activemembership_names_by_personid( $person_id );
-	if ( ! empty( $memberships ) ) {
-		$memberships_list = join( ', ', $memberships );
-	} else {
-		$memberships_list = '';
-	}
-	$memberships_list = apply_filters( 'eme_general', $memberships_list );
+	$memberships_list = eme_get_activemembership_names_by_personid( $person_id );
 	?>
 	<h3><?php esc_html_e( 'Events Made Easy settings', 'events-made-easy' ); ?></h3>
 	<table class='form-table'>
@@ -4089,7 +4133,7 @@ function eme_user_profile( $user ) {
 		</tr>
 		<tr>
 		<th><label for="eme_memberships"><?php esc_html_e( 'Active memberships', 'events-made-easy' ); ?></label></th>
-	<td><?php echo $memberships_list; ?>
+		<td><?php echo $memberships_list; ?></td>
 		</tr>
 	</table>
 	<?php
@@ -4895,12 +4939,7 @@ function eme_ajax_people_list( $dynamic_groupname = '' ) {
 		$record['people.creation_date'] = eme_localized_datetime( $item['creation_date'], EME_TIMEZONE, 1 );
 		$record['people.modif_date']    = eme_localized_datetime( $item['modif_date'], EME_TIMEZONE, 1 );
 		$record['people.groups']        = join( ',', eme_esc_html( eme_get_persongroup_names( $item['person_id'] ) ) );
-		$memberships                    = eme_get_activemembership_names_by_personid( $item['person_id'] );
-		if ( ! empty( $memberships ) ) {
-			$record['people.memberships'] = join( ', ', $memberships );
-		} else {
-			$record['people.memberships'] = '';
-		}
+		$record['people.memberships']   = eme_get_activemembership_names_by_personid( $item['person_id'] );
 		$answers = eme_get_person_answers( $item['person_id'] );
 		foreach ( $formfields as $formfield ) {
 			foreach ( $answers as $val ) {

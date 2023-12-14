@@ -560,7 +560,14 @@ function eme_get_activemembership_names_by_personid( $person_id ) {
 	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	$sql               = $wpdb->prepare( "SELECT DISTINCT memberships.name FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN ($status_active,$status_grace)", $person_id );
-	return $wpdb->get_col( $sql );
+	$res = $wpdb->get_col( $sql );
+	 if ( ! empty( $res ) ) {
+                $memberships_list = join( ', ', $res );
+        } else {
+                $memberships_list = '';
+        }
+        $memberships_list = apply_filters( 'eme_general', $memberships_list );
+	return $memberships_list;
 }
 
 function eme_get_active_membershipids_by_wpid( $wp_id ) {

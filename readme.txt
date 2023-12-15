@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.4.2
-Stable tag: 2.4.19
+Stable tag: 2.4.20
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,14 +98,14 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.20 (2023//) =
+= 2.4.20 (2023/12/15) =
 * Avoid being able to create an identical person (same name/email) in the backend
 * More verifications done when checking for people integrity
 * Better person image representation in the backend
 * Make frontend member editing also work for dynamic data
 * Upgrade dompdf to fix a small security issue
 * Mollie update to 2.63
-# Convert filter dropdowns to better select
+* Convert filter dropdowns to better select
 
 = 2.4.19 (2023/12/12) =
 * Added a new recurrence period "specific months", so you can choose on which months something transpires and repeat per year

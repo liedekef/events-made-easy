@@ -1004,4 +1004,24 @@ jQuery(document).ready( function($) {
         if ($('#eme-payment-form').length) {
                 $(document).scrollTop( $('div#eme-payment-form').offset().top - $(window).height()/2 + $('div#eme-payment-form').height()/2);
         }
+
+        if ($('#eme_loc_filter').length) {
+		$('#eme_loc_filter').select2();
+	}
+	if ($('#eme_cat_filter').length) {
+		$('#eme_cat_filter').select2();
+	}
+	if ($('#eme_city_filter').length) {
+		$('eme_city_filter').select2();
+	}
+	if ($('#eme_country_filter').length) {
+		$('eme_country_filter').select2();
+	}
+	//	$('eme_scope_filter').select2(); // not for scope, this can be date selects too
+	if ($('#eme_contact_filter').length) {
+		$('eme_contact_filter').select2();
+	}
+	if ($('#eme_author_filter').length) {
+		$('eme_author_filter').select2();
+	}
 });

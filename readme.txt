@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Make frontend member editing also work for dynamic data
 * Upgrade dompdf to fix a small security issue
 * Mollie update to 2.63
+# Convert filter dropdowns to better select
 
 = 2.4.19 (2023/12/12) =
 * Added a new recurrence period "specific months", so you can choose on which months something transpires and repeat per year

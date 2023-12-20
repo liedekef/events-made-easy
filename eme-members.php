@@ -5307,7 +5307,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 				}
 				$t_format = str_replace( '#_CONTACT', '#_', $t_format );
 				$t_format = str_replace( '#_AUTHOR', '#_', $t_format );
-				$person   = eme_get_person_by_wp_id( $contact->ID );
+				$person   = eme_get_person_by_wp_id( $contact->ID, 1 );
 				// to be consistent: #_CONTACTNAME returns the full name if not linked to an EME user, so we do that here too
 				if ( $t_format == '#_NAME' ) {
 					$t_format = '#_FULLNAME';

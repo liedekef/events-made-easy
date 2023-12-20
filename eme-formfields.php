@@ -1110,7 +1110,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	$gdpr          = 0;
 	if ( is_user_logged_in() ) {
 		$current_user       = wp_get_current_user();
-		$person             = eme_get_person_by_wp_id( $current_user->ID );
+		$person             = eme_get_person_by_wp_id( $current_user->ID, 1 );
 		$bookerLastName     = eme_esc_html( $person['lastname'] );
 		$bookerFirstName    = eme_esc_html( $person['firstname'] );
 		$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
@@ -1441,7 +1441,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 	$bookerCancelComment = '';
 	if ( is_user_logged_in() ) {
 		$current_user    = wp_get_current_user();
-		$person          = eme_get_person_by_wp_id( $current_user->ID );
+		$person          = eme_get_person_by_wp_id( $current_user->ID, 1 );
 		$bookerLastName  = eme_esc_html($person['lastname']);
 		$bookerFirstName = eme_esc_html($person['firstname']);
 		$bookerEmail     = eme_esc_html($person['email']);
@@ -1757,7 +1757,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 	$allow_clear = 0;
 	if ( is_user_logged_in() ) {
 		$current_user       = wp_get_current_user();
-		$person             = eme_get_person_by_wp_id( $current_user->ID );
+		$person             = eme_get_person_by_wp_id( $current_user->ID, 1 );
 		$bookerLastName     = eme_esc_html( $person['lastname'] );
 		$bookerFirstName    = eme_esc_html( $person['firstname'] );
 		$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
@@ -2443,7 +2443,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 
 	// don't fill out the basic info if in the backend, but do it only if in the frontend
 	if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-		$person             = eme_get_person_by_wp_id( $current_user->ID );
+		$person             = eme_get_person_by_wp_id( $current_user->ID, 1 );
 		$bookerLastName     = eme_esc_html( $person['lastname'] );
 		$bookerFirstName    = eme_esc_html( $person['firstname'] );
 		$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
@@ -3710,7 +3710,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		$person = eme_get_person( $member['person_id'] );
 	} elseif (! empty( $current_userid )) {
 		// this will also fill person with wp info if logged in and person doesn't exist in EME
-		$person = eme_get_person_by_wp_id( $current_userid );
+		$person = eme_get_person_by_wp_id( $current_userid, 1 );
 
 	}
 	if ( ! empty( $person ) ) {

@@ -4325,7 +4325,7 @@ function eme_update_people_language( $person_ids, $lang ) {
 
 function eme_get_indexed_users() {
 	global $wpdb;
-	$sql           = "SELECT display_name, ID FROM $wpdb->users";
+	$sql           = "SELECT ID, display_name FROM $wpdb->users";
 	$users         = $wpdb->get_results( $sql, ARRAY_A );
 	$indexed_users = [];
 	foreach ( $users as $user ) {
@@ -4349,6 +4349,11 @@ function eme_get_wp_users( $search, $offset = 0, $pagesize = 0 ) {
 		],
 		[
 			'key'     => 'last_name',
+			'value'   => $search,
+			'compare' => 'LIKE',
+		],
+		[
+			'key'     => 'display_name',
 			'value'   => $search,
 			'compare' => 'LIKE',
 		],

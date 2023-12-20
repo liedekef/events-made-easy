@@ -2720,6 +2720,9 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 	global $wpdb;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$user_info    = get_userdata( $wp_id );
+	if (!$user_info && !$use_wp_info) {
+		return false;
+	}
 	$lastname     = $user_info->user_lastname;
 	$firstname    = $user_info->user_firstname;
 	$email        = $user_info->user_email;
@@ -2737,24 +2740,23 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 	}
 	if ( count( $lines ) == 1 ) {
 		$person = $lines[0];
-		if ( $use_wp_info ) {
-			// we use the lastname from the wp profile if that is not empty
-			// if that is empty, we use the info from the person
-			// if that is still empty, we use the display_name
-			if ( ! empty( $lastname ) ) {
-				$person['lastname'] = $lastname;
-			}
-			if ( empty( $lastname ) ) {
-				$lastname = $user_info->display_name;
-			}
-			if ( ! empty( $firstname ) ) {
-				$person['firstname'] = $firstname;
-			}
-			$person['email'] = $email;
+		// we use the lastname from the wp profile if that is not empty
+		// if that is empty, we use the info from the person
+		// if that is still empty, we use the display_name
+		if ( ! empty( $lastname ) ) {
+			$person['lastname'] = $lastname;
 		}
+		if ( empty( $lastname ) ) {
+			$lastname = $user_info->display_name;
+		}
+		if ( ! empty( $firstname ) ) {
+			$person['firstname'] = $firstname;
+		}
+		$person['email'] = $email;
 		$person['properties'] = eme_init_person_props( eme_unserialize( $person['properties'] ) );
 	} else {
 		// imagine there is no user yet, but someone matching with this info (lastname, firstname, email), then we add the wp id to that existing user
+		// if still no EME person matching: take the info from the WP profile and return a basis $person array if use_wp_info=1
 		if ( empty( $lastname ) ) {
 			$lastname = $user_info->display_name;
 		}
@@ -2766,6 +2768,18 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 			$res = eme_update_person_wp_id( $person['person_id'], $wp_id );
 			wp_cache_delete( "eme_person_wpid $wp_id" );
 			if ( $res !== false ) {
+				$person['wp_id'] = $wp_id;
+			}
+		} else {
+			if ( $use_wp_info ) {
+				$person = eme_new_person();
+				$person['lastname'] = $lastname;
+				if ( empty( $lastname ) ) {
+					$lastname = $user_info->display_name;
+				}
+				$person['firstname'] = $firstname;
+				$person['email'] = $email;
+				$person['phone'] = eme_get_user_phone( $wp_id );
 				$person['wp_id'] = $wp_id;
 			}
 		}

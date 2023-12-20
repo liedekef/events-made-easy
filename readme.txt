@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.21 (2023//) =
+* Fix/improve usage of WP profile for membership (and others)
+
 = 2.4.20 (2023/12/15) =
 * Avoid being able to create an identical person (same name/email) in the backend
 * More verifications done when checking for people integrity

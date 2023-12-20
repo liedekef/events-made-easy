@@ -1649,7 +1649,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 		$form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>";
 	}
 	$form_html .= "<input type='hidden' id='membership_id' name='membership_id' value='$membership_id'>";
-	$form_html .= "<input type='hidden' name='wp_id' value='$wp_id' class='dynamicupdates'>";
+	$form_html .= "<input type='hidden' name='wp_id' value='$wp_id'>";
 
 	if (!empty($member['member_id'])) {
 		$format_prefix = "<table class='eme-rsvp-form'>
@@ -5308,47 +5308,11 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
 				$t_format = str_replace( '#_CONTACT', '#_', $t_format );
 				$t_format = str_replace( '#_AUTHOR', '#_', $t_format );
 				$person   = eme_get_person_by_wp_id( $contact->ID );
-				if ( $person ) {
-					// to be consistent: #_CONTACTNAME returns the full name if not linked to an EME user, so we do that here too
-					if ( $t_format == '#_NAME' ) {
-						$t_format = '#_FULLNAME';
-					}
-					$replacement = eme_replace_people_placeholders( $t_format, $person, $target, $lang, 0 );
-				} else {
-					if ( preg_match( '/#_NAME/', $t_format ) ) {
-						$replacement = $contact->display_name;
-						if ( $target == 'html' ) {
-							$replacement = eme_trans_esc_html( $replacement, $lang );
-						}
-					} elseif ( preg_match( '/#_LASTNAME/', $t_format ) ) {
-						$replacement = $contact->user_lastname;
-						if ( $target == 'html' ) {
-							$replacement = eme_trans_esc_html( $replacement, $lang );
-						}
-					} elseif ( preg_match( '/#_FIRSTNAME/', $t_format ) ) {
-						$replacement = $contact->user_firstname;
-						if ( $target == 'html' ) {
-							$replacement = eme_trans_esc_html( $replacement, $lang );
-						}
-					} elseif ( preg_match( '/#_EMAIL/', $t_format ) ) {
-						$replacement = $contact->user_email;
-						// ascii encode for primitive harvesting protection ...
-						$replacement = eme_email_obfuscate( $replacement, $orig_target );
-					} elseif ( preg_match( '/#_PHONE/', $t_format ) ) {
-						$replacement = eme_get_user_phone( $contact->ID );
-						if ( $target == 'html' ) {
-							$replacement = eme_trans_esc_html( $replacement, $lang );
-						}
-					}
-
-					if ( $target == 'html' ) {
-						$replacement = apply_filters( 'eme_general', $replacement );
-					} elseif ( $target == 'rss' ) {
-						$replacement = apply_filters( 'the_content_rss', $replacement );
-					} else {
-						$replacement = apply_filters( 'eme_text', $replacement );
-					}
+				// to be consistent: #_CONTACTNAME returns the full name if not linked to an EME user, so we do that here too
+				if ( $t_format == '#_NAME' ) {
+					$t_format = '#_FULLNAME';
 				}
+				$replacement = eme_replace_people_placeholders( $t_format, $person, $target, $lang, 0 );
 			}
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+?)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];

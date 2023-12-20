@@ -1341,7 +1341,7 @@ function eme_calc_booking_discount( $discount, $booking ) {
 			return false;
 		}
 		$current_userid = get_current_user_id();
-		$person         = eme_get_person_by_wp_id( $current_userid );
+		$person         = eme_get_person_by_wp_id( $current_userid, 0 );
 		if ( empty( $person ) ) {
 			return false;
 		}
@@ -1475,7 +1475,7 @@ function eme_calc_member_discount( $discount, $member ) {
 			return false;
 		}
 		$current_userid = get_current_user_id();
-		$person         = eme_get_person_by_wp_id( $current_userid );
+		$person         = eme_get_person_by_wp_id( $current_userid, 0 );
 		if ( empty( $person ) ) {
 			return false;
 		}

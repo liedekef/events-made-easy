@@ -227,7 +227,6 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 					} else {
 						$replacement = eme_ui_select( $selected_category, $cat_post_name, $cat_list, $label, 0, 'eme_select2', $aria_label );
 					}
-
 				}
 			}
 		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_LOCS(\{.+?\})?/', $result, $matches ) ) {

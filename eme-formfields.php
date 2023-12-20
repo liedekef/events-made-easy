@@ -1109,33 +1109,22 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	$bd_email      = 0;
 	$gdpr          = 0;
 	if ( is_user_logged_in() ) {
-		$current_user = wp_get_current_user();
-		$person       = eme_get_person_by_wp_id( $current_user->ID );
-		if ( ! empty( $person ) ) {
-			$bookerLastName     = eme_esc_html( $person['lastname'] );
-                        $bookerFirstName    = eme_esc_html( $person['firstname'] );
-                        $bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-                        $bookerBirthplace   = eme_esc_html( $person['birthplace'] );
-                        $bookerAddress1     = eme_esc_html( $person['address1'] );
-                        $bookerAddress2     = eme_esc_html( $person['address2'] );
-                        $bookerCity         = eme_esc_html( $person['city'] );
-                        $bookerZip          = eme_esc_html( $person['zip'] );
-                        $bookerState_code   = eme_esc_html( $person['state_code'] );
-                        $bookerCountry_code = eme_esc_html( $person['country_code'] );
-                        $bookerEmail        = eme_esc_html( $person['email'] );
-                        $bookerPhone        = eme_esc_html( $person['phone'] );
-                        $bd_email           = intval( $person['bd_email'] );
-                        $gdpr               = intval( $person['gdpr'] );
-
-		} else {
-			$bookerLastName = $current_user->user_lastname;
-			if ( empty( $bookerLastName ) ) {
-				$bookerLastName = $current_user->display_name;
-			}
-			$bookerFirstName = $current_user->user_firstname;
-			$bookerEmail     = $current_user->user_email;
-			$bookerPhone     = eme_esc_html( eme_get_user_phone( $current_user->ID ) );
-		}
+		$current_user       = wp_get_current_user();
+		$person             = eme_get_person_by_wp_id( $current_user->ID );
+		$bookerLastName     = eme_esc_html( $person['lastname'] );
+		$bookerFirstName    = eme_esc_html( $person['firstname'] );
+		$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
+		$bookerBirthplace   = eme_esc_html( $person['birthplace'] );
+		$bookerAddress1     = eme_esc_html( $person['address1'] );
+		$bookerAddress2     = eme_esc_html( $person['address2'] );
+		$bookerCity         = eme_esc_html( $person['city'] );
+		$bookerZip          = eme_esc_html( $person['zip'] );
+		$bookerState_code   = eme_esc_html( $person['state_code'] );
+		$bookerCountry_code = eme_esc_html( $person['country_code'] );
+		$bookerEmail        = eme_esc_html( $person['email'] );
+		$bookerPhone        = eme_esc_html( $person['phone'] );
+		$bd_email           = intval( $person['bd_email'] );
+		$gdpr               = intval( $person['gdpr'] );
 	}
 
 	# we need 3 required fields: #_NAME, #_EMAIL and #_SEATS
@@ -1451,20 +1440,11 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 	$bookerEmail         = '';
 	$bookerCancelComment = '';
 	if ( is_user_logged_in() ) {
-		$current_user = wp_get_current_user();
-		$person       = eme_get_person_by_wp_id( $current_user->ID );
-		if ( ! empty( $person ) ) {
-			$bookerLastName  = eme_esc_html($person['lastname']);
-			$bookerFirstName = eme_esc_html($person['firstname']);
-			$bookerEmail     = eme_esc_html($person['email']);
-		} else {
-			$bookerLastName = $current_user->user_lastname;
-			if ( empty( $bookerLastName ) ) {
-				$bookerLastName = eme_esc_html($current_user->display_name);
-			}
-			$bookerFirstName = eme_esc_html($current_user->user_firstname);
-			$bookerEmail     = eme_esc_html($current_user->user_email);
-		}
+		$current_user    = wp_get_current_user();
+		$person          = eme_get_person_by_wp_id( $current_user->ID );
+		$bookerLastName  = eme_esc_html($person['lastname']);
+		$bookerFirstName = eme_esc_html($person['firstname']);
+		$bookerEmail     = eme_esc_html($person['email']);
 	}
 
 	// the 2 placeholders that can contain extra text are treated separately first
@@ -1776,32 +1756,22 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 
 	$allow_clear = 0;
 	if ( is_user_logged_in() ) {
-		$current_user = wp_get_current_user();
-		$person       = eme_get_person_by_wp_id( $current_user->ID );
-		if ( ! empty( $person ) ) {
-			$bookerLastName     = eme_esc_html( $person['lastname'] );
-			$bookerFirstName    = eme_esc_html( $person['firstname'] );
-			$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-			$bookerBirthplace   = eme_esc_html( $person['birthplace'] );
-			$bookerAddress1     = eme_esc_html( $person['address1'] );
-			$bookerAddress2     = eme_esc_html( $person['address2'] );
-			$bookerCity         = eme_esc_html( $person['city'] );
-			$bookerZip          = eme_esc_html( $person['zip'] );
-			$bookerState_code   = eme_esc_html( $person['state_code'] );
-			$bookerCountry_code = eme_esc_html( $person['country_code'] );
-			$bookerEmail        = eme_esc_html( $person['email'] );
-			$bookerPhone        = eme_esc_html( $person['phone'] );
-			$bd_email           = intval( $person['bd_email'] );
-			$gdpr               = intval( $person['gdpr'] );
-		} else {
-			$bookerLastName = eme_esc_html( $current_user->user_lastname );
-			if ( empty( $bookerLastName ) ) {
-				$bookerLastName = eme_esc_html( $current_user->display_name );
-			}
-			$bookerFirstName = eme_esc_html( $current_user->user_firstname );
-			$bookerEmail     = eme_esc_html( $current_user->user_email );
-			$bookerPhone     = eme_esc_html( eme_get_user_phone( $current_user->ID ) );
-		}
+		$current_user       = wp_get_current_user();
+		$person             = eme_get_person_by_wp_id( $current_user->ID );
+		$bookerLastName     = eme_esc_html( $person['lastname'] );
+		$bookerFirstName    = eme_esc_html( $person['firstname'] );
+		$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
+		$bookerBirthplace   = eme_esc_html( $person['birthplace'] );
+		$bookerAddress1     = eme_esc_html( $person['address1'] );
+		$bookerAddress2     = eme_esc_html( $person['address2'] );
+		$bookerCity         = eme_esc_html( $person['city'] );
+		$bookerZip          = eme_esc_html( $person['zip'] );
+		$bookerState_code   = eme_esc_html( $person['state_code'] );
+		$bookerCountry_code = eme_esc_html( $person['country_code'] );
+		$bookerEmail        = eme_esc_html( $person['email'] );
+		$bookerPhone        = eme_esc_html( $person['phone'] );
+		$bd_email           = intval( $person['bd_email'] );
+		$gdpr               = intval( $person['gdpr'] );
 
 		if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
 			$allow_clear = 1;
@@ -2473,32 +2443,22 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 
 	// don't fill out the basic info if in the backend, but do it only if in the frontend
 	if ( is_user_logged_in() && ! $eme_is_admin_request ) {
-		$person = eme_get_person_by_wp_id( $current_user->ID );
-		if ( ! empty( $person ) ) {
-			$bookerLastName       = eme_esc_html( $person['lastname'] );
-			$bookerFirstName      = eme_esc_html( $person['firstname'] );
-			$bookerBirthdate      = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
-			$bookerBirthplace     = eme_esc_html( $person['birthplace'] );
-			$bookerAddress1       = eme_esc_html( $person['address1'] );
-			$bookerAddress2       = eme_esc_html( $person['address2'] );
-			$bookerCity           = eme_esc_html( $person['city'] );
-			$bookerZip            = eme_esc_html( $person['zip'] );
-			$bookerState_code     = eme_esc_html( $person['state_code'] );
-			$bookerCountry_code   = eme_esc_html( $person['country_code'] );
-			$bookerEmail          = eme_esc_html( $person['email'] );
-			$bookerPhone          = eme_esc_html( $person['phone'] );
-			$massmail             = intval( $person['massmail'] );
-			$bd_email             = intval( $person['bd_email'] );
-			$gdpr                 = intval( $person['gdpr'] );
-		} else {
-			$bookerLastName = eme_esc_html( $current_user->user_lastname );
-			if ( empty( $bookerLastName ) ) {
-				$bookerLastName = eme_esc_html( $current_user->display_name );
-			}
-			$bookerFirstName = eme_esc_html( $current_user->user_firstname );
-			$bookerEmail     = eme_esc_html( $current_user->user_email );
-			$bookerPhone     = eme_esc_html( eme_get_user_phone( $current_user->ID ) );
-		}
+		$person             = eme_get_person_by_wp_id( $current_user->ID );
+		$bookerLastName     = eme_esc_html( $person['lastname'] );
+		$bookerFirstName    = eme_esc_html( $person['firstname'] );
+		$bookerBirthdate    = eme_is_date( $person['birthdate'] ) ? eme_esc_html( $person['birthdate'] ) : '';
+		$bookerBirthplace   = eme_esc_html( $person['birthplace'] );
+		$bookerAddress1     = eme_esc_html( $person['address1'] );
+		$bookerAddress2     = eme_esc_html( $person['address2'] );
+		$bookerCity         = eme_esc_html( $person['city'] );
+		$bookerZip          = eme_esc_html( $person['zip'] );
+		$bookerState_code   = eme_esc_html( $person['state_code'] );
+		$bookerCountry_code = eme_esc_html( $person['country_code'] );
+		$bookerEmail        = eme_esc_html( $person['email'] );
+		$bookerPhone        = eme_esc_html( $person['phone'] );
+		$massmail           = intval( $person['massmail'] );
+		$bd_email           = intval( $person['bd_email'] );
+		$gdpr               = intval( $person['gdpr'] );
 	}
 
 	if ( $editing_booking_from_backend ) {
@@ -3751,6 +3711,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	} elseif (! empty( $current_userid )) {
 		// this will also fill person with wp info if logged in and person doesn't exist in EME
 		$person = eme_get_person_by_wp_id( $current_userid );
+
 	}
 	if ( ! empty( $person ) ) {
 		$bookerLastName     = eme_esc_html( $person['lastname'] );
@@ -4338,22 +4299,13 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 	$readonly        = '';
 	$gdpr            = 0;
 	if ( is_user_logged_in() ) {
-		$readonly     = "readonly='readonly'";
-		$current_user = wp_get_current_user();
-		$person       = eme_get_person_by_wp_id( $current_user->ID );
-		if ( ! empty( $person ) ) {
-			$bookerLastName  = $person['lastname'];
-			$bookerFirstName = $person['firstname'];
-			$bookerEmail     = $person['email'];
-			$gdpr            = intval( $person['gdpr'] );
-		} else {
-			$bookerLastName = $current_user->user_lastname;
-			if ( empty( $bookerLastName ) ) {
-				$bookerLastName = $current_user->display_name;
-			}
-			$bookerFirstName = $current_user->user_firstname;
-			$bookerEmail     = $current_user->user_email;
-		}
+		$readonly        = "readonly='readonly'";
+		$current_user    = wp_get_current_user();
+		$person          = eme_get_person_by_wp_id( $current_user->ID );
+		$bookerLastName  = $person['lastname'];
+		$bookerFirstName = $person['firstname'];
+		$bookerEmail     = $person['email'];
+		$gdpr            = intval( $person['gdpr'] );
 	} elseif ( isset( $_GET['eme_email'] ) ) {
 		$bookerEmail = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
 	}

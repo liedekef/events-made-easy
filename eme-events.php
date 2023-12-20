@@ -3395,7 +3395,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$contact = eme_get_event_contact( $event );
 					}
 					if ( ! empty( $contact ) && is_null( $contact_person ) ) {
-						$contact_person = eme_get_person_by_wp_id( $contact->ID );
+						$contact_person = eme_get_person_by_wp_id( $contact->ID, 0 );
 					}
 					$t_contact = $contact;
 					$t_person  = $contact_person;
@@ -3404,7 +3404,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$author = eme_get_author( $event );
 					}
 					if ( ! empty( $author ) && is_null( $author_person ) ) {
-						$author_person = eme_get_person_by_wp_id( $author->ID );
+						$author_person = eme_get_person_by_wp_id( $author->ID, 0 );
 					}
 					$t_contact = $author;
 					$t_person  = $author_person;
@@ -3419,47 +3419,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					}
 					$t_format = str_replace( '#_CONTACT', '#_', $t_format );
 					$t_format = str_replace( '#_AUTHOR', '#_', $t_format );
-					if ( ! empty( $t_person ) ) {
-						// to be consistent: #_CONTACTNAME returns the full name if not linked to an EME user, so we do that here too
-						if ( $t_format == '#_NAME' ) {
-							$t_format = '#_FULLNAME';
-						}
-						$replacement = eme_replace_people_placeholders( $t_format, $t_person, $target, $lang );
-					} else {
-						if ( preg_match( '/#_NAME|#_DISPNAME/', $t_format ) ) {
-							$replacement = $t_contact->display_name;
-							if ( $target == 'html' ) {
-								$replacement = eme_trans_esc_html( $replacement, $lang );
-							}
-						} elseif ( preg_match( '/#_LASTNAME/', $t_format ) ) {
-							$replacement = $t_contact->user_lastname;
-							if ( $target == 'html' ) {
-								$replacement = eme_trans_esc_html( $replacement, $lang );
-							}
-						} elseif ( preg_match( '/#_FIRSTNAME/', $t_format ) ) {
-							$replacement = $t_contact->user_firstname;
-							if ( $target == 'html' ) {
-								$replacement = eme_trans_esc_html( $replacement, $lang );
-							}
-						} elseif ( preg_match( '/#_EMAIL/', $t_format ) ) {
-							$replacement = $t_contact->user_email;
-							// ascii encode for primitive harvesting protection ...
-							$replacement = eme_email_obfuscate( $replacement, $orig_target );
-						} elseif ( preg_match( '/#_PHONE/', $t_format ) ) {
-							$replacement = eme_get_user_phone( $t_contact->ID );
-							if ( $target == 'html' ) {
-								$replacement = eme_trans_esc_html( $replacement, $lang );
-							}
-						}
-
-						if ( $target == 'html' ) {
-							$replacement = apply_filters( 'eme_general', $replacement );
-						} elseif ( $target == 'rss' ) {
-							$replacement = apply_filters( 'the_content_rss', $replacement );
-						} else {
-							$replacement = apply_filters( 'eme_text', $replacement );
-						}
+					// to be consistent: #_CONTACTNAME returns the full name if not linked to an EME user, so we do that here too
+					if ( $t_format == '#_NAME' ) {
+						$t_format = '#_FULLNAME';
 					}
+					$replacement = eme_replace_people_placeholders( $t_format, $t_person, $target, $lang );
 				}
 			} elseif ( preg_match( '/#_CREATIONDATE\{(.+?)\}$/', $result, $matches ) ) {
 				$replacement = eme_localized_date( $event['creation_date'], EME_TIMEZONE, $matches[1] );

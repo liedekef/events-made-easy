@@ -2726,8 +2726,11 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 	$lastname     = $user_info->user_lastname;
 	$firstname    = $user_info->user_firstname;
 	$email        = $user_info->user_email;
+	if ( empty( $lastname ) ) {
+		$lastname = $user_info->display_name;
+	}
 
-	$person = wp_cache_get( "eme_person_wpid $wp_id" );
+	$person = wp_cache_get( "eme_person_wpid $use_wp_info $wp_id" );
 	if ( $person === false ) {
 		$sql   = $wpdb->prepare( "SELECT * FROM $people_table WHERE wp_id = %d AND status=%d", $wp_id, EME_PEOPLE_STATUS_ACTIVE);
 		$lines = $wpdb->get_results( $sql, ARRAY_A );
@@ -2746,9 +2749,6 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 		if ( ! empty( $lastname ) ) {
 			$person['lastname'] = $lastname;
 		}
-		if ( empty( $lastname ) ) {
-			$lastname = $user_info->display_name;
-		}
 		if ( ! empty( $firstname ) ) {
 			$person['firstname'] = $firstname;
 		}
@@ -2757,16 +2757,13 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 	} else {
 		// imagine there is no user yet, but someone matching with this info (lastname, firstname, email), then we add the wp id to that existing user
 		// if still no EME person matching: take the info from the WP profile and return a basis $person array if use_wp_info=1
-		if ( empty( $lastname ) ) {
-			$lastname = $user_info->display_name;
-		}
 		$person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
 		if ( ! $person ) {
 			$person = eme_get_person_by_email_only( $email );
 		}
 		if ( ! empty( $person ) ) {
 			$res = eme_update_person_wp_id( $person['person_id'], $wp_id );
-			wp_cache_delete( "eme_person_wpid $wp_id" );
+			wp_cache_delete( "eme_person_wpid $use_wp_info $wp_id" );
 			if ( $res !== false ) {
 				$person['wp_id'] = $wp_id;
 			}
@@ -2774,9 +2771,6 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 			if ( $use_wp_info ) {
 				$person = eme_new_person();
 				$person['lastname'] = $lastname;
-				if ( empty( $lastname ) ) {
-					$lastname = $user_info->display_name;
-				}
 				$person['firstname'] = $firstname;
 				$person['email'] = $email;
 				$person['phone'] = eme_get_user_phone( $wp_id );
@@ -2784,7 +2778,7 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 			}
 		}
 	}
-	wp_cache_set( "eme_person_wpid $wp_id", $person, '', 10 );
+	wp_cache_set( "eme_person_wpid $use_wp_info $wp_id", $person, '', 10 );
 	return $person;
 }
 

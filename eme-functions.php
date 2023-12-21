@@ -3835,7 +3835,9 @@ function eme_migrate_event_payment_options() {
 }
 
 function eme_is_empty_string( $text ) {
-	if ( is_array( $text ) ) {
+	if ( empty( $text ) ) {
+		return 1;
+	} elseif ( is_array( $text ) ) {
 		$text = array_map( 'trim', $text );
 	} else {
 		$text = trim( $text );

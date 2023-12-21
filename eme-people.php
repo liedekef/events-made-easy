@@ -4334,7 +4334,7 @@ function eme_get_indexed_users() {
 	return $indexed_users;
 }
 
-function eme_get_wp_users( $search, $offset = 0, $pagesize = 0 ) {
+function eme_get_wp_users( $search, $offset = 0, $pagesize = 0, $wp_ids_to_exclude = [] ) {
 	$meta_query = [
 		'relation' => 'OR',
 		[
@@ -4368,8 +4368,11 @@ function eme_get_wp_users( $search, $offset = 0, $pagesize = 0 ) {
 		'orderby'     => 'ID',
 		'order'       => 'ASC',
 		'count_total' => true,
-		'fields'      => [ 'ID' ],
+		// 'fields'      => [ 'ID' ], // default is all, we want all
 	];
+	if (!empty($wp_ids_to_exclude)) {
+		$args['exclude'] = $wp_ids_to_exclude;
+	}
 	if ( $pagesize > 0 ) {
 		$args['offset'] = $offset;
 		$args['number'] = $pagesize;
@@ -4848,6 +4851,7 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 		$search_tables = 'wp_users';
 	}
 
+	$wp_ids_seen = [];
 	if ( $search_tables == 'people' || $search_tables == 'both' ) {
 		$search = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
 		if ( ! empty( $exclude_personids ) ) {
@@ -4871,20 +4875,23 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 			$record['massmail']  = intval( $item['massmail'] );
 			$record['gdpr']      = intval( $item['gdpr'] );
 			$return[]            = $record;
+			if (!empty($record['wp_id'] )) {
+				$wp_ids_seen[]=$record['wp_id'];
+			}
 		}
 	}
 	if ( $search_tables == 'wp_users' || $search_tables == 'both' ) {
-		[$persons, $total] = eme_get_wp_users( $q );
-		foreach ( $persons as $item ) {
+		// we don't want to include the people linked in EME, so we exclude those
+		[$wp_users, $total] = eme_get_wp_users( search: $q, wp_ids_to_exclude: $wp_ids_seen );
+		foreach ( $wp_users as $wp_user ) {
 			$record             = [];
-			$user_info          = get_userdata( $item->ID );
-			$phone              = eme_esc_html( eme_get_user_phone( $item->ID ) );
-			$record['lastname'] = eme_esc_html( $user_info->user_lastname );
+			$phone              = eme_esc_html( eme_get_user_phone( $wp_user->ID ) );
+			$record['lastname'] = eme_esc_html( $wp_user->user_lastname );
 			if ( empty( $record['lastname'] ) ) {
-				$record['lastname'] = eme_esc_html( $user_info->display_name );
+				$record['lastname'] = eme_esc_html( $wp_user->display_name );
 			}
-			$record['firstname'] = eme_esc_html( $user_info->user_firstname );
-			$record['email']     = eme_esc_html( $user_info->user_email );
+			$record['firstname'] = eme_esc_html( $wp_user->user_firstname );
+			$record['email']     = eme_esc_html( $wp_user->user_email );
 			$record['address1']  = '';
 			$record['address2']  = '';
 			$record['city']      = '';
@@ -4892,7 +4899,7 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 			$record['state']     = '';
 			$record['country']   = '';
 			$record['phone']     = eme_esc_html( $phone );
-			$record['wp_id']     = intval( $item->ID );
+			$record['wp_id']     = intval( $wp_user->ID );
 			$record['massmail']  = 1;
 			$record['gdpr']      = 1;
 			$record['person_id'] = 0;

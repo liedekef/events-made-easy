@@ -9987,13 +9987,12 @@ function eme_ajax_wpuser_select2() {
 	$start        = isset( $_REQUEST['page'] ) ? (intval( $_REQUEST['page'] ) -1) * $pagesize : 0;
 
 	$records              = [];
-	[$persons, $total] = eme_get_wp_users( $q, $start, $pagesize );
-	foreach ( $persons as $item ) {
+	[$wp_users, $total] = eme_get_wp_users( $q, $start, $pagesize );
+	foreach ( $wp_users as $wp_user ) {
 		$record       = [];
-		$user_info    = get_userdata( $item->ID );
-		$record['id'] = $item->ID;
+		$record['id'] = $wp_user->ID;
 		// no eme_esc_html here, select2 does it own escaping upon arrival
-		$record['text'] = $user_info->display_name;
+		$record['text'] = $wp_user->display_name;
 		$records[]      = $record;
 	}
 	$jTableResult['TotalRecordCount'] = $total;

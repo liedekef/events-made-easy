@@ -618,7 +618,6 @@ jQuery(document).ready(function ($) {
 					{ q: request.term,
 					  'eme_admin_nonce': eme.translate_adminnonce,
 					  action: 'eme_autocomplete_people',
-					  eme_searchlimit: 'people'
 					},
 					function(data){
 						response($.map(data, function(item) {
@@ -646,29 +645,21 @@ jQuery(document).ready(function ($) {
 			select:function(event, ui) {
 				// when a person is selected, populate some fields in this form, hide the rest of personal info (too complicated)
 				event.preventDefault();
-				if (ui.item.person_id>0) {
-					$('.personal_info').hide();
-					$('input[name=lastname]').val(ui.item.lastname).attr('readonly', true).show();
-					$('input[name=firstname]').val(ui.item.firstname).attr('readonly', true).show();
-					$('input[name=email]').val(ui.item.email).attr('readonly', true).show();
-					$('input[name=person_id]').val(ui.item.person_id);
-					$(event.target).val(ui.item.lastname+' '+ui.item.firstname).attr('readonly', true).addClass('clearable x');
-					$('input[name=wp_id]').val(ui.item.wp_id);
-					$('input[name=wp_id]').trigger('input');
-				}
+				$('.personal_info').hide();
+				$('input[name=lastname]').val(ui.item.lastname).attr('readonly', true).show();
+				$('input[name=firstname]').val(ui.item.firstname).attr('readonly', true).show();
+				$('input[name=email]').val(ui.item.email).attr('readonly', true).show();
+				$('input[name=person_id]').val(ui.item.person_id);
+				$(event.target).val(ui.item.lastname+' '+ui.item.firstname).attr('readonly', true).addClass('clearable x');
+				$('input[name=wp_id]').val(ui.item.wp_id);
+				$('input[name=wp_id]').trigger('input');
 				return false;
 			},
 			minLength: 2
 		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
-			if (item.person_id==0) {
-				return $( '<li></li>' )
-					.append('<strong>'+eme.translate_nomatchperson+'</strong>')
-					.appendTo( ul );
-			} else {
-				return $( '<li></li>' )
-					.append('<a><strong>'+item.lastname+' '+item.firstname+'</strong><br /><small>'+item.email+'</small></a>')
-					.appendTo( ul );
-			}
+			return $( '<li></li>' )
+				.append('<a><strong>'+item.lastname+' '+item.firstname+'</strong><br /><small>'+item.email+'</small></a>')
+				.appendTo( ul );
 		};
 
 		// if manual input: set the hidden field empty again
@@ -731,15 +722,9 @@ jQuery(document).ready(function ($) {
 			},
 			minLength: 2
 		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
-			if (item.person_id==0) {
-				return $( '<li></li>' )
-					.append('<strong>'+eme.translate_nomatchperson+'</strong>')
-					.appendTo( ul );
-			} else {
-				return $( '<li></li>' )
-					.append('<a><strong>'+item.lastname+' '+item.firstname+'</strong><br /><small>'+item.email+'</small></a>')
-					.appendTo( ul );
-			}
+			return $( '<li></li>' )
+				.append('<a><strong>'+item.lastname+' '+item.firstname+'</strong><br /><small>'+item.email+'</small></a>')
+				.appendTo( ul );
 		};
 
 		// if manual input: set the hidden field empty again

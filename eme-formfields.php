@@ -3708,10 +3708,9 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	$person = [];
 	if ($editing_member) {
 		$person = eme_get_person( $member['person_id'] );
-	} elseif (! empty( $current_userid )) {
+	} elseif (! empty( $current_userid ) && !$eme_is_admin_request) {
 		// this will also fill person with wp info if logged in and person doesn't exist in EME
 		$person = eme_get_person_by_wp_id( $current_userid, 1 );
-
 	}
 	if ( ! empty( $person ) ) {
 		$bookerLastName     = eme_esc_html( $person['lastname'] );

@@ -2716,11 +2716,11 @@ function eme_count_persons_with_wp_id( $wp_id ) {
 	return $wpdb->get_var( $sql );
 }
 
-function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
+function eme_get_person_by_wp_id( $wp_id ) {
 	global $wpdb;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$user_info    = get_userdata( $wp_id );
-	if (!$user_info && !$use_wp_info) {
+	if (!$user_info ) {
 		return false;
 	}
 	$lastname     = $user_info->user_lastname;
@@ -2730,7 +2730,7 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 		$lastname = $user_info->display_name;
 	}
 
-	$person = wp_cache_get( "eme_person_wpid $use_wp_info $wp_id" );
+	$person = wp_cache_get( "eme_person_wpid $wp_id" );
 	if ( $person === false ) {
 		$sql   = $wpdb->prepare( "SELECT * FROM $people_table WHERE wp_id = %d AND status=%d", $wp_id, EME_PEOPLE_STATUS_ACTIVE);
 		$lines = $wpdb->get_results( $sql, ARRAY_A );
@@ -2763,22 +2763,31 @@ function eme_get_person_by_wp_id( $wp_id, $use_wp_info = 1 ) {
 		}
 		if ( ! empty( $person ) ) {
 			$res = eme_update_person_wp_id( $person['person_id'], $wp_id );
-			wp_cache_delete( "eme_person_wpid $use_wp_info $wp_id" );
+			wp_cache_delete( "eme_person_wpid $wp_id" );
 			if ( $res !== false ) {
-				$person['wp_id'] = $wp_id;
-			}
-		} else {
-			if ( $use_wp_info ) {
-				$person = eme_new_person();
-				$person['lastname'] = $lastname;
-				$person['firstname'] = $firstname;
-				$person['email'] = $email;
-				$person['phone'] = eme_get_user_phone( $wp_id );
 				$person['wp_id'] = $wp_id;
 			}
 		}
 	}
-	wp_cache_set( "eme_person_wpid $use_wp_info $wp_id", $person, '', 10 );
+	wp_cache_set( "eme_person_wpid $wp_id", $person, '', 10 );
+	return $person;
+}
+
+function eme_fake_person_by_wp_id( $wp_id ) {
+	global $wpdb;
+	$user_info    = get_userdata( $wp_id );
+	$person = eme_new_person();
+	if ($user_info ) {
+		$lastname     = $user_info->user_lastname;
+		if ( empty( $lastname ) ) {
+			$lastname = $user_info->display_name;
+		}
+		$person['lastname'] = $lastname;
+		$person['firstname'] = $user_info->user_firstname;
+		$person['email'] = $user_info->user_email;
+		$person['phone'] = eme_get_user_phone( $wp_id );
+		$person['wp_id'] = $wp_id;
+	}
 	return $person;
 }
 
@@ -4210,7 +4219,7 @@ function eme_after_profile_update( $wp_id, $old_user_data ) {
 	$firstname = $user_info->user_firstname;
 	$email     = $user_info->user_email;
 	$phone     = eme_get_user_phone( $wp_id );
-	$person    = eme_get_person_by_wp_id( $wp_id, 0 );
+	$person    = eme_get_person_by_wp_id( $wp_id );
 	if ( ! empty( $person ) ) {
 		if ( ! empty( $lastname ) ) {
 			$person['lastname'] = $lastname;

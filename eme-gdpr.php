@@ -118,7 +118,7 @@ function eme_rpi_shortcode( $atts ) {
 	// for logged in users that are linked to an EME user, immediately show the info
 	if ( $show_info_if_logged_in && is_user_logged_in() ) {
 		$current_userid = get_current_user_id();
-		$person         = eme_get_person_by_wp_id( $current_userid, 0 );
+		$person         = eme_get_person_by_wp_id( $current_userid );
 		if ( ! empty( $person ) ) {
 			return eme_show_personal_info( $person['email'] );
 		}

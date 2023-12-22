@@ -839,7 +839,7 @@ function eme_mytasks_signups_shortcode( $atts ) {
 	} else {
 		return;
 	}
-	$person = eme_get_person_by_wp_id( $wp_id, 0 );
+	$person = eme_get_person_by_wp_id( $wp_id );
 	if ( empty( $person ) ) {
 		return;
 	}

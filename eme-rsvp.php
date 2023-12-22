@@ -110,7 +110,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 
 		// check group memberships
 		if ( ! empty( $event['event_properties']['rsvp_required_group_ids'] ) ) {
-			$person = eme_get_person_by_wp_id( $current_userid, 0 );
+			$person = eme_get_person_by_wp_id( $current_userid );
 			if ( empty( $person ) ) {
 				return '';
 			}

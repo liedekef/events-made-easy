@@ -3395,7 +3395,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$contact = eme_get_event_contact( $event );
 					}
 					if ( ! empty( $contact ) && is_null( $contact_person ) ) {
-						$contact_person = eme_get_person_by_wp_id( $contact->ID, 0 );
+						$contact_person = eme_get_person_by_wp_id( $contact->ID );
 					}
 					$t_contact = $contact;
 					$t_person  = $contact_person;
@@ -3404,7 +3404,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$author = eme_get_author( $event );
 					}
 					if ( ! empty( $author ) && is_null( $author_person ) ) {
-						$author_person = eme_get_person_by_wp_id( $author->ID, 0 );
+						$author_person = eme_get_person_by_wp_id( $author->ID );
 					}
 					$t_contact = $author;
 					$t_person  = $author_person;

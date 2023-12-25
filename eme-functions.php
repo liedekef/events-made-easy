@@ -3601,10 +3601,10 @@ function eme_extra_event_headers( $event ) {
 		$performer['name']    = '#_EVENTNAME';
 		$content['performer'] = $performer;
 	}
-		$organizer          = [];
-		$organizer['@type'] = 'Organization';
-		$organizer['name']  = '#_CONTACTNAME';
-		$organizer['url']   = '#_EVENTPAGEURL';
+	$organizer          = [];
+	$organizer['@type'] = 'Organization';
+	$organizer['name']  = '#_CONTACTNAME';
+	$organizer['url']   = '#_EVENTPAGEURL';
 	$content['organizer']   = $organizer;
 	$content['eventStatus'] = 'https://schema.org/EventScheduled';
 

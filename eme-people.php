@@ -217,6 +217,9 @@ function eme_person_shortcode( $atts ) {
 	} elseif ( is_user_logged_in() ) {
 		$wp_id  = get_current_user_id();
 		$person = eme_get_person_by_wp_id( $wp_id );
+		if (empty($person)) {
+			$person = eme_fake_person_by_wp_id( $wp_id );
+		}
 	}
 	if ( !empty($atts['template_id']) && ! empty( $person ) ) {
 		$format = eme_get_template_format( intval($atts['template_id']) );

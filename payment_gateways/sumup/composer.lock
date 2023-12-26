@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "sumup/sumup-ecom-php-sdk",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sumup/sumup-ecom-php-sdk.git",
-                "reference": "0d9aa0d22c83bcf17f6f76518a5a42b45c7d6579"
+                "reference": "37719156316316f839b7c1ad6d34f458a121de97"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sumup/sumup-ecom-php-sdk/zipball/0d9aa0d22c83bcf17f6f76518a5a42b45c7d6579",
-                "reference": "0d9aa0d22c83bcf17f6f76518a5a42b45c7d6579",
+                "url": "https://api.github.com/repos/sumup/sumup-ecom-php-sdk/zipball/37719156316316f839b7c1ad6d34f458a121de97",
+                "reference": "37719156316316f839b7c1ad6d34f458a121de97",
                 "shasum": ""
             },
             "require": {
@@ -55,9 +55,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sumup/sumup-ecom-php-sdk/issues",
-                "source": "https://github.com/sumup/sumup-ecom-php-sdk/tree/1.1.0"
+                "source": "https://github.com/sumup/sumup-ecom-php-sdk/tree/1.2.0"
             },
-            "time": "2022-03-03T15:55:29+00:00"
+            "time": "2023-12-19T08:49:39+00:00"
         }
     ],
     "packages-dev": [],
@@ -68,5 +68,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }

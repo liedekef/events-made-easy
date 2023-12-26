@@ -22,7 +22,7 @@ try {
         'code'       => 'YOUR-AUTHORIZATION-CODE'
     ]);
     $checkoutService = $sumup->getCheckoutService();
-    $checkoutResponse = $checkoutService->create($amount, $currency, $checkoutRef, $merchantCode);
+    $checkoutResponse = $checkoutService->create($amount, $currency, $checkoutRef, $payToEmail);
     $checkoutId = $checkoutResponse->getBody()->id;
 //  pass the $chekoutId to the front-end to be processed
 } catch (\SumUp\Exceptions\SumUpAuthenticationException $e) {

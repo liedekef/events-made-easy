@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.22 (2023//) =
 * Fix #_CONTACT and #_AUTHOR event placeholders if no EME person is linked to that wp id
+* Sumup and Mollie API updates
 
 = 2.4.21 (2023/12/22) =
 * Fix/improve usage of WP profile for membership (and others)

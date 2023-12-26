@@ -53,7 +53,7 @@ class Merchant implements SumUpService
      */
     public function getProfile()
     {
-        $path = '/me/merchant-profile';
+        $path = '/v0.1/me/merchant-profile';
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, [], $headers);
     }
@@ -76,7 +76,7 @@ class Merchant implements SumUpService
         if (empty($data)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('payload data'));
         }
-        $path = '/me/merchant-profile';
+        $path = '/v0.1/me/merchant-profile';
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('PUT', $path, $data, $headers);
     }
@@ -93,7 +93,7 @@ class Merchant implements SumUpService
      */
     public function getDoingBusinessAs()
     {
-        $path = '/me/merchant-profile/doing-business-as';
+        $path = '/v0.1/me/merchant-profile/doing-business-as';
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, [], $headers);
     }
@@ -116,7 +116,7 @@ class Merchant implements SumUpService
         if (empty($data)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('payload data'));
         }
-        $path = '/me/merchant-profile/doing-business-as';
+        $path = '/v0.1/me/merchant-profile/doing-business-as';
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('PUT', $path, $data, $headers);
     }

@@ -22,7 +22,7 @@ public function create(
     float  $amount,
     string $currency,
     string $checkoutRef,
-    string $merchantCode,,
+    string $payToEmail,
     string $description = '',
     string $payFromEmail = null,
     string $returnURL = null

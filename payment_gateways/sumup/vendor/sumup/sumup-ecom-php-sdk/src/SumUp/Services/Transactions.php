@@ -59,7 +59,7 @@ class Transactions implements SumUpService
         if (empty($transactionId)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('transaction id'));
         }
-        $path = '/me/transactions?id=' . $transactionId;
+        $path = '/v0.1/me/transactions?id=' . $transactionId;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, [], $headers);
     }
@@ -82,7 +82,7 @@ class Transactions implements SumUpService
         if (empty($internalId)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('internal id'));
         }
-        $path = '/me/transactions?internal_id=' . $internalId;
+        $path = '/v0.1/me/transactions?internal_id=' . $internalId;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, [], $headers);
     }
@@ -105,7 +105,7 @@ class Transactions implements SumUpService
         if (empty($transactionCode)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('transaction code'));
         }
-        $path = '/me/transactions?transaction_code=' . $transactionCode;
+        $path = '/v0.1/me/transactions?transaction_code=' . $transactionCode;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, [], $headers);
     }
@@ -203,7 +203,7 @@ class Transactions implements SumUpService
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('merchant id'));
         }
         $queryParams = http_build_query(['mid' => $merchantId]);
-        $path = '/v0.1/receipts/' . $transactionId . '?' . $queryParams;
+        $path = '/v1.0/receipts/' . $transactionId . '?' . $queryParams;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, [], $headers);
     }

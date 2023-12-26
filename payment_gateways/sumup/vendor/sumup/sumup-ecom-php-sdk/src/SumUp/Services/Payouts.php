@@ -83,7 +83,7 @@ class Payouts implements SumUpService
             'format' => $format
         ];
         $queryParams = http_build_query($filters);
-        $path = '/me/financials/payouts?' . $queryParams;
+        $path = '/v0.1/me/financials/payouts?' . $queryParams;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, null, $headers);
     }
@@ -130,7 +130,7 @@ class Payouts implements SumUpService
             'format' => $format
         ];
         $queryParams = http_build_query($filters);
-        $path = '/me/financials/transactions?' . $queryParams;
+        $path = '/v0.1/me/financials/transactions?' . $queryParams;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, null, $headers);
     }

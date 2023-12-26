@@ -88,7 +88,7 @@ class Customers implements SumUpService
             'customer_id' => $customerId,
             'personal_details' => $details
         ];
-        $path = '/customers';
+        $path = '/v0.1/customers';
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('POST', $path, $payload, $headers);
     }
@@ -139,7 +139,7 @@ class Customers implements SumUpService
             'customer_id' => $customerId,
             'personal_details' => $details
         ];
-        $path = '/customers/' . $customerId;
+        $path = '/v0.1/customers/' . $customerId;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('PUT', $path, $payload, $headers);
     }
@@ -162,7 +162,7 @@ class Customers implements SumUpService
         if (empty($customerId)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('customer id'));
         }
-        $path = '/customers/' . $customerId;
+        $path = '/v0.1/customers/' . $customerId;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, [], $headers);
     }
@@ -185,7 +185,7 @@ class Customers implements SumUpService
         if (empty($customerId)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('customer id'));
         }
-        $path = '/customers/' . $customerId . '/payment-instruments';
+        $path = '/v0.1/customers/' . $customerId . '/payment-instruments';
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('GET', $path, [], $headers);
     }
@@ -212,7 +212,7 @@ class Customers implements SumUpService
         if (empty($cardToken)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('card token'));
         }
-        $path = '/customers/' . $customerId . '/payment-instruments/' . $cardToken;
+        $path = '/v0.1/customers/' . $customerId . '/payment-instruments/' . $cardToken;
         $headers = array_merge(Headers::getStandardHeaders(), Headers::getAuth($this->accessToken));
         return $this->client->send('DELETE', $path, [], $headers);
     }

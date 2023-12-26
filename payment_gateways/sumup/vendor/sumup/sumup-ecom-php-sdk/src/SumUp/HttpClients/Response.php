@@ -99,7 +99,7 @@ class Response
             throw new SumUpServerException($message, $this->httpResponseCode);
         }
         if ($this->httpResponseCode >= 400) {
-            $message = $this->parseErrorMessage('Client error').$this->httpResponseCode;
+            $message = $this->parseErrorMessage('Client error');
             throw new SumUpResponseException($message, $this->httpResponseCode);
         }
     }

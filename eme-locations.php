@@ -102,8 +102,8 @@ function eme_locations_page() {
 			$location_id = intval( $_POST['location_id'] );
 			$location    = eme_get_location( $location_id );
 			if ( empty( $location ) ) {
-					$location_id = 0;
-					$location    = eme_new_location();
+				$location_id = 0;
+				$location    = eme_new_location();
 			}
 		} else {
 			$location_id = 0;
@@ -114,7 +114,7 @@ function eme_locations_page() {
 			$message = __( 'You have no right to add a location!', 'events-made-easy' );
 			eme_locations_table( $message );
 		} elseif ( $action == 'do_editlocation' && ! ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
-					( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) ) {
+			   ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) ) {
 			$message = __( 'You have no right to edit this location!', 'events-made-easy' );
 			eme_locations_table( $message );
 		} else {
@@ -223,7 +223,7 @@ function eme_import_csv_locations() {
 	$error_msg = '';
 	$handle    = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
 	if ( ! $handle ) {
-				return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
+		return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
 	}
 	// BOM as a string for comparison.
 	$bom = "\xef\xbb\xbf";
@@ -413,53 +413,41 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 	?>
 	</div>
 </div> <!-- end location-tabs -->
-			<p class="submit"><input type="submit" class="button-primary" name="submit" value="
+<p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add location', 'events-made-easy' ); } else { esc_html_e( 'Update location', 'events-made-easy' ); } ?>"></p>
+</div>
+<!-- END OF MAIN -->
+<!-- SIDEBAR -->
+	<div id="postbox-container-1" class="postbox-container">
+		<div id='side-sortables' class="meta-box-sortables ui-sortable">
+			<!-- author postbox -->
 			<?php
-			if ( $action == 'add' ) {
-				esc_html_e( 'Add location', 'events-made-easy' );
+			if ( $action == 'edit' ) {
+				$location_author = $location['location_author'];
 			} else {
-				esc_html_e( 'Update location', 'events-made-easy' );
+				$location_author = get_current_user_id();
 			}
 			?>
-																								"></p>
-			</div>
-			<!-- END OF MAIN -->
-			<!-- SIDEBAR -->
-			<div id="postbox-container-1" class="postbox-container">
-				<div id='side-sortables' class="meta-box-sortables ui-sortable">
-					<!-- author postbox -->
+			<div class="postbox" id="eme_authordiv">
+			<h2 class='hndle'><span><?php esc_html_e( 'Author', 'events-made-easy' ); ?></span></h2>
+				<div class="inside">
+				<p><?php esc_html_e( 'Author of this location: ', 'events-made-easy' ); ?>
 					<?php
-					if ( $action == 'edit' ) {
-						$location_author = $location['location_author'];
-					} else {
-						$location_author = get_current_user_id();
-					}
+					wp_dropdown_users(
+						[
+							'name'     => 'location_author',
+							'selected' => $location_author,
+						]
+					);
 					?>
-					<div class="postbox" id="eme_authordiv">
-					<h2 class='hndle'><span>
-						<?php esc_html_e( 'Author', 'events-made-easy' ); ?>
-						</span></h2>
-					<div class="inside">
-						<p><?php esc_html_e( 'Author of this location: ', 'events-made-easy' ); ?>
-							<?php
-							wp_dropdown_users(
-								[
-									'name'     => 'location_author',
-									'selected' => $location_author,
-								]
-							);
-							?>
-						</p>
-					</div>
-					</div>
-					<!-- categories postbox -->
-					<div class="postbox" id="eme_categoriesdiv">
-					<h2 class='hndle'><span>
-						<?php esc_html_e( 'Category', 'events-made-easy' ); ?>
-						</span></h2>
-					<div class="inside">
-					<?php
-						$categories = eme_get_categories();
+				</p>
+				</div>
+			</div>
+			<!-- categories postbox -->
+			<div class="postbox" id="eme_categoriesdiv">
+			<h2 class='hndle'><span><?php esc_html_e( 'Category', 'events-made-easy' ); ?></span></h2>
+				<div class="inside">
+				<?php
+					$categories = eme_get_categories();
 					if ( empty( $categories ) ) {
 						?>
 						<span><?php esc_html_e( 'No categories defined.', 'events-made-easy' ); ?></span>
@@ -477,15 +465,15 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 						} // end foreach
 					} // end if
 					?>
-					</div>
-					</div>
 				</div>
 			</div>
-			<!-- END OF SIDEBAR -->
 		</div>
-		</div>
-	</form>
 	</div>
+	<!-- END OF SIDEBAR -->
+</div>
+</div>
+</form>
+</div>
 	<?php
 }
 
@@ -707,7 +695,8 @@ function eme_meta_box_div_location_image( $location ) {
 		echo "<img id='eme_location_image_example' alt='" . esc_attr__( 'Location image', 'events-made-easy' ) . "' src='" . $location['location_image_url'] . "' width='200'>";
 		echo "<input type='hidden' name='location_image_url' id='location_image_url' value='" . $location['location_image_url'] . "'>";
 	} else {
-		echo "<img id='eme_location_image_example' alt='" . esc_attr__( 'Location image', 'events-made-easy' ) . "' src='' width='200'>";
+		# to prevent html validation errors, use a transparent small pixel
+		echo "<img id='eme_location_image_example' alt='" . esc_attr__( 'Location image', 'events-made-easy' ) . "' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=' width='200'>";
 		echo "<input type='hidden' name='location_image_url' id='location_image_url'>";
 	}
 	if ( ! empty( $location['location_image_id'] ) ) {

@@ -8395,7 +8395,8 @@ function eme_meta_box_div_event_image( $event ) {
 		echo "<img id='eme_event_image_example' alt='" . esc_attr__( 'Event image', 'events-made-easy' ) . "' src='" . $event['event_image_url'] . "' width='200'>";
 		echo "<input type='hidden' name='event_image_url' id='event_image_url' value='" . $event['event_image_url'] . "'>";
 	} else {
-		echo "<img id='eme_event_image_example' src='' alt='" . esc_attr__( 'Event image', 'events-made-easy' ) . "' width='200'>";
+		# to prevent html validation errors, use a transparent small pixel
+		echo "<img id='eme_event_image_example' src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=' alt='" . esc_attr__( 'Event image', 'events-made-easy' ) . "' width='200'>";
 		echo "<input type='hidden' name='event_image_url' id='event_image_url'>";
 	}
 	if ( ! empty( $event['event_image_id'] ) ) {

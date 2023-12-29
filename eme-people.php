@@ -2536,7 +2536,8 @@ function eme_person_replace_image_input_div( $person, $relative_div = 0 ) {
 	if ( $person['properties']['image_id'] > 0 ) {
 		$image_url = esc_url( wp_get_attachment_image_url( $person['properties']['image_id'], 'full' ) );
 	} else {
-		$image_url = '';
+		# to prevent html validation errors, use a transparent small pixel
+		$image_url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=';
 	}
 	$no_image     = esc_html__( 'No image set', 'events-made-easy' );
 	$set_image    = esc_html__( 'Choose image', 'events-made-easy' );
@@ -2575,7 +2576,8 @@ function eme_person_replace_image_input( $person, $relative_div = 0 ) {
 	if ( $person['properties']['image_id'] > 0 ) {
 		$image_url = esc_url( wp_get_attachment_image_url( $person['properties']['image_id'], 'full' ) );
 	} else {
-		$image_url = '';
+		# to prevent html validation errors, use a transparent small pixel
+		$image_url = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=';
 	}
 	$no_image     = esc_html__( 'No image set', 'events-made-easy' );
 	$set_image    = esc_html__( 'Choose image', 'events-made-easy' );

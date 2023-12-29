@@ -1451,6 +1451,18 @@ add_filter( 'the_content', 'eme_filter_events_page' );
 $eme_use_is_page_for_title = get_option( 'eme_use_is_page_for_title' );
 function eme_page_title( $data, $post_id = null ) {
 	global $eme_use_is_page_for_title;
+
+	// the following little trick is used to avoid recursion caused by shortcodes. Example:
+	// 1. EME sets the filter (so eme_page_title gets called)
+	// 2. in the title there is a shortcode (for example shortcoder: sc)
+	// 3. due to the eme_page_title filter calling eme_replace_event_placeholders, that shortcode gets executed, does things and might call the function the_title
+	// 4. that call to the the_title calls eme_page_title and so we're back to step 1 ...
+	// Normally this doesn't happen, but some plugins define own regex for shortcodes and
+	// these (like shortcoder) are in fact the problem
+	global $eme_page_title_count;
+	if ($eme_page_title_count > 0) return $data;
+	$eme_page_title_count ++;
+
 	$events_page_id = eme_get_events_page_id();
 	$events_page    = get_page( $events_page_id );
 	if ( ! $events_page ) {
@@ -1545,15 +1557,27 @@ function eme_page_title( $data, $post_id = null ) {
 		$res = $data;
 	}
 
+	$eme_page_title_count --;
 	return $res;
 }
 
 function eme_html_title( $data ) {
+	// the following little trick is used to avoid recursion caused by shortcodes. Example:
+	// 1. EME sets the filter (so eme_html_title gets called)
+	// 2. in the title there is a shortcode (for example shortcoder: sc)
+	// 3. due to the eme_html_title filter calling eme_replace_event_placeholders, that shortcode gets executed, does things and might call the function single_post_title
+	// 4. that call to the single_post_title calls eme_html_title and so we're back to step 1 ...
+	// Normally this doesn't happen, but some plugins define own regex for shortcodes and
+	// these (like shortcoder) are in fact the problem
+	global $eme_html_title_count;
+	if ($eme_html_title_count > 0) return $data;
+	$eme_html_title_count ++;
+
 	if ( eme_is_events_page() ) {
 		if ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
-			return __( 'Attendance check', 'events-made-easy' );
+			$res = __( 'Attendance check', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_rsvp_confirm' ) && get_query_var( 'eme_pmt_rndid' ) ) {
-			return __( 'Booking confirmation', 'events-made-easy' );
+			$res = __( 'Booking confirmation', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_pmt_rndid' ) ) {
 			$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
 			$payment          = eme_get_payment( 0, $payment_randomid );
@@ -1566,7 +1590,7 @@ function eme_html_title( $data ) {
 				if ( count( $booking_ids ) == 1 ) {
 					$event = eme_get_event_by_booking_id( $booking_ids[0] );
 					if ( empty( $event ) ) {
-						return $data;
+						$res = $data;
 					} else {
 						$stored_html_title_format = get_option( 'eme_event_html_title_format' );
 						$html_title               = eme_sanitize_request( eme_replace_event_placeholders( $stored_html_title_format, $event ) );
@@ -1575,57 +1599,56 @@ function eme_html_title( $data ) {
 					$html_title = eme_sanitize_request( get_option( 'eme_events_page_title' ) );
 				}
 			}
-			return $html_title;
+			$res = $html_title;
 		} elseif ( eme_is_single_event_page() ) {
 			// single event page
 			$event_id = eme_sanitize_request( get_query_var( 'event_id' ) );
 			$event    = eme_get_event( $event_id );
 			if ( empty( $event ) ) {
-					return $data;
+				$res = $data;
 			} else {
 				$stored_html_title_format = get_option( 'eme_event_html_title_format' );
 				// no html tags or anything weird in the title: we sanitize it, so it already removes all problems
-				$html_title = eme_sanitize_request( eme_replace_event_placeholders( $stored_html_title_format, $event ) );
-				return $html_title;
+				$res = eme_sanitize_request( eme_replace_event_placeholders( $stored_html_title_format, $event ) );
 			}
 		} elseif ( eme_is_single_location_page() ) {
 			$location_id = eme_sanitize_request( get_query_var( 'location_id' ) );
 			$location    = eme_get_location( $location_id );
 			if ( empty( $location ) ) {
-				return $data;
+				$res = $data;
 			} else {
 				$stored_html_title_format = get_option( 'eme_location_html_title_format' );
 				// no html tags or anything weird in the title: we sanitize it, so it already removes all problems
-				$html_title = eme_sanitize_request( eme_replace_locations_placeholders( $stored_html_title_format, $location ) );
-				return $html_title;
+				$res = eme_sanitize_request( eme_replace_locations_placeholders( $stored_html_title_format, $location ) );
 			}
 		} elseif ( ! empty( $_GET['eme_sub_confirm'] ) && ! empty( $_GET['eme_sub_nonce'] ) ) {
-			return __( 'Subscribe confirmation', 'events-made-easy' );
+			$res = __( 'Subscribe confirmation', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_unsub_confirm'] ) && ! empty( $_GET['eme_unsub_nonce'] ) ) {
-			return __( 'Unsubscribe confirmation', 'events-made-easy' );
+			$res = __( 'Unsubscribe confirmation', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_unsub'] ) ) {
-			return __( 'Unsubscribe from mailings', 'events-made-easy' );
+			$res = __( 'Unsubscribe from mailings', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_gdpr_approve'] ) && ! empty( $_GET['eme_gdpr_nonce'] ) ) {
-			return __( 'GDPR approval', 'events-made-easy' );
+			$res = __( 'GDPR approval', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_gdpr'] ) && ! empty( $_GET['eme_gdpr_nonce'] ) ) {
-			return __( 'GDPR', 'events-made-easy' );
+			$res = __( 'GDPR', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_cpi'] ) && ! empty( $_GET['eme_cpi_nonce'] ) ) {
-			return __( 'Change personal info', 'events-made-easy' );
+			$res = __( 'Change personal info', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_cancel_payment'] ) || ! empty( $_GET['eme_cancel'] )  ) {
-			return __( 'Cancel booking', 'events-made-easy' );
+			$res = __( 'Cancel booking', 'events-made-easy' );
 		} elseif ( ! empty( $_GET['eme_cancel_signup'] ) ) {
-			return __( 'Cancel task signup', 'events-made-easy' );
+			$res = __( 'Cancel task signup', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_check_member' ) && ! empty( $_GET['member_id'] ) ) {
-			return __( 'Membership check', 'events-made-easy' );
+			$res = __( 'Membership check', 'events-made-easy' );
 		} else {
 			// Multiple events page
 			// no html tags or anything weird in the title: we sanitize it, so it already removes all problems
-			$html_title = eme_sanitize_request( get_option( 'eme_events_page_title' ) );
-			return $html_title;
+			$res = eme_sanitize_request( get_option( 'eme_events_page_title' ) );
 		}
 	} else {
-		return $data;
+		$res = $data;
 	}
+	$eme_html_title_count --;
+	return $res;
 }
 // the filter single_post_title influences the html header title and the page title
 // we want to prevent html tags in the html header title (if you add html in the 'single event title format', it will show)
@@ -3396,7 +3419,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					}
 					if ( ! empty( $contact ) && is_null( $contact_person ) ) {
 						$contact_person = eme_get_person_by_wp_id( $contact->ID );
-				                if ( empty( $contact_person ) ) {
+						if ( empty( $contact_person ) ) {
 							$contact_person = eme_fake_person_by_wp_id( $contact->ID );
 						}
 					}

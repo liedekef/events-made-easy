@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.4.22 (2023//) =
 * Fix #_CONTACT and #_AUTHOR event placeholders if no EME person is linked to that wp id
 * Sumup and Mollie API updates
+* Prefent some loops when using shortcodes/filters together with other bad-behaving plugins
 
 = 2.4.21 (2023/12/22) =
 * Fix/improve usage of WP profile for membership (and others)

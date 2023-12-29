@@ -532,7 +532,7 @@ function eme_enqueue_frontend() {
 
 function eme_add_defer_attribute( $tag, $handle ) {
 	if ( 'eme-basic' === $handle ) {
-			return str_replace( ' src', ' defer="defer" src', $tag );
+		return str_replace( ' src', ' defer="defer" src', $tag );
 	}
 
 	if ( 'eme-recaptcha' === $handle || 'eme-hcaptcha' === $handle || 'eme-cfcaptcha' === $handle ) {

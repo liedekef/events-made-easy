@@ -158,8 +158,11 @@ define( 'EME_WP_DATE_FORMAT', get_option( 'date_format' ) );
 define( 'EME_WP_TIME_FORMAT', get_option( 'time_format' ) );
 define( 'EME_TIMEZONE', wp_timezone_string() );
 
-function eme_plugin_row_meta( $links, $file ) {
+// 2 globals, being used in filters to prevent shortcode/filter combo recursion
+$eme_page_title_count = 0;
+$eme_html_title_count = 0;
 
+function eme_plugin_row_meta( $links, $file ) {
 	if ( strpos( $file, 'events-manager.php' ) !== false ) {
 		$new_links = [
 			'donate Paypal'  => '<a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurring=0&currency_code=EUR">Donate (Paypal)</a>',

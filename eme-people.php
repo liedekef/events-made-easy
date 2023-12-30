@@ -1590,15 +1590,15 @@ function eme_person_verify_layout() {
 				if ( $row['wp_id'] && isset( $wp_users[ $row['wp_id'] ] ) ) {
 					print '<td>' . eme_esc_html( $wp_users[ $row['wp_id'] ] ) . '</td>';
 				} else {
-					print '<td>NON EXISTING WP USER linked</td>';
+					print '<td>' . esc_html__('Non existing WP user linked!!','events-made-easy' ) . '</td>';
 				}
 				$membership_names = eme_get_activemembership_names_by_personid( $person_id );
 				print "<td>$membership_names</td>";
 				$future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
 				if (!empty($future_bookings)) {
-					print "<td>".__('Yes','events_made_easy')."</td>";
+					print "<td>".esc_html__('Yes','events_made_easy')."</td>";
 				} else {
-					print "<td>".__('No','events_made_easy')."</td>";
+					print "<td>".esc_html__('No','events_made_easy')."</td>";
 				}
 				print '</tr>';
 			}
@@ -1639,9 +1639,9 @@ function eme_person_verify_layout() {
 					print "<td>$membership_names</td>";
 					$future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
 					if (!empty($future_bookings)) {
-						print "<td>".__('Yes','events_made_easy')."</td>";
+						print "<td>".esc_html__('Yes','events_made_easy')."</td>";
 					} else {
-						print "<td>".__('No','events_made_easy')."</td>";
+						print "<td>".esc_html__('No','events_made_easy')."</td>";
 					}
 					print '</tr>';
 				}
@@ -1682,9 +1682,9 @@ function eme_person_verify_layout() {
 					print "<td>$membership_names</td>";
 					$future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
 					if (!empty($future_bookings)) {
-						print "<td>".__('Yes','events_made_easy')."</td>";
+						print "<td>".esc_html__('Yes','events_made_easy')."</td>";
 					} else {
-						print "<td>".__('No','events_made_easy')."</td>";
+						print "<td>".esc_html__('No','events_made_easy')."</td>";
 					}
 					print '</tr>';
 				}

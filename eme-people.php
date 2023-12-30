@@ -1590,7 +1590,7 @@ function eme_person_verify_layout() {
 				if ( $row['wp_id'] && isset( $wp_users[ $row['wp_id'] ] ) ) {
 					print '<td>' . eme_esc_html( $wp_users[ $row['wp_id'] ] ) . '</td>';
 				} else {
-					print '<td>' . esc_html__('Non existing WP user linked!!','events-made-easy' ) . '</td>';
+					print '<td>' . esc_html__('Non-existing WP user linked!!','events-made-easy' ) . '</td>';
 				}
 				$membership_names = eme_get_activemembership_names_by_personid( $person_id );
 				print "<td>$membership_names</td>";

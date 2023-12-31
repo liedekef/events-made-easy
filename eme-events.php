@@ -5,7 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_event() {
-	
 	$eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$this_datetime = $eme_date_obj->getDateTime();
 	$event         = [
@@ -127,6 +126,9 @@ function eme_init_event_props( $props = [] ) {
 	}
 	if ( ! isset( $props['rsvp_addpersontogroup'] ) ) {
 		$props['rsvp_addpersontogroup'] = [];
+	}
+	if ( ! isset( $props['rsvp_dyndata'] ) ) {
+		$props['rsvp_dyndata'] = [];
 	}
 	if ( ! isset( $props['rsvp_password'] ) ) {
 		$props['rsvp_password'] = '';
@@ -6361,20 +6363,15 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		echo '<h3>' . esc_html__( 'Dynamic data', 'events-made-easy' ) . '</h3>';
 		echo '<div>';
 		$templates_array = eme_get_templates_array_by_id( 'rsvpform' );
-		if ( ! empty( $event['event_properties']['rsvp_dyndata'] ) ) {
-			$eme_data = $event['event_properties']['rsvp_dyndata'];
-		} else {
-			$eme_data = [];
-		}
 		if ( ! empty( $event['event_id'] ) ) {
 			$used_groupingids = eme_get_event_cf_answers_groupingids( $event['event_id'] );
 		} else {
 			$used_groupingids = [];
 		}
-		eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids );
-		eme_meta_box_div_event_dyndata_allfields( $event, $templates_array );
+		eme_dyndata_adminform( $event['event_properties']['rsvp_dyndata'], $templates_array, $used_groupingids );
+		eme_meta_box_div_event_dyndata_allfields( $event['event_properties']['dyndata_all_fields'], $templates_array );
 		echo '</div>';
-		echo '<h3>' . esc_html__( 'RSVP forms format', 'events-made-easy' ) . '</h3>';
+		echo '<h3>' . esc_html__( 'RSVP form format', 'events-made-easy' ) . '</h3>';
 		echo '<div>';
 		eme_meta_box_div_event_registration_form_format( $event, $templates_array );
 		eme_meta_box_div_event_registration_recorded_ok_html( $event, $templates_array );
@@ -7370,8 +7367,8 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
 	<?php
 }
 
-function eme_meta_box_div_event_dyndata_allfields( $event, $templates_array ) {
-	$eme_prop_dyndata_all_fields = ( $event['event_properties']['dyndata_all_fields'] ) ? "checked='checked'" : '';
+function eme_meta_box_div_event_dyndata_allfields( $dyndata_all_fields, $templates_array ) {
+	$eme_prop_dyndata_all_fields = ( $dyndata_all_fields ) ? "checked='checked'" : '';
 	?>
 <div id="div_event_dyndata_allfields">
 		<br>

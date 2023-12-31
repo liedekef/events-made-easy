@@ -5,7 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_new_membership() {
-	
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$today            = $eme_date_obj_now->getDate();
 
@@ -2162,18 +2161,13 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<?php
 
 	$templates_array = eme_get_templates_array_by_id( 'membershipform' );
-	if ( isset( $membership['properties']['dyndata'] ) ) {
-		$eme_data = $membership['properties']['dyndata'];
-	} else {
-		$eme_data = [];
-	}
 	// for new memberships there's no membership id
 	if ( isset( $membership['membership_id'] ) ) {
 		$used_groupingids = eme_get_membership_cf_answers_groupingids( $membership['membership_id'] );
 	} else {
 		$used_groupingids = [];
 	}
-	eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids );
+	eme_dyndata_adminform( $membership['properties']['dyndata'], $templates_array, $used_groupingids );
 	?>
 	<div>
 		<br>

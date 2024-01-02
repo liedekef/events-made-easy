@@ -99,6 +99,11 @@
                 .data('fieldName', fieldName)
                 .append($headerContainerDiv);
 
+	    //hide the table header if the corresponding field is hidden
+	    if(field.visibility==='hidden'){
+		    $th.hide();
+	    }
+
             return $th;
         }
 	});

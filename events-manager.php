@@ -166,7 +166,6 @@ function eme_plugin_row_meta( $links, $file ) {
 	if ( strpos( $file, 'events-manager.php' ) !== false ) {
 		$new_links = [
 			'donate Paypal'  => '<a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurring=0&currency_code=EUR">Donate (Paypal)</a>',
-			'donate Liberapay'  => '<a href="https://liberapay.com/frankyvl/donate">Donate (Liberapay)</a>',
 			'Support' => '<a href="https://github.com/liedekef/events-made-easy">Support</a>',
 		];
 		$links     = array_merge( $links, $new_links );

@@ -2010,14 +2010,23 @@ function eme_is_multi( $element ) {
 }
 
 function eme_convert_multi2br( $multistring ) {
+	if (empty($multistring)) {
+		return '';
+	}
 	return str_replace( '||', '<br>', $multistring );
 }
 
 function eme_convert_multi2array( $multistring ) {
+	if (empty($multistring)) {
+		return [];
+	}
 	return explode( '||', $multistring );
 }
 
 function eme_convert_array2multi( $multiarr, $sep = '||' ) {
+	if (empty($multiarr)) {
+		return '';
+	}
 	return join( $sep, $multiarr );
 }
 

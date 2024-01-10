@@ -2318,6 +2318,7 @@ function eme_charge_stripe() {
 	require_once 'payment_gateways/stripe/init.php';
 	\Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
 	\Stripe\Stripe::setAppInfo( 'WordPress Events Made Easy Stripe plugin' );
+
 	$payment_methods = get_option( 'eme_stripe_payment_methods' );
 	if ( empty( $payment_methods ) ) {
 		$payment_methods = 'card';
@@ -2328,29 +2329,42 @@ function eme_charge_stripe() {
 	} else {
 		$payment_methods_arr = $payment_methods;
 	}
-	$stripe_session = \Stripe\Checkout\Session::create(
-	    [
-			'payment_method_types' => $payment_methods_arr,
-			'payment_intent_data'  => [ 'description' => $description ],
-			'line_items'           => [
-				[
-					'price_data' => [
-						'currency'     => strtolower( $cur ),
-						'unit_amount'  => $price,
-						'product_data' => [
-							'name'        => $item_name,
-							'description' => $description,
-						],
+
+
+	$stripe_session_params = [
+		'payment_method_types' => $payment_methods_arr,
+		'payment_intent_data'  => [ 'description' => $description ],
+		'line_items'           => [
+			[
+				'price_data' => [
+					'currency'     => strtolower( $cur ),
+					'unit_amount'  => $price,
+					'product_data' => [
+						'name'        => $item_name,
+						'description' => $description,
 					],
-					'quantity'   => 1,
 				],
+				'quantity'   => 1,
 			],
-			'mode'                 => 'payment',
-			'client_reference_id'  => $payment_id,
-			'success_url'          => $success_link,
-			'cancel_url'           => $fail_link,
-		]
-	);
+		],
+		'mode'                 => 'payment',
+		'client_reference_id'  => $payment_id,
+		'success_url'          => $success_link,
+		'cancel_url'           => $fail_link,
+	];
+
+	// prefill e-mail in Stripe form, if only one booking is associated to the payment
+	$booking_ids = eme_get_payment_booking_ids( $payment_id );
+	if (count($booking_ids) == 1) {
+		$booking = eme_get_booking($booking_ids[0]);
+		$person = eme_get_person( $booking['person_id'] );
+
+		if (!empty($person)) {
+			$stripe_session_params['customer_email'] = $person['email'];
+		}
+	}
+
+	$stripe_session = \Stripe\Checkout\Session::create($stripe_session_params);
 
 	$stripe_session_id = $stripe_session->id;
 	eme_update_payment_pg_pid( $payment_id, $stripe_session_id );

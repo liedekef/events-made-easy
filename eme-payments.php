@@ -2353,7 +2353,7 @@ function eme_charge_stripe() {
 		'cancel_url'           => $fail_link,
 	];
 
-	// prefill e-mail in Stripe form if popssible
+	// prefill e-mail in Stripe form if possible
 	$booking_ids = eme_get_payment_booking_ids( $payment_id );
 	if ( $booking_ids ) {
 		$booking = eme_get_booking( $booking_ids[0] );

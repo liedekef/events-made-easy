@@ -687,19 +687,19 @@ function eme_opayo_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 
 	$person = [];
 	if ( $payment['target'] == 'member' ) {
-			$member = eme_get_member_by_paymentid( $payment_id );
+		$member = eme_get_member_by_paymentid( $payment_id );
 		if ( $member ) {
 			$person = eme_get_person( $member['person_id'] );
 		}
 	} else {
 		$booking_ids = eme_get_payment_booking_ids( $payment_id );
 		if ( $booking_ids ) {
-				$booking = eme_get_booking( $booking_ids[0] );
-				$person  = eme_get_person( $booking['person_id'] );
+			$booking = eme_get_booking( $booking_ids[0] );
+			$person  = eme_get_person( $booking['person_id'] );
 		}
 	}
 	if ( empty( $person ) ) {
-			$person = eme_new_person();
+		$person = eme_new_person();
 	}
 
 	$query = [
@@ -2353,12 +2353,11 @@ function eme_charge_stripe() {
 		'cancel_url'           => $fail_link,
 	];
 
-	// prefill e-mail in Stripe form, if only one booking is associated to the payment
+	// prefill e-mail in Stripe form if popssible
 	$booking_ids = eme_get_payment_booking_ids( $payment_id );
-	if (count($booking_ids) == 1) {
-		$booking = eme_get_booking($booking_ids[0]);
-		$person = eme_get_person( $booking['person_id'] );
-
+	if ( $booking_ids ) {
+		$booking = eme_get_booking( $booking_ids[0] );
+		$person  = eme_get_person( $booking['person_id'] );
 		if (!empty($person)) {
 			$stripe_session_params['customer_email'] = $person['email'];
 		}

@@ -2664,7 +2664,7 @@ function eme_ajax_mailings_div() {
 			$status = __( 'Planned', 'events-made-easy' );
 			$stats  = eme_get_mailing_stats( $id );
 			$extra  = sprintf( __( '%d mails left', 'events-made-easy' ), $stats['planned'] );
-			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
+			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a> <a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
 		} elseif ( $mailing['status'] == 'ongoing' ) {
 			$status = __( 'Ongoing', 'events-made-easy' );
 			$stats  = eme_get_mailing_stats( $id );

@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.24 (2024//) =
+* Fix recurrence creation for specific/repeated months
+
 = 2.4.23 (2024/01/15) =
 * Prefill Stripe Payment Form with E-Mail from EME Booking Form (thanks to EweLoHD)
 

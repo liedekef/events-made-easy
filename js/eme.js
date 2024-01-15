@@ -499,7 +499,7 @@ jQuery(document).ready( function($) {
 			$('#'+form_id).find('div#eme_dyndata').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
 			alldata.append('eme_override_eventAction', 'dynmemberdata');
 			// normally the nonce is already added (because it is different for adding or frontend editing of a member), so we check
-			if (!$.inArray('eme_frontend_nonce', alldata)) {
+			if ($.inArray('eme_frontend_nonce', alldata) == -1) {
 				alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
 			}
 			$.ajax({url: self.location.href, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})

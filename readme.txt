@@ -98,6 +98,13 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.25 (2024//) =
+* Added filters eme_payment_gateway_change_total and eme_payment_gateway_exra_cost.
+  Together with the filters eme_payment_gateways, eme_offline_payment_gateways and eme_configured_payment_gateways
+  these allow to create custom payment gateways
+  Next to that, the hook to setup_theme and init is needed to be called to apply possible webhooks and payment notifications as well
+  This all still needs to be documented though ...
+
 = 2.4.24 (2024/01/15) =
 * Fix recurrence creation for specific/repeated months
 

@@ -395,6 +395,9 @@ function eme_payment_gateway_total( $price, $cur, $gateway ) {
 			$price *= 100;
 		}
 	}
+	if ( has_filter( 'eme_payment_gateway_change_total' ) ) {
+		$price = apply_filters( 'eme_payment_gateway_change_total', $price, $gateway );
+	}
 	return $price;
 }
 
@@ -421,6 +424,9 @@ function eme_payment_gateway_extra_charge( $price, $gateway ) {
 		} else {
 			$result += sprintf( '%01.2f', $extra );
 		}
+	}
+	if ( has_filter( 'eme_payment_gateway_extra_cost' ) ) {
+		$result = apply_filters( 'eme_payment_gateway_extra_cost', $price, $gateway );
 	}
 	return $result;
 }

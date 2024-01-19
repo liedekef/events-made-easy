@@ -460,6 +460,7 @@ function eme_get_category_ids( $cat_slug = '' ) {
 function eme_get_category_id_by_name_slug ($cat_name ) {
 	global $wpdb;
 	$categories_table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
+	$cat_name = eme_sanitize_request($cat_name);
 	$sql = $wpdb->prepare( "SELECT category_id FROM $categories_table WHERE category_name = %s OR category_slug = %s LIMIT 1", $cat_name, $cat_name );
 	return $wpdb->get_var( $sql );
 }

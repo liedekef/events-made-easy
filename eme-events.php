@@ -5382,15 +5382,15 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 		} elseif ( $category == 'none' ) {
 			$conditions[] = "event_category_ids = ''";
 		} elseif ( preg_match( '/,/', $category ) ) {
-			$category            = explode( ',', $category );
+			$category_arr        = explode( ',', $category );
 			$category_conditions = [];
-			foreach ( $category as $cat ) {
+			foreach ( $category_arr as $cat ) {
 				if ( is_numeric( $cat ) && $cat > 0 ) {
 					$category_conditions[] = "FIND_IN_SET($cat,event_category_ids)";
 				} elseif ( $cat == 'none' ) {
 					$category_conditions[] = "event_category_ids = ''";
 				} else {
-					$cat_id = eme_get_category_id_by_name_slug($category);
+					$cat_id = eme_get_category_id_by_name_slug($cat);
 					if (!empty($cat_id)) {
 						$category_conditions[] = "FIND_IN_SET($cat_id,event_category_ids)";
 					}
@@ -5398,13 +5398,13 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 			}
 			$conditions[] = '(' . implode( ' OR ', $category_conditions ) . ')';
 		} elseif ( preg_match( '/\+| /', $category ) ) {
-			$category            = preg_split( '/\+| /', $category, 0, PREG_SPLIT_NO_EMPTY );
+			$category_arr        = preg_split( '/\+| /', $category, 0, PREG_SPLIT_NO_EMPTY );
 			$category_conditions = [];
-			foreach ( $category as $cat ) {
+			foreach ( $category_arr as $cat ) {
 				if ( is_numeric( $cat ) && $cat > 0 ) {
 					$category_conditions[] = "FIND_IN_SET($cat,event_category_ids)";
 				} else {
-					$cat_id = eme_get_category_id_by_name_slug($category);
+					$cat_id = eme_get_category_id_by_name_slug($cat);
 					if (!empty($cat_id)) {
 						$category_conditions[] = "FIND_IN_SET($cat_id,event_category_ids)";
 					}
@@ -5425,15 +5425,15 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 		} elseif ( $notcategory == 'none' ) {
 			$conditions[] = "event_category_ids != ''";
 		} elseif ( preg_match( '/,/', $notcategory ) ) {
-			$notcategory         = explode( ',', $notcategory );
+			$notcategory_arr     = explode( ',', $notcategory );
 			$category_conditions = [];
-			foreach ( $notcategory as $cat ) {
+			foreach ( $notcategory_arr as $cat ) {
 				if ( is_numeric( $cat ) && $cat > 0 ) {
 					$category_conditions[] = "(NOT FIND_IN_SET($cat,event_category_ids) OR event_category_ids IS NULL)";
 				} elseif ( $cat == 'none' ) {
 					$category_conditions[] = "event_category_ids != ''";
 				} else {
-					$cat_id = eme_get_category_id_by_name_slug($category);
+					$cat_id = eme_get_category_id_by_name_slug($cat);
 					if (!empty($cat_id)) {
 						$category_conditions[] = "(NOT FIND_IN_SET($cat_id,event_category_ids) OR event_category_ids IS NULL)";
 					}
@@ -5442,13 +5442,13 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 			$conditions[] = '(' . implode( ' OR ', $category_conditions ) . ')';
 		} elseif ( preg_match( '/\+| /', $notcategory ) ) {
 			// url decoding of '+' is ' '
-			$notcategory         = preg_split( '/\+| /', $notcategory, 0, PREG_SPLIT_NO_EMPTY );
+			$notcategory_arr     = preg_split( '/\+| /', $notcategory, 0, PREG_SPLIT_NO_EMPTY );
 			$category_conditions = [];
-			foreach ( $notcategory as $cat ) {
+			foreach ( $notcategory_arr as $cat ) {
 				if ( is_numeric( $cat ) && $cat > 0 ) {
 					$category_conditions[] = "(NOT FIND_IN_SET($cat,event_category_ids) OR event_category_ids IS NULL)";
 				} else {
-					$cat_id = eme_get_category_id_by_name_slug($category);
+					$cat_id = eme_get_category_id_by_name_slug($cat);
 					if (!empty($cat_id)) {
 						$category_conditions[] = "(NOT FIND_IN_SET($cat_id,event_category_ids) OR event_category_ids IS NULL)";
 					}
@@ -5456,7 +5456,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 			}
 			$conditions[] = '(' . implode( ' AND ', $category_conditions ) . ')';
 		} else {
-			$cat_id = eme_get_category_id_by_name_slug($category);
+			$cat_id = eme_get_category_id_by_name_slug($notcategory);
 			if (!empty($cat_id)) {
 				$category_conditions[] = "(NOT FIND_IN_SET($cat_id,event_category_ids) OR event_category_ids IS NULL)";
 			}

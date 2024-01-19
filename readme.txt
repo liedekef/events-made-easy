@@ -104,6 +104,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
   these allow to create custom payment gateways
   Next to that, the hook to setup_theme and init is needed to be called to apply possible webhooks and payment notifications as well
   This all still needs to be documented though ...
+* Fix the category/notcategory option for events when using a name and not an id
 
 = 2.4.24 (2024/01/15) =
 * Fix recurrence creation for specific/repeated months

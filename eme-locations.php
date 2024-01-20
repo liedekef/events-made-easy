@@ -1091,9 +1091,9 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 			} elseif ( $category == 'none' ) {
 				$conditions [] = "location_category_ids=''";
 			} elseif ( preg_match( '/,/', $category ) ) {
-				$category            = explode( ',', $category );
+				$category_arr        = explode( ',', $category );
 				$category_conditions = [];
-				foreach ( $category as $cat ) {
+				foreach ( $category_arr as $cat ) {
 					if ( is_numeric( $cat ) && $cat > 0 ) {
 						$category_conditions[] = " FIND_IN_SET($cat,location_category_ids)";
 					} elseif ( $cat == 'none' ) {
@@ -1102,9 +1102,9 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 				}
 				$conditions [] = '(' . implode( ' OR', $category_conditions ) . ')';
 			} elseif ( preg_match( '/\+/', $category ) ) {
-				$category            = explode( '+', $category );
+				$category_arr        = explode( '+', $category );
 				$category_conditions = [];
-				foreach ( $category as $cat ) {
+				foreach ( $category_arr as $cat ) {
 					if ( is_numeric( $cat ) && $cat > 0 ) {
 						$category_conditions[] = " FIND_IN_SET($cat,location_category_ids)";
 					}
@@ -1119,9 +1119,9 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 			} elseif ( $notcategory == 'none' ) {
 				$conditions[] = "location_category_ids != ''";
 			} elseif ( preg_match( '/,/', $notcategory ) ) {
-				$notcategory         = explode( ',', $notcategory );
+				$notcategory_arr     = explode( ',', $notcategory );
 				$category_conditions = [];
-				foreach ( $notcategory as $cat ) {
+				foreach ( $notcategory_arr as $cat ) {
 					if ( is_numeric( $cat ) && $cat > 0 ) {
 						$category_conditions[] = "(NOT FIND_IN_SET($cat,location_category_ids) OR location_category_ids IS NULL)";
 					} elseif ( $cat == 'none' ) {
@@ -1131,9 +1131,9 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
 				$conditions[] = '(' . implode( ' OR ', $category_conditions ) . ')';
 			} elseif ( preg_match( '/\+| /', $notcategory ) ) {
 				// url decoding of '+' is ' '
-				$notcategory         = preg_split( '/\+| /', $notcategory, 0, PREG_SPLIT_NO_EMPTY );
+				$notcategory_arr     = preg_split( '/\+| /', $notcategory, 0, PREG_SPLIT_NO_EMPTY );
 				$category_conditions = [];
-				foreach ( $notcategory as $cat ) {
+				foreach ( $notcategory_arr as $cat ) {
 					if ( is_numeric( $cat ) && $cat > 0 ) {
 						$category_conditions[] = "(NOT FIND_IN_SET($cat,location_category_ids) OR location_category_ids IS NULL)";
 					}

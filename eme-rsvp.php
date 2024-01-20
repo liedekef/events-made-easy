@@ -3238,7 +3238,6 @@ function eme_get_bookings_list_for_event( $event, $template_id = 0, $template_id
 	} else {
 		$bookings = eme_get_bookings_for( $event['event_id'], $rsvp_status, $paid_status, $order );
 	}
-	$format        = get_option( 'eme_bookings_list_format' );
 	$format_header = get_option( 'eme_bookings_list_header_format' );
 	$format_footer = get_option( 'eme_bookings_list_footer_format' );
 
@@ -3249,6 +3248,11 @@ function eme_get_bookings_list_for_event( $event, $template_id = 0, $template_id
 
 	if ( $template_id ) {
 		$format = eme_get_template_format( $template_id );
+		if (empty($format)) {
+			$format = get_option( 'eme_bookings_list_format' );
+		}
+	} else {
+		$format = get_option( 'eme_bookings_list_format' );
 	}
 
 	// header and footer can't contain per booking info, so we don't replace booking placeholders there
@@ -3294,6 +3298,9 @@ function eme_get_bookings_list_for_wp_id( $wp_id, $scope, $template = '', $templ
 
 	if ( $template_id ) {
 		$format = eme_get_template_format( $template_id );
+		if (empty($format)) {
+			$format = get_option( 'eme_bookings_list_format' );
+		}
 	}
 
 	// header and footer can't contain per booking info, so we don't replace booking placeholders there

@@ -102,7 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Added filters eme_payment_gateway_change_total and eme_payment_gateway_exra_cost.
   Together with the filters eme_payment_gateways, eme_offline_payment_gateways and eme_configured_payment_gateways
   these allow to create custom payment gateways
-  Next to that, the hook to setup_theme and init is needed to be called to apply possible webhooks and payment notifications as well
+  Next to that, hooks to admin_init, setup_theme and init are needed to be called to apply possible webhooks and payment notifications as well
   This all still needs to be documented though ...
 * Fix the category/notcategory option for events when using a name and not an id
 

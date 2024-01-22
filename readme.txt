@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
   Next to that, hooks to admin_init, setup_theme and init are needed to be called to apply possible webhooks and payment notifications as well
   This all still needs to be documented though ...
 * Fix the category/notcategory option for events when using a name and not an id
+* Add shortcde eme_mymemberinfo (see doc: takes template_id and membership_id as parameters and returns the rendered template)
 
 = 2.4.24 (2024/01/15) =
 * Fix recurrence creation for specific/repeated months

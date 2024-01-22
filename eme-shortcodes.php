@@ -44,6 +44,7 @@ add_shortcode( 'eme_bookings', 'eme_booking_list_shortcode' );
 add_shortcode( 'eme_bookings_report_link', 'eme_bookings_report_link_shortcode' );
 add_shortcode( 'eme_mybookings', 'eme_mybooking_list_shortcode' );
 add_shortcode( 'eme_mymemberships', 'eme_mymemberships_list_shortcode' );
+add_shortcode( 'eme_mymemberinfo', 'eme_mymemberinfo_shortcode' );
 add_shortcode( 'eme_attendees', 'eme_attendee_list_shortcode' );
 add_shortcode( 'eme_attendees_report_link', 'eme_attendees_report_link_shortcode' );
 add_shortcode( 'eme_members_report_link', 'eme_members_report_link_shortcode' );

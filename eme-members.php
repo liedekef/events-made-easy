@@ -4291,6 +4291,36 @@ function eme_members_shortcode( $atts ) {
 	return $output;
 }
 
+function eme_mymemberinfo_shortcode( $atts ) {
+	eme_enqueue_frontend();
+	extract(
+		shortcode_atts(
+			[
+				'membership_id'      => 0,
+				'template_id'        => 0,
+			],
+			$atts
+		)
+	);
+
+	if ( empty( $membership_id ) || empty( $template_id ) ) {
+		return '';
+	}
+
+	$wp_id = get_current_user_id();
+	if ( $wp_id ) {
+		$member = eme_get_member_by_wpid_membershipid( $wp_id, intval($membership_id) );
+		if ( ! empty( $member ) ) {
+			$format = eme_get_template_format( $template_id );
+			$membership = eme_get_membership( $membership_id );
+			$lang       = eme_detect_lang();
+			$output     = eme_replace_member_placeholders( $format, $membership, $member, 'html', $lang );
+		} 
+	}
+
+	return $output;
+}
+
 function eme_members_frontend_csv_report( $group_id, $membership_id, $template_id, $template_id_header ) {
 	if ( ! empty( $group_id ) ) {
 		$member_ids = eme_get_groups_member_ids( $group_id );

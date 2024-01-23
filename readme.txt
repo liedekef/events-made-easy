@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.4.2
-Stable tag: 2.4.24
+Stable tag: 2.4.25
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.25 (2024//) =
+= 2.4.25 (2024/01/23) =
 * Added filters eme_payment_gateway_change_total and eme_payment_gateway_exra_cost.
   Together with the filters eme_payment_gateways, eme_offline_payment_gateways and eme_configured_payment_gateways
   these allow to create custom payment gateways

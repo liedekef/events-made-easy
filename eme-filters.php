@@ -44,7 +44,8 @@ function eme_filter_form_shortcode( $atts ) {
 	$content = eme_replace_filter_form_placeholders( $filter_form_format, $multiple, $multisize, $scope_count, $category, $notcategory );
 	# using the current page as action, so we can leave action empty in the html form definition
 	# this helps to keep the language and any other parameters, and works with permalinks as well
-	$form  = "<form id='eme_filter_form' name='eme_filter_form' action='' method='POST'>";
+	$form_id = uniqid();
+	$form  = "<form id='eme_filter_form-$form_id' name='eme_filter_form' action='' method='POST'>";
 	$form .= "<input type='hidden' name='eme_eventAction' value='filter'>";
 	#   foreach ($_REQUEST as $key => $item) {
 	#      $key = esc_html(eme_sanitize_request( $key ));

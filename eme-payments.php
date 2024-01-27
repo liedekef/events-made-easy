@@ -2892,6 +2892,10 @@ function eme_charge_mollie() {
 	}
 }
 
+function eme_complete_mollie_transaction( $mollie_payment_id = 0 ) {
+	return eme_notification_mollie( $mollie_payment_id);
+}
+
 function eme_notification_mollie( $mollie_payment_id = 0 ) {
 	$gateway = 'mollie';
 	$api_key = get_option( 'eme_mollie_api_key' );
@@ -2981,6 +2985,10 @@ function eme_charge_payconiq() {
 		wp_redirect($url);
 		exit;
 	}
+}
+
+function eme_complete_payconiq_transaction( $payconiq_paymentid = 0 ) {
+	return eme_notification_payconiq( $payconiq_paymentid );
 }
 
 function eme_notification_payconiq( $payconiq_paymentid = 0 ) {

@@ -98,11 +98,14 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.26 (2024//) =
+* Added action hook eme_options_postsave_action, to allow own code to be called upon saving options
+  This is needed for e.g. custom payment gateways that need a webhook created
+
 = 2.4.25 (2024/01/23) =
 * Added filters eme_payment_gateway_change_total and eme_payment_gateway_exra_cost.
   Together with the filters eme_payment_gateways, eme_offline_payment_gateways and eme_configured_payment_gateways
   these allow to create custom payment gateways
-  Next to that, hooks to admin_init, setup_theme and init are needed to be called to apply possible webhooks and payment notifications as well
   This all still needs to be documented though ...
 * Fix the category/notcategory option for events when using a name and not an id
 * Add shortcde eme_mymemberinfo (see doc: takes template_id and membership_id as parameters and returns the rendered template)

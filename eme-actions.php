@@ -29,54 +29,17 @@ function eme_actions_early_init() {
 		#   eme_notification_paypal();
 		#   exit();
 		#}
-		if ( $_GET['eme_eventAction'] == 'legacypaypal_notification' ) {
-			eme_notification_legacypaypal();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == '2co_notification' ) {
-			eme_notification_2co();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'webmoney_notification' ) {
-			eme_notification_webmoney();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'mollie_notification' ) {
-			eme_notification_mollie();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'worldpay_notification' ) {
-			eme_notification_worldpay();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'instamojo_notification' ) {
-			eme_notification_instamojo();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'mercadopago_notification' ) {
-			eme_notification_mercadopago();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'sumup_notification' ) {
-			eme_notification_sumup();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'stripe_notification' ) {
-			eme_notification_stripe();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'fondy_notification' ) {
-			eme_notification_fondy();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'payconiq_notification' ) {
-			eme_notification_payconiq();
-			exit();
-		}
-		if ( $_GET['eme_eventAction'] == 'opayo_notification' ) {
-			eme_notification_opayo();
-			// opayo doesn't use a notification url, but sends the status along as part of the return url, so we just check
-			// the status and set paid or not, but then we continue regular flow of events
+		$found_methods = eme_get_configured_pgs();
+		foreach ($found_methods as $pg) {
+			$notification_function = 'eme_notification_'.$pg;
+			if ( $_GET['eme_eventAction'] == $pg.'_notification' && function_exists($notification_function)) {
+				$notification_function();
+				if ($pg != "opayo") {
+					// opayo doesn't use a notification url, but sends the status along as part of the return url, so we just check
+					// the status and set paid or not, but then we continue regular flow of events
+					exit();
+				}
+			}
 		}
 	}
 	// notification for fdgg happens via POST
@@ -230,42 +193,12 @@ function eme_actions_init() {
 
 	// payment charges can apply custom filters, so we leave these in eme_actions_init
 	if ( isset( $_POST['eme_eventAction'] ) ) {
-		if ( $_POST['eme_eventAction'] == 'payconiq_charge' ) {
-			eme_charge_payconiq();
-			exit();
-		}
-		if ( $_POST['eme_eventAction'] == 'mollie_charge' ) {
-			eme_charge_mollie();
-			exit();
-		}
-		if ( $_POST['eme_eventAction'] == 'instamojo_charge' ) {
-			eme_charge_instamojo();
-			exit();
-		}
-		// sumup form is shown directly, no charge function
-		//if ($_POST['eme_eventAction']=="sumup_charge") {
-		//     eme_charge_sumup();
-		//     exit();
-		//  }
-		if ( $_POST['eme_eventAction'] == 'stripe_charge' ) {
-			eme_charge_stripe();
-			exit();
-		}
-		if ( $_POST['eme_eventAction'] == 'paypal_charge' ) {
-			eme_charge_paypal();
-			exit();
-		}
-		if ( $_POST['eme_eventAction'] == 'mercadopago_charge' ) {
-			eme_charge_mercadopago();
-			exit();
-		}
-		if ( $_POST['eme_eventAction'] == 'fondy_charge' ) {
-			eme_charge_fondy();
-			exit();
-		}
-		if ( $_POST['eme_eventAction'] == 'braintree_charge' ) {
-			eme_charge_braintree();
-			exit();
+		$found_methods = eme_get_configured_pgs();
+		foreach ($found_methods as $pg) {
+			$charge_function = 'eme_charge'.$pg;
+			if ( $_POST['eme_eventAction'] == $pg.'_charge' && function_exists($charge_function)) {
+				$charge_function();
+			}
 		}
 	}
 }

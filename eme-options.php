@@ -993,6 +993,11 @@ function eme_options_postsave_actions() {
 			update_option( 'eme_event_list_number_items', 10 );
 		}
 	}
+
+	// allow custom actions
+	if (has_action('eme_options_postsave_action')) {
+		do_action('eme_options_postsave_action');
+	}
 }
 
 function eme_options_register() {

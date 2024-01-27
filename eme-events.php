@@ -1088,114 +1088,31 @@ function eme_events_page_content() {
 		//     (pg_handled gets set to 0 if a new pg pid gets generated, see function eme_update_payment_pg_pid, and gets set to 1 if a payment is handled via a payment gateway)
 
 		// mollie updates the state of the payment before returning to the success/failure url, but it doesn't make a distinction for success/failure url, so we check it here
+		// other payment gateways (payconiq, paypal, sumup, stripe, instamojo, fondy) need EME to complete the transaction too
+		// so in all these case we check if a corresponding 'eme_complete_' . $result . '_transaction' function exists 
+		// and execute it if appropriate
 		$result = get_query_var( 'eme_pmt_result' );
-		if ( $result == 'mollie' ) {
-			// we can get to the returnurl (this section) faster than the webhook, so act as if we received a notification here too
-			if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $pg_pid ) ) {
-				eme_notification_mollie( $pg_pid );
+		$found_methods        = eme_get_configured_pgs();
+                if ( is_string($result) && in_array( $result, $found_methods ) ) {
+			$result = eme_sanitize_request($result);
+			$func = 'eme_complete_' . $result . '_transaction';
+			if ( function_exists( $func ) ) {
+				if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $pg_pid ) ) {
+					$func( $pg_pid );
+				}
+				// the state can change after the last function call, so check it
+				$payment = eme_get_payment( 0, $payment_randomid );
+				$paid    = eme_get_payment_paid( $payment );
+				if ( empty( $pg_pid ) ) {
+					$result = 'fail';
+				} elseif ( $payment['pg_handled'] == 1 && $paid ) {
+					$result = 'success';
+				} else {
+					$result = 'fail';
+				}
 			}
-			// the state can change after the last function call, so check it
-			$payment = eme_get_payment( 0, $payment_randomid );
-			$paid    = eme_get_payment_paid( $payment );
-			if ( empty( $pg_pid ) ) {
-				$result = 'fail';
-			} elseif ( $payment['pg_handled'] == 1 && $paid ) {
-				$result = 'success';
-			} else {
-				$result = 'fail';
-			}
-		}
-		if ( $result == 'payconiq' ) {
-			// we can get to the returnurl (this section) faster than the webhook, so act as if we received a notification here too
-			if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $pg_pid ) ) {
-				eme_notification_payconiq( $pg_pid );
-			}
-			// the state can change after the last function call, so check it
-			$payment = eme_get_payment( 0, $payment_randomid );
-			$paid    = eme_get_payment_paid( $payment );
-			if ( empty( $pg_pid ) ) {
-				$result = 'fail';
-			} elseif ( $payment['pg_handled'] == 1 && $paid ) {
-				$result = 'success';
-			} else {
-				$result = 'fail';
-			}
-		}
-		if ( $result == 'paypal' ) {
-			if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $pg_pid ) ) {
-				eme_complete_paypal_transaction( $payment );
-			}
-			// the state can change after the last function call, so check it
-			$payment = eme_get_payment( 0, $payment_randomid );
-			$paid    = eme_get_payment_paid( $payment );
-			if ( empty( $pg_pid ) ) {
-				$result = 'fail';
-			} elseif ( $payment['pg_handled'] == 1 && $paid ) {
-				$result = 'success';
-			} else {
-				$result = 'fail';
-			}
-		}
-		if ( $result == 'sumup' ) {
-			if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $pg_pid ) ) {
-				eme_complete_sumup_transaction( $payment );
-			}
-			// the state can change after the last function call, so check it
-			$payment = eme_get_payment( 0, $payment_randomid );
-			$paid    = eme_get_payment_paid( $payment );
-			if ( empty( $pg_pid ) ) {
-				$result = 'fail';
-			} elseif ( $payment['pg_handled'] == 1 && $paid ) {
-				$result = 'success';
-			} else {
-				$result = 'fail';
-			}
-		}
-		if ( $result == 'stripe' ) {
-			if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $pg_pid ) ) {
-				eme_complete_stripe_transaction( $payment );
-			}
-			// the state can change after the last function call, so check it
-			$payment = eme_get_payment( 0, $payment_randomid );
-			$paid    = eme_get_payment_paid( $payment );
-			if ( empty( $pg_pid ) ) {
-				$result = 'fail';
-			} elseif ( $payment['pg_handled'] == 1 && $paid ) {
-				$result = 'success';
-			} else {
-				$result = 'fail';
-			}
-		}
-		if ( $result == 'instamojo' ) {
-			if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $pg_pid ) ) {
-				eme_complete_instamojo_transaction( $payment );
-			}
-			// the state can change after the last function call, so check it
-			$payment = eme_get_payment( 0, $payment_randomid );
-			$paid    = eme_get_payment_paid( $payment );
-			if ( empty( $pg_pid ) ) {
-				$result = 'fail';
-			} elseif ( $payment['pg_handled'] == 1 && $paid ) {
-				$result = 'success';
-			} else {
-				$result = 'fail';
-			}
-		}
-		if ( $result == 'fondy' ) {
-			if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $pg_pid ) ) {
-				eme_complete_fondy_transaction( $payment );
-			}
-			// the state can change after the last function call, so check it
-			$payment = eme_get_payment( 0, $payment_randomid );
-			$paid    = eme_get_payment_paid( $payment );
-			if ( empty( $pg_pid ) ) {
-				$result = 'fail';
-			} elseif ( $payment['pg_handled'] == 1 && $paid ) {
-				$result = 'success';
-			} else {
-				$result = 'fail';
-			}
-		}
+                }
+
 		if ( $payment['target'] == 'member' ) {
 			$member     = eme_get_member_by_paymentid( $payment['id'] );
 			$membership = eme_get_membership( $member['membership_id'] );

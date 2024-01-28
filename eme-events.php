@@ -5952,7 +5952,9 @@ function eme_events_table( $message = '' ) {
 	$formfields_searchable = eme_get_searchable_formfields( 'events' );
 	if ( ! empty( $formfields_searchable ) ) {
 		echo '<input type="text" class="clearable" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
-		echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2_customfieldids_class' );
+		$label = __( 'Custom fields to filter on', 'events-made-easy' );
+                $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
+		echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2', $extra_attributes, 1 );
 	}
 	?>
 	</div>
@@ -9389,7 +9391,6 @@ function eme_admin_enqueue_js() {
 			'translate_anygroup'                   => __( 'Any group', 'events-made-easy' ),
 			'translate_selectmemberships'          => __( 'Filter on membership', 'events-made-easy' ),
 			'translate_selectmemberstatus'         => __( 'Filter on member status', 'events-made-easy' ),
-			'translate_selectcustomfields'         => __( 'Custom fields to filter on', 'events-made-easy' ),
 			'translate_addatachments'              => __( 'Add attachments', 'events-made-easy' ),
 			'translate_selectdiscount'             => __( 'Select a discount', 'events-made-easy' ),
 			'translate_selectdiscountgroup'        => __( 'Select a discountgroup', 'events-made-easy' ),

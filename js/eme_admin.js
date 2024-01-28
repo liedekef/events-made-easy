@@ -365,11 +365,6 @@ jQuery(document).ready( function($) {
 		$('#'+elname).toggle();
         });
 
-	$('.eme_select2_customfieldids_class').select2({
-		width: 'style',
-		placeholder: emeadmin.translate_selectcustomfields
-	});
-
 	$('.eme_select2_members_class').select2({
 		width: 'style',
 		ajax: {

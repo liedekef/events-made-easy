@@ -2673,7 +2673,9 @@ function eme_render_members_searchfields( $group = [] ) {
 				$value = $search_terms['search_customfieldids'];
 			}
 		}
-		echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, '', 0, 'eme_select2_customfieldids_class' );
+		$label = __( 'Custom fields to filter on', 'events-made-easy' );
+                $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
+		echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2', $extra_attributes, 1 );
 	}
 }
 

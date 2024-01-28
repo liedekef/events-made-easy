@@ -29,6 +29,11 @@
     margin-bottom: 5px;
 }
 
+.select2-selection--multiple ul {
+   margin: 0px !important;
+   line-height: initial !important;
+}
+
 .eme_admin_button_middle {
 	vertical-align: middle !important;
 }

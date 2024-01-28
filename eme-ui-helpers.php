@@ -413,7 +413,7 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
 	return $val;
 }
 
-function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value, $size = 3, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
+function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value, $size = 3, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $disable_first_option = 0 ) {
 	// make sure it is an array, otherwise just go back
 	if ( ! is_array( $list ) ) {
 		return;
@@ -438,7 +438,11 @@ function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value
 
 	$val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='{$name}[]' id='{$name}' size='$size'>";
 	if ( ! empty( $add_empty_first ) ) {
-		$val .= "<option value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
+		if ($disable_first_option) {
+			$val .= "<option disabled='disabled' value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
+		} else {
+			$val .= "<option value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
+		}
 	}
 	foreach ( $list as $line ) {
 		$t_key   = $line[ $key ];

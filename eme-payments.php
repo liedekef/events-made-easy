@@ -3135,57 +3135,61 @@ function eme_notification_opayo() {
 }
 
 function eme_get_configured_pgs() {
-	$pgs = [];
-	if ( ! empty( get_option( 'eme_paypal_clientid' ) ) ) {
-		$pgs[] = 'paypal';
-	}
-	if ( ! empty( get_option( 'eme_legacypaypal_business' ) ) ) {
-		$pgs[] = 'legacypaypal';
-	}
-	if ( ! empty( get_option( 'eme_2co_business' ) ) ) {
-		$pgs[] = '2co';
-	}
-	if ( ! empty( get_option( 'eme_webmoney_purse' ) ) ) {
-		$pgs[] = 'webmoney';
-	}
-	if ( ! empty( get_option( 'eme_fdgg_store_name' ) ) ) {
-		$pgs[] = 'fdgg';
-	}
-	if ( ! empty( get_option( 'eme_mollie_api_key' ) ) ) {
-		$pgs[] = 'mollie';
-	}
-	if ( ! empty( get_option( 'eme_payconiq_api_key' ) ) ) {
-		$pgs[] = 'payconiq';
-	}
-	if ( ! empty( get_option( 'eme_worldpay_instid' ) ) ) {
-		$pgs[] = 'worldpay';
-	}
-	if ( ! empty( get_option( 'eme_opayo_vendor_name' ) ) ) {
-		$pgs[] = 'opayo';
-	}
-	if ( ! empty( get_option( 'eme_sumup_app_id' ) ) ) {
-		$pgs[] = 'sumup';
-	}
-	if ( ! empty( get_option( 'eme_stripe_private_key' ) ) ) {
-		$pgs[] = 'stripe';
-	}
-	if ( ! empty( get_option( 'eme_braintree_private_key' ) ) ) {
-		$pgs[] = 'braintree';
-	}
-	if ( ! empty( get_option( 'eme_instamojo_key' ) ) ) {
-		$pgs[] = 'instamojo';
-	}
-	if ( ! empty( get_option( 'eme_mercadopago_sandbox_token' ) ) || ! empty( get_option( 'eme_mercadopago_live_token' ) ) ) {
-		$pgs[] = 'mercadopago';
-	}
-	if ( ! empty( get_option( 'eme_fondy_secret_key' ) ) ) {
-		$pgs[] = 'fondy';
-	}
-	if ( ! empty( get_option( 'eme_offline_payment' ) ) ) {
-		$pgs[] = 'offline';
-	}
-	if ( has_filter( 'eme_configured_payment_gateways' ) ) {
-		$pgs = apply_filters( 'eme_configured_payment_gateways', $pgs );
+	$pgs = wp_cache_get( 'eme_configured_pgs' );
+        if ( $pgs === false ) {
+		$pgs = [];
+		if ( ! empty( get_option( 'eme_paypal_clientid' ) ) ) {
+			$pgs[] = 'paypal';
+		}
+		if ( ! empty( get_option( 'eme_legacypaypal_business' ) ) ) {
+			$pgs[] = 'legacypaypal';
+		}
+		if ( ! empty( get_option( 'eme_2co_business' ) ) ) {
+			$pgs[] = '2co';
+		}
+		if ( ! empty( get_option( 'eme_webmoney_purse' ) ) ) {
+			$pgs[] = 'webmoney';
+		}
+		if ( ! empty( get_option( 'eme_fdgg_store_name' ) ) ) {
+			$pgs[] = 'fdgg';
+		}
+		if ( ! empty( get_option( 'eme_mollie_api_key' ) ) ) {
+			$pgs[] = 'mollie';
+		}
+		if ( ! empty( get_option( 'eme_payconiq_api_key' ) ) ) {
+			$pgs[] = 'payconiq';
+		}
+		if ( ! empty( get_option( 'eme_worldpay_instid' ) ) ) {
+			$pgs[] = 'worldpay';
+		}
+		if ( ! empty( get_option( 'eme_opayo_vendor_name' ) ) ) {
+			$pgs[] = 'opayo';
+		}
+		if ( ! empty( get_option( 'eme_sumup_app_id' ) ) ) {
+			$pgs[] = 'sumup';
+		}
+		if ( ! empty( get_option( 'eme_stripe_private_key' ) ) ) {
+			$pgs[] = 'stripe';
+		}
+		if ( ! empty( get_option( 'eme_braintree_private_key' ) ) ) {
+			$pgs[] = 'braintree';
+		}
+		if ( ! empty( get_option( 'eme_instamojo_key' ) ) ) {
+			$pgs[] = 'instamojo';
+		}
+		if ( ! empty( get_option( 'eme_mercadopago_sandbox_token' ) ) || ! empty( get_option( 'eme_mercadopago_live_token' ) ) ) {
+			$pgs[] = 'mercadopago';
+		}
+		if ( ! empty( get_option( 'eme_fondy_secret_key' ) ) ) {
+			$pgs[] = 'fondy';
+		}
+		if ( ! empty( get_option( 'eme_offline_payment' ) ) ) {
+			$pgs[] = 'offline';
+		}
+		if ( has_filter( 'eme_configured_payment_gateways' ) ) {
+			$pgs = apply_filters( 'eme_configured_payment_gateways', $pgs );
+		}
+		wp_cache_set( 'eme_configured_pgs', $pgs, '', 10 );
 	}
 	return $pgs;
 }

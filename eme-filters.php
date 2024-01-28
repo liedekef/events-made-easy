@@ -11,6 +11,7 @@ function eme_filter_form_shortcode( $atts ) {
 		    [
 				'multiple'    => 0,
 				'multisize'   => 5,
+				'old_select'  => 0,
 				'scope_count' => 12,
 				'submit'      => 'Submit',
 				'category'    => '',
@@ -21,6 +22,7 @@ function eme_filter_form_shortcode( $atts ) {
 		)
 	);
 	$multiple = filter_var( $multiple, FILTER_VALIDATE_BOOLEAN );
+	$old_select = filter_var( $old_select, FILTER_VALIDATE_BOOLEAN );
 	$multisize = intval($multisize);
 	$scope_count = intval($scope_count);
 	$template_id = intval($template_id);
@@ -41,7 +43,7 @@ function eme_filter_form_shortcode( $atts ) {
 		$submit_to_added = 1;
 	}
 
-	$content = eme_replace_filter_form_placeholders( $filter_form_format, $multiple, $multisize, $scope_count, $category, $notcategory );
+	$content = eme_replace_filter_form_placeholders( $filter_form_format, $multiple, $multisize, $scope_count, $category, $notcategory, $old_select );
 	# using the current page as action, so we can leave action empty in the html form definition
 	# this helps to keep the language and any other parameters, and works with permalinks as well
 	$form_id = uniqid();
@@ -137,7 +139,7 @@ function eme_create_year_scope( $count, $eventful = 0 ) {
 	return $scope;
 }
 
-function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $scope_count, $category, $notcategory ) {
+function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $scope_count, $category, $notcategory, $old_select ) {
 	// if one of these changes, also the eme_events.php needs changing for the "Next page" part
 	$author_post_name          = 'eme_author_filter';
 	$contact_post_name         = 'eme_contact_filter';
@@ -224,7 +226,11 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				if ( ! empty( $cat_list ) ) {
 					asort( $cat_list );
 					if ( $multiple ) {
-						$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, $label, 0, 'eme_select2', $aria_label );
+						if ( $old_select ) {
+							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, $label, 0, '', $aria_label );
+						} else {
+							$replacement = eme_ui_multiselect( $selected_category, $cat_post_name, $cat_list, $multisize, $label, 0, 'eme_select2', $aria_label . "data-placeholder='$label'", 1 );
+						}
 					} else {
 						$replacement = eme_ui_select( $selected_category, $cat_post_name, $cat_list, $label, 0, 'eme_select2', $aria_label );
 					}
@@ -254,7 +260,11 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				if ( ! empty( $loc_list ) ) {
 					asort( $loc_list );
 					if ( $multiple ) {
-						$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, 'eme_select2', $aria_label );
+						if ( $old_select > 1 ) {
+							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, '', $aria_label );
+						} else {
+							$replacement = eme_ui_multiselect( $selected_location, $loc_post_name, $loc_list, $multisize, $label, 0, 'eme_select2', $aria_label . "data-placeholder='$label'", 1 );
+						}
 					} else {
 						$replacement = eme_ui_select( $selected_location, $loc_post_name, $loc_list, $label, 0, 'eme_select2', $aria_label );
 					}
@@ -284,7 +294,11 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				if ( ! empty( $city_list ) ) {
 					asort( $city_list );
 					if ( $multiple ) {
-						$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, 'eme_select2', $aria_label );
+						if ( $old_select > 1 ) {
+							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, '', $aria_label );
+						} else {
+							$replacement = eme_ui_multiselect( $selected_city, $city_post_name, $city_list, $multisize, $label, 0, 'eme_select2', $aria_label . "data-placeholder='$label'", 1 );
+						}
 					} else {
 						$replacement = eme_ui_select( $selected_city, $city_post_name, $city_list, $label, 0, 'eme_select2', $aria_label );
 					}
@@ -314,7 +328,11 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				if ( ! empty( $country_list ) ) {
 					asort( $country_list );
 					if ( $multiple ) {
-						$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, 'eme_select2', $aria_label );
+						if ( $old_select > 1 ) {
+							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, '', $aria_label );
+						} else {
+							$replacement = eme_ui_multiselect( $selected_country, $country_post_name, $country_list, $multisize, $label, 0, 'eme_select2', $aria_label . "data-placeholder='$label'", 1 );
+						}
 					} else {
 						$replacement = eme_ui_select( $selected_country, $country_post_name, $country_list, $label, 0, 'eme_select2', $aria_label );
 					}

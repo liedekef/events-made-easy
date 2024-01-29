@@ -2146,7 +2146,12 @@ function eme_booking_from_form( $event ) {
 	return $booking;
 }
 
+add_action( 'wp_ajax_eme_calc_bookingprice', 'eme_calc_bookingprice_ajax' );
+add_action( 'wp_ajax_nopriv_eme_calc_bookingprice', 'eme_calc_bookingprice_ajax' );
 function eme_calc_bookingprice_ajax() {
+        // has an extra frontend nonce set (even if executed in the backend)
+        check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
+
 	header( 'Content-type: application/json; charset=utf-8' );
 	// first detect multibooking
 	$event_ids = [];
@@ -2157,10 +2162,6 @@ function eme_calc_bookingprice_ajax() {
 	}
 	$total = 0;
 	$cur   = '';
-	// in the admin interface, we have a booking id, so we use the currently applied discount
-	if ( ! empty( $_POST['booking_id'] ) ) {
-		check_admin_referer( "eme_admin", 'eme_admin_nonce' );
-	}
 
 	foreach ( $event_ids as $event_id ) {
 		$event = eme_get_event( $event_id );
@@ -2173,6 +2174,7 @@ function eme_calc_bookingprice_ajax() {
 
 	$result = eme_localized_price( $total, $cur );
 	echo wp_json_encode( [ 'total' => $result ] );
+	wp_die();
 }
 
 // the people dyndata only gets called from the backend, so we use wp ajax and check the admin nonce
@@ -2263,7 +2265,12 @@ function eme_dyndata_people_ajax() {
 	wp_die();
 }
 
+add_action( 'wp_ajax_eme_dyndata_rsvp', 'eme_dyndata_rsvp_ajax' );
+add_action( 'wp_ajax_nopriv_eme_dyndata_rsvp', 'eme_dyndata_rsvp_ajax' );
 function eme_dyndata_rsvp_ajax() {
+	// has an extra frontend nonce set (even if executed in the backend)
+        check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
+
 	header( 'Content-type: application/json; charset=utf-8' );
 	// first detect multibooking
 	$event_ids = [];
@@ -2404,6 +2411,7 @@ function eme_dyndata_rsvp_ajax() {
 		}
 	}
 	echo wp_json_encode( [ 'Result' => do_shortcode( $form_html ) ] );
+	wp_die();
 }
 
 function eme_safe_css_attributes( $array ) {

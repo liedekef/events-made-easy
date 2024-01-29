@@ -3093,7 +3093,12 @@ function eme_calc_price_fake_member( $membership ) {
 	return eme_get_total_member_price( $member );
 }
 
+add_action( 'wp_ajax_eme_calc_memberprice', 'eme_calc_memberprice_ajax' );
+add_action( 'wp_ajax_nopriv_eme_calc_memberprice', 'eme_calc_memberprice_ajax' );
 function eme_calc_memberprice_ajax() {
+        // has an extra frontend nonce set (even if executed in the backend)
+        check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
+
 	header( 'Content-type: application/json; charset=utf-8' );
 	if ( isset( $_POST['membership_id'] ) ) {
 		$membership_id = intval( $_POST['membership_id'] );
@@ -3116,9 +3121,15 @@ function eme_calc_memberprice_ajax() {
 	$cur    = $membership['properties']['currency'];
 	$result = eme_localized_price( $total, $cur );
 	echo wp_json_encode( [ 'total' => $result ] );
+	wp_die();
 }
 
+add_action( 'wp_ajax_eme_dyndata_familymember', 'eme_dyndata_familymember_ajax' );
+add_action( 'wp_ajax_nopriv_eme_dyndata_familymember', 'eme_dyndata_familymember_ajax' );
 function eme_dyndata_familymember_ajax() {
+        // has an extra frontend nonce set (even if executed in the backend)
+        check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
+
 	header( 'Content-type: application/json; charset=utf-8' );
 	if ( isset( $_POST['membership_id'] ) ) {
 		$membership_id = intval( $_POST['membership_id'] );
@@ -3145,9 +3156,15 @@ function eme_dyndata_familymember_ajax() {
 		$form_html .= eme_replace_membership_familyformfields_placeholders( $format, $i );
 	}
 	echo wp_json_encode( [ 'Result' => do_shortcode( $form_html ) ] );
+	wp_die();
 }
 
+add_action( 'wp_ajax_eme_dyndata_member', 'eme_dyndata_member_ajax' );
+add_action( 'wp_ajax_nopriv_eme_dyndata_member', 'eme_dyndata_member_ajax' );
 function eme_dyndata_member_ajax() {
+        // has an extra frontend nonce set (even if executed in the backend)
+        check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
+
 	header( 'Content-type: application/json; charset=utf-8' );
 	$membership_id = 0;
 	if ( ! empty( $_POST['membership_id'] ) ) {
@@ -3278,6 +3295,7 @@ function eme_dyndata_member_ajax() {
 		}
 	}
 	echo wp_json_encode( [ 'Result' => do_shortcode( $form_html ) ] );
+	wp_die();
 }
 
 function eme_get_member_post_answers( $member, $include_dynamicdata = 1 ) {

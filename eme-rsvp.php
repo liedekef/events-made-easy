@@ -4864,7 +4864,7 @@ function eme_import_csv_payments() {
 				}
 			} elseif ( ! empty( $line['payment_randomid'] ) ) {
 				$payment_randomid = intval( $line['payment_randomid'] );
-				$payment          = eme_get_payment( 0, $payment_randomid );
+				$payment          = eme_get_payment( payment_randomid: $payment_randomid );
 				if ( ! empty( $payment ) ) {
 					$payment_id = $payment['id'];
 				}

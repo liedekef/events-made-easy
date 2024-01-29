@@ -4965,8 +4965,8 @@ function eme_ajax_people_list( $dynamic_groupname = '' ) {
 					$search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );
 			}
 		}
-			$group['search_terms'] = eme_serialize( $search_terms );
-			return $wpdb->insert( $table, $group );
+		$group['search_terms'] = eme_serialize( $search_terms );
+		return $wpdb->insert( $table, $group );
 	}
 
 	$formfields = eme_get_formfields( '', 'people' );

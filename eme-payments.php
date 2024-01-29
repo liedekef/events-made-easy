@@ -2892,8 +2892,8 @@ function eme_charge_mollie() {
 	}
 }
 
-function eme_complete_mollie_transaction( $mollie_payment_id = 0 ) {
-	return eme_notification_mollie( $mollie_payment_id);
+function eme_complete_mollie_transaction( $payment ) {
+	return eme_notification_mollie( $payment['pg_pid']);
 }
 
 function eme_notification_mollie( $mollie_payment_id = 0 ) {
@@ -2987,8 +2987,8 @@ function eme_charge_payconiq() {
 	}
 }
 
-function eme_complete_payconiq_transaction( $payconiq_paymentid = 0 ) {
-	return eme_notification_payconiq( $payconiq_paymentid );
+function eme_complete_payconiq_transaction( $payment ) {
+	return eme_notification_payconiq( $payment['pg_pid'] );
 }
 
 function eme_notification_payconiq( $payconiq_paymentid = 0 ) {
@@ -3321,7 +3321,7 @@ function eme_create_payment( $booking_ids ) {
 	return $payment_id;
 }
 
-function eme_get_payment( $payment_id, $payment_randomid = 0 ) {
+function eme_get_payment( $payment_id=0, $payment_randomid = 0 ) {
 	global $wpdb;
 	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	if ( $payment_id ) {

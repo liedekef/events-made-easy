@@ -23,13 +23,9 @@ function eme_actions_early_init() {
 	}
 
 	if ( isset( $_POST['eme_ajax_action'] ) && $_POST['eme_ajax_action'] == 'task_autocomplete_people' && isset( $_POST['task_lastname'] ) ) {
+		check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 		$no_wp_die = 1;
 		if ( is_user_logged_in() && isset( $_POST['eme_event_ids'] ) ) {
-			if ( ! isset( $_POST['eme_frontend_nonce'] ) ||
-			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
-				header( 'Content-type: application/json; charset=utf-8' );
-				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
-			}
 			$event          = eme_get_event( intval( $_POST['eme_event_ids'][0] ) );
 			$current_userid = get_current_user_id();
 			if ( ! empty( $event ) && ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
@@ -44,42 +40,37 @@ function eme_actions_early_init() {
 		$no_wp_die = 1;
 
 		if ( isset( $_POST['event_id'] ) && $eme_is_admin_request ) {
+			check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 			// this is the case for new registrations in the backend
 			$event_id = intval( $_POST['event_id'] );
 			$event    = eme_get_event( $event_id );
-			if ( empty( $event ) || ! isset( $_POST['eme_admin_nonce'] ) ||
-			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), "eme_admin" ) ) ) {
-				header( 'Content-type: application/json; charset=utf-8' );
-				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
-			}
-			eme_people_autocomplete_ajax( $no_wp_die, $event['registration_wp_users_only'] );
+			if ( !empty( $event )) 
+				eme_people_autocomplete_ajax( $no_wp_die, $event['registration_wp_users_only'] );
 		} elseif ( isset( $_POST['booking_id'] ) && $eme_is_admin_request ) {
+			check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 			// this is the case for updating a registration in the backend
 			$booking_id = intval( $_POST['booking_id'] );
 			$event      = eme_get_event_by_booking_id( $booking_id );
-			if ( empty( $event ) || ! isset( $_POST['eme_admin_nonce'] ) ||
-			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), "eme_admin" ) ) ) {
-				header( 'Content-type: application/json; charset=utf-8' );
-				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
-			}
-			eme_people_autocomplete_ajax( $no_wp_die, $event['registration_wp_users_only'] );
+			if ( !empty( $event )) 
+				eme_people_autocomplete_ajax( $no_wp_die, $event['registration_wp_users_only'] );
 		} elseif ( isset( $_POST['membership_id'] ) && is_user_logged_in() ) {
 			if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
-			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
-			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
+			( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_POST['eme_admin_nonce'], 'eme_admin' ) ) ||
+			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
 				header( 'Content-type: application/json; charset=utf-8' );
 				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
+				if ( wp_doing_ajax() ) {
+					wp_die( -1, 403 );
+				} else {
+					die( '-1' );
+				}
 			}
 			if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
 				$membership = eme_get_membership( intval( $_POST['membership_id'] ) );
 				eme_people_autocomplete_ajax( $no_wp_die, $membership['properties']['registration_wp_users_only'] );
 			}
 		} elseif ( is_user_logged_in() && isset( $_POST['eme_event_ids'] ) ) {
-			if ( ! isset( $_POST['eme_frontend_nonce'] ) ||
-			( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
-				header( 'Content-type: application/json; charset=utf-8' );
-				echo wp_json_encode( __( 'Access denied!', 'events-made-easy' ) );
-			}
+			check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 			$event          = eme_get_event( intval( $_POST['eme_event_ids'][0] ) );
 			$current_userid = get_current_user_id();
 			if ( ! empty( $event ) && ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
@@ -125,30 +116,6 @@ function eme_actions_init() {
 		exit;
 	}
 
-	if ( isset( $_POST['eme_override_eventAction'] ) ) {
-		// all of these have an extra frontend nonce set (even if executed in the backend too)
-		check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
-		// the price stuff can be dependant on user functions (for discounts), so we put them also in eme_actions_init and not eme_actions_preinit
-		switch ( $_POST['eme_override_eventAction'] ) {
-			case 'calc_memberprice':
-				eme_calc_memberprice_ajax();
-				break;
-			case 'dynmemberdata':
-				eme_dyndata_member_ajax();
-				break;
-			case 'dynfamilymemberdata':
-				eme_dyndata_familymember_ajax();
-				break;
-			case 'calc_bookingprice':
-				eme_calc_bookingprice_ajax();
-				break;
-			case 'dynbookingdata':
-				eme_dyndata_rsvp_ajax();
-				break;
-		}
-		exit();
-	}
-
 	if ( isset( $_GET['eme_admin_action'] ) && $eme_is_admin_request ) {
 		if ( $_GET['eme_admin_action'] == 'autocomplete_locations' ) {
 			$no_wp_die = 1;
@@ -165,7 +132,7 @@ function eme_actions_init() {
 		}
 	}
 
-	# payment notifications apply filters in eme_get_configured_pgs(), so this needs to be in eme_actions_init, not in eme_actions_early_init
+	# payment notifications can apply filters in eme_get_configured_pgs(), so this needs to be in eme_actions_init, not in eme_actions_early_init
 	if ( isset( $_GET['eme_eventAction'] ) ) {
 		// not yet implemented for new paypal ...
 		#if ($_GET['eme_eventAction']=="paypal_notification") {
@@ -175,7 +142,8 @@ function eme_actions_init() {
 		$found_methods = eme_get_configured_pgs();
 		foreach ($found_methods as $pg) {
 			$notification_function = 'eme_notification_'.$pg;
-			if ( $_GET['eme_eventAction'] == $pg.'_notification' && function_exists($notification_function)) {
+			// don't care if it is GET or POST for notifications
+			if ( $_REQUEST['eme_eventAction'] == $pg.'_notification' && function_exists($notification_function)) {
 				$notification_function();
 				if ($pg != "opayo") {
 					// opayo doesn't use a notification url, but sends the status along as part of the return url, so we just check
@@ -184,11 +152,6 @@ function eme_actions_init() {
 				}
 			}
 		}
-	}
-	// notification for fdgg happens via POST
-	if ( isset( $_POST['eme_eventAction'] ) && $_POST['eme_eventAction'] == 'fdgg_notification' ) {
-		eme_notification_fdgg();
-		exit();
 	}
 
 	// payment charges and eme_get_configured_pgs can apply custom filters, so we leave these in eme_actions_init

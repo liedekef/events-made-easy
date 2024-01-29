@@ -939,7 +939,7 @@ function eme_events_page_content() {
 		}
 	} elseif ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
 		$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
-		$payment          = eme_get_payment( 0, $payment_randomid );
+		$payment          = eme_get_payment( payment_randomid: $payment_randomid );
 		if ( ! $payment ) {
 			return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
 		}
@@ -1074,13 +1074,11 @@ function eme_events_page_content() {
 		return $format;
 	} elseif ( get_query_var( 'eme_pmt_result' ) && get_query_var( 'eme_pmt_rndid' ) ) {
 		$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
-		$payment          = eme_get_payment( 0, $payment_randomid );
+		$payment          = eme_get_payment( payment_randomid: $payment_randomid );
 		if ( ! $payment ) {
 			$format = "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
 			return $format;
 		}
-		$paid   = eme_get_payment_paid( $payment );
-		$pg_pid = $payment['pg_pid'];
 		// eme_get_payment_paid calculates the payment status of $payment, but this is done for each related booking or member
 		// So, if a user arrives at a payment gateway and doesn't do anything but clicks on 'back to website', he might arrive here too
 		//     but the payment might already be paid (for an active member extension for example), so next to that we check if pg_handled==1
@@ -1094,14 +1092,15 @@ function eme_events_page_content() {
 		$result = get_query_var( 'eme_pmt_result' );
 		$found_methods        = eme_get_configured_pgs();
                 if ( is_string($result) && in_array( $result, $found_methods ) ) {
+			$paid   = eme_get_payment_paid( $payment );
 			$result = eme_sanitize_request($result);
 			$func = 'eme_complete_' . $result . '_transaction';
 			if ( function_exists( $func ) ) {
-				if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $pg_pid ) ) {
-					$func( $pg_pid );
+				if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $payment['pg_pid'] ) ) {
+					$func( $payment );
 				}
 				// the state can change after the last function call, so check it
-				$payment = eme_get_payment( 0, $payment_randomid );
+				$payment = eme_get_payment( payment_randomid: $payment_randomid );
 				$paid    = eme_get_payment_paid( $payment );
 				if ( empty( $pg_pid ) ) {
 					$result = 'fail';
@@ -1178,7 +1177,7 @@ function eme_events_page_content() {
 		}
 	} elseif ( get_query_var( 'eme_pmt_rndid' ) ) {
 		$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
-		$payment          = eme_get_payment( 0, $payment_randomid );
+		$payment          = eme_get_payment( payment_randomid: $payment_randomid );
 		if ( get_query_var( 'res_fail' ) ) {
 			$resultcode = 1;
 		} else {
@@ -1402,7 +1401,7 @@ function eme_page_title( $data, $post_id = null ) {
 			$res = __( 'Booking confirmation', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_pmt_rndid' ) ) {
 			$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
-			$payment          = eme_get_payment( 0, $payment_randomid );
+			$payment          = eme_get_payment( payment_randomid: $payment_randomid );
 			if ( empty( $payment ) ) {
 				$page_title = get_option( 'eme_events_page_title' );
 			} elseif ( $payment['target'] == 'member' ) {
@@ -1503,7 +1502,7 @@ function eme_html_title( $data ) {
 			$res = __( 'Booking confirmation', 'events-made-easy' );
 		} elseif ( get_query_var( 'eme_pmt_rndid' ) ) {
 			$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
-			$payment          = eme_get_payment( 0, $payment_randomid );
+			$payment          = eme_get_payment( payment_randomid: $payment_randomid );
 			if ( empty( $payment ) ) {
 				$html_title = get_option( 'eme_events_page_title' );
 			} elseif ( $payment['target'] == 'member' ) {

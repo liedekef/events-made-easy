@@ -7,45 +7,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 // the early init runs before theme functions.php is loaded, so we only call things that don't call custom filters
 function eme_actions_early_init() {
 	$eme_is_admin_request = eme_is_admin_request();
-	if ( isset( $_GET['eme_captcha'] ) && $_GET['eme_captcha'] == 'generate' && isset( $_GET['f'] ) ) {
+	if ( !empty( $_GET['eme_captcha'] ) && $_GET['eme_captcha'] == 'generate' && !empty( $_GET['f'] ) ) {
 		$captcha_id = eme_sanitize_filenamechars( $_GET['f'] );
-		if ( ! eme_is_empty_string( $captcha_id ) ) {
+		if ( $_GET['f']==$captcha_id && ! eme_is_empty_string( $captcha_id ) && get_option( 'eme_captcha_for_forms' ) ) {
 			eme_captcha_generate( $captcha_id );
 		}
 		exit;
 	}
-	if ( isset( $_GET['eme_tracker_id'] ) ) {
+	if ( !empty( $_GET['eme_tracker_id'] ) ) {
 		$tracker_id = eme_sanitize_filenamechars( $_GET['eme_tracker_id'] );
 		if ( ! eme_is_empty_string( $tracker_id ) ) {
 			eme_mail_track( $tracker_id );
 		}
 		exit;
-	}
-
-	# payment notifications don't apply filters, so we can leave these in eme_actions_early_init
-	if ( isset( $_GET['eme_eventAction'] ) ) {
-		// not yet implemented for new paypal ...
-		#if ($_GET['eme_eventAction']=="paypal_notification") {
-		#   eme_notification_paypal();
-		#   exit();
-		#}
-		$found_methods = eme_get_configured_pgs();
-		foreach ($found_methods as $pg) {
-			$notification_function = 'eme_notification_'.$pg;
-			if ( $_GET['eme_eventAction'] == $pg.'_notification' && function_exists($notification_function)) {
-				$notification_function();
-				if ($pg != "opayo") {
-					// opayo doesn't use a notification url, but sends the status along as part of the return url, so we just check
-					// the status and set paid or not, but then we continue regular flow of events
-					exit();
-				}
-			}
-		}
-	}
-	// notification for fdgg happens via POST
-	if ( isset( $_POST['eme_eventAction'] ) && $_POST['eme_eventAction'] == 'fdgg_notification' ) {
-		eme_notification_fdgg();
-		exit();
 	}
 
 	if ( isset( $_POST['eme_ajax_action'] ) && $_POST['eme_ajax_action'] == 'task_autocomplete_people' && isset( $_POST['task_lastname'] ) ) {
@@ -191,7 +165,33 @@ function eme_actions_init() {
 		}
 	}
 
-	// payment charges can apply custom filters, so we leave these in eme_actions_init
+	# payment notifications apply filters in eme_get_configured_pgs(), so this needs to be in eme_actions_init, not in eme_actions_early_init
+	if ( isset( $_GET['eme_eventAction'] ) ) {
+		// not yet implemented for new paypal ...
+		#if ($_GET['eme_eventAction']=="paypal_notification") {
+		#   eme_notification_paypal();
+		#   exit();
+		#}
+		$found_methods = eme_get_configured_pgs();
+		foreach ($found_methods as $pg) {
+			$notification_function = 'eme_notification_'.$pg;
+			if ( $_GET['eme_eventAction'] == $pg.'_notification' && function_exists($notification_function)) {
+				$notification_function();
+				if ($pg != "opayo") {
+					// opayo doesn't use a notification url, but sends the status along as part of the return url, so we just check
+					// the status and set paid or not, but then we continue regular flow of events
+					exit();
+				}
+			}
+		}
+	}
+	// notification for fdgg happens via POST
+	if ( isset( $_POST['eme_eventAction'] ) && $_POST['eme_eventAction'] == 'fdgg_notification' ) {
+		eme_notification_fdgg();
+		exit();
+	}
+
+	// payment charges and eme_get_configured_pgs can apply custom filters, so we leave these in eme_actions_init
 	if ( isset( $_POST['eme_eventAction'] ) ) {
 		$found_methods = eme_get_configured_pgs();
 		foreach ($found_methods as $pg) {

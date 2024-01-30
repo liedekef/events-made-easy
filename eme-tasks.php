@@ -691,6 +691,7 @@ function eme_meta_box_div_event_task_signup_form_format( $event, $templates_arra
 	<p class="eme_smaller"><?php esc_html_e( 'The layout of the task signup form.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Warning: this override will only be used when inside a single event, otherwise the generic setting will always be used!', 'events-made-easy' ); ?>
 	<?php echo eme_ui_select( $event['event_properties']['task_signup_form_format_tpl'], 'eme_prop_task_signup_form_format_tpl', $templates_array ); ?>
 </div>
 	<?php
@@ -1333,12 +1334,20 @@ function eme_tasks_signupform_shortcode( $atts ) {
 
 	// now add the signup form
 	if ( $open_tasks_found > 0 ) {
+		$signupform_format = '';
 		if ( ! empty( $signupform_template_id ) ) {
 			$signupform_format = eme_get_template_format( $signupform_template_id );
-		} else {
-			$signupform_format = get_option( 'eme_task_form_format' );
+		} elseif (eme_is_single_event_page()) {
+			$event_id = eme_sanitize_request( get_query_var( 'event_id' ) );
+			$event = eme_get_event($event_id);
+			if (!empty($event['event_properties']['task_signup_form_format_tpl'])) {
+				$signupform_format = eme_get_template_format( $event['event_properties']['task_signup_form_format_tpl'] );
+			}
 		}
 
+		if (empty($signupform_format)) {
+			$signupform_format = get_option( 'eme_task_form_format' );
+		}
 		$result .= eme_replace_task_signupformfields_placeholders( $signupform_format );
 	} else {
 		$result = "<div id='eme-tasks-message' class='eme-message-info eme-tasks-message eme-no-tasks'>" . __( 'There are no tasks to sign up for right now', 'events-made-easy' ) . '</div>';
@@ -1716,17 +1725,35 @@ function eme_tasks_ajax() {
 					'signup_status' => $signup_status,
 					'comment'       => $bookerComment,
 				];
-				eme_db_insert_task_signup( $signup );
-				if ( $signup_status == 0 ) {
-					eme_email_tasksignup_action( $signup, 'pending' );
+				$signup_id = eme_db_insert_task_signup( $signup );
+				if ($signup_id) {
+					// re-get the signup, since the random id is now in it too
+					$signup = eme_get_task_signup($signup_id);
+					if ( $signup_status == 0 ) {
+						eme_email_tasksignup_action( $signup, 'pending' );
+					} else {
+						eme_email_tasksignup_action( $signup, 'new' );
+						// we'll add the person to the group of choice if the task doesn't require approval
+						eme_add_persongroups( $person_id, $event['event_properties']['task_addpersontogroup'] );
+					}
+					#$message .= __( 'Signup done', 'events-made-easy' );
+					$format = "";
+					if (!empty($event['event_properties']['task_signup_recorded_ok_html_tpl'])) {
+						$format = eme_get_template_format( $event['event_properties']['task_signup_recorded_ok_html_tpl']);
+					}
+					if (empty($format)) {
+						$format = get_option('eme_task_signup_recorded_ok_html');
+					}
+					$person = eme_get_person($person_id);
+					$message .= eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task );
+					$message .= '<br>';
+					$ok       = 1;
 				} else {
-					eme_email_tasksignup_action( $signup, 'new' );
-					// we'll add the person to the group of choice if the task doesn't require approval
-					eme_add_persongroups( $person_id, $event['event_properties']['task_addpersontogroup'] );
+					$message .= __( 'Signup failed', 'events-made-easy' );
+					$message .= '<br>';
+					$nok      = 1;
+					continue;
 				}
-				$message .= __( 'Signup done', 'events-made-easy' );
-				$message .= '<br>';
-				$ok       = 1;
 			}
 		}
 	}

@@ -147,11 +147,11 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	$pg_count = eme_event_count_pgs( $event );
 	if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
 		$eme_pg_submit_immediately = 1;
-			$hidden_style          = "style='display:none;'";
+		$hidden_style              = "style='display:none;'";
 		$pg_in_use                 = eme_event_get_first_pg( $event );
 	} else {
 		$eme_pg_submit_immediately = 0;
-			$hidden_style          = '';
+		$hidden_style              = '';
 		$pg_in_use                 = '';
 	}
 
@@ -200,7 +200,7 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 				$ret_string        .= $result;
 				$ret_string        .= '</div>';
 			} else {
-				$func = 'eme_' . $pg . '_form';
+				$func = 'eme_payment_form_' . $pg ;
 				if ( function_exists( $func ) ) {
 					$pg_form     = $func( $event['event_name'], $payment, $total_price, $cur, $is_multi );
 					$ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $event['event_properties']['vat_pct'], 'html', $person['lang'] );
@@ -431,7 +431,7 @@ function eme_payment_gateway_extra_charge( $price, $gateway ) {
 	return $result;
 }
 
-function eme_webmoney_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_webmoney( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway            = 'webmoney';
 	$eme_webmoney_purse = get_option( 'eme_webmoney_purse' );
 	if ( ! $eme_webmoney_purse ) {
@@ -496,7 +496,7 @@ function eme_webmoney_form( $item_name, $payment, $baseprice, $cur, $multi_booki
 	return $form_html;
 }
 
-function eme_2co_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_2co( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway          = '2co';
 	$eme_2co_business = get_option( 'eme_2co_business' );
 	if ( ! $eme_2co_business ) {
@@ -564,7 +564,7 @@ function eme_2co_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 
 	return $form_html;
 }
 
-function eme_worldpay_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_worldpay( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway             = 'worldpay';
 	$worldpay_instid     = get_option( 'eme_worldpay_instid' );
 	$worldpay_md5_secret = get_option( 'eme_worldpay_md5_secret' );
@@ -641,7 +641,7 @@ function eme_worldpay_form( $item_name, $payment, $baseprice, $cur, $multi_booki
 	return $form_html;
 }
 
-function eme_opayo_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_opayo( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway     = 'opayo';
 	$vendor_name = get_option( 'eme_opayo_vendor_name' );
 	if ( ! $vendor_name ) {
@@ -750,7 +750,7 @@ function eme_opayo_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 	return $form_html;
 }
 
-function eme_braintree_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway                   = 'braintree';
 	$eme_braintree_private_key = get_option( 'eme_braintree_private_key' );
 	$eme_braintree_public_key  = get_option( 'eme_braintree_public_key' );
@@ -836,7 +836,7 @@ jQuery(document).ready(function ($) {
 	return $form_html;
 }
 
-function eme_sumup_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway                 = 'sumup';
 	$eme_sumup_app_id        = get_option( 'eme_sumup_app_id' );
 	$eme_sumup_app_secret    = get_option( 'eme_sumup_app_secret' );
@@ -939,7 +939,7 @@ function eme_sumup_form( $item_name, $payment, $baseprice, $cur, $multi_booking 
 	return $form_html;
 }
 
-function eme_stripe_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_stripe( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway               = 'stripe';
 	$eme_stripe_public_key = get_option( 'eme_stripe_public_key' );
 	if ( ! $eme_stripe_public_key ) {
@@ -997,8 +997,7 @@ function eme_stripe_form( $item_name, $payment, $baseprice, $cur, $multi_booking
 	return $form_html;
 }
 
-function eme_fdgg_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
-	
+function eme_payment_form_fdgg( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway       = 'fdgg';
 	$store_name    = get_option( 'eme_fdgg_store_name' );
 	$shared_secret = get_option( 'eme_fdgg_shared_secret' );
@@ -1081,7 +1080,7 @@ function eme_fdgg_form( $item_name, $payment, $baseprice, $cur, $multi_booking =
 	return $form_html;
 }
 
-function eme_instamojo_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_instamojo( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway              = 'instamojo';
 	$instamojo_key        = get_option( 'eme_instamojo_key' );
 	$instamojo_auth_token = get_option( 'eme_instamojo_auth_token' );
@@ -1139,7 +1138,7 @@ function eme_instamojo_form( $item_name, $payment, $baseprice, $cur, $multi_book
 	return $form_html;
 }
 
-function eme_mollie_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_mollie( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway        = 'mollie';
 	$mollie_api_key = get_option( 'eme_mollie_api_key' );
 	if ( ! $mollie_api_key ) {
@@ -1198,7 +1197,7 @@ function eme_mollie_form( $item_name, $payment, $baseprice, $cur, $multi_booking
 	return $form_html;
 }
 
-function eme_payconiq_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_payconiq( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway = 'payconiq';
 	$api_key = get_option( 'eme_payconiq_api_key' );
 	if ( ! $api_key ) {
@@ -1257,7 +1256,7 @@ function eme_payconiq_form( $item_name, $payment, $baseprice, $cur, $multi_booki
 	return $form_html;
 }
 
-function eme_paypal_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_paypal( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway             = 'paypal';
 	$eme_paypal_clientid = get_option( 'eme_paypal_clientid' );
 	$eme_paypal_secret   = get_option( 'eme_paypal_secret' );
@@ -1316,7 +1315,7 @@ function eme_paypal_form( $item_name, $payment, $baseprice, $cur, $multi_booking
 	return $form_html;
 }
 
-function eme_legacypaypal_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_legacypaypal( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway             = 'legacypaypal';
 	$eme_paypal_business = get_option( 'eme_legacypaypal_business' );
 	if ( ! $eme_paypal_business ) {
@@ -1408,7 +1407,7 @@ function eme_legacypaypal_form( $item_name, $payment, $baseprice, $cur, $multi_b
 	return $form_html;
 }
 
-function eme_mercadopago_form( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway = 'mercadopago';
 	if ( get_option( 'eme_mercadopago_demo' ) == 1 ) {
 		$eme_mercadopago_access_token = get_option( 'eme_mercadopago_sandbox_token' );
@@ -1518,7 +1517,7 @@ data-preference-id='" . $preference->id . "' data-button-label='$button_label'>
 	return $form_html;
 }
 
-function eme_fondy_form( $event_or_memebership, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_fondy( $event_or_memebership, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway = 'fondy';
 
 	$merchant_id = get_option( "eme_{$gateway}_merchant_id" );
@@ -1583,7 +1582,7 @@ function eme_fondy_form( $event_or_memebership, $payment, $baseprice, $cur, $mul
 	return $form_html;
 }
 
-function eme_complete_instamojo_transaction( $payment ) {
+function eme_complete_transaction_instamojo( $payment ) {
 	$instamojo_key        = get_option( 'eme_instamojo_key' );
 	$instamojo_auth_token = get_option( 'eme_instamojo_auth_token' );
 	require_once 'payment_gateways/instamojo/vendor/autoload.php';
@@ -1612,7 +1611,7 @@ function eme_complete_instamojo_transaction( $payment ) {
 	}
 }
 
-function eme_complete_sumup_transaction( $payment ) {
+function eme_complete_transaction_sumup( $payment ) {
 	$eme_sumup_app_id        = get_option( 'eme_sumup_app_id' );
 	$eme_sumup_app_secret    = get_option( 'eme_sumup_app_secret' );
 	$eme_sumup_merchant_code = get_option( 'eme_sumup_merchant_code' );
@@ -1660,7 +1659,7 @@ function eme_complete_sumup_transaction( $payment ) {
 	//  }
 }
 
-function eme_complete_stripe_transaction( $payment ) {
+function eme_complete_transaction_stripe( $payment ) {
 	require_once 'payment_gateways/stripe/init.php';
 	$eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
 	\Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
@@ -1683,7 +1682,7 @@ function eme_complete_stripe_transaction( $payment ) {
 	}
 }
 
-function eme_complete_paypal_transaction( $payment ) {
+function eme_complete_transaction_paypal( $payment ) {
 	require_once 'payment_gateways/paypal/vendor/autoload.php';
 	// the paypal or paypal sandbox url
 	$mode = get_option( 'eme_paypal_url' );
@@ -1722,7 +1721,7 @@ function eme_complete_paypal_transaction( $payment ) {
 	}
 }
 
-function eme_complete_fondy_transaction( $payment ) {
+function eme_complete_transaction_fondy( $payment ) {
 	$eme_fondy_merchant_id = get_option( 'eme_fondy_merchant_id' );
 	if ( ! $eme_fondy_merchant_id ) {
 		return 'No merchant ID';
@@ -2892,7 +2891,7 @@ function eme_charge_mollie() {
 	}
 }
 
-function eme_complete_mollie_transaction( $payment ) {
+function eme_complete_transaction_mollie( $payment ) {
 	return eme_notification_mollie( $payment['pg_pid']);
 }
 
@@ -2987,7 +2986,7 @@ function eme_charge_payconiq() {
 	}
 }
 
-function eme_complete_payconiq_transaction( $payment ) {
+function eme_complete_transaction_payconiq( $payment ) {
 	return eme_notification_payconiq( $payment['pg_pid'] );
 }
 

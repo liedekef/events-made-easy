@@ -1087,14 +1087,14 @@ function eme_events_page_content() {
 
 		// mollie updates the state of the payment before returning to the success/failure url, but it doesn't make a distinction for success/failure url, so we check it here
 		// other payment gateways (payconiq, paypal, sumup, stripe, instamojo, fondy) need EME to complete the transaction too
-		// so in all these case we check if a corresponding 'eme_complete_' . $result . '_transaction' function exists 
+		// so in all these case we check if a corresponding 'eme_complete_transaction_' . $result function exists 
 		// and execute it if appropriate
 		$result = get_query_var( 'eme_pmt_result' );
 		$found_methods        = eme_get_configured_pgs();
                 if ( is_string($result) && in_array( $result, $found_methods ) ) {
 			$paid   = eme_get_payment_paid( $payment );
 			$result = eme_sanitize_request($result);
-			$func = 'eme_complete_' . $result . '_transaction';
+			$func = 'eme_complete_transaction_' . $result ;
 			if ( function_exists( $func ) ) {
 				if ( ( $payment['pg_handled'] == 0 || ! $paid ) && ! empty( $payment['pg_pid'] ) ) {
 					$func( $payment );

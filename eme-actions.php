@@ -158,7 +158,7 @@ function eme_actions_init() {
 	if ( isset( $_POST['eme_eventAction'] ) ) {
 		$found_methods = eme_get_configured_pgs();
 		foreach ($found_methods as $pg) {
-			$charge_function = 'eme_charge'.$pg;
+			$charge_function = 'eme_charge_'.$pg;
 			if ( $_POST['eme_eventAction'] == $pg.'_charge' && function_exists($charge_function)) {
 				$charge_function();
 			}

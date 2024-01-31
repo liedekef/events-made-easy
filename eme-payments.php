@@ -760,7 +760,7 @@ function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $mu
 		return;
 	}
 
-	require_once 'payment_gateways/braintree/lib/Braintree.php';
+	require_once 'payment_gateways/braintree/vendor/autoload.php';
 	$braintree_gateway = new Braintree\Gateway(
 	    [
 			'environment' => $eme_braintree_env,
@@ -2418,7 +2418,7 @@ function eme_charge_braintree() {
 		return $check_allowed_to_pay;
 	}
 
-	require_once 'payment_gateways/braintree/lib/Braintree.php';
+	require_once 'payment_gateways/braintree/vendor/autoload.php';
 	if ( ! isset( $_POST['braintree_nonce'] ) ) {
 		wp_redirect($fail_link);
 		exit;
@@ -2810,7 +2810,7 @@ function eme_refund_booking_braintree( $booking ) {
 		return;
 	}
 
-	require_once 'payment_gateways/braintree/lib/Braintree.php';
+	require_once 'payment_gateways/braintree/vendor/autoload.php';
 	$braintree_gateway = new Braintree\Gateway(
 	    [
 			'environment' => $eme_braintree_env,

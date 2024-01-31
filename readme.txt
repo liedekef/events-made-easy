@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
   This option defaults to 0, other value: 1
 * For multiselects and filter form, the label was not shown anymore: fixed
 * Fix task cancel and the use of custom task signup forms
+* Braintree API update to 6.16
 
 = 2.4.25 (2024/01/23) =
 * Added filters eme_payment_gateway_change_total and eme_payment_gateway_exra_cost.

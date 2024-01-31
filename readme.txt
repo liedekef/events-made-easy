@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.26 (2024//) =
+= 2.4.26 (2024/01/31) =
 * Added action hook eme_options_postsave_action, to allow own code to be called upon saving options
   This is needed for e.g. custom payment gateways that need a webhook created
 * Added option "old_select" for filters, so people wanting the old style of select back, they can get it

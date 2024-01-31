@@ -2208,7 +2208,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Paypal', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Paypal', 'events-made-easy' ); ?> <b>Deprecated, use Braintree</b></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2239,7 +2239,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Legacy Paypal', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Legacy Paypal', 'events-made-easy' ); ?> <b>Deprecated, use Braintree</b></h3>
 <div>
 <table class='form-table'>
 			<?php

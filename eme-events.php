@@ -1102,7 +1102,7 @@ function eme_events_page_content() {
 				// the state can change after the last function call, so check it
 				$payment = eme_get_payment( payment_randomid: $payment_randomid );
 				$paid    = eme_get_payment_paid( $payment );
-				if ( empty( $pg_pid ) ) {
+				if ( empty( $payment['pg_pid'] ) ) {
 					$result = 'fail';
 				} elseif ( $payment['pg_handled'] == 1 && $paid ) {
 					$result = 'success';

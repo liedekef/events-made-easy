@@ -481,3 +481,9 @@ input[type="checkbox"] {
         filter:var(--eme-map-tiles-filter, none);
 	}
 }
+
+/* some plugins set readonly pointer-events to none, but for our datetime fields this is not ok */
+.eme_formfield_fdatetime, .eme_formfield_fdate {
+	pointer-events: auto !important;
+	opacity: 1 !important;
+}

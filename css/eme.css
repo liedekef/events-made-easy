@@ -29,7 +29,7 @@
     margin-bottom: 5px;
 }
 
-.select2-selection--multiple ul {
+.select2-selection--multiple ul li {
    margin: 0px !important;
    line-height: initial !important;
 }

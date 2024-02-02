@@ -2201,19 +2201,19 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		</tr>
 		<tr>
 		<td style="vertical-align:top"><label for="chooserelatedperson"><?php esc_html_e( 'Family members:', 'events-made-easy' ); ?></label></td>
-			<td>
+		<td>
 	<?php
-					$familymember_person_ids = eme_get_family_person_ids( $person_id );
+	$familymember_person_ids = eme_get_family_person_ids( $person_id );
 	if ( $action == 'edit' && ! empty( $familymember_person_ids ) ) {
 		foreach ( $familymember_person_ids as $family_person_id ) {
-					$family_person = eme_get_person( $family_person_id );
+			$family_person = eme_get_person( $family_person_id );
 			if ( $family_person ) {
 				print "<a href='" . admin_url( "admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=$family_person_id" ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $family_person['firstname'], $family_person['lastname'] ) ) . '</a><br>';
 			}
 		}
 	}
 	?>
-			</td>
+		</td>
 		<td></td>
 		</tr>
 		<tr>

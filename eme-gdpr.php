@@ -104,7 +104,6 @@ function eme_rpi_ajax() {
 }
 
 function eme_rpi_shortcode( $atts ) {
-	
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
 		$email = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
@@ -200,7 +199,6 @@ function eme_gdpr_approve_ajax() {
 }
 
 function eme_gdpr_approve_shortcode() {
-	
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
 		$email = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
@@ -289,7 +287,7 @@ function eme_cpi_request_ajax() {
 			}
 		}
 		if ( $mail_text_html == 'htmlmail' ) {
-				$change_info .= '</table>';
+			$change_info .= '</table>';
 		}
 		if ( strstr( $change_body, '#_CHANGE_PERSON_URL' ) ) {
 			$change_body = str_replace( '#_CHANGE_PERSON_URL', $change_info, $change_body );
@@ -309,7 +307,6 @@ function eme_cpi_request_ajax() {
 }
 
 function eme_cpi_shortcode( $atts ) {
-	
 	eme_enqueue_frontend();
 	if ( isset( $_GET['eme_email'] ) ) {
 		$email = eme_esc_html( eme_sanitize_email( $_GET['eme_email'] ) );
@@ -405,7 +402,6 @@ function eme_cpi_ajax() {
 }
 
 function eme_cpi_form( $person_id ) {
-	
 	$person = eme_get_person( $person_id );
 	if ( empty( $person ) ) {
 		return "<div class='eme-message-error eme-cpi-message-error'>" . __( 'This link is no longer valid, please request a new link.', 'events-made-easy' ) . '</div>';

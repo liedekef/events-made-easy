@@ -1089,8 +1089,8 @@ function eme_events_page_content() {
 		// other payment gateways (payconiq, paypal, sumup, stripe, instamojo, fondy) need EME to complete the transaction too
 		// so in all these case we check if a corresponding 'eme_complete_transaction_' . $result function exists 
 		// and execute it if appropriate
-		$result = get_query_var( 'eme_pmt_result' );
-		$found_methods        = eme_get_configured_pgs();
+		$result        = get_query_var( 'eme_pmt_result' );
+		$found_methods = eme_get_configured_pgs();
                 if ( is_string($result) && in_array( $result, $found_methods ) ) {
 			$paid   = eme_get_payment_paid( $payment );
 			$result = eme_sanitize_request($result);
@@ -1208,7 +1208,7 @@ function eme_events_page_content() {
 			if ( eme_is_empty_string( $format_footer ) ) {
 				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
 			}
-			$limit = intval(get_option( 'eme_event_list_number_items' ));
+			$limit     = intval(get_option( 'eme_event_list_number_items' ));
 			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_id: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
@@ -1228,7 +1228,7 @@ function eme_events_page_content() {
 			if ( eme_is_empty_string( $format_footer ) ) {
 				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
 			}
-			$limit = intval(get_option( 'eme_event_list_number_items' ));
+			$limit     = intval(get_option( 'eme_event_list_number_items' ));
 			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_id: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';

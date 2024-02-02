@@ -46,7 +46,6 @@ function eme_is_offline_pg( $pg ) {
 }
 
 function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
-
 	$ret_string = '';
 	$payment    = eme_get_payment( $payment_id );
 	if ( $payment['target'] == 'member' ) {
@@ -237,7 +236,6 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 }
 
 function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
-	
 	if ( $resultcode > 0 ) {
 			$ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Payment failed for your membership for #_MEMBERSHIPNAME, please try again.', 'events-made-easy' ) . '</div>';
 	} else {

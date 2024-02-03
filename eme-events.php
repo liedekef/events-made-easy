@@ -2389,8 +2389,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					}
 				}
 			} elseif ( preg_match( '/#_PRINTBOOKINGSLINK/', $result ) ) {
-				if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || current_user_can( get_option( 'eme_cap_list_events' ) ) ||
-					( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
+				if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
+				     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
 					$url = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] );
 					if ( $target == 'html' ) {
 						$url = esc_url( $url );
@@ -2398,16 +2398,16 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$replacement = "<a href='$url'>" . __( 'Printable view of bookings', 'events-made-easy' ) . '</a>';
 				}
 			} elseif ( preg_match( '/#_PRINTBOOKINGSURL/', $result ) ) {
-				if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || current_user_can( get_option( 'eme_cap_list_events' ) ) ||
-					( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
+				if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
+				     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
 					$replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_printable&event_id=' . $event['event_id'] );
 					if ( $target == 'html' ) {
 						$replacement = esc_url( $replacement );
 					}
 				}
 			} elseif ( preg_match( '/#_CSVBOOKINGSLINK/', $result ) ) {
-				if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || current_user_can( get_option( 'eme_cap_list_events' ) ) ||
-					( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
+				if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
+				     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
 					$url = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] );
 					if ( $target == 'html' ) {
 						$url = esc_url( $url );
@@ -2415,8 +2415,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$replacement = "<a href='$url'>" . __( 'CSV view of bookings', 'events-made-easy' ) . '</a>';
 				}
 			} elseif ( preg_match( '/#_CSVBOOKINGSURL/', $result ) ) {
-				if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || current_user_can( get_option( 'eme_cap_list_events' ) ) ||
-					( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
+				if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) || 
+				     ( current_user_can( get_option( 'eme_cap_list_events' ) ) && ($event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid) ) ) {
 					$replacement = admin_url( 'admin.php?page=eme-people&eme_admin_action=booking_csv&event_id=' . $event['event_id'] );
 					if ( $target == 'html' ) {
 						$replacement = esc_url( $replacement );
@@ -9963,6 +9963,7 @@ function eme_ajax_events_list() {
 		print wp_json_encode( $jTableResult );
 		wp_die();
 	}
+	$wp_id = get_current_user_id();
 
 	$jtStartIndex      = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 	$jtPageSize        = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
@@ -10002,17 +10003,13 @@ function eme_ajax_events_list() {
 		}
 	}
 
-	// if the person is not allowed to manage all events, show only events he can edit
+	// if the person is not allowed to manage all events, we'll limit the links
 	if ( ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
-			$wp_id = get_current_user_id();
-		if ( ! $wp_id ) {
-			$ajaxResult['Result']               = 'OK';
-				$ajaxResult['TotalRecordCount'] = 0;
-				$ajaxResult['Records']          = [];
-				print wp_json_encode( $ajaxResult );
-				wp_die();
-		}
-		$where_arr[] = "(event_author=$wp_id)";
+		if (get_option('eme_limit_admin_event_listing'))
+			$where_arr[] = "(event_author=$wp_id || event_contactpersonid=$wp_id)";
+		$limited_links = 1;
+	} else {
+		$limited_links = 0;
 	}
 
 	if ( $where_arr ) {
@@ -10052,6 +10049,11 @@ function eme_ajax_events_list() {
 	$formfields = eme_get_formfields( '', 'events' );
 	$rows       = [];
 	foreach ( $events as $event ) {
+		if ($limited_links && $event['event_author']!=$wp_id && $event['event_contactperson_id']!=$wp_id) {
+			$no_edit_links = 1;
+		} else {
+			$no_edit_links = 0;
+		}
 		$record             = [];
 		$record['event_id'] = $event['event_id'];
 		if ( empty( $event['event_name'] ) ) {
@@ -10059,7 +10061,11 @@ function eme_ajax_events_list() {
 		}
 		$date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 
-		$record['event_name_simple'] = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
+		if ($no_edit_links==1) {
+			$record['event_name_simple'] = "<strong>" . eme_trans_esc_html( $event['event_name'] ) . '</strong>';
+		} else {
+			$record['event_name_simple'] = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
+		}
 		$record['event_name']        = $record['event_name_simple'];
 		if ( ! empty( $event['event_category_ids'] ) ) {
 			$categories            = explode( ',', $event['event_category_ids'] );
@@ -10097,26 +10103,42 @@ function eme_ajax_events_list() {
 				$booked_seats_string  = $booked_seats;
 			}
 			if ( $total_seats > 0 ) {
-					$available_seats = eme_get_available_seats( $event['event_id'] );
+				$available_seats = eme_get_available_seats( $event['event_id'] );
 				if ( eme_is_multi( $event['event_seats'] ) ) {
 						$available_seats_string = $available_seats . ' (' . eme_convert_array2multi( eme_get_available_multiseats( $event['event_id'] ) ) . ')';
 				} else {
 					$available_seats_string = $available_seats;
 				}
 				$record['event_name'] .= __( 'Free: ', 'events-made-easy' ) . ' ' . $available_seats_string;
-				$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
+				if ($no_edit_links==1) {
+					$record['event_name'] .= ', ' . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string";
+				} else {
+					$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
+				}
 			} else {
 				$total_seats_string    = '&infin;';
-				$record['event_name'] .= "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
+				if ($no_edit_links==1) {
+					$record['event_name'] .= __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string";
+				} else {
+					$record['event_name'] .= "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
+				}
 			}
 
 			if ( $pending_seats > 0 ) {
-				$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string</a>";
+				if ($no_edit_links==1) {
+					$record['event_name'] .= ', ' . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string";
+				} else {
+					$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string</a>";
+				}
 			}
 			if ( $event['event_properties']['take_attendance'] ) {
 				$absent_bookings = eme_get_absent_bookings( $event['event_id'] );
 				if ( $absent_bookings > 0 ) {
-					$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
+					if ($no_edit_links==1) {
+						$record['event_name'] .= ', ' . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings";
+					} else {
+						$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
+					}
 				}
 			}
 			$record['event_name'] .= ', ' . __( 'Max: ', 'events-made-easy' ) . $total_seats_string;
@@ -10148,9 +10170,17 @@ function eme_ajax_events_list() {
                                 }
 				$record['event_name'] .= '<br>' . sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
 				if ( $pending_spaces >0 ) {
-					$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=0&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+					if ($no_edit_links==1) {
+						$record['event_name'] .= ', ' . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces";
+					} else {
+						$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=0&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+					}
 				}
-				$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=1&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
+				if ($no_edit_links==1) {
+					$record['event_name'] .= ', ' . __( 'Approved:', 'events-made-easy' ) . " $used_spaces";
+				} else {
+					$record['event_name'] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=1&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
+				}
                         }
                 }
 
@@ -10185,7 +10215,11 @@ function eme_ajax_events_list() {
 			}
 		}
 
-		$record['copy'] = "<a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_24.png'></a>";
+		if (current_user_can(get_option('eme_cap_add_event'))) {
+			$record['copy'] = "<a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_24.png'></a>";
+		} else {
+			$record['copy'] = "";
+		}
 
 		if ( $event['event_rsvp'] && ! $view_trash ) {
 			if ( $event['registration_requires_approval'] ) {
@@ -10193,7 +10227,7 @@ function eme_ajax_events_list() {
 			} else {
 				$page = 'eme-registration-seats';
 			}
-
+	
 			$record['rsvp'] = "<a href='" . wp_nonce_url( admin_url( "admin.php?page=$page&amp;eme_admin_action=newBooking&amp;event_id=" . $event['event_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "' title='" . __( 'Add booking for this event', 'events-made-easy' ) . "'>" . __( 'RSVP', 'events-made-easy' ) . '</a>';
 			if ( ! empty( $event['event_properties']['rsvp_password'] ) ) {
 					$record['rsvp'] .= '<br>(' . __( 'Password protected', 'events-made-easy' ) . ')';
@@ -10240,9 +10274,13 @@ function eme_ajax_events_list() {
 
 		if ( $event['recurrence_id'] > 0 ) {
 			$recurrence_desc    = eme_get_recurrence_desc( $event['recurrence_id'] );
-			$record['recinfo']  = "$recurrence_desc <br> <a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_recurrence&amp;recurrence_id=' . $event['recurrence_id'] ) . "'>";
-			$record['recinfo'] .= __( 'Edit Recurrence', 'events-made-easy' );
-			$record['recinfo'] .= '</a>';
+			if ($no_edit_links==1) {
+				$record['recinfo']  = $recurrence_desc;
+			} else {
+				$record['recinfo']  = "$recurrence_desc <br> <a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_recurrence&amp;recurrence_id=' . $event['recurrence_id'] ) . "'>";
+				$record['recinfo'] .= __( 'Edit Recurrence', 'events-made-easy' );
+				$record['recinfo'] .= '</a>';
+			}
 		}
 
 		$event_cf_values = eme_get_event_answers( $event['event_id'] );

@@ -362,6 +362,7 @@ function eme_add_options( $reset = 0 ) {
 		'eme_cap_manage_mails'                            => DEFAULT_CAP_MANAGE_MAILS,
 		'eme_cap_list_attendances'                        => DEFAULT_CAP_LIST_ATTENDANCES,
 		'eme_cap_manage_attendances'                      => DEFAULT_CAP_MANAGE_ATTENDANCES,
+		'eme_limit_admin_event_listing'			  => 0,
 		'eme_html_header'                                 => '',
 		'eme_html_footer'                                 => '',
 		'eme_event_html_headers_format'                   => '',
@@ -1017,7 +1018,7 @@ function eme_options_register() {
 				$options = [ 'eme_seo_permalink', 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ];
 			break;
 		case 'access':
-				$options = [ 'eme_cap_add_event', 'eme_cap_author_event', 'eme_cap_publish_event', 'eme_cap_list_events', 'eme_cap_edit_events', 'eme_cap_manage_task_signups', 'eme_cap_list_locations', 'eme_cap_add_locations', 'eme_cap_author_locations', 'eme_cap_edit_locations', 'eme_cap_categories', 'eme_cap_holidays', 'eme_cap_templates', 'eme_cap_access_people', 'eme_cap_list_people', 'eme_cap_edit_people', 'eme_cap_author_person', 'eme_cap_access_members', 'eme_cap_list_members', 'eme_cap_edit_members', 'eme_cap_author_member', 'eme_cap_discounts', 'eme_cap_list_approve', 'eme_cap_author_approve', 'eme_cap_approve', 'eme_cap_list_registrations', 'eme_cap_author_registrations', 'eme_cap_registrations', 'eme_cap_attendancecheck', 'eme_cap_membercheck', 'eme_cap_forms', 'eme_cap_cleanup', 'eme_cap_settings', 'eme_cap_send_mails', 'eme_cap_send_other_mails', 'eme_cap_list_attendances', 'eme_cap_manage_attendances' ];
+				$options = [ 'eme_cap_add_event', 'eme_cap_author_event', 'eme_cap_publish_event', 'eme_cap_list_events', 'eme_cap_edit_events', 'eme_cap_manage_task_signups', 'eme_cap_list_locations', 'eme_cap_add_locations', 'eme_cap_author_locations', 'eme_cap_edit_locations', 'eme_cap_categories', 'eme_cap_holidays', 'eme_cap_templates', 'eme_cap_access_people', 'eme_cap_list_people', 'eme_cap_edit_people', 'eme_cap_author_person', 'eme_cap_access_members', 'eme_cap_list_members', 'eme_cap_edit_members', 'eme_cap_author_member', 'eme_cap_discounts', 'eme_cap_list_approve', 'eme_cap_author_approve', 'eme_cap_approve', 'eme_cap_list_registrations', 'eme_cap_author_registrations', 'eme_cap_registrations', 'eme_cap_attendancecheck', 'eme_cap_membercheck', 'eme_cap_forms', 'eme_cap_cleanup', 'eme_cap_settings', 'eme_cap_send_mails', 'eme_cap_send_other_mails', 'eme_cap_list_attendances', 'eme_cap_manage_attendances', 'eme_limit_admin_event_listing' ];
 			break;
 		case 'events':
 				$options = [ 'eme_events_page', 'eme_display_events_in_events_page', 'eme_display_calendar_in_events_page', 'eme_event_list_number_items', 'eme_event_initial_state', 'eme_event_list_item_format_header', 'eme_cat_event_list_item_format_header', 'eme_event_list_item_format', 'eme_event_list_item_format_footer', 'eme_cat_event_list_item_format_footer', 'eme_event_page_title_format', 'eme_event_html_title_format', 'eme_single_event_format', 'eme_show_period_monthly_dateformat', 'eme_show_period_yearly_dateformat', 'eme_events_page_title', 'eme_no_events_message', 'eme_filter_form_format', 'eme_redir_priv_event_url' ];
@@ -1327,6 +1328,7 @@ function eme_options_page() {
 <table class="form-table">
 			<?php
 				eme_options_select( __( 'List events', 'events-made-easy' ), 'eme_cap_list_events', eme_get_all_caps(), sprintf( __( 'Permission needed to list all events, useful for CSV exports for bookings and such. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_LIST_EVENTS ) ) . '<br><b>' . __( 'All your Events Made Easy admins need this as well, otherwise the main menu will not show.', 'events-made-easy' ) . '</b>' );
+				eme_options_radio_binary( __( 'Limit event listing?', 'events-made-easy' ), 'eme_limit_admin_event_listing', __( 'If Yes, the admin listing of events will be limited to those the current user can author or is contact person for.', 'events-made-easy' ) );
 				eme_options_select( __( 'Add event', 'events-made-easy' ), 'eme_cap_add_event', eme_get_all_caps(), sprintf( __( 'Permission needed to add a new event. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_ADD_EVENT ) ) );
 				eme_options_select( __( 'Author event', 'events-made-easy' ), 'eme_cap_author_event', eme_get_all_caps(), sprintf( __( 'Permission needed to edit own events (events for which you are the author). Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_AUTHOR_EVENT ) ) );
 				eme_options_select( __( 'Publish event', 'events-made-easy' ), 'eme_cap_publish_event', eme_get_all_caps(), sprintf( __( 'Permission needed to make an event public. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_PUBLISH_EVENT ) ) );

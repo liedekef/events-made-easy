@@ -138,12 +138,11 @@ function eme_options_radio_binary( $title, $name, $description, $option_value = 
 		$option_value = get_option( $name );
 	}
 	?>
-	   
 		<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-			<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
+			<th scope="row"><?php echo esc_html( $title ); ?></th>
 			<td>
-			<input id="<?php echo $name; ?>_yes" name="<?php echo $name; ?>" type="radio" value="1" <?php if ( $option_value ) { echo "checked='checked'";} ?> ><?php esc_html_e( 'Yes', 'events-made-easy' ); ?> <br>
-			<input  id="<?php echo $name; ?>_no" name="<?php echo $name; ?>" type="radio" value="0" <?php if ( ! $option_value ) { echo "checked='checked'";} ?> ><?php esc_html_e( 'No', 'events-made-easy' ); ?>
+			<input id="<?php echo $name; ?>_yes" name="<?php echo $name; ?>" type="radio" value="1" <?php if ( $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo $name; ?>_yes'><?php esc_html_e( 'Yes', 'events-made-easy' ); ?> <br>
+			<input  id="<?php echo $name; ?>_no" name="<?php echo $name; ?>" type="radio" value="0" <?php if ( ! $option_value ) { echo "checked='checked'";} ?> ><label for='<?php echo $name; ?>_no'><?php esc_html_e( 'No', 'events-made-easy' ); ?>
 			<?php
 			if ( ! empty( $description ) ) {
 				echo '<br>' . $description;

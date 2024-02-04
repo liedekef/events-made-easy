@@ -3966,4 +3966,10 @@ function eme_get_initials( $myname ) {
 	$res .= ( mb_substr( $res, -1 ) == '.' ? '' : '.' );
 	return $res;
 }
+
+function eme_js_redirect( $mylink ) {
+	$mylink = wp_sanitize_redirect( $mylink );
+	return '<script type="text/javascript">window.location.href="' . $mylink . '";</script>';
+}
+
 ?>

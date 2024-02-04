@@ -1749,10 +1749,7 @@ function eme_complete_transaction_fondy( $payment ) {
 	}
 }
 
-
 function eme_notification_instamojo() {
-	global $wpdb;
-
 	$instamojo_key        = get_option( 'eme_instamojo_key' );
 	$instamojo_auth_token = get_option( 'eme_instamojo_auth_token' );
 	$instamojo_salt       = get_option( 'eme_instamojo_salt' );
@@ -1802,13 +1799,13 @@ function eme_notification_mercadopago() {
 	if ( isset( $_GET['topic'] ) && isset( $_GET['id'] ) && is_numeric( $_GET['id'] ) ) {
 		switch ( $_GET['topic'] ) {
 			case 'payment':
-					$mercadopago_paymentid = eme_sanitize_request( $_GET['id'] );
-					$mercadopago_payment   = MercadoPago\Payment::find_by_id( $mercadopago_paymentid );
-					// Get the payment and the corresponding merchant_order reported by the IPN.
-					$merchant_order = MercadoPago\MerchantOrder::find_by_id( $mercadopago_payment->order->id );
+				$mercadopago_paymentid = eme_sanitize_request( $_GET['id'] );
+				$mercadopago_payment   = MercadoPago\Payment::find_by_id( $mercadopago_paymentid );
+				// Get the payment and the corresponding merchant_order reported by the IPN.
+				$merchant_order = MercadoPago\MerchantOrder::find_by_id( $mercadopago_payment->order->id );
 				break;
 			case 'merchant_order':
-					$merchant_order = MercadoPago\MerchantOrder::find_by_id( $_GET['id'] );
+				$merchant_order = MercadoPago\MerchantOrder::find_by_id( $_GET['id'] );
 				break;
 		}
 		if ( $merchant_order ) {
@@ -1972,7 +1969,6 @@ function eme_notification_webmoney() {
 }
 
 function eme_notification_fdgg() {
-	
 	$store_name    = get_option( 'eme_fdgg_store_name' );
 	$shared_secret = get_option( 'eme_fdgg_shared_secret' );
 	require_once 'payment_gateways/fdgg/fdgg-util_sha2.php';
@@ -2110,8 +2106,6 @@ function eme_notification_stripe() {
 }
 
 function eme_notification_fondy() {
-	global $wpdb;
-
 	$gateway = 'fondy';
 
 	$merchant_id = get_option( "eme_{$gateway}_merchant_id" );

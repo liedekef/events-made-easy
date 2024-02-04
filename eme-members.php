@@ -4153,7 +4153,7 @@ function eme_add_member_form_shortcode( $atts ) {
 function eme_edit_member_form_shortcode( ) {
 	if ( ! is_user_logged_in() ) {
 		// url not empty, so we redirect to it
-                $page_body = '<script type="text/javascript">window.location.href="' . wp_login_url(get_permalink()) . '";</script>';
+                $page_body = eme_js_redirect( wp_login_url(get_permalink()) );
 		return $page_body;
 	}
 	if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {

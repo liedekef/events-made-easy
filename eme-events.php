@@ -4634,7 +4634,7 @@ function eme_display_single_event( $event_id, $template_id = 0, $ignore_url = 0 
 		return __( 'No such event', 'events-made-easy' );
 	} elseif ( ! eme_is_empty_string( $event['event_url'] ) && ! $ignore_url && eme_is_url( $event['event_url'] ) ) {
 		// url not empty, so we redirect to it
-		$page_body = '<script type="text/javascript">window.location.href="' . $event['event_url'] . '";</script>';
+		$page_body = eme_js_redirect( $event['event_url'] );
 		return $page_body;
 	} elseif ( $template_id ) {
 		$single_event_format = eme_get_template_format( $template_id );

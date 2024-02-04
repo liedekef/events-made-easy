@@ -1766,7 +1766,7 @@ function eme_display_single_location( $location_id, $template_id = 0, $ignore_ur
 	}
 	if ( eme_is_empty_string( $location['location_url'] ) && ! $ignore_url && eme_is_url( $location['location_url'] ) ) {
 		// url not empty, so we redirect to it
-		$page_body = '<script type="text/javascript">window.location.href="' . $location['location_url'] . '";</script>';
+		$page_body = eme_js_redirect( $location['location_url'] );
 		return $page_body;
 	} elseif ( $template_id ) {
 		$single_location_format = eme_get_template_format( $template_id );

@@ -2012,7 +2012,7 @@ function eme_manage_people_layout( $message = '' ) {
 	<input type='text' id='language' name='language'>
 	</span>
 	<span id="span_transferto" class="eme-hidden">
-	<?php esc_html_e( 'Transfer associated bookings to (leave empty for moving bookings for future events to trash too):', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):', 'events-made-easy' ); ?>
 	<input type='hidden' id='transferto_id' name='transferto_id'>
 	<input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>">
 	</span>

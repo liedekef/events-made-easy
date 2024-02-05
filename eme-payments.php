@@ -273,13 +273,13 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 	// if only 1 and the option to immediately submit is set, hide the divs and forms and submit it
 	$pg_count = eme_membership_count_pgs( $membership );
 	if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
-			$eme_pg_submit_immediately = 1;
-			$hidden_style              = "style='display:none;'";
-		$pg_in_use                     = eme_membership_get_first_pg( $membership );
+		$eme_pg_submit_immediately = 1;
+		$hidden_style              = "style='display:none;'";
+		$pg_in_use                 = eme_membership_get_first_pg( $membership );
 	} else {
-			$eme_pg_submit_immediately = 0;
-			$hidden_style              = '';
-		$pg_in_use                     = '';
+		$eme_pg_submit_immediately = 0;
+		$hidden_style              = '';
+		$pg_in_use                 = '';
 	}
 
 	// if not "submit immediately" or standalone: we show the header
@@ -306,9 +306,12 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 	// if "submit immediately": we show the button text, since the rest of the div is hidden
 	if ( $eme_pg_submit_immediately ) {
 		$button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
-		$ret_string  .= "<div id='eme-payment-formtext' class='eme-message-success eme-rsvp-message-success'>";
-		$ret_string  .= eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
-		$ret_string  .= '</div>';
+		$above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
+		if ( ! empty( $above_text ) ) {
+			$ret_string .= "<div id='eme-payment-formtext-header' class='eme-message-success eme-rsvp-message-success'>";
+			$ret_string .= $above_text;
+			$ret_string .= '</div>';
+		}
 	}
 	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form' $hidden_style>";
 	$is_multi    = 0;
@@ -326,10 +329,10 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 				$ret_string .= $result;
 				$ret_string .= '</div>';
 			} else {
-						$func = 'eme_' . $pg . '_form';
+				$func = 'eme_payment_form_' . $pg ;
 				if ( function_exists( $func ) ) {
-						$pg_form     = $func( $membership['name'], $payment, $total_price, $cur, $is_multi );
-						$ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
+					$pg_form     = $func( $membership['name'], $payment, $total_price, $cur, $is_multi );
+					$ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
 					if ( $eme_pg_submit_immediately ) {
 						$waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
 						$ret_string .= '<script type="text/javascript">

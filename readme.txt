@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.28 (2024/02/06) =
+* Fix payment button for memberships
+
 = 2.4.27 (2024/02/01) =
 * Correction release: for payments the failure message was shown even after successfull payment (apart from the message, all is correctly handled)
 

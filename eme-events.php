@@ -452,7 +452,6 @@ function eme_events_page() {
 			} else {
 				$recurrence['recurrence_byday'] = '';
 			}
-			$recurrence['recurrence_byday'] = '';
 		}
 		$recurrence['recurrence_interval'] = isset( $_POST['recurrence_interval'] ) ? eme_sanitize_request( $_POST['recurrence_interval'] ) : 1;
 		if ( $recurrence['recurrence_interval'] == 0 ) {

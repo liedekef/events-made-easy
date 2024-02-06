@@ -5,7 +5,7 @@ msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
 "POT-Creation-Date: 2024-02-05 20:30:20+00:00\n"
-"PO-Revision-Date: 2024-02-01 17:33+0100\n"
+"PO-Revision-Date: 2024-02-06 17:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: nl_NL\n"
@@ -11116,15 +11116,17 @@ msgstr ""
 "hoofdmenu niet worden getoond."
 #
 # File: eme-options.php, line: 1331
-#, fuzzy
 msgid "Limit event listing?"
-msgstr "Toon evenement"
+msgstr "Beperk evenementenoplijsting?"
 #
 # File: eme-options.php, line: 1331
 msgid ""
 "If Yes, the admin listing of events will be limited to those the current "
 "user can author or is contact person for."
 msgstr ""
+"Zo ja, dan wordt de beheerderslijst met gebeurtenissen beperkt tot de "
+"gebeurtenissen die de huidige gebruiker kan bewerken of waarvoor hij een "
+"contactpersoon is."
 #
 # File: eme-options.php, line: 1332
 msgid "Permission needed to add a new event. Default: %s"
@@ -15878,13 +15880,12 @@ msgid "Change language to: "
 msgstr "Verander taal in: "
 #
 # File: eme-people.php, line: 2015
-#, fuzzy
 msgid ""
 "Transfer associated bookings and task signups to (leave empty for moving "
 "bookings for future events to trash too):"
 msgstr ""
-"Transfer bijbehorende boekingen naar (laat leeg om ook boekingen voor "
-"toekomstige evenementen naar de vuilbak te verplaatsen):"
+"Transfer bijbehorende boekingen en taakaanmeldingen naar (laat leeg om ook "
+"boekingen voor toekomstige evenementen naar de vuilbak te verplaatsen):"
 #
 # File: eme-people.php, line: 2129
 msgid "View person in trash (read-only)"
@@ -17247,8 +17248,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Signup cancelled message"
 #~ msgstr "Aanmelding geannuleerd boodschap"
+#
 #
 #
 #
@@ -17274,8 +17277,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Send Emails"
 #~ msgstr "Verstuur e-mails"
+#
 #
 #
 #
@@ -17311,8 +17316,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "No bookings made yet."
 #~ msgstr "Nog geen boekingen gemaakt."
+#
 #
 #
 #
@@ -17395,8 +17402,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "Converteer het einde van een lijn"
+#
 #
 #
 #
@@ -17483,12 +17492,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
 #~ msgstr ""
 #~ "Als je niet wil dat dit gebeurt (bv. voor een template die je gebruikt in "
 #~ "een tabel-rij), deselecteer deze optie."
+#
 #
 #
 #
@@ -17595,9 +17606,11 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #, fuzzy
 #~ msgid "See <a href=\"%s\">here</a> for more info on country code."
 #~ msgstr "Zie <a href=\"%s\">hier</a> voor meer info over landcodes"
+#
 #
 #
 #
@@ -17733,6 +17746,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the location description."
@@ -17740,6 +17754,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "Bestand uploaden is hier niet toegestaan, gebruik de normale WP "
 #~ "mediabibliotheek om bestanden te uploaden of gebruik de knop 'Media "
 #~ "toevoegen' in de locatiebeschrijving."
+#
 #
 #
 #
@@ -17870,8 +17885,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Geüploade bestanden"
+#
 #
 #
 #
@@ -18004,8 +18021,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Successfully deleted the selected task signups."
 #~ msgstr "De geselecteerde taakaanmeldingen zijn succesvol verwijderd."
+#
 #
 #
 #
@@ -18141,8 +18160,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Incorrect IDs supplied. Please try again."
 #~ msgstr "Onjuist IDs meegegeven. Probeer het nog eens."
+#
 #
 #
 #
@@ -18284,6 +18305,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "The template should at least contain the placeholders #_LASTNAME, "
 #~ "#_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown."
@@ -18291,6 +18313,7 @@ msgstr "https://www.e-dynamics.be/"
 #~ "De template moet minstens de placeholders #_LASTNAME, #_FIRSTNAME, "
 #~ "#_EMAIL en #_SUBMIT bevatten. Anders zal het formulier niet getoond "
 #~ "worden."
+#
 #
 #
 #

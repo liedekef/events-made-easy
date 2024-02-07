@@ -423,45 +423,45 @@ function eme_task_signups_table_layout( $message = '' ) {
 	</div>
 
 	<form action="#" method="post">
-	<input type="text" class="clearable" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Task name', 'events-made-easy' ); ?>" size=20>
-	<?php if (!isset($_GET['event_id'])) { ?>
-		<input type="text" class="clearable" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" size=20>
-	<?php } else { ?>
+	<?php if (isset($_GET['event_id'])) { ?>
 		<input type="hidden" name="search_eventid" id="search_eventid" value="<?php echo intval($_GET['event_id']);?>">
-	<?php } ?>
-	<input type="text" class="clearable" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=20>
-	<select id="search_scope" name="search_scope">
-	<?php
-	$scope_names           = [];
-	$scope_names['past']   = __( 'Past events', 'events-made-easy' );
-	$scope_names['all']    = __( 'All events', 'events-made-easy' );
-	$scope_names['future'] = __( 'Future events', 'events-made-easy' );
-	foreach ( $scope_names as $key => $value ) {
-		$selected = '';
-		if ( $key == 'future' ) {
-			$selected = "selected='selected'";
+	<?php } else { ?>
+		<input type="text" class="clearable" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Task name', 'events-made-easy' ); ?>" size=20>
+		<input type="text" class="clearable" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" size=20>
+		<input type="text" class="clearable" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=20>
+		<select id="search_scope" name="search_scope">
+		<?php
+		$scope_names           = [];
+		$scope_names['past']   = __( 'Past events', 'events-made-easy' );
+		$scope_names['all']    = __( 'All events', 'events-made-easy' );
+		$scope_names['future'] = __( 'Future events', 'events-made-easy' );
+		foreach ( $scope_names as $key => $value ) {
+			$selected = '';
+			if ( $key == 'future' ) {
+				$selected = "selected='selected'";
+			}
+			echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
 		}
-		echo "<option value='".esc_attr($key)."' $selected>".esc_html($value)."</option>";
-	}
-	?>
-	</select>
-	<?php
-	$eme_signup_status_array = [
-		-1 => __('All', 'events-made-easy'),
-		0  => __('Pending', 'events-made-easy'),
-		1 => __('Approved', 'events-made-easy')
-	];
-	if (isset($_GET['status']))
-		echo eme_ui_select( intval($_GET['status']), 'search_signup_status', $eme_signup_status_array );
-	else
-		echo eme_ui_select( -1, 'search_signup_status', $eme_signup_status_array );
-	?>
+		?>
+		</select>
+		<?php
+		$eme_signup_status_array = [
+			-1 => __('All', 'events-made-easy'),
+			0  => __('Pending', 'events-made-easy'),
+			1 => __('Approved', 'events-made-easy')
+		];
+		if (isset($_GET['status']))
+			echo eme_ui_select( intval($_GET['status']), 'search_signup_status', $eme_signup_status_array );
+		else
+			echo eme_ui_select( -1, 'search_signup_status', $eme_signup_status_array );
+		?>
 
-	<input id="search_start_date" type="hidden" name="search_start_date" value="">
-	<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate'>
-	<input id="search_end_date" type="hidden" name="search_end_date" value="">
-	<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate'>
-	<button id="TaskSignupsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter task signups', 'events-made-easy' ); ?></button>
+		<input id="search_start_date" type="hidden" name="search_start_date" value="">
+		<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate'>
+		<input id="search_end_date" type="hidden" name="search_end_date" value="">
+		<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate'>
+		<button id="TaskSignupsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter task signups', 'events-made-easy' ); ?></button>
+	<?php } ?>
 	</form>
 
 	<form id='task-signups-form' action="#" method="post">
@@ -1811,14 +1811,25 @@ function eme_ajax_task_signups_list() {
 	$tasks_table       = EME_DB_PREFIX . EME_TASKS_TBNAME;
 	$people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$jTableResult      = [];
-	$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
-	$search_scope      = isset( $_REQUEST['search_scope'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_scope'] ) ) : 'future';
-	$search_event      = isset( $_REQUEST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_event'] ) ) ) : '';
-	$search_eventid    = isset( $_REQUEST['search_eventid'] ) ? intval( $_REQUEST['search_eventid'] ) : 0;
-	$search_person     = isset( $_REQUEST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_person'] ) ) ) : '';
-	$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql( $_REQUEST['search_start_date'] ) : '';
-	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( $_REQUEST['search_end_date'] ) : '';
-	$search_status     = isset( $_REQUEST['search_signup_status'] ) ? intval( $_REQUEST['search_signup_status'] ) : -1;
+	if (!empty($_REQUEST['search_eventid'] )) {
+		$search_eventid    = intval( $_REQUEST['search_eventid'] );
+		$search_name       = "";
+		$search_scope      = "";
+		$search_event      = "";
+		$search_person     = "";
+		$search_start_date = "";
+		$search_end_date   = "";
+		$search_status     = -1;
+	} else {
+		$search_eventid    = 0;
+		$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
+		$search_scope      = isset( $_REQUEST['search_scope'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_scope'] ) ) : 'future';
+		$search_event      = isset( $_REQUEST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_event'] ) ) ) : '';
+		$search_person     = isset( $_REQUEST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_person'] ) ) ) : '';
+		$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql( $_REQUEST['search_start_date'] ) : '';
+		$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( $_REQUEST['search_end_date'] ) : '';
+		$search_status     = isset( $_REQUEST['search_signup_status'] ) ? intval( $_REQUEST['search_signup_status'] ) : -1;
+	}
 
 	$where     = '';
 	$where_arr = [];

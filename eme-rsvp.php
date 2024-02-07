@@ -5001,7 +5001,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 		echo '<input type="hidden" id="booking_status" name="booking_status" value="APPROVED">';
 	}
 
-	echo "<input type='hidden' name=event_id id=event_id value='$event_id'>";
+	echo "<input type='hidden' name='event_id' id='event_id' value='$event_id'>";
 	if ( ! $event_id && ! $person_id ) {
 		// if eitherr event id or person id is passed via GET, we ignore the scope, so let's hide the selection too
 		?>

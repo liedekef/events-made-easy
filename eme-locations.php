@@ -2510,24 +2510,6 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 					// no location custom field? Then leave it alone
 					$found = 0;
 				}
-			} elseif ( preg_match( '/#_IS_SINGLE_LOC/', $result ) ) {
-				if ( eme_is_single_location_page() ) {
-					$replacement = 1;
-				} else {
-					$replacement = 0;
-				}
-			} elseif ( preg_match( '/#_IS_LOGGED_IN/', $result ) ) {
-				if ( is_user_logged_in() ) {
-					$replacement = 1;
-				} else {
-					$replacement = 0;
-				}
-			} elseif ( preg_match( '/#_IS_ADMIN_PAGE/', $result ) ) {
-				if ( eme_is_admin_request() ) {
-					$replacement = 1;
-				} else {
-					$replacement = 0;
-				}
 			} else {
 				$found = 0;
 			}

@@ -1601,16 +1601,10 @@ function eme_send_mails_ajax_actions( $action ) {
 				}
 			}
 			if ( $queue ) {
-				// in case we want a mailing to be done at multiple times
-				if ( strstr( $mailing_datetime, ',' ) ) {
-					$dates = explode( ',', $mailing_datetime );
-					foreach ( $dates as $datetime ) {
-						$mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-						$res        = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
-						eme_mark_mailing_planned( $mailing_id );
-					}
-				} else {
-					$mailing_id = eme_db_insert_mailing( $mailing_name, $mailing_datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
+				// in case we want a mailing to be done at multiple times, the times are separated by ","
+				$dates = explode( ',', $mailing_datetime );
+				foreach ( $dates as $datetime ) {
+					$mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
 					$res        = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
 					eme_mark_mailing_planned( $mailing_id );
 				}

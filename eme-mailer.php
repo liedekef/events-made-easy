@@ -2551,7 +2551,14 @@ function eme_emails_page() {
 	<div id="tab-sentmail">
 	<h1><?php esc_html_e( 'Sent emails', 'events-made-easy' ); ?></h1>
 	<div class='eme-message-admin'><p>
-	<?php esc_html_e( 'If you want to archive old mailings and clean up old mails automatically, check the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME', 'events-made-easy' ); ?>
+	<?php 
+	        $archive_old_mailings_days = get_option( 'eme_gdpr_archive_old_mailings_days' );
+		if ( empty( $archive_old_mailings_days ) ) {
+			esc_html_e( 'If you want to archive old mailings and clean up old mails automatically, check the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME', 'events-made-easy' );
+		} else {
+			sprintf(esc_html__( 'Every %d days, old mailings will be archived and old mails will be cleaned up (see the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME)', 'events-made-easy' ),$archive_old_mailings_days);
+		}
+	?>
 	</p></div>
 	<form id='search_mail' name='search_mail' action="#" method="post" onsubmit="return false;">
 	<label for='search_text'><?php esc_html_e( 'Enter the search text (leave empty to show the last 100 emails sent)', 'events-made-easy' ); ?></label>
@@ -2602,7 +2609,12 @@ function eme_ajax_mailings_div() {
 	</p></div>
 	<div class='eme-message-admin'><p>
 	<?php
-	esc_html_e( 'If you want to archive old mailings and clean up old mails automatically, check the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME', 'events-made-easy' );
+	        $archive_old_mailings_days = get_option( 'eme_gdpr_archive_old_mailings_days' );
+		if ( empty( $archive_old_mailings_days ) ) {
+			esc_html_e( 'If you want to archive old mailings and clean up old mails automatically, check the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME', 'events-made-easy' );
+		} else {
+			sprintf(esc_html__( 'Every %d days, old mailings will be archived and old mails will be cleaned up (see the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME)', 'events-made-easy' ),$archive_old_mailings_days);
+		}
 	?>
 	</p></div>
 	<?php

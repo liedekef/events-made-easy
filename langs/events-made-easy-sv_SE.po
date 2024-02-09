@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Plugins - Events Made Easy - Stable (latest release)\n"
 "Report-Msgid-Bugs-To: https://github.com/liedekef/events-made-easy\n"
-"POT-Creation-Date: 2024-02-05 20:30:20+00:00\n"
+"POT-Creation-Date: 2024-02-09 19:09:25+00:00\n"
 "PO-Revision-Date: 2022-12-05 11:58:21+0000\n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
@@ -39,11 +39,11 @@ msgstr ""
 # File: eme-functions.php, line: 3290
 # File: eme-functions.php, line: 3291
 # File: eme-functions.php, line: 3335
-# File: eme-locations.php, line: 2903
+# File: eme-locations.php, line: 2885
 # File: eme-mailer.php, line: 1211
 # File: eme-mailer.php, line: 1338
-# File: eme-mailer.php, line: 2592
-# File: eme-mailer.php, line: 2717
+# File: eme-mailer.php, line: 2593
+# File: eme-mailer.php, line: 2723
 # File: eme-members.php, line: 5894
 # File: eme-members.php, line: 6006
 # File: eme-members.php, line: 6169
@@ -69,8 +69,8 @@ msgstr ""
 # File: eme-rsvp.php, line: 5399
 # File: eme-rsvp.php, line: 5421
 # File: eme-tasks.php, line: 1804
-# File: eme-tasks.php, line: 1896
 # File: eme-tasks.php, line: 1907
+# File: eme-tasks.php, line: 1918
 # File: eme-templates.php, line: 493
 msgid "Access denied!"
 msgstr "Åtkomst nekad!"
@@ -236,8 +236,8 @@ msgstr "Lägg till en närvaropost manuellt"
 #
 # File: eme-attendances.php, line: 108
 # File: eme-locations.php, line: 909
-# File: eme-mailer.php, line: 2349
-# File: eme-mailer.php, line: 2529
+# File: eme-mailer.php, line: 2343
+# File: eme-mailer.php, line: 2523
 # File: eme-members.php, line: 1439
 # File: eme-members.php, line: 1461
 # File: eme-members.php, line: 1505
@@ -270,7 +270,7 @@ msgstr ""
 # File: eme-events.php, line: 5931
 # File: eme-events.php, line: 6079
 # File: eme-rsvp.php, line: 5030
-# File: eme-tasks.php, line: 461
+# File: eme-tasks.php, line: 460
 msgid "Filter on start date"
 msgstr ""
 #
@@ -278,7 +278,7 @@ msgstr ""
 # File: eme-events.php, line: 5933
 # File: eme-events.php, line: 6081
 # File: eme-rsvp.php, line: 5032
-# File: eme-tasks.php, line: 463
+# File: eme-tasks.php, line: 462
 msgid "Filter on end date"
 msgstr "Filtrera efter slutdatum"
 #
@@ -322,7 +322,7 @@ msgstr "Tips: högerklicka på kolumnrubrikerna för att visa/dölja kolumner"
 # File: eme-people.php, line: 5006
 # File: eme-people.php, line: 5007
 # File: eme-people.php, line: 5008
-# File: eme-tasks.php, line: 1888
+# File: eme-tasks.php, line: 1899
 msgid "Edit person"
 msgstr "Redigera person"
 #
@@ -510,8 +510,8 @@ msgstr "ID"
 # File: eme-holidays.php, line: 123
 # File: eme-holidays.php, line: 130
 # File: eme-mailer.php, line: 1379
-# File: eme-mailer.php, line: 2640
-# File: eme-mailer.php, line: 2749
+# File: eme-mailer.php, line: 2646
+# File: eme-mailer.php, line: 2755
 # File: eme-members.php, line: 1791
 # File: eme-people.php, line: 2430
 # File: eme-tasks.php, line: 734
@@ -523,7 +523,7 @@ msgstr "Namn"
 # File: eme-events.php, line: 10059
 # File: eme-formfields.php, line: 5177
 # File: eme-holidays.php, line: 136
-# File: eme-locations.php, line: 2980
+# File: eme-locations.php, line: 2962
 # File: eme-members.php, line: 5930
 # File: eme-people.php, line: 5100
 # File: eme-templates.php, line: 481
@@ -536,10 +536,10 @@ msgstr "Är du säker på att du vill ta bort dessa kategorier?"
 #
 # File: eme-categories.php, line: 154
 # File: eme-holidays.php, line: 147
-# File: eme-mailer.php, line: 2657
-# File: eme-mailer.php, line: 2667
-# File: eme-mailer.php, line: 2677
-# File: eme-mailer.php, line: 2762
+# File: eme-mailer.php, line: 2663
+# File: eme-mailer.php, line: 2673
+# File: eme-mailer.php, line: 2683
+# File: eme-mailer.php, line: 2768
 msgid "Delete"
 msgstr "Ta bort"
 #
@@ -639,8 +639,8 @@ msgstr ""
 "bort."
 #
 # File: eme-cleanup.php, line: 273
-# File: eme-mailer.php, line: 2636
-# File: eme-mailer.php, line: 2745
+# File: eme-mailer.php, line: 2642
+# File: eme-mailer.php, line: 2751
 msgid "Are you sure you want to do this?"
 msgstr "Är du säker på att du vill göra detta?"
 #
@@ -704,8 +704,8 @@ msgstr "Månad(er)"
 # File: eme-events.php, line: 9801
 # File: eme-formfields.php, line: 232
 # File: eme-locations.php, line: 911
-# File: eme-mailer.php, line: 2630
-# File: eme-mailer.php, line: 2739
+# File: eme-mailer.php, line: 2636
+# File: eme-mailer.php, line: 2745
 # File: eme-members.php, line: 2958
 # File: eme-members.php, line: 3028
 # File: eme-people.php, line: 2035
@@ -1024,8 +1024,8 @@ msgstr ""
 # File: eme-events.php, line: 6086
 # File: eme-formfields.php, line: 229
 # File: eme-locations.php, line: 903
-# File: eme-mailer.php, line: 2626
-# File: eme-mailer.php, line: 2736
+# File: eme-mailer.php, line: 2632
+# File: eme-mailer.php, line: 2742
 # File: eme-members.php, line: 2917
 # File: eme-members.php, line: 3022
 # File: eme-people.php, line: 1987
@@ -1753,7 +1753,7 @@ msgstr "Fast per plats"
 # File: eme-gdpr.php, line: 446
 # File: eme-gdpr.php, line: 565
 # File: eme-gdpr.php, line: 566
-# File: eme-locations.php, line: 3016
+# File: eme-locations.php, line: 2998
 # File: eme-members.php, line: 6103
 # File: eme-people.php, line: 468
 # File: eme-people.php, line: 476
@@ -1786,7 +1786,7 @@ msgstr "Ja"
 # File: eme-gdpr.php, line: 446
 # File: eme-gdpr.php, line: 565
 # File: eme-gdpr.php, line: 566
-# File: eme-locations.php, line: 3016
+# File: eme-locations.php, line: 2998
 # File: eme-members.php, line: 6103
 # File: eme-people.php, line: 468
 # File: eme-people.php, line: 476
@@ -1847,7 +1847,7 @@ msgstr ""
 # File: eme-events.php, line: 963
 # File: eme-events.php, line: 1169
 # File: eme-events.php, line: 4633
-# File: eme-mailer.php, line: 1739
+# File: eme-mailer.php, line: 1733
 # File: eme-payments.php, line: 120
 # File: eme-payments.php, line: 2002
 # File: eme-rsvp.php, line: 4946
@@ -2328,20 +2328,20 @@ msgstr ""
 #
 # File: eme-events.php, line: 5849
 # File: eme-rsvp.php, line: 4918
-# File: eme-tasks.php, line: 436
+# File: eme-tasks.php, line: 435
 msgid "Past events"
 msgstr "Tidigare event"
 #
 # File: eme-events.php, line: 5850
 # File: eme-rsvp.php, line: 4919
-# File: eme-tasks.php, line: 437
+# File: eme-tasks.php, line: 436
 # File: events-manager.php, line: 353
 msgid "All events"
 msgstr "Alla event"
 #
 # File: eme-events.php, line: 5851
 # File: eme-rsvp.php, line: 4920
-# File: eme-tasks.php, line: 438
+# File: eme-tasks.php, line: 437
 msgid "Future events"
 msgstr "Kommande event"
 #
@@ -2393,7 +2393,7 @@ msgstr "Event utan kategori"
 # File: eme-events.php, line: 5929
 # File: eme-events.php, line: 6077
 # File: eme-events.php, line: 6923
-# File: eme-tasks.php, line: 428
+# File: eme-tasks.php, line: 430
 msgid "Event name"
 msgstr "Eventets namn"
 #
@@ -2770,7 +2770,7 @@ msgstr "Radera återkommande"
 # File: eme-events.php, line: 9755
 # File: eme-events.php, line: 9828
 # File: eme-mailer.php, line: 1382
-# File: eme-mailer.php, line: 2643
+# File: eme-mailer.php, line: 2649
 # File: eme-members.php, line: 1657
 # File: eme-people.php, line: 1010
 # File: eme-people.php, line: 1308
@@ -2818,7 +2818,7 @@ msgstr ""
 # File: eme-events.php, line: 9781
 # File: eme-events.php, line: 10071
 # File: eme-locations.php, line: 447
-# File: eme-locations.php, line: 2990
+# File: eme-locations.php, line: 2972
 # File: eme-recurrence.php, line: 628
 # File: eme-widgets.php, line: 180
 # File: eme-widgets.php, line: 352
@@ -3206,9 +3206,9 @@ msgstr "Fyll bara i detta ifall du vill åsidosätta standardinställningarna."
 # File: eme-events.php, line: 8131
 # File: eme-events.php, line: 8514
 # File: eme-events.php, line: 8529
-# File: eme-mailer.php, line: 2268
-# File: eme-mailer.php, line: 2278
-# File: eme-mailer.php, line: 2461
+# File: eme-mailer.php, line: 2262
+# File: eme-mailer.php, line: 2272
+# File: eme-mailer.php, line: 2455
 # File: eme-widgets.php, line: 226
 msgid "Either choose from a template: "
 msgstr "Välj antingen en mall:"
@@ -3292,8 +3292,8 @@ msgstr ""
 # File: eme-events.php, line: 8361
 # File: eme-locations.php, line: 671
 # File: eme-locations.php, line: 770
-# File: eme-mailer.php, line: 2293
-# File: eme-mailer.php, line: 2476
+# File: eme-mailer.php, line: 2287
+# File: eme-mailer.php, line: 2470
 # File: eme-members.php, line: 2570
 # File: eme-templates.php, line: 283
 msgid ""
@@ -3467,8 +3467,8 @@ msgstr "E-postbilagor för gjord bokning"
 # File: eme-events.php, line: 9392
 # File: eme-events.php, line: 9758
 # File: eme-events.php, line: 9833
-# File: eme-mailer.php, line: 2318
-# File: eme-mailer.php, line: 2498
+# File: eme-mailer.php, line: 2312
+# File: eme-mailer.php, line: 2492
 # File: eme-members.php, line: 2241
 # File: eme-options.php, line: 1846
 # File: eme-options.php, line: 1892
@@ -3480,8 +3480,8 @@ msgstr "Lägg till bilaga"
 # File: eme-events.php, line: 7462
 # File: eme-events.php, line: 7652
 # File: eme-events.php, line: 8028
-# File: eme-mailer.php, line: 2319
-# File: eme-mailer.php, line: 2499
+# File: eme-mailer.php, line: 2313
+# File: eme-mailer.php, line: 2493
 # File: eme-members.php, line: 2242
 # File: eme-options.php, line: 1847
 # File: eme-options.php, line: 1893
@@ -4698,7 +4698,7 @@ msgid "Task signups"
 msgstr ""
 #
 # File: eme-events.php, line: 9497
-# File: eme-tasks.php, line: 426
+# File: eme-tasks.php, line: 429
 msgid "Task name"
 msgstr ""
 #
@@ -5296,8 +5296,8 @@ msgid "Please select only one record in order to do partial payments"
 msgstr ""
 #
 # File: eme-events.php, line: 9818
-# File: eme-mailer.php, line: 2353
-# File: eme-mailer.php, line: 2533
+# File: eme-mailer.php, line: 2347
+# File: eme-mailer.php, line: 2527
 msgid "Send email"
 msgstr "Sänd e-post"
 #
@@ -5322,8 +5322,8 @@ msgstr ""
 #
 # File: eme-events.php, line: 9823
 # File: eme-mailer.php, line: 1387
-# File: eme-mailer.php, line: 2645
-# File: eme-mailer.php, line: 2753
+# File: eme-mailer.php, line: 2651
+# File: eme-mailer.php, line: 2759
 msgid "Read count"
 msgstr "Räknare visningar"
 #
@@ -5334,13 +5334,13 @@ msgstr "Felmeddelande"
 #
 # File: eme-events.php, line: 9829
 # File: eme-mailer.php, line: 1390
-# File: eme-mailer.php, line: 2649
-# File: eme-mailer.php, line: 2756
+# File: eme-mailer.php, line: 2655
+# File: eme-mailer.php, line: 2762
 msgid "Action"
 msgstr "Händelse"
 #
 # File: eme-events.php, line: 9830
-# File: eme-mailer.php, line: 2137
+# File: eme-mailer.php, line: 2131
 msgid "Mailing report"
 msgstr "E-postrapport"
 #
@@ -5350,7 +5350,7 @@ msgstr "Välj ett eller flera event"
 #
 # File: eme-events.php, line: 10066
 # File: eme-rsvp.php, line: 5627
-# File: eme-tasks.php, line: 1878
+# File: eme-tasks.php, line: 1889
 msgid "Edit event"
 msgstr "Redigera event"
 #
@@ -5418,13 +5418,13 @@ msgstr ""
 #
 # File: eme-events.php, line: 10189
 # File: eme-locations.php, line: 531
-# File: eme-locations.php, line: 2984
+# File: eme-locations.php, line: 2966
 # File: eme-recurrence.php, line: 646
 msgid "Edit location"
 msgstr "Redigera plats"
 #
 # File: eme-events.php, line: 10191
-# File: eme-locations.php, line: 2986
+# File: eme-locations.php, line: 2968
 # File: eme-recurrence.php, line: 648
 msgid ""
 "Location map coordinates are empty! Please edit the location to correct "
@@ -6400,7 +6400,7 @@ msgstr ""
 "platshållare."
 #
 # File: eme-formfields.php, line: 4299
-# File: eme-tasks.php, line: 450
+# File: eme-tasks.php, line: 449
 # File: eme-templates.php, line: 40
 msgid "All"
 msgstr "Alla"
@@ -6587,8 +6587,8 @@ msgstr "Utkast"
 # File: eme-people.php, line: 1045
 # File: eme-people.php, line: 1365
 # File: eme-people.php, line: 1504
-# File: eme-tasks.php, line: 451
-# File: eme-tasks.php, line: 1886
+# File: eme-tasks.php, line: 450
+# File: eme-tasks.php, line: 1897
 msgid "Pending"
 msgstr "Inväntar granskning"
 #
@@ -6766,8 +6766,8 @@ msgid "South African Rand"
 msgstr "Sydafrikanska Rand"
 #
 # File: eme-functions.php, line: 2213
-# File: eme-mailer.php, line: 2646
-# File: eme-mailer.php, line: 2754
+# File: eme-mailer.php, line: 2652
+# File: eme-mailer.php, line: 2760
 msgid "Extra info"
 msgstr "Extra info"
 #
@@ -7008,7 +7008,7 @@ msgstr ""
 "kunna justera för tidsskillnader mellan klient/server när datum och "
 "klockslag för event ska visas."
 #
-#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.27)  #-#-#-#-#
+#. #-#-#-#-#  events-made-easy.pot (Events Made Easy 2.4.28)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 # File: eme-gdpr.php, line: 543
 # File: eme-gdpr.php, line: 549
@@ -7278,8 +7278,8 @@ msgid "Location maximum capacity"
 msgstr "Platsbild"
 #
 # File: eme-locations.php, line: 646
-# File: eme-locations.php, line: 3002
-# File: eme-locations.php, line: 3003
+# File: eme-locations.php, line: 2984
+# File: eme-locations.php, line: 2985
 msgid "Max capacity"
 msgstr ""
 #
@@ -7372,28 +7372,28 @@ msgstr "Platsens adress"
 msgid "The location city"
 msgstr "Platsens stad"
 #
-# File: eme-locations.php, line: 2683
+# File: eme-locations.php, line: 2665
 msgid "Your Street Address"
 msgstr "Din gatuadress"
 #
-# File: eme-locations.php, line: 2687
+# File: eme-locations.php, line: 2669
 msgid "Get Directions"
 msgstr "Få vägbeskrivning"
 #
-# File: eme-locations.php, line: 3018
+# File: eme-locations.php, line: 3000
 msgid "View location"
 msgstr "Visa plats"
 #
-# File: eme-locations.php, line: 3019
+# File: eme-locations.php, line: 3001
 msgid "Duplicate this location"
 msgstr "Skapa kopia av denna plats"
 #
 # File: eme-mailer.php, line: 142
 # File: eme-mailer.php, line: 1474
 # File: eme-mailer.php, line: 1567
-# File: eme-mailer.php, line: 1641
-# File: eme-mailer.php, line: 1735
-# File: eme-mailer.php, line: 1839
+# File: eme-mailer.php, line: 1635
+# File: eme-mailer.php, line: 1729
+# File: eme-mailer.php, line: 1833
 # File: eme-members.php, line: 6369
 # File: eme-members.php, line: 6447
 # File: eme-members.php, line: 6566
@@ -7419,7 +7419,7 @@ msgid ""
 msgstr ""
 #
 # File: eme-mailer.php, line: 802
-# File: eme-mailer.php, line: 2664
+# File: eme-mailer.php, line: 2670
 msgid "Planned"
 msgstr "Planerad"
 #
@@ -7432,7 +7432,7 @@ msgid "Failed"
 msgstr "Misslyckades"
 #
 # File: eme-mailer.php, line: 805
-# File: eme-mailer.php, line: 2654
+# File: eme-mailer.php, line: 2660
 msgid "Cancelled"
 msgstr "Avbokat"
 #
@@ -7443,8 +7443,8 @@ msgstr ""
 # File: eme-mailer.php, line: 1269
 # File: eme-mailer.php, line: 1425
 # File: eme-mailer.php, line: 1434
-# File: eme-mailer.php, line: 2680
-# File: eme-mailer.php, line: 2764
+# File: eme-mailer.php, line: 2686
+# File: eme-mailer.php, line: 2770
 msgid "Reuse"
 msgstr "Återanvänd"
 #
@@ -7453,20 +7453,20 @@ msgid "No results found"
 msgstr "Inga resultat hittades"
 #
 # File: eme-mailer.php, line: 1377
-# File: eme-mailer.php, line: 2441
+# File: eme-mailer.php, line: 2435
 msgid "Sender name"
 msgstr ""
 #
 # File: eme-mailer.php, line: 1378
-# File: eme-mailer.php, line: 2445
+# File: eme-mailer.php, line: 2439
 msgid "Sender email"
 msgstr ""
 #
 # File: eme-mailer.php, line: 1381
-# File: eme-mailer.php, line: 2266
-# File: eme-mailer.php, line: 2452
-# File: eme-mailer.php, line: 2641
-# File: eme-mailer.php, line: 2750
+# File: eme-mailer.php, line: 2260
+# File: eme-mailer.php, line: 2446
+# File: eme-mailer.php, line: 2647
+# File: eme-mailer.php, line: 2756
 msgid "Subject"
 msgstr "Ärenderad"
 #
@@ -7475,8 +7475,8 @@ msgid "Queued on"
 msgstr ""
 #
 # File: eme-mailer.php, line: 1434
-# File: eme-mailer.php, line: 2667
-# File: eme-mailer.php, line: 2672
+# File: eme-mailer.php, line: 2673
+# File: eme-mailer.php, line: 2678
 msgid "Cancel"
 msgstr "Avboka"
 #
@@ -7501,9 +7501,9 @@ msgstr ""
 #
 # File: eme-mailer.php, line: 1471
 # File: eme-mailer.php, line: 1564
-# File: eme-mailer.php, line: 1631
-# File: eme-mailer.php, line: 1732
-# File: eme-mailer.php, line: 1832
+# File: eme-mailer.php, line: 1625
+# File: eme-mailer.php, line: 1726
+# File: eme-mailer.php, line: 1826
 # File: eme-members.php, line: 6366
 # File: eme-rsvp.php, line: 6336
 # File: eme-rsvp.php, line: 6356
@@ -7511,7 +7511,7 @@ msgid "The mail has been sent."
 msgstr "E-postmeddelandet har skickats"
 #
 # File: eme-mailer.php, line: 1511
-# File: eme-mailer.php, line: 1679
+# File: eme-mailer.php, line: 1673
 msgid "Please enter both subject and message for the mail to be sent."
 msgstr "Vänligen ange både ärenderad och meddelandetext att sända."
 #
@@ -7522,63 +7522,63 @@ msgstr ""
 "kontakten för eventet, avbryter"
 #
 # File: eme-mailer.php, line: 1552
-# File: eme-mailer.php, line: 1714
+# File: eme-mailer.php, line: 1708
 msgid "Please select a person to send the preview mail to."
 msgstr "Vänligen välj en person att sända förhandsgranskningen till."
 #
-# File: eme-mailer.php, line: 1626
-# File: eme-mailer.php, line: 1827
+# File: eme-mailer.php, line: 1620
+# File: eme-mailer.php, line: 1821
 msgid ""
 "The mailing has been put on the queue, but you have not yet configured the "
 "queueing. Go in the <a href=\"%s\">Scheduled actions</a> submenu and "
 "configure it now."
 msgstr ""
 #
-# File: eme-mailer.php, line: 1628
-# File: eme-mailer.php, line: 1829
+# File: eme-mailer.php, line: 1622
+# File: eme-mailer.php, line: 1823
 msgid "The mailing has been planned."
 msgstr "E-postutskicket har planerats."
 #
-# File: eme-mailer.php, line: 1636
+# File: eme-mailer.php, line: 1630
 msgid ""
 "The mailing has been put on the queue, but not all persons will receive it."
 msgstr ""
 "Utskicket har lagts till i kön, men alla personer kommer inte att få det."
 #
-# File: eme-mailer.php, line: 1638
+# File: eme-mailer.php, line: 1632
 msgid "The following persons will not receive the mail:"
 msgstr "Följande personer kommer inte att få e-postmeddelandet: "
 #
-# File: eme-mailer.php, line: 1643
-# File: eme-mailer.php, line: 1841
+# File: eme-mailer.php, line: 1637
+# File: eme-mailer.php, line: 1835
 msgid "Email to the following persons has not been sent:"
 msgstr "E-post har inte skickats till följande personer: "
 #
-# File: eme-mailer.php, line: 1686
+# File: eme-mailer.php, line: 1680
 # File: eme-rsvp.php, line: 816
 # File: eme-rsvp.php, line: 831
 msgid "Please select at least one event."
 msgstr ""
 #
-# File: eme-mailer.php, line: 1763
+# File: eme-mailer.php, line: 1757
 msgid "Please select the type of mail to be sent."
 msgstr "Vänligen välj vilken typ av e-post att skicka."
 #
-# File: eme-mailer.php, line: 1837
+# File: eme-mailer.php, line: 1831
 msgid ""
 "Only mails for events you have the right to send mails for have been sent."
 msgstr "Bara e-postmeddelanden för event du har rätt att sända för, har sänts."
 #
-# File: eme-mailer.php, line: 2139
-# File: eme-tasks.php, line: 432
+# File: eme-mailer.php, line: 2133
+# File: eme-tasks.php, line: 431
 msgid "Person name"
 msgstr "Persons namn"
 #
-# File: eme-mailer.php, line: 2140
+# File: eme-mailer.php, line: 2134
 msgid "Filter"
 msgstr "Filter"
 #
-# File: eme-mailer.php, line: 2142
+# File: eme-mailer.php, line: 2136
 msgid ""
 "Remark: the list of recipients below is just an indication based on the "
 "moment the mailing was created. Just before the mailing will actually start, "
@@ -7589,41 +7589,41 @@ msgstr ""
 "ögonblicksbild när utskicket skapades. Listan kommer att uppdateras baserat "
 "på villkoren som utskicket skapades med precis när ett utskick ska påbörjas."
 #
-# File: eme-mailer.php, line: 2159
+# File: eme-mailer.php, line: 2153
 msgid "Event related email"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2160
+# File: eme-mailer.php, line: 2154
 msgid "Generic email"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2161
+# File: eme-mailer.php, line: 2155
 msgid "Mailings"
 msgstr "E-postutskick"
 #
-# File: eme-mailer.php, line: 2162
+# File: eme-mailer.php, line: 2156
 msgid "Mailings archive"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2163
-# File: eme-mailer.php, line: 2558
+# File: eme-mailer.php, line: 2157
+# File: eme-mailer.php, line: 2552
 msgid "Sent emails"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2164
+# File: eme-mailer.php, line: 2158
 msgid "Test email"
 msgstr "Testa e-post"
 #
-# File: eme-mailer.php, line: 2167
+# File: eme-mailer.php, line: 2161
 msgid "Send event related emails"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2179
+# File: eme-mailer.php, line: 2173
 # File: eme-rsvp.php, line: 4572
 msgid "Check this box to search through all events and not just future ones."
 msgstr ""
 #
-# File: eme-mailer.php, line: 2180
+# File: eme-mailer.php, line: 2174
 msgid ""
 "Remark: if you select multiple events, a mailing will be created for each "
 "selected event"
@@ -7631,149 +7631,149 @@ msgstr ""
 "Kommentar: om du väljer flera event kommer ett utskick att skapas för varje "
 "valt event"
 #
-# File: eme-mailer.php, line: 2184
+# File: eme-mailer.php, line: 2178
 msgid "Select the type of mail"
 msgstr "Välj typ av e-postmeddelande"
 #
-# File: eme-mailer.php, line: 2188
-# File: eme-mailer.php, line: 2306
+# File: eme-mailer.php, line: 2182
+# File: eme-mailer.php, line: 2300
 msgid "Attendee mails"
 msgstr "E-post för deltagare"
 #
-# File: eme-mailer.php, line: 2189
-# File: eme-mailer.php, line: 2307
+# File: eme-mailer.php, line: 2183
+# File: eme-mailer.php, line: 2301
 msgid "Booking mails"
 msgstr "E-post för bokningar"
 #
-# File: eme-mailer.php, line: 2190
+# File: eme-mailer.php, line: 2184
 msgid "Email to all people registered in EME"
 msgstr "E-post till alla personer som är registrerade i EME"
 #
-# File: eme-mailer.php, line: 2191
+# File: eme-mailer.php, line: 2185
 msgid "Email to people and/or groups registered in EME"
 msgstr "E-post till personer och/eller grupper som är registrerade i EME"
 #
-# File: eme-mailer.php, line: 2192
+# File: eme-mailer.php, line: 2186
 msgid "Email to all WP users"
 msgstr "E-post till alla WP-användare"
 #
-# File: eme-mailer.php, line: 2199
+# File: eme-mailer.php, line: 2193
 msgid "Select your target audience"
 msgstr "Välj din målgrupp"
 #
-# File: eme-mailer.php, line: 2202
+# File: eme-mailer.php, line: 2196
 msgid "All registered persons"
 msgstr "Alla registrerade personer"
 #
-# File: eme-mailer.php, line: 2203
+# File: eme-mailer.php, line: 2197
 msgid "Only approved bookings"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2204
+# File: eme-mailer.php, line: 2198
 msgid "Only pending bookings"
 msgstr "Endast bokningar som inväntar granskning"
 #
-# File: eme-mailer.php, line: 2209
+# File: eme-mailer.php, line: 2203
 msgid "Exclude people already registered for the selected event(s)"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2215
+# File: eme-mailer.php, line: 2209
 msgid "Only send mails to attendees who did not pay yet"
 msgstr "Sänd endast e-postmeddelanden till deltagare som inte betalat än"
 #
-# File: eme-mailer.php, line: 2272
-# File: eme-mailer.php, line: 2283
-# File: eme-mailer.php, line: 2466
+# File: eme-mailer.php, line: 2266
+# File: eme-mailer.php, line: 2277
+# File: eme-mailer.php, line: 2460
 msgid "Or enter your own: "
 msgstr "Eller fyll i ditt eget:"
 #
-# File: eme-mailer.php, line: 2276
-# File: eme-mailer.php, line: 2458
+# File: eme-mailer.php, line: 2270
+# File: eme-mailer.php, line: 2452
 msgid "Message"
 msgstr "Meddelande"
 #
-# File: eme-mailer.php, line: 2303
-# File: eme-mailer.php, line: 2486
+# File: eme-mailer.php, line: 2297
+# File: eme-mailer.php, line: 2480
 msgid "You can use any placeholders mentioned here:"
 msgstr "Du kan använda alla platshållare som nämns här:"
 #
-# File: eme-mailer.php, line: 2304
+# File: eme-mailer.php, line: 2298
 msgid "Event placeholders"
 msgstr "Platshållare för event"
 #
-# File: eme-mailer.php, line: 2305
-# File: eme-mailer.php, line: 2487
+# File: eme-mailer.php, line: 2299
+# File: eme-mailer.php, line: 2481
 msgid "People placeholders"
 msgstr "Platshållare för personer"
 #
-# File: eme-mailer.php, line: 2306
+# File: eme-mailer.php, line: 2300
 msgid "Attendees placeholders"
 msgstr "Platshållare för deltagare"
 #
-# File: eme-mailer.php, line: 2306
-# File: eme-mailer.php, line: 2307
-# File: eme-mailer.php, line: 2487
-# File: eme-mailer.php, line: 2488
+# File: eme-mailer.php, line: 2300
+# File: eme-mailer.php, line: 2301
+# File: eme-mailer.php, line: 2481
+# File: eme-mailer.php, line: 2482
 msgid "for "
 msgstr "för "
 #
-# File: eme-mailer.php, line: 2307
+# File: eme-mailer.php, line: 2301
 msgid "Booking placeholders"
 msgstr "Platshållare för bokningar"
 #
-# File: eme-mailer.php, line: 2308
-# File: eme-mailer.php, line: 2488
+# File: eme-mailer.php, line: 2302
+# File: eme-mailer.php, line: 2482
 msgid "Member placeholders"
 msgstr "Platshållare för medlemmar"
 #
-# File: eme-mailer.php, line: 2308
+# File: eme-mailer.php, line: 2302
 msgid "if you selected members, memberships or member groups"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2309
-# File: eme-mailer.php, line: 2489
+# File: eme-mailer.php, line: 2303
+# File: eme-mailer.php, line: 2483
 msgid "You can also use any shortcode you want."
 msgstr "Du kan även använda vilken kortkod du vill."
 #
-# File: eme-mailer.php, line: 2315
-# File: eme-mailer.php, line: 2495
+# File: eme-mailer.php, line: 2309
+# File: eme-mailer.php, line: 2489
 msgid "Optionally add attachments to your mailing"
 msgstr "Lägg valfritt till bilagor till ditt e-postutskick"
 #
-# File: eme-mailer.php, line: 2328
-# File: eme-mailer.php, line: 2508
+# File: eme-mailer.php, line: 2322
+# File: eme-mailer.php, line: 2502
 msgid "Set mailing name and start date and time"
 msgstr "Ange namn på utskicket och startdatum och tid"
 #
-# File: eme-mailer.php, line: 2329
-# File: eme-mailer.php, line: 2509
+# File: eme-mailer.php, line: 2323
+# File: eme-mailer.php, line: 2503
 msgid "Mailing name: "
 msgstr "Namn på utskick:"
 #
-# File: eme-mailer.php, line: 2330
-# File: eme-mailer.php, line: 2510
+# File: eme-mailer.php, line: 2324
+# File: eme-mailer.php, line: 2504
 msgid "Start date and time: "
 msgstr "Startdatum och tid:"
 #
-# File: eme-mailer.php, line: 2332
-# File: eme-mailer.php, line: 2512
+# File: eme-mailer.php, line: 2326
+# File: eme-mailer.php, line: 2506
 msgid "Leave empty to send the mail immediately"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2334
-# File: eme-mailer.php, line: 2514
+# File: eme-mailer.php, line: 2328
+# File: eme-mailer.php, line: 2508
 msgid ""
 "(multiple dates can be selected, in which case the mailing will be planned "
 "on each selected date and time)"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2341
-# File: eme-mailer.php, line: 2521
+# File: eme-mailer.php, line: 2335
+# File: eme-mailer.php, line: 2515
 msgid "Ignore massmail setting:"
 msgstr "Ignorera inställning för massutskick:"
 #
-# File: eme-mailer.php, line: 2343
-# File: eme-mailer.php, line: 2523
+# File: eme-mailer.php, line: 2337
+# File: eme-mailer.php, line: 2517
 msgid ""
 "When sending a mail to all EME people or certain groups, it is by default "
 "only sent to the people who have indicated they want to receive mass "
@@ -7785,18 +7785,18 @@ msgstr ""
 "emot massutskick. Om du behöver sända e-postmeddelandet till alla personer, "
 "oavsett deras inställning för massutskick, markera detta alternativ."
 #
-# File: eme-mailer.php, line: 2347
-# File: eme-mailer.php, line: 2527
+# File: eme-mailer.php, line: 2341
+# File: eme-mailer.php, line: 2521
 msgid "Enter a test recipient"
 msgstr "Ange en testmottagare"
 #
-# File: eme-mailer.php, line: 2350
-# File: eme-mailer.php, line: 2530
+# File: eme-mailer.php, line: 2344
+# File: eme-mailer.php, line: 2524
 msgid "Send Preview Email"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2359
-# File: eme-mailer.php, line: 2539
+# File: eme-mailer.php, line: 2353
+# File: eme-mailer.php, line: 2533
 msgid ""
 "Warning: using this functionality to send mails to attendees can result in a "
 "php timeout, so not everybody will receive the mail then. This depends on "
@@ -7808,19 +7808,19 @@ msgstr ""
 "Detta beror på antalet deltagare, lasten på servern, … . Om detta händer, "
 "aktivera och konfigurera e-postköer."
 #
-# File: eme-mailer.php, line: 2367
-# File: eme-mailer.php, line: 2547
+# File: eme-mailer.php, line: 2361
+# File: eme-mailer.php, line: 2541
 msgid ""
 "Email queueing has been activated but not yet configured. Go in the <a "
 "href=\"%s\">Scheduled actions</a> submenu and configure it now."
 msgstr ""
 #
-# File: eme-mailer.php, line: 2379
+# File: eme-mailer.php, line: 2373
 # File: eme-options.php, line: 1426
 msgid "Send generic emails"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2380
+# File: eme-mailer.php, line: 2374
 msgid ""
 "Use the below form to send a generic mail. Don't forget to use the "
 "#_UNSUB_URL for unsubscribe possibility."
@@ -7828,155 +7828,163 @@ msgstr ""
 "Använd formuläret nedan för att sända allmänt e-post. Glöm inte att använda "
 "#_UNSUB_URL för att möjliggöra att avsluta prenumerationen."
 #
-# File: eme-mailer.php, line: 2383
+# File: eme-mailer.php, line: 2377
 msgid "Target audience:"
 msgstr "Målgrupp:"
 #
-# File: eme-mailer.php, line: 2384
+# File: eme-mailer.php, line: 2378
 msgid "Send to all EME people"
 msgstr "Sänd till alla EME-personer"
 #
-# File: eme-mailer.php, line: 2388
+# File: eme-mailer.php, line: 2382
 msgid ""
 "Deselect this to select specific groups and/or memberships for your mailing"
 msgstr ""
 "Avmarkera detta för att välja specifika grupper och/eller medlemskap för "
 "ditt utskick"
 #
-# File: eme-mailer.php, line: 2487
+# File: eme-mailer.php, line: 2481
 msgid "People or groups"
 msgstr "Personer eller grupper"
 #
-# File: eme-mailer.php, line: 2488
+# File: eme-mailer.php, line: 2482
 msgid "members"
 msgstr "medlemmar"
 #
-# File: eme-mailer.php, line: 2560
-# File: eme-mailer.php, line: 2611
+# File: eme-mailer.php, line: 2557
+# File: eme-mailer.php, line: 2614
 msgid ""
 "If you want to archive old mailings and clean up old mails automatically, "
 "check the option \"Automatically archive old mailings and remove old mails\" "
 "in the GDPR Settings of EME"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2563
+# File: eme-mailer.php, line: 2559
+# File: eme-mailer.php, line: 2616
+msgid ""
+"Every %d days, old mailings will be archived and old mails will be cleaned "
+"up (see the option \"Automatically archive old mailings and remove old "
+"mails\" in the GDPR Settings of EME)"
+msgstr ""
+#
+# File: eme-mailer.php, line: 2564
 msgid "Enter the search text (leave empty to show the last 100 emails sent)"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2565
+# File: eme-mailer.php, line: 2566
 msgid "Only show failed emails"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2566
+# File: eme-mailer.php, line: 2567
 msgid "Search"
 msgstr "Sök"
 #
-# File: eme-mailer.php, line: 2572
+# File: eme-mailer.php, line: 2573
 msgid "Test mail settings"
 msgstr "Testa e-postinställningar"
 #
-# File: eme-mailer.php, line: 2574
+# File: eme-mailer.php, line: 2575
 msgid "Use the below form to send a test mail"
 msgstr "Använd formuläret nedan för att sända ett testmeddelande"
 #
-# File: eme-mailer.php, line: 2576
+# File: eme-mailer.php, line: 2577
 msgid "Enter the recipient"
 msgstr "Ange mottagare"
 #
-# File: eme-mailer.php, line: 2578
+# File: eme-mailer.php, line: 2579
 msgid "Send Email"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2603
+# File: eme-mailer.php, line: 2604
 msgid "Mailings overview"
 msgstr "Översikt e-postutskick"
 #
-# File: eme-mailer.php, line: 2606
+# File: eme-mailer.php, line: 2607
 msgid ""
 "Here you can find an overview of all planned, ongoing or completed mailings. "
 "For an overview of all emails, check the \"Sent emails\" tab."
 msgstr ""
 #
-# File: eme-mailer.php, line: 2617
+# File: eme-mailer.php, line: 2623
 msgid ""
 "Email queueing is not activated, so sent mails will only be visible in the "
 "\"Sent emails\" tab"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2627
-# File: eme-mailer.php, line: 2737
+# File: eme-mailer.php, line: 2633
+# File: eme-mailer.php, line: 2743
 msgid "Delete selected mailings"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2628
+# File: eme-mailer.php, line: 2634
 msgid "Archive selected mailings"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2642
-# File: eme-mailer.php, line: 2751
+# File: eme-mailer.php, line: 2648
+# File: eme-mailer.php, line: 2757
 msgid "Planned execution time"
 msgstr "Planerad tidpunkt för utförande"
 #
-# File: eme-mailer.php, line: 2644
-# File: eme-mailer.php, line: 2752
+# File: eme-mailer.php, line: 2650
+# File: eme-mailer.php, line: 2758
 msgid "Unique read count"
 msgstr "Räknare unika visningar"
 #
-# File: eme-mailer.php, line: 2647
-# File: eme-mailer.php, line: 2702
+# File: eme-mailer.php, line: 2653
+# File: eme-mailer.php, line: 2708
 msgid "Report"
 msgstr "Rapport"
 #
-# File: eme-mailer.php, line: 2656
-# File: eme-mailer.php, line: 2761
+# File: eme-mailer.php, line: 2662
+# File: eme-mailer.php, line: 2767
 msgid "%d mails sent, %d mails failed, %d mails cancelled"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2657
-# File: eme-mailer.php, line: 2677
+# File: eme-mailer.php, line: 2663
+# File: eme-mailer.php, line: 2683
 msgid "Archive"
 msgstr "Arkiv"
 #
-# File: eme-mailer.php, line: 2659
+# File: eme-mailer.php, line: 2665
 msgid "Initializing ..."
 msgstr ""
 #
-# File: eme-mailer.php, line: 2666
+# File: eme-mailer.php, line: 2672
 msgid "%d mails left"
 msgstr "%d e-post återstår"
 #
-# File: eme-mailer.php, line: 2669
+# File: eme-mailer.php, line: 2675
 msgid "Ongoing"
 msgstr "Pågående"
 #
-# File: eme-mailer.php, line: 2671
+# File: eme-mailer.php, line: 2677
 msgid "%d mails sent, %d mails failed, %d mails left"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2674
+# File: eme-mailer.php, line: 2680
 msgid "Completed"
 msgstr "Färdig"
 #
-# File: eme-mailer.php, line: 2676
+# File: eme-mailer.php, line: 2682
 msgid "%d mails sent, %d mails failed"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2683
+# File: eme-mailer.php, line: 2689
 #, fuzzy
 msgid "Retry failed mails"
 msgstr "Tillägg misslyckades:"
 #
-# File: eme-mailer.php, line: 2694
+# File: eme-mailer.php, line: 2700
 msgid ""
 "The number of emails to be sent is an estimation and will be reevaluated at "
 "send time"
 msgstr ""
 #
-# File: eme-mailer.php, line: 2728
+# File: eme-mailer.php, line: 2734
 msgid "Email archive"
 msgstr "E-postarkiv"
 #
-# File: eme-mailer.php, line: 2730
+# File: eme-mailer.php, line: 2736
 msgid "Here you can find an overview of all archived mailings"
 msgstr "Här finner du en översikt över alla arkiverade utskick"
 #
@@ -9558,8 +9566,8 @@ msgstr "Medlemmarna borttagna."
 # File: eme-rsvp.php, line: 6306
 # File: eme-rsvp.php, line: 6368
 # File: eme-rsvp.php, line: 6404
-# File: eme-tasks.php, line: 1945
-# File: eme-tasks.php, line: 1969
+# File: eme-tasks.php, line: 1956
+# File: eme-tasks.php, line: 1980
 msgid "The action has been executed successfully."
 msgstr "Handlingen har utförts."
 #
@@ -9591,8 +9599,8 @@ msgstr "Handlingen har utförts men det var problem med att sända e-post."
 # File: eme-rsvp.php, line: 6263
 # File: eme-rsvp.php, line: 6299
 # File: eme-rsvp.php, line: 6401
-# File: eme-tasks.php, line: 1948
-# File: eme-tasks.php, line: 1972
+# File: eme-tasks.php, line: 1959
+# File: eme-tasks.php, line: 1983
 msgid ""
 "There was a problem executing the desired action, please check your logs."
 msgstr ""
@@ -14728,8 +14736,8 @@ msgstr ""
 # File: eme-people.php, line: 1049
 # File: eme-people.php, line: 1369
 # File: eme-people.php, line: 1489
-# File: eme-tasks.php, line: 452
-# File: eme-tasks.php, line: 1884
+# File: eme-tasks.php, line: 451
+# File: eme-tasks.php, line: 1895
 msgid "Approved"
 msgstr "Godkänd"
 #
@@ -15705,7 +15713,7 @@ msgstr ""
 msgid "There was a problem refunding the payment, please check your logs."
 msgstr ""
 #
-# File: eme-tasks.php, line: 464
+# File: eme-tasks.php, line: 463
 msgid "Filter task signups"
 msgstr ""
 #
@@ -16226,8 +16234,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "No bookings made yet."
 #~ msgstr "Inga bokningar gjorda ännu."
+#
 #
 #
 #
@@ -16280,8 +16290,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Convert newlines"
 #~ msgstr "Konvertera radbrytningar"
+#
 #
 #
 #
@@ -16338,12 +16350,14 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "If you don't want this to happen (for example for a template used in a "
 #~ "table-row), deselect this option."
 #~ msgstr ""
 #~ "Om du inte vill att detta ska hända (t.ex. för en mall som används i en "
 #~ "tabellrad) avmarkera detta alternativ."
+#
 #
 #
 #
@@ -16400,8 +16414,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "File upload is not allowed here."
 #~ msgstr "Inte tillåtet att ladda upp filer här."
+#
 #
 #
 #
@@ -16459,6 +16475,7 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid ""
 #~ "File upload is not allowed here, use the regular WP media library to "
 #~ "upload files or use the 'Add media' button in the event notes."
@@ -16491,8 +16508,10 @@ msgstr "https://www.e-dynamics.be/"
 #
 #
 #
+#
 #~ msgid "Uploaded files"
 #~ msgstr "Uppladdade filer"
+#
 #
 #
 #

@@ -152,6 +152,7 @@ define( 'EME_LANGUAGE_REGEX', '[a-z]{2,3}' );
 $upload_info = wp_upload_dir();
 define( 'EME_UPLOAD_DIR', $upload_info['basedir'] . '/events-made-easy' );
 define( 'EME_UPLOAD_URL', $upload_info['baseurl'] . '/events-made-easy' );
+define( 'EME_INCLUDE_DIR', $upload_info['basedir'] . '/events-made-easy/includes' );
 define( 'EME_PLUGIN_URL',  eme_plugin_url() );
 define( 'EME_DB_PREFIX',  eme_get_db_prefix() );
 define( 'EME_WP_DATE_FORMAT', get_option( 'date_format' ) );
@@ -386,4 +387,9 @@ function eme_explain_events_page_missing() {
 	<?php
 }
 
+if (file_exists(EME_INCLUDE_DIR) && is_dir(EME_INCLUDE_DIR)) {
+	foreach ( glob( EME_INCLUDE_DIR . '/eme_*.php' ) as $file ) {
+		require_once($file);
+	}
+}
 ?>

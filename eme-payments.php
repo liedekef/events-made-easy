@@ -444,7 +444,7 @@ function eme_payment_form_webmoney( $item_name, $payment, $baseprice, $cur, $mul
 	$payment_id        = $payment['id'];
 	$success_link      = eme_payment_return_url( $payment, 0 );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'webmoney_notification' ], $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -578,7 +578,7 @@ function eme_payment_form_worldpay( $item_name, $payment, $baseprice, $cur, $mul
 	$payment_id       = $payment['id'];
 	// $success_link = eme_payment_return_url($payment,0);
 	// $fail_link = eme_payment_return_url($payment,1);
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'worldpay_notification' ], $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
 		$filtername  = 'eme_member_paymentform_description_filter';
@@ -656,8 +656,8 @@ function eme_payment_form_opayo( $item_name, $payment, $baseprice, $cur, $multi_
 	$fail_link        = eme_payment_return_url( $payment, 1 );
 	// opayo doesn't use a notification url, but sends the status along as part of the return url
 	// so we add the notification info to it too, so we can process paid info as usual
-	$success_link = add_query_arg( [ 'eme_eventAction' => 'opayo_notification' ], $success_link );
-	$fail_link    = add_query_arg( [ 'eme_eventAction' => 'opayo_notification' ], $fail_link );
+	$success_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $success_link );
+	$fail_link    = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $fail_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -788,16 +788,16 @@ function eme_payment_form_braintree( $item_name, $payment, $baseprice, $cur, $mu
 	$button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
 	$form_html  = $button_above;
-	$form_html .= "<form action='' method='post' name='eme_braintree_form' id='eme_braintree_form'>
+	$form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
    <div id='braintree-payment-form-div'></div>
    <input type='hidden' name='payment_id' value='$payment_id'>
-   <input type='hidden' name='eme_eventAction' value='braintree_charge'>
+   <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
    <input type='hidden' name='eme_multibooking' value='$multi_booking'>
-   <input type='hidden' name='braintree_nonce' id='braintree_nonce'>
+   <input type='hidden' name='eme_{$gateway}_nonce' id='eme_{$gateway}_nonce'>
    <input type='hidden' name='price' value='$price'>
    <input type='hidden' name='cur' value='$cur'>
    ";
-        $form_html .= wp_nonce_field( "$price$cur", 'eme_braintree_nonce', false, false );
+        $form_html .= wp_nonce_field( "$price$cur", "eme_{$gateway}_nonce", false, false );
 
 	if ( ! empty( $button_img_url ) ) {
 		$form_html .= "<input type='image' alt='$button_label' title='$button_label' src='$button_img_url' class='button-primary eme_submit_button'><br>";
@@ -849,8 +849,8 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
 	$price             = eme_payment_gateway_total( $baseprice, $cur, $gateway );
 	$events_page_link  = eme_get_events_page();
 	$payment_id        = $payment['id'];
-	$return_link       = eme_payment_return_url( $payment, 'sumup' );
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'sumup_notification' ], $events_page_link );
+	$return_link       = eme_payment_return_url( $payment, $gateway );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -980,9 +980,9 @@ function eme_payment_form_stripe( $item_name, $payment, $baseprice, $cur, $multi
 	$button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
 	$form_html  = $button_above;
-	$form_html .= "<form action='' method='post' name='eme_stripe_form' id='eme_stripe_form'>
+	$form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
    <input type='hidden' name='payment_id' value='$payment_id'>
-   <input type='hidden' name='eme_eventAction' value='stripe_charge'>
+   <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
    <input type='hidden' name='description' value='$description'>
    <input type='hidden' name='price' value='$price'>
    <input type='hidden' name='cur' value='$cur'>
@@ -992,7 +992,7 @@ function eme_payment_form_stripe( $item_name, $payment, $baseprice, $cur, $multi
 	} else {
 		$form_html .= "<input type='submit' value='$button_label' class='button-primary eme_submit_button'><br>";
 	}
-	$form_html .= wp_nonce_field( "$price$cur", 'eme_stripe_nonce', false, false );
+	$form_html .= wp_nonce_field( "$price$cur", "eme_{$gateway}_nonce", false, false );
 	$form_html .= '</form>';
 	$form_html .= $button_below;
 	return $form_html;
@@ -1070,7 +1070,7 @@ function eme_payment_form_fdgg( $item_name, $payment, $baseprice, $cur, $multi_b
 	$form_html .= "<input type='hidden' name='oid' value='$payment_id'>";
 	$form_html .= "<input type='hidden' name='responseSuccessURL' value='$success_link'>";
 	$form_html .= "<input type='hidden' name='responseFailURL' value='$fail_link'>";
-	$form_html .= "<input type='hidden' name='eme_eventAction' value='fdgg_notification'>";
+	$form_html .= "<input type='hidden' name='eme_eventAction' value='{$gateway}_notification'>";
 	if ( ! empty( $button_img_url ) ) {
 		$form_html .= "<input type='image' src='$button_img_url' alt='$button_label' title='$button_label' class='button-primary eme_submit_button'><br>";
 	} else {
@@ -1092,8 +1092,8 @@ function eme_payment_form_instamojo( $item_name, $payment, $baseprice, $cur, $mu
 	$price             = eme_payment_gateway_total( $baseprice, $cur, $gateway );
 	$events_page_link  = eme_get_events_page();
 	$payment_id        = $payment['id'];
-	$return_link       = eme_payment_return_url( $payment, 'instamojo' );
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'instamojo_notification' ], $events_page_link );
+	$return_link       = eme_payment_return_url( $payment, $gateway );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -1121,9 +1121,9 @@ function eme_payment_form_instamojo( $item_name, $payment, $baseprice, $cur, $mu
 	$button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
 	$form_html  = $button_above;
-	$form_html .= "<form action='' method='post' name='eme_instamojo_form' id='eme_instamojo_form'>
+	$form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
    <input type='hidden' name='payment_id' value='$payment_id'>
-   <input type='hidden' name='eme_eventAction' value='instamojo_charge'>
+   <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
    <input type='hidden' name='description' value='$description'>
    <input type='hidden' name='price' value='$price'>
    <input type='hidden' name='cur' value='$cur'>
@@ -1133,7 +1133,7 @@ function eme_payment_form_instamojo( $item_name, $payment, $baseprice, $cur, $mu
 	} else {
 		$form_html .= "<input type='submit' value='$button_label' class='button-primary eme_submit_button'><br>";
 	}
-	$form_html .= wp_nonce_field( "$price$cur", 'eme_instamojo_nonce', false, false );
+	$form_html .= wp_nonce_field( "$price$cur", "eme_{$gateway}_nonce", false, false );
 	$form_html .= $button_below;
 	$form_html .= '</form>';
 	return $form_html;
@@ -1180,9 +1180,9 @@ function eme_payment_form_mollie( $item_name, $payment, $baseprice, $cur, $multi
 	$button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
 	$form_html  = $button_above;
-	$form_html .= "<form action='' method='post' name='eme_mollie_form' id='eme_mollie_form'>
+	$form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
    <input type='hidden' name='payment_id' value='$payment_id'>
-   <input type='hidden' name='eme_eventAction' value='mollie_charge'>
+   <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
    <input type='hidden' name='description' value='$description'>
    <input type='hidden' name='price' value='$price'>
    <input type='hidden' name='cur' value='$cur'>
@@ -1192,7 +1192,7 @@ function eme_payment_form_mollie( $item_name, $payment, $baseprice, $cur, $multi
 	} else {
 		$form_html .= "<input type='submit' value='$button_label' class='button-primary eme_submit_button'><br>";
 	}
-	$form_html .= wp_nonce_field( "$price$cur", 'eme_mollie_nonce', false, false );
+	$form_html .= wp_nonce_field( "$price$cur", "eme_{$gateway}_nonce", false, false );
 	$form_html .= '</form>';
 	$form_html .= $button_below;
 	return $form_html;
@@ -1239,9 +1239,9 @@ function eme_payment_form_payconiq( $item_name, $payment, $baseprice, $cur, $mul
 	$button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
 	$form_html  = $button_above;
-	$form_html .= "<form action='' method='post' name='eme_payconiq_form' id='eme_payconiq_form'>
+	$form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
    <input type='hidden' name='payment_id' value='$payment_id'>
-   <input type='hidden' name='eme_eventAction' value='payconiq_charge'>
+   <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
    <input type='hidden' name='description' value='$description'>
    <input type='hidden' name='price' value='$price'>
    <input type='hidden' name='cur' value='$cur'>
@@ -1251,7 +1251,7 @@ function eme_payment_form_payconiq( $item_name, $payment, $baseprice, $cur, $mul
 	} else {
 		$form_html .= "<input type='submit' value='$button_label' class='button-primary eme_submit_button'><br>";
 	}
-	$form_html .= wp_nonce_field( "$price$cur", 'eme_payconiq_nonce', false, false );
+	$form_html .= wp_nonce_field( "$price$cur", "eme_{$gateway}_nonce", false, false );
 	$form_html .= '</form>';
 	$form_html .= $button_below;
 	return $form_html;
@@ -1298,9 +1298,9 @@ function eme_payment_form_paypal( $item_name, $payment, $baseprice, $cur, $multi
 	$button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
 	$form_html  = $button_above;
-	$form_html .= "<form action='' method='post' name='eme_paypal_form' id='eme_paypal_form'>
+	$form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
    <input type='hidden' name='payment_id' value='$payment_id'>
-   <input type='hidden' name='eme_eventAction' value='paypal_charge'>
+   <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
    <input type='hidden' name='description' value='$description'>
    <input type='hidden' name='price' value='$price'>
    <input type='hidden' name='cur' value='$cur'>
@@ -1310,7 +1310,7 @@ function eme_payment_form_paypal( $item_name, $payment, $baseprice, $cur, $multi
 	} else {
 		$form_html .= "<input type='submit' value='$button_label' class='button-primary eme_submit_button'><br>";
 	}
-	$form_html .= wp_nonce_field( "$price$cur", 'eme_paypal_nonce', false, false );
+	$form_html .= wp_nonce_field( "$price$cur", "eme_{$gateway}_nonce", false, false );
 	$form_html .= '</form>';
 	$form_html .= $button_below;
 	return $form_html;
@@ -1329,7 +1329,7 @@ function eme_payment_form_legacypaypal( $item_name, $payment, $baseprice, $cur, 
 	$payment_id        = $payment['id'];
 	$success_link      = eme_payment_return_url( $payment, 0 );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'legacypaypal_notification' ], $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
@@ -1422,7 +1422,7 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
 	$events_page_link  = eme_get_events_page();
 	$success_link      = eme_payment_return_url( $payment, 0 );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'mercadopago_notification' ], $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
 	require_once 'payment_gateways/mercadopago/vendor/autoload.php';
 	MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
@@ -1506,12 +1506,12 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
 	if ( ! $res ) {
 		$form_html .= '<br>' . __( 'Mercado Pago API returned an error: ', 'events-made-easy' ) . eme_esc_html( $preference->Error() );
 	} else {
-		$form_html     .= "<form action='' method='post' name='eme_mercadopago_form' id='eme_mercadopago_form'>
+		$form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
 		   <script src='https://www.mercadopago.com.ar/integrations/v1/web-payment-checkout.js'
 data-preference-id='" . $preference->id . "' data-button-label='$button_label'>
-	     </script>
-             <input type='hidden' name='eme_eventAction' value='mercadopago_charge'>
-             ";
+	           </script>
+                   <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
+                ";
 		$form_html .= '</form>';
 	}
 	$form_html .= $button_below;
@@ -1568,7 +1568,7 @@ function eme_payment_form_fondy( $event_or_memebership, $payment, $baseprice, $c
 	$form_html  = $button_above;
 	$form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>";
 	$form_html .= "<input type='hidden' name='payment_id' value='$payment_id'>";
-	$form_html .= "<input type='hidden' name='eme_eventAction' value='fondy_charge'>";
+	$form_html .= "<input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>";
 	$form_html .= "<input type='hidden' name='description' value='$description'>";
 	$form_html .= "<input type='hidden' name='price' value='$price'>";
 	$form_html .= "<input type='hidden' name='cur' value='$cur'>";
@@ -1584,6 +1584,7 @@ function eme_payment_form_fondy( $event_or_memebership, $payment, $baseprice, $c
 }
 
 function eme_complete_transaction_instamojo( $payment ) {
+	$gateway              = 'instamojo';
 	$instamojo_key        = get_option( 'eme_instamojo_key' );
 	$instamojo_auth_token = get_option( 'eme_instamojo_auth_token' );
 	require_once 'payment_gateways/instamojo/vendor/autoload.php';
@@ -1605,7 +1606,7 @@ function eme_complete_transaction_instamojo( $payment ) {
 	try {
 		$response = $api->paymentRequestPaymentStatus( $instamojo_requestid, $instamojo_paymentid );
 		if ( $response['payment']['status'] == 'Credit' ) {
-			eme_mark_payment_paid( $payment['id'], 1, 'instamojo', $instamojo_requestid );
+			eme_mark_payment_paid( $payment['id'], 1, $gateway, $instamojo_requestid );
 		}
 	} catch ( Exception $e ) {
 		return;
@@ -1613,6 +1614,7 @@ function eme_complete_transaction_instamojo( $payment ) {
 }
 
 function eme_complete_transaction_sumup( $payment ) {
+	$gateway                 = 'sumup';
 	$eme_sumup_app_id        = get_option( 'eme_sumup_app_id' );
 	$eme_sumup_app_secret    = get_option( 'eme_sumup_app_secret' );
 	$eme_sumup_merchant_code = get_option( 'eme_sumup_merchant_code' );
@@ -1649,7 +1651,7 @@ function eme_complete_transaction_sumup( $payment ) {
 		$checkoutbody = $checkoutbody[0];
 	}
 	if ( $checkoutbody->status == 'PAID' ) {
-		eme_mark_payment_paid( $payment['id'], 1, 'sumup', $checkout_id );
+		eme_mark_payment_paid( $payment['id'], 1, $gateway, $checkout_id );
 	}
 	//if ($transaction->status=="SUCCESSFUL") {
 	//$transactionService = $sumup->getTransactionService();
@@ -1661,6 +1663,7 @@ function eme_complete_transaction_sumup( $payment ) {
 }
 
 function eme_complete_transaction_stripe( $payment ) {
+	$gateway = 'stripe';
 	require_once 'payment_gateways/stripe/init.php';
 	$eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
 	\Stripe\Stripe::setApiKey( "$eme_stripe_private_key" );
@@ -1678,12 +1681,13 @@ function eme_complete_transaction_stripe( $payment ) {
 		}
 		if ( $stripe_pi->status == 'succeeded' ) {
 			// we store the payment intent id, so we can refund later
-			eme_mark_payment_paid( $payment_id, 1, 'stripe', $stripe_pi_id );
+			eme_mark_payment_paid( $payment_id, 1, $gateway, $stripe_pi_id );
 		}
 	}
 }
 
 function eme_complete_transaction_paypal( $payment ) {
+	$gateway = 'paypal';
 	require_once 'payment_gateways/paypal/vendor/autoload.php';
 	// the paypal or paypal sandbox url
 	$mode = get_option( 'eme_paypal_url' );
@@ -1710,7 +1714,7 @@ function eme_complete_transaction_paypal( $payment ) {
 					$capture_id = $capture->id;
 				}
 			}
-			eme_mark_payment_paid( $payment['id'], 1, 'paypal', $capture_id );
+			eme_mark_payment_paid( $payment['id'], 1, $gateway, $capture_id );
 			return 1;
 		} else {
 			return 0;
@@ -1723,6 +1727,7 @@ function eme_complete_transaction_paypal( $payment ) {
 }
 
 function eme_complete_transaction_fondy( $payment ) {
+	$gateway = 'fondy';
 	$eme_fondy_merchant_id = get_option( 'eme_fondy_merchant_id' );
 	if ( ! $eme_fondy_merchant_id ) {
 		return 'No merchant ID';
@@ -1745,7 +1750,7 @@ function eme_complete_transaction_fondy( $payment ) {
 	$order       = $orderStatus->getData();
 
 	if ( $order['order_status'] == 'approved' ) {
-		eme_mark_payment_paid( $payment['id'], 'fondy', $order_id );
+		eme_mark_payment_paid( $payment['id'], $gateway, $order_id );
 		return 1;
 	} else {
 		return 0;
@@ -1753,6 +1758,7 @@ function eme_complete_transaction_fondy( $payment ) {
 }
 
 function eme_notification_instamojo() {
+	$gateway              = 'instamojo';
 	$instamojo_key        = get_option( 'eme_instamojo_key' );
 	$instamojo_auth_token = get_option( 'eme_instamojo_auth_token' );
 	$instamojo_salt       = get_option( 'eme_instamojo_salt' );
@@ -1778,12 +1784,13 @@ function eme_notification_instamojo() {
 	$mac_calculated = hash_hmac( 'sha1', implode( '|', $data ), $instamojo_salt );
 	if ( $mac_provided == $mac_calculated && $payment['pg_pid'] == $instamojo_requestid ) {
 		if ( $data['status'] == 'Credit' ) {
-			eme_mark_payment_paid( $payment_id, 1, 'instamojo', $instamojo_requestid );
+			eme_mark_payment_paid( $payment_id, 1, $gateway, $instamojo_requestid );
 		}
 	}
 }
 
 function eme_notification_mercadopago() {
+	$gateway = 'mercadopago';
 	if ( get_option( 'eme_mercadopago_demo' ) == 1 ) {
 		$eme_mercadopago_access_token = get_option( 'eme_mercadopago_sandbox_token' );
 	} else {
@@ -1832,7 +1839,7 @@ function eme_notification_mercadopago() {
 			// If the payment's transaction amount is equal (or bigger) than the merchant_order's amount you can release your items
 			$eme_price = eme_get_payment_price( $payment_id );
 			if ( $paid_amount >= $merchant_order->total_amount && $paid_amount >= $eme_price ) {
-				eme_mark_payment_paid( $payment_id, 1, 'mercadopago', $mercadopago_paymentid );
+				eme_mark_payment_paid( $payment_id, 1, $gateway, $mercadopago_paymentid );
 				http_response_code( 200 );
 			} else {
 				http_response_code( 400 );
@@ -1857,7 +1864,7 @@ function eme_notification_mercadopago() {
 			}
 			$eme_price = eme_get_payment_price( $payment_id );
 			if ( $paid_amount >= $eme_price ) {
-				eme_mark_payment_paid( $payment_id, 1, 'mercadopago', $mercadopago_paymentid );
+				eme_mark_payment_paid( $payment_id, 1, $gateway, $mercadopago_paymentid );
 				http_response_code( 200 );
 			} else {
 				http_response_code( 400 );
@@ -1870,6 +1877,7 @@ function eme_notification_mercadopago() {
 }
 
 function eme_notification_legacypaypal() {
+	$gateway = 'legacypaypal';
 	require_once 'payment_gateways/paypal_legacy/IPN.php';
 	$ipn = new IPN();
 
@@ -1915,12 +1923,13 @@ function eme_notification_legacypaypal() {
 		The complete() method below logs the valid IPN to the places you choose
 		*/
 		$payment_id = intval( $ipn->ipn['custom'] );
-		eme_mark_payment_paid( $payment_id, 1, 'legacypaypal', $ipn->ipn['txn_id'] );
+		eme_mark_payment_paid( $payment_id, 1, $gateway, $ipn->ipn['txn_id'] );
 		$ipn->complete();
 	}
 }
 
 function eme_notification_2co() {
+	$gateway  = '2co'; 
 	$business = get_option( 'eme_2co_business' );
 	$secret   = get_option( 'eme_2co_secret' );
 
@@ -1945,12 +1954,13 @@ function eme_notification_2co() {
 
 		if ( $insMessage['invoice_status'] == 'approved' || $insMessage['invoice_status'] == 'deposited' ) {
 			$payment_id = intval( $insMessage['item_id_1'] );
-			eme_mark_payment_paid( $payment_id, 1, '2co', $hashInvoice );
+			eme_mark_payment_paid( $payment_id, 1, $gateway, $hashInvoice );
 		}
 	}
 }
 
 function eme_notification_webmoney() {
+	$gateway  = 'webmoney'; 
 	$webmoney_purse  = get_option( 'eme_webmoney_purse' );
 	$webmoney_secret = get_option( 'eme_webmoney_secret' );
 
@@ -1966,12 +1976,13 @@ function eme_notification_webmoney() {
 		#}
 		$payment_id = intval( $wm_notif->payment_no );
 		if ( $wm_notif->CheckMD5( $webmoney_purse, $amount, $payment_id, $webmoney_secret ) == WM_RES_OK ) {
-			eme_mark_payment_paid( $payment_id, 1, 'webmoney', $wm_notif->sys_invs_no );
+			eme_mark_payment_paid( $payment_id, 1, $gateway, $wm_notif->sys_invs_no );
 		}
 	}
 }
 
 function eme_notification_fdgg() {
+	$gateway  = 'fdgg'; 
 	$store_name    = get_option( 'eme_fdgg_store_name' );
 	$shared_secret = get_option( 'eme_fdgg_shared_secret' );
 	require_once 'payment_gateways/fdgg/fdgg-util_sha2.php';
@@ -2023,11 +2034,12 @@ function eme_notification_fdgg() {
 	#$price=eme_get_total_booking_price($booking);
 
 	if ( strtolower( $response_status ) == 'approved' ) {
-		eme_mark_payment_paid( $payment_id, 1, 'fdgg', $payment_id );
+		eme_mark_payment_paid( $payment_id, 1, $gateway, $payment_id );
 	}
 }
 
 function eme_notification_sumup() {
+	$gateway  = 'sumup'; 
 	$eme_sumup_app_id        = get_option( 'eme_sumup_app_id' );
 	$eme_sumup_app_secret    = get_option( 'eme_sumup_app_secret' );
 	$eme_sumup_merchant_code = get_option( 'eme_sumup_merchant_code' );
@@ -2065,12 +2077,13 @@ function eme_notification_sumup() {
 	if ( $checkoutbody->status == 'PAID' ) {
 		$payment = eme_get_payment_by_pg_pid( $checkout_id );
 		if ( ! empty( $payment ) ) {
-			eme_mark_payment_paid( $payment['id'], 1, 'sumup', $checkout->id );
+			eme_mark_payment_paid( $payment['id'], 1, $gateway, $checkout->id );
 		}
 	}
 }
 
 function eme_notification_stripe() {
+	$gateway  = 'stripe'; 
 	$eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
 	$webhook_secret         = get_option( 'eme_stripe_webhook_secret' );
 
@@ -2103,7 +2116,7 @@ function eme_notification_stripe() {
 		$stripe_session = $event->data->object;
 		$payment_id     = $stripe_session->client_reference_id;
 		$stripe_pi_id   = $stripe_session->payment_intent;
-		eme_mark_payment_paid( $payment_id, 1, 'stripe', $stripe_pi_id );
+		eme_mark_payment_paid( $payment_id, 1, $gateway, $stripe_pi_id );
 	}
 	http_response_code( 200 );
 }
@@ -2141,13 +2154,14 @@ function eme_notification_fondy() {
 }
 
 function eme_stripe_webhook() {
+	$gateway = "stripe";
 	$eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
 	if ( empty( $eme_stripe_private_key ) ) {
 		return;
 	}
 	// do nothing if the events page is on localhost
 	$events_page_link  = eme_get_events_page();
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'stripe_notification' ], $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 	if ( strstr( $events_page_link, 'localhost' ) ) {
 		update_option( 'eme_stripe_webhook_error', __( 'since this is a site running on localhost, no webhook will be created', 'events-made-easy' ) );
 		return;
@@ -2191,18 +2205,19 @@ function eme_stripe_webhook() {
 }
 
 function eme_charge_paypal() {
+	$gateway = "paypal";
 	$events_page_link = eme_get_events_page();
 	$payment_id       = intval( $_POST['payment_id'] );
 	$price            = eme_sanitize_request( $_POST['price'] );
 	$cur              = eme_sanitize_request( $_POST['cur'] );
 	$description      = eme_sanitize_request( $_POST['description'] );
 	$payment          = eme_get_payment( $payment_id );
-	$success_link     = eme_payment_return_url( $payment, 'paypal' );
+	$success_link     = eme_payment_return_url( $payment, $gateway );
 	$fail_link        = eme_payment_return_url( $payment, 1 );
 	// $notification_link = add_query_arg(array('eme_eventAction'=>'paypal_notification'),$events_page_link);
 
 	// no cheating
-	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_paypal_nonce']), "$price$cur" ) ) {
+	if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
 		wp_redirect($fail_link);
 		exit;
 	}
@@ -2286,17 +2301,18 @@ function eme_charge_paypal() {
 }
 
 function eme_charge_stripe() {
+	$gateway = "stripe";
 	$events_page_link = eme_get_events_page();
 	$payment_id       = intval( $_POST['payment_id'] );
 	$price            = eme_sanitize_request( $_POST['price'] );
 	$cur              = eme_sanitize_request( $_POST['cur'] );
 	$description      = eme_sanitize_request( $_POST['description'] );
 	$payment          = eme_get_payment( $payment_id );
-	$success_link     = eme_payment_return_url( $payment, 'stripe' );
+	$success_link     = eme_payment_return_url( $payment, $gateway );
 	$fail_link        = eme_payment_return_url( $payment, 1 );
 
 	// no cheating
-	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_stripe_nonce']), "$price$cur" ) ) {
+	if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
 		wp_redirect($fail_link);
 		exit;
 	}
@@ -2401,7 +2417,7 @@ function eme_charge_braintree() {
 	$fail_link    = eme_payment_return_url( $payment, 1 );
 
 	// no cheating
-	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_braintree_nonce']), "$price$cur" ) ) {
+	if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
 		wp_redirect($fail_link);
 		exit;
 	}
@@ -2459,12 +2475,12 @@ function eme_charge_instamojo() {
 	$description      = eme_sanitize_request( $_POST['description'] );
 	$payment          = eme_get_payment( $payment_id );
 
-	$return_link       = eme_payment_return_url( $payment, 'instamojo' );
+	$return_link       = eme_payment_return_url( $payment, $gateway );
 	$fail_link         = eme_payment_return_url( $payment, 1 );
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'instamojo_notification' ], $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
 	// no cheating
-	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_instamojo_nonce']), "$price$cur" ) ) {
+	if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
 		wp_redirect($fail_link);
 		exit;
 	}
@@ -2572,7 +2588,7 @@ function eme_charge_fondy() {
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 
 	// no cheating
-	if ( ! wp_verify_nonce( eme_sanitize_request($_POST[ "eme_{$gateway}_nonce" ]), "$price$cur" ) ) {
+	if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
 		wp_redirect($fail_link);
 		exit;
 	}
@@ -2820,6 +2836,7 @@ function eme_refund_booking_braintree( $booking ) {
 }
 
 function eme_charge_mollie() {
+	$gateway = 'mollie';
 	$events_page_link = eme_get_events_page();
 	$payment_id       = intval( $_POST['payment_id'] );
 	$price            = eme_sanitize_request( $_POST['price'] );
@@ -2832,12 +2849,12 @@ function eme_charge_mollie() {
 		return;
 	}
 
-	$return_link       = eme_payment_return_url( $payment, 'mollie' );
-	$fail_link         = eme_payment_return_url( $payment, 'mollie' );
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'mollie_notification' ], $events_page_link );
+	$return_link       = eme_payment_return_url( $payment, $gateway );
+	$fail_link         = eme_payment_return_url( $payment, $gateway );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
 	// no cheating
-	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_mollie_nonce']), "$price$cur" ) ) {
+	if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
 		wp_redirect($fail_link);
 		exit;
 	}
@@ -2938,10 +2955,10 @@ function eme_charge_payconiq() {
 
 	$return_link       = eme_payment_return_url( $payment, $gateway );
 	$fail_link         = eme_payment_return_url( $payment, $gateway );
-	$notification_link = add_query_arg( [ 'eme_eventAction' => 'payconiq_notification' ], $events_page_link );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
 	// no cheating
-	if ( ! wp_verify_nonce( eme_sanitize_request($_POST['eme_payconiq_nonce']), "$price$cur" ) ) {
+	if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
 		wp_redirect($fail_link);
 		exit;
 	}
@@ -3707,7 +3724,7 @@ function eme_cancel_payment_ajax() {
 			wp_die();
 		}
 	}
-	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), "cancel payment $payment_randomid" ) ) {
+	if ( empty( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], "cancel payment $payment_randomid" ) ) {
 		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
 		echo wp_json_encode(
 			[

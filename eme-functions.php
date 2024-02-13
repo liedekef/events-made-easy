@@ -2914,15 +2914,10 @@ function eme_upload_files( $id, $type = 'bookings' ) {
 		}
 		// now we know where to store it, so create the dir
 		$targetPath = EME_UPLOAD_DIR . '/' . $type . '/' . $id;
-		if ( ! is_dir( $targetPath ) ) {
-			$mkdir_res = wp_mkdir_p( $targetPath );
-			if ( ! $mkdir_res ) {
-				$errors[] = __( 'Failure creating upload dir, please check your permissions.', 'events-made-easy' );
-				continue;
-			}
-		}
-		if ( ! is_file( $targetPath . '/index.html' ) ) {
-			touch( $targetPath . '/index.html' );
+		$mkdir_res = eme_mkdir_with_index( $targetPath );
+		if ( ! $mkdir_res ) {
+			$errors[] = __( 'Failure creating upload dir, please check your permissions.', 'events-made-easy' );
+			continue;
 		}
 		if ( $eme_is_admin_request && isset( $_REQUEST['eme_admin_action'] ) ) {
 			if ( ! empty( $formfield['admin_values'] ) ) {
@@ -3970,6 +3965,17 @@ function eme_get_initials( $myname ) {
 function eme_js_redirect( $mylink ) {
 	$mylink = wp_sanitize_redirect( $mylink );
 	return '<script type="text/javascript">window.location.href="' . $mylink . '";</script>';
+}
+
+function eme_mkdir_with_index( $targetPath ) {
+	$mkdir_res = true;
+	if ( ! is_dir( $targetPath ) ) {
+		$mkdir_res = wp_mkdir_p( $targetPath );
+	}
+	if ( $mkdir_res && is_writable( $targetPath ) && ! is_file( $targetPath . '/index.html' ) ) {
+		touch( $targetPath . '/index.html' );
+	}
+	return $mkdir_res;
 }
 
 ?>

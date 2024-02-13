@@ -65,27 +65,16 @@ function _eme_install() {
 		eme_update_options( $db_version );
 	}
 
-	// some dir
-	if ( ! is_dir( EME_UPLOAD_DIR ) ) {
-		wp_mkdir_p( EME_UPLOAD_DIR );
+	// some folders that need to be created
+	eme_mkdir_with_index( EME_UPLOAD_DIR );
+	$upload_folders = [ 'events', 'locations', 'memberships', 'bookings', 'people', 'members', 'includes' ];
+	foreach ($upload_folders as $upload_folder) {
+		eme_mkdir_with_index( EME_UPLOAD_DIR . '/' . $upload_folder );
 	}
-	if ( ! is_dir( EME_UPLOAD_DIR . '/bookings' ) ) {
-		wp_mkdir_p( EME_UPLOAD_DIR . '/bookings' );
-	}
-	if ( ! is_file( EME_UPLOAD_DIR . '/bookings/index.html' ) ) {
-		touch( EME_UPLOAD_DIR . '/bookings/index.html' );
-	}
-	if ( ! is_dir( EME_UPLOAD_DIR . '/people' ) ) {
-		wp_mkdir_p( EME_UPLOAD_DIR . '/people' );
-	}
-	if ( ! is_file( EME_UPLOAD_DIR . '/people/index.html' ) ) {
-		touch( EME_UPLOAD_DIR . '/people/index.html' );
-	}
-	if ( ! is_dir( EME_UPLOAD_DIR . '/members' ) ) {
-		wp_mkdir_p( EME_UPLOAD_DIR . '/members' );
-	}
-	if ( ! is_file( EME_UPLOAD_DIR . '/members/index.html' ) ) {
-		touch( EME_UPLOAD_DIR . '/members/index.html' );
+	// let's restrict includes folder even more
+	if ( is_writable( EME_UPLOAD_DIR . '/includes' ) && ! is_file( EME_UPLOAD_DIR . '/includes/.htaccess' ) ) {
+		$content = "Deny from all";
+		file_put_contents(EME_UPLOAD_DIR . '/includes/.htaccess', $content);
 	}
 
 	// Create events page if necessary

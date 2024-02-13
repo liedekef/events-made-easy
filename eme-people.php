@@ -1250,7 +1250,7 @@ function eme_printable_booking_report( $event_id ) {
 			foreach ($price_arr as $key=>$price) {
                                 $res_arr[] = eme_localized_price( $price, $event['currency']) . " " . esc_html($multprice_desc_arr[$key]);
                         }
-                        echo join('||',$res_arr);
+                        echo eme_convert_array2multi( $res_arr, '<br>');
 		} else {
 			echo eme_localized_price( $event['price'], $event['currency']);
 			if (!empty($event['event_properties']['price_desc'])) {
@@ -1296,7 +1296,14 @@ function eme_printable_booking_report( $event_id ) {
 			<th scope='col' class='eme_print_seats'>
 			<?php
 			if ( $is_multiprice ) {
-				esc_html_e( 'Seats (Multiprice)', 'events-made-easy' );
+				if (!eme_is_empty_string($event['event_properties']['multiprice_desc'])) {
+					esc_html_e( 'Seats', 'events-made-easy' );
+					print "&nbsp; (";
+					print eme_array2multi(eme_multi2array($event['event_properties']['multiprice_desc']),', ');
+					print ")";
+				} else {
+					esc_html_e( 'Seats (Multiprice)', 'events-made-easy' );
+				}
 			} else {
 				esc_html_e( 'Seats', 'events-made-easy' );
 			}
@@ -1382,7 +1389,7 @@ function eme_printable_booking_report( $event_id ) {
 					if ( $booking['booking_seats_mp'] == '' ) {
 						$booking['booking_seats_mp'] = $booking['booking_seats'];
 					}
-					echo esc_html($booking['booking_seats'] . ' (' . $booking['booking_seats_mp'] . ')');
+					echo esc_html($booking['booking_seats'] . ' (' . eme_convert_array2multi( eme_convert_multi2array($booking['booking_seats_mp']), ', ') . ')');
 				} else {
 					echo esc_html($booking['booking_seats']);
 				}

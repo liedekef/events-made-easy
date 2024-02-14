@@ -1202,9 +1202,6 @@ function eme_printable_booking_report( $event_id ) {
 	$total_seats     = eme_get_total( $event['event_seats'] );
 	$booked_seats    = eme_get_booked_seats( $event_id );
 	$pending_seats   = eme_get_pending_seats( $event_id );
-	if ( $is_multiseat ) {
-		$available_seats_ms = eme_convert_array2multi( eme_get_available_multiseats( $event_id ) );
-	}
 
 	$stylesheet = esc_url(EME_PLUGIN_URL) . 'css/eme.css';
 
@@ -1482,7 +1479,7 @@ function eme_printable_booking_report( $event_id ) {
 			<?php
 			print esc_html($booked_seats);
 			if ( $is_multiprice ) {
-				$booked_seats_mp = eme_convert_array2multi( eme_get_booked_multiseats( $event_id ) );
+				$booked_seats_mp = eme_convert_array2multi( eme_get_booked_multiseats( $event_id ), ', ' );
 				print esc_html(" ($booked_seats_mp)");
 			}
 			?>
@@ -1499,7 +1496,7 @@ function eme_printable_booking_report( $event_id ) {
 				$approved_seats = eme_get_approved_seats( $event_id );
 				print esc_html($approved_seats);
 				if ( $is_multiprice ) {
-					$approved_seats_mp = eme_convert_array2multi( eme_get_approved_multiseats( $event_id ) );
+					$approved_seats_mp = eme_convert_array2multi( eme_get_approved_multiseats( $event_id ), ', ' );
 					print esc_html(" ($approved_seats_mp)");
 				}
 				?>
@@ -1513,7 +1510,7 @@ function eme_printable_booking_report( $event_id ) {
 					<?php
 					print esc_html($pending_seats);
 					if ( $is_multiprice ) {
-						$pending_seats_mp = eme_convert_array2multi( eme_get_pending_multiseats( $event_id ) );
+						$pending_seats_mp = eme_convert_array2multi( eme_get_pending_multiseats( $event_id ), ', ' );
 						print esc_html(" ($pending_seats_mp)");
 					}
 					?>
@@ -1530,6 +1527,7 @@ function eme_printable_booking_report( $event_id ) {
 			<?php
 			print esc_html($available_seats);
 			if ( $is_multiseat ) {
+				$available_seats_ms = eme_convert_array2multi( eme_get_available_multiseats( $event_id ), ', ' );
 				print esc_html(" ($available_seats_ms)");
 			}
 			?>

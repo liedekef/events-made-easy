@@ -1299,7 +1299,7 @@ function eme_printable_booking_report( $event_id ) {
 				if (!eme_is_empty_string($event['event_properties']['multiprice_desc'])) {
 					esc_html_e( 'Seats', 'events-made-easy' );
 					print "&nbsp; (";
-					print eme_array2multi(eme_multi2array($event['event_properties']['multiprice_desc']),', ');
+					print eme_convert_array2multi(eme_convert_multi2array($event['event_properties']['multiprice_desc']),', ');
 					print ")";
 				} else {
 					esc_html_e( 'Seats (Multiprice)', 'events-made-easy' );

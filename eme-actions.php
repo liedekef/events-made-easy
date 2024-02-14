@@ -132,17 +132,13 @@ function eme_actions_init() {
 		}
 	}
 
-	# payment notifications can apply filters in eme_get_configured_pgs(), so this needs to be in eme_actions_init, not in eme_actions_early_init
-	if ( isset( $_GET['eme_eventAction'] ) ) {
-		// not yet implemented for new paypal ...
-		#if ($_GET['eme_eventAction']=="paypal_notification") {
-		#   eme_notification_paypal();
-		#   exit();
-		#}
+	# payment notifications can apply filters in eme_get_configured_pgs(), so these need to be in eme_actions_init, not in eme_actions_early_init
+	// payment charges and eme_get_configured_pgs can apply custom filters, so we leave these in eme_actions_init too
+	if ( isset( $_REQUEST['eme_eventAction'] ) ) {
 		$found_methods = eme_get_configured_pgs();
 		foreach ($found_methods as $pg) {
+			// don't care if it is GET or POST for notifications (most use GET, fdgg uses POST)
 			$notification_function = 'eme_notification_'.$pg;
-			// don't care if it is GET or POST for notifications
 			if ( $_REQUEST['eme_eventAction'] == $pg.'_notification' && function_exists($notification_function)) {
 				$notification_function();
 				if ($pg != "opayo") {
@@ -151,15 +147,10 @@ function eme_actions_init() {
 					exit();
 				}
 			}
-		}
-	}
 
-	// payment charges and eme_get_configured_pgs can apply custom filters, so we leave these in eme_actions_init
-	if ( isset( $_POST['eme_eventAction'] ) ) {
-		$found_methods = eme_get_configured_pgs();
-		foreach ($found_methods as $pg) {
+			// charge calls normally come in via POST, but let's be generic and use REQUEST too
 			$charge_function = 'eme_charge_'.$pg;
-			if ( $_POST['eme_eventAction'] == $pg.'_charge' && function_exists($charge_function)) {
+			if ( $_REQUEST['eme_eventAction'] == $pg.'_charge' && function_exists($charge_function)) {
 				$charge_function();
 			}
 		}

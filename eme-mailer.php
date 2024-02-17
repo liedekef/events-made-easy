@@ -2280,8 +2280,7 @@ function eme_emails_page() {
 		<?php
 		if ( get_option( 'eme_rsvp_send_html' ) ) {
 			// for mails, let enable the full html editor
-			$eme_editor_settings = eme_get_editor_settings( true );
-			wp_editor( $event_mail_message, 'event_mail_message', $eme_editor_settings );
+			eme_wysiwyg_textarea( 'event_mail_message', $event_mail_message, 1, 1 );
 			if ( current_user_can( 'unfiltered_html' ) ) {
 				echo "<div class='eme_notice_unfiltered_html'>";
 				esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
@@ -2463,8 +2462,7 @@ function eme_emails_page() {
 		<?php
 		if ( get_option( 'eme_rsvp_send_html' ) ) {
 			// for mails, let enable the full html editor
-			$eme_editor_settings = eme_get_editor_settings( true );
-			wp_editor( $generic_mail_message, 'generic_mail_message', $eme_editor_settings );
+			eme_wysiwyg_textarea( 'generic_mail_message', $generic_mail_message, 1, 1 );
 			if ( current_user_can( 'unfiltered_html' ) ) {
 				echo "<div class='eme_notice_unfiltered_html'>";
 				esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );

@@ -112,20 +112,10 @@ function eme_options_textarea( $title, $name, $description, $show_wp_editor = 0,
 	<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
 	<td>
 	<?php
-	if ( $show_wp_editor ) {
-		if ( $show_full ) {
-			$eme_editor_settings = eme_get_editor_settings();
-		} else {
-			$eme_editor_settings = eme_get_editor_settings( false );
+		eme_wysiwyg_textarea( $name, $option_value, $show_wp_editor, $show_full);
+		if ( ! empty( $description ) ) {
+			echo '<br>' . $description;
 		}
-		wp_editor( $option_value, $name, $eme_editor_settings );
-	} else {
-		?>
-		<textarea name="<?php echo $name; ?>" id="<?php echo $name; ?>" rows="6" style="width: 95%"><?php echo eme_esc_html( $option_value ); ?></textarea>
-	<?php } ?>
-	<?php
-	if ( ! empty( $description ) ) {
-		echo '<br>' . $description;}
 	?>
 	</td>
 	</tr>

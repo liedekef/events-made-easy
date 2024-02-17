@@ -1973,7 +1973,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		}
 		?>
 		<div id="div_membership_properties_member_form_text" <?php echo $showhide_style; ?>>
-		<?php eme_wysiwyg_textarea( 'properties[member_form_text]', $membership['properties']['member_form_text'], 1, 0 ); ?>
+		<?php eme_wysiwyg_textarea( 'properties[member_form_text]', $membership['properties']['member_form_text'], 1, 1 ); ?>
 		</div>
 	</td>
 	</tr>
@@ -2005,7 +2005,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		}
 		?>
 		<div id="div_membership_properties_familymember_form_text" <?php echo $showhide_style; ?>>
-		<?php eme_wysiwyg_textarea( 'properties[familymember_form_text]', $membership['properties']['familymember_form_text'], 1, 0 ); ?>
+		<?php eme_wysiwyg_textarea( 'properties[familymember_form_text]', $membership['properties']['familymember_form_text'], 1, 1 ); ?>
 		</div>
 	</td>
 	</tr>
@@ -2023,7 +2023,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		}
 		?>
 		<div id="div_membership_properties_member_added_text" <?php echo $showhide_style; ?>>
-		<?php eme_wysiwyg_textarea( 'properties[member_added_text]', $membership['properties']['member_added_text'], 1, 0 ); ?>
+		<?php eme_wysiwyg_textarea( 'properties[member_added_text]', $membership['properties']['member_added_text'], 1, 1 ); ?>
 		</div>
 	</td>
 	</tr>
@@ -2041,7 +2041,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		}
 		?>
 		<div id="div_membership_properties_payment_form_header_text" <?php echo $showhide_style; ?>>
-		<?php eme_wysiwyg_textarea( 'properties[payment_form_header_text]', $membership['properties']['payment_form_header_text'], 1, 0 ); ?>
+		<?php eme_wysiwyg_textarea( 'properties[payment_form_header_text]', $membership['properties']['payment_form_header_text'], 1, 1 ); ?>
 		</div>
 	</td>
 	</tr>
@@ -2059,7 +2059,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		}
 		?>
 		<div id="div_membership_properties_payment_form_footer_text" <?php echo $showhide_style; ?>>
-		<?php eme_wysiwyg_textarea( 'properties[payment_form_footer_text]', $membership['properties']['payment_form_footer_text'], 1, 0 ); ?>
+		<?php eme_wysiwyg_textarea( 'properties[payment_form_footer_text]', $membership['properties']['payment_form_footer_text'], 1, 1 ); ?>
 		</div>
 	</td>
 	</tr>
@@ -2077,7 +2077,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		}
 		?>
 		<div id="div_membership_properties_payment_success_text" <?php echo $showhide_style; ?>>
-		<?php eme_wysiwyg_textarea( 'properties[payment_success_text]', $membership['properties']['payment_success_text'], 1, 0 ); ?>
+		<?php eme_wysiwyg_textarea( 'properties[payment_success_text]', $membership['properties']['payment_success_text'], 1, 1 ); ?>
 		</div>
 	</td>
 	</tr>
@@ -2144,7 +2144,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		}
 		?>
 		<div id="div_membership_properties_offline_payment_text" <?php echo $showhide_style; ?>>
-		<?php eme_wysiwyg_textarea( 'properties[offline_payment_text]', $membership['properties']['offline_payment_text'], 1, 0 ); ?>
+		<?php eme_wysiwyg_textarea( 'properties[offline_payment_text]', $membership['properties']['offline_payment_text'], 1, 1 ); ?>
 		</div>
 	</td>
 	</tr>

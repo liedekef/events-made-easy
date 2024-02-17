@@ -223,8 +223,7 @@ function eme_categories_edit_layout( $message = '' ) {
 			<td><div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
 				<!-- we need description for qtranslate as ID -->
 				<?php
-				$eme_editor_settings = eme_get_editor_settings();
-				wp_editor( $category['description'], 'description', $eme_editor_settings );
+				eme_wysiwyg_textarea( 'description', $category['description'], 1, 1 );
 				?>
 				<br><?php esc_html_e( 'The description of the category', 'events-made-easy' ); ?>
 				</div>

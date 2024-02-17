@@ -232,7 +232,6 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 	}
 	$template_types      = eme_template_types();
 	$nonce_field         = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
-	$eme_editor_settings = eme_get_editor_settings();
 	$orientation_array   = [
 		'portrait'  => __( 'Portrait', 'events-made-easy' ),
 		'landscape' => __( 'Landscape', 'events-made-easy' ),
@@ -276,7 +275,7 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 			</tr>
 			<tr>
 			<td><?php esc_html_e( 'Format', 'events-made-easy' ); ?></label></td>
-			<td><?php wp_editor( $template['format'], 'template_format', $eme_editor_settings ); ?>
+			<td><?php eme_wysiwyg_textarea( 'template_format', $template['format'], 1, 1 ); ?>
 			<?php
 				if ( current_user_can( 'unfiltered_html' ) ) {
 					echo "<div class='eme_notice_unfiltered_html'>";

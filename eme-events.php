@@ -8276,7 +8276,6 @@ function eme_meta_box_div_event_location( $event ) {
 }
 
 function eme_meta_box_div_event_notes( $event ) {
-	$eme_editor_settings = eme_get_editor_settings();
 	?>
 <div id="div_event_notes">
 		<br>
@@ -8286,7 +8285,7 @@ function eme_meta_box_div_event_notes( $event ) {
 	<p class="eme_smaller"><?php esc_html_e( 'The event description. This is also used in html meta tags and google tags to show the event info.', 'events-made-easy' ); ?></p>
 	<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
 	<!-- we need content for qtranslate as ID -->
-	<?php wp_editor( $event['event_notes'], 'content', $eme_editor_settings ); ?>
+	<?php eme_wysiwyg_textarea( 'content', $event['event_notes'], 1, 1 ); ?>
 	<?php
 	if ( current_user_can( 'unfiltered_html' ) ) {
 			echo "<div class='eme_notice_unfiltered_html'>";

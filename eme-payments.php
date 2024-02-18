@@ -427,7 +427,7 @@ function eme_payment_gateway_extra_charge( $price, $gateway ) {
 		}
 	}
 	if ( has_filter( 'eme_payment_gateway_extra_cost' ) ) {
-		$result = apply_filters( 'eme_payment_gateway_extra_cost', $price, $gateway );
+		$result += apply_filters( 'eme_payment_gateway_extra_cost', $price, $gateway );
 	}
 	return $result;
 }

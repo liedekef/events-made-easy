@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.30 (2024//) =
+* Fix extra charge for payment gateways if eme_payment_gateway_extra_cost was defined
+
 = 2.4.29 (2024/02/17) =
 * Allow to have a folder wp-content/uploads/events-made-easy/includes. Files present in that folder will be included by EME
   This allows for EME extensions and are not overwritten by theme/plugin updates

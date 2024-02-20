@@ -5185,10 +5185,10 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 
 	// when used inside a location description, you can use "this_location" to indicate the current location being viewed
 	if ( is_string( $location_id ) && ( $location_id == '#_SINGLE_LOCATIONPAGE_LOCATIONID' || $location_id == 'this_location' ) && eme_is_single_location_page() ) {
-			$locationid_or_slug = eme_sanitize_request( get_query_var( 'location_id' ) );
-			$location           = eme_get_location( $locationid_or_slug );
+		$locationid_or_slug = eme_sanitize_request( get_query_var( 'location_id' ) );
+		$location           = eme_get_location( $locationid_or_slug );
 		if ( ! empty( $location ) ) {
-				$location_id = $location['location_id'];
+			$location_id = $location['location_id'];
 		}
 	}
 
@@ -5946,6 +5946,7 @@ function eme_events_table( $message = '' ) {
 		}
 		?>
 	</select>
+        <input type="text" name="search_location" id="search_location" placeholder="<?php esc_attr_e( 'Filter on location', 'events-made-easy' ); ?>" size=15>
 	<?php
 	$formfields_searchable = eme_get_searchable_formfields( 'events' );
 	if ( ! empty( $formfields_searchable ) ) {
@@ -9972,6 +9973,8 @@ function eme_ajax_events_list() {
 	$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql(eme_sanitize_request( $_REQUEST['search_start_date']) ) : '';
 	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_end_date']) ) : '';
+	$search_location   = isset( $_REQUEST['search_location'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_location'] ) ) ) : '';
+
 	$where             = '';
 	$where_arr         = [];
 	if ( ! empty( $search_name ) ) {
@@ -9988,6 +9991,16 @@ function eme_ajax_events_list() {
 		$where_arr[] = "event_end LIKE '$search_end_date%'";
 		$scope       = 'all';
 	}
+	$location_ids = "";
+        if ( ! empty( $search_location ) ) {
+	        $location_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+		$query = "SELECT location_id FROM $location_table WHERE location_name LIKE '%$search_location%'";
+		$location_ids_arr = $wpdb->get_col( $query );
+		if (!empty($location_ids_arr)) {
+			$location_ids = join(',',$location_ids_arr);
+		}
+        }
+
 	// override in case of trash
 	if ( isset( $_REQUEST['trash'] ) && $_REQUEST['trash'] == 1 ) {
 		$view_trash  = 1;
@@ -10033,13 +10046,13 @@ function eme_ajax_events_list() {
 		$search_customfields = '';
 	}
 
-	$events_count = eme_get_events( 0, $scope, '', 0, '', $category, '', '', 1, '', 0, $where, $count_only, 1, $field_ids, $search_customfields );
+	$events_count = eme_get_events( 0, $scope, '', 0, $location_ids, $category, '', '', 1, '', 0, $where, $count_only, 1, $field_ids, $search_customfields );
 
 	// datetime is a column in the javascript definition of the events jtable, but of course the db doesn't know this
 	// so we need to change this into something known, but since eme_get_events can work with "ASC/DESC" only and
 	// then sorts on date/time, we just remove the word here
 	$jtSorting          = str_replace( 'datetime ', '', $jtSorting );
-	$events             = eme_get_events( $jtPageSize, $scope, $jtSorting, $jtStartIndex, '', $category, '', '', 1, '', 0, $where, 0, 1, $field_ids, $search_customfields );
+	$events             = eme_get_events( $jtPageSize, $scope, $jtSorting, $jtStartIndex, $location_ids, $category, '', '', 1, '', 0, $where, 0, 1, $field_ids, $search_customfields );
 	$event_status_array = eme_status_array();
 	$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
 

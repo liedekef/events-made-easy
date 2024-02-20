@@ -3422,7 +3422,7 @@ function eme_store_member_answers( $member, $do_update = 1 ) {
 				eme_update_answer( $answer_id, $answer['answer'] );
 				$answer_ids_seen[] = $answer_id;
 			} elseif ( $answer['field_purpose'] == 'people' ) {
-					$answer_id = eme_insert_answer( 'person', $person_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
+				$answer_id = eme_insert_answer( 'person', $person_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
 			} else {
 				$answer_id = eme_insert_answer( 'member', $member_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
 			}
@@ -3764,8 +3764,10 @@ function eme_member_set_paid( $member, $pg = '', $pg_pid = '' ) {
 	$fields['paid']          = 1;
 	$fields['reminder']      = 0;
 	$fields['reminder_date'] = '0000-00-00 00:00:00';
-	$fields['pg']            = $pg;
-	$fields['pg_pid']        = $pg_pid;
+	if (!empty($pg))
+		$fields['pg']            = $pg;
+	if (!empty($pg_pid))
+		$fields['pg_pid']        = $pg_pid;
 	$fields['payment_date']  = current_time( 'mysql', false );
 
 	// if a membership is paid, set the start and end date if need be

@@ -2178,7 +2178,7 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
 				eme_update_answer( $answer_id, $answer['answer'] );
 				$answer_ids_seen[] = $answer_id;
 			} elseif ( $answer['field_purpose'] == 'people' ) {
-					$answer_id = eme_insert_answer( 'person', $person_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
+				$answer_id = eme_insert_answer( 'person', $person_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
 			} else {
 				$answer_id = eme_insert_answer( 'booking', $booking_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
 			}

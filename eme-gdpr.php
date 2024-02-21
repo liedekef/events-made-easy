@@ -93,7 +93,7 @@ function eme_rpi_ajax() {
 		$gdpr_body    = eme_replace_generic_placeholders( $gdpr_body, $mail_text_html );
 		eme_queue_fastmail( $gdpr_subject, $gdpr_body, $contact_email, $contact_name, $email, '', $contact_email, $contact_name );
 	}
-	$form_html = __( 'Thank you for your request, an email will be sent with further info', 'events-made-easy' );
+	$form_html = __( 'Thank you for your request, an email will be sent with further info.', 'events-made-easy' );
 	echo wp_json_encode(
 	    [
 			'Result'      => 'OK',
@@ -188,7 +188,7 @@ function eme_gdpr_approve_ajax() {
 		$gdpr_body    = eme_replace_generic_placeholders( $gdpr_body, $mail_text_html );
 		eme_queue_fastmail( $gdpr_subject, $gdpr_body, $contact_email, $contact_name, $email, '', $contact_email, $contact_name );
 	}
-	$form_html = __( 'Thank you for your request, an email will be sent with further info', 'events-made-easy' );
+	$form_html = __( 'Thank you for your request, an email will be sent with further info.', 'events-made-easy' );
 	echo wp_json_encode(
 		[
 			'Result'      => 'OK',

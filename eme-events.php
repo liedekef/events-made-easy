@@ -4735,10 +4735,6 @@ function eme_search_events( $name, $scope = 'future', $name_only = 0, $exclude_i
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
-function eme_get_events_include_unlisted( $limit = 0, $scope = 'future', $order = 'ASC', $offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '' ) {
-	return eme_get_events( $limit, $scope, $order, $offset, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions, $count, $include_customformfields, $search_customfieldids, $search_customfields, 1);
-}
-
 // main function querying the database event table
 function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset = 0, $location_id = '', $category = '', $author = '', $contact_person = '', $show_ongoing = 1, $notcategory = '', $show_recurrent_events_once = 0, $extra_conditions = '', $count = 0, $include_customformfields = 0, $search_customfieldids = '', $search_customfields = '', $include_unlisted = 0 ) {
 	global $wpdb;
@@ -4807,7 +4803,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 		$conditions[] = $extra_conditions;
 	}
 
-	// if we're not in the admin itf, we don't want draft events
+	// if we're not in the admin itf, we don't want draft or unlisted events
 	if ( ! eme_is_admin_request() ) {
 		if ( is_user_logged_in() ) {
 			if ($include_unlisted) {
@@ -10046,13 +10042,14 @@ function eme_ajax_events_list() {
 		$search_customfields = '';
 	}
 
-	$events_count = eme_get_events( 0, $scope, '', 0, $location_ids, $category, '', '', 1, '', 0, $where, $count_only, 1, $field_ids, $search_customfields );
+
+	$events_count = eme_get_events( scope: $scope, location_id: $location_ids, category: $category, extra_conditions: $where, count: $count_only, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
 
 	// datetime is a column in the javascript definition of the events jtable, but of course the db doesn't know this
 	// so we need to change this into something known, but since eme_get_events can work with "ASC/DESC" only and
 	// then sorts on date/time, we just remove the word here
 	$jtSorting          = str_replace( 'datetime ', '', $jtSorting );
-	$events             = eme_get_events( $jtPageSize, $scope, $jtSorting, $jtStartIndex, $location_ids, $category, '', '', 1, '', 0, $where, 0, 1, $field_ids, $search_customfields );
+	$events             = eme_get_events( limit: $jtPageSize, scope: $scope, order: $jtSorting, offset: $jtStartIndex, location_id: $location_ids, category: $category, extra_conditions: $where, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
 	$event_status_array = eme_status_array();
 	$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
 

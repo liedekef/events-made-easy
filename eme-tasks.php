@@ -1232,11 +1232,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 		$extra_conditions = '(' . join( ' AND ', $extra_conditions_arr ) . ')';
 	}
 
-	if ($include_unlisted) {
-		$events = eme_get_events_include_unlisted( 0, $scope, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
-	} else {
-		$events = eme_get_events( 0, $scope, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
-	}
+	$events = eme_get_events( scope: $scope, order: $order, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, include_unlisted: $include_unlisted);
 	if ( empty( $events ) ) {
 		$result = "<div id='eme-tasks-message' class='eme-message-info eme-tasks-message eme-no-tasks'>" . __( 'There are no tasks to sign up for right now', 'events-made-easy' ) . '</div>';
 		return $result;

@@ -4069,7 +4069,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
 }
 
 // TEMPLATE TAGS
-function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format = '', $format_header = '', $format_footer = '', $echo = 0, $category = '', $showperiod = '', $long_events = 0, $author = '', $contact_person = '', $paging = 0, $event_ids = '', $location_id = '', $user_registered_only = 0, $show_ongoing = 1, $link_showperiod = 0, $notcategory = '', $show_recurrent_events_once = 0, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $no_events_message = '', $template_id_no_events = 0, $limit_offset = 0 ) {
+function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format = '', $format_header = '', $format_footer = '', $echo = 0, $category = '', $showperiod = '', $long_events = 0, $author = '', $contact_person = '', $paging = 0, $event_ids = '', $location_ids = '', $user_registered_only = 0, $show_ongoing = 1, $link_showperiod = 0, $notcategory = '', $show_recurrent_events_once = 0, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $no_events_message = '', $template_id_no_events = 0, $limit_offset = 0 ) {
 	global $post;
 	if ( $limit === '' ) {
 		$limit = intval(get_option( 'eme_event_list_number_items' ));
@@ -4203,9 +4203,9 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 	}
 	// We request $limit+1 events, so we know if we need to show the pagination link or not.
 	if ( $limit == 0 ) {
-		$events = eme_get_events( 0, $scope, $order, $limit_offset, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
+		$events = eme_get_events( scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
 	} else {
-		$events = eme_get_events( $limit + 1, $scope, $order, $limit_offset, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
+		$events = eme_get_events( limit: $limit + 1, scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
 	}
 	$events_count = count( $events );
 
@@ -4218,7 +4218,7 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 		// for normal paging and there're no events, we go back to offset=0 and try again
 		if ( $events_count == 0 ) {
 			$limit_offset = 0;
-			$events       = eme_get_events( $limit + 1, $scope, $order, $limit_offset, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
+			$events       = eme_get_events( limit: $limit + 1, scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
 			$events_count = count( $events );
 		}
 		$prev_text     = __( 'Previous page', 'events-made-easy' );
@@ -4308,8 +4308,8 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 
 		// to prevent going on indefinitely and thus allowing search bots to go on for ever,
 		// we stop providing links if there are no more events left
-		$count_older_events = eme_get_events( 1, '--' . $limit_start, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions, 1 );
-                $count_newer_events = eme_get_events( 1, '++' . $limit_end, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions, 1 );
+		$count_older_events = eme_get_events( limit: 1, scope: '--' . $limit_start, order: $order, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, count: 1 );
+		$count_newer_events = eme_get_events( limit: 1, scope: '++' . $limit_end, order: $order, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, count: 1 );
 		if ( $count_older_events > 0 ) {
 			$pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
 		} else {
@@ -4618,7 +4618,7 @@ function eme_get_events_list_shortcode( $atts ) {
 	// "#_" here
 	$format = preg_replace( '/#OTHER/', '#', $format );
 
-	$result = eme_get_events_list( $limit, $scope, $order, $format, '', '', 0, $category, $showperiod, $long_events, $author, $contact_person, $paging, $event_id, $location_id, $user_registered_only, $show_ongoing, $link_showperiod, $notcategory, $show_recurrent_events_once, $template_id, $template_id_header, $template_id_footer, $no_events_message, $template_id_no_events, $offset );
+	$result = eme_get_events_list( limit: $limit, scope: $scope, order: $order, format: $format, category: $category, showperiod: $showperiod, long_events: $long_events, author: $author, contact_person: $contact_person, paging: $paging, event_ids: $event_id, location_id: $location_id, user_registered_only: $user_registered_only, show_ongoing: $show_ongoing, link_showperiod: $link_showperiod, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, template_id: $template_id, template_id_header: $template_id_header, template_id_footer: $template_id_footer, no_events_message: $no_events_message, template_id_no_events: $template_id_no_events, limit_offset: $offset );
 	return $result;
 }
 
@@ -4684,8 +4684,7 @@ function eme_are_events_available( $scope = 'future', $order = 'ASC', $location_
 	if ( $scope == '' ) {
 		$scope = 'future';
 	}
-	$events = eme_get_events( 1, $scope, $order, 0, $location_id, $category, $author, $contact_person );
-
+	$events = eme_get_events( limit: 1, scope: $scope, order: $order, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, count: 1 );
 	if ( empty( $events ) ) {
 		return false;
 	} else {
@@ -4767,26 +4766,28 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 	$orderby = '';
 	// remove trailing ','
 	$order = preg_replace( '/,$/', '', $order );
-	if ( $order == 'ASC' || $order == 'DESC' ) {
-		$orderby = "ORDER BY event_start $order, event_name $order";
-	} elseif ( ! eme_is_empty_string( $order ) && preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
-		$order_arr = [];
-		$order_by  = '';
-		if ( preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
-			$order_tmp_arr = explode( ',', $order );
-			foreach ( $order_tmp_arr as $order_ell ) {
-				$asc_desc = 'ASC';
-				if ( preg_match( '/DESC$/', $order_ell ) ) {
-					$asc_desc = 'DESC';
+	if ( ! eme_is_empty_string( $order )) {
+		if ( $order == 'ASC' || $order == 'DESC' ) {
+			$orderby = "ORDER BY event_start $order, event_name $order";
+		} elseif ( preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
+			$order_arr = [];
+			$order_by  = '';
+			if ( preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
+				$order_tmp_arr = explode( ',', $order );
+				foreach ( $order_tmp_arr as $order_ell ) {
+					$asc_desc = 'ASC';
+					if ( preg_match( '/DESC$/', $order_ell ) ) {
+						$asc_desc = 'DESC';
+					}
+					$order_ell   = trim( preg_replace( '/ASC$|DESC$|\s/', '', $order_ell ) );
+					$order_arr[] = "$order_ell $asc_desc";
 				}
-				$order_ell   = trim( preg_replace( '/ASC$|DESC$|\s/', '', $order_ell ) );
-				$order_arr[] = "$order_ell $asc_desc";
 			}
-		}
-		if ( ! empty( $order_arr ) ) {
-			$orderby = 'ORDER BY ' . join( ', ', $order_arr );
-		} else {
-			$orderby = 'ORDER BY event_start ASC, event_name ASC';
+			if ( ! empty( $order_arr ) ) {
+				$orderby = 'ORDER BY ' . join( ', ', $order_arr );
+			} else {
+				$orderby = 'ORDER BY event_start ASC, event_name ASC';
+			}
 		}
 	}
 
@@ -10043,7 +10044,7 @@ function eme_ajax_events_list() {
 	}
 
 
-	$events_count = eme_get_events( scope: $scope, location_id: $location_ids, category: $category, extra_conditions: $where, count: $count_only, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
+	$events_count = eme_get_events( scope: $scope, order: '', location_id: $location_ids, category: $category, extra_conditions: $where, count: $count_only, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
 
 	// datetime is a column in the javascript definition of the events jtable, but of course the db doesn't know this
 	// so we need to change this into something known, but since eme_get_events can work with "ASC/DESC" only and

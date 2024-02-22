@@ -220,7 +220,7 @@ function eme_ical() {
 	$scope              = isset( $_GET['scope'] ) ? eme_sanitize_request( urldecode( $_GET['scope'] ) ) : '';
 	$author             = isset( $_GET['author'] ) ? eme_sanitize_request( urldecode( $_GET['author'] ) ) : '';
 	$contact_person     = isset( $_GET['contact_person'] ) ? eme_sanitize_request( urldecode( $_GET['contact_person'] ) ) : '';
-	$events             = eme_get_events( 0, $scope, 'ASC', 0, $location_id, $category, $author, $contact_person, 1, $notcategory );
+	$events             = eme_get_events( scope: $scope, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: 1, notcategory: $notcategory );
 	foreach ( $events as $event ) {
 		echo eme_ical_single_event( $event, $title_format, $description_format, $location_format );
 	}
@@ -232,7 +232,7 @@ function eme_sitemap() {
 	header( 'Content-type: text/xml; charset=utf-8' );
 	header( 'Content-Disposition: inline; filename=eme_public.xml' );
 	echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">' . "\n";
-	$events = eme_get_events( 5000, 'all', 'DESC' );
+	$events = eme_get_events( limit: 5000, scope: 'all', order: 'DESC' );
 	if ( ! empty( $events ) ) {
 		foreach ( $events as $event ) {
 				// Build Sitemap Elements

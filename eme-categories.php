@@ -285,7 +285,7 @@ function eme_get_categories( $eventful = false, $scope = 'future', $extra_condit
 	$categories       = [];
 	$order_by         = ' ORDER BY category_name ASC';
 	if ( $eventful ) {
-		$events = eme_get_events( 0, $scope, 'ASC' );
+		$events = eme_get_events( scope: $scope, order: 'ASC' );
 		if ( $events ) {
 			foreach ( $events as $event ) {
 				if ( ! empty( $event['event_category_ids'] ) ) {

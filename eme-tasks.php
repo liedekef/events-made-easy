@@ -1059,7 +1059,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 	}
 
 	$extra_conditions_arr[] = 'event_tasks = 1';
-	$events                 = eme_get_events( 0, $scope, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing, $notcategory, $show_recurrent_events_once, $extra_conditions );
+	$events                 = eme_get_events( scope: $scope, order: $order, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
 
 	foreach ( $events as $event ) {
 		$tasks = eme_get_event_tasks( $event['event_id'] );

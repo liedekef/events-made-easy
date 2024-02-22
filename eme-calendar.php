@@ -315,7 +315,7 @@ function eme_get_calendar( $args = '' ) {
 	// we'll look for events in the requested month and 7 days before and after
 	$calbegin = "$iPrevYear-$iPrevMonth-$iPrevShowFrom";
 	$calend   = "$iNextYear-$iNextMonth-07";
-	$events   = eme_get_events( 0, "$calbegin--$calend", 'ASC', 0, $location_id, $category, $author, $contact_person, 1, $notcategory );
+	$events   = eme_get_events( scope: "$calbegin--$calend", location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, notcategory: $notcategory );
 
 	$eventful_days = [];
 	if ( $events ) {

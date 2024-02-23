@@ -4618,7 +4618,7 @@ function eme_get_events_list_shortcode( $atts ) {
 	// "#_" here
 	$format = preg_replace( '/#OTHER/', '#', $format );
 
-	$result = eme_get_events_list( limit: $limit, scope: $scope, order: $order, format: $format, category: $category, showperiod: $showperiod, long_events: $long_events, author: $author, contact_person: $contact_person, paging: $paging, event_ids: $event_id, location_id: $location_id, user_registered_only: $user_registered_only, show_ongoing: $show_ongoing, link_showperiod: $link_showperiod, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, template_id: $template_id, template_id_header: $template_id_header, template_id_footer: $template_id_footer, no_events_message: $no_events_message, template_id_no_events: $template_id_no_events, limit_offset: $offset );
+	$result = eme_get_events_list( limit: $limit, scope: $scope, order: $order, format: $format, category: $category, showperiod: $showperiod, long_events: $long_events, author: $author, contact_person: $contact_person, paging: $paging, event_ids: $event_id, location_ids: $location_id, user_registered_only: $user_registered_only, show_ongoing: $show_ongoing, link_showperiod: $link_showperiod, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, template_id: $template_id, template_id_header: $template_id_header, template_id_footer: $template_id_footer, no_events_message: $no_events_message, template_id_no_events: $template_id_no_events, limit_offset: $offset );
 	return $result;
 }
 

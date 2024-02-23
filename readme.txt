@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 5.4
 Tested up to: 6.4.3
-Stable tag: 2.4.31
+Stable tag: 2.4.32
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.32 (2024/02/23) =
+* Fix yet another named parameter usage (typo) causing event listing not to show in some shortcodes
+
 = 2.4.31 (2024/02/23) =
 * Fix a new named parameter usage (typo) causing rsvp not to work
 

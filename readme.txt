@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.31 (2024/02/23) =
+* Fix a new named parameter usage (typo) causing rsvp not to work
+
 = 2.4.30 (2024/02/22) =
 * Fix extra charge for payment gateways if eme_payment_gateway_extra_cost was defined
 * The dompdf included with EME uses a php-svg-lib version that had a security vulnerability

@@ -1208,7 +1208,7 @@ function eme_events_page_content() {
 				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
 			}
 			$limit     = intval(get_option( 'eme_event_list_number_items' ));
-			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_id: $location_ids );
+			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_ids: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
 		}
@@ -1228,7 +1228,7 @@ function eme_events_page_content() {
 				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
 			}
 			$limit     = intval(get_option( 'eme_event_list_number_items' ));
-			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_id: $location_ids );
+			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_ids: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
 		}
@@ -1281,7 +1281,7 @@ function eme_events_page_content() {
 		$author         = str_replace( '_MYSELF', '#_MYSELF', $author );
 		$contact_person = str_replace( '_MYSELF', '#_MYSELF', $contact_person );
 
-		$page_body = eme_get_events_list( limit: 0, scope: $scope, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory );
+		$page_body = eme_get_events_list( limit: 0, scope: $scope, category: $category, author: $author, contact_person: $contact_person, location_ids: $location_id, notcategory: $notcategory );
 		return $page_body;
 	} else {
 		// Defaults events page

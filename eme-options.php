@@ -386,15 +386,6 @@ function eme_add_options( $reset = 0 ) {
 		'eme_paypal_button_img_url'                       => '',
 		'eme_paypal_button_above'                         => sprintf( $eme_payment_button_above_localizable, 'Paypal' ),
 		'eme_paypal_button_below'                         => '',
-		'eme_2co_demo'                                    => 0,
-		'eme_2co_business'                                => '',
-		'eme_2co_secret'                                  => '',
-		'eme_2co_cost'                                    => 0,
-		'eme_2co_cost2'                                   => 0,
-		'eme_2co_button_label'                            => sprintf( $eme_payment_button_label_localizable, '2Checkout' ),
-		'eme_2co_button_img_url'                          => '',
-		'eme_2co_button_above'                            => sprintf( $eme_payment_button_above_localizable, '2Checkout' ),
-		'eme_2co_button_below'                            => '',
 		'eme_webmoney_demo'                               => 0,
 		'eme_webmoney_purse'                              => '',
 		'eme_webmoney_secret'                             => '',
@@ -824,6 +815,17 @@ function eme_update_options( $db_version ) {
 				update_option( 'eme_payconiq_button_img_url', esc_url(EME_PLUGIN_URL) . 'images/payment_gateways/payconiq/logo.png' );
 			}
 		}
+		if ( $db_version < 379 ) {
+			delete_option( 'eme_2co_demo' );
+			delete_option( 'eme_2co_secret' );
+			delete_option( 'eme_2co_business' );
+			delete_option( 'eme_2co_cost' );
+			delete_option( 'eme_2co_cost' );
+			delete_option( 'eme_2co_button_label' );
+			delete_option( 'eme_2co_button_img_url' );
+			delete_option( 'eme_2co_button_above' );
+			delete_option( 'eme_2co_button_below' );
+		}
 	}
 	// make sure the captcha doesn't cause problems
 	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
@@ -1051,7 +1053,7 @@ function eme_options_register() {
 				$options = [ 'eme_cpi_subject', 'eme_cpi_body', 'eme_cpi_form', 'eme_gdpr_subject', 'eme_gdpr_body', 'eme_gdpr_approve_subject', 'eme_gdpr_approve_body', 'eme_gdpr_page_title', 'eme_gdpr_page_header', 'eme_gdpr_page_footer', 'eme_gdpr_approve_page_title', 'eme_gdpr_approve_page_content', 'eme_gdpr_remove_expired_member_days', 'eme_gdpr_anonymize_old_bookings_days', 'eme_gdpr_remove_old_events_days', 'eme_gdpr_archive_old_mailings_days', 'eme_gdpr_remove_old_attendances_days', 'eme_gdpr_remove_old_signups_days' ];
 			break;
 		case 'payments':
-			$options = [ 'eme_default_vat', 'eme_payment_form_header_format', 'eme_payment_form_footer_format', 'eme_multipayment_form_header_format', 'eme_multipayment_form_footer_format', 'eme_payment_succes_format', 'eme_payment_fail_format', 'eme_payment_member_succes_format', 'eme_payment_member_fail_format', 'eme_payment_booking_already_paid_format', 'eme_payment_booking_on_waitinglist_format', 'eme_default_currency', 'eme_default_price', 'eme_payment_refund_ok', 'eme_pg_submit_immediately', 'eme_payment_redirect', 'eme_payment_redirect_wait', 'eme_payment_redirect_msg', 'eme_paypal_url', 'eme_paypal_clientid', 'eme_paypal_secret', 'eme_2co_demo', 'eme_2co_business', 'eme_2co_secret', 'eme_webmoney_purse', 'eme_webmoney_secret', 'eme_webmoney_demo', 'eme_fdgg_url', 'eme_fdgg_store_name', 'eme_fdgg_shared_secret', 'eme_2co_cost', 'eme_paypal_cost', 'eme_fdgg_cost', 'eme_webmoney_cost', 'eme_2co_cost2', 'eme_paypal_cost2', 'eme_fdgg_cost2', 'eme_webmoney_cost2', 'eme_mollie_api_key', 'eme_mollie_cost', 'eme_mollie_cost2', 'eme_paypal_button_label', 'eme_paypal_button_above', 'eme_paypal_button_below', 'eme_2co_button_label', 'eme_2co_button_above', 'eme_2co_button_below', 'eme_fdgg_button_label', 'eme_fdgg_button_above', 'eme_fdgg_button_below', 'eme_webmoney_button_label', 'eme_webmoney_button_above', 'eme_webmoney_button_below', 'eme_mollie_button_label', 'eme_mollie_button_above', 'eme_mollie_button_below', 'eme_paypal_button_img_url', 'eme_2co_button_img_url', 'eme_fdgg_button_img_url', 'eme_webmoney_button_img_url', 'eme_mollie_button_img_url', 'eme_worldpay_demo', 'eme_worldpay_instid', 'eme_worldpay_md5_secret', 'eme_worldpay_md5_parameters', 'eme_worldpay_test_pwd', 'eme_worldpay_live_pwd', 'eme_worldpay_cost', 'eme_worldpay_cost2', 'eme_worldpay_button_label', 'eme_worldpay_button_img_url', 'eme_worldpay_button_above', 'eme_worldpay_button_below', 'eme_braintree_private_key', 'eme_braintree_public_key', 'eme_braintree_merchant_id', 'eme_braintree_env', 'eme_braintree_cost', 'eme_braintree_cost2', 'eme_braintree_button_label', 'eme_braintree_button_img_url', 'eme_braintree_button_above', 'eme_braintree_button_below', 'eme_stripe_private_key', 'eme_stripe_public_key', 'eme_stripe_cost', 'eme_stripe_cost2', 'eme_stripe_button_label', 'eme_stripe_button_img_url', 'eme_stripe_button_above', 'eme_stripe_button_below', 'eme_stripe_payment_methods', 'eme_offline_payment', 'eme_legacypaypal_url', 'eme_legacypaypal_business', 'eme_legacypaypal_no_tax', 'eme_legacypaypal_cost', 'eme_legacypaypal_cost2', 'eme_legacypaypal_button_label', 'eme_legacypaypal_button_img_url', 'eme_legacypaypal_button_above', 'eme_legacypaypal_button_below', 'eme_instamojo_env', 'eme_instamojo_key', 'eme_instamojo_auth_token', 'eme_instamojo_salt', 'eme_instamojo_cost', 'eme_instamojo_cost2', 'eme_instamojo_button_label', 'eme_instamojo_button_img_url', 'eme_instamojo_button_above', 'eme_instamojo_button_below', 'eme_mercadopago_demo', 'eme_mercadopago_sandbox_token', 'eme_mercadopago_live_token', 'eme_mercadopago_cost', 'eme_mercadopago_cost2', 'eme_mercadopago_button_label', 'eme_mercadopago_button_img_url', 'eme_mercadopago_button_above', 'eme_mercadopago_button_below', 'eme_fondy_merchant_id', 'eme_fondy_secret_key', 'eme_fondy_cost', 'eme_fondy_cost2', 'eme_fondy_button_label', 'eme_fondy_button_img_url', 'eme_fondy_button_above', 'eme_fondy_button_below', 'eme_payconiq_api_key', 'eme_payconiq_env', 'eme_payconiq_merchant_id', 'eme_payconiq_cost', 'eme_payconiq_cost2', 'eme_payconiq_button_label', 'eme_payconiq_button_img_url', 'eme_payconiq_button_above', 'eme_payconiq_button_below', 'eme_sumup_merchant_code', 'eme_sumup_app_id', 'eme_sumup_app_secret', 'eme_sumup_cost', 'eme_sumup_cost2', 'eme_sumup_button_label', 'eme_sumup_button_img_url', 'eme_sumup_button_above', 'eme_sumup_button_below', 'eme_opayo_demo', 'eme_opayo_vendor_name', 'eme_opayo_test_pwd', 'eme_opayo_live_pwd', 'eme_opayo_cost', 'eme_opayo_cost2', 'eme_opayo_button_label', 'eme_opayo_button_img_url', 'eme_opayo_button_above', 'eme_opayo_button_below' ];
+			$options = [ 'eme_default_vat', 'eme_payment_form_header_format', 'eme_payment_form_footer_format', 'eme_multipayment_form_header_format', 'eme_multipayment_form_footer_format', 'eme_payment_succes_format', 'eme_payment_fail_format', 'eme_payment_member_succes_format', 'eme_payment_member_fail_format', 'eme_payment_booking_already_paid_format', 'eme_payment_booking_on_waitinglist_format', 'eme_default_currency', 'eme_default_price', 'eme_payment_refund_ok', 'eme_pg_submit_immediately', 'eme_payment_redirect', 'eme_payment_redirect_wait', 'eme_payment_redirect_msg', 'eme_paypal_url', 'eme_paypal_clientid', 'eme_paypal_secret', 'eme_webmoney_purse', 'eme_webmoney_secret', 'eme_webmoney_demo', 'eme_fdgg_url', 'eme_fdgg_store_name', 'eme_fdgg_shared_secret', 'eme_paypal_cost', 'eme_fdgg_cost', 'eme_webmoney_cost', 'eme_paypal_cost2', 'eme_fdgg_cost2', 'eme_webmoney_cost2', 'eme_mollie_api_key', 'eme_mollie_cost', 'eme_mollie_cost2', 'eme_paypal_button_label', 'eme_paypal_button_above', 'eme_paypal_button_below', 'eme_fdgg_button_label', 'eme_fdgg_button_above', 'eme_fdgg_button_below', 'eme_webmoney_button_label', 'eme_webmoney_button_above', 'eme_webmoney_button_below', 'eme_mollie_button_label', 'eme_mollie_button_above', 'eme_mollie_button_below', 'eme_paypal_button_img_url', 'eme_fdgg_button_img_url', 'eme_webmoney_button_img_url', 'eme_mollie_button_img_url', 'eme_worldpay_demo', 'eme_worldpay_instid', 'eme_worldpay_md5_secret', 'eme_worldpay_md5_parameters', 'eme_worldpay_test_pwd', 'eme_worldpay_live_pwd', 'eme_worldpay_cost', 'eme_worldpay_cost2', 'eme_worldpay_button_label', 'eme_worldpay_button_img_url', 'eme_worldpay_button_above', 'eme_worldpay_button_below', 'eme_braintree_private_key', 'eme_braintree_public_key', 'eme_braintree_merchant_id', 'eme_braintree_env', 'eme_braintree_cost', 'eme_braintree_cost2', 'eme_braintree_button_label', 'eme_braintree_button_img_url', 'eme_braintree_button_above', 'eme_braintree_button_below', 'eme_stripe_private_key', 'eme_stripe_public_key', 'eme_stripe_cost', 'eme_stripe_cost2', 'eme_stripe_button_label', 'eme_stripe_button_img_url', 'eme_stripe_button_above', 'eme_stripe_button_below', 'eme_stripe_payment_methods', 'eme_offline_payment', 'eme_legacypaypal_url', 'eme_legacypaypal_business', 'eme_legacypaypal_no_tax', 'eme_legacypaypal_cost', 'eme_legacypaypal_cost2', 'eme_legacypaypal_button_label', 'eme_legacypaypal_button_img_url', 'eme_legacypaypal_button_above', 'eme_legacypaypal_button_below', 'eme_instamojo_env', 'eme_instamojo_key', 'eme_instamojo_auth_token', 'eme_instamojo_salt', 'eme_instamojo_cost', 'eme_instamojo_cost2', 'eme_instamojo_button_label', 'eme_instamojo_button_img_url', 'eme_instamojo_button_above', 'eme_instamojo_button_below', 'eme_mercadopago_demo', 'eme_mercadopago_sandbox_token', 'eme_mercadopago_live_token', 'eme_mercadopago_cost', 'eme_mercadopago_cost2', 'eme_mercadopago_button_label', 'eme_mercadopago_button_img_url', 'eme_mercadopago_button_above', 'eme_mercadopago_button_below', 'eme_fondy_merchant_id', 'eme_fondy_secret_key', 'eme_fondy_cost', 'eme_fondy_cost2', 'eme_fondy_button_label', 'eme_fondy_button_img_url', 'eme_fondy_button_above', 'eme_fondy_button_below', 'eme_payconiq_api_key', 'eme_payconiq_env', 'eme_payconiq_merchant_id', 'eme_payconiq_cost', 'eme_payconiq_cost2', 'eme_payconiq_button_label', 'eme_payconiq_button_img_url', 'eme_payconiq_button_above', 'eme_payconiq_button_below', 'eme_sumup_merchant_code', 'eme_sumup_app_id', 'eme_sumup_app_secret', 'eme_sumup_cost', 'eme_sumup_cost2', 'eme_sumup_button_label', 'eme_sumup_button_img_url', 'eme_sumup_button_above', 'eme_sumup_button_below', 'eme_opayo_demo', 'eme_opayo_vendor_name', 'eme_opayo_test_pwd', 'eme_opayo_live_pwd', 'eme_opayo_cost', 'eme_opayo_cost2', 'eme_opayo_button_label', 'eme_opayo_button_img_url', 'eme_opayo_button_above', 'eme_opayo_button_below' ];
 			break;
 		case 'maps':
 			$options = [ 'eme_indiv_zoom_factor', 'eme_map_zooming', 'eme_location_baloon_format', 'eme_location_map_icon', 'eme_map_gesture_handling' ];
@@ -2269,41 +2271,6 @@ function eme_options_page() {
 			eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
-			?>
-</table>
-</div>
-
-
-<h3><?php esc_html_e( '2Checkout', 'events-made-easy' ); ?></h3>
-<div>
-<table class='form-table'>
-			<?php
-			$notification_link = add_query_arg( [ 'eme_eventAction' => '2co_notification' ], $events_page_link );
-
-			eme_options_select(
-			    __( '2Checkout live or test', 'events-made-easy' ),
-			    'eme_2co_demo',
-			    [
-					2 => __( '2Checkout Sandbox (for testing)', 'events-made-easy' ),
-					1 => __( '2Checkout Test (the "demo" mode)', 'events-made-easy' ),
-					0 => __(
-					    '2Checkout Live',
-					    'events-made-easy'
-					),
-				],
-			    __( 'Choose wether you want to test 2Checkout in a sandbox or go live and really use 2Checkout.', 'events-made-easy' )
-			);
-			eme_options_input_text( __( '2Checkout Account number', 'events-made-easy' ), 'eme_2co_business', __( '2Checkout Account number.', 'events-made-easy' ) );
-			eme_options_input_password( __( '2Checkout Secret', 'events-made-easy' ), 'eme_2co_secret', __( '2Checkout secret.', 'events-made-easy' ) );
-			$gateway = '2co';
-			eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
-			eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
-			eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
-			eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
-			eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-			eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-			echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
 </div>

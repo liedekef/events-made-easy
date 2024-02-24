@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.33 (2024//) =
+* Remove abandonned 2Checkout payment gateway
+
 = 2.4.32 (2024/02/23) =
 * Fix yet another named parameter usage (typo) causing event listing not to show in some shortcodes
 

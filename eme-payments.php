@@ -8,7 +8,7 @@ function eme_payment_gateways() {
 	$pgs = [
 		'paypal'       => __( 'Paypal', 'events-made-easy' ),
 		'legacypaypal' => __( 'Legacy Paypal', 'events-made-easy' ),
-		'2co'          => __( '2Checkout', 'events-made-easy' ),
+		//'2co'          => __( '2Checkout', 'events-made-easy' ),
 		'webmoney'     => __( 'Webmoney', 'events-made-easy' ),
 		'fdgg'         => __( 'First Data', 'events-made-easy' ),
 		'mollie'       => __( 'Mollie', 'events-made-easy' ),
@@ -500,15 +500,19 @@ function eme_payment_form_webmoney( $item_name, $payment, $baseprice, $cur, $mul
 function eme_payment_form_2co( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway          = '2co';
 	$eme_2co_business = get_option( 'eme_2co_business' );
-	if ( ! $eme_2co_business ) {
+	$eme_2co_secret = get_option( 'eme_2co_secret' );
+	$eme_2co_buylinksecret = get_option( 'eme_2co_buylinksecret' );
+	if ( ! $eme_2co_business || !$eme_2co_secret || !$eme_2co_buylinksecret ) {
 		return;
 	}
 
-	$price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
-	$events_page_link = eme_get_events_page();
-	$payment_id       = $payment['id'];
-	$success_link     = eme_payment_return_url( $payment, 0 );
-	$fail_link        = eme_payment_return_url( $payment, 1 );
+	$price             = eme_payment_gateway_total( $baseprice, $cur, $gateway );
+	$events_page_link  = eme_get_events_page();
+	$payment_id        = $payment['id'];
+	$success_link      = eme_payment_return_url( $payment, 0 );
+	$fail_link         = eme_payment_return_url( $payment, 1 );
+	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
+
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
 		$filtername  = 'eme_member_paymentform_description_filter';
@@ -525,44 +529,32 @@ function eme_payment_form_2co( $item_name, $payment, $baseprice, $cur, $multi_bo
 
 	$description = eme_esc_html( $description );
 
-	if ( get_option( 'eme_2co_demo' ) == 2 ) {
-		$url = 'https://sandbox.2checkout.com/checkout/purchase';
-	} else {
-		$url = 'https://www.2checkout.com/checkout/purchase';
-	}
-	$quantity = 1;
-
 	$button_above = get_option( 'eme_' . $gateway . '_button_above' );
 	$button_label = get_option( 'eme_' . $gateway . '_button_label' );
 	if ( empty( $button_label ) ) {
 		$button_label = $gateway;
 	}
-	$button_label   = htmlentities( $button_label );
+	$button_label   = htmlentities($button_label);
 	$button_below   = get_option( 'eme_' . $gateway . '_button_below' );
 	$button_img_url = get_option( 'eme_' . $gateway . '_button_img_url' );
 
 	$form_html  = $button_above;
-	$form_html .= "<form action='$url' method='post' name='eme_2co_form' id='eme_2co_form'>";
-	$form_html .= "<input type='hidden' name='sid' value='$eme_2co_business'>";
-	$form_html .= "<input type='hidden' name='mode' value='2CO'>";
-	$form_html .= "<input type='hidden' name='return_url' value='$success_link'>";
-	$form_html .= "<input type='hidden' name='li_0_type' value='product'>";
-	$form_html .= "<input type='hidden' name='li_0_product_id' value='$payment_id'>";
-	$form_html .= "<input type='hidden' name='li_0_name' value='$description'>";
-	$form_html .= "<input type='hidden' name='li_0_price' value='$price'>";
-	$form_html .= "<input type='hidden' name='li_0_quantity' value='$quantity'>";
-	$form_html .= "<input type='hidden' name='currency_code' value='$cur'>";
-	if ( ! empty( $button_img_url ) ) {
-		$form_html .= "<input type='image' alt='$button_label' title='$button_label' src='$button_img_url' class='button-primary eme_submit_button'><br>";
-	} else {
-		$form_html .= "<input type='submit' value='$button_label' class='button-primary eme_submit_button'><br>";
-	}
-	if ( get_option( 'eme_2co_demo' ) == 1 ) {
-		$form_html .= "<input type='hidden' name='demo' value='Y'>";
-	}
-	$form_html .= '</form>';
-	$form_html .= $button_below;
-	return $form_html;
+        $form_html .= "<form action='' method='post' name='eme_{$gateway}_form' id='eme_{$gateway}_form'>
+   <input type='hidden' name='payment_id' value='$payment_id'>
+   <input type='hidden' name='eme_eventAction' value='{$gateway}_charge'>
+   <input type='hidden' name='description' value='$description'>
+   <input type='hidden' name='price' value='$price'>
+   <input type='hidden' name='cur' value='$cur'>
+   ";
+        if ( ! empty( $button_img_url ) ) {
+                $form_html .= "<input type='image' src='$button_img_url' alt='$button_label' title='$button_label' class='button-primary eme_submit_button'><br>";
+        } else {
+                $form_html .= "<input type='submit' value='$button_label' class='button-primary eme_submit_button'><br>";
+        }
+        $form_html .= wp_nonce_field( "$price$cur", "eme_{$gateway}_nonce", false, false );
+        $form_html .= '</form>';
+        $form_html .= $button_below;
+        return $form_html;
 }
 
 function eme_payment_form_worldpay( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
@@ -882,8 +874,8 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
 	try {
 		$sumup       = new \SumUp\SumUp(
 		    [
-				'app_id'     => get_option( 'eme_sumup_app_id' ),
-				'app_secret' => get_option( 'eme_sumup_app_secret' ),
+				'app_id'     => $eme_sumup_app_id,
+				'app_secret' => $eme_sumup_app_secret,
 				'grant_type' => 'client_credentials',
 				'scopes'     => [ 'payments' ],
 			]
@@ -1932,6 +1924,7 @@ function eme_notification_2co() {
 	$gateway  = '2co'; 
 	$business = get_option( 'eme_2co_business' );
 	$secret   = get_option( 'eme_2co_secret' );
+	$secret   = get_option( 'eme_2co_secret' );
 
 	if ( $_POST['message_type'] == 'ORDER_CREATED'
 		|| $_POST['message_type'] == 'INVOICE_STATUS_CHANGED' ) {
@@ -2300,6 +2293,82 @@ function eme_charge_paypal() {
 	}
 }
 
+function eme_charge_2co() {
+	$gateway = "2co";
+	$events_page_link = eme_get_events_page();
+	$payment_id       = intval( $_POST['payment_id'] );
+	$price            = eme_sanitize_request( $_POST['price'] );
+	$cur              = eme_sanitize_request( $_POST['cur'] );
+	$description      = eme_sanitize_request( $_POST['description'] );
+	$payment          = eme_get_payment( $payment_id );
+	$success_link     = eme_payment_return_url( $payment, $gateway );
+	$fail_link        = eme_payment_return_url( $payment, 1 );
+
+	// no cheating
+	if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
+		wp_redirect($fail_link);
+		exit;
+	}
+
+	// avoid that people pay again after pressing "back" and arriving on the payment form again
+	$check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
+	if ( ! empty( $check_allowed_to_pay )) {
+		// not allowed: return the reason and stop
+		return $check_allowed_to_pay;
+	}
+
+	$eme_2co_buylinksecret = get_option( 'eme_2co_buylinksecret' );
+	$eme_2co_secret = get_option( 'eme_2co_secret' );
+	$eme_2co_business  = get_option( 'eme_2co_business' );
+	$item_name              = esc_attr( get_option( 'blog_name' ) );
+	if ( empty( $item_name ) ) {
+		$item_name = $description;
+	}
+
+	require_once 'payment_gateways/2checkout/2checkout-php-sdk/autoloader.php';
+	$config    = [
+            'sellerId'      => $eme_2co_business,
+            'secretKey'     => $eme_2co_secret,
+            'buyLinkSecretWord'    => $eme_2co_buylinksecret,
+            'jwtExpireTime' => 30,
+            'curlVerifySsl' => 1
+	];
+	$buyLinkParameters = [
+		'order-ext-ref' => $payment_id,
+		'back-url' => $events_page_link,
+		'currency' => $cur,
+		'qty' => 1,
+		'price' => $price,
+		'prod' => $item_name,
+		'description' => $description,
+		'merchant' => $eme_2co_business,
+		'return-url' => $success_link,
+		'return-type' => 'Redirect',
+		'tangible' => 0,
+		'type' => 'PRODUCT',
+		'dynamic' => 1,
+	];
+	$tco = new TwocheckoutFacade($config);
+
+	// prefill e-mail in form if possible
+	$booking_ids = eme_get_payment_booking_ids( $payment_id );
+	if ( $booking_ids ) {
+		$booking = eme_get_booking( $booking_ids[0] );
+		$person  = eme_get_person( $booking['person_id'] );
+		if (!empty($person)) {
+			$buyLinkParameters['email'] = $person['email'];
+		}
+	}
+	if (get_option('eme_2co_demo')) {
+		$buyLinkParameters['test'] = 1;
+	}
+
+	$buyLinkSignature = $tco->getBuyLinkSignature($buyLinkParameters);
+	$buyLinkParameters['signature'] = $buyLinkSignature;
+	$redirectTo = 'https://secure.2checkout.com/checkout/buy/?' . ( http_build_query( $buyLinkParameters ) );
+	wp_redirect($redirectTo);
+}
+
 function eme_charge_stripe() {
 	$gateway = "stripe";
 	$events_page_link = eme_get_events_page();
@@ -2345,7 +2414,6 @@ function eme_charge_stripe() {
 	} else {
 		$payment_methods_arr = $payment_methods;
 	}
-
 
 	$stripe_session_params = [
 		'payment_method_types' => $payment_methods_arr,
@@ -3155,9 +3223,9 @@ function eme_get_configured_pgs() {
 		if ( ! empty( get_option( 'eme_legacypaypal_business' ) ) ) {
 			$pgs[] = 'legacypaypal';
 		}
-		if ( ! empty( get_option( 'eme_2co_business' ) ) ) {
-			$pgs[] = '2co';
-		}
+		//if ( ! empty( get_option( 'eme_2co_business' ) ) ) {
+		//	$pgs[] = '2co';
+		//}
 		if ( ! empty( get_option( 'eme_webmoney_purse' ) ) ) {
 			$pgs[] = 'webmoney';
 		}

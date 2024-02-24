@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 379 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 380 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -344,8 +344,6 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 			event_tasks bool DEFAULT 0,
 			price text,
 			currency text,
-			rsvp_number_days mediumint(5) DEFAULT 0,
-			rsvp_number_hours mediumint(5) DEFAULT 0,
 			event_seats text,
 			event_contactperson_id mediumint(9) DEFAULT 0,
 			location_id mediumint(9) DEFAULT 0,
@@ -429,8 +427,6 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'event_end', "ALTER TABLE $table_name ADD event_end datetime;" );
 		maybe_add_column( $table_name, 'event_rsvp', "ALTER TABLE $table_name ADD event_rsvp bool DEFAULT 0;" );
 		maybe_add_column( $table_name, 'event_tasks', "ALTER TABLE $table_name ADD event_tasks bool DEFAULT 0;" );
-		maybe_add_column( $table_name, 'rsvp_number_days', "ALTER TABLE $table_name ADD rsvp_number_days mediumint(5) DEFAULT 0;" );
-		maybe_add_column( $table_name, 'rsvp_number_hours', "ALTER TABLE $table_name ADD rsvp_number_hours mediumint(5) DEFAULT 0;" );
 		maybe_add_column( $table_name, 'price', "ALTER TABLE $table_name ADD price text;" );
 		maybe_add_column( $table_name, 'currency', "ALTER TABLE $table_name ADD currency text;" );
 		maybe_add_column( $table_name, 'event_seats', "ALTER TABLE $table_name ADD event_seats text;" );
@@ -508,10 +504,6 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 			}
 			maybe_add_column( $table_name, 'event_registration_trashed_email_body', "ALTER TABLE $table_name ADD event_registration_trashed_email_body text;" );
 		}
-		if ( $db_version < 281 ) {
-			$wpdb->query( "ALTER TABLE $table_name MODIFY rsvp_number_days mediumint(5) DEFAULT 0;" );
-			$wpdb->query( "ALTER TABLE $table_name MODIFY rsvp_number_hours mediumint(5) DEFAULT 0;" );
-		}
 		if ( $db_version < 294 ) {
 			eme_migrate_event_payment_options();
 			eme_maybe_drop_column( $table_name, 'use_paypal' );
@@ -537,6 +529,13 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 			eme_maybe_drop_column( $table_name, 'event_end_date' );
 			eme_maybe_drop_column( $table_name, 'event_start_time' );
 			eme_maybe_drop_column( $table_name, 'event_end_time' );
+		}
+		if ( $db_version < 380 ) {
+			if ( eme_column_exists( $table_name, 'rsvp_number_hours' ) && eme_column_exists( $table_name, 'rsvp_number_days' ) ) {
+				eme_migrate_event_rsvpstartend_options();
+				eme_maybe_drop_column( $table_name, 'rsvp_number_hours' );
+				eme_maybe_drop_column( $table_name, 'rsvp_number_days' );
+			}
 		}
 	}
 }

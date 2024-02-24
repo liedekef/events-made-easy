@@ -17,8 +17,6 @@ function eme_new_event() {
 		'event_tasks'                             => 0,
 		'price'                                   => get_option( 'eme_default_price' ),
 		'currency'                                => get_option( 'eme_default_currency' ),
-		'rsvp_number_days'                        => get_option( 'eme_rsvp_number_days' ),
-		'rsvp_number_hours'                       => get_option( 'eme_rsvp_number_hours' ),
 		'registration_requires_approval'          => get_option( 'eme_rsvp_require_approval' ) ? 1 : 0,
 		'registration_wp_users_only'              => get_option( 'eme_rsvp_registered_users_only' ) ? 1 : 0,
 		'event_seats'                             => get_option( 'eme_rsvp_default_number_spaces' ) ? intval( get_option( 'eme_rsvp_default_number_spaces' ) ) : 0,
@@ -90,11 +88,17 @@ function eme_init_event_props( $props = [] ) {
 	if ( ! isset( $props['max_allowed'] ) ) {
 		$props['max_allowed'] = intval(get_option( 'eme_rsvp_addbooking_max_spaces' ));
 	}
+	if ( ! isset( $props['rsvp_number_days'] ) ) {
+		$props['rsvp_number_days'] = get_option( 'eme_rsvp_number_days' );
+	}
+	if ( ! isset( $props['rsvp_number_hours'] ) ) {
+		$props['rsvp_number_hours'] = get_option( 'eme_rsvp_number_hours' );
+	}
 	if ( ! isset( $props['rsvp_start_number_days'] ) ) {
-		$props['rsvp_start_number_days'] = '';
+		$props['rsvp_start_number_days'] = 0;
 	}
 	if ( ! isset( $props['rsvp_start_number_hours'] ) ) {
-		$props['rsvp_start_number_hours'] = '';
+		$props['rsvp_start_number_hours'] = 0;
 	}
 	if ( ! isset( $props['rsvp_start_target'] ) ) {
 		$props['rsvp_start_target'] = '';
@@ -364,7 +368,7 @@ function eme_events_page() {
 		}
 		$orig_event = $event;
 		$event[ 'event_name' ] = eme_sanitize_request( $_POST[ 'event_name' ] );
-		$post_vars  = [ 'event_seats', 'price', 'rsvp_number_days', 'rsvp_number_hours', 'currency', 'event_author', 'event_contactperson_id', 'event_url', 'event_image_url', 'event_image_id', 'event_prefix', 'event_slug', 'event_page_title_format', 'event_contactperson_email_body', 'event_registration_recorded_ok_html', 'event_respondent_email_body', 'event_registration_pending_email_body', 'event_registration_updated_email_body', 'event_registration_cancelled_email_body', 'event_registration_trashed_email_body', 'event_registration_form_format', 'event_cancel_form_format', 'event_registration_paid_email_body' ];
+		$post_vars  = [ 'event_seats', 'price', 'currency', 'event_author', 'event_contactperson_id', 'event_url', 'event_image_url', 'event_image_id', 'event_prefix', 'event_slug', 'event_page_title_format', 'event_contactperson_email_body', 'event_registration_recorded_ok_html', 'event_respondent_email_body', 'event_registration_pending_email_body', 'event_registration_updated_email_body', 'event_registration_cancelled_email_body', 'event_registration_trashed_email_body', 'event_registration_form_format', 'event_cancel_form_format', 'event_registration_paid_email_body' ];
 		foreach ( $post_vars as $post_var ) {
 			if ( isset( $_POST[ $post_var ] ) ) {
 				$event[ $post_var ] = eme_kses( $_POST[ $post_var ] );
@@ -1002,12 +1006,12 @@ function eme_events_page_content() {
 		$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$eme_start_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 		$eme_end_date_obj   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
-		$begin_difference   = round( $eme_date_obj_now->getDifferenceInHours( $eme_start_date_obj ) );
-		$end_difference     = round( $eme_end_date_obj->getDifferenceInHours( $eme_date_obj_now ) );
-		if ( $begin_difference > intval( $event['event_properties']['attendance_begin'] ) ) {
+		$begin_difference   = $eme_date_obj_now->getDifferenceInHours( $eme_start_date_obj );
+		$end_difference     = $eme_end_date_obj->getDifferenceInHours( $eme_date_obj_now );
+		if ( $begin_difference > $event['event_properties']['attendance_begin'] ) {
 			$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 			$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'No entry allowed yet', 'events-made-easy' ) . '</div>';
-		} elseif ( $end_difference > intval( $event['event_properties']['attendance_end'] ) ) {
+		} elseif ( $end_difference > $event['event_properties']['attendance_end'] ) {
 			$img     = "<img src='" . esc_url(EME_PLUGIN_URL) . "images/error-48.png'>";
 			$format .= "<div class='eme-message-error eme-attendance-message-error'>$img" . __( 'No entry allowed anymore', 'events-made-easy' ) . '</div>';
 		} else {
@@ -3650,8 +3654,8 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			} elseif ( preg_match( '/#_RSVPSTART/', $result ) ) {
 				// show the end date+time for which a user can rsvp for an event
 				if ( eme_is_event_rsvp( $event ) ) {
-					$rsvp_number_days  = intval( $event['event_properties']['rsvp_start_number_days'] );
-					$rsvp_number_hours = intval( $event['event_properties']['rsvp_start_number_hours'] );
+					$rsvp_number_days  = $event['event_properties']['rsvp_start_number_days'];
+					$rsvp_number_hours = $event['event_properties']['rsvp_start_number_hours'];
 					if ( $rsvp_number_days || $rsvp_number_hours ) {
 						if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
 							$rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
@@ -3670,15 +3674,15 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					} else {
 						$rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 					}
-					$rsvp_number_days  = intval( $event['rsvp_number_days'] );
-					$rsvp_number_hours = intval( $event['rsvp_number_hours'] );
+					$rsvp_number_days  = $event['event_properties']['rsvp_number_days'];
+					$rsvp_number_hours = $event['event_properties']['rsvp_number_hours'];
 					$rsvp_date_obj->minusDays( $rsvp_number_days )->minusHours( $rsvp_number_hours );
 					$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE );
 				}
 			} elseif ( preg_match( '/#_CANCELEND/', $result ) ) {
 				// show the end date+time for which a user can cancel an rsvp for an event
 				if ( eme_is_event_rsvp( $event ) ) {
-					$eme_cancel_rsvp_days = intval( $event['event_properties']['cancel_rsvp_days'] );
+					$eme_cancel_rsvp_days = $event['event_properties']['cancel_rsvp_days'];
 					$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 					$cancel_cutofftime->minusDays( $eme_cancel_rsvp_days );
 					$replacement = eme_localized_datetime( $cancel_cutofftime->getDateTime(), EME_TIMEZONE );
@@ -8497,9 +8501,9 @@ function eme_meta_box_div_attendance_info( $event, $templates_array ) {
 				</p>
 				<p id='span_attendance_limit'>
 					<?php esc_html_e( 'Attendance URL (generated by #_ATTENDANCE_URL) is valid from ', 'events-made-easy' ); ?>
-					<input id="eme_prop_attendance_begin" type="text" name="eme_prop_attendance_begin" maxlength='3' size='2' value="<?php echo $event['event_properties']['attendance_begin']; ?>">
+					<input id="eme_prop_attendance_begin" type="text" name="eme_prop_attendance_begin" size='4' value="<?php echo $event['event_properties']['attendance_begin']; ?>">
 					<?php esc_html_e( 'hours before the event starts until ', 'events-made-easy' ); ?>
-					<input id="eme_prop_attendance_end" type="text" name="eme_prop_attendance_end" maxlength='3' size='2' value="<?php echo $event['event_properties']['attendance_end']; ?>">
+					<input id="eme_prop_attendance_end" type="text" name="eme_prop_attendance_end" size='4' value="<?php echo $event['event_properties']['attendance_end']; ?>">
 					<?php esc_html_e( 'hours after the event ends.', 'events-made-easy' ); ?>
 					<br><span class="eme_smaller"><?php esc_html_e( 'When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter. EME will then also count the number of times the code is scanned by an authorized user and issue a warning is this count is greater than the number of booked seats.', 'events-made-easy' ); ?></span>
 				</p>
@@ -8722,20 +8726,20 @@ function eme_meta_box_div_event_rsvp( $event ) {
 	</table>
 	<p id='span_rsvp_allowed_from'>
 		<?php esc_html_e( 'Allow RSVP from ', 'events-made-easy' ); ?>
-		<input id="eme_prop_rsvp_start_number_days" type="text" name="eme_prop_rsvp_start_number_days" maxlength='4' size='4' value="<?php echo $event['event_properties']['rsvp_start_number_days']; ?>">
+		<input id="eme_prop_rsvp_start_number_days" type="text" name="eme_prop_rsvp_start_number_days" size='4' value="<?php echo $event['event_properties']['rsvp_start_number_days']; ?>">
 		<?php esc_html_e( 'days', 'events-made-easy' ); ?>
-		<input id="eme_prop_rsvp_start_number_hours" type="text" name="eme_prop_rsvp_start_number_hours" maxlength='3' size='2' value="<?php echo $event['event_properties']['rsvp_start_number_hours']; ?>">
+		<input id="eme_prop_rsvp_start_number_hours" type="text" name="eme_prop_rsvp_start_number_hours" size='4' value="<?php echo $event['event_properties']['rsvp_start_number_hours']; ?>">
 		<?php esc_html_e( 'hours', 'events-made-easy' ); ?>
 		<?php esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_start_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
 			echo eme_ui_select( $event['event_properties']['rsvp_start_target'], 'eme_prop_rsvp_start_target', $eme_rsvp_start_target_list );
 		?>
-		&nbsp;<?php esc_html_e( '(Leave empty to disable this limit)', 'events-made-easy' ); ?>
+		&nbsp;<?php esc_html_e( '(Leave empty or 0 to disable this limit)', 'events-made-easy' ); ?>
 	</p>
 	<p id='span_rsvp_allowed_until'>
 		<?php esc_html_e( 'Allow RSVP until ', 'events-made-easy' ); ?>
-		<input id="rsvp_number_days" type="text" name="rsvp_number_days" maxlength='4' size='4' value="<?php echo $event['rsvp_number_days']; ?>">
+		<input id="eme_prop_rsvp_number_days" type="text" name="eme_prop_rsvp_number_days" size='4' value="<?php echo $event['event_properties']['rsvp_number_days']; ?>">
 		<?php esc_html_e( 'days', 'events-made-easy' ); ?>
-		<input id="rsvp_number_hours" type="text" name="rsvp_number_hours" maxlength='4' size='4' value="<?php echo $event['rsvp_number_hours']; ?>">
+		<input id="eme_prop_rsvp_number_hours" type="text" name="eme_prop_rsvp_number_hours" size='4' value="<?php echo $event['event_properties']['rsvp_number_hours']; ?>">
 		<?php esc_html_e( 'hours', 'events-made-easy' ); ?>
 		<?php esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_end_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
 		echo eme_ui_select( $event['event_properties']['rsvp_end_target'], 'eme_prop_rsvp_end_target', $eme_rsvp_end_target_list );
@@ -8743,11 +8747,11 @@ function eme_meta_box_div_event_rsvp( $event ) {
 	</p>
 	<p id='span_rsvp_cutoff'>
 		<?php esc_html_e( 'RSVP cancel cutoff before event starts', 'events-made-easy' ); ?>
-		<input id="eme_prop_cancel_rsvp_days" type="text" name="eme_prop_cancel_rsvp_days" maxlength='4' size='4' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_days'] ); ?>">
+		<input id="eme_prop_cancel_rsvp_days" type="text" name="eme_prop_cancel_rsvp_days" size='4' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_days'] ); ?>">
 		<span class="eme_smaller"><?php esc_html_e( 'Allow RSVP cancellation until this many days before the event starts.', 'events-made-easy' ); ?></span>
 		<br>
 		<?php esc_html_e( 'RSVP cancel cutoff booking age', 'events-made-easy' ); ?>
-		<input id="eme_prop_cancel_rsvp_age" type="text" name="eme_prop_cancel_rsvp_age" maxlength='3' size='2' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_age'] ); ?>">
+		<input id="eme_prop_cancel_rsvp_age" type="text" name="eme_prop_cancel_rsvp_age" size='4' value="<?php echo eme_esc_html( $event['event_properties']['cancel_rsvp_age'] ); ?>">
 		<span class="eme_smaller"><?php esc_html_e( 'Allow RSVP cancellation until this many days after the booking has been made.', 'events-made-easy' ); ?></span>
 	</p>
 </div>
@@ -9108,7 +9112,7 @@ function eme_sanitize_event( $event ) {
 	}
 
 	// some things just need to be integers, let's brute-force them
-	$int_vars = [ 'event_contactperson_id', 'event_author', 'event_tasks', 'event_rsvp', 'rsvp_number_days', 'rsvp_number_hours', 'registration_requires_approval', 'registration_wp_users_only', 'event_image_id' ];
+	$int_vars = [ 'event_contactperson_id', 'event_author', 'event_tasks', 'event_rsvp', 'registration_requires_approval', 'registration_wp_users_only', 'event_image_id' ];
 	foreach ( $int_vars as $int_var ) {
 		if ( isset( $event[ $int_var ] ) ) {
 			$event[ $int_var ] = intval( $event[ $int_var ] );
@@ -9133,7 +9137,14 @@ function eme_sanitize_event( $event ) {
 		$event_properties['use_cfcaptcha'] = 0;
 	}
 
-	if ( ! is_numeric( $event_properties['vat_pct'] ) || $event_properties['vat_pct'] < 0 || $event_properties['vat_pct'] > 100 ) {
+	// some properties need to be numeric
+	$numeric_vars = [ 'vat_pct', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'rsvp_number_days', 'rsvp_number_hours', 'cancel_rsvp_days', 'cancel_rsvp_age' ];
+	foreach ($numeric_vars as $numeric_var) {
+		if ( ! is_numeric( $event_properties[$numeric_var] ) ) {
+			$event_properties[$numeric_var] = 0;
+		}
+	}
+	if ( $event_properties['vat_pct'] < 0 || $event_properties['vat_pct'] > 100 ) {
 		$event_properties['vat_pct'] = 0;
 	}
 

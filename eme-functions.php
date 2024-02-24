@@ -3561,7 +3561,7 @@ function eme_extra_event_headers( $event ) {
 		$offers['priceCurrency'] = $event['currency'];
 
 		// allow rsvp from rsvp_start_number_days:rsvp_start_number_hours before the event starts/ends (rsvp_start_target)
-		if ( ( intval( $event['event_properties']['rsvp_start_number_days'] ) > 0 || intval( $event['event_properties']['rsvp_start_number_hours'] ) > 0 ) ) {
+		if ( ( $event['event_properties']['rsvp_start_number_days'] > 0 || $event['event_properties']['rsvp_start_number_hours'] > 0 ) ) {
 			$event_rsvp_startdatetime = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 			$event_rsvp_enddatetime   = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 			if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
@@ -3570,7 +3570,7 @@ function eme_extra_event_headers( $event ) {
 				$event_rsvp_start = $event_rsvp_startdatetime->copy();
 			}
 
-			$event_rsvp_start->minusDays( intval( $event['event_properties']['rsvp_start_number_days'] ) )->minusHours( intval( $event['event_properties']['rsvp_start_number_hours'] ) );
+			$event_rsvp_start->minusDays( $event['event_properties']['rsvp_start_number_days'] )->minusHours( $event['event_properties']['rsvp_start_number_hours'] );
 			$validfrom = $event_rsvp_start->format( 'c' );
 		} elseif ( eme_is_empty_datetime( $event['creation_date'] ) ) {
 			$validfrom = '#_STARTDATETIME_8601';
@@ -3841,6 +3841,25 @@ function eme_migrate_event_payment_options() {
 					$event['event_properties'][ $payment_option ] = 1;
 					eme_db_update_event( $event, $id );
 				}
+			}
+		}
+	}
+}
+
+function eme_migrate_event_rsvpstartend_options() {
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
+
+	$rsvp_options = [ 'rsvp_number_days', 'rsvp_number_hours' ];
+	foreach ( $rsvp_options as $rsvp_option ) {
+		$sql = "SELECT event_id, rsvp_number_days, rsvp_number_hours from $table_name WHERE rsvp_number_days>0 OR rsvp_number_hours>0";
+		$res = $wpdb->get_results( $sql, ARRAY_A );
+		if ( ! empty( $res ) ) {
+			foreach ( $res as $row ) {
+				$event = eme_get_event( $row['event_id'] );
+				$event['event_properties'][ 'rsvp_number_days' ] = $row['rsvp_number_days'];
+				$event['event_properties'][ 'rsvp_number_hours' ] = $row['rsvp_number_hours'];
+				eme_db_update_event( $event, $row['event_id'] );
 			}
 		}
 	}

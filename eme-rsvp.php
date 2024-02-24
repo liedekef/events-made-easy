@@ -5300,13 +5300,13 @@ function eme_event_rsvp_status( $event ) {
 
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// allow rsvp from rsvp_start_number_days:rsvp_start_number_hours before the event starts/ends (rsvp_start_target)
-	if ( ( intval( $event['event_properties']['rsvp_start_number_days'] ) > 0 || intval( $event['event_properties']['rsvp_start_number_hours'] ) > 0 ) ) {
-		if ( $event_rsvp_start->minusDays( intval( $event['event_properties']['rsvp_start_number_days'] ) )->minusHours( intval( $event['event_properties']['rsvp_start_number_hours'] ) ) > $eme_date_obj_now ) {
+	if ( $event['event_properties']['rsvp_start_number_days'] > 0 || $event['event_properties']['rsvp_start_number_hours'] > 0 ) {
+		if ( $event_rsvp_start->minusDays( $event['event_properties']['rsvp_start_number_days'] )->minusHours( $event['event_properties']['rsvp_start_number_hours'] ) > $eme_date_obj_now ) {
 			return 0;
 		}
 	}
 	// allow rsvp until rsvp_number_days:rsvp_number_hours before the event starts/ends (rsvp_end_target)
-	if ( $event_rsvp_end->minusDays( intval( $event['rsvp_number_days'] ) )->minusHours( intval( $event['rsvp_number_hours'] ) ) < $eme_date_obj_now ) {
+	if ( $event_rsvp_end->minusDays( $event['event_properties']['rsvp_number_days'] )->minusHours( $event['event_properties']['rsvp_number_hours'] ) < $eme_date_obj_now ) {
 		return 2;
 	}
 	// in all other cases: return ok
@@ -5333,9 +5333,8 @@ function eme_is_event_rsvp_ended( $event ) {
 
 function eme_is_event_cancelrsvp_ended( $event ) {
 	$eme_date_obj_now     = new ExpressiveDate( 'now', EME_TIMEZONE );
-	$eme_cancel_rsvp_days = intval( $event['event_properties']['cancel_rsvp_days'] );
 	$cancel_cutofftime    = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-	$cancel_cutofftime->minusDays( $eme_cancel_rsvp_days );
+	$cancel_cutofftime->minusDays( $event['event_properties']['cancel_rsvp_days'] );
 	if ( eme_is_event_rsvp_ended( $event ) || $cancel_cutofftime < $eme_date_obj_now ) {
 			return 1;
 	} else {

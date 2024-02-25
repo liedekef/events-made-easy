@@ -5305,8 +5305,8 @@ function eme_event_rsvp_status( $event ) {
 			return 0;
 		}
 	}
-	// allow rsvp until rsvp_number_days:rsvp_number_hours before the event starts/ends (rsvp_end_target)
-	if ( $event_rsvp_end->minusDays( $event['event_properties']['rsvp_number_days'] )->minusHours( $event['event_properties']['rsvp_number_hours'] ) < $eme_date_obj_now ) {
+	// allow rsvp until rsvp_end_number_days:rsvp_end_number_hours before the event starts/ends (rsvp_end_target)
+	if ( $event_rsvp_end->minusDays( $event['event_properties']['rsvp_end_number_days'] )->minusHours( $event['event_properties']['rsvp_end_number_hours'] ) < $eme_date_obj_now ) {
 		return 2;
 	}
 	// in all other cases: return ok

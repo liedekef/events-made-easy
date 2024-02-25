@@ -509,8 +509,8 @@ function eme_add_options( $reset = 0 ) {
 		'eme_payment_redirect'                            => 1,
 		'eme_payment_redirect_wait'                       => 5,
 		'eme_payment_redirect_msg'                        => $eme_payment_redirect_msg_localizable,
-		'eme_rsvp_number_days'                            => 0,
-		'eme_rsvp_number_hours'                           => 0,
+		'eme_rsvp_end_number_days'                        => 0,
+		'eme_rsvp_end_number_hours'                       => 0,
 		'eme_thumbnail_size'                              => 'thumbnail',
 		'eme_payment_form_header_format'                  => '',
 		'eme_payment_form_footer_format'                  => '',
@@ -825,6 +825,17 @@ function eme_update_options( $db_version ) {
 			delete_option( 'eme_2co_button_img_url' );
 			delete_option( 'eme_2co_button_above' );
 			delete_option( 'eme_2co_button_below' );
+			// rename some options
+			$options2 = [
+				'eme_rsvp_number_days' => 'eme_rsvp_end_number_days',
+				'eme_rsvp_number_hours' => 'eme_rsvp_end_number_hours',
+			];
+			foreach ( $options2 as $old_option => $new_option ) {
+				if ( get_option( $old_option ) ) {
+					update_option( $new_option, get_option( $old_option ) );
+					delete_option( $old_option );
+				}
+			}
 		}
 	}
 	// make sure the captcha doesn't cause problems
@@ -1038,7 +1049,7 @@ function eme_options_register() {
 				$options = [ 'eme_rss_main_title', 'eme_rss_main_description', 'eme_rss_title_format', 'eme_rss_description_format', 'eme_rss_show_pubdate', 'eme_rss_pubdate_startdate', 'eme_ical_description_format', 'eme_ical_location_format', 'eme_ical_title_format', 'eme_ical_quote_tzid' ];
 			break;
 		case 'rsvp':
-				$options = [ 'eme_default_contact_person', 'eme_rsvp_registered_users_only', 'eme_rsvp_reg_for_new_events', 'eme_rsvp_require_approval', 'eme_rsvp_require_user_confirmation', 'eme_rsvp_default_number_spaces', 'eme_rsvp_addbooking_min_spaces', 'eme_rsvp_addbooking_max_spaces', 'eme_rsvp_hide_full_events', 'eme_rsvp_hide_rsvp_ended_events', 'eme_rsvp_show_form_after_booking', 'eme_rsvp_addbooking_submit_string', 'eme_rsvp_delbooking_submit_string', 'eme_rsvp_not_yet_allowed_string', 'eme_rsvp_no_longer_allowed_string', 'eme_rsvp_full_string', 'eme_rsvp_on_waiting_list_string', 'eme_rsvp_cancel_no_longer_allowed_string', 'eme_attendees_list_format', 'eme_attendees_list_ignore_pending', 'eme_bookings_list_ignore_pending', 'eme_bookings_list_header_format', 'eme_bookings_list_format', 'eme_bookings_list_footer_format', 'eme_registration_recorded_ok_html', 'eme_registration_form_format', 'eme_cancel_form_format', 'eme_cancel_payment_form_format', 'eme_cancel_payment_line_format', 'eme_cancelled_payment_format', 'eme_rsvp_number_days', 'eme_rsvp_number_hours', 'eme_rsvp_end_target', 'eme_rsvp_check_required_fields', 'eme_cancel_rsvp_days', 'eme_cancel_rsvp_age', 'eme_rsvp_check_without_accents', 'eme_rsvp_admin_allow_overbooking', 'eme_rsvp_login_required_string', 'eme_rsvp_invitation_required_string', 'eme_rsvp_email_already_registered_string', 'eme_rsvp_person_already_registered_string', 'eme_check_free_waiting', 'eme_rsvp_pending_reminder_days', 'eme_rsvp_approved_reminder_days' ];
+				$options = [ 'eme_default_contact_person', 'eme_rsvp_registered_users_only', 'eme_rsvp_reg_for_new_events', 'eme_rsvp_require_approval', 'eme_rsvp_require_user_confirmation', 'eme_rsvp_default_number_spaces', 'eme_rsvp_addbooking_min_spaces', 'eme_rsvp_addbooking_max_spaces', 'eme_rsvp_hide_full_events', 'eme_rsvp_hide_rsvp_ended_events', 'eme_rsvp_show_form_after_booking', 'eme_rsvp_addbooking_submit_string', 'eme_rsvp_delbooking_submit_string', 'eme_rsvp_not_yet_allowed_string', 'eme_rsvp_no_longer_allowed_string', 'eme_rsvp_full_string', 'eme_rsvp_on_waiting_list_string', 'eme_rsvp_cancel_no_longer_allowed_string', 'eme_attendees_list_format', 'eme_attendees_list_ignore_pending', 'eme_bookings_list_ignore_pending', 'eme_bookings_list_header_format', 'eme_bookings_list_format', 'eme_bookings_list_footer_format', 'eme_registration_recorded_ok_html', 'eme_registration_form_format', 'eme_cancel_form_format', 'eme_cancel_payment_form_format', 'eme_cancel_payment_line_format', 'eme_cancelled_payment_format', 'eme_rsvp_end_number_days', 'eme_rsvp_end_number_hours', 'eme_rsvp_end_target', 'eme_rsvp_check_required_fields', 'eme_cancel_rsvp_days', 'eme_cancel_rsvp_age', 'eme_rsvp_check_without_accents', 'eme_rsvp_admin_allow_overbooking', 'eme_rsvp_login_required_string', 'eme_rsvp_invitation_required_string', 'eme_rsvp_email_already_registered_string', 'eme_rsvp_person_already_registered_string', 'eme_check_free_waiting', 'eme_rsvp_pending_reminder_days', 'eme_rsvp_approved_reminder_days' ];
 			break;
 		case 'tasks':
 				$options = [ 'eme_task_registered_users_only', 'eme_task_requires_approval', 'eme_task_allow_overlap', 'eme_task_form_taskentry_format', 'eme_task_form_format', 'eme_task_signup_format', 'eme_task_signup_recorded_ok_html', 'eme_task_reminder_days' ];
@@ -1605,15 +1616,15 @@ function eme_options_page() {
 				eme_options_input_text( __( 'Default number of seats', 'events-made-easy' ), 'eme_rsvp_default_number_spaces', __( 'The default number of seats an event has.', 'events-made-easy' ) . ' ' . __( 'Enter 0 for no limit', 'events-made-easy' ) );
 				eme_options_input_text( __( 'Min number of seats to book', 'events-made-easy' ), 'eme_rsvp_addbooking_min_spaces', __( 'The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list).', 'events-made-easy' ) );
 				eme_options_input_text( __( 'Max number of seats to book', 'events-made-easy' ), 'eme_rsvp_addbooking_max_spaces', __( 'The maximum number of seats a person can book in one go.', 'events-made-easy' ) );
-				$eme_rsvp_number_days  = get_option( 'eme_rsvp_number_days' );
-				$eme_rsvp_number_hours = get_option( 'eme_rsvp_number_hours' );
+				$eme_rsvp_end_number_days  = get_option( 'eme_rsvp_end_number_days' );
+				$eme_rsvp_end_number_hours = get_option( 'eme_rsvp_end_number_hours' );
 				$eme_rsvp_end_target   = get_option( 'eme_rsvp_end_target' );
 			?>
 	<tr style='vertical-align:top' id='eme_rsvp_number_row'>
 		<th scope="row"><?php esc_html_e( 'By default allow RSVP until this many', 'events-made-easy' ); ?></th>
 		<td>
-		<input name="eme_rsvp_number_days" type="text" id="eme_rsvp_number_days" value="<?php echo eme_esc_html( $eme_rsvp_number_days ); ?>" size="4"> <?php esc_html_e( 'days', 'events-made-easy' ); ?>
-		<input name="eme_rsvp_number_hours" type="text" id="eme_rsvp_number_hours" value="<?php echo eme_esc_html( $eme_rsvp_number_hours ); ?>" size="4"> <?php esc_html_e( 'hours', 'events-made-easy' ); ?>
+		<input name="eme_rsvp_end_number_days" type="text" id="eme_rsvp_end_number_days" value="<?php echo eme_esc_html( $eme_rsvp_end_number_days ); ?>" size="4"> <?php esc_html_e( 'days', 'events-made-easy' ); ?>
+		<input name="eme_rsvp_end_number_hours" type="text" id="eme_rsvp_end_number_hours" value="<?php echo eme_esc_html( $eme_rsvp_end_number_hours ); ?>" size="4"> <?php esc_html_e( 'hours', 'events-made-easy' ); ?>
 			<?php
 				$eme_rsvp_end_target_list = [
 					'start' => __( 'starts', 'events-made-easy' ),

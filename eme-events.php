@@ -88,11 +88,11 @@ function eme_init_event_props( $props = [] ) {
 	if ( ! isset( $props['max_allowed'] ) ) {
 		$props['max_allowed'] = intval(get_option( 'eme_rsvp_addbooking_max_spaces' ));
 	}
-	if ( ! isset( $props['rsvp_number_days'] ) ) {
-		$props['rsvp_number_days'] = get_option( 'eme_rsvp_number_days' );
+	if ( ! isset( $props['rsvp_end_number_days'] ) ) {
+		$props['rsvp_end_number_days'] = get_option( 'eme_rsvp_end_number_days' );
 	}
-	if ( ! isset( $props['rsvp_number_hours'] ) ) {
-		$props['rsvp_number_hours'] = get_option( 'eme_rsvp_number_hours' );
+	if ( ! isset( $props['rsvp_end_number_hours'] ) ) {
+		$props['rsvp_end_number_hours'] = get_option( 'eme_rsvp_end_number_hours' );
 	}
 	if ( ! isset( $props['rsvp_start_number_days'] ) ) {
 		$props['rsvp_start_number_days'] = 0;
@@ -3654,15 +3654,15 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 			} elseif ( preg_match( '/#_RSVPSTART/', $result ) ) {
 				// show the end date+time for which a user can rsvp for an event
 				if ( eme_is_event_rsvp( $event ) ) {
-					$rsvp_number_days  = $event['event_properties']['rsvp_start_number_days'];
-					$rsvp_number_hours = $event['event_properties']['rsvp_start_number_hours'];
-					if ( $rsvp_number_days || $rsvp_number_hours ) {
+					$rsvp_end_number_days  = $event['event_properties']['rsvp_start_number_days'];
+					$rsvp_end_number_hours = $event['event_properties']['rsvp_start_number_hours'];
+					if ( $rsvp_end_number_days || $rsvp_end_number_hours ) {
 						if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
 							$rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 						} else {
 							$rsvp_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 						}
-						$rsvp_date_obj->minusDays( $rsvp_number_days )->minusHours( $rsvp_number_hours );
+						$rsvp_date_obj->minusDays( $rsvp_end_number_days )->minusHours( $rsvp_end_number_hours );
 						$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE );
 					}
 				}
@@ -3674,9 +3674,9 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					} else {
 						$rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 					}
-					$rsvp_number_days  = $event['event_properties']['rsvp_number_days'];
-					$rsvp_number_hours = $event['event_properties']['rsvp_number_hours'];
-					$rsvp_date_obj->minusDays( $rsvp_number_days )->minusHours( $rsvp_number_hours );
+					$rsvp_end_number_days  = $event['event_properties']['rsvp_end_number_days'];
+					$rsvp_end_number_hours = $event['event_properties']['rsvp_end_number_hours'];
+					$rsvp_date_obj->minusDays( $rsvp_end_number_days )->minusHours( $rsvp_end_number_hours );
 					$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE );
 				}
 			} elseif ( preg_match( '/#_CANCELEND/', $result ) ) {
@@ -8737,9 +8737,9 @@ function eme_meta_box_div_event_rsvp( $event ) {
 	</p>
 	<p id='span_rsvp_allowed_until'>
 		<?php esc_html_e( 'Allow RSVP until ', 'events-made-easy' ); ?>
-		<input id="eme_prop_rsvp_number_days" type="text" name="eme_prop_rsvp_number_days" size='4' value="<?php echo $event['event_properties']['rsvp_number_days']; ?>">
+		<input id="eme_prop_rsvp_end_number_days" type="text" name="eme_prop_rsvp_end_number_days" size='4' value="<?php echo $event['event_properties']['rsvp_end_number_days']; ?>">
 		<?php esc_html_e( 'days', 'events-made-easy' ); ?>
-		<input id="eme_prop_rsvp_number_hours" type="text" name="eme_prop_rsvp_number_hours" size='4' value="<?php echo $event['event_properties']['rsvp_number_hours']; ?>">
+		<input id="eme_prop_rsvp_end_number_hours" type="text" name="eme_prop_rsvp_end_number_hours" size='4' value="<?php echo $event['event_properties']['rsvp_end_number_hours']; ?>">
 		<?php esc_html_e( 'hours', 'events-made-easy' ); ?>
 		<?php esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_end_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
 		echo eme_ui_select( $event['event_properties']['rsvp_end_target'], 'eme_prop_rsvp_end_target', $eme_rsvp_end_target_list );
@@ -9007,7 +9007,6 @@ function eme_general_footer() {
 }
 
 function eme_sanitize_event( $event ) {
-	
 	// remove possible unwanted fields
 	if ( isset( $event['event_id'] ) ) {
 		unset( $event['event_id'] );
@@ -9138,7 +9137,7 @@ function eme_sanitize_event( $event ) {
 	}
 
 	// some properties need to be numeric
-	$numeric_vars = [ 'vat_pct', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'rsvp_number_days', 'rsvp_number_hours', 'cancel_rsvp_days', 'cancel_rsvp_age' ];
+	$numeric_vars = [ 'vat_pct', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'rsvp_end_number_days', 'rsvp_end_number_hours', 'cancel_rsvp_days', 'cancel_rsvp_age' ];
 	foreach ($numeric_vars as $numeric_var) {
 		if ( ! is_numeric( $event_properties[$numeric_var] ) ) {
 			$event_properties[$numeric_var] = 0;

@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.4.33 (2024//) =
 * Remove abandonned 2Checkout payment gateway
 * Event DB columns rsvp_number_days and rsvp_number_hours are gone, both are now event properties (in line with some other settings) a,d called rsvp_end_number_days and rsvp_end_number_hours
+* Slovak language contribution by Jozef Gaal
 
 = 2.4.32 (2024/02/23) =
 * Fix yet another named parameter usage (typo) causing event listing not to show in some shortcodes

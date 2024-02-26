@@ -45,7 +45,7 @@ function eme_countries_page() {
 			//validate whether uploaded file is a csv file
 			if ( ! empty( $_FILES['eme_csv']['name'] ) && in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
 				if ( is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
-						$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
+					$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
 					if ( ! $handle ) {
 						$message = __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
 					} else {
@@ -94,7 +94,7 @@ function eme_countries_page() {
 					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
 				}
 			} else {
-					$message = sprintf( __( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
+				$message = sprintf( __( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 			}
 		} elseif ( $_POST['eme_admin_action'] == 'do_importstates' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$inserted  = 0;
@@ -103,9 +103,9 @@ function eme_countries_page() {
 			//validate whether uploaded file is a csv file
 			if ( ! empty( $_FILES['eme_csv']['name'] ) && in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
 				if ( is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
-						$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
+					$handle = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
 					if ( ! $handle ) {
-							$message = __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
+						$message = __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
 					} else {
 						// BOM as a string for comparison.
 						$bom = "\xef\xbb\xbf";
@@ -165,14 +165,14 @@ function eme_countries_page() {
 			}
 			foreach ( $state as $key => $val ) {
 				if ( isset( $_POST[ $key ] ) ) {
-						$state[ $key ] = eme_sanitize_request( $_POST[ $key ] );
+					$state[ $key ] = eme_sanitize_request( $_POST[ $key ] );
 				}
 			}
 			$validation_result = eme_validate_state( $state );
 			if ( ! empty( $validation_result ) ) {
 				$message = sprintf( __( 'Problem detected: %s, please correct try again.', 'events-made-easy' ), $validation_result );
 			} elseif ( $state_id ) {
-					$update_result = eme_db_update_state( $state_id, $state );
+				$update_result = eme_db_update_state( $state_id, $state );
 				if ( $update_result !== false ) {
 					$message = __( 'Successfully edited the state', 'events-made-easy' );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
@@ -185,28 +185,28 @@ function eme_countries_page() {
 			} else {
 				$new_id = eme_db_insert_state( $state );
 				if ( $new_id ) {
-							$message = __( 'Successfully added the state', 'events-made-easy' );
+					$message = __( 'Successfully added the state', 'events-made-easy' );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_states_edit_layout( $new_id, $message );
 						return;
 					}
 				} else {
-																	$message = __( 'There was a problem adding the state, please try again.', 'events-made-easy' );
+					$message = __( 'There was a problem adding the state, please try again.', 'events-made-easy' );
 				}
 			}
-				eme_manage_states_layout( $message );
-				return;
+			eme_manage_states_layout( $message );
+			return;
 		} elseif ( $_POST['eme_admin_action'] == 'do_editcountry' ) {
 			if ( ! empty( $_POST['id'] ) ) {
-					$country_id = intval( $_POST['id'] );
-					$country    = eme_get_country( $country_id );
+				$country_id = intval( $_POST['id'] );
+				$country    = eme_get_country( $country_id );
 			} else {
 				$country_id = 0;
 				$country    = eme_new_country();
 			}
 			foreach ( $country as $key => $val ) {
 				if ( isset( $_POST[ $key ] ) ) {
-						$country[ $key ] = eme_sanitize_request( $_POST[ $key ] );
+					$country[ $key ] = eme_sanitize_request( $_POST[ $key ] );
 				}
 			}
 			// the language POST var has a different name ('language', not 'lang') to avoid a conflict with qtranslate-xt that
@@ -218,26 +218,26 @@ function eme_countries_page() {
 			if ( ! empty( $validation_result ) ) {
 				$message = sprintf( __( 'Problem detected: %s, please correct try again.', 'events-made-easy' ), $validation_result );
 			} elseif ( $country_id ) {
-					$update_result = eme_db_update_country( $country_id, $country );
+				$update_result = eme_db_update_country( $country_id, $country );
 				if ( $update_result !== false ) {
 					$message = __( 'Successfully edited the country', 'events-made-easy' );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
-								eme_countries_edit_layout( $country_id, $message );
-								return;
+						eme_countries_edit_layout( $country_id, $message );
+						return;
 					}
 				} else {
-						$message = __( 'There was a problem editing the country, please try again.', 'events-made-easy' );
+					$message = __( 'There was a problem editing the country, please try again.', 'events-made-easy' );
 				}
 			} else {
 				$new_id = eme_db_insert_country( $country );
 				if ( $new_id ) {
-							$message = __( 'Successfully added the country', 'events-made-easy' );
+					$message = __( 'Successfully added the country', 'events-made-easy' );
 					if ( get_option( 'eme_stay_on_edit_page' ) ) {
 						eme_countries_edit_layout( $new_id, $message );
 						return;
 					}
 				} else {
-							$message = __( 'There was a problem adding the country, please try again.', 'events-made-easy' );
+					$message = __( 'There was a problem adding the country, please try again.', 'events-made-easy' );
 				}
 			}
 				eme_manage_countries_layout( $message );
@@ -288,7 +288,7 @@ function eme_countries_main_layout( $message = '' ) {
          <h1>" . __( 'Manage countries and states', 'events-made-easy' ) . '</h1>
    ';
 	if ( ! empty( $message ) ) {
-			$html .= '<div id="countries-message" class="eme-message-admin"><p>' . $message . '</p></div>';
+		$html .= '<div id="countries-message" class="eme-message-admin"><p>' . $message . '</p></div>';
 	}
 
 	$html .= '<p>' . __( 'For personal info (people, members, event rsvp) EME allows you to use auto-completion on states, based on the country choice. However, since there are way too many states and languages, it is impossible to provide that list in EME itself. So if you want to use country and state info, you should enter the countries and states here.', 'events-made-easy' ) . '</p>';
@@ -311,7 +311,7 @@ function eme_manage_countries_layout( $message = '' ) {
 	$lang        = eme_detect_lang();
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-			$hidden_style = 'display:none;';
+		$hidden_style = 'display:none;';
 	} else {
 		$hidden_style = '';
 	}
@@ -332,7 +332,7 @@ function eme_manage_countries_layout( $message = '' ) {
 		</div>
 		 
 		<div id="countries-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-				<p><?php echo $message; ?></p>
+			<p><?php echo $message; ?></p>
 		</div>
 
 		<h1><?php esc_html_e( 'Add a new country', 'events-made-easy' ); ?></h1>
@@ -392,7 +392,7 @@ function eme_manage_states_layout( $message = '' ) {
 	global $plugin_page;
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-			$hidden_style = 'display:none;';
+		$hidden_style = 'display:none;';
 	} else {
 		$hidden_style = '';
 	}
@@ -464,19 +464,19 @@ function eme_states_edit_layout( $state_id = 0, $message = '' ) {
 
 	$countries = eme_get_countries_lang();
 	if ( ! empty( $state_id ) ) {
-		$state             = eme_get_state( $state_id );
-			$h1_string     = __( 'Edit state', 'events-made-easy' );
-			$action_string = __( 'Update state', 'events-made-easy' );
+		$state         = eme_get_state( $state_id );
+		$h1_string     = __( 'Edit state', 'events-made-easy' );
+		$action_string = __( 'Update state', 'events-made-easy' );
 	} elseif ( isset( $_GET['id'] ) ) {
-			$state_id      = intval( $_GET['id'] );
-		$state             = eme_get_state( $state_id );
-			$h1_string     = __( 'Edit state', 'events-made-easy' );
-			$action_string = __( 'Update state', 'events-made-easy' );
+		$state_id      = intval( $_GET['id'] );
+		$state         = eme_get_state( $state_id );
+		$h1_string     = __( 'Edit state', 'events-made-easy' );
+		$action_string = __( 'Update state', 'events-made-easy' );
 	} else {
-			$state_id      = 0;
-			$state         = eme_new_state();
-			$h1_string     = __( 'Create state', 'events-made-easy' );
-			$action_string = __( 'Add state', 'events-made-easy' );
+		$state_id      = 0;
+		$state         = eme_new_state();
+		$h1_string     = __( 'Create state', 'events-made-easy' );
+		$action_string = __( 'Add state', 'events-made-easy' );
 	}
 
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
@@ -665,15 +665,27 @@ function eme_validate_state( $state ) {
 }
 
 function eme_validate_country( $country ) {
+	global $wpdb;
+	$table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	if ( strlen( $country['alpha_2'] ) != 2 ) {
-			return __( 'Incorrect alpha-2 code', 'events-made-easy' );
+		return __( 'Incorrect alpha-2 code', 'events-made-easy' );
 	}
 	if ( $country['alpha_3'] && strlen( $country['alpha_3'] ) != 3 ) {
-			return __( 'Incorrect alpha-3 code', 'events-made-easy' );
+		return __( 'Incorrect alpha-3 code', 'events-made-easy' );
 	}
 	if ( $country['num_3'] && strlen( $country['num_3'] ) != 3 ) {
-			return __( 'Incorrect num-3 code', 'events-made-easy' );
+		return __( 'Incorrect num-3 code', 'events-made-easy' );
 	}
+	if ( empty($country['id'] ) ) {
+		$sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE alpha_2=%s AND lang=%s", $country['alpha_2'], $country['lang'] );
+	} else {
+		$sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE id != %d AND alpha_2=%s AND lang=%s", $country['id'], $country['alpha_2'], $country['lang'] );
+	}
+	$count = $wpdb->get_col( $sql );
+	if ( $count > 0 ) {
+		return __( 'Duplicate alpha-2 code detected', 'events-made-easy' );
+	}
+	
 	return '';
 }
 
@@ -683,10 +695,10 @@ function eme_db_insert_country( $line ) {
 
 	$country = eme_new_country();
 	// we only want the columns that interest us
-	$keys                    = array_intersect_key( $line, $country );
-	$new_line                = array_merge( $country, $keys );
-		$new_line['alpha_2'] = strtoupper( $new_line['alpha_2'] );
-		$new_line['alpha_3'] = strtoupper( $new_line['alpha_3'] );
+	$keys                = array_intersect_key( $line, $country );
+	$new_line            = array_merge( $country, $keys );
+	$new_line['alpha_2'] = strtoupper( $new_line['alpha_2'] );
+	$new_line['alpha_3'] = strtoupper( $new_line['alpha_3'] );
 
 	if ( $wpdb->insert( $table, $new_line ) === false ) {
 		return false;
@@ -700,8 +712,8 @@ function eme_db_update_country( $id, $line ) {
 	$table        = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 
-		$line['alpha_2'] = strtoupper( $line['alpha_2'] );
-		$line['alpha_3'] = strtoupper( $line['alpha_3'] );
+	$line['alpha_2'] = strtoupper( $line['alpha_2'] );
+	$line['alpha_3'] = strtoupper( $line['alpha_3'] );
 	// first get the existing country, compary the alpha_2 and change ALL countries and people from the old to new alpha_2 if not the same
 	$country = eme_get_country( $id );
 	if ( $country['alpha_2'] != $line['alpha_2'] ) {
@@ -741,9 +753,9 @@ function eme_db_insert_state( $line ) {
 
 	$state = eme_new_state();
 	// we only want the columns that interest us
-	$keys                 = array_intersect_key( $line, $state );
-	$new_line             = array_merge( $state, $keys );
-		$new_line['code'] = strtoupper( $new_line['code'] );
+	$keys             = array_intersect_key( $line, $state );
+	$new_line         = array_merge( $state, $keys );
+	$new_line['code'] = strtoupper( $new_line['code'] );
 	if ( $wpdb->insert( $table, $new_line ) === false ) {
 		return false;
 	} else {
@@ -755,7 +767,7 @@ function eme_db_update_state( $id, $line ) {
 	global $wpdb;
 	$table            = EME_DB_PREFIX . EME_STATES_TBNAME;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-		$line['code'] = strtoupper( $line['code'] );
+	$line['code'] = strtoupper( $line['code'] );
 
 	// first get the existing state, compary the state code and change ALL relevant states and people from the old to new code if not the same
 	$state = eme_get_state( $id );
@@ -859,8 +871,8 @@ function eme_ajax_countries_list() {
 	$where_array = [];
 	if ( $q ) {
 		for ( $i = 0; $i < count( $opt ); $i++ ) {
-				$fld           = esc_sql( $opt[ $i ] );
-				$where_array[] = "`$fld` LIKE '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%'";
+			$fld           = esc_sql( $opt[ $i ] );
+			$where_array[] = "`$fld` LIKE '%" . esc_sql( $wpdb->esc_like( $q[ $i ] ) ) . "%'";
 		}
 		$where = ' WHERE ' . implode( ' AND ', $where_array );
 	}
@@ -869,7 +881,7 @@ function eme_ajax_countries_list() {
 		$recordCount = $wpdb->get_var( $sql );
 		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( eme_sanitize_sql_orderby($_REQUEST['jtSorting']) ) : '';
 		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
-				$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
+			$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
 		} else {
 			$limit = '';
 		}
@@ -877,7 +889,7 @@ function eme_ajax_countries_list() {
 		$sql  = "SELECT * FROM $table $where $sorting $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
-				$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_country&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
+			$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_country&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
 		$jTableResult['Result']           = 'OK';
 		$jTableResult['TotalRecordCount'] = $recordCount;
@@ -901,7 +913,7 @@ function eme_ajax_states_list() {
 		$recordCount = $wpdb->get_var( $sql );
 		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( eme_sanitize_sql_orderby($_REQUEST['jtSorting'])) : '';
 		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
-				$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
+			$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
 		} else {
 			$limit = '';
 		}
@@ -909,7 +921,7 @@ function eme_ajax_states_list() {
 		$sql  = "SELECT state.*,country.lang,country.name AS country_name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id $sorting $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
-				$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_state&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
+			$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_state&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
 
 		$jTableResult['Result']           = 'OK';

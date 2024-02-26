@@ -683,7 +683,7 @@ function eme_validate_country( $country ) {
 	}
 	$count = $wpdb->get_col( $sql );
 	if ( $count > 0 ) {
-		return __( 'Duplicate alpha-2 code detected', 'events-made-easy' );
+		return __( 'Duplicate country with the same language and alpha-2 code detected', 'events-made-easy' );
 	}
 	
 	return '';

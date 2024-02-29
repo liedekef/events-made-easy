@@ -10024,7 +10024,7 @@ function eme_ajax_events_list() {
 	// if the person is not allowed to manage all events, we'll limit the links
 	if ( ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
 		if (get_option('eme_limit_admin_event_listing'))
-			$where_arr[] = "(event_author=$wp_id || event_contactpersonid=$wp_id)";
+			$where_arr[] = "(event_author=$wp_id || event_contactperson_id=$wp_id)";
 		$limited_links = 1;
 	} else {
 		$limited_links = 0;

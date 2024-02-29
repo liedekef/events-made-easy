@@ -2628,10 +2628,10 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
 	<?php
 	eme_render_members_searchfields( limit_to_group: $limit_to_group);
 	?>
-	<button id="MembersLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter members', 'events-made-easy' ); ?></button>
 	<?php
 		if (empty($limit_to_group)) {
 	?>
+	<button id="MembersLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter members', 'events-made-easy' ); ?></button>
 	<button id="StoreQueryButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Store result as dynamic group', 'events-made-easy' ); ?></button>
 	<div id="StoreQueryDiv"><?php esc_html_e( 'Enter a name for this dynamic group', 'events-made-easy' ); ?> <input type="text" id="dynamicgroupname" name="dynamicgroupname" class="clearable" size=20>
 		<button id="StoreQuerySubmitButton" class="button action"><?php esc_html_e( 'Store dynamic group', 'events-made-easy' ); ?></button>
@@ -2642,7 +2642,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
 
 	<?php
 	$formfields_searchable = eme_get_searchable_formfields( 'members', 1 );
-	if ( ! empty( $formfields_searchable ) ) {
+	if ( empty($limit_to_group) &&! empty( $formfields_searchable ) ) {
 		?>
 	<div id="hint">
 		<?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>

@@ -2617,16 +2617,131 @@ function eme_meta_box_div_membershipcustomfields( $membership ) {
 <?php
 }
 
-function eme_render_members_searchfields( $group = [] ) {
+function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
+	$memberships     = eme_get_memberships();
+	$pdftemplates    = eme_get_templates( 'pdf', 1 );
+	$htmltemplates   = eme_get_templates( 'html', 1 );
+	$membertemplates = eme_get_templates( 'membershipmail' );
+	$nonce_field     = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
+?>
+	<form id="eme-admin-regsearchform" name="eme-admin-regsearchform" action="#" method="post">
+	<?php
+	eme_render_members_searchfields( limit_to_group: $limit_to_group);
+	?>
+	<button id="MembersLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter members', 'events-made-easy' ); ?></button>
+	<?php
+		if (empty($limit_to_group)) {
+	?>
+	<button id="StoreQueryButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Store result as dynamic group', 'events-made-easy' ); ?></button>
+	<div id="StoreQueryDiv"><?php esc_html_e( 'Enter a name for this dynamic group', 'events-made-easy' ); ?> <input type="text" id="dynamicgroupname" name="dynamicgroupname" class="clearable" size=20>
+		<button id="StoreQuerySubmitButton" class="button action"><?php esc_html_e( 'Store dynamic group', 'events-made-easy' ); ?></button>
+	</div>
+        <?php
+		}
+        ?>
+
+	<?php
+	$formfields_searchable = eme_get_searchable_formfields( 'members', 1 );
+	if ( ! empty( $formfields_searchable ) ) {
+		?>
+	<div id="hint">
+		<?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
+		<?php esc_html_e( 'If you can\'t see your custom field in the "Custom fields to filter on" select-box, make sure you marked it as "searchable" in the field definition.', 'events-made-easy' ); ?>
+	</div>
+		<?php
+	}
+	?>
+	</form>
+
+	<form id='members-form' action="#" method="post">
+	<?php echo $nonce_field; ?>
+	<select id="eme_admin_action" name="eme_admin_action">
+	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
+	<?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
+	<option value="acceptPayment"><?php esc_html_e( 'Accept membership payment', 'events-made-easy' ); ?></option>
+	<option value="markUnpaid"><?php esc_html_e( 'Set membership unpaid', 'events-made-easy' ); ?></option>
+	<option value="stopMembership"><?php esc_html_e( 'Stop membership', 'events-made-easy' ); ?></option>
+	<option value="deleteMembers"><?php esc_html_e( 'Delete selected members', 'events-made-easy' ); ?></option>
+	<option value="resendPendingMember"><?php esc_html_e( 'Resend the mail for pending members', 'events-made-easy' ); ?></option>
+	<option value="resendPaidMember"><?php esc_html_e( 'Resend the mail for paid members', 'events-made-easy' ); ?></option>
+	<option value="resendExpirationReminders"><?php esc_html_e( 'Resend the expiration reminder mail', 'events-made-easy' ); ?></option>
+	<option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
+	<option value="memberMails"><?php esc_html_e( 'Send membership related email to selected members', 'events-made-easy' ); ?></option>
+	<?php endif; ?>
+	<option value="pdf"><?php esc_html_e( 'PDF output', 'events-made-easy' ); ?></option>
+	<option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
+	</select>
+	<span id="span_sendmails" class="eme-hidden">
+	<?php
+	esc_html_e( 'Send mails to members upon changes being made?', 'events-made-easy' );
+	echo eme_ui_select_binary( 1, 'send_mail' );
+	?>
+	</span>
+	<span id="span_trashperson" class="eme-hidden">
+	<?php
+	esc_html_e( 'Move corresponding persons to the trash bin?', 'events-made-easy' );
+	echo eme_ui_select_binary( 0, 'trash_person' );
+	?>
+	</span>
+	<span id="span_membermailtemplate" class="eme-hidden">
+	<?php echo eme_ui_select_key_value( '', 'membermail_template_subject', $membertemplates, 'id', 'name', __( 'Select a subject template', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'membermail_template', $membertemplates, 'id', 'name', __( 'Please select a body template', 'events-made-easy' ), 1 ); ?>
+	</span>
+	<span id="span_pdftemplate" class="eme-hidden">
+	<?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
+	</span>
+	<span id="span_htmltemplate" class="eme-hidden">
+	<?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
+	</span>
+	<button id="MembersActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
+	<span class="rightclickhint">
+		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
+	</span>
+	</form>
+	<?php
+	$extrafields_arr          = [];
+	$extrafieldnames_arr      = [];
+	$extrafieldsearchable_arr = [];
+	if ( get_option( 'eme_members_show_people_info' ) ) {
+		$formfields = eme_get_formfields( '', 'members,people,generic' );
+	} else {
+		$formfields = eme_get_formfields( '', 'members,generic' );
+	}
+	foreach ( $formfields as $formfield ) {
+		$extrafields_arr[]      = $formfield['field_id'];
+		$extrafieldnames_arr[]  = eme_trans_esc_html( $formfield['field_name'] );
+		$extrafieldsearchable_arr[] = $formfield['searchable'];
+	}
+	// these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns
+	$extrafields          = join( ',', $extrafields_arr );
+	$extrafieldnames      = join( ',', $extrafieldnames_arr );
+	$extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
+	?>
+	<div id="MembersTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+<?php
+}
+
+function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = [] ) {
 	$eme_member_status_array = eme_member_status_array();
 	$memberships             = eme_get_memberships();
 	$value                   = '';
-	if ( ! empty( $group ) ) {
+	if ( ! empty( $group_to_edit ) ) {
 		$edit_group   = 1;
-		$search_terms = eme_unserialize( $group['search_terms'] );
+		$search_terms = eme_unserialize( $group_to_edit['search_terms'] );
 	} else {
 		$edit_group = 0;
 	}
+
+	if ($limit_to_group) {
+                echo '<input type="hidden" name="search_groups" id="search_groups" value="' . esc_attr($limit_to_group) . '">';
+                // currently we don't show the other filters anymore (double id's, need to fix that first)
+                return;
+        }
+
 	if ( $edit_group ) {
 		echo '<tr><td>' . esc_html__( 'Select memberships', 'events-made-easy' ) . '</td><td>';
 		if ( isset( $search_terms['search_membershipids'] ) ) {
@@ -2648,6 +2763,7 @@ function eme_render_members_searchfields( $group = [] ) {
 		}
 	}
 	echo '<input type="text" value="' . esc_html($value) . '" class="clearable" name="search_person" id="search_person" placeholder="' . esc_html__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
+
 	if ( $edit_group ) {
 		echo '</td></tr><tr><td>' . esc_html__( 'Filter on member ID', 'events-made-easy' ) . '</td><td>';
 		if ( isset( $search_terms['search_memberid'] ) ) {
@@ -2693,6 +2809,15 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 		$search_person = esc_sql( $wpdb->esc_like( trim( $search_terms['search_person'] ) ) );
 		$where_arr[]   = "(people.lastname LIKE '%$search_person%' OR people.firstname LIKE '%$search_person%' OR people.email LIKE '%$search_person%')";
 	}
+        if ( ! empty( $search_terms['search_groups'] ) && is_numeric( $search_terms['search_groups'] ) ) {
+                $tmp_group = eme_get_group($search_terms['search_groups'] );
+                if ( $tmp_group['type'] == "dynamic_members" ) {
+                        $person_ids_arr = eme_get_groups_person_ids($search_terms['search_groups'] );
+                        if (!empty($person_ids_arr)) {
+                                $where_arr[]    = "people.person_id IN ( ".join(',',$person_ids_arr) .")";
+                        }
+                }
+        }
 
 	// if the person is not allowed to manage all people, show only himself
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
@@ -2806,19 +2931,16 @@ function eme_manage_members_layout( $message ) {
 	global $plugin_page;
 
 	$memberships     = eme_get_memberships();
-	$pdftemplates    = eme_get_templates( 'pdf', 1 );
-	$htmltemplates   = eme_get_templates( 'html', 1 );
-	$membertemplates = eme_get_templates( 'membershipmail' );
 	$nonce_field     = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 	if ( empty( $message ) ) {
-			$style_class = "style='display:none;'";
+		$style_class = "style='display:none;'";
 	} else {
 		$style_class = "class='notice is-dismissible eme-message-admin'";
 	}
 	?>
-	<div class="wrap nosubsub">
-	<div id="poststuff">
+<div class="wrap nosubsub">
+<div id="poststuff">
 	<div id="icon-edit" class="icon32">
 	</div>
 
@@ -2889,99 +3011,12 @@ function eme_manage_members_layout( $message ) {
 	<?php } ?>
 	<br>
 
-	<form id="eme-admin-regsearchform" name="eme-admin-regsearchform" action="#" method="post">
-	<?php
-	eme_render_members_searchfields();
-	?>
-	<button id="MembersLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter members', 'events-made-easy' ); ?></button>
-	<button id="StoreQueryButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Store result as dynamic group', 'events-made-easy' ); ?></button>
-	<div id="StoreQueryDiv"><?php esc_html_e( 'Enter a name for this dynamic group', 'events-made-easy' ); ?> <input type="text" id="dynamicgroupname" name="dynamicgroupname" class="clearable" size=20>
-		<button id="StoreQuerySubmitButton" class="button action"><?php esc_html_e( 'Store dynamic group', 'events-made-easy' ); ?></button>
-	</div>
-	<?php
-	$formfields_searchable = eme_get_searchable_formfields( 'members', 1 );
-	if ( ! empty( $formfields_searchable ) ) {
-		?>
-	<div id="hint">
-		<?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
-		<?php esc_html_e( 'If you can\'t see your custom field in the "Custom fields to filter on" select-box, make sure you marked it as "searchable" in the field definition.', 'events-made-easy' ); ?>
-	</div>
-		<?php
-	}
-	?>
-	</form>
+        <?php
+        eme_render_member_table_and_filters();
+        ?>
 
-	<form id='members-form' action="#" method="post">
-	<?php echo $nonce_field; ?>
-	<select id="eme_admin_action" name="eme_admin_action">
-	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
-	<?php if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) : ?>
-	<option value="acceptPayment"><?php esc_html_e( 'Accept membership payment', 'events-made-easy' ); ?></option>
-	<option value="markUnpaid"><?php esc_html_e( 'Set membership unpaid', 'events-made-easy' ); ?></option>
-	<option value="stopMembership"><?php esc_html_e( 'Stop membership', 'events-made-easy' ); ?></option>
-	<option value="deleteMembers"><?php esc_html_e( 'Delete selected members', 'events-made-easy' ); ?></option>
-	<option value="resendPendingMember"><?php esc_html_e( 'Resend the mail for pending members', 'events-made-easy' ); ?></option>
-	<option value="resendPaidMember"><?php esc_html_e( 'Resend the mail for paid members', 'events-made-easy' ); ?></option>
-	<option value="resendExpirationReminders"><?php esc_html_e( 'Resend the expiration reminder mail', 'events-made-easy' ); ?></option>
-	<option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
-	<option value="memberMails"><?php esc_html_e( 'Send membership related email to selected members', 'events-made-easy' ); ?></option>
-	<?php endif; ?>
-	<option value="pdf"><?php esc_html_e( 'PDF output', 'events-made-easy' ); ?></option>
-	<option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
-	</select>
-	<span id="span_sendmails" class="eme-hidden">
-	<?php
-	esc_html_e( 'Send mails to members upon changes being made?', 'events-made-easy' );
-	echo eme_ui_select_binary( 1, 'send_mail' );
-	?>
-	</span>
-	<span id="span_trashperson" class="eme-hidden">
-	<?php
-	esc_html_e( 'Move corresponding persons to the trash bin?', 'events-made-easy' );
-	echo eme_ui_select_binary( 0, 'trash_person' );
-	?>
-	</span>
-	<span id="span_membermailtemplate" class="eme-hidden">
-	<?php echo eme_ui_select_key_value( '', 'membermail_template_subject', $membertemplates, 'id', 'name', __( 'Select a subject template', 'events-made-easy' ), 1 ); ?>
-	<?php echo eme_ui_select_key_value( '', 'membermail_template', $membertemplates, 'id', 'name', __( 'Please select a body template', 'events-made-easy' ), 1 ); ?>
-	</span>
-	<span id="span_pdftemplate" class="eme-hidden">
-	<?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
-	<?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
-	<?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
-	</span>
-	<span id="span_htmltemplate" class="eme-hidden">
-	<?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
-	<?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
-	<?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
-	</span>
-	<button id="MembersActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
-		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-	</span>
-	<?php
-	$extrafields_arr          = [];
-	$extrafieldnames_arr      = [];
-	$extrafieldsearchable_arr = [];
-	if ( get_option( 'eme_members_show_people_info' ) ) {
-		$formfields = eme_get_formfields( '', 'members,people,generic' );
-	} else {
-		$formfields = eme_get_formfields( '', 'members,generic' );
-	}
-	foreach ( $formfields as $formfield ) {
-		$extrafields_arr[]      = $formfield['field_id'];
-		$extrafieldnames_arr[]  = eme_trans_esc_html( $formfield['field_name'] );
-		$extrafieldsearchable_arr[] = $formfield['searchable'];
-	}
-	// these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns
-	$extrafields          = join( ',', $extrafields_arr );
-	$extrafieldnames      = join( ',', $extrafieldnames_arr );
-	$extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
-	?>
-	</form>
-	<div id="MembersTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
-	</div>
-	</div>
+</div>
+</div>
 	<?php
 }
 
@@ -5996,7 +6031,7 @@ function eme_ajax_memberships_list() {
 	wp_die();
 }
 
-function eme_ajax_members_list( $dynamic_groupname = '' ) {
+function eme_ajax_members_list( ) {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$eme_member_status_array = eme_member_status_array();
@@ -6008,22 +6043,6 @@ function eme_ajax_members_list( $dynamic_groupname = '' ) {
 			$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
 			print wp_json_encode( $ajaxResult );
 			wp_die();
-	}
-
-	if ( ! empty( $dynamic_groupname ) ) {
-			$table         = EME_DB_PREFIX . EME_GROUPS_TBNAME;
-			$group['type'] = 'dynamic_members';
-		$group['name']     = $dynamic_groupname . ' ' . __( '(Dynamic)', 'events-made-easy' );
-		$search_terms      = [];
-		// the same as in add_update_group
-		$search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids' ];
-		foreach ( $search_fields as $search_field ) {
-			if ( isset( $_POST[ $search_field ] ) ) {
-				$search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );
-			}
-		}
-		$group['search_terms'] = eme_serialize( $search_terms );
-			return $wpdb->insert( $table, $group );
 	}
 
 	$start     = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
@@ -6219,8 +6238,24 @@ function eme_ajax_store_members_query() {
 		wp_die();
 	}
 	if ( ! empty( $_POST['dynamicgroupname'] ) ) {
-		eme_ajax_members_list( $_POST['dynamicgroupname'] );
-		$jTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
+		$group         = [];
+		$group['type'] = 'dynamic_members';
+		$group['name']     = esc_sql( eme_sanitize_request( $_POST['dynamicgroupname'] ) . ' ' . __( '(Dynamic)', 'events-made-easy' ));
+		$search_terms      = [];
+		// the same as in add_update_group
+		$search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids' ];
+		foreach ( $search_fields as $search_field ) {
+			if ( isset( $_POST[ $search_field ] ) ) {
+				$search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );
+			}
+		}
+		$group['search_terms'] = eme_serialize( $search_terms );
+		$new_group_id = eme_db_insert_group($group);
+		if ($new_group_id) {
+			$jTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
+		} else {
+			$jTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'There was a problem adding the group', 'events-made-easy' ) . '</p></div>';
+		}
 	} else {
 		$jTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter a name for the group', 'events-made-easy' ) . '</p></div>';
 	}

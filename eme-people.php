@@ -1705,14 +1705,131 @@ function eme_person_verify_layout() {
 	<?php
 }
 
-function eme_render_people_searchfields( $group = [] ) {
+function eme_render_people_table_and_filters( $limit_to_group = '') {
+        $nonce_field             = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
+        $groups                  = eme_get_static_groups();
+        $pdftemplates            = eme_get_templates( 'pdf', 1 );
+        $htmltemplates           = eme_get_templates( 'html', 1 );
+?>
+	<form id="eme-admin-regsearchform" name="eme-admin-regsearchform" action="#" method="post">
+	<?php
+	eme_render_people_searchfields( limit_to_group: $limit_to_group);
+	?>
+		<?php
+		if (empty($limit_to_group)) {
+		?>
+		<button id="PeopleLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter people', 'events-made-easy' ); ?></button>
+		<button id="StoreQueryButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Store result as dynamic group', 'events-made-easy' ); ?></button>
+		<div id="StoreQueryDiv"><?php esc_html_e( 'Enter a name for this dynamic group', 'events-made-easy' ); ?> <input type="text" id="dynamicgroupname" name="dynamicgroupname" class="clearable" size=20>
+	<button id="StoreQuerySubmitButton" class="button action"><?php esc_html_e( 'Store dynamic group', 'events-made-easy' ); ?></button>
+		</div>
+		<?php
+		}
+		?>
+		
+	<?php
+	$formfields_searchable = eme_get_searchable_formfields( 'people' );
+	if ( empty( $limit_to_group ) && ! empty( $formfields_searchable ) ) {
+		?>
+		<div id="hint">
+		<?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
+		<?php esc_html_e( 'If you can\'t see your custom field in the "Custom fields to filter on" select-box, make sure you marked it as "searchable" in the field definition.', 'events-made-easy' ); ?>
+		</div>
+		<?php
+	}
+	?>
+	</form>
+
+	<form id='people-form' action="#" method="post">
+	<?php echo $nonce_field; ?>
+	<select id="eme_admin_action" name="eme_admin_action">
+	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
+	<?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?> 
+	<option value="untrashPeople"><?php esc_html_e( 'Restore selected persons', 'events-made-easy' ); ?></option>
+	<option value="deletePeople"><?php esc_html_e( 'Permanently delete selected persons', 'events-made-easy' ); ?></option>
+	<?php } else { ?>
+	<option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
+		<?php if ( !$limit_to_group ) : ?>
+	<option value="addToGroup"><?php esc_html_e( 'Add to group', 'events-made-easy' ); ?></option>
+	<option value="removeFromGroup"><?php esc_html_e( 'Remove from group', 'events-made-easy' ); ?></option>
+		<?php endif; ?>
+	<option value="gdprApprovePeople"><?php esc_html_e( 'Set GDPR approval to yes', 'events-made-easy' ); ?></option>
+	<option value="gdprUnapprovePeople"><?php esc_html_e( 'Set GDPR approval to no', 'events-made-easy' ); ?></option>
+	<option value="massmailPeople"><?php esc_html_e( 'Set Massmail to yes', 'events-made-easy' ); ?></option>
+	<option value="noMassmailPeople"><?php esc_html_e( 'Set Massmail to no', 'events-made-easy' ); ?></option>
+	<option value="bdemailPeople"><?php esc_html_e( 'Set Birthday email to yes', 'events-made-easy' ); ?></option>
+	<option value="noBdemailPeople"><?php esc_html_e( 'Set Birthday email to no', 'events-made-easy' ); ?></option>
+		<?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
+	<option value="trashPeople"><?php esc_html_e( 'Delete selected persons (move to trash)', 'events-made-easy' ); ?></option>
+	<option value="gdprPeople"><?php esc_html_e( 'Remove personal data (and move to trash bin)', 'events-made-easy' ); ?></option>
+		<?php endif; ?>
+	<option value="changeLanguage"><?php esc_html_e( 'Change language of selected persons', 'events-made-easy' ); ?></option>
+	<option value="pdf"><?php esc_html_e( 'PDF output', 'events-made-easy' ); ?></option>
+	<option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
+	<?php } ?>
+	</select>
+	<span id="span_language" class="eme-hidden">
+	<?php esc_html_e( 'Change language to: ', 'events-made-easy' ); ?>
+	<input type='text' id='language' name='language'>
+	</span>
+	<span id="span_transferto" class="eme-hidden">
+	<?php esc_html_e( 'Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):', 'events-made-easy' ); ?>
+	<input type='hidden' id='transferto_id' name='transferto_id'>
+	<input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>">
+	</span>
+	<span id="span_addtogroup" class="eme-hidden">
+	<?php echo eme_ui_select_key_value( '', 'addtogroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
+	</span>
+	<span id="span_removefromgroup" class="eme-hidden">
+	<?php echo eme_ui_select_key_value( '', 'removefromgroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
+	</span>
+	<span id="span_pdftemplate" class="eme-hidden">
+	<?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
+	</span>
+	<span id="span_htmltemplate" class="eme-hidden">
+	<?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
+	<?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
+	</span>
+	<button id="PeopleActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
+	<span class="rightclickhint">
+		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
+	</span>
+	</form>
+	<?php
+	$formfields               = eme_get_formfields( '', 'people' );
+	$extrafields_arr          = [];
+	$extrafieldnames_arr      = [];
+	$extrafieldsearchable_arr = [];
+	foreach ( $formfields as $formfield ) {
+		$extrafields_arr[]          = intval($formfield['field_id']);
+		$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
+		$extrafieldsearchable_arr[] = esc_html($formfield['searchable']);
+	}
+	$extrafields          = join( ',', $extrafields_arr );
+	$extrafieldnames      = join( ',', $extrafieldnames_arr );
+	$extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
+	?>
+	<div id="PeopleTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
+<?php
+}
+
+function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [] ) {
 	$eme_member_status_array = eme_member_status_array();
 	$memberships             = eme_get_memberships();
 	$groups                  = eme_get_static_groups();
 
-	if ( ! empty( $group ) ) {
+	if ($limit_to_group) {
+		echo '<input type="hidden" name="search_groups" id="search_groups" value="' . esc_attr($limit_to_group) . '">';
+		// currently we don't show the other filters anymore (double id's, need to fix that first)
+		return;
+	}
+
+	if ( ! empty( $group_to_edit ) ) {
 		$edit_group   = 1;
-		$search_terms = eme_unserialize( $group['search_terms'] );
+		$search_terms = eme_unserialize( $group_to_edit['search_terms'] );
 	} else {
 		$edit_group = 0;
 	}
@@ -1812,6 +1929,18 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
 		$where_arr[]    = "ugroups.group_id IN ($search_groups)";
 		$usergroup_join = "LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id";
 	}
+	if ( ! empty( $search_terms['search_groups'] ) && is_numeric( $search_terms['search_groups'] ) ) {
+		$tmp_group = eme_get_group($search_terms['search_groups'] );
+		if ( $tmp_group['type'] == "dynamic_people" ) {
+			$person_ids_arr = eme_get_groups_person_ids($search_terms['search_groups'] );
+			if (!empty($person_ids_arr)) {
+				$where_arr[]    = "people.person_id IN ( ".join(',',$person_ids_arr) .")";
+			}
+		} elseif ( $tmp_group['type'] == "static" ) {
+			$where_arr[]    = "ugroups.group_id = ".$search_terms['search_groups'];
+			$usergroup_join = "LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id";
+		}
+	}
 	$member_join = '';
 	if ( ! empty( $search_terms['search_membershipids'] ) && eme_is_numeric_array( $search_terms['search_membershipids'] ) ) {
 		$search_membershipids = join( ',', $search_terms['search_membershipids'] );
@@ -1899,10 +2028,7 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
 function eme_manage_people_layout( $message = '' ) {
 	global $plugin_page;
 
-	$nonce_field             = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
-	$groups                  = eme_get_static_groups();
-	$pdftemplates            = eme_get_templates( 'pdf', 1 );
-	$htmltemplates           = eme_get_templates( 'html', 1 );
+	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 	if ( empty( $message ) ) {
 		$hidden_style = 'display:none;';
@@ -1911,8 +2037,8 @@ function eme_manage_people_layout( $message = '' ) {
 	}
 
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
+<div class="wrap nosubsub">
+<div id="poststuff">
 	<div id="icon-edit" class="icon32">
 	</div>
 
@@ -1964,101 +2090,12 @@ function eme_manage_people_layout( $message = '' ) {
 		<?php } ?>
 		<br>
 	<?php } ?>
-	<form id="eme-admin-regsearchform" name="eme-admin-regsearchform" action="#" method="post">
-	<?php
-	eme_render_people_searchfields();
-	?>
-		<button id="PeopleLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter people', 'events-made-easy' ); ?></button>
-		<button id="StoreQueryButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Store result as dynamic group', 'events-made-easy' ); ?></button>
-		<div id="StoreQueryDiv"><?php esc_html_e( 'Enter a name for this dynamic group', 'events-made-easy' ); ?> <input type="text" id="dynamicgroupname" name="dynamicgroupname" class="clearable" size=20>
-	<button id="StoreQuerySubmitButton" class="button action"><?php esc_html_e( 'Store dynamic group', 'events-made-easy' ); ?></button>
-		</div>
-	<?php
-	$formfields_searchable = eme_get_searchable_formfields( 'people' );
-	if ( ! empty( $formfields_searchable ) ) {
-		?>
-		<div id="hint">
-		<?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
-		<?php esc_html_e( 'If you can\'t see your custom field in the "Custom fields to filter on" select-box, make sure you marked it as "searchable" in the field definition.', 'events-made-easy' ); ?>
-		</div>
-		<?php
-	}
-	?>
-	</form>
 
-	<form id='people-form' action="#" method="post">
-	<?php echo $nonce_field; ?>
-	<select id="eme_admin_action" name="eme_admin_action">
-	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
-	<?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?> 
-	<option value="untrashPeople"><?php esc_html_e( 'Restore selected persons', 'events-made-easy' ); ?></option>
-	<option value="deletePeople"><?php esc_html_e( 'Permanently delete selected persons', 'events-made-easy' ); ?></option>
-	<?php } else { ?>
-	<option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
-	<option value="addToGroup"><?php esc_html_e( 'Add to group', 'events-made-easy' ); ?></option>
-	<option value="removeFromGroup"><?php esc_html_e( 'Remove from group', 'events-made-easy' ); ?></option>
-	<option value="gdprApprovePeople"><?php esc_html_e( 'Set GDPR approval to yes', 'events-made-easy' ); ?></option>
-	<option value="gdprUnapprovePeople"><?php esc_html_e( 'Set GDPR approval to no', 'events-made-easy' ); ?></option>
-	<option value="massmailPeople"><?php esc_html_e( 'Set Massmail to yes', 'events-made-easy' ); ?></option>
-	<option value="noMassmailPeople"><?php esc_html_e( 'Set Massmail to no', 'events-made-easy' ); ?></option>
-	<option value="bdemailPeople"><?php esc_html_e( 'Set Birthday email to yes', 'events-made-easy' ); ?></option>
-	<option value="noBdemailPeople"><?php esc_html_e( 'Set Birthday email to no', 'events-made-easy' ); ?></option>
-		<?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
-	<option value="trashPeople"><?php esc_html_e( 'Delete selected persons (move to trash)', 'events-made-easy' ); ?></option>
-	<option value="gdprPeople"><?php esc_html_e( 'Remove personal data (and move to trash bin)', 'events-made-easy' ); ?></option>
-<?php endif; ?>
-	<option value="changeLanguage"><?php esc_html_e( 'Change language of selected persons', 'events-made-easy' ); ?></option>
-	<option value="pdf"><?php esc_html_e( 'PDF output', 'events-made-easy' ); ?></option>
-	<option value="html"><?php esc_html_e( 'HTML output', 'events-made-easy' ); ?></option>
-	<?php } ?>
-	</select>
-	<span id="span_language" class="eme-hidden">
-	<?php esc_html_e( 'Change language to: ', 'events-made-easy' ); ?>
-	<input type='text' id='language' name='language'>
-	</span>
-	<span id="span_transferto" class="eme-hidden">
-	<?php esc_html_e( 'Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):', 'events-made-easy' ); ?>
-	<input type='hidden' id='transferto_id' name='transferto_id'>
-	<input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>">
-	</span>
-	<span id="span_addtogroup" class="eme-hidden">
-	<?php echo eme_ui_select_key_value( '', 'addtogroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
-	</span>
-	<span id="span_removefromgroup" class="eme-hidden">
-	<?php echo eme_ui_select_key_value( '', 'removefromgroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>
-	</span>
-	<span id="span_pdftemplate" class="eme-hidden">
-	<?php echo eme_ui_select_key_value( '', 'pdf_template_header', $pdftemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
-	<?php echo eme_ui_select_key_value( '', 'pdf_template', $pdftemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
-	<?php echo eme_ui_select_key_value( '', 'pdf_template_footer', $pdftemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
-	</span>
-	<span id="span_htmltemplate" class="eme-hidden">
-	<?php echo eme_ui_select_key_value( '', 'html_template_header', $htmltemplates, 'id', 'name', __( 'Select an optional header template', 'events-made-easy' ), 1 ); ?>
-	<?php echo eme_ui_select_key_value( '', 'html_template', $htmltemplates, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
-	<?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
-	</span>
-	<button id="PeopleActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
-		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-	</span>
-	<?php
-	$formfields               = eme_get_formfields( '', 'people' );
-	$extrafields_arr          = [];
-	$extrafieldnames_arr      = [];
-	$extrafieldsearchable_arr = [];
-	foreach ( $formfields as $formfield ) {
-		$extrafields_arr[]          = intval($formfield['field_id']);
-		$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
-		$extrafieldsearchable_arr[] = esc_html($formfield['searchable']);
-	}
-	$extrafields          = join( ',', $extrafields_arr );
-	$extrafieldnames      = join( ',', $extrafieldnames_arr );
-	$extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
+	<?php 
+	eme_render_people_table_and_filters();
 	?>
-	</form>
-	<div id="PeopleTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
-	</div>
-	</div>
+</div>
+</div>
 	<?php
 }
 
@@ -2461,28 +2498,28 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 			if ( empty( $group['search_terms'] ) && $action == 'edit' ) {
 				echo "<tr><td colspan=2><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: this group is using an older method of defining the criteria for the members in it. Upon saving this group, you will lose that info, so make sure to reenter the criteria in the fields below', 'events-made-easy' ) . '</td></tr>';
 			}
-			eme_render_people_searchfields( $group );
+			eme_render_people_searchfields( group_to_edit: $group );
 		} elseif ( $group['type'] == 'dynamic_members' ) {
 			if ( empty( $group['search_terms'] ) && $action == 'edit' ) {
 				echo "<tr><td colspan=2><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: this group is using an older method of defining the criteria for the members in it. Upon saving this group, you will lose that info, so make sure to reenter the criteria in the fields below', 'events-made-easy' ) . '</td></tr>';
 			}
-			eme_render_members_searchfields( $group );
+			eme_render_members_searchfields( group_to_edit: $group );
 		}
 		?>
 		</table>
 		</div>
 	</div>
-	<p class="submit"><input type="submit" class="button-primary" name="submit" value="
+	<p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add group', 'events-made-easy' ); } else { esc_html_e( 'Update group', 'events-made-easy' ); } ?>"></p>
+	</div>
+	</form>
 	<?php
-	if ( $action == 'add' ) {
-		esc_html_e( 'Add group', 'events-made-easy' );
-	} else {
-		esc_html_e( 'Update group', 'events-made-easy' );
-	}
+		if ( $group['type'] == 'dynamic_members' ) {
+			eme_render_member_table_and_filters( $group_id );
+		} elseif ($group_id) {
+			eme_render_people_table_and_filters( $group_id );
+		}
 	?>
-																						"></p>
-		</div>
-		</form>
+
 	</div>
 	<?php
 }
@@ -3015,6 +3052,7 @@ function eme_get_group( $group_id ) {
 	}
 	return $res;
 }
+
 function eme_get_group_by_name( $name ) {
 	global $wpdb;
 	$groups_table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
@@ -3043,6 +3081,7 @@ function eme_get_groups() {
 	$sql   = "SELECT * FROM $table ORDER BY name";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
+
 function eme_get_public_groups( $group_ids = '' ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
@@ -3053,12 +3092,14 @@ function eme_get_public_groups( $group_ids = '' ) {
 	}
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
+
 function eme_get_public_groupids() {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
 	$sql   = "SELECT group_id FROM $table WHERE public=1 AND type='static' ORDER BY name";
 	return $wpdb->get_col( $sql );
 }
+
 function eme_get_membergroups() {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
@@ -4948,7 +4989,7 @@ add_action( 'wp_ajax_eme_manage_people', 'eme_ajax_manage_people' );
 add_action( 'wp_ajax_eme_manage_groups', 'eme_ajax_manage_groups' );
 add_action( 'wp_ajax_eme_store_people_query', 'eme_ajax_store_people_query' );
 
-function eme_ajax_people_list( $dynamic_groupname = '' ) {
+function eme_ajax_people_list( ) {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
@@ -4956,22 +4997,6 @@ function eme_ajax_people_list( $dynamic_groupname = '' ) {
 		$ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
 		print wp_json_encode( $ajaxResult );
 		wp_die();
-	}
-
-	if ( ! empty( $dynamic_groupname ) ) {
-		$table         = EME_DB_PREFIX . EME_GROUPS_TBNAME;
-		$group['type'] = 'dynamic_people';
-		$group['name'] = $dynamic_groupname . ' ' . esc_html__( '(Dynamic)', 'events-made-easy' );
-		$search_terms  = [];
-		// the same as in add_update_group
-		$search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids' ];
-		foreach ( $search_fields as $search_field ) {
-			if ( isset( $_POST[ $search_field ] ) ) {
-					$search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );
-			}
-		}
-		$group['search_terms'] = eme_serialize( $search_terms );
-		return $wpdb->insert( $table, $group );
 	}
 
 	$formfields = eme_get_formfields( '', 'people' );
@@ -5194,8 +5219,24 @@ function eme_ajax_store_people_query() {
 		wp_die();
 	}
 	if ( ! empty( $_POST['dynamicgroupname'] ) ) {
-		eme_ajax_people_list( $_POST['dynamicgroupname'] );
-		$jTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
+                $group         = [];
+                $group['type'] = 'dynamic_people';
+                $group['name'] = esc_sql(eme_sanitize_request($_POST['dynamicgroupname']) . ' ' . __( '(Dynamic)', 'events-made-easy' ));
+                $search_terms  = [];
+                // the same as in add_update_group
+                $search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids' ];
+                foreach ( $search_fields as $search_field ) {
+                        if ( isset( $_POST[ $search_field ] ) ) {
+                                        $search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );
+                        }
+                }
+                $group['search_terms'] = eme_serialize( $search_terms );
+		$new_group_id = eme_db_insert_group($group);
+		if ($new_group_id) {
+			$jTableResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Dynamic group added', 'events-made-easy' ) . '</p></div>';
+		} else {
+			$jTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'There was a problem adding the group', 'events-made-easy' ) . '</p></div>';
+		}
 	} else {
 		$jTableResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . esc_html__( 'Please enter a name for the group', 'events-made-easy' ) . '</p></div>';
 	}

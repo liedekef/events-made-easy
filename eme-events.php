@@ -9710,7 +9710,7 @@ function eme_admin_enqueue_js() {
 		wp_localize_script( 'eme-people', 'eme', $translation_array );
 		wp_enqueue_script( 'eme-people' );
 	}
-	if ( in_array( $plugin_page, [ 'eme-members', 'eme-memberships' ] ) ) {
+	if ( in_array( $plugin_page, [ 'eme-members', 'eme-memberships', 'eme-groups' ] ) ) {
 		wp_enqueue_media();
 		$translation_array = [
 			'translate_nomatchperson'              => __( 'No matching person found', 'events-made-easy' ),

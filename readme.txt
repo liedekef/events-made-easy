@@ -104,6 +104,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Slovak language contribution by Jozef Gaal
 * Make sure no countries with double alpha-2 code and the same language can exist
 * Correct the use of the setting "Limit event listing?" It was not working due to a wrong column name in the database query
+* Show the people/members in the group-section
 
 = 2.4.32 (2024/02/23) =
 * Fix yet another named parameter usage (typo) causing event listing not to show in some shortcodes

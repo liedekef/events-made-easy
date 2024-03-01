@@ -1705,7 +1705,7 @@ function eme_person_verify_layout() {
 	<?php
 }
 
-function eme_render_people_table_and_filters( $limit_to_group = '') {
+function eme_render_people_table_and_filters( $limit_to_group = 0) {
         $nonce_field             = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
         $groups                  = eme_get_static_groups();
         $pdftemplates            = eme_get_templates( 'pdf', 1 );
@@ -1749,7 +1749,7 @@ function eme_render_people_table_and_filters( $limit_to_group = '') {
 	<option value="deletePeople"><?php esc_html_e( 'Permanently delete selected persons', 'events-made-easy' ); ?></option>
 	<?php } else { ?>
 	<option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
-		<?php if ( !$limit_to_group ) : ?>
+		<?php if ( !$limit_to_group  ) : ?>
 	<option value="addToGroup"><?php esc_html_e( 'Add to group', 'events-made-easy' ); ?></option>
 	<option value="removeFromGroup"><?php esc_html_e( 'Remove from group', 'events-made-easy' ); ?></option>
 		<?php endif; ?>

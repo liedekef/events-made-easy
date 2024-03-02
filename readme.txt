@@ -100,11 +100,11 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.33 (2024//) =
 * Remove abandonned 2Checkout payment gateway
-* Event DB columns rsvp_number_days and rsvp_number_hours are gone, both are now event properties (in line with some other settings) a,d called rsvp_end_number_days and rsvp_end_number_hours
+* Event DB columns rsvp_number_days and rsvp_number_hours are gone, both are now event properties (in line with some other settings) and called rsvp_end_number_days and rsvp_end_number_hours
 * Slovak language contribution by Jozef Gaal
 * Make sure no countries with double alpha-2 code and the same language can exist
 * Correct the use of the setting "Limit event listing?" It was not working due to a wrong column name in the database query
-* Show the people/members in the group-section
+* Show the people/members of a group when editing that group (and allow filtering/actions as if in the people/member section)
 
 = 2.4.32 (2024/02/23) =
 * Fix yet another named parameter usage (typo) causing event listing not to show in some shortcodes

@@ -1715,10 +1715,10 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
 	<?php
 	eme_render_people_searchfields( limit_to_group: $limit_to_group);
 	?>
+		<button id="PeopleLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter people', 'events-made-easy' ); ?></button>
 		<?php
 		if (empty($limit_to_group)) {
 		?>
-		<button id="PeopleLoadRecordsButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Filter people', 'events-made-easy' ); ?></button>
 		<button id="StoreQueryButton" class="button action eme_admin_button_middle"><?php esc_html_e( 'Store result as dynamic group', 'events-made-easy' ); ?></button>
 		<div id="StoreQueryDiv"><?php esc_html_e( 'Enter a name for this dynamic group', 'events-made-easy' ); ?> <input type="text" id="dynamicgroupname" name="dynamicgroupname" class="clearable" size=20>
 	<button id="StoreQuerySubmitButton" class="button action"><?php esc_html_e( 'Store dynamic group', 'events-made-easy' ); ?></button>
@@ -1821,17 +1821,19 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 	$memberships             = eme_get_memberships();
 	$groups                  = eme_get_static_groups();
 
-	if ($limit_to_group) {
-		echo '<input type="hidden" name="search_groups" id="search_groups" value="' . esc_attr($limit_to_group) . '">';
-		// currently we don't show the other filters anymore (double id's, need to fix that first)
-		return;
-	}
-
 	if ( ! empty( $group_to_edit ) ) {
 		$edit_group   = 1;
 		$search_terms = eme_unserialize( $group_to_edit['search_terms'] );
+		$id_prefix    = 'edit_';
 	} else {
 		$edit_group = 0;
+		$id_prefix  = '';
+	}
+
+	if ($limit_to_group) {
+		echo '<input type="hidden" name="search_groups" id="'.$id_prefix.'search_groups" value="' . esc_attr($limit_to_group) . '">';
+		// currently we don't show the other filters anymore (double id's, need to fix that first)
+		//return;
 	}
 
 	$value = '';
@@ -1841,7 +1843,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 			$value = $search_terms['search_person'];
 		}
 	}
-	echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_person" id="search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
+	echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
 
 	$value = '';
 	if ( $edit_group ) {
@@ -1850,7 +1852,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 			$value = $search_terms['search_groups'];
 		}
 	}
-	echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2_people_groups_class' );
+	echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2_people_groups_class', id_prefix: $id_prefix );
 
 	$value = '';
 	if ( $edit_group ) {
@@ -1859,7 +1861,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 			$value = $search_terms['search_membershipids'];
 		}
 	}
-	echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class' );
+	echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class', id_prefix: $id_prefix );
 
 	$value = '';
 	if ( $edit_group ) {
@@ -1868,7 +1870,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 			$value = $search_terms['search_memberstatus'];
 		}
 	}
-	echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_select2_memberstatus_class' );
+	echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_select2_memberstatus_class', id_prefix: $id_prefix );
 
 	$formfields_searchable = eme_get_searchable_formfields( 'people' );
 	if ( ! empty( $formfields_searchable ) ) {
@@ -1879,7 +1881,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 				$value = $search_terms['search_customfields'];
 			}
 		}
-		echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_customfields" id="search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
+		echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_customfields" id="'.$id_prefix.'search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
 
 		$value = '';
 		if ( $edit_group ) {
@@ -1890,7 +1892,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 		}
 		$label = __( 'Custom fields to filter on', 'events-made-easy' );
 		$extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-		echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2', $extra_attributes, 1 );
+		echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2', $extra_attributes, 1, id_prefix: $id_prefix );
 	}
 }
 

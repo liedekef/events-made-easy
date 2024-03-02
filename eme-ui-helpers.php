@@ -353,7 +353,7 @@ function eme_ui_select_key_value( $option_value, $name, $list, $key, $value, $ad
 	return $val;
 }
 
-function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $disable_first_option = 0 ) {
+function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $disable_first_option = 0, $id_prefix = '' ) {
 	// make sure it is an array, otherwise just go back
 	if ( ! is_array( $list ) ) {
 		return;
@@ -375,7 +375,7 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
 		$extra_attributes .= ' aria-label="' . $name . '"';
 	}
 
-	$val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='{$name}[]' id='{$name}' size='$size'>";
+	$val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
 	if ( $add_empty_first != '' ) {
 		if ($disable_first_option) {
 			$val .= "<option disabled='disabled' value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
@@ -402,7 +402,7 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
 	return $val;
 }
 
-function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value, $size = 3, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $disable_first_option = 0 ) {
+function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value, $size = 3, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '', $disable_first_option = 0, $id_prefix = '' ) {
 	// make sure it is an array, otherwise just go back
 	if ( ! is_array( $list ) ) {
 		return;
@@ -425,7 +425,7 @@ function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value
 		$extra_attributes .= ' aria-label="' . $name . '"';
 	}
 
-	$val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='{$name}[]' id='{$name}' size='$size'>";
+	$val = "<select $required_att $class_att $extra_attributes multiple='multiple' name='{$name}[]' id='{$id_prefix}{$name}' size='$size'>";
 	if ( ! empty( $add_empty_first ) ) {
 		if ($disable_first_option) {
 			$val .= "<option disabled='disabled' value=''>" . eme_esc_html( $add_empty_first ) . '</option>';

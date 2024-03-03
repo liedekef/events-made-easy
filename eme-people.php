@@ -1821,6 +1821,9 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 	$memberships             = eme_get_memberships();
 	$groups                  = eme_get_static_groups();
 
+	// setting the id_prefix helps in avoiding double id's if eme_render_people_searchfields is called
+	// on a group page 2 times (ones to edit the group, once to show the group members+filters)
+	// Double id's causes some javascripts to flip ...
 	if ( ! empty( $group_to_edit ) ) {
 		$edit_group   = 1;
 		$search_terms = eme_unserialize( $group_to_edit['search_terms'] );
@@ -1832,8 +1835,6 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 
 	if ($limit_to_group) {
 		echo '<input type="hidden" name="search_groups" id="'.$id_prefix.'search_groups" value="' . esc_attr($limit_to_group) . '">';
-		// currently we don't show the other filters anymore (double id's, need to fix that first)
-		//return;
 	}
 
 	$value = '';

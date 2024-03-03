@@ -183,7 +183,7 @@ jQuery(document).ready( function($) {
                             $('input#eme_loc_prop_online_only').val(ui.item.online_only).attr('disabled',true);
                             $('input#location_url').val(ui.item.location_url).attr('readonly', true);
                             $('#img_edit_location').show();
-                            if(eme.translate_eme_map_is_active === 'true') {
+                            if(emeevents.translate_eme_map_is_active === 'true') {
                                loadMapLatLong(ui.item.name, ui.item.address1, ui.item.address2, ui.item.city,ui.item.state,ui.item.zip,ui.item.country, ui.item.latitude, ui.item.longitude);
                             }
                             return false;
@@ -261,7 +261,7 @@ jQuery(document).ready( function($) {
                   $('input[name="location-select-country"]').val(item.country);
                   $('input[name="location-select-latitude"]').val(item.latitude);
                   $('input[name="location-select-longitude"]').val(item.longitude);
-                  if(eme.translate_eme_map_is_active === 'true') {
+                  if(emeevents.translate_eme_map_is_active === 'true') {
                      loadMapLatLong(item.name,item.address1,item.address2,item.city,item.state,item.zip,item.country,item.latitude,item.longitude);
                   }
                })
@@ -312,9 +312,9 @@ jQuery(document).ready( function($) {
 					   $('#localized-rec-end-date').fdatepicker().data('fdatepicker').selectDate(date);
 				   }
 			   } else {
-				$('#recurrence-dates-specificdates').html('<br />'+eme.translate_selecteddates+'<br />');
+				$('#recurrence-dates-specificdates').html('<br />'+emeevents.translate_selecteddates+'<br />');
 				$.each(date, function( index, value ) {
-			   		date_formatted = inst.formatDate(eme.translate_fdateformat,value);
+			   		date_formatted = inst.formatDate(emeevents.translate_fdateformat,value);
 					$('#recurrence-dates-specificdates').append(date_formatted+'<br />');
 				});
 			   }
@@ -394,7 +394,7 @@ jQuery(document).ready( function($) {
 		   // we call both functions to show the map, only 1 will work (either the select-based or the other) depending on the form shown
 		   if (ui.newPanel.attr('id') == 'tab-locationdetails') {
 			   // We need to call it here, because otherwise the map initially doesn't render correctly due to hidden tab div etc ...
-			   if(eme.translate_eme_map_is_active === 'true') {
+			   if(emeevents.translate_eme_map_is_active === 'true') {
 				   eme_SelectdisplayAddress();
 				   eme_displayAddress(0);
 			   }
@@ -450,11 +450,11 @@ jQuery(document).ready( function($) {
       var recurring = $('input[name=repeated_event]:checked').val();
       
       if (recurring && $('input#localized-rec-end-date').val() == '' && $('select#recurrence-frequency').val() != 'specific') {
-         alert (eme.translate_enddate_required); 
+         alert (emeevents.translate_enddate_required); 
          $('input#localized-rec-end-date').css('border','2px solid red');
          return false;
       } else if (recurring && $('input#localized-rec-start-date').val() == $('input#localized-rec-end-date').val()) {
-         alert (eme.translate_startenddate_identical); 
+         alert (emeevents.translate_startenddate_identical); 
          $('input#localized-rec-end-date').css('border','2px solid red');
          return false;
       } else {
@@ -469,101 +469,101 @@ jQuery(document).ready( function($) {
    var eventfields = {
                 event_id: {
                     key: true,
-		    title: eme.translate_id,
+		    title: emeevents.translate_id,
                     visibility: 'hidden'
                 },
                 event_name: {
-		    title: eme.translate_name,
+		    title: emeevents.translate_name,
                     visibility: 'fixed'
                 },
                 event_status: {
-		    title: eme.translate_status,
+		    title: emeevents.translate_status,
                     width: '5%'
                 },
                 copy: {
-		    title: eme.translate_copy,
+		    title: emeevents.translate_copy,
                     sorting: false,
                     width: '2%',
                     listClass: 'eme-jtable-center'
                 },
                 rsvp: {
-		    title: eme.translate_rsvp,
+		    title: emeevents.translate_rsvp,
                     sorting: false,
                     width: '2%',
                     listClass: 'eme-jtable-center'
                 },
 	        eventprice: {
-                    title: eme.translate_eventprice,
+                    title: emeevents.translate_eventprice,
                     sorting: false
                 },
                 location_name: {
-		    title: eme.translate_location
+		    title: emeevents.translate_location
                 },
                 datetime: {
-		    title: eme.translate_datetime,
+		    title: emeevents.translate_datetime,
                     width: '5%'
                 },
                 creation_date: {
-		    title: eme.translate_created_on,
+		    title: emeevents.translate_created_on,
                     visibility: 'hidden',
                     width: '5%'
                 },
                 modif_date: {
-		    title: eme.translate_modified_on,
+		    title: emeevents.translate_modified_on,
                     visibility: 'hidden',
                     width: '5%'
                 },
                 recinfo: {
-		    title: eme.translate_recinfo,
+		    title: emeevents.translate_recinfo,
                     sorting: false
                 }
    }
    var recurrencefields = {
                 recurrence_id: {
                     key: true,
-		    title: eme.translate_id,
+		    title: emeevents.translate_id,
                     visibility: 'hidden'
                 },
                 event_name: {
-		    title: eme.translate_name,
+		    title: emeevents.translate_name,
 		    sorting: false,
                     visibility: 'fixed'
                 },
                 event_status: {
-		    title: eme.translate_status,
+		    title: emeevents.translate_status,
 		    sorting: false,
                     width: '5%'
                 },
                 copy: {
-		    title: eme.translate_copy,
+		    title: emeevents.translate_copy,
                     sorting: false,
                     width: '2%',
                     listClass: 'eme-jtable-center'
                 },
 	        eventprice: {
-                    title: eme.translate_eventprice,
+                    title: emeevents.translate_eventprice,
                     sorting: false
                 },
                 location_name: {
-		    title: eme.translate_location,
+		    title: emeevents.translate_location,
 		    sorting: false,
                 },
                 creation_date: {
-		    title: eme.translate_created_on,
+		    title: emeevents.translate_created_on,
                     visibility: 'hidden',
                     width: '5%'
                 },
                 modif_date: {
-		    title: eme.translate_modified_on,
+		    title: emeevents.translate_modified_on,
                     visibility: 'hidden',
                     width: '5%'
                 },
                 recinfo: {
-		    title: eme.translate_recinfo,
+		    title: emeevents.translate_recinfo,
                     sorting: false
                 },
                 rec_singledur: {
-		    title: eme.translate_rec_singledur,
+		    title: emeevents.translate_rec_singledur,
                     sorting: false
                 }
    }
@@ -591,7 +591,7 @@ jQuery(document).ready( function($) {
 
       //Prepare jtable plugin
       $('#EventsTableContainer').jtable({
-            title: eme.translate_events,
+            title: emeevents.translate_events,
             paging: true,
             pageSizes: [10, 25, 50, 100],
             sorting: true,
@@ -604,13 +604,13 @@ jQuery(document).ready( function($) {
             selectOnRowClick: true, //Enable this to only select using checkboxes
             toolbar: {
                 items: [{
-                        text: eme.translate_csv,
+                        text: emeevents.translate_csv,
                         click: function () {
                                   jtable_csv('#EventsTableContainer');
                                }
                         },
                         {
-                        text: eme.translate_print,
+                        text: emeevents.translate_print,
                         click: function () {
                                   $('#EventsTableContainer').printElement();
                                }
@@ -618,11 +618,11 @@ jQuery(document).ready( function($) {
                         ]
             },
             deleteConfirmation: function(data) {
-               data.deleteConfirmMessage = eme.translate_pressdeletetoremove + ' "' + data.record.event_name_simple + '"';
+               data.deleteConfirmMessage = emeevents.translate_pressdeletetoremove + ' "' + data.record.event_name_simple + '"';
             },
             actions: {
-		listAction: ajaxurl+'?action=eme_events_list&eme_admin_nonce='+eme.translate_adminnonce+'&trash='+$_GET['trash']
-                //deleteAction: ajaxurl+'?action=eme_manage_events&do_action=deleteEvents&eme_admin_nonce='+eme.translate_adminnonce
+		listAction: ajaxurl+'?action=eme_events_list&eme_admin_nonce='+emeevents.translate_adminnonce+'&trash='+$_GET['trash']
+                //deleteAction: ajaxurl+'?action=eme_manage_events&do_action=deleteEvents&eme_admin_nonce='+emeevents.translate_adminnonce
             },
             fields: eventfields
         });
@@ -651,11 +651,11 @@ jQuery(document).ready( function($) {
 
            var action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
-              if ((do_action=='deleteEvents' || do_action=='deleteRecurrences') && !confirm(eme.translate_areyousuretodeleteselected)) {
+              if ((do_action=='deleteEvents' || do_action=='deleteRecurrences') && !confirm(emeevents.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if (action_ok==1) {
-		 $('#EventsActionsButton').text(eme.translate_pleasewait);
+		 $('#EventsActionsButton').text(emeevents.translate_pleasewait);
                  $('#EventsActionsButton').prop('disabled', true);
 	         var ids = [];
 	         selectedRows.each(function () {
@@ -669,11 +669,11 @@ jQuery(document).ready( function($) {
                         'do_action': do_action,
                         'send_trashmails': send_trashmails,
                         'addtocategory': addtocategory,
-                        'eme_admin_nonce': eme.translate_adminnonce };
+                        'eme_admin_nonce': emeevents.translate_adminnonce };
 
                  $.post(ajaxurl, params, function(data) {
 	            $('#EventsTableContainer').jtable('reload');
-		    $('#EventsActionsButton').text(eme.translate_apply);
+		    $('#EventsActionsButton').text(emeevents.translate_apply);
                     $('#EventsActionsButton').prop('disabled', false);
                     $('div#events-message').html(data.Message);
                     $('div#events-message').show();
@@ -706,7 +706,7 @@ jQuery(document).ready( function($) {
    if ($('#RecurrencesTableContainer').length) {
       //Prepare jtable plugin
       $('#RecurrencesTableContainer').jtable({
-            title: eme.translate_recurrences,
+            title: emeevents.translate_recurrences,
             paging: true,
             pageSizes: [10, 25, 50, 100],
             sorting: true,
@@ -719,24 +719,24 @@ jQuery(document).ready( function($) {
             selectOnRowClick: true, //Enable this to only select using checkboxes
             toolbar: {
                 items: [{
-                        text: eme.translate_csv,
+                        text: emeevents.translate_csv,
                         click: function () {
                                   jtable_csv('#RecurrencesTableContainer');
                                }
                         },
                         {
-                        text: eme.translate_print,
+                        text: emeevents.translate_print,
                         click: function () {
                                   $('#RecurrencesTableContainer').printElement();
                                }
                         }]
             },
             deleteConfirmation: function(data) {
-               data.deleteConfirmMessage = eme.translate_pressdeletetoremove + ' "' + data.record.event_name_simple + '"';
+               data.deleteConfirmMessage = emeevents.translate_pressdeletetoremove + ' "' + data.record.event_name_simple + '"';
             },
             actions: {
-		listAction: ajaxurl+'?action=eme_recurrences_list&eme_admin_nonce='+eme.translate_adminnonce+'&trash='+$_GET['trash']
-                //deleteAction: ajaxurl+'?action=eme_manage_recurrences&do_action=deleteRecurrences&eme_admin_nonce='+eme.translate_adminnonce
+		listAction: ajaxurl+'?action=eme_recurrences_list&eme_admin_nonce='+emeevents.translate_adminnonce+'&trash='+$_GET['trash']
+                //deleteAction: ajaxurl+'?action=eme_manage_recurrences&do_action=deleteRecurrences&eme_admin_nonce='+emeevents.translate_adminnonce
             },
             fields: recurrencefields
         });
@@ -765,11 +765,11 @@ jQuery(document).ready( function($) {
 
            var action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
-              if (do_action=='deleteRecurrences' && !confirm(eme.translate_areyousuretodeleteselected)) {
+              if (do_action=='deleteRecurrences' && !confirm(emeevents.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if (action_ok==1) {
-		 $('#RecurrencesActionsButton').text(eme.translate_pleasewait);
+		 $('#RecurrencesActionsButton').text(emeevents.translate_pleasewait);
                  $('#RecurrencesActionsButton').prop('disabled', true);
 	         var ids = [];
 	         selectedRows.each(function () {
@@ -783,11 +783,11 @@ jQuery(document).ready( function($) {
                         'do_action': do_action,
 			'rec_new_start_date': rec_new_start_date,
 			'rec_new_end_date': rec_new_end_date,
-                        'eme_admin_nonce': eme.translate_adminnonce };
+                        'eme_admin_nonce': emeevents.translate_adminnonce };
 
                  $.post(ajaxurl, params, function(data) {
 	            $('#RecurrencesTableContainer').jtable('reload');
-		    $('#RecurrencesActionsButton').text(eme.translate_apply);
+		    $('#RecurrencesActionsButton').text(emeevents.translate_apply);
                     $('#RecurrencesActionsButton').prop('disabled', false);
                     $('div#events-message').html(data.Message);
                     $('div#events-message').show();
@@ -840,9 +840,9 @@ jQuery(document).ready( function($) {
    function changeEventAdminPageTitle() {
            var eventname=$('input[name=event_name]').val();
            if (!eventname) {
-                   title=eme.translate_insertnewevent;
+                   title=emeevents.translate_insertnewevent;
            } else {
-                   title=eme.translate_editeventstring;
+                   title=emeevents.translate_editeventstring;
 		   title=title.replace(/%s/g, eventname);
 	   }
            jQuery(document).prop('title', eme_htmlDecode(title));
@@ -863,9 +863,9 @@ jQuery(document).ready( function($) {
 	$('#event_image_button').on("click",function(e) {
 		e.preventDefault();
 		var custom_uploader = wp.media({
-			title: eme.translate_selectfeaturedimg,
+			title: emeevents.translate_selectfeaturedimg,
 			button: {
-				text: eme.translate_setfeaturedimg
+				text: emeevents.translate_setfeaturedimg
 			},
 			// Tell the modal to show only images.
 			library: {
@@ -908,7 +908,7 @@ jQuery(document).ready( function($) {
                                         page: params.page || 1,
                                         pagesize: 10,
 					action: 'eme_wpuser_select2',
-                                        eme_admin_nonce: eme.translate_adminnonce
+                                        eme_admin_nonce: emeevents.translate_adminnonce
                                 };
                         },
                         processResults: function (data, params) {
@@ -939,7 +939,7 @@ jQuery(document).ready( function($) {
                                         page: params.page || 1,
                                         pagesize: 10,
 					action: 'eme_wpuser_select2',
-                                        eme_admin_nonce: eme.translate_adminnonce
+                                        eme_admin_nonce: emeevents.translate_adminnonce
                                 };
                         },
                         processResults: function (data, params) {
@@ -958,7 +958,7 @@ jQuery(document).ready( function($) {
                         cache: true
                 },
 		allowClear: true,
-                placeholder: eme.translate_selectcontact
+                placeholder: emeevents.translate_selectcontact
         });
 
 });

@@ -9471,7 +9471,7 @@ function eme_admin_enqueue_js() {
 			'translate_selectcontact'              => __( 'Event author', 'events-made-easy' ),
 			'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
 		];
-		wp_localize_script( 'eme-events', 'eme', $translation_array );
+		wp_localize_script( 'eme-events', 'emeevents', $translation_array );
 		wp_enqueue_script( 'eme-events' );
 		// some inline js that gets shown at the top
 		eme_admin_event_script();

@@ -9652,7 +9652,7 @@ function eme_admin_enqueue_js() {
 			'translate_setfeaturedimage'           => __( 'Set featured image', 'events-made-easy' ),
 			'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
 		];
-		wp_localize_script( 'eme-locations', 'eme', $translation_array );
+		wp_localize_script( 'eme-locations', 'emelocations', $translation_array );
 		wp_enqueue_script( 'eme-locations' );
 	}
 	if ( in_array( $plugin_page, [ 'eme-people', 'eme-groups' ] ) ) {

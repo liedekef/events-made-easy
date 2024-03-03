@@ -2,62 +2,62 @@ jQuery(document).ready(function ($) {
 	var locationfields = {
                 location_id: {
                     key: true,
-		    title: eme.translate_id,
+		    title: emelocations.translate_id,
                     visibility: 'hidden'
                 },
                 location_name: {
-		    title: eme.translate_name
+		    title: emelocations.translate_name
                 },
                 view: {
-                    title: eme.translate_view,
+                    title: emelocations.translate_view,
                     sorting: false,
                     listClass: 'eme-jtable-center'
                 },
                 copy: {
-                    title: eme.translate_copy,
+                    title: emelocations.translate_copy,
                     sorting: false,
                     width: '2%',
                     listClass: 'eme-jtable-center'
                 },
                 location_address1: {
-		    title: eme.translate_address1,
+		    title: emelocations.translate_address1,
                     visibility: 'hidden'
                 },
                 location_address2: {
-		    title: eme.translate_address2,
+		    title: emelocations.translate_address2,
                     visibility: 'hidden'
                 },
                 location_zip: {
-		    title: eme.translate_zip,
+		    title: emelocations.translate_zip,
                     visibility: 'hidden'
                 },
                 location_city: {
-		    title: eme.translate_city,
+		    title: emelocations.translate_city,
                     visibility: 'hidden'
                 },
                 location_state: {
-		    title: eme.translate_state,
+		    title: emelocations.translate_state,
                     visibility: 'hidden'
                 },
                 location_country: {
-		    title: eme.translate_country,
+		    title: emelocations.translate_country,
                     visibility: 'hidden'
                 },
                 location_longitude: {
-		    title: eme.translate_longitude,
+		    title: emelocations.translate_longitude,
                     visibility: 'hidden'
                 },
                 location_latitude: {
-		    title: eme.translate_latitude,
+		    title: emelocations.translate_latitude,
                     visibility: 'hidden'
                 },
                 external_url: {
-		    title: eme.translate_external_url,
+		    title: emelocations.translate_external_url,
                     visibility: 'hidden'
                 },
                 online_only: {
                     sorting: false,
-		    title: eme.translate_online_only,
+		    title: emelocations.translate_online_only,
                     visibility: 'hidden'
                 }
 	}
@@ -86,7 +86,7 @@ jQuery(document).ready(function ($) {
 
            //Prepare jtable plugin
            $('#LocationsTableContainer').jtable({
-               title: eme.translate_locations,
+               title: emelocations.translate_locations,
                paging: true,
                sorting: true,
                jqueryuiTheme: true,
@@ -97,13 +97,13 @@ jQuery(document).ready(function ($) {
                selectOnRowClick: true, //Enable this to only select using checkboxes
                toolbar: {
                    items: [{
-                        text: eme.translate_csv,
+                        text: emelocations.translate_csv,
                         click: function () {
                                   jtable_csv('#LocationsTableContainer');
                                }
                         },
                         {
-                        text: eme.translate_print,
+                        text: emelocations.translate_print,
                         click: function () {
                                   $('#LocationsTableContainer').printElement();
                                }
@@ -111,7 +111,7 @@ jQuery(document).ready(function ($) {
                         ]
                },
                actions: {
-                   listAction: ajaxurl+'?action=eme_locations_list&eme_admin_nonce='+eme.translate_adminnonce
+                   listAction: ajaxurl+'?action=eme_locations_list&eme_admin_nonce='+emelocations.translate_adminnonce
                },
                fields: locationfields
            });
@@ -150,9 +150,9 @@ jQuery(document).ready(function ($) {
         function changeLocationAdminPageTitle() {
                 var locationame=$('input[name=location_name]').val();
 		if (!locationame) {
-			title=eme.translate_insertnewlocation;
+			title=emelocations.translate_insertnewlocation;
 		} else {
-			title=eme.translate_editlocationstring;
+			title=emelocations.translate_editlocationstring;
 			title=title.replace(/%s/g, locationame);
                 }
                 jQuery(document).prop('title', eme_htmlDecode(title));
@@ -204,7 +204,7 @@ jQuery(document).ready(function ($) {
 		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
 			if (item.location_id==0) {
 				return $( '<li></li>' )
-					.append('<strong>'+eme.translate_nomatchlocation+'</strong>')
+					.append('<strong>'+emelocations.translate_nomatchlocation+'</strong>')
 					.appendTo( ul );
 			} else {
 				return $( '<li></li>' )
@@ -233,11 +233,11 @@ jQuery(document).ready(function ($) {
            var nonce = $('#eme_admin_nonce').val();
            var action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
-              if ((do_action=='deleteLocations') && !confirm(eme.translate_areyousuretodeleteselected)) {
+              if ((do_action=='deleteLocations') && !confirm(emelocations.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if (action_ok==1) {
-                 $('#LocationsActionsButton').text(eme.translate_pleasewait);
+                 $('#LocationsActionsButton').text(emelocations.translate_pleasewait);
                  var ids = [];
                  selectedRows.each(function () {
                    ids.push($(this).data('record')['location_id']);
@@ -252,7 +252,7 @@ jQuery(document).ready(function ($) {
 					'eme_admin_nonce': nonce },
                              function() {
 	                        $('#LocationsTableContainer').jtable('reload');
-                                $('#LocationsActionsButton').text(eme.translate_apply);
+                                $('#LocationsActionsButton').text(emelocations.translate_apply);
                              });
               }
            }
@@ -283,9 +283,9 @@ jQuery(document).ready(function ($) {
 		e.preventDefault();
 
 		var custom_uploader = wp.media({
-			title: eme.translate_selectfeaturedimage,
+			title: emelocations.translate_selectfeaturedimage,
 			button: {
-				text: eme.translate_setfeaturedimage
+				text: emelocations.translate_setfeaturedimage
 			},
 			// Tell the modal to show only images.
 			library: {
@@ -325,7 +325,7 @@ jQuery(document).ready(function ($) {
 		   // we call both functions to show the map, only 1 will work (either the select-based or the other) depending on the form shown
 		   if (ui.newPanel.attr('id') == 'tab-locationdetails') {
 			   // We need to call it here, because otherwise the map initially doesn't render correctly due to hidden tab div etc ...
-			   if(eme.translate_eme_map_is_active === 'true') {
+			   if(emelocations.translate_eme_map_is_active === 'true') {
 				   eme_SelectdisplayAddress();
 				   eme_displayAddress(0);
 			   }

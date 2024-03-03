@@ -9703,11 +9703,13 @@ function eme_admin_enqueue_js() {
 			'translate_groupcount'                 => __( 'Nbr People', 'events-made-easy' ),
 			'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
 			'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
-			'translate_firstDayOfWeek'             => get_option( 'start_of_week' ),
+			'translate_firstDayOfWeek'	       => get_option( 'start_of_week' ),
 			'translate_flanguage'                  => $language,
+			'translate_minutesStep'                => get_option( 'eme_timepicker_minutesstep' ),
 			'translate_fdateformat'                => EME_WP_DATE_FORMAT,
+			'translate_ftimeformat'                => EME_WP_TIME_FORMAT,
 		];
-		wp_localize_script( 'eme-people', 'eme', $translation_array );
+		wp_localize_script( 'eme-people', 'emepeople', $translation_array );
 		wp_enqueue_script( 'eme-people' );
 	}
 	if ( in_array( $plugin_page, [ 'eme-members', 'eme-memberships', 'eme-groups' ] ) ) {
@@ -9768,7 +9770,7 @@ function eme_admin_enqueue_js() {
 			'translate_totalprice'                 => __( 'Total price', 'events-made-easy' ),
 			'translate_membershipprice'            => __( 'Membership price', 'events-made-easy' ),
 		];
-		wp_localize_script( 'eme-members', 'eme', $translation_array );
+		wp_localize_script( 'eme-members', 'ememembers', $translation_array );
 		wp_enqueue_script( 'eme-members' );
 	}
 	if ( in_array( $plugin_page, [ 'eme-registration-approval', 'eme-registration-seats' ] ) ) {
@@ -9813,7 +9815,7 @@ function eme_admin_enqueue_js() {
 			'translate_attend_count'               => __( 'Attendance count', 'events-made-easy' ),
 			'translate_selectonerowonlyforpartial' => __( 'Please select only one record in order to do partial payments', 'events-made-easy' ),
 		];
-		wp_localize_script( 'eme-rsvp', 'eme', $translation_array );
+		wp_localize_script( 'eme-rsvp', 'emersvp', $translation_array );
 		wp_enqueue_script( 'eme-rsvp' );
 	}
 	if ( in_array( $plugin_page, [ 'eme-emails' ] ) ) {
@@ -9846,7 +9848,7 @@ function eme_admin_enqueue_js() {
 			'translate_ftimeformat'     => EME_WP_TIME_FORMAT,
 			'translate_fdatetimeformat' => EME_WP_DATE_FORMAT . ' ' . EME_WP_TIME_FORMAT,
 		];
-		wp_localize_script( 'eme-sendmails', 'eme', $translation_array );
+		wp_localize_script( 'eme-sendmails', 'ememails', $translation_array );
 		wp_enqueue_script( 'eme-sendmails' );
 	}
 

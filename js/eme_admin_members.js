@@ -3,141 +3,141 @@ jQuery(document).ready(function ($) {
         var memberfields = {
                 'members.member_id': {
                     key: true,
-		    title: eme.translate_memberid,
+		    title: ememembers.translate_memberid,
                     visibility: 'hidden'
                 },
 		person_id: {
-		    title: eme.translate_personid,
+		    title: ememembers.translate_personid,
 		    visibility: 'hidden'
 		},
                 lastname: {
-		    title: eme.translate_lastname
+		    title: ememembers.translate_lastname
                 },
                 firstname: {
-		    title: eme.translate_firstname
+		    title: ememembers.translate_firstname
                 },
                 email: {
-		    title: eme.translate_email
+		    title: ememembers.translate_email
                 },
 		related_member_id: {
-                    title: eme.translate_related_to,
+                    title: ememembers.translate_related_to,
                     visibility: 'hidden'
                 },
 		address1: {
-                    title: eme.translate_address1,
+                    title: ememembers.translate_address1,
                     visibility: 'hidden'
                 },
                 address2: {
-                    title: eme.translate_address2,
+                    title: ememembers.translate_address2,
                     visibility: 'hidden'
                 },
                 city: {
-                    title: eme.translate_city,
+                    title: ememembers.translate_city,
                     visibility: 'hidden'
                 },
                 zip: {
-                    title: eme.translate_zip,
+                    title: ememembers.translate_zip,
                     visibility: 'hidden'
                 },
                 state: {
-                    title: eme.translate_state,
+                    title: ememembers.translate_state,
                     visibility: 'hidden'
                 },
                 country: {
-                    title: eme.translate_country,
+                    title: ememembers.translate_country,
                     visibility: 'hidden'
                 },
 		birthdate: {
-                    title: eme.translate_birthdate,
+                    title: ememembers.translate_birthdate,
                     visibility: 'hidden'
                 },
                 birthplace: {
-                    title: eme.translate_birthplace,
+                    title: ememembers.translate_birthplace,
                     visibility: 'hidden'
                 },
                 membership_name: {
-		    title: eme.translate_membership,
+		    title: ememembers.translate_membership,
                     visibility: 'hidden'
                 },
 		membershipprice: {
-                    title: eme.translate_membershipprice,
+                    title: ememembers.translate_membershipprice,
                     visibility: 'hidden',
                     sorting: false
                 },
                 discount: {
-                    title: eme.translate_discount,
+                    title: ememembers.translate_discount,
                     sorting: false,
                     visibility: 'hidden'
                 },
                 dcodes_used: {
-                    title: eme.translate_dcodes_used,
+                    title: ememembers.translate_dcodes_used,
                     sorting: false,
                     visibility: 'hidden'
                 },
                 totalprice: {
-                    title: eme.translate_totalprice,
+                    title: ememembers.translate_totalprice,
                     visibility: 'hidden',
                     sorting: false
                 },
                 start_date: {
-		    title: eme.translate_startdate,
+		    title: ememembers.translate_startdate,
                     visibility: 'hidden'
                 },
                 end_date: {
-		    title: eme.translate_enddate,
+		    title: ememembers.translate_enddate,
                     visibility: 'hidden'
                 },
                 usage_count: {
-		    title: eme.translate_usage_count,
+		    title: ememembers.translate_usage_count,
                     visibility: 'hidden',
                     sorting: false
                 },
                 creation_date: {
-		    title: eme.translate_registrationdate,
+		    title: ememembers.translate_registrationdate,
                     visibility: 'hidden'
                 },
                 last_seen: {
-		    title: eme.translate_last_seen,
+		    title: ememembers.translate_last_seen,
                     visibility: 'hidden'
                 },
                 paid: {
-		    title: eme.translate_paid,
+		    title: ememembers.translate_paid,
                     visibility: 'hidden'
                 },
 		unique_nbr: {
-                    title: eme.translate_uniquenbr,
+                    title: ememembers.translate_uniquenbr,
                     visibility: 'hidden'
                 },
                 payment_date: {
-		    title: eme.translate_paymentdate,
+		    title: ememembers.translate_paymentdate,
                     visibility: 'hidden'
                 },
                 pg: {
-		    title: eme.translate_pg,
+		    title: ememembers.translate_pg,
                     visibility: 'hidden'
                 },
                 pg_pid: {
-		    title: eme.translate_pg_pid,
+		    title: ememembers.translate_pg_pid,
                     visibility: 'hidden'
                 },
 		payment_id: {
-                    title: eme.translate_paymentid,
+                    title: ememembers.translate_paymentid,
                     visibility: 'hidden'
                 },
                 reminder_date: {
-		    title: eme.translate_lastreminder,
+		    title: ememembers.translate_lastreminder,
                     visibility: 'hidden'
                 },
                 reminder: {
-		    title: eme.translate_nbrreminder,
+		    title: ememembers.translate_nbrreminder,
                     visibility: 'hidden'
                 },
                 status: {
-		    title: eme.translate_status,
+		    title: ememembers.translate_status,
                     visibility: 'hidden'
                 },
                 wp_user: {
-                    title: eme.translate_wpuser,
+                    title: ememembers.translate_wpuser,
                     sorting: false,
                     visibility: 'hidden'
                 }
@@ -145,21 +145,21 @@ jQuery(document).ready(function ($) {
         var membershipfields = {
 		membership_id: {
 			key: true,
-			title: eme.translate_id,
+			title: ememembers.translate_id,
 			visibility: 'hidden'
 		},
 		name: {
-			title: eme.translate_name
+			title: ememembers.translate_name
 		},
 		description: {
-			title: eme.translate_description
+			title: ememembers.translate_description
 		},
 		membercount: {
-			title: eme.translate_membercount,
+			title: ememembers.translate_membercount,
 			sorting: false
 		},
 		contact: {
-			title: eme.translate_contact,
+			title: ememembers.translate_contact,
 			sorting: false
 		}
 	}
@@ -187,7 +187,7 @@ jQuery(document).ready(function ($) {
 
 		//Prepare jtable plugin
 		$('#MembersTableContainer').jtable({
-			title: eme.translate_members,
+			title: ememembers.translate_members,
 			paging: true,
 			sorting: true,
 			multiSorting: true,
@@ -199,13 +199,13 @@ jQuery(document).ready(function ($) {
 			selectOnRowClick: true,
 			toolbar: {
 				items: [{
-						text: eme.translate_csv,
+						text: ememembers.translate_csv,
 						click: function () {
 							jtable_csv('#MembersTableContainer');
 						}
 					},
 					{
-						text: eme.translate_print,
+						text: ememembers.translate_print,
 						click: function () {
 							$('#MembersTableContainer').printElement();
 						}
@@ -213,7 +213,7 @@ jQuery(document).ready(function ($) {
 				]
 			},
 			actions: {
-				listAction: ajaxurl+'?action=eme_members_list&eme_admin_nonce='+eme.translate_adminnonce
+				listAction: ajaxurl+'?action=eme_members_list&eme_admin_nonce='+ememembers.translate_adminnonce
 			},
 			fields: memberfields
 		});
@@ -251,7 +251,7 @@ jQuery(document).ready(function ($) {
 			}
                 });
 		$('#MembershipsTableContainer').jtable({
-			title: eme.translate_memberships,
+			title: ememembers.translate_memberships,
 			paging: true,
 			sorting: true,
 			multiSorting: true,
@@ -262,7 +262,7 @@ jQuery(document).ready(function ($) {
 			selectingCheckboxes: true, //Show checkboxes on first column
 			selectOnRowClick: true,
 			actions: {
-				listAction: ajaxurl+'?action=eme_memberships_list&eme_admin_nonce='+eme.translate_adminnonce
+				listAction: ajaxurl+'?action=eme_memberships_list&eme_admin_nonce='+ememembers.translate_adminnonce
 			},
 			fields: membershipfields
 		});
@@ -276,11 +276,11 @@ jQuery(document).ready(function ($) {
            var do_action = $('#eme_admin_action').val();
            var action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
-              if ((do_action=='deleteMemberships') && !confirm(eme.translate_areyousuretodeleteselected)) {
+              if ((do_action=='deleteMemberships') && !confirm(ememembers.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if (action_ok==1) {
-                 $('#MembershipsActionsButton').text(eme.translate_pleasewait);
+                 $('#MembershipsActionsButton').text(ememembers.translate_pleasewait);
 		 $('#MembershipsActionsButton').prop('disabled', true);
                  var ids = [];
                  selectedRows.each(function () {
@@ -288,9 +288,9 @@ jQuery(document).ready(function ($) {
                  });
 
                  var idsjoined = ids.join(); //will be such a string '2,5,7'
-                 $.post(ajaxurl, {'membership_id': idsjoined, 'action': 'eme_manage_memberships', 'do_action': do_action, 'eme_admin_nonce': eme.translate_adminnonce }, function(data) {
+                 $.post(ajaxurl, {'membership_id': idsjoined, 'action': 'eme_manage_memberships', 'do_action': do_action, 'eme_admin_nonce': ememembers.translate_adminnonce }, function(data) {
 			$('#MembershipsTableContainer').jtable('reload');
-			$('#MembershipsActionsButton').text(eme.translate_apply);
+			$('#MembershipsActionsButton').text(ememembers.translate_apply);
 		 	$('#MembershipsActionsButton').prop('disabled', false);
 			$('div#memberships-message').html(data.htmlmessage);
 			$('div#memberships-message').show();
@@ -322,11 +322,11 @@ jQuery(document).ready(function ($) {
 
            var action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
-              if ((do_action=='deleteMembers') && !confirm(eme.translate_areyousuretodeleteselected)) {
+              if ((do_action=='deleteMembers') && !confirm(ememembers.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if (action_ok==1) {
-                 $('#MembersActionsButton').text(eme.translate_pleasewait);
+                 $('#MembersActionsButton').text(ememembers.translate_pleasewait);
 		 $('#MembersActionsButton').prop('disabled', true);
                  var ids = [];
                  selectedRows.each(function () {
@@ -349,10 +349,10 @@ jQuery(document).ready(function ($) {
                         'html_template': html_template,
                         'html_template_header': html_template_header,
                         'html_templata_footer': html_template_footer,
-			'eme_admin_nonce': eme.translate_adminnonce };
+			'eme_admin_nonce': ememembers.translate_adminnonce };
 
 		 if (do_action=='sendMails') {
-                         form = $('<form method="POST" action="'+eme.translate_admin_sendmails_url+'">');
+                         form = $('<form method="POST" action="'+ememembers.translate_admin_sendmails_url+'">');
                          params = {
                                  'member_ids': idsjoined,
                                  'eme_admin_action': 'new_mailing'
@@ -372,13 +372,13 @@ jQuery(document).ready(function ($) {
 			 });
 			 $('body').append(form);
                          form.trigger("submit");
-			 $('#MembersActionsButton').text(eme.translate_apply);
+			 $('#MembersActionsButton').text(ememembers.translate_apply);
 			 $('#MembersActionsButton').prop('disabled', false);
 			 return false;
 		 }
                  $.post(ajaxurl, params, function(data) {
 	                        $('#MembersTableContainer').jtable('reload');
-                                $('#MembersActionsButton').text(eme.translate_apply);
+                                $('#MembersActionsButton').text(ememembers.translate_apply);
 		                $('#MembersActionsButton').prop('disabled', false);
 				$('div#members-message').html(data.htmlmessage);
 				$('div#members-message').show();
@@ -429,7 +429,7 @@ jQuery(document).ready(function ($) {
                'search_customfields': $('#search_customfields').val(),
                'search_customfieldids': $('#search_customfieldids').val(),
 	       'action': 'eme_store_members_query',
-	       'eme_admin_nonce': eme.translate_adminnonce,
+	       'eme_admin_nonce': ememembers.translate_adminnonce,
                'dynamicgroupname': $('#dynamicgroupname').val()
 	   };
            $.post(ajaxurl, params, function(data) {
@@ -451,7 +451,7 @@ jQuery(document).ready(function ($) {
 	   var params = {
 	       'action': 'eme_get_payconiq_iban',
                'pg_pid': $(this).data('pg_pid'),
-	       'eme_admin_nonce': eme.translate_adminnonce
+	       'eme_admin_nonce': ememembers.translate_adminnonce
 	   };
            $.post(ajaxurl, params, function(data) {
 		   $('#button_'+data.payment_id).hide();
@@ -552,7 +552,7 @@ jQuery(document).ready(function ($) {
 					{ q: request.term,
 					  'member_id': $('#member_id').val(),
 					  'membership_id': $('#membership_id').val(),
-					  'eme_admin_nonce': eme.translate_adminnonce,
+					  'eme_admin_nonce': ememembers.translate_adminnonce,
 					  action: 'wp_ajax_eme_autocomplete_membermainaccount'
 					},
 					function(data){
@@ -589,7 +589,7 @@ jQuery(document).ready(function ($) {
 		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
 			if (item.member_id==0) {
 				return $( '<li></li>' )
-					.append('<strong>'+eme.translate_nomatchmember+'</strong>')
+					.append('<strong>'+ememembers.translate_nomatchmember+'</strong>')
 					.appendTo( ul );
 			} else {
 				return $( '<li></li>' )
@@ -616,7 +616,7 @@ jQuery(document).ready(function ($) {
 			source: function(request, response) {
 				$.post(ajaxurl,
 					{ q: request.term,
-					  'eme_admin_nonce': eme.translate_adminnonce,
+					  'eme_admin_nonce': ememembers.translate_adminnonce,
 					  action: 'eme_autocomplete_people',
 					},
 					function(data){
@@ -684,7 +684,7 @@ jQuery(document).ready(function ($) {
 			source: function(request, response) {
 				$.post(ajaxurl,
 					{ 'q': request.term,
-					  'eme_admin_nonce': eme.translate_adminnonce,
+					  'eme_admin_nonce': ememembers.translate_adminnonce,
 					  'action': 'eme_autocomplete_memberperson',
 					  'exclude_personid': $('input[name=person_id]').val(),
 					  'membership_id': $('#membership_id').val(),
@@ -786,9 +786,9 @@ jQuery(document).ready(function ($) {
         $('#newmember_attach_button').on("click",function(e) {
                 e.preventDefault();
                 var custom_uploader = wp.media({
-                        title: eme.translate_addattachments,
+                        title: ememembers.translate_addattachments,
                         button: {
-                                text: eme.translate_addattachments
+                                text: ememembers.translate_addattachments
                         },
                         multiple: true  // Set this to true to allow multiple files to be selected
                 }).on('select', function() {

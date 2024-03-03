@@ -20,8 +20,8 @@ jQuery(document).ready(function ($) {
 		if ($('div#eme_dynpersondata').length) {
 			var alldata = new FormData($('#'+form_id)[0]);
 			alldata.append('action', 'eme_people_dyndata');
-			alldata.append('eme_admin_nonce', eme.translate_adminnonce);
-			$('div#eme_dynpersondata').html('<img src="'+eme.translate_plugin_url+'images/spinner.gif">');
+			alldata.append('eme_admin_nonce', emepeople.translate_adminnonce);
+			$('div#eme_dynpersondata').html('<img src="'+emepeople.translate_plugin_url+'images/spinner.gif">');
 			$.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
                         .done(function(data){
 				$('div#eme_dynpersondata').html(data.Result);
@@ -33,10 +33,10 @@ jQuery(document).ready(function ($) {
 					$('.eme_formfield_fdate.dynamicfield').fdatepicker({ 
 						todayButton: new Date(),
 						clearButton: true,
-						language: eme.translate_flanguage,
-						firstDay: parseInt(eme.translate_firstDayOfWeek),
+						language: emepeople.translate_flanguage,
+						firstDay: parseInt(emepeople.translate_firstDayOfWeek),
 						altFieldDateFormat: 'Y-m-d',
-						dateFormat: eme.translate_fdateformat
+						dateFormat: emepeople.translate_fdateformat
 					});
 					$.each($('.eme_formfield_fdate'), function() {
 						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
@@ -50,12 +50,12 @@ jQuery(document).ready(function ($) {
                                                 clearButton: true,
                                                 closeButton: true,
                                                 timepicker: true,
-                                                minutesStep: parseInt(emebasic.translate_minutesStep),
-                                                language: emebasic.translate_flanguage,
-                                                firstDay: parseInt(emebasic.translate_firstDayOfWeek),
+                                                minutesStep: parseInt(emepeople.translate_minutesStep),
+                                                language: emepeople.translate_flanguage,
+                                                firstDay: parseInt(emepeople.translate_firstDayOfWeek),
                                                 altFieldDateFormat: 'Y-m-d H:i:00',
-                                                dateFormat: emebasic.translate_fdateformat,
-                                                timeFormat: emebasic.translate_ftimeformat
+                                                dateFormat: emepeople.translate_fdateformat,
+                                                timeFormat: emepeople.translate_ftimeformat
                                         });
                                         $.each($('.eme_formfield_fdatetime'), function() {
                                                 if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
@@ -65,7 +65,7 @@ jQuery(document).ready(function ($) {
                                 }
                                 if ($('.eme_formfield_timepicker.dynamicfield').length) {
                                         $('.eme_formfield_timepicker.dynamicfield').timepicker({
-                                                timeFormat: emebasic.translate_ftimeformat
+                                                timeFormat: emepeople.translate_ftimeformat
                                         });
                                 }
                         });
@@ -75,110 +75,110 @@ jQuery(document).ready(function ($) {
         var personfields = {
                 'people.person_id': {
                     key: true,
-		    title: eme.translate_personid,
+		    title: emepeople.translate_personid,
                     visibility: 'hidden'
                 },
                 'people.lastname': {
-		    title: eme.translate_lastname,
+		    title: emepeople.translate_lastname,
                     inputClass: 'validate[required]'
                 },
                 'people.firstname': {
-		    title: eme.translate_firstname
+		    title: emepeople.translate_firstname
                 },
                 'people.address1': {
-		    title: eme.translate_address1,
+		    title: emepeople.translate_address1,
                     visibility: 'hidden'
                 },
                 'people.address2': {
-		    title: eme.translate_address2,
+		    title: emepeople.translate_address2,
                     visibility: 'hidden'
                 },
                 'people.city': {
-		    title: eme.translate_city,
+		    title: emepeople.translate_city,
                     visibility: 'hidden'
                 },
                 'people.zip': {
-		    title: eme.translate_zip,
+		    title: emepeople.translate_zip,
                     visibility: 'hidden'
                 },
                 'people.state': {
-		    title: eme.translate_state,
+		    title: emepeople.translate_state,
                     visibility: 'hidden'
                 },
                 'people.country': {
-		    title: eme.translate_country,
+		    title: emepeople.translate_country,
                     visibility: 'hidden'
                 },
                 'people.email': {
-		    title: eme.translate_email,
+		    title: emepeople.translate_email,
                     inputClass: 'validate[required]'
                 },
                 'people.phone': {
-		    title: eme.translate_phone,
+		    title: emepeople.translate_phone,
                     visibility: 'hidden'
                 },
                 'people.birthdate': {
-		    title: eme.translate_birthdate,
+		    title: emepeople.translate_birthdate,
                     visibility: 'hidden'
                 },
                 'people.birthplace': {
-		    title: eme.translate_birthplace,
+		    title: emepeople.translate_birthplace,
                     visibility: 'hidden'
                 },
                 'people.lang': {
-		    title: eme.translate_lang,
+		    title: emepeople.translate_lang,
                     visibility: 'hidden',
                 },
                 'people.massmail': {
-		    title: eme.translate_massmail,
+		    title: emepeople.translate_massmail,
                     visibility: 'hidden'
                 },
                 'people.bd_email': {
-		    title: eme.translate_bd_email,
+		    title: emepeople.translate_bd_email,
                     visibility: 'hidden'
                 },
                 'people.gdpr': {
-		    title: eme.translate_gdpr,
+		    title: emepeople.translate_gdpr,
                     visibility: 'hidden'
                 },
                 'people.gdpr_date': {
-		    title: eme.translate_gdpr_date,
+		    title: emepeople.translate_gdpr_date,
                     visibility: 'hidden'
                 },
                 'people.creation_date': {
-		    title: eme.translate_created_on,
+		    title: emepeople.translate_created_on,
                     visibility: 'hidden'
                 },
                 'people.modif_date': {
-		    title: eme.translate_modified_on,
+		    title: emepeople.translate_modified_on,
                     visibility: 'hidden'
                 },
                 'people.related_to': {
-		    title: eme.translate_related_to,
+		    title: emepeople.translate_related_to,
 		    sorting: false,
                     visibility: 'hidden'
                 },
                 'people.groups': {
-		    title: eme.translate_persongroups,
+		    title: emepeople.translate_persongroups,
 		    sorting: false,
                     visibility: 'hidden'
                 },
                 'people.memberships': {
-		    title: eme.translate_personmemberships,
+		    title: emepeople.translate_personmemberships,
 		    sorting: false,
                     visibility: 'hidden'
                 },
                 'people.wp_user': {
-		    title: eme.translate_wpuser,
+		    title: emepeople.translate_wpuser,
 		    sorting: false,
                     visibility: 'hidden'
                 },
                 'bookingsmade': {
-		    title: eme.translate_bookingsmade,
+		    title: emepeople.translate_bookingsmade,
                     sorting: false,
                     visibility: 'hidden',
                     display: function (data) {
-                       return '<a href="admin.php?page=eme-registration-seats&person_id='+ data.record['people.person_id']+'">' + eme.translate_showallbookings + '</a>';
+                       return '<a href="admin.php?page=eme-registration-seats&person_id='+ data.record['people.person_id']+'">' + emepeople.translate_showallbookings + '</a>';
                     }
                 }
             }
@@ -207,7 +207,7 @@ jQuery(document).ready(function ($) {
 
 		//Prepare jtable plugin
 		$('#PeopleTableContainer').jtable({
-			title: eme.translate_people,
+			title: emepeople.translate_people,
 			paging: true,
 			sorting: true,
 			multiSorting: true,
@@ -219,13 +219,13 @@ jQuery(document).ready(function ($) {
 			selectOnRowClick: true,
 			toolbar: {
 				items: [{
-						text: eme.translate_csv,
+						text: emepeople.translate_csv,
 						click: function () {
 							jtable_csv('#PeopleTableContainer');
 						}
 					},
 					{
-						text: eme.translate_print,
+						text: emepeople.translate_print,
 						click: function () {
 							$('#PeopleTableContainer').printElement();
 						}
@@ -233,14 +233,14 @@ jQuery(document).ready(function ($) {
 				]
 			},
 			actions: {
-				listAction: ajaxurl+'?action=eme_people_list&eme_admin_nonce='+eme.translate_adminnonce+'&trash='+$_GET['trash']
+				listAction: ajaxurl+'?action=eme_people_list&eme_admin_nonce='+emepeople.translate_adminnonce+'&trash='+$_GET['trash']
 			},
 			fields: personfields
 		});
 	}
 
         $('#GroupsTableContainer').jtable({
-            title: eme.translate_groups,
+            title: emepeople.translate_groups,
             paging: true,
             sorting: true,
             jqueryuiTheme: true,
@@ -250,30 +250,30 @@ jQuery(document).ready(function ($) {
             selectingCheckboxes: true, //Show checkboxes on first column
             selectOnRowClick: true,
             actions: {
-                listAction: ajaxurl+'?action=eme_groups_list&eme_admin_nonce='+eme.translate_adminnonce,
-		deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&eme_admin_nonce='+eme.translate_adminnonce,
+                listAction: ajaxurl+'?action=eme_groups_list&eme_admin_nonce='+emepeople.translate_adminnonce,
+		deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&eme_admin_nonce='+emepeople.translate_adminnonce,
             },
             fields: {
                 'group_id': {
-		    title: eme.translate_groupid,
+		    title: emepeople.translate_groupid,
                     key: true,
                     create: false,
                     edit: false,
                     visibility: 'hidden'
                 },
                 'name': {
-		    title: eme.translate_name,
+		    title: emepeople.translate_name,
                     inputClass: 'validate[required]'
                 },
                 'description': {
-		    title: eme.translate_description
+		    title: emepeople.translate_description
                 },
                 'public': {
-		    title: eme.translate_publicgroup,
+		    title: emepeople.translate_publicgroup,
                     visibility: 'hidden'
                 },
 		'groupcount': {
-                    title: eme.translate_groupcount,
+                    title: emepeople.translate_groupcount,
                     sorting: false
                 }
             }
@@ -303,11 +303,11 @@ jQuery(document).ready(function ($) {
            var do_action = $('#eme_admin_action').val();
            var action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
-              if ((do_action=='deleteGroups') && !confirm(eme.translate_areyousuretodeleteselected)) {
+              if ((do_action=='deleteGroups') && !confirm(emepeople.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if (action_ok==1) {
-                 $('#GroupsActionsButton').text(eme.translate_pleasewait);
+                 $('#GroupsActionsButton').text(emepeople.translate_pleasewait);
 		 $('#GroupsActionsButton').prop('disabled', true);
                  var ids = [];
                  selectedRows.each(function () {
@@ -315,9 +315,9 @@ jQuery(document).ready(function ($) {
                  });
 
                  var idsjoined = ids.join(); //will be such a string '2,5,7'
-                 $.post(ajaxurl, {'group_id': idsjoined, 'action': 'eme_manage_groups', 'do_action': do_action, 'eme_admin_nonce': eme.translate_adminnonce }, function(data) {
+                 $.post(ajaxurl, {'group_id': idsjoined, 'action': 'eme_manage_groups', 'do_action': do_action, 'eme_admin_nonce': emepeople.translate_adminnonce }, function(data) {
 			 $('#GroupsTableContainer').jtable('reload');
-			 $('#GroupsActionsButton').text(eme.translate_apply);
+			 $('#GroupsActionsButton').text(emepeople.translate_apply);
 		 	 $('#GroupsActionsButton').prop('disabled', false);
 			 if (do_action=='deleteGroups') {
 				$('div#groups-message').html(data.htmlmessage);
@@ -339,11 +339,11 @@ jQuery(document).ready(function ($) {
 
            var action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
-              if ((do_action=='deletePeople') && !confirm(eme.translate_areyousuretodeleteselected)) {
+              if ((do_action=='deletePeople') && !confirm(emepeople.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if (action_ok==1) {
-                 $('#PeopleActionsButton').text(eme.translate_pleasewait);
+                 $('#PeopleActionsButton').text(emepeople.translate_pleasewait);
 		 $('#PeopleActionsButton').prop('disabled', true);
                  var ids = [];
                  selectedRows.each(function () {
@@ -367,10 +367,10 @@ jQuery(document).ready(function ($) {
                         'html_templata_footer': $('#html_template_footer').val(),
                         'addtogroup': $('#addtogroup').val(),
                         'removefromgroup': $('#removefromgroup').val(),
-                        'eme_admin_nonce': eme.translate_adminnonce };
+                        'eme_admin_nonce': emepeople.translate_adminnonce };
 
                  if (do_action=='sendMails') {
-                         form = $('<form method="POST" action="'+eme.translate_admin_sendmails_url+'">');
+                         form = $('<form method="POST" action="'+emepeople.translate_admin_sendmails_url+'">');
 			 params = {
 				 'person_ids': idsjoined,
 				 'eme_admin_action': 'new_mailing'
@@ -389,13 +389,13 @@ jQuery(document).ready(function ($) {
                          });
                          $('body').append(form);
                          form.trigger("submit");
-                         $('#PeopleActionsButton').text(eme.translate_apply);
+                         $('#PeopleActionsButton').text(emepeople.translate_apply);
                          $('#PeopleActionsButton').prop('disabled', false);
                          return false;
                  }
                  $.post(ajaxurl, params, function(data) {
 	                        $('#PeopleTableContainer').jtable('reload');
-                                $('#PeopleActionsButton').text(eme.translate_apply);
+                                $('#PeopleActionsButton').text(emepeople.translate_apply);
 		                $('#PeopleActionsButton').prop('disabled', false);
 				$('div#people-message').html(data.htmlmessage);
 				$('div#people-message').show();
@@ -444,7 +444,7 @@ jQuery(document).ready(function ($) {
 	       'search_customfields': $('#search_customfields').val(),
                'search_customfieldids': $('#search_customfieldids').val(),
                'action': 'eme_store_people_query',
-               'eme_admin_nonce': eme.translate_adminnonce,
+               'eme_admin_nonce': emepeople.translate_adminnonce,
                'dynamicgroupname': $('#dynamicgroupname').val()
            };
            $.post(ajaxurl, params, function(data) {
@@ -511,7 +511,7 @@ jQuery(document).ready(function ($) {
             source: function(request, response) {
                          $.post(ajaxurl,
                                   { q: request.term,
-				    'eme_admin_nonce': eme.translate_adminnonce,
+				    'eme_admin_nonce': emepeople.translate_adminnonce,
                                     action: 'eme_autocomplete_people',
                                     eme_searchlimit: 'people'
                                   },
@@ -549,7 +549,7 @@ jQuery(document).ready(function ($) {
           }).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
             if (item.person_id==0) {
                return $( '<li></li>' )
-               .append('<strong>'+eme.translate_nomatchperson+'</strong>')
+               .append('<strong>'+emepeople.translate_nomatchperson+'</strong>')
                .appendTo( ul );
             } else {
                return $( '<li></li>' )
@@ -588,7 +588,7 @@ jQuery(document).ready(function ($) {
 			  $.post(ajaxurl,
 				  { q: request.term,
 					  action: 'eme_autocomplete_people',
-					  'eme_admin_nonce': eme.translate_adminnonce,
+					  'eme_admin_nonce': emepeople.translate_adminnonce,
 					  eme_searchlimit: 'people',
 					  'exclude_personids': idsjoined
 				  },
@@ -628,7 +628,7 @@ jQuery(document).ready(function ($) {
 	  }).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
 		  if (item.person_id==0) {
 			  return $( '<li></li>' )
-				  .append('<strong>'+eme.translate_nomatchperson+'</strong>')
+				  .append('<strong>'+emepeople.translate_nomatchperson+'</strong>')
 				  .appendTo( ul );
 		  } else {
 			  return $( '<li></li>' )

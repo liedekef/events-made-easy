@@ -2335,7 +2335,11 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		</td>
 		</tr>
 	<?php 
-		$membership_names = eme_get_activemembership_names_by_personid( $person['person_id'] );
+		if ($action == 'edit' ) {
+			$membership_names = eme_get_activemembership_names_by_personid( $person['person_id'] );
+		} else {
+			$membership_names = '';
+		}
 		if ( ! empty( $membership_names ) ) :
 	?>
 		<tr>

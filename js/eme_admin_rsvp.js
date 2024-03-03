@@ -2,120 +2,120 @@ jQuery(document).ready(function ($) {
 
         var rsvpfields = {
                 booking_id: {
-                    title: eme.translate_id,
+                    title: emersvp.translate_id,
                     key: true,
                     list: true,
                     width: '2%',
                     listClass: 'eme-jtable-center'
                 },
                 event_name: {
-                    title: eme.translate_eventinfo
+                    title: emersvp.translate_eventinfo
                 },
                 event_id: {
-                    title: eme.translate_event_id,
+                    title: emersvp.translate_event_id,
                     sorting: false,
 	            visibility: 'hidden'
                 },
                 rsvp: {
-                    title: eme.translate_rsvp,
+                    title: emersvp.translate_rsvp,
                     sorting: false,
                     width: '2%',
                     listClass: 'eme-jtable-center'
                 },
                 datetime: {
-                    title: eme.translate_datetime,
+                    title: emersvp.translate_datetime,
                     sorting: true
                 },
                 booker: {
-                    title: eme.translate_booker
+                    title: emersvp.translate_booker
                 },
                 creation_date: {
-                    title: eme.translate_bookingdate
+                    title: emersvp.translate_bookingdate
                 },
                 seats: {
-                    title: eme.translate_seats,
+                    title: emersvp.translate_seats,
                     sorting: false,
                     listClass: 'eme-jtable-center'
                 },
                 eventprice: {
-                    title: eme.translate_eventprice,
+                    title: emersvp.translate_eventprice,
                     sorting: false
                 },
                 event_cats: {
-                    title: eme.translate_event_cats,
+                    title: emersvp.translate_event_cats,
                     sorting: false,
 	            visibility: 'hidden'
                 },
                 discount: {
-                    title: eme.translate_discount,
+                    title: emersvp.translate_discount,
                     sorting: false,
 	            visibility: 'hidden'
                 },
                 dcodes_used: {
-                    title: eme.translate_dcodes_used,
+                    title: emersvp.translate_dcodes_used,
                     sorting: false,
 	            visibility: 'hidden'
                 },
                 totalprice: {
-                    title: eme.translate_totalprice,
+                    title: emersvp.translate_totalprice,
                     sorting: false
                 },
                 unique_nbr: {
-                    title: eme.translate_uniquenbr,
+                    title: emersvp.translate_uniquenbr,
 	            visibility: 'hidden'
                 },
                 booking_paid: {
-                    title: eme.translate_paid,
+                    title: emersvp.translate_paid,
 	            visibility: 'hidden'
                 },
                 remaining: {
-                    title: eme.translate_remaining,
+                    title: emersvp.translate_remaining,
                     sorting: false,
 	            visibility: 'hidden'
                 },
                 received: {
-                    title: eme.translate_received,
+                    title: emersvp.translate_received,
                     sorting: false,
 	            visibility: 'hidden'
                 },
                 payment_date: {
-                    title: eme.translate_paymentdate,
+                    title: emersvp.translate_paymentdate,
 	            visibility: 'hidden'
                 },
                 pg: {
-                    title: eme.translate_pg,
+                    title: emersvp.translate_pg,
                     visibility: 'hidden'
                 },
                 pg_pid: {
-                    title: eme.translate_pg_pid,
+                    title: emersvp.translate_pg_pid,
                     visibility: 'hidden'
                 },
                 payment_id: {
-                    title: eme.translate_paymentid
+                    title: emersvp.translate_paymentid
                 },
                 attend_count: {
-                    title: eme.translate_attend_count,
+                    title: emersvp.translate_attend_count,
 	            visibility: 'hidden'
                 },
                 lastreminder: {
-                    title: eme.translate_lastreminder,
+                    title: emersvp.translate_lastreminder,
                     sorting: false,
 	            visibility: 'hidden'
                 },
                 booking_comment: {
-                    title: eme.translate_comment,
+                    title: emersvp.translate_comment,
                     sorting: false,
 	            visibility: 'hidden'
                 },
                 wp_user: {
-                    title: eme.translate_wpuser,
+                    title: emersvp.translate_wpuser,
                     sorting: false,
 	            visibility: 'hidden'
                 }
 	}
 	var editfield = {
                 edit_link: {
-                    title: eme.translate_edit,
+                    title: emersvp.translate_edit,
                     sorting: false,
                     visibility: 'fixed',
                     listClass: 'eme-jtable-center'
@@ -172,7 +172,7 @@ jQuery(document).ready(function ($) {
 		}
 
 		$('#BookingsTableContainer').jtable({
-			title: eme.translate_bookings,
+			title: emersvp.translate_bookings,
 			paging: true,
 			sorting: true,
 			multiSorting: true,
@@ -184,7 +184,7 @@ jQuery(document).ready(function ($) {
 			selectOnRowClick: true, //Enable this to only select using checkboxes
 			toolbar: {
 				items: [{
-					text: eme.translate_markpaidandapprove,
+					text: emersvp.translate_markpaidandapprove,
 					cssClass: 'eme_jtable_button_for_pending_only',
 					click: function () {
 						var selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
@@ -195,8 +195,8 @@ jQuery(document).ready(function ($) {
 								ids.push($(this).data('record')['booking_id']);
 							});
 							var idsjoined = ids.join(); //will be such a string '2,5,7'
-							$('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(eme.translate_pleasewait);
-							$.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': eme.translate_adminnonce }, function(data) {
+							$('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_pleasewait);
+							$.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': emersvp.translate_adminnonce }, function(data) {
 								if (data.Result!='OK') {
 									$('div#bookings-message').html(data.htmlmessage);
 									$('div#bookings-message').show();
@@ -204,13 +204,13 @@ jQuery(document).ready(function ($) {
 								}
 
 								$('#BookingsTableContainer').jtable('reload');
-								$('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(eme.translate_markpaidandapprove);
+								$('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_markpaidandapprove);
 							}, 'json');
 						}
 					}
 				},
 				{
-					text: eme.translate_markpaid,
+					text: emersvp.translate_markpaid,
 					cssClass: 'eme_jtable_button_for_approved_only',
 					click: function () {
 						var selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
@@ -221,8 +221,8 @@ jQuery(document).ready(function ($) {
 								ids.push($(this).data('record')['booking_id']);
 							});
 							var idsjoined = ids.join(); //will be such a string '2,5,7'
-							$('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(eme.translate_pleasewait);
-							$.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': eme.translate_adminnonce }, function(data) {
+							$('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(emersvp.translate_pleasewait);
+							$.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': emersvp.translate_adminnonce }, function(data) {
 								if (data.Result!='OK') {
 									$('div#bookings-message').html(data.htmlmessage);
 									$('div#bookings-message').show();
@@ -230,19 +230,19 @@ jQuery(document).ready(function ($) {
 								}
 
 								$('#BookingsTableContainer').jtable('reload');
-								$('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(eme.translate_markpaid);
+								$('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(emersvp.translate_markpaid);
 							}, 'json');
 						}
 					}
 				},
 				{
-					text: eme.translate_csv,
+					text: emersvp.translate_csv,
 					click: function () {
 						jtable_csv('#BookingsTableContainer');
 					}
 				},
 				{
-					text: eme.translate_print,
+					text: emersvp.translate_print,
 					click: function () {
 						$('#BookingsTableContainer').printElement();
 					}
@@ -250,7 +250,7 @@ jQuery(document).ready(function ($) {
 				]
 			},
 			actions: {
-				listAction: ajaxurl+'?action=eme_bookings_list&eme_admin_nonce='+eme.translate_adminnonce+'&trash='+$_GET['trash']
+				listAction: ajaxurl+'?action=eme_bookings_list&eme_admin_nonce='+emersvp.translate_adminnonce+'&trash='+$_GET['trash']
 			},
 			fields: rsvpfields
 		});
@@ -353,15 +353,15 @@ jQuery(document).ready(function ($) {
 
            var action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
-              if ((do_action=='deleteRegistration') && !confirm(eme.translate_areyousuretodeleteselected)) {
+              if ((do_action=='deleteRegistration') && !confirm(emersvp.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if ((do_action=='partialPayment') && selectedRows.length > 1) {
-		 alert(eme.translate_selectonerowonlyforpartial);
+		 alert(emersvp.translate_selectonerowonlyforpartial);
                  action_ok=0;
               }
               if (action_ok==1) {
-		 $('#BookingsActionsButton').text(eme.translate_pleasewait);
+		 $('#BookingsActionsButton').text(emersvp.translate_pleasewait);
 		 $('#BookingsActionsButton').prop('disabled', true);
                  var ids = [];
 		 var form;
@@ -386,10 +386,10 @@ jQuery(document).ready(function ($) {
                         'html_template': html_template,
                         'html_template_header': html_template_header,
                         'html_templata_footer': html_template_footer,
-                        'eme_admin_nonce': eme.translate_adminnonce };
+                        'eme_admin_nonce': emersvp.translate_adminnonce };
 
                  if (do_action=='sendMails') {
-                         form = $('<form method="POST" action="'+eme.translate_admin_sendmails_url+'">');
+                         form = $('<form method="POST" action="'+emersvp.translate_admin_sendmails_url+'">');
                          params = {
                                  'booking_ids': idsjoined,
                                  'eme_admin_action': 'new_mailing'
@@ -409,13 +409,13 @@ jQuery(document).ready(function ($) {
                          });
                          $('body').append(form);
                          form.trigger("submit");
-                         $('#BookingsActionsButton').text(eme.translate_apply);
+                         $('#BookingsActionsButton').text(emersvp.translate_apply);
                          $('#BookingsActionsButton').prop('disabled', false);
                          return false;
                  }
                  $.post(ajaxurl, params, function(data) {
 	            $('#BookingsTableContainer').jtable('reload');
-		    $('#BookingsActionsButton').text(eme.translate_apply);
+		    $('#BookingsActionsButton').text(emersvp.translate_apply);
 		    $('#BookingsActionsButton').prop('disabled', false);
 		    $('div#bookings-message').html(data.htmlmessage);
 		    $('div#bookings-message').show();
@@ -454,7 +454,7 @@ jQuery(document).ready(function ($) {
            var params = {
                'action': 'eme_get_payconiq_iban',
                'pg_pid': $(this).data('pg_pid'),
-               'eme_admin_nonce': eme.translate_adminnonce
+               'eme_admin_nonce': emersvp.translate_adminnonce
            };
            $.post(ajaxurl, params, function(data) {
 		   $('#button_'+data.payment_id).hide();
@@ -513,7 +513,7 @@ jQuery(document).ready(function ($) {
           }).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
             if (item.transferto_id==0) {
                return $( '<li></li>' )
-               .append('<strong>'+eme.translate_nomatchevent+'</strong>')
+               .append('<strong>'+emersvp.translate_nomatchevent+'</strong>')
                .appendTo( ul );
             } else {
                return $( '<li></li>' )

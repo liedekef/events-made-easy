@@ -58,7 +58,7 @@ jQuery(document).ready( function($) {
           }).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
             if (item.person_id==0) {
                return $( '<li></li>' )
-               .append('<strong>'+eme.translate_nomatchperson+'</strong>')
+               .append('<strong>'+ememails.translate_nomatchperson+'</strong>')
                .appendTo( ul );
 	    } else {
                return $( '<li></li>' )
@@ -119,7 +119,7 @@ jQuery(document).ready( function($) {
           }).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
             if (item.person_id==0) {
                return $( '<li></li>' )
-               .append('<strong>'+eme.translate_nomatchperson+'</strong>')
+               .append('<strong>'+ememails.translate_nomatchperson+'</strong>')
                .appendTo( ul );
 	    } else {
                return $( '<li></li>' )
@@ -155,7 +155,7 @@ jQuery(document).ready( function($) {
    $('#eventmailButton').on("click",function (e) {
            e.preventDefault();
 	   // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-           if (eme.translate_htmlmail=='yes') {
+           if (ememails.translate_htmlmail=='yes') {
                 var editor = tinymce.get('event_mail_message');
 		if ( editor !== null) {
                    editor.save();
@@ -165,7 +165,7 @@ jQuery(document).ready( function($) {
 	   var alldata = new FormData($('#'+form_id)[0]);
 	   alldata.append('action', 'eme_eventmail');
 	   alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-	   $('#eventmailButton').text(eme.translate_pleasewait);
+	   $('#eventmailButton').text(ememails.translate_pleasewait);
 	   $('#eventmailButton').prop('disabled', true);
 	   $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 	   .done(function(data){
@@ -184,7 +184,7 @@ jQuery(document).ready( function($) {
 			$("#eme_mail_type").val(null).trigger("change");
 		        $('div#eventmail-message').delay(10000).fadeOut('slow');
 		   }
-		   $('#eventmailButton').text(eme.translate_sendmail);
+		   $('#eventmailButton').text(ememails.translate_sendmail);
 		   $('#eventmailButton').prop('disabled', false);
 	   });
            return false;
@@ -193,7 +193,7 @@ jQuery(document).ready( function($) {
    $('#genericmailButton').on("click",function (e) {
            e.preventDefault();
 	   // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-           if (eme.translate_htmlmail=='yes') {
+           if (ememails.translate_htmlmail=='yes') {
                 var editor = tinymce.get('generic_mail_message');
 		if ( editor !== null) {
                    editor.save();
@@ -203,7 +203,7 @@ jQuery(document).ready( function($) {
 	   var alldata = new FormData($('#'+form_id)[0]);
 	   alldata.append('action', 'eme_genericmail');
 	   alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-	   $('#genericmailButton').text(eme.translate_pleasewait);
+	   $('#genericmailButton').text(ememails.translate_pleasewait);
 	   $('#genericmailButton').prop('disabled', true);
 	   $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 	   .done(function(data){
@@ -223,7 +223,7 @@ jQuery(document).ready( function($) {
 			$('input#eme_send_all_people').trigger('change');
 			$('div#genericmail-message').delay(5000).fadeOut('slow');
 		   }
-		   $('#genericmailButton').text(eme.translate_sendmail);
+		   $('#genericmailButton').text(ememails.translate_sendmail);
 		   $('#genericmailButton').prop('disabled', false);
 	   });
            return false;
@@ -232,7 +232,7 @@ jQuery(document).ready( function($) {
    $('#previeweventmailButton').on("click",function (e) {
            e.preventDefault();
 	   // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-           if (eme.translate_htmlmail=='yes') {
+           if (ememails.translate_htmlmail=='yes') {
                 var editor = tinymce.get('event_mail_message');
 		if ( editor !== null) {
                    editor.save();
@@ -258,7 +258,7 @@ jQuery(document).ready( function($) {
    $('#previewmailButton').on("click",function (e) {
            e.preventDefault();
 	   // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-           if (eme.translate_htmlmail=='yes') {
+           if (ememails.translate_htmlmail=='yes') {
                 var editor = tinymce.get('generic_mail_message');
 		if ( editor !== null) {
                    editor.save();
@@ -303,7 +303,7 @@ jQuery(document).ready( function($) {
 	   var alldata = new FormData($('#'+form_id)[0]);
 	   alldata.append('action', 'eme_testmail');
 	   alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-	   $('#testmailButton').text(eme.translate_pleasewait);
+	   $('#testmailButton').text(ememails.translate_pleasewait);
 	   $('#testmailButton').prop('disabled', true);
 	   $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 	   .done(function(data){
@@ -312,7 +312,7 @@ jQuery(document).ready( function($) {
 		   if (data.Result=='OK') {
 		   	$('#'+form_id).trigger('reset');
 		   }
-		   $('#testmailButton').text(eme.translate_sendmail);
+		   $('#testmailButton').text(ememails.translate_sendmail);
 		   $('#testmailButton').prop('disabled', false);
 	   });
            return false;
@@ -342,7 +342,7 @@ jQuery(document).ready( function($) {
 		  },
 		  function(data){
 			  $('textarea#event_mail_message').val(data.htmlmessage);
-			  if (eme.translate_htmlmail=='yes') {
+			  if (ememails.translate_htmlmail=='yes') {
 				  var editor = tinymce.get('event_mail_message');
 				  if ( editor !== null) {
 					  editor.setContent(data.htmlmessage);
@@ -376,7 +376,7 @@ jQuery(document).ready( function($) {
 		  },
 		  function(data){
 			  $('textarea#generic_mail_message').val(data.htmlmessage);
-			  if (eme.translate_htmlmail=='yes') {
+			  if (ememails.translate_htmlmail=='yes') {
 				  var editor = tinymce.get('generic_mail_message');
 				  if ( editor !== null) {
 					  editor.setContent(data.htmlmessage);
@@ -459,13 +459,13 @@ jQuery(document).ready( function($) {
                     },
                     cache: true
         },
-        placeholder: eme.translate_selectevents,
+        placeholder: ememails.translate_selectevents,
         width: '90%'
     });
 
         //Prepare jtable plugin
         jQuery('#MailingReportTableContainer').jtable({
-            title: eme.translate_mailingreport,
+            title: ememails.translate_mailingreport,
             paging: true,
             sorting: true,
             jqueryuiTheme: true,
@@ -479,36 +479,36 @@ jQuery(document).ready( function($) {
             },
             fields: {
                 receiveremail: {
-                    title: eme.translate_email,
+                    title: ememails.translate_email,
                 },
                 receivername: {
-                    title: eme.translate_name,
+                    title: ememails.translate_name,
                 },
                 status: {
-                    title: eme.translate_status,
+                    title: ememails.translate_status,
                 },
                 sent_datetime: {
-                    title: eme.translate_sentdatetime,
+                    title: ememails.translate_sentdatetime,
                     sorting: true
                 },
                 first_read_on: {
-                    title: eme.translate_first_read_on,
+                    title: ememails.translate_first_read_on,
                     sorting: true
                 },
                 last_read_on: {
-                    title: eme.translate_last_read_on,
+                    title: ememails.translate_last_read_on,
                     sorting: true
                 },
                 read_count: {
-                    title: eme.translate_readcount,
+                    title: ememails.translate_readcount,
                 },
                 error_msg: {
-                    title: eme.translate_errormessage,
+                    title: ememails.translate_errormessage,
                     visibility: 'hidden',
                     sorting: false
                 },
                 action: {
-                    title: eme.translate_action,
+                    title: ememails.translate_action,
                     sorting: false
                 }
             }
@@ -530,9 +530,9 @@ jQuery(document).ready( function($) {
         $('#eventmail_attach_button').on("click",function(e) {
                 e.preventDefault();
                 var custom_uploader = wp.media({
-                        title: eme.translate_addattachments,
+                        title: ememails.translate_addattachments,
                         button: {
-                                text: eme.translate_addattachments
+                                text: ememails.translate_addattachments
                         },
                         multiple: true  // Set this to true to allow multiple files to be selected
                 }).on('select', function() {
@@ -573,9 +573,9 @@ jQuery(document).ready( function($) {
         $('#generic_attach_button').on("click",function(e) {
                 e.preventDefault();
                 var custom_uploader = wp.media({
-                        title: eme.translate_addattachments,
+                        title: ememails.translate_addattachments,
                         button: {
-                                text: eme.translate_addattachments
+                                text: ememails.translate_addattachments
                         },
                         multiple: true  // Set this to true to allow multiple files to be selected
                 }).on('select', function() {
@@ -618,23 +618,23 @@ jQuery(document).ready( function($) {
 			todayButton: new Date(),
                         clearButton: true,
                         timepicker: true,
-                        minutesStep: parseInt(eme.translate_minutesStep),
-                        language: eme.translate_flanguage,
-                        firstDay: parseInt(eme.translate_firstDayOfWeek),
+                        minutesStep: parseInt(ememails.translate_minutesStep),
+                        language: ememails.translate_flanguage,
+                        firstDay: parseInt(ememails.translate_firstDayOfWeek),
                         altFieldDateFormat: 'Y-m-d H:i:00',
-                        dateFormat: eme.translate_fdateformat,
-                        timeFormat: eme.translate_ftimeformat,
+                        dateFormat: ememails.translate_fdateformat,
+                        timeFormat: ememails.translate_ftimeformat,
 			onSelect: function(formattedDate,date,inst) {
 				if (!Array.isArray(date)) {
 					$('#eventmail-specificdates').text("");
-					$('#eventmailButton').text(eme.translate_sendmail);
+					$('#eventmailButton').text(ememails.translate_sendmail);
 				} else {
-					$('#eventmail-specificdates').html('<br />'+eme.translate_selecteddates+'<br />');
+					$('#eventmail-specificdates').html('<br />'+ememails.translate_selecteddates+'<br />');
 					$.each(date, function( index, value ) {
-						date_formatted = inst.formatDate(eme.translate_fdatetimeformat,value);
+						date_formatted = inst.formatDate(ememails.translate_fdatetimeformat,value);
 						$('#eventmail-specificdates').append(date_formatted+'<br />');
 					});
-					$('#eventmailButton').text(eme.translate_planmail);
+					$('#eventmailButton').text(ememails.translate_planmail);
 				}
 			}
 		});
@@ -644,23 +644,23 @@ jQuery(document).ready( function($) {
 			todayButton: new Date(),
                         clearButton: true,
                         timepicker: true,
-                        minutesStep: parseInt(eme.translate_minutesStep),
-                        language: eme.translate_flanguage,
-                        firstDay: parseInt(eme.translate_firstDayOfWeek),
+                        minutesStep: parseInt(ememails.translate_minutesStep),
+                        language: ememails.translate_flanguage,
+                        firstDay: parseInt(ememails.translate_firstDayOfWeek),
                         altFieldDateFormat: 'Y-m-d H:i:00',
-                        dateFormat: eme.translate_fdateformat,
-                        timeFormat: eme.translate_ftimeformat,
+                        dateFormat: ememails.translate_fdateformat,
+                        timeFormat: ememails.translate_ftimeformat,
 			onSelect: function(formattedDate,date,inst) {
 				if (!Array.isArray(date)) {
 					$('#genericmail-specificdates').text("");
-					$('#genericmailButton').text(eme.translate_sendmail);
+					$('#genericmailButton').text(ememails.translate_sendmail);
 				} else {
-					$('#genericmail-specificdates').html('<br />'+eme.translate_selecteddates+'<br />');
+					$('#genericmail-specificdates').html('<br />'+ememails.translate_selecteddates+'<br />');
 					$.each(date, function( index, value ) {
-						date_formatted = inst.formatDate(eme.translate_fdatetimeformat,value);
+						date_formatted = inst.formatDate(ememails.translate_fdatetimeformat,value);
 						$('#genericmail-specificdates').append(date_formatted+'<br />');
 					});
-					$('#genericmailButton').text(eme.translate_planmail);
+					$('#genericmailButton').text(ememails.translate_planmail);
 				}
 			}
 		});

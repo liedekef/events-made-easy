@@ -3651,22 +3651,34 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$replacement = apply_filters( 'eme_text', $replacement );
 					}
 				}
-			} elseif ( preg_match( '/#_RSVPSTART/', $result ) ) {
-				// show the end date+time for which a user can rsvp for an event
+			} elseif ( preg_match( '/#_RSVPSTART(\{.+?\})?$/', $result, $matches ) ) {
+				if ( isset( $matches[1] ) ) {
+					// remove { and } (first and last char of second match)
+					$date_format = substr( $matches[1], 1, -1 );
+				} else {
+					$date_format = '';
+				}
+				// show the start date+time for which a user can rsvp for an event
 				if ( eme_is_event_rsvp( $event ) ) {
-					$rsvp_end_number_days  = $event['event_properties']['rsvp_start_number_days'];
-					$rsvp_end_number_hours = $event['event_properties']['rsvp_start_number_hours'];
-					if ( $rsvp_end_number_days || $rsvp_end_number_hours ) {
+					$rsvp_start_number_days  = $event['event_properties']['rsvp_start_number_days'];
+					$rsvp_start_number_hours = $event['event_properties']['rsvp_start_number_hours'];
+					if ( $rsvp_start_number_days || $rsvp_start_number_hours ) {
 						if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
 							$rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
 						} else {
 							$rsvp_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 						}
-						$rsvp_date_obj->minusDays( $rsvp_end_number_days )->minusHours( $rsvp_end_number_hours );
-						$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE );
+						$rsvp_date_obj->minusDays( $rsvp_start_number_days )->minusHours( $rsvp_start_number_hours );
+						$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE, $date_format );
 					}
 				}
-			} elseif ( preg_match( '/#_RSVPEND/', $result ) ) {
+			} elseif ( preg_match( '/#_RSVPEND(\{.+?\})?$/', $result, $matches ) ) {
+				if ( isset( $matches[1] ) ) {
+					// remove { and } (first and last char of second match)
+					$date_format = substr( $matches[1], 1, -1 );
+				} else {
+					$date_format = '';
+				}
 				// show the end date+time for which a user can rsvp for an event
 				if ( eme_is_event_rsvp( $event ) ) {
 					if ( $event['event_properties']['rsvp_end_target'] == 'start' ) {
@@ -3677,7 +3689,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$rsvp_end_number_days  = $event['event_properties']['rsvp_end_number_days'];
 					$rsvp_end_number_hours = $event['event_properties']['rsvp_end_number_hours'];
 					$rsvp_date_obj->minusDays( $rsvp_end_number_days )->minusHours( $rsvp_end_number_hours );
-					$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE );
+					$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE, $date_format );
 				}
 			} elseif ( preg_match( '/#_CANCELEND/', $result ) ) {
 				// show the end date+time for which a user can cancel an rsvp for an event

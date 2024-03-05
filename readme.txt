@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Make sure no countries with double alpha-2 code and the same language can exist
 * Correct the use of the setting "Limit event listing?" It was not working due to a wrong column name in the database query
 * Show the people/members of a group when editing that group (and allow filtering/actions as if in the people/member section)
+* Added support for event placeholders #_RSVPSTART{xx} and #_RSVPEND{xx}, next to just #_RSVPSTART and #_RSVPEND so you can format the layout to your liking ('xx' being the date/time format in php date notation)
 
 = 2.4.32 (2024/02/23) =
 * Fix yet another named parameter usage (typo) causing event listing not to show in some shortcodes

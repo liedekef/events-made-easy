@@ -2530,6 +2530,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 	</div>
 	</form>
 	<?php
+		// let's show the existing members too for existing groups
 		if ( $group['type'] == 'dynamic_members' ) {
 			eme_render_member_table_and_filters( $group_id );
 		} elseif ($group_id) {

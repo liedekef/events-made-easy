@@ -681,7 +681,7 @@ function eme_validate_country( $country ) {
 	} else {
 		$sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE id != %d AND alpha_2=%s AND lang=%s", $country['id'], $country['alpha_2'], $country['lang'] );
 	}
-	$count = $wpdb->get_col( $sql );
+	$count = $wpdb->get_var( $sql );
 	if ( $count > 0 ) {
 		return __( 'Duplicate country with the same language and alpha-2 code detected', 'events-made-easy' );
 	}

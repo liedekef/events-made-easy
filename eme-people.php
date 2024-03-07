@@ -1826,70 +1826,80 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 	// Double id's causes some javascripts to flip ...
 	if ( ! empty( $group_to_edit ) ) {
 		$edit_group   = 1;
-		$search_terms = eme_unserialize( $group_to_edit['search_terms'] );
 		$id_prefix    = 'edit_';
+		$search_terms = eme_unserialize( $group_to_edit['search_terms'] );
 	} else {
 		$edit_group = 0;
 		$id_prefix  = '';
+		if ($limit_to_group) {
+			$tmp_group = eme_get_group($limit_to_group);
+			$search_terms = eme_unserialize( $tmp_group['search_terms'] );
+		}
 	}
 
 	if ($limit_to_group) {
 		echo '<input type="hidden" name="search_groups" id="'.$id_prefix.'search_groups" value="' . esc_attr($limit_to_group) . '">';
 	}
 
-	$value = '';
 	if ( $edit_group ) {
 		echo '</td></tr><tr><td>' . esc_html__( 'Filter on person', 'events-made-easy' ) . '</td><td>';
-		if ( isset( $search_terms['search_person'] ) ) {
-			$value = $search_terms['search_person'];
-		}
+	}
+	if ( isset( $search_terms['search_person'] ) ) {
+		$value = $search_terms['search_person'];
+	} else {
+		$value = '';
 	}
 	echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
 
-	$value = '';
 	if ( $edit_group ) {
 		echo '</td></tr><tr><td>' . esc_html__( 'Filter on group', 'events-made-easy' ) . '</td><td>';
-		if ( isset( $search_terms['search_groups'] ) ) {
-			$value = $search_terms['search_groups'];
-		}
+	}
+	if ( isset( $search_terms['search_groups'] ) ) {
+		$value = $search_terms['search_groups'];
+	} else {
+		$value = '';
 	}
 	echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2_people_groups_class', id_prefix: $id_prefix );
 
-	$value = '';
 	if ( $edit_group ) {
 		echo '<tr><td>' . esc_html__( 'Select memberships', 'events-made-easy' ) . '</td><td>';
-		if ( isset( $search_terms['search_membershipids'] ) ) {
-			$value = $search_terms['search_membershipids'];
-		}
+	}
+	if ( isset( $search_terms['search_membershipids'] ) ) {
+		$value = $search_terms['search_membershipids'];
+	} else {
+		$value = '';
 	}
 	echo eme_ui_multiselect_key_value( $value, 'search_membershipids', $memberships, 'membership_id', 'name', 5, '', 0, 'eme_select2_memberships_class', id_prefix: $id_prefix );
 
-	$value = '';
 	if ( $edit_group ) {
 		echo '</td></tr><tr><td>' . esc_html__( 'Select member status', 'events-made-easy' ) . '</td><td>';
-		if ( isset( $search_terms['search_memberstatus'] ) ) {
-			$value = $search_terms['search_memberstatus'];
-		}
+	}
+	if ( isset( $search_terms['search_memberstatus'] ) ) {
+		$value = $search_terms['search_memberstatus'];
+	} else {
+		$value = '';
 	}
 	echo eme_ui_multiselect( $value, 'search_memberstatus', $eme_member_status_array, 5, '', 0, 'eme_select2_memberstatus_class', id_prefix: $id_prefix );
 
 	$formfields_searchable = eme_get_searchable_formfields( 'people' );
 	if ( ! empty( $formfields_searchable ) ) {
-		$value = '';
 		if ( $edit_group ) {
 			echo '</td></tr><tr><td>' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '</td><td>';
-			if ( isset( $search_terms['search_customfields'] ) ) {
-				$value = $search_terms['search_customfields'];
-			}
+		}
+		if ( isset( $search_terms['search_customfields'] ) ) {
+			$value = $search_terms['search_customfields'];
+		} else {
+			$value = '';
 		}
 		echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_customfields" id="'.$id_prefix.'search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
 
-		$value = '';
 		if ( $edit_group ) {
 			echo '</td></tr><tr><td>' . esc_html__( 'Custom field to search', 'events-made-easy' ) . '</td><td>';
-			if ( isset( $search_terms['search_customfieldids'] ) ) {
-				$value = $search_terms['search_customfieldids'];
-			}
+		}
+		if ( isset( $search_terms['search_customfieldids'] ) ) {
+			$value = $search_terms['search_customfieldids'];
+		} else {
+			$value = '';
 		}
 		$label = __( 'Custom fields to filter on', 'events-made-easy' );
 		$extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';

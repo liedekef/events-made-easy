@@ -128,7 +128,8 @@ function eme_formfields_page() {
 			if ( ! empty( $_POST['field_condition'] ) && is_array( $_POST['field_condition'] ) ) {
 				$condition_arr = eme_sanitize_request( $_POST['field_condition'] );
 				//Remove element by value using unset()
-				if ( ( $key = array_search( 'group:0', $condition_arr ) ) !== false ) {
+				$key = array_search( 'group:0', $condition_arr );
+				if ( $key !== false ) {
 					unset( $condition_arr[ $key ] );
 				}
 				$formfield['field_condition'] = join( ',', eme_sanitize_request( $condition_arr ) );

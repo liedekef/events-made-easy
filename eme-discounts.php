@@ -1126,13 +1126,14 @@ function eme_add_discount_to_group( $discount_id, $group_id ) {
 }
 
 function eme_remove_discount_from_group( $discount_id, $group_id ) {
-		$discount = eme_get_discount( $discount_id );
-	$changed      = 0;
+	$discount = eme_get_discount( $discount_id );
+	$changed  = 0;
 	if ( empty( $discount['dgroup'] ) ) {
 		return;
 	} else {
 		$dgroups_arr = explode( ',', $discount['dgroup'] );
-		if ( ( $key = array_search( $group_id, $dgroups_arr ) ) !== false ) {
+		$key = array_search( $group_id, $dgroups_arr );
+		if ( $key !== false ) {
 			unset( $dgroups_arr[ $key ] );
 			$changed = 1;
 		}

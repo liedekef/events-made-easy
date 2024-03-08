@@ -1638,7 +1638,8 @@ function eme_single_event_page_template( $template ) {
 	if ( eme_is_single_event_page() ) {
 		$event = eme_get_event( get_query_var( 'event_id' ) );
 		if ( ! empty( $event ) && ! empty( $event['event_properties']['wp_page_template'] ) ) {
-			if ( $overridden_template = locate_template( $event['event_properties']['wp_page_template'] ) ) {
+			$overridden_template = locate_template( $event['event_properties']['wp_page_template'] );
+			if ( $overridden_template ) {
 				return $overridden_template;
 			} else {
 				return $template;

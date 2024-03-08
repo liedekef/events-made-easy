@@ -1975,7 +1975,8 @@ function eme_is_email( $email, $extra_checks_required = 0 ) {
 		// add trailing '.'
 		$fqdn .= ( substr( $fqdn, -1 ) == '.' ? '' : '.' );
 		$mx_records = [];
-		if ( $result = getmxrr( $fqdn, $mx_records ) ) {
+		$result = getmxrr( $fqdn, $mx_records );
+		if ( $result ) {
 			if ( ! isset( $mx_records ) || ( count( $mx_records ) == 0 ) ) {
 				$result = false;
 			}
@@ -3070,7 +3071,8 @@ function eme_get_uploaded_files( $id, $type = 'bookings' ) {
 	$res = [];
 	$dir = EME_UPLOAD_DIR . '/' . $type . '/' . $id;
 	if ( is_dir( $dir ) ) {
-		if ( $handle = opendir( $dir ) ) {
+		$handle = opendir( $dir );
+		if ( $handle ) {
 			while ( ( $entry = readdir( $handle ) ) !== false ) {
 				if ( $entry != '.' && $entry != '..' ) {
 					$info = explode( '-', $entry );

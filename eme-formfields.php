@@ -429,7 +429,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             <tr id='tr_field_attributes' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_attributes'>" . __( 'HTML field attributes', 'events-made-easy' ) . "</label></th>
                <td><input name='field_attributes' id='field_attributes' type='text' value='" . eme_esc_html( $formfield['field_attributes'] ) . "' size='40'>
-                   <br>" . __( 'Here you can specify extra html attributes for your field (like size, maxlength, pattern, ...', 'events-made-easy' ) . '
+                   <br>" . __( 'Here you can specify extra html attributes for your field (like size, maxlength, pattern, ...).', 'events-made-easy' ) . '
                    <br>' . __( "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' enter a valid PHP-format of the date you like to see when entering/showing the value (unrecognized characters in the format will cause the result to be empty). If left empty, the WordPress settings for date format will be used.", 'events-made-easy' ) . "
                </td>
             </tr>

@@ -599,13 +599,7 @@ function eme_countries_edit_layout( $country_id = 0, $message = '' ) {
    ";
 	echo $layout;
 }
-function eme_get_states( $country_id = 0 ) {
-	global $wpdb;
-	$table           = EME_DB_PREFIX . EME_STATES_TBNAME;
-	$countries_table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
-	$sql             = "SELECT state.*,country.lang FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id";
-	return $wpdb->get_results( $sql, ARRAY_A );
-}
+
 function eme_get_localized_states( $country_code = '' ) {
 	global $wpdb;
 	$table           = EME_DB_PREFIX . EME_STATES_TBNAME;
@@ -661,6 +655,9 @@ function eme_get_countries_alpha2() {
 }
 
 function eme_validate_state( $state ) {
+	if ( strlen( $state['code'] ) != 2 ) {
+		return __( 'Incorrect code', 'events-made-easy' );
+	}
 	return '';
 }
 

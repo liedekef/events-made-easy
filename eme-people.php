@@ -1828,6 +1828,8 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 		$edit_group   = 1;
 		$id_prefix    = 'edit_';
 		$search_terms = eme_unserialize( $group_to_edit['search_terms'] );
+		// just to make sure ...
+		$limit_to_group = 0;
 	} else {
 		$edit_group = 0;
 		$id_prefix  = '';
@@ -1835,10 +1837,6 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 			$tmp_group = eme_get_group($limit_to_group);
 			$search_terms = eme_unserialize( $tmp_group['search_terms'] );
 		}
-	}
-
-	if ($limit_to_group) {
-		echo '<input type="hidden" name="search_groups" id="'.$id_prefix.'search_groups" value="' . esc_attr($limit_to_group) . '">';
 	}
 
 	if ( $edit_group ) {
@@ -1851,15 +1849,19 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 	}
 	echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
 
-	if ( $edit_group ) {
-		echo '</td></tr><tr><td>' . esc_html__( 'Filter on group', 'events-made-easy' ) . '</td><td>';
-	}
-	if ( isset( $search_terms['search_groups'] ) ) {
-		$value = $search_terms['search_groups'];
+	if ($limit_to_group) {
+		echo '<input type="hidden" name="search_groups" id="'.$id_prefix.'search_groups" value="' . esc_attr($limit_to_group) . '">';
 	} else {
-		$value = '';
+		if ( $edit_group ) {
+			echo '</td></tr><tr><td>' . esc_html__( 'Filter on group', 'events-made-easy' ) . '</td><td>';
+		}
+		if ( isset( $search_terms['search_groups'] ) ) {
+			$value = $search_terms['search_groups'];
+		} else {
+			$value = '';
+		}
+		echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2_people_groups_class', id_prefix: $id_prefix );
 	}
-	echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2_people_groups_class', id_prefix: $id_prefix );
 
 	if ( $edit_group ) {
 		echo '<tr><td>' . esc_html__( 'Select memberships', 'events-made-easy' ) . '</td><td>';

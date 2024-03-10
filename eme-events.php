@@ -231,10 +231,27 @@ function eme_init_event_props( $props = [] ) {
 		$props['rsvp_approved_reminder_days'] = get_option( 'eme_rsvp_approved_reminder_days' );
 	}
 
+	// for sure integers
+	$numbers = [ 'create_wp_user', 'auto_approve', 'ignore_pending', 'email_only_once', 'person_only_once', 'invite_only', 'all_day', 'take_attendance', 'require_user_confirmation', 'captcha_only_logged_out', 'dyndata_all_fields', 'task_registered_users_only', 'task_requires_approval', 'task_allow_overlap', 'attendancerecord' ];
+	foreach ( $numbers as $opt ) {
+		$props[$opt]=intval($props[$opt]);
+	}
+	// for integers or floats
+	$numbers = [ 'rsvp_end_number_days', 'rsvp_end_number_hours', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'waitinglist_seats', 'check_free_waiting', 'cancel_rsvp_days', 'cancel_rsvp_age', 'attendance_begin', 'attendance_end', 'ticket_template_id', 'skippaymentoptions', 'task_reminder_days', 'rsvp_pending_reminder_days', 'rsvp_approved_reminder_days' ];
+	foreach ( $numbers as $opt ) {
+		if (eme_isFloat($props[$opt])) {
+			$props[$opt]=floatval($props[$opt]);
+		} else {
+			$props[$opt]=intval($props[$opt]);
+		}
+	}
+
 	$template_override = [ 'event_page_title_format_tpl', 'event_single_event_format_tpl', 'event_contactperson_email_body_tpl', 'event_registration_recorded_ok_html_tpl', 'event_respondent_email_body_tpl', 'event_registration_pending_email_body_tpl', 'event_registration_userpending_email_body_tpl', 'event_registration_updated_email_body_tpl', 'event_registration_cancelled_email_body_tpl', 'event_registration_trashed_email_body_tpl', 'event_registration_form_format_tpl', 'event_cancel_form_format_tpl', 'event_registration_paid_email_body_tpl', 'event_contactperson_email_subject_tpl', 'event_respondent_email_subject_tpl', 'event_registration_pending_email_subject_tpl', 'event_registration_userpending_email_subject_tpl', 'event_registration_updated_email_subject_tpl', 'event_registration_cancelled_email_subject_tpl', 'event_registration_trashed_email_subject_tpl', 'event_registration_paid_email_subject_tpl', 'contactperson_registration_pending_email_subject_tpl', 'contactperson_registration_pending_email_body_tpl', 'contactperson_registration_cancelled_email_subject_tpl', 'contactperson_registration_cancelled_email_body_tpl', 'contactperson_registration_ipn_email_subject_tpl', 'contactperson_registration_ipn_email_body_tpl', 'contactperson_registration_paid_email_subject_tpl', 'contactperson_registration_paid_email_body_tpl', 'attendance_unauth_scan_tpl', 'attendance_auth_scan_tpl', 'task_signup_email_subject_tpl', 'task_signup_email_body_tpl', 'cp_task_signup_email_subject_tpl', 'cp_task_signup_email_body_tpl', 'task_signup_pending_email_subject_tpl', 'task_signup_pending_email_body_tpl', 'cp_task_signup_pending_email_subject_tpl', 'cp_task_signup_pending_email_body_tpl', 'task_signup_updated_email_subject_tpl', 'task_signup_updated_email_body_tpl', 'task_signup_cancelled_email_subject_tpl', 'task_signup_cancelled_email_body_tpl', 'cp_task_signup_cancelled_email_subject_tpl', 'cp_task_signup_cancelled_email_body_tpl', 'task_signup_trashed_email_subject_tpl', 'task_signup_trashed_email_body_tpl', 'task_signup_form_format_tpl', 'task_signup_recorded_ok_html_tpl', 'task_signup_reminder_email_subject_tpl', 'task_signup_reminder_email_body_tpl', 'event_registration_reminder_email_subject_tpl', 'event_registration_reminder_email_body_tpl', 'event_registration_pending_reminder_email_subject_tpl', 'event_registration_pending_reminder_email_body_tpl' ];
 	foreach ( $template_override as $line ) {
 		if ( ! isset( $props[ $line ] ) ) {
 			$props[ $line ] = 0;
+		} else {
+			$props[ $line ] = intval($props[ $line ]);
 		}
 	}
 	$text_override = [ 'event_contactperson_email_subject', 'event_respondent_email_subject', 'event_registration_pending_email_subject', 'event_registration_userpending_email_subject', 'event_registration_userpending_email_body', 'event_registration_updated_email_subject', 'event_registration_cancelled_email_subject', 'event_registration_paid_email_subject', 'event_registration_trashed_email_subject', 'contactperson_registration_pending_email_body', 'contactperson_registration_cancelled_email_body', 'contactperson_registration_ipn_email_body', 'contactperson_registration_pending_email_subject', 'contactperson_registration_cancelled_email_subject', 'contactperson_registration_ipn_email_subject', 'contactperson_registration_paid_email_subject', 'contactperson_registration_paid_email_body', 'attendance_unauth_scan_format', 'attendance_auth_scan_format', 'event_registration_reminder_email_subject', 'event_registration_reminder_email_body', 'event_registration_pending_reminder_email_subject', 'event_registration_pending_reminder_email_body' ];

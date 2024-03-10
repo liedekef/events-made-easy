@@ -324,6 +324,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function modifyDays( $amount, $invert = false ) {
+		$amount = floatval($amount);
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -392,6 +393,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function modifyMonths( $amount, $invert = false ) {
+		$amount = floatval($amount);
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -460,6 +462,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function modifyYears( $amount, $invert = false ) {
+		$amount = floatval($amount);
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -528,6 +531,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function modifyHours( $amount, $invert = false ) {
+		$amount = floatval($amount);
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -596,6 +600,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function modifyMinutes( $amount, $invert = false ) {
+		$amount = floatval($amount);
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -728,6 +733,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function modifyWeeks( $amount, $invert = false ) {
+		$amount = floatval($amount);
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;

@@ -307,6 +307,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function minusDays( $amount ): ExpressiveDate {
+		$amount = floatval($amount);
 		// minusDays and a negative amount is in fact addDays
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
@@ -376,6 +377,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function minusMonths( $amount ) {
+		$amount = floatval($amount);
 		// minusMonths and a negative amount is in fact addMonths
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
@@ -445,6 +447,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function minusYears( $amount ) {
+		$amount = floatval($amount);
 		// minusYears and a negative amount is in fact addYears
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
@@ -514,6 +517,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function minusHours( $amount ) {
+		$amount = floatval($amount);
 		// minusHours and a negative amount is in fact addHours
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
@@ -583,6 +587,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function minusMinutes( $amount ) {
+		$amount = floatval($amount);
 		// minusMinutes and a negative amount is in fact addMinutes
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
@@ -652,6 +657,7 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function minusSeconds( $amount ) {
+		$amount = floatval($amount);
 		// minusSeconds and a negative amount is in fact addSeconds
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );

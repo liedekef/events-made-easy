@@ -9273,10 +9273,7 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 	$updated_event['modif_date'] = current_time( 'mysql', false );
 
 	$where = [ 'event_id' => $event_id ];
-	$wpdb->show_errors( true );
 	if ( $wpdb->update( $table_name, $updated_event, $where ) === false ) {
-		$wpdb->print_error();
-		$wpdb->show_errors( false );
 		return false;
 	} else {
 		wp_cache_delete( "eme_event $event_id" );
@@ -9289,7 +9286,6 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 		} else {
 			eme_delete_event_tasks( $event_id );
 		}
-		$wpdb->show_errors( false );
 		return true;
 	}
 }

@@ -155,6 +155,9 @@ function eme_delete_event_old_tasks( $event_id, $ids_arr ) {
 function eme_cancel_task_signup( $signup_randomid ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
+	if (empty($signup_randomid)) {
+		return;
+	}
 	$sql   = $wpdb->prepare( "DELETE FROM $table WHERE random_id=%s", $signup_randomid );
 	return $wpdb->query( $sql );
 }
@@ -382,11 +385,12 @@ function eme_tasks_send_signup_reminders() {
 function eme_tasks_remove_old_signups() {
 	global $wpdb;
 	$table                   = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
+	$events_table            = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$remove_old_signups_days = get_option( 'eme_gdpr_remove_old_signups_days' );
 	if ( empty( $remove_old_signups_days ) ) {
-			return;
+		return;
 	} else {
-			$remove_old_signups_days = abs( $remove_old_signups_days );
+		$remove_old_signups_days = abs( intval($remove_old_signups_days) );
 	}
 
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );

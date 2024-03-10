@@ -669,6 +669,8 @@ class ExpressiveDate extends DateTime {
 	 * @return ExpressiveDate
 	 */
 	public function modifySeconds( $amount, $invert = false ) {
+		// seconds are the smallest unit here and need to be an integer, otherwise DateInterval will complain
+		$amount = intval($amount);
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;

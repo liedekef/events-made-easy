@@ -2113,7 +2113,7 @@ function eme_booking_from_form( $event ) {
 
 	// for non-multi event seats, let's check the waitinglist option too
 	if ( ! eme_is_multi( $event['event_seats'] ) ) {
-		$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
+		$waitinglist_seats = $event['event_properties']['waitinglist_seats'];
 		// check for real available seats excluding waitinglis
 		$avail_seats = eme_get_available_seats( $event_id, 1 );
 		if ( $waitinglist_seats > 0 && $avail_seats <= 0 ) {

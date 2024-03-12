@@ -2666,9 +2666,10 @@ function eme_get_available_multiseats( $event_id, $exclude_waiting_list = 0, $ex
 		if ( isset( $young_pending_multiseats[ $key ] ) ) {
 			$available_seats[ $key ] -= $young_pending_multiseats[ $key ];
 		}
+		// the next is not in use yet: waitinglist_seats is currently not allowed to be multi
 		if ( $exclude_waiting_list && eme_is_multi( $event['event_properties']['waitinglist_seats'] ) ) {
 			$waitinglist_multiseats   = eme_convert_multi2array( $event['event_properties']['waitinglist_seats'] );
-			$available_seats[ $key ] -= $waitinglist_multiseats[ $key ];
+			$available_seats[ $key ] -= intval($waitinglist_multiseats[ $key ]);
 		}
 
 		if ( !empty($location) && !empty($location['location_properties']['max_capacity'])) {
@@ -5676,7 +5677,7 @@ function eme_ajax_bookings_list() {
 					}
 				}
 				$event_name_info[ $event_id ] .= ', ' . __( 'Max: ', 'events-made-easy' ) . $total_seats_string;
-				$waitinglist_seats            = intval( $event['event_properties']['waitinglist_seats'] );
+				$waitinglist_seats            = $event['event_properties']['waitinglist_seats'];
 				if ( $waitinglist_seats > 0 ) {
 					$event_name_info[ $event_id ] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
 				}

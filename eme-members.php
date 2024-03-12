@@ -49,6 +49,12 @@ function eme_init_member_props( $props = [] ) {
 	if ( ! isset( $props['usage_count'] ) ) {
 		$props['usage_count'] = 0;
 	}
+
+	$numbers = [ 'usage_count' ];
+        foreach ( $numbers as $opt ) {
+                $props[$opt]=intval($props[$opt]);
+        }
+
 	return $props;
 }
 
@@ -149,12 +155,20 @@ function eme_init_membership_props( $props = [] ) {
 		$props['skippaymentoptions'] = 0;
 	}
 
+	// for sure integers
+        $numbers = [ 'max_usage_count', 'remove_pending_days', 'registration_wp_users_only', 'one_free_period', 'contact_id', 'member_template_id', 'dyndata_all_fields', 'use_cfcaptcha', 'use_hcaptcha', 'use_recaptcha', 'use_captcha', 'captcha_only_logged_out', 'create_wp_user', 'renewal_cutoff_days', 'allow_renewal', 'attendancerecord', 'skippaymentoptions', 'family_membership', 'family_maxmembers', 'grace_period' ];
+        foreach ( $numbers as $opt ) {
+                $props[$opt]=intval($props[$opt]);
+        }
+
 	$payment_gateways = eme_payment_gateways();
 	foreach ( array_keys($payment_gateways) as $pg ) {
 		// the properties for payment gateways alsways have "use_" in front of them, so add it
 		if ( ! isset( $props[ 'use_' . $pg ] ) ) {
 			$props[ 'use_' . $pg ] = 0;
-		}
+		} else {
+			$props[ 'use_' . $pg ] = intval( $props[ 'use_' . $pg ] );
+		} 
 	}
 
 	if ( ! isset( $props['new_subject_format'] ) ) {
@@ -192,6 +206,8 @@ function eme_init_membership_props( $props = [] ) {
 	foreach ( $templates as $template ) {
 		if ( ! isset( $props[ $template ] ) ) {
 			$props[ $template ] = 0;
+		} else {
+			$props[ $template ] = intval( $props[ $template ] );
 		}
 	}
 	$template_texts = [ 'member_form_text', 'familymember_form_text', 'payment_form_header_text', 'payment_form_footer_text', 'payment_success_text', 'offline_payment_text', 'new_body_text', 'contact_new_body_text', 'updated_body_text', 'extended_body_text', 'paid_body_text', 'contact_paid_body_text', 'reminder_body_text', 'stop_body_text', 'contact_stop_body_text', 'contact_ipn_body_text', 'member_added_text' ];
@@ -1194,7 +1210,7 @@ function eme_check_member_allowed_to_pay( $member, $membership ) {
                                 $end_date_obj     = ExpressiveDate::createFromFormat( 'Y-m-d', $member['end_date'], ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
                                 $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
                                 $diff             = $eme_date_obj_now->getDifferenceInDays( $end_date_obj );
-                                if ( $diff > intval( $membership['properties']['renewal_cutoff_days'] ) ) {
+                                if ( $diff > $membership['properties']['renewal_cutoff_days'] ) {
                                         $too_soon_to_pay = 1;
                                 }
                         }
@@ -1985,7 +2001,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	</tr>
 	<tr id="tr_family_maxmembers">
 	<td><label for="family_maxmembers"><?php esc_html_e( 'Maximum number of family members', 'events-made-easy' ); ?></label></td>
-	<td><input id="family_maxmembers" name="properties[family_maxmembers]" type="number" value="<?php echo intval( $membership['properties']['family_maxmembers'] ); ?>" size="4">
+	<td><input id="family_maxmembers" name="properties[family_maxmembers]" type="number" value="<?php echo $membership['properties']['family_maxmembers']; ?>" size="4">
 		<br><p class='eme_smaller'><?php esc_html_e( 'The maximum number of family members allowed to sign up.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
@@ -3637,8 +3653,7 @@ function eme_member_recalculate_status( $member_id = 0 ) {
 	$rows = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $rows as $item ) {
 		$properties        = eme_init_membership_props( eme_unserialize( $item['properties'] ) );
-		$grace_period      = intval( $properties['grace_period'] );
-		$status_calculated = eme_member_calc_status( $item['start_date'], $item['end_date'], $item['duration_period'], $grace_period );
+		$status_calculated = eme_member_calc_status( $item['start_date'], $item['end_date'], $item['duration_period'], $properties['grace_period'] );
 		if ($properties['max_usage_count'] > 0 ) {
 			$memberprops = eme_unserialize( $item['memberprops'] );
 			if ($memberprops['usage_count'] >= $properties['max_usage_count'] ) {
@@ -6127,7 +6142,7 @@ function eme_ajax_members_list( ) {
 		}
 		$record['start_date']      = eme_localized_date( $item['start_date'], EME_TIMEZONE, 1 );
 		$record['end_date']        = eme_localized_date( $item['end_date'], EME_TIMEZONE, 1 );
-		$record['usage_count']     = intval( $item['properties']['usage_count'] ) .' ('. __( 'Max: ', 'events-made-easy' ) .$membership['properties']['max_usage_count']. ')';
+		$record['usage_count']     = $item['properties']['usage_count'] .' ('. __( 'Max: ', 'events-made-easy' ) .$membership['properties']['max_usage_count']. ')';
 		$record['creation_date']   = eme_localized_datetime( $item['creation_date'], EME_TIMEZONE, 1 );
 		$record['last_seen']       = eme_localized_datetime( $item['last_seen'], EME_TIMEZONE, 1 );
 		$record['payment_date']    = eme_localized_datetime( $item['payment_date'], EME_TIMEZONE, 1 );

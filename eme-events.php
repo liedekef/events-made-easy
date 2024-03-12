@@ -143,6 +143,8 @@ function eme_init_event_props( $props = [] ) {
 		// the properties for payment gateways alsways have "use_" in front of them, so add it
 		if ( ! isset( $props[ 'use_' . $pg ] ) ) {
 				$props[ 'use_' . $pg ] = 0;
+		} else {
+			$props[ 'use_' . $pg ] = intval( 'use_' . $pg );
 		}
 	}
 
@@ -232,12 +234,12 @@ function eme_init_event_props( $props = [] ) {
 	}
 
 	// for sure integers
-	$numbers = [ 'create_wp_user', 'auto_approve', 'ignore_pending', 'email_only_once', 'person_only_once', 'invite_only', 'all_day', 'take_attendance', 'require_user_confirmation', 'captcha_only_logged_out', 'dyndata_all_fields', 'task_registered_users_only', 'task_requires_approval', 'task_allow_overlap', 'attendancerecord' ];
+	$numbers = [ 'create_wp_user', 'auto_approve', 'ignore_pending', 'email_only_once', 'person_only_once', 'invite_only', 'all_day', 'take_attendance', 'require_user_confirmation', 'captcha_only_logged_out', 'dyndata_all_fields', 'task_registered_users_only', 'task_requires_approval', 'task_allow_overlap', 'attendancerecord', 'waitinglist_seats' ];
 	foreach ( $numbers as $opt ) {
 		$props[$opt]=intval($props[$opt]);
 	}
 	// for integers or floats
-	$numbers = [ 'rsvp_end_number_days', 'rsvp_end_number_hours', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'waitinglist_seats', 'check_free_waiting', 'cancel_rsvp_days', 'cancel_rsvp_age', 'attendance_begin', 'attendance_end', 'ticket_template_id', 'skippaymentoptions', 'task_reminder_days', 'rsvp_pending_reminder_days', 'rsvp_approved_reminder_days' ];
+	$numbers = [ 'rsvp_end_number_days', 'rsvp_end_number_hours', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'check_free_waiting', 'cancel_rsvp_days', 'cancel_rsvp_age', 'attendance_begin', 'attendance_end', 'ticket_template_id', 'skippaymentoptions', 'task_reminder_days', 'rsvp_pending_reminder_days', 'rsvp_approved_reminder_days' ];
 	foreach ( $numbers as $opt ) {
 		if (eme_isFloat($props[$opt])) {
 			$props[$opt]=floatval($props[$opt]);
@@ -2626,7 +2628,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					}
 				}
 			} elseif ( preg_match( '/#_WAITING_LIST_ACTIVATED$/', $result ) ) {
-				$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
+				$waitinglist_seats = $event['event_properties']['waitinglist_seats'];
 				// check for avail seats excluding waiting list
 				$avail_seats = eme_get_available_seats( $event['event_id'], 1 );
 				if ( $waitinglist_seats > 0 && $avail_seats <= 0 && ! eme_is_multi( $event['event_seats'] ) ) {
@@ -2635,7 +2637,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$replacement = 0;
 				}
 			} elseif ( preg_match( '/#_WAITING_LIST_CLOSED$/', $result ) ) {
-				$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
+				$waitinglist_seats = $event['event_properties']['waitinglist_seats'];
 				$avail_seats       = eme_get_available_seats( $event['event_id'] );
 				if ( $waitinglist_seats > 0 && $avail_seats <= 0 && ! eme_is_multi( $event['event_seats'] ) ) {
 					$replacement = 1;
@@ -2643,13 +2645,13 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$replacement = 0;
 				}
 			} elseif ( preg_match( '/#_WAITINGLISTSEATS$/', $result ) ) {
-				$replacement = intval( $event['event_properties']['waitinglist_seats'] );
+				$replacement = $event['event_properties']['waitinglist_seats'];
 
 			} elseif ( preg_match( '/#_AVAILABLEWAITINGLISTSEATS$/', $result ) ) {
 				if ( $total_seats == 0 || eme_is_multi( $event['event_seats'] ) ) {
 					$replacement = 0;
 				} else {
-					$waitinglist_seats   = intval( $event['event_properties']['waitinglist_seats'] );
+					$waitinglist_seats   = $event['event_properties']['waitinglist_seats'];
 					$booked_seats        = eme_get_booked_waitinglistseats( $event['event_id'] );
 					$avail_seats_waiting = $waitinglist_seats - $booked_seats;
 					if ( $avail_seats_waiting < 0 ) {
@@ -2665,7 +2667,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				if ( $total_seats == 0 || eme_is_multi( $event['event_seats'] ) ) {
 					$replacement = 0;
 				} else {
-					$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
+					$waitinglist_seats = $event['event_properties']['waitinglist_seats'];
 					$booked_seats      = eme_get_booked_waitinglistseats( $event['event_id'] );
 					if ( $waitinglist_seats > 0 ) {
 						$replacement = $booked_seats;
@@ -2704,7 +2706,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 						$replacement = __( 'No limit', 'events-made-easy' );
 					}
 				} else {
-					$waitinglist_seats = intval( $event['event_properties']['waitinglist_seats'] );
+					$waitinglist_seats = $event['event_properties']['waitinglist_seats'];
 					$replacement       = $total_seats - $waitinglist_seats;
 				}
 			} elseif ( preg_match( '/#_(TOTALSPACES|TOTALSEATS)\{(\d+)\}$/', $result, $matches ) ) {
@@ -10189,7 +10191,7 @@ function eme_ajax_events_list() {
 				}
 			}
 			$record['event_name'] .= ', ' . __( 'Max: ', 'events-made-easy' ) . $total_seats_string;
-			$waitinglist_seats     = intval( $event['event_properties']['waitinglist_seats'] );
+			$waitinglist_seats     = $event['event_properties']['waitinglist_seats'];
 			if ( $waitinglist_seats > 0 ) {
 				$record['event_name'] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
 			}

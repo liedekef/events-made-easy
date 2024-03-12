@@ -44,6 +44,11 @@ function eme_init_location_props( $props = [] ) {
 	if ( ! isset( $props['override_loc'] ) ) {
 		$props['override_loc'] = 0;
 	}
+	// for sure integers
+        $numbers = [ 'online_only', 'max_capacity', 'override_loc' ];
+        foreach ( $numbers as $opt ) {
+                $props[$opt]=intval($props[$opt]);
+        }
 	return $props;
 }
 
@@ -644,7 +649,7 @@ function eme_meta_box_div_location_details( $location ) {
 			<div class="inside">
 			<table><tr>
 			<td><label for="eme_loc_prop_max_capacity"><?php esc_html_e( 'Max capacity', 'events-made-easy' ); ?></label></td>
-		<td><input id="eme_loc_prop_max_capacity" name="eme_loc_prop_max_capacity" type="text" value="<?php echo intval( $location['location_properties']['max_capacity'] ); ?>" size="40">
+		<td><input id="eme_loc_prop_max_capacity" name="eme_loc_prop_max_capacity" type="text" value="<?php echo $location['location_properties']['max_capacity']; ?>" size="40">
 		<br><?php esc_html_e( "If setting the max capacity to something else than 0, then - for all events that are happening at the same time at this location - a check will be done to see if the location still allows extra people inside.", 'events-made-easy' ); ?>
 			</td>
 			</tr></table>

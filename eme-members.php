@@ -549,7 +549,10 @@ function eme_get_active_member_by_personid_membershipid( $person_id, $membership
 function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = '' ) {
 	global $wpdb;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-	$persons_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	if (empty($wp_id)) {
+		return '';
+	}
 	if ( $status == 'all' ) {
 		$cond_status = '';
 	} elseif ( ! empty( $status ) ) {
@@ -561,7 +564,7 @@ function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = 
 	} else {
 		$cond_status = "AND members.status IN (". EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE .")";
 	}
-	$sql    = $wpdb->prepare( "SELECT members.* FROM $members_table AS members, $persons_table AS persons WHERE members.membership_id=%d $cond_status AND members.person_id=persons.person_id AND persons.wp_id=%d LIMIT 1", $membership_id, $wp_id );
+	$sql    = $wpdb->prepare( "SELECT members.* FROM $members_table AS members, $people_table AS people WHERE members.membership_id=%d $cond_status AND members.person_id=people.person_id AND people.wp_id=%d LIMIT 1", $membership_id, $wp_id );
 	$member = $wpdb->get_row( $sql, ARRAY_A );
 	$member = eme_get_extra_member_data( $member );
 
@@ -591,15 +594,15 @@ function eme_get_active_membershipids_by_wpid( $wp_id ) {
 	$status_grace  = EME_MEMBER_STATUS_GRACE;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$sql           = $wpdb->prepare( "SELECT DISTINCT members.membership_id FROM $members_table AS members, $people_table AS persons WHERE members.status IN ($status_active,$status_grace) AND members.person_id=persons.person_id AND persons.wp_id=%d", $wp_id );
+	$sql           = $wpdb->prepare( "SELECT DISTINCT members.membership_id FROM $members_table AS members, $people_table AS people WHERE members.status IN ($status_active,$status_grace) AND members.person_id=people.person_id AND people.wp_id=%d", $wp_id );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_memberids_by_wpid( $wp_id ) {
 	global $wpdb;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-	$persons_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$sql           = $wpdb->prepare( "SELECT DISTINCT members.member_id FROM $members_table AS members, $persons_table AS persons WHERE members.person_id=persons.person_id AND persons.wp_id=%d", $wp_id );
+	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$sql           = $wpdb->prepare( "SELECT DISTINCT members.member_id FROM $members_table AS members, $people_table AS people WHERE members.person_id=people.person_id AND people.wp_id=%d", $wp_id );
 	return $wpdb->get_col( $sql );
 }
 

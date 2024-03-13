@@ -1731,7 +1731,7 @@ function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_stat
 	global $wpdb;
 	$events_table    = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$bookings_table  = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$persons_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$extra_condition = '';
 	if ( $rsvp_status ) {
 		$extra_condition .= " bookings.status=".intval($rsvp_status);
@@ -1751,13 +1751,13 @@ function eme_get_bookings_by_wp_id( $wp_id, $scope, $rsvp_status = 0, $paid_stat
 	if ( $scope == 1 || $scope == 'future' ) {
 		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$now          = $eme_date_obj->getDateTime();
-		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$persons_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start>%s ORDER BY events.event_start ASC", $wp_id, $now );
+		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$people_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start>%s ORDER BY events.event_start ASC", $wp_id, $now );
 	} elseif ( $scope == 'past' ) {
 		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 		$now          = $eme_date_obj->getDateTime();
-		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$persons_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start<=%s ORDER BY events.event_start ASC", $wp_id, $now );
+		$sql          = $wpdb->prepare( "SELECT bookings.* FROM $bookings_table AS bookings,$events_table AS events,$people_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id AND events.event_start<=%s ORDER BY events.event_start ASC", $wp_id, $now );
 	} elseif ( $scope == 0 || $scope == 'all' ) {
-		$sql = $wpdb->prepare( "SELECT * FROM $bookings_table AS bookings,$events_table AS events,$persons_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id ORDER BY events.event_start ASC", $wp_id );
+		$sql = $wpdb->prepare( "SELECT * FROM $bookings_table AS bookings,$events_table AS events,$people_table AS people WHERE $extra_condition bookings.person_id=people.person_id AND people.wp_id = %d AND bookings.event_id=events.event_id ORDER BY events.event_start ASC", $wp_id );
 	}
 	$bookings = $wpdb->get_results( $sql, ARRAY_A );
 	if ( ! empty( $bookings ) ) {
@@ -1841,16 +1841,16 @@ function eme_get_booking_ids_by_person_event_id( $person_id, $event_id ) {
 function eme_get_booking_ids_by_email_event_id( $email, $event_id ) {
 	global $wpdb;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$persons_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$sql            = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.email = %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id, $email );
+	$people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$sql            = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.email = %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id, $email );
 	return $wpdb->get_col( $sql );
 }
 
 function eme_get_booking_ids_by_wp_event_id( $wp_id, $event_id ) {
 	global $wpdb;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$persons_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$sql            = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.wp_id=%d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id, $wp_id );
+	$people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$sql            = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND bookings.event_id = %d AND people.wp_id=%d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $event_id, $wp_id );
 	return $wpdb->get_col( $sql );
 }
 
@@ -1877,8 +1877,8 @@ function eme_get_unpaid_booking_ids_by_bookingids( $booking_ids ) {
 function eme_get_booking_ids_by_email( $email ) {
 	global $wpdb;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$persons_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$sql            = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.email = %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $email );
+	$people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$sql            = $wpdb->prepare( "SELECT bookings.booking_id FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.email = %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $email );
 	return $wpdb->get_col( $sql );
 }
 
@@ -1888,16 +1888,16 @@ function eme_get_booked_seats_by_wp_event_id( $wp_id, $event_id ) {
 		return array_sum( eme_get_booked_multiseats_by_wp_event_id( $wp_id, $event_id ) );
 	}
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$persons_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$sql            = $wpdb->prepare( "SELECT COALESCE(SUM(booking_seats),0) AS booked_seats FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.wp_id = %d AND bookings.event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $wp_id, $event_id );
+	$people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$sql            = $wpdb->prepare( "SELECT COALESCE(SUM(booking_seats),0) AS booked_seats FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.wp_id = %d AND bookings.event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $wp_id, $event_id );
 	return $wpdb->get_var( $sql );
 }
 
 function eme_get_booked_multiseats_by_wp_event_id( $wp_id, $event_id ) {
 	global $wpdb;
 	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-	$persons_table    = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table AS bookings LEFT JOIN $persons_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.wp_id = %d AND bookings.event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $wp_id, $event_id );
+	$people_table    = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+	$sql              = $wpdb->prepare( "SELECT booking_seats_mp FROM $bookings_table AS bookings LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id WHERE bookings.status IN (%d,%d,%d) AND people.wp_id = %d AND bookings.event_id = %d", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, EME_RSVP_STATUS_APPROVED, $wp_id, $event_id );
 	$booking_seats_mp = $wpdb->get_col( $sql );
 	$result           = [];
 	foreach ( $booking_seats_mp as $booked_seats ) {

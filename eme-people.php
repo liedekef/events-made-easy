@@ -475,7 +475,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 				foreach ( $memberships_arr as $membership_t ) {
 					$membership = eme_get_membership( $membership_t );
 					if ($membership) {
-						$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'] );
+						$member = eme_get_member_by_wpid_membershipid( $person['wp_id'], $membership['membership_id'] );
 					}
 					if ( ! empty( $member ) ) {
 						$replacement = 1;

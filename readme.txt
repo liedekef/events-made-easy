@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.34 (2024/03/10) =
 * Fix a newly introduced bug if rsvp cutoff times were floating point numbers
+* Added #_IS_PERSON_MEMBER_OF{xx} so you can check if a person is a member of certain memberships
 
 = 2.4.33 (2024/03/08) =
 * Remove abandonned 2Checkout payment gateway

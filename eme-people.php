@@ -464,6 +464,25 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
+		} elseif ( preg_match( '/^#_IS_PERSON_MEMBER_OF\{(.+?)\}$/', $result, $matches ) ) {
+			$memberships = $matches[1];
+			if ( preg_match( '/#_/', $memberships ) ) {
+				// if it contains another placeholder as value, don't do anything here
+				$found = 0;
+			} else {
+				$replacement = 0;
+				$memberships_arr = explode( ',', $memberships );
+				foreach ( $memberships_arr as $membership_t ) {
+					$membership = eme_get_membership( $membership_t );
+					if ($membership) {
+						$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'] );
+					}
+					if ( ! empty( $member ) ) {
+						$replacement = 1;
+						break;
+					}
+				}
+			}
 		} elseif ( preg_match( '/#_BIRTHDAY_EMAIL/', $result ) ) {
 			$replacement = $person['bd_email'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 			if ( $target == 'html' ) {

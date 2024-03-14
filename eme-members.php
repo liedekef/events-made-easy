@@ -633,6 +633,16 @@ function eme_get_member_by_paymentid( $id ) {
 	return $member;
 }
 
+function eme_get_member_by_personid_membershipid( $person_id, $membership_id ) {
+	global $wpdb;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE person_id=%d AND membership_id=%d", $person_id, $membership_id );
+	$member = $wpdb->get_row( $sql, ARRAY_A );
+	$member = eme_get_extra_member_data( $member );
+
+	return $member;
+}
+
 function eme_get_extra_member_data( $member ) {
 	if (!empty($member)) {
 		if ( eme_is_serialized( $member['dcodes_used'] ) ) {
@@ -4394,6 +4404,33 @@ function eme_members_shortcode( $atts ) {
 	return $output;
 }
 
+function eme_person_memberinfo_shortcode( $atts ) {
+	eme_enqueue_frontend();
+	extract(
+		shortcode_atts(
+			[
+				'person_id'          => 0,
+				'membership_id'      => 0,
+				'template_id'        => 0,
+			],
+			$atts
+		)
+	);
+
+	if ( empty( $membership_id ) || empty( $template_id ) || empty( $person_id ) ) {
+		return '';
+	}
+
+	$member = eme_get_member_by_personid_membershipid( $person_id, $membership_id );
+	if ( ! empty( $member ) ) {
+		$format     = eme_get_template_format( $template_id );
+		$membership = eme_get_membership( $membership_id );
+		$output     = eme_replace_member_placeholders( $format, $membership, $member );
+	} 
+
+	return $output;
+}
+
 function eme_mymemberinfo_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	extract(
@@ -4414,7 +4451,7 @@ function eme_mymemberinfo_shortcode( $atts ) {
 	if ( $wp_id ) {
 		$member = eme_get_member_by_wpid_membershipid( $wp_id, intval($membership_id) );
 		if ( ! empty( $member ) ) {
-			$format = eme_get_template_format( $template_id );
+			$format     = eme_get_template_format( $template_id );
 			$membership = eme_get_membership( $membership_id );
 			$lang       = eme_detect_lang();
 			$output     = eme_replace_member_placeholders( $format, $membership, $member, 'html', $lang );

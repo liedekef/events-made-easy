@@ -102,6 +102,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Fix a newly introduced bug if rsvp cutoff times were floating point numbers
 * Added #_IS_PERSON_MEMBER_OF{xx} so you can check if a person is an active member of certain memberships
 * Added #_IS_PERSON_IN_GROUP{xx} so you can check if a person is a member of certain groups
+* Added shortcode eme_person_memberinfo, that works like eme_mymemberinfo but on the EME person being treated (like during mail)
+  Takes 3 required arguments: person_id, template_id and membership_id. person_id can be #_PERSONID if used inside another shortcode (that then first replaces #_PERSONID with the required value and then the shortcode is interpreted)
 
 = 2.4.33 (2024/03/08) =
 * Remove abandonned 2Checkout payment gateway

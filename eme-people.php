@@ -485,6 +485,20 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 					break;
 				}
 			}
+		} elseif ( preg_match( '/^#_IS_PERSON_IN_GROUP\{(.+?)\}$/', $result, $matches ) ) {
+			$groups = $matches[1];
+			$replacement = 0;
+			$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+			$groupids_arr = explode( ',', $groups );
+			$person_groupids = eme_get_persongroup_ids( $person['person_id'] );
+			if ( ! empty($person_groupids ) ) {
+				$res_intersect = array_intersect( $person_groupids, $groupids_arr );
+			} else {
+				$res_intersect = 0;
+			}
+			if ( !empty( $res_intersect ) ) {
+				$replacement = 1;
+			}
 		} elseif ( preg_match( '/#_BIRTHDAY_EMAIL/', $result ) ) {
 			$replacement = $person['bd_email'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 			if ( $target == 'html' ) {

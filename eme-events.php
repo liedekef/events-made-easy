@@ -2040,14 +2040,9 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				if ( $wp_id ) {
 					$groups_arr = explode( ',', $groups );
 					foreach ( $groups_arr as $group ) {
-						if ( $wp_id ) {
-							$groups_arr = explode( ',', $groups );
-							foreach ( $groups_arr as $group ) {
-								if ( ! empty( eme_get_groups_person_ids( $group, "$people_table.wp_id = $wp_id" ) ) ) {
-									$replacement = 1;
-									break;
-								}
-							}
+						if ( ! empty( eme_get_groups_person_ids( $group, "$people_table.wp_id = $wp_id" ) ) ) {
+							$replacement = 1;
+							break;
 						}
 					}
 				}
@@ -3682,15 +3677,13 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				if ( eme_is_event_rsvp( $event ) ) {
 					$rsvp_start_number_days  = $event['event_properties']['rsvp_start_number_days'];
 					$rsvp_start_number_hours = $event['event_properties']['rsvp_start_number_hours'];
-					if ( $rsvp_start_number_days || $rsvp_start_number_hours ) {
-						if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
-							$rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
-						} else {
-							$rsvp_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-						}
-						$rsvp_date_obj->minusDays( $rsvp_start_number_days )->minusHours( $rsvp_start_number_hours );
-						$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE, $date_format );
+					if ( $event['event_properties']['rsvp_start_target'] == 'end' ) {
+						$rsvp_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
+					} else {
+						$rsvp_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 					}
+					$rsvp_date_obj->minusDays( $rsvp_start_number_days )->minusHours( $rsvp_start_number_hours );
+					$replacement = eme_localized_datetime( $rsvp_date_obj->getDateTime(), EME_TIMEZONE, $date_format );
 				}
 			} elseif ( preg_match( '/#_RSVPEND(\{.+?\})?$/', $result, $matches ) ) {
 				if ( isset( $matches[1] ) ) {

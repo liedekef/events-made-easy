@@ -3996,4 +3996,8 @@ function eme_mkdir_with_index( $targetPath ) {
 	return $mkdir_res;
 }
 
+function eme_isFloat($amount ): bool {
+	return is_float( $amount ) && intval( $amount ) != $amount;
+}
+
 ?>

@@ -466,21 +466,23 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 			}
 		} elseif ( preg_match( '/^#_IS_PERSON_MEMBER_OF\{(.+?)\}$/', $result, $matches ) ) {
 			$memberships = $matches[1];
-			if ( preg_match( '/#_/', $memberships ) ) {
-				// if it contains another placeholder as value, don't do anything here
-				$found = 0;
-			} else {
-				$replacement = 0;
-				$memberships_arr = explode( ',', $memberships );
-				foreach ( $memberships_arr as $membership_t ) {
+			$replacement = 0;
+			$active_membershipids = eme_get_active_membershipids_by_personid( $person['person_id'] );
+			$memberships_arr = explode( ',', $memberships );
+			foreach ( $memberships_arr as $membership_t ) {
+				if (!is_numeric($membership_t)) {
 					$membership = eme_get_membership( $membership_t );
 					if ($membership) {
-						$member = eme_get_member_by_wpid_membershipid( $person['wp_id'], $membership['membership_id'] );
+						$membership_id = $membership['membership_id'];
+					} else {
+						$membership_id = 0;
 					}
-					if ( ! empty( $member ) ) {
-						$replacement = 1;
-						break;
-					}
+				} else {
+					$membership_id = $membership_t;
+				}
+				if ( !empty($membership_id) && in_array($membership_id, $active_membershipids) ) {
+					$replacement = 1;
+					break;
 				}
 			}
 		} elseif ( preg_match( '/#_BIRTHDAY_EMAIL/', $result ) ) {

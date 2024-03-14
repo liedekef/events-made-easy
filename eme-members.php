@@ -598,6 +598,16 @@ function eme_get_active_membershipids_by_wpid( $wp_id ) {
 	return $wpdb->get_col( $sql );
 }
 
+function eme_get_active_membershipids_by_personid( $person_id ) {
+	global $wpdb;
+	$status_active     = EME_MEMBER_STATUS_ACTIVE;
+	$status_grace      = EME_MEMBER_STATUS_GRACE;
+	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
+	$sql               = $wpdb->prepare( "SELECT DISTINCT memberships.membership_id FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN ($status_active,$status_grace)", $person_id );
+	return $wpdb->get_col( $sql );
+}
+
 function eme_get_memberids_by_wpid( $wp_id ) {
 	global $wpdb;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;

@@ -4455,10 +4455,11 @@ function eme_mymemberinfo_shortcode( $atts ) {
 			$membership = eme_get_membership( $membership_id );
 			$lang       = eme_detect_lang();
 			$output     = eme_replace_member_placeholders( $format, $membership, $member, 'html', $lang );
+			return $output;
 		} 
 	}
 
-	return $output;
+	return '';
 }
 
 function eme_members_frontend_csv_report( $group_id, $membership_id, $template_id, $template_id_header ) {

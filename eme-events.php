@@ -8885,40 +8885,40 @@ function eme_rss() {
 		$main_title = eme_sanitize_request( get_option( 'eme_rss_main_title' ) );
 	}
 
-		header( 'Content-type: text/xml' );
-		echo "<?xml version='1.0'?>\n";
+	header( 'Content-type: text/xml' );
+	echo "<?xml version='1.0'?>\n";
 
-	?>
+?>
 <rss version="2.0">
 <channel>
 <title>
-	<?php
-		echo eme_rss_cdata( $main_title );
-	?>
-		</title>
+<?php
+	echo eme_rss_cdata( $main_title );
+?>
+</title>
 <link>
-	<?php
-		$events_page_link = eme_get_events_page();
-		echo eme_rss_cdata( $events_page_link );
-	?>
-		</link>
+<?php
+	$events_page_link = eme_get_events_page();
+	echo eme_rss_cdata( $events_page_link );
+?>
+</link>
 <description>
-	<?php
-		echo eme_rss_cdata( eme_sanitize_request( get_option( 'eme_rss_main_description' ) ) );
-	?>
-		</description>
+<?php
+	echo eme_rss_cdata( eme_sanitize_request( get_option( 'eme_rss_main_description' ) ) );
+?>
+</description>
 <docs>
 http://blogs.law.harvard.edu/tech/rss
 </docs>
 <generator>
 Weblog Editor 2.0
 </generator>
-	<?php
-		$title_format       = get_option( 'eme_rss_title_format' );
-		$description_format = get_option( 'eme_rss_description_format' );
-		$events             = eme_get_events( $limit, $scope, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing );
+<?php
+	$title_format       = get_option( 'eme_rss_title_format' );
+	$description_format = get_option( 'eme_rss_description_format' );
+	$events             = eme_get_events( $limit, $scope, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing );
 
-		# some RSS readers don't like it when an empty feed without items is returned, so we add a dummy item then
+	# some RSS readers don't like it when an empty feed without items is returned, so we add a dummy item then
 	if ( empty( $events ) ) {
 		echo "<item>\n";
 		echo "<title></title>\n";
@@ -8962,10 +8962,10 @@ Weblog Editor 2.0
 			echo "</item>\n";
 		}
 	}
-	?>
+?>
 </channel>
 </rss>
-	<?php
+<?php
 }
 
 function eme_general_head() {

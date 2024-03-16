@@ -928,12 +928,12 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 		$ignore_massmail_setting = 0;
 	}
 
-	$attachment_ids = '';
+	$attachment_ids      = '';
+	$person_ids          = [];
+	$member_ids          = [];
+	$cond_person_ids_arr = [];
+	$cond_member_ids_arr = [];
 	if ( $conditions['action'] == 'genericmail' ) {
-		$person_ids          = [];
-		$member_ids          = [];
-		$cond_person_ids_arr = [];
-		$cond_member_ids_arr = [];
 		if ( isset( $conditions['eme_generic_attach_ids'] ) ) {
 			$attachment_ids = $conditions['eme_generic_attach_ids'];
 		}
@@ -1013,7 +1013,6 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 			}
 		}
 	} elseif ( $conditions['action'] == 'eventmail' ) {
-		$cond_member_ids_arr = [];
 		if ( ! isset( $conditions['rsvp_status'] ) ) {
 			$conditions['rsvp_status'] = 0;
 		}
@@ -1078,8 +1077,6 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 					}
 				}
 			} elseif ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'people_and_groups' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
-				$person_ids = [];
-				$member_ids = [];
 				if ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
 					// although we check later on the massmail preference per person too, we optimize the sql load a bit
 					if ( $ignore_massmail_setting ) {
@@ -1900,15 +1897,23 @@ function eme_emails_page() {
 	} else {
 		$data_forced_tab = '';
 	}
-	$exclude_registered_checked = '';
-	$only_unpaid_checked = '';
-	$send_to_all_people_checked = '';
-	$ignore_massmail_setting    = '';
-	$event_mail_subject         = '';
-	$event_mail_message         = '';
-	$eme_mail_type              = '';
-	$generic_mail_subject       = '';
-	$generic_mail_message       = '';
+	$exclude_registered_checked     = '';
+	$only_unpaid_checked            = '';
+	$eme_mail_type                  = '';
+	$send_to_all_people_checked     = '';
+	$event_mail_subject             = '';
+	$event_mail_message             = '';
+	$event_mail_attachment_ids      = '';
+	$event_mail_attach_url_string   = '';
+	$generic_mail_subject           = '';
+	$generic_mail_message           = '';
+	$generic_mail_attachment_ids    = '';
+	$generic_mail_attach_url_string = '';
+	$generic_mail_ignore_massmail_setting = '';
+	$event_mail_ignore_massmail_setting   = '';
+	#$ignore_massmail_setting        = '';
+	#$attachment_ids    = '';
+	#$attach_url_string = '';
 
 	$generic_mail_from_email = get_option( 'eme_mail_sender_address' );
 	$generic_mail_from_name  = get_option( 'eme_mail_sender_name' );
@@ -1935,8 +1940,6 @@ function eme_emails_page() {
 			eme_delete_mailing( $mailing_id );
 		}
 	}
-	$attachment_ids    = '';
-	$attach_url_string = '';
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'reuse_mail' && isset( $_GET['id'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		$id   = intval( $_GET['id'] );
@@ -1965,15 +1968,16 @@ function eme_emails_page() {
 			// reuse the attachments too
 			if ( ! empty( $mail['attachments'] ) ) {
 				$attachment_ids_arr = eme_unserialize( $mail['attachments'] );
+				if ( ! empty( $attachment_ids_arr ) ) {
+					$generic_mail_attachment_ids = join( ',', $attachment_ids_arr );
+				}
+				// now also build the attach_url_string variable
 				foreach ( $attachment_ids_arr as $attachment_id ) {
 					$attach_link = eme_get_attachment_link( $attachment_id );
 					if ( ! empty( $attach_link ) ) {
-						$attach_url_string .= $attach_link;
-						$attach_url_string .= '<br \>';
+						$generic_mail_attach_url_string .= $attach_link;
+						$generic_mail_attach_url_string .= '<br \>';
 					}
-				}
-				if ( ! empty( $attachment_ids_arr ) ) {
-					$attachment_ids = join( ',', $attachment_ids_arr );
 				}
 			}
 			$data_forced_tab = 'data-showtab=1';
@@ -1994,10 +1998,10 @@ function eme_emails_page() {
 		$mailing = eme_get_mailing( $id );
 		if ( $mailing ) {
 			$conditions = eme_unserialize( $mailing['conditions'] );
-			if ( ! empty( $conditions['ignore_massmail_setting'] ) ) {
-				$ignore_massmail_setting = "checked='checked'";
-			}
 			if ( $conditions['action'] == 'genericmail' ) {
+				if ( ! empty( $conditions['ignore_massmail_setting'] ) ) {
+					$generic_mail_ignore_massmail_setting = "checked='checked'";
+				}
 				$generic_mail_subject    = $mailing['subject'];
 				$generic_mail_message    = $mailing['body'];
 				$generic_mail_from_name  = $mailing['fromname'];
@@ -2032,17 +2036,21 @@ function eme_emails_page() {
 				}
 				// reuse the attachments too
 				if ( ! empty( $conditions['eme_generic_attach_ids'] ) ) {
-					$attachment_ids     = $conditions['eme_generic_attach_ids'];
-					$attachment_ids_arr = explode( ',', $attachment_ids );
+					$generic_mail_attachment_ids     = $conditions['eme_generic_attach_ids'];
+					// now also build the attach_url_string variable
+					$attachment_ids_arr = explode( ',', $generic_mail_attachment_ids );
 					foreach ( $attachment_ids_arr as $attachment_id ) {
 						$attach_link = eme_get_attachment_link( $attachment_id );
 						if ( ! empty( $attach_link ) ) {
-							$attach_url_string .= $attach_link;
-							$attach_url_string .= '<br \>';
+							$generic_mail_attach_url_string .= $attach_link;
+							$generic_mail_attach_url_string .= '<br \>';
 						}
 					}
 				}
 			} elseif ( $conditions['action'] == 'eventmail' ) {
+				if ( ! empty( $conditions['ignore_massmail_setting'] ) ) {
+					$event_mail_ignore_massmail_setting = "checked='checked'";
+				}
 				$event_mail_subject = $mailing['subject'];
 				$event_mail_message = $mailing['body'];
 				if ( ! empty( $conditions['eme_mail_type'] ) ) {
@@ -2087,13 +2095,14 @@ function eme_emails_page() {
 				}
 				// reuse the attachments too
 				if ( ! empty( $conditions['eme_eventmail_attach_ids'] ) ) {
-					$attachment_ids     = $conditions['eme_eventmail_attach_ids'];
-					$attachment_ids_arr = explode( ',', $attachment_ids );
+					$event_mail_attachment_ids     = $conditions['eme_eventmail_attach_ids'];
+					// now also build the attach_url_string variable
+					$attachment_ids_arr = explode( ',', $event_mail_attachment_ids );
 					foreach ( $attachment_ids_arr as $attachment_id ) {
 						$attach_link = eme_get_attachment_link( $attachment_id );
 						if ( ! empty( $attach_link ) ) {
-							$attach_url_string .= $attach_link;
-							$attach_url_string .= '<br \>';
+							$event_mail_attach_url_string .= $attach_link;
+							$event_mail_attach_url_string .= '<br \>';
 						}
 					}
 				}
@@ -2306,8 +2315,8 @@ function eme_emails_page() {
 		<div id='div_event_mailing_attach'>
 		<p>
 		<b><?php esc_html_e( 'Optionally add attachments to your mailing', 'events-made-easy' ); ?></b><br>
-		<span id="eventmail_attach_links"><?php echo $attach_url_string; ?></span>
-		<input type="hidden" name="eme_eventmail_attach_ids" id="eme_eventmail_attach_ids" value="<?php echo $attachment_ids; ?>">
+		<span id="eventmail_attach_links"><?php echo $event_mail_attach_url_string; ?></span>
+		<input type="hidden" name="eme_eventmail_attach_ids" id="eme_eventmail_attach_ids" value="<?php echo $event_mail_attachment_ids; ?>">
 		<input type="button" name="eventmail_attach_button" id="eventmail_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
 		<input type="button" name="eventmail_remove_attach_button" id="eventmail_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
 		</p>
@@ -2332,7 +2341,7 @@ function eme_emails_page() {
 		<div id='div_event_ignore_massmail_setting'>
 		<p>
 		<b><label for='eventmail_ignore_massmail_setting'><?php esc_html_e( 'Ignore massmail setting:', 'events-made-easy' ); ?></label></b>
-				<input id="eventmail_ignore_massmail_setting" name='eventmail_ignore_massmail_setting' value='1' type='checkbox' <?php echo $ignore_massmail_setting; ?>><br>
+				<input id="eventmail_ignore_massmail_setting" name='eventmail_ignore_massmail_setting' value='1' type='checkbox' <?php echo $event_mail_ignore_massmail_setting; ?>><br>
 				<?php esc_html_e( 'When sending a mail to all EME people or certain groups, it is by default only sent to the people who have indicated they want to receive mass mailings. If you need to send the mail to all the persons regardless their massmail setting, check this option.', 'events-made-easy' ); ?>
 		</p>
 		</div>
@@ -2485,8 +2494,8 @@ function eme_emails_page() {
 		<div id='div_generic_mailing_attach'>
 		<p>
 		<b><?php esc_html_e( 'Optionally add attachments to your mailing', 'events-made-easy' ); ?></b><br>
-			<span id="generic_attach_links"><?php echo $attach_url_string; ?></span>
-			<input type="hidden" name="eme_generic_attach_ids" id="eme_generic_attach_ids" value="<?php echo $attachment_ids; ?>">
+			<span id="generic_attach_links"><?php echo $generic_mail_attach_url_string; ?></span>
+			<input type="hidden" name="eme_generic_attach_ids" id="eme_generic_attach_ids" value="<?php echo $generic_mail_attachment_ids; ?>">
 			<input type="button" name="generic_attach_button" id="generic_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
 			<input type="button" name="generic_remove_attach_button" id="generic_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
 			</p>
@@ -2511,7 +2520,7 @@ function eme_emails_page() {
 		<div id='div_generic_ignore_massmail_setting'>
 		<p>
 		<b><label for='genericmail_ignore_massmail_setting'><?php esc_html_e( 'Ignore massmail setting:', 'events-made-easy' ); ?></label></b>
-				<input id="genericmail_ignore_massmail_setting" name='genericmail_ignore_massmail_setting' value='1' type='checkbox' <?php echo $ignore_massmail_setting; ?>><br>
+				<input id="genericmail_ignore_massmail_setting" name='genericmail_ignore_massmail_setting' value='1' type='checkbox' <?php echo $generic_mail_ignore_massmail_setting; ?>><br>
 				<?php esc_html_e( 'When sending a mail to all EME people or certain groups, it is by default only sent to the people who have indicated they want to receive mass mailings. If you need to send the mail to all the persons regardless their massmail setting, check this option.', 'events-made-easy' ); ?>
 		</p>
 		</div>

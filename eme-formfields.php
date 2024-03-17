@@ -363,8 +363,8 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             <tr id='tr_extra_charge' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='extra_charge'>" . __( 'Extra charge', 'events-made-easy' ) . '</label></th>
 	       <td>' . eme_ui_select_binary( $formfield['extra_charge'], 'extra_charge' ) . '
-                  <br>' . __( 'Use this if the field indicates an extra charge to the total price', 'events-made-easy' ) . '
-                  <br>' . __( 'This is only really useful for multivalue fields (like e.g. dropdown), in which case the field values should indicate the price for that selection (and the price needs to be unique).', 'events-made-easy' ) . '
+                  <br>' . __( 'Use this if the field indicates an extra charge to the total price (can be negative to indicate a discount), in which case you should also set the field value to the charge.', 'events-made-easy' ) . '
+                  <br>' . __( 'For multivalue fields (like e.g. dropdown) the field values should indicate the price for that selection (and the price needs to be unique).', 'events-made-easy' ) . '
                   <br>' . __( "This is ignored for fields with purpose 'Events field', 'Locations field' or 'Memberships field'", 'events-made-easy' ) . "
             </tr>
             <tr id='tr_field_values' class='form-field'>
@@ -394,7 +394,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
 		$layout .= "<td><input name='field_tags' id='field_tags' type='text' value='" . eme_esc_html( $formfield['field_tags'] ) . "' size='40'>";
 	}
 	$layout .= '
-		  <br>' . __( 'This option is only useful for multivalue fields, for other field types this is not really used.', 'events-made-easy' ) . '
+		  <br>' . __( 'This option determines the "visible" value people will see for the field.', 'events-made-easy' ) . '
 		  <br>' . __( 'For multivalue fields, you can here enter the "visible" tag people will see per value (so, if "Field values" contain e.g. "a1||a2||a3", you can use here e.g. "Text a1||Text a2||Text a3").', 'events-made-easy' ) . '
                   <br>' . __( 'If left empty, the field values will be used (so the visible tag equals the value).', 'events-made-easy' ) . "
                </td>

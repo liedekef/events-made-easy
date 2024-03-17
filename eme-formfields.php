@@ -300,7 +300,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
       <table class='form-table'>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_name'>" . __( 'Field name', 'events-made-easy' ) . "</label></th>
-               <td><input name='field_name' id='field_name' type='text' value='" . eme_esc_html( $formfield['field_name'] ) . "' size='40'></td>
+               <td><input name='field_name' id='field_name' type='text' value='" . eme_esc_html( $formfield['field_name'] ) . "' size='40' required='required'></td>
             </tr>
             <tr class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_type'>" . __( 'Field type', 'events-made-easy' ) . '</label></th>

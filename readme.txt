@@ -2,9 +2,9 @@
 Contributors: liedekef
 Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
-Requires at least: 5.4
+Requires at least: 6.0
 Tested up to: 6.5
-Stable tag: 2.4.34
+Stable tag: 2.4.35
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,12 +98,14 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.34 (2024/03/10) =
-* Fix a newly introduced bug if rsvp cutoff times were floating point numbers
+= 2.4.35 (2024/03/17) =
 * Added #_IS_PERSON_MEMBER_OF{xx} so you can check if a person is an active member of certain memberships
 * Added #_IS_PERSON_IN_GROUP{xx} so you can check if a person is a member of certain groups
 * Added shortcode eme_person_memberinfo, that works like eme_mymemberinfo but on the EME person being treated (like during mail)
   Takes 3 required arguments: person_id, template_id and membership_id. person_id can be #_PERSONID if used inside another shortcode (that then first replaces #_PERSONID with the required value and then the shortcode is interpreted)
+
+= 2.4.34 (2024/03/10) =
+* Fix a newly introduced bug if rsvp cutoff times were floating point numbers
 
 = 2.4.33 (2024/03/08) =
 * Remove abandonned 2Checkout payment gateway

@@ -144,7 +144,7 @@ function eme_init_event_props( $props = [] ) {
 		if ( ! isset( $props[ 'use_' . $pg ] ) ) {
 				$props[ 'use_' . $pg ] = 0;
 		} else {
-			$props[ 'use_' . $pg ] = intval( 'use_' . $pg );
+			$props[ 'use_' . $pg ] = intval( $props[ 'use_' . $pg ] );
 		}
 	}
 

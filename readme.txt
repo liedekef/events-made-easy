@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.37 (2024//) =
+* Fix setting the "Allow renewal" property for memberships
+
 = 2.4.36 (2024/03/18) =
 * Fix typo for event payment gateways registration/activation
 

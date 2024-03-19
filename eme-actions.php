@@ -472,6 +472,8 @@ function eme_admin_notices() {
 	<br><br>
 PayPal: <a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurring=0&currency_code=EUR"><img src="https://www.paypal.com/en_US/i/btn/btn_donate_LG.gif" name="submit" alt="PayPal - The safer, easier way to pay online!"></a>
 	<br><br>
+Github: <a href="https://github.com/sponsors/liedekef">Github sponsoring</a>
+	<br><br>
 			<?php
 			echo sprintf( __( '<a href="%s" title="I already donated">I already donated.</a>', 'events-made-easy' ), add_query_arg( [ 'eme_notice_ignore' => 'donate' ], remove_query_arg( 'eme_notice_ignore' ) ) );
 			?>

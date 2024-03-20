@@ -88,20 +88,20 @@ function eme_init_event_props( $props = [] ) {
 	if ( ! isset( $props['max_allowed'] ) ) {
 		$props['max_allowed'] = intval(get_option( 'eme_rsvp_addbooking_max_spaces' ));
 	}
+	if ( ! isset( $props['rsvp_start_number_days'] ) ) {
+		$props['rsvp_start_number_days'] = get_option( 'eme_rsvp_start_number_days' );
+	}
+	if ( ! isset( $props['rsvp_start_number_hours'] ) ) {
+		$props['rsvp_start_number_hours'] = get_option( 'eme_rsvp_start_number_hours' );
+	}
+	if ( ! isset( $props['rsvp_start_target'] ) ) {
+		$props['rsvp_start_target'] = get_option( 'eme_rsvp_start_target' );
+	}
 	if ( ! isset( $props['rsvp_end_number_days'] ) ) {
 		$props['rsvp_end_number_days'] = get_option( 'eme_rsvp_end_number_days' );
 	}
 	if ( ! isset( $props['rsvp_end_number_hours'] ) ) {
 		$props['rsvp_end_number_hours'] = get_option( 'eme_rsvp_end_number_hours' );
-	}
-	if ( ! isset( $props['rsvp_start_number_days'] ) ) {
-		$props['rsvp_start_number_days'] = 0;
-	}
-	if ( ! isset( $props['rsvp_start_number_hours'] ) ) {
-		$props['rsvp_start_number_hours'] = 0;
-	}
-	if ( ! isset( $props['rsvp_start_target'] ) ) {
-		$props['rsvp_start_target'] = '';
 	}
 	if ( ! isset( $props['rsvp_end_target'] ) ) {
 		$props['rsvp_end_target'] = get_option( 'eme_rsvp_end_target' );

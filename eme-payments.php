@@ -3605,19 +3605,30 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 			$mailing_paid     = get_option( 'eme_rsvp_mail_notify_paid' );
 
 			$mail_sent = 0;
-			// we check for available seats, excluding waiting list, and excluding this pending booking
-			// reason: it is very well possible that the booking is pending, being paid for but other bookings already happened and the event is now "full"
-			$seats_available = eme_are_seats_available_for( $booking['event_id'], $booking['booking_seats'], 1, $booking['booking_id'] );
-			if ( $event['event_properties']['auto_approve'] && $booking['status'] == EME_RSVP_STATUS_PENDING && ! $booking['waitinglist'] && $seats_available ) {
-				$res = eme_mark_booking_paid_approved( $booking, $pg, $pg_pid );
-				if ( $res ) {
-					//booking changed, let's get it again
-					$booking = eme_get_booking( $booking_id );
-					// if the option to send a mail after payment is received is active, we don't send a second mail for approval
-					// However: if the price to pay is 0, then no payment mail is sent ... so then we do send the approval mail
-					if ( $mailing_approved && ( ! $mailing_paid || $total_price == 0 ) ) {
-						eme_email_booking_action( $booking, 'approveBooking' );
-						$mail_sent = 1;
+			if ( $event['event_properties']['auto_approve'] && $booking['status'] == EME_RSVP_STATUS_PENDING && ! $booking['waitinglist'] ) {
+				// we check for available seats, excluding waiting list, and excluding this pending booking
+				// reason: it is very well possible that the booking is pending, being paid for but other bookings already happened and the event is now "full"
+				$seats_available = eme_are_seats_available_for( $booking['event_id'], $booking['booking_seats'], 1, $booking['booking_id'] );
+				if ( $seats_available ) {
+					$res = eme_mark_booking_paid_approved( $booking, $pg, $pg_pid );
+					if ( $res ) {
+						//booking changed, let's get it again
+						$booking = eme_get_booking( $booking_id );
+						// if the option to send a mail after payment is received is active, we don't send a second mail for approval
+						// However: if the price to pay is 0, then no payment mail is sent ... so then we do send the approval mail
+						if ( $mailing_approved && ( ! $mailing_paid || $total_price == 0 ) ) {
+							eme_email_booking_action( $booking, 'approveBooking' );
+							$mail_sent = 1;
+						}
+					}
+				} else {
+					// a pending booking got paid via payment gateway and autoapprove is on, but
+					// no more seats available ==> we'll send out a special mail then
+					$res = eme_mark_booking_paid( $booking, $pg, $pg_pid );
+					if ( $res ) {
+						//booking changed, let's get it again
+						$booking = eme_get_booking( $booking_id );
+						eme_email_booking_action( $booking, 'pendingButPaid' );
 					}
 				}
 			} else {

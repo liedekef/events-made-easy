@@ -4268,6 +4268,14 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 			$contact_subject_filter = 'contact_paid_subject';
 			$contact_body_filter    = 'contact_paid_body';
 			break;
+		case 'pendingButPaid':
+			$contact_subject = 'Failed to auto-approve pending paid booking';
+			$contact_body = 'A payment was received via a payment gateway for a pending booking <br>with booking id #_BOOKINGID, but since the event (#_EVENTNAME) is fully booked,<br> the booking did not get automatically approved.<br><br>Yours faithfully,<br>#_CONTACTPERSON';
+			$person_subject_filter  = 'pendingbutpaid_subject';
+			$person_body_filter     = 'pendingbutpaid_body';
+			$contact_subject_filter = 'contact_pendingbutpaid_subject';
+			$contact_body_filter    = 'contact_pendingbutpaid_body';
+			break;
 		case 'ipnReceived':
 			if ( ! empty( $event['event_properties']['contactperson_registration_ipn_email_subject'] ) ) {
 				$contact_subject = $event['event_properties']['contactperson_registration_ipn_email_subject'];

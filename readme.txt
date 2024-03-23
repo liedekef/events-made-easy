@@ -101,6 +101,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.4.37 (2024//) =
 * Fix setting the "Allow renewal" property for memberships
 * Check a borderline case for full events when a pending booking is being paid for
+* Added a mail for the case when a payment arrives for a pending booking for an event with auto-approve active but the
+  event is fully booked so the booking can't get approved automatically
+  The mail can be changed via the mail filter pendingButPaid (see doc on eme_rsvp_email_text_xxx_filter and eme_rsvp_email_html_xxx_filter)
 
 = 2.4.36 (2024/03/18) =
 * Fix typo for event payment gateways registration/activation

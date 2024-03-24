@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.5
-Stable tag: 2.4.36
+Stable tag: 2.4.37
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.37 (2024//) =
+= 2.4.37 (2024/03/24) =
 * Fix setting the "Allow renewal" property for memberships
 * Check a borderline case for full events when a pending booking is being paid for
 * Added a mail for the case when a payment arrives for a pending booking for an event with auto-approve active but the

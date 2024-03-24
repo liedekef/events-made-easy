@@ -1009,6 +1009,15 @@ function eme_options_postsave_actions() {
 			update_option( 'eme_event_list_number_items', 10 );
 		}
 	}
+	if ( $tab == 'rsvp' ) {
+		$rsvp_options = ['eme_rsvp_start_number_days','eme_rsvp_start_number_hours','eme_rsvp_end_number_days','eme_rsvp_end_number_hours','eme_cancel_rsvp_days','eme_cancel_rsvp_age'];
+		foreach ($rsvp_options as $rsvp_option) {
+			$rsvp_value = get_option( $rsvp_option );
+			if ( ! is_numeric( $rsvp_value ) ) {
+				update_option( $rsvp_option, 0 );
+			}
+		}
+	}
 
 	// allow custom actions
 	if (has_action('eme_options_postsave_action')) {
@@ -1639,6 +1648,7 @@ function eme_options_page() {
 				esc_html_e( 'before the event ', 'events-made-easy' );
 				echo eme_ui_select( $eme_rsvp_start_target, 'eme_rsvp_start_target', $eme_rsvp_start_target_list );
 				?>
+		<br><?php esc_html_e( '(0 for both days and hours indicates no limit)', 'events-made-easy' ); ?>
 		</td>
 	</tr>
 	<tr style='vertical-align:top' id='eme_rsvp_end_number_row'>
@@ -1654,6 +1664,7 @@ function eme_options_page() {
 				esc_html_e( 'before the event ', 'events-made-easy' );
 				echo eme_ui_select( $eme_rsvp_end_target, 'eme_rsvp_end_target', $eme_rsvp_end_target_list );
 				?>
+		<br><?php esc_html_e( '(0 for both days and hours indicates no limit)', 'events-made-easy' ); ?>
 		</td>
 	</tr>
 			<?php

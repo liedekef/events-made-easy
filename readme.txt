@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.38 (2024//) =
+* Avoid html-encoding of some options (like the smtp password)
+
 = 2.4.37 (2024/03/24) =
 * Fix setting the "Allow renewal" property for memberships
 * Check a borderline case for full events when a pending booking is being paid for

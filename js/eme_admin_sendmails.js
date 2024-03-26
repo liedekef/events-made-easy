@@ -403,6 +403,13 @@ jQuery(document).ready( function($) {
 	   if ($('select[name=eme_mail_type]').val() == 'attendees' || $('select[name=eme_mail_type]').val() == 'bookings') {
 		   $('tr#eme_pending_approved_row').show();
 		   $('tr#eme_only_unpaid_row').show();
+		   if ($('select[name=eme_mail_type]').val() == 'attendees') {
+		   	$('span#span_unpaid_attendees').show();
+		   	$('span#span_unpaid_bookings').hide();
+		   } else {
+		   	$('span#span_unpaid_attendees').hide();
+		   	$('span#span_unpaid_bookings').show();
+		   }
 		   $('tr#eme_exclude_registered_row').hide();
 		   $('tr#eme_rsvp_status_row').show();
            } else {

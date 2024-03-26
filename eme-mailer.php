@@ -2215,7 +2215,10 @@ function eme_emails_page() {
 		</td>
 		</tr>
 		<tr id="eme_only_unpaid_row">
-		<td><?php esc_html_e( 'Only send mails to attendees who did not pay yet', 'events-made-easy' ); ?>&nbsp;</td>
+		<td><span id="span_unpaid_attendees"><?php esc_html_e( 'Only send mails to attendees who did not pay yet', 'events-made-easy' ); ?></span>
+		<span id="span_unpaid_bookings"><?php esc_html_e( 'Only take unpaid bookings into account', 'events-made-easy' ); ?></span>
+		&nbsp;
+		</td>
 		<td>
 			<input type="checkbox" name="only_unpaid" value="1" <?php echo $only_unpaid_checked; ?>>
 		</td>

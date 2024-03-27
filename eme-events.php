@@ -181,6 +181,10 @@ function eme_init_event_props( $props = [] ) {
 	if ( ! isset( $props['use_captcha'] ) ) {
 		$props['use_captcha'] = get_option( 'eme_captcha_for_forms' ) ? 1 : 0;
 	}
+	// checking it here also takes care of the case GD gets disabled after event creation
+	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
+		$props['use_captcha'] = 0;
+	}
 	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
 		$props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) ? 1 : 0;
 	}
@@ -516,52 +520,33 @@ function eme_events_page() {
 
 		// set the properties for both event and location
 		$event_properties    = [];
-		$event_properties    = eme_init_event_props( $event_properties );
 		$location_properties = [];
-		$location_properties = eme_init_location_props( $location_properties );
-		// now for the select boxes, we need to set to 0 if not in the _POST
-		$payment_gateways = eme_payment_gateways();
-		foreach ( array_keys($payment_gateways) as $pg ) {
-			// the properties for payment gateways alsways have "use_" in front of them, so add it
-			if ( ! isset( $_POST[ 'eme_prop_use_' . $pg ] ) ) {
-				$event_properties[ 'use_' . $pg ] = 0;
-			}
-		}
-		$select_event_post_vars = [ 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'captcha_only_logged_out', 'dyndata_all_fields', 'all_day' ];
-		foreach ( $select_event_post_vars as $post_var ) {
-			if ( ! isset( $_POST[ 'eme_prop_' . $post_var ] ) ) {
-				$event_properties[ $post_var ] = 0;
-			}
-		}
-		if ( $event_properties['use_captcha'] && ! function_exists( 'imagecreatetruecolor' ) ) {
-			$event_properties['use_captcha'] = 0;
-		}
-		$select_location_post_vars = [ 'online_only' ];
-		foreach ( $select_location_post_vars as $post_var ) {
-			if ( ! isset( $_POST[ 'eme_loc_prop_' . $post_var ] ) ) {
-				$location_properties[ $post_var ] = 0;
-			}
-		}
-
 		foreach ( $_POST as $key => $value ) {
 			if ( preg_match( '/eme_prop_(.+)/', eme_sanitize_request( $key ), $matches ) ) {
 				$found_key = $matches[1];
-				if ( $found_key == 'multiprice_desc' ) {
+				if ( preg_match( '/password/', $found_key ) ) {
+					$event_properties[ $found_key ] = $value;
+				} elseif ( $found_key == 'multiprice_desc' ) {
 					$event_properties[ $found_key ] = eme_convert_array2multi( eme_sanitize_request( eme_text_split_newlines( $value ) ) );
 				} else {
 					$event_properties[ $found_key ] = eme_kses( $value );
 				}
 			}
 			if ( preg_match( '/eme_loc_prop_(.+)/', eme_sanitize_request( $key ), $matches ) ) {
-				$location_properties[ $matches[1] ] = eme_kses( $value );
+				$found_key = $matches[1];
+				if ( preg_match( '/password/', $found_key ) ) {
+					$location_properties[ $found_key ] = $value;
+				} else {
+					$location_properties[ $found_key ] = eme_kses( $value );
+				}
 			}
 		}
 		$event_rsvp_dyndata = eme_handle_dyndata_post_adminform();
 		if ( ! empty( $event_rsvp_dyndata ) ) {
 			$event_properties['rsvp_dyndata'] = $event_rsvp_dyndata;
 		}
-		$event['event_properties']       = $event_properties;
-		$location['location_properties'] = $location_properties;
+		$event['event_properties']       = eme_init_event_props( $event_properties );
+		$location['location_properties'] = eme_init_location_props( $location_properties );
 
 		$event             = eme_sanitize_event( $event );
 		$location          = eme_sanitize_location( $location );

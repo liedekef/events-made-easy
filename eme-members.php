@@ -127,6 +127,10 @@ function eme_init_membership_props( $props = [] ) {
 	if ( ! isset( $props['use_captcha'] ) ) {
 		$props['use_captcha'] = get_option( 'eme_captcha_for_forms' ) ? 1 : 0;
 	}
+	// checking it here also takes care of the case GD gets disabled after membership creation
+	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
+		$props['use_captcha'] = 0;
+	}
 	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
                 $props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) ? 1 : 0;
         }
@@ -1282,25 +1286,17 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	$membership['duration_count']  = isset( $_POST['duration_count'] ) ? intval( $_POST['duration_count'] ) : 0;
 	$membership['duration_period'] = isset( $_POST['duration_period'] ) ? eme_sanitize_request( $_POST['duration_period'] ) : '';
 	$membership['type']            = isset( $_POST['type'] ) ? eme_sanitize_request( $_POST['type'] ) : '';
+	$membership_properties = [];
 	if ( isset( $_POST['properties'] ) ) {
-		$membership['properties'] = eme_kses( $_POST['properties'] );
-	}
-	// now for the select boxes, we need to set to 0 if not in the _POST
-	$select_post_vars = [ 'allow_renewal', 'use_captcha', 'use_recaptcha', 'use_hcaptcha', 'use_cfcaptcha', 'captcha_only_logged_out', 'create_wp_user', 'registration_wp_users_only', 'attendancerecord', 'family_membership', 'dyndata_all_fields' ];
-
-	foreach ( $select_post_vars as $post_var ) {
-		if ( isset( $_POST['properties'][ $post_var ] ) ) {
-			$membership['properties'][ $post_var ] = intval( $_POST['properties'][ $post_var ] );
-		} else {
-			$membership['properties'][ $post_var ] = 0;
+		foreach ( $_POST['properties'] as $key => $value ) {
+			if ( preg_match( '/password/', $key ) ) {
+				$membership_properties[ $key ] = $value;
+			} else {
+				$membership_properties[ $found_key ] = eme_kses( $value );
+                        }
 		}
+		$membership['properties'] = $membership_properties;
 	}
-	if ( $membership['properties']['use_captcha'] && ! function_exists( 'imagecreatetruecolor' ) ) {
-		$membership['properties']['use_captcha'] = 0;
-	}
-
-	// max_usage_count needs to be an int
-	$membership['properties']['max_usage_count'] = intval( $membership['properties']['max_usage_count'] );
 
 	if ( isset( $_POST['start_date'] ) && eme_is_date( $_POST['start_date'] ) ) {
 		$membership['start_date'] = eme_sanitize_request( $_POST['start_date'] );
@@ -1320,7 +1316,6 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	if ( $membership['duration_period'] == 'forever' ) {
 		$membership['properties']['reminder_days'] = '';
 	}
-	$membership['properties']['remove_pending_days'] = intval( $membership['properties']['remove_pending_days'] );
 
 	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
 		$membership['properties']['use_hcaptcha'] = 0;
@@ -1335,7 +1330,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	if ( isset( $membership['properties']['price'] ) ) {
 		if ( ! is_numeric( $membership['properties']['price'] ) ) {
 			$membership['properties']['price'] = 0;
-			$message                          .= __( 'The membership price is not a valid price, resetted to 0', 'events-made-easy' ) . '<br>';
+			$message                          .= __( 'The membership price is not a valid price and has been reset to 0', 'events-made-easy' ) . '<br>';
 		}
 	} else {
 		$membership['properties']['price'] = 0;
@@ -1343,11 +1338,14 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	if ( isset( $membership['properties']['extra_charge'] ) ) {
 		if ( ! is_numeric( $membership['properties']['extra_charge'] ) ) {
 			$membership['properties']['extra_charge'] = 0;
-			$message                                 .= __( 'The extra charge for the membership is not a valid price, resetted to 0', 'events-made-easy' ) . '<br>';
+			$message                                 .= __( 'The extra charge for the membership is not a valid price and has been reset to 0', 'events-made-easy' ) . '<br>';
 		}
 	} else {
 		$membership['properties']['extra_charge'] = 0;
 	}
+
+	// the next takes care of all missing properties (like unchecked checkboxes), integers ...
+	$membership['properties'] = eme_init_membership_props( $membership['properties'] );
 
 	if ( $membership_id ) {
 		$membership_id = eme_db_update_membership( $membership_id, $membership );

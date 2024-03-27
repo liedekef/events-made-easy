@@ -147,20 +147,17 @@ function eme_locations_page() {
 			$location['location_attributes'] = $location_attributes;
 
 			$location_properties = [];
-			$location_properties = eme_init_location_props( $location_properties );
-			// now for the select boxes, we need to set to 0 if not in the _POST
-			$select_location_post_vars = [ 'online_only', 'override_loc' ];
-			foreach ( $select_location_post_vars as $post_var ) {
-				if ( ! isset( $_POST[ 'eme_loc_prop_' . $post_var ] ) ) {
-					$location_properties[ $post_var ] = 0;
-				}
-			}
 			foreach ( $_POST as $key => $value ) {
 				if ( preg_match( '/eme_loc_prop_(.+)/', eme_sanitize_request( $key ), $matches ) ) {
-					$location_properties[ $matches[1] ] = eme_kses( $value );
+					$found_key = $matches[1];
+					if ( preg_match( '/password/', $found_key ) ) {
+						$location_properties[ $found_key ] = $value;
+					} else {
+						$location_properties[ $found_key ] = eme_kses( $value );
+					}
 				}
 			}
-			$location['location_properties'] = $location_properties;
+			$location['location_properties'] = eme_init_location_props( $location_properties );
 
 			$location          = eme_sanitize_location( $location );
 			$validation_result = eme_validate_location( $location );

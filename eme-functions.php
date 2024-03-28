@@ -2527,12 +2527,13 @@ function eme_strip_weird( $value ) {
 	}
 }
 
-function eme_get_editor_settings( $tinymce = true, $quicktags = true, $media_buttons = true, $rows = 10 ) {
+function eme_get_editor_settings( $name, $tinymce = true, $quicktags = true, $media_buttons = true, $rows = 10 ) {
 	if ( ! $tinymce && ! has_action( 'eme_add_my_quicktags' ) ) {
 		add_action( 'admin_print_footer_scripts', 'eme_add_my_quicktags' );
 	}
 
 	return [
+		'textarea_name' => $name,
 		'textarea_rows' => $rows,
 		'tinymce'       => $tinymce,
 		'quicktags'     => $quicktags,
@@ -2788,7 +2789,7 @@ function eme_sanitize_email( $email ) {
 // same as wp function, but also allow the "." for table names
 function eme_sanitize_sql_orderby( $orderby ) {
 	if ( preg_match( '/^\s*(([a-z0-9_\.]+|`[a-z0-9_\.]+`)(\s+(ASC|DESC))?\s*(,\s*(?=[a-z0-9_\.`])|$))+$/i', $orderby ) || preg_match( '/^\s*RAND\(\s*\)\s*$/i', $orderby ) ) {
-			return $orderby;
+		return $orderby;
 	}
 	return false;
 }
@@ -3896,15 +3897,16 @@ function eme_is_empty_datetime( $mydate ) {
 }
 
 function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 0 ) {
+	$editor_id =  preg_replace( '/\[|\]/', '_', $name);
 	if ( $show_wp_editor ) {
 		if ( $show_full ) {
-			$eme_editor_settings = eme_get_editor_settings();
+			$eme_editor_settings = eme_get_editor_settings($name);
 		} else {
-			$eme_editor_settings = eme_get_editor_settings( false );
+			$eme_editor_settings = eme_get_editor_settings($name, false );
 		}
-		wp_editor( $value, $name, $eme_editor_settings );
+		wp_editor( $value, $editor_id, $eme_editor_settings );
 	} else { ?>
-		<textarea name="<?php echo $name; ?>" id="<?php echo $name; ?>" rows="6" style="width: 95%" ><?php echo eme_esc_html( $value ); ?></textarea>
+		<textarea name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" style="width: 95%" ><?php echo eme_esc_html( $value ); ?></textarea>
 		<?php
 	}
 }

@@ -1601,8 +1601,6 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 }
 
 function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids ) {
-	
-
 	// We need at least #_CANCEL_PAYMENT_LINE
 	$line_found = 0;
 

@@ -4531,6 +4531,7 @@ function eme_access_meta_box() {
 	add_meta_box( 'eme_access-meta-box', 'EME Access check', 'eme_access_meta_box_cb', 'page', 'normal' );
 	add_meta_box( 'eme_access-meta-box', 'EME Access check', 'eme_access_meta_box_cb', 'post', 'normal' );
 }
+
 function eme_access_meta_box_cb( $post ) {
 	$custom_values          = get_post_custom( $post->ID );
 	$selected_membershipids = isset( $custom_values['eme_membershipids'] ) ? $custom_values['eme_membershipids'][0] : '';
@@ -4571,10 +4572,9 @@ function eme_access_meta_box_cb( $post ) {
 	echo eme_ui_select( $access_denied_tpl, 'eme_access_denied', $templates_array );
 		echo "<br><p class='eme_smaller'>" . esc_html__( 'The format of the text shown if access to the page is denied. If left empty, a default message will be shown.', 'events-made-easy' ) . '</p>';
 
-	#$eme_editor_settings = eme_get_editor_settings();
-	#wp_editor($text,'eme_access_denied',$eme_editor_settings);
 	wp_nonce_field( 'eme_meta_box', 'eme_meta_box_nonce' );
 }
+
 add_action( 'save_post', 'eme_access_meta_box_save' );
 function eme_access_meta_box_save( $post_id ) {
 	// Bail if we're doing an auto save

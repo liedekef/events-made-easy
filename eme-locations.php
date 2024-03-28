@@ -130,7 +130,7 @@ function eme_locations_page() {
 				}
 			}
 			//switched to WP TinyMCE field
-			$location['location_description'] = eme_kses_maybe_unfiltered( $_POST['content'] );
+			$location['location_description'] = eme_kses_maybe_unfiltered( $_POST['location_description'] );
 
 			if ( isset( $_POST['location_category_ids'] ) && eme_is_numeric_array( $_POST['location_category_ids'] ) ) {
 				$location ['location_category_ids'] = join( ',', $_POST['location_category_ids'] );
@@ -656,7 +656,6 @@ function eme_meta_box_div_location_details( $location ) {
 }
 
 function eme_meta_box_div_location_notes( $location ) {
-	$eme_editor_settings = eme_get_editor_settings();
 	?>
 		<div class="postbox" id="loc_description">
 			<h3>
@@ -664,10 +663,8 @@ function eme_meta_box_div_location_notes( $location ) {
 			</h3>
 			<div class="inside">
 				<div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
-					<!-- we need content for qtranslate as ID -->
 					<?php
-					$eme_editor_settings = eme_get_editor_settings();
-					wp_editor( $location['location_description'], 'content', $eme_editor_settings );
+					eme_wysiwyg_textarea( 'location_description', $location['location_description'], 1, 1 );
 					if ( current_user_can( 'unfiltered_html' ) ) {
 						echo "<div class='eme_notice_unfiltered_html'>";
 						esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );

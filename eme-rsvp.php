@@ -1858,7 +1858,7 @@ function eme_get_pending_booking_ids_by_bookingids( $booking_ids ) {
 	global $wpdb;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	if (eme_is_list_of_int($booking_ids) ) {
-		return $wpdb->get_col( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($booking_ids) AND status IN (%d,%d)", EME_RSVP_STATUS_PENDING,EME_RSVP_STATUS_USERPENDING );
+		return $wpdb->get_col( $wpdb->prepare( "SELECT booking_id FROM $bookings_table WHERE booking_id IN ($booking_ids) AND status IN (%d,%d)", EME_RSVP_STATUS_PENDING,EME_RSVP_STATUS_USERPENDING ) );
 	} else {
 		return 0;
 	}	

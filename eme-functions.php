@@ -647,9 +647,9 @@ function eme_if_shortcode( $atts, $content ) {
 		}
 	} elseif ( ! empty( $tag ) ) {
 		return do_shortcode( $content );
-	} else {
-		return '';
 	}
+	// return empty in all other cases
+	return '';
 }
 
 function eme_for_shortcode( $atts, $content ) {

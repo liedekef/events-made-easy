@@ -3394,10 +3394,15 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 		$replacement        = '';
 		$found              = 1;
 		$need_escape        = 0;
+		$need_urlencode     = 0;
 		if ( strstr( $result, '#ESC' ) ) {
 			$result      = str_replace( '#ESC', '#', $result );
 			$need_escape = 1;
+		} elseif ( strstr( $result, '#URL' ) ) {
+			$result         = str_replace( '#URL', '#', $result );
+			$need_urlencode = 1;
 		}
+
 		// support for #_BOOKING and #_BOOKING_
 		$result = preg_replace( '/#_BOOKING(_)?/', '#_', $result );
 		

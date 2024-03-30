@@ -1469,7 +1469,7 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 		$lang = eme_detect_lang();
 	}
 
-	preg_match_all( '/#(REQ)?_[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(ESC)?_[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	$needle_offset = 0;
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
@@ -1477,6 +1477,11 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 		$orig_result_length = strlen( $orig_result[0] );
 		$found              = 1;
 		$replacement        = '';
+                $need_escape        = 0;
+                if ( strstr( $result, '#ESC' ) ) {
+                        $result      = str_replace( '#ESC', '#', $result );
+                        $need_escape = 1;
+                }
 
 		if ( preg_match( '/#_TASKNAME$/', $result ) ) {
 			$replacement = eme_translate( $task['name'], $lang );
@@ -1530,6 +1535,9 @@ function eme_replace_task_placeholders( $format, $task, $event, $target = 'html'
 		}
 
 		if ( $found ) {
+			if ( $need_escape ) {
+				$replacement = eme_esc_html( preg_replace( '/\n|\r/', '', $replacement ) );
+			}
 			$format         = substr_replace( $format, $replacement, $orig_result_needle, $orig_result_length );
 			$needle_offset += $orig_result_length - strlen( $replacement );
 		}

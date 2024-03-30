@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.4.38 (2024//) =
 * Avoid html-encoding of some options (like the smtp password)
 * Make #_IS_REGISTERED_PENDING and #_IS_REGISTERED_APPROVED work as expected (there was a typo in the executed sql statement)
+* Small tasklist improv: disable checkboxes if appropriate (not remove them), makes the list more uniform
 
 = 2.4.37 (2024/03/24) =
 * Fix setting the "Allow renewal" property for memberships

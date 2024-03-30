@@ -1021,12 +1021,14 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 		}
 
 		if ( preg_match( '/#_TASKSIGNUPCHECKBOX$/', $result ) ) {
-			if ( $free_spaces > 0 && ! $task_ended ) {
-				$select_value = $task['task_id'];
-				$select_name  = 'eme_task_signups[' . $event['event_id'] . '][]';
-				$select_id    = 'eme_task_signups_' . $event['event_id'] . '_' . $select_value;
-				$replacement  = "<input type='checkbox' name='{$select_name}' id='{$select_id}' value='$select_value'>";
+			$disabled = '';
+			if ( $free_spaces == 0 || $task_ended ) {
+				$disabled = 'disabled="disabled"';
 			}
+			$select_value = $task['task_id'];
+			$select_name  = 'eme_task_signups[' . $event['event_id'] . '][]';
+			$select_id    = 'eme_task_signups_' . $event['event_id'] . '_' . $select_value;
+			$replacement  = "<input type='checkbox' name='{$select_name}' id='{$select_id}' value='$select_value' $disabled>";
 		} else {
 			$found = 0;
 		}

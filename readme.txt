@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.5
-Stable tag: 2.4.37
+Stable tag: 2.4.38
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.38 (2024//) =
+= 2.4.38 (2024/04/01) =
 * Avoid html-encoding of some options (like the smtp password)
 * Make #_IS_REGISTERED_PENDING and #_IS_REGISTERED_APPROVED work as expected (there was a typo in the executed sql statement)
 * Small tasklist improv: disable checkboxes if appropriate (not remove them), makes the list more uniform

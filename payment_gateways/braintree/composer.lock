@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "braintree/braintree_php",
-            "version": "6.17.0",
+            "version": "6.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/braintree/braintree_php.git",
-                "reference": "37c187c91416003708632a58c230d03dbe88fb67"
+                "reference": "8ca67004fe2405ef0b6b33a5897594fdcf417e0e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/37c187c91416003708632a58c230d03dbe88fb67",
-                "reference": "37c187c91416003708632a58c230d03dbe88fb67",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/8ca67004fe2405ef0b6b33a5897594fdcf417e0e",
+                "reference": "8ca67004fe2405ef0b6b33a5897594fdcf417e0e",
                 "shasum": ""
             },
             "require": {
@@ -51,9 +51,9 @@
             "description": "Braintree PHP Client Library",
             "support": {
                 "issues": "https://github.com/braintree/braintree_php/issues",
-                "source": "https://github.com/braintree/braintree_php/tree/6.17.0"
+                "source": "https://github.com/braintree/braintree_php/tree/6.18.0"
             },
-            "time": "2024-03-06T20:01:30+00:00"
+            "time": "2024-03-26T21:08:13+00:00"
         }
     ],
     "packages-dev": [],

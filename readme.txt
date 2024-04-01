@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Avoid html-encoding of some options (like the smtp password)
 * Make #_IS_REGISTERED_PENDING and #_IS_REGISTERED_APPROVED work as expected (there was a typo in the executed sql statement)
 * Small tasklist improv: disable checkboxes if appropriate (not remove them), makes the list more uniform
+* Upgraded braintree API to 6.18.0
 
 = 2.4.37 (2024/03/24) =
 * Fix setting the "Allow renewal" property for memberships

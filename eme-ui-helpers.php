@@ -37,7 +37,7 @@ function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
 			$checked = "checked='checked'";
 		}
 		$id = esc_attr( eme_get_field_id( $name, $key ));
-		$output .= "<input type='checkbox' name='$name' id='$id' value='" . eme_esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . eme_esc_html( $item ) . '</label>';
+		$output .= "<input type='checkbox' name='$name' id='$id' value='" . eme_esc_html( $key ) . "' $checked>&nbsp;<label for='$id'>" . eme_esc_html_keep_br( $item ) . '</label>';
 		if ( $horizontal ) {
 			$output .= "&nbsp;";
 		} else {
@@ -54,7 +54,7 @@ function eme_options_input_text( $title, $name, $description, $type = 'text', $o
 	}
 	?>
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html( $title ); ?></label></th>
+		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 		<td>
 		<input name="<?php echo $name; ?>" type="<?php echo $type; ?>" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
 					<?php
@@ -73,7 +73,7 @@ function eme_options_input_int( $title, $name, $description, $type = 'text', $op
 	}
 	?>
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-		<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
+		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 		<td>
 		<input name="<?php echo $name; ?>" type="<?php echo $type; ?>" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
 		<?php
@@ -89,7 +89,7 @@ function eme_options_input_int( $title, $name, $description, $type = 'text', $op
 function eme_options_input_password( $title, $name, $description ) {
 	?>
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-		<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
+		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 		<td>
 		<input autocomplete="new-password" name="<?php echo $name; ?>" type="password" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( get_option( $name ) ); ?>" size="45">
 		<?php
@@ -109,7 +109,7 @@ function eme_options_textarea( $title, $name, $description, $show_wp_editor = 0,
 	}
 	?>
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-	<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
+	<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 	<td>
 	<?php
 		eme_wysiwyg_textarea( $name, $option_value, $show_wp_editor, $show_full);
@@ -155,7 +155,7 @@ function eme_options_select( $title, $name, $list, $description, $option_value =
 	}
 	?>
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-	<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
+	<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 	<td>
 	<?php
 	echo eme_ui_select( $option_value, $name, $list );
@@ -189,7 +189,7 @@ function eme_options_multiselect( $title, $name, $list, $description, $option_va
 	}
 	?>
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-	<th scope="row"><label for='<?php echo $name; ?>'><?php echo esc_html( $title ); ?></label></th>
+	<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 	<td>
 	<?php
 	echo eme_ui_multiselect( $option_value_arr, $name, $list, 5, '', 0, $class );
@@ -513,7 +513,7 @@ function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 
 	$name = wp_strip_all_tags( $name );
 	$val  = "<input $required_att type='checkbox' name='{$name}' id='{$name}' $class_att value='1' $selected $extra_attributes>";
 	if ( ! empty( $label ) ) {
-		$val .= "&nbsp;<label for='{$name}'>" . eme_esc_html( $label ) . '</label>';
+		$val .= "&nbsp;<label for='{$name}'>" . eme_esc_html_keep_br( $label ) . '</label>';
 	}
 	return $val;
 }
@@ -545,7 +545,7 @@ function eme_ui_checkbox( $option_value, $name, $list, $horizontal = true, $requ
 		} else {
 			"$key" == $option_value ? $selected = "checked='checked' " : $selected = '';
 		}
-		$val .= "<input $required_att type='checkbox' name='{$name}[]' id='{$name}_{$counter}' $class_att value='" . eme_esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . eme_esc_html( $value ) . '</label>';
+		$val .= "<input $required_att type='checkbox' name='{$name}[]' id='{$name}_{$counter}' $class_att value='" . eme_esc_html( $key ) . "' $selected $extra_attributes> <label for='{$name}_{$counter}'>" . eme_esc_html_keep_br( $value ) . '</label>';
 		if ( $horizontal ) {
 			$val .= "&nbsp;";
 		} else {

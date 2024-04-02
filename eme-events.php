@@ -9523,6 +9523,7 @@ function eme_admin_enqueue_js() {
 			'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
 			'translate_adminnonce'                 => wp_create_nonce( 'eme_admin' ),
 			'translate_tasksignup_status'          => __( 'Status', 'events-made-easy' ),
+			'translate_tasksignup_date'            => __( 'Signup date', 'events-made-easy' ),
 		];
 		wp_localize_script( 'eme-tasksignups', 'emetasks', $translation_array );
 		wp_enqueue_script( 'eme-tasksignups' );

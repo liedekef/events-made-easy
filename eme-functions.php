@@ -2803,7 +2803,22 @@ function eme_rss_cdata( $value ) {
 	return '<![CDATA[' . $value . ']]>';
 }
 
-function eme_esc_html( $value ) {
+function eme_esc_html_keep_br( $value ) {
+	if ( is_null( $value ) || $value === '' ) {
+		return $value;
+	}
+	if ( is_array( $value ) ) {
+		return array_map( 'eme_esc_html_keep_br', $value );
+	} else {
+		// if br is found, replace it by BREAK
+		$value = preg_replace( "/<br\W*?\/?>/", 'BREAK', $value );
+		$value = esc_html( $value );
+		$value = str_replace( 'BREAK', "<br>", $value );
+		return $value;
+	}
+}
+
+function eme_esc_html( $value, $keep_br=0 ) {
 	if ( is_null( $value ) || $value === '' ) {
 		return $value;
 	}

@@ -56,6 +56,10 @@ jQuery(document).ready( function($) {
                     visibility: 'hidden',
 		    title: emetasks.translate_tasksignup_status
                 },
+                signup_date: {
+                    visibility: 'hidden',
+		    title: emetasks.translate_tasksignup_date
+                },
 		comment: {
                     title: emetasks.translate_comment,
                     sorting: false,

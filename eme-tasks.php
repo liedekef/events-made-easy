@@ -164,8 +164,9 @@ function eme_cancel_task_signup( $signup_randomid ) {
 
 function eme_db_insert_task_signup( $line ) {
 	global $wpdb;
-	$table             = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-	$line['random_id'] = eme_random_id();
+	$table               = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
+	$line['random_id']   = eme_random_id();
+	$line['signup_date'] = current_time( 'mysql', false );
 	if ( $wpdb->insert( $table, $line ) === false ) {
 		return false;
 	} else {
@@ -1894,11 +1895,13 @@ function eme_ajax_task_signups_list() {
 			$localized_end_date          = eme_localized_date( $row['event_end'], EME_TIMEZONE, 1 );
 			$localized_taskstart_date    = eme_localized_datetime( $row['task_start'], EME_TIMEZONE, 1 );
 			$localized_taskend_date      = eme_localized_datetime( $row['task_end'], EME_TIMEZONE, 1 );
+			$localized_signup_date       = eme_localized_datetime( $row['signup_date'], EME_TIMEZONE, 1 );
 			$rows[ $key ]['event_name']  = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $row['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $row['event_name'] ) . '</a></strong><br>' . $localized_start_date . ' - ' . $localized_end_date;
 			$rows[ $key ]['task_name']   = eme_esc_html( $row['task_name'] );
 			$rows[ $key ]['comment']     = nl2br(eme_esc_html( $row['comment'] ));
 			$rows[ $key ]['task_start']  = $localized_taskstart_date;
 			$rows[ $key ]['task_end']    = $localized_taskend_date;
+			$rows[ $key ]['signup_date'] = $localized_signup_date;
 			if ( $row['signup_status'] == 1 ) {
 				$rows[ $key ]['signup_status'] = __('Approved', 'events-made-easy');
 			} else {

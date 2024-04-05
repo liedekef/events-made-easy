@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.39 (2024//) =
+* Show RSVP and task info overview in the event edit window too (in the sidebar), like in the events overview table
+
 = 2.4.38 (2024/04/01) =
 * Avoid html-encoding of some options (like the smtp password)
 * Make #_IS_REGISTERED_PENDING and #_IS_REGISTERED_APPROVED work as expected (there was a typo in the executed sql statement)

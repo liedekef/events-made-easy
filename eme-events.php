@@ -6478,9 +6478,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 					<?php if ( current_user_can( get_option( 'eme_cap_author_event' ) ) || current_user_can( get_option( 'eme_cap_edit_events' ) ) ) { ?>
 					<!-- status postbox -->
 					<div class="postbox" id="eme_statusdiv">
-					<h2 class='hndle'><span>
-						<?php esc_html_e( 'Event Status', 'events-made-easy' ); ?>
-						</span></h2>
+					<h2 class='hndle'><span><?php esc_html_e( 'Event Status', 'events-made-easy' ); ?></span></h2>
 					<div class="inside">
 						<p><?php esc_html_e( 'Status', 'events-made-easy' ); ?>
 						<select id="status" name="event_status">
@@ -6503,6 +6501,105 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 					</div>
 					<?php } ?>
 
+					<?php 
+					$view_trash = 0;
+					if ( isset( $_REQUEST['trash'] ) && $_REQUEST['trash'] == 1 ) {
+						$view_trash  = 1;
+					}
+					if ( !$view_trash && ($event['event_rsvp'] || $event['event_tasks'] )) { ?>
+					<div class="postbox" id="eme_bookingsandtasks">
+					<h2 class='hndle'><span><?php esc_html_e( 'Bookings and tasks', 'events-made-easy' ); ?></span></h2>
+					<div class="inside">
+					<?php
+						$info_line = '';
+						if ( $event['event_rsvp'] ) {
+							$info_line .= __( 'RSVP Info: ', 'events-made-easy' );
+							$booked_seats  = eme_get_approved_seats( $event['event_id'] );
+							$pending_seats = eme_get_pending_seats( $event['event_id'] );
+							$total_seats   = eme_get_total( $event['event_seats'] );
+							if ( eme_is_multi( $event['event_seats'] ) ) {
+								if ( $pending_seats > 0 ) {
+									$pending_seats_string = $pending_seats . ' (' . eme_convert_array2multi( eme_get_pending_multiseats( $event['event_id'] ) ) . ')';
+								} else {
+									$pending_seats_string = $pending_seats;
+								}
+								$total_seats_string = $total_seats . ' (' . $event['event_seats'] . ')';
+								if ( $booked_seats > 0 ) {
+									$booked_seats_string = $booked_seats . ' (' . eme_convert_array2multi( eme_get_approved_multiseats( $event['event_id'] ) ) . ')';
+								} else {
+									$booked_seats_string = $booked_seats;
+								}
+							} else {
+								$pending_seats_string = $pending_seats;
+								$total_seats_string   = $total_seats;
+								$booked_seats_string  = $booked_seats;
+							}
+							if ( $total_seats > 0 ) {
+								$available_seats = eme_get_available_seats( $event['event_id'] );
+								if ( eme_is_multi( $event['event_seats'] ) ) {
+									$available_seats_string = $available_seats . ' (' . eme_convert_array2multi( eme_get_available_multiseats( $event['event_id'] ) ) . ')';
+								} else {
+									$available_seats_string = $available_seats;
+								}
+								$info_line .= __( 'Free: ', 'events-made-easy' ) . ' ' . $available_seats_string;
+								$info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
+							} else {
+								$total_seats_string    = '&infin;';
+								$info_line .= "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . "  $booked_seats_string</a>";
+							}
+
+							if ( $pending_seats > 0 ) {
+								$info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string</a>";
+							}
+							if ( $event['event_properties']['take_attendance'] ) {
+								$absent_bookings = eme_get_absent_bookings( $event['event_id'] );
+								if ( $absent_bookings > 0 ) {
+									$info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
+								}
+							}
+							$info_line .= ', ' . __( 'Max: ', 'events-made-easy' ) . $total_seats_string;
+							$waitinglist_seats     = $event['event_properties']['waitinglist_seats'];
+							if ( $waitinglist_seats > 0 ) {
+								$info_line .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
+							}
+							if ( $booked_seats > 0 || $pending_seats > 0 ) {
+								$printable_address     = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_printable&amp;event_id=' . $event['event_id'] );
+								$csv_address           = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_csv&amp;event_id=' . $event['event_id'] );
+								$info_line .= " <br>(<a id='booking_printable_" . $event['event_id'] . "' href='$printable_address'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
+								$info_line .= " (<a id='booking_csv_" . $event['event_id'] . "' href='$csv_address'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
+							}
+						}
+
+						if ( $event['event_tasks'] ) {
+							if (!empty($info_line)) {
+								$info_line .= '<br>';
+							}
+							$tasks = eme_get_event_tasks( $event['event_id'] );
+							$task_count = count($tasks);
+							if ( $task_count>0 ) {
+								$pending_spaces = 0;
+								$used_spaces = 0;
+								//$total_spaces = 0;
+								foreach ( $tasks as $task ) {
+									if ( $event['event_properties']['task_requires_approval'] ) {
+										$pending_spaces += eme_count_task_pending_signups( $task['task_id'] );
+									}
+									$used_spaces += eme_count_task_approved_signups( $task['task_id'] );
+									//$total_spaces += $task['spaces'];
+								}
+								$info_line .= sprintf( __('Task Info: %d tasks', 'events-made-easy' ), $task_count );
+								if ( $pending_spaces >0 ) {
+									$info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=0&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_spaces</a>";
+								}
+								$info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-task-signups&amp;status=1&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $used_spaces</a>";
+							}
+						}
+						print $info_line;
+					?>
+					</div>
+					</div>
+					<?php } ?>
+
 			<?php
 			if ( ! $is_new_event ) {
 				$event_author = $event['event_author'];
@@ -6512,9 +6609,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 			?>
 					<!-- author postbox -->
 					<div class="postbox" id="eme_authordiv">
-					<h2 class='hndle'><span>
-						<?php esc_html_e( 'Author', 'events-made-easy' ); ?>
-						</span></h2>
+					<h2 class='hndle'><span><?php esc_html_e( 'Author', 'events-made-easy' ); ?></span></h2>
 					<div class="inside">
 						<p><?php esc_html_e( 'Author of this event: ', 'events-made-easy' ); ?>
 							<?php
@@ -6532,9 +6627,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 
 					<!-- contact postbox -->
 					<div class="postbox" id="eme_contactdiv">
-					<h2 class='hndle'><span>
-						<?php esc_html_e( 'Contact Person', 'events-made-easy' ); ?>
-						</span></h2>
+					<h2 class='hndle'><span><?php esc_html_e( 'Contact Person', 'events-made-easy' ); ?></span></h2>
 					<div class="inside">
 						<p><?php esc_html_e( 'If you leave this empty, the author will be used as contact person.', 'events-made-easy' ); ?>
 							<?php
@@ -6557,9 +6650,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 					</div>
 					<?php if ( get_option( 'eme_categories_enabled' ) ) : ?>
 					<div class="postbox" id="eme_categoriesdiv">
-					<h2 class='hndle'><span>
-						<?php esc_html_e( 'Category', 'events-made-easy' ); ?>
-						</span></h2>
+					<h2 class='hndle'><span><?php esc_html_e( 'Category', 'events-made-easy' ); ?></span></h2>
 					<div class="inside">
 						<?php
 						$categories = eme_get_categories();
@@ -6583,10 +6674,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 					</div>
 					</div> 
 					<?php endif; ?>
-					<div class="postbox" id="eme_ditev">
-					<h2 class='hndle'><span>
-						<?php esc_html_e( 'WP Page template', 'events-made-easy' ); ?>
-						</span></h2>
+					<div class="postbox" id="eme_pagetemplate">
+					<h2 class='hndle'><span><?php esc_html_e( 'WP Page template', 'events-made-easy' ); ?></span></h2>
 					<div class="inside">
 					<?php
 						$templates = get_page_templates();

@@ -598,23 +598,19 @@ jQuery(document).ready( function($) {
 				tmp_ids_arr.push(attachment.id);
 				tmp_ids_val=tmp_ids_arr.join(',');
                                 $('#eme_booking_attach_ids').val(tmp_ids_val);
-                                $('#booking_attach_button').hide();
                                 $('#booking_remove_attach_button').show();
                         });
                 }).open();
         });
         if ($('#eme_booking_attach_ids').val() != '') {
-		$('#booking_attach_button').hide();
 		$('#booking_remove_attach_button').show();
         } else {
-		$('#booking_attach_button').show();
 		$('#booking_remove_attach_button').hide();
         }
 	$('#booking_remove_attach_button').on("click",function(e) {
                 e.preventDefault();
 		$('#booking_attach_links').html('');
 		$('#eme_booking_attach_ids').val('');
-		$('#booking_attach_button').show();
 		$('#booking_remove_attach_button').hide();
 	});
 	$('#pending_attach_button').on("click",function(e) {
@@ -640,23 +636,19 @@ jQuery(document).ready( function($) {
 				tmp_ids_arr.push(attachment.id);
 				tmp_ids_val=tmp_ids_arr.join(',');
                                 $('#eme_pending_attach_ids').val(tmp_ids_val);
-                                $('#pending_attach_button').hide();
                                 $('#pending_remove_attach_button').show();
                         });
                 }).open();
         });
         if ($('#eme_pending_attach_ids').val() != '') {
-		$('#pending_attach_button').hide();
 		$('#pending_remove_attach_button').show();
         } else {
-		$('#pending_attach_button').show();
 		$('#pending_remove_attach_button').hide();
         }
 	$('#pending_remove_attach_button').on("click",function(e) {
                 e.preventDefault();
 		$('#pending_attach_links').html('');
 		$('#eme_pending_attach_ids').val('');
-		$('#pending_attach_button').show();
 		$('#pending_remove_attach_button').hide();
 	});
 	$('#paid_attach_button').on("click",function(e) {
@@ -682,23 +674,19 @@ jQuery(document).ready( function($) {
 				tmp_ids_arr.push(attachment.id);
 				tmp_ids_val=tmp_ids_arr.join(',');
                                 $('#eme_paid_attach_ids').val(tmp_ids_val);
-                                $('#paid_attach_button').hide();
                                 $('#paid_remove_attach_button').show();
                         });
                 }).open();
         });
         if ($('#eme_paid_attach_ids').val() != '') {
-		$('#paid_attach_button').hide();
 		$('#paid_remove_attach_button').show();
         } else {
-		$('#paid_attach_button').show();
 		$('#paid_remove_attach_button').hide();
         }
 	$('#paid_remove_attach_button').on("click",function(e) {
                 e.preventDefault();
 		$('#paid_attach_links').html('');
 		$('#eme_paid_attach_ids').val('');
-		$('#paid_attach_button').show();
 		$('#paid_remove_attach_button').hide();
 	});
         $('#subscribe_attach_button').on("click",function(e) {
@@ -724,23 +712,19 @@ jQuery(document).ready( function($) {
                                 tmp_ids_arr.push(attachment.id);
                                 tmp_ids_val=tmp_ids_arr.join(',');
                                 $('#eme_subscribe_attach_ids').val(tmp_ids_val);
-                                $('#subscribe_attach_button').hide();
                                 $('#subscribe_remove_attach_button').show();
                         });
                 }).open();
         });
         if ($('#eme_subscribe_attach_ids').val() != '') {
-                $('#subscribe_attach_button').hide();
                 $('#subscribe_remove_attach_button').show();
         } else {
-                $('#subscribe_attach_button').show();
                 $('#subscribe_remove_attach_button').hide();
         }
         $('#subscribe_remove_attach_button').on("click",function(e) {
                 e.preventDefault();
                 $('#subscribe_attach_links').html('');
                 $('#eme_subscribe_attach_ids').val('');
-                $('#subscribe_attach_button').show();
                 $('#subscribe_remove_attach_button').hide();
         });
 

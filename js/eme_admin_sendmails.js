@@ -557,23 +557,19 @@ jQuery(document).ready( function($) {
                                 tmp_ids_arr.push(attachment.id);
                                 tmp_ids_val=tmp_ids_arr.join(',');
                                 $('#eme_eventmail_attach_ids').val(tmp_ids_val);
-                                $('#eventmail_attach_button').hide();
                                 $('#eventmail_remove_attach_button').show();
                         });
                 }).open();
         });
         if ($('#eme_eventmail_attach_ids').val() != '') {
-                $('#eventmail_attach_button').hide();
                 $('#eventmail_remove_attach_button').show();
         } else {
-                $('#eventmail_attach_button').show();
                 $('#eventmail_remove_attach_button').hide();
         }
         $('#eventmail_remove_attach_button').on("click",function(e) {
                 e.preventDefault();
                 $('#eventmail_attach_links').html('');
                 $('#eme_eventmail_attach_ids').val('');
-                $('#eventmail_attach_button').show();
                 $('#eventmail_remove_attach_button').hide();
         });
 
@@ -600,23 +596,19 @@ jQuery(document).ready( function($) {
                                 tmp_ids_arr.push(attachment.id);
                                 tmp_ids_val=tmp_ids_arr.join(',');
                                 $('#eme_generic_attach_ids').val(tmp_ids_val);
-                                $('#generic_attach_button').hide();
                                 $('#generic_remove_attach_button').show();
                         });
                 }).open();
         });
         if ($('#eme_generic_attach_ids').val() != '') {
-                $('#generic_attach_button').hide();
                 $('#generic_remove_attach_button').show();
         } else {
-                $('#generic_attach_button').show();
                 $('#generic_remove_attach_button').hide();
         }
         $('#generic_remove_attach_button').on("click",function(e) {
                 e.preventDefault();
                 $('#generic_attach_links').html('');
                 $('#eme_generic_attach_ids').val('');
-                $('#generic_attach_button').show();
                 $('#generic_remove_attach_button').hide();
         });
 

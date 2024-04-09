@@ -934,13 +934,12 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 	$cond_person_ids_arr = [];
 	$cond_member_ids_arr = [];
 	if ( $conditions['action'] == 'genericmail' ) {
-		if ( isset( $conditions['eme_generic_attach_ids'] ) ) {
+		$attachment_id_arr = [];
+		if ( isset( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_generic_attach_ids'] ) ) {
 			$attachment_ids = $conditions['eme_generic_attach_ids'];
-		}
-		if ( ! empty( $attachment_ids ) ) {
-			$attachment_id_arr = explode( ',', $attachment_ids );
-		} else {
-			$attachment_id_arr = [];
+			if ( ! empty( $attachment_ids ) ) {
+				$attachment_id_arr = explode( ',', $attachment_ids );
+			}
 		}
 
 		if ( isset( $conditions['eme_send_all_people'] ) ) {
@@ -1030,13 +1029,12 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 		if ( ! isset( $conditions['exclude_registered'] ) ) {
 			$conditions['exclude_registered'] = 0;
 		}
-		if ( isset( $conditions['eme_eventmail_attach_ids'] ) ) {
+		$attachment_id_arr = [];
+		if ( isset( $conditions['eme_eventmail_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_eventmail_attach_ids'] ) ) {
 			$attachment_ids = $conditions['eme_eventmail_attach_ids'];
-		}
-		if ( ! empty( $attachment_ids ) ) {
-			$attachment_id_arr = explode( ',', $attachment_ids );
-		} else {
-			$attachment_id_arr = [];
+			if ( ! empty( $attachment_ids ) ) {
+				$attachment_id_arr = explode( ',', $attachment_ids );
+			}
 		}
 
 		// conditions event_id can be multiple ids
@@ -1482,8 +1480,9 @@ function eme_send_mails_ajax_actions( $action ) {
 		if ( ! empty( $_POST['genericmail_ignore_massmail_setting'] ) ) {
 			$conditions['ignore_massmail_setting'] = 1;
 		}
-		$conditions['eme_generic_attach_ids'] = eme_sanitize_request( $_POST['eme_generic_attach_ids'] );
-
+		if ( ! empty( $_POST['eme_generic_attach_ids'] ) && eme_is_list_of_int( $_POST['eme_generic_attach_ids'] ) ) {
+			$conditions['eme_generic_attach_ids'] = eme_sanitize_request( $_POST['eme_generic_attach_ids'] );
+		}
 		if ( ! empty( $_POST['generic_mail_subject'] ) ) {
 			$mail_subject = eme_sanitize_request( $_POST['generic_mail_subject'] );
 		} elseif ( isset( $_POST['generic_subject_template'] ) && intval( $_POST['generic_subject_template'] ) > 0 ) {
@@ -1536,13 +1535,12 @@ function eme_send_mails_ajax_actions( $action ) {
 		$mailing_id = 0;
 		if ( $action == 'previewmail' ) {
 			// let's add attachments too
-			if ( isset( $conditions['eme_generic_attach_ids'] ) ) {
+			$attachment_ids_arr = [];
+			if ( isset( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_generic_attach_ids'] ) ) {
 				$attachment_ids = $conditions['eme_generic_attach_ids'];
-			}
-			if ( ! empty( $attachment_ids ) ) {
-				$attachment_ids_arr = explode( ',', $attachment_ids );
-			} else {
-				$attachment_ids_arr = [];
+				if ( ! empty( $attachment_ids ) ) {
+					$attachment_ids_arr = explode( ',', $attachment_ids );
+				}
 			}
 			$preview_mail_to = intval( $_POST['send_previewmailto_id'] );
 			if ( $preview_mail_to == 0 ) {
@@ -1645,7 +1643,9 @@ function eme_send_mails_ajax_actions( $action ) {
 		if ( ! empty( $_POST['eventmail_ignore_massmail_setting'] ) ) {
 			$conditions['ignore_massmail_setting'] = 1;
 		}
-		$conditions['eme_eventmail_attach_ids'] = eme_sanitize_request( $_POST['eme_eventmail_attach_ids'] );
+		if ( ! empty( $_POST['eme_eventmail_attach_ids'] ) && eme_is_list_of_int( $_POST['eme_eventmail_attach_ids'] ) ) {
+			$conditions['eme_eventmail_attach_ids'] = eme_sanitize_request( $_POST['eme_eventmail_attach_ids'] );
+		}
 		if ( ! empty( $_POST ['event_mail_subject'] ) ) {
 			$mail_subject = eme_sanitize_request( $_POST ['event_mail_subject'] );
 		} elseif ( isset( $_POST ['event_subject_template'] ) && intval( $_POST ['event_subject_template'] ) > 0 ) {
@@ -1692,13 +1692,12 @@ function eme_send_mails_ajax_actions( $action ) {
 		}
 		if ( $action == 'previeweventmail' ) {
 			// let's add attachments too
+			$attachment_ids_arr = [];
 			if ( isset( $conditions['eme_generic_attach_ids'] ) ) {
 				$attachment_ids = $conditions['eme_generic_attach_ids'];
-			}
-			if ( ! empty( $attachment_ids ) ) {
-				$attachment_ids_arr = explode( ',', $attachment_ids );
-			} else {
-				$attachment_ids_arr = [];
+				if ( ! empty( $attachment_ids ) ) {
+					$attachment_ids_arr = explode( ',', $attachment_ids );
+				}
 			}
 			$preview_mail_to = intval( $_POST['send_previeweventmailto_id'] );
 			if ( $preview_mail_to == 0 ) {
@@ -2035,7 +2034,7 @@ function eme_emails_page() {
 					}
 				}
 				// reuse the attachments too
-				if ( ! empty( $conditions['eme_generic_attach_ids'] ) ) {
+				if ( ! empty( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int($conditions['eme_generic_attach_ids']) ) {
 					$generic_mail_attachment_ids     = $conditions['eme_generic_attach_ids'];
 					// now also build the attach_url_string variable
 					$attachment_ids_arr = explode( ',', $generic_mail_attachment_ids );
@@ -2094,7 +2093,7 @@ function eme_emails_page() {
 					$membership_ids = explode( ',', $conditions['eme_eventmail_send_memberships'] );
 				}
 				// reuse the attachments too
-				if ( ! empty( $conditions['eme_eventmail_attach_ids'] ) ) {
+				if ( ! empty( $conditions['eme_eventmail_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_eventmail_attach_ids'] ) ) {
 					$event_mail_attachment_ids     = $conditions['eme_eventmail_attach_ids'];
 					// now also build the attach_url_string variable
 					$attachment_ids_arr = explode( ',', $event_mail_attachment_ids );

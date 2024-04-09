@@ -4117,7 +4117,7 @@ function eme_email_member_action( $member, $action ) {
 		}
 		$template_id = $membership['properties']['member_template_id'];
 		if ( $template_id ) {
-			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id );
+			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id, 'member' );
 		}
 	} elseif ( $action == 'resendPaidMember' ) {
 		$member_subject = $membership['properties']['paid_subject_format'];
@@ -4128,7 +4128,7 @@ function eme_email_member_action( $member, $action ) {
 		}
 		$template_id = $membership['properties']['member_template_id'];
 		if ( $template_id ) {
-			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id );
+			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id, 'member' );
 		}
 	} elseif ( $action == 'extendMember' ) {
 		$member_subject = $membership['properties']['extended_subject_format'];
@@ -4139,7 +4139,7 @@ function eme_email_member_action( $member, $action ) {
 		}
 		$template_id = $membership['properties']['member_template_id'];
 		if ( $template_id ) {
-			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id );
+			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id, 'member' );
 		}
 	} elseif ( $action == 'updateMember' ) {
 		$member_subject = $membership['properties']['updated_subject_format'];
@@ -5124,7 +5124,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				}
 			}
 			if ( empty( $pdf_path ) ) {
-				$pdf_path = eme_generate_member_pdf( $member, $membership, $template_id );
+				$pdf_path = eme_generate_member_pdf( $member, $membership, $template_id, 'member' );
 			}
 			if ( ! empty( $pdf_path ) ) {
 				$replacement = EME_UPLOAD_URL . '/members/' . $member['member_id'] . '/' . basename( $pdf_path );
@@ -6701,7 +6701,7 @@ function eme_ajax_action_resend_member_reminders( $ids_arr ) {
 	print wp_json_encode( $ajaxResult );
 }
 
-function eme_generate_member_pdf( $member, $membership, $template_id ) {
+function eme_generate_member_pdf( $member, $membership, $template_id, $prefix='member' ) {
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
 		$format = eme_get_template_format( $template_id );
@@ -6757,10 +6757,10 @@ $extra_html_header
 		touch( $targetPath . '/index.html' );
 	}
 	// unlink old pdf
-	array_map( 'wp_delete_file', glob( "$targetPath/member-$template_id-*.pdf" ) );
+	array_map( 'wp_delete_file', glob( "$targetPath/$prefix-$template_id-*.pdf" ) );
 	// now put new one
 	$rand_id     = eme_random_id();
-	$target_file = $targetPath . "/member-$template_id-$rand_id.pdf";
+	$target_file = $targetPath . "/$prefix-$template_id-$rand_id.pdf";
 	file_put_contents( $target_file, $dompdf->output() );
 	return $target_file;
 }

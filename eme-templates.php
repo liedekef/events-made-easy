@@ -360,8 +360,8 @@ function eme_get_templates_name_id( $type = '', $strict = 0 ) {
 	}
 }
 
-function eme_get_templates_array_by_id( $type = '' ) {
-	$templates       = eme_get_templates_name_id( $type );
+function eme_get_templates_array_by_id( $type = '', $strict = 0 ) {
+	$templates       = eme_get_templates_name_id( $type, $strict );
 	$templates_by_id = [];
 	if ( is_array( $templates ) && count( $templates ) > 0 ) {
 		$templates_by_id[0] = '&nbsp;';

@@ -3625,7 +3625,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 				}
 			}
 			if ( empty( $pdf_path ) ) {
-				$pdf_path = eme_generate_booking_pdf( $booking, $event, $template_id );
+				$pdf_path = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
 			}
 			if ( ! empty( $pdf_path ) ) {
 				$replacement = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'] . '/' . basename( $pdf_path );
@@ -4037,6 +4037,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 	$contact_body           = '';
 	$contact_body_filter    = '';
 	$attachment_ids         = '';
+	$attachment_tmpl_ids    = '';
 	$ticket_attachment      = '';
 	switch ( $action ) {
 		case 'resendApprovedBooking':
@@ -4045,11 +4046,15 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 			if ( $mailing_approved ) {
 				$template_id = $event['event_properties']['ticket_template_id'];
 				if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'approval' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
-					$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
+					$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
 				}
 				$attachment_ids = $event['event_properties']['booking_attach_ids'];
 				if ( empty( $attachment_ids ) ) {
 					$attachment_ids = get_option( 'eme_booking_attach_ids' );
+				}
+				$attachment_tmpl_ids = $event['event_properties']['booking_attach_tmpl_ids'];
+				if ( empty( $attachment_tmpl_ids ) ) {
+					$attachment_tmpl_ids = get_option( 'eme_booking_attach_tmpl_ids' );
 				}
 				if ( ! empty( $event['event_properties']['event_respondent_email_subject'] ) ) {
 					$person_subject = $event['event_properties']['event_respondent_email_subject'];
@@ -4079,6 +4084,10 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 				$attachment_ids = $event['event_properties']['pending_attach_ids'];
 				if ( empty( $attachment_ids ) ) {
 					$attachment_ids = get_option( 'eme_pending_attach_ids' );
+				}
+				$attachment_tmpl_ids = $event['event_properties']['pending_attach_tmpl_ids'];
+				if ( empty( $attachment_tmpl_ids ) ) {
+					$attachment_tmpl_ids = get_option( 'eme_pending_attach_tmpl_ids' );
 				}
 				if ( ! empty( $event['event_properties']['event_registration_pending_email_subject'] ) ) {
 					$person_subject = $event['event_properties']['event_registration_pending_email_subject'];
@@ -4229,11 +4238,15 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 			if ( $mailing_paid ) {
 				$template_id = $event['event_properties']['ticket_template_id'];
 				if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'payment' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
-					$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
+					$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
 				}
 				$attachment_ids = $event['event_properties']['paid_attach_ids'];
 				if ( empty( $attachment_ids ) ) {
 					$attachment_ids = get_option( 'eme_paid_attach_ids' );
+				}
+				$attachment_tmpl_ids = $event['event_properties']['paid_attach_tmpl_ids'];
+				if ( empty( $attachment_tmpl_ids ) ) {
+					$attachment_tmpl_ids = get_option( 'eme_paid_attach_tmpl_ids' );
 				}
 				if ( ! empty( $event['event_properties']['event_registration_paid_email_subject'] ) ) {
 					$person_subject = $event['event_properties']['event_registration_paid_email_subject'];
@@ -4327,9 +4340,16 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 				if ( $mailing_pending ) {
 					$template_id = $event['event_properties']['ticket_template_id'];
 					if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'booking' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
-						$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
+						$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
 					}
-					$attachment_ids = get_option( 'eme_pending_attach_ids' );
+					$attachment_ids = $event['event_properties']['pending_attach_ids'];
+					if ( empty( $attachment_ids ) ) {
+						$attachment_ids = get_option( 'eme_pending_attach_ids' );
+					}
+					$attachment_tmpl_ids = $event['event_properties']['pending_attach_tmpl_ids'];
+					if ( empty( $attachment_tmpl_ids ) ) {
+						$attachment_tmpl_ids = get_option( 'eme_pending_attach_tmpl_ids' );
+					}
 					if ( ! empty( $event['event_properties']['event_registration_pending_email_subject'] ) ) {
 						$person_subject = $event['event_properties']['event_registration_pending_email_subject'];
 					} elseif ( $event['event_properties']['event_registration_pending_email_subject_tpl'] > 0 ) {
@@ -4372,11 +4392,15 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 				if ( $mailing_approved ) {
 					$template_id = $event['event_properties']['ticket_template_id'];
 					if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'booking' || $event['event_properties']['ticket_mail'] == 'approval' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
-						$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
+						$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
 					}
 					$attachment_ids = $event['event_properties']['booking_attach_ids'];
 					if ( empty( $attachment_ids ) ) {
 						$attachment_ids = get_option( 'eme_booking_attach_ids' );
+					}
+					$attachment_tmpl_ids = $event['event_properties']['booking_attach_tmpl_ids'];
+					if ( empty( $attachment_tmpl_ids ) ) {
+						$attachment_tmpl_ids = get_option( 'eme_booking_attach_tmpl_ids' );
 					}
 					if ( ! empty( $event['event_properties']['event_respondent_email_subject'] ) ) {
 						$person_subject = $event['event_properties']['event_respondent_email_subject'];
@@ -4498,6 +4522,15 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 		if ( ! empty( $ticket_attachment ) ) {
 			$attachment_ids_arr[] = $ticket_attachment;
 		}
+		// create and add the needed pdf attachments too
+		if ( !empty( $attachment_tmpl_ids ) ) {
+			$attachment_tmpl_ids_arr = explode( ',', $attachment_tmpl_ids );
+			foreach ($attachment_tmpl_ids_arr as $attachment_tmpl_id) {
+				$attachment_ids_arr[] = eme_generate_booking_pdf( $booking, $event, $template_id, 'booking' );
+			}
+		}
+
+
 		if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
 			$mail_res = eme_queue_fastmail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
 		} else {

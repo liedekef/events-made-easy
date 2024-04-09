@@ -192,13 +192,22 @@ function eme_init_event_props( $props = [] ) {
 		$props['dyndata_all_fields'] = 0;
 	}
 	if ( ! isset( $props['booking_attach_ids'] ) ) {
-		$props['booking_attach_ids'] = 0;
+		$props['booking_attach_ids'] = '';
 	}
 	if ( ! isset( $props['pending_attach_ids'] ) ) {
-		$props['pending_attach_ids'] = 0;
+		$props['pending_attach_ids'] = '';
 	}
 	if ( ! isset( $props['paid_attach_ids'] ) ) {
-		$props['paid_attach_ids'] = 0;
+		$props['paid_attach_ids'] = '';
+	}
+	if ( ! isset( $props['booking_attach_tmpl_ids'] ) ) {
+		$props['booking_attach_tmpl_ids'] = '';
+	}
+	if ( ! isset( $props['pending_attach_tmpl_ids'] ) ) {
+		$props['pending_attach_tmpl_ids'] = '';
+	}
+	if ( ! isset( $props['paid_attach_tmpl_ids'] ) ) {
+		$props['paid_attach_tmpl_ids'] = '';
 	}
 	if ( ! isset( $props['multiprice_desc'] ) ) {
 		$props['multiprice_desc'] = '';
@@ -7563,8 +7572,19 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 <input type="button" name="booking_remove_attach_button" id="booking_remove_attach_button" value="<?php esc_attr_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a new booking is made.', 'events-made-easy' ); ?>
 <br><?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
-</div>
+<br><br><?php esc_html_e( 'PDF templates to be added as attachments:', 'events-made-easy' ); ?>
 	<?php
+	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+	if (!empty($pdftemplates)) {
+		echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdftemplates, 3, '', 0, 'eme_select2_width50_class' );
+		echo '<br>';
+		esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' );
+	} else {
+		esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
+	}
+?>
+</div>
+<?php
 }
 
 function eme_meta_box_div_event_registration_userpending_email( $event, $templates_array ) {
@@ -7751,14 +7771,24 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 <input type="hidden" name="eme_prop_pending_attach_ids" id="eme_pending_attach_ids" value="<?php echo $attachment_ids; ?>">
 <input type="button" name="pending_attach_button" id="pending_attach_button" value="<?php esc_attr_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="pending_remove_attach_button" id="pending_remove_attach_button" value="<?php esc_attr_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
-<br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is approved.', 'events-made-easy' ); ?>
+<br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is pending.', 'events-made-easy' ); ?>
 <br><?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
-</div>
+<br><br><?php esc_html_e( 'PDF templates to be added as attachments:', 'events-made-easy' ); ?>
 	<?php
+	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+	if (!empty($pdftemplates)) {
+		echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdftemplates, 3, '', 0, 'eme_select2_width50_class' );
+		echo '<br>';
+		esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' );
+	} else {
+		esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
+	}
+?>
+</div>
+<?php
 }
 
 function eme_meta_box_div_event_registration_updated_email( $event, $templates_array ) {
-	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_updated_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7903,7 +7933,6 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 }
 
 function eme_meta_box_div_event_registration_cancelled_email( $event, $templates_array ) {
-	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_cancelled_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -8003,7 +8032,6 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 }
 
 function eme_meta_box_div_event_registration_paid_email( $event, $templates_array ) {
-	
 	$use_html_editor = get_option( 'eme_rsvp_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_paid_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -8106,6 +8134,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 	</div>
 </div>
 <br>
+<div>
 <b><?php esc_html_e( 'Booking paid mail attachments', 'events-made-easy' ); ?></b><br>
 <span id="paid_attach_links">
 	<?php
@@ -8129,7 +8158,19 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 <input type="button" name="paid_remove_attach_button" id="paid_remove_attach_button" value="<?php esc_attr_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is paid.', 'events-made-easy' ); ?>
 <br><?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
+<br><br><?php esc_html_e( 'PDF templates to be added as attachments:', 'events-made-easy' ); ?>
 	<?php
+	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+	if (!empty($pdftemplates)) {
+		echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdftemplates, 3, '', 0, 'eme_select2_width50_class' );
+		echo '<br>';
+		esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' );
+	} else {
+		esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
+	}
+?>
+</div>
+<?php
 }
 
 function eme_meta_box_div_event_registration_trashed_email( $event, $templates_array ) {

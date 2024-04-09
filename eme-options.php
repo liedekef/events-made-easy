@@ -548,6 +548,9 @@ function eme_add_options( $reset = 0 ) {
 		'eme_booking_attach_ids'                          => '',
 		'eme_pending_attach_ids'                          => '',
 		'eme_paid_attach_ids'                             => '',
+		'eme_booking_attach_tmpl_ids'                     => '',
+		'eme_pending_attach_tmpl_ids'                     => '',
+		'eme_paid_attach_tmpl_ids'                        => '',
 		'eme_subscribe_attach_ids'                        => '',
 		'eme_allowed_html'                                => '',
 		'eme_allowed_style_attr'                          => '',
@@ -1072,7 +1075,7 @@ function eme_options_register() {
 			$options = [ 'eme_rsvp_mail_notify_is_active', 'eme_rsvp_mail_notify_pending', 'eme_rsvp_mail_notify_paid', 'eme_rsvp_mail_notify_approved', 'eme_mail_sender_name', 'eme_mail_sender_address', 'eme_mail_force_from', 'eme_rsvp_mail_send_method', 'eme_smtp_host', 'eme_smtp_port', 'eme_smtp_encryption', 'eme_rsvp_mail_SMTPAuth', 'eme_smtp_username', 'eme_smtp_password', 'eme_smtp_debug', 'eme_rsvp_send_html', 'eme_mail_bcc_address', 'eme_smtp_verify_cert', 'eme_queue_mails', 'eme_cron_send_queued', 'eme_cron_queue_count', 'eme_people_newsletter', 'eme_people_massmail', 'eme_massmail_popup_text', 'eme_massmail_popup', 'eme_mail_tracking', 'eme_mail_sleep', 'eme_mail_blacklist' ];
 			break;
 		case 'mailtemplates':
-			$options = [ 'eme_contactperson_email_subject', 'eme_contactperson_cancelled_email_subject', 'eme_contactperson_pending_email_subject', 'eme_contactperson_email_body', 'eme_contactperson_cancelled_email_body', 'eme_contactperson_pending_email_body', 'eme_contactperson_ipn_email_subject', 'eme_contactperson_ipn_email_body', 'eme_contactperson_paid_email_subject', 'eme_contactperson_paid_email_body', 'eme_respondent_email_subject', 'eme_respondent_email_body', 'eme_registration_pending_email_subject', 'eme_registration_pending_email_body', 'eme_registration_userpending_email_subject', 'eme_registration_userpending_email_body', 'eme_registration_cancelled_email_subject', 'eme_registration_cancelled_email_body', 'eme_registration_trashed_email_subject', 'eme_registration_trashed_email_body', 'eme_registration_updated_email_subject', 'eme_registration_updated_email_body', 'eme_registration_paid_email_subject', 'eme_registration_paid_email_body', 'eme_registration_pending_reminder_email_subject', 'eme_registration_pending_reminder_email_body', 'eme_registration_reminder_email_subject', 'eme_registration_reminder_email_body', 'eme_sub_subject', 'eme_sub_body', 'eme_unsub_subject', 'eme_unsub_body', 'eme_booking_attach_ids', 'eme_pending_attach_ids', 'eme_paid_attach_ids', 'eme_subscribe_attach_ids', 'eme_full_name_format', 'eme_cp_task_signup_pending_email_subject', 'eme_cp_task_signup_pending_email_body', 'eme_cp_task_signup_email_subject', 'eme_cp_task_signup_email_body', 'eme_cp_task_signup_cancelled_email_subject', 'eme_cp_task_signup_cancelled_email_body', 'eme_task_signup_pending_email_subject', 'eme_task_signup_pending_email_body', 'eme_task_signup_email_subject', 'eme_task_signup_email_body', 'eme_task_signup_cancelled_email_subject', 'eme_task_signup_cancelled_email_body', 'eme_task_signup_trashed_email_subject', 'eme_task_signup_trashed_email_body', 'eme_task_signup_reminder_email_subject', 'eme_task_signup_reminder_email_body', 'eme_bd_email_subject', 'eme_bd_email_body' ];
+			$options = [ 'eme_contactperson_email_subject', 'eme_contactperson_cancelled_email_subject', 'eme_contactperson_pending_email_subject', 'eme_contactperson_email_body', 'eme_contactperson_cancelled_email_body', 'eme_contactperson_pending_email_body', 'eme_contactperson_ipn_email_subject', 'eme_contactperson_ipn_email_body', 'eme_contactperson_paid_email_subject', 'eme_contactperson_paid_email_body', 'eme_respondent_email_subject', 'eme_respondent_email_body', 'eme_registration_pending_email_subject', 'eme_registration_pending_email_body', 'eme_registration_userpending_email_subject', 'eme_registration_userpending_email_body', 'eme_registration_cancelled_email_subject', 'eme_registration_cancelled_email_body', 'eme_registration_trashed_email_subject', 'eme_registration_trashed_email_body', 'eme_registration_updated_email_subject', 'eme_registration_updated_email_body', 'eme_registration_paid_email_subject', 'eme_registration_paid_email_body', 'eme_registration_pending_reminder_email_subject', 'eme_registration_pending_reminder_email_body', 'eme_registration_reminder_email_subject', 'eme_registration_reminder_email_body', 'eme_sub_subject', 'eme_sub_body', 'eme_unsub_subject', 'eme_unsub_body', 'eme_booking_attach_ids', 'eme_pending_attach_ids', 'eme_paid_attach_ids', 'eme_booking_attach_tmpl_ids', 'eme_pending_attach_tmpl_ids', 'eme_paid_attach_tmpl_ids', 'eme_subscribe_attach_ids', 'eme_full_name_format', 'eme_cp_task_signup_pending_email_subject', 'eme_cp_task_signup_pending_email_body', 'eme_cp_task_signup_email_subject', 'eme_cp_task_signup_email_body', 'eme_cp_task_signup_cancelled_email_subject', 'eme_cp_task_signup_cancelled_email_body', 'eme_task_signup_pending_email_subject', 'eme_task_signup_pending_email_body', 'eme_task_signup_email_subject', 'eme_task_signup_email_body', 'eme_task_signup_cancelled_email_subject', 'eme_task_signup_cancelled_email_body', 'eme_task_signup_trashed_email_subject', 'eme_task_signup_trashed_email_body', 'eme_task_signup_reminder_email_subject', 'eme_task_signup_reminder_email_body', 'eme_bd_email_subject', 'eme_bd_email_body' ];
 			break;
 		case 'gdpr':
 			$options = [ 'eme_cpi_subject', 'eme_cpi_body', 'eme_cpi_form', 'eme_gdpr_subject', 'eme_gdpr_body', 'eme_gdpr_approve_subject', 'eme_gdpr_approve_body', 'eme_gdpr_page_title', 'eme_gdpr_page_header', 'eme_gdpr_page_footer', 'eme_gdpr_approve_page_title', 'eme_gdpr_approve_page_content', 'eme_gdpr_remove_expired_member_days', 'eme_gdpr_anonymize_old_bookings_days', 'eme_gdpr_remove_old_events_days', 'eme_gdpr_archive_old_mailings_days', 'eme_gdpr_remove_old_attendances_days', 'eme_gdpr_remove_old_signups_days' ];
@@ -1887,7 +1890,7 @@ function eme_options_page() {
 					}
 				}
 			} else {
-					$attachment_ids = '';
+				$attachment_ids = '';
 			}
 			?>
 			</span>
@@ -1896,6 +1899,17 @@ function eme_options_page() {
 <input type="button" name="booking_remove_attach_button" id="booking_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 	<br><?php esc_html_e( 'Optionally add attachments to the mail when a new booking is made.', 'events-made-easy' ); ?>
 </td></tr>
+<?php
+        $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+        if (!empty($pdftemplates)) {
+		$title = __( 'PDF templates to be added as attachments:', 'events-made-easy' );
+		$name  = 'eme_booking_attach_tmpl_ids';
+		$description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
+		eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_select2_width50_class' );
+        } else {
+                esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
+        }
+?>
 </table>
 </div>
 
@@ -1933,15 +1947,26 @@ function eme_options_page() {
 					}
 				}
 			} else {
-					$attachment_ids = '';
+				$attachment_ids = '';
 			}
 			?>
 			</span>
 <input type="hidden" name="eme_pending_attach_ids" id="eme_pending_attach_ids" value="<?php echo $attachment_ids; ?>">
 <input type="button" name="pending_attach_button" id="pending_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <input type="button" name="pending_remove_attach_button" id="pending_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
-<br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is approved.', 'events-made-easy' ); ?>
+<br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is pending.', 'events-made-easy' ); ?>
 </td></tr>
+<?php
+        $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+        if (!empty($pdftemplates)) {
+		$title = __( 'PDF templates to be added as attachments:', 'events-made-easy' );
+		$name  = 'eme_pending_attach_tmpl_ids';
+		$description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
+		eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_select2_width50_class' );
+        } else {
+                esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
+        }
+?>
 </table>
 </div>
 
@@ -2032,7 +2057,7 @@ function eme_options_page() {
 					}
 				}
 			} else {
-					$attachment_ids = '';
+				$attachment_ids = '';
 			}
 			?>
 			</span>
@@ -2041,6 +2066,17 @@ function eme_options_page() {
 <input type="button" name="paid_remove_attach_button" id="paid_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is paid.', 'events-made-easy' ); ?>
 </td></tr>
+<?php
+        $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+        if (!empty($pdftemplates)) {
+		$title = __( 'PDF templates to be added as attachments:', 'events-made-easy' );
+		$name  = 'eme_paid_attach_tmpl_ids';
+		$description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
+		eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_select2_width50_class' );
+        } else {
+                esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
+        }
+?>
 </table>
 </div>
 

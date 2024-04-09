@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.39 (2024//) =
 * Show RSVP and task info overview in the event edit window too (in the sidebar), like in the events overview table
+* PDF templates can now be added to the paid/pending/booking made/approved mails (default and per event)
 
 = 2.4.38 (2024/04/01) =
 * Avoid html-encoding of some options (like the smtp password)

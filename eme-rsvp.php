@@ -3620,12 +3620,18 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			$targetPath  = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
 			$pdf_path    = '';
 			if ( is_dir( $targetPath ) ) {
-				foreach ( glob( "$targetPath/ticket-$template_id-*.pdf" ) as $filename ) {
+				foreach ( glob( "$targetPath/booking-$template_id-*.pdf" ) as $filename ) {
 					$pdf_path = $filename;
+				}
+				// support the older "ticket-" name convention too
+				if ( empty( $pdf_path ) ) {
+					foreach ( glob( "$targetPath/ticket-$template_id-*.pdf" ) as $filename ) {
+						$pdf_path = $filename;
+					}
 				}
 			}
 			if ( empty( $pdf_path ) ) {
-				$pdf_path = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
+				$pdf_path = eme_generate_booking_pdf( $booking, $event, $template_id );
 			}
 			if ( ! empty( $pdf_path ) ) {
 				$replacement = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'] . '/' . basename( $pdf_path );
@@ -4046,7 +4052,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 			if ( $mailing_approved ) {
 				$template_id = $event['event_properties']['ticket_template_id'];
 				if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'approval' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
-					$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
+					$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
 				}
 				$attachment_ids = $event['event_properties']['booking_attach_ids'];
 				if ( empty( $attachment_ids ) ) {
@@ -4238,7 +4244,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 			if ( $mailing_paid ) {
 				$template_id = $event['event_properties']['ticket_template_id'];
 				if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'payment' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
-					$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
+					$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
 				}
 				$attachment_ids = $event['event_properties']['paid_attach_ids'];
 				if ( empty( $attachment_ids ) ) {
@@ -4340,7 +4346,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 				if ( $mailing_pending ) {
 					$template_id = $event['event_properties']['ticket_template_id'];
 					if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'booking' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
-						$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
+						$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
 					}
 					$attachment_ids = $event['event_properties']['pending_attach_ids'];
 					if ( empty( $attachment_ids ) ) {
@@ -4392,7 +4398,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 				if ( $mailing_approved ) {
 					$template_id = $event['event_properties']['ticket_template_id'];
 					if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'booking' || $event['event_properties']['ticket_mail'] == 'approval' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
-						$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id, 'ticket' );
+						$ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
 					}
 					$attachment_ids = $event['event_properties']['booking_attach_ids'];
 					if ( empty( $attachment_ids ) ) {
@@ -4516,7 +4522,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 		if ( empty( $attachment_ids ) ) {
 			$attachment_ids_arr = [];
 		} else {
-			$attachment_ids_arr = explode( ',', $attachment_ids );
+			$attachment_ids_arr = array_unique(explode( ',', $attachment_ids ));
 		}
 		// add the optional ticket template too, but since it is not a wp attachment, we directly add the ticket file path
 		if ( ! empty( $ticket_attachment ) ) {
@@ -4525,10 +4531,9 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 		// create and add the needed pdf attachments too
 		if ( !empty( $attachment_tmpl_ids_arr ) ) {
 			foreach ($attachment_tmpl_ids_arr as $attachment_tmpl_id) {
-				$attachment_ids_arr[] = eme_generate_booking_pdf( $booking, $event, $attachment_tmpl_id, 'booking' );
+				$attachment_ids_arr[] = eme_generate_booking_pdf( $booking, $event, $attachment_tmpl_id );
 			}
 		}
-
 
 		if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
 			$mail_res = eme_queue_fastmail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
@@ -6463,7 +6468,7 @@ function eme_ajax_action_mark_pending( $ids_arr, $action, $send_mail, $refund ) 
 	print wp_json_encode( $ajaxResult );
 }
 
-function eme_generate_booking_pdf( $booking, $event, $template_id, $prefix='ticket' ) {
+function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
 	$format = eme_get_template_format( $template_id );
@@ -6520,10 +6525,10 @@ $extra_html_header
 		touch( $targetPath . '/index.html' );
 	}
 	// unlink old pdf
-	array_map( 'wp_delete_file', glob( "$targetPath/$prefix-$template_id-*.pdf" ) );
+	array_map( 'wp_delete_file', glob( "$targetPath/booking-$template_id-*.pdf" ) );
 	// now put new one
 	$rand_id     = eme_random_id();
-	$target_file = $targetPath . "/$prefix-$template_id-$rand_id.pdf";
+	$target_file = $targetPath . "/booking-$template_id-$rand_id.pdf";
 	file_put_contents( $target_file, $dompdf->output() );
 	return $target_file;
 }

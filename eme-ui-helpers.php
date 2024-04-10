@@ -276,6 +276,7 @@ function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $req
 	$val .= ' </select>';
 	return $val;
 }
+
 function eme_ui_select_inverted( $option_value, $name, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
 	// make sure it is an array, otherwise just go back
 	if ( ! is_array( $list ) ) {
@@ -347,7 +348,7 @@ function eme_ui_select_key_value( $option_value, $name, $list, $key, $value, $ad
 			$t_value = '&nbsp;';
 		}
 		"$t_key" == $option_value ? $selected = "selected='selected' " : $selected = '';
-		$val                                 .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+		$val .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
 	}
 	$val .= ' </select>';
 	return $val;

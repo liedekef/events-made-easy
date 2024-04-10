@@ -140,6 +140,21 @@ function eme_init_membership_props( $props = [] ) {
 	if ( ! isset( $props['newmember_attach_ids'] ) ) {
 		$props['newmember_attach_ids'] = '';
 	}
+	if ( ! isset( $props['extended_attach_ids'] ) ) {
+		$props['extended_attach_ids'] = '';
+	}
+	if ( ! isset( $props['paid_attach_ids'] ) ) {
+		$props['paid_attach_ids'] = '';
+	}
+	if ( ! isset( $props['newmember_attach_tmpl_ids'] ) ) {
+		$props['newmember_attach_tmpl_ids'] = [];
+	}
+	if ( ! isset( $props['extended_attach_tmpl_ids'] ) ) {
+		$props['extended_attach_tmpl_ids'] = [];
+	}
+	if ( ! isset( $props['paid_attach_tmpl_ids'] ) ) {
+		$props['paid_attach_tmpl_ids'] = [];
+	}
 	if ( ! isset( $props['renewal_cutoff_days'] ) ) {
 		$props['renewal_cutoff_days'] = 0;
 	}
@@ -2228,14 +2243,14 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 	<img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the member that is signing up.', 'events-made-easy' ); ?>
 	<table class="eme_membership_admin_table">
 	<tr>
-	<td><label for="name"><?php esc_html_e( 'New member email subject', 'events-made-easy' ); ?></label></td>
+	<td><label for="properties[new_subject_format]"><?php esc_html_e( 'New member email subject', 'events-made-easy' ); ?></label></td>
 	<td><input id="properties[new_subject_format]" name="properties[new_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['new_subject_format'] ); ?>" size="40">
 		<br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the person signing up as a member.', 'events-made-easy' ); ?></p>
 		<br>
 	</td>
 	</tr>
 	<tr>
-	<td><label for="name"><?php esc_html_e( 'New member email body', 'events-made-easy' ); ?></label></td>
+	<td><label for="properties[new_body_format_tpl]"><?php esc_html_e( 'New member email body', 'events-made-easy' ); ?></label></td>
 	<td><?php echo eme_ui_select( $membership['properties']['new_body_format_tpl'], 'properties[new_body_format_tpl]', $templates_array ); ?>
 		<br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the person signing up as a member.', 'events-made-easy' ); ?><br>
 		<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
@@ -2261,7 +2276,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 	<?php
 	$attachment_ids = $membership['properties']['newmember_attach_ids'];
 	if ( ! empty( $attachment_ids ) ) {
-		$attachment_id_arr = explode( ',', $attachment_ids );
+		$attachment_id_arr = array_unique( explode( ',', $attachment_ids ));
 		foreach ( $attachment_id_arr as $attachment_id ) {
 			$attach_link = eme_get_attachment_link( $attachment_id );
 			if ( ! empty( $attach_link ) ) {
@@ -2281,7 +2296,24 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 	</td>
 	</tr>
 	<tr>
-	<td><label for="name"><?php esc_html_e( 'Contactperson new member email subject', 'events-made-easy' ); ?></label></td>
+	<td><label for="properties[newmember_attach_tmpl_ids]"><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?></label></td>
+	<td>
+<?php
+        $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+        if (!empty($pdftemplates)) {
+                $name  = 'properties[newmember_attach_tmpl_ids]';
+                $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
+                echo eme_ui_multiselect( $membership['properties']['newmember_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2_width50_class' );
+		echo '<br>';
+		esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
+        } else {
+                esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
+        }
+?>
+	</td>
+	</tr>
+	<tr>
+	<td><label for="properties[contact_new_subject_format]"><?php esc_html_e( 'Contactperson new member email subject', 'events-made-easy' ); ?></label></td>
 	<td><input id="properties[contact_new_subject_format]" name="properties[contact_new_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['contact_new_subject_format'] ); ?>" size="40">
 		<br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the contactperson when someone signes up as a member.', 'events-made-easy' ); ?></p>
 		<br>
@@ -2378,6 +2410,48 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		</p>
 	</td>
 	</tr>
+	<tr><td><?php esc_html_e( 'Mail attachments', 'events-made-easy' ); ?></td>
+	<td>
+<span id="extended_attach_links">
+	<?php
+	$attachment_ids = $membership['properties']['extended_attach_ids'];
+	if ( ! empty( $attachment_ids ) ) {
+		$attachment_id_arr = array_unique( explode( ',', $attachment_ids ));
+		foreach ( $attachment_id_arr as $attachment_id ) {
+			$attach_link = eme_get_attachment_link( $attachment_id );
+			if ( ! empty( $attach_link ) ) {
+				echo $attach_link;
+				echo '<br \>';
+			}
+		}
+	} else {
+		$attachment_ids = '';
+	}
+	?>
+</span>
+	<input type="hidden" name="properties[extended_attach_ids]" id="eme_extended_attach_ids" value="<?php echo $attachment_ids; ?>">
+	<input type="button" name="extended_attach_button" id="extended_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
+	<input type="button" name="extended_remove_attach_button" id="extended_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
+	<br><?php esc_html_e( 'Optionally add attachments to the mail when a member extends its membership.', 'events-made-easy' ); ?>
+	</td>
+	</tr>
+	<tr>
+	<td><label for="properties[extended_attach_tmpl_ids]"><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?></label></td>
+	<td>
+<?php
+        $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+        if (!empty($pdftemplates)) {
+                $name  = 'properties[extended_attach_tmpl_ids]';
+                $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
+                echo eme_ui_multiselect( $membership['properties']['extended_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2_width50_class' );
+		echo '<br>';
+		esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
+        } else {
+                esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
+        }
+?>
+	</td>
+	</tr>
 	</table>
 	</div>
 
@@ -2411,6 +2485,48 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		<?php eme_wysiwyg_textarea( 'properties[paid_body_text]', $membership['properties']['paid_body_text'], 1, 0 ); ?>
 		</div>
 		</p>
+	</td>
+	</tr>
+	<tr><td><?php esc_html_e( 'Mail attachments', 'events-made-easy' ); ?></td>
+	<td>
+<span id="paid_attach_links">
+	<?php
+	$attachment_ids = $membership['properties']['paid_attach_ids'];
+	if ( ! empty( $attachment_ids ) ) {
+		$attachment_id_arr = array_unique( explode( ',', $attachment_ids ));
+		foreach ( $attachment_id_arr as $attachment_id ) {
+			$attach_link = eme_get_attachment_link( $attachment_id );
+			if ( ! empty( $attach_link ) ) {
+				echo $attach_link;
+				echo '<br \>';
+			}
+		}
+	} else {
+		$attachment_ids = '';
+	}
+	?>
+</span>
+	<input type="hidden" name="properties[paid_attach_ids]" id="eme_paid_attach_ids" value="<?php echo $attachment_ids; ?>">
+	<input type="button" name="paid_attach_button" id="paid_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>" class="button-secondary action">
+	<input type="button" name="paid_remove_attach_button" id="paid_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
+	<br><?php esc_html_e( 'Optionally add attachments to the mail when a member has paid for the membership.', 'events-made-easy' ); ?>
+	</td>
+	</tr>
+	<tr>
+	<td><label for="properties[paid_attach_tmpl_ids]"><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?></label></td>
+	<td>
+<?php
+        $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+        if (!empty($pdftemplates)) {
+                $name  = 'properties[paid_attach_tmpl_ids]';
+                $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
+                echo eme_ui_multiselect( $membership['properties']['paid_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2_width50_class' );
+		echo '<br>';
+		esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
+        } else {
+                esc_html_e( 'No PDF templates defined yet.', 'events-made-easy' );
+        }
+?>
 	</td>
 	</tr>
 	<tr>
@@ -4095,6 +4211,7 @@ function eme_email_member_action( $member, $action ) {
 	$contact_subject = '';
 	$contact_body    = '';
 	$atts            = [];
+	$attachment_tmpl_ids_arr = [];
 	if ( $action == 'expiration_reminder' ) {
 		$member_subject = $membership['properties']['reminder_subject_format'];
 		if ( ! eme_is_empty_string( $membership['properties']['reminder_body_text'] ) ) {
@@ -4115,10 +4232,15 @@ function eme_email_member_action( $member, $action ) {
 		} else {
 			$contact_body = eme_get_template_format_plain( $membership['properties']['contact_paid_body_format_tpl'] );
 		}
+		$attachment_ids = $membership['properties']['paid_attach_ids'];
+                if ( ! empty( $attachment_ids ) ) {
+                        $atts = array_unique(explode( ',', $attachment_ids ));
+                }
 		$template_id = $membership['properties']['member_template_id'];
 		if ( $template_id ) {
-			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id, 'member' );
+			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id );
 		}
+                $attachment_tmpl_ids_arr = $membership['properties']['paid_attach_tmpl_ids'];
 	} elseif ( $action == 'resendPaidMember' ) {
 		$member_subject = $membership['properties']['paid_subject_format'];
 		if ( ! eme_is_empty_string( $membership['properties']['paid_body_text'] ) ) {
@@ -4126,10 +4248,16 @@ function eme_email_member_action( $member, $action ) {
 		} else {
 			$member_body = eme_get_template_format_plain( $membership['properties']['paid_body_format_tpl'] );
 		}
+		$attachment_ids = $membership['properties']['paid_attach_ids'];
+                if ( ! empty( $attachment_ids ) ) {
+                        $atts = array_unique(explode( ',', $attachment_ids ));
+                }
 		$template_id = $membership['properties']['member_template_id'];
 		if ( $template_id ) {
-			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id, 'member' );
+			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id );
 		}
+                $attachment_tmpl_ids_arr = $membership['properties']['paid_attach_tmpl_ids'];
+
 	} elseif ( $action == 'extendMember' ) {
 		$member_subject = $membership['properties']['extended_subject_format'];
 		if ( ! eme_is_empty_string( $membership['properties']['extended_body_text'] ) ) {
@@ -4137,10 +4265,15 @@ function eme_email_member_action( $member, $action ) {
 		} else {
 			$member_body = eme_get_template_format_plain( $membership['properties']['extended_body_format_tpl'] );
 		}
+		$attachment_ids = $membership['properties']['extended_attach_ids'];
+		if ( ! empty( $attachment_ids ) ) {
+			$atts = array_unique(explode( ',', $attachment_ids ));
+		}
 		$template_id = $membership['properties']['member_template_id'];
 		if ( $template_id ) {
-			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id, 'member' );
+			$atts[] = eme_generate_member_pdf( $member, $membership, $template_id );
 		}
+		$attachment_tmpl_ids_arr = $membership['properties']['extended_attach_tmpl_ids'];
 	} elseif ( $action == 'updateMember' ) {
 		$member_subject = $membership['properties']['updated_subject_format'];
 		if ( ! eme_is_empty_string( $membership['properties']['updated_body_text'] ) ) {
@@ -4183,8 +4316,9 @@ function eme_email_member_action( $member, $action ) {
 		}
 		$attachment_ids = $membership['properties']['newmember_attach_ids'];
 		if ( ! empty( $attachment_ids ) ) {
-			$atts = explode( ',', $attachment_ids );
+			$atts = array_unique(explode( ',', $attachment_ids ));
 		}
+		$attachment_tmpl_ids_arr = $membership['properties']['newmember_attach_tmpl_ids'];
 	}
 
 	// replace needed placeholders for the member and the contact
@@ -4199,6 +4333,13 @@ function eme_email_member_action( $member, $action ) {
 	}
 	if ( ! empty( $contact_body ) ) {
 		$contact_body = eme_replace_member_placeholders( $contact_body, $membership, $member, $mail_text_html );
+	}
+
+	// create and add the needed pdf attachments too
+	if ( !empty( $attachment_tmpl_ids_arr ) ) {
+		foreach ($attachment_tmpl_ids_arr as $attachment_tmpl_id) {
+			$atts[] = eme_generate_member_pdf( $member, $membership, $attachment_tmpl_id );
+		}
 	}
 
 	// now an action, so you can hook into everything
@@ -5114,7 +5255,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				}
 				$replacement .= '</table>';
 			}
-		} elseif ( preg_match( '/#_PDF_URL\{(.+?)\}$/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_PDF_URL\{(\d+)\}/', $result, $matches ) ) {
 			$template_id = intval( $matches[1] );
 			$targetPath  = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
 			$pdf_path    = '';
@@ -5124,7 +5265,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 				}
 			}
 			if ( empty( $pdf_path ) ) {
-				$pdf_path = eme_generate_member_pdf( $member, $membership, $template_id, 'member' );
+				$pdf_path = eme_generate_member_pdf( $member, $membership, $template_id );
 			}
 			if ( ! empty( $pdf_path ) ) {
 				$replacement = EME_UPLOAD_URL . '/members/' . $member['member_id'] . '/' . basename( $pdf_path );
@@ -6701,7 +6842,7 @@ function eme_ajax_action_resend_member_reminders( $ids_arr ) {
 	print wp_json_encode( $ajaxResult );
 }
 
-function eme_generate_member_pdf( $member, $membership, $template_id, $prefix='member' ) {
+function eme_generate_member_pdf( $member, $membership, $template_id ) {
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
 		$format = eme_get_template_format( $template_id );
@@ -6757,10 +6898,10 @@ $extra_html_header
 		touch( $targetPath . '/index.html' );
 	}
 	// unlink old pdf
-	array_map( 'wp_delete_file', glob( "$targetPath/$prefix-$template_id-*.pdf" ) );
+	array_map( 'wp_delete_file', glob( "$targetPath/member-$template_id-*.pdf" ) );
 	// now put new one
 	$rand_id     = eme_random_id();
-	$target_file = $targetPath . "/$prefix-$template_id-$rand_id.pdf";
+	$target_file = $targetPath . "/member-$template_id-$rand_id.pdf";
 	file_put_contents( $target_file, $dompdf->output() );
 	return $target_file;
 }

@@ -1881,7 +1881,7 @@ function eme_options_page() {
 			<?php
 			$attachment_ids = get_option( 'eme_booking_attach_ids' );
 			if ( ! empty( $attachment_ids ) ) {
-					$attachment_id_arr = explode( ',', $attachment_ids );
+				$attachment_id_arr = array_unique( explode( ',', $attachment_ids ));
 				foreach ( $attachment_id_arr as $attachment_id ) {
 					$attach_link = eme_get_attachment_link( $attachment_id );
 					if ( ! empty( $attach_link ) ) {
@@ -1902,7 +1902,7 @@ function eme_options_page() {
 <?php
         $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
         if (!empty($pdftemplates)) {
-		$title = __( 'PDF templates to be added as attachments:', 'events-made-easy' );
+		$title = __( 'PDF templates as attachments', 'events-made-easy' );
 		$name  = 'eme_booking_attach_tmpl_ids';
 		$description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
 		eme_options_multiselect( $title, $name, $pdftemplates, $description, false, 'eme_select2_width50_class' );

@@ -806,16 +806,13 @@ jQuery(document).ready(function ($) {
                                 tmp_ids_arr.push(attachment.id);
                                 tmp_ids_val=tmp_ids_arr.join(',');
                                 $('#eme_newmember_attach_ids').val(tmp_ids_val);
-                                $('#newmember_attach_button').hide();
                                 $('#newmember_remove_attach_button').show();
                         });
                 }).open();
         });
         if ($('#eme_newmember_attach_ids').val() != '') {
-                $('#newmember_attach_button').hide();
                 $('#newmember_remove_attach_button').show();
         } else {
-                $('#newmember_attach_button').show();
                 $('#newmember_remove_attach_button').hide();
         }
         $('#newmember_remove_attach_button').on("click",function(e) {
@@ -824,6 +821,85 @@ jQuery(document).ready(function ($) {
                 $('#eme_newmember_attach_ids').val('');
                 $('#newmember_attach_button').show();
                 $('#newmember_remove_attach_button').hide();
+        });
+
+        $('#extended_attach_button').on("click",function(e) {
+                e.preventDefault();
+                var custom_uploader = wp.media({
+                        title: ememembers.translate_addattachments,
+                        button: {
+                                text: ememembers.translate_addattachments
+                        },
+                        multiple: true  // Set this to true to allow multiple files to be selected
+                }).on('select', function() {
+                        var selection = custom_uploader.state().get('selection');
+                        // using map is not really needed, but this way we can reuse the code if multiple=true
+                        // var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        selection.map( function(attach) {
+                                attachment = attach.toJSON();
+                                $('#extended_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                                if ($('#eme_extended_attach_ids').val() != '') {
+                                        tmp_ids_arr=$('#eme_extended_attach_ids').val().split(',');
+                                } else {
+                                        tmp_ids_arr=[];
+                                }
+                                tmp_ids_arr.push(attachment.id);
+                                tmp_ids_val=tmp_ids_arr.join(',');
+                                $('#eme_extended_attach_ids').val(tmp_ids_val);
+                                $('#extended_remove_attach_button').show();
+                        });
+                }).open();
+        });
+        if ($('#eme_extended_attach_ids').val() != '') {
+                $('#extended_remove_attach_button').show();
+        } else {
+                $('#extended_remove_attach_button').hide();
+        }
+        $('#extended_remove_attach_button').on("click",function(e) {
+                e.preventDefault();
+                $('#extended_attach_links').html('');
+                $('#eme_extended_attach_ids').val('');
+                $('#extended_attach_button').show();
+                $('#extended_remove_attach_button').hide();
+        });
+        $('#paid_attach_button').on("click",function(e) {
+                e.preventDefault();
+                var custom_uploader = wp.media({
+                        title: ememembers.translate_addattachments,
+                        button: {
+                                text: ememembers.translate_addattachments
+                        },
+                        multiple: true  // Set this to true to allow multiple files to be selected
+                }).on('select', function() {
+                        var selection = custom_uploader.state().get('selection');
+                        // using map is not really needed, but this way we can reuse the code if multiple=true
+                        // var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        selection.map( function(attach) {
+                                attachment = attach.toJSON();
+                                $('#paid_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                                if ($('#eme_paid_attach_ids').val() != '') {
+                                        tmp_ids_arr=$('#eme_paid_attach_ids').val().split(',');
+                                } else {
+                                        tmp_ids_arr=[];
+                                }
+                                tmp_ids_arr.push(attachment.id);
+                                tmp_ids_val=tmp_ids_arr.join(',');
+                                $('#eme_paid_attach_ids').val(tmp_ids_val);
+                                $('#paid_remove_attach_button').show();
+                        });
+                }).open();
+        });
+        if ($('#eme_paid_attach_ids').val() != '') {
+                $('#paid_remove_attach_button').show();
+        } else {
+                $('#paid_remove_attach_button').hide();
+        }
+        $('#paid_remove_attach_button').on("click",function(e) {
+                e.preventDefault();
+                $('#paid_attach_links').html('');
+                $('#eme_paid_attach_ids').val('');
+                $('#paid_attach_button').show();
+                $('#paid_remove_attach_button').hide();
         });
 
 });

@@ -7554,7 +7554,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 	<?php
 	$attachment_ids = $event['event_properties']['booking_attach_ids'];
 	if ( ! empty( $attachment_ids ) ) {
-		$attachment_id_arr = explode( ',', $attachment_ids );
+		$attachment_id_arr = array_unique(explode( ',', $attachment_ids ));
 		foreach ( $attachment_id_arr as $attachment_id ) {
 			$attach_link = eme_get_attachment_link( $attachment_id );
 			if ( ! empty( $attach_link ) ) {
@@ -7572,11 +7572,13 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 <input type="button" name="booking_remove_attach_button" id="booking_remove_attach_button" value="<?php esc_attr_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a new booking is made.', 'events-made-easy' ); ?>
 <br><?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
-<br><br><?php esc_html_e( 'PDF templates to be added as attachments:', 'events-made-easy' ); ?>
+<br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 	<?php
 	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
 	if (!empty($pdftemplates)) {
 		echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdftemplates, 3, '', 0, 'eme_select2_width50_class' );
+		echo '<br>';
+		esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
 		echo '<br>';
 		esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' );
 	} else {
@@ -7755,7 +7757,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 	<?php
 	$attachment_ids = $event['event_properties']['pending_attach_ids'];
 	if ( ! empty( $attachment_ids ) ) {
-		$attachment_id_arr = explode( ',', $attachment_ids );
+		$attachment_id_arr = array_unique(explode( ',', $attachment_ids ));
 		foreach ( $attachment_id_arr as $attachment_id ) {
 			$attach_link = eme_get_attachment_link( $attachment_id );
 			if ( ! empty( $attach_link ) ) {
@@ -7773,11 +7775,13 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 <input type="button" name="pending_remove_attach_button" id="pending_remove_attach_button" value="<?php esc_attr_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is pending.', 'events-made-easy' ); ?>
 <br><?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
-<br><br><?php esc_html_e( 'PDF templates to be added as attachments:', 'events-made-easy' ); ?>
+<br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 	<?php
 	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
 	if (!empty($pdftemplates)) {
 		echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdftemplates, 3, '', 0, 'eme_select2_width50_class' );
+		echo '<br>';
+		esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
 		echo '<br>';
 		esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' );
 	} else {
@@ -8140,7 +8144,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 	<?php
 	$attachment_ids = $event['event_properties']['paid_attach_ids'];
 	if ( ! empty( $attachment_ids ) ) {
-		$attachment_id_arr = explode( ',', $attachment_ids );
+		$attachment_id_arr = array_unique(explode( ',', $attachment_ids ));
 		foreach ( $attachment_id_arr as $attachment_id ) {
 			$attach_link = eme_get_attachment_link( $attachment_id );
 			if ( ! empty( $attach_link ) ) {
@@ -8158,11 +8162,13 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 <input type="button" name="paid_remove_attach_button" id="paid_remove_attach_button" value="<?php esc_attr_e( 'Remove attachments', 'events-made-easy' ); ?>" class="button-secondary action">
 <br><?php esc_html_e( 'Optionally add attachments to the mail when a booking is paid.', 'events-made-easy' ); ?>
 <br><?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
-<br><br><?php esc_html_e( 'PDF templates to be added as attachments:', 'events-made-easy' ); ?>
+<br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 	<?php
 	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
 	if (!empty($pdftemplates)) {
 		echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdftemplates, 3, '', 0, 'eme_select2_width50_class' );
+		echo '<br>';
+		esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
 		echo '<br>';
 		esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' );
 	} else {

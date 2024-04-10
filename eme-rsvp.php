@@ -6470,6 +6470,12 @@ function eme_ajax_action_mark_pending( $ids_arr, $action, $send_mail, $refund ) 
 
 function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 	$template = eme_get_template( $template_id );
+
+	// if the template is not meant for pdf, return
+	if ( $template['type'] != "pdf" ) {
+		return;
+	}
+
 	// the template format needs br-handling, so lets use a handy function
 	$format = eme_get_template_format( $template_id );
 

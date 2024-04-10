@@ -6844,8 +6844,14 @@ function eme_ajax_action_resend_member_reminders( $ids_arr ) {
 
 function eme_generate_member_pdf( $member, $membership, $template_id ) {
 	$template = eme_get_template( $template_id );
+
+	// if the template is not meant for pdf, return
+	if ( $template['type'] != "pdf" ) {
+		return;
+	}
+
 	// the template format needs br-handling, so lets use a handy function
-		$format = eme_get_template_format( $template_id );
+	$format = eme_get_template_format( $template_id );
 
 	require_once 'dompdf/vendor/autoload.php';
 	// instantiate and use the dompdf class

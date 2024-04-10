@@ -93,12 +93,21 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 			if ( is_numeric( $attachment ) ) {
 				$file_path = get_attached_file( $attachment );
 				if ( ! empty( $file_path ) && file_exists( $file_path ) ) {
-					$attachment_paths_arr[] = $file_path;
+					$filename = basename($file_path);
+					$attachment_paths_arr[$filename] = $file_path;
 				}
 			} else {
 				// if it is not a numeric id, it is a file path (like for pdf tickets)
 				if ( file_exists( $attachment ) ) {
-					$attachment_paths_arr[] = $attachment;
+					$filename = basename($attachment);
+					$extension = pathinfo($filename, PATHINFO_EXTENSION);
+					// first remove the extension
+					$filename = preg_replace( '/\.$extension$/','', $filename );
+					// now rename parts of the file
+					$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
+					$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
+					// re-add the extension
+					$attachment_paths_arr[$filename.'.'.$extension] = $attachment;
 				}
 			}
 		}
@@ -132,7 +141,10 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		// set the correct content type
 		if ( $mailoptions['send_html'] ) {
 			$body = eme_nl2br_save_html( $body );
-			add_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
+			// set the content-type header, wp-mail knows about this one
+			// it is cleaner than add_filter/remove_filter of wp_mail_content_type ...
+			$headers[] = 'Content-type: text/html';
+			//add_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
 		}
 
 		// now send it
@@ -147,9 +159,9 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		}
 
 		// Reset content-type to avoid conflicts -- http://core.trac.wordpress.org/ticket/23578
-		if ( $mailoptions['send_html'] ) {
-			remove_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
-		}
+		//if ( $mailoptions['send_html'] ) {
+		//	remove_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
+		//}
 	} else {
 		// we prefer the new location first
 		if ( file_exists( ABSPATH . WPINC . '/PHPMailer/PHPMailer.php' ) ) {
@@ -286,8 +298,9 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		}
 
 		if ( ! empty( $attachment_paths_arr ) ) {
-			foreach ( $attachment_paths_arr as $att ) {
-				$mail->addAttachment( $att );
+			foreach ( $attachment_paths_arr as $filename => $att ) {
+				$filename = is_string( $filename ) ? $filename : '';
+				$mail->addAttachment( $att, $filename );
 			}
 		}
 

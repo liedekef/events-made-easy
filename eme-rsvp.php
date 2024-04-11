@@ -2000,9 +2000,7 @@ function eme_db_insert_booking( $event, $booker, $booking ) {
 	$booking['dcodes_entered'] = eme_serialize( $booking['dcodes_entered'] );
 	$booking['dcodes_used']    = eme_serialize( $booking['dcodes_used'] );
 
-	if ( empty( $booking['creation_date'] ) || ! ( eme_is_date( $booking['creation_date'] ) || eme_is_datetime( $booking['creation_date'] ) ) ) {
-		$booking['creation_date'] = current_time( 'mysql', false );
-	}
+	$booking['creation_date'] = current_time( 'mysql', false );
 	$booking['modif_date'] = $booking['creation_date'];
 
 	if ( $wpdb->insert( $bookings_table, $booking ) ) {
@@ -3617,22 +3615,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			}
 		} elseif ( preg_match( '/#_PDF_URL\{(\d+)\}/', $result, $matches ) ) {
 			$template_id = intval( $matches[1] );
-			$targetPath  = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
-			$pdf_path    = '';
-			if ( is_dir( $targetPath ) ) {
-				foreach ( glob( "$targetPath/booking-$template_id-*.pdf" ) as $filename ) {
-					$pdf_path = $filename;
-				}
-				// support the older "ticket-" name convention too
-				if ( empty( $pdf_path ) ) {
-					foreach ( glob( "$targetPath/ticket-$template_id-*.pdf" ) as $filename ) {
-						$pdf_path = $filename;
-					}
-				}
-			}
-			if ( empty( $pdf_path ) ) {
-				$pdf_path = eme_generate_booking_pdf( $booking, $event, $template_id );
-			}
+			$pdf_path = eme_generate_booking_pdf( $booking, $event, $template_id );
 			if ( ! empty( $pdf_path ) ) {
 				$replacement = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'] . '/' . basename( $pdf_path );
 			}
@@ -6474,6 +6457,32 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 	// if the template is not meant for pdf, return
 	if ( $template['type'] != "pdf" ) {
 		return;
+	}
+
+	$targetPath  = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
+	$pdf_path    = '';
+	if ( is_dir( $targetPath ) ) {
+		foreach ( glob( "$targetPath/booking-$template_id-*.pdf" ) as $filename ) {
+			$pdf_path = $filename;
+		}
+		// support the older "ticket-" name convention too
+		if ( empty( $pdf_path ) ) {
+			foreach ( glob( "$targetPath/ticket-$template_id-*.pdf" ) as $filename ) {
+				$pdf_path = $filename;
+			}
+		}
+	}
+	// we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
+	if ( !empty( $pdf_path ) ) {
+		$pdf_mtime      = filemtime( $pdf_path );
+		$pdf_mtime_obj      = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$pdf_mtime_obj->setTimestamp($pdf_mtime);
+		$booking_mtime_obj  = new ExpressiveDate( $booking['modif_date'], EME_TIMEZONE );
+		$event_mtime_obj    = new ExpressiveDate( $event['modif_date'], EME_TIMEZONE );
+		$template_mtime_obj = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
+		if ($booking_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
+			return $pdf_path;
+		}
 	}
 
 	// the template format needs br-handling, so lets use a handy function

@@ -103,6 +103,7 @@ function eme_templates_page() {
 			$template['description'] = eme_sanitize_request( $_POST['description'] );
 			$template['type']        = eme_sanitize_request( $_POST['type'] );
 			$template['format']      = eme_kses_maybe_unfiltered( $_POST['template_format'] );
+			$template['modif_date']  = current_time( 'mysql', false );
 			if ( isset( $_POST['properties'] ) ) {
 				$properties = eme_sanitize_request( $_POST['properties'] );
 			}

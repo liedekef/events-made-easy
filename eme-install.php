@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 384 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 386 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -993,14 +993,15 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
          format text NOT NULL,
          type tinytext,
          properties text,
+         modif_date datetime,
          UNIQUE KEY  (id)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
 		maybe_add_column( $table_name, 'type', "ALTER TABLE $table_name ADD type tinytext;" );
 		maybe_add_column( $table_name, 'properties', "ALTER TABLE $table_name ADD properties text;" );
+		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
 		eme_maybe_drop_column( $table_name, 'creation_date' );
-		eme_maybe_drop_column( $table_name, 'modif_date' );
 		if ( $db_version < 41 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY format text NOT NULL;" );
 		}
@@ -1013,6 +1014,10 @@ function eme_create_templates_table( $charset, $collate, $db_version, $db_prefix
 				maybe_add_column( $table_name, 'name', "ALTER TABLE $table_name ADD name tinytext;" );
 				$wpdb->query( "UPDATE $table_name SET name = description;" );
 			}
+		}
+		if ( $db_version < 385 ) {
+			$modif_date = current_time( 'mysql', false );
+			$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET modif_date = %s", $modif_date ) );
 		}
 	}
 }
@@ -1539,12 +1544,17 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          duration_count tinyint DEFAULT 0,
          duration_period varchar(50) DEFAULT '',
          properties text,
+         modif_date datetime,
          UNIQUE KEY  (membership_id)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
-		eme_maybe_drop_column( $table_name, 'modif_date' );
+		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
 		eme_maybe_drop_column( $table_name, 'creation_date' );
+		if ( $db_version < 386 ) {
+			$modif_date = current_time( 'mysql', false );
+			$wpdb->query( $wpdb->prepare( "UPDATE $table_name SET modif_date = %s", $modif_date ) );
+		}
 	}
 }
 

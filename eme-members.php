@@ -245,6 +245,7 @@ function eme_db_insert_membership( $membership ) {
 	if ( ! eme_is_serialized( $membership['properties'] ) ) {
 		$membership['properties'] = eme_serialize( $membership['properties'] );
 	}
+	$membership['modif_date'] = current_time( 'mysql', false );
 	if ( ! $wpdb->insert( $table, $membership ) ) {
 		$wpdb->print_error();
 		return false;
@@ -278,9 +279,7 @@ function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
 		$member = apply_filters( 'eme_insert_member_filter', $member );
 	}
 
-	if ( empty( $member['creation_date'] ) || ! ( eme_is_date( $member['creation_date'] ) || eme_is_datetime( $member['creation_date'] ) ) ) {
-		$member['creation_date'] = current_time( 'mysql', false );
-	}
+	$member['creation_date'] = current_time( 'mysql', false );
 	$member['modif_date']    = $member['creation_date'];
 	$member['membership_id'] = $membership['membership_id'];
 
@@ -361,6 +360,7 @@ function eme_db_update_membership( $membership_id, $line ) {
 	$where                  = [];
 	$where['membership_id'] = intval( $membership_id );
 
+	$line['modif_date']     = current_time( 'mysql', false );
 	$membership = eme_get_membership( $membership_id );
 	wp_cache_delete( "eme_membership $membership_id" );
 	unset( $membership['membership_id'] );
@@ -5257,16 +5257,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			}
 		} elseif ( preg_match( '/#_PDF_URL\{(\d+)\}/', $result, $matches ) ) {
 			$template_id = intval( $matches[1] );
-			$targetPath  = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
-			$pdf_path    = '';
-			if ( is_dir( $targetPath ) ) {
-				foreach ( glob( "$targetPath/member-$template_id-*.pdf" ) as $filename ) {
-					$pdf_path = $filename;
-				}
-			}
-			if ( empty( $pdf_path ) ) {
-				$pdf_path = eme_generate_member_pdf( $member, $membership, $template_id );
-			}
+			$pdf_path = eme_generate_member_pdf( $member, $membership, $template_id );
 			if ( ! empty( $pdf_path ) ) {
 				$replacement = EME_UPLOAD_URL . '/members/' . $member['member_id'] . '/' . basename( $pdf_path );
 			}
@@ -6848,6 +6839,27 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 	// if the template is not meant for pdf, return
 	if ( $template['type'] != "pdf" ) {
 		return;
+	}
+
+	$targetPath  = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
+	$pdf_path    = '';
+	if ( is_dir( $targetPath ) ) {
+		foreach ( glob( "$targetPath/member-$template_id-*.pdf" ) as $filename ) {
+			$pdf_path = $filename;
+		}
+	}
+
+	// we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
+	if ( !empty( $pdf_path ) ) {
+		$pdf_mtime      = filemtime( $pdf_path );
+		$pdf_mtime_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$pdf_mtime_obj->setTimestamp($pdf_mtime);
+		$member_mtime_obj     = new ExpressiveDate( $member['modif_date'], EME_TIMEZONE );
+		$membership_mtime_obj = new ExpressiveDate( $membership['modif_date'], EME_TIMEZONE );
+		$template_mtime_obj   = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
+		if ($member_mtime_obj<$pdf_mtime_obj && $membership_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
+			return $pdf_path;
+		}
 	}
 
 	// the template format needs br-handling, so lets use a handy function

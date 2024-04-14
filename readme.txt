@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Show RSVP and task info overview in the event edit window too (in the sidebar), like in the events overview table
 * PDF templates can now be added to the paid/pending/booking made/approved mails (default and per event)
 * PDF templates can now be added to the paid/extended/new member mails (set per membership)
+* Update dompdf to 2.0.5
 
 = 2.4.38 (2024/04/01) =
 * Avoid html-encoding of some options (like the smtp password)

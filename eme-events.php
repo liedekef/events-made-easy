@@ -6132,11 +6132,11 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	$event_status_array = eme_status_array();
 	$nonce_field        = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( ! isset( $info['feedback'] ) ) {
-			$hidden_style = 'display:none;';
-		$message          = '';
+		$hidden_style = 'display:none;';
+		$message      = '';
 	} else {
-			$hidden_style = '';
-		$message          = $info['feedback'];
+		$hidden_style = '';
+		$message      = $info['feedback'];
 	}
 
 	// if it comes from a copy action, remove event_id and such
@@ -6515,7 +6515,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 					if ( isset( $_REQUEST['trash'] ) && $_REQUEST['trash'] == 1 ) {
 						$view_trash  = 1;
 					}
-					if ( !$view_trash && ($event['event_rsvp'] || $event['event_tasks'] )) { ?>
+					if ( !$edit_recurrence && !$view_trash && ($event['event_rsvp'] || $event['event_tasks'] )) { ?>
 					<div class="postbox" id="eme_bookingsandtasks">
 					<h2 class='hndle'><span><?php esc_html_e( 'Bookings and tasks', 'events-made-easy' ); ?></span></h2>
 					<div class="inside">
@@ -7083,8 +7083,8 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 			$eme_recurrence_checked = "checked='checked'";
 		}
 	} elseif ( isset( $event['recurrence_id'] ) && $event['recurrence_id'] ) {
-			# editing a single event of an recurrence: don't show the recurrence form
-			$show_recurrent_form = 0;
+		# editing a single event of an recurrence: don't show the recurrence form
+		$show_recurrent_form = 0;
 	} else {
 		# for single non-recurrent events: we show the form, so we can make it recurrent if we want to
 		# Also: in the case that bookings already took place for this event, we don't allow the conversion
@@ -7136,7 +7136,7 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 			<input id="event-recurrence" type="checkbox" name="repeated_event" value="1" <?php echo $eme_recurrence_checked; ?>>
 			<label for="event-recurrence"><?php esc_html_e( 'Check if your event happens more than once.', 'events-made-easy' ); ?></label>
 			<?php
-		} else {
+		} elseif (!$event['recurrence_id']) {
 			echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
 			esc_html_e( 'Bookings found for this event, so not possible to convert to a recurring event.', 'events-made-easy' );
 		}

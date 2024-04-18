@@ -247,12 +247,12 @@ function eme_init_event_props( $props = [] ) {
 	}
 
 	// for sure integers
-	$numbers = [ 'create_wp_user', 'auto_approve', 'ignore_pending', 'email_only_once', 'person_only_once', 'invite_only', 'all_day', 'take_attendance', 'require_user_confirmation', 'captcha_only_logged_out', 'dyndata_all_fields', 'task_registered_users_only', 'task_requires_approval', 'task_allow_overlap', 'attendancerecord', 'waitinglist_seats' ];
+	$numbers = [ 'create_wp_user', 'auto_approve', 'ignore_pending', 'email_only_once', 'person_only_once', 'invite_only', 'all_day', 'take_attendance', 'require_user_confirmation', 'captcha_only_logged_out', 'dyndata_all_fields', 'task_registered_users_only', 'task_requires_approval', 'task_allow_overlap', 'attendancerecord', 'waitinglist_seats', 'check_free_waiting', 'ticket_template_id', 'skippaymentoptions' ];
 	foreach ( $numbers as $opt ) {
 		$props[$opt]=intval($props[$opt]);
 	}
 	// for integers or floats
-	$numbers = [ 'rsvp_end_number_days', 'rsvp_end_number_hours', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'check_free_waiting', 'cancel_rsvp_days', 'cancel_rsvp_age', 'attendance_begin', 'attendance_end', 'ticket_template_id', 'skippaymentoptions', 'task_reminder_days', 'rsvp_pending_reminder_days', 'rsvp_approved_reminder_days' ];
+	$numbers = [ 'rsvp_end_number_days', 'rsvp_end_number_hours', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'cancel_rsvp_days', 'cancel_rsvp_age', 'attendance_begin', 'attendance_end', 'task_reminder_days', 'rsvp_pending_reminder_days', 'rsvp_approved_reminder_days' ];
 	foreach ( $numbers as $opt ) {
 		if (eme_isFloat($props[$opt])) {
 			$props[$opt]=floatval($props[$opt]);

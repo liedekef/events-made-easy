@@ -4014,6 +4014,9 @@ function eme_mkdir_with_index( $targetPath ) {
 }
 
 function eme_isFloat($amount ): bool {
+	// if not numeric, return false
+	if (!is_numeric($amount)) return false;
+        $amount +=0; // this converts strings to int or float
 	return is_float( $amount ) && intval( $amount ) != $amount;
 }
 

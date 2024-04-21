@@ -151,7 +151,7 @@ class Client
 	 * 
 	 * @return  array  Response objects by Payconiq
 	 */
-	public function getPaymentsListByDateRange($fromDate='',$toDate='')
+	public function getPaymentsListByDateRange($fromDate='',$toDate='',$size=50)
 	{
 		$param_arr = [
 			"paymentStatuses" => ["SUCCEEDED"]
@@ -162,12 +162,21 @@ class Client
 		if (!empty($toDate)) {
 			$param_arr['to'] = $toDate;
 		}
-		$response = $this->curl('POST', $this->getEndpoint('/payments/search'), $this->constructHeaders(), $param_arr);
+		$page = 0;
+		$response = $this->curl('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $this->constructHeaders(), $param_arr);
 
 		if (empty($response->size))
 			throw new GetPaymentsListFailedException($response->message);
 
-		return $response->details;
+		$details = $response->details;
+		if (!empty($response->totalPages) && $response->totalPages>1) {
+			while ($page < $response->totalPages) {
+				$page=$response->number+1;
+				$response = $this->curl('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $this->constructHeaders(), $param_arr);
+				$details = array_merge($details,$response->details);
+			}
+		}
+		return $details;
 	}
 
 	/**

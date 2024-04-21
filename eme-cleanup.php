@@ -11,7 +11,7 @@ function eme_cleanup_people() {
 	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$tasksignup_table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE person_id NOT IN (SELECT person_id FROM $bookings_table WHERE status != %d) AND person_id NOT IN (SELECT person_id FROM $members_table WHERE status != %d) AND person_id NOT IN (SELECT person_id FROM $usergroups_table) AND person_id NOT IN (SELECT person_id FROM $tasksignup_table) AND status !=%d ", EME_RSVP_STATUS_TRASH, EME_MEMBER_STATUS_EXPIRED, EME_PEOPLE_STATUS_TRASH );
+	$sql              = $wpdb->prepare( "SELECT $people_table.person_id FROM $people_table WHERE NOT EXISTS (SELECT 1 FROM $bookings_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $members_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $usergroups_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $tasksignup_table WHERE $bookings_table.person_id=$people_table.person_id) AND status !=%d ", EME_PEOPLE_STATUS_TRASH );
 	$person_ids       = $wpdb->get_col( $sql );
 	$count            = count( $person_ids );
 	$tmp_ids          = join( ',', $person_ids );
@@ -319,7 +319,7 @@ function eme_cleanup_form( $message = '' ) {
 
 <br><br>
 	<form action="" method="post">
-	<?php esc_html_e( 'Set status of people who are no longer referenced in bookings, groups or memberships to trash', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'Move people who are no longer referenced in bookings, groups or memberships to the trash bin', 'events-made-easy' ); ?>
 	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_people'>

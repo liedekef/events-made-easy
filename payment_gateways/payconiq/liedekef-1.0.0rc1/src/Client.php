@@ -170,7 +170,7 @@ class Client
 
 		$details = $response->details;
 		if (!empty($response->totalPages) && $response->totalPages>1) {
-			while ($page < $response->totalPages) {
+			while ($page < $response->totalPages-1) {
 				$page=$response->number+1;
 				$response = $this->curl('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $this->constructHeaders(), $param_arr);
 				$details = array_merge($details,$response->details);

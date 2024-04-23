@@ -565,7 +565,7 @@ function eme_get_active_member_by_personid_membershipid( $person_id, $membership
 	return $member;
 }
 
-function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = '' ) {
+function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = EME_MEMBER_STATUS_ACTIVE.'.'.EME_MEMBER_STATUS_GRACE ) {
 	global $wpdb;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
@@ -574,14 +574,12 @@ function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = 
 	}
 	if ( $status == 'all' ) {
 		$cond_status = '';
-	} elseif ( ! empty( $status ) ) {
+	} else {
 		if ( strstr( $status, ',' ) ) {
 			$cond_status = "AND members.status IN ($status)";
 		} else {
 			$cond_status = "AND members.status = $status";
 		}
-	} else {
-		$cond_status = "AND members.status IN (". EME_MEMBER_STATUS_ACTIVE . ',' . EME_MEMBER_STATUS_GRACE .")";
 	}
 	$sql    = $wpdb->prepare( "SELECT members.* FROM $members_table AS members, $people_table AS people WHERE members.membership_id=%d $cond_status AND members.person_id=people.person_id AND people.wp_id=%d LIMIT 1", $membership_id, $wp_id );
 	$member = $wpdb->get_row( $sql, ARRAY_A );

@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.5
-Stable tag: 2.4.40
+Stable tag: 2.4.41
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.41 (2024/04/24) =
+* Typo caused #_IS_USER_MEMBER_OF not to work
+
 = 2.4.40 (2024/04/24) =
 * Better people-cleanup function
 * Update dompdf to 2.0.7

@@ -565,7 +565,7 @@ function eme_get_active_member_by_personid_membershipid( $person_id, $membership
 	return $member;
 }
 
-function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = EME_MEMBER_STATUS_ACTIVE.'.'.EME_MEMBER_STATUS_GRACE ) {
+function eme_get_member_by_wpid_membershipid( $wp_id, $membership_id, $status = EME_MEMBER_STATUS_ACTIVE.','.EME_MEMBER_STATUS_GRACE ) {
 	global $wpdb;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;

@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.40 (2024//) =
+= 2.4.40 (2024/04/24) =
 * Better people-cleanup function
 * Update dompdf to 2.0.7
 * Make #_IS_USER_MEMBER_PENDING work

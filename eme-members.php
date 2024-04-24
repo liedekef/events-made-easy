@@ -1305,7 +1305,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
 			if ( preg_match( '/password/', $key ) ) {
 				$membership_properties[ $key ] = $value;
 			} else {
-				$membership_properties[ $found_key ] = eme_kses( $value );
+				$membership_properties[ $key ] = eme_kses( $value );
                         }
 		}
 		$membership['properties'] = $membership_properties;

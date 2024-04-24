@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Better people-cleanup function
 * Update dompdf to 2.0.7
 * Make #_IS_USER_MEMBER_PENDING work
+* Fix membership edit
 
 = 2.4.39 (2024/04/18) =
 * Show RSVP and task info overview in the event edit window too (in the sidebar), like in the events overview table

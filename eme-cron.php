@@ -198,7 +198,8 @@ function eme_cron_gdpr_daily_actions() {
 	if ( ! eme_is_datamaster() ) {
 		return;
 	}
-	eme_member_remove_old_expired();
+	eme_member_anonymize_expired();
+	eme_member_remove_expired();
 	eme_rsvp_anonymize_old_bookings();
 	eme_delete_old_events();
 	eme_tasks_remove_old_signups();

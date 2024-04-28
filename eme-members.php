@@ -3844,12 +3844,32 @@ function eme_member_remove_pending() {
 }
 
 // for GDPR CRON
-function eme_member_remove_old_expired() {
+function eme_member_anonymize_expired() {
+	global $wpdb;
+	$table               = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$anonymize_expired_days = get_option( 'eme_gdpr_anonymize_expired_member_days' );
+	if ( empty( $anonymize_expired_days ) ) {
+		return;
+	}
+
+	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$today            = $eme_date_obj_now->getDate();
+
+	$sql        = $wpdb->prepare( "UPDATE $table SET person_id=0 WHERE status=%d AND DATEDIFF(%s,end_date)>%d", EME_MEMBER_STATUS_EXPIRED, $today, $anonymize_expired_days );
+        $wpdb->query( $sql );
+}
+
+function eme_member_remove_expired() {
 	global $wpdb;
 	$table               = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$remove_expired_days = get_option( 'eme_gdpr_remove_expired_member_days' );
+	$anonymize_expired_days = get_option( 'eme_gdpr_anonymize_expired_member_days' );
 	if ( empty( $remove_expired_days ) ) {
 		return;
+	}
+	if (!empty( $anonymize_expired_days )) {
+		if ($remove_expired_days<=$anonymize_expired_days)
+			$remove_expired_days = $anonymize_expired_days+1;
 	}
 
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );

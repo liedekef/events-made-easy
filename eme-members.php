@@ -500,7 +500,7 @@ function eme_get_membership_stats( $ids ) {
 	}
 
 	$res = '<table>';
-	$res .= "<tr><td>".__('Period','events-made-easy')."</td><td>".__('New','events-made-easy')."</td><td>".__('Total','events-made-easy')."</td></tr>";
+	$res .= "<tr><td>".__('Period','events-made-easy')."</td><td>".__('New','events-made-easy')."</td><td>".__('Expired','events-made-easy')."</td><td>".__('Total','events-made-easy')."</td></tr>";
 	$counter = 0;
 	while ( $counter <= $difference ) {
 		$limit_start   = $eme_date_obj->format( 'Y-m-d' );
@@ -509,18 +509,18 @@ function eme_get_membership_stats( $ids ) {
 		if ( $counter == $difference ) {
 			$sql = "SELECT count(*) FROM $table WHERE status=1 AND membership_id IN ($ids)";
 			$member_nbr = $wpdb->get_var( $sql );
-			$sql3 = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
-			$member_nbr_new = $wpdb->get_var( $sql3 );
 		} else {
 			$sql1 = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date<=%s AND (end_date >= %s OR end_date = '0000-00-00') AND membership_id IN ($ids)", $limit_end, $limit_start );
 			$member_nbr_1 = $wpdb->get_var( $sql1 );
 			$sql2 = $wpdb->prepare( "SELECT count(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
 			$member_nbr_2 = $wpdb->get_var( $sql2 );
 			$member_nbr = $member_nbr_1 - $member_nbr_2;
-			$sql3 = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
-			$member_nbr_new = $wpdb->get_var( $sql3 );
 		}
-		$res .= "<tr><td>".$eme_date_obj->format( 'Y-m' )."</td><td>$member_nbr_new</td><td>$member_nbr</td></tr>";
+		$sql3 = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
+		$member_nbr_new = $wpdb->get_var( $sql3 );
+		$sql4 = $wpdb->prepare( "SELECT count(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
+                $member_nbr_expired = $wpdb->get_var( $sql4 );
+                $res .= "<tr><td>".$eme_date_obj->format( 'Y-m' )."</td><td>$member_nbr_new</td><td>$member_nbr_expired</td><td>$member_nbr</td></tr>";
 		$eme_date_obj->startOfMonth()->modifyMonths(+1);
 		$counter++;
 	}

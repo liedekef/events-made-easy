@@ -368,8 +368,11 @@ jQuery(document).ready( function($) {
                                                 dateFormat: emebasic.translate_fdateformat
                                         });
 					$.each($('.eme_formfield_fdate.dynamicfield'), function() {
-						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
+						if ($(this).data('date') && $(this).data('date') != '0000-00-00') {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+							// to avoid it being done multiple times
+                                                        $(this).removeData('date');
+                                                        $(this).removeAttr('date');
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
@@ -393,8 +396,11 @@ jQuery(document).ready( function($) {
 						timeFormat: emebasic.translate_ftimeformat
 					});
 					$.each($('.eme_formfield_fdatetime'), function() {
-						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
+						if ($(this).data('date') && $(this).data('date') != '0000-00-00 00:00:00' ) {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+							// to avoid it being done multiple times
+                                                        $(this).removeData('date');
+                                                        $(this).removeAttr('date');
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
@@ -481,8 +487,11 @@ jQuery(document).ready( function($) {
                                                 dateFormat: emebasic.translate_fdateformat
                                         });
 					$.each($('.eme_formfield_fdate.dynamicfield'), function() {
-						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
+						if ($(this).data('date') && $(this).data('date') != '0000-00-00') {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+							// to avoid it being done multiple times
+                                                        $(this).removeData('date');
+                                                        $(this).removeAttr('date');
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
@@ -505,9 +514,12 @@ jQuery(document).ready( function($) {
 						dateFormat: emebasic.translate_fdateformat,
 						timeFormat: emebasic.translate_ftimeformat
 					});
-					$.each($('.eme_formfield_fdatetime'), function() {
-						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
+					$.each($('.eme_formfield_fdatetime.dynamicfield'), function() {
+						if ($(this).data('date')  && $(this).data('date') != '0000-00-00 00:00:00' ) {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+							// to avoid it being done multiple times
+                                                        $(this).removeData('date');
+                                                        $(this).removeAttr('date');
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
@@ -573,8 +585,12 @@ jQuery(document).ready( function($) {
                                                 dateFormat: emebasic.translate_fdateformat
                                         });
 					$.each($('.eme_formfield_fdate.dynamicfield'), function() {
-						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
+						if ($(this).data('date') && $(this).data('date') != '0000-00-00') {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+							// to avoid it being done multiple times
+                                                        $(this).removeData('date');
+                                                        $(this).removeAttr('date');
+
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
@@ -597,7 +613,7 @@ jQuery(document).ready( function($) {
 						dateFormat: emebasic.translate_fdateformat,
 						timeFormat: emebasic.translate_ftimeformat
 					});
-					$.each($('.eme_formfield_fdatetime'), function() {
+					$.each($('.eme_formfield_fdatetime.dynamicfield'), function() {
 						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
 						}
@@ -903,8 +919,11 @@ jQuery(document).ready( function($) {
 			timeFormat: emebasic.translate_ftimeformat
 		});
                 $.each($('.eme_formfield_fdatetime'), function() {
-			if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
+			if ($(this).data('date') && $(this).data('date') != '0000-00-00 00:00:00' ) {
 				$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+				// to avoid it being done multiple times
+				$(this).removeData('date');
+				$(this).removeAttr('date');
 			}
 			if ($(this).data('dateFormat')) {
 				$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
@@ -932,8 +951,11 @@ jQuery(document).ready( function($) {
 			dateFormat: emebasic.translate_fdateformat
 		});
                 $.each($('.eme_formfield_fdate'), function() {
-			if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
+			if ($(this).data('date') && $(this).data('date') != '0000-00-00') {
 				$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+				// to avoid it being done multiple times
+				$(this).removeData('date');
+				$(this).removeAttr('date');
 			}
 			if ($(this).data('dateFormat')) {
 				$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
@@ -955,8 +977,11 @@ jQuery(document).ready( function($) {
 			timeFormat: emebasic.translate_ftimeformat
 		});
                 $.each($('.eme_formfield_ftime'), function() {
-			if ($(this).data('date') != '' && $(this).data('date') != '00:00:00' ) {
+			if ($(this).data('date') && $(this).data('date') != '00:00:00' ) {
 				$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+				// to avoid it being done multiple times
+				$(this).removeData('date');
+				$(this).removeAttr('date');
 			}
 			if ($(this).data('timeFormat')) {
 				$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));

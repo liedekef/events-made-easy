@@ -499,7 +499,7 @@ function eme_get_membership_stats( $ids ) {
 		$difference = 12;
 	}
 
-	$res = '<table>';
+	$res = '<table class="eme_admin_table">';
 	$res .= "<tr><td>".__('Period','events-made-easy')."</td><td>".__('New','events-made-easy')."</td><td>".__('Expired','events-made-easy')."</td><td>".__('Total','events-made-easy')."</td></tr>";
 	$counter = 0;
 	while ( $counter <= $difference ) {

@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.42 (2024//) =
 * Added an option to anonymize old members (and not just remove them), this allows for membership stats to be more correct and kept longer
+* The date/time format set for custom fields was not respected in the form itself in firefox, this has been corrected
 
 = 2.4.41 (2024/04/24) =
 * Typo caused #_IS_USER_MEMBER_OF not to work

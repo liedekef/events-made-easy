@@ -371,6 +371,9 @@ jQuery(document).ready( function($) {
 						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
 						}
+						if ($(this).data('dateFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+						}
 					});
                                 }
 				if ($('.eme_formfield_fdatetime.dynamicfield').length) {
@@ -389,6 +392,12 @@ jQuery(document).ready( function($) {
 					$.each($('.eme_formfield_fdatetime'), function() {
 						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+						}
+						if ($(this).data('dateFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+						}
+						if ($(this).data('timeFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
 						}
 					});
 				}
@@ -458,6 +467,9 @@ jQuery(document).ready( function($) {
 						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
 						}
+						if ($(this).data('dateFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+						}
 					});
                                 }
 				if ($('.eme_formfield_fdatetime.dynamicfield').length) {
@@ -476,6 +488,12 @@ jQuery(document).ready( function($) {
 					$.each($('.eme_formfield_fdatetime'), function() {
 						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+						}
+						if ($(this).data('dateFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+						}
+						if ($(this).data('timeFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
 						}
 					});
 				}
@@ -524,6 +542,9 @@ jQuery(document).ready( function($) {
 						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
 						}
+						if ($(this).data('dateFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+						}
 					});
                                 }
 				if ($('.eme_formfield_fdatetime.dynamicfield').length) {
@@ -542,6 +563,12 @@ jQuery(document).ready( function($) {
 					$.each($('.eme_formfield_fdatetime'), function() {
 						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+						}
+						if ($(this).data('dateFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+						}
+						if ($(this).data('timeFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
 						}
 					});
 				}
@@ -828,6 +855,12 @@ jQuery(document).ready( function($) {
 			if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
 				$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
 			}
+			if ($(this).data('dateFormat')) {
+				$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+			}
+			if ($(this).data('timeFormat')) {
+				$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
+			}
                 });
         }
         if ($('.eme_formfield_fdate').length) {
@@ -845,6 +878,9 @@ jQuery(document).ready( function($) {
 			if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
 				$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
 			}
+			if ($(this).data('dateFormat')) {
+				$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+			}
                 });
         }
         if ($('.eme_formfield_ftime').length) {
@@ -861,6 +897,9 @@ jQuery(document).ready( function($) {
                 $.each($('.eme_formfield_ftime'), function() {
 			if ($(this).data('date') != '' && $(this).data('date') != '00:00:00' ) {
 				$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
+			}
+			if ($(this).data('timeFormat')) {
+				$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
 			}
                 });
         }

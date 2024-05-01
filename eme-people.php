@@ -2271,7 +2271,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		</tr>
 		<tr>
 		<td style="vertical-align:top"><label for="email"><?php esc_html_e( 'Email', 'events-made-easy' ); ?></label></td>
-		<td><input id="email" name="email" type="email" value="<?php echo eme_esc_html( $person['email'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
+		<td><input id="email" name="email" type="email" value="<?php echo eme_esc_html( $person['email'] ); ?>" size="40" <?php echo $wp_readonly; ?> autocomplete="off"><br>
 				<?php
 				if ( ! empty( $wp_readonly ) ) {
 					esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );}
@@ -2292,7 +2292,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		<td></td>
 		</tr>
 		<tr>
-		<td style="vertical-align:top"><label for="chooserelatedperson"><?php esc_html_e( 'Family members:', 'events-made-easy' ); ?></label></td>
+		<td style="vertical-align:top"><?php esc_html_e( 'Family members:', 'events-made-easy' ); ?></td>
 		<td>
 	<?php
 	$familymember_person_ids = eme_get_family_person_ids( $person_id );
@@ -2310,7 +2310,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		</tr>
 		<tr>
 		<td><label for="phone"><?php esc_html_e( 'Phone Number', 'events-made-easy' ); ?></label></td>
-		<td><input id="phone" name="phone" type="text" value="<?php echo eme_esc_html( $person['phone'] ); ?>" size="40"></td>
+		<td><input id="phone" name="phone" type="text" value="<?php echo eme_esc_html( $person['phone'] ); ?>" size="40" autocomplete="off"></td>
 		<td></td>
 		</tr>
 		<tr>
@@ -2334,15 +2334,15 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		<td></td>
 		</tr>
 		<tr>
-		<td><label for="state"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
+		<td><label for="state_code"><?php esc_html_e( 'State', 'events-made-easy' ); ?></label></td>
 		<td colspan=2><?php echo eme_ui_select( $person['state_code'], 'state_code', $state_arr, '', 0, 'eme_select2_state_class' ); ?></td>
 		</tr>
 		<tr>
-		<td><label for="country"><?php esc_html_e( 'Country', 'events-made-easy' ); ?></label></td>
+		<td><label for="country_code"><?php esc_html_e( 'Country', 'events-made-easy' ); ?></label></td>
 		<td colspan=2><?php echo eme_ui_select( $person['country_code'], 'country_code', $country_arr, '', 0, 'eme_select2_country_class' ); ?></td>
 		</tr>
 		<tr>
-		<td><label for="birthdate"><?php esc_html_e( 'Date of birth', 'events-made-easy' ); ?></label></td>
+		<td><label for="dp_birthdate"><?php esc_html_e( 'Date of birth', 'events-made-easy' ); ?></label></td>
 		<td colspan=2><input type='hidden' name='birthdate' id='birthdate' value='<?php echo eme_esc_html( $person['birthdate'] ); ?>'>
 		<input readonly='readonly' type='text' name='dp_birthdate' id='dp_birthdate' data-date='<?php echo eme_esc_html( $person['birthdate'] ); ?>' data-date-format='<?php echo EME_WP_DATE_FORMAT; ?>' data-alt-field='#birthdate' class='eme_formfield_fdate'>
 		</tr>
@@ -2360,7 +2360,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		<td colspan=2><input id="birthplace" name="birthplace" type="text" value="<?php echo eme_esc_html( $person['birthplace'] ); ?>" size="40"></td>
 		</tr>
 		<tr>
-		<td><label for="lang"><?php esc_html_e( 'Language', 'events-made-easy' ); ?></label></td>
+		<td><label for="language"><?php esc_html_e( 'Language', 'events-made-easy' ); ?></label></td>
 		<td colspan=2><input id="language" name="language" type="text" value="<?php echo eme_esc_html( $person['lang'] ); ?>" size="40" maxlength="7"></td>
 		</tr>
 		<tr>
@@ -2399,7 +2399,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 	?>
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
 		<tr>
-		<td style="vertical-align:top"><label for="wpid"><?php esc_html_e( 'Linked WP user', 'events-made-easy' ); ?></label></td>
+		<td style="vertical-align:top"><label for="wp_id"><?php esc_html_e( 'Linked WP user', 'events-made-easy' ); ?></label></td>
 		<td colspan=2>
 		<?php
 		$used_wp_ids = eme_get_used_wpids( $person['wp_id'] );
@@ -2419,7 +2419,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		</td>
 		</tr>
 		<tr>
-		<td style="vertical-align:top"><label for="wpid"><?php esc_html_e( 'Delete linked WP user?', 'events-made-easy' ); ?></label></td>
+		<td style="vertical-align:top"><label for="properties[wp_delete_user]"><?php esc_html_e( 'Delete linked WP user?', 'events-made-easy' ); ?></label></td>
 		<td colspan=2><?php echo eme_ui_select_binary( $person['properties']['wp_delete_user'], "properties[wp_delete_user]" ); ?>
 			<br>
 			<?php esc_html_e( "Set this to yes if you want the linked WP user to be deleted when the EME person gets removed (moved to trash bin).", 'events-made-easy' ); ?><br>

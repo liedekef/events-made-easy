@@ -373,6 +373,9 @@ jQuery(document).ready( function($) {
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('dateFormat');
+							$(this).removeAttr('dateFormat');
 						}
 					});
                                 }
@@ -395,15 +398,29 @@ jQuery(document).ready( function($) {
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('dateFormat');
+							$(this).removeAttr('dateFormat');
 						}
 						if ($(this).data('timeFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('timeFormat');
+							$(this).removeAttr('timeFormat');
 						}
 					});
 				}
 				if ($('.eme_formfield_timepicker.dynamicfield').length) {
 					$('.eme_formfield_timepicker.dynamicfield').timepicker({
 						timeFormat: emebasic.translate_ftimeformat
+					});
+					$.each($('.eme_formfield_timepicker'), function() {
+						if ($(this).data('timeFormat')) {
+							$(this).timepicker('option', { 'timeFormat': $(this).data('timeFormat') });
+							// to avoid it being done multiple times
+							$(this).removeData('timeFormat');
+							$(this).removeAttr('timeFormat');
+						}
 					});
 				}
 
@@ -469,6 +486,9 @@ jQuery(document).ready( function($) {
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('dateFormat');
+							$(this).removeAttr('dateFormat');
 						}
 					});
                                 }
@@ -491,15 +511,29 @@ jQuery(document).ready( function($) {
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('dateFormat');
+							$(this).removeAttr('dateFormat');
 						}
 						if ($(this).data('timeFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('timeFormat');
+							$(this).removeAttr('timeFormat');
 						}
 					});
 				}
 				if ($('.eme_formfield_timepicker.dynamicfield').length) {
 					$('.eme_formfield_timepicker.dynamicfield').timepicker({
 						timeFormat: emebasic.translate_ftimeformat
+					});
+					$.each($('.eme_formfield_timepicker'), function() {
+						if ($(this).data('timeFormat')) {
+							$(this).timepicker('option', { 'timeFormat': $(this).data('timeFormat') });
+							// to avoid it being done multiple times
+							$(this).removeData('timeFormat');
+							$(this).removeAttr('timeFormat');
+						}
 					});
 				}
 			})
@@ -544,6 +578,9 @@ jQuery(document).ready( function($) {
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('dateFormat');
+							$(this).removeAttr('dateFormat');
 						}
 					});
                                 }
@@ -566,15 +603,29 @@ jQuery(document).ready( function($) {
 						}
 						if ($(this).data('dateFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('dateFormat');
+							$(this).removeAttr('dateFormat');
 						}
 						if ($(this).data('timeFormat')) {
 							$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('timeFormat');
+							$(this).removeAttr('timeFormat');
 						}
 					});
 				}
 				if ($('.eme_formfield_timepicker.dynamicfield').length) {
 					$('.eme_formfield_timepicker.dynamicfield').timepicker({
 						timeFormat: emebasic.translate_ftimeformat
+					});
+					$.each($('.eme_formfield_timepicker'), function() {
+						if ($(this).data('timeFormat')) {
+							$(this).timepicker('option', { 'timeFormat': $(this).data('timeFormat') });
+							// to avoid it being done multiple times
+							$(this).removeData('timeFormat');
+							$(this).removeAttr('timeFormat');
+						}
 					});
 				}
 				eme_dynamic_memberprice_json(form_id);
@@ -857,9 +908,15 @@ jQuery(document).ready( function($) {
 			}
 			if ($(this).data('dateFormat')) {
 				$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+				// to avoid it being done multiple times
+				$(this).removeData('dateFormat');
+				$(this).removeAttr('dateFormat');
 			}
 			if ($(this).data('timeFormat')) {
 				$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
+				// to avoid it being done multiple times
+				$(this).removeData('timeFormat');
+				$(this).removeAttr('timeFormat');
 			}
                 });
         }
@@ -880,6 +937,9 @@ jQuery(document).ready( function($) {
 			}
 			if ($(this).data('dateFormat')) {
 				$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+				// to avoid it being done multiple times
+				$(this).removeData('dateFormat');
+				$(this).removeAttr('dateFormat');
 			}
                 });
         }
@@ -900,6 +960,9 @@ jQuery(document).ready( function($) {
 			}
 			if ($(this).data('timeFormat')) {
 				$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
+				// to avoid it being done multiple times
+				$(this).removeData('timeFormat');
+				$(this).removeAttr('timeFormat');
 			}
                 });
         }
@@ -907,6 +970,14 @@ jQuery(document).ready( function($) {
                 $('.eme_formfield_timepicker').timepicker({
 			timeFormat: emebasic.translate_ftimeformat
 		});
+                $.each($('.eme_formfield_timepicker'), function() {
+			if ($(this).data('timeFormat')) {
+				$(this).timepicker('option', { 'timeFormat': $(this).data('timeFormat') });
+				// to avoid it being done multiple times
+				$(this).removeData('timeFormat');
+				$(this).removeAttr('timeFormat');
+			}
+                });
         }
         if ($('.eme_select2_width50_class').length) {
 		$('.eme_select2_width50_class').select2({width: '50%'});

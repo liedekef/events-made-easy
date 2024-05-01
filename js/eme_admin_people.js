@@ -42,6 +42,12 @@ jQuery(document).ready(function ($) {
 						if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00') {
 							$(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
 						}
+						if ($(this).data('dateFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('dateFormat');
+							$(this).removeAttr('dateFormat');
+						}
 					});
 				}
 				if ($('.eme_formfield_fdatetime.dynamicfield').length) {
@@ -61,11 +67,31 @@ jQuery(document).ready(function ($) {
                                                 if ($(this).data('date') != '' && $(this).data('date') != '0000-00-00 00:00:00' ) {
                                                         $(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
                                                 }
+						if ($(this).data('dateFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('dateFormat', $(this).data('dateFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('dateFormat');
+							$(this).removeAttr('dateFormat');
+						}
+						if ($(this).data('timeFormat')) {
+							$(this).fdatepicker().data('fdatepicker').update('timeFormat', $(this).data('timeFormat'));
+							// to avoid it being done multiple times
+							$(this).removeData('timeFormat');
+							$(this).removeAttr('timeFormat');
+						}
                                         });
                                 }
                                 if ($('.eme_formfield_timepicker.dynamicfield').length) {
                                         $('.eme_formfield_timepicker.dynamicfield').timepicker({
                                                 timeFormat: emepeople.translate_ftimeformat
+                                        });
+                                        $.each($('.eme_formfield_timepicker'), function() {
+						if ($(this).data('timeFormat')) {
+							$(this).timepicker('option', { 'timeFormat': $(this).data('timeFormat') });
+							// to avoid it being done multiple times
+							$(this).removeData('timeFormat');
+							$(this).removeAttr('timeFormat');
+						}
                                         });
                                 }
                         });

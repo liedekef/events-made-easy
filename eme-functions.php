@@ -3873,8 +3873,8 @@ function eme_migrate_event_rsvpstartend_options() {
 	if ( ! empty( $res ) ) {
 		foreach ( $res as $row ) {
 			$event = eme_get_event( $row['event_id'] );
-			$event['event_properties'][ 'rsvp_start_number_days' ] = $row['rsvp_number_days'];
-			$event['event_properties'][ 'rsvp_start_number_hours' ] = $row['rsvp_number_hours'];
+			$event['event_properties'][ 'rsvp_end_number_days' ] = $row['rsvp_number_days'];
+			$event['event_properties'][ 'rsvp_end_number_hours' ] = $row['rsvp_number_hours'];
 			eme_db_update_event( $event, $row['event_id'] );
 		}
 	}

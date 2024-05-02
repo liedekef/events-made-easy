@@ -593,7 +593,6 @@ jQuery(document).ready( function($) {
       $('#EventsTableContainer').jtable({
             title: emeevents.translate_events,
             paging: true,
-            pageSizes: [10, 25, 50, 100],
             sorting: true,
             multiSorting: true,
             jqueryuiTheme: true,
@@ -708,7 +707,6 @@ jQuery(document).ready( function($) {
       $('#RecurrencesTableContainer').jtable({
             title: emeevents.translate_recurrences,
             paging: true,
-            pageSizes: [10, 25, 50, 100],
             sorting: true,
             multiSorting: true,
             jqueryuiTheme: true,

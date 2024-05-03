@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.5
-Stable tag: 2.4.41
+Stable tag: 2.4.42
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,7 +98,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.42 (2024//) =
+= 2.4.42 (2024/05/03) =
 * Added an option to anonymize old members (and not just remove them), this allows for membership stats to be more correct and kept longer
 * The date/time format set for custom fields was not respected in the form itself in firefox, this has been corrected
 * When updating from a version older than 2.4.34, the per-event rsvp end cutoff day was set to the start date (if set at all)

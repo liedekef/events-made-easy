@@ -217,6 +217,12 @@ jQuery(document).ready(function ($) {
 			},
 			fields: memberfields
 		});
+		var exactmatch;
+		if ($('#search_exactmatch').is(":checked")) {
+			exactmatch = 1;
+		} else {
+			exactmatch = 0;
+		}
 		$('#MembersTableContainer').jtable('load', {
 			'search_person': $('#search_person').val(),
 			'search_memberstatus': $('#search_memberstatus').val(),
@@ -225,7 +231,8 @@ jQuery(document).ready(function ($) {
 			'search_paymentid': $('#search_paymentid').val(),
 			'search_pg_pid': $('#search_pg_pid').val(),
 			'search_customfields': $('#search_customfields').val(),
-			'search_customfieldids': $('#search_customfieldids').val()
+			'search_customfieldids': $('#search_customfieldids').val(),
+			'search_exactmatch': exactmatch
 		});
 	}
 
@@ -393,6 +400,12 @@ jQuery(document).ready(function ($) {
         // Re-load records when user click 'load records' button.
         $('#MembersLoadRecordsButton').on("click",function (e) {
            e.preventDefault();
+		var exactmatch;
+		if ($('#search_exactmatch').is(":checked")) {
+			exactmatch = 1;
+		} else {
+			exactmatch = 0;
+		}
            $('#MembersTableContainer').jtable('load', {
                'search_person': $('#search_person').val(),
                'search_memberstatus': $('#search_memberstatus').val(),
@@ -401,7 +414,8 @@ jQuery(document).ready(function ($) {
                'search_paymentid': $('#search_paymentid').val(),
                'search_pg_pid': $('#search_pg_pid').val(),
                'search_customfields': $('#search_customfields').val(),
-               'search_customfieldids': $('#search_customfieldids').val()
+               'search_customfieldids': $('#search_customfieldids').val(),
+	       'search_exactmatch': exactmatch
            });
 	   if ($('#search_person').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_memberid').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
 		   $('#StoreQueryButton').show();
@@ -421,6 +435,12 @@ jQuery(document).ready(function ($) {
 	});
 	$('#StoreQuerySubmitButton').on("click",function (e) {
            e.preventDefault();
+		var exactmatch;
+		if ($('#search_exactmatch').is(":checked")) {
+			exactmatch = 1;
+		} else {
+			exactmatch = 0;
+		}
 	   var params = {
                'search_person': $('#search_person').val(),
                'search_memberstatus': $('#search_memberstatus').val(),
@@ -428,6 +448,7 @@ jQuery(document).ready(function ($) {
                'search_memberid': $('#search_memberid').val(),
                'search_customfields': $('#search_customfields').val(),
                'search_customfieldids': $('#search_customfieldids').val(),
+	       'search_exactmatch': exactmatch,
 	       'action': 'eme_store_members_query',
 	       'eme_admin_nonce': ememembers.translate_adminnonce,
                'dynamicgroupname': $('#dynamicgroupname').val()

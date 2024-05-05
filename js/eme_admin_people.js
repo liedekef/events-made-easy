@@ -315,13 +315,21 @@ jQuery(document).ready(function ($) {
         // and only in the initial load we take a possible person id in the url into account
         // This person id can come from the eme_people page when clicking on "view all bookings"
         if ($('#PeopleTableContainer').length) {
+	   var exactmatch;
+	   if ($('#search_exactmatch').is(":checked")) {
+		exactmatch = 1;
+	   } else {
+		exactmatch = 0;
+	   }
+
            $('#PeopleTableContainer').jtable('load', {
                'search_person': $('#search_person').val(),
                'search_groups': $('#search_groups').val(),
                'search_memberstatus': $('#search_memberstatus').val(),
                'search_membershipids': $('#search_membershipids').val(),
 	       'search_customfields': $('#search_customfields').val(),
-               'search_customfieldids': $('#search_customfieldids').val()
+               'search_customfieldids': $('#search_customfieldids').val(),
+               'search_exactmatch': exactmatch
            });
         }
         if ($('#GroupsTableContainer').length) {
@@ -442,13 +450,20 @@ jQuery(document).ready(function ($) {
         // Re-load records when user click 'load records' button.
         $('#PeopleLoadRecordsButton').on("click",function (e) {
            e.preventDefault();
+	   var exactmatch;
+	   if ($('#search_exactmatch').is(":checked")) {
+		exactmatch = 1;
+	   } else {
+		exactmatch = 0;
+	   }
            $('#PeopleTableContainer').jtable('load', {
                'search_person': $('#search_person').val(),
                'search_groups': $('#search_groups').val(),
                'search_memberstatus': $('#search_memberstatus').val(),
                'search_membershipids': $('#search_membershipids').val(),
 	       'search_customfields': $('#search_customfields').val(),
-               'search_customfieldids': $('#search_customfieldids').val()
+               'search_customfieldids': $('#search_customfieldids').val(),
+               'search_exactmatch': exactmatch
            });
 	   if ($('#search_person').val().length || $('#search_groups').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
 		   $('#StoreQueryButton').show();
@@ -468,6 +483,12 @@ jQuery(document).ready(function ($) {
         });
         $('#StoreQuerySubmitButton').on("click",function (e) {
            e.preventDefault();
+	   var exactmatch;
+	   if ($('#search_exactmatch').is(":checked")) {
+		exactmatch = 1;
+	   } else {
+		exactmatch = 0;
+	   }
            var params = {
                'search_person': $('#search_person').val(),
                'search_groups': $('#search_groups').val(),
@@ -475,6 +496,7 @@ jQuery(document).ready(function ($) {
                'search_membershipids': $('#search_membershipids').val(),
 	       'search_customfields': $('#search_customfields').val(),
                'search_customfieldids': $('#search_customfieldids').val(),
+               'search_exactmatch': exactmatch,
                'action': 'eme_store_people_query',
                'eme_admin_nonce': emepeople.translate_adminnonce,
                'dynamicgroupname': $('#dynamicgroupname').val()

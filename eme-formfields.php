@@ -1004,7 +1004,7 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 		$task_ended = 1;
 	}
 
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	$needle_offset = 0;
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
@@ -1136,7 +1136,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 	# we need 3 required fields: #_NAME, #_EMAIL and #_SEATS
 	# if these are not present: we don't replace anything and the form is worthless
 
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	$needle_offset = 0;
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
@@ -1471,7 +1471,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 	# we need 3 required fields: #_NAME, #_EMAIL and #_SEATS
 	# if these are not present: we don't replace anything and the form is worthless
 
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	$needle_offset = 0;
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
@@ -1640,14 +1640,12 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 	// make sure we set the largest matched placeholders first, otherwise if you found e.g.
 	// #_LOCATION, part of #_LOCATIONPAGEURL would get replaced as well ...
 	$needle_offset = 0;
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
 		$orig_result_needle = $orig_result[1] - $needle_offset;
 		$orig_result_length = strlen( $orig_result[0] );
 		$found              = 1;
-		$required           = 0;
-		$required_att       = '';
 		$replacement        = '';
 		if ( preg_match( '/#_CANCEL_PAYMENT_LINE$/', $result ) ) {
 			$tmp_format = get_option( 'eme_cancel_payment_line_format' );
@@ -1696,7 +1694,6 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 			if ( $eme_captcha_for_forms && ! $captcha_set ) {
 				$replacement = eme_load_captcha_html();
 				$captcha_set = 1;
-				$required    = 1;
 			}
 		} elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -1726,7 +1723,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 	// now, replace any language tags found in the format itself
 	$format = eme_translate( $format );
 
-	// now check we found all the required placeholders for the form to work
+	// only if #_CANCEL_PAYMENT_LINE is present, we return the format
 	if ( $line_found ) {
 		return $format;
 	} else {
@@ -1813,7 +1810,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 	$dynamic_price_class_basic = 'dynamicprice';
 
 	$needle_offset = 0;
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
 		$orig_result_needle = $orig_result[1] - $needle_offset;
@@ -2177,7 +2174,7 @@ function eme_replace_dynamic_rsvp_formfields_placeholders( $event, $booking, $fo
 	}
 
 	$needle_offset = 0;
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
 		$orig_result_needle = $orig_result[1] - $needle_offset;
@@ -2292,7 +2289,7 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 	}
 
 	$needle_offset = 0;
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
 		$orig_result_needle = $orig_result[1] - $needle_offset;
@@ -2855,7 +2852,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		$dynamic_data_wanted = 0;
 	}
 	$needle_offset = 0;
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
 		$orig_result_needle = $orig_result[1] - $needle_offset;
@@ -3474,7 +3471,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 	$dynamic_field_class_basic = 'nodynamicupdates dynamicfield';
 
 	$needle_offset = 0;
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
 		$orig_result_needle = $orig_result[1] - $needle_offset;
@@ -3835,7 +3832,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	$personal_info_class   = 'personal_info';
 	$discount_fields_count = 0;
 
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	$needle_offset = 0;
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
@@ -4331,7 +4328,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 	// We need at least #_EMAIL
 	$email_found   = 0;
 	$needle_offset = 0;
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];
 		$orig_result_needle = $orig_result[1] - $needle_offset;
@@ -4530,7 +4527,7 @@ function eme_replace_cpiform_placeholders( $format, $person ) {
 
 	$current_userid = get_current_user_id();
 
-	preg_match_all( '/#(ESC|URL|REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	$needle_offset = 0;
 	foreach ( $placeholders[0] as $orig_result ) {
 		$result             = $orig_result[0];

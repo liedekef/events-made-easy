@@ -6497,7 +6497,7 @@ function eme_ajax_store_members_query() {
 		$group['name']     = esc_sql( eme_sanitize_request( $_POST['dynamicgroupname'] ) . ' ' . __( '(Dynamic)', 'events-made-easy' ));
 		$search_terms      = [];
 		// the same as in add_update_group
-		$search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids' ];
+		$search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids', 'search_exactmatch' ];
 		foreach ( $search_fields as $search_field ) {
 			if ( isset( $_POST[ $search_field ] ) ) {
 				$search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );

@@ -1941,6 +1941,16 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 		$label = __( 'Custom fields to filter on', 'events-made-easy' );
 		$extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
 		echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2', $extra_attributes, 1, id_prefix: $id_prefix );
+		if ( $edit_group ) {
+			echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
+		}
+		if ( isset( $search_terms['search_exactmatch'] ) ) {
+			$value = intval($search_terms['search_exactmatch']);
+		} else {
+			$value = 0;
+		}
+		$title = esc_attr(__( 'Exact custom field search match', 'events-made-easy' ));
+		echo eme_ui_checkbox_binary( $value, 'search_exactmatch', '', 0, '', "title='$title'");
 	}
 }
 
@@ -2027,6 +2037,9 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
                 if ( $search_terms['search_customfields'] == '' ) {
                         $search_customfields = '';
                         $search_formfield_sql = " AND answer = '' ";
+                } elseif (! empty($search_terms['search_exactmatch']))  {
+                        $search_customfields = esc_sql( $search_terms['search_customfields'] );
+                        $search_formfield_sql = " AND answer = '$search_customfields' ";
                 } else  {
                         $search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
                         $search_formfield_sql = " AND answer LIKE '%$search_customfields%' ";
@@ -2513,6 +2526,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 	<?php echo $nonce_field; ?>
 	<?php if ( $action == 'add' ) { ?>
 	<input type="hidden" name="eme_admin_action" value="do_addgroup">
+	<input type="hidden" name="group_type" value="<?php echo $group_type; ?>">
 	<?php } else { ?>
 	<input type="hidden" name="eme_admin_action" value="do_editgroup">
 	<input type="hidden" name="group_id" value="<?php echo $group['group_id']; ?>">
@@ -3883,8 +3897,9 @@ function eme_add_update_group( $group_id = 0 ) {
 		$group['description'] = eme_sanitize_request( $_POST['description'] );
 	}
 	$group['public'] = isset( $_POST['public'] ) ? intval( $_POST['public'] ) : 0;
+	$group['type'] = isset( $_POST['group_type'] ) ? eme_sanitize_request( $_POST['group_type'] ) : 'static';
 	$search_terms    = [];
-	$search_fields   = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids' ];
+	$search_fields   = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids', 'search_exactmatch' ];
 	foreach ( $search_fields as $search_field ) {
 		if ( isset( $_POST[ $search_field ] ) ) {
 			$search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );
@@ -5279,7 +5294,7 @@ function eme_ajax_store_people_query() {
                 $group['name'] = esc_sql(eme_sanitize_request($_POST['dynamicgroupname']) . ' ' . __( '(Dynamic)', 'events-made-easy' ));
                 $search_terms  = [];
                 // the same as in add_update_group
-                $search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids' ];
+                $search_fields = [ 'search_membershipids', 'search_memberstatus', 'search_person', 'search_groups', 'search_memberid', 'search_customfields', 'search_customfieldids', 'search_exactmatch' ];
                 foreach ( $search_fields as $search_field ) {
                         if ( isset( $_POST[ $search_field ] ) ) {
                                         $search_terms[ $search_field ] = esc_sql( eme_sanitize_request( $_POST[ $search_field ] ) );

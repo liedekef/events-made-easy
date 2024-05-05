@@ -2965,6 +2965,16 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
 		$label = __( 'Custom fields to filter on', 'events-made-easy' );
                 $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
 		echo eme_ui_multiselect_key_value( $value, 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2', $extra_attributes, 1, id_prefix: $id_prefix );
+		if ( $edit_group ) {
+			echo '</td></tr><tr><td>' . esc_html__( 'Exact custom field search match', 'events-made-easy' ) . '</td><td>';
+		}
+		if ( isset( $search_terms['search_exactmatch'] ) ) {
+			$value = intval($search_terms['search_exactmatch']);
+		} else {
+			$value = 0;
+		}
+		$title = esc_attr(__( 'Exact custom field search match', 'events-made-easy' ));
+		echo eme_ui_checkbox_binary( $value, 'search_exactmatch', '', 0, '', "title='$title'");
 	}
 }
 
@@ -3049,6 +3059,9 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
                 if ( $search_terms['search_customfields'] == '' ) {
                         $search_customfields = '';
                         $search_formfield_sql = " AND answer = '' ";
+		} elseif (! empty($search_terms['search_exactmatch']))  {
+			$search_customfields = esc_sql( $search_terms['search_customfields'] );
+			$search_formfield_sql = " AND answer = '$search_customfields' ";
                 } else  {
                         $search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
                         $search_formfield_sql = " AND answer LIKE '%$search_customfields%' ";

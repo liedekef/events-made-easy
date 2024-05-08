@@ -2479,7 +2479,6 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 	} else {
 		$action  = 'edit';
 		$group   = eme_get_group( $group_id );
-		$group_type = $group['type'];
 		$persons = eme_get_grouppersons( $group['group_id'] );
 		if ( ! empty( $persons ) && is_array( $persons ) ) {
 			foreach ( $persons as $person ) {
@@ -2530,7 +2529,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 	<div id="ajax-response"></div>
 	<form name="editgroup" id="editgroup" method="post" autocomplete="off" action="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>" class="validate">
 	<?php echo $nonce_field; ?>
-	<input type="hidden" name="group_type" value="<?php echo $group_type; ?>">
+	<input type="hidden" name="group_type" value="<?php echo $group['type']; ?>">
 	<?php if ( $action == 'add' ) { ?>
 	<input type="hidden" name="eme_admin_action" value="do_addgroup">
 	<?php } else { ?>

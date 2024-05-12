@@ -1959,7 +1959,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 	}
 }
 
-function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize = 0, $sorting = '', $count = 0, $ids_only = 0, $emails_only = 0 ) {
+function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize = 0, $sorting = '', $count = 0, $ids_only = 0, $emails_only = 0, $where_arr=[] ) {
 	global $wpdb;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
@@ -1969,7 +1969,6 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
 	// trim the search_person param too
 	$search_person = isset( $search_terms['search_person'] ) ? esc_sql( $wpdb->esc_like( trim( $search_terms['search_person'] ) ) ) : '';
 	$where         = '';
-	$where_arr     = [];
 
 	// if the person is not allowed to manage all people, show only himself
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
@@ -3476,8 +3475,10 @@ function eme_get_groups_person_emails( $group_ids, $massmail_only=1 ) {
 	$static_groupids  = $wpdb->get_col( $sql );
 
 	if ($massmail_only) {
-		$massmail_sql = "AND people.massmail=1";
+		$and_massmail_sql = "AND $people_table.massmail=1";
+		$massmail_sql = "$people_table.massmail=1";
 	} else {
+		$and_massmail_sql = "";
 		$massmail_sql = "";
 	}
 
@@ -3485,7 +3486,7 @@ function eme_get_groups_person_emails( $group_ids, $massmail_only=1 ) {
 	$res = [];
 	if ( ! empty( $static_groupids ) && eme_is_numeric_array( $static_groupids ) ) {
 		$ids_list = implode(',', $static_groupids);
-		$sql = $wpdb->prepare("SELECT people.lastname, people.firstname, people.email FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=%d $massmail_sql AND people.email<>'' AND ugroups.group_id IN ($ids_list) GROUP BY people.email", EME_PEOPLE_STATUS_ACTIVE);
+		$sql = $wpdb->prepare("SELECT people.lastname, people.firstname, people.email FROM $people_table AS people LEFT JOIN $usergroups_table AS ugroups ON people.person_id=ugroups.person_id WHERE people.status=%d $and_massmail_sql AND people.email<>'' AND ugroups.group_id IN ($ids_list) GROUP BY people.email", EME_PEOPLE_STATUS_ACTIVE);
 		$res     = $wpdb->get_results( $sql, ARRAY_A );
 	}
 	$emails_seen = [];
@@ -3501,13 +3502,13 @@ function eme_get_groups_person_emails( $group_ids, $massmail_only=1 ) {
 	foreach ( $dynamic_groups as $dynamic_group ) {
 		if ( ! empty( $dynamic_group['search_terms'] ) ) {
 			if ( $dynamic_group['type'] == 'dynamic_members' ) {
-				$sql = eme_get_sql_members_searchfields( $dynamic_group['search_terms'], 0, 0, '', 0, 0, 0, 1 );
+				$sql = eme_get_sql_members_searchfields( search_terms: $dynamic_group['search_terms'], emails_only: 1, where_arr: [$massmail_sql] );
 			}
 			if ( $dynamic_group['type'] == 'dynamic_people' ) {
-				$sql = eme_get_sql_people_searchfields( $dynamic_group['search_terms'], 0, 0, '', 0, 0, 1 );
+				$sql = eme_get_sql_people_searchfields( search_terms: $dynamic_group['search_terms'], emails_only: 1, where_arr: [$massmail_sql] );
 			}
 		} else {
-			$sql = 'SELECT people.lastname, people.firstname, people.email ' . $dynamic_group['stored_sql'] . "  $massmail_sql";
+			$sql = 'SELECT people.lastname, people.firstname, people.email ' . $dynamic_group['stored_sql'] . "  $and_massmail_sql";
 		}
 		$res2 = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $res2 as $entry ) {
@@ -3541,13 +3542,14 @@ function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
 	}
 	$static_groupids = $wpdb->get_col( $sql );
 
+	$and_extra_sql = '';
 	if ( ! empty( $extra_sql ) ) {
-		$extra_sql = ' AND ' . $extra_sql;
+		$and_extra_sql = ' AND ' . $extra_sql;
 	}
 
 	if ( ! empty( $static_groupids ) && eme_is_numeric_array($static_groupids)) {
 		$ids_list = implode(',', $static_groupids);
-		$sql = $wpdb->prepare( "SELECT $people_table.person_id FROM $people_table LEFT JOIN $usergroups_table ON $people_table.person_id=$usergroups_table.person_id WHERE $people_table.status=%d AND $usergroups_table.group_id IN ($ids_list) $extra_sql", EME_PEOPLE_STATUS_ACTIVE);
+		$sql = $wpdb->prepare( "SELECT $people_table.person_id FROM $people_table LEFT JOIN $usergroups_table ON $people_table.person_id=$usergroups_table.person_id WHERE $people_table.status=%d AND $usergroups_table.group_id IN ($ids_list) $and_extra_sql", EME_PEOPLE_STATUS_ACTIVE);
 		$res = $wpdb->get_col( $sql );
 	} else {
 		$res = [];
@@ -3563,13 +3565,13 @@ function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
 		if ( ! empty( $dynamic_group['search_terms'] ) ) {
 			$search_terms = eme_unserialize( $dynamic_group['search_terms'] );
 			if ( $dynamic_group['type'] == 'dynamic_members' ) {
-				$sql = eme_get_sql_members_searchfields( $search_terms, 0, 0, '', 0, 0, 1 );
+				$sql = eme_get_sql_members_searchfields( search_terms: $search_terms, peopleids_only: 1, where_arr: [$extra_sql] );
 			}
 			if ( $dynamic_group['type'] == 'dynamic_people' ) {
-				$sql = eme_get_sql_people_searchfields( $search_terms, 0, 0, '', 0, 1 );
+				$sql = eme_get_sql_people_searchfields( search_terms: $search_terms, ids_only: 1, where_arr: [$extra_sql] );
 			}
 		} else {
-			$sql = 'SELECT people.person_id ' . $dynamic_group['stored_sql'] . $extra_sql;
+			$sql = 'SELECT people.person_id ' . $dynamic_group['stored_sql'] . $and_extra_sql;
 		}
 		$res2 = $wpdb->get_col( $sql );
 		$res  = array_merge( $res, $res2 );

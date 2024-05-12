@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.44 (2024//) =
+* Make #_IS_USER_IN_GROUP also work for dynamic groups
+
 = 2.4.43 (2024/05/09) =
 * Correct direct adding of dynamic groups of people or members
 * Added an option for exact search match for custom field searches (for dynamic groups too)

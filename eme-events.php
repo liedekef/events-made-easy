@@ -2052,10 +2052,12 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
-						$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_PENDING );
-						if ( ! empty( $member ) ) {
-							$replacement = 1;
-							break;
+						if ($membership) {
+							$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_PENDING );
+							if ( ! empty( $member ) ) {
+								$replacement = 1;
+								break;
+							}
 						}
 					}
 				}
@@ -2071,10 +2073,12 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 					$memberships_arr = explode( ',', $memberships );
 					foreach ( $memberships_arr as $membership_t ) {
 						$membership = eme_get_membership( $membership_t );
-						$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_EXPIRED );
-						if ( ! empty( $member ) ) {
-							$replacement = 1;
-							break;
+						if ($membership) {
+							$member     = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'], EME_MEMBER_STATUS_EXPIRED );
+							if ( ! empty( $member ) ) {
+								$replacement = 1;
+								break;
+							}
 						}
 					}
 				}
@@ -2092,10 +2096,10 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 						$membership = eme_get_membership( $membership_t );
 						if ($membership) {
 							$member = eme_get_member_by_wpid_membershipid( $wp_id, $membership['membership_id'] );
-						}
-						if ( ! empty( $member ) ) {
-							$replacement = 1;
-							break;
+							if ( ! empty( $member ) ) {
+								$replacement = 1;
+								break;
+							}
 						}
 					}
 				}

@@ -3475,8 +3475,8 @@ function eme_get_groups_person_emails( $group_ids, $massmail_only=1 ) {
 	$static_groupids  = $wpdb->get_col( $sql );
 
 	if ($massmail_only) {
-		$and_massmail_sql = "AND $people_table.massmail=1";
-		$massmail_sql = "$people_table.massmail=1";
+		$and_massmail_sql = "AND people.massmail=1";
+		$massmail_sql = "people.massmail=1";
 	} else {
 		$and_massmail_sql = "";
 		$massmail_sql = "";

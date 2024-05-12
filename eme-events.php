@@ -2034,7 +2034,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				if ( $wp_id ) {
 					$groups_arr = explode( ',', $groups );
 					foreach ( $groups_arr as $group ) {
-						if ( ! empty( eme_get_groups_person_ids( $group, "$people_table.wp_id = $wp_id" ) ) ) {
+						if ( ! empty( eme_get_groups_person_ids( $group, "people.wp_id = $wp_id" ) ) ) {
 							$replacement = 1;
 							break;
 						}

@@ -4020,4 +4020,17 @@ function eme_isFloat($amount ): bool {
 	return is_float( $amount ) && intval( $amount ) != $amount;
 }
 
+function eme_editing_booking_or_member(): bool {
+	if (empty($_GET['eme_admin_action'] )) {
+		return false;
+	}
+	if ($_GET['eme_admin_action'] == 'editBooking' && isset( $_GET['booking_id'])) {
+		return true;
+	}
+	if ($_GET['eme_admin_action'] == 'edit_member' && isset( $_GET['member_id'])) {
+		return true;
+	}
+	return false;
+}
+
 ?>

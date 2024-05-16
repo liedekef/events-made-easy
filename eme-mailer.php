@@ -325,7 +325,42 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions = [] ) {
 	global $wpdb;
 	$mailing_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-	$current_userid = get_current_user_id();
+
+	if ( empty( $fromemail ) ) {
+		$fromemail = $replytoemail;
+		$fromname  = $replytoname;
+	}
+	// if forced or fromemail is still empty
+	if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
+		$default_sender_address = get_option( 'eme_mail_sender_address' );
+		if ( eme_is_email( $default_sender_address ) ) {
+			$fromemail = $default_sender_address;
+			if ( $fromemail != $default_sender_address ) {
+				$fromname  = get_option( 'eme_mail_sender_name' );
+			}
+		} else {
+			$contact   = eme_get_contact();
+			$fromemail = $contact->user_email;
+			$fromname  = $contact->display_name;
+		}
+		// Still empty from, then we go further up
+		if ( empty( $fromemail ) ) {
+			$fromemail = get_option( 'admin_email' );
+		}
+		if ( empty( $fromname ) ) {
+			$fromname = get_option( 'blogname' );
+		}
+		$replytoemail = $fromemail;
+		$replytoname = $fromname;
+	}
+	// now the from should never be empty, so just check reply to again
+	if ( empty( $replytoemail ) ) {
+		$replytoemail = $fromemail;
+	}
+	if ( empty( $replytoname ) ) {
+		$replytoname = $fromname;
+	}
+
 	$now           = current_time( 'mysql', false );
 	$mailing       = [
 		'name'           => mb_substr( $mailing_name, 0, 255 ),
@@ -341,9 +376,13 @@ function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromema
 		'creation_date'  => $now,
 		'conditions'     => eme_serialize( $conditions ),
 	];
+
+	// add userid if possible
+	$current_userid = get_current_user_id();
 	if (!empty($current_userid)) {
 		$mailing['created_by'] = $current_userid;
 	}
+
 	if ( $wpdb->insert( $mailing_table, $mailing ) === false ) {
 		return false;
 	} else {
@@ -354,7 +393,42 @@ function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromema
 function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions ) {
 	global $wpdb;
 	$mailing_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-	$current_userid = get_current_user_id();
+
+	if ( empty( $fromemail ) ) {
+		$fromemail = $replytoemail;
+		$fromname  = $replytoname;
+	}
+	// if forced or fromemail is still empty
+	if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
+		$default_sender_address = get_option( 'eme_mail_sender_address' );
+		if ( eme_is_email( $default_sender_address ) ) {
+			$fromemail = $default_sender_address;
+			if ( $fromemail != $default_sender_address ) {
+				$fromname  = get_option( 'eme_mail_sender_name' );
+			}
+		} else {
+			$contact   = eme_get_contact();
+			$fromemail = $contact->user_email;
+			$fromname  = $contact->display_name;
+		}
+		// Still empty from, then we go further up
+		if ( empty( $fromemail ) ) {
+			$fromemail = get_option( 'admin_email' );
+		}
+		if ( empty( $fromname ) ) {
+			$fromname = get_option( 'blogname' );
+		}
+		$replytoemail = $fromemail;
+		$replytoname = $fromname;
+	}
+	// now the from should never be empty, so just check reply to again
+	if ( empty( $replytoemail ) ) {
+		$replytoemail = $fromemail;
+	}
+	if ( empty( $replytoname ) ) {
+		$replytoname = $fromname;
+	}
+
 	$now           = current_time( 'mysql', false );
 	$mailing       = [
 		'name'           => mb_substr( $mailing_name, 0, 255 ),
@@ -370,6 +444,9 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 		'creation_date'  => $now,
 		'conditions'     => eme_serialize( $conditions ),
 	];
+
+	// add userid if possible
+	$current_userid = get_current_user_id();
 	if (!empty($current_userid)) {
 		$mailing['created_by'] = $current_userid;
 	}
@@ -387,7 +464,6 @@ function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiverem
 function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail = '', $replytoname = '', $mailing_id = 0, $person_id = 0, $member_id = 0, $atts = [], $send_immediately = 0 ) {
 	global $wpdb;
 	$mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-	$current_userid = get_current_user_id();
 
 	if ( eme_is_empty_string( $subject ) || eme_is_empty_string( $body ) ) {
 		// no mail to be sent: fake it
@@ -456,9 +532,12 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		'creation_date' => $now,
 		'random_id'     => $random_id,
 	];
+
+	// add userid if possible
 	if (!empty($current_userid)) {
 		$mail['created_by'] = $current_userid;
 	}
+
 	if ( $send_immediately ) {
 		// we add the mail to the queue as sent and send it immediately
 		$mail['status']        = 1;

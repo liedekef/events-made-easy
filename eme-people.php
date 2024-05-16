@@ -3531,7 +3531,7 @@ function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
 
 	// in case $extra_sql is not empty, we'll cache the info so we can reuse it
 	if ( ! empty( $extra_sql ) ) {
-		$answers = wp_cache_get( "eme_group_person_ids $extra_sql" );
+		$answers = wp_cache_get( "eme_group_person_ids $group_ids $extra_sql" );
 		if ( $answers !== false ) {
 			return $answers;
 		}
@@ -3582,7 +3582,7 @@ function eme_get_groups_person_ids( $group_ids, $extra_sql = '' ) {
 	$res = array_unique( $res );
 	// in case $extra_sql is not empty, we'll cache the info so we can reuse it
 	if ( ! empty( $extra_sql ) ) {
-		wp_cache_set( "eme_group_person_ids $extra_sql", $res, '', 10 );
+		wp_cache_set( "eme_group_person_ids $group_ids $extra_sql", $res, '', 10 );
 	}
 	return $res;
 }

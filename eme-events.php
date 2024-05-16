@@ -2032,12 +2032,8 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$replacement = 0;
 				$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 				if ( $wp_id ) {
-					$groups_arr = explode( ',', $groups );
-					foreach ( $groups_arr as $group ) {
-						if ( ! empty( eme_get_groups_person_ids( $group, "people.wp_id = $wp_id" ) ) ) {
-							$replacement = 1;
-							break;
-						}
+					if ( ! empty( eme_get_groups_person_ids( $groups, "people.wp_id = $wp_id" ) ) ) {
+						$replacement = 1;
 					}
 				}
 			}

@@ -747,15 +747,17 @@ function eme_is_single_location_page() {
 }
 
 function eme_get_contact( $contact_id = 0 ) {
-	// suppose the user has been deleted ...
-	if ( ! $contact_id || ! get_userdata( $contact_id ) ) {
-		$contact_id = intval(get_option( 'eme_default_contact_person',0) );
-	}
 	$userinfo = false;
-	if ( $contact_id > 0 ) {
+	if ($contact_id > 0 ) {
 		$userinfo = get_userdata( $contact_id );
 	}
-	if ( $contact_id < 1 || $userinfo === false ) {
+	// suppose the user has been deleted ...
+	if ( $userinfo === false ) {
+		$contact_id = intval(get_option( 'eme_default_contact_person',0) );
+		$userinfo = get_userdata( $contact_id );
+	}
+	// still false? Means the user doesn't exist and the default contact person neither
+	if ( $userinfo === false ) {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			$thisblog = get_current_blog_id();
 			$userinfo = get_user_by( 'email', get_blog_option( $thisblog, 'admin_email' ) );

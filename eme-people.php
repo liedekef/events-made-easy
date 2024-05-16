@@ -1968,7 +1968,6 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
 
 	// trim the search_person param too
 	$search_person = isset( $search_terms['search_person'] ) ? esc_sql( $wpdb->esc_like( trim( $search_terms['search_person'] ) ) ) : '';
-	$where         = '';
 
 	// if the person is not allowed to manage all people, show only himself
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
@@ -2020,8 +2019,11 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
 		}
 	}
 
-	if ( $where_arr ) {
-		$where = 'WHERE ' . implode( ' AND ', $where_arr );
+	$where_arr = eme_array_remove_empty_elements($where_arr);
+	if ( !empty($where_arr) ) {
+		$where = 'WHERE ' . join( ' AND ', $where_arr );
+	} else {
+		$where = '';
 	}
 
 	$formfields_searchable = eme_get_searchable_formfields( 'people' );

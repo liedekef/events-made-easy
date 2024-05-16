@@ -3040,6 +3040,7 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 		$search_pg_pid = esc_sql( $wpdb->esc_like( $search_terms['search_pg_pid'] ) );
 		$where_arr[]   = "(pg_pid like '%$search_pg_pid%')";
 	}
+	$where_arr = eme_array_remove_empty_elements($where_arr);
 	if ( ! empty( $where_arr ) ) {
 		$where = 'WHERE ' . join( ' AND ', $where_arr );
 	} else {

@@ -1,0 +1,9 @@
+{
+    "require": {
+        "wp-cli/i18n-command": "^2.6"
+    },
+    "scripts": {
+      "update-po": "wp i18n update-po langs/events-made-easy.pot",
+      "make-mo": "wp i18n make-mo langs"
+    }
+}

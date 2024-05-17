@@ -100,7 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.44 (2024/05/17) =
 * Make #_IS_USER_IN_GROUP also work for dynamic groups
-# Account for empty/forced from-email when inserting a mailing (the individual mails were ok, so it just caused a php warning)
+* Account for empty/forced from-email when inserting a mailing (the individual mails were ok, so it just caused a php warning)
 
 = 2.4.43 (2024/05/09) =
 * Correct direct adding of dynamic groups of people or members

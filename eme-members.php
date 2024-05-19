@@ -685,25 +685,34 @@ function eme_get_extra_member_data( $member ) {
         return $member;
 }
 
-function eme_delete_member( $member_id ) {
+function eme_delete_member( $member_id, $is_related_member=0 ) {
 	global $wpdb;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	if ( ! empty( $member_id ) ) {
+		$member = eme_get_member($member_id);
 		if ( has_action( 'eme_delete_member_action' ) ) {
-			$member = eme_get_member($member_id);
 			do_action( 'eme_delete_member_action', $member );
 		}
 		// do the related member ids before deletion the head of the family
 		$related_member_ids = eme_get_family_member_ids( $member_id );
 		if ( ! empty( $related_member_ids ) ) {
 			foreach ( $related_member_ids as $related_member_id ) {
-				eme_delete_member( $related_member_id );
+				// we pass 1 as second param, so eme_delete_member then knows not to delete the payment
+				eme_delete_member( $related_member_id,1 );
 			}
 		}
 		eme_delete_member_answers( $member_id );
 		$sql = $wpdb->prepare( "DELETE FROM $members_table WHERE member_id = %d", $member_id );
 		$wpdb->query( $sql );
 		eme_delete_uploaded_files( $member_id, 'members' );
+		// remove the linked payment too, but only for the head of the family, not related members
+		// this is just for a bit of efficiency
+		if (!empty($member['payment_id']) && !$is_related_member) {
+			$member_ids = eme_get_payment_member_ids( $member['payment_id'] );
+			if ( empty( $member_ids ) ) {
+				eme_delete_payment( $member['payment_id'] );
+			}
+		}
 	}
 }
 

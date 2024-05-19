@@ -3433,6 +3433,13 @@ function eme_get_payment_booking_ids( $payment_id ) {
 	return $wpdb->get_col( $sql );
 }
 
+function eme_get_payment_member_ids( $payment_id ) {
+	global $wpdb;
+	$table_name = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$sql        = $wpdb->prepare( "SELECT member_id FROM $table_name WHERE status IN (%d,%d,%d) AND payment_id=%d", EME_MEMBER_STATUS_GRACE, EME_MEMBER_STATUS_ACTIVE, EME_MEMBER_STATUS_PENDING, $payment_id );
+	return $wpdb->get_col( $sql );
+}
+
 function eme_get_randompayment_booking_ids( $payment_randomid, $check_trash = 0 ) {
 	global $wpdb;
 	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;

@@ -48,6 +48,9 @@ function eme_is_offline_pg( $pg ) {
 function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	$ret_string = '';
 	$payment    = eme_get_payment( $payment_id );
+	if ( empty( $payment ) ) {
+		return;
+	}
 	if ( $payment['target'] == 'member' ) {
 		return eme_payment_member_form( $payment_id, $resultcode, $standalone );
 	}
@@ -237,13 +240,18 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 
 function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	if ( $resultcode > 0 ) {
-			$ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Payment failed for your membership for #_MEMBERSHIPNAME, please try again.', 'events-made-easy' ) . '</div>';
+		$ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Payment failed for your membership for #_MEMBERSHIPNAME, please try again.', 'events-made-easy' ) . '</div>';
 	} else {
-			$ret_string = '';
+		$ret_string = '';
 	}
 
 	$payment     = eme_get_payment( $payment_id );
 	$member      = eme_get_member_by_paymentid( $payment_id );
+	if (empty($member)) {
+		// member has been deleted, but the payment id is still present
+		$ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( "No member found linked to this payment. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' ) . '</div>';
+		return $ret_string;
+	}
 	$person      = eme_get_person( $member['person_id'] );
 	$total_price = eme_get_member_payment_price( $payment_id );
 	$membership  = eme_get_membership( $member['membership_id'] );

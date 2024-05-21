@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.4.45 (2024//) =
 * Update dompdf to 3.0.0
 * Fix #_IS_USER_IN_GROUP for static groups
+* Fix ical php warning
 
 = 2.4.44 (2024/05/17) =
 * Make #_IS_USER_IN_GROUP also work for dynamic groups

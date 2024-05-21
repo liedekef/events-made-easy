@@ -34,7 +34,7 @@ function eme_ical_single_event( $event, $title_format, $description_format, $loc
 	$html_description = eme_replace_event_placeholders( $description_format, $event, 'html' );
 
 	$event_link    = eme_event_url( $event );
-	$contact       = eme_get_contact( $event );
+	$contact       = eme_get_event_contact( $event );
 	$contact_email = $contact->user_email;
 	$contact_name  = $contact->display_name;
 

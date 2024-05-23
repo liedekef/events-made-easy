@@ -1457,7 +1457,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 			$related_person = null;
 		}
 		if ( ! empty( $related_person ) ) {
-			$related_person_name  = eme_format_full_name( $related_person['firstname'], $related_person['lastname'] );
+			$related_person_name  = eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] );
 			$related_person_class = "readonly='readonly' class='clearable x'";
 		} else {
 			$related_person_name  = '';
@@ -1563,7 +1563,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 				if ( $related_member ) {
 					$related_person = eme_get_person( $related_member['person_id'] );
 					if ( $related_person ) {
-						print "<br><a href='" . admin_url( "admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=$related_member_id" ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) ) . '</a>';
+						print "<br><a href='" . admin_url( "admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=$related_member_id" ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
 					}
 				}
 			}
@@ -6347,7 +6347,7 @@ function eme_ajax_members_list( ) {
 			$related_member = eme_get_member( $item['related_member_id'] );
 			if ( $related_member ) {
 				$related_person              = eme_get_person( $related_member['person_id'] );
-				$record['related_member_id'] = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['related_member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) ) . '</a>';
+				$record['related_member_id'] = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['related_member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
 				$familytext                 .= '<br>' . esc_html__( 'Head of the family: ', 'events-made-easy' ) . $record['related_member_id'];
 			}
 		} elseif ( ! empty( $membership['properties']['family_membership'] ) ) {
@@ -6479,7 +6479,7 @@ function eme_ajax_members_select2() {
 	$pagesize = intval( $_REQUEST['pagesize'] );
 	//$start= isset($_REQUEST["page"]) ? intval($_REQUEST["page"])*$pagesize : 0;
 	$start     = ( isset( $_REQUEST['page'] ) && intval( $_REQUEST['page'] ) > 0 ) ? ( intval( $_REQUEST['page'] ) - 1 ) * $pagesize : 0;
-	$sql       = "SELECT members.member_id, people.lastname, people.firstname, people.wp_id, memberships.name AS membership_name
+	$sql       = "SELECT members.member_id, people.lastname, people.firstname, people.email, people.wp_id, memberships.name AS membership_name
            FROM $members_table AS members
            LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
            LEFT JOIN $people_table as people ON members.person_id=people.person_id
@@ -6497,7 +6497,7 @@ function eme_ajax_members_select2() {
 		$record       = [];
 		$record['id'] = $member['member_id'];
 		// no eme_esc_html here, select2 does it own escaping upon arrival
-		$record['text'] = eme_format_full_name( $member['firstname'], $member['lastname'] ) . ' (' . $member['membership_name'] . ')';
+		$record['text'] = eme_format_full_name( $member['firstname'], $member['lastname'], $member['email'] ) . ' (' . $member['membership_name'] . ')';
 		$records[]      = $record;
 	}
 	$jTableResult['TotalRecordCount'] = $recordCount;

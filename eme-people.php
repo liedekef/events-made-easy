@@ -895,10 +895,10 @@ function eme_import_csv_people() {
 			}
 			// also allow empty firstname
 			if ( ! isset( $line['firstname'] ) ) {
-					$line['firstname'] = '';
+				$line['firstname'] = '';
 			}
 			if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
-								++$errors;
+				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
 			} elseif ( isset( $line['lastname'] ) && isset( $line['firstname'] ) && isset( $line['email'] ) ) {
 				// also import properties
@@ -938,6 +938,7 @@ function eme_import_csv_people() {
 				}
 				if ( $person_id ) {
 					// now handle all the extra info, in the CSV they need to be named like 'answer_XX' (with 'XX' being either the fieldid or the fieldname, e.g. answer_myfieldname)
+					// if the key is called "groups", then the person will get imported into the the mentioned groups
 					foreach ( $line as $key => $value ) {
 						if ( preg_match( '/^answer_(.*)$/', $key, $matches ) ) {
 							$grouping   = 0;

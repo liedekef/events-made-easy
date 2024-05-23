@@ -276,7 +276,7 @@ function eme_cpi_request_ajax() {
 		foreach ( $person_ids as $person_id ) {
 			$person      = eme_get_person( $person_id );
 			$change_link = eme_cpi_url( $person_id, $email );
-			$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+			$person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
 			if ( empty( $first_person_name ) ) {
 				$first_person_name = $person_name;
 			}
@@ -459,7 +459,7 @@ function eme_show_personal_info( $email ) {
 			$output  .= '<tr><td>' . __( 'MassMail', 'events-made-easy' ) . '</td><td>' . $massmail . '</td></tr>';
 			$output  .= '<tr><td>' . __( 'GDPR approval', 'events-made-easy' ) . '</td><td>' . $gdpr . '</td></tr>';
 			if ( ! empty( $person['properties']['image_id'] ) ) {
-								$img = wp_get_attachment_image( $person['properties']['image_id'], 'full', 0, [ 'class' => 'eme_person_image' ] );
+				$img = wp_get_attachment_image( $person['properties']['image_id'], 'full', 0, [ 'class' => 'eme_person_image' ] );
 				$output             .= '<tr><td>' . __( 'Image', 'events-made-easy' ) . '</td><td>' . $img . '</td></tr>';
 			}
 			$output .= '<tr><td>' . __( 'Member of group(s)', 'events-made-easy' ) . '</td><td>' . eme_esc_html( $groups ) . '</td></tr>';
@@ -494,9 +494,9 @@ function eme_show_personal_info( $email ) {
 						foreach ( $related_member_ids as $related_member_id ) {
 							$related_member = eme_get_member( $related_member_id );
 							if ( $related_member ) {
-									$related_person = eme_get_person( $related_member['person_id'] );
+								$related_person = eme_get_person( $related_member['person_id'] );
 								if ( $related_person ) {
-									$output .= '<tr><td>' . __( 'Main family account for', 'events-made-easy' ) . '</td><td>' . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) ) . ' (' . eme_esc_html( $related_person['email'] ) . ')</td></tr>';
+									$output .= '<tr><td>' . __( 'Main family account for', 'events-made-easy' ) . '</td><td>' . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . ' (' . eme_esc_html( $related_person['email'] ) . ')</td></tr>';
 								}
 							}
 						}

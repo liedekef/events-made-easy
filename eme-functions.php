@@ -3458,7 +3458,11 @@ function eme_create_wp_user( $person ) {
 	}
 }
 
-function eme_format_full_name( $firstname, $lastname ) {
+function eme_format_full_name( $firstname, $lastname, $email='' ) {
+	// the special case where the firstname/lastname are empty: then we use email as name if given as arg
+	if (empty($firstname) && empty($lastname) && !empty($email)) {
+		return $email;
+	}
 	$format = get_option( 'eme_full_name_format' );
 	if ( ! strstr( $format, '#_LASTNAME' ) ) {
 		$format .= ' #_LASTNAME';

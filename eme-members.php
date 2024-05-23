@@ -4189,6 +4189,14 @@ function eme_member_set_status( $member_id, $status ) {
 	return $res;
 }
 
+function eme_member_get_status( $member_id ) {
+	global $wpdb;
+	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+
+	$sql   = $wpdb->prepare( "SELECT status FROM $table WHERE member_id=%d", $member_id );
+	return $wpdb->get_var( $sql );
+}
+
 function eme_stop_member( $member_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;

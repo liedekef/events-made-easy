@@ -2953,6 +2953,14 @@ function eme_get_person( $person_id ) {
 	return $person;
 }
 
+function eme_person_get_status( $person_id ) {
+        global $wpdb;
+	$table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+
+        $sql   = $wpdb->prepare( "SELECT status FROM $table WHERE person_id=%d", $person_id );
+        return $wpdb->get_var( $sql );
+}
+
 function eme_trash_people( $person_ids ) {
 	global $wpdb;
 	$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;

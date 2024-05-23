@@ -2047,7 +2047,7 @@ function eme_emails_page() {
 				$person_ids[] = $mail['person_id'];
 				$person       = eme_get_person( $mail['person_id'] );
 				if ( !empty( $person ) ) {
-					$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+					$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
 				}
 			} elseif ( $mail['member_id'] > 0 ) {
 				$member_ids[] = $mail['member_id'];
@@ -2055,7 +2055,7 @@ function eme_emails_page() {
 				if (! empty( $member ) ) {
 					$person = eme_get_person( $member['person_id'] );
 					if ( !empty( $person ) ) {
-						$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+						$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['firstname'] );
 					}
 				}
 			}
@@ -2108,14 +2108,14 @@ function eme_emails_page() {
 						$person_ids = explode( ',', $conditions['eme_genericmail_send_persons'] );
 						$persons    = eme_get_persons( $person_ids );
 						foreach ( $persons as $person ) {
-							$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+							$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
 						}
 					}
 					if ( ! empty( $conditions['eme_send_members'] ) ) {
 						$member_ids = explode( ',', $conditions['eme_send_members'] );
 						$members    = eme_get_members( $member_ids );
 						foreach ( $members as $member ) {
-							$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'] );
+							$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'], $person['email'] );
 						}
 					}
 					if ( ! empty( $conditions['eme_genericmail_send_peoplegroups'] ) ) {
@@ -2168,14 +2168,14 @@ function eme_emails_page() {
 					$person_ids = explode( ',', $conditions['eme_eventmail_send_persons'] );
 					$persons    = eme_get_persons( $person_ids );
 					foreach ( $persons as $person ) {
-						$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+						$mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
 					}
 				}
 				if ( ! empty( $conditions['eme_eventmail_send_members'] ) ) {
 					$member_ids = explode( ',', $conditions['eme_eventmail_send_members'] );
 					$members    = eme_get_members( $member_ids );
 					foreach ( $members as $member ) {
-						$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'] );
+						$mymembergroups[ $member['member_id'] ] = eme_format_full_name( $member['firstname'], $member['lastname'], $person['email'] );
 					}
 				}
 				if ( ! empty( $conditions['eme_eventmail_send_groups'] ) ) {

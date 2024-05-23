@@ -1907,7 +1907,7 @@ function eme_ajax_task_signups_list() {
 			} else {
 				$rows[ $key ]['signup_status'] = __('Pending', 'events-made-easy');
 			}
-			$rows[ $key ]['person_info'] = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $row['person_id'] ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $row['firstname'], $row['lastname'] ) ) . '</a>';
+			$rows[ $key ]['person_info'] = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $row['person_id'] ) . "' title='" . __( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $row['firstname'], $row['lastname'], , $row['email'] ) ) . '</a>';
 		}
 
 		$jTableResult['Result']           = 'OK';

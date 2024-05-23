@@ -878,7 +878,7 @@ function eme_import_csv_people() {
 	$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
 
 	// check required columns
-	if ( ! in_array( 'lastname', $headers ) || ! in_array( 'firstname', $headers ) || ! in_array( 'email', $headers ) ) {
+	if ( ! in_array( 'email', $headers ) ) {
 		$result = esc_html__( 'Not all required fields present.', 'events-made-easy' );
 	} else {
 		$empty_props = [];
@@ -894,7 +894,10 @@ function eme_import_csv_people() {
 				$line['massmail'] = 0;
 			}
 			// also allow empty firstname
-			if ( ! isset( $line['firstname'] ) ) {
+			if ( empty( $line['lastname'] ) ) {
+				$line['lastname'] = '';
+			}
+			if ( empty( $line['firstname'] ) ) {
 				$line['firstname'] = '';
 			}
 			if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
@@ -954,7 +957,7 @@ function eme_import_csv_people() {
 							}
 						}
 						if ( preg_match( '/^groups?$/', $key, $matches ) ) {
-							$groups = eme_convert_multi2array( $key );
+							$groups = eme_convert_multi2array( $value );
 							eme_add_persongroups( $person_id, $groups );
 						}
 					}
@@ -964,9 +967,9 @@ function eme_import_csv_people() {
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
 			}
 		}
+		$result = sprintf( esc_html__( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
 	}
 	fclose( $handle );
-	$result = sprintf( esc_html__( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
 	if ( $errors ) {
 		$result .= '<br>' . $error_msg;
 	}

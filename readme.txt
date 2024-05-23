@@ -98,8 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.46 (2024/05/21) =
+= 2.4.46 (2024//) =
 * #_IS_USER_IN_GROUP fix for lists of group names (not ids)
+* Get the first user with admin rights as default contact person if no other is found
 
 = 2.4.45 (2024/05/21) =
 * Update dompdf to 3.0.0

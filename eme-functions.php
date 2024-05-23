@@ -766,10 +766,9 @@ function eme_get_contact( $contact_id = 0 ) {
 		}
 		// still nothing ? Can be if the main admin email is not matching a user, so get the first admin
 		if ( ! $userinfo ) {
-			$eme_super_admins = get_super_admins();
-			if ( ! empty( $eme_super_admins ) ) {
-				$userinfo = get_user_by( 'login', $eme_super_admins[0] );
-			}
+			$user_query = new WP_User_Query( array( 'role' => 'administrator' ) );
+			$users      = $user_query->get_results(); // array of WP_User objects, like get_users
+			$userinfo   = $users[0];
 		}
 	}
 	return $userinfo;

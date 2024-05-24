@@ -27,38 +27,38 @@ msgstr ""
 #: eme-countries.php:994
 #: eme-discounts.php:1644
 #: eme-discounts.php:1687
-#: eme-events.php:10113
-#: eme-events.php:10495
-#: eme-events.php:10736
+#: eme-events.php:10124
+#: eme-events.php:10506
+#: eme-events.php:10747
 #: eme-formfields.php:5138
 #: eme-formfields.php:5190
 #: eme-formfields.php:5201
 #: eme-formfields.php:5202
 #: eme-formfields.php:5224
 #: eme-formfields.php:5225
-#: eme-functions.php:3284
+#: eme-functions.php:3283
+#: eme-functions.php:3304
 #: eme-functions.php:3305
-#: eme-functions.php:3306
-#: eme-functions.php:3350
+#: eme-functions.php:3349
 #: eme-locations.php:2884
 #: eme-mailer.php:1301
 #: eme-mailer.php:1428
 #: eme-mailer.php:2697
 #: eme-mailer.php:2827
-#: eme-members.php:6197
-#: eme-members.php:6309
-#: eme-members.php:6456
-#: eme-members.php:6543
-#: eme-members.php:6614
+#: eme-members.php:6205
+#: eme-members.php:6317
+#: eme-members.php:6464
+#: eme-members.php:6551
+#: eme-members.php:6622
 #: eme-options.php:138
 #: eme-payments.php:3939
-#: eme-people.php:3968
-#: eme-people.php:5076
-#: eme-people.php:5185
-#: eme-people.php:5257
-#: eme-people.php:5296
-#: eme-people.php:5335
-#: eme-people.php:5417
+#: eme-people.php:3980
+#: eme-people.php:5088
+#: eme-people.php:5197
+#: eme-people.php:5269
+#: eme-people.php:5308
+#: eme-people.php:5347
+#: eme-people.php:5429
 #: eme-recurrence.php:520
 #: eme-recurrence.php:689
 #: eme-rsvp.php:1218
@@ -77,53 +77,53 @@ msgid "Access denied!"
 msgstr "拒绝访问!"
 
 #: eme-actions.php:210
-#: eme-events.php:6261
-#: eme-events.php:9650
+#: eme-events.php:6272
+#: eme-events.php:9661
 #: eme-templates.php:41
 msgid "Event"
 msgstr "活动"
 
 #: eme-actions.php:219
-#: eme-events.php:6262
-#: eme-events.php:8374
-#: eme-events.php:9595
+#: eme-events.php:6273
+#: eme-events.php:8385
+#: eme-events.php:9606
 #: eme-locations.php:390
 msgid "Location"
 msgstr "地点"
 
 #: eme-actions.php:340
-#: eme-events.php:9513
-#: eme-events.php:9750
-#: eme-events.php:9783
-#: eme-events.php:9818
-#: eme-events.php:9884
+#: eme-events.php:9524
+#: eme-events.php:9761
+#: eme-events.php:9794
+#: eme-events.php:9829
+#: eme-events.php:9895
 #: eme-gdpr.php:456
 #: eme-gdpr.php:601
 #: eme-locations.php:571
-#: eme-people.php:1020
-#: eme-people.php:2356
+#: eme-people.php:1024
+#: eme-people.php:2360
 #: eme-rsvp.php:1425
 msgid "State"
 msgstr "州/省"
 
 #: eme-actions.php:341
 #: eme-countries.php:518
-#: eme-events.php:9514
-#: eme-events.php:9749
-#: eme-events.php:9784
-#: eme-events.php:9819
-#: eme-events.php:9885
+#: eme-events.php:9525
+#: eme-events.php:9760
+#: eme-events.php:9795
+#: eme-events.php:9830
+#: eme-events.php:9896
 #: eme-gdpr.php:457
 #: eme-gdpr.php:605
 #: eme-locations.php:579
-#: eme-people.php:1021
-#: eme-people.php:2360
+#: eme-people.php:1025
+#: eme-people.php:2364
 #: eme-rsvp.php:1430
 msgid "Country"
 msgstr "国家"
 
 #: eme-actions.php:343
-#: eme-events.php:9516
+#: eme-events.php:9527
 msgid "An error has occurred"
 msgstr "出现错误。"
 
@@ -132,17 +132,17 @@ msgid "Clear"
 msgstr "清空"
 
 #: eme-actions.php:345
-#: eme-events.php:9517
+#: eme-events.php:9528
 msgid "Mailing preferences"
 msgstr "邮寄优先权"
 
 #: eme-actions.php:346
-#: eme-events.php:9518
+#: eme-events.php:9529
 msgid "Yes, I'm sure"
 msgstr "是的，我肯定"
 
 #: eme-actions.php:347
-#: eme-events.php:9519
+#: eme-events.php:9530
 msgid "I want to receive mails"
 msgstr "我要接收邮件"
 
@@ -173,7 +173,7 @@ msgid "Any"
 msgstr "任何"
 
 #: eme-attendances.php:80
-#: eme-events.php:9583
+#: eme-events.php:9594
 #: eme-install.php:1679
 #: eme-options.php:146
 #: eme-options.php:147
@@ -185,7 +185,7 @@ msgid "Events"
 msgstr "活动"
 
 #: eme-attendances.php:81
-#: eme-events.php:9865
+#: eme-events.php:9876
 #: eme-gdpr.php:483
 #: eme-options.php:1436
 #: events-manager.php:374
@@ -217,8 +217,8 @@ msgstr "手动添加出席记录"
 #: eme-members.php:1506
 #: eme-members.php:1528
 #: eme-members.php:1572
-#: eme-people.php:1813
-#: eme-people.php:2304
+#: eme-people.php:1817
+#: eme-people.php:2308
 msgid "Start typing a name"
 msgstr "开始键入一个名字"
 
@@ -239,16 +239,16 @@ msgid "If a RSVP or member QRCODE is scanned by someone with sufficent rights, a
 msgstr "如果 RSVP 或会员 QRCODE 被有足够权限的人扫描，出席记录将被添加到这个表格中。"
 
 #: eme-attendances.php:134
-#: eme-events.php:5951
-#: eme-events.php:6100
+#: eme-events.php:5962
+#: eme-events.php:6111
 #: eme-rsvp.php:5067
 #: eme-tasks.php:465
 msgid "Filter on start date"
 msgstr "过滤开始日期"
 
 #: eme-attendances.php:136
-#: eme-events.php:5953
-#: eme-events.php:6102
+#: eme-events.php:5964
+#: eme-events.php:6113
 #: eme-rsvp.php:5069
 #: eme-tasks.php:467
 msgid "Filter on end date"
@@ -263,14 +263,14 @@ msgstr "出席者的筛选"
 #: eme-countries.php:453
 #: eme-discounts.php:465
 #: eme-discounts.php:532
-#: eme-events.php:6022
-#: eme-events.php:6122
+#: eme-events.php:6033
+#: eme-events.php:6133
 #: eme-formfields.php:235
 #: eme-locations.php:912
 #: eme-members.php:2870
 #: eme-members.php:3268
-#: eme-people.php:1833
-#: eme-people.php:2644
+#: eme-people.php:1837
+#: eme-people.php:2648
 #: eme-rsvp.php:5170
 #: eme-tasks.php:488
 #: eme-templates.php:204
@@ -278,28 +278,28 @@ msgid "Hint: rightclick on the column headers to show/hide columns"
 msgstr "提示：右键单击列标题以显示或隐藏列"
 
 #: eme-attendances.php:202
-#: eme-people.php:1627
-#: eme-people.php:1628
-#: eme-people.php:1629
-#: eme-people.php:1675
-#: eme-people.php:1676
-#: eme-people.php:1677
-#: eme-people.php:1718
-#: eme-people.php:1719
-#: eme-people.php:1720
-#: eme-people.php:2242
-#: eme-people.php:2307
-#: eme-people.php:2322
-#: eme-people.php:5101
-#: eme-people.php:5115
-#: eme-people.php:5116
-#: eme-people.php:5117
+#: eme-people.php:1631
+#: eme-people.php:1632
+#: eme-people.php:1633
+#: eme-people.php:1679
+#: eme-people.php:1680
+#: eme-people.php:1681
+#: eme-people.php:1722
+#: eme-people.php:1723
+#: eme-people.php:1724
+#: eme-people.php:2246
+#: eme-people.php:2311
+#: eme-people.php:2326
+#: eme-people.php:5113
+#: eme-people.php:5127
+#: eme-people.php:5128
+#: eme-people.php:5129
 #: eme-tasks.php:1910
 msgid "Edit person"
 msgstr "编辑人员"
 
 #: eme-attendances.php:217
-#: eme-events.php:10425
+#: eme-events.php:10436
 #: eme-rsvp.php:5773
 msgid "All day"
 msgstr "全天"
@@ -310,7 +310,7 @@ msgid "Manual entry"
 msgstr "手动"
 
 #: eme-attendances.php:264
-#: eme-events.php:10537
+#: eme-events.php:10548
 msgid "Events deleted"
 msgstr "活动已删除"
 
@@ -323,7 +323,7 @@ msgid "Attribute Name"
 msgstr "属性名称"
 
 #: eme-attributes.php:96
-#: eme-events.php:9718
+#: eme-events.php:9729
 msgid "Value"
 msgstr "值"
 
@@ -389,58 +389,58 @@ msgstr "添加分类"
 
 #: eme-categories.php:129
 #: eme-categories.php:136
-#: eme-events.php:9587
-#: eme-events.php:9627
-#: eme-events.php:9644
-#: eme-events.php:9669
-#: eme-events.php:9690
-#: eme-events.php:9712
-#: eme-events.php:9745
-#: eme-events.php:9773
-#: eme-events.php:9868
-#: eme-events.php:9923
+#: eme-events.php:9598
+#: eme-events.php:9638
+#: eme-events.php:9655
+#: eme-events.php:9680
+#: eme-events.php:9701
+#: eme-events.php:9723
+#: eme-events.php:9756
+#: eme-events.php:9784
+#: eme-events.php:9879
+#: eme-events.php:9934
 #: eme-gdpr.php:448
 #: eme-gdpr.php:488
 #: eme-holidays.php:122
 #: eme-holidays.php:129
-#: eme-people.php:1013
-#: eme-people.php:1300
-#: eme-people.php:1614
-#: eme-people.php:1663
-#: eme-people.php:1706
+#: eme-people.php:1017
+#: eme-people.php:1304
+#: eme-people.php:1618
+#: eme-people.php:1667
+#: eme-people.php:1710
 msgid "ID"
 msgstr "ID"
 
 #: eme-categories.php:130
 #: eme-categories.php:137
-#: eme-events.php:9588
-#: eme-events.php:9671
-#: eme-events.php:9691
-#: eme-events.php:9711
-#: eme-events.php:9746
-#: eme-events.php:9774
-#: eme-events.php:9811
-#: eme-events.php:9873
-#: eme-events.php:9978
+#: eme-events.php:9599
+#: eme-events.php:9682
+#: eme-events.php:9702
+#: eme-events.php:9722
+#: eme-events.php:9757
+#: eme-events.php:9785
+#: eme-events.php:9822
+#: eme-events.php:9884
+#: eme-events.php:9989
 #: eme-holidays.php:123
 #: eme-holidays.php:130
 #: eme-mailer.php:1469
 #: eme-mailer.php:2750
 #: eme-mailer.php:2859
 #: eme-members.php:1858
-#: eme-people.php:2546
+#: eme-people.php:2550
 #: eme-tasks.php:739
 #: eme-templates.php:270
 msgid "Name"
 msgstr "名字"
 
 #: eme-categories.php:143
-#: eme-events.php:10224
+#: eme-events.php:10235
 #: eme-formfields.php:5175
 #: eme-holidays.php:136
 #: eme-locations.php:2961
-#: eme-members.php:6233
-#: eme-people.php:5209
+#: eme-members.php:6241
+#: eme-people.php:5221
 #: eme-templates.php:481
 msgid "No name"
 msgstr "没有名字"
@@ -459,7 +459,7 @@ msgid "Delete"
 msgstr "删除"
 
 #: eme-categories.php:168
-#: eme-events.php:6668
+#: eme-events.php:6679
 #: eme-locations.php:455
 msgid "No categories defined."
 msgstr "没有定义分类。"
@@ -473,7 +473,7 @@ msgid "Update category"
 msgstr "更新分类"
 
 #: eme-categories.php:185
-#: eme-events.php:7038
+#: eme-events.php:7049
 #: eme-locations.php:498
 msgid "Permalink: "
 msgstr "固定链接："
@@ -483,7 +483,7 @@ msgid "Create category"
 msgstr "创建分类"
 
 #: eme-categories.php:192
-#: eme-events.php:7040
+#: eme-events.php:7051
 #: eme-locations.php:500
 msgid "Permalink prefix: "
 msgstr "固定链接的前缀。"
@@ -590,26 +590,26 @@ msgstr "月"
 #: eme-cron.php:431
 #: eme-discounts.php:463
 #: eme-discounts.php:530
-#: eme-events.php:6020
-#: eme-events.php:6120
-#: eme-events.php:9605
-#: eme-events.php:9655
-#: eme-events.php:9676
-#: eme-events.php:9700
-#: eme-events.php:9734
-#: eme-events.php:9762
-#: eme-events.php:9790
-#: eme-events.php:9827
-#: eme-events.php:9887
-#: eme-events.php:9953
+#: eme-events.php:6031
+#: eme-events.php:6131
+#: eme-events.php:9616
+#: eme-events.php:9666
+#: eme-events.php:9687
+#: eme-events.php:9711
+#: eme-events.php:9745
+#: eme-events.php:9773
+#: eme-events.php:9801
+#: eme-events.php:9838
+#: eme-events.php:9898
+#: eme-events.php:9964
 #: eme-formfields.php:233
 #: eme-locations.php:910
 #: eme-mailer.php:2740
 #: eme-mailer.php:2849
 #: eme-members.php:2868
 #: eme-members.php:3266
-#: eme-people.php:1831
-#: eme-people.php:2642
+#: eme-people.php:1835
+#: eme-people.php:2646
 #: eme-rsvp.php:5168
 #: eme-tasks.php:486
 #: eme-templates.php:202
@@ -678,10 +678,10 @@ msgstr "您无权管理折扣!"
 #: eme-countries.php:108
 #: eme-discounts.php:79
 #: eme-discounts.php:172
-#: eme-events.php:5686
+#: eme-events.php:5697
 #: eme-locations.php:228
-#: eme-members.php:5779
-#: eme-members.php:5949
+#: eme-members.php:5787
+#: eme-members.php:5957
 #: eme-people.php:855
 #: eme-rsvp.php:4851
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
@@ -691,10 +691,10 @@ msgstr "在访问上传的文件时出现问题，也许是一些安保问题？
 #: eme-countries.php:133
 #: eme-discounts.php:104
 #: eme-discounts.php:197
-#: eme-events.php:5713
+#: eme-events.php:5724
 #: eme-locations.php:255
-#: eme-members.php:5805
-#: eme-members.php:5975
+#: eme-members.php:5813
+#: eme-members.php:5983
 #: eme-people.php:882
 #: eme-rsvp.php:4878
 msgid "Not all required fields present."
@@ -711,7 +711,7 @@ msgstr "未被导入：%s"
 #: eme-countries.php:145
 #: eme-discounts.php:150
 #: eme-discounts.php:209
-#: eme-members.php:6060
+#: eme-members.php:6068
 msgid "Import finished: %d inserts, %d errors"
 msgstr ""
 
@@ -719,10 +719,10 @@ msgstr ""
 #: eme-countries.php:153
 #: eme-discounts.php:158
 #: eme-discounts.php:217
-#: eme-events.php:5677
+#: eme-events.php:5688
 #: eme-locations.php:219
-#: eme-members.php:5771
-#: eme-members.php:5942
+#: eme-members.php:5779
+#: eme-members.php:5950
 #: eme-people.php:846
 #: eme-rsvp.php:4841
 msgid "Problem detected while uploading the file"
@@ -732,10 +732,10 @@ msgstr "上传文件时发现问题"
 #: eme-countries.php:156
 #: eme-discounts.php:161
 #: eme-discounts.php:220
-#: eme-events.php:5674
+#: eme-events.php:5685
 #: eme-locations.php:216
-#: eme-members.php:5768
-#: eme-members.php:5939
+#: eme-members.php:5776
+#: eme-members.php:5947
 #: eme-people.php:843
 #: eme-rsvp.php:4838
 msgid "No CSV file detected: %s"
@@ -823,10 +823,10 @@ msgstr "添加国家"
 #: eme-countries.php:422
 #: eme-discounts.php:420
 #: eme-discounts.php:505
-#: eme-events.php:5907
+#: eme-events.php:5918
 #: eme-locations.php:856
 #: eme-members.php:3178
-#: eme-people.php:2138
+#: eme-people.php:2142
 msgid "Click on the icon to show the import form"
 msgstr "点击图标，显示导入表格"
 
@@ -834,11 +834,11 @@ msgstr "点击图标，显示导入表格"
 #: eme-countries.php:429
 #: eme-discounts.php:427
 #: eme-discounts.php:512
-#: eme-events.php:5914
+#: eme-events.php:5925
 #: eme-locations.php:863
 #: eme-members.php:3185
 #: eme-members.php:3200
-#: eme-people.php:2145
+#: eme-people.php:2149
 #: eme-rsvp.php:5019
 msgid "Delimiter:"
 msgstr "定界符："
@@ -847,11 +847,11 @@ msgstr "定界符："
 #: eme-countries.php:431
 #: eme-discounts.php:429
 #: eme-discounts.php:514
-#: eme-events.php:5916
+#: eme-events.php:5927
 #: eme-locations.php:865
 #: eme-members.php:3187
 #: eme-members.php:3202
-#: eme-people.php:2147
+#: eme-people.php:2151
 #: eme-rsvp.php:5021
 msgid "Enclosure:"
 msgstr "附件："
@@ -860,9 +860,9 @@ msgstr "附件："
 #: eme-countries.php:434
 #: eme-discounts.php:432
 #: eme-discounts.php:517
-#: eme-events.php:5919
+#: eme-events.php:5930
 #: eme-locations.php:868
-#: eme-people.php:2154
+#: eme-people.php:2158
 #: eme-rsvp.php:5024
 msgid "Import"
 msgstr "导入"
@@ -885,16 +885,16 @@ msgstr ""
 #: eme-countries.php:448
 #: eme-discounts.php:442
 #: eme-discounts.php:527
-#: eme-events.php:5999
-#: eme-events.php:6107
+#: eme-events.php:6010
+#: eme-events.php:6118
 #: eme-formfields.php:230
 #: eme-locations.php:902
 #: eme-mailer.php:2736
 #: eme-mailer.php:2846
 #: eme-members.php:2827
 #: eme-members.php:3260
-#: eme-people.php:1781
-#: eme-people.php:2637
+#: eme-people.php:1785
+#: eme-people.php:2641
 #: eme-rsvp.php:5090
 #: eme-tasks.php:475
 #: eme-templates.php:199
@@ -956,8 +956,8 @@ msgstr "州的名称"
 
 #: eme-countries.php:511
 #: eme-discounts.php:1551
-#: eme-events.php:9732
-#: eme-events.php:9757
+#: eme-events.php:9743
+#: eme-events.php:9768
 msgid "Code"
 msgstr "代码"
 
@@ -984,24 +984,24 @@ msgid "The name of the country"
 msgstr "国家的名称"
 
 #: eme-countries.php:577
-#: eme-events.php:9758
+#: eme-events.php:9769
 msgid "Alpha-2"
 msgstr "Alpha-2"
 
 #: eme-countries.php:581
-#: eme-events.php:9759
+#: eme-events.php:9770
 msgid "Alpha-3"
 msgstr "Alpha-3"
 
 #: eme-countries.php:585
-#: eme-events.php:9760
+#: eme-events.php:9771
 msgid "Num-3"
 msgstr "Num-3"
 
 #: eme-countries.php:589
-#: eme-events.php:9751
-#: eme-events.php:9824
-#: eme-people.php:2382
+#: eme-events.php:9762
+#: eme-events.php:9835
+#: eme-people.php:2386
 msgid "Language"
 msgstr "语言"
 
@@ -1043,12 +1043,12 @@ msgid "Incorrect country selection"
 msgstr "国家选择不正确"
 
 #: eme-countries.php:1041
-#: eme-functions.php:3332
+#: eme-functions.php:3331
 msgid "Update failed: "
 msgstr "更新失败："
 
 #: eme-countries.php:1043
-#: eme-functions.php:3334
+#: eme-functions.php:3333
 msgid "Insert failed: "
 msgstr "插入失败："
 
@@ -1150,8 +1150,8 @@ msgstr "分批发送队列的邮件"
 
 #: eme-cron.php:386
 #: eme-options.php:1806
-#: eme-people.php:1025
-#: eme-people.php:2391
+#: eme-people.php:1029
+#: eme-people.php:2395
 msgid "Newsletter"
 msgstr "信息通讯"
 
@@ -1160,9 +1160,9 @@ msgid "Send a mail to all EME registered people for upcoming events that will ha
 msgstr "向所有 EME 的注册者发送邮件，介绍即将在接下来发生的活动"
 
 #: eme-cron.php:397
-#: eme-events.php:7224
-#: eme-events.php:8876
+#: eme-events.php:7235
 #: eme-events.php:8887
+#: eme-events.php:8898
 #: eme-options.php:1658
 #: eme-options.php:1674
 #: eme-recurrence.php:595
@@ -1263,12 +1263,12 @@ msgid "Delete selected discounts"
 msgstr "删除选定的折扣"
 
 #: eme-discounts.php:444
-#: eme-people.php:1788
+#: eme-people.php:1792
 msgid "Add to group"
 msgstr "添加到群组"
 
 #: eme-discounts.php:445
-#: eme-people.php:1789
+#: eme-people.php:1793
 msgid "Remove from group"
 msgstr "从群组中删除"
 
@@ -1282,8 +1282,8 @@ msgstr "更改 \"有效期至\" 的日期"
 
 #: eme-discounts.php:450
 #: eme-discounts.php:453
-#: eme-people.php:1816
-#: eme-people.php:1819
+#: eme-people.php:1820
+#: eme-people.php:1823
 msgid "Select a group"
 msgstr "选择一个群组"
 
@@ -1338,22 +1338,22 @@ msgstr "折扣的名称"
 
 #: eme-discounts.php:839
 #: eme-discounts.php:989
-#: eme-events.php:9672
-#: eme-events.php:9713
-#: eme-events.php:9810
-#: eme-events.php:9867
+#: eme-events.php:9683
+#: eme-events.php:9724
+#: eme-events.php:9821
+#: eme-events.php:9878
 #: eme-members.php:1862
-#: eme-people.php:2550
+#: eme-people.php:2554
 #: eme-tasks.php:743
 #: eme-templates.php:274
 msgid "Description"
 msgstr "描述"
 
 #: eme-discounts.php:843
-#: eme-events.php:9628
-#: eme-events.php:9673
-#: eme-events.php:9692
-#: eme-events.php:9719
+#: eme-events.php:9639
+#: eme-events.php:9684
+#: eme-events.php:9703
+#: eme-events.php:9730
 #: eme-members.php:1866
 #: eme-templates.php:291
 msgid "Type"
@@ -1388,7 +1388,7 @@ msgid "If you leave the coupon code empty but set a discount expiration date, yo
 msgstr "如果您把优惠券代码留空，但设置一个折扣到期日，您可以把它作为一个 \"早鸟\" 折扣使用"
 
 #: eme-discounts.php:862
-#: eme-events.php:9714
+#: eme-events.php:9725
 msgid "Discount groups"
 msgstr "折扣群组"
 
@@ -1397,7 +1397,7 @@ msgid "If wanted, you can make this discount a part of one or more discount grou
 msgstr "如果需要，您可以把这个折扣作为一个或多个折扣群组的一部分，然后把折扣群组应用到您的活动上"
 
 #: eme-discounts.php:868
-#: eme-events.php:9722
+#: eme-events.php:9733
 msgid "Valid from"
 msgstr "有效期从"
 
@@ -1406,7 +1406,7 @@ msgid "An optional coupon start date and time, if entered the coupon is not vali
 msgstr "可选的优惠券开始的日期和时间，如果输入的优惠券在此日期和时间之前是无效的。"
 
 #: eme-discounts.php:875
-#: eme-events.php:9723
+#: eme-events.php:9734
 msgid "Valid until"
 msgstr "有效期至"
 
@@ -1434,7 +1434,7 @@ msgid "Require users to be logged-in for this discount to apply."
 msgstr "需要用户登录后才能使用此折扣。"
 
 #: eme-discounts.php:894
-#: eme-events.php:8833
+#: eme-events.php:8844
 msgid "Require EME groups"
 msgstr "需要 EME 群组"
 
@@ -1443,7 +1443,7 @@ msgid "Require logged-in user to be in of one of the selected EME groups for thi
 msgstr "需要登录的用户必须是所选 EME 群组中的一员才能使用该折扣。"
 
 #: eme-discounts.php:900
-#: eme-events.php:8838
+#: eme-events.php:8849
 msgid "Require EME membership"
 msgstr "需要 EME 会籍"
 
@@ -1521,17 +1521,17 @@ msgid "A discount group exists of several discounts, and you can ask for several
 msgstr "一个折扣群组存在几个折扣，您可以通过重复使用 #_DISCOUNT 来要求几个折扣代码。然后，这个参数对可以应用的有效折扣的数量进行了限制。因此，即使您输入了5个有效的优惠券代码，您也可以将其使用限制在 3 个左右。"
 
 #: eme-discounts.php:1549
-#: eme-events.php:9729
+#: eme-events.php:9740
 msgid "Fixed"
 msgstr "已修复"
 
 #: eme-discounts.php:1550
-#: eme-events.php:9731
+#: eme-events.php:9742
 msgid "Percentage"
 msgstr "百分比"
 
 #: eme-discounts.php:1552
-#: eme-events.php:9730
+#: eme-events.php:9741
 msgid "Fixed per seat"
 msgstr "每个座位固定"
 
@@ -1546,18 +1546,18 @@ msgstr "每个座位固定"
 #: eme-gdpr.php:565
 #: eme-gdpr.php:566
 #: eme-locations.php:2997
-#: eme-members.php:6390
+#: eme-members.php:6398
 #: eme-people.php:503
 #: eme-people.php:511
 #: eme-people.php:519
-#: eme-people.php:1098
-#: eme-people.php:1099
-#: eme-people.php:1134
-#: eme-people.php:1434
-#: eme-people.php:5120
-#: eme-people.php:5137
-#: eme-people.php:5138
-#: eme-people.php:5212
+#: eme-people.php:1102
+#: eme-people.php:1103
+#: eme-people.php:1138
+#: eme-people.php:1438
+#: eme-people.php:5132
+#: eme-people.php:5149
+#: eme-people.php:5150
+#: eme-people.php:5224
 #: eme-rsvp.php:3784
 #: eme-rsvp.php:5810
 #: eme-ui-helpers.php:134
@@ -1576,18 +1576,18 @@ msgstr "是的"
 #: eme-gdpr.php:565
 #: eme-gdpr.php:566
 #: eme-locations.php:2997
-#: eme-members.php:6390
+#: eme-members.php:6398
 #: eme-people.php:503
 #: eme-people.php:511
 #: eme-people.php:519
-#: eme-people.php:1098
-#: eme-people.php:1099
-#: eme-people.php:1134
-#: eme-people.php:1436
-#: eme-people.php:5120
-#: eme-people.php:5137
-#: eme-people.php:5138
-#: eme-people.php:5212
+#: eme-people.php:1102
+#: eme-people.php:1103
+#: eme-people.php:1138
+#: eme-people.php:1440
+#: eme-people.php:5132
+#: eme-people.php:5149
+#: eme-people.php:5150
+#: eme-people.php:5224
 #: eme-rsvp.php:3784
 #: eme-rsvp.php:5810
 #: eme-ui-helpers.php:135
@@ -1628,7 +1628,7 @@ msgstr "按浏览器的后退按钮，返回到前一个屏幕并纠正您的错
 #: eme-events.php:827
 #: eme-events.php:980
 #: eme-events.php:1186
-#: eme-events.php:4656
+#: eme-events.php:4667
 #: eme-mailer.php:1824
 #: eme-payments.php:123
 #: eme-payments.php:2014
@@ -1669,8 +1669,8 @@ msgstr "新插入的循环包含 %d 活动"
 #: eme-events.php:663
 #: eme-events.php:690
 #: eme-events.php:833
-#: eme-events.php:6244
-#: eme-events.php:10445
+#: eme-events.php:6255
+#: eme-events.php:10456
 msgid "Edit Recurrence"
 msgstr "编辑循环"
 
@@ -1685,7 +1685,7 @@ msgstr "新活动已成功插入!"
 #: eme-events.php:642
 #: eme-events.php:712
 #: eme-events.php:771
-#: eme-events.php:9590
+#: eme-events.php:9601
 msgid "Edit Event '%s'"
 msgstr "编辑活动 “%s”"
 
@@ -1721,7 +1721,7 @@ msgid "Failed to update '%s'"
 msgstr "更新 “%s” 失败"
 
 #: eme-events.php:742
-#: eme-events.php:9589
+#: eme-events.php:9600
 msgid "Insert New Event"
 msgstr "插入新活动"
 
@@ -1925,12 +1925,12 @@ msgstr "会籍检查"
 #: eme-gdpr.php:460
 #: eme-gdpr.php:617
 #: eme-options.php:62
-#: eme-people.php:2395
+#: eme-people.php:2399
 msgid "GDPR approval"
 msgstr "GDPR 批准"
 
 #: eme-events.php:1571
-#: eme-events.php:9838
+#: eme-events.php:9849
 msgid "GDPR"
 msgstr "GDPR"
 
@@ -1942,411 +1942,411 @@ msgstr "更改个人信息"
 msgid "Events Made Easy plugin page"
 msgstr "Events Made Easy 的插件页面"
 
-#: eme-events.php:2393
-#: eme-events.php:9674
-#: eme-events.php:9698
-#: eme-events.php:9725
-#: eme-events.php:9752
-#: eme-events.php:9892
-#: eme-events.php:9945
+#: eme-events.php:2404
+#: eme-events.php:9685
+#: eme-events.php:9709
+#: eme-events.php:9736
+#: eme-events.php:9763
+#: eme-events.php:9903
+#: eme-events.php:9956
 #: eme-locations.php:2416
 #: eme-rsvp.php:5654
 msgid "Edit"
 msgstr "编辑"
 
-#: eme-events.php:2410
+#: eme-events.php:2421
 msgid "Printable view of bookings"
 msgstr "可打印的预订视图"
 
-#: eme-events.php:2427
+#: eme-events.php:2438
 msgid "CSV view of bookings"
 msgstr "预订的 CSV 视图"
 
-#: eme-events.php:2678
-#: eme-events.php:2695
-#: eme-events.php:2708
+#: eme-events.php:2689
+#: eme-events.php:2706
+#: eme-events.php:2719
 msgid "No limit"
 msgstr "无限制"
 
-#: eme-events.php:3109
+#: eme-events.php:3120
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] "%d 秒"
 
-#: eme-events.php:3111
+#: eme-events.php:3122
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] "%d 分钟"
 
-#: eme-events.php:3114
+#: eme-events.php:3125
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] "%d 小时"
 
-#: eme-events.php:3117
+#: eme-events.php:3128
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] "%d 天"
 
-#: eme-events.php:3120
+#: eme-events.php:3131
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] "%d 个月"
 
-#: eme-events.php:3123
+#: eme-events.php:3134
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] "%d 年"
 
-#: eme-events.php:4185
+#: eme-events.php:4196
 #: eme-locations.php:1594
 msgid "Previous week"
 msgstr "上周"
 
-#: eme-events.php:4186
+#: eme-events.php:4197
 #: eme-locations.php:1595
 msgid "Next week"
 msgstr "下周"
 
-#: eme-events.php:4196
+#: eme-events.php:4207
 #: eme-locations.php:1632
 msgid "Previous month"
 msgstr "上个月"
 
-#: eme-events.php:4197
+#: eme-events.php:4208
 #: eme-locations.php:1633
 msgid "Next month"
 msgstr "下个月"
 
-#: eme-events.php:4206
+#: eme-events.php:4217
 #: eme-locations.php:1605
 msgid "Previous year"
 msgstr "上一年"
 
-#: eme-events.php:4207
+#: eme-events.php:4218
 #: eme-locations.php:1606
 msgid "Next year"
 msgstr "下一年"
 
-#: eme-events.php:4214
-#: eme-events.php:4223
+#: eme-events.php:4225
+#: eme-events.php:4234
 #: eme-locations.php:1613
 #: eme-locations.php:1622
 msgid "Previous day"
 msgstr "上一天"
 
-#: eme-events.php:4215
-#: eme-events.php:4224
+#: eme-events.php:4226
+#: eme-events.php:4235
 #: eme-locations.php:1614
 #: eme-locations.php:1623
 msgid "Next day"
 msgstr "下一天"
 
-#: eme-events.php:4247
+#: eme-events.php:4258
 msgid "Previous page"
 msgstr "上一页"
 
-#: eme-events.php:4248
+#: eme-events.php:4259
 msgid "Next page"
 msgstr "下一页"
 
-#: eme-events.php:4290
 #: eme-events.php:4301
+#: eme-events.php:4312
 msgid "Page %d"
 msgstr ""
 
-#: eme-events.php:5742
-#: eme-events.php:5748
+#: eme-events.php:5753
+#: eme-events.php:5759
 msgid "Location not imported: %s"
 msgstr "地点未被导入：%s"
 
-#: eme-events.php:5772
-#: eme-events.php:5775
-#: eme-members.php:5822
-#: eme-members.php:5825
-#: eme-members.php:5828
-#: eme-members.php:5831
-#: eme-people.php:902
+#: eme-events.php:5783
+#: eme-events.php:5786
+#: eme-members.php:5830
+#: eme-members.php:5833
+#: eme-members.php:5836
+#: eme-members.php:5839
+#: eme-people.php:905
 #, fuzzy
 msgid "Not imported (field %s not valid): %s"
 msgstr "未导入（人不存在）：%s"
 
-#: eme-events.php:5817
+#: eme-events.php:5828
 msgid "Not imported (problem updating the event in the db): %s"
 msgstr "未导入（在数据库中更新活动时出了问题）：%s"
 
-#: eme-events.php:5825
+#: eme-events.php:5836
 msgid "Not imported (problem inserting the event in the db): %s"
 msgstr "未导入（在数据库中插入活动时出了问题）：%s"
 
-#: eme-events.php:5847
+#: eme-events.php:5858
 #: eme-locations.php:336
-#: eme-members.php:5915
-#: eme-members.php:6055
-#: eme-people.php:963
+#: eme-members.php:5923
+#: eme-members.php:6063
+#: eme-people.php:967
 msgid "Not imported (not all required fields are present): %s"
 msgstr "未导入（并非所有必要的字段都存在）：%s"
 
-#: eme-events.php:5850
+#: eme-events.php:5861
 #: eme-locations.php:339
-#: eme-members.php:5920
-#: eme-people.php:968
+#: eme-members.php:5928
+#: eme-people.php:970
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr ""
 
-#: eme-events.php:5869
+#: eme-events.php:5880
 #: eme-rsvp.php:4955
 #: eme-tasks.php:440
 msgid "Past events"
 msgstr "过去的活动"
 
-#: eme-events.php:5870
+#: eme-events.php:5881
 #: eme-rsvp.php:4956
 #: eme-tasks.php:441
 #: events-manager.php:355
 msgid "All events"
 msgstr "所有活动"
 
-#: eme-events.php:5871
+#: eme-events.php:5882
 #: eme-rsvp.php:4957
 #: eme-tasks.php:442
 msgid "Future events"
 msgstr "未来的活动"
 
-#: eme-events.php:5888
+#: eme-events.php:5899
 msgid "Add a new event"
 msgstr "添加一个新的活动"
 
-#: eme-events.php:5892
+#: eme-events.php:5903
 #: eme-options.php:1374
 msgid "Add event"
 msgstr "添加活动"
 
-#: eme-events.php:5897
-#: eme-events.php:6083
+#: eme-events.php:5908
+#: eme-events.php:6094
 msgid "Manage events"
 msgstr "管理活动"
 
-#: eme-events.php:5898
-#: eme-events.php:6082
+#: eme-events.php:5909
+#: eme-events.php:6093
 msgid "Manage recurrences"
 msgstr "管理循环"
 
-#: eme-events.php:5902
-#: eme-people.php:2133
+#: eme-events.php:5913
+#: eme-people.php:2137
 #: eme-rsvp.php:5007
 msgid "Show regular content"
 msgstr "显示常规内容"
 
-#: eme-events.php:5904
-#: eme-people.php:2135
+#: eme-events.php:5915
+#: eme-people.php:2139
 #: eme-rsvp.php:5009
 msgid "Show trash content"
 msgstr "显示回收站内容"
 
-#: eme-events.php:5920
+#: eme-events.php:5931
 msgid "If you want, use this to import events into the database"
 msgstr "如果您愿意，可以用这个将活动导入数据库"
 
-#: eme-events.php:5941
+#: eme-events.php:5952
 #: eme-rsvp.php:5057
 msgid "All categories"
 msgstr "所有分类"
 
-#: eme-events.php:5942
+#: eme-events.php:5953
 #: eme-rsvp.php:5058
 msgid "Events without category"
 msgstr "无分类的活动"
 
-#: eme-events.php:5949
-#: eme-events.php:6098
-#: eme-events.php:7033
+#: eme-events.php:5960
+#: eme-events.php:6109
+#: eme-events.php:7044
 #: eme-tasks.php:435
 msgid "Event name"
 msgstr "活动名称"
 
-#: eme-events.php:5954
+#: eme-events.php:5965
 #: eme-rsvp.php:5074
 msgid "Show/hide extra filters"
 msgstr "显示或隐藏额外的筛选"
 
-#: eme-events.php:5957
-#: eme-events.php:6490
+#: eme-events.php:5968
+#: eme-events.php:6501
 msgid "Event Status"
 msgstr "活动状态"
 
-#: eme-events.php:5969
+#: eme-events.php:5980
 #, fuzzy
 msgid "Filter on location"
 msgstr "过滤地点"
 
-#: eme-events.php:5973
+#: eme-events.php:5984
 #: eme-locations.php:880
 #: eme-members.php:2962
 #: eme-members.php:2969
-#: eme-people.php:1924
-#: eme-people.php:1931
+#: eme-people.php:1928
+#: eme-people.php:1935
 msgid "Custom field value to search"
 msgstr "要搜索的自定义字段值"
 
-#: eme-events.php:5974
+#: eme-events.php:5985
 #: eme-locations.php:881
 #: eme-members.php:2978
-#: eme-people.php:1941
+#: eme-people.php:1945
 msgid "Custom fields to filter on"
 msgstr "用于过滤的自定义字段"
 
-#: eme-events.php:5980
+#: eme-events.php:5991
 msgid "Filter events"
 msgstr "过滤活动"
 
-#: eme-events.php:5985
+#: eme-events.php:5996
 #: eme-locations.php:891
 #: eme-members.php:2816
-#: eme-people.php:1770
+#: eme-people.php:1774
 msgid "Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the \"Custom fields to filter on\" select-box shown."
 msgstr "提示：当搜索自定义字段值时，您可以选择限制您想在 \"自定义字段过滤\" 选择框中搜索哪些自定义字段。"
 
-#: eme-events.php:5986
+#: eme-events.php:5997
 #: eme-locations.php:892
 #: eme-members.php:2817
-#: eme-people.php:1771
+#: eme-people.php:1775
 msgid "If you can't see your custom field in the \"Custom fields to filter on\" select-box, make sure you marked it as \"searchable\" in the field definition."
 msgstr "如果您在 \"过滤的自定义字段\" 选择框中看不到您的自定义字段，请确保您在字段定义中把它标记为 \"可搜索\"。"
 
-#: eme-events.php:6001
+#: eme-events.php:6012
 msgid "Restore selected events (to draft status)"
 msgstr "恢复选定的活动（到草稿状态）"
 
-#: eme-events.php:6002
+#: eme-events.php:6013
 msgid "Permanently delete selected events"
 msgstr "永久性地删除选定的活动"
 
-#: eme-events.php:6004
+#: eme-events.php:6015
 msgid "Delete selected events (move to trash)"
 msgstr "删除选定的活动（移至回收站）"
 
-#: eme-events.php:6005
+#: eme-events.php:6016
 msgid "Publish selected events"
 msgstr "发布选定的活动"
 
-#: eme-events.php:6006
+#: eme-events.php:6017
 msgid "Make selected events private"
 msgstr "使选定的活动成为私人"
 
-#: eme-events.php:6007
+#: eme-events.php:6018
 msgid "Make selected events draft"
 msgstr "使选定的活动成为草稿"
 
-#: eme-events.php:6008
+#: eme-events.php:6019
 msgid "Add selected events to category"
 msgstr "将选定的活动添加到分类中"
 
-#: eme-events.php:6013
+#: eme-events.php:6024
 msgid "Send mails for cancelled bookings too?"
 msgstr "对取消的预订也发送邮件？"
 
-#: eme-events.php:6018
+#: eme-events.php:6029
 msgid "Please select a category"
 msgstr "请选择一个分类。"
 
-#: eme-events.php:6058
+#: eme-events.php:6069
 msgid "Past recurrences"
 msgstr "过去的循环"
 
-#: eme-events.php:6059
+#: eme-events.php:6070
 msgid "All recurrences"
 msgstr "所有循环"
 
-#: eme-events.php:6060
+#: eme-events.php:6071
 msgid "Ongoing recurrences"
 msgstr "正在进行的循环"
 
-#: eme-events.php:6073
+#: eme-events.php:6084
 msgid "Add a new recurrence"
 msgstr "添加一个新的循环"
 
-#: eme-events.php:6077
+#: eme-events.php:6088
 msgid "Add recurrence"
 msgstr "添加循环"
 
-#: eme-events.php:6103
+#: eme-events.php:6114
 msgid "Filter recurrences"
 msgstr "筛选循环"
 
-#: eme-events.php:6108
+#: eme-events.php:6119
 msgid "Delete selected recurrences (and move events to trash)"
 msgstr "删除选定的循环（并将活动移至回收站）。"
 
-#: eme-events.php:6109
+#: eme-events.php:6120
 msgid "Publish selected recurrences"
 msgstr "发布选定的循环"
 
-#: eme-events.php:6110
+#: eme-events.php:6121
 msgid "Make selected recurrences private"
 msgstr "使选定的循环成为私人的"
 
-#: eme-events.php:6111
+#: eme-events.php:6122
 msgid "Make selected recurrences draft"
 msgstr "使选定的循环成为草案"
 
-#: eme-events.php:6112
+#: eme-events.php:6123
 msgid "Set new start/end date for selected recurrences"
 msgstr "为选定的循环性活动设置新的开始或结束日期"
 
-#: eme-events.php:6116
+#: eme-events.php:6127
 msgid "Select new start date"
 msgstr "选择新的开始日期"
 
-#: eme-events.php:6118
+#: eme-events.php:6129
 msgid "Select new end date"
 msgstr "选择新的结束日期"
 
-#: eme-events.php:6149
+#: eme-events.php:6160
 #: eme-locations.php:86
 #: eme-templates.php:79
 msgid " (Copy)"
 msgstr "(复制)"
 
-#: eme-events.php:6235
+#: eme-events.php:6246
 msgid "WARNING: This is a recurrence."
 msgstr "警告：这是一个循环。"
 
-#: eme-events.php:6237
+#: eme-events.php:6248
 msgid "If you change this recurrence, events with a start day no longer matching the defined days will be removed while missing events will get added. Existing events with a start day that still match the defined days will get updated but you will not lose bookings."
 msgstr "如果您改变了这个循环，开始日不再符合定义的日期的活动将被删除，而缺少的活动将被添加。现有的活动，如果其开始日仍与定义的日期相匹配，将被更新，但您不会失去预订。"
 
-#: eme-events.php:6240
+#: eme-events.php:6251
 msgid "WARNING: This event is part of a recurrence."
 msgstr "警告：该活动是循环的一部分。"
 
-#: eme-events.php:6242
+#: eme-events.php:6253
 msgid "If you change this event, it will become an independent event and be removed from the recurrence."
 msgstr "如果您改变这个活动，它将成为一个独立的活动，并从循环中删除。"
 
-#: eme-events.php:6264
-#: eme-events.php:9585
-#: eme-events.php:9925
-#: eme-events.php:10395
+#: eme-events.php:6275
+#: eme-events.php:9596
+#: eme-events.php:9936
+#: eme-events.php:10406
 #: eme-options.php:1147
 #: eme-rsvp.php:5732
 msgid "RSVP"
 msgstr "RSVP"
 
-#: eme-events.php:6267
-#: eme-events.php:6386
+#: eme-events.php:6278
+#: eme-events.php:6397
 msgid "Tasks"
 msgstr "任务"
 
-#: eme-events.php:6270
-#: eme-events.php:8486
+#: eme-events.php:6281
+#: eme-events.php:8497
 #: eme-locations.php:392
 #: eme-locations.php:748
 msgid "Attributes"
 msgstr "属性"
 
-#: eme-events.php:6272
-#: eme-events.php:8500
+#: eme-events.php:6283
+#: eme-events.php:8511
 #: eme-locations.php:394
 #: eme-locations.php:762
 #: eme-members.php:1806
@@ -2355,202 +2355,202 @@ msgstr "属性"
 msgid "Custom fields"
 msgstr "自定义字段"
 
-#: eme-events.php:6297
+#: eme-events.php:6308
 msgid "Generic RSVP info"
 msgstr "通用的 RSVP 信息"
 
-#: eme-events.php:6301
+#: eme-events.php:6312
 #: eme-members.php:2162
 msgid "Payment methods"
 msgstr "付款方式"
 
-#: eme-events.php:6305
+#: eme-events.php:6316
 msgid "Dynamic data"
 msgstr "动态数据"
 
-#: eme-events.php:6316
+#: eme-events.php:6327
 #, fuzzy
 msgid "RSVP form format"
 msgstr "任务表格格式"
 
-#: eme-events.php:6323
+#: eme-events.php:6334
 msgid "Attendance settings"
 msgstr "出席设置"
 
-#: eme-events.php:6330
+#: eme-events.php:6341
 msgid "RSVP Email format settings"
 msgstr ""
 
-#: eme-events.php:6334
+#: eme-events.php:6345
 #: eme-options.php:1870
 msgid "Booking Made or Approved Email"
 msgstr "已预订或已批准的电子邮件"
 
-#: eme-events.php:6338
+#: eme-events.php:6349
 msgid "Booking Awaiting User Confirmation Email"
 msgstr "预订等待用户确认中的电子邮件"
 
-#: eme-events.php:6342
+#: eme-events.php:6353
 #: eme-options.php:1926
 msgid "Booking Pending Email"
 msgstr "待订的电子邮件"
 
-#: eme-events.php:6346
+#: eme-events.php:6357
 #: eme-options.php:1983
 msgid "Booking Updated Email"
 msgstr "预订已更新的电子邮件"
 
-#: eme-events.php:6350
+#: eme-events.php:6361
 #: eme-options.php:1996
 msgid "Booking Reminder Email"
 msgstr "预订提醒的电子邮件"
 
-#: eme-events.php:6354
+#: eme-events.php:6365
 #: eme-options.php:2011
 msgid "Booking Cancelled Email"
 msgstr "已取消预订的电子邮件"
 
-#: eme-events.php:6358
+#: eme-events.php:6369
 #: eme-options.php:2026
 msgid "Booking Deleted Email"
 msgstr "预订已删除的电子邮件"
 
-#: eme-events.php:6362
+#: eme-events.php:6373
 #: eme-options.php:2039
 msgid "Booking Paid Email"
 msgstr "预订已付费的电子邮件"
 
-#: eme-events.php:6366
+#: eme-events.php:6377
 #: eme-options.php:2093
 msgid "Booking Payment Gateway Notification Email"
 msgstr "预订付款网关通知的电子邮件"
 
-#: eme-events.php:6382
+#: eme-events.php:6393
 msgid "Enable tasks for this event"
 msgstr "为该活动启用任务"
 
-#: eme-events.php:6388
+#: eme-events.php:6399
 msgid "List of tasks"
 msgstr "任务清单"
 
-#: eme-events.php:6394
+#: eme-events.php:6405
 msgid "Tasks settings"
 msgstr "任务设置"
 
-#: eme-events.php:6396
+#: eme-events.php:6407
 msgid "Tasks generic settings"
 msgstr "任务通用的设置"
 
-#: eme-events.php:6400
+#: eme-events.php:6411
 msgid "Tasks form format"
 msgstr "任务表格格式"
 
-#: eme-events.php:6408
+#: eme-events.php:6419
 msgid "Tasks Email format settings"
 msgstr ""
 
-#: eme-events.php:6412
+#: eme-events.php:6423
 #: eme-options.php:2144
 #, fuzzy
 msgid "Task Signup Pending Email"
 msgstr "任务报名的提醒电子邮件"
 
-#: eme-events.php:6416
+#: eme-events.php:6427
 #: eme-options.php:2157
 msgid "Task Signup Made Email"
 msgstr "已进行任务报名的电子邮件"
 
-#: eme-events.php:6420
+#: eme-events.php:6431
 #: eme-options.php:2170
 msgid "Task Signup Reminder Email"
 msgstr "任务报名的提醒电子邮件"
 
-#: eme-events.php:6424
+#: eme-events.php:6435
 #: eme-options.php:2180
 msgid "Task Signup Cancelled Email"
 msgstr "任务报名被取消的电子邮件"
 
-#: eme-events.php:6428
+#: eme-events.php:6439
 #: eme-options.php:2192
 msgid "Task Signup Deleted Email"
 msgstr "任务报名被删除的电子邮件"
 
-#: eme-events.php:6454
+#: eme-events.php:6465
 msgid "Save"
 msgstr "保存"
 
-#: eme-events.php:6455
-#: eme-events.php:6475
+#: eme-events.php:6466
+#: eme-events.php:6486
 msgid "If pressing save or update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
 msgstr "如果按 \"保存\" 或 \"更新\" 似乎没有任何作用，那么请检查所有其他标签，以确保所有必要的字段都已填写。"
 
-#: eme-events.php:6458
+#: eme-events.php:6469
 msgid "Are you sure you want to delete this event?"
 msgstr "您确定要删除这个活动吗？"
 
-#: eme-events.php:6459
+#: eme-events.php:6470
 msgid "Are you sure you want to delete this recurrence?"
 msgstr "您确定要删除这个循环吗？"
 
-#: eme-events.php:6461
+#: eme-events.php:6472
 msgid "Update"
 msgstr "更新"
 
-#: eme-events.php:6463
+#: eme-events.php:6474
 msgid "Delete Event"
 msgstr "删除活动"
 
-#: eme-events.php:9778
+#: eme-events.php:9789
 msgid "View"
 msgstr "查看"
 
-#: eme-events.php:6478
+#: eme-events.php:6489
 msgid "Delete Recurrence"
 msgstr "删除循环"
 
-#: eme-events.php:6492
-#: eme-events.php:9591
-#: eme-events.php:9661
-#: eme-events.php:9907
-#: eme-events.php:9980
+#: eme-events.php:6503
+#: eme-events.php:9602
+#: eme-events.php:9672
+#: eme-events.php:9918
+#: eme-events.php:9991
 #: eme-mailer.php:1472
 #: eme-mailer.php:2753
 #: eme-members.php:1724
-#: eme-people.php:1045
-#: eme-people.php:1347
+#: eme-people.php:1049
+#: eme-people.php:1351
 msgid "Status"
 msgstr "状态"
 
-#: eme-events.php:6506
+#: eme-events.php:6517
 msgid "Private events are only visible for logged in users, draft events are not visible from the front end."
 msgstr "私人活动只对登录的用户可见，草稿活动从前端不可见。"
 
-#: eme-events.php:6621
+#: eme-events.php:6632
 #: eme-locations.php:433
 #: eme-widgets.php:207
 #: eme-widgets.php:379
 msgid "Author"
 msgstr "作者"
 
-#: eme-events.php:6623
+#: eme-events.php:6634
 msgid "Author of this event: "
 msgstr "此活动的作者："
 
-#: eme-events.php:6639
+#: eme-events.php:6650
 msgid "Contact Person"
 msgstr "联系人"
 
-#: eme-events.php:6641
+#: eme-events.php:6652
 msgid "If you leave this empty, the author will be used as contact person."
 msgstr "如果您留空，作者将被用作联系人。"
 
-#: eme-events.php:6654
+#: eme-events.php:6665
 msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending mails), will use the admin user info."
 msgstr "由于该活动的作者未被定义，任何对联系人的引用（比如在发送邮件时使用 #_CONTACTPERSON），都将使用管理用户信息。"
 
-#: eme-events.php:6662
-#: eme-events.php:9933
-#: eme-events.php:10236
+#: eme-events.php:6673
+#: eme-events.php:9944
+#: eme-events.php:10247
 #: eme-locations.php:449
 #: eme-locations.php:2971
 #: eme-recurrence.php:628
@@ -2559,324 +2559,324 @@ msgstr "由于该活动的作者未被定义，任何对联系人的引用（比
 msgid "Category"
 msgstr "分类"
 
-#: eme-events.php:6687
+#: eme-events.php:6698
 msgid "WP Page template"
 msgstr "WP 页面模板"
 
-#: eme-events.php:6692
+#: eme-events.php:6703
 msgid "By default the event uses the same WP page template as the defined special events page. If your theme provides several different page templates, chose another one if wanted."
 msgstr "默认的情况下，该活动将使用与被定义的特殊活动页面相同的 WP 页面模板。如果您的主题提供了几种不同的页面模板，有需要的话可以选择另一种。"
 
-#: eme-events.php:6711
+#: eme-events.php:6722
 msgid "The event name"
 msgstr "活动名称"
 
-#: eme-events.php:6712
+#: eme-events.php:6723
 msgid "The start date"
 msgstr "开始日期"
 
-#: eme-events.php:6716
-#: eme-events.php:6719
+#: eme-events.php:6727
+#: eme-events.php:6730
 #: eme-locations.php:1354
 #: eme-locations.php:1358
 #: eme-locations.php:1361
 msgid "%s is missing!"
 msgstr "缺少 %s!"
 
-#: eme-events.php:6722
+#: eme-events.php:6733
 msgid "Since the event is repeated, you must specify an event date for the recurrence."
 msgstr "由于事件是重复发生的，您必须为循环指定一个活动的日期。"
 
-#: eme-events.php:6727
+#: eme-events.php:6738
 msgid "Since the event contains multiple seat categories (multiseat), you must specify the price per category (multiprice) as well."
 msgstr "由于该活动包含多个座位类别（多座位），您必须同时指定每个类别的价格（多价格）。"
 
-#: eme-events.php:6733
+#: eme-events.php:6744
 msgid "Since the event contains multiple seat categories (multiseat), you must specify the exact same amount of prices (multiprice) as well."
 msgstr "由于该活动包含多个座位类别（多座位），您也必须指定完全相同数量的价格（多价格）。"
 
-#: eme-events.php:6760
+#: eme-events.php:6771
 msgid "Your event seems to have multiple price categories, so you can't use #_SEATS (or #_SPACES) in your event RSVP form format. Please correct the RSVP form format to use the #_SEATS{xx} notation."
 msgstr "您的活动似乎有多个价格分类，所以您不能在您的活动 RSVP 表格格式中使用 #_SEATS（或 #_SPACES）。请更正 RSVP 表格格式，使用 #_SEATS{xx} 符号。"
 
-#: eme-events.php:6776
+#: eme-events.php:6787
 msgid "Please correct the RSVP form format to use #_EMAIL."
 msgstr "请更正 RSVP 表格格式，使用 #_EMAIL。"
 
-#: eme-events.php:6779
+#: eme-events.php:6790
 msgid "Please correct the RSVP form format to use #_LASTNAME."
 msgstr "请更正 RSVP 表格格式，使用 #_LASTNAME。"
 
-#: eme-events.php:6782
+#: eme-events.php:6793
 msgid "You have indicated you want to use a password but your event RSVP form format doesn't contain #_PASSWORD. Please correct the RSVP form format to use #_PASSWORD."
 msgstr "您表示要使用密码，但您的活动 RSVP 表格格式不包含 #_PASSWORD。请更正 RSVP 表格格式，使用 #_PASSWORD。"
 
-#: eme-events.php:6786
+#: eme-events.php:6797
 msgid "The min amount of seats to book should not be bigger than the max amount of seats to book."
 msgstr ""
 
-#: eme-events.php:6793
+#: eme-events.php:6804
 msgid "If specified, the max amount of seats to book should consist of integers only."
 msgstr "如果被指定，预订的最大座位数应仅由整数组成。"
 
-#: eme-events.php:6796
+#: eme-events.php:6807
 msgid "Since this is a multiprice event and you decided to limit the max amount of seats to book (for one booking) per price category, you must specify the exact same amount of \"max seats to book\" as you did for the prices."
 msgstr "由于这是一个多价格的活动，而且您决定限制每个价格分类的最大预订座位数（用于一次预订），您必须指定与价格完全相同的 \"最大预订座位\"。"
 
-#: eme-events.php:6799
+#: eme-events.php:6810
 msgid "If specified, the max amount of seats to book should be an integer."
 msgstr "如果被指定，预订的最大座位数应该是一个整数。"
 
-#: eme-events.php:6806
+#: eme-events.php:6817
 msgid "If specified, the min amount of seats to book should consist of integers only."
 msgstr "如果被指定，预订的最小座位数应仅由整数组成。"
 
-#: eme-events.php:6809
+#: eme-events.php:6820
 msgid "Since this is a multiprice event and you decided to limit the min amount of seats to book (for one booking) per price category, you must specify the exact same amount of \"min seats to book\" as you did for the prices."
 msgstr "由于这是一个多价格的活动，而且您决定限制每个价格分类的最小预订座位数（用于一次预订），您必须指定与价格完全相同的 \"最小预订座位\"。"
 
-#: eme-events.php:6812
+#: eme-events.php:6823
 msgid "If specified, the min amount of seats to book should be an integer."
 msgstr "如果被指定，预订的最小座位数应该是一个整数。"
 
-#: eme-events.php:6824
+#: eme-events.php:6835
 #: eme-locations.php:1368
 msgid "Ach, some problems here:"
 msgstr "这里有些问题："
 
-#: eme-events.php:7106
+#: eme-events.php:7117
 msgid "Event date"
 msgstr "活动日期"
 
-#: eme-events.php:7112
+#: eme-events.php:7123
 msgid "The event beginning and end date."
 msgstr "活动的开始和结束日期。"
 
-#: eme-events.php:7116
+#: eme-events.php:7127
 msgid "Event duration (in days)"
 msgstr "活动的持续时间（以天为单位）"
 
-#: eme-events.php:7117
+#: eme-events.php:7128
 msgid "day(s)"
 msgstr "日"
 
-#: eme-events.php:7121
+#: eme-events.php:7132
 msgid "Event time"
 msgstr "活动时间"
 
-#: eme-events.php:7127
+#: eme-events.php:7138
 msgid "The time of the event beginning and end"
 msgstr "活动开始和结束的时间"
 
-#: eme-events.php:7131
+#: eme-events.php:7142
 msgid "This event lasts all day"
 msgstr "这个活动持续一整天"
 
-#: eme-events.php:7137
+#: eme-events.php:7148
 msgid "Check if your event happens more than once."
 msgstr "检查您的活动是否发生多过一次。"
 
-#: eme-events.php:7141
+#: eme-events.php:7152
 msgid "Bookings found for this event, so not possible to convert to a recurring event."
 msgstr "发现此活动的预订，所以不可能转换为循环性活动。"
 
-#: eme-events.php:7151
+#: eme-events.php:7162
 #: eme-widgets.php:164
 msgid "Daily"
 msgstr "每日"
 
-#: eme-events.php:7152
+#: eme-events.php:7163
 msgid "Weekly"
 msgstr "每周"
 
-#: eme-events.php:7153
+#: eme-events.php:7164
 #: eme-widgets.php:165
 msgid "Monthly"
 msgstr "每月"
 
-#: eme-events.php:7154
+#: eme-events.php:7165
 msgid "Specific days"
 msgstr "具体日子"
 
-#: eme-events.php:7155
+#: eme-events.php:7166
 #, fuzzy
 msgid "Specific months"
 msgstr "具体日子"
 
-#: eme-events.php:7181
+#: eme-events.php:7192
 msgid "first"
 msgstr "第一"
 
-#: eme-events.php:7182
+#: eme-events.php:7193
 msgid "second"
 msgstr "第二"
 
-#: eme-events.php:7183
+#: eme-events.php:7194
 msgid "third"
 msgstr "第三"
 
-#: eme-events.php:7184
+#: eme-events.php:7195
 msgid "fourth"
 msgstr "第四"
 
-#: eme-events.php:7185
+#: eme-events.php:7196
 msgid "fifth"
 msgstr "第五"
 
-#: eme-events.php:7186
+#: eme-events.php:7197
 msgid "last"
 msgstr "最后"
 
-#: eme-events.php:7187
+#: eme-events.php:7198
 msgid "Start day"
 msgstr "起始日"
 
-#: eme-events.php:7198
+#: eme-events.php:7209
 msgid "Recurrence dates"
 msgstr "循环的日期"
 
-#: eme-events.php:7204
+#: eme-events.php:7215
 msgid "The recurrence beginning and end date."
 msgstr "循环的开始和结束日期。"
 
-#: eme-events.php:7207
+#: eme-events.php:7218
 msgid "Select all the dates you want the event to begin on."
 msgstr "选择所有您希望活动开始的日期。"
 
-#: eme-events.php:7212
+#: eme-events.php:7223
 msgid "Frequency:"
 msgstr "频率："
 
-#: eme-events.php:7218
-#: eme-events.php:7236
-#: eme-events.php:7249
+#: eme-events.php:7229
+#: eme-events.php:7247
+#: eme-events.php:7260
 msgid "Every"
 msgstr "每"
 
-#: eme-events.php:7223
+#: eme-events.php:7234
 #: eme-recurrence.php:597
 msgid "day"
 msgstr "天"
 
-#: eme-events.php:7225
+#: eme-events.php:7236
 msgid "week"
 msgstr "星期"
 
-#: eme-events.php:7226
+#: eme-events.php:7237
 msgid "weeks"
 msgstr "星期"
 
-#: eme-events.php:7227
+#: eme-events.php:7238
 msgid "month"
 msgstr "月"
 
-#: eme-events.php:7228
+#: eme-events.php:7239
 msgid "months"
 msgstr "月"
 
-#: eme-events.php:7233
+#: eme-events.php:7244
 msgid "If you leave this empty, the recurrence start date will be used as a reference."
 msgstr "如果您把它留空，复发开始日期将被作为参考。"
 
-#: eme-events.php:7243
-#: eme-events.php:7256
+#: eme-events.php:7254
+#: eme-events.php:7267
 msgid "Day of month"
 msgstr "月的日期"
 
-#: eme-events.php:7245
-#: eme-events.php:7258
+#: eme-events.php:7256
+#: eme-events.php:7269
 msgid "If you use \"Start day\" as day of the month, the recurrence start date will be used as a reference."
 msgstr "如果您使用 \"开始日\" 作为月份的日期，那么递归的开始日期将被作为参考。"
 
-#: eme-events.php:7265
+#: eme-events.php:7276
 msgid "Holidays: "
 msgstr "假期："
 
-#: eme-events.php:7270
+#: eme-events.php:7281
 msgid "No events will be created on days matching an entry in the holidays list"
 msgstr "在与假期列表中的条目相匹配的日子里，将不会创建任何活动。"
 
-#: eme-events.php:7290
+#: eme-events.php:7301
 msgid "Single Event Title"
 msgstr "单项活动的名称"
 
-#: eme-events.php:7292
-#: eme-events.php:7324
-#: eme-events.php:7362
-#: eme-events.php:7384
-#: eme-events.php:7429
-#: eme-events.php:7466
-#: eme-events.php:7488
-#: eme-events.php:7514
-#: eme-events.php:7536
-#: eme-events.php:7574
-#: eme-events.php:7583
-#: eme-events.php:7611
-#: eme-events.php:7633
-#: eme-events.php:7669
-#: eme-events.php:7691
-#: eme-events.php:7717
-#: eme-events.php:7739
-#: eme-events.php:7777
-#: eme-events.php:7786
-#: eme-events.php:7807
-#: eme-events.php:7829
-#: eme-events.php:7859
-#: eme-events.php:7881
-#: eme-events.php:7900
-#: eme-events.php:7922
-#: eme-events.php:7951
-#: eme-events.php:7973
-#: eme-events.php:7999
-#: eme-events.php:8021
-#: eme-events.php:8056
-#: eme-events.php:8078
-#: eme-events.php:8104
-#: eme-events.php:8126
-#: eme-events.php:8164
-#: eme-events.php:8173
-#: eme-events.php:8195
-#: eme-events.php:8217
-#: eme-events.php:8246
-#: eme-events.php:8276
+#: eme-events.php:7303
+#: eme-events.php:7335
+#: eme-events.php:7373
+#: eme-events.php:7395
+#: eme-events.php:7440
+#: eme-events.php:7477
+#: eme-events.php:7499
+#: eme-events.php:7525
+#: eme-events.php:7547
+#: eme-events.php:7585
+#: eme-events.php:7594
+#: eme-events.php:7622
+#: eme-events.php:7644
+#: eme-events.php:7680
+#: eme-events.php:7702
+#: eme-events.php:7728
+#: eme-events.php:7750
+#: eme-events.php:7788
+#: eme-events.php:7797
+#: eme-events.php:7818
+#: eme-events.php:7840
+#: eme-events.php:7870
+#: eme-events.php:7892
+#: eme-events.php:7911
+#: eme-events.php:7933
+#: eme-events.php:7962
+#: eme-events.php:7984
+#: eme-events.php:8010
+#: eme-events.php:8032
+#: eme-events.php:8067
+#: eme-events.php:8089
+#: eme-events.php:8115
+#: eme-events.php:8137
+#: eme-events.php:8175
+#: eme-events.php:8184
+#: eme-events.php:8206
+#: eme-events.php:8228
+#: eme-events.php:8257
+#: eme-events.php:8287
 msgid "Only fill this in if you want to override the default settings."
 msgstr "只有在您想推翻默认设置时才填写。"
 
-#: eme-events.php:7295
-#: eme-events.php:7329
-#: eme-events.php:7365
-#: eme-events.php:7387
-#: eme-events.php:7432
-#: eme-events.php:7469
-#: eme-events.php:7491
-#: eme-events.php:7517
-#: eme-events.php:7539
-#: eme-events.php:7614
-#: eme-events.php:7636
-#: eme-events.php:7672
-#: eme-events.php:7694
-#: eme-events.php:7720
-#: eme-events.php:7742
-#: eme-events.php:7810
-#: eme-events.php:7832
-#: eme-events.php:7862
-#: eme-events.php:7884
-#: eme-events.php:7903
-#: eme-events.php:7925
-#: eme-events.php:7954
-#: eme-events.php:7976
-#: eme-events.php:8002
-#: eme-events.php:8024
-#: eme-events.php:8059
-#: eme-events.php:8081
-#: eme-events.php:8107
-#: eme-events.php:8129
-#: eme-events.php:8198
-#: eme-events.php:8220
-#: eme-events.php:8249
-#: eme-events.php:8279
-#: eme-events.php:8661
-#: eme-events.php:8676
+#: eme-events.php:7306
+#: eme-events.php:7340
+#: eme-events.php:7376
+#: eme-events.php:7398
+#: eme-events.php:7443
+#: eme-events.php:7480
+#: eme-events.php:7502
+#: eme-events.php:7528
+#: eme-events.php:7550
+#: eme-events.php:7625
+#: eme-events.php:7647
+#: eme-events.php:7683
+#: eme-events.php:7705
+#: eme-events.php:7731
+#: eme-events.php:7753
+#: eme-events.php:7821
+#: eme-events.php:7843
+#: eme-events.php:7873
+#: eme-events.php:7895
+#: eme-events.php:7914
+#: eme-events.php:7936
+#: eme-events.php:7965
+#: eme-events.php:7987
+#: eme-events.php:8013
+#: eme-events.php:8035
+#: eme-events.php:8070
+#: eme-events.php:8092
+#: eme-events.php:8118
+#: eme-events.php:8140
+#: eme-events.php:8209
+#: eme-events.php:8231
+#: eme-events.php:8260
+#: eme-events.php:8290
+#: eme-events.php:8672
+#: eme-events.php:8687
 #: eme-mailer.php:2368
 #: eme-mailer.php:2378
 #: eme-mailer.php:2560
@@ -2884,41 +2884,41 @@ msgstr "只有在您想推翻默认设置时才填写。"
 msgid "Either choose from a template: "
 msgstr "要么从模板中选择："
 
-#: eme-events.php:7299
-#: eme-events.php:7333
-#: eme-events.php:7369
-#: eme-events.php:7391
-#: eme-events.php:7436
-#: eme-events.php:7473
-#: eme-events.php:7495
-#: eme-events.php:7521
-#: eme-events.php:7543
-#: eme-events.php:7618
-#: eme-events.php:7640
-#: eme-events.php:7676
-#: eme-events.php:7698
-#: eme-events.php:7724
-#: eme-events.php:7746
-#: eme-events.php:7814
-#: eme-events.php:7836
-#: eme-events.php:7866
-#: eme-events.php:7888
-#: eme-events.php:7907
-#: eme-events.php:7929
-#: eme-events.php:7958
-#: eme-events.php:7980
-#: eme-events.php:8006
-#: eme-events.php:8028
-#: eme-events.php:8063
-#: eme-events.php:8085
-#: eme-events.php:8111
-#: eme-events.php:8133
-#: eme-events.php:8202
-#: eme-events.php:8224
-#: eme-events.php:8253
-#: eme-events.php:8283
-#: eme-events.php:8665
-#: eme-events.php:8680
+#: eme-events.php:7310
+#: eme-events.php:7344
+#: eme-events.php:7380
+#: eme-events.php:7402
+#: eme-events.php:7447
+#: eme-events.php:7484
+#: eme-events.php:7506
+#: eme-events.php:7532
+#: eme-events.php:7554
+#: eme-events.php:7629
+#: eme-events.php:7651
+#: eme-events.php:7687
+#: eme-events.php:7709
+#: eme-events.php:7735
+#: eme-events.php:7757
+#: eme-events.php:7825
+#: eme-events.php:7847
+#: eme-events.php:7877
+#: eme-events.php:7899
+#: eme-events.php:7918
+#: eme-events.php:7940
+#: eme-events.php:7969
+#: eme-events.php:7991
+#: eme-events.php:8017
+#: eme-events.php:8039
+#: eme-events.php:8074
+#: eme-events.php:8096
+#: eme-events.php:8122
+#: eme-events.php:8144
+#: eme-events.php:8213
+#: eme-events.php:8235
+#: eme-events.php:8264
+#: eme-events.php:8294
+#: eme-events.php:8676
+#: eme-events.php:8691
 #: eme-members.php:2033
 #: eme-members.php:2065
 #: eme-members.php:2083
@@ -2940,21 +2940,21 @@ msgstr "要么从模板中选择："
 msgid "Or enter your own (if anything is entered here, it takes precedence over the selected template): "
 msgstr "或者输入您自己的（如果这里输入了任何东西，它将优先于所选的模板）："
 
-#: eme-events.php:7319
+#: eme-events.php:7330
 msgid "Single Event"
 msgstr "单项活动"
 
-#: eme-events.php:7322
+#: eme-events.php:7333
 msgid "The format of the single event page."
 msgstr "单项活动页面的格式。"
 
-#: eme-events.php:7326
+#: eme-events.php:7337
 msgid "This defines the layout of your event (where the event description goes, the RSVP form, the map, ... ."
 msgstr "这定义了您的活动布局（活动描述的位置、RSVP 表格、地、..."
 
-#: eme-events.php:7341
-#: eme-events.php:8440
-#: eme-events.php:8508
+#: eme-events.php:7352
+#: eme-events.php:8451
+#: eme-events.php:8519
 #: eme-locations.php:670
 #: eme-locations.php:769
 #: eme-mailer.php:2392
@@ -2964,58 +2964,58 @@ msgstr "这定义了您的活动布局（活动描述的位置、RSVP 表格、�
 msgid "Your account has the ability to post unrestricted HTML content here, except javascript."
 msgstr "您的账户有能力在这里发布不受限制的 HTML 内容，除了 javascript。"
 
-#: eme-events.php:7359
+#: eme-events.php:7370
 msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr "联系人 支付网关通知的电子邮件主题"
 
-#: eme-events.php:7360
+#: eme-events.php:7371
 #: eme-members.php:2691
 #: eme-options.php:2100
 msgid "The subject of the email which will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "当通过支付网关收到付款通知时，将向联系人发送的电子邮件主题。"
 
-#: eme-events.php:7380
+#: eme-events.php:7391
 msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr "联系人 支付网关通知的电子邮件正文"
 
-#: eme-events.php:7382
+#: eme-events.php:7393
 #: eme-members.php:2698
 #: eme-options.php:2101
 msgid "The body of the email which will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "当通过支付网关收到付款通知时，将向联系人发送的电子邮件正文。"
 
-#: eme-events.php:7406
+#: eme-events.php:7417
 #: eme-members.php:2241
 msgid "Dynamic data check on every field"
 msgstr "对每个字段进行动态数据检查"
 
-#: eme-events.php:7408
+#: eme-events.php:7419
 msgid "By default the dynamic data check only happens for the fields mentioned in your dynamic data condition if those are present in your RSVP form definition. Using this option, you can use all booking placeholders, even if not defined in your RSVP form. The small disadvantage is that more requests will be made to the backend, so use only when absolutely needed."
 msgstr "默认情况下，动态数据检查只发生在您的动态数据条件中提到的字段，如果这些字段存在于您的 RSVP 表格定义中。使用这个选项，您可以使用所有的预订占位符，即使在您的 RSVP 表格中没有定义。小的缺点是会向后台发出更多的请求，所以只在绝对需要的时候使用。"
 
-#: eme-events.php:7409
+#: eme-events.php:7420
 msgid "If your event uses a discount of type code and you want the dynamic price (using #_DYNAMICPRICE) to be updated taking that discount into account too, then also check this option."
 msgstr "如果您的活动使用代码类型的折扣，并且您希望动态价格（使用 #_DYNAMICPRICE）在更新时也考虑到该折扣，那么也请选中该选项。"
 
-#: eme-events.php:7425
+#: eme-events.php:7436
 #: eme-options.php:1712
 msgid "Booking recorded message"
 msgstr "预订记录的信息"
 
-#: eme-events.php:7427
+#: eme-events.php:7438
 #: eme-options.php:1712
 msgid "The text (html allowed) shown to the user when the booking has been made successfully."
 msgstr "当预订成功后显示给用户的文本（允许使用 html）。"
 
-#: eme-events.php:7455
+#: eme-events.php:7466
 #: eme-options.php:1878
 msgid "When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid."
 msgstr "当一个活动被配置为付款后自动批准预订，并且您选择了发送付款邮件，并且支付的总金额不为 0 时，该邮件不会被发送，但是当一个待订被标记为付款时，有关预订被支付的邮件会被发送。"
 
-#: eme-events.php:7457
-#: eme-events.php:7601
-#: eme-events.php:7659
-#: eme-events.php:8046
+#: eme-events.php:7468
+#: eme-events.php:7612
+#: eme-events.php:7670
+#: eme-events.php:8057
 #: eme-options.php:1874
 #: eme-options.php:1930
 #: eme-options.php:1988
@@ -3027,62 +3027,62 @@ msgstr "当一个活动被配置为付款后自动批准预订，并且您选择
 msgid "RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
-#: eme-events.php:7459
+#: eme-events.php:7470
 #: eme-options.php:1876
 msgid "RSVP notifications are not activated for bookings made or approved, so these mails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
-#: eme-events.php:7463
+#: eme-events.php:7474
 #: eme-options.php:1882
 msgid "Booking Made Email Subject"
 msgstr "已预订的电子邮件主题"
 
-#: eme-events.php:7464
+#: eme-events.php:7475
 #: eme-options.php:1882
 msgid "The subject of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr "当预订（非待订）或已批准时，发送给应答者的电子邮件主题。"
 
-#: eme-events.php:7485
+#: eme-events.php:7496
 #: eme-options.php:1883
 msgid "Booking Made Email Body"
 msgstr "预订的电子邮件正文"
 
-#: eme-events.php:7486
+#: eme-events.php:7497
 #: eme-options.php:1883
 msgid "The body of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr "当预订（非待订）或已批准时，发送给应答者的电子邮件正文。"
 
-#: eme-events.php:7511
+#: eme-events.php:7522
 #: eme-options.php:1884
 msgid "Contact Person Booking Made Email Subject"
 msgstr "联系人 已预订的电子邮件主题"
 
-#: eme-events.php:7512
+#: eme-events.php:7523
 #: eme-options.php:1884
 msgid "The subject of the email which will be sent to the contact person when a booking is made."
 msgstr "预订时将发送给联系人的电子邮件主题。"
 
-#: eme-events.php:7533
+#: eme-events.php:7544
 #: eme-options.php:1885
 msgid "Contact Person Booking Made Email Body"
 msgstr "联系人 已预订的电子邮件正文"
 
-#: eme-events.php:7534
+#: eme-events.php:7545
 #: eme-options.php:1885
 msgid "The body of the email which will be sent to the contact person when a booking is made."
 msgstr "预订时将发送给联系人的电子邮件正文。"
 
-#: eme-events.php:7552
+#: eme-events.php:7563
 #: eme-options.php:1888
 msgid "Booking made mail attachments"
 msgstr "预订的邮件附件"
 
-#: eme-events.php:7571
-#: eme-events.php:7774
-#: eme-events.php:8161
-#: eme-events.php:9541
-#: eme-events.php:9910
-#: eme-events.php:9985
+#: eme-events.php:7582
+#: eme-events.php:7785
+#: eme-events.php:8172
+#: eme-events.php:9552
+#: eme-events.php:9921
+#: eme-events.php:9996
 #: eme-mailer.php:2417
 #: eme-mailer.php:2596
 #: eme-members.php:2308
@@ -3095,9 +3095,9 @@ msgstr "预订的邮件附件"
 msgid "Add attachments"
 msgstr "添加附件"
 
-#: eme-events.php:7572
-#: eme-events.php:7775
-#: eme-events.php:8162
+#: eme-events.php:7583
+#: eme-events.php:7786
+#: eme-events.php:8173
 #: eme-mailer.php:2418
 #: eme-mailer.php:2597
 #: eme-members.php:2309
@@ -3110,1055 +3110,1055 @@ msgstr "添加附件"
 msgid "Remove attachments"
 msgstr "删除附件"
 
-#: eme-events.php:7573
+#: eme-events.php:7584
 #: eme-options.php:1910
 msgid "Optionally add attachments to the mail when a new booking is made."
 msgstr "当有新的预订时，可以选择在邮件中添加附件。"
 
-#: eme-events.php:7603
-#: eme-events.php:7661
-#: eme-events.php:8720
+#: eme-events.php:7614
+#: eme-events.php:7672
+#: eme-events.php:8731
 #: eme-options.php:1932
 msgid "RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
-#: eme-events.php:7608
+#: eme-events.php:7619
 #: eme-options.php:1937
 msgid "Booking Awaiting User Confirmation Email Subject"
 msgstr "预订等待用户的确认中的电子邮件主题"
 
-#: eme-events.php:7609
+#: eme-events.php:7620
 #: eme-options.php:1937
 msgid "The subject of the email which will be sent to the respondent if the booking requires user confirmation."
 msgstr "如果预订需要用户的确认，向应答者发送的电子邮件的主题。"
 
-#: eme-events.php:7629
+#: eme-events.php:7640
 #: eme-options.php:1938
 msgid "Booking Awaiting User Confirmation Email Body"
 msgstr "预订等待用户的确认中的电子邮件正文"
 
-#: eme-events.php:7631
+#: eme-events.php:7642
 #: eme-options.php:1938
 msgid "The body of the email which will be sent to the respondent if the booking requires user confirmation."
 msgstr "如果预订需要用户的确认，向应答者发送的电子邮件的正文。"
 
-#: eme-events.php:7666
+#: eme-events.php:7677
 #: eme-options.php:1939
 msgid "Booking Pending Email Subject"
 msgstr "预订在待定的电子邮件主题"
 
-#: eme-events.php:7667
+#: eme-events.php:7678
 #: eme-options.php:1939
 msgid "The subject of the email which will be sent to the respondent if the booking requires approval."
 msgstr "如果预订需要批准，将向应答者发送的电子邮件主题。"
 
-#: eme-events.php:7687
+#: eme-events.php:7698
 #: eme-options.php:1940
 msgid "Booking Pending Email Body"
 msgstr "预订在待订的电子邮件正文"
 
-#: eme-events.php:7689
+#: eme-events.php:7700
 #: eme-options.php:1940
 msgid "The body of the email which will be sent to the respondent if the booking requires approval."
 msgstr "如果预订需要批准，将向应答者发送的电子邮件正文。"
 
-#: eme-events.php:7714
+#: eme-events.php:7725
 #: eme-options.php:1941
 msgid "Contact Person Pending Booking Email Subject"
 msgstr "联络人 待订的电子邮件主题"
 
-#: eme-events.php:7715
+#: eme-events.php:7726
 #: eme-options.php:1941
 msgid "The subject of the email which will be sent to the contact person if a booking requires approval."
 msgstr "如果预订需要批准，将向联系人发送的电子邮件主题。"
 
-#: eme-events.php:7736
+#: eme-events.php:7747
 #: eme-options.php:1942
 msgid "Contact Person Pending Booking Email Body"
 msgstr "联系人 待订电子邮件正文"
 
-#: eme-events.php:7737
+#: eme-events.php:7748
 #: eme-options.php:1942
 msgid "The body of the email which will be sent to the contact person if a booking requires approval."
 msgstr "如果预订需要批准，向联系人发送的电子邮件正文。"
 
-#: eme-events.php:7755
+#: eme-events.php:7766
 #: eme-options.php:1945
 msgid "Pending mail attachments"
 msgstr "待订的邮件附件"
 
-#: eme-events.php:7804
+#: eme-events.php:7815
 #: eme-options.php:1990
 msgid "Booking Updated Email Subject"
 msgstr "预订已更新的电子邮件主题"
 
-#: eme-events.php:7805
+#: eme-events.php:7816
 #: eme-options.php:1990
 msgid "The subject of the email which will be sent to the respondent if the booking has been updated by an admin."
 msgstr "如果预订被管理员更新，则将向应答者发送的电子邮件主题。"
 
-#: eme-events.php:7826
+#: eme-events.php:7837
 #: eme-options.php:1991
 msgid "Booking Updated Email Body"
 msgstr "预订已更新的邮件正文"
 
-#: eme-events.php:7827
+#: eme-events.php:7838
 #: eme-options.php:1991
 msgid "The body of the email which will be sent to the respondent if the booking has been updated by an admin."
 msgstr "如果预订被管理员更新，则将发送电子邮件的正文给应答者。"
 
-#: eme-events.php:7856
+#: eme-events.php:7867
 #: eme-options.php:2003
 msgid "Pending Booking Reminder Email Subject"
 msgstr "待订提醒电子邮件的主题"
 
-#: eme-events.php:7857
+#: eme-events.php:7868
 #: eme-options.php:2003
 msgid "The subject of the email which will be sent to the respondent as a reminder of a pending booking."
 msgstr "电子邮件的主题，它将被发送给应答者，作为待订的提醒。"
 
-#: eme-events.php:7878
+#: eme-events.php:7889
 #: eme-options.php:2004
 msgid "Pending Booking Reminder Email Body"
 msgstr "待订提醒电子邮件的正文"
 
-#: eme-events.php:7879
+#: eme-events.php:7890
 #: eme-options.php:2004
 msgid "The body of the email which will be sent to the respondent as a reminder of a pending booking."
 msgstr "发送给应答者的电子邮件的正文，作为待订的提醒。"
 
-#: eme-events.php:7897
+#: eme-events.php:7908
 #: eme-options.php:2005
 msgid "Accepted Booking Reminder Email Subject"
 msgstr "接受预订提醒的电子邮件主题"
 
-#: eme-events.php:7898
+#: eme-events.php:7909
 #: eme-options.php:2005
 msgid "The subject of the email which will be sent to the respondent as a reminder of an approved booking."
 msgstr "电子邮件的主题，它将作为已批准的预订的提醒发送给应答者。"
 
-#: eme-events.php:7919
+#: eme-events.php:7930
 #: eme-options.php:2006
 msgid "Accepted Booking Reminder Email Body"
 msgstr "接受预订提醒的电子邮件正文"
 
-#: eme-events.php:7920
+#: eme-events.php:7931
 #: eme-options.php:2006
 msgid "The body of the email which will be sent to the respondent as a reminder of an approved booking."
 msgstr "发送给应答者的电子邮件的内容，作为已批准的预订的提醒。"
 
-#: eme-events.php:7948
+#: eme-events.php:7959
 #: eme-options.php:2018
 msgid "Booking Cancelled Email Subject"
 msgstr "取消预订的电子邮件主题"
 
-#: eme-events.php:7949
+#: eme-events.php:7960
 #: eme-options.php:2018
 msgid "The subject of the email which will be sent to the respondent when he cancels all his bookings for an event."
 msgstr "当应答者取消其所有活动的预订时，将向其发送的电子邮件主题。"
 
-#: eme-events.php:7970
+#: eme-events.php:7981
 #: eme-options.php:2019
 msgid "Booking Cancelled Email Body"
 msgstr "预订已取消的电子邮件正文"
 
-#: eme-events.php:7971
+#: eme-events.php:7982
 #: eme-options.php:2019
 msgid "The body of the email which will be sent to the respondent when he cancels all his bookings for an event."
 msgstr "当应答者取消其对某一活动的所有预订时，将向其发送的电子邮件正文。"
 
-#: eme-events.php:7996
+#: eme-events.php:8007
 #: eme-options.php:2020
 msgid "Contact Person Cancelled Booking Email Subject"
 msgstr "联系人 已取消的预订电子邮件主题"
 
-#: eme-events.php:7997
+#: eme-events.php:8008
 #: eme-options.php:2020
 msgid "The subject of the email which will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr "当应答者取消其对某一活动的所有预订时，将向联系人发送的电子邮件主题。"
 
-#: eme-events.php:8018
+#: eme-events.php:8029
 #: eme-options.php:2021
 msgid "Contact Person Cancelled Booking Email Body"
 msgstr "联系人 已取消预订的电子邮件正文"
 
-#: eme-events.php:8019
+#: eme-events.php:8030
 #: eme-options.php:2021
 msgid "The body of the email which will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr "当应答者取消其对某一事件的所有预订时，将向联系人发送的电子邮件正文。"
 
-#: eme-events.php:8048
+#: eme-events.php:8059
 #: eme-options.php:2045
 msgid "RSVP notifications are not activated for paid bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
-#: eme-events.php:8053
+#: eme-events.php:8064
 #: eme-options.php:2050
 msgid "Booking Paid Email Subject"
 msgstr "预订已付款的电子邮件主题"
 
-#: eme-events.php:8054
+#: eme-events.php:8065
 #: eme-options.php:2050
 msgid "The subject of the email which will be sent to the respondent when a booking is marked as paid."
 msgstr "当预订被标记为已付款时，将向应答者发送的电子邮件主题。"
 
-#: eme-events.php:8075
+#: eme-events.php:8086
 #: eme-options.php:2051
 msgid "Booking Paid Email Body"
 msgstr "预订已付款的电子邮件正文"
 
-#: eme-events.php:8076
+#: eme-events.php:8087
 #: eme-options.php:2051
 msgid "The body of the email which will be sent to the respondent when a booking is marked as paid."
 msgstr "当预订被标记为已付款时，将向应答者发送的电子邮件正文。"
 
-#: eme-events.php:8101
+#: eme-events.php:8112
 msgid "Contact Person Booking Paid Email Subject"
 msgstr "联系人 预订已付费的电子邮件主题"
 
-#: eme-events.php:8102
+#: eme-events.php:8113
 #: eme-options.php:2052
 msgid "The subject of the email which will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr "当一个预订被标记为已付款（不是通过支付网关）时，将向联系人发送的电子邮件主题。"
 
-#: eme-events.php:8122
+#: eme-events.php:8133
 msgid "Contact Person Booking Paid Email Body"
 msgstr "联系人 预订已付费的电子邮件正文"
 
-#: eme-events.php:8124
+#: eme-events.php:8135
 #: eme-options.php:2053
 msgid "The body of the email which will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr "当一个预订被标记为已付款（不是通过支付网关）时，将发送给联系人的电子邮件正文。"
 
-#: eme-events.php:8142
+#: eme-events.php:8153
 #: eme-options.php:2055
 msgid "Booking paid mail attachments"
 msgstr "预订已付费的邮件附件"
 
-#: eme-events.php:8163
+#: eme-events.php:8174
 #: eme-options.php:2077
 msgid "Optionally add attachments to the mail when a booking is paid."
 msgstr "在已支付预订时，可选择在邮件中添加附件。"
 
-#: eme-events.php:8192
+#: eme-events.php:8203
 #: eme-options.php:2033
 msgid "Booking Deleted Email Subject"
 msgstr "预订删除的电子邮件主题"
 
-#: eme-events.php:8193
+#: eme-events.php:8204
 #: eme-options.php:2033
 msgid "The subject of the email which will be sent to the respondent if the booking is deleted by an admin."
 msgstr "如果预订被管理员删除，将向应答者发送的电子邮件主题。"
 
-#: eme-events.php:8214
+#: eme-events.php:8225
 #: eme-options.php:2034
 msgid "Booking Deleted Email Body"
 msgstr "预订删除的电子邮件正文"
 
-#: eme-events.php:8215
+#: eme-events.php:8226
 #: eme-options.php:2034
 msgid "The body of the email which will be sent to the respondent if the booking is deleted by an admin."
 msgstr "如果预订被管理员删除，将向应答者发送的电子邮件正文。"
 
-#: eme-events.php:8243
+#: eme-events.php:8254
 msgid "Booking Form"
 msgstr "预订表格"
 
-#: eme-events.php:8244
+#: eme-events.php:8255
 msgid "The booking form format."
 msgstr "预订表格的格式。"
 
-#: eme-events.php:8273
+#: eme-events.php:8284
 msgid "Cancel Booking Form"
 msgstr "取消预订表格"
 
-#: eme-events.php:8274
+#: eme-events.php:8285
 msgid "The cancel booking form format."
 msgstr "取消预订表格的格式。"
 
-#: eme-events.php:8303
+#: eme-events.php:8314
 msgid "Captcha settings"
 msgstr "Captcha 的设置"
 
-#: eme-events.php:8307
+#: eme-events.php:8318
 #: eme-options.php:1308
 msgid "Use Google reCAPTCHA for forms?"
 msgstr "在表格里使用谷歌 reCAPTCHA？"
 
-#: eme-events.php:8308
+#: eme-events.php:8319
 msgid "If this option is checked, make sure to use #_RECAPTCHA in your booking/cancel form. If not present, it will be added just above the submit button."
 msgstr "如果这个选项被选中，请确保在您的预订或取消表格中使用 #_RECAPTCHA。如果不存在，它将被添加到提交按钮的上方。"
 
-#: eme-events.php:8314
+#: eme-events.php:8325
 #: eme-options.php:1311
 msgid "Use hCaptcha for forms?"
 msgstr "在表格中使用 hCaptcha？"
 
-#: eme-events.php:8315
+#: eme-events.php:8326
 msgid "If this option is checked, make sure to use #_HCAPTCHA in your booking/cancel form. If not present, it will be added just above the submit button."
 msgstr "如果这个选项被勾选，请确保在您的预订或取消表格中使用 #_HCAPTCHA。如果不存在，它将会被添加到提交按钮的上方。"
 
-#: eme-events.php:8321
+#: eme-events.php:8332
 #: eme-options.php:1314
 #, fuzzy
 msgid "Use Cloudflare Turnstile for forms?"
 msgstr "在表格里使用谷歌 reCAPTCHA？"
 
-#: eme-events.php:8322
+#: eme-events.php:8333
 #, fuzzy
 msgid "If this option is checked, make sure to use #_CFCAPTCHA in your booking/cancel form. If not present, it will be added just above the submit button."
 msgstr "如果这个选项被选中，请确保在您的预订或取消表格中使用 #_CAPTCHA。如果不存在，它将被添加到提交按钮的上方。"
 
-#: eme-events.php:8327
+#: eme-events.php:8338
 #: eme-options.php:1307
 msgid "Use EME captcha for forms?"
 msgstr "在表格中使用 EME 的验证码？"
 
-#: eme-events.php:8328
+#: eme-events.php:8339
 msgid "If this option is checked, make sure to use #_CAPTCHA in your booking/cancel form. If not present, it will be added just above the submit button."
 msgstr "如果这个选项被选中，请确保在您的预订或取消表格中使用 #_CAPTCHA。如果不存在，它将被添加到提交按钮的上方。"
 
-#: eme-events.php:8332
+#: eme-events.php:8343
 #: eme-members.php:1961
 #: eme-options.php:1317
 msgid "Only use captcha for logged out users?"
 msgstr ""
 
-#: eme-events.php:8333
+#: eme-events.php:8344
 #: eme-members.php:1963
 #: eme-options.php:1317
 msgid "If this option is checked, the captcha will only be used for logged out users."
 msgstr ""
 
-#: eme-events.php:8408
+#: eme-events.php:8419
 #: eme-locations.php:606
 msgid "Map not found"
 msgstr "未找到地图"
 
-#: eme-events.php:8431
+#: eme-events.php:8442
 msgid "Event description"
 msgstr "活动的描述"
 
-#: eme-events.php:8433
+#: eme-events.php:8444
 msgid "The event description. This is also used in html meta tags and google tags to show the event info."
 msgstr "活动的描述。这也被用于 html 元标签和 google 标签，以显示活动的信息。"
 
-#: eme-events.php:8456
-#: eme-events.php:8460
-#: eme-events.php:8464
+#: eme-events.php:8467
+#: eme-events.php:8471
+#: eme-events.php:8475
 msgid "Event image"
 msgstr "活动图像"
 
-#: eme-events.php:8474
+#: eme-events.php:8485
 #: eme-locations.php:708
 msgid "Set a featured image"
 msgstr "设置特色图像"
 
-#: eme-events.php:8475
+#: eme-events.php:8486
 #: eme-locations.php:709
 msgid "Unset featured image"
 msgstr "不设置特色图像"
 
-#: eme-events.php:8501
+#: eme-events.php:8512
 msgid "Here custom fields of type 'events' are shown."
 msgstr "这里显示的是 \"活动\" 类型的自定义字段。"
 
-#: eme-events.php:8502
+#: eme-events.php:8513
 msgid "The difference with event attributes is that attributes need to be defined in your format first and can only be text, here you can first create custom fields of any kind which allows more freedom."
 msgstr "与活动属性不同的是，属性需要先在您的格式中定义，而且只能是文本，这里您可以先创建任何类型的自定义字段，这样可以有更多的自由。"
 
-#: eme-events.php:8503
+#: eme-events.php:8514
 msgid "If a custom field with name 'performer' exists, it's value here will be used for the google 'performer' header when showing the event in google search results."
 msgstr "如果存在一个名为 \"表演者\" 的自定义字段，当在谷歌搜索结果中显示该活动时，这里的值将被用于谷歌 \"表演者\" 标题。"
 
-#: eme-events.php:8555
+#: eme-events.php:8566
 #: eme-locations.php:813
 #: eme-members.php:2776
 msgid "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr "“隐藏\" 类型的自定义字段在这里是无用的，当然也不会被显示。"
 
-#: eme-events.php:8571
-#: eme-events.php:9787
+#: eme-events.php:8582
+#: eme-events.php:9798
 #: eme-locations.php:727
 msgid "External URL"
 msgstr "外部链接"
 
-#: eme-events.php:8575
+#: eme-events.php:8586
 msgid "If this is filled in, the single event URL will point to this url instead of the standard event page."
 msgstr "如果填写了这个，单项活动的网址将指向这个网址，而不是标准活动页面。"
 
-#: eme-events.php:8584
+#: eme-events.php:8595
 msgid "Enable bookings for this event"
 msgstr "启用该活动的预订"
 
-#: eme-events.php:8596
+#: eme-events.php:8607
 msgid "If no payment method is selected, the \"Booking Recorded Message\" (defined in the RSVP Form format settings) will be shown. Otherwise the \"Booking Recorded Message\" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings)."
 msgstr "如果没有选择付款的方式，将显示 \"预订被记录的信息\"（在 RSVP 表格格式的设置中被定义）。否则，\"预订被记录的信息\" 将被显示，而几秒钟后，用户将被重定向到付款页面（看关于重定向超时和更多付款设置的通用 EME 设置）。"
 
-#: eme-events.php:8616
+#: eme-events.php:8627
 #: eme-members.php:2193
 msgid "No payment methods configured yet. Go in the EME payment settings and configure some."
 msgstr "还没有配置付款的方式。在 EME 的付款设置中去配置一些。"
 
-#: eme-events.php:8621
+#: eme-events.php:8632
 msgid "Skip payment methods after booking"
 msgstr "预订后跳过付款方式"
 
-#: eme-events.php:8623
+#: eme-events.php:8634
 msgid "If you want to skip the possibility to pay immediately after booking, select this option. This might be useful if you for example want to approve unpaid bookings and only then send them the payment link using #_PAYMENT_URL in the booked email message."
 msgstr "如果您想跳过预订后立即付款的可能性，选择这个选项。这可能是有用的，例如您想批准未付款的预订，然后才在预订的电子邮件中使用 #_PAYMENT_URL 向他们发送付款链接。"
 
-#: eme-events.php:8646
+#: eme-events.php:8657
 msgid "Select this option if you want an attendance record to be kept everytime the RSVP attendance QRCODE is scanned by an authorized user."
 msgstr "如果您想在授权用户每次扫描 RSVP 出席 QRCODE 时保留出席记录，请选择此选项。"
 
-#: eme-events.php:8649
+#: eme-events.php:8660
 msgid "Attendance URL (generated by #_ATTENDANCE_URL) is valid from "
 msgstr "出席网址（由 #_ATTENDANCE_URL 生成）有效从"
 
-#: eme-events.php:8651
+#: eme-events.php:8662
 msgid "hours before the event starts until "
 msgstr "活动开始前几个小时，直到"
 
-#: eme-events.php:8653
+#: eme-events.php:8664
 msgid "hours after the event ends."
 msgstr "活动结束后的几个小时"
 
-#: eme-events.php:8654
+#: eme-events.php:8665
 msgid "When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter. EME will then also count the number of times the code is scanned by an authorized user and issue a warning is this count is greater than the number of booked seats."
 msgstr "当扫描由 #_QRCODE 或 #_ATTENDANCE_URL 生成的链接时，您也可以决定将其作为入场券。然后，这个选项允许定义人们从哪一点开始被允许进入。EME 还将计算授权用户扫描该代码的次数，如果该次数大于预订的座位数，将发出警告。"
 
-#: eme-events.php:8658
+#: eme-events.php:8669
 msgid "Extra attendance info for not authorized users"
 msgstr "非授权用户的额外出席信息"
 
-#: eme-events.php:8659
+#: eme-events.php:8670
 msgid "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a not authorized user, only info concerning the payment status is shown. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed."
 msgstr "当 #_QRCODE 或 #_ATTENDANCE_URL 生成的链接被非授权用户扫描时，只显示有关付款状态的信息。如果您想显示额外的信息（如活动名称或一些预订信息），您可以在此模板中定义。所有的事件和 RSVP 占位符都是允许的。"
 
-#: eme-events.php:8673
+#: eme-events.php:8684
 msgid "Extra attendance info for authorized users"
 msgstr "授权用户的额外出席信息"
 
-#: eme-events.php:8674
+#: eme-events.php:8685
 msgid "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a authorized user, only info concerning the payment status is shown, next to attendance count info if configured to do so. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed."
 msgstr "当 #_QRCODE 或 #_ATTENDANCE_URL 生成的链接被授权用户扫描时，只显示有关付款状态的信息，如果配置为这样，则显示出席人数的信息。如果您想显示额外的信息（如活动名称或一些预订信息），您可以在此模板中定义。所有的活动和 RSVP 占位符都是允许的。"
 
-#: eme-events.php:8716
+#: eme-events.php:8727
 msgid "Require booking approval"
 msgstr "需要预订批准"
 
-#: eme-events.php:8725
+#: eme-events.php:8736
 msgid "Require user confirmation after booking"
 msgstr "预订后要求用户确认"
 
-#: eme-events.php:8726
+#: eme-events.php:8737
 msgid "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent to a booker."
 msgstr "如果是激活的状态，别忘了在发给预订者的邮件中使用#_BOOKING_CONFIRM_URL。"
 
-#: eme-events.php:8729
+#: eme-events.php:8740
 msgid "Auto-approve booking upon payment"
 msgstr "付款后自动批准预订"
 
-#: eme-events.php:8732
+#: eme-events.php:8743
 msgid "Consider pending bookings as available seats for new bookings"
 msgstr "考虑将待订作为新预订的可用席位"
 
-#: eme-events.php:8732
+#: eme-events.php:8743
 msgid "In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments."
 msgstr "如果可以进行在线付款，少于5分钟的待订也将被算作被占用，以便让人员完成在线付款。"
 
-#: eme-events.php:8736
+#: eme-events.php:8747
 #: eme-options.php:1641
 msgid "Set the number of days before reminder emails will be sent for pending bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "设置为待订在发送提醒邮件前的天数（从活动开始日期算起）。如果您想发送多封提醒函，请用逗号隔开这些日子。留空表示不发送提醒电子邮件。"
 
-#: eme-events.php:8740
+#: eme-events.php:8751
 #: eme-options.php:1642
 msgid "Set the number of days before reminder emails will be sent for approved bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "设置为已批准的预订在发送提醒邮件前的天数（从活动开始日期算起）。如果您想发送多封提醒函，请在这里用逗号把天数隔开。留空表示不发送提醒电子邮件。"
 
-#: eme-events.php:8743
+#: eme-events.php:8754
 msgid "Create WP user after succesful booking"
 msgstr "预订成功后创建 WP 用户"
 
-#: eme-events.php:8744
+#: eme-events.php:8755
 msgid "This will create a WP user after the booking is completed, as if the person registered in WP itself. This will only create a user if the booker was not logged in and the email is not yet taken by another WP user."
 msgstr "这将在预订完成后创建一个 WP 用户，就像这个人在 WP 本身注册一样。这将只在预订者没有登录并且电子邮件还没有被其他 WP 用户占用的情况下创建一个用户。"
 
-#: eme-events.php:8747
+#: eme-events.php:8758
 msgid "Allow only 1 booking per unique email address"
 msgstr "每个独特的电子邮件地址只允许有一个预订"
 
-#: eme-events.php:8750
+#: eme-events.php:8761
 msgid "Allow only 1 booking per person (combo email/last name/first name)"
 msgstr "每个人只允许有一个预订（组合电子邮件、姓氏、名字）"
 
-#: eme-events.php:8754
-#: eme-events.php:9931
+#: eme-events.php:8765
+#: eme-events.php:9942
 #: eme-options.php:38
-#: eme-people.php:1043
-#: eme-people.php:1332
-#: eme-people.php:1340
+#: eme-people.php:1047
+#: eme-people.php:1336
+#: eme-people.php:1344
 msgid "Seats"
 msgstr "座位"
 
-#: eme-events.php:8755
+#: eme-events.php:8766
 #: eme-options.php:1645
 msgid "Enter 0 for no limit"
 msgstr "输入 0 表示无限制"
 
-#: eme-events.php:8756
+#: eme-events.php:8767
 msgid "The max available seats for this event. Enter 0 for no limit. For multiseat events, separate the values by '||'"
 msgstr "此活动的最大可用席位。输入 0 表示没有限制。对于多席活动，用 “||” 分隔这些值。"
 
-#: eme-events.php:8760
-#: eme-people.php:1278
+#: eme-events.php:8771
+#: eme-people.php:1282
 msgid "Price: "
 msgstr "价格："
 
-#: eme-events.php:8761
-#: eme-events.php:8776
+#: eme-events.php:8772
+#: eme-events.php:8787
 msgid "For multiprice events, separate the values by '||'"
 msgstr "对于多价格活动，用 “||” 分隔数值"
 
-#: eme-events.php:8777
+#: eme-events.php:8788
 #: eme-members.php:1975
 #: eme-members.php:1981
 #: eme-options.php:2279
 msgid "Use the point as decimal separator"
 msgstr "使用点作为小数点的分隔符"
 
-#: eme-events.php:8781
+#: eme-events.php:8792
 msgid "Price description"
 msgstr "价格描述"
 
-#: eme-events.php:8782
+#: eme-events.php:8793
 msgid "Add an optional description for the price (which can be used in templates)."
 msgstr "为价格添加一个可选的描述（可以在模板中使用）。"
 
-#: eme-events.php:8785
+#: eme-events.php:8796
 msgid "Price Categories descriptions"
 msgstr "价格分类的描述"
 
-#: eme-events.php:8786
+#: eme-events.php:8797
 msgid "Add an optional description for each price category (one price description per line)."
 msgstr "为每个价格分类添加一个可选的描述（每行一个价格描述）。"
 
-#: eme-events.php:8789
+#: eme-events.php:8800
 msgid "VAT percentage: "
 msgstr "增值税百分比："
 
-#: eme-events.php:8790
+#: eme-events.php:8801
 #: eme-members.php:1989
 msgid "VAT percentage"
 msgstr "增值税百分比"
 
-#: eme-events.php:8791
+#: eme-events.php:8802
 msgid "The price you indicate for events is VAT included, special placeholders are foreseen to indicate the price without VAT."
 msgstr "您所表示的活动价格是包括增值税的，可以预见，特殊的占位符可以表示不含增值税的价格。"
 
-#: eme-events.php:8795
+#: eme-events.php:8806
 #: eme-members.php:1995
 msgid "Discount to apply"
 msgstr "应用的折扣"
 
-#: eme-events.php:8796
+#: eme-events.php:8807
 #: eme-members.php:1996
 msgid "The discount name you want to apply (is overridden by discount group if used)."
 msgstr "您想应用的折扣名称（如果使用的话，会被折扣群组覆盖）。"
 
-#: eme-events.php:8799
+#: eme-events.php:8810
 #: eme-members.php:1999
 msgid "Discount group to apply"
 msgstr "群组折扣的应用"
 
-#: eme-events.php:8800
+#: eme-events.php:8811
 #: eme-members.php:2000
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr "您希望应用的折扣群组名称（覆盖折扣）。"
 
-#: eme-events.php:8803
+#: eme-events.php:8814
 msgid "Waitinglist seats"
 msgstr "等待名单上的席位"
 
-#: eme-events.php:8804
+#: eme-events.php:8815
 msgid "The number of seats considered to be a waiting list."
 msgstr "被认为是候补名单的席位数量。"
 
-#: eme-events.php:8807
+#: eme-events.php:8818
 #: eme-options.php:1710
 msgid "Check waitinglist when seats become available"
 msgstr "当有空座位时，查看等候名单"
 
-#: eme-events.php:8809
+#: eme-events.php:8820
 #: eme-options.php:1710
 msgid "Automatically take a booking from the waiting list when seats become available again"
 msgstr "当空座位再次出现时，自动从候补名单中提取预订。"
 
-#: eme-events.php:8812
+#: eme-events.php:8823
 #: eme-options.php:1647
 msgid "Max number of seats to book"
 msgstr "最多可以预订的座位数"
 
-#: eme-events.php:8813
+#: eme-events.php:8824
 #: eme-options.php:1647
 msgid "The maximum number of seats a person can book in one go."
 msgstr "一个人可以一次性预订的最大座位数。"
 
-#: eme-events.php:8813
-#: eme-events.php:8817
+#: eme-events.php:8824
+#: eme-events.php:8828
 msgid "(is multi-compatible)"
 msgstr "(是多重兼容的)"
 
-#: eme-events.php:8813
-#: eme-events.php:8817
+#: eme-events.php:8824
+#: eme-events.php:8828
 msgid "If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden."
 msgstr "如果预订的最小和最大的座位数相同，那么选择预订座位数的字段将被隐藏。"
 
-#: eme-events.php:8816
+#: eme-events.php:8827
 #: eme-options.php:1646
 msgid "Min number of seats to book"
 msgstr "预定的最少座位数"
 
-#: eme-events.php:8817
+#: eme-events.php:8828
 #: eme-options.php:1646
 msgid "The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list)."
 msgstr "一个人可以一次性预订的最小座位数（可以是 0，例如只是一个出席者名单）。"
 
-#: eme-events.php:8820
+#: eme-events.php:8831
 msgid "Attendance-only event?"
 msgstr "仅限出席的活动？"
 
-#: eme-events.php:8821
+#: eme-events.php:8832
 msgid "Only take attendance (0 or 1 seat) for this event"
 msgstr "只在此项活动进行点名（0 或 1 座）。"
 
-#: eme-events.php:8822
+#: eme-events.php:8833
 #, fuzzy
 msgid "If this option is set and the setting \"Min number of seats to book\" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox."
 msgstr "如果设置了这个选项，并且 \"最小预订座位数\" 设置为大于 0 的值，那么选择预订座位数的区域将被隐藏。"
 
-#: eme-events.php:8823
+#: eme-events.php:8834
 #, fuzzy
 msgid "If this option is set and the setting \"Min number of seats to book\" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1."
 msgstr "如果设置了这个选项，并且 \"最小预订座位数\" 设置为大于 0 的值，那么选择预订座位数的区域将被隐藏。"
 
-#: eme-events.php:8827
+#: eme-events.php:8838
 msgid "Require WP membership for booking"
 msgstr "要求预订时使用 WP 会籍"
 
-#: eme-events.php:8829
+#: eme-events.php:8840
 msgid "This will only show the booking form for logged in users and prefill the form with the personal data from their WordPress profile. That data can't be changed in the form then, so if you don't want this, you can deactivate this option and use #_ADDBOOKINGFORM_IF_LOGGED_IN to show the form to logged in users only."
 msgstr ""
 
-#: eme-events.php:8834
+#: eme-events.php:8845
 #, fuzzy
 msgid "Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event."
 msgstr "需要登录的用户必须是所选 EME 群组中的一员才能使用该折扣。"
 
-#: eme-events.php:8840
+#: eme-events.php:8851
 #, fuzzy
 msgid "Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event."
 msgstr "需要登录的用户必须是选定的 EME 会籍之一，才能使用此折扣。"
 
-#: eme-events.php:8844
+#: eme-events.php:8855
 #: eme-members.php:2152
 #: eme-tasks.php:823
 msgid "Group to add people to"
 msgstr "添加人员到此群组"
 
-#: eme-events.php:8845
+#: eme-events.php:8856
 #: eme-members.php:2153
 #: eme-tasks.php:824
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "您希望人们在订阅时自动成为该群组的会员。"
 
-#: eme-events.php:8848
+#: eme-events.php:8859
 msgid "RSVP Password"
 msgstr "RSVP 密码"
 
-#: eme-events.php:8849
+#: eme-events.php:8860
 msgid "A password required for RSVP submit to succeed. If used, #_PASSWORD is required in the RSVP form too."
 msgstr "为成功提交 RSVP 而需要的密码。如果使用，#_PASSWORD 在 RSVP 表格中也需要。"
 
-#: eme-events.php:8852
+#: eme-events.php:8863
 msgid "Invite-only event?"
 msgstr "仅限邀请的活动？"
 
-#: eme-events.php:8853
+#: eme-events.php:8864
 msgid "Require an invitation"
 msgstr "需要邀请"
 
-#: eme-events.php:8854
+#: eme-events.php:8865
 msgid "Allow only bookings done if someone visits the event via the invite url generated by #_INVITEURL."
 msgstr "只允许在有人通过 #_INVITEURL 生成的邀请网址链接登入该活动时完成预订。"
 
-#: eme-events.php:8859
+#: eme-events.php:8870
 msgid "Ticket PDF template"
 msgstr "票据 PDF 模板"
 
-#: eme-events.php:8861
+#: eme-events.php:8872
 msgid "This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included)."
 msgstr "这个可选的模板用于在预订被批准或付款时在邮件中发送一个 PDF 附件（见下一个设置，以配置何时应包括附件）。"
 
-#: eme-events.php:8862
+#: eme-events.php:8873
 msgid "No template shown in the list? Then go in the section Templates and create a PDF template."
 msgstr "列表中没有显示模板？那在模板部分，创建一个 PDF 模板。"
 
-#: eme-events.php:8866
+#: eme-events.php:8877
 msgid "Ticket mail preference"
 msgstr "票的邮件优先权"
 
-#: eme-events.php:8867
+#: eme-events.php:8878
 msgid "At booking time"
 msgstr "在预订时"
 
-#: eme-events.php:8867
+#: eme-events.php:8878
 msgid "Upon approval"
 msgstr "经批准后"
 
-#: eme-events.php:8867
+#: eme-events.php:8878
 msgid "Upon payment"
 msgstr "付款后"
 
-#: eme-events.php:8867
+#: eme-events.php:8878
 msgid "All of the above"
 msgstr "以上全部"
 
-#: eme-events.php:8868
+#: eme-events.php:8879
 msgid "Configure in which mail you want the optional PDF attachment to be included: when the booking is made, when it is approved or when the booking is paid for."
 msgstr "配置您想在哪个邮件中包含可选的 PDF 附件：当预订时，当它被批准时或当预订被支付时。"
 
-#: eme-events.php:8874
+#: eme-events.php:8885
 msgid "Allow RSVP from "
 msgstr "允许 RSVP 从"
 
-#: eme-events.php:8878
 #: eme-events.php:8889
+#: eme-events.php:8900
 #: eme-options.php:1659
 #: eme-options.php:1675
 msgid "hours"
 msgstr "小时"
 
-#: eme-events.php:8879
 #: eme-events.php:8890
+#: eme-events.php:8901
 #: eme-options.php:1665
 #: eme-options.php:1681
 msgid "before the event "
 msgstr "活动前"
 
-#: eme-events.php:8879
 #: eme-events.php:8890
+#: eme-events.php:8901
 #: eme-options.php:1662
 #: eme-options.php:1678
 msgid "starts"
 msgstr "开始"
 
-#: eme-events.php:8879
 #: eme-events.php:8890
+#: eme-events.php:8901
 #: eme-options.php:1663
 #: eme-options.php:1679
 msgid "ends"
 msgstr "结束"
 
-#: eme-events.php:8882
+#: eme-events.php:8893
 #, fuzzy
 msgid "(Leave empty or 0 to disable this limit)"
 msgstr "(留空以禁用此限制)"
 
-#: eme-events.php:8885
+#: eme-events.php:8896
 msgid "Allow RSVP until "
 msgstr "允许 RSVP 直到"
 
-#: eme-events.php:8895
+#: eme-events.php:8906
 #: eme-options.php:1688
 msgid "RSVP cancel cutoff before event starts"
 msgstr "活动开始前的 RSVP 取消截止日期"
 
-#: eme-events.php:8897
+#: eme-events.php:8908
 #: eme-options.php:1688
 msgid "Allow RSVP cancellation until this many days before the event starts."
 msgstr "允许在活动开始前的这么多天内取消 RSVP。"
 
-#: eme-events.php:8899
+#: eme-events.php:8910
 #: eme-options.php:1689
 msgid "RSVP cancel cutoff booking age"
 msgstr "RSVP 取消预订年龄的截止日期"
 
-#: eme-events.php:8901
+#: eme-events.php:8912
 #: eme-options.php:1689
 msgid "Allow RSVP cancellation until this many days after the booking has been made."
 msgstr "允许在预订后的这么多天内取消 RSVP。"
 
-#: eme-events.php:9525
+#: eme-events.php:9536
 msgid "Select the image to be used as person image"
 msgstr "选择作为人物的图像"
 
-#: eme-events.php:9526
+#: eme-events.php:9537
 msgid "Set image"
 msgstr "设置图像"
 
-#: eme-events.php:9527
-#: eme-people.php:2662
-#: eme-people.php:2702
+#: eme-events.php:9538
+#: eme-people.php:2666
+#: eme-people.php:2706
 msgid "Choose image"
 msgstr "选择图片"
 
-#: eme-events.php:9528
+#: eme-events.php:9539
 msgid "Replace image"
 msgstr "更换图像"
 
-#: eme-events.php:9533
-#: eme-events.php:9609
-#: eme-events.php:9791
+#: eme-events.php:9544
+#: eme-events.php:9620
+#: eme-events.php:9802
 msgid "Are you sure you want to delete the selected records?"
 msgstr "您确定要删除选定的记录吗？"
 
-#: eme-events.php:9534
+#: eme-events.php:9545
 msgid "Are you sure you want to delete this file?"
 msgstr ""
 
-#: eme-events.php:9535
+#: eme-events.php:9546
 msgid "Select one or more persons"
 msgstr "选择一个或多个人员"
 
-#: eme-events.php:9536
+#: eme-events.php:9547
 msgid "Select one or more members"
 msgstr "选择一个或多个会员"
 
-#: eme-events.php:9537
+#: eme-events.php:9548
 msgid "Select one or more groups"
 msgstr "选择一个或多个群组"
 
-#: eme-events.php:9538
+#: eme-events.php:9549
 msgid "Any group"
 msgstr "任何群组"
 
-#: eme-events.php:9539
+#: eme-events.php:9550
 msgid "Filter on membership"
 msgstr "过滤会籍"
 
-#: eme-events.php:9540
+#: eme-events.php:9551
 msgid "Filter on member status"
 msgstr "对会员身份进行过滤"
 
-#: eme-events.php:9542
+#: eme-events.php:9553
 msgid "Select a discount"
 msgstr "选择一个折扣"
 
-#: eme-events.php:9543
+#: eme-events.php:9554
 msgid "Select a discountgroup"
 msgstr "选择一个折扣群组"
 
-#: eme-events.php:9581
-#: eme-events.php:9921
+#: eme-events.php:9592
+#: eme-events.php:9932
 msgid "No matching event found"
 msgstr "没有找到匹配的活动"
 
-#: eme-events.php:9584
+#: eme-events.php:9595
 msgid "Recurrences"
 msgstr "循环"
 
-#: eme-events.php:9586
-#: eme-events.php:9932
+#: eme-events.php:9597
+#: eme-events.php:9943
 msgid "Event price"
 msgstr "活动价格"
 
-#: eme-events.php:9592
-#: eme-events.php:9682
-#: eme-events.php:9777
+#: eme-events.php:9603
+#: eme-events.php:9693
+#: eme-events.php:9788
 msgid "Copy"
 msgstr "复制"
 
-#: eme-events.php:9593
-#: eme-events.php:9633
-#: eme-events.php:9652
-#: eme-events.php:9677
-#: eme-events.php:9792
-#: eme-events.php:9833
-#: eme-events.php:9889
-#: eme-events.php:9946
+#: eme-events.php:9604
+#: eme-events.php:9644
+#: eme-events.php:9663
+#: eme-events.php:9688
+#: eme-events.php:9803
+#: eme-events.php:9844
+#: eme-events.php:9900
+#: eme-events.php:9957
 msgid "CSV"
 msgstr "CSV"
 
-#: eme-events.php:9594
-#: eme-events.php:9634
-#: eme-events.php:9653
-#: eme-events.php:9678
-#: eme-events.php:9793
-#: eme-events.php:9834
-#: eme-events.php:9890
-#: eme-events.php:9947
+#: eme-events.php:9605
+#: eme-events.php:9645
+#: eme-events.php:9664
+#: eme-events.php:9689
+#: eme-events.php:9804
+#: eme-events.php:9845
+#: eme-events.php:9901
+#: eme-events.php:9958
 msgid "Print"
 msgstr "打印"
 
-#: eme-events.php:9596
+#: eme-events.php:9607
 msgid "Recurrence info"
 msgstr "循环的信息"
 
-#: eme-events.php:9597
+#: eme-events.php:9608
 msgid "Single event duration"
 msgstr "单一活动的持续时间"
 
-#: eme-events.php:9598
+#: eme-events.php:9609
 msgid "Date"
 msgstr "日期"
 
-#: eme-events.php:9599
-#: eme-events.php:9927
+#: eme-events.php:9610
+#: eme-events.php:9938
 msgid "Date and time"
 msgstr "日期和时间"
 
-#: eme-events.php:9601
-#: eme-events.php:9986
+#: eme-events.php:9612
+#: eme-events.php:9997
 msgid "Selected dates:"
 msgstr "选定的日期："
 
-#: eme-events.php:9602
-#: eme-events.php:9840
+#: eme-events.php:9613
+#: eme-events.php:9851
 msgid "Created on"
 msgstr "创建于"
 
-#: eme-events.php:9603
-#: eme-events.php:9841
+#: eme-events.php:9614
+#: eme-events.php:9852
 msgid "Modified on"
 msgstr "修改于"
 
-#: eme-events.php:9604
-#: eme-events.php:9654
-#: eme-events.php:9675
-#: eme-events.php:9699
-#: eme-events.php:9733
-#: eme-events.php:9761
-#: eme-events.php:9789
-#: eme-events.php:9826
-#: eme-events.php:9886
-#: eme-events.php:9952
-#: eme-events.php:9969
+#: eme-events.php:9615
+#: eme-events.php:9665
+#: eme-events.php:9686
+#: eme-events.php:9710
+#: eme-events.php:9744
+#: eme-events.php:9772
+#: eme-events.php:9800
+#: eme-events.php:9837
+#: eme-events.php:9897
+#: eme-events.php:9963
+#: eme-events.php:9980
 msgid "Please wait"
 msgstr "请稍候"
 
-#: eme-events.php:9606
-#: eme-events.php:9794
+#: eme-events.php:9617
+#: eme-events.php:9805
 msgid "Select the image to be used as featured image"
 msgstr "选择要作为特色图片的图像"
 
-#: eme-events.php:9607
-#: eme-events.php:9795
+#: eme-events.php:9618
+#: eme-events.php:9806
 msgid "Set featured image"
 msgstr "设置特色图像"
 
-#: eme-events.php:9608
-#: eme-events.php:9680
-#: eme-events.php:9702
-#: eme-events.php:9736
+#: eme-events.php:9619
+#: eme-events.php:9691
+#: eme-events.php:9713
+#: eme-events.php:9747
 msgid "Press the delete button to remove"
 msgstr "按下删除按钮以移除"
 
-#: eme-events.php:9610
+#: eme-events.php:9621
 msgid "Since the event is repeated, you must specify an end date"
 msgstr "由于该活动是重复的，您必须指定一个结束日期"
 
-#: eme-events.php:9611
+#: eme-events.php:9622
 msgid "In a recurrence, start and end date can't be identical"
 msgstr "在一个循环中，开始和结束日期不能相同"
 
-#: eme-events.php:9613
+#: eme-events.php:9624
 #: eme-filters.php:408
 #: eme-options.php:1635
 msgid "Event author"
 msgstr "活动作者"
 
-#: eme-events.php:9629
+#: eme-events.php:9640
 msgid "Recorded on"
 msgstr "录制于"
 
-#: eme-events.php:9630
-#: eme-events.php:9651
+#: eme-events.php:9641
+#: eme-events.php:9662
 msgid "Person"
 msgstr "个人"
 
-#: eme-events.php:9631
+#: eme-events.php:9642
 #, fuzzy
 msgid "Event/Membership name"
 msgstr "已添加会籍"
 
-#: eme-events.php:9632
+#: eme-events.php:9643
 msgid "Attendance reports"
 msgstr "出席报告"
 
-#: eme-events.php:9635
+#: eme-events.php:9646
 msgid "Are you sure to delete this record?"
 msgstr "您确定要删除这个记录吗？"
 
-#: eme-events.php:9636
-#: eme-events.php:9804
-#: eme-events.php:9861
-#: eme-events.php:9977
+#: eme-events.php:9647
+#: eme-events.php:9815
+#: eme-events.php:9872
+#: eme-events.php:9988
 msgid "No matching person found"
 msgstr "没有找到匹配的人"
 
-#: eme-events.php:9645
+#: eme-events.php:9656
 #: events-manager.php:369
 msgid "Task signups"
 msgstr "任务报名"
 
-#: eme-events.php:9646
+#: eme-events.php:9657
 #: eme-tasks.php:434
 msgid "Task name"
 msgstr "任务名称"
 
-#: eme-events.php:9647
+#: eme-events.php:9658
 msgid "Task start date"
 msgstr "任务开始日期"
 
-#: eme-events.php:9648
+#: eme-events.php:9659
 msgid "Task end date"
 msgstr "任务结束日期"
 
-#: eme-events.php:9649
-#: eme-events.php:9948
+#: eme-events.php:9660
+#: eme-events.php:9959
 #: eme-formfields.php:1213
 #: eme-formfields.php:2061
 #: eme-formfields.php:3253
 #: eme-options.php:39
-#: eme-people.php:1054
-#: eme-people.php:1377
+#: eme-people.php:1058
+#: eme-people.php:1381
 #: eme-rsvp.php:1434
 msgid "Comment"
 msgstr "评论"
 
-#: eme-events.php:9656
-#: eme-events.php:9679
-#: eme-events.php:9701
-#: eme-events.php:9735
-#: eme-events.php:9763
-#: eme-events.php:9828
-#: eme-events.php:9888
-#: eme-events.php:9954
+#: eme-events.php:9667
+#: eme-events.php:9690
+#: eme-events.php:9712
+#: eme-events.php:9746
+#: eme-events.php:9774
+#: eme-events.php:9839
+#: eme-events.php:9899
+#: eme-events.php:9965
 msgid "Are you sure to delete the selected records?"
 msgstr "您确定要删除选定的记录吗？"
 
-#: eme-events.php:9657
+#: eme-events.php:9668
 msgid "Press the delete button to remove this record"
 msgstr "按下删除按钮以删除此记录"
 
-#: eme-events.php:9658
-#: eme-events.php:9681
-#: eme-events.php:9728
-#: eme-events.php:9756
+#: eme-events.php:9669
+#: eme-events.php:9692
+#: eme-events.php:9739
+#: eme-events.php:9767
 msgid "Records deleted"
 msgstr "已删除记录"
 
-#: eme-events.php:9670
+#: eme-events.php:9681
 #: eme-formfields.php:4981
 #: eme-options.php:1409
 #: events-manager.php:362
 msgid "Templates"
 msgstr "模版"
 
-#: eme-events.php:9693
+#: eme-events.php:9704
 #: eme-formfields.php:364
 #: eme-options.php:2329
 #: eme-options.php:2360
@@ -4177,104 +4177,104 @@ msgstr "模版"
 msgid "Extra charge"
 msgstr "额外收费"
 
-#: eme-events.php:9694
+#: eme-events.php:9705
 msgid "Searchable"
 msgstr "可搜索"
 
-#: eme-events.php:9695
+#: eme-events.php:9706
 msgid "Purpose"
 msgstr "目的"
 
-#: eme-events.php:9696
+#: eme-events.php:9707
 msgid "Used in replies"
 msgstr "在答复中使用"
 
-#: eme-events.php:9697
+#: eme-events.php:9708
 msgid "Required"
 msgstr "必需"
 
-#: eme-events.php:9710
+#: eme-events.php:9721
 #: eme-options.php:1417
 #: events-manager.php:364
 msgid "Discounts"
 msgstr "折扣"
 
-#: eme-events.php:9715
+#: eme-events.php:9726
 msgid "Coupon"
 msgstr "优惠券"
 
-#: eme-events.php:9716
+#: eme-events.php:9727
 msgid "Case sensitive"
 msgstr "区分大小写"
 
-#: eme-events.php:9717
+#: eme-events.php:9728
 msgid "Track discount usage per booked seat"
 msgstr "跟踪每个预订座位的折扣使用情况"
 
-#: eme-events.php:9720
+#: eme-events.php:9731
 msgid "Max Usage"
 msgstr "最大使用量"
 
-#: eme-events.php:9721
+#: eme-events.php:9732
 msgid "Usage"
 msgstr "使用情况"
 
-#: eme-events.php:9724
+#: eme-events.php:9735
 msgid "Max Discounts"
 msgstr "最大折扣"
 
-#: eme-events.php:9726
-#: eme-events.php:9754
-#: eme-events.php:9836
+#: eme-events.php:9737
+#: eme-events.php:9765
+#: eme-events.php:9847
 msgid "Record added"
 msgstr "已添加记录"
 
-#: eme-events.php:9727
-#: eme-events.php:9755
-#: eme-events.php:9837
+#: eme-events.php:9738
+#: eme-events.php:9766
+#: eme-events.php:9848
 msgid "Record updated"
 msgstr "已更新记录"
 
-#: eme-events.php:9744
+#: eme-events.php:9755
 msgid "Countries"
 msgstr "国家"
 
-#: eme-events.php:9747
+#: eme-events.php:9758
 msgid "Country ID"
 msgstr "国家 ID"
 
-#: eme-events.php:9748
+#: eme-events.php:9759
 msgid "States"
 msgstr "州"
 
-#: eme-events.php:9753
+#: eme-events.php:9764
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "没有与该州相关的国家，它将不会显示在下拉列表中。请编辑该州并纠正国家信息。"
 
-#: eme-events.php:9771
+#: eme-events.php:9782
 msgid "No matching location found"
 msgstr "没有找到匹配的地点"
 
-#: eme-events.php:9772
+#: eme-events.php:9783
 #: eme-options.php:1143
 #: eme-options.php:1382
 #: events-manager.php:356
 msgid "Locations"
 msgstr "地點"
 
-#: eme-events.php:9775
+#: eme-events.php:9786
 #: eme-locations.php:378
 msgid "Insert New Location"
 msgstr "插入新的地点"
 
-#: eme-events.php:9776
+#: eme-events.php:9787
 #: eme-locations.php:380
 msgid "Edit Location '%s'"
 msgstr "编辑地点 “%s”。"
 
-#: eme-events.php:9781
-#: eme-events.php:9816
-#: eme-events.php:9882
+#: eme-events.php:9792
+#: eme-events.php:9827
+#: eme-events.php:9893
 #: eme-formfields.php:1274
 #: eme-formfields.php:1909
 #: eme-formfields.php:2999
@@ -4283,15 +4283,15 @@ msgstr "编辑地点 “%s”。"
 #: eme-gdpr.php:454
 #: eme-gdpr.php:593
 #: eme-locations.php:567
-#: eme-people.php:1018
-#: eme-people.php:2346
+#: eme-people.php:1022
+#: eme-people.php:2350
 #: eme-rsvp.php:1411
 msgid "City"
 msgstr "城市"
 
-#: eme-events.php:9782
-#: eme-events.php:9817
-#: eme-events.php:9883
+#: eme-events.php:9793
+#: eme-events.php:9828
+#: eme-events.php:9894
 #: eme-formfields.php:1284
 #: eme-formfields.php:1925
 #: eme-formfields.php:3011
@@ -4300,51 +4300,51 @@ msgstr "城市"
 #: eme-gdpr.php:455
 #: eme-gdpr.php:597
 #: eme-locations.php:575
-#: eme-people.php:1019
-#: eme-people.php:2351
+#: eme-people.php:1023
+#: eme-people.php:2355
 #: eme-rsvp.php:1414
 msgid "Postal code"
 msgstr "邮政编码"
 
-#: eme-events.php:9785
+#: eme-events.php:9796
 #: eme-locations.php:592
 msgid "Latitude"
 msgstr "纬度"
 
-#: eme-events.php:9786
+#: eme-events.php:9797
 #: eme-locations.php:596
 msgid "Longitude"
 msgstr "经度"
 
-#: eme-events.php:9788
+#: eme-events.php:9799
 msgid "Online only"
 msgstr "仅限在线"
 
-#: eme-events.php:9806
-#: eme-events.php:9870
+#: eme-events.php:9817
+#: eme-events.php:9881
 #: eme-gdpr.php:569
 msgid "Person ID"
 msgstr "个人 ID"
 
-#: eme-events.php:9807
+#: eme-events.php:9818
 msgid "Group ID"
 msgstr "群组 ID"
 
-#: eme-events.php:9808
-#: eme-people.php:2567
+#: eme-events.php:9819
+#: eme-people.php:2571
 #: events-manager.php:371
 msgid "People"
 msgstr "人员"
 
-#: eme-events.php:9809
-#: eme-events.php:9831
-#: eme-people.php:2399
+#: eme-events.php:9820
+#: eme-events.php:9842
+#: eme-people.php:2403
 #: events-manager.php:372
 msgid "Groups"
 msgstr "群组"
 
-#: eme-events.php:9812
-#: eme-events.php:9874
+#: eme-events.php:9823
+#: eme-events.php:9885
 #: eme-formfields.php:1166
 #: eme-formfields.php:1501
 #: eme-formfields.php:1847
@@ -4361,18 +4361,18 @@ msgstr "群组"
 #: eme-options.php:34
 #: eme-options.php:44
 #: eme-options.php:87
-#: eme-people.php:1014
-#: eme-people.php:1306
-#: eme-people.php:1615
-#: eme-people.php:1664
-#: eme-people.php:1707
-#: eme-people.php:2270
+#: eme-people.php:1018
+#: eme-people.php:1310
+#: eme-people.php:1619
+#: eme-people.php:1668
+#: eme-people.php:1711
+#: eme-people.php:2274
 #: eme-rsvp.php:71
 msgid "Last name"
 msgstr "姓氏"
 
-#: eme-events.php:9813
-#: eme-events.php:9875
+#: eme-events.php:9824
+#: eme-events.php:9886
 #: eme-formfields.php:1182
 #: eme-formfields.php:1513
 #: eme-formfields.php:1863
@@ -4390,20 +4390,20 @@ msgstr "姓氏"
 #: eme-options.php:35
 #: eme-options.php:45
 #: eme-options.php:88
-#: eme-people.php:1015
-#: eme-people.php:1312
-#: eme-people.php:1616
-#: eme-people.php:1665
-#: eme-people.php:1708
-#: eme-people.php:2282
+#: eme-people.php:1019
+#: eme-people.php:1316
+#: eme-people.php:1620
+#: eme-people.php:1669
+#: eme-people.php:1712
+#: eme-people.php:2286
 #: eme-rsvp.php:71
 #: eme-rsvp.php:1397
 msgid "First name"
 msgstr "名字"
 
-#: eme-events.php:9820
-#: eme-events.php:9876
-#: eme-events.php:9979
+#: eme-events.php:9831
+#: eme-events.php:9887
+#: eme-events.php:9990
 #: eme-formfields.php:1191
 #: eme-formfields.php:1522
 #: eme-formfields.php:1958
@@ -4424,17 +4424,17 @@ msgstr "名字"
 #: eme-options.php:46
 #: eme-options.php:89
 #: eme-options.php:1149
-#: eme-people.php:1022
-#: eme-people.php:1318
-#: eme-people.php:1617
-#: eme-people.php:1666
-#: eme-people.php:1709
-#: eme-people.php:2292
+#: eme-people.php:1026
+#: eme-people.php:1322
+#: eme-people.php:1621
+#: eme-people.php:1670
+#: eme-people.php:1713
+#: eme-people.php:2296
 #: eme-rsvp.php:71
 msgid "Email"
 msgstr "电子邮件"
 
-#: eme-events.php:9821
+#: eme-events.php:9832
 #: eme-formfields.php:1204
 #: eme-formfields.php:2043
 #: eme-formfields.php:2052
@@ -4446,449 +4446,449 @@ msgstr "电子邮件"
 #: eme-gdpr.php:458
 #: eme-gdpr.php:609
 #: eme-options.php:37
-#: eme-people.php:1023
-#: eme-people.php:1324
-#: eme-people.php:4331
+#: eme-people.php:1027
+#: eme-people.php:1328
+#: eme-people.php:4343
 #: eme-rsvp.php:1390
 msgid "Phone number"
 msgstr "电话号码"
 
-#: eme-events.php:9822
-#: eme-events.php:9880
+#: eme-events.php:9833
+#: eme-events.php:9891
 msgid "Birth date"
 msgstr "出生日期"
 
-#: eme-events.php:9823
-#: eme-events.php:9881
+#: eme-events.php:9834
+#: eme-events.php:9892
 msgid "Birth place"
 msgstr "出生地"
 
-#: eme-events.php:9825
-#: eme-events.php:9871
-#: eme-events.php:9929
-#: eme-people.php:1618
-#: eme-people.php:2421
+#: eme-events.php:9836
+#: eme-events.php:9882
+#: eme-events.php:9940
+#: eme-people.php:1622
+#: eme-people.php:2425
 msgid "Linked WP user"
 msgstr "链接的 WP 用户"
 
-#: eme-events.php:9829
+#: eme-events.php:9840
 msgid "Show all bookings"
 msgstr "显示所有预订"
 
-#: eme-events.php:9830
+#: eme-events.php:9841
 msgid "Member of"
 msgstr "会员属于"
 
-#: eme-events.php:9832
+#: eme-events.php:9843
 msgid "Bookings made"
 msgstr "已预订"
 
-#: eme-events.php:9835
-#: eme-events.php:9891
+#: eme-events.php:9846
+#: eme-events.php:9902
 msgid "Answers"
 msgstr "答案"
 
-#: eme-events.php:9839
+#: eme-events.php:9850
 msgid "GDPR modification date"
 msgstr "GDPR 的修改日期"
 
-#: eme-events.php:9842
-#: eme-events.php:9877
+#: eme-events.php:9853
+#: eme-events.php:9888
 msgid "Related to"
 msgstr "与之相关"
 
-#: eme-events.php:9843
+#: eme-events.php:9854
 #: eme-gdpr.php:459
 #: eme-gdpr.php:613
 #: eme-options.php:1803
-#: eme-people.php:1024
-#: eme-people.php:2387
+#: eme-people.php:1028
+#: eme-people.php:2391
 msgid "MassMail"
 msgstr "群邮"
 
-#: eme-events.php:9844
+#: eme-events.php:9855
 #: eme-options.php:2202
 msgid "Birthday Email"
 msgstr "生日电子邮件"
 
-#: eme-events.php:9845
+#: eme-events.php:9856
 msgid "Public group"
 msgstr "公共群组"
 
-#: eme-events.php:9846
+#: eme-events.php:9857
 msgid "Nbr People"
 msgstr "Nbr 人员"
 
-#: eme-events.php:9862
+#: eme-events.php:9873
 msgid "No matching member found"
 msgstr "没有找到匹配的成员"
 
-#: eme-events.php:9864
+#: eme-events.php:9875
 #: eme-options.php:1144
 #: events-manager.php:373
 msgid "Members"
 msgstr "会员"
 
-#: eme-events.php:9866
+#: eme-events.php:9877
 #: eme-gdpr.php:489
 #: eme-gdpr.php:673
 #: eme-members.php:1546
 msgid "Membership"
 msgstr "会籍"
 
-#: eme-events.php:9869
+#: eme-events.php:9880
 #: eme-gdpr.php:669
 msgid "Member ID"
 msgstr "会员 ID"
 
-#: eme-events.php:9872
+#: eme-events.php:9883
 msgid "Contact"
 msgstr "联系"
 
-#: eme-events.php:9893
+#: eme-events.php:9904
 msgid "Nbr Active Members"
 msgstr "Nbr 有效会员"
 
-#: eme-events.php:9894
+#: eme-events.php:9905
 #: eme-gdpr.php:490
 #: eme-gdpr.php:677
 msgid "Start"
 msgstr "开始"
 
-#: eme-events.php:9895
+#: eme-events.php:9906
 #: eme-gdpr.php:491
 #: eme-gdpr.php:681
 #: eme-tasks.php:741
 msgid "End"
 msgstr "结束"
 
-#: eme-events.php:9896
+#: eme-events.php:9907
 #: eme-members.php:1608
 #, fuzzy
 msgid "Usage count"
 msgstr "更新国家"
 
-#: eme-events.php:9897
+#: eme-events.php:9908
 msgid "Registered on"
 msgstr "注册日期"
 
-#: eme-events.php:9898
+#: eme-events.php:9909
 msgid "Last seen on"
 msgstr "最后一次出现在"
 
-#: eme-events.php:9899
+#: eme-events.php:9910
 msgid "Paid on"
 msgstr "付款日期"
 
-#: eme-events.php:9900
-#: eme-events.php:9935
-#: eme-people.php:1052
+#: eme-events.php:9911
+#: eme-events.php:9946
+#: eme-people.php:1056
 msgid "Unique nbr"
 msgstr "独特的 nbr"
 
-#: eme-events.php:9901
-#: eme-events.php:9936
+#: eme-events.php:9912
+#: eme-events.php:9947
 msgid "Payment ID"
 msgstr "付款 ID"
 
-#: eme-events.php:9902
-#: eme-events.php:9937
-#: eme-people.php:1046
-#: eme-people.php:1353
+#: eme-events.php:9913
+#: eme-events.php:9948
+#: eme-people.php:1050
+#: eme-people.php:1357
 msgid "Paid"
 msgstr "已付款"
 
-#: eme-events.php:9903
-#: eme-events.php:9940
+#: eme-events.php:9914
+#: eme-events.php:9951
 msgid "Payment GW"
 msgstr "付款 GW"
 
-#: eme-events.php:9904
-#: eme-events.php:9941
+#: eme-events.php:9915
+#: eme-events.php:9952
 msgid "Payment GW ID"
 msgstr "付款 GW ID"
 
-#: eme-events.php:9905
-#: eme-events.php:9949
+#: eme-events.php:9916
+#: eme-events.php:9960
 msgid "Last reminder"
 msgstr "最后提醒"
 
-#: eme-events.php:9906
+#: eme-events.php:9917
 msgid "Reminders sent"
 msgstr "发送提醒"
 
-#: eme-events.php:9911
-#: eme-events.php:9950
-#: eme-people.php:1050
-#: eme-people.php:1365
+#: eme-events.php:9922
+#: eme-events.php:9961
+#: eme-people.php:1054
+#: eme-people.php:1369
 msgid "Discount"
 msgstr "折扣"
 
-#: eme-events.php:9912
-#: eme-events.php:9951
+#: eme-events.php:9923
+#: eme-events.php:9962
 msgid "Used discount codes"
 msgstr "已使用的折扣代码"
 
-#: eme-events.php:9913
-#: eme-events.php:9934
-#: eme-people.php:1051
-#: eme-people.php:1371
+#: eme-events.php:9924
+#: eme-events.php:9945
+#: eme-people.php:1055
+#: eme-people.php:1375
 msgid "Total price"
 msgstr "总价"
 
-#: eme-events.php:9914
+#: eme-events.php:9925
 msgid "Membership price"
 msgstr "会员价格"
 
-#: eme-events.php:9922
+#: eme-events.php:9933
 #: eme-options.php:1448
 msgid "Bookings"
 msgstr "预订"
 
-#: eme-events.php:9924
+#: eme-events.php:9935
 #, fuzzy
 msgid "Event ID"
 msgstr "活动"
 
-#: eme-events.php:9926
+#: eme-events.php:9937
 msgid "Event info"
 msgstr "活动信息"
 
-#: eme-events.php:9928
+#: eme-events.php:9939
 msgid "Booker"
 msgstr "预订者"
 
-#: eme-events.php:9930
-#: eme-people.php:1049
-#: eme-people.php:1359
+#: eme-events.php:9941
+#: eme-people.php:1053
+#: eme-people.php:1363
 msgid "Booking date"
 msgstr "预订日期"
 
-#: eme-events.php:9938
-#: eme-people.php:1048
+#: eme-events.php:9949
+#: eme-people.php:1052
 msgid "Remaining"
 msgstr "剩余的"
 
-#: eme-events.php:9939
-#: eme-people.php:1047
+#: eme-events.php:9950
+#: eme-people.php:1051
 msgid "Received"
 msgstr "已收到"
 
-#: eme-events.php:9942
+#: eme-events.php:9953
 msgid "Payment date"
 msgstr "付款日期"
 
-#: eme-events.php:9943
+#: eme-events.php:9954
 msgid "Mark paid and approve"
 msgstr "标记已支付并已批准"
 
-#: eme-events.php:9944
+#: eme-events.php:9955
 #: eme-rsvp.php:5102
 #: eme-rsvp.php:5117
 msgid "Mark paid"
 msgstr "标记为已支付"
 
-#: eme-events.php:9958
-#: eme-people.php:1053
+#: eme-events.php:9969
+#: eme-people.php:1057
 msgid "Attendance count"
 msgstr "出席统计"
 
-#: eme-events.php:9959
+#: eme-events.php:9970
 msgid "Please select only one record in order to do partial payments"
 msgstr "请只选择一条记录，以便进行部分支付"
 
-#: eme-events.php:9970
+#: eme-events.php:9981
 #: eme-mailer.php:2452
 #: eme-mailer.php:2631
 msgid "Send email"
 msgstr "发送电子邮件"
 
-#: eme-events.php:9971
+#: eme-events.php:9982
 msgid "Queue email"
 msgstr "队列电子邮件"
 
-#: eme-events.php:9972
+#: eme-events.php:9983
 #: eme-mailer.php:1474
 msgid "Sent on"
 msgstr "发送日期"
 
-#: eme-events.php:9973
+#: eme-events.php:9984
 #: eme-mailer.php:1475
 msgid "First read on"
 msgstr "初次阅读是在"
 
-#: eme-events.php:9974
+#: eme-events.php:9985
 #: eme-mailer.php:1476
 msgid "Last read on"
 msgstr "最后一次阅读是在"
 
-#: eme-events.php:9975
+#: eme-events.php:9986
 #: eme-mailer.php:1477
 #: eme-mailer.php:2755
 #: eme-mailer.php:2863
 msgid "Read count"
 msgstr "阅读次数"
 
-#: eme-events.php:9976
+#: eme-events.php:9987
 #: eme-mailer.php:1478
 msgid "Error message"
 msgstr "错误信息"
 
-#: eme-events.php:9981
+#: eme-events.php:9992
 #: eme-mailer.php:1480
 #: eme-mailer.php:2759
 #: eme-mailer.php:2866
 msgid "Action"
 msgstr "行动"
 
-#: eme-events.php:9982
+#: eme-events.php:9993
 #: eme-mailer.php:2234
 msgid "Mailing report"
 msgstr "邮寄报告"
 
-#: eme-events.php:9983
+#: eme-events.php:9994
 msgid "Select one or more events"
 msgstr "选择一个或多个活动"
 
-#: eme-events.php:10231
+#: eme-events.php:10242
 #: eme-rsvp.php:5663
 #: eme-tasks.php:1899
 msgid "Edit event"
 msgstr "编辑活动"
 
-#: eme-events.php:6525
-#: eme-events.php:10248
+#: eme-events.php:6536
+#: eme-events.php:10259
 #: eme-rsvp.php:5667
 msgid "RSVP Info: "
 msgstr "RSVP 的信息："
 
-#: eme-events.php:6553
-#: eme-events.php:10276
+#: eme-events.php:6564
+#: eme-events.php:10287
 #: eme-rsvp.php:5696
 msgid "Free: "
 msgstr "免费："
 
-#: eme-events.php:6554
-#: eme-events.php:6557
-#: eme-events.php:6603
-#: eme-events.php:10278
-#: eme-events.php:10280
-#: eme-events.php:10285
-#: eme-events.php:10287
-#: eme-events.php:10344
-#: eme-events.php:10346
+#: eme-events.php:6565
+#: eme-events.php:6568
+#: eme-events.php:6614
+#: eme-events.php:10289
+#: eme-events.php:10291
+#: eme-events.php:10296
+#: eme-events.php:10298
+#: eme-events.php:10355
+#: eme-events.php:10357
 #: eme-rsvp.php:5670
 #: eme-rsvp.php:5759
 msgid "Approved:"
 msgstr "已批准："
 
-#: eme-events.php:6561
-#: eme-events.php:6601
-#: eme-events.php:10293
-#: eme-events.php:10295
-#: eme-events.php:10338
-#: eme-events.php:10340
+#: eme-events.php:6572
+#: eme-events.php:6612
+#: eme-events.php:10304
+#: eme-events.php:10306
+#: eme-events.php:10349
+#: eme-events.php:10351
 #: eme-rsvp.php:5757
 msgid "Pending:"
 msgstr "待订："
 
-#: eme-events.php:6566
-#: eme-events.php:10302
-#: eme-events.php:10304
+#: eme-events.php:6577
+#: eme-events.php:10313
+#: eme-events.php:10315
 #: eme-rsvp.php:5709
 msgid "Absent:"
 msgstr "缺席："
 
-#: eme-events.php:6569
-#: eme-events.php:10308
-#: eme-members.php:6378
+#: eme-events.php:6580
+#: eme-events.php:10319
+#: eme-members.php:6386
 #: eme-recurrence.php:616
 #: eme-rsvp.php:5712
 msgid "Max: "
 msgstr "最大："
 
-#: eme-events.php:6572
-#: eme-events.php:10311
+#: eme-events.php:6583
+#: eme-events.php:10322
 #: eme-rsvp.php:5715
 msgid "(%d waiting list seats included)"
 msgstr "(包括 %d 个等待名单的席位)"
 
-#: eme-events.php:6577
-#: eme-events.php:10316
+#: eme-events.php:6588
+#: eme-events.php:10327
 #: eme-rsvp.php:5721
 msgid "Printable view"
 msgstr "可打印的视图"
 
-#: eme-events.php:6578
-#: eme-events.php:10317
+#: eme-events.php:6589
+#: eme-events.php:10328
 #: eme-rsvp.php:5722
 msgid "CSV export"
 msgstr "CSV 导出"
 
-#: eme-events.php:6599
-#: eme-events.php:10335
+#: eme-events.php:6610
+#: eme-events.php:10346
 #: eme-rsvp.php:5755
 msgid "Task Info: %d tasks"
 msgstr ""
 
-#: eme-events.php:10354
+#: eme-events.php:10365
 #: eme-locations.php:533
 #: eme-locations.php:2965
 #: eme-recurrence.php:646
 msgid "Edit location"
 msgstr "编辑地点"
 
-#: eme-events.php:10356
+#: eme-events.php:10367
 #: eme-locations.php:2967
 #: eme-recurrence.php:648
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "地点地图坐标为空! 请编辑位置以纠正这一点，否则它将无法在您的网站上正确显示。"
 
-#: eme-events.php:10375
+#: eme-events.php:10386
 msgid "Preview event"
 msgstr "预览活动"
 
-#: eme-events.php:10377
+#: eme-events.php:10388
 msgid "View event"
 msgstr "查看活动"
 
-#: eme-events.php:10383
+#: eme-events.php:10394
 msgid "Duplicate this event"
 msgstr "复制此活动"
 
-#: eme-events.php:10395
+#: eme-events.php:10406
 #: eme-rsvp.php:5732
 msgid "Add booking for this event"
 msgstr "为该活动添加预订"
 
-#: eme-events.php:10397
+#: eme-events.php:10408
 #: eme-rsvp.php:5734
 msgid "Password protected"
 msgstr "被密码保护"
 
-#: eme-events.php:10405
+#: eme-events.php:10416
 #: eme-recurrence.php:618
 msgid "Free"
 msgstr "免费"
 
-#: eme-events.php:10527
+#: eme-events.php:10538
 #: eme-recurrence.php:713
 msgid "No action defined!"
 msgstr "没有定义行动!"
 
-#: eme-events.php:10545
+#: eme-events.php:10556
 msgid "Events moved to trash"
 msgstr "活动移至回收站"
 
-#: eme-events.php:10553
+#: eme-events.php:10564
 msgid "Restored selected events to draft status"
 msgstr "将选定的活动恢复到草稿状态"
 
-#: eme-events.php:10561
+#: eme-events.php:10572
 msgid "Events status updated"
 msgstr "活动状态已更新"
 
-#: eme-events.php:10574
+#: eme-events.php:10585
 msgid "Events added to category"
 msgstr "活动已添加到分类"
 
@@ -5503,7 +5503,7 @@ msgstr "新会员的电子邮件"
 #: eme-formfields.php:3604
 #: eme-formfields.php:3918
 #: eme-formfields.php:4586
-#: eme-people.php:2364
+#: eme-people.php:2368
 #: eme-rsvp.php:1417
 msgid "Date of birth"
 msgstr "出生日期"
@@ -5514,7 +5514,7 @@ msgstr "出生日期"
 #: eme-formfields.php:3588
 #: eme-formfields.php:3929
 #: eme-formfields.php:4597
-#: eme-people.php:2378
+#: eme-people.php:2382
 #: eme-rsvp.php:1420
 msgid "Place of birth"
 msgstr "出生地点"
@@ -5570,23 +5570,23 @@ msgstr "如果需要，请输入一个固定的折扣值"
 
 #: eme-formfields.php:3382
 #: eme-formfields.php:4112
-#: eme-people.php:1147
-#: eme-people.php:1447
+#: eme-people.php:1151
+#: eme-people.php:1451
 msgid "Discountgroup %s"
 msgstr "折扣群组 %s"
 
 #: eme-formfields.php:3384
 #: eme-formfields.php:4114
-#: eme-people.php:1149
-#: eme-people.php:1449
+#: eme-people.php:1153
+#: eme-people.php:1453
 msgid "Applied discount group %d no longer exists"
 msgstr "应用的折扣群组 %d 已不存在"
 
 #: eme-formfields.php:3394
 #: eme-formfields.php:4124
-#: eme-members.php:5055
-#: eme-people.php:1159
-#: eme-people.php:1459
+#: eme-members.php:5063
+#: eme-people.php:1163
+#: eme-people.php:1463
 #: eme-rsvp.php:3541
 msgid "Applied discount %d no longer exists"
 msgstr "已应用的折扣 %d 不复存在"
@@ -5745,7 +5745,7 @@ msgstr "使用占位符 #_DYNAMICDATA 来显示您表格中的动态表格。"
 
 #: eme-formfields.php:5211
 #: eme-formfields.php:5221
-#: eme-functions.php:3302
+#: eme-functions.php:3301
 msgid "Records deleted!"
 msgstr "记录已被删除!"
 
@@ -5774,286 +5774,286 @@ msgstr "您输入了一个错误的代码"
 msgid "Please enter the displayed code."
 msgstr "请输入显示的代码。"
 
-#: eme-functions.php:1416
+#: eme-functions.php:1415
 msgid "Public"
 msgstr "公开"
 
-#: eme-functions.php:1417
+#: eme-functions.php:1416
 msgid "Private"
 msgstr "私人"
 
-#: eme-functions.php:1418
+#: eme-functions.php:1417
 msgid "Unlisted"
 msgstr "未被列出"
 
-#: eme-functions.php:1419
+#: eme-functions.php:1418
 msgid "Draft"
 msgstr "草稿"
 
-#: eme-functions.php:1425
-#: eme-people.php:1080
-#: eme-people.php:1404
-#: eme-people.php:1543
+#: eme-functions.php:1424
+#: eme-people.php:1084
+#: eme-people.php:1408
+#: eme-people.php:1547
 #: eme-tasks.php:455
 #: eme-tasks.php:1908
 msgid "Pending"
 msgstr "待订"
 
-#: eme-functions.php:1426
+#: eme-functions.php:1425
 msgid "Active"
 msgstr "有效"
 
-#: eme-functions.php:1427
+#: eme-functions.php:1426
 #: eme-members.php:1889
 msgid "Grace period"
 msgstr "宽限期"
 
-#: eme-functions.php:1428
+#: eme-functions.php:1427
 #: eme-members.php:503
 msgid "Expired"
 msgstr "已过期"
 
-#: eme-functions.php:1656
+#: eme-functions.php:1655
 msgid "Argentine Peso"
 msgstr "阿根廷比索"
 
-#: eme-functions.php:1657
+#: eme-functions.php:1656
 msgid "Australian Dollar"
 msgstr "澳元"
 
-#: eme-functions.php:1658
+#: eme-functions.php:1657
 msgid "Burundian Franc"
 msgstr "布隆迪法郎"
 
-#: eme-functions.php:1659
+#: eme-functions.php:1658
 msgid "Brazilian Real"
 msgstr "巴西雷亚尔"
 
-#: eme-functions.php:1660
+#: eme-functions.php:1659
 msgid "Canadian Dollar"
 msgstr "加元"
 
-#: eme-functions.php:1661
+#: eme-functions.php:1660
 msgid "Chilean Peso"
 msgstr "智利比索"
 
-#: eme-functions.php:1662
+#: eme-functions.php:1661
 msgid "Chinese Yuan Renminbi"
 msgstr "中国元 人民币"
 
-#: eme-functions.php:1663
+#: eme-functions.php:1662
 msgid "Czech Koruna"
 msgstr "捷克克朗"
 
-#: eme-functions.php:1664
+#: eme-functions.php:1663
 msgid "Danish Krone"
 msgstr "丹麦克朗"
 
-#: eme-functions.php:1665
+#: eme-functions.php:1664
 msgid "Djiboutian Franc"
 msgstr "吉布提法郎"
 
-#: eme-functions.php:1666
+#: eme-functions.php:1665
 msgid "Euro"
 msgstr "欧元"
 
-#: eme-functions.php:1667
+#: eme-functions.php:1666
 msgid "Pound Sterling"
 msgstr "英镑"
 
-#: eme-functions.php:1668
+#: eme-functions.php:1667
 msgid "Guinean Franc"
 msgstr "几内亚法郎"
 
-#: eme-functions.php:1669
+#: eme-functions.php:1668
 msgid "Hong Kong Dollar"
 msgstr "港币(&#36;)"
 
-#: eme-functions.php:1670
+#: eme-functions.php:1669
 msgid "Hungarian Forint"
 msgstr "匈牙利福林"
 
-#: eme-functions.php:1671
+#: eme-functions.php:1670
 msgid "Indian Rupee"
 msgstr "印度卢比"
 
-#: eme-functions.php:1672
+#: eme-functions.php:1671
 msgid "Israeli New Sheqel"
 msgstr "以色列新谢克尔"
 
-#: eme-functions.php:1673
+#: eme-functions.php:1672
 msgid "Japanese Yen"
 msgstr "日元"
 
-#: eme-functions.php:1674
+#: eme-functions.php:1673
 msgid "Comoro Franc"
 msgstr "科摩罗法郎"
 
-#: eme-functions.php:1675
+#: eme-functions.php:1674
 msgid "South Korean Won"
 msgstr "韩元"
 
-#: eme-functions.php:1676
+#: eme-functions.php:1675
 msgid "Malagasy Ariary"
 msgstr "马达加斯加阿里亚里"
 
-#: eme-functions.php:1677
+#: eme-functions.php:1676
 msgid "Mexican Peso"
 msgstr "墨西哥比索"
 
-#: eme-functions.php:1678
+#: eme-functions.php:1677
 msgid "Norwegian Krone"
 msgstr "挪威克朗"
 
-#: eme-functions.php:1679
+#: eme-functions.php:1678
 msgid "New Zealand Dollar"
 msgstr "新西兰元"
 
-#: eme-functions.php:1680
+#: eme-functions.php:1679
 msgid "Philippine Peso"
 msgstr "菲律宾比索"
 
-#: eme-functions.php:1681
+#: eme-functions.php:1680
 msgid "Polish Zloty"
 msgstr "波兰兹罗提"
 
-#: eme-functions.php:1682
+#: eme-functions.php:1681
 msgid "Paraguayan Guarani"
 msgstr ""
 
-#: eme-functions.php:1683
+#: eme-functions.php:1682
 msgid "Russian Ruble"
 msgstr "俄罗斯卢布"
 
-#: eme-functions.php:1684
+#: eme-functions.php:1683
 msgid "Rwandan Franc"
 msgstr "卢旺达法郎"
 
-#: eme-functions.php:1685
+#: eme-functions.php:1684
 msgid "Singapore Dollar"
 msgstr "新加坡元"
 
-#: eme-functions.php:1686
+#: eme-functions.php:1685
 msgid "Swedish Krona"
 msgstr "瑞典克朗"
 
-#: eme-functions.php:1687
+#: eme-functions.php:1686
 msgid "Swiss Franc"
 msgstr "瑞士法郎"
 
-#: eme-functions.php:1688
+#: eme-functions.php:1687
 msgid "Thai Baht"
 msgstr "泰铢"
 
-#: eme-functions.php:1689
+#: eme-functions.php:1688
 msgid "U.S. Dollar"
 msgstr "美元"
 
-#: eme-functions.php:1690
+#: eme-functions.php:1689
 msgid "Vietnamese dong"
 msgstr ""
 
-#: eme-functions.php:1691
+#: eme-functions.php:1690
 msgid "Vanuatu vatu"
 msgstr "瓦努阿图瓦图"
 
-#: eme-functions.php:1692
+#: eme-functions.php:1691
 msgid "CFA Franc BEAC"
 msgstr "非洲金融共同体法郎"
 
-#: eme-functions.php:1693
+#: eme-functions.php:1692
 msgid "CFA Franc BCEAO"
 msgstr "非洲金融共同体法郎 BCEAO"
 
-#: eme-functions.php:1694
+#: eme-functions.php:1693
 msgid "CFP Franc (Franc Pacifique)"
 msgstr "非洲金融共同体法郎 (Franc Pacifique)"
 
-#: eme-functions.php:1695
+#: eme-functions.php:1694
 msgid "South African Rand"
 msgstr "南非兰特"
 
-#: eme-functions.php:2216
+#: eme-functions.php:2215
 #: eme-mailer.php:2756
 #: eme-mailer.php:2864
 msgid "Extra info"
 msgstr "额外信息"
 
-#: eme-functions.php:2218
+#: eme-functions.php:2217
 msgid "Group"
 msgstr "群组"
 
-#: eme-functions.php:2875
+#: eme-functions.php:2874
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: eme-functions.php:2878
+#: eme-functions.php:2877
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
-#: eme-functions.php:2881
+#: eme-functions.php:2880
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: eme-functions.php:2884
+#: eme-functions.php:2883
 msgid "No file was uploaded"
 msgstr ""
 
-#: eme-functions.php:2887
+#: eme-functions.php:2886
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: eme-functions.php:2890
+#: eme-functions.php:2889
 msgid "Failed to write file to disk"
 msgstr ""
 
-#: eme-functions.php:2893
+#: eme-functions.php:2892
 msgid "File upload stopped by extension"
 msgstr ""
 
-#: eme-functions.php:2897
+#: eme-functions.php:2896
 msgid "Unknown upload error"
 msgstr ""
 
-#: eme-functions.php:2938
+#: eme-functions.php:2937
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "创建上传目录失败，请检查您的权限。"
 
-#: eme-functions.php:2973
-#: eme-functions.php:3034
+#: eme-functions.php:2972
+#: eme-functions.php:3033
 msgid "File upload is required."
 msgstr "需要上传文件。"
 
-#: eme-functions.php:2981
-#: eme-functions.php:3042
+#: eme-functions.php:2980
+#: eme-functions.php:3041
 msgid "Illegal filename."
 msgstr "文件名不合法。"
 
-#: eme-functions.php:2987
-#: eme-functions.php:3048
+#: eme-functions.php:2986
+#: eme-functions.php:3047
 msgid "File already exists."
 msgstr "文件已经存在。"
 
-#: eme-functions.php:2993
-#: eme-functions.php:3054
+#: eme-functions.php:2992
+#: eme-functions.php:3053
 msgid "File too large."
 msgstr "文件太大。"
 
-#: eme-functions.php:3009
-#: eme-functions.php:3070
+#: eme-functions.php:3008
+#: eme-functions.php:3069
 msgid "Incorrect file type."
 msgstr "文件类型不正确。"
 
-#: eme-functions.php:3014
-#: eme-functions.php:3075
+#: eme-functions.php:3013
+#: eme-functions.php:3074
 msgid "Upload failed."
 msgstr "上传失败。"
 
-#: eme-functions.php:3082
+#: eme-functions.php:3081
 msgid "Errors encountered while uploading files"
 msgstr "上传文件时遇到的错误"
 
-#: eme-functions.php:3318
+#: eme-functions.php:3317
 msgid "No such record"
 msgstr "没有这样的记录"
 
@@ -6061,10 +6061,10 @@ msgstr "没有这样的记录"
 #: eme-gdpr.php:148
 #: eme-gdpr.php:231
 #: eme-gdpr.php:353
-#: eme-members.php:4817
+#: eme-members.php:4825
 #: eme-payments.php:3828
-#: eme-people.php:4541
-#: eme-people.php:4626
+#: eme-people.php:4553
+#: eme-people.php:4638
 #: eme-rsvp.php:797
 #: eme-rsvp.php:1097
 #: eme-tasks.php:1629
@@ -6077,11 +6077,11 @@ msgstr "检测到机器人。如果您认为您收到这个消息是错误的，
 #: eme-gdpr.php:364
 #: eme-gdpr.php:375
 #: eme-members.php:989
-#: eme-members.php:4458
-#: eme-members.php:4830
+#: eme-members.php:4466
+#: eme-members.php:4838
 #: eme-payments.php:3839
-#: eme-people.php:4552
-#: eme-people.php:4638
+#: eme-people.php:4564
+#: eme-people.php:4650
 #: eme-rsvp.php:809
 #: eme-rsvp.php:1109
 #: eme-tasks.php:1640
@@ -6099,8 +6099,8 @@ msgstr "谢谢您的请求，我们将发送电子邮件提供进一步信息。
 #: eme-gdpr.php:335
 #: eme-gdpr.php:418
 #: eme-members.php:1712
-#: eme-people.php:4612
-#: eme-people.php:4696
+#: eme-people.php:4624
+#: eme-people.php:4708
 #: eme-rsvp.php:166
 #: eme-rsvp.php:769
 #: eme-tasks.php:1286
@@ -6489,9 +6489,9 @@ msgstr "复制这个地点"
 #: eme-mailer.php:1725
 #: eme-mailer.php:1820
 #: eme-mailer.php:1924
-#: eme-members.php:6672
-#: eme-members.php:6750
-#: eme-members.php:6869
+#: eme-members.php:6680
+#: eme-members.php:6758
+#: eme-members.php:6877
 #: eme-rsvp.php:1190
 #: eme-rsvp.php:4805
 #: eme-rsvp.php:6375
@@ -6581,12 +6581,12 @@ msgstr "这个邮件是一个邮寄的一部分，如果您想取消这个邮件
 #: eme-mailer.php:1542
 #: eme-members.php:1058
 #: eme-members.php:1061
-#: eme-people.php:3836
-#: eme-people.php:3987
-#: eme-people.php:4090
-#: eme-people.php:4290
-#: eme-people.php:4586
-#: eme-people.php:4670
+#: eme-people.php:3848
+#: eme-people.php:3999
+#: eme-people.php:4102
+#: eme-people.php:4302
+#: eme-people.php:4598
+#: eme-people.php:4682
 #: eme-rsvp.php:1341
 msgid "Please enter a valid email address"
 msgstr "请输入有效的电子邮件地址"
@@ -6596,7 +6596,7 @@ msgstr "请输入有效的电子邮件地址"
 #: eme-mailer.php:1715
 #: eme-mailer.php:1817
 #: eme-mailer.php:1917
-#: eme-members.php:6669
+#: eme-members.php:6677
 #: eme-rsvp.php:6372
 #: eme-rsvp.php:6392
 msgid "The mail has been sent."
@@ -7210,10 +7210,10 @@ msgstr "添加会员"
 
 #: eme-members.php:1444
 #: eme-members.php:1566
-#: eme-members.php:6342
-#: eme-members.php:6352
-#: eme-members.php:6353
-#: eme-members.php:6354
+#: eme-members.php:6350
+#: eme-members.php:6360
+#: eme-members.php:6361
+#: eme-members.php:6362
 msgid "Edit member"
 msgstr "编辑会员"
 
@@ -7256,7 +7256,7 @@ msgid "This member is head of the family for other members."
 msgstr "这个成员是其他成员的一家之主。"
 
 #: eme-members.php:1560
-#: eme-people.php:2314
+#: eme-people.php:2318
 msgid "Family members:"
 msgstr "家庭成员："
 
@@ -7523,8 +7523,8 @@ msgstr "会员表格："
 #: eme-members.php:2061
 #: eme-members.php:2860
 #: eme-members.php:2865
-#: eme-people.php:1823
-#: eme-people.php:1828
+#: eme-people.php:1827
+#: eme-people.php:1832
 #: eme-rsvp.php:5160
 #: eme-rsvp.php:5165
 msgid "Please select a template"
@@ -7999,17 +7999,17 @@ msgid "Filter members"
 msgstr "筛选会员"
 
 #: eme-members.php:2803
-#: eme-people.php:1757
+#: eme-people.php:1761
 msgid "Store result as dynamic group"
 msgstr "将结果保存为动态群组"
 
 #: eme-members.php:2804
-#: eme-people.php:1758
+#: eme-people.php:1762
 msgid "Enter a name for this dynamic group"
 msgstr "为这个动态群组输入一个名称"
 
 #: eme-members.php:2805
-#: eme-people.php:1759
+#: eme-people.php:1763
 msgid "Store dynamic group"
 msgstr "保存动态群组"
 
@@ -8042,7 +8042,7 @@ msgid "Resend the expiration reminder mail"
 msgstr "重新发送过期提醒邮件"
 
 #: eme-members.php:2836
-#: eme-people.php:1786
+#: eme-people.php:1790
 #: eme-rsvp.php:5107
 #: eme-rsvp.php:5121
 #: eme-tasks.php:476
@@ -8054,14 +8054,14 @@ msgid "Send membership related email to selected members"
 msgstr "向选定的会员发送会员相关的电子邮件"
 
 #: eme-members.php:2839
-#: eme-people.php:1802
+#: eme-people.php:1806
 #: eme-rsvp.php:5109
 #: eme-rsvp.php:5123
 msgid "PDF output"
 msgstr "PDF 输出"
 
 #: eme-members.php:2840
-#: eme-people.php:1803
+#: eme-people.php:1807
 #: eme-rsvp.php:5110
 #: eme-rsvp.php:5124
 msgid "HTML output"
@@ -8087,8 +8087,8 @@ msgstr "请选择一个主体模板"
 
 #: eme-members.php:2859
 #: eme-members.php:2864
-#: eme-people.php:1822
-#: eme-people.php:1827
+#: eme-people.php:1826
+#: eme-people.php:1831
 #: eme-rsvp.php:5159
 #: eme-rsvp.php:5164
 msgid "Select an optional header template"
@@ -8096,27 +8096,27 @@ msgstr "选择一个可选的页头模板"
 
 #: eme-members.php:2861
 #: eme-members.php:2866
-#: eme-people.php:1824
-#: eme-people.php:1829
+#: eme-people.php:1828
+#: eme-people.php:1833
 #: eme-rsvp.php:5161
 #: eme-rsvp.php:5166
 msgid "Select an optional footer template"
 msgstr "选择一个可选的页脚模板"
 
 #: eme-members.php:2920
-#: eme-people.php:1902
+#: eme-people.php:1906
 msgid "Select memberships"
 msgstr "选择会籍"
 
 #: eme-members.php:2929
-#: eme-people.php:1912
+#: eme-people.php:1916
 msgid "Select member status"
 msgstr "选择会员状态"
 
 #: eme-members.php:2938
 #: eme-members.php:2945
-#: eme-people.php:1878
-#: eme-people.php:1885
+#: eme-people.php:1882
+#: eme-people.php:1889
 #: eme-rsvp.php:5077
 msgid "Filter on person"
 msgstr "过滤人员"
@@ -8137,7 +8137,7 @@ msgid "Filter on payment GW id"
 msgstr "筛选支付 GW ID"
 
 #: eme-members.php:2971
-#: eme-people.php:1934
+#: eme-people.php:1938
 msgid "Custom field to search"
 msgstr "搜索的自定义字段"
 
@@ -8151,7 +8151,7 @@ msgstr "管理会员"
 
 #: eme-members.php:3191
 #: eme-members.php:3206
-#: eme-people.php:2151
+#: eme-people.php:2155
 msgid "Allow empty email?"
 msgstr "允许空电子邮件吗？"
 
@@ -8188,156 +8188,156 @@ msgstr "删除选定的会籍"
 msgid "Show membership statistics"
 msgstr "设置会籍为未支付"
 
-#: eme-members.php:4521
+#: eme-members.php:4529
 msgid "Members CSV"
 msgstr "会员 CSV"
 
-#: eme-members.php:4746
+#: eme-members.php:4754
 msgid "Limit access to EME members of"
 msgstr "限制只让 EME 会员访问"
 
-#: eme-members.php:4752
+#: eme-members.php:4760
 msgid "Allow access after the membership has been active for this many days (drip content):"
 msgstr "在会籍有效了这么多天后允许登录（滴灌内容）。"
 
-#: eme-members.php:4755
+#: eme-members.php:4763
 msgid "Limit access to EME people that are members of the following groups"
 msgstr "只让属于以下群体的EME成员进入。"
 
-#: eme-members.php:4762
+#: eme-members.php:4770
 msgid "Access denied message template"
 msgstr "拒绝登录的信息模板"
 
-#: eme-members.php:4766
+#: eme-members.php:4774
 msgid "The format of the text shown if access to the page is denied. If left empty, a default message will be shown."
 msgstr "如果访问该网页被拒绝所显示的文本格式。如果留空，将显示一个默认信息。"
 
-#: eme-members.php:4841
+#: eme-members.php:4849
 msgid "No membership selected"
 msgstr "没有选择会籍"
 
-#: eme-members.php:4861
+#: eme-members.php:4869
 #: eme-rsvp.php:1479
 msgid "You did not enter a valid discount code"
 msgstr "您没有输入有效的折扣代码"
 
-#: eme-members.php:5127
+#: eme-members.php:5135
 #: eme-rsvp.php:5802
 msgid "Never"
 msgstr "从未"
 
-#: eme-members.php:5158
-#: eme-members.php:5176
-#: eme-members.php:5215
-#: eme-members.php:5237
+#: eme-members.php:5166
+#: eme-members.php:5184
+#: eme-members.php:5223
+#: eme-members.php:5245
 msgid "no end date"
 msgstr "没有结束日期"
 
-#: eme-members.php:5231
+#: eme-members.php:5239
 msgid "expired"
 msgstr "已过期"
 
-#: eme-members.php:5763
-#: eme-members.php:5933
+#: eme-members.php:5771
+#: eme-members.php:5941
 msgid "Access denied"
 msgstr "拒绝访问"
 
-#: eme-members.php:5853
-#: eme-people.php:928
+#: eme-members.php:5861
+#: eme-people.php:931
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr "未导入（在数据库中更新人时出了问题）：%s"
 
-#: eme-members.php:5859
-#: eme-members.php:6050
+#: eme-members.php:5867
+#: eme-members.php:6058
 msgid "Not imported (membership does not exist): %s"
 msgstr "未导入（会籍不存在）：%s"
 
-#: eme-members.php:5909
+#: eme-members.php:5917
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr "未导入（在数据库中插入该会员时出了问题）：%s"
 
-#: eme-members.php:6000
+#: eme-members.php:6008
 msgid "Not imported (person does not exist): %s"
 msgstr "未导入（人不存在）：%s"
 
-#: eme-members.php:6045
+#: eme-members.php:6053
 msgid "Not imported (member does not exist): %s"
 msgstr "未导入（会员不存在）：%s"
 
-#: eme-members.php:6243
+#: eme-members.php:6251
 msgid "Edit membership"
 msgstr "编辑会籍"
 
-#: eme-members.php:6249
+#: eme-members.php:6257
 msgid "No membership form has been defined for this membership, a simple default will be used."
 msgstr ""
 
-#: eme-members.php:6261
+#: eme-members.php:6269
 #, fuzzy
 msgid "%d head of the family accounts + %d family members"
 msgstr "“一家之主” 账户"
 
-#: eme-members.php:6338
-#: eme-people.php:5102
+#: eme-members.php:6346
+#: eme-people.php:5114
 msgid "(family member)"
 msgstr "(家庭成员)"
 
-#: eme-members.php:6343
+#: eme-members.php:6351
 msgid "Head of the family: "
 msgstr "一家之主"
 
-#: eme-members.php:6346
+#: eme-members.php:6354
 msgid "(head of the family)"
 msgstr "(一家之主)"
 
-#: eme-members.php:6392
+#: eme-members.php:6400
 msgid "This is based on the payment ID of the member: %d"
 msgstr ""
 
-#: eme-members.php:6509
-#: eme-people.php:5303
+#: eme-members.php:6517
+#: eme-people.php:5315
 msgid "(Dynamic)"
 msgstr "(动态)"
 
-#: eme-members.php:6521
-#: eme-people.php:5315
+#: eme-members.php:6529
+#: eme-people.php:5327
 msgid "Dynamic group added"
 msgstr "已添加动态群组"
 
-#: eme-members.php:6523
-#: eme-people.php:5317
+#: eme-members.php:6531
+#: eme-people.php:5329
 #, fuzzy
 msgid "There was a problem adding the group"
 msgstr "添加字段时出现了问题"
 
-#: eme-members.php:6526
-#: eme-people.php:5320
+#: eme-members.php:6534
+#: eme-people.php:5332
 msgid "Please enter a name for the group"
 msgstr "请为该群组输入名称"
 
-#: eme-members.php:6577
-#: eme-members.php:6645
+#: eme-members.php:6585
+#: eme-members.php:6653
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr "主题或正文的内容是空的，没有邮件被发送。"
 
-#: eme-members.php:6630
+#: eme-members.php:6638
 msgid "Memberships deleted."
 msgstr "已删除会籍。"
 
-#: eme-members.php:6686
+#: eme-members.php:6694
 msgid "No corresponding persons found."
 msgstr "没有找到相应的人们。"
 
-#: eme-members.php:6695
+#: eme-members.php:6703
 msgid "Members deleted."
 msgstr "已删除会员。"
 
-#: eme-members.php:6721
-#: eme-members.php:6747
-#: eme-members.php:6810
-#: eme-members.php:6841
-#: eme-members.php:6866
-#: eme-members.php:6883
+#: eme-members.php:6729
+#: eme-members.php:6755
+#: eme-members.php:6818
+#: eme-members.php:6849
+#: eme-members.php:6874
+#: eme-members.php:6891
 #: eme-rsvp.php:6008
 #: eme-rsvp.php:6042
 #: eme-rsvp.php:6086
@@ -8354,8 +8354,8 @@ msgstr "已删除会员。"
 msgid "The action has been executed successfully."
 msgstr "该行动已成功执行。"
 
-#: eme-members.php:6724
-#: eme-members.php:6844
+#: eme-members.php:6732
+#: eme-members.php:6852
 #: eme-rsvp.php:6011
 #: eme-rsvp.php:6045
 #: eme-rsvp.php:6089
@@ -8368,8 +8368,8 @@ msgstr "该行动已成功执行。"
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "该行动已成功执行，但在发送邮件时出现了一些问题。"
 
-#: eme-members.php:6727
-#: eme-members.php:6847
+#: eme-members.php:6735
+#: eme-members.php:6855
 #: eme-rsvp.php:6014
 #: eme-rsvp.php:6048
 #: eme-rsvp.php:6083
@@ -8491,7 +8491,7 @@ msgid "You're about to cancel the following bookings:"
 msgstr "您即将取消以下的预订："
 
 #: eme-options.php:51
-#: eme-people.php:4324
+#: eme-people.php:4336
 msgid "seats"
 msgstr "座位"
 
@@ -12333,492 +12333,492 @@ msgstr "您没有权利添加群组!"
 msgid "You have no right to update groups!"
 msgstr "您没有权限更新群组!"
 
-#: eme-people.php:936
+#: eme-people.php:939
 msgid "Not imported (problem inserting the person in the db): %s"
 msgstr "未导入（在数据库中插入该人时出了问题）：%s"
 
-#: eme-people.php:1037
+#: eme-people.php:1041
 msgid "Seats \"%s\""
 msgstr "座位 \"%s\""
 
-#: eme-people.php:1039
+#: eme-people.php:1043
 msgid "Seats category %d"
 msgstr "座位分类 %d"
 
-#: eme-people.php:1078
-#: eme-people.php:1402
+#: eme-people.php:1082
+#: eme-people.php:1406
 msgid "On waiting list"
 msgstr "在等待名单上"
 
-#: eme-people.php:1082
-#: eme-people.php:1406
+#: eme-people.php:1086
+#: eme-people.php:1410
 msgid "Awaiting user confirmation"
 msgstr "等待用户的确认中"
 
-#: eme-people.php:1084
-#: eme-people.php:1408
-#: eme-people.php:1528
+#: eme-people.php:1088
+#: eme-people.php:1412
+#: eme-people.php:1532
 #: eme-tasks.php:456
 #: eme-tasks.php:1906
 msgid "Approved"
 msgstr "已批准"
 
-#: eme-people.php:1250
-#: eme-people.php:1265
+#: eme-people.php:1254
+#: eme-people.php:1269
 msgid "Bookings for"
 msgstr "预订的"
 
-#: eme-people.php:1295
+#: eme-people.php:1299
 msgid "Bookings data"
 msgstr "预订数据"
 
-#: eme-people.php:1337
+#: eme-people.php:1341
 msgid "Seats (Multiprice)"
 msgstr "座位（多价位）"
 
-#: eme-people.php:1512
+#: eme-people.php:1516
 msgid "Booked"
 msgstr "已预订"
 
-#: eme-people.php:1560
+#: eme-people.php:1564
 msgid "Available"
 msgstr "可用"
 
-#: eme-people.php:1580
+#: eme-people.php:1584
 msgid "Absent"
 msgstr "缺席"
 
-#: eme-people.php:1602
+#: eme-people.php:1606
 msgid "Verify link between people and WP"
 msgstr "核实人员与 WP 之间的联系"
 
-#: eme-people.php:1607
+#: eme-people.php:1611
 msgid "The table below shows the people that are linked to the same WordPress user"
 msgstr ""
 
-#: eme-people.php:1609
+#: eme-people.php:1613
 msgid "Please correct these errors: a WordPress user should be linked to at most one EME person."
 msgstr ""
 
-#: eme-people.php:1619
-#: eme-people.php:1667
-#: eme-people.php:1710
-#: eme-people.php:2413
-#: eme-people.php:4340
+#: eme-people.php:1623
+#: eme-people.php:1671
+#: eme-people.php:1714
+#: eme-people.php:2417
+#: eme-people.php:4352
 msgid "Active memberships"
 msgstr "有效的会籍"
 
-#: eme-people.php:1620
-#: eme-people.php:1668
-#: eme-people.php:1711
+#: eme-people.php:1624
+#: eme-people.php:1672
+#: eme-people.php:1715
 #, fuzzy
 msgid "Future bookings made?"
 msgstr "已预订"
 
-#: eme-people.php:1633
+#: eme-people.php:1637
 msgid "Non-existing WP user linked!!"
 msgstr ""
 
-#: eme-people.php:1648
-#: eme-people.php:1691
-#: eme-people.php:1734
+#: eme-people.php:1652
+#: eme-people.php:1695
+#: eme-people.php:1738
 msgid "No issues found"
 msgstr "没有发现问题"
 
-#: eme-people.php:1653
+#: eme-people.php:1657
 msgid "Verify unique emails"
 msgstr "验证独特的电子邮件"
 
-#: eme-people.php:1658
+#: eme-people.php:1662
 msgid "The table below shows the people that have identical emails while you require a unique email per person"
 msgstr "下表显示了拥有相同电子邮件的人，而您要求每个人有一个独特的电子邮件"
 
-#: eme-people.php:1660
+#: eme-people.php:1664
 msgid "Please correct these errors: all EME people should have a unique email."
 msgstr "请纠正这些错误：所有 EME 人员都应该有一个独特的电子邮件。"
 
-#: eme-people.php:1696
+#: eme-people.php:1700
 #, fuzzy
 msgid "Verify unique name/email combinations"
 msgstr "验证独特的电子邮件"
 
-#: eme-people.php:1701
+#: eme-people.php:1705
 #, fuzzy
 msgid "The table below shows the people that have an identical name and email"
 msgstr "下表显示了拥有相同电子邮件的人，而您要求每个人有一个独特的电子邮件"
 
-#: eme-people.php:1703
+#: eme-people.php:1707
 #, fuzzy
 msgid "Please correct these errors: all EME people should have an unique name and email combination."
 msgstr "请纠正这些错误：所有 EME 人员都应该有一个独特的电子邮件。"
 
-#: eme-people.php:1753
+#: eme-people.php:1757
 msgid "Filter people"
 msgstr "过滤人员"
 
-#: eme-people.php:1783
+#: eme-people.php:1787
 msgid "Restore selected persons"
 msgstr "恢复选定的人员"
 
-#: eme-people.php:1784
+#: eme-people.php:1788
 msgid "Permanently delete selected persons"
 msgstr "永久删除所选人员"
 
-#: eme-people.php:1791
+#: eme-people.php:1795
 msgid "Set GDPR approval to yes"
 msgstr "设置 GDPR 批准为是"
 
-#: eme-people.php:1792
+#: eme-people.php:1796
 msgid "Set GDPR approval to no"
 msgstr "设置 GDPR 批准为否"
 
-#: eme-people.php:1793
+#: eme-people.php:1797
 msgid "Set Massmail to yes"
 msgstr "将群发邮件设置为是"
 
-#: eme-people.php:1794
+#: eme-people.php:1798
 msgid "Set Massmail to no"
 msgstr "将群发邮件设置为否"
 
-#: eme-people.php:1795
+#: eme-people.php:1799
 msgid "Set Birthday email to yes"
 msgstr "设置生日电子邮件为是"
 
-#: eme-people.php:1796
+#: eme-people.php:1800
 msgid "Set Birthday email to no"
 msgstr "设置生日电子邮件为否"
 
-#: eme-people.php:1798
+#: eme-people.php:1802
 msgid "Delete selected persons (move to trash)"
 msgstr "删除所选人员（移至回收站）"
 
-#: eme-people.php:1799
+#: eme-people.php:1803
 msgid "Remove personal data (and move to trash bin)"
 msgstr "删除个人数据（并移至回收站）。"
 
-#: eme-people.php:1801
+#: eme-people.php:1805
 msgid "Change language of selected persons"
 msgstr "改变所选人员的语言"
 
-#: eme-people.php:1807
+#: eme-people.php:1811
 msgid "Change language to: "
 msgstr "将语言改为："
 
-#: eme-people.php:1811
+#: eme-people.php:1815
 #, fuzzy
 msgid "Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):"
 msgstr "将相关的预订转移到（留空以便将未来活动的预订也转移到垃圾桶）："
 
-#: eme-people.php:1891
+#: eme-people.php:1895
 msgid "Filter on group"
 msgstr "过滤群组"
 
-#: eme-people.php:2119
+#: eme-people.php:2123
 msgid "Add a new person"
 msgstr "添加一个新的人员"
 
-#: eme-people.php:2124
-#: eme-people.php:2238
-#: eme-people.php:2464
+#: eme-people.php:2128
+#: eme-people.php:2242
+#: eme-people.php:2468
 msgid "Add person"
 msgstr "添加人员"
 
-#: eme-people.php:2129
+#: eme-people.php:2133
 msgid "Manage people"
 msgstr "管理人员"
 
-#: eme-people.php:2130
+#: eme-people.php:2134
 msgid "Click <a href='%s'>here</a> to verify the integrity of EME people"
 msgstr "点击 <a href='%s'>这里</a> 以验证 EME 人员的完整性"
 
-#: eme-people.php:2155
+#: eme-people.php:2159
 msgid "If you want, use this to import people info into the database"
 msgstr "如果您要，可以用这个将人员的信息导入数据库"
 
-#: eme-people.php:2240
+#: eme-people.php:2244
 msgid "View person in trash (read-only)"
 msgstr "查看回收站中的人（只读）。"
 
-#: eme-people.php:2274
-#: eme-people.php:2286
-#: eme-people.php:2296
+#: eme-people.php:2278
+#: eme-people.php:2290
+#: eme-people.php:2300
 msgid "Since this person is linked to a WP user, this field is read-only"
 msgstr "由于此人与一个 WP 用户相联系，这个字段是只读的。"
 
-#: eme-people.php:2302
+#: eme-people.php:2306
 msgid "Related family member"
 msgstr "相关的家庭成员"
 
-#: eme-people.php:2307
+#: eme-people.php:2311
 msgid "Click here to edit that person"
 msgstr ""
 
-#: eme-people.php:2331
+#: eme-people.php:2335
 msgid "Phone Number"
 msgstr "电话号码"
 
-#: eme-people.php:2369
+#: eme-people.php:2373
 msgid "Birthday email"
 msgstr "生日电子邮件"
 
-#: eme-people.php:2373
+#: eme-people.php:2377
 msgid "If active, the person will receive a birthday email."
 msgstr "如果是激活的状态，该人将收到一封生日电子邮件。"
 
-#: eme-people.php:2401
+#: eme-people.php:2405
 msgid "Don't forget that you can define custom fields with purpose 'People' that will allow extra info based on the group the person is in."
 msgstr "不要忘记，您可以用 \"人员\" 为目的而自定义字段，这将允许基于该人所在的群组的额外信息。"
 
-#: eme-people.php:2436
+#: eme-people.php:2440
 msgid "Linking an EME person with a WP user will not be allowed if there's another EME person matching the WP user's firstname/lastname/email."
 msgstr "如果有另一个 EME 的人与 WP 用户的名字、姓氏、电子邮件相匹配，则不允许将 EME 的人与 WP 用户联系起来。"
 
-#: eme-people.php:2437
+#: eme-people.php:2441
 msgid "Linking an EME person with a WP user will change the person firstname/lastname/email to the WP user's firstname/lastname/email and those fields can then only be changed via the WP profile of that person."
 msgstr "将一个 EME 的人与一个 WP 用户联系起来，会将这个人的名字、姓氏、电子邮件改为 WP 用户的名字、姓氏、电子邮件，然后这些字段只能通过该人的 WP 资料来改变。"
 
-#: eme-people.php:2441
+#: eme-people.php:2445
 #, fuzzy
 msgid "Delete linked WP user?"
 msgstr "链接的 WP 用户"
 
-#: eme-people.php:2444
+#: eme-people.php:2448
 msgid "Set this to yes if you want the linked WP user to be deleted when the EME person gets removed (moved to trash bin)."
 msgstr ""
 
-#: eme-people.php:2445
+#: eme-people.php:2449
 msgid "By default, this is only set to true when a WP user is created by EME (when creating a member or doing a reservation for an event and the option to create a WP user is set). An admin will never be deleted."
 msgstr ""
 
-#: eme-people.php:2464
+#: eme-people.php:2468
 msgid "Update person"
 msgstr "更新人员"
 
-#: eme-people.php:2507
-#: eme-people.php:2626
+#: eme-people.php:2511
+#: eme-people.php:2630
 #, fuzzy
 msgid "Add dynamic group of people"
 msgstr "动态的人们群组"
 
-#: eme-people.php:2509
-#: eme-people.php:2627
+#: eme-people.php:2513
+#: eme-people.php:2631
 #, fuzzy
 msgid "Add dynamic group of members"
 msgstr "动态的会员群组"
 
-#: eme-people.php:2511
-#: eme-people.php:2586
-#: eme-people.php:2625
+#: eme-people.php:2515
+#: eme-people.php:2590
+#: eme-people.php:2629
 msgid "Add group"
 msgstr "添加群组"
 
-#: eme-people.php:2515
+#: eme-people.php:2519
 #, fuzzy
 msgid "Edit dynamic group of people"
 msgstr "动态的人们群组"
 
-#: eme-people.php:2517
+#: eme-people.php:2521
 #, fuzzy
 msgid "Edit dynamic group of members"
 msgstr "动态的会员群组"
 
-#: eme-people.php:2519
-#: eme-people.php:5214
+#: eme-people.php:2523
+#: eme-people.php:5226
 msgid "Edit group"
 msgstr "编辑群组"
 
-#: eme-people.php:2554
+#: eme-people.php:2558
 msgid "Group email"
 msgstr "群组电子邮件"
 
-#: eme-people.php:2556
+#: eme-people.php:2560
 msgid "If you want to be able to send mail to this group via your mail client (and not just via EME), you need to configure the cli_mail method (see doc) and enter a unique email address for this group. This can be left empty."
 msgstr "如果您希望能够通过您的邮件客户端（而不仅仅是通过 EME）向该群组发送邮件，您需要配置 cli_mail 的方法（见文档），并为该群组输入一个独特的电子邮件地址。这可以留空。"
 
-#: eme-people.php:2561
+#: eme-people.php:2565
 msgid "Public?"
 msgstr "公众？"
 
-#: eme-people.php:2563
+#: eme-people.php:2567
 msgid "If you chose for this group to be a public group, then this group will appear in the list of groups to subscribe/unsubscribe in the eme_subform and eme_unsubform shortcodes (and the form generated by #_UNSUB_URL)."
 msgstr "如果您选择这个群组为公共群组，那么这个群组将出现在 eme_subform 和 eme_unsubform 快捷键（以及 #_UNSUB_URL 生成的表格）的订阅或退订的群组列表中。"
 
-#: eme-people.php:2573
-#: eme-people.php:2578
+#: eme-people.php:2577
+#: eme-people.php:2582
 msgid "Warning: this group is using an older method of defining the criteria for the members in it. Upon saving this group, you will lose that info, so make sure to reenter the criteria in the fields below"
 msgstr "警告：这个群组在使用旧的方法来定义组内成员的标准。保存该群组后，您将失去这些信息，所以请确保在下面的字段中重新输入标准。"
 
-#: eme-people.php:2586
+#: eme-people.php:2590
 msgid "Update group"
 msgstr "更新群组"
 
-#: eme-people.php:2620
+#: eme-people.php:2624
 msgid "Add a new group"
 msgstr "添加一个新的群组"
 
-#: eme-people.php:2632
+#: eme-people.php:2636
 msgid "Manage groups"
 msgstr "管理群组"
 
-#: eme-people.php:2639
+#: eme-people.php:2643
 msgid "Delete selected groups"
 msgstr "删除所选群组"
 
-#: eme-people.php:2661
-#: eme-people.php:2701
+#: eme-people.php:2665
+#: eme-people.php:2705
 msgid "No image set"
 msgstr "未设置图像"
 
-#: eme-people.php:2663
-#: eme-people.php:2703
+#: eme-people.php:2667
+#: eme-people.php:2707
 msgid "Remove image"
 msgstr "删除图片"
 
-#: eme-people.php:2664
-#: eme-people.php:2704
+#: eme-people.php:2668
+#: eme-people.php:2708
 msgid "Person image"
 msgstr "人物图像"
 
-#: eme-people.php:3849
+#: eme-people.php:3861
 msgid "A person with this name and email already exists"
 msgstr ""
 
-#: eme-people.php:3998
-#: eme-people.php:4142
+#: eme-people.php:4010
+#: eme-people.php:4154
 msgid "Invalid country code"
 msgstr "无效的国家代码"
 
-#: eme-people.php:4009
-#: eme-people.php:4153
+#: eme-people.php:4021
+#: eme-people.php:4165
 msgid "Invalid state code"
 msgstr "无效的州代码"
 
-#: eme-people.php:4100
-#: eme-people.php:4244
-#: eme-people.php:4316
+#: eme-people.php:4112
+#: eme-people.php:4256
+#: eme-people.php:4328
 msgid "Error encountered while updating person"
 msgstr "更新人员时遇到的错误"
 
-#: eme-people.php:4116
+#: eme-people.php:4128
 msgid "The email address belongs to an existing user. Please log in first before continuing to register with this email address."
 msgstr "该电子邮件地址属于一个现有用户。请先登录，然后再继续用这个电子邮件地址进行注册。"
 
-#: eme-people.php:4267
+#: eme-people.php:4279
 msgid "Error encountered while adding person"
 msgstr "添加人员时遇到的错误"
 
-#: eme-people.php:4298
+#: eme-people.php:4310
 msgid "Conflict with info from other person, please use another lastname, firstname or email"
 msgstr "与他人的信息冲突，请使用另一个姓氏、名字或电子邮件。"
 
-#: eme-people.php:4328
+#: eme-people.php:4340
 msgid "Events Made Easy settings"
 msgstr "Events Made Easy 设置"
 
-#: eme-people.php:4333
+#: eme-people.php:4345
 msgid "The phone number used by Events Made Easy when the user is indicated as the contact person for an event."
 msgstr "当用户被指定为某一活动的联系人时，Events Made Easy 使用的电话号码。"
 
-#: eme-people.php:4336
+#: eme-people.php:4348
 msgid "Bookings made for future events"
 msgstr "为未来的活动进行了预订"
 
-#: eme-people.php:4578
-#: eme-people.php:4662
+#: eme-people.php:4590
+#: eme-people.php:4674
 msgid "A request for confirmation has been sent to the given email address."
 msgstr "已向所给的电子邮件地址发送了确认请求。"
 
-#: eme-people.php:4603
+#: eme-people.php:4615
 msgid "If you want to subscribe to future mailings, please do so by entering your email here."
 msgstr "如果您想订阅未来的邮寄，请在这里输入您的电子邮件。"
 
-#: eme-people.php:4606
+#: eme-people.php:4618
 msgid "Please select the groups you wish to subscribe to."
 msgstr "请选择您想订阅的群组。"
 
-#: eme-people.php:4687
+#: eme-people.php:4699
 msgid "If you want to unsubscribe from future mailings, please do so by entering your email here."
 msgstr "如果您想退订未来的邮寄，请在此输入您的电子邮件。"
 
-#: eme-people.php:4690
+#: eme-people.php:4702
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr "请选择您想退订的群组。"
 
-#: eme-people.php:5096
+#: eme-people.php:5108
 msgid "No surname"
 msgstr "没有姓氏"
 
-#: eme-people.php:5220
+#: eme-people.php:5232
 msgid "Dynamic group of people"
 msgstr "动态的人们群组"
 
-#: eme-people.php:5226
+#: eme-people.php:5238
 msgid "(1 person)"
 msgid_plural "(%d persons)"
 msgstr[0] "（%d 个人）"
 
-#: eme-people.php:5230
+#: eme-people.php:5242
 msgid "Dynamic group of members"
 msgstr "动态的会员群组"
 
-#: eme-people.php:5236
+#: eme-people.php:5248
 msgid "(1 member)"
 msgid_plural "(%d members)"
 msgstr[0] "（%d 名成员）"
 
-#: eme-people.php:5434
+#: eme-people.php:5446
 msgid "People recovered from trash bin."
 msgstr "人员已从回收站里回收了。"
 
-#: eme-people.php:5446
+#: eme-people.php:5458
 msgid "People moved to trash bin."
 msgstr "人员移至回收站。"
 
-#: eme-people.php:5454
+#: eme-people.php:5466
 msgid "Personal data removed and moved to trash bin."
 msgstr "个人数据已被删除并移至回收站。"
 
-#: eme-people.php:5462
+#: eme-people.php:5474
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "GDPR 批准设置为 \"是\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5470
+#: eme-people.php:5482
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "GDPR 批准设置为 \"否\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5478
+#: eme-people.php:5490
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "群发邮件设置为 \"是\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5486
+#: eme-people.php:5498
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "群发邮件设置为 \"否\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5494
+#: eme-people.php:5506
 msgid "Birthday email set to \"Yes\"."
 msgstr "生日电子邮件设置为 ‘是’。"
 
-#: eme-people.php:5502
+#: eme-people.php:5514
 msgid "Birthday email set to \"No\"."
 msgstr "生日电子邮件设置为 ‘否’。"
 
-#: eme-people.php:5511
+#: eme-people.php:5523
 msgid "Language updated."
 msgstr "语言已更新。"
 
-#: eme-people.php:5524
+#: eme-people.php:5536
 msgid "People deleted."
 msgstr "人们已删除。"
 
-#: eme-people.php:5534
+#: eme-people.php:5546
 msgid "People added to group."
 msgstr "人们添加到群组。"
 
-#: eme-people.php:5545
+#: eme-people.php:5557
 msgid "People removed from group."
 msgstr "从群组中删除的人。"
 
-#: eme-people.php:5554
+#: eme-people.php:5566
 msgid "Groups deleted."
 msgstr "已删掉的群组。"
 
@@ -13721,17 +13721,17 @@ msgstr ""
 msgid "The extra charge for the membership is not a valid price and has been reset to 0"
 msgstr ""
 
-#: eme-events.php:6520
+#: eme-events.php:6531
 msgid "Bookings and tasks"
 msgstr ""
 
-#: eme-events.php:9662
+#: eme-events.php:9673
 msgid "Signup date"
 msgstr ""
 
-#: eme-events.php:7575
-#: eme-events.php:7778
-#: eme-events.php:8165
+#: eme-events.php:7586
+#: eme-events.php:7789
+#: eme-events.php:8176
 #: eme-members.php:2314
 #: eme-members.php:2454
 #: eme-members.php:2531
@@ -13741,9 +13741,9 @@ msgstr ""
 msgid "PDF templates as attachments"
 msgstr ""
 
-#: eme-events.php:7581
-#: eme-events.php:7784
-#: eme-events.php:8171
+#: eme-events.php:7592
+#: eme-events.php:7795
+#: eme-events.php:8182
 #: eme-members.php:2320
 #: eme-members.php:2323
 #: eme-members.php:2460
@@ -13756,9 +13756,9 @@ msgstr ""
 msgid "Optionally add PDF templates as attachments to the mail."
 msgstr ""
 
-#: eme-events.php:7585
-#: eme-events.php:7788
-#: eme-events.php:8175
+#: eme-events.php:7596
+#: eme-events.php:7799
+#: eme-events.php:8186
 #: eme-members.php:2325
 #: eme-members.php:2465
 #: eme-members.php:2542
@@ -13768,7 +13768,7 @@ msgstr ""
 msgid "No PDF templates defined yet."
 msgstr ""
 
-#: eme-events.php:7776
+#: eme-events.php:7787
 #: eme-options.php:1967
 msgid "Optionally add attachments to the mail when a booking is pending."
 msgstr ""
@@ -13816,13 +13816,13 @@ msgstr ""
 
 #: eme-members.php:2982
 #: eme-members.php:2994
-#: eme-people.php:1945
-#: eme-people.php:1957
+#: eme-people.php:1949
+#: eme-people.php:1961
 msgid "Exact custom field search match"
 msgstr ""
 
 #: eme-members.php:2992
-#: eme-people.php:1955
+#: eme-people.php:1959
 msgid "Exact?"
 msgstr ""
 

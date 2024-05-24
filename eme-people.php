@@ -877,8 +877,8 @@ function eme_import_csv_people() {
 	// get the first row as keys and lowercase them
 	$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
 
-	// check required columns
-	if ( ! in_array( 'email', $headers ) ) {
+	// check required columns: at least email or lastname is needed
+	if ( ! in_array( 'email', $headers ) && ! in_array( 'lastname', $headers ) ) {
 		$result = esc_html__( 'Not all required fields present.', 'events-made-easy' );
 	} else {
 		$empty_props = [];
@@ -892,12 +892,18 @@ function eme_import_csv_people() {
 			if ( isset( $_POST['allow_empty_email'] ) && $_POST['allow_empty_email'] == 1 && ! isset( $line['email'] ) ) {
 				$line['email']    = '';
 				$line['massmail'] = 0;
+				// if email empty: at least lastname is needed
+				if ( !isset( $line['lastname'] ) ) {
+					++$errors;
+					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+					continue;
+				}
 			}
 			// also allow empty firstname
-			if ( empty( $line['lastname'] ) ) {
+			if ( !isset( $line['lastname'] ) ) {
 				$line['lastname'] = '';
 			}
-			if ( empty( $line['firstname'] ) ) {
+			if ( !isset( $line['firstname'] ) ) {
 				$line['firstname'] = '';
 			}
 			if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {

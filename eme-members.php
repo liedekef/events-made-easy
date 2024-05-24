@@ -3187,10 +3187,6 @@ function eme_manage_members_layout( $message ) {
 	<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
 	<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
 	<input type="hidden" name="eme_admin_action" value="import">
-	<?php
-	esc_html_e( 'Allow empty email?', 'events-made-easy' );
-	echo eme_ui_select_binary( '', 'allow_empty_email' );
-	?>
 	<input type="submit" value="<?php esc_html_e( 'Import members', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
 	<?php esc_html_e( 'If you want, use this to import members info into the database', 'events-made-easy' ); ?>
 	</form>
@@ -3202,10 +3198,6 @@ function eme_manage_members_layout( $message ) {
 	<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
 	<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
 	<input type="hidden" name="eme_admin_action" value="import_dynamic_answers">
-	<?php
-	esc_html_e( 'Allow empty email?', 'events-made-easy' );
-	echo eme_ui_select_binary( '', 'allow_empty_email' );
-	?>
 	<input type="submit" value="<?php esc_html_e( 'Import dynamic field answers', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
 	<?php esc_html_e( 'Once you finished importing members, use this to import dynamic field answers into the database', 'events-made-easy' ); ?>
 	</form>
@@ -5808,8 +5800,8 @@ function eme_import_csv_members() {
 	// get the first row as keys and lowercase them
 	$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
 
-	// check required columns
-	if ( ! in_array( 'lastname', $headers ) || ! in_array( 'firstname', $headers ) || ! in_array( 'email', $headers ) || ! in_array( 'membership', $headers ) || ! in_array( 'start_date', $headers ) ) {
+	// check required columns: membership, start_date and at least lastname or email
+	if ( ! ( in_array( 'lastname', $headers ) || in_array( 'email', $headers ) ) || ! in_array( 'membership', $headers ) || ! in_array( 'start_date', $headers ) ) {
 		return __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
 		// now loop over the rest
@@ -5817,24 +5809,33 @@ function eme_import_csv_members() {
 			$line = array_combine( $headers, $row );
 			// remove columns with empty values
 			$line = eme_array_remove_empty_elements( $line );
-			if ( isset( $_POST['allow_empty_email'] ) && $_POST['allow_empty_email'] == 1 && ! isset( $line['email'] ) ) {
-								$line['email']    = '';
-								$line['massmail'] = 0;
+			if ( ! isset( $line['email'] ) ) {
+				$line['email']    = '';
+				$line['massmail'] = 0;
+			}
+			// if email empty: at least lastname is needed
+			if (empty($line['email'] ) && !isset( $line['lastname'] ) ) {
+				++$errors;
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				continue;
 			}
 			// also allow empty firstname
-			if ( ! isset( $line['firstname'] ) ) {
-								$line['firstname'] = '';
+			if ( !isset( $line['firstname'] ) ) {
+				$line['firstname'] = '';
 			}
-			if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
+			if ( !isset( $line['lastname'] ) ) {
+				$line['lastname'] = '';
+			}
+			if ( !empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
-			} elseif ( ! empty( $line['start_date'] ) && ! eme_is_date( $line['start_date'] ) ) {
+			} elseif ( isset( $line['start_date'] ) && ! eme_is_date( $line['start_date'] ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'start_date', implode( ',', $row ) ) );
-			} elseif ( ! empty( $line['end_date'] ) && ! eme_is_date( $line['end_date'] ) ) {
+			} elseif ( isset( $line['end_date'] ) && ! eme_is_date( $line['end_date'] ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'end_date', implode( ',', $row ) ) );
-			} elseif ( ! empty( $line['creation_date'] ) && ! ( eme_is_date( $line['creation_date'] ) || eme_is_datetime( $line['creation_date'] ) ) ) {
+			} elseif ( isset( $line['creation_date'] ) && ! ( eme_is_date( $line['creation_date'] ) || eme_is_datetime( $line['creation_date'] ) ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'creation_date', implode( ',', $row ) ) );
 			} elseif ( isset( $line['lastname'] ) && isset( $line['firstname'] ) && isset( $line['email'] ) && isset( $line['membership'] ) && isset( $line['start_date'] ) ) {
@@ -5979,7 +5980,7 @@ function eme_import_csv_member_dynamic_answers() {
 	$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
 
 	// check required columns
-	if ( ! in_array( 'lastname', $headers ) || ! in_array( 'firstname', $headers ) || ! in_array( 'email', $headers ) || ! in_array( 'membership', $headers ) ) {
+	if ( ! ( in_array( 'lastname', $headers ) || in_array( 'email', $headers ) ) || ! in_array( 'firstname', $headers ) || ! in_array( 'email', $headers ) || ! in_array( 'membership', $headers ) ) {
 		return __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
 		// now loop over the rest
@@ -5989,11 +5990,23 @@ function eme_import_csv_member_dynamic_answers() {
 			$line = array_combine( $headers, $row );
 			// remove columns with empty values
 			$line = eme_array_remove_empty_elements( $line );
-			if ( isset( $_POST['allow_empty_email'] ) && $_POST['allow_empty_email'] == 1 && ! isset( $line['email'] ) ) {
-								$line['email']    = '';
-								$line['massmail'] = 0;
+			if ( ! isset( $line['email'] ) ) {
+				$line['email']    = '';
+				$line['massmail'] = 0;
 			}
-
+			// if email empty: at least lastname is needed
+			if (empty($line['email'] ) && !isset( $line['lastname'] ) ) {
+				++$errors;
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				continue;
+			}
+			// also allow empty firstname
+			if ( !isset( $line['firstname'] ) ) {
+				$line['firstname'] = '';
+			}
+			if ( !isset( $line['lastname'] ) ) {
+				$line['lastname'] = '';
+			}
 			// we need at least 4 fields present, otherwise nothing will be done
 			if ( isset( $line['lastname'] ) && isset( $line['firstname'] ) && isset( $line['email'] ) && isset( $line['membership'] ) ) {
 				// if the person already exists: update him

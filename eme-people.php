@@ -889,15 +889,15 @@ function eme_import_csv_people() {
 			// remove columns with empty values
 			$line = eme_array_remove_empty_elements( $line );
 			// we need at least 3 fields present, otherwise nothing will be done
-			if ( isset( $_POST['allow_empty_email'] ) && $_POST['allow_empty_email'] == 1 && ! isset( $line['email'] ) ) {
+			if ( ! isset( $line['email'] ) ) {
 				$line['email']    = '';
 				$line['massmail'] = 0;
-				// if email empty: at least lastname is needed
-				if ( !isset( $line['lastname'] ) ) {
-					++$errors;
-					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
-					continue;
-				}
+			}
+			// if email empty: at least lastname is needed
+			if ( empty($line['email'] ) && !isset( $line['lastname'] ) ) {
+				++$errors;
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (both email and lastname are empty): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				continue;
 			}
 			// also allow empty firstname
 			if ( !isset( $line['lastname'] ) ) {
@@ -909,68 +909,66 @@ function eme_import_csv_people() {
 			if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
-			} elseif ( isset( $line['lastname'] ) && isset( $line['firstname'] ) && isset( $line['email'] ) ) {
-				// also import properties
-				foreach ( $line as $key => $value ) {
-					if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
-						$prop = $matches[1];
-						if ( ! isset( $line['properties'] ) ) {
-							$line['properties'] = [];
-						}
-						if ( array_key_exists( $prop, $empty_props ) ) {
-							$line['properties'][ $prop ] = $value;
-						}
-					}
-				}
-				// if the person already exists: update him
-				$person = eme_get_person_by_name_and_email( $line['lastname'], $line['firstname'], $line['email'] );
-				if ( ! $person ) {
-					$person = eme_get_person_by_email_only( $line['email'] );
-				}
-				$person_id = 0;
-				if ( $person ) {
-					$person_id = eme_db_update_person( $person['person_id'], $line );
-					if ( $person_id ) {
-						++$updated;
-					} else {
-						++$errors;
-						$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
-					}
-				} else {
-					$person_id = eme_db_insert_person( $line );
-					if ( $person_id ) {
-						++$inserted;
-					} else {
-						++$errors;
-						$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem inserting the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
-					}
-				}
-				if ( $person_id ) {
-					// now handle all the extra info, in the CSV they need to be named like 'answer_XX' (with 'XX' being either the fieldid or the fieldname, e.g. answer_myfieldname)
-					// if the key is called "groups", then the person will get imported into the the mentioned groups
-					foreach ( $line as $key => $value ) {
-						if ( preg_match( '/^answer_(.*)$/', $key, $matches ) ) {
-							$grouping   = 0;
-							$field_name = $matches[1];
-							$formfield  = eme_get_formfield( $field_name );
-							if ( ! empty( $formfield ) ) {
-								$field_id = $formfield['field_id'];
-								$sql      = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='person'", $person_id, $field_id );
-								$wpdb->query( $sql );
+				continue;
+			}
 
-								$sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,eme_grouping,type) VALUES (%d,%d,%s,%d,%s)", $person_id, $field_id, $value, $grouping, 'person' );
-								$wpdb->query( $sql );
-							}
-						}
-						if ( preg_match( '/^groups?$/', $key, $matches ) ) {
-							$groups = eme_convert_multi2array( $value );
-							eme_add_persongroups( $person_id, $groups );
-						}
+			// also import properties
+			foreach ( $line as $key => $value ) {
+				if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
+					$prop = $matches[1];
+					if ( ! isset( $line['properties'] ) ) {
+						$line['properties'] = [];
 					}
+					if ( array_key_exists( $prop, $empty_props ) ) {
+						$line['properties'][ $prop ] = $value;
+					}
+				}
+			}
+			// if the person already exists: update him
+			$person = eme_get_person_by_name_and_email( $line['lastname'], $line['firstname'], $line['email'] );
+			if ( ! $person ) {
+				$person = eme_get_person_by_email_only( $line['email'] );
+			}
+			$person_id = 0;
+			if ( $person ) {
+				$person_id = eme_db_update_person( $person['person_id'], $line );
+				if ( $person_id ) {
+					++$updated;
+				} else {
+					++$errors;
+					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
 				}
 			} else {
-				++$errors;
-				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				$person_id = eme_db_insert_person( $line );
+				if ( $person_id ) {
+					++$inserted;
+				} else {
+					++$errors;
+					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem inserting the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				}
+			}
+			if ( $person_id ) {
+				// now handle all the extra info, in the CSV they need to be named like 'answer_XX' (with 'XX' being either the fieldid or the fieldname, e.g. answer_myfieldname)
+				// if the key is called "groups", then the person will get imported into the the mentioned groups
+				foreach ( $line as $key => $value ) {
+					if ( preg_match( '/^answer_(.*)$/', $key, $matches ) ) {
+						$grouping   = 0;
+						$field_name = $matches[1];
+						$formfield  = eme_get_formfield( $field_name );
+						if ( ! empty( $formfield ) ) {
+							$field_id = $formfield['field_id'];
+							$sql      = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id = %d and field_id=%d AND type='person'", $person_id, $field_id );
+							$wpdb->query( $sql );
+
+							$sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,eme_grouping,type) VALUES (%d,%d,%s,%d,%s)", $person_id, $field_id, $value, $grouping, 'person' );
+							$wpdb->query( $sql );
+						}
+					}
+					if ( preg_match( '/^groups?$/', $key, $matches ) ) {
+						$groups = eme_convert_multi2array( $value );
+						eme_add_persongroups( $person_id, $groups );
+					}
+				}
 			}
 		}
 		$result = sprintf( esc_html__( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
@@ -2157,10 +2155,6 @@ function eme_manage_people_layout( $message = '' ) {
 			<?php esc_html_e( 'Enclosure:', 'events-made-easy' ); ?>
 		<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"' required='required'>
 		<input type="hidden" name="eme_admin_action" value="import_people">
-			<?php
-			esc_html_e( 'Allow empty email?', 'events-made-easy' );
-			echo eme_ui_select_binary( '', 'allow_empty_email' );
-			?>
 		<input type="submit" value="<?php esc_html_e( 'Import', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
 			<?php esc_html_e( 'If you want, use this to import people info into the database', 'events-made-easy' ); ?>
 		</form>

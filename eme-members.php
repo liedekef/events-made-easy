@@ -5826,102 +5826,109 @@ function eme_import_csv_members() {
 			if ( !isset( $line['lastname'] ) ) {
 				$line['lastname'] = '';
 			}
+			if ( ! isset( $line['membership'] ) || ! isset( $line['start_date'] ) ) {
+				++$errors;
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), print_r( $line, true ) ) );
+				continue;
+			}
 			if ( !empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
-			} elseif ( isset( $line['start_date'] ) && ! eme_is_date( $line['start_date'] ) ) {
+				continue;
+			}
+			if ( isset( $line['start_date'] ) && ! eme_is_date( $line['start_date'] ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'start_date', implode( ',', $row ) ) );
-			} elseif ( isset( $line['end_date'] ) && ! eme_is_date( $line['end_date'] ) ) {
+				continue;
+			}
+			if ( isset( $line['end_date'] ) && ! eme_is_date( $line['end_date'] ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'end_date', implode( ',', $row ) ) );
-			} elseif ( isset( $line['creation_date'] ) && ! ( eme_is_date( $line['creation_date'] ) || eme_is_datetime( $line['creation_date'] ) ) ) {
+				continue;
+			}
+			if ( isset( $line['creation_date'] ) && ! ( eme_is_date( $line['creation_date'] ) || eme_is_datetime( $line['creation_date'] ) ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'creation_date', implode( ',', $row ) ) );
-			} elseif ( isset( $line['lastname'] ) && isset( $line['firstname'] ) && isset( $line['email'] ) && isset( $line['membership'] ) && isset( $line['start_date'] ) ) {
-				// we need at least 4 fields present, otherwise nothing will be done
-				$person_id  = 0;
-				$membership = eme_get_membership( $line['membership'] );
-				if ( $membership ) {
-					// if the person already exists: update him
-					$person = eme_get_person_by_name_and_email( $line['lastname'], $line['firstname'], $line['email'] );
-					if ( ! $person ) {
-						$person = eme_get_person_by_email_only( $line['email'] );
-					}
-					if ( $person ) {
-						$person_id = $person['person_id'];
-					} else {
-						$person = $line;
-						// status should be active, but it can also be provided for members, so we override it in case it was present
-						if ( isset( $person['status'] ) ) {
-							$person['status'] = EME_PEOPLE_STATUS_ACTIVE;
-						}
-						$person_id = eme_db_insert_person( $person );
-						if ( ! $person_id ) {
-							++$errors;
-							$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
-						}
-					}
-				} else {
-					// if membership doesn't exist
-					++$errors;
-					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				continue;
+			}
+
+			$person_id  = 0;
+			$membership = eme_get_membership( $line['membership'] );
+			if ( $membership ) {
+				// if the person already exists: update him
+				$person = eme_get_person_by_name_and_email( $line['lastname'], $line['firstname'], $line['email'] );
+				if ( ! $person ) {
+					$person = eme_get_person_by_email_only( $line['email'] );
 				}
-				if ( $membership && $person_id ) {
-					if ( isset( $line['start_date'] ) ) {
-						if ( ! isset( $line['end_date'] ) ) {
-							$line['end_date'] = eme_get_next_end_date( $membership, $line['start_date'] );
-						}
-					} else {
-						$line['start_date'] = '';
-						$line['end_date']   = '';
+				if ( $person ) {
+					$person_id = $person['person_id'];
+				} else {
+					$person = $line;
+					// status should be active, but it can also be provided for members, so we override it in case it was present
+					if ( isset( $person['status'] ) ) {
+						$person['status'] = EME_PEOPLE_STATUS_ACTIVE;
 					}
-					$line['status']           = isset( $line['status'] ) ? intval( $line['status'] ) : EME_MEMBER_STATUS_PENDING;
-					$line['status_automatic'] = isset( $line['status_automatic'] ) ? intval( $line['status_automatic'] ) : 1;
-					$line['paid']             = isset( $line['paid'] ) ? intval( $line['paid'] ) : 1;
-					$member_id                = eme_is_member( $person_id, $membership['membership_id'] );
-					if ( $member_id ) {
-						eme_db_update_member( $member_id, $line, $membership );
-						++$updated;
-					} else {
-						$line['person_id'] = $person_id;
-						// if the memberid is present as value to import, do that too if the memberid doesn't exist yet
-						if ( ! empty( $line['member_id'] ) && empty( eme_get_member( $line['member_id'] ) ) ) {
-							$member_id = eme_db_insert_member( $line, $membership, $line['member_id'] );
-						} else {
-							$member_id = eme_db_insert_member( $line, $membership );
-						}
-						if ( $member_id ) {
-							// create/update the payment id, so an imported pending member can pay too
-							$payment_id = eme_create_member_payment( $member_id );
-							++$inserted;
-						}
-					}
-					if ( $member_id ) {
-						// now handle all the extra info, in the CSV they need to be named like 'answer_XX_fieldname' (with XX being a number starting from 0, e.g. answer_0_myfieldname)
-						foreach ( $line as $key => $value ) {
-							if ( preg_match( '/^answer_(.*)$/', $key, $matches ) ) {
-								$grouping   = 0;
-								$field_name = $matches[1];
-								$formfield  = eme_get_formfield( $field_name );
-								if ( ! empty( $formfield ) ) {
-									$field_id = $formfield['field_id'];
-									$sql      = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d and field_id=%d and type='member'", $member_id, $field_id );
-									$wpdb->query( $sql );
-									$sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,eme_grouping,type) VALUES (%d,%d,%s,%d,%s)", $member_id, $field_id, $value, $grouping, 'member' );
-									$wpdb->query( $sql );
-								}
-							}
-						}
-					} else {
+					$person_id = eme_db_insert_person( $person );
+					if ( ! $person_id ) {
 						++$errors;
-						$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem inserting the member in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+						$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
 					}
 				}
 			} else {
-				// if lastname, firstname or email is empty
+				// if membership doesn't exist
 				++$errors;
-				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), print_r( $line, true ) ) );
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+			}
+			if ( $membership && $person_id ) {
+				if ( isset( $line['start_date'] ) ) {
+					if ( ! isset( $line['end_date'] ) ) {
+						$line['end_date'] = eme_get_next_end_date( $membership, $line['start_date'] );
+					}
+				} else {
+					$line['start_date'] = '';
+					$line['end_date']   = '';
+				}
+				$line['status']           = isset( $line['status'] ) ? intval( $line['status'] ) : EME_MEMBER_STATUS_PENDING;
+				$line['status_automatic'] = isset( $line['status_automatic'] ) ? intval( $line['status_automatic'] ) : 1;
+				$line['paid']             = isset( $line['paid'] ) ? intval( $line['paid'] ) : 1;
+				$member_id                = eme_is_member( $person_id, $membership['membership_id'] );
+				if ( $member_id ) {
+					eme_db_update_member( $member_id, $line, $membership );
+					++$updated;
+				} else {
+					$line['person_id'] = $person_id;
+					// if the memberid is present as value to import, do that too if the memberid doesn't exist yet
+					if ( ! empty( $line['member_id'] ) && empty( eme_get_member( $line['member_id'] ) ) ) {
+						$member_id = eme_db_insert_member( $line, $membership, $line['member_id'] );
+					} else {
+						$member_id = eme_db_insert_member( $line, $membership );
+					}
+					if ( $member_id ) {
+						// create/update the payment id, so an imported pending member can pay too
+						$payment_id = eme_create_member_payment( $member_id );
+						++$inserted;
+					}
+				}
+				if ( $member_id ) {
+					// now handle all the extra info, in the CSV they need to be named like 'answer_XX_fieldname' (with XX being a number starting from 0, e.g. answer_0_myfieldname)
+					foreach ( $line as $key => $value ) {
+						if ( preg_match( '/^answer_(.*)$/', $key, $matches ) ) {
+							$grouping   = 0;
+							$field_name = $matches[1];
+							$formfield  = eme_get_formfield( $field_name );
+							if ( ! empty( $formfield ) ) {
+								$field_id = $formfield['field_id'];
+								$sql      = $wpdb->prepare( "DELETE FROM $answers_table WHERE related_id=%d and field_id=%d and type='member'", $member_id, $field_id );
+								$wpdb->query( $sql );
+								$sql = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,eme_grouping,type) VALUES (%d,%d,%s,%d,%s)", $member_id, $field_id, $value, $grouping, 'member' );
+								$wpdb->query( $sql );
+							}
+						}
+					}
+				} else {
+					++$errors;
+					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem inserting the member in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				}
 			}
 		}
 	}
@@ -6007,73 +6014,75 @@ function eme_import_csv_member_dynamic_answers() {
 			if ( !isset( $line['lastname'] ) ) {
 				$line['lastname'] = '';
 			}
-			// we need at least 4 fields present, otherwise nothing will be done
-			if ( isset( $line['lastname'] ) && isset( $line['firstname'] ) && isset( $line['email'] ) && isset( $line['membership'] ) ) {
-				// if the person already exists: update him
-				$person_id  = 0;
-				$membership = eme_get_membership( $line['membership'] );
-				if ( $membership ) {
-					$person = eme_get_person_by_name_and_email( $line['lastname'], $line['firstname'], $line['email'] );
-					if ( $person ) {
-						$person_id = $person['person_id'];
-					} else {
-						++$errors;
-						$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (person does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
-					}
-				}
-				if ( $membership && $person_id ) {
-					$member_id = eme_is_member( $person_id, $membership['membership_id'] );
-					if ( $member_id ) {
-						if ( ! isset( $occurences[ $member_id ] ) ) {
-							$occurences[ $member_id ] = [];
-						}
-						// make sure grouping contains a sensible value (we call it "index now, but keep "grouping" for backwards compat)
-						if ( isset( $line['index'] ) ) {
-							$grouping = intval( $line['index'] );
-							if ( $grouping < 1 ) {
-								$grouping = 1;
-							}
-						} elseif ( isset( $line['grouping'] ) ) {
-							$grouping = intval( $line['grouping'] );
-							if ( $grouping < 1 ) {
-								$grouping = 1;
-							}
-						} else {
-							$grouping = 1;
-						}
-						if ( ! isset( $occurences[ $member_id ][ $grouping ] ) ) {
-							$occurence = 0;
-						} else {
-							$occurence = $occurences[ $member_id ][ $grouping ];
-							++$occurence;
-						}
-						$occurences[ $member_id ][ $grouping ] = $occurence;
-						// handle all the extra info, in the CSV they need to be named like 'answer_XX_fieldname' (with XX being a number starting from 0, e.g. answer_0_myfieldname)
-						foreach ( $line as $key => $value ) {
-							if ( preg_match( '/^answer_(.*)$/', $key, $matches ) ) {
-								$field_name = $matches[1];
-								$formfield  = eme_get_formfield( $field_name );
-								if ( ! empty( $formfield ) ) {
-									$field_id = $formfield['field_id'];
-									$sql      = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,eme_grouping,occurence,type) VALUES (%d,%d,%s,%d,%d,%s)", $member_id, $field_id, $value, $grouping, $occurence, 'member' );
-									$wpdb->query( $sql );
-									++$inserted;
-								}
-							}
-						}
-					} else {
-						++$errors;
-						$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (member does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
-					}
-				} else {
-					// if membership doesn't exist
-					++$errors;
-					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
-				}
-			} else {
-				// if lastname, firstname or email is empty
+			if ( !isset( $line['membership'] ) ) {
 				++$errors;
 				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				continue;
+			}
+
+			$person_id  = 0;
+			$membership = eme_get_membership( $line['membership'] );
+			if ( $membership ) {
+				$person = eme_get_person_by_name_and_email( $line['lastname'], $line['firstname'], $line['email'] );
+				if ( $person ) {
+					$person_id = $person['person_id'];
+				} else {
+					++$errors;
+					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (person does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+					continue;
+				}
+			} else {
+				++$errors;
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (membership does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				continue;
+			}
+			if ( $person_id ) {
+				$member_id = eme_is_member( $person_id, $membership['membership_id'] );
+				if ( $member_id ) {
+					if ( ! isset( $occurences[ $member_id ] ) ) {
+						$occurences[ $member_id ] = [];
+					}
+					// make sure grouping contains a sensible value (we call it "index now, but keep "grouping" for backwards compat)
+					if ( isset( $line['index'] ) ) {
+						$grouping = intval( $line['index'] );
+						if ( $grouping < 1 ) {
+							$grouping = 1;
+						}
+					} elseif ( isset( $line['grouping'] ) ) {
+						$grouping = intval( $line['grouping'] );
+						if ( $grouping < 1 ) {
+							$grouping = 1;
+						}
+					} else {
+						$grouping = 1;
+					}
+					if ( ! isset( $occurences[ $member_id ][ $grouping ] ) ) {
+						$occurence = 0;
+					} else {
+						$occurence = $occurences[ $member_id ][ $grouping ];
+						++$occurence;
+					}
+					$occurences[ $member_id ][ $grouping ] = $occurence;
+					// handle all the extra info, in the CSV they need to be named like 'answer_XX_fieldname' (with XX being a number starting from 0, e.g. answer_0_myfieldname)
+					foreach ( $line as $key => $value ) {
+						if ( preg_match( '/^answer_(.*)$/', $key, $matches ) ) {
+							$field_name = $matches[1];
+							$formfield  = eme_get_formfield( $field_name );
+							if ( ! empty( $formfield ) ) {
+								$field_id = $formfield['field_id'];
+								$sql      = $wpdb->prepare( "INSERT INTO $answers_table (related_id,field_id,answer,eme_grouping,occurence,type) VALUES (%d,%d,%s,%d,%d,%s)", $member_id, $field_id, $value, $grouping, $occurence, 'member' );
+								$wpdb->query( $sql );
+								++$inserted;
+							}
+						}
+					}
+				} else {
+					++$errors;
+					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (member does not exist): %s', 'events-made-easy' ), implode( ',', $row ) ) );
+				}
+			} else {
+				++$errors;
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (no matching person found): %s', 'events-made-easy' ), implode( ',', $row ) ) );
 			}
 		}
 	}

@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * #_IS_USER_IN_GROUP fix for lists of group names (not ids)
 * Get the first user with admin rights as default contact person if no other is found
 * Only email is required for person import
+* When trashing bookings for a trashed event, also execute the hook eme_trash_rsvp_action if present
 
 = 2.4.45 (2024/05/21) =
 * Update dompdf to 3.0.0

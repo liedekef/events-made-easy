@@ -10595,7 +10595,7 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 	$sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_TRASH); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
-	if ( $send_trashmails ) {
+	if ( $send_trashmails || has_action( 'eme_trash_rsvp_action' ) ) {
 		$event_ids = explode( ',', $ids );
 		foreach ( $event_ids as $event_id ) {
 			$booking_ids = eme_get_bookingids_for( $event_id );
@@ -10604,12 +10604,16 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 					// first get the booking details, then delete it and then send the mail
 					// the mail needs to be sent after the deletion, otherwise the count of free seats is wrong
 					$booking = eme_get_booking( $booking_id );
+					// this call also executes the hook 'eme_trash_rsvp_action'
 					eme_trash_booking( $booking_id );
-					eme_email_booking_action( $booking, 'cancelBooking' );
+					if ($send_trashmails) {
+						eme_email_booking_action( $booking, 'cancelBooking' );
+					}
 				}
 			}
 		}
 	} else {
+		// this is more efficient, but doesn't execute the hook 'eme_trash_rsvp_action'
 		eme_trash_bookings_for_event_ids( $ids );
 	}
 }

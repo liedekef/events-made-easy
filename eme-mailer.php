@@ -545,8 +545,11 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		// we add the mail to the queue as sent and send it immediately
 		$mail['status']        = 1;
 		$mail['sent_datetime'] = $now;
-		$wpdb->insert( $mqueue_table, $mail );
-		return eme_send_mail( $subject, $body, $receiveremail, $receivername, $replytoemail, $replytoname, $fromemail, $fromname, $atts, $custom_headers );
+		if ($wpdb->insert( $mqueue_table, $mail ) === false) {
+			return false;
+		} else {
+			return eme_send_mail( $subject, $body, $receiveremail, $receivername, $replytoemail, $replytoname, $fromemail, $fromname, $atts, $custom_headers );
+		}
 	} elseif ( $wpdb->insert( $mqueue_table, $mail ) === false ) {
 		return false;
 	} else {
@@ -685,10 +688,10 @@ function eme_send_queued() {
 		$body = $mail['body'];
 		$atts = eme_unserialize( $mail['attachments'] );
 		if ( $add_tracking && ! empty( $mail['random_id'] ) ) {
-				$track_url  = eme_tracker_url( $mail['random_id'] );
-				$track_html = "<img src='$track_url' alt=''>";
-				// if a closing body-tag is present, add it before that
-				// otherwise add it to the end
+			$track_url  = eme_tracker_url( $mail['random_id'] );
+			$track_html = "<img src='$track_url' alt=''>";
+			// if a closing body-tag is present, add it before that
+			// otherwise add it to the end
 			if ( strstr( $body, '</body>' ) ) {
 				$body = str_replace( '</body>', $track_html . '</body>', $body );
 			} else {

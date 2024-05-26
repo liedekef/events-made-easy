@@ -6174,8 +6174,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	}
 
 	if ( ! empty( $_GET['eme_admin_action'] ) ) {
-			$action        = eme_sanitize_request( $_GET['eme_admin_action'] );
-			$recurrence_ID = isset( $_GET['recurrence_id'] ) ? intval( $_GET['recurrence_id'] ) : 0;
+		$action        = eme_sanitize_request( $_GET['eme_admin_action'] );
+		$recurrence_ID = isset( $_GET['recurrence_id'] ) ? intval( $_GET['recurrence_id'] ) : 0;
 	} else {
 		$action        = '';
 		$recurrence_ID = '';
@@ -6526,7 +6526,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 					if ( isset( $_REQUEST['trash'] ) && $_REQUEST['trash'] == 1 ) {
 						$view_trash  = 1;
 					}
-					if ( !$edit_recurrence && !$view_trash && ($event['event_rsvp'] || $event['event_tasks'] )) { ?>
+					if ( !$edit_recurrence && !$view_trash && !$is_new_event && ($event['event_rsvp'] || $event['event_tasks'] )) { ?>
 					<div class="postbox" id="eme_bookingsandtasks">
 					<h2 class='hndle'><span><?php esc_html_e( 'Bookings and tasks', 'events-made-easy' ); ?></span></h2>
 					<div class="inside">

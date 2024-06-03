@@ -8,10 +8,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-03-24 13:25:27+00:00\n"
-"PO-Revision-Date: 2024-05-24 09:49+0200\n"
+"PO-Revision-Date: 2024-06-03 20:10+0200\n"
 "Language: nl_BE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Poedit 3.4.2\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #. translators: %s: original email sender name
 #: cli_mail.php:148
@@ -13747,8 +13747,8 @@ msgstr "Er is geen lid gevonden dat aan deze betaling is gekoppeld. Als u denkt 
 #: eme-members.php:6007
 #: eme-people.php:899
 msgid "Not imported (both email and lastname are empty): %s"
-msgstr ""
+msgstr "Niet geïmporteerd (zowel email als naam zijn leeg): %s"
 
 #: eme-members.php:6085
 msgid "Not imported (no matching person found): %s"
-msgstr ""
+msgstr "Niet geïmporteerd (geen overeenkomstige persoon gevonden): %s"

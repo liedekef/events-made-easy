@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.47 (2024//) =
+* Make sort on membership name work in members overview
+
 = 2.4.46 (2024/05/26) =
 * #_IS_USER_IN_GROUP fix for lists of group names (not ids)
 * Get the first user with admin rights as default contact person if no other is found

@@ -3610,7 +3610,7 @@ function eme_get_groups_member_ids( $group_ids ) {
 	foreach ( $dynamic_groups as $dynamic_group ) {
 		if ( ! empty( $dynamic_group['search_terms'] ) ) {
 			$search_terms = eme_unserialize( $dynamic_group['search_terms'] );
-			$sql          = eme_get_sql_members_searchfields( $search_terms, 0, 0, '', 0, 1 );
+			$sql          = eme_get_sql_members_searchfields( search_terms: $search_terms, memberids_only: 1 );
 		} else {
 			$sql = 'SELECT members.member_id ' . $dynamic_group['stored_sql'];
 		}
@@ -5242,7 +5242,7 @@ function eme_ajax_groups_list() {
 			$record['groupcount'] = esc_html__( 'Dynamic group of members', 'events-made-easy' );
 			if ( ! empty( $group['search_terms'] ) ) {
 				$search_terms = eme_unserialize( $group['search_terms'] );
-				$count_sql    = eme_get_sql_members_searchfields( $search_terms, 0, 0, '', 1 );
+				$count_sql    = eme_get_sql_members_searchfields( search_terms: $search_terms, count: 1 );
 				$count        = $wpdb->get_var( $count_sql );
 				if ( $count > 0 ) {
 					$record['groupcount'] .= '&nbsp;' . sprintf( _n( '(1 member)', '(%d members)', $count, 'events-made-easy' ), $count );

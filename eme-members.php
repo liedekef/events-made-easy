@@ -3001,7 +3001,14 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 	$members_table           = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$people_table            = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$answers_table           = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 
+	if (preg_match('/membership_name/', $sorting ) ) {
+		$sorting = str_replace( 'membership_name', 'memberships.name', $sorting );
+		$membership_join = "LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id";
+	} else {
+		$membership_join = "";
+	}
 	$people_join = "LEFT JOIN $people_table AS people ON members.person_id=people.person_id";
 	// trim the search_person too
 	if ( ! empty( $search_terms['search_person'] ) ) {
@@ -3113,16 +3120,16 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
 		   ON members.member_id=ans.related_id";
 	}
 	if ( $count ) {
-		$sql = "SELECT COUNT(*) FROM $members_table AS members $people_join $sql_join $where";
+		$sql = "SELECT COUNT(*) FROM $members_table AS members $people_join $membership_join $sql_join $where";
 	} elseif ( $memberids_only ) {
-		$sql = "SELECT members.member_id FROM $members_table AS members $people_join $sql_join $where $sorting";
+		$sql = "SELECT members.member_id FROM $members_table AS members $people_join $membership_join $sql_join $where $sorting";
 	} elseif ( $peopleids_only ) {
-		$sql = "SELECT people.person_id FROM $members_table AS members $people_join $sql_join $where $sorting";
+		$sql = "SELECT people.person_id FROM $members_table AS members $people_join $membership_join $sql_join $where $sorting";
 	} elseif ( $emails_only ) {
-		$sql = "SELECT people.email FROM $members_table AS members $people_join $sql_join $where $sorting";
+		$sql = "SELECT people.email FROM $members_table AS members $people_join $membership_join $sql_join $where $sorting";
 	} else {
 		$sql = "SELECT members.*, people.lastname, people.firstname, people.email, people.birthdate, people.birthplace, people.address1, people.address2, people.zip, people.city, people.state_code, people.country_code, people.wp_id
-	   FROM $members_table AS members $people_join $sql_join $where $sorting";
+	   FROM $members_table AS members $people_join $membership_join $sql_join $where $sorting";
 		if ( ! empty( $pagesize ) ) {
 			$sql .= " LIMIT $start,$pagesize";
 		}

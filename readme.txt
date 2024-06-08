@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.5
-Stable tag: 2.4.46
+Stable tag: 2.4.47
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,8 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.4.47 (2024//) =
+= 2.4.47 (2024/06/08) =
 * Make sort on membership name work in members overview
+* Small fix in membership statistics (some counters included pending members)
 
 = 2.4.46 (2024/05/26) =
 * #_IS_USER_IN_GROUP fix for lists of group names (not ids)

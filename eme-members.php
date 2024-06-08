@@ -507,14 +507,15 @@ function eme_get_membership_stats( $ids ) {
 		$days_in_month = $eme_date_obj->getDaysInMonth();
 		$limit_end     = $eme_date_obj->format( "Y-m-$days_in_month" );
 		if ( $counter == $difference ) {
+			// for current month: just count active members
 			$sql = "SELECT count(*) FROM $table WHERE status=1 AND membership_id IN ($ids)";
 			$member_nbr = $wpdb->get_var( $sql );
 		} else {
-			$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date<=%s AND (end_date >= %s OR end_date = '0000-00-00') AND membership_id IN ($ids)", $limit_end, $limit_start );
-			$member_nbr_1 = $wpdb->get_var( $sql );
-			$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
-			$member_nbr_2 = $wpdb->get_var( $sql );
-			$member_nbr = $member_nbr_1 - $member_nbr_2;
+			// for previous months: take members that started before the end of the month and were still a member after the end of the month
+			// Always ignore pending (a member could've signed up months ago and still not paid)
+			$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date<=%s AND (end_date >= %s OR end_date = '0000-00-00') AND status<>0 AND membership_id IN ($ids)", $limit_end, $limit_end );
+			$member_nbr = $wpdb->get_var( $sql );
+			$member_nbr .= $sql;
 		}
 		$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
 		$member_nbr_new = $wpdb->get_var( $sql );

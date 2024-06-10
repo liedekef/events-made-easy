@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.48 (2024//) =
+* Mollie API update
+
 = 2.4.47 (2024/06/08) =
 * Make sort on membership name work in members overview
 * Small fix in membership statistics (some counters included pending members)

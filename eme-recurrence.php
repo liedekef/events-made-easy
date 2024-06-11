@@ -219,6 +219,10 @@ function eme_insert_events_for_recurrence( $recurrence, $event ) {
 	foreach ( $matching_days as $day ) {
 		$event['event_start'] = "$day $event_start_time";
 		$eme_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+		// no past events will be created
+		if ($eme_date_obj < $eme_date_obj_now) {
+			continue;
+		}
 		$day_difference       = $eme_date_obj_orig->getDifferenceInDays( $eme_date_obj );
 		$eme_date_obj->addDays( $recurrence['event_duration'] - 1 );
 		$event_end_date     = $eme_date_obj->getDate();
@@ -339,6 +343,10 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	foreach ( $matching_days as $day ) {
 		$event['event_start'] = "$day $event_start_time";
 		$eme_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
+		// no past events will be created
+		if ($eme_date_obj < $eme_date_obj_now) {
+			continue;
+		}
 		$day_difference       = $eme_date_obj_orig->getDifferenceInDays( $eme_date_obj );
 		$eme_date_obj->addDays( $recurrence['event_duration'] - 1 );
 		$event_end_date     = $eme_date_obj->getDate();

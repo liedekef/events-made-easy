@@ -515,7 +515,6 @@ function eme_get_membership_stats( $ids ) {
 			// Always ignore pending (a member could've signed up months ago and still not paid)
 			$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date<=%s AND (end_date >= %s OR end_date = '0000-00-00') AND status<>0 AND membership_id IN ($ids)", $limit_end, $limit_end );
 			$member_nbr = $wpdb->get_var( $sql );
-			$member_nbr .= $sql;
 		}
 		$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
 		$member_nbr_new = $wpdb->get_var( $sql );

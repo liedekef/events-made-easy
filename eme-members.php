@@ -59,6 +59,10 @@ function eme_init_member_props( $props = [] ) {
 }
 
 function eme_init_membership_props( $props = [] ) {
+	$new_membership = 0;
+	if (empty($props)) {
+		$new_membership = 1;
+	}
 	if ( ! isset( $props['reminder_days'] ) ) {
 		$props['reminder_days'] = '';
 	} else {
@@ -116,23 +120,23 @@ function eme_init_membership_props( $props = [] ) {
 		$props['vat_pct'] = get_option( 'eme_default_vat' );
 	}
 	if ( ! isset( $props['use_cfcaptcha'] ) ) {
-		$props['use_cfcaptcha'] = get_option( 'eme_cfcaptcha_for_forms' ) ? 1 : 0;
+		$props['use_cfcaptcha'] = get_option( 'eme_cfcaptcha_for_forms' ) && $new_membership ? 1 : 0;
 	}
 	if ( ! isset( $props['use_hcaptcha'] ) ) {
-		$props['use_hcaptcha'] = get_option( 'eme_hcaptcha_for_forms' ) ? 1 : 0;
+		$props['use_hcaptcha'] = get_option( 'eme_hcaptcha_for_forms' ) && $new_membership ? 1 : 0;
 	}
 	if ( ! isset( $props['use_recaptcha'] ) ) {
-		$props['use_recaptcha'] = get_option( 'eme_recaptcha_for_forms' ) ? 1 : 0;
+		$props['use_recaptcha'] = get_option( 'eme_recaptcha_for_forms' ) && $new_membership ? 1 : 0;
 	}
 	if ( ! isset( $props['use_captcha'] ) ) {
-		$props['use_captcha'] = get_option( 'eme_captcha_for_forms' ) ? 1 : 0;
+		$props['use_captcha'] = get_option( 'eme_captcha_for_forms' ) && $new_membership ? 1 : 0;
 	}
 	// checking it here also takes care of the case GD gets disabled after membership creation
 	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
 		$props['use_captcha'] = 0;
 	}
 	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
-                $props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) ? 1 : 0;
+                $props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) && $new_membership ? 1 : 0;
         }
 	if ( ! isset( $props['create_wp_user'] ) ) {
 		$props['create_wp_user'] = 0;

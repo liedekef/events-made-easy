@@ -51,6 +51,11 @@ function eme_new_event() {
 }
 
 function eme_init_event_props( $props = [] ) {
+	$new_event=0;
+	if (empty($props)) {
+		$new_event=1;
+	}
+	
 	if ( ! isset( $props['create_wp_user'] ) ) {
 		$props['create_wp_user'] = 0;
 	}
@@ -76,7 +81,7 @@ function eme_init_event_props( $props = [] ) {
 		$props['take_attendance'] = 0;
 	}
 	if ( ! isset( $props['require_user_confirmation'] ) ) {
-		if ( empty( $props ) ) {
+		if ( $new_event ) {
 			$props['require_user_confirmation'] = get_option( 'eme_rsvp_require_user_confirmation' );
 		} else {
 			$props['require_user_confirmation'] = 0;
@@ -142,7 +147,7 @@ function eme_init_event_props( $props = [] ) {
 	foreach ( array_keys($payment_gateways) as $pg ) {
 		// the properties for payment gateways alsways have "use_" in front of them, so add it
 		if ( ! isset( $props[ 'use_' . $pg ] ) ) {
-				$props[ 'use_' . $pg ] = 0;
+			$props[ 'use_' . $pg ] = 0;
 		} else {
 			$props[ 'use_' . $pg ] = intval( $props[ 'use_' . $pg ] );
 		}
@@ -170,23 +175,23 @@ function eme_init_event_props( $props = [] ) {
 		$props['wp_page_template'] = '';
 	}
 	if ( ! isset( $props['use_hcaptcha'] ) ) {
-		$props['use_hcaptcha'] = get_option( 'eme_hcaptcha_for_forms' ) ? 1 : 0;
+		$props['use_hcaptcha'] = get_option( 'eme_hcaptcha_for_forms' ) && $new_event ? 1 : 0;
 	}
 	if ( ! isset( $props['use_recaptcha'] ) ) {
-		$props['use_recaptcha'] = get_option( 'eme_recaptcha_for_forms' ) ? 1 : 0;
+		$props['use_recaptcha'] = get_option( 'eme_recaptcha_for_forms' ) && $new_event ? 1 : 0;
 	}
 	if ( ! isset( $props['use_cfcaptcha'] ) ) {
-		$props['use_cfcaptcha'] = get_option( 'eme_cfcaptcha_for_forms' ) ? 1 : 0;
+		$props['use_cfcaptcha'] = get_option( 'eme_cfcaptcha_for_forms' ) && $new_event ? 1 : 0;
 	}
 	if ( ! isset( $props['use_captcha'] ) ) {
-		$props['use_captcha'] = get_option( 'eme_captcha_for_forms' ) ? 1 : 0;
+		$props['use_captcha'] = get_option( 'eme_captcha_for_forms' ) && $new_event ? 1 : 0;
 	}
 	// checking it here also takes care of the case GD gets disabled after event creation
 	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
 		$props['use_captcha'] = 0;
 	}
 	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
-		$props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) ? 1 : 0;
+		$props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) && $new_event ? 1 : 0;
 	}
 	if ( ! isset( $props['dyndata_all_fields'] ) ) {
 		$props['dyndata_all_fields'] = 0;

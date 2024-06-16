@@ -118,7 +118,7 @@ function eme_init_event_props( $props = [] ) {
 		$props['waitinglist_seats'] = 0;
 	}
 	if ( ! isset( $props['check_free_waiting'] ) ) {
-		if ( empty( $props ) ) {
+		if ( $new_event ) {
 			$props['check_free_waiting'] = get_option( 'eme_check_free_waiting' );
 		} else {
 			$props['check_free_waiting'] = 0;

@@ -6150,19 +6150,19 @@ function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
 
 	$search = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
 	if ( $exclude_personid > 0 ) {
-		$search .= " AND members.person_id<>$exclude_personid";
+		$search .= " AND people.person_id<>$exclude_personid";
 	}
 	if ( $related_member_id > 0 ) {
 		$search .= " AND members.member_id<>$related_member_id";
 	}
 	// we need people not in the membership, so ...
 	if ( $membership_id > 0 ) {
-		$search .= " AND (members.membership_id<>$membership_id OR (members.status = " . EME_MEMBER_STATUS_EXPIRED . '))';
+		$search .= " AND (members.membership_id<>$membership_id OR members.membership_id IS NULL OR members.status = " . EME_MEMBER_STATUS_EXPIRED . ' OR members.status IS NULL)';
 	}
 
 	$sql = "SELECT people.person_id,people.lastname,people.firstname,people.email
-	   FROM $members_table AS members
-	   LEFT JOIN $people_table AS people ON members.person_id=people.person_id
+	   FROM $people_table AS people
+	   LEFT JOIN $members_table AS members ON members.person_id=people.person_id
            WHERE $search";
 
 	$persons = $wpdb->get_results( $sql, ARRAY_A );

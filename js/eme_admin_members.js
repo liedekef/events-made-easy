@@ -743,9 +743,15 @@ jQuery(document).ready(function ($) {
 			},
 			minLength: 2
 		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
-			return $( '<li></li>' )
-				.append('<a><strong>'+item.lastname+' '+item.firstname+'</strong><br /><small>'+item.email+'</small></a>')
-				.appendTo( ul );
+			if (item.person_id==0) {
+				return $( '<li></li>' )
+					.append('<strong>'+ememembers.translate_nomatchmember+'</strong>')
+					.appendTo( ul );
+			} else {
+				return $( '<li></li>' )
+					.append('<a><strong>'+item.lastname+' '+item.firstname+' ('+item.person_id+')'+'</strong><br /><small>'+item.email+ '</small></a>')
+					.appendTo( ul );
+			}
 		};
 
 		// if manual input: set the hidden field empty again

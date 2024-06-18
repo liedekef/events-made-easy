@@ -507,6 +507,15 @@ jQuery(document).ready(function ($) {
            updateShowHideReminder();
 	}
 
+	if ($('select#paid').length) {
+           $('select#paid').on("change",function(){
+		   if ($('select#paid').val() == '1' && $('input#dp_payment_date').val() == '') {
+			   var curdate=new Date();
+			   $('#dp_payment_date').fdatepicker().data('fdatepicker').selectDate(curdate);
+		   }
+	   });
+	}
+
         //function updateShowHideMemberState () {
         //   if ($('select#status_automatic').val() == '1') {
         //      $('select#status').attr('disabled', true);
@@ -745,7 +754,7 @@ jQuery(document).ready(function ($) {
 		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
 			if (item.person_id==0) {
 				return $( '<li></li>' )
-					.append('<strong>'+ememembers.translate_nomatchmember+'</strong>')
+					.append('<strong>'+ememembers.translate_nomatchperson+'</strong>')
 					.appendTo( ul );
 			} else {
 				return $( '<li></li>' )

@@ -1429,7 +1429,8 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 				if ( $mailing['status'] == 'cancelled' ) {
 					eme_cancel_mailing( $id );
 				} elseif ( $stats['planned'] > 0 && $stats['sent'] == 0 ) {
-					eme_mark_mailing_planned( $id );
+					$to_send = eme_count_mails_to_send( $id );
+					eme_mark_mailing_planned( $id, $to_send );
 				} elseif ( $stats['planned'] > 0 && $stats['sent'] > 0 ) {
 					eme_mark_mailing_ongoing( $id );
 				} else {

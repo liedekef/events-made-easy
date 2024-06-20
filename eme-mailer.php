@@ -726,7 +726,7 @@ function eme_send_queued() {
 	// thanks to the fact we substraced 5 seconds from the $interval, we always have time to finish this
 	$ongoing_mailings = eme_get_ongoing_mailings();
 	foreach ( $ongoing_mailings as $mailing_id ) {
-		if ( eme_count_mails_to_sent( $mailing_id ) == 0 ) {
+		if ( eme_count_mails_to_send( $mailing_id ) == 0 ) {
 			eme_mark_mailing_completed( $mailing_id );
 		}
 	}
@@ -746,17 +746,25 @@ function eme_get_ongoing_mailings() {
 	return $wpdb->get_col( $sql );
 }
 
-function eme_mark_mailing_planned( $mailing_id ) {
+function eme_mark_mailing_planned( $mailing_id, $planned_count ) {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='planned' where id=%d", $mailing_id );
+	$stats          = [
+                'planned'          => $planned_count,
+                'sent'             => 0,
+                'failed'           => 0,
+                'cancelled'        => 0,
+                'ignored'          => 0,
+                'total_read_count' => 0,
+        ];
+	$sql = $wpdb->prepare( "UPDATE $mailings_table SET status='planned', stats=%s WHERE id=%d", eme_serialize( $stats ), $mailing_id );
 	$wpdb->query( $sql );
 }
 
 function eme_mark_mailing_ongoing( $mailing_id ) {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='ongoing' where id=%d", $mailing_id );
+	$sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='ongoing' WHERE id=%d", $mailing_id );
 	$wpdb->query( $sql );
 }
 
@@ -764,7 +772,7 @@ function eme_mark_mailing_completed( $mailing_id ) {
 	global $wpdb;
 	$stats          = eme_get_mailing_stats( $mailing_id );
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-	$sql            = $wpdb->prepare( "UPDATE $mailings_table set status='completed', stats=%s where id=%d", eme_serialize( $stats ), $mailing_id );
+	$sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='completed', stats=%s WHERE id=%d", eme_serialize( $stats ), $mailing_id );
 	$wpdb->query( $sql );
 	if ( $stats['failed'] > 0 ) {
 		$mailing        = eme_get_mailing( $mailing_id );
@@ -781,11 +789,16 @@ function eme_archive_mailing( $mailing_id ) {
 		return;
 	}
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-	$stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
-	$sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='archived', stats=%s WHERE id=%d", $stats, $mailing_id );
+	if ( $mailing['status'] == 'completed' ) {
+		// for completed mailings, the stats no longer change
+		$sql = $wpdb->prepare( "UPDATE $mailings_table SET status='archived' WHERE id=%d", $mailing_id );
+	} else {
+		$stats = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
+		$sql   = $wpdb->prepare( "UPDATE $mailings_table SET status='archived', stats=%s WHERE id=%d", $stats, $mailing_id );
+	}
 	$wpdb->query( $sql );
 	$queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-	$sql         = $wpdb->prepare( "DELETE FROM $queue_table where mailing_id=%d", $mailing_id );
+	$sql         = $wpdb->prepare( "DELETE FROM $queue_table WHERE mailing_id=%d", $mailing_id );
 	$wpdb->query( $sql );
 }
 
@@ -816,7 +829,7 @@ function eme_archive_old_mailings() {
 	$eme_date_obj   = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$old_date       = $eme_date_obj->minusDays( $archive_old_mailings_days )->getDateTime();
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-	$sql            = "SELECT id from $mailings_table WHERE creation_date < '$old_date' AND (status='completed' OR status='cancelled')";
+	$sql            = "SELECT id FROM $mailings_table WHERE creation_date < '$old_date' AND (status='completed' OR status='cancelled')";
 	$mailing_ids    = $wpdb->get_col( $sql );
 	foreach ( $mailing_ids as $mailing_id ) {
 		eme_archive_mailing( $mailing_id );
@@ -824,7 +837,7 @@ function eme_archive_old_mailings() {
 
 	// now remove old mails not belonging to a specific mailing
 	$queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-	$sql         = "DELETE FROM $queue_table where mailing_id=0 AND creation_date < '$old_date'";
+	$sql         = "DELETE FROM $queue_table WHERE mailing_id=0 AND creation_date < '$old_date'";
 	$wpdb->query( $sql );
 }
 
@@ -849,30 +862,31 @@ function eme_cancel_mailing( $mailing_id ) {
 function eme_delete_mailing_mails( $id ) {
 	global $wpdb;
 	$queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-	$sql         = $wpdb->prepare( "DELETE FROM $queue_table where mailing_id=%d", $id );
+	$sql         = $wpdb->prepare( "DELETE FROM $queue_table WHERE mailing_id=%d", $id );
 	$wpdb->query( $sql );
 }
 function eme_delete_mailing( $id ) {
 	global $wpdb;
 	eme_delete_mailing_mails( $id );
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-	$sql            = $wpdb->prepare( "DELETE FROM $mailings_table where id=%d", $id );
+	$sql            = $wpdb->prepare( "DELETE FROM $mailings_table WHERE id=%d", $id );
 	$wpdb->query( $sql );
 }
 
 function eme_get_mail( $id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-	$sql   = $wpdb->prepare( "SELECT * from $table WHERE id=%d", $id );
+	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE id=%d", $id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
 
 function eme_get_mailing( $id ) {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-	$sql            = $wpdb->prepare( "SELECT * from $mailings_table WHERE id=%d", $id );
+	$sql            = $wpdb->prepare( "SELECT * FROM $mailings_table WHERE id=%d", $id );
 	return $wpdb->get_row( $sql, ARRAY_A );
 }
+
 function eme_get_mailings( $archive = 0 ) {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
@@ -881,7 +895,7 @@ function eme_get_mailings( $archive = 0 ) {
 	} else {
 		$where = " WHERE status<>'archived' ";
 	}
-	$sql = "SELECT * from $mailings_table $where ORDER BY planned_on,name";
+	$sql = "SELECT * FROM $mailings_table $where ORDER BY planned_on,name";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
@@ -895,6 +909,7 @@ function eme_mail_states() {
 	];
 	return $states;
 }
+
 function eme_mail_localizedstates() {
 	$states = [
 		0 => __( 'Planned', 'events-made-easy' ),
@@ -906,7 +921,7 @@ function eme_mail_localizedstates() {
 	return $states;
 }
 
-function eme_count_mails_to_sent( $mailing_id ) {
+function eme_count_mails_to_send( $mailing_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
 	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE status=0 AND mailing_id=%d", $mailing_id );
@@ -1009,15 +1024,25 @@ function eme_check_mailing_receivers( $mailing_id ) {
 	}
 	$conditions = eme_unserialize( $mailing['conditions'] );
 	// we delete all planned mails for the mailing and enter the mails anew, this allows us to have all mails with the latest content and receivers
+	// for newer versions of EME this delete no longer does anything since the individual mails are only inserted here when calling eme_update_mailing_receivers
 	eme_delete_mailing_mails( $mailing_id );
 	eme_update_mailing_receivers( $mailing['subject'], $mailing['body'], $mailing['fromemail'], $mailing['fromname'], $mailing['replytoemail'], $mailing['replytoname'], $mailing['mail_text_html'], $conditions, $mailing_id );
 }
 
-function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email, $from_name, $replyto_email, $replyto_name, $mail_text_html, $conditions, $mailing_id = 0 ) {
-	$res['mail_problems'] = 0;
-	$res['not_sent']      = '';
-	$mail_subject         = eme_replace_generic_placeholders( $mail_subject );
-	$mail_message         = eme_replace_generic_placeholders( $mail_message );
+function eme_count_planned_mailing_receivers( $conditions, $mailing_id = 0) {
+	return eme_update_mailing_receivers( conditions: $conditions, mailing_id: $mailing_id, count_only: 1);
+}
+
+function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $from_email = '', $from_name = '', $replyto_email = '', $replyto_name = '', $mail_text_html = 'html', $conditions = [], $mailing_id = 0, $count_only = 0 ) {
+	$res = [
+		'mail_problems' => 0,
+		'total'		=> 0,
+		'not_sent'      => ''
+	];
+	if (!$count_only) {
+		$mail_subject = eme_replace_generic_placeholders( $mail_subject );
+		$mail_message = eme_replace_generic_placeholders( $mail_message );
+	}
 	$not_sent             = [];
 	$emails_handled       = [];
 	if ( isset( $conditions['ignore_massmail_setting'] ) && $conditions['ignore_massmail_setting'] == 1 ) {
@@ -1078,10 +1103,14 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 			// we could postpone the placeholder replacement until the moment of actual sending (for large number of mails)
 			// but that complicates the queue-code and is in fact ugly (I did it, but removed it on 2017-12-04)
 			// Once I hit execution timeouts I'll rethink it again
-			$membership  = eme_get_membership( $member['membership_id'] );
-			$tmp_subject = eme_replace_member_placeholders( $mail_subject, $membership, $member, 'text' );
-			$tmp_message = eme_replace_member_placeholders( $mail_message, $membership, $member, $mail_text_html );
-			$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $attachment_id_arr );
+			if ($count_only) {
+				$mail_res    = eme_is_email($person['email']);
+			} else {
+				$membership  = eme_get_membership( $member['membership_id'] );
+				$tmp_subject = eme_replace_member_placeholders( $mail_subject, $membership, $member, 'text' );
+				$tmp_message = eme_replace_member_placeholders( $mail_message, $membership, $member, $mail_text_html );
+				$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $attachment_id_arr );
+			}
 			if ( ! $mail_res ) {
 				$res['mail_problems'] = 1;
 				$not_sent[]           = $person_name;
@@ -1098,9 +1127,13 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 			$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
 			// we will ignore double emails
 			if ( ! in_array( $person['email'], $emails_handled ) ) {
-				$tmp_subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
-				$tmp_message = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
-				$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+				if ($count_only) {
+					$mail_res    = eme_is_email($person['email']);
+				} else {
+					$tmp_subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
+					$tmp_message = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
+					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+				}
 				if ( ! $mail_res ) {
 					$res['mail_problems'] = 1;
 					$not_sent[]           = $person_name;
@@ -1145,11 +1178,15 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 				$attendee_ids = eme_get_attendee_ids( $event_id, $conditions['rsvp_status'], $conditions['only_unpaid'] );
 				foreach ( $attendee_ids as $attendee_id ) {
 					$attendee    = eme_get_person( $attendee_id );
-					$tmp_subject = eme_replace_attendees_placeholders( $mail_subject, $event, $attendee, 'text' );
-					$tmp_message = eme_replace_attendees_placeholders( $mail_message, $event, $attendee, $mail_text_html );
-					$person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
-					$person_id   = $attendee['person_id'];
-					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+					if ($count_only) {
+						$mail_res    = eme_is_email($attendee['email']);
+					} else {
+						$tmp_subject = eme_replace_attendees_placeholders( $mail_subject, $event, $attendee, 'text' );
+						$tmp_message = eme_replace_attendees_placeholders( $mail_message, $event, $attendee, $mail_text_html );
+						$person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
+						$person_id   = $attendee['person_id'];
+						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+					}
 					if ( ! $mail_res ) {
 						$res['mail_problems'] = 1;
 						$not_sent[]           = $person_name;
@@ -1161,11 +1198,15 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 					// we use the language done in the booking for the mails, not the attendee lang in this case
 					$attendee = eme_get_person( $booking['person_id'] );
 					if ( $attendee && is_array( $attendee ) ) {
-						$tmp_subject = eme_replace_booking_placeholders( $mail_subject, $event, $booking, 0, 'text' );
-						$tmp_message = eme_replace_booking_placeholders( $mail_message, $event, $booking, 0, $mail_text_html );
-						$person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
-						$person_id   = $attendee['person_id'];
-						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+						if ($count_only) {
+							$mail_res    = eme_is_email($attendee['email']);
+						} else {
+							$tmp_subject = eme_replace_booking_placeholders( $mail_subject, $event, $booking, 0, 'text' );
+							$tmp_message = eme_replace_booking_placeholders( $mail_message, $event, $booking, 0, $mail_text_html );
+							$person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
+							$person_id   = $attendee['person_id'];
+							$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+						}
 						if ( ! $mail_res ) {
 							$res['mail_problems'] = 1;
 							$not_sent[]           = $person_name;
@@ -1219,13 +1260,17 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 					// we could postpone the placeholder replacement until the moment of actual sending (for large number of mails)
 					// but that complicates the queue-code and is in fact ugly (I did it, but removed it on 2017-12-04)
 					// Once I hit execution timeouts I'll rethink it again
-					$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
-					$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
-					$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $person['email'], $person['lastname'], $person['firstname'], $event );
-					$membership  = eme_get_membership( $member['membership_id'] );
-					$tmp_subject = eme_replace_member_placeholders( $tmp_subject, $membership, $member, 'text' );
-					$tmp_message = eme_replace_member_placeholders( $tmp_message, $membership, $member, $mail_text_html );
-					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $attachment_id_arr );
+					if ($count_only) {
+						$mail_res    = eme_is_email($person['email']);
+					} else {
+						$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
+						$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
+						$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $person['email'], $person['lastname'], $person['firstname'], $event );
+						$membership  = eme_get_membership( $member['membership_id'] );
+						$tmp_subject = eme_replace_member_placeholders( $tmp_subject, $membership, $member, 'text' );
+						$tmp_message = eme_replace_member_placeholders( $tmp_message, $membership, $member, $mail_text_html );
+						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $attachment_id_arr );
+					}
 
 					if ( ! $mail_res ) {
 						$res['mail_problems'] = 1;
@@ -1241,17 +1286,21 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 					$person = eme_get_person( $person_id );
 					// we will ignore double emails
 					if ( ! in_array( $person['email'], $emails_handled ) ) {
+						$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
 						if ( ! $ignore_massmail_setting && ! $person['massmail'] ) {
 							continue;
 						}
-						$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
-						$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
-						$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $person['email'], $person['lastname'], $person['firstname'], $event );
-						$tmp_subject = eme_replace_people_placeholders( $tmp_subject, $person, 'text' );
-						$tmp_message = eme_replace_people_placeholders( $tmp_message, $person, $mail_text_html );
-						$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
-						$person_id   = $person['person_id'];
-						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+						if ($count_only) {
+							$mail_res    = eme_is_email($person['email']);
+						} else {
+							$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
+							$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
+							$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $person['email'], $person['lastname'], $person['firstname'], $event );
+							$tmp_subject = eme_replace_people_placeholders( $tmp_subject, $person, 'text' );
+							$tmp_message = eme_replace_people_placeholders( $tmp_message, $person, $mail_text_html );
+							$person_id   = $person['person_id'];
+							$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $attachment_id_arr );
+						}
 						if ( ! $mail_res ) {
 							$res['mail_problems'] = 1;
 							$not_sent[]           = $person_name;
@@ -1275,10 +1324,15 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 					if ( in_array( $wp_user->ID, $attendee_wp_ids ) ) {
 						continue;
 					}
-					$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $lang, 0 );
-					$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $lang, 0 );
-					$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $wp_user->user_firstname, $wp_user->display_name, $wp_user->display_name, $event );
-					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $attachment_id_arr );
+					if ($count_only) {
+						// wp email is always considered valid, but let's keep the code identical
+						$mail_res    = eme_is_email($wp_user->user_email);
+					} else {
+						$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $lang, 0 );
+						$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $lang, 0 );
+						$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $wp_user->user_firstname, $wp_user->display_name, $wp_user->display_name, $event );
+						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $attachment_id_arr );
+					}
 					if ( ! $mail_res ) {
 						$res['mail_problems'] = 1;
 						$not_sent[]           = $wp_user->display_name;
@@ -1290,6 +1344,7 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 		}
 	}
 	$res['not_sent'] = join( ', ', $not_sent );
+	$res['total'] = count($emails_handled);
 	return $res;
 }
 
@@ -1698,8 +1753,9 @@ function eme_send_mails_ajax_actions( $action ) {
 				$dates = explode( ',', $mailing_datetime );
 				foreach ( $dates as $datetime ) {
 					$mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-					$res        = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
-					eme_mark_mailing_planned( $mailing_id );
+					// we just need the count of receivers here, the actual insert of individual mails happens when the mailing starts
+					$res        = eme_count_planned_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
+					eme_mark_mailing_planned( $mailing_id, $res['total'] );
 				}
 			} else {
 				$res = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
@@ -1890,8 +1946,9 @@ function eme_send_mails_ajax_actions( $action ) {
 					$dates = explode( ',', $mailing_datetime );
 					foreach ( $dates as $datetime ) {
 						$mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-						$res        = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
-						eme_mark_mailing_planned( $mailing_id );
+						// we just need the count of receivers here, the actual insert of individual mails happens when the mailing starts
+						$res        = eme_count_planned_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
+						eme_mark_mailing_planned( $mailing_id, $res['total'] );
 					}
 				} else {
 					$res = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
@@ -2769,7 +2826,13 @@ function eme_ajax_mailings_div() {
 			$action = '';
 		} elseif ( $mailing['status'] == 'planned' ) {
 			$status = __( 'Planned', 'events-made-easy' );
-			$stats  = eme_get_mailing_stats( $id );
+			// older mailings inserted the mails directly and not update the stats
+			// newer mailings only set the planned stats and update the receivers the moment the mailing starts
+			if (empty($mailing['stats'])) {
+				$stats  = eme_get_mailing_stats( $id );
+			} else {
+				$stats  = eme_unserialize( $mailing['stats'] );
+			}
 			$extra  = sprintf( __( '%d mails left', 'events-made-easy' ), $stats['planned'] );
 			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a> <a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
 		} elseif ( $mailing['status'] == 'ongoing' ) {

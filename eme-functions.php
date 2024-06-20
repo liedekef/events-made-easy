@@ -3702,12 +3702,7 @@ function eme_prettyprint_assoc( $jsonData, $pre = '' ) {
 }
 
 function eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size ) {
-	if ( ! is_dir( $targetBasePath ) ) {
-		wp_mkdir_p( $targetBasePath );
-	}
-	if ( ! is_file( $targetBasePath . '/index.html' ) ) {
-		touch( $targetBasePath . '/index.html' );
-	}
+	eme_mkdir_with_index( $targetBasePath );
 	if ( $size == 'small' ) {
 		$real_size = 1;
 	} elseif ( $size == 'medium' ) {

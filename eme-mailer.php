@@ -1748,7 +1748,7 @@ function eme_send_mails_ajax_actions( $action ) {
 				foreach ( $dates as $datetime ) {
 					$mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
 					// we just need the count of receivers here, the actual insert of individual mails happens when the mailing starts
-					$res        = eme_count_planned_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
+					$res        = eme_count_planned_mailing_receivers( $conditions, $mailing_id );
 					eme_mark_mailing_planned( $mailing_id, $res['total'] );
 				}
 			} else {
@@ -1941,7 +1941,7 @@ function eme_send_mails_ajax_actions( $action ) {
 					foreach ( $dates as $datetime ) {
 						$mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
 						// we just need the count of receivers here, the actual insert of individual mails happens when the mailing starts
-						$res        = eme_count_planned_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
+						$res        = eme_count_planned_mailing_receivers( $conditions, $mailing_id );
 						eme_mark_mailing_planned( $mailing_id, $res['total'] );
 					}
 				} else {
@@ -2817,7 +2817,7 @@ function eme_ajax_mailings_div() {
 			$status = __( 'Initializing ...', 'events-made-easy' );
 			$stats  = '';
 			$extra  = '';
-			$action = '';
+			$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
 		} elseif ( $mailing['status'] == 'planned' ) {
 			$status = __( 'Planned', 'events-made-easy' );
 			// older mailings inserted the mails directly and not update the stats

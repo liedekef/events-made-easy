@@ -1016,12 +1016,6 @@ function eme_check_mailing_receivers( $mailing_id ) {
 	if ( ! $mailing || empty( $mailing['conditions'] ) ) {
 		return;
 	}
-	// don't update the receivers if the mailing was created less than 5 minutes ago
-	$eme_date_obj_now     = new ExpressiveDate( 'now', EME_TIMEZONE );
-	$eme_date_obj_created = new ExpressiveDate( $mailing['creation_date'], EME_TIMEZONE );
-	if ( $eme_date_obj_created->getDifferenceInMinutes( $eme_date_obj_now ) <= 5 ) {
-		return;
-	}
 	$conditions = eme_unserialize( $mailing['conditions'] );
 	// we delete all planned mails for the mailing and enter the mails anew, this allows us to have all mails with the latest content and receivers
 	// for newer versions of EME this delete no longer does anything since the individual mails are only inserted here when calling eme_update_mailing_receivers

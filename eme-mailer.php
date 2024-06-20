@@ -1281,9 +1281,9 @@ function eme_update_mailing_receivers( $mail_subject, $mail_message, $from_email
 					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $attachment_id_arr );
 					if ( ! $mail_res ) {
 						$res['mail_problems'] = 1;
-						$not_sent[]           = $person_name;
+						$not_sent[]           = $wp_user->display_name;
 					} else {
-						$emails_handled[] = $person['email'];
+						$emails_handled[] = $wp_user->user_email;
 					}
 				}
 			}

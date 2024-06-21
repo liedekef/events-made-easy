@@ -7216,7 +7216,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 	<input id="rec-end-date-to-submit" type="hidden" name="recurrence_end_date" value="">
 	<input id="localized-rec-end-date" type="text" name="localized_recurrence_end_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='<?php echo eme_js_datetime( $recurrence['recurrence_end_date'] ); ?>' data-alt-field='rec-end-date-to-submit' class='eme_formfield_fdate'>
 	<p class="eme_smaller" id='recurrence-dates-explanation'>
-	<?php esc_html_e( 'The recurrence beginning and end date. If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily).', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'The recurrence beginning and end date. If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one.', 'events-made-easy' ); ?>
 	</p>
 	<span id='recurrence-dates-explanation-specificdates'>
 	<?php esc_html_e( 'Select all the dates you want the event to begin on.', 'events-made-easy' ); ?>

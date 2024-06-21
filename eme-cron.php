@@ -187,6 +187,12 @@ function eme_cron_events_daily_actions() {
 	eme_tasks_send_signup_reminders();
 	eme_rsvp_send_pending_reminders();
 	eme_rsvp_send_approved_reminders();
+	$recurrences = eme_get_perpetual_recurrences();
+	foreach ($recurrences as $recurrence) {
+		$event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence['recurrence_id'] ) );
+		eme_db_update_recurrence( $recurrence, $event, 1 );
+
+	}
 	if ( has_action( 'eme_events_daily_action' ) ) {
 		do_action( 'eme_events_daily_action' );
 	}

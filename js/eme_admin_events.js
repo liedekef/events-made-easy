@@ -449,11 +449,7 @@ jQuery(document).ready( function($) {
       // users cannot submit the event form unless some fields are filled
       var recurring = $('input[name=repeated_event]:checked').val();
       
-      if (recurring && $('input#localized-rec-end-date').val() == '' && $('select#recurrence-frequency').val() != 'specific') {
-         alert (emeevents.translate_enddate_required); 
-         $('input#localized-rec-end-date').css('border','2px solid red');
-         return false;
-      } else if (recurring && $('input#localized-rec-start-date').val() == $('input#localized-rec-end-date').val()) {
+      if (recurring && $('input#localized-rec-start-date').val() == $('input#localized-rec-end-date').val()) {
          alert (emeevents.translate_startenddate_identical); 
          $('input#localized-rec-end-date').css('border','2px solid red');
          return false;

@@ -28,6 +28,20 @@ function eme_get_recurrence( $recurrence_id ) {
 	return $recurrence;
 }
 
+function eme_get_perpetual_recurrences() {
+	global $wpdb;
+	$res = [];
+	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
+	$sql              = $wpdb->prepare( "SELECT * FROM $recurrence_table WHERE recurrence_freq != 'specific'" );
+	$recurrences      = $wpdb->get_results( $sql, ARRAY_A );
+	foreach ($recurrences as $recurrence) {
+		if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
+			$res[] = $recurrence;
+		}
+	}
+	return $res;
+}
+
 function eme_get_recurrence_days( $recurrence ) {
 	$matching_days = [];
 
@@ -41,7 +55,15 @@ function eme_get_recurrence_days( $recurrence ) {
 	}
 
 	$start_date_obj = new ExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
-	$end_date_obj   = new ExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
+	if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
+		// end date empty, so take the start date, add eleven years to it to make sure
+		// and indicate we just want the next 10 occurences
+		$end_date_obj     = $start_date_obj->copy()->addYears(11);
+		$only_the_next_10 = 1;
+	} else {
+		$end_date_obj     = new ExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
+		$only_the_next_10 = 0;
+	}
 
 	$holidays = [];
 	if ( isset( $recurrence['holidays_id'] ) && $recurrence['holidays_id'] > 0 ) {
@@ -65,8 +87,9 @@ function eme_get_recurrence_days( $recurrence ) {
 	$monthcounter     = 0;
 	$start_monthday   = $start_date_obj->format( 'j' );
 	$cycle_date_obj   = $start_date_obj->copy();
+	$occurence_counter = 0;
 
-	while ( $cycle_date_obj <= $end_date_obj ) {
+	while ( $cycle_date_obj <= $end_date_obj && $occurence_counter<=10 ) {
 		$ymd       = $cycle_date_obj->getDate();
 
 		// skip holidays
@@ -89,6 +112,7 @@ function eme_get_recurrence_days( $recurrence ) {
 		if ( $recurrence['recurrence_freq'] == 'daily' ) {
 			if ( $daycounter % $recurrence['recurrence_interval'] == 0 ) {
 				array_push( $matching_days, $ymd );
+				if ($only_the_next_10==1) $occurence_counter++;
 			}
 		}
 
@@ -96,9 +120,11 @@ function eme_get_recurrence_days( $recurrence ) {
 			if ( $weekcounter % $recurrence['recurrence_interval'] == 0 ) {
 				if ( ! $recurrence['recurrence_byday'] && eme_N_weekday( $cycle_date_obj ) == eme_N_weekday( $start_date_obj ) ) {
 					array_push( $matching_days, $ymd );
+					if ($only_the_next_10==1) $occurence_counter++;
 				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
 					// specific days, so we only check for those days
 					array_push( $matching_days, $ymd );
+					if ($only_the_next_10==1) $occurence_counter++;
 				}
 			}
 		}
@@ -111,13 +137,16 @@ function eme_get_recurrence_days( $recurrence ) {
 				if ( $recurrence['recurrence_byweekno'] == 0 ) {
 					if ( $monthday == $start_monthday ) {
 						array_push( $matching_days, $ymd );
+						if ($only_the_next_10==1) $occurence_counter++;
 					}
 				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
 					$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
 					if ( ( $recurrence['recurrence_byweekno'] == -1 ) && ( $monthday >= $last_week_start[ $month - 1 ] ) ) {
 						array_push( $matching_days, $ymd );
+						if ($only_the_next_10==1) $occurence_counter++;
 					} elseif ( $recurrence['recurrence_byweekno'] == $monthweek ) {
 						array_push( $matching_days, $ymd );
+						if ($only_the_next_10==1) $occurence_counter++;
 					}
 				}
 			}
@@ -130,13 +159,16 @@ function eme_get_recurrence_days( $recurrence ) {
 				if ( $recurrence['recurrence_byweekno'] == 0 ) {
 					if ( $monthday == $start_monthday ) {
 						array_push( $matching_days, $ymd );
+						if ($only_the_next_10==1) $occurence_counter++;
 					}
 				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
 					$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
 					if ( ( $recurrence['recurrence_byweekno'] == -1 ) && ( $monthday >= $last_week_start[ $month - 1 ] ) ) {
 						array_push( $matching_days, $ymd );
+						if ($only_the_next_10==1) $occurence_counter++;
 					} elseif ( $recurrence['recurrence_byweekno'] == $monthweek ) {
 						array_push( $matching_days, $ymd );
+						if ($only_the_next_10==1) $occurence_counter++;
 					}
 				}
 			}
@@ -170,13 +202,14 @@ function eme_db_insert_recurrence( $recurrence, $event ) {
 
 	// some sanity checks
 	$recurrence['recurrence_interval'] = intval( $recurrence['recurrence_interval'] );
-	if ( $recurrence['recurrence_freq'] != 'specific' ) {
+	// if the end date is set, it should be a sensible end date
+	if ( $recurrence['recurrence_freq'] != 'specific' && !eme_is_empty_date($recurrence['recurrence_end_date']) ) {
 		$eme_date_obj1 = new ExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
 		$eme_date_obj2 = new ExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
 		if ( $eme_date_obj2 < $eme_date_obj1 ) {
 			$recurrence['recurrence_end_date'] = $recurrence['recurrence_start_date'];
 		}
-	} else {
+	} elseif ( $recurrence['recurrence_freq'] == 'specific' ) {
 		// get the recurrence start days
 		$matching_days = eme_get_recurrence_days( $recurrence );
 		// find the last start day
@@ -213,6 +246,7 @@ function eme_insert_events_for_recurrence( $recurrence, $event ) {
 	sort( $matching_days );
 	$count = 0;
 	// in order to take tasks into account for recurring events, we need to know the difference in days between the events
+	$eme_date_obj_now  = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_date_obj_orig = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 	$event_start_time  = eme_get_time_from_dt( $event['event_start'] );
 	$event_end_time    = eme_get_time_from_dt( $event['event_end'] );
@@ -246,13 +280,14 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
 
 	// some sanity checks
-	if ( $recurrence['recurrence_freq'] != 'specific' ) {
+	// if the end date is set, it should be a sensible end date
+	if ( $recurrence['recurrence_freq'] != 'specific' && !eme_is_empty_date($recurrence['recurrence_end_date']) ) {
 		$eme_date_obj1 = new ExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
 		$eme_date_obj2 = new ExpressiveDate( $recurrence['recurrence_end_date'], EME_TIMEZONE );
 		if ( $eme_date_obj2 < $eme_date_obj1 ) {
 			$recurrence['recurrence_end_date'] = $recurrence['recurrence_start_date'];
 		}
-	} else {
+	} elseif ( $recurrence['recurrence_freq'] == 'specific' ) {
 		// get the recurrence start days
 		$matching_days = eme_get_recurrence_days( $recurrence );
 		// find the last start day
@@ -420,7 +455,11 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 		'5'  => __( 'the fifth %s of the month', 'events-made-easy' ),
 		'-1' => __( 'the last %s of the month', 'events-made-easy' ),
 	];
-	$output         = sprintf( __( 'From %s to %s', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
+	if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
+		$output         = sprintf( __( 'From %s, perpetual', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
+	} else {
+		$output         = sprintf( __( 'From %s to %s', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
+	}
 	if ( $recurrence['recurrence_freq'] == 'daily' ) {
 		$freq_desc = __( 'everyday', 'events-made-easy' );
 		if ( $recurrence['recurrence_interval'] > 1 ) {
@@ -549,14 +588,14 @@ function eme_ajax_recurrences_list() {
 	}
 	if ( ! empty( $search_start_date ) && ! empty( $search_end_date ) ) {
 		$where_arr[] = "recurrence_start_date >= '$search_start_date'";
-		$where_arr[] = "recurrence_end_date <= '$search_end_date'";
+		$where_arr[] = "(recurrence_end_date <= '$search_end_date' OR recurrence_end_date = '') ";
 	} elseif ( ! empty( $search_start_date ) ) {
 		$where_arr[] = "recurrence_start_date = '$search_start_date'";
 	} elseif ( ! empty( $search_end_date ) ) {
 		$where_arr[] = "recurrence_end_date = '$search_end_date'";
 	} elseif ( ! empty( $scope ) ) {
 		if ( $scope == 'ongoing' ) {
-				$where_arr[] = "recurrence_end_date >= '$today'";
+			$where_arr[] = "(recurrence_end_date >= '$today' OR recurrence_end_date = '')";
 		} elseif ( $scope == 'past' ) {
 			$where_arr[] = "recurrence_end_date < '$today'";
 		}
@@ -748,6 +787,10 @@ function eme_ajax_action_recurrences_status( $ids_arr, $status ) {
 function eme_ajax_action_recurrences_extend( $ids_arr, $rec_new_start_date, $rec_new_end_date ) {
 	foreach ( $ids_arr as $recurrence_id ) {
 		$recurrence = eme_get_recurrence( $recurrence_id );
+		if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
+			// we don't change events for perpetual recurrences here
+			continue;
+		}
 		$event      = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_id ) );
 		if ( ! empty( $event ) ) {
 			if ( ! eme_is_empty_date( $rec_new_start_date ) && ! eme_is_empty_date( $rec_new_end_date ) ) {

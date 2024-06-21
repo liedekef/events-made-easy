@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Avoid creating past events for recurrences
 * Make sure captcha settings can be deactivated per event/membership
 * Planned mailings will now no longer insert the individual mails but do that just before being sent
+* Recurrences no longer need an end date, in which case the next 10 events will be planned (checked daily)
 
 = 2.4.47 (2024/06/08) =
 * Make sort on membership name work in members overview

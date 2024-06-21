@@ -478,10 +478,12 @@ function eme_events_page() {
 			$recurrence['recurrence_start_date']    = isset( $_POST['recurrence_start_date'] ) ? eme_sanitize_request( $_POST['recurrence_start_date'] ) : $event_start_date;
 			$recurrence['recurrence_end_date']      = isset( $_POST['recurrence_end_date'] ) ? eme_sanitize_request( $_POST['recurrence_end_date'] ) : $event_end_date;
 		}
+		// make sure the recurrence_start_date is a date
 		if ( ! eme_is_date( $recurrence['recurrence_start_date'] ) ) {
 			$recurrence['recurrence_start_date'] = '';
 		}
-		if ( ! eme_is_date( $recurrence['recurrence_end_date'] ) ) {
+		// if the recurrence_end_date is not empty, make sure it is a date
+		if ( ! eme_is_empty_date($recurrence['recurrence_end_date']) && ! eme_is_date( $recurrence['recurrence_end_date'] ) ) {
 			$recurrence['recurrence_end_date'] = $recurrence['recurrence_start_date'];
 		}
 		if ( ! eme_are_dates_valid( $recurrence['specific_days'] ) ) {
@@ -6734,9 +6736,6 @@ function eme_validate_event( $event ) {
 	if ( empty( $event['event_name'] ) ) {
 		$troubles .= '<li>' . sprintf( __( '%s is missing!', 'events-made-easy' ), $required_fields['event_name'] ) . '</li>';
 	}
-	if ( isset( $_POST['repeated_event'] ) && $_POST['repeated_event'] == '1' && $_POST['recurrence_freq'] != 'specific' && ( ! isset( $_POST['recurrence_end_date'] ) || $_POST['recurrence_end_date'] == '' ) ) {
-		$troubles .= '<li>' . __( 'Since the event is repeated, you must specify an event date for the recurrence.', 'events-made-easy' ) . '</li>';
-	}
 
 	if ( $event['event_rsvp'] ) {
 		if ( eme_is_multi( $event['event_seats'] ) && ! eme_is_multi( $event['price'] ) ) {
@@ -7217,7 +7216,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 	<input id="rec-end-date-to-submit" type="hidden" name="recurrence_end_date" value="">
 	<input id="localized-rec-end-date" type="text" name="localized_recurrence_end_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='<?php echo eme_js_datetime( $recurrence['recurrence_end_date'] ); ?>' data-alt-field='rec-end-date-to-submit' class='eme_formfield_fdate'>
 	<p class="eme_smaller" id='recurrence-dates-explanation'>
-	<?php esc_html_e( 'The recurrence beginning and end date.', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'The recurrence beginning and end date. If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily).', 'events-made-easy' ); ?>
 	</p>
 	<span id='recurrence-dates-explanation-specificdates'>
 	<?php esc_html_e( 'Select all the dates you want the event to begin on.', 'events-made-easy' ); ?>

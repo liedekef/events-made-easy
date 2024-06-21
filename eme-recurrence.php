@@ -90,8 +90,8 @@ function eme_get_recurrence_days( $recurrence ) {
 	$cycle_date_obj   = $start_date_obj->copy();
 	$occurence_counter = 0;
 
-	while ( $cycle_date_obj <= $end_date_obj && $occurence_counter<=10 ) {
-		$ymd       = $cycle_date_obj->getDate();
+	while ( $cycle_date_obj <= $end_date_obj && $occurence_counter<10 ) {
+		$ymd = $cycle_date_obj->getDate();
 
 		// skip holidays
 		if ( ! empty( $holidays ) && isset( $holidays[ $ymd ] ) ) {
@@ -116,8 +116,8 @@ function eme_get_recurrence_days( $recurrence ) {
 					$matching_days[0] = $ymd;
 				} else {
 					array_push( $matching_days, $ymd );
+					if ( $only_the_next_10 == 1 ) $occurence_counter++;
 				}
-				if ( $only_the_next_10 == 1 ) $occurence_counter++;
 			}
 		}
 
@@ -128,16 +128,16 @@ function eme_get_recurrence_days( $recurrence ) {
 						$matching_days[0] = $ymd;
 					} else {
 						array_push( $matching_days, $ymd );
+						if ( $only_the_next_10 == 1 ) $occurence_counter++;
 					}
-					if ( $only_the_next_10 == 1 ) $occurence_counter++;
 				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
 					// specific days, so we only check for those days
 					if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
 						$matching_days[0] = $ymd;
 					} else {
 						array_push( $matching_days, $ymd );
+						if ( $only_the_next_10 == 1 ) $occurence_counter++;
 					}
-					if ( $only_the_next_10 == 1 ) $occurence_counter++;
 				}
 			}
 		}
@@ -153,8 +153,8 @@ function eme_get_recurrence_days( $recurrence ) {
 							$matching_days[0] = $ymd;
 						} else {
 							array_push( $matching_days, $ymd );
+							if ( $only_the_next_10 == 1 ) $occurence_counter++;
 						}
-						if ( $only_the_next_10 == 1 ) $occurence_counter++;
 					}
 				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
 					$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
@@ -163,15 +163,15 @@ function eme_get_recurrence_days( $recurrence ) {
 							$matching_days[0] = $ymd;
 						} else {
 							array_push( $matching_days, $ymd );
+							if ( $only_the_next_10 == 1 ) $occurence_counter++;
 						}
-						if ( $only_the_next_10 == 1 ) $occurence_counter++;
 					} elseif ( $recurrence['recurrence_byweekno'] == $monthweek ) {
 						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
 							$matching_days[0] = $ymd;
 						} else {
 							array_push( $matching_days, $ymd );
+							if ( $only_the_next_10 == 1 ) $occurence_counter++;
 						}
-						if ( $only_the_next_10 == 1 ) $occurence_counter++;
 					}
 				}
 			}
@@ -187,8 +187,8 @@ function eme_get_recurrence_days( $recurrence ) {
 							$matching_days[0] = $ymd;
 						} else {
 							array_push( $matching_days, $ymd );
+							if ( $only_the_next_10 == 1 ) $occurence_counter++;
 						}
-						if ( $only_the_next_10 == 1 ) $occurence_counter++;
 					}
 				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
 					$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
@@ -197,15 +197,15 @@ function eme_get_recurrence_days( $recurrence ) {
 							$matching_days[0] = $ymd;
 						} else {
 							array_push( $matching_days, $ymd );
+							if ( $only_the_next_10 == 1 ) $occurence_counter++;
 						}
-						if ( $only_the_next_10 == 1 ) $occurence_counter++;
 					} elseif ( $recurrence['recurrence_byweekno'] == $monthweek ) {
 						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
 							$matching_days[0] = $ymd;
 						} else {
 							array_push( $matching_days, $ymd );
+							if ( $only_the_next_10 == 1 ) $occurence_counter++;
 						}
-						if ( $only_the_next_10 == 1 ) $occurence_counter++;
 					}
 				}
 			}

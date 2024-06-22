@@ -1387,14 +1387,14 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 					} elseif ( preg_match( '/PHONE/', $required_field ) ) {
 						// PHONE regex also catches HTML5_PHONE
 						if ( eme_is_empty_string( $_POST['phone'] ) ) {
-							array_push( $missing_required_fields, __( 'Phone number', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'Phone number', 'events-made-easy' );
 						}
 					} elseif ( preg_match( '/FIRSTNAME/', $required_field ) ) {
 						// if wp membership is required, this is a disabled field (not submitted via POST) and info got from WP
 						if ( $registration_wp_users_only ) {
 							continue;
 						} elseif ( eme_is_empty_string( $_POST['firstname'] ) ) {
-							array_push( $missing_required_fields, __( 'First name', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'First name', 'events-made-easy' );
 						}
 					} elseif ( preg_match( '/(ADDRESS1|ADDRESS2|CITY|ZIP|POSTAL|BIRTHDATE|BIRTHPLACE)/', $required_field, $matches ) ) {
 						$fieldname = strtolower( $matches[1] );
@@ -1402,41 +1402,41 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 							$fieldname = 'zip';
 						}
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) && $fieldname == 'address1' ) {
-							array_push( $missing_required_fields, $eme_address1_string );
+							$missing_required_fields[] = $eme_address1_string;
 						}
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) && $fieldname == 'address2' ) {
-							array_push( $missing_required_fields, $eme_address2_string );
+							$missing_required_fields[] = $eme_address2_string;
 						}
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) && $fieldname == 'city' ) {
-							array_push( $missing_required_fields, __( 'City', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'City', 'events-made-easy' );
 						}
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) && $fieldname == 'zip' ) {
-							array_push( $missing_required_fields, __( 'Postal code', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'Postal code', 'events-made-easy' );
 						}
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) && $fieldname == 'birthdate' ) {
-							array_push( $missing_required_fields, __( 'Date of birth', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'Date of birth', 'events-made-easy' );
 						}
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) && $fieldname == 'birthplace' ) {
-							array_push( $missing_required_fields, __( 'Place of birth', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'Place of birth', 'events-made-easy' );
 						}
 					} elseif ( preg_match( '/STATE/', $required_field, $matches ) ) {
 						$fieldname = 'state_code';
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) ) {
-							array_push( $missing_required_fields, __( 'State', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'State', 'events-made-easy' );
 						}
 					} elseif ( preg_match( '/COUNTRY/', $required_field, $matches ) ) {
 						$fieldname = 'country_code';
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) ) {
-							array_push( $missing_required_fields, __( 'Country', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'Country', 'events-made-easy' );
 						}
 					} elseif ( preg_match( '/COMMENT/', $required_field ) ) {
 						if ( eme_is_empty_string( $tmp_booking['booking_comment'] ) ) {
-							array_push( $missing_required_fields, __( 'Comment', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'Comment', 'events-made-easy' );
 						}
 					} elseif ( preg_match( '/MASSMAIL|OPT_OUT|OPT_IN/', $required_field, $matches ) ) {
 						$fieldname = 'massmail';
 						if ( eme_is_empty_string( $_POST[ $fieldname ] ) ) {
-							array_push( $missing_required_fields, __( 'Massmail', 'events-made-easy' ) );
+							$missing_required_fields[] = __( 'Massmail', 'events-made-easy' );
 						}
 					} elseif ( preg_match( '/FIELD(\d+)/', $required_field, $matches ) ) {
 						// can be 0 as value for custom fields, so we error out if it is not set, or if it is empty and not 0
@@ -1456,11 +1456,11 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 							$field_key = $matches[1];
 							$formfield = eme_get_formfield( $field_key );
 							if ( ! empty( $formfield ) ) {
-								array_push( $missing_required_fields, $formfield['field_name'] );
+								$missing_required_fields[] = $formfield['field_name'];
 							}
 						}
 					} elseif ( eme_is_empty_string( $_POST[ $required_field ] ) ) {
-						array_push( $missing_required_fields, $required_field );
+						$missing_required_fields[] = $required_field;
 					}
 				}
 				if ( count( $missing_required_fields ) > 0 ) {

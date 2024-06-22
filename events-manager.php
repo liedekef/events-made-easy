@@ -265,22 +265,7 @@ add_filter( 'rewrite_rules_array', 'eme_insertMyRewriteRules' );
 // Adding the id var so that WP recognizes it
 // any variable added in the rewrite rules that is not defined here will get removed, so this is important.
 function eme_insertMyRewriteQueryVars( $vars ) {
-	array_push( $vars, 'event_id' );
-	array_push( $vars, 'location_id' );
-	array_push( $vars, 'membership_id' );
-	array_push( $vars, 'calendar_day' );
-	array_push( $vars, 'eme_city' );
-	array_push( $vars, 'eme_country' );
-	array_push( $vars, 'eme_event_cat' );
-	// a bit cryptic for the booking id
-	array_push( $vars, 'eme_pmt_rndid' );
-	// for the payment result
-	array_push( $vars, 'eme_pmt_result' );
-	array_push( $vars, 'eme_rsvp_confirm' );
-	// for attendance
-	array_push( $vars, 'eme_check_rsvp' );
-	// for members
-	array_push( $vars, 'eme_check_member' );
+	array_push( $vars, 'event_id' , 'location_id' , 'membership_id' , 'calendar_day' , 'eme_city' , 'eme_country' , 'eme_event_cat' , 'eme_pmt_rndid' , 'eme_pmt_result' , 'eme_rsvp_confirm' , 'eme_check_rsvp' , 'eme_check_member' );
 	return $vars;
 }
 add_filter( 'query_vars', 'eme_insertMyRewriteQueryVars' );

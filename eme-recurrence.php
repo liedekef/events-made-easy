@@ -507,7 +507,7 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 		'-1' => __( 'the last %s of the month', 'events-made-easy' ),
 	];
 	if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
-		$output         = sprintf( __( 'From %s, perpetual', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
+		$output         = sprintf( __( 'From %s, no end date', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
 	} else {
 		$output         = sprintf( __( 'From %s to %s', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
 	}

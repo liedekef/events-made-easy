@@ -838,22 +838,21 @@ function eme_ajax_action_recurrences_status( $ids_arr, $status ) {
 function eme_ajax_action_recurrences_extend( $ids_arr, $rec_new_start_date, $rec_new_end_date ) {
 	foreach ( $ids_arr as $recurrence_id ) {
 		$recurrence = eme_get_recurrence( $recurrence_id );
-		if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
-			// we don't change events for perpetual recurrences here
-			continue;
-		}
 		$event      = eme_get_event( eme_get_recurrence_first_eventid( $recurrence_id ) );
 		if ( ! empty( $event ) ) {
 			if ( ! eme_is_empty_date( $rec_new_start_date ) && ! eme_is_empty_date( $rec_new_end_date ) ) {
 				$recurrence['recurrence_start_date'] = $rec_new_start_date;
-				$recurrence['recurrence_end_date']   = $rec_new_end_date;
+				// we don't change end dates for perpetual recurrences here
+				if ( ! eme_is_empty_date($recurrence['recurrence_end_date'] ) ) {
+					$recurrence['recurrence_end_date']   = $rec_new_end_date;
+				}
 				// we add the 1 as param so eme_db_update_recurrence knows it is for changing dates only and can skip some things
 				eme_db_update_recurrence( $recurrence, $event, 1 );
 			} elseif ( ! eme_is_empty_date( $rec_new_start_date ) && eme_is_empty_date( $rec_new_end_date ) ) {
 				$recurrence['recurrence_start_date'] = $rec_new_start_date;
 				// we add the 1 as param so eme_db_update_recurrence knows it is for changing dates only and can skip some things
 				eme_db_update_recurrence( $recurrence, $event, 1 );
-			} elseif ( eme_is_empty_date( $rec_new_start_date ) && ! eme_is_empty_date( $rec_new_end_date ) ) {
+			} elseif ( eme_is_empty_date( $rec_new_start_date ) && ! eme_is_empty_date( $rec_new_end_date ) && eme_is_empty_date($recurrence['recurrence_end_date'] ) ) {
 				$recurrence['recurrence_end_date'] = $rec_new_end_date;
 				// we add the 1 as param so eme_db_update_recurrence knows it is for changing dates only and can skip some things
 				eme_db_update_recurrence( $recurrence, $event, 1 );

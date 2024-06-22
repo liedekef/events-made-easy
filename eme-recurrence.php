@@ -54,8 +54,11 @@ function eme_get_recurrence_days( $recurrence ) {
 		return $matching_days;
 	}
 
-	$start_date_obj    = new ExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
-	$eme_date_obj_now  = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$start_date_obj     = new ExpressiveDate( $recurrence['recurrence_start_date'], EME_TIMEZONE );
+	// we'll need to compare to the beginning of today
+	$eme_date_obj_today = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$eme_date_obj_today->startOfDay();
+
 	if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
 		// end date empty, so take the start date, add eleven years to it to make sure
 		// and indicate we just want the next 10 occurences
@@ -112,7 +115,7 @@ function eme_get_recurrence_days( $recurrence ) {
 
 		if ( $recurrence['recurrence_freq'] == 'daily' ) {
 			if ( $daycounter % $recurrence['recurrence_interval'] == 0 ) {
-				if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
+				if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_today ) {
 					$matching_days[0] = $ymd;
 				} else {
 					$matching_days[] = $ymd;
@@ -124,7 +127,7 @@ function eme_get_recurrence_days( $recurrence ) {
 		if ( $recurrence['recurrence_freq'] == 'weekly' ) {
 			if ( $weekcounter % $recurrence['recurrence_interval'] == 0 ) {
 				if ( ! $recurrence['recurrence_byday'] && eme_N_weekday( $cycle_date_obj ) == eme_N_weekday( $start_date_obj ) ) {
-					if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
+					if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_today ) {
 						$matching_days[0] = $ymd;
 					} else {
 						$matching_days[] = $ymd;
@@ -132,7 +135,7 @@ function eme_get_recurrence_days( $recurrence ) {
 					}
 				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
 					// specific days, so we only check for those days
-					if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
+					if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_today ) {
 						$matching_days[0] = $ymd;
 					} else {
 						$matching_days[] = $ymd;
@@ -149,7 +152,7 @@ function eme_get_recurrence_days( $recurrence ) {
 				// if recurrence_byweekno=0 ==> means to use the startday as repeating day
 				if ( $recurrence['recurrence_byweekno'] == 0 ) {
 					if ( $monthday == $start_monthday ) {
-						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
+						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_today ) {
 							$matching_days[0] = $ymd;
 						} else {
 							$matching_days[] = $ymd;
@@ -159,14 +162,14 @@ function eme_get_recurrence_days( $recurrence ) {
 				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
 					$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
 					if ( ( $recurrence['recurrence_byweekno'] == -1 ) && ( $monthday >= $last_week_start[ $month - 1 ] ) ) {
-						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
+						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_today ) {
 							$matching_days[0] = $ymd;
 						} else {
 							$matching_days[] = $ymd;
 							if ( $only_the_next_10 == 1 ) $occurence_counter++;
 						}
 					} elseif ( $recurrence['recurrence_byweekno'] == $monthweek ) {
-						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
+						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_today ) {
 							$matching_days[0] = $ymd;
 						} else {
 							$matching_days[] = $ymd;
@@ -183,7 +186,7 @@ function eme_get_recurrence_days( $recurrence ) {
 				// if recurrence_byweekno=0 ==> means to use the startday as repeating day
 				if ( $recurrence['recurrence_byweekno'] == 0 ) {
 					if ( $monthday == $start_monthday ) {
-						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
+						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_today ) {
 							$matching_days[0] = $ymd;
 						} else {
 							$matching_days[] = $ymd;
@@ -193,14 +196,14 @@ function eme_get_recurrence_days( $recurrence ) {
 				} elseif ( in_array( eme_N_weekday( $cycle_date_obj ), $choosen_weekdays ) ) {
 					$monthweek = floor( ( ( $cycle_date_obj->format( 'd' ) - 1 ) / 7 ) ) + 1;
 					if ( ( $recurrence['recurrence_byweekno'] == -1 ) && ( $monthday >= $last_week_start[ $month - 1 ] ) ) {
-						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
+						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_today ) {
 							$matching_days[0] = $ymd;
 						} else {
 							$matching_days[] = $ymd;
 							if ( $only_the_next_10 == 1 ) $occurence_counter++;
 						}
 					} elseif ( $recurrence['recurrence_byweekno'] == $monthweek ) {
-						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_now ) {
+						if ( $only_the_next_10 == 1 && $cycle_date_obj < $eme_date_obj_today ) {
 							$matching_days[0] = $ymd;
 						} else {
 							$matching_days[] = $ymd;

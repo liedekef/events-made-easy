@@ -259,9 +259,9 @@ function eme_db_insert_recurrence( $recurrence, $event ) {
 	} else {
 		// get the recurrence start days
 		$matching_days = eme_get_recurrence_days( $recurrence );
-		// find the last start day
-		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
-		$last_day     = $eme_date_obj->getDate();
+		$recurrence['recurrence_start_date'] = $matching_days[0];
+		// find the last matching day too
+		$last_day     = $matching_days[0];
 		foreach ( $matching_days as $day ) {
 			if ( $day > $last_day ) {
 				$last_day = $day;
@@ -300,9 +300,9 @@ function eme_insert_events_for_recurrence( $recurrence, $event ) {
 	foreach ( $matching_days as $day ) {
 		$event['event_start'] = "$day $event_start_time";
 		$eme_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-		// no past events will be created
-		if ($eme_date_obj < $eme_date_obj_now) {
-			continue;
+		// no past events will be created, unless for specific days
+		if ($recurrence['recurrence_freq'] != 'specific' && $eme_date_obj < $eme_date_obj_now) {
+                        continue;
 		}
 		$day_difference       = $eme_date_obj_orig->getDifferenceInDays( $eme_date_obj );
 		$eme_date_obj->addDays( $recurrence['event_duration'] - 1 );
@@ -344,9 +344,9 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 	} else {
 		// get the recurrence start days
 		$matching_days = eme_get_recurrence_days( $recurrence );
-		// find the last start day
-		$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
-		$last_day     = $eme_date_obj->getDate();
+		$recurrence['recurrence_start_date'] = $matching_days[0];
+		// find the last matching day too
+		$last_day     = $matching_days[0];
 		foreach ( $matching_days as $day ) {
 			if ( $day > $last_day ) {
 				$last_day = $day;

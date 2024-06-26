@@ -715,7 +715,6 @@ function eme_meta_box_div_event_task_signup_recorded_ok_html( $event, $templates
 }
 
 function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
-	
 	if ( isset( $event['is_duplicate'] ) ) {
 		$tasks = eme_get_event_tasks( $event['orig_id'] );
 	} elseif ( ! empty( $event['event_id'] ) ) {
@@ -792,7 +791,8 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 			?>
 		</tbody>
 		</table>
-		<?php esc_html_e( 'If name, start date or end date of a task is empty, it will be ignored.', 'events-made-easy' ); ?>
+		<?php esc_html_e( 'If name, start date or end date of a task is empty, it will be ignored.', 'events-made-easy' );
+		esc_html_e( 'If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks.', 'events-made-easy' ); ?>
 		<?php
 		if ( $edit_recurrence ) {
 			echo "<div style='background-color: lightgrey;'>";
@@ -1291,6 +1291,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 
 	$open_tasks_found = 0;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$lang = eme_detect_lang();
 	foreach ( $events as $event ) {
 		// we add the event ids for the autocomplete check, not used for anything else
 		$result               .= "<input type='hidden' name='eme_event_ids[]' id='eme_event_ids[]' value='" . $event['event_id'] . "'>";
@@ -1310,7 +1311,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 			$free_spaces = $task['spaces'] - $used_spaces;
 
 			$skip = 0;
-			if ( $free_spaces == 0 && $skip_full ) {
+			if ( $task['spaces'] > 0 && $free_spaces == 0 && $skip_full ) {
 				// skip full option, so check the free spaces for that task, if 0: set $skip=1
 				$skip = 1;
 			}
@@ -1324,7 +1325,9 @@ function eme_tasks_signupform_shortcode( $atts ) {
 			if ( $free_spaces > 0 && ! $task_ended ) {
 				++$open_tasks_found;
 			}
-			if ( ! $skip ) {
+			if ( $task['spaces'] == 0 ) {
+				$result .= '<span class="eme_task_section_header">'.eme_translate( $task['name'], $lang ).'</span><br>';
+			} elseif ( ! $skip ) {
 				$result .= eme_replace_eventtaskformfields_placeholders( $format, $task, $event );
 			}
 		}

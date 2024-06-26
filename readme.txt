@@ -105,6 +105,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Planned mailings will now no longer insert the individual mails but do that just before being sent
 * Recurrences no longer need an end date, in which case the next 10 events will be planned (checked daily),
   while older events will be removed except the most recent one.
+* The number of spaces for a task can now be 0 too. If that's the case, the description of that task
+  will be used as a section header for the next set of tasks.
 
 = 2.4.47 (2024/06/08) =
 * Make sort on membership name work in members overview

@@ -1326,7 +1326,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 				++$open_tasks_found;
 			}
 			if ( $task['spaces'] == 0 ) {
-				$result .= '<span class="eme_task_section_header">'.eme_translate( $task['name'], $lang ).'</span><br>';
+				$result .= '<br><span class="eme_task_section_header">'.eme_translate( $task['name'], $lang ).'</span><br>';
 			} elseif ( ! $skip ) {
 				$result .= eme_replace_eventtaskformfields_placeholders( $format, $task, $event );
 			}

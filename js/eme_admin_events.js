@@ -305,12 +305,12 @@ jQuery(document).ready( function($) {
 			   if (!Array.isArray(date)) {
 				   $('#recurrence-dates-specificdates').text("");
 				   //$('#localized-rec-end-date').fdatepicker().data('fdatepicker').update('minDate',date);
-				   startDate_formatted = inst.formatDate('Ymd',date);
-				   endDate_basic = $('#localized-rec-end-date').fdatepicker().data('fdatepicker').selectedDates[0];
-				   endDate_formatted = inst.formatDate('Ymd',endDate_basic);
-				   if (endDate_formatted<startDate_formatted) {
-					   $('#localized-rec-end-date').fdatepicker().data('fdatepicker').selectDate(date);
-				   }
+				   //startDate_formatted = inst.formatDate('Ymd',date);
+				   //endDate_basic = $('#localized-rec-end-date').fdatepicker().data('fdatepicker').selectedDates[0];
+				   //endDate_formatted = inst.formatDate('Ymd',endDate_basic);
+				   //if (endDate_formatted<startDate_formatted) {
+				//	   $('#localized-rec-end-date').fdatepicker().data('fdatepicker').selectDate(date);
+				   //}
 			   } else {
 				$('#recurrence-dates-specificdates').html('<br />'+emeevents.translate_selecteddates+'<br />');
 				$.each(date, function( index, value ) {

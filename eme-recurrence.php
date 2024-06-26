@@ -492,10 +492,8 @@ function eme_get_recurrence_eventids( $recurrence_id, $future_only = 0 ) {
 }
 
 function eme_get_recurrence_desc( $recurrence_id ) {
-	global $wpdb, $wp_locale;
-	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT * FROM $recurrence_table WHERE recurrence_id = %d", $recurrence_id );
-	$recurrence       = $wpdb->get_row( $sql, ARRAY_A );
+	global $wp_locale;
+	$recurrence = eme_get_recurrence( $recurrence_id );
 	if ( empty( $recurrence ) ) {
 		return;
 	}
@@ -510,7 +508,7 @@ function eme_get_recurrence_desc( $recurrence_id ) {
 		'-1' => __( 'the last %s of the month', 'events-made-easy' ),
 	];
 	if (eme_is_empty_date($recurrence['recurrence_end_date'])) {
-		$output         = sprintf( __( 'From %s, no end date', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
+		$output         = sprintf( __( 'From %s onwards (automatically extended)', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ) ) . ', ';
 	} else {
 		$output         = sprintf( __( 'From %s to %s', 'events-made-easy' ), eme_localized_date( $recurrence['recurrence_start_date'], EME_TIMEZONE ), eme_localized_date( $recurrence['recurrence_end_date'], EME_TIMEZONE ) ) . ', ';
 	}

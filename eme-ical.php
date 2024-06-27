@@ -28,7 +28,6 @@ function eme_esc_ical( $prefix, $value = '', $keep_html = 0 ) {
 }
 
 function eme_ical_single_event( $event, $title_format, $description_format, $location_format ) {
-	
 	$title            = eme_replace_event_placeholders( $title_format, $event, 'text' );
 	$description      = eme_replace_event_placeholders( $description_format, $event, 'text' );
 	$html_description = eme_replace_event_placeholders( $description_format, $event, 'html' );
@@ -211,6 +210,10 @@ function eme_ical() {
 	echo "VERSION:2.0\r\n";
 	echo "METHOD:PUBLISH\r\n";
 	echo "PRODID:-//hacksw/handcal//NONSGML v1.0//EN\r\n";
+	if ( has_action( 'eme_ical_header_action' ) ) {
+		// allows to add any custom header of choice
+		do_action( 'eme_ical_header_action' );
+	}
 	$title_format       = get_option( 'eme_ical_title_format' );
 	$description_format = get_option( 'eme_ical_description_format' );
 	$location_format    = get_option( 'eme_ical_location_format' );

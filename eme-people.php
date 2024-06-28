@@ -4690,7 +4690,7 @@ function eme_unsubscribe_ajax() {
 	wp_die();
 }
 
-function eme_unsubform_shortcode( $atts ) {
+function eme_unsubform_shortcode( $atts = [] ) {
 	eme_enqueue_frontend();
 	$atts = shortcode_atts( [ 'template_id' => 0 ], $atts );
 	if ( !empty($atts['template_id']) ) {

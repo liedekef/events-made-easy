@@ -892,8 +892,7 @@ function eme_events_page_content() {
 		}
 	} elseif ( ! empty( $_GET['eme_unsub'] ) ) {
 		// lets act as if the unsub shortcode is on the page
-		$atts = [];
-		return eme_unsubform_shortcode( $atts );
+		return eme_unsubform_shortcode( );
 
 	} elseif ( ! empty( $_GET['eme_sub_confirm'] ) && ! empty( $_GET['eme_sub_nonce'] ) ) {
 		$eme_email     = eme_sanitize_email( $_GET['eme_sub_confirm'] );

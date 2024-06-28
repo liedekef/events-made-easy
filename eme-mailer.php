@@ -9,7 +9,7 @@ function eme_set_wpmail_html_content_type() {
 }
 
 // for backwards compat, the fromname and email are after the replyto and can be empty
-function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $replytoemail = '', $replytoname = '', $fromemail = '', $fromname = '', $atts = [], $custom_headers = [] ) {
+function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $replytoemail = '', $replytoname = '', $fromemail = '', $fromname = '', $atts_arr = [], $custom_headers = [] ) {
 	$subject = preg_replace( '/(^\s+|\s+$)/m', '', $subject );
 	$res     = true;
 	$message = '';
@@ -88,7 +88,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 
 	// allow either an array of file paths or of attachment ids
 	$attachment_paths_arr = [];
-	foreach ( $atts as $attachment ) {
+	foreach ( $atts_arr as $attachment ) {
 		if ( ! empty( $attachment ) ) {
 			if ( is_numeric( $attachment ) ) {
 				$file_path = get_attached_file( $attachment );
@@ -457,11 +457,11 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 	}
 }
 
-function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $extras_arr = [] ) {
-	return eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id, $person_id, $member_id, $extras_arr, 1 );
+function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts_arr = [] ) {
+	return eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id, $person_id, $member_id, $atts_arr, 1 );
 }
 
-function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail = '', $replytoname = '', $mailing_id = 0, $person_id = 0, $member_id = 0, $extras_arr = [], $send_immediately = 0 ) {
+function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail = '', $replytoname = '', $mailing_id = 0, $person_id = 0, $member_id = 0, $atts_arr = [], $send_immediately = 0 ) {
 	global $wpdb;
 	$mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
 
@@ -477,12 +477,6 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 	$random_id      = eme_random_id();
 	$custom_headers = [ 'X-EME-mailid:' . $random_id ];
 
-	// if there are extra headers to be added, add them, then unset it
-	// after that $extras_arr wil only contain attachment info
-	if (isset($extras_arr['extra_headers'])) {
-		$custom_headers = array_merge($custom_headers,$extras_arr['extra_headers']);
-		unset($extras_arr['extra_headers']);
-	}
 	if ( ! get_option( 'eme_queue_mails' ) ) {
 		$send_immediately = 1;
 	}
@@ -538,7 +532,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		'mailing_id'    => $mailing_id,
 		'person_id'     => $person_id,
 		'member_id'     => $member_id,
-		'attachments'   => eme_serialize( $extras_arr ),
+		'attachments'   => eme_serialize( $atts_arr ),
 		'creation_date' => $now,
 		'random_id'     => $random_id,
 	];
@@ -555,7 +549,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		if ($wpdb->insert( $mqueue_table, $mail ) === false) {
 			return false;
 		} else {
-			return eme_send_mail( $subject, $body, $receiveremail, $receivername, $replytoemail, $replytoname, $fromemail, $fromname, $extras_arr, $custom_headers );
+			return eme_send_mail( $subject, $body, $receiveremail, $receivername, $replytoemail, $replytoname, $fromemail, $fromname, $atts_arr, $custom_headers );
 		}
 	} elseif ( $wpdb->insert( $mqueue_table, $mail ) === false ) {
 		return false;
@@ -1057,14 +1051,13 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 	$member_ids          = [];
 	$cond_person_ids_arr = [];
 	$cond_member_ids_arr = [];
-	$extras_arr          = [];
+	$atts_arr          = [];
 
-	$list_unsub_header   = 'List-Unsubscribe: '.eme_unsub_url();
 	if ( $conditions['action'] == 'genericmail' ) {
 		if ( isset( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_generic_attach_ids'] ) ) {
 			$attachment_ids = $conditions['eme_generic_attach_ids'];
 			if ( ! empty( $attachment_ids ) ) {
-				$extras_arr = explode( ',', $attachment_ids );
+				$atts_arr = explode( ',', $attachment_ids );
 			}
 		}
 
@@ -1074,7 +1067,6 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 				$person_ids = eme_get_allmail_person_ids();
 			} else {
 				$person_ids = eme_get_massmail_person_ids();
-				$extras_arr['extra_headers'] = [ $list_unsub_header ];
 			}
 		} else {
 			if ( ! empty( $conditions['eme_genericmail_send_persons'] ) ) {
@@ -1087,18 +1079,12 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 			}
 			if ( ! empty( $conditions['eme_genericmail_send_peoplegroups'] ) ) {
 				$person_ids = array_unique( array_merge( $person_ids, eme_get_groups_person_ids( $conditions['eme_genericmail_send_peoplegroups'] ) ) );
-				if ( ! $ignore_massmail_setting )
-					$extras_arr['extra_headers'] = [ $list_unsub_header ];
 			}
 			if ( ! empty( $conditions['eme_genericmail_send_membergroups'] ) ) {
 				$member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_genericmail_send_membergroups'] ) ) );
-				if ( ! $ignore_massmail_setting )
-					$extras_arr['extra_headers'] = [ $list_unsub_header ];
 			}
 			if ( ! empty( $conditions['eme_send_memberships'] ) ) {
 				$member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_send_memberships'] ) ) );
-				if ( ! $ignore_massmail_setting )
-					$extras_arr['extra_headers'] = [ $list_unsub_header ];
 			}
 		}
 		foreach ( $member_ids as $member_id ) {
@@ -1119,7 +1105,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 				$membership  = eme_get_membership( $member['membership_id'] );
 				$tmp_subject = eme_replace_member_placeholders( $mail_subject, $membership, $member, 'text' );
 				$tmp_message = eme_replace_member_placeholders( $mail_message, $membership, $member, $mail_text_html );
-				$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $extras_arr );
+				$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $atts_arr );
 			}
 			if ( ! $mail_res ) {
 				$res['mail_problems'] = 1;
@@ -1142,7 +1128,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 				} else {
 					$tmp_subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
 					$tmp_message = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
-					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $extras_arr );
+					$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr );
 				}
 				if ( ! $mail_res ) {
 					$res['mail_problems'] = 1;
@@ -1173,7 +1159,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 		if ( isset( $conditions['eme_eventmail_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_eventmail_attach_ids'] ) ) {
 			$attachment_ids = $conditions['eme_eventmail_attach_ids'];
 			if ( ! empty( $attachment_ids ) ) {
-				$extras_arr = explode( ',', $attachment_ids );
+				$atts_arr = explode( ',', $attachment_ids );
 			}
 		}
 
@@ -1194,7 +1180,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 						$tmp_message = eme_replace_attendees_placeholders( $mail_message, $event, $attendee, $mail_text_html );
 						$person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
 						$person_id   = $attendee['person_id'];
-						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $extras_arr );
+						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr );
 					}
 					if ( ! $mail_res ) {
 						$res['mail_problems'] = 1;
@@ -1214,7 +1200,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 							$tmp_message = eme_replace_booking_placeholders( $mail_message, $event, $booking, 0, $mail_text_html );
 							$person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
 							$person_id   = $attendee['person_id'];
-							$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $extras_arr );
+							$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr );
 						}
 						if ( ! $mail_res ) {
 							$res['mail_problems'] = 1;
@@ -1229,7 +1215,6 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 						$person_ids = eme_get_allmail_person_ids();
 					} else {
 						$person_ids = eme_get_massmail_person_ids();
-						$extras_arr['extra_headers'] = [ $list_unsub_header ];
 					}
 				} elseif ( $conditions['eme_mail_type'] == 'people_and_groups' ) {
 					if ( ! empty( $conditions['eme_eventmail_send_persons'] ) ) {
@@ -1241,18 +1226,12 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 					if ( ! empty( $conditions['eme_eventmail_send_members'] ) ) {
 						$cond_member_ids_arr = explode( ',', $conditions['eme_eventmail_send_members'] );
 						$member_ids          = $cond_member_ids_arr;
-						if ( ! $ignore_massmail_setting )
-							$extras_arr['extra_headers'] = [ $list_unsub_header ];
 					}
 					if ( ! empty( $conditions['eme_eventmail_send_membergroups'] ) ) {
 						$member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_eventmail_send_membergroups'] ) ) );
-						if ( ! $ignore_massmail_setting )
-							$extras_arr['extra_headers'] = [ $list_unsub_header ];
 					}
 					if ( ! empty( $conditions['eme_eventmail_send_memberships'] ) ) {
 						$member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_eventmail_send_memberships'] ) ) );
-						if ( ! $ignore_massmail_setting )
-							$extras_arr['extra_headers'] = [ $list_unsub_header ];
 					}
 				}
 				if ( ! empty( $conditions['exclude_registered'] ) || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {
@@ -1285,7 +1264,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 						$membership  = eme_get_membership( $member['membership_id'] );
 						$tmp_subject = eme_replace_member_placeholders( $tmp_subject, $membership, $member, 'text' );
 						$tmp_message = eme_replace_member_placeholders( $tmp_message, $membership, $member, $mail_text_html );
-						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $extras_arr );
+						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $atts_arr );
 					}
 
 					if ( ! $mail_res ) {
@@ -1315,7 +1294,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 							$tmp_subject = eme_replace_people_placeholders( $tmp_subject, $person, 'text' );
 							$tmp_message = eme_replace_people_placeholders( $tmp_message, $person, $mail_text_html );
 							$person_id   = $person['person_id'];
-							$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $extras_arr );
+							$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr );
 						}
 						if ( ! $mail_res ) {
 							$res['mail_problems'] = 1;
@@ -1347,7 +1326,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 						$tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $lang, 0 );
 						$tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $lang, 0 );
 						$tmp_message = eme_replace_email_event_placeholders( $tmp_message, $wp_user->user_firstname, $wp_user->display_name, $wp_user->display_name, $event );
-						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $extras_arr );
+						$mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $atts_arr );
 					}
 					if ( ! $mail_res ) {
 						$res['mail_problems'] = 1;

@@ -1074,7 +1074,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 				$person_ids = eme_get_allmail_person_ids();
 			} else {
 				$person_ids = eme_get_massmail_person_ids();
-				$extras_arr['extra_headers'] = $list_unsub_header;
+				$extras_arr['extra_headers'] = [ $list_unsub_header ];
 			}
 		} else {
 			if ( ! empty( $conditions['eme_genericmail_send_persons'] ) ) {
@@ -1088,17 +1088,17 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 			if ( ! empty( $conditions['eme_genericmail_send_peoplegroups'] ) ) {
 				$person_ids = array_unique( array_merge( $person_ids, eme_get_groups_person_ids( $conditions['eme_genericmail_send_peoplegroups'] ) ) );
 				if ( ! $ignore_massmail_setting )
-					$extras_arr['extra_headers'] = $list_unsub_header;
+					$extras_arr['extra_headers'] = [ $list_unsub_header ];
 			}
 			if ( ! empty( $conditions['eme_genericmail_send_membergroups'] ) ) {
 				$member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_genericmail_send_membergroups'] ) ) );
 				if ( ! $ignore_massmail_setting )
-					$extras_arr['extra_headers'] = $list_unsub_header;
+					$extras_arr['extra_headers'] = [ $list_unsub_header ];
 			}
 			if ( ! empty( $conditions['eme_send_memberships'] ) ) {
 				$member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_send_memberships'] ) ) );
 				if ( ! $ignore_massmail_setting )
-					$extras_arr['extra_headers'] = $list_unsub_header;
+					$extras_arr['extra_headers'] = [ $list_unsub_header ];
 			}
 		}
 		foreach ( $member_ids as $member_id ) {
@@ -1229,7 +1229,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 						$person_ids = eme_get_allmail_person_ids();
 					} else {
 						$person_ids = eme_get_massmail_person_ids();
-						$extras_arr['extra_headers'] = $list_unsub_header;
+						$extras_arr['extra_headers'] = [ $list_unsub_header ];
 					}
 				} elseif ( $conditions['eme_mail_type'] == 'people_and_groups' ) {
 					if ( ! empty( $conditions['eme_eventmail_send_persons'] ) ) {
@@ -1242,17 +1242,17 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 						$cond_member_ids_arr = explode( ',', $conditions['eme_eventmail_send_members'] );
 						$member_ids          = $cond_member_ids_arr;
 						if ( ! $ignore_massmail_setting )
-							$extras_arr['extra_headers'] = $list_unsub_header;
+							$extras_arr['extra_headers'] = [ $list_unsub_header ];
 					}
 					if ( ! empty( $conditions['eme_eventmail_send_membergroups'] ) ) {
 						$member_ids = array_unique( array_merge( $member_ids, eme_get_groups_member_ids( $conditions['eme_eventmail_send_membergroups'] ) ) );
 						if ( ! $ignore_massmail_setting )
-							$extras_arr['extra_headers'] = $list_unsub_header;
+							$extras_arr['extra_headers'] = [ $list_unsub_header ];
 					}
 					if ( ! empty( $conditions['eme_eventmail_send_memberships'] ) ) {
 						$member_ids = array_unique( array_merge( $member_ids, eme_get_memberships_member_ids( $conditions['eme_eventmail_send_memberships'] ) ) );
 						if ( ! $ignore_massmail_setting )
-							$extras_arr['extra_headers'] = $list_unsub_header;
+							$extras_arr['extra_headers'] = [ $list_unsub_header ];
 					}
 				}
 				if ( ! empty( $conditions['exclude_registered'] ) || $conditions['eme_mail_type'] == 'all_people_not_registered' ) {

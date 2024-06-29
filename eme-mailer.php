@@ -475,7 +475,6 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 	}
 
 	$random_id      = eme_random_id();
-	$custom_headers = [ 'X-EME-mailid:' . $random_id ];
 
 	if ( ! get_option( 'eme_queue_mails' ) ) {
 		$send_immediately = 1;
@@ -549,7 +548,13 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		if ($wpdb->insert( $mqueue_table, $mail ) === false) {
 			return false;
 		} else {
-			return eme_send_mail( $subject, $body, $receiveremail, $receivername, $replytoemail, $replytoname, $fromemail, $fromname, $atts_arr, $custom_headers );
+			$custom_headers = [ 'X-EME-mailid:' . $random_id ];
+			$mail_res_arr = eme_send_mail( $subject, $body, $receiveremail, $receivername, $replytoemail, $replytoname, $fromemail, $fromname, $atts_arr, $custom_headers );
+			if ( $mail_res_arr[0] ) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	} elseif ( $wpdb->insert( $mqueue_table, $mail ) === false ) {
 		return false;

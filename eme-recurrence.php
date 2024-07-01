@@ -46,11 +46,8 @@ function eme_get_recurrence_days( $recurrence ) {
 	$matching_days = [];
 
 	if ( $recurrence['recurrence_freq'] == 'specific' ) {
-		$specific_days = explode( ',', $recurrence['specific_days'] );
-		asort( $specific_days );
-		foreach ( $specific_days as $day ) {
-			$matching_days[] = $day;
-		}
+		$matching_days = explode( ',', $recurrence['specific_days'] );
+		sort( $matching_days );
 		return $matching_days;
 	}
 
@@ -223,6 +220,7 @@ function eme_get_recurrence_days( $recurrence ) {
 		}
 	}
 
+	sort( $matching_days );
 	return $matching_days;
 }
 
@@ -290,7 +288,6 @@ function eme_db_insert_recurrence( $recurrence, $event ) {
 
 function eme_insert_events_for_recurrence( $recurrence, $event ) {
 	$matching_days = eme_get_recurrence_days( $recurrence );
-	sort( $matching_days );
 	$count = 0;
 	// in order to take tasks into account for recurring events, we need to know the difference in days between the events
 	$eme_date_obj_now  = new ExpressiveDate( 'now', EME_TIMEZONE );
@@ -355,6 +352,16 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 		$recurrence['recurrence_end_date'] = $last_day;
 	}
 
+	if ( $only_change_recdates ) {
+		// if the new start/end dates are identical and we only want to change the dates
+		// then nothing needs to happen and we return
+		$orig_recurrence = eme_get_recurrence($recurrence['recurrence_id']);
+		if ($orig_recurrence['recurrence_start_date'] == $recurrence['recurrence_start_date'] &&
+			$orig_recurrence['recurrence_end_date'] == $recurrence['recurrence_end_date'] ) {
+			return;
+		}
+	}
+
 	$where = [ 'recurrence_id' => $recurrence['recurrence_id'] ];
 	$wpdb->show_errors( true );
 	$wpdb->update( $recurrence_table, $recurrence, $where );
@@ -376,7 +383,6 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 	global $wpdb;
 	$events_table  = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 	$matching_days = eme_get_recurrence_days( $recurrence );
-	sort( $matching_days );
 
 	// 2 steps for updating events for a recurrence:
 	// First step: check the existing events and

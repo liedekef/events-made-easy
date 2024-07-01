@@ -190,6 +190,7 @@ function eme_cron_events_daily_actions() {
 	$recurrences = eme_get_perpetual_recurrences();
 	foreach ($recurrences as $recurrence) {
 		$event = eme_get_event( eme_get_recurrence_first_eventid( $recurrence['recurrence_id'] ) );
+		// we add the 1 as param so eme_db_update_recurrence knows it is for changing dates only and can skip some things
 		eme_db_update_recurrence( $recurrence, $event, 1 );
 
 	}

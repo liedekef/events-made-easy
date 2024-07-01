@@ -60,12 +60,14 @@ jQuery(document).ready( function($) {
          $('input#localized-rec-end-date').hide();
          $('p#recurrence-dates-explanation').hide();
          $('span#recurrence-dates-explanation-specificdates').show();
+         $('#localized-rec-start-date').attr('required', true);
          $('#localized-rec-start-date').fdatepicker().data('fdatepicker').update('multipleDates',true);
       } else {
          $('div#recurrence-intervals').show();
          $('input#localized-rec-end-date').show();
          $('p#recurrence-dates-explanation').show();
          $('span#recurrence-dates-explanation-specificdates').hide();
+         $('#localized-rec-start-date').attr('required', false);
          $('#localized-rec-start-date').fdatepicker().data('fdatepicker').update('multipleDates',false);
 	 // if the recurrence contained specific days before, clear those because that would not work upon save
          if ($('#rec-start-date-to-submit').val().indexOf(',') !== -1) {

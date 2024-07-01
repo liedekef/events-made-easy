@@ -255,8 +255,13 @@ function eme_db_insert_recurrence( $recurrence, $event ) {
 			}
 		}
 	} else {
+		if (empty($recurrence['specific_days'])) {
+			return 0;
+		}
 		// get the recurrence start days
+		// this also ordens the days by date, so we'll update the recurrence with that too
 		$matching_days = eme_get_recurrence_days( $recurrence );
+		$recurrence['specific_days'] = join( ',', $matching_days );
 		$recurrence['recurrence_start_date'] = $matching_days[0];
 		// find the last matching day too
 		$last_day     = $matching_days[0];
@@ -339,8 +344,13 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 			}
 		}
 	} else {
+		if (empty($recurrence['specific_days'])) {
+			return 0;
+		}
 		// get the recurrence start days
+		// this also ordens the days by date, so we'll update the recurrence with that too
 		$matching_days = eme_get_recurrence_days( $recurrence );
+		$recurrence['specific_days'] = join( ',', $matching_days );
 		$recurrence['recurrence_start_date'] = $matching_days[0];
 		// find the last matching day too
 		$last_day     = $matching_days[0];

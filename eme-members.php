@@ -520,14 +520,25 @@ function eme_get_membership_stats( $ids ) {
 			$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date<=%s AND (end_date >= %s OR end_date = '0000-00-00') AND status<>0 AND membership_id IN ($ids)", $limit_end, $limit_end );
 			$member_nbr = $wpdb->get_var( $sql );
 		}
-		$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
-		$member_nbr_new = $wpdb->get_var( $sql );
-		$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
+                // sql for new members
+                $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND renewal_count=0 AND membership_id IN ($ids)", $limit_start, $limit_end );
+                $member_nbr_new = $wpdb->get_var( $sql );
+                // sql for expired members
+                $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
                 $member_nbr_expired = $wpdb->get_var( $sql );
-		$sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND membership_id IN ($ids)", $limit_start, $limit_end );
-		$member_nbr_paid = $wpdb->get_var( $sql );
-		$member_nbr_renewed = $member_nbr_paid - $member_nbr_new;
-		if ($member_nbr_renewed<0) $member_nbr_renewed=0; // can happen for memberships that have no ending, so only new ones
+                // sql for renewed members
+                $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE payment_date>=%s AND payment_date AND renewal_count>0 AND membership_id IN ($ids)", $limit_start, $limit_end );
+                $member_nbr_renewed = $wpdb->get_var( $sql );
+                /*
+                $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
+                $member_nbr_new = $wpdb->get_var( $sql );
+                $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
+                $member_nbr_expired = $wpdb->get_var( $sql );
+                $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND membership_id IN ($ids)", $limit_start, $limit_end );
+                $member_nbr_paid = $wpdb->get_var( $sql );
+                $member_nbr_renewed = $member_nbr_paid - $member_nbr_new;
+                if ($member_nbr_renewed<0) $member_nbr_renewed=0; // can happen for memberships that have no ending, so only new ones
+                 */
                 $res .= "<tr><td>".$eme_date_obj->format( 'Y-m' )."</td><td>$member_nbr_new</td><td>$member_nbr_expired</td><td>$member_nbr_renewed</td><td>$member_nbr</td></tr>";
 		$eme_date_obj->startOfMonth()->modifyMonths(+1);
 		$counter++;
@@ -4144,7 +4155,8 @@ function eme_renew_expired_member( $member, $pg = '', $pg_pid = '' ) {
 	// set the third option to eme_get_start_date to 1, to force a new startdate (only has an effect for rolling-type memberships)
 	$fields['start_date']       = eme_get_start_date( $membership, $member, 1 );
 	$fields['end_date']         = eme_get_next_end_date( $membership, $fields['start_date'] );
-	$fields['renewal_count']    = 0;
+	// we still set the renewal count +1, so we know this was a member in the past too
+	$fields['renewal_count'] = $member['renewal_count'] + 1;
 	$fields['status_automatic'] = 1;
 	$fields['status']           = eme_member_calc_status( $fields['start_date'], $fields['end_date'], $membership['duration_period'], $membership['properties']['grace_period'] );
 

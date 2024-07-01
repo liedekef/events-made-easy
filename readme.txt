@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.49 (2024//) =
+* Mollie API update
+
 = 2.4.48 (2024/07/01) =
 * Mollie API update
 * Avoid creating past events for recurrences

@@ -389,9 +389,9 @@ function eme_manage_discounts_layout( $message = '' ) {
 	$dgroups     = eme_get_dgroups();
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-		$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 
 	?>
@@ -400,8 +400,8 @@ function eme_manage_discounts_layout( $message = '' ) {
 		<div id="icon-edit" class="icon32">
 		</div>
 		 
-		<div id="discounts-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-				<p><?php echo $message; ?></p>
+		<div id="discounts-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
+			<p><?php echo $message; ?></p>
 		</div>
 
 		<h1><?php esc_html_e( 'Add a new discount definition', 'events-made-easy' ); ?></h1>
@@ -475,9 +475,9 @@ function eme_manage_dgroups_layout( $message = '' ) {
 	global $plugin_page;
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-		$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 	?>
 		<div class="wrap nosubsub">
@@ -485,9 +485,9 @@ function eme_manage_dgroups_layout( $message = '' ) {
 		<div id="icon-edit" class="icon32">
 		</div>
 		 
-	<div id="discountgroups-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-				<p><?php echo $message; ?></p>
-		</div>
+	<div id="discountgroups-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
+		<p><?php echo $message; ?></p>
+	</div>
 
 		<h1><?php esc_html_e( 'Add a new discount group', 'events-made-easy' ); ?></h1>
 		<div class="wrap">

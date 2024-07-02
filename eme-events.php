@@ -5877,9 +5877,9 @@ function eme_events_table( $message = '' ) {
 	global $plugin_page;
 
 	if ( empty( $message ) ) {
-			$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 
 	$scope_names           = [];
@@ -5897,7 +5897,7 @@ function eme_events_table( $message = '' ) {
 <div id="poststuff">
 	<div id="icon-edit" class="icon32"></div>
 
-	<div id="events-message" class="updated notice notice-success is-dismissible" style="<?php echo $hidden_style; ?>">
+	<div id="events-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; ?>">
 				<p><?php echo $message; ?></p>
 	</div>
 
@@ -6066,9 +6066,9 @@ function eme_recurrences_table( $message = '' ) {
 	global $plugin_page;
 
 	if ( empty( $message ) ) {
-			$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 
 	$scope_names            = [];
@@ -6082,8 +6082,8 @@ function eme_recurrences_table( $message = '' ) {
 <div id="poststuff">
 	<div id="icon-edit" class="icon32"></div>
 
-	<div id="events-message" class="updated notice notice-success is-dismissible" style="<?php echo $hidden_style; ?>">
-				<p><?php echo $message; ?></p>
+	<div id="events-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; ?>">
+		<p><?php echo $message; ?></p>
 	</div>
 
 	<?php if ( current_user_can( get_option( 'eme_cap_add_event' ) ) ) : ?>
@@ -6149,10 +6149,10 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	$event_status_array = eme_status_array();
 	$nonce_field        = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( ! isset( $info['feedback'] ) ) {
-		$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 		$message      = '';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 		$message      = $info['feedback'];
 	}
 
@@ -6234,7 +6234,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 
 	?>
 	<div class="wrap">
-	<div id="events-message" class="updated notice notice-success is-dismissible" style="<?php echo $hidden_style; ?>">
+	<div id="events-message" class="updated notice notice-success is-dismissible <?php echo $hidden_class; ?>">
 		<p><?php echo $message; ?></p>
 	</div>
 	<form id="eventForm" name="eventForm" method="post" autocomplete="off" enctype="multipart/form-data" action="<?php echo $form_destination; ?>">

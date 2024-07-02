@@ -149,11 +149,11 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	$pg_count = eme_event_count_pgs( $event );
 	if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
 		$eme_pg_submit_immediately = 1;
-		$hidden_style              = "style='display:none;'";
+		$hidden_class              = 'eme-hidden';
 		$pg_in_use                 = eme_event_get_first_pg( $event );
 	} else {
 		$eme_pg_submit_immediately = 0;
-		$hidden_style              = '';
+		$hidden_class              = '';
 		$pg_in_use                 = '';
 	}
 
@@ -191,7 +191,7 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 		}
 	}
 
-	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form' $hidden_style>";
+	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class>'";
 	$pgs         = eme_payment_gateways();
 	foreach ( $pgs as $pg => $value ) {
 		if ( $event['event_properties'][ 'use_' . $pg ] ) {
@@ -282,11 +282,11 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 	$pg_count = eme_membership_count_pgs( $membership );
 	if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
 		$eme_pg_submit_immediately = 1;
-		$hidden_style              = "style='display:none;'";
+		$hidden_class              = 'eme-hidden';
 		$pg_in_use                 = eme_membership_get_first_pg( $membership );
 	} else {
 		$eme_pg_submit_immediately = 0;
-		$hidden_style              = '';
+		$hidden_class              = '';
 		$pg_in_use                 = '';
 	}
 
@@ -321,7 +321,7 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 			$ret_string .= '</div>';
 		}
 	}
-	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form' $hidden_style>";
+	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class>'";
 	$is_multi    = 0;
 	$pgs         = eme_payment_gateways();
 	foreach ( $pgs as $pg => $value ) {

@@ -311,9 +311,9 @@ function eme_manage_countries_layout( $message = '' ) {
 	$lang        = eme_detect_lang();
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-		$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 
 	$countries_count = eme_get_countries_count();
@@ -331,7 +331,7 @@ function eme_manage_countries_layout( $message = '' ) {
 		<div id="icon-edit" class="icon32">
 		</div>
 		 
-		<div id="countries-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
+		<div id="countries-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
 			<p><?php echo $message; ?></p>
 		</div>
 
@@ -392,9 +392,9 @@ function eme_manage_states_layout( $message = '' ) {
 	global $plugin_page;
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-		$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 	?>
 		<div class="wrap nosubsub">
@@ -402,9 +402,9 @@ function eme_manage_states_layout( $message = '' ) {
 		<div id="icon-edit" class="icon32">
 		</div>
 		 
-	<div id="states-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-				<p><?php echo $message; ?></p>
-		</div>
+	<div id="states-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
+		<p><?php echo $message; ?></p>
+	</div>
 
 		<h1><?php esc_html_e( 'Add a new state', 'events-made-easy' ); ?></h1>
 		<div class="wrap">

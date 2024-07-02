@@ -162,9 +162,9 @@ function eme_templates_table_layout( $message = '' ) {
 	$destination    = admin_url( "admin.php?page=$plugin_page" );
 	$nonce_field    = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-			$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 
 	echo "
@@ -175,8 +175,8 @@ function eme_templates_table_layout( $message = '' ) {
          <h1>" . __( 'Manage templates', 'events-made-easy' ) . "</h1>\n ";
 
 	?>
-	<div id="templates-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-				<p><?php echo $message; ?></p>
+	<div id="templates-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
+		<p><?php echo $message; ?></p>
 	</div>
 
 	<div class="wrap">

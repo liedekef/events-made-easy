@@ -2108,9 +2108,9 @@ function eme_manage_people_layout( $message = '' ) {
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
 	if ( empty( $message ) ) {
-		$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 
 	?>
@@ -2119,8 +2119,8 @@ function eme_manage_people_layout( $message = '' ) {
 	<div id="icon-edit" class="icon32">
 	</div>
 
-	<div id="people-message" class="notice is-dismissible eme-message-admin" style="<?php echo esc_attr($hidden_style); ?>">
-			<p><?php echo $message; ?></p>
+	<div id="people-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
+		<p><?php echo $message; ?></p>
 	</div>
 
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>
@@ -2606,18 +2606,18 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 function eme_manage_groups_layout( $message = '' ) {
 	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	if ( empty( $message ) ) {
-		$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 	?>
-		<div class="wrap nosubsub">
-		<div id="poststuff">
+	<div class="wrap nosubsub">
+	<div id="poststuff">
 	<div id="icon-edit" class="icon32">
 	</div>
 
-	<div id="groups-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
-			<p><?php echo $message; ?></p>
+	<div id="groups-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
+		<p><?php echo $message; ?></p>
 	</div>
 
 	<?php if ( current_user_can( get_option( 'eme_cap_edit_people' ) ) ) : ?>

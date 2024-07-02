@@ -193,9 +193,9 @@ function eme_formfields_table_layout( $message = '' ) {
 	$nonce_field    = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 	$destination    = admin_url( "admin.php?page=$plugin_page" );
 	if ( empty( $message ) ) {
-			$hidden_style = 'display:none;';
+		$hidden_class = 'eme-hidden';
 	} else {
-		$hidden_style = '';
+		$hidden_class = '';
 	}
 	?>
 	<div class="wrap nosubsub">
@@ -203,7 +203,7 @@ function eme_formfields_table_layout( $message = '' ) {
 	<div id="icon-edit" class="icon32">
 	</div>
 
-	<div id="formfields-message" class="notice is-dismissible eme-message-admin" style="<?php echo $hidden_style; ?>">
+	<div id="formfields-message" class="notice is-dismissible eme-message-admin <?php echo $hidden_class; ?>">
 		<p><?php echo $message; ?></p>
 	</div>
 

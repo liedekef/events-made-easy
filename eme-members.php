@@ -218,6 +218,9 @@ function eme_init_membership_props( $props = [] ) {
 	if ( ! isset( $props['contact_stop_subject_format'] ) ) {
 		$props['contact_stop_subject_format'] = __( 'Member stopped', 'events-made-easy' );
 	}
+	if ( ! isset( $props['contact_deleted_subject_format'] ) ) {
+		$props['contact_deleted_subject_format'] = __( 'Member deleted', 'events-made-easy' );
+	}
 	if ( ! isset( $props['contact_ipn_subject_format'] ) ) {
 		$props['contact_ipn_subject_format'] = __( 'Member IPN received', 'events-made-easy' );
 	}
@@ -225,7 +228,7 @@ function eme_init_membership_props( $props = [] ) {
 		$props['contact_paid_subject_format'] = __( 'Member payment received', 'events-made-easy' );
 	}
 
-	$templates = [ 'member_form_tpl', 'familymember_form_tpl', 'payment_form_header_tpl', 'payment_form_footer_tpl', 'new_body_format_tpl', 'updated_body_format_tpl', 'extended_body_format_tpl', 'paid_body_format_tpl', 'reminder_body_format_tpl', 'stop_body_format_tpl', 'contact_new_body_format_tpl', 'contact_stop_body_format_tpl', 'contact_ipn_body_format_tpl', 'contact_paid_body_format_tpl', 'offline_payment_tpl', 'member_added_tpl', 'payment_success_tpl' ];
+	$templates = [ 'member_form_tpl', 'familymember_form_tpl', 'payment_form_header_tpl', 'payment_form_footer_tpl', 'new_body_format_tpl', 'updated_body_format_tpl', 'extended_body_format_tpl', 'paid_body_format_tpl', 'reminder_body_format_tpl', 'stop_body_format_tpl', 'contact_new_body_format_tpl', 'contact_stop_body_format_tpl', 'contact_deleted_body_format_tpl', 'contact_ipn_body_format_tpl', 'contact_paid_body_format_tpl', 'offline_payment_tpl', 'member_added_tpl', 'payment_success_tpl' ];
 	foreach ( $templates as $template ) {
 		if ( ! isset( $props[ $template ] ) ) {
 			$props[ $template ] = 0;
@@ -233,7 +236,7 @@ function eme_init_membership_props( $props = [] ) {
 			$props[ $template ] = intval( $props[ $template ] );
 		}
 	}
-	$template_texts = [ 'member_form_text', 'familymember_form_text', 'payment_form_header_text', 'payment_form_footer_text', 'payment_success_text', 'offline_payment_text', 'new_body_text', 'contact_new_body_text', 'updated_body_text', 'extended_body_text', 'paid_body_text', 'contact_paid_body_text', 'reminder_body_text', 'stop_body_text', 'contact_stop_body_text', 'contact_ipn_body_text', 'member_added_text' ];
+	$template_texts = [ 'member_form_text', 'familymember_form_text', 'payment_form_header_text', 'payment_form_footer_text', 'payment_success_text', 'offline_payment_text', 'new_body_text', 'contact_new_body_text', 'updated_body_text', 'extended_body_text', 'paid_body_text', 'contact_paid_body_text', 'reminder_body_text', 'stop_body_text', 'contact_stop_body_text', 'contact_deleted_body_text', 'contact_ipn_body_text', 'member_added_text' ];
 	foreach ( $template_texts as $template_text ) {
 		if ( ! isset( $props[ $template_text ] ) ) {
 			$props[ $template_text ] = '';
@@ -705,6 +708,8 @@ function eme_delete_member( $member_id, $is_related_member=0 ) {
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	if ( ! empty( $member_id ) ) {
 		$member = eme_get_member($member_id);
+		// we send the mail first, so we still have all the member answers that can then be used in the mail
+		eme_email_member_action( $member, 'deleteMember' );
 		if ( has_action( 'eme_delete_member_action' ) ) {
 			do_action( 'eme_delete_member_action', $member );
 		}
@@ -2697,6 +2702,41 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 		</table>
 		</div>
 
+	<h3><?php esc_html_e( 'Member deleted email', 'events-made-easy' ); ?></h3>
+		<div>
+	<table class="eme_membership_admin_table">
+	<tr>
+	<td><label for="name"><?php esc_html_e( 'Contactperson member deleted email subject', 'events-made-easy' ); ?></label></td>
+	<td><input id="properties[contact_deleted_subject_format]" name="properties[contact_deleted_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['contact_deleted_subject_format'] ); ?>" size="40">
+		<br><p class='eme_smaller'><?php esc_html_e( 'The subject of the mail sent to the contactperson just before a member is deleted.', 'events-made-easy' ); ?>
+			</p>
+		<br>
+	</td>
+	</tr>
+	<tr>
+	<td><label for="name"><?php esc_html_e( 'Contactperson member deleted email body', 'events-made-easy' ); ?></label></td>
+	<td><?php echo eme_ui_select( $membership['properties']['contact_deleted_body_format_tpl'], 'properties[contact_deleted_body_format_tpl]', $templates_array ); ?>
+		<br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the contactperson just before a member is deleted.', 'events-made-easy' ); ?>
+				<br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
+		<br>
+		<?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
+		<img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_deleted_body_text" style="cursor: pointer; vertical-align: middle; ">
+		<?php
+		if ( eme_is_empty_string( $membership['properties']['contact_deleted_body_text'] ) ) {
+			$showhide_style = 'style="display:none; width:100%;"';
+		} else {
+			$showhide_style = 'style="width:100%;"';
+		}
+		?>
+		<div id="div_membership_properties_contact_deleted_body_text" <?php echo $showhide_style; ?>>
+		<?php eme_wysiwyg_textarea( 'properties[contact_deleted_body_text]', $membership['properties']['contact_deleted_body_text'], 1, 0 ); ?>
+		</div>
+		</p>
+	</td>
+	</tr>
+		</table>
+		</div>
+
 	<h3><?php esc_html_e( 'Contactperson payment notification email', 'events-made-easy' ); ?></h3>
 		<div>
 	<table class="eme_membership_admin_table">
@@ -4368,6 +4408,13 @@ function eme_email_member_action( $member, $action ) {
 			$contact_body = $membership['properties']['contact_stop_body_text'];
 		} else {
 			$contact_body = eme_get_template_format_plain( $membership['properties']['contact_stop_body_format_tpl'] );
+		}
+	} elseif ( $action == 'deleteMember' ) {
+		$contact_subject = $membership['properties']['contact_deleted_subject_format'];
+		if ( ! eme_is_empty_string( $membership['properties']['contact_deleted_body_text'] ) ) {
+			$contact_body = $membership['properties']['contact_deleted_body_text'];
+		} else {
+			$contact_body = eme_get_template_format_plain( $membership['properties']['contact_deleted_body_format_tpl'] );
 		}
 	} elseif ( $action == 'ipnReceived' ) {
 		$contact_subject = $membership['properties']['contact_ipn_subject_format'];

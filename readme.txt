@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.49 (2024//) =
 * Mollie API update
+* Add email settings in case a member is deleted in the admin interface
 
 = 2.4.48 (2024/07/01) =
 * Mollie API update

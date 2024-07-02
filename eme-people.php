@@ -515,7 +515,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
 			} else {
 				$replacement = apply_filters( 'eme_text', $replacement );
 			}
-		} elseif ( preg_match( '/#_GDPR/', $result ) ) {
+		} elseif ( preg_match( '/#_GDPR|#_CONSENT/', $result ) ) {
 			$replacement = $person['gdpr'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );

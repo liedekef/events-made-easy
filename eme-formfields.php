@@ -1829,6 +1829,10 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 		if ( strstr( $result, '#_RESP' ) ) {
 			$result = str_replace( '#_RESP', '#_', $result );
 		}
+		// also support CONSENT
+		if ( strstr( $result, '#_CONSENT' ) ) {
+			$result = str_replace( '#_CONSENT', '#_GDPR', $result );
+		}
 
 		if ( preg_match( '/#_(NAME|LASTNAME)(\{.+?\})?$/', $result, $matches ) ) {
 			$this_readonly = '';

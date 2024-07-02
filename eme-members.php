@@ -703,13 +703,15 @@ function eme_get_extra_member_data( $member ) {
         return $member;
 }
 
-function eme_delete_member( $member_id, $is_related_member=0 ) {
+function eme_delete_member( $member_id, $send_mail=0 ) {
 	global $wpdb;
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	if ( ! empty( $member_id ) ) {
 		$member = eme_get_member($member_id);
 		// we send the mail first, so we still have all the member answers that can then be used in the mail
-		eme_email_member_action( $member, 'deleteMember' );
+		if ($send_mail) {
+			eme_email_member_action( $member, 'deleteMember' );
+		}
 		if ( has_action( 'eme_delete_member_action' ) ) {
 			do_action( 'eme_delete_member_action', $member );
 		}
@@ -717,17 +719,20 @@ function eme_delete_member( $member_id, $is_related_member=0 ) {
 		$related_member_ids = eme_get_family_member_ids( $member_id );
 		if ( ! empty( $related_member_ids ) ) {
 			foreach ( $related_member_ids as $related_member_id ) {
-				// we pass 1 as second param, so eme_delete_member then knows not to delete the payment
-				eme_delete_member( $related_member_id,1 );
+				eme_delete_member( $related_member_id, $send_mail );
 			}
 		}
+
+		// first we delete the answers
 		eme_delete_member_answers( $member_id );
+		// then we delete the member itself
 		$sql = $wpdb->prepare( "DELETE FROM $members_table WHERE member_id = %d", $member_id );
 		$wpdb->query( $sql );
+		// also delete any uploaded files
 		eme_delete_uploaded_files( $member_id, 'members' );
 		// remove the linked payment too, but only for the head of the family, not related members
 		// this is just for a bit of efficiency
-		if (!empty($member['payment_id']) && !$is_related_member) {
+		if (!empty($member['payment_id']) && empty($member['related_member_id'])) {
 			$member_ids = eme_get_payment_member_ids( $member['payment_id'] );
 			if ( empty( $member_ids ) ) {
 				eme_delete_payment( $member['payment_id'] );
@@ -1162,7 +1167,7 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 						if ( ! $eme_is_admin_request && ! empty( $member['discountids'] ) ) {
 							$discount_ids = explode( ',', $member['discountids'] );
 							foreach ( $discount_ids as $discount_id ) {
-									eme_increase_discount_member_count( $discount_id, $member );
+								eme_increase_discount_member_count( $discount_id, $member );
 							}
 						}
 
@@ -4224,7 +4229,7 @@ function eme_get_family_member_ids( $member_id ) {
 	if ( empty( $member_id ) ) {
 		return false;
 	}
-	$sql = $wpdb->prepare( "select member_id from $table where related_member_id=%d", $member_id );
+	$sql = $wpdb->prepare( "SELECT member_id FROM $table WHERE related_member_id=%d", $member_id );
 	return $wpdb->get_col( $sql );
 }
 
@@ -6789,7 +6794,8 @@ function eme_ajax_action_delete_members( $ids_arr, $trash_person = 0 ) {
 	} else {
 		$ajaxResult = [];
 		foreach ( $ids_arr as $member_id ) {
-			eme_delete_member( $member_id );
+			// we set the second param to 1, in which case mails will be sent for deleting members
+			eme_delete_member( $member_id, 1 );
 		}
 		$ajaxResult['Result']      = 'OK';
 		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . esc_html__( 'Members deleted.', 'events-made-easy' ) . '</p></div>';

@@ -4852,8 +4852,12 @@ function eme_delete_person_memberships( $person_ids ) {
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	if ( eme_is_list_of_int( $person_ids ) ) {
-		$wpdb->query( "DELETE FROM $answers_table WHERE type='member' AND related_id IN (SELECT member_id FROM $members_table WHERE person_id IN ($person_ids))" );
-		$wpdb->query( "DELETE FROM $members_table WHERE person_id IN ($person_ids)" );
+		$sql        = "SELECT member_id FROM $members_table WHERE person_id IN ($person_ids)";
+		$member_ids = $wpdb->get_col( $sql );
+		foreach ( $member_ids as $member_id ) {
+			// we set the second param to 1, in which case mails will be sent for deleting members
+			eme_delete_member( $member_id, 1 );
+		}
 	}
 }
 

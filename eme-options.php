@@ -876,18 +876,6 @@ function eme_options_delete() {
 	}
 }
 
-function eme_metabox_options_delete() {
-	global $wpdb;
-	$screens = [ 'events_page_eme-new_event', 'toplevel_page_eme-manager' ];
-	foreach ( $screens as $screen ) {
-		foreach ( [ 'metaboxhidden', 'closedpostboxes', 'wp_metaboxorder', 'meta-box-order', 'screen_layout' ] as $option ) {
-			$keys[] = "'{$option}_{$screen}'";
-		}
-	}
-	$my_list = implode(',', $keys);
-	$wpdb->query( "DELETE FROM {$wpdb->usermeta} WHERE meta_key IN ( $my_list )" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-}
-
 function eme_options_postsave_actions() {
 	// make sure the captcha doesn't cause problems
 	if ( ! function_exists( 'imagecreatetruecolor' ) ) {

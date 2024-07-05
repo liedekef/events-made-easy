@@ -246,7 +246,6 @@ function _eme_uninstall( $force_drop = 0 ) {
 	if ( $drop_settings || $force_drop ) {
 		eme_delete_events_page();
 		eme_options_delete();
-		eme_metabox_options_delete();
 	}
 	if ( $drop_data && ! $drop_settings ) {
 		// make sure eme_version is deleted if drop_data is selected
@@ -266,14 +265,12 @@ function _eme_uninstall( $force_drop = 0 ) {
 	flush_rewrite_rules();
 }
 
-function eme_new_blog( $blog_id, $user_id, $domain, $path, $site_id, $meta ) {
-	global $wpdb;
-
+function eme_new_blog( WP_Site $new_site, $args ) {
+	// we don't use $args here
 	if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
-		$old_blog = $wpdb->blogid;
-		switch_to_blog( $blog_id );
+		switch_to_blog( $new_site->blog_id );
 		_eme_install();
-		switch_to_blog( $old_blog );
+		restore_current_blog();
 	}
 }
 
@@ -1684,9 +1681,9 @@ function eme_create_events_page() {
 		'comment_status' => 'closed',
 		'ping_status'    => 'closed',
 	];
-	$int_post_id = wp_insert_post( $postarr );
-	if ( $int_post_id ) {
-		update_option( 'eme_events_page', $int_post_id );
+	$eme_page_id = wp_insert_post( $postarr );
+	if ( !is_wp_error( $eme_page_id ) ) {
+		update_option( 'eme_events_page', $eme_page_id );
 	}
 }
 

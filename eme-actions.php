@@ -603,7 +603,8 @@ if (typeof QTags != 'undefined') {
 // the eme_add_my_quicktags action will be added when needed, see function eme_get_editor_settings
 // add_action('admin_print_footer_scripts', 'eme_add_my_quicktags');
 
-// action to be done after plugin update
+// action executed after plugin update
+// currently not needed, so we disable the action hook
 function eme_update_completed( $upgrader_object, $options ) {
 	// If an update has taken place and the updated type is plugins and the plugins element exists
 	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
@@ -616,6 +617,6 @@ function eme_update_completed( $upgrader_object, $options ) {
 		}
 	}
 }
-add_action( 'upgrader_process_complete', 'eme_update_completed', 10, 2 );
+//add_action( 'upgrader_process_complete', 'eme_update_completed', 10, 2 );
 
 ?>

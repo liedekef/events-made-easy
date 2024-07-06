@@ -117,13 +117,13 @@ function _eme_install() {
 		wp_unschedule_hook( 'eme_cron_events_daily_actions' );
 	}
 	if ( ! wp_next_scheduled( 'eme_cron_member_daily_actions' ) ) {
-			wp_schedule_event( $timestamp, 'daily', 'eme_cron_member_daily_actions' );
+		wp_schedule_event( $timestamp, 'daily', 'eme_cron_member_daily_actions' );
 	}
 	if ( ! wp_next_scheduled( 'eme_cron_gdpr_daily_actions' ) ) {
-			wp_schedule_event( $timestamp + 300, 'daily', 'eme_cron_gdpr_daily_actions' );
+		wp_schedule_event( $timestamp + 300, 'daily', 'eme_cron_gdpr_daily_actions' );
 	}
 	if ( ! wp_next_scheduled( 'eme_cron_events_daily_actions' ) ) {
-			wp_schedule_event( $timestamp, 'daily', 'eme_cron_events_daily_actions' );
+		wp_schedule_event( $timestamp, 'daily', 'eme_cron_events_daily_actions' );
 	}
 	if ( ! wp_next_scheduled( 'eme_cron_daily_actions' ) ) {
 		$res = wp_schedule_event( $timestamp + 600, 'daily', 'eme_cron_daily_actions' );

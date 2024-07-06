@@ -456,7 +456,7 @@ function eme_admin_notices() {
 			delete_user_meta( $user_id, 'eme_donate_notice_ignore' );
 			$eme_donate_notice_ignore = 0;
 		}
-		if ( ! $eme_hello_notice_ignore && preg_match( '/^eme-/', $plugin_page ) ) { ?>
+		if ( ! $eme_hello_notice_ignore && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
 		<div class="updated notice"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6\$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), $current_user->display_name, admin_url( 'widgets.php' ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', admin_url( 'admin.php?page=eme-options' ), add_query_arg( [ 'eme_notice_ignore' => 'hello' ], remove_query_arg( 'eme_notice_ignore' ) ) ); ?></div>
 			<?php
 		}
@@ -475,7 +475,7 @@ PayPal: <a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurr
 Github: <a href="https://github.com/sponsors/liedekef">Github sponsoring</a>
 	<br><br>
 			<?php
-			echo sprintf( __( '<a href="%s" title="I already donated">I already donated.</a>', 'events-made-easy' ), add_query_arg( [ 'eme_notice_ignore' => 'donate' ], remove_query_arg( 'eme_notice_ignore' ) ) );
+			echo sprintf( '<a href="%s" title="%s">%s</a>', add_query_arg( [ 'eme_notice_ignore' => 'donate' ], remove_query_arg( 'eme_notice_ignore' ) ), __("Dismiss",'events-made-easy'), __("Dismiss",'events-made-easy') );
 			?>
 	</div>
 </div>
@@ -602,5 +602,20 @@ if (typeof QTags != 'undefined') {
 }
 // the eme_add_my_quicktags action will be added when needed, see function eme_get_editor_settings
 // add_action('admin_print_footer_scripts', 'eme_add_my_quicktags');
+
+// action to be done after plugin update
+function eme_update_completed( $upgrader_object, $options ) {
+	// If an update has taken place and the updated type is plugins and the plugins element exists
+	if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
+		foreach( $options['plugins'] as $plugin ) {
+			// Check to ensure it's my plugin
+			if( $plugin == plugin_basename( __FILE__ ) ) {
+				$current_userid = get_current_user_id();
+				delete_user_meta( $current_userid, 'eme_donate_notice_ignore' );
+			}
+		}
+	}
+}
+add_action( 'upgrader_process_complete', 'eme_update_completed', 10, 2 );
 
 ?>

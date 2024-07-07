@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Mollie API update
 * Add email settings in case a member is deleted in the admin interface
 * Also support #_CONSENT as placeholder (alias for #_GDPR)
+* Show notice after upgrading EME (will be used to show/point to the changelog too)
 
 = 2.4.48 (2024/07/01) =
 * Mollie API update

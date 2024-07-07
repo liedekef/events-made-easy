@@ -172,7 +172,7 @@ function eme_actions_admin_init() {
 		add_user_meta( $user_id, 'eme_hello_notice_ignore', $eme_date_obj->format( 'Ymd' ), true );
 	}
 	if ( isset( $_GET['eme_notice_ignore'] ) && ( $_GET['eme_notice_ignore'] == 'donate' ) ) {
-		add_user_meta( $user_id, 'eme_donate_notice_ignore', $eme_date_obj->format( 'Ymd' ), true );
+		add_user_meta( $user_id, 'eme_donate_notice_ignore', EME_VERSION . $eme_date_obj->format( 'Ymd' ), true );
 	}
 
 	// do some actions when the settings have been updated
@@ -451,10 +451,19 @@ function eme_admin_notices() {
 		$single                   = true;
 		$eme_hello_notice_ignore  = get_user_meta( $user_id, 'eme_hello_notice_ignore', $single );
 		$eme_donate_notice_ignore = get_user_meta( $user_id, 'eme_donate_notice_ignore', $single );
-		// let's show the donate notice again after 3 months
-		if ( $eme_donate_notice_ignore && ( intval( $eme_date_obj->format( 'Ymd' ) ) - intval( $eme_donate_notice_ignore ) > 90 ) ) {
-			delete_user_meta( $user_id, 'eme_donate_notice_ignore' );
-			$eme_donate_notice_ignore = 0;
+		if ($eme_donate_notice_ignore ) {
+			// if the donate notice doesn't contain the current version, show the notice
+			if ( ! preg_match( '/^'.EME_VERSION.'/', $eme_donate_notice_ignore ) ) {
+				delete_user_meta( $user_id, 'eme_donate_notice_ignore' );
+				$eme_donate_notice_ignore = 0;
+			} else {
+				$eme_donate_notice_ignore = preg_replace( '/^'.EME_VERSION.'/', '', $eme_donate_notice_ignore );
+				// let's show the donate notice again after 3 months
+				if ( intval( $eme_date_obj->format( 'Ymd' ) ) - intval( $eme_donate_notice_ignore ) > 90 ) {
+					delete_user_meta( $user_id, 'eme_donate_notice_ignore' );
+					$eme_donate_notice_ignore = 0;
+				}
+			}
 		}
 		if ( ! $eme_hello_notice_ignore && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
 		<div class="updated notice"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6\$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), $current_user->display_name, admin_url( 'widgets.php' ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', admin_url( 'admin.php?page=eme-options' ), add_query_arg( [ 'eme_notice_ignore' => 'hello' ], remove_query_arg( 'eme_notice_ignore' ) ) ); ?></div>
@@ -463,9 +472,10 @@ function eme_admin_notices() {
 
 		if ( ! $eme_donate_notice_ignore && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) {
 			?>
-<div class="updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;">
+<div class="notice-updated" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;">
 	<div>
-	<h3><?php esc_html_e( 'Donate to the development of Events Made Easy', 'events-made-easy' ); ?></h3>
+	<h3><?php esc_html_e( 'Events Made Easy has been installed or upgraded', 'events-made-easy' ); ?></h3>
+	<h3><?php esc_html_e( 'Please donate to the development of Events Made Easy', 'events-made-easy' ); ?></h3>
 			<?php
 			_e( 'If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!', 'events-made-easy' );
 			?>

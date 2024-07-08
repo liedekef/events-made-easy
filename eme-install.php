@@ -65,10 +65,6 @@ function _eme_install() {
 		eme_update_options( $db_version );
 	}
 
-	// this will cause the donate notice to be shown again
-	$current_userid = get_current_user_id();
-	delete_user_meta( $current_userid, 'eme_donate_notice_ignore' );
-
 	// some folders that need to be created
 	eme_mkdir_with_index( EME_UPLOAD_DIR );
 	$upload_folders = [ 'events', 'locations', 'memberships', 'bookings', 'people', 'members', 'includes' ];

@@ -169,10 +169,10 @@ function eme_actions_admin_init() {
 
 	$user_id = $current_user->ID;
 	if ( isset( $_GET['eme_notice_ignore'] ) && ( $_GET['eme_notice_ignore'] == 'hello' ) ) {
-		update_user_meta( $user_id, 'eme_hello_notice_ignore', $eme_date_obj->format( 'Ymd' ), true );
+		update_user_meta( $user_id, 'eme_hello_notice_ignore', $eme_date_obj->format( 'Ymd' ) );
 	}
 	if ( isset( $_GET['eme_notice_ignore'] ) && ( $_GET['eme_notice_ignore'] == 'donate' ) ) {
-		update_user_meta( $user_id, 'eme_donate_notice_ignore', EME_VERSION . $eme_date_obj->format( 'Ymd' ), true );
+		update_user_meta( $user_id, 'eme_donate_notice_ignore', EME_VERSION . $eme_date_obj->format( 'Ymd' ) );
 	}
 
 	// do some actions when the settings have been updated
@@ -463,12 +463,12 @@ function eme_admin_notices() {
 				}
 			}
 		}
-		if ( !empty($eme_hello_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
-		<div class="updated notice"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6\$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), $current_user->display_name, admin_url( 'widgets.php' ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', admin_url( 'admin.php?page=eme-options' ), add_query_arg( [ 'eme_notice_ignore' => 'hello' ], remove_query_arg( 'eme_notice_ignore' ) ) ); ?></div>
+		if ( empty($eme_hello_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
+		<div class="notice-updated"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6\$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), $current_user->display_name, admin_url( 'widgets.php' ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', admin_url( 'admin.php?page=eme-options' ), add_query_arg( [ 'eme_notice_ignore' => 'hello' ], remove_query_arg( 'eme_notice_ignore' ) ) ); ?></div>
 			<?php
 		}
 
-		if ( !empty($eme_donate_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) {
+		if ( empty($eme_donate_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) {
 			?>
 <div class="notice-updated" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;">
 	<div>

@@ -2710,11 +2710,11 @@ function eme_refund_booking_paypal( $booking ) {
 	// the paypal or paypal sandbox url
 	$mode = get_option( 'eme_paypal_url' );
 	if ( preg_match( '/sandbox/', $mode ) ) {
-			require_once 'payment_gateways/paypal/client_sandbox.php';
-			$client = PayPalClient::client();
+		require_once 'payment_gateways/paypal/client_sandbox.php';
+		$client = PayPalClient::client();
 	} else {
-			require_once 'payment_gateways/paypal/client_prod.php';
-			$client = PayPalClient::client();
+		require_once 'payment_gateways/paypal/client_prod.php';
+		$client = PayPalClient::client();
 	}
 
 	$price = eme_get_total_booking_price( $booking );
@@ -2763,7 +2763,9 @@ function eme_refund_booking_payconiq( $booking ) {
 			$payconiq->setEndpointTest();
 	}
 	try {
-		$payconiq_payment = $payconiq->refundPayment( $payment_id, $price, $cur, $description );
+		// currently no description
+		$description = '';
+		$payconiq_payment = $payconiq->refundPayment( $booking['pg_pid'], $price, $cur, $description );
 	} catch ( Exception $e ) {
 		$url = '';
 		print 'Payconiq API call failed: ' . htmlspecialchars( $e->getMessage() ) . ' on field ' . htmlspecialchars( $e->getField() );

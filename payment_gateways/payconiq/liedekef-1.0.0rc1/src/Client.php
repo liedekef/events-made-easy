@@ -194,8 +194,11 @@ class Client
 		$data_arr = [
                         'amount' => $amount,
                         'currency' => $currency,
-                        'description' => $description,
                 ];
+		// description is optional, so add it only when not empty
+		if (!empty($description)) {
+			$data_arr['description'] = $description;
+		}
 		$response = $this->curl('POST', $this->getEndpoint('/payments/' . $paymentId), $this->constructHeaders(), $data_arr);
 
 		if (empty($response->paymentId))

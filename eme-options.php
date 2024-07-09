@@ -271,6 +271,7 @@ function eme_add_options( $reset = 0 ) {
 		'eme_smtp_port'                                   => 25,
 		'eme_smtp_encryption'                             => '',
 		'eme_smtp_verify_cert'                            => 1,
+		'eme_smtp_auth'                                   => 0,
 		'eme_smtp_username'                               => '',
 		'eme_smtp_password'                               => '',
 		'eme_mail_sender_name'                            => '',
@@ -279,7 +280,6 @@ function eme_add_options( $reset = 0 ) {
 		'eme_mail_bcc_address'                            => '',
 		'eme_rsvp_mail_send_method'                       => 'wp_mail',
 		'eme_rsvp_send_html'                              => 1,
-		'eme_rsvp_mail_SMTPAuth'                          => 0,
 		'eme_rsvp_registered_users_only'                  => 0,
 		'eme_rsvp_reg_for_new_events'                     => 0,
 		'eme_rsvp_default_number_spaces'                  => 10,
@@ -846,6 +846,18 @@ function eme_update_options( $db_version ) {
 				}
 			}
 		}
+		if ( $db_version < 388 ) {
+			// rename some options
+			$options2 = [
+				'eme_rsvp_mail_SMTPAuth' => 'eme_smtp_auth',
+			];
+			foreach ( $options2 as $old_option => $new_option ) {
+				if ( get_option( $old_option ) ) {
+					update_option( $new_option, get_option( $old_option ) );
+					delete_option( $old_option );
+				}
+			}
+		}
 	}
 	// make sure the captcha doesn't cause problems
 	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
@@ -1070,7 +1082,7 @@ function eme_options_register() {
 			$options = [ 'eme_task_registered_users_only', 'eme_task_requires_approval', 'eme_task_allow_overlap', 'eme_task_form_taskentry_format', 'eme_task_form_format', 'eme_task_signup_format', 'eme_task_signup_recorded_ok_html', 'eme_task_reminder_days' ];
 			break;
 		case 'mail':
-			$options = [ 'eme_rsvp_mail_notify_is_active', 'eme_rsvp_mail_notify_pending', 'eme_rsvp_mail_notify_paid', 'eme_rsvp_mail_notify_approved', 'eme_mail_sender_name', 'eme_mail_sender_address', 'eme_mail_force_from', 'eme_rsvp_mail_send_method', 'eme_smtp_host', 'eme_smtp_port', 'eme_smtp_encryption', 'eme_rsvp_mail_SMTPAuth', 'eme_smtp_username', 'eme_smtp_password', 'eme_smtp_debug', 'eme_rsvp_send_html', 'eme_mail_bcc_address', 'eme_smtp_verify_cert', 'eme_queue_mails', 'eme_cron_send_queued', 'eme_cron_queue_count', 'eme_people_newsletter', 'eme_people_massmail', 'eme_massmail_popup_text', 'eme_massmail_popup', 'eme_mail_tracking', 'eme_mail_sleep', 'eme_mail_blacklist' ];
+			$options = [ 'eme_rsvp_mail_notify_is_active', 'eme_rsvp_mail_notify_pending', 'eme_rsvp_mail_notify_paid', 'eme_rsvp_mail_notify_approved', 'eme_mail_sender_name', 'eme_mail_sender_address', 'eme_mail_force_from', 'eme_rsvp_mail_send_method', 'eme_smtp_host', 'eme_smtp_port', 'eme_smtp_encryption', 'eme_smtp_auth', 'eme_smtp_username', 'eme_smtp_password', 'eme_smtp_debug', 'eme_rsvp_send_html', 'eme_mail_bcc_address', 'eme_smtp_verify_cert', 'eme_queue_mails', 'eme_cron_send_queued', 'eme_cron_queue_count', 'eme_people_newsletter', 'eme_people_massmail', 'eme_massmail_popup_text', 'eme_massmail_popup', 'eme_mail_tracking', 'eme_mail_sleep', 'eme_mail_blacklist' ];
 			break;
 		case 'mailtemplates':
 			$options = [ 'eme_contactperson_email_subject', 'eme_contactperson_cancelled_email_subject', 'eme_contactperson_pending_email_subject', 'eme_contactperson_email_body', 'eme_contactperson_cancelled_email_body', 'eme_contactperson_pending_email_body', 'eme_contactperson_ipn_email_subject', 'eme_contactperson_ipn_email_body', 'eme_contactperson_paid_email_subject', 'eme_contactperson_paid_email_body', 'eme_respondent_email_subject', 'eme_respondent_email_body', 'eme_registration_pending_email_subject', 'eme_registration_pending_email_body', 'eme_registration_userpending_email_subject', 'eme_registration_userpending_email_body', 'eme_registration_cancelled_email_subject', 'eme_registration_cancelled_email_body', 'eme_registration_trashed_email_subject', 'eme_registration_trashed_email_body', 'eme_registration_updated_email_subject', 'eme_registration_updated_email_body', 'eme_registration_paid_email_subject', 'eme_registration_paid_email_body', 'eme_registration_pending_reminder_email_subject', 'eme_registration_pending_reminder_email_body', 'eme_registration_reminder_email_subject', 'eme_registration_reminder_email_body', 'eme_sub_subject', 'eme_sub_body', 'eme_unsub_subject', 'eme_unsub_body', 'eme_booking_attach_ids', 'eme_pending_attach_ids', 'eme_paid_attach_ids', 'eme_booking_attach_tmpl_ids', 'eme_pending_attach_tmpl_ids', 'eme_paid_attach_tmpl_ids', 'eme_subscribe_attach_ids', 'eme_full_name_format', 'eme_cp_task_signup_pending_email_subject', 'eme_cp_task_signup_pending_email_body', 'eme_cp_task_signup_email_subject', 'eme_cp_task_signup_email_body', 'eme_cp_task_signup_cancelled_email_subject', 'eme_cp_task_signup_cancelled_email_body', 'eme_task_signup_pending_email_subject', 'eme_task_signup_pending_email_body', 'eme_task_signup_email_subject', 'eme_task_signup_email_body', 'eme_task_signup_cancelled_email_subject', 'eme_task_signup_cancelled_email_body', 'eme_task_signup_trashed_email_subject', 'eme_task_signup_trashed_email_body', 'eme_task_signup_reminder_email_subject', 'eme_task_signup_reminder_email_body', 'eme_bd_email_subject', 'eme_bd_email_body' ];
@@ -1823,7 +1835,7 @@ function eme_options_page() {
 				],
 			    __( 'Select the SMTP encryption method.', 'events-made-easy' )
 			);
-			eme_options_radio_binary( __( 'Use SMTP authentication?', 'events-made-easy' ), 'eme_rsvp_mail_SMTPAuth', __( 'SMTP authentication is often needed. If you use Gmail, make sure to set this parameter to Yes', 'events-made-easy' ) );
+			eme_options_radio_binary( __( 'Use SMTP authentication?', 'events-made-easy' ), 'eme_smtp_auth', __( 'SMTP authentication is often needed. If you use Gmail, make sure to set this parameter to Yes', 'events-made-easy' ) );
 			eme_options_input_text( __( 'SMTP username', 'events-made-easy' ), 'eme_smtp_username', __( 'Insert the username to be used to access your SMTP server.', 'events-made-easy' ) );
 			eme_options_input_password( __( 'SMTP password', 'events-made-easy' ), 'eme_smtp_password', __( 'Insert the password to be used to access your SMTP server', 'events-made-easy' ) );
 			eme_options_radio_binary( __( 'Verify SMTP certificates?', 'events-made-easy' ), 'eme_smtp_verify_cert', __( 'Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public mailservers this is not allowed.', 'events-made-easy' ) );

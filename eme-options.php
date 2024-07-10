@@ -1109,34 +1109,28 @@ function eme_options_register() {
 			break;
 	}
 
-	//$allow_js_arr=array('eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html');
-	$no_kses = ['eme_smtp_password'];
 	foreach ( $options as $opt ) {
-		if (!is_array($opt)) {
-			if (in_array($opt,$no_kses))
-				register_setting ( 'eme-options', $opt );
-			else
-				register_setting ( 'eme-options', $opt, 'eme_sanitize_options' );
-		} else {
-			register_setting ( 'eme-options', $opt, 'eme_sanitize_options' );
-		}
+		register_setting ( 'eme-options', $opt, 'eme_sanitize_option' );
 	}
 }
 
-function eme_sanitize_options( $input ) {
+function eme_sanitize_option( $option_value, $option_name ) {
 	// allow js only in very specific header settings
 	//$allow_js_arr=array('eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html');
 	$no_kses = ['eme_smtp_password'];
-	if ( is_array( $input ) ) {
+	if ( is_array( $option_value ) ) {
 		$output = [];
-		foreach ($input as $key=>$value) {
+		foreach ($option_value as $key=>$value) {
 			if (in_array($key,$no_kses))
 				$output[$key]=$value;
 			else
 				$output[$key] = eme_kses($value);
 		}
 	} else {
-		$output = eme_kses( $input );
+		if (in_array($option_name,$no_kses))
+			$output = $option_value;
+		else
+			$output = eme_kses( $option_value );
 	}
 	return $output;
 }

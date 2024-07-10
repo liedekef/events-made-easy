@@ -51,11 +51,11 @@ jQuery(document).ready( function($) {
 		}
 	}
 
-	function updateShowHideRsvpMailSendMethod () {
-		if ($('select[name=eme_rsvp_mail_send_method]').val() == 'smtp') {
+	function updateShowHideMailSendMethod () {
+		if ($('select[name=eme_mail_send_method]').val() == 'smtp') {
 			$('tr#eme_smtp_host_row').show();
 			$('tr#eme_smtp_port_row').show(); 
-			$('tr#eme_rsvp_mail_SMTPAuth_row').show();
+			$('tr#eme_smtp_auth_row').show();
 			$('tr#eme_smtp_username_row').show(); 
 			$('tr#eme_smtp_password_row').show(); 
 			$('tr#eme_smtp_encryption_row').show(); 
@@ -64,7 +64,7 @@ jQuery(document).ready( function($) {
 		} else {
 			$('tr#eme_smtp_host_row').hide();
 			$('tr#eme_smtp_port_row').hide(); 
-			$('tr#eme_rsvp_mail_SMTPAuth_row').hide();
+			$('tr#eme_smtp_auth_row').hide();
 			$('tr#eme_smtp_username_row').hide(); 
 			$('tr#eme_smtp_password_row').hide();
 			$('tr#eme_smtp_encryption_row').hide(); 
@@ -73,8 +73,8 @@ jQuery(document).ready( function($) {
 		}
 	}
 
-	function updateShowHideRsvpMailSMTPAuth () {
-		if ($('input[name=eme_rsvp_mail_SMTPAuth]').prop('checked') && $('select[name=eme_rsvp_mail_send_method]').val() == 'smtp') {
+	function updateShowHideSMTPAuth () {
+		if ($('input[name=eme_smtp_auth]').prop('checked') && $('select[name=eme_mail_send_method]').val() == 'smtp') {
 			$('tr#eme_smtp_username_row').show(); 
 			$('tr#eme_smtp_password_row').show(); 
 		} else {
@@ -83,8 +83,8 @@ jQuery(document).ready( function($) {
 		}
 	}
 
-	function updateShowHideRsvpMailSMTPCert () {
-                if ($('select[name=eme_smtp_encryption]').val() != 'none' && $('select[name=eme_rsvp_mail_send_method]').val() == 'smtp') {
+	function updateShowHideSMTPCert () {
+                if ($('select[name=eme_smtp_encryption]').val() != 'none' && $('select[name=eme_mail_send_method]').val() == 'smtp') {
                         $('tr#eme_smtp_verify_cert_row').show();
                 } else {
                         $('tr#eme_smtp_verify_cert_row').hide();
@@ -94,17 +94,17 @@ jQuery(document).ready( function($) {
 	// for the eme-options pages
 	updateShowHideCaptcha();
 	updateShowHideRsvpMailNotify();
-	updateShowHideRsvpMailSendMethod();
-	updateShowHideRsvpMailSMTPAuth();
-	updateShowHideRsvpMailSMTPCert();
+	updateShowHideMailSendMethod();
+	updateShowHideSMTPAuth();
+	updateShowHideSMTPCert();
 	updateShowHideMailQueueOptions();
 	$('input[name=eme_recaptcha_for_forms]').on("change",updateShowHideCaptcha);
 	$('input[name=eme_hcaptcha_for_forms]').on("change",updateShowHideCaptcha);
 	$('input[name=eme_cfcaptcha_for_forms]').on("change",updateShowHideCaptcha);
 	$('input[name=eme_rsvp_mail_notify_is_active]').on("change",updateShowHideRsvpMailNotify);
-	$('select[name=eme_rsvp_mail_send_method]').on("change",updateShowHideRsvpMailSendMethod);
-	$('input[name=eme_rsvp_mail_SMTPAuth]').on("change",updateShowHideRsvpMailSMTPAuth);
-	$('select[name=eme_smtp_encryption]').on("change",updateShowHideRsvpMailSMTPCert);
+	$('select[name=eme_mail_send_method]').on("change",updateShowHideMailSendMethod);
+	$('input[name=eme_smtp_auth]').on("change",updateShowHideSMTPAuth);
+	$('select[name=eme_smtp_encryption]').on("change",updateShowHideSMTPCert);
 	$('input[name=eme_queue_mails]').on("change",updateShowHideMailQueueOptions);
 });
 

@@ -1110,7 +1110,8 @@ function eme_options_register() {
 	}
 
 	foreach ( $options as $opt ) {
-		register_setting ( 'eme-options', $opt, 'eme_sanitize_option' );
+		register_setting ( 'eme-options', $opt );
+		add_filter ( 'sanitize_option_' . $opt, 'eme_sanitize_option', 10, 2 );
 	}
 }
 

@@ -64,8 +64,8 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		'replytoMail'      => $replytoemail,
 		'replytoName'      => $replytoname,
 		'bcc_addresses'    => get_option( 'eme_mail_bcc_address', '' ),
-		'mail_send_method' => get_option( 'eme_rsvp_mail_send_method' ), // smtp, mail, sendmail, qmail, wp_mail
-		'send_html'        => get_option( 'eme_rsvp_send_html' ), // true or false
+		'mail_send_method' => get_option( 'eme_mail_send_method' ), // smtp, mail, sendmail, qmail, wp_mail
+		'send_html'        => get_option( 'eme_mail_send_html' ), // true or false
 		'smtp_host'        => get_option( 'eme_smtp_host', 'localhost' ),
 		'smtp_encryption'  => get_option( 'eme_smtp_encryption' ), // none, tls or ssl
 		'smtp_verify_cert' => get_option( 'eme_smtp_verify_cert' ),  // true or false
@@ -649,7 +649,7 @@ function eme_send_queued() {
 	// let's keep 5 seconds to ourselves (see at the end of this function)
 	$interval -= 5;
 
-	$eme_rsvp_send_html = get_option( 'eme_rsvp_send_html' );
+	$eme_mail_send_html = get_option( 'eme_mail_send_html' );
 	$eme_mail_sleep     = intval( get_option( 'eme_mail_sleep' ) );
 	if ( $eme_mail_sleep >= 1000000 ) {
 		$eme_mail_sleep_seconds  = intval( $eme_mail_sleep / 1000000 );
@@ -678,7 +678,7 @@ function eme_send_queued() {
 	}
 
 	// check if tracking is required and possible (meaning: only for html mails)
-	if ( $eme_rsvp_send_html && get_option( 'eme_mail_tracking' ) ) {
+	if ( $eme_mail_send_html && get_option( 'eme_mail_tracking' ) ) {
 		$add_tracking = true;
 	} else {
 		$add_tracking = false;
@@ -1663,7 +1663,7 @@ function eme_send_mails_ajax_actions( $action ) {
 			wp_die();
 		}
 
-		$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+		$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 		if ( ! empty( $_POST['generic_mail_from_name'] ) && ! empty( $_POST['generic_mail_from_email'] ) && eme_is_email( $_POST['generic_mail_from_email'] ) ) {
 			$contact_name  = eme_sanitize_request( $_POST['generic_mail_from_name'] );
 			$contact_email = eme_sanitize_request( $_POST['generic_mail_from_email'] );
@@ -1939,7 +1939,7 @@ function eme_send_mails_ajax_actions( $action ) {
 				$contact        = eme_get_event_contact( $event );
 				$contact_email  = $contact->user_email;
 				$contact_name   = $contact->display_name;
-				$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+				$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
 				if ( $queue ) {
 					// in case we want a mailing to be done at multiple times, the times are separated by ","
@@ -2438,7 +2438,7 @@ function eme_emails_page() {
 		?>
 		</p>
 		<?php
-		if ( get_option( 'eme_rsvp_send_html' ) ) {
+		if ( get_option( 'eme_mail_send_html' ) ) {
 			// for mails, let enable the full html editor
 			eme_wysiwyg_textarea( 'event_mail_message', $event_mail_message, 1, 1 );
 			if ( current_user_can( 'unfiltered_html' ) ) {
@@ -2620,7 +2620,7 @@ function eme_emails_page() {
 		?>
 		</p>
 		<?php
-		if ( get_option( 'eme_rsvp_send_html' ) ) {
+		if ( get_option( 'eme_mail_send_html' ) ) {
 			// for mails, let enable the full html editor
 			eme_wysiwyg_textarea( 'generic_mail_message', $generic_mail_message, 1, 1 );
 			if ( current_user_can( 'unfiltered_html' ) ) {

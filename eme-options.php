@@ -278,8 +278,8 @@ function eme_add_options( $reset = 0 ) {
 		'eme_mail_sender_address'                         => '',
 		'eme_mail_force_from'                             => 0,
 		'eme_mail_bcc_address'                            => '',
-		'eme_rsvp_mail_send_method'                       => 'wp_mail',
-		'eme_rsvp_send_html'                              => 1,
+		'eme_mail_send_method'                            => 'wp_mail',
+		'eme_mail_send_html'                              => 1,
 		'eme_rsvp_registered_users_only'                  => 0,
 		'eme_rsvp_reg_for_new_events'                     => 0,
 		'eme_rsvp_default_number_spaces'                  => 10,
@@ -603,13 +603,13 @@ function eme_update_options( $db_version ) {
 				delete_option( $opt );
 			}
 			// rename some options
-			$options2 = [
+			$rename_options = [
 				'eme_cron_reminder_unpayed_minutes' => 'eme_cron_reminder_unpaid_minutes',
 				'eme_cron_cleanup_unpayed_minutes'  => 'eme_cron_cleanup_unpaid_minutes',
 				'eme_cron_reminder_unpayed_subject' => 'eme_cron_reminder_unpaid_subject',
 				'eme_cron_reminder_unpayed_body'    => 'eme_cron_reminder_unpaid_body',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -634,10 +634,10 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 197 ) {
 			// rename some options
-			$options2 = [
+			$rename_options = [
 				'eme_rsvp_required_field_string' => 'eme_form_required_field_string',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -646,11 +646,11 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 206 ) {
 			delete_option( 'eme_gmap_api_key' );
-			$options2 = [
+			$rename_options = [
 				'eme_gmap_active'  => 'eme_map_active',
 				'eme_gmap_zooming' => 'eme_map_zooming',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -692,11 +692,11 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 247 ) {
 			// rename some options
-			$options2 = [
+			$rename_options = [
 				'eme_registration_denied_email_subject' => 'eme_registration_trashed_email_subject',
 				'eme_registration_denied_email_body'    => 'eme_registration_trashed_email_body',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -705,11 +705,11 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 250 ) {
 			// rename some options
-			$options2 = [
+			$rename_options = [
 				'eme_cap_people'  => 'eme_cap_edit_people',
 				'eme_cap_members' => 'eme_cap_edit_members',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -724,10 +724,10 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 298 ) {
 			// rename some options
-			$options2 = [
+			$rename_options = [
 				'eme_captcha_for_booking' => 'eme_captcha_for_forms',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -749,10 +749,10 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 306 ) {
 			// rename some options
-			$options2 = [
+			$rename_options = [
 				'eme_mail_recipient_format' => 'eme_full_name_format',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -766,10 +766,10 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 315 ) {
 			// rename some options
-			$options2 = [
+			$rename_options = [
 				'eme_gdpr_remove_old_bookings_days' => 'eme_gdpr_anonymize_old_bookings_days',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -825,21 +825,26 @@ function eme_update_options( $db_version ) {
 			}
 		}
 		if ( $db_version < 379 ) {
-			delete_option( 'eme_2co_demo' );
-			delete_option( 'eme_2co_secret' );
-			delete_option( 'eme_2co_business' );
-			delete_option( 'eme_2co_cost' );
-			delete_option( 'eme_2co_cost' );
-			delete_option( 'eme_2co_button_label' );
-			delete_option( 'eme_2co_button_img_url' );
-			delete_option( 'eme_2co_button_above' );
-			delete_option( 'eme_2co_button_below' );
+			$to_delete_options = [
+				'eme_2co_demo',
+				'eme_2co_secret',
+				'eme_2co_business',
+				'eme_2co_cost',
+				'eme_2co_cost',
+				'eme_2co_button_label',
+				'eme_2co_button_img_url',
+				'eme_2co_button_above',
+				'eme_2co_button_below'
+			];
+			foreach ( $to_delete_options as $to_delete_option ) {
+				delete_option( $to_delete_option );
+			}
 			// rename some options
-			$options2 = [
+			$rename_options = [
 				'eme_rsvp_number_days' => 'eme_rsvp_end_number_days',
 				'eme_rsvp_number_hours' => 'eme_rsvp_end_number_hours',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -848,10 +853,12 @@ function eme_update_options( $db_version ) {
 		}
 		if ( $db_version < 388 ) {
 			// rename some options
-			$options2 = [
+			$rename_options = [
 				'eme_rsvp_mail_SMTPAuth' => 'eme_smtp_auth',
+				'eme_rsvp_mail_send_method' => 'eme_mail_send_method',
+				'eme_rsvp_send_html' => 'eme_mail_send_html',
 			];
-			foreach ( $options2 as $old_option => $new_option ) {
+			foreach ( $rename_options as $old_option => $new_option ) {
 				if ( get_option( $old_option ) ) {
 					update_option( $new_option, get_option( $old_option ) );
 					delete_option( $old_option );
@@ -1082,7 +1089,7 @@ function eme_options_register() {
 			$options = [ 'eme_task_registered_users_only', 'eme_task_requires_approval', 'eme_task_allow_overlap', 'eme_task_form_taskentry_format', 'eme_task_form_format', 'eme_task_signup_format', 'eme_task_signup_recorded_ok_html', 'eme_task_reminder_days' ];
 			break;
 		case 'mail':
-			$options = [ 'eme_rsvp_mail_notify_is_active', 'eme_rsvp_mail_notify_pending', 'eme_rsvp_mail_notify_paid', 'eme_rsvp_mail_notify_approved', 'eme_mail_sender_name', 'eme_mail_sender_address', 'eme_mail_force_from', 'eme_rsvp_mail_send_method', 'eme_smtp_host', 'eme_smtp_port', 'eme_smtp_encryption', 'eme_smtp_auth', 'eme_smtp_username', 'eme_smtp_password', 'eme_smtp_debug', 'eme_rsvp_send_html', 'eme_mail_bcc_address', 'eme_smtp_verify_cert', 'eme_queue_mails', 'eme_cron_send_queued', 'eme_cron_queue_count', 'eme_people_newsletter', 'eme_people_massmail', 'eme_massmail_popup_text', 'eme_massmail_popup', 'eme_mail_tracking', 'eme_mail_sleep', 'eme_mail_blacklist' ];
+			$options = [ 'eme_rsvp_mail_notify_is_active', 'eme_rsvp_mail_notify_pending', 'eme_rsvp_mail_notify_paid', 'eme_rsvp_mail_notify_approved', 'eme_mail_sender_name', 'eme_mail_sender_address', 'eme_mail_force_from', 'eme_mail_send_method', 'eme_smtp_host', 'eme_smtp_port', 'eme_smtp_encryption', 'eme_smtp_auth', 'eme_smtp_username', 'eme_smtp_password', 'eme_smtp_debug', 'eme_mail_send_html', 'eme_mail_bcc_address', 'eme_smtp_verify_cert', 'eme_queue_mails', 'eme_cron_send_queued', 'eme_cron_queue_count', 'eme_people_newsletter', 'eme_people_massmail', 'eme_massmail_popup_text', 'eme_massmail_popup', 'eme_mail_tracking', 'eme_mail_sleep', 'eme_mail_blacklist' ];
 			break;
 		case 'mailtemplates':
 			$options = [ 'eme_contactperson_email_subject', 'eme_contactperson_cancelled_email_subject', 'eme_contactperson_pending_email_subject', 'eme_contactperson_email_body', 'eme_contactperson_cancelled_email_body', 'eme_contactperson_pending_email_body', 'eme_contactperson_ipn_email_subject', 'eme_contactperson_ipn_email_body', 'eme_contactperson_paid_email_subject', 'eme_contactperson_paid_email_body', 'eme_respondent_email_subject', 'eme_respondent_email_body', 'eme_registration_pending_email_subject', 'eme_registration_pending_email_body', 'eme_registration_userpending_email_subject', 'eme_registration_userpending_email_body', 'eme_registration_cancelled_email_subject', 'eme_registration_cancelled_email_body', 'eme_registration_trashed_email_subject', 'eme_registration_trashed_email_body', 'eme_registration_updated_email_subject', 'eme_registration_updated_email_body', 'eme_registration_paid_email_subject', 'eme_registration_paid_email_body', 'eme_registration_pending_reminder_email_subject', 'eme_registration_pending_reminder_email_body', 'eme_registration_reminder_email_subject', 'eme_registration_reminder_email_body', 'eme_sub_subject', 'eme_sub_body', 'eme_unsub_subject', 'eme_unsub_body', 'eme_booking_attach_ids', 'eme_pending_attach_ids', 'eme_paid_attach_ids', 'eme_booking_attach_tmpl_ids', 'eme_pending_attach_tmpl_ids', 'eme_paid_attach_tmpl_ids', 'eme_subscribe_attach_ids', 'eme_full_name_format', 'eme_cp_task_signup_pending_email_subject', 'eme_cp_task_signup_pending_email_body', 'eme_cp_task_signup_email_subject', 'eme_cp_task_signup_email_body', 'eme_cp_task_signup_cancelled_email_subject', 'eme_cp_task_signup_cancelled_email_body', 'eme_task_signup_pending_email_subject', 'eme_task_signup_pending_email_body', 'eme_task_signup_email_subject', 'eme_task_signup_email_body', 'eme_task_signup_cancelled_email_subject', 'eme_task_signup_cancelled_email_body', 'eme_task_signup_trashed_email_subject', 'eme_task_signup_trashed_email_body', 'eme_task_signup_reminder_email_subject', 'eme_task_signup_reminder_email_body', 'eme_bd_email_subject', 'eme_bd_email_body' ];
@@ -1765,7 +1772,7 @@ function eme_options_page() {
 </table>
 <table class='form-table'>
 			<?php
-			eme_options_radio_binary( __( 'Send HTML mails', 'events-made-easy' ), 'eme_rsvp_send_html', __( 'Check this option if you want to use html in the mails being sent.', 'events-made-easy' ) );
+			eme_options_radio_binary( __( 'Send HTML mails', 'events-made-easy' ), 'eme_mail_send_html', __( 'Check this option if you want to use html in the mails being sent.', 'events-made-easy' ) );
 			if ( eme_is_datamaster() ) {
 				eme_options_radio_binary( __( 'Use mail queuing?', 'events-made-easy' ), 'eme_queue_mails', __( 'If activated, you can plan mails for sending at a later date and time.', 'events-made-easy' ) . '<br><b>' . __( 'It is recommended to activate this option.', 'events-made-easy' ) . '</b>' );
 				?>
@@ -1810,7 +1817,7 @@ function eme_options_page() {
 			eme_options_input_text( __( 'Default email BCC', 'events-made-easy' ), 'eme_mail_bcc_address', __( 'Insert an email address that will be added in Bcc to all outgoing mails (multiple addresses are to be separated by comma or semicolon). Can be left empty.', 'events-made-easy' ) );
 			eme_options_select(
 			    __( 'Email sending method', 'events-made-easy' ),
-			    'eme_rsvp_mail_send_method',
+			    'eme_mail_send_method',
 			    [
 					'smtp'     => 'SMTP',
 					'mail'     => __( 'PHP email function', 'events-made-easy' ),
@@ -1848,7 +1855,7 @@ function eme_options_page() {
 			<?php
 			break;
 		case 'mailtemplates':
-			if ( get_option( 'eme_rsvp_send_html' ) == '1' ) {
+			if ( get_option( 'eme_mail_send_html' ) == '1' ) {
 				$use_html_editor = 1;
 				$use_full        = 1;
 			} else {
@@ -2218,7 +2225,7 @@ function eme_options_page() {
 			<?php print esc_html__( 'For more info concerning GDPR, see', 'events-made-easy' ) . " <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_gdpr_approve/'>" . esc_html(sprintf( __( 'the documentation about the shortcode %s', 'events-made-easy' ), 'eme_gdpr_approve' )) . "</a>, <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_request_personal_info/'>" . esc_html(sprintf( __( 'the documentation about the shortcode %s', 'events-made-easy' ), 'eme_request_personal_info' )) . '</a> ' . esc_html__( 'and', 'events-made-easy' ) . " <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_change_personal_info/'>" .esc_html( sprintf( __( 'the documentation about the shortcode %s', 'events-made-easy' ), 'eme_change_personal_info' )) . '</a>'; ?>
 <table class='form-table'>
 			<?php
-			if ( get_option( 'eme_rsvp_send_html' ) == '1' ) {
+			if ( get_option( 'eme_mail_send_html' ) == '1' ) {
 				$use_html_editor = 1;
 				$use_full        = 1;
 			} else {

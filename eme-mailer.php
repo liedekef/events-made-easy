@@ -10,9 +10,10 @@ function eme_set_wpmail_html_content_type() {
 
 // for backwards compat, the fromname and email are after the replyto and can be empty
 function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $replytoemail = '', $replytoname = '', $fromemail = '', $fromname = '', $atts_arr = [], $custom_headers = [] ) {
-	$subject = preg_replace( '/(^\s+|\s+$)/m', '', $subject );
-	$res     = true;
-	$message = '';
+	$subject  = preg_replace( '/(^\s+|\s+$)/m', '', $subject );
+	$res      = true;
+	$message  = '';
+	$debugtxt = '';
 
 	// nothing to send? Then act as if all is ok
 	if ( empty( $body ) || empty( $subject ) || empty( $receiveremail ) ) {
@@ -269,9 +270,8 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 			}
 			if ( $mailoptions['smtp_debug'] ) {
 				$mail->SMTPDebug           = 2;
-				$GLOBALS['eme_smtp_debug'] = '';
-				$mail->Debugoutput         = function( $str, $level ) {
-					$GLOBALS['eme_smtp_debug'] .= "$level: $str\n";
+				$mail->Debugoutput         = function( $str, $level ) use (&$debugtxt) {
+					$debugtxt .= "$level: $str\n";
 				};
 			}
 		}
@@ -319,7 +319,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 	}
 	// remove the phpmailer url added for some errors
 	$message = str_replace( 'https://github.com/PHPMailer/PHPMailer/wiki/Troubleshooting', '', $message );
-	return [ $res, $message ];
+	return [ $res, $message, $debugtxt ];
 }
 
 function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions = [] ) {
@@ -1612,8 +1612,9 @@ function eme_send_mails_ajax_actions( $action ) {
 		$mail_res_arr  = eme_send_mail( $tmp_subject, $tmp_message, $testmail_to, $person_name, $contact_email, $contact_name );
 		$mail_res      = $mail_res_arr[0];
 		$extra_html    = eme_esc_html( $mail_res_arr[1] );
-		if ( ! empty( $GLOBALS['eme_smtp_debug'] ) ) {
-			$extra_html .= nl2br( eme_esc_html( $GLOBALS['eme_smtp_debug'] ) );
+		if ( ! empty( $mail_res_arr[2] ) ) {
+			// this contains debug messages
+			$extra_html .= nl2br( eme_esc_html( $mail_res_arr[2] ) );
 		}
 		if ( $mail_res ) {
 			$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mail has been sent.', 'events-made-easy' ) . "</p><p>$extra_html</p></div>";

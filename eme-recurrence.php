@@ -32,7 +32,7 @@ function eme_get_perpetual_recurrences() {
 	global $wpdb;
 	$res = [];
 	$recurrence_table = EME_DB_PREFIX . EME_RECURRENCE_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT * FROM $recurrence_table WHERE recurrence_freq != 'specific'" );
+	$sql              = "SELECT * FROM $recurrence_table WHERE recurrence_freq != 'specific'";
 	$recurrences      = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ($recurrences as $recurrence) {
 		if (eme_is_empty_date($recurrence['recurrence_end_date'])) {

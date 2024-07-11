@@ -566,7 +566,6 @@ function eme_add_options( $reset = 0 ) {
 		'eme_backend_dateformat'                          => '',
 		'eme_backend_timeformat'                          => '',
 		'eme_check_free_waiting'                          => 0,
-		'eme_unique_email_per_person'                     => 0,
 		'eme_multisite_active'                            => 0,
 		'eme_rememberme'                                  => 0,
 	];
@@ -864,6 +863,7 @@ function eme_update_options( $db_version ) {
 					delete_option( $old_option );
 				}
 			}
+			delete_option('eme_unique_email_per_person');
 		}
 	}
 	// make sure the captcha doesn't cause problems
@@ -1105,7 +1105,7 @@ function eme_options_register() {
 			break;
 		case 'other':
 			// put eme_allowed_style_attr and eme_allowed_html first, so it has a immediate impact on the other options
-			$options = [ 'eme_allowed_style_attr', 'eme_allowed_html', 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_separator', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_version', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_unique_email_per_person', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' ];
+			$options = [ 'eme_allowed_style_attr', 'eme_allowed_html', 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_separator', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_version', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' ];
 			break;
 	}
 
@@ -2770,7 +2770,6 @@ function eme_options_page() {
 				eme_options_radio_binary( __( 'Remove leading zeros from minutes?', 'events-made-easy' ), 'eme_time_remove_leading_zeros', __( 'PHP date/time functions have no notation to show minutes without leading zeros. Checking this option will return e.g. 9 for 09 and empty for 00. This setting affects custom time placeholders and also the generic *DATE and *TIME placeholders', 'events-made-easy' ) );
 				eme_options_input_text( __( 'CSV separator', 'events-made-easy' ), 'eme_csv_separator', __( 'Set the separator used in CSV exports.', 'events-made-easy' ) );
 				eme_options_radio_binary( __( 'Localize price', 'events-made-easy' ), 'eme_localize_price', __( "If selected, all prices will be shown in the current locale with the price symbol. If you don't want this, deselect this option to regain the old behavior of localized prices where you need to take care of the decimal accuracy, the currency symbol and it's location yourself. This option only works if the php class NumberFormatter is present, which is always the case in newer php versions but just don't forget to load the INTL extension in php.", 'events-made-easy' ) );
-				//   eme_options_radio_binary ( __ ( 'Unique email per person?', 'events-made-easy'), 'eme_unique_email_per_person', __ ( 'By default EME searches for a matching lastname-firstname-email combo when a person is entered in the database. If a match is found, that person is then updated. Using this option allows to search for just an email to find the matching person.', 'events-made-easy') );
 				eme_options_input_int( __( 'Decimals accuracy', 'events-made-easy' ), 'eme_decimals', __( 'EME tries to show the prices in the frontend in the current locale, with the decimals accuracy set here. Defaults to 2.', 'events-made-easy' ) . '<br>' . __( 'This option is not used if the localize price option above is active and the php class NumberFormatter is present.', 'events-made-easy' ) );
 				eme_options_input_int( __( 'Timepicker step interval', 'events-made-easy' ), 'eme_timepicker_minutesstep', __( 'The timepicker step interval. Defaults to 5-minutes interval (meaning steps of 5 minutes will be taken)', 'events-made-easy' ) );
 				eme_options_input_text( __( 'Required field text', 'events-made-easy' ), 'eme_form_required_field_string', __( 'The text shown next to a form field when it is a required field', 'events-made-easy' ) );

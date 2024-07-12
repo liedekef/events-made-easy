@@ -1074,15 +1074,15 @@ function eme_sanitize_option( $option_value, $option_name ) {
 					$output[$key] .= ' #_FIRSTNAME';
 				$output[$key] = trim( $output[$key] );
 			}
-			if ( $key == 'eme_cpi_body' ! strstr( $output[$key], '#_CHANGE_PERSON_INFO' ) )
+			if ( $key == 'eme_cpi_body' && ! strstr( $output[$key], '#_CHANGE_PERSON_INFO' ) )
 				$output[$key] .= "\n#_CHANGE_PERSON_INFO";
-			if ( $key == 'eme_gdpr_approve_body' ! strstr( $output[$key], '#_GDPR_APPROVE_URL' ) )
+			if ( $key == 'eme_gdpr_approve_body' && ! strstr( $output[$key], '#_GDPR_APPROVE_URL' ) )
 				$output[$key] .= "\n#_GDPR_APPROVE_URL";
-			if ( $key == 'eme_gdpr_body' ! strstr( $output[$key], '#_GDPR_URL' ) )
+			if ( $key == 'eme_gdpr_body' && ! strstr( $output[$key], '#_GDPR_URL' ) )
 				$output[$key] .= "\n#_GDPR_URL";
 			if ( $key == 'eme_default_vat' && ! is_numeric( $output[$key] ) || $output[$key] < 0 || $output[$key] > 100 )
 				$output[$key] = 0;
-			if ( $key == 'eme_captcha_for_forms' && ! function_exists( 'imagecreatetruecolor' ) ) {
+			if ( $key == 'eme_captcha_for_forms' && ! function_exists( 'imagecreatetruecolor' ) )
 				$output[$key] = 0;
 		}
 	} else {
@@ -1105,15 +1105,15 @@ function eme_sanitize_option( $option_value, $option_name ) {
 				$output .= ' #_FIRSTNAME';
 			$output = trim( $output );
 		}
-		if ( $option_name == 'eme_cpi_body' ! strstr( $output, '#_CHANGE_PERSON_INFO' ) )
+		if ( $option_name == 'eme_cpi_body' && ! strstr( $output, '#_CHANGE_PERSON_INFO' ) )
                         $output .= "\n#_CHANGE_PERSON_INFO";
-		if ( $option_name == 'eme_gdpr_approve_body' ! strstr( $output, '#_GDPR_APPROVE_URL' ) )
+		if ( $option_name == 'eme_gdpr_approve_body' && ! strstr( $output, '#_GDPR_APPROVE_URL' ) )
                         $output .= "\n#_GDPR_APPROVE_URL";
-		if ( $option_name == 'eme_gdpr_body' ! strstr( $output, '#_GDPR_URL' ) )
+		if ( $option_name == 'eme_gdpr_body' && ! strstr( $output, '#_GDPR_URL' ) )
                         $output .= "\n#_GDPR_URL";
 		if ( $option_name == 'eme_default_vat' && ! is_numeric( $output ) || $output < 0 || $output > 100 )
 			$output = 0;
-		if ( $option_name == 'eme_captcha_for_forms' && ! function_exists( 'imagecreatetruecolor' ) ) {
+		if ( $option_name == 'eme_captcha_for_forms' && ! function_exists( 'imagecreatetruecolor' ) )
 			$output = 0;
 	}
 	return $output;

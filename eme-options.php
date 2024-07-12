@@ -896,11 +896,6 @@ function eme_options_delete() {
 }
 
 function eme_options_postsave_actions() {
-	// make sure the captcha doesn't cause problems
-	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
-		update_option( 'eme_captcha_for_forms', 0 );
-	}
-
 	$tab = isset( $_GET['tab'] ) ? eme_sanitize_request( $_GET['tab'] ) : 'general';
 	// if we saved settings on the payments tab, certain webhooks need to be created
 	if ( $tab == 'payments' ) {
@@ -956,39 +951,6 @@ function eme_options_postsave_actions() {
 	eme_plan_queue_mails();
 
 	// some extra checks
-	if ( $tab == 'mailtemplates' ) {
-		$val = get_option( 'eme_sub_body', '' );
-		if ( ! strstr( $val, '#_SUB_CONFIRM_URL' ) ) {
-			$val .= "\n#_SUB_CONFIRM_URL";
-			update_option( 'eme_sub_body', $val );
-		}
-		$val = get_option( 'eme_unsub_body', '' );
-		if ( ! strstr( $val, '#_UNSUB_CONFIRM_URL' ) ) {
-			$val .= "\n#_UNSUB_CONFIRM_URL";
-			update_option( 'eme_unsub_body', $val );
-		}
-		$val                          = get_option( 'eme_full_name_format', '' );
-		$eme_full_name_format_changed = 0;
-		if ( ! strstr( $val, '#_LASTNAME' ) ) {
-				$val                     .= ' #_LASTNAME';
-			$eme_full_name_format_changed = 1;
-		}
-		if ( ! strstr( $val, '#_FIRSTNAME' ) ) {
-				$val                     .= ' #_FIRSTNAME';
-			$eme_full_name_format_changed = 1;
-		}
-		if ( $eme_full_name_format_changed ) {
-			$val = trim( $val );
-			update_option( 'eme_full_name_format', $val );
-		}
-	}
-	if ( $tab == 'payments' ) {
-		$vat_pct = get_option( 'eme_default_vat' );
-		if ( ! is_numeric( $vat_pct ) || $vat_pct < 0 || $vat_pct > 100 ) {
-			update_option( 'eme_default_vat', 0 );
-		}
-	}
-
 	if ( $tab == 'gdpr' ) {
 		$remove_expired_days = get_option( 'eme_gdpr_remove_expired_member_days' );
 		$anonymize_expired_days = get_option( 'eme_gdpr_anonymize_expired_member_days' );
@@ -996,47 +958,6 @@ function eme_options_postsave_actions() {
 			if ($remove_expired_days<=$anonymize_expired_days) {
 				$remove_expired_days = $anonymize_expired_days+1;
 				update_option( 'eme_gdpr_remove_expired_member_days', $remove_expired_days );
-			}
-		}
-
-		$val = get_option( 'eme_cpi_body', '' );
-		if ( ! strstr( $val, '#_CHANGE_PERSON_INFO' ) ) {
-			$val .= "\n#_CHANGE_PERSON_INFO";
-			update_option( 'eme_cpi_body', $val );
-		}
-		$val = get_option( 'eme_gdpr_approve_body' );
-		if ( ! strstr( $val, '#_GDPR_APPROVE_URL', '' ) ) {
-			$val .= "\n#_GDPR_APPROVE_URL";
-			update_option( 'eme_gdpr_approve_body', $val );
-		}
-		$val = get_option( 'eme_gdpr_body', '' );
-		if ( ! strstr( $val, '#_GDPR_URL' ) ) {
-			$val .= "\n#_GDPR_URL";
-			update_option( 'eme_gdpr_body', $val );
-		}
-	}
-	if ( $tab == 'mail' ) {
-		$smtp_port = get_option( 'eme_smtp_port', 25 );
-		if ( ! is_numeric( $smtp_port ) ) {
-			update_option( 'eme_smtp_port', 25 );
-		}
-		$mail_sleep = get_option( 'eme_mail_sleep', 0 );
-		if ( ! is_numeric( $mail_sleep ) ) {
-			update_option( 'eme_mail_sleep', 0 );
-		}
-	}
-	if ( $tab == 'events' ) {
-		$eme_event_list_number_items = get_option( 'eme_event_list_number_items', 10 );
-		if ( ! is_numeric( $eme_event_list_number_items ) ) {
-			update_option( 'eme_event_list_number_items', 10 );
-		}
-	}
-	if ( $tab == 'rsvp' ) {
-		$rsvp_options = ['eme_rsvp_start_number_days','eme_rsvp_start_number_hours','eme_rsvp_end_number_days','eme_rsvp_end_number_hours','eme_cancel_rsvp_days','eme_cancel_rsvp_age'];
-		foreach ($rsvp_options as $rsvp_option) {
-			$rsvp_value = get_option( $rsvp_option );
-			if ( ! is_numeric( $rsvp_value ) ) {
-				update_option( $rsvp_option, 0 );
 			}
 		}
 	}
@@ -1119,19 +1040,81 @@ function eme_sanitize_option( $option_value, $option_name ) {
 	// allow js only in very specific header settings
 	//$allow_js_arr=array('eme_html_header','eme_html_footer','eme_event_html_headers_format','eme_location_html_headers_format','eme_payment_form_header_format','eme_payment_form_footer_format','eme_multipayment_form_header_format','eme_multipayment_form_footer_format','eme_payment_succes_format','eme_payment_fail_format','eme_payment_member_succes_format','eme_payment_member_fail_format','eme_registration_recorded_ok_html');
 	$no_kses = ['eme_smtp_password'];
+	$numeric_options = [
+		'eme_rsvp_start_number_days' => 0,
+		'eme_rsvp_start_number_hours' => 0,
+		'eme_rsvp_end_number_days' => 0,
+		'eme_rsvp_end_number_hours' => 0,
+		'eme_cancel_rsvp_days' => 0,
+		'eme_cancel_rsvp_age' => 0,
+		'eme_event_list_number_items' => 10,
+		'eme_smtp_port' => 25,
+                'eme_mail_sleep' => 0,
+	];
+
 	if ( is_array( $option_value ) ) {
 		$output = [];
 		foreach ($option_value as $key=>$value) {
-			if (in_array($key,$no_kses))
+			if (in_array($key,$no_kses)) {
 				$output[$key]=$value;
-			else
+			} else {
 				$output[$key] = eme_kses($value);
+			}
+			if (array_key_exists($key,$numeric_options) && ! is_numeric( $output[$key] ) ) {
+				$output[$key] = $numeric_options[$key];
+			}
+			if ( $key == 'eme_sub_body' && ! strstr( $output[$key], '#_SUB_CONFIRM_URL' ) )
+				$output[$key] .= "\n#_SUB_CONFIRM_URL";
+			if ( $key == 'eme_unsub_body' && ! strstr( $output[$key], '#_UNSUB_CONFIRM_URL' ) )
+				$output[$key] .= "\n#_UNSUB_CONFIRM_URL";
+			if ( $key == 'eme_full_name_format' ) {
+				if ( ! strstr( $output[$key], '#_LASTNAME' ) )
+					$output[$key] .= ' #_LASTNAME';
+				if ( ! strstr( $output[$key], '#_FIRSTNAME' ) )
+					$output[$key] .= ' #_FIRSTNAME';
+				$output[$key] = trim( $output[$key] );
+			}
+			if ( $key == 'eme_cpi_body' ! strstr( $output[$key], '#_CHANGE_PERSON_INFO' ) )
+				$output[$key] .= "\n#_CHANGE_PERSON_INFO";
+			if ( $key == 'eme_gdpr_approve_body' ! strstr( $output[$key], '#_GDPR_APPROVE_URL' ) )
+				$output[$key] .= "\n#_GDPR_APPROVE_URL";
+			if ( $key == 'eme_gdpr_body' ! strstr( $output[$key], '#_GDPR_URL' ) )
+				$output[$key] .= "\n#_GDPR_URL";
+			if ( $key == 'eme_default_vat' && ! is_numeric( $output[$key] ) || $output[$key] < 0 || $output[$key] > 100 )
+				$output[$key] = 0;
+			if ( $key == 'eme_captcha_for_forms' && ! function_exists( 'imagecreatetruecolor' ) ) {
+				$output[$key] = 0;
 		}
 	} else {
-		if (in_array($option_name,$no_kses))
+		if (in_array($option_name,$no_kses)) {
 			$output = $option_value;
-		else
+		} else {
 			$output = eme_kses( $option_value );
+		}
+		if (array_key_exists($option_name,$numeric_options) && ! is_numeric( $output ) ) {
+			$output = $numeric_options[$option_name];
+		}
+		if ( $option_name == 'eme_sub_body' && ! strstr( $output, '#_SUB_CONFIRM_URL' ) )
+			$output .= "\n#_SUB_CONFIRM_URL";
+		if ( $option_name == 'eme_unsub_body' && ! strstr( $output, '#_UNSUB_CONFIRM_URL' ) )
+			$output .= "\n#_UNSUB_CONFIRM_URL";
+		if ( $option_name == 'eme_full_name_format' ) {
+			if ( ! strstr( $output, '#_LASTNAME' ) )
+				$output .= ' #_LASTNAME';
+			if ( ! strstr( $output, '#_FIRSTNAME' ) )
+				$output .= ' #_FIRSTNAME';
+			$output = trim( $output );
+		}
+		if ( $option_name == 'eme_cpi_body' ! strstr( $output, '#_CHANGE_PERSON_INFO' ) )
+                        $output .= "\n#_CHANGE_PERSON_INFO";
+		if ( $option_name == 'eme_gdpr_approve_body' ! strstr( $output, '#_GDPR_APPROVE_URL' ) )
+                        $output .= "\n#_GDPR_APPROVE_URL";
+		if ( $option_name == 'eme_gdpr_body' ! strstr( $output, '#_GDPR_URL' ) )
+                        $output .= "\n#_GDPR_URL";
+		if ( $option_name == 'eme_default_vat' && ! is_numeric( $output ) || $output < 0 || $output > 100 )
+			$output = 0;
+		if ( $option_name == 'eme_captcha_for_forms' && ! function_exists( 'imagecreatetruecolor' ) ) {
+			$output = 0;
 	}
 	return $output;
 }

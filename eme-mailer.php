@@ -1866,6 +1866,7 @@ function eme_send_mails_ajax_actions( $action ) {
 					$contact       = eme_get_event_contact( $event );
 					$contact_email = $contact->user_email;
 					$contact_name  = $contact->display_name;
+					$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 					$mail_subject  = eme_replace_event_placeholders( $mail_subject, $event, 'text', $person['lang'], 0 );
 					$mail_message  = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $person['lang'], 0 );
 					$mail_message  = eme_replace_email_event_placeholders( $mail_message, $person['email'], $person['lastname'], $person['firstname'], $event, $person['lang'] );

@@ -1053,38 +1053,7 @@ function eme_sanitize_option( $option_value, $option_name ) {
 	];
 
 	if ( is_array( $option_value ) ) {
-		$output = [];
-		foreach ($option_value as $key=>$value) {
-			if (in_array($key,$no_kses)) {
-				$output[$key]=$value;
-			} else {
-				$output[$key] = eme_kses($value);
-			}
-			if (array_key_exists($key,$numeric_options) && ! is_numeric( $output[$key] ) ) {
-				$output[$key] = $numeric_options[$key];
-			}
-			if ( $key == 'eme_sub_body' && ! strstr( $output[$key], '#_SUB_CONFIRM_URL' ) )
-				$output[$key] .= "\n#_SUB_CONFIRM_URL";
-			if ( $key == 'eme_unsub_body' && ! strstr( $output[$key], '#_UNSUB_CONFIRM_URL' ) )
-				$output[$key] .= "\n#_UNSUB_CONFIRM_URL";
-			if ( $key == 'eme_full_name_format' ) {
-				if ( ! strstr( $output[$key], '#_LASTNAME' ) )
-					$output[$key] .= ' #_LASTNAME';
-				if ( ! strstr( $output[$key], '#_FIRSTNAME' ) )
-					$output[$key] .= ' #_FIRSTNAME';
-				$output[$key] = trim( $output[$key] );
-			}
-			if ( $key == 'eme_cpi_body' && ! strstr( $output[$key], '#_CHANGE_PERSON_INFO' ) )
-				$output[$key] .= "\n#_CHANGE_PERSON_INFO";
-			if ( $key == 'eme_gdpr_approve_body' && ! strstr( $output[$key], '#_GDPR_APPROVE_URL' ) )
-				$output[$key] .= "\n#_GDPR_APPROVE_URL";
-			if ( $key == 'eme_gdpr_body' && ! strstr( $output[$key], '#_GDPR_URL' ) )
-				$output[$key] .= "\n#_GDPR_URL";
-			if ( $key == 'eme_default_vat' && (! is_numeric( $output[$key] ) || $output[$key] < 0 || $output[$key] > 100 ))
-				$output[$key] = 0;
-			if ( $key == 'eme_captcha_for_forms' && ! function_exists( 'imagecreatetruecolor' ) )
-				$output[$key] = 0;
-		}
+		return array_map( 'eme_sanitize_option', $option_value );
 	} else {
 		if (in_array($option_name,$no_kses)) {
 			$output = $option_value;

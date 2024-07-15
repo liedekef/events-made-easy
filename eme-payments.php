@@ -191,7 +191,7 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 		}
 	}
 
-	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class>'";
+	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class'>";
 	$pgs         = eme_payment_gateways();
 	foreach ( $pgs as $pg => $value ) {
 		if ( $event['event_properties'][ 'use_' . $pg ] ) {
@@ -213,7 +213,7 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 							setTimeout(function () {
 								$( "#eme_' . $pg . '_form" ).submit();
                                         		}, ' . $waitperiod . ');
-						   });</script>;';
+						   });</script>';
 					}
 				}
 			}

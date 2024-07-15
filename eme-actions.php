@@ -324,6 +324,11 @@ function eme_register_scripts() {
 	}
 	$language = eme_detect_lang();
 
+	// if on the payment page and we need to submit immediately, we need jquery loaded in the header
+	// so our jquery code to submit the payment form works
+	if (get_option( 'eme_pg_submit_immediately' ) && get_query_var( 'eme_pmt_rndid' ) ) {
+		wp_enqueue_script( 'jquery' );
+	}
 	wp_register_script( 'eme-select2', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/js/select2.min.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
 	if ( $language != 'en' ) {
 		$eme_plugin_dir  = eme_plugin_dir();

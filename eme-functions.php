@@ -4020,4 +4020,12 @@ function eme_isFloat($amount ): bool {
 	return is_float( $amount ) && intval( $amount ) != $amount;
 }
 
+function eme_get_field_name($eme_opt_group, $opt_name) {
+	return sprintf( '%s[%s]', $eme_opt_group, $opt_name );
+}
+
+function eme_get_field_value($eme_opt_group, $opt_name) {
+	$opt_group_val = get_option( $eme_opt_group );
+	return $opt_group_val[$opt_name];
+}
 ?>

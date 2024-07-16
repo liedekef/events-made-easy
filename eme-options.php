@@ -892,9 +892,11 @@ function eme_update_options( $db_version ) {
 }
 
 function eme_add_option( $key, $value, $reset ) {
-	$option_val = get_option( $key, 'non_existing' );
-	if ( $option_val == 'non_existing' || $reset ) {
+	$existing_value = get_option( $key, 'non_existing' );
+	if ( ( !is_array($existing_value) && $existing_value == 'non_existing' ) || $reset ) {
 		update_option( $key, $value );
+	} elseif (is_array($existing_value)) {
+		update_option( $key, array_merge($value,$existing_value));
 	}
 }
 
@@ -1032,6 +1034,9 @@ function eme_options_register() {
 		case 'payments':
 			$options = [ 'eme_default_vat', 'eme_payment_form_header_format', 'eme_payment_form_footer_format', 'eme_multipayment_form_header_format', 'eme_multipayment_form_footer_format', 'eme_payment_succes_format', 'eme_payment_fail_format', 'eme_payment_member_succes_format', 'eme_payment_member_fail_format', 'eme_payment_booking_already_paid_format', 'eme_payment_booking_on_waitinglist_format', 'eme_default_currency', 'eme_default_price', 'eme_payment_refund_ok', 'eme_pg_submit_immediately', 'eme_payment_redirect', 'eme_payment_redirect_wait', 'eme_payment_redirect_msg', 'eme_paypal_url', 'eme_paypal_clientid', 'eme_paypal_secret', 'eme_webmoney_purse', 'eme_webmoney_secret', 'eme_webmoney_demo', 'eme_fdgg_url', 'eme_fdgg_store_name', 'eme_fdgg_shared_secret', 'eme_paypal_cost', 'eme_fdgg_cost', 'eme_webmoney_cost', 'eme_paypal_cost2', 'eme_fdgg_cost2', 'eme_webmoney_cost2', 'eme_mollie_api_key', 'eme_mollie_cost', 'eme_mollie_cost2', 'eme_paypal_button_label', 'eme_paypal_button_above', 'eme_paypal_button_below', 'eme_fdgg_button_label', 'eme_fdgg_button_above', 'eme_fdgg_button_below', 'eme_webmoney_button_label', 'eme_webmoney_button_above', 'eme_webmoney_button_below', 'eme_mollie_button_label', 'eme_mollie_button_above', 'eme_mollie_button_below', 'eme_paypal_button_img_url', 'eme_fdgg_button_img_url', 'eme_webmoney_button_img_url', 'eme_mollie_button_img_url', 'eme_worldpay_demo', 'eme_worldpay_instid', 'eme_worldpay_md5_secret', 'eme_worldpay_md5_parameters', 'eme_worldpay_test_pwd', 'eme_worldpay_live_pwd', 'eme_worldpay_cost', 'eme_worldpay_cost2', 'eme_worldpay_button_label', 'eme_worldpay_button_img_url', 'eme_worldpay_button_above', 'eme_worldpay_button_below', 'eme_braintree_private_key', 'eme_braintree_public_key', 'eme_braintree_merchant_id', 'eme_braintree_env', 'eme_braintree_cost', 'eme_braintree_cost2', 'eme_braintree_button_label', 'eme_braintree_button_img_url', 'eme_braintree_button_above', 'eme_braintree_button_below', 'eme_stripe_private_key', 'eme_stripe_public_key', 'eme_stripe_cost', 'eme_stripe_cost2', 'eme_stripe_button_label', 'eme_stripe_button_img_url', 'eme_stripe_button_above', 'eme_stripe_button_below', 'eme_stripe_payment_methods', 'eme_offline_payment', 'eme_legacypaypal_url', 'eme_legacypaypal_business', 'eme_legacypaypal_no_tax', 'eme_legacypaypal_cost', 'eme_legacypaypal_cost2', 'eme_legacypaypal_button_label', 'eme_legacypaypal_button_img_url', 'eme_legacypaypal_button_above', 'eme_legacypaypal_button_below', 'eme_instamojo_env', 'eme_instamojo_key', 'eme_instamojo_auth_token', 'eme_instamojo_salt', 'eme_instamojo_cost', 'eme_instamojo_cost2', 'eme_instamojo_button_label', 'eme_instamojo_button_img_url', 'eme_instamojo_button_above', 'eme_instamojo_button_below', 'eme_mercadopago_demo', 'eme_mercadopago_sandbox_token', 'eme_mercadopago_live_token', 'eme_mercadopago_cost', 'eme_mercadopago_cost2', 'eme_mercadopago_button_label', 'eme_mercadopago_button_img_url', 'eme_mercadopago_button_above', 'eme_mercadopago_button_below', 'eme_fondy_merchant_id', 'eme_fondy_secret_key', 'eme_fondy_cost', 'eme_fondy_cost2', 'eme_fondy_button_label', 'eme_fondy_button_img_url', 'eme_fondy_button_above', 'eme_fondy_button_below', 'eme_payconiq_api_key', 'eme_payconiq_env', 'eme_payconiq_merchant_id', 'eme_payconiq_cost', 'eme_payconiq_cost2', 'eme_payconiq_button_label', 'eme_payconiq_button_img_url', 'eme_payconiq_button_above', 'eme_payconiq_button_below', 'eme_sumup_merchant_code', 'eme_sumup_app_id', 'eme_sumup_app_secret', 'eme_sumup_cost', 'eme_sumup_cost2', 'eme_sumup_button_label', 'eme_sumup_button_img_url', 'eme_sumup_button_above', 'eme_sumup_button_below', 'eme_opayo_demo', 'eme_opayo_vendor_name', 'eme_opayo_test_pwd', 'eme_opayo_live_pwd', 'eme_opayo_cost', 'eme_opayo_cost2', 'eme_opayo_button_label', 'eme_opayo_button_img_url', 'eme_opayo_button_above', 'eme_opayo_button_below' ];
 			break;
+		case 'emefs':
+			$options = [ 'eme_fs' ];
+			break;
 		case 'maps':
 			$options = [ 'eme_indiv_zoom_factor', 'eme_map_zooming', 'eme_location_baloon_format', 'eme_location_map_icon', 'eme_map_gesture_handling' ];
 			break;
@@ -1147,6 +1152,7 @@ function eme_admin_tabs( $current = 'homepage' ) {
 		'gdpr'          => __( 'Data protection', 'events-made-easy' ),
 		'payments'      => __( 'Payments', 'events-made-easy' ),
 		'maps'          => __( 'Maps', 'events-made-easy' ),
+		'emefs'         => __( 'Frontend Submit', 'events-made-easy' ),
 		'other'         => __( 'Other', 'events-made-easy' ),
 	];
 	if ( ! get_option( 'eme_rsvp_enabled' ) ) {
@@ -1263,8 +1269,6 @@ function eme_explain_slug_conflict( $conflict_found ) {
 
 // Function composing the options page
 function eme_options_page() {
-	
-
 	$tab = isset( $_GET['tab'] ) ? eme_sanitize_request( $_GET['tab'] ) : 'general';
 	eme_admin_tabs( $tab );
 	$conflict_found = eme_check_conflicting_slug();
@@ -2735,8 +2739,8 @@ function eme_options_page() {
 			?>
 </table>
 </div>
-</div>
 
+</div>
 			<?php
 			break;
 		case 'maps':
@@ -2751,7 +2755,36 @@ function eme_options_page() {
 				eme_options_textarea( __( 'Default location balloon format', 'events-made-easy' ), 'eme_location_baloon_format', __( 'The format of the text appearing in the balloon describing the location in the map.', 'events-made-easy' ) );
 			?>
 </table>
-
+			<?php
+			break;
+		case 'emefs':
+			?>
+<h3><?php esc_html_e( 'Frontend Submit options', 'events-made-easy' ); ?></h3>
+<table class='form-table'>
+			<?php
+			$categories=eme_get_categories();
+			$category_arr=array();
+			$category_arr[0]='';
+			if ( $categories ) {
+				// the first value should be empty, so if it is required, the browser can require it ...
+				foreach ($categories as $category){
+					$category_arr[$category['category_id']] = $category['category_name'];
+				}
+			}
+			eme_options_select (__('State for new event','events-made-easy'), eme_get_field_name('eme_fs','auto_publish'), eme_status_array(), __ ('The state for a newly submitted event.','events-made-easy'), eme_get_field_value('eme_fs','auto_publish') );
+			eme_options_select (__('Default category for new event','events-made-easy'), eme_get_field_name('eme_fs','default_cat'), $category_arr, __ ('The default category assigned to an event if nothing is selected in the form.','events-made-easy'), eme_get_field_value('eme_fs','default_cat') );
+			eme_options_radio_binary (__('Force location creation?','events-made-easy'), eme_get_field_name('eme_fs','force_location_creation'), __ ( 'Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations.', 'events-made-easy' ), eme_get_field_value('eme_fs','force_location_creation'));
+			eme_options_radio_binary (__('Enable Maps integration?','events-made-easy'), eme_get_field_name('eme_fs','map_enabled'), __ ( 'Check this option to enable Map integration', 'events-made-easy' ), eme_get_field_value('eme_fs','map_enabled'));
+			eme_options_radio_binary (__('Allow guest submit?','events-made-easy'), eme_get_field_name('eme_fs','guest_submit'), __ ( 'Check this option if you want guests also to be able to add new events.', 'events-made-easy' ), eme_get_field_value('eme_fs','guest_submit'));
+			eme_options_select ( __ ( 'Success Page','events-made-easy'), eme_get_field_name('eme_fs','success_page'), eme_get_all_pages (), __ ( 'The page a person will be redirected to after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event.','events-made-easy'), eme_get_field_value('eme_fs','success_page'));
+			eme_options_radio_binary (__('Always show success page','events-made-easy'), eme_get_field_name('eme_fs','always_success_page'), __ ( 'Check this option if you want to redirect to the success page even if the person submitting the event has the right to see the newly submitted event.', 'events-made-easy' ), eme_get_field_value('eme_fs','always_success_page'));
+			eme_options_textarea ( __( 'Guests not allowed text', 'events-made-easy'), eme_get_field_name('eme_fs','guest_not_allowed_text'), __( 'The text shown to a guest when trying to submit a new event when they are not allowed to do so.','events-made-easy'),1, 0, eme_get_field_value('eme_fs','guest_not_allowed_text'));
+			eme_options_radio_binary (__('Redirect to login page','events-made-easy'), eme_get_field_name('eme_fs','redirect_to_login'), __ ( 'Check this option if you want to redirect to the login page if not logged in (or no have the "edit posts" capability) and not show the "Guests not allowed text"', 'events-made-easy' ), eme_get_field_value('eme_fs','redirect_to_login'));
+			eme_options_select (__('Submit new event capabilty','events-made-easy'), eme_get_field_name('eme_fs','cap_add_event'), eme_get_all_caps (), sprintf(__('Permission needed to submit a new event when guest submit is not allowed. Default: %s','events-made-easy'), eme_capNamesCB('edit_posts')), eme_get_field_value('eme_fs','cap_add_event') );
+			eme_options_radio_binary (__('Use wysiwyg?','events-made-easy'), eme_get_field_name('eme_fs','use_wysiwyg'), __ ( 'Check this option if you want to use a frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_wysiwyg'));
+			eme_options_radio_binary (__('Allow image upload?','events-made-easy'), eme_get_field_name('eme_fs','allow_upload'), __ ( 'Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','allow_upload'));
+			?>
+</table>
 			<?php
 			break;
 		case 'other':

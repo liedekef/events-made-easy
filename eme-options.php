@@ -568,6 +568,21 @@ function eme_add_options( $reset = 0 ) {
 		'eme_check_free_waiting'                          => 0,
 		'eme_multisite_active'                            => 0,
 		'eme_rememberme'                                  => 0,
+		'eme_fs' => [
+			'auto_publish' => EME_EVENT_STATUS_PUBLIC,
+			'guest_submit' => false,
+			'success_page' => 0,
+			'always_success_page' => 0,
+			'default_cat' => 0,
+			'guest_not_allowed_text' => '',
+			'redirect_to_login' => 0,
+			'cap_add_event' => 'edit_posts',
+			'force_location_creation' => 0,
+			'use_honeypot' => 1,
+			'use_wysiwyg' => 0,
+			'allow_upload' => 0,
+			'map_enabled' => 1
+		]
 	];
 
 	foreach ( $eme_options as $key => $value ) {
@@ -887,12 +902,8 @@ function eme_add_option( $key, $value, $reset ) {
 // WP options registration/deletion
 ////////////////////////////////////
 function eme_options_delete() {
-	$all_options = wp_load_alloptions();
-	foreach ( array_keys($all_options) as $name ) {
-		if ( preg_match( '/^eme_/', $name ) ) {
-			delete_option( $name );
-		}
-	}
+	global $wpdb;
+	$wpdb->query("DELETE FROM ".$wpdb->options." WHERE option_name LIKE 'eme_%'" );
 }
 
 function eme_options_postsave_actions() {
@@ -1190,10 +1201,10 @@ function eme_check_conflicting_slug() {
 
 	$events_pageid = eme_get_events_page_id();
 
-	$check_sql = "SELECT ID FROM $wpdb->posts WHERE post_name = %s AND ID != %d AND post_status != 'trash' LIMIT 1";
+	$check_sql = "SELECT ID FROM ".$wpdb->posts." WHERE post_name = %s AND ID != %d AND post_status != 'trash' LIMIT 1";
 	foreach ( $events_prefixes as $events_prefix ) {
 		if ( eme_is_empty_string( $events_prefix ) ) {
-					continue;
+			continue;
 		}
 		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $events_prefix, $events_pageid ) );
 		if ( ! empty( $post_name_check ) ) {
@@ -1202,7 +1213,7 @@ function eme_check_conflicting_slug() {
 	}
 	foreach ( $locations_prefixes as $locations_prefix ) {
 		if ( eme_is_empty_string( $locations_prefix ) ) {
-					continue;
+			continue;
 		}
 		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $locations_prefix, $events_pageid ) );
 		if ( ! empty( $post_name_check ) ) {
@@ -1211,7 +1222,7 @@ function eme_check_conflicting_slug() {
 	}
 	foreach ( $categories_prefixes as $categories_prefix ) {
 		if ( eme_is_empty_string( $categories_prefix ) ) {
-					continue;
+			continue;
 		}
 		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $categories_prefix, $events_pageid ) );
 		if ( ! empty( $post_name_check ) ) {

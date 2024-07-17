@@ -14,7 +14,6 @@ add_shortcode( 'eme_events_page', 'eme_get_events_page_shortcode' );
 add_shortcode( 'eme_countdown', 'eme_countdown_shortcode' );
 add_shortcode( 'eme_holidays', 'eme_holidays_shortcode' );
 add_shortcode( 'eme_filterform', 'eme_filter_form_shortcode' );
-add_shortcode( 'eme_fs_submit_event_form', 'eme_fs_submit_shortcode' );
 add_shortcode( 'eme_for', 'eme_for_shortcode' );
 add_shortcode( 'eme_if', 'eme_if_shortcode' );
 add_shortcode( 'eme_if2', 'eme_if_shortcode' );

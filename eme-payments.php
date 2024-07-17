@@ -321,7 +321,7 @@ function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 
 			$ret_string .= '</div>';
 		}
 	}
-	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class>'";
+	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class'>";
 	$is_multi    = 0;
 	$pgs         = eme_payment_gateways();
 	foreach ( $pgs as $pg => $value ) {

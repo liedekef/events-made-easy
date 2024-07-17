@@ -3318,7 +3318,6 @@ function eme_ajax_record_edit( $tablename, $cap, $id_column, $record, $record_fu
 		print wp_json_encode( $jTableResult );
 		wp_die();
 	}
-	$wpdb->show_errors( false );
 	if ( current_user_can( get_option( $cap ) ) ) {
 		if ( $update ) {
 			$wpdb->update( $table, $record, [ $id_column => $record[ $id_column ] ] );

@@ -373,9 +373,7 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 	}
 
 	$where = [ 'recurrence_id' => $recurrence['recurrence_id'] ];
-	$wpdb->show_errors( true );
 	$wpdb->update( $recurrence_table, $recurrence, $where );
-	$wpdb->show_errors( false );
 	$event['recurrence_id'] = $recurrence['recurrence_id'];
 	$count                  = eme_update_events_for_recurrence( $recurrence, $event, $only_change_recdates );
 	if ( $count ) {

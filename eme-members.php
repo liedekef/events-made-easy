@@ -248,13 +248,11 @@ function eme_init_membership_props( $props = [] ) {
 function eme_db_insert_membership( $membership ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-	$wpdb->show_errors( true );
 	if ( ! eme_is_serialized( $membership['properties'] ) ) {
 		$membership['properties'] = eme_serialize( $membership['properties'] );
 	}
 	$membership['modif_date'] = current_time( 'mysql', false );
 	if ( ! $wpdb->insert( $table, $membership ) ) {
-		$wpdb->print_error();
 		return false;
 	} else {
 		return $wpdb->insert_id;
@@ -264,7 +262,6 @@ function eme_db_insert_membership( $membership ) {
 function eme_db_insert_member( $line, $membership, $member_id = 0 ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-	$wpdb->show_errors( true );
 
 	if ( $membership['properties']['create_wp_user'] ) {
 		$person = eme_get_person( $line['person_id'] );
@@ -473,7 +470,6 @@ function eme_get_membership( $id ) {
 	}
 	$membership = wp_cache_get( "eme_membership $id" );
 	if ( $membership === false ) {
-		//$wpdb->show_errors(true);
 		$membership = $wpdb->get_row( $sql, ARRAY_A );
 		if ( $membership ) {
 			$membership['properties'] = eme_init_membership_props( eme_unserialize( $membership['properties'] ) );

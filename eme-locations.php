@@ -1390,14 +1390,10 @@ function eme_update_location( $line, $location_id ) {
 	$new_line['location_attributes'] = eme_serialize( $new_line['location_attributes'] );
 	$new_line['location_properties'] = eme_serialize( $new_line['location_properties'] );
 
-	$wpdb->show_errors( true );
 	$where = [ 'location_id' => $location_id ];
 	if ( $wpdb->update( $table_name, $new_line, $where ) === false ) {
-		$wpdb->print_error();
-		$wpdb->show_errors( false );
 		return false;
 	} else {
-		$wpdb->show_errors( false );
 		wp_cache_delete( "eme_location $location_id" );
 		return $location_id;
 	}
@@ -1429,14 +1425,10 @@ function eme_insert_location( $line, $force = 0 ) {
 	$new_line['location_properties'] = eme_serialize( $new_line['location_properties'] );
 
 	if ( current_user_can( get_option( 'eme_cap_add_locations' ) ) || $force ) {
-		$wpdb->show_errors( true );
 		if ( ! $wpdb->insert( $table_name, $new_line ) ) {
-			$wpdb->print_error();
-			$wpdb->show_errors( false );
 			return false;
 		} else {
 			$location_id = $wpdb->insert_id;
-			$wpdb->show_errors( false );
 			return $location_id;
 		}
 	} else {

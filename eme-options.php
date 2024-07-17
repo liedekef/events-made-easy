@@ -878,10 +878,8 @@ function eme_update_options( $db_version ) {
 
 function eme_add_option( $key, $value, $reset ) {
 	$existing_value = get_option( $key, 'non_existing' );
-	if ( ( !is_array($existing_value) && $existing_value == 'non_existing' ) || $reset ) {
+	if ( $existing_value == 'non_existing' || $reset ) {
 		update_option( $key, $value );
-	} elseif (is_array($existing_value)) {
-		update_option( $key, array_merge($value,$existing_value));
 	}
 }
 

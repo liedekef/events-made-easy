@@ -1190,6 +1190,8 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 					if ( ! $mail_res ) {
 						$res['mail_problems'] = 1;
 						$not_sent[]           = $person_name;
+					} else {
+						$emails_handled[] = $attendee['email'];
 					}
 				}
 			} elseif ( $conditions['eme_mail_type'] == 'bookings' ) {
@@ -1210,6 +1212,8 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
 						if ( ! $mail_res ) {
 							$res['mail_problems'] = 1;
 							$not_sent[]           = $person_name;
+						} else {
+							$emails_handled[] = $attendee['email'];
 						}
 					}
 				}

@@ -632,4 +632,17 @@ function eme_update_completed( $upgrader_object, $options ) {
 }
 //add_action( 'upgrader_process_complete', 'eme_update_completed', 10, 2 );
 
+
+add_action('wp_dashboard_setup', 'eme_custom_dashboard_widget');
+function eme_custom_dashboard_widget() {
+	wp_add_dashboard_widget('eme_custom_events_widget', __('Events Made Easy','events-made-easy'), 'eme_custom_dashboard_next_events');
+}
+
+function eme_custom_dashboard_next_events() {
+	$format = "<li>#_STARTDATE #_STARTTIME <a href='#_EDITEVENTURL'>#_EVENTNAME</a> </li>";
+	#$format = '';
+	$format_header = '<h3>'.__('List of next 10 events','events-made-easy').'</h3><ul>';
+	$format_footer = '</ul>';
+	echo eme_get_events_list(limit: 10, format: $format, format_header: $format_header, format_footer: $format_footer);
+}
 ?>

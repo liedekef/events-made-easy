@@ -446,7 +446,7 @@ function eme_add_options( $reset = 0 ) {
 		'eme_stripe_button_img_url'                       => '',
 		'eme_stripe_button_above'                         => sprintf( $eme_payment_button_above_localizable, 'Stripe' ),
 		'eme_stripe_button_below'                         => '',
-		'eme_stripe_payment_methods'                      => 'card',
+		'eme_stripe_payment_methods'                      => ['card'],
 		'eme_fdgg_url'                                    => 'live',
 		'eme_fdgg_store_name'                             => '',
 		'eme_fdgg_shared_secret'                          => '',
@@ -549,10 +549,10 @@ function eme_add_options( $reset = 0 ) {
 		'eme_booking_attach_ids'                          => '',
 		'eme_pending_attach_ids'                          => '',
 		'eme_paid_attach_ids'                             => '',
-		'eme_booking_attach_tmpl_ids'                     => '',
-		'eme_pending_attach_tmpl_ids'                     => '',
-		'eme_paid_attach_tmpl_ids'                        => '',
-		'eme_subscribe_attach_ids'                        => '',
+		'eme_booking_attach_tmpl_ids'                     => [],
+		'eme_pending_attach_tmpl_ids'                     => [],
+		'eme_paid_attach_tmpl_ids'                        => [],
+		'eme_subscribe_attach_ids'                        => [],
 		'eme_allowed_html'                                => '',
 		'eme_allowed_style_attr'                          => '',
 		'eme_redir_priv_event_url'                        => '',
@@ -878,9 +878,22 @@ function eme_update_options( $db_version ) {
 
 function eme_add_option( $key, $value, $reset ) {
 	$existing_value = get_option( $key, 'non_existing' );
-	if ( $existing_value == 'non_existing' || $reset ) {
+	if ($reset) {
+		// in case of forced reset: take the new value
 		update_option( $key, $value );
+	} elseif ( !is_array($existing_value) && $existing_value == 'non_existing' ) {
+		// in case the option didn't exist: take the new value
+		update_option( $key, $value );
+	} elseif (is_array($existing_value) ) {
+		// in case the option exists and is an assoc array (not a list): merge the values
+		// the new value should be an array too, but we don't check on that to make sure
+		// we get an error if we ever forget it ...
+		if ( ! (array_is_list($value) && array_is_list($existing_value) ) )
+			update_option( $key, array_merge($value,$existing_value));
 	}
+	#if ( $existing_value == 'non_existing' || $reset ) {
+	#	update_option( $key, $value );
+	#}
 }
 
 ////////////////////////////////////

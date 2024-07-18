@@ -567,7 +567,22 @@ function eme_add_options( $reset = 0 ) {
 		'eme_backend_timeformat'                          => '',
 		'eme_check_free_waiting'                          => 0,
 		'eme_multisite_active'                            => 0,
-		'eme_rememberme'                                  => 0
+		'eme_rememberme'                                  => 0,
+		'eme_fs' => [
+			'auto_publish' => EME_EVENT_STATUS_PUBLIC,
+			'guest_submit' => false,
+			'success_page' => 0,
+			'always_success_page' => 0,
+			'default_cat' => 0,
+			'guest_not_allowed_text' => '',
+			'redirect_to_login' => 0,
+			'cap_add_event' => 'edit_posts',
+			'force_location_creation' => 0,
+			'use_honeypot' => 1,
+			'use_wysiwyg' => 0,
+			'allow_upload' => 0,
+			'map_enabled' => 1
+		]
 	];
 
 	foreach ( $eme_options as $key => $value ) {
@@ -1033,6 +1048,9 @@ function eme_options_register() {
 		case 'maps':
 			$options = [ 'eme_indiv_zoom_factor', 'eme_map_zooming', 'eme_location_baloon_format', 'eme_location_map_icon', 'eme_map_gesture_handling' ];
 			break;
+		case 'emefs':
+			$options = [ 'eme_fs' ];
+			break;
 		case 'other':
 			// put eme_allowed_style_attr and eme_allowed_html first, so it has a immediate impact on the other options
 			$options = [ 'eme_allowed_style_attr', 'eme_allowed_html', 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_separator', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_version', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' ];
@@ -1145,6 +1163,7 @@ function eme_admin_tabs( $current = 'homepage' ) {
 		'gdpr'          => __( 'Data protection', 'events-made-easy' ),
 		'payments'      => __( 'Payments', 'events-made-easy' ),
 		'maps'          => __( 'Maps', 'events-made-easy' ),
+		//'emefs'         => __( 'Frontend Submit', 'events-made-easy' ),
 		'other'         => __( 'Other', 'events-made-easy' ),
 	];
 	if ( ! get_option( 'eme_rsvp_enabled' ) ) {
@@ -2745,6 +2764,36 @@ function eme_options_page() {
 				eme_options_input_text( __( 'Individual map zoom factor', 'events-made-easy' ), 'eme_indiv_zoom_factor', __( 'The zoom factor used when showing a single map (max: 14).', 'events-made-easy' ) );
 				eme_options_input_text( __( 'Default location map icon', 'events-made-easy' ), 'eme_location_map_icon', __( "By default a regular pin is shown on the map where the location is. If you don't like the default, you can set another map icon here.", 'events-made-easy' ) . '<br>' . __( 'Size should be 32x32, bottom center will be pointing to the location on the map.', 'events-made-easy' ) );
 				eme_options_textarea( __( 'Default location balloon format', 'events-made-easy' ), 'eme_location_baloon_format', __( 'The format of the text appearing in the balloon describing the location in the map.', 'events-made-easy' ) );
+			?>
+</table>
+			<?php
+			break;
+		case 'emefs':
+			?>
+<h3><?php esc_html_e( 'Frontend Submit options', 'events-made-easy' ); ?></h3>
+<table class='form-table'>
+			<?php
+			$categories=eme_get_categories();
+			$category_arr=array();
+			$category_arr[0]='';
+			if ( $categories ) {
+				// the first value should be empty, so if it is required, the browser can require it ...
+				foreach ($categories as $category){
+					$category_arr[$category['category_id']] = $category['category_name'];
+				}
+			}
+			eme_options_select (__('State for new event','events-made-easy'), eme_get_field_name('eme_fs','auto_publish'), eme_status_array(), __ ('The state for a newly submitted event.','events-made-easy'), eme_get_field_value('eme_fs','auto_publish') );
+			eme_options_select (__('Default category for new event','events-made-easy'), eme_get_field_name('eme_fs','default_cat'), $category_arr, __ ('The default category assigned to an event if nothing is selected in the form.','events-made-easy'), eme_get_field_value('eme_fs','default_cat') );
+			eme_options_radio_binary (__('Force location creation?','events-made-easy'), eme_get_field_name('eme_fs','force_location_creation'), __ ( 'Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations.', 'events-made-easy' ), eme_get_field_value('eme_fs','force_location_creation'));
+			eme_options_radio_binary (__('Enable Maps integration?','events-made-easy'), eme_get_field_name('eme_fs','map_enabled'), __ ( 'Check this option to enable Map integration', 'events-made-easy' ), eme_get_field_value('eme_fs','map_enabled'));
+			eme_options_radio_binary (__('Allow guest submit?','events-made-easy'), eme_get_field_name('eme_fs','guest_submit'), __ ( 'Check this option if you want guests also to be able to add new events.', 'events-made-easy' ), eme_get_field_value('eme_fs','guest_submit'));
+			eme_options_select ( __ ( 'Success Page','events-made-easy'), eme_get_field_name('eme_fs','success_page'), eme_get_all_pages (), __ ( 'The page a person will be redirected to after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event.','events-made-easy'), eme_get_field_value('eme_fs','success_page'));
+			eme_options_radio_binary (__('Always show success page','events-made-easy'), eme_get_field_name('eme_fs','always_success_page'), __ ( 'Check this option if you want to redirect to the success page even if the person submitting the event has the right to see the newly submitted event.', 'events-made-easy' ), eme_get_field_value('eme_fs','always_success_page'));
+			eme_options_textarea ( __( 'Guests not allowed text', 'events-made-easy'), eme_get_field_name('eme_fs','guest_not_allowed_text'), __( 'The text shown to a guest when trying to submit a new event when they are not allowed to do so.','events-made-easy'),1, 0, eme_get_field_value('eme_fs','guest_not_allowed_text'));
+			eme_options_radio_binary (__('Redirect to login page','events-made-easy'), eme_get_field_name('eme_fs','redirect_to_login'), __ ( 'Check this option if you want to redirect to the login page if not logged in (or no have the "edit posts" capability) and not show the "Guests not allowed text"', 'events-made-easy' ), eme_get_field_value('eme_fs','redirect_to_login'));
+			eme_options_select (__('Submit new event capabilty','events-made-easy'), eme_get_field_name('eme_fs','cap_add_event'), eme_get_all_caps (), sprintf(__('Permission needed to submit a new event when guest submit is not allowed. Default: %s','events-made-easy'), eme_capNamesCB('edit_posts')), eme_get_field_value('eme_fs','cap_add_event') );
+			eme_options_radio_binary (__('Use wysiwyg?','events-made-easy'), eme_get_field_name('eme_fs','use_wysiwyg'), __ ( 'Check this option if you want to use a frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_wysiwyg'));
+			eme_options_radio_binary (__('Allow image upload?','events-made-easy'), eme_get_field_name('eme_fs','allow_upload'), __ ( 'Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','allow_upload'));
 			?>
 </table>
 			<?php

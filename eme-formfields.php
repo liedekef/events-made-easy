@@ -2855,6 +2855,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	} else {
 		$dynamic_data_wanted = 0;
 	}
+	# the next is to make sure we render #_DYNAMICDATA only once
+	$dynamic_data_rendered = 0;
+
 	$needle_offset = 0;
 	preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	foreach ( $placeholders[0] as $orig_result ) {
@@ -3182,8 +3185,9 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				$replacement = "<span id='eme_calc_bookingprice'></span>";
 			}
 		} elseif ( preg_match( '/#_DYNAMICDATA$/', $result ) ) {
-			if ( ! empty( $event['event_properties']['rsvp_dyndata'] ) ) {
+			if ( !$dynamic_data_rendered && ! empty( $event['event_properties']['rsvp_dyndata'] ) ) {
 				$replacement = "<div id='eme_dyndata'></div>";
+				$dynamic_data_rendered = 1;
 			}
 		} elseif ( preg_match( '/#_SEATS$|#_SPACES$/', $result ) ) {
 			$var_prefix  = "bookings[$event_id][";
@@ -3832,6 +3836,8 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 	} else {
 		$dynamic_data_wanted = 0;
 	}
+	# the next is to make sure we render #_DYNAMICDATA only once
+	$dynamic_data_rendered = 0;
 
 	$personal_info_class   = 'personal_info';
 	$discount_fields_count = 0;
@@ -4135,8 +4141,9 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
 		} elseif ( preg_match( '/#_DYNAMICPRICE$/', $result ) ) {
 			$replacement = "<span id='eme_calc_memberprice'></span>";
 		} elseif ( preg_match( '/#_DYNAMICDATA$/', $result ) ) {
-			if ( ! empty( $membership['properties']['dyndata'] ) ) {
+			if ( !$dynamic_data_rendered && ! empty( $membership['properties']['dyndata'] ) ) {
 				$replacement = "<div id='eme_dyndata'></div>";
+				$dynamic_data_rendered = 1;
 			}
 		} elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
 			if ( $eme_cfcaptcha_for_forms && ! $captcha_set ) {

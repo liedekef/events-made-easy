@@ -1727,12 +1727,17 @@ function eme_send_mails_ajax_actions( $action ) {
 			if ( ! empty( $_POST['genericmail_mailing_name'] ) ) {
 				$mailing_name = eme_sanitize_request( $_POST['genericmail_mailing_name'] );
 			} else {
-				$mailing_name = 'mailing ' . $eme_date_obj_now->getDateTime();
+				//$mailing_name = 'mailing ' . $eme_date_obj_now->getDateTime();
+				$mailing_name = '';
 			}
 			if ( ! empty( $_POST['genericmail_actualstartdate'] ) ) {
 				$mailing_datetime = eme_sanitize_request( $_POST['genericmail_actualstartdate'] );
 			} else {
-				$mailing_datetime = $eme_date_obj_now->getDateTime();
+				// if both name and time are empty, act as individual mails being done (so no mailing)
+				if (empty($mailing_name))
+					$queue = 0;
+				else
+					$mailing_datetime = $eme_date_obj_now->getDateTime();
 			}
 			if ( isset( $_POST['eme_send_all_people'] ) ) {
 				$conditions['eme_send_all_people'] = 1;
@@ -1842,12 +1847,17 @@ function eme_send_mails_ajax_actions( $action ) {
 		if ( ! empty( $_POST['eventmail_mailing_name'] ) ) {
 			$mailing_name = eme_sanitize_request( $_POST['eventmail_mailing_name'] );
 		} else {
-			$mailing_name = 'event mailing ' . $eme_date_obj_now->getDateTime();
+			//$mailing_name = 'event mailing ' . $eme_date_obj_now->getDateTime();
+			$mailing_name = '';
 		}
 		if ( ! empty( $_POST['eventmail_actualstartdate'] ) ) {
 			$mailing_datetime = eme_sanitize_request( $_POST['eventmail_actualstartdate'] );
 		} else {
-			$mailing_datetime = $eme_date_obj_now->getDateTime();
+			// if both name and time are empty, act as individual mails being done (so no mailing)
+			if (empty($mailing_name))
+				$queue = 0;
+			else
+				$mailing_datetime = $eme_date_obj_now->getDateTime();
 		}
 		if ( $action == 'previeweventmail' ) {
 			// let's add attachments too

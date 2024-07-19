@@ -145,6 +145,16 @@ jQuery(document).ready( function($) {
 	   active: localStorage.getItem('mailtabs_currentIdx'),
 	   activate: function(event, ui) {
 		   localStorage.setItem('mailtabs_currentIdx', $(this).tabs('option', 'active'));
+		   // if tab-sentmail
+		   if ($(this).tabs('option', 'active') == 4) {
+			   $('#searchmailButton').trigger('click');
+		   }
+	   },
+	   create: function(event, ui) {
+		   // if tab-sentmail
+		   if ($(this).tabs('option', 'active') == 4) {
+			   $('#searchmailButton').trigger('click');
+		   }
 	   }
    });
    $('#mail-tabs').show();
@@ -295,7 +305,7 @@ jQuery(document).ready( function($) {
 	   });
            return false;
    });
-   $('#searchmailButton').trigger('click');
+   //$('#searchmailButton').trigger('click');
 
    $('#testmailButton').on("click",function (e) {
            e.preventDefault();

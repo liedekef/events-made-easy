@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 2.4.52
+Stable tag: 2.4.53
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -98,9 +98,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.4.53 (2024/07/19) =
+* A renamed option was not taken into account in all pages
+
 = 2.4.52 (2024/07/17) =
 * Fix an option code typo
-* A renamed option was not taken into account in all pages
 
 = 2.4.51 (2024/07/17) =
 * Add an EME dashboard to the main WP dashboard page

@@ -74,7 +74,7 @@ function eme_rpi_ajax() {
 	$remove_captcha_if_ok = 1;
 	eme_check_captchas( null, $remove_captcha_if_ok );
 
-	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 	// send email to client if it exists, otherwise do nothing, but always return the same message
 	$email = eme_sanitize_email( $_POST['eme_email'] );
 	// check if email is found, if so: send the gdpr url
@@ -169,7 +169,7 @@ function eme_gdpr_approve_ajax() {
 	$remove_captcha_if_ok = 1;
 	eme_check_captchas( null, $remove_captcha_if_ok );
 
-	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 	// send email to client if it exists, otherwise do nothing, but always return the same message
 	$email = eme_sanitize_email( $_POST['eme_email'] );
 	// check if email is found, if so: send the gdpr url
@@ -255,7 +255,7 @@ function eme_cpi_request_ajax() {
 	// send email to client if it exists, otherwise do nothing, but always return the same message
 	$email = eme_sanitize_email( $_POST['eme_email'] );
 	// check if email is found, if so: send the url
-	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 	$person_ids     = eme_get_personids_by_email( $email );
 	if ( ! empty( $person_ids ) ) {
 		$contact_email = get_option( 'eme_mail_sender_address' );

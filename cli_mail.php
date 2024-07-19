@@ -201,8 +201,8 @@ if ( isset( $arguments['allowed_senders'] ) ) {
 }
 
 // ok, conditions met, send it
-$eme_rsvp_send_html = get_option( 'eme_rsvp_send_html' );
-if ( $eme_rsvp_send_html ) {
+$eme_mail_send_html = get_option( 'eme_mail_send_html' );
+if ( $eme_mail_send_html ) {
 	$body           = ( ! empty( $html_contents ) ) ? $html_contents : $plain_contents;
 	$mail_text_html = 'html';
 } else {

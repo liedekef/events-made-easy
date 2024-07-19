@@ -7367,7 +7367,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
 	} else {
 		$showhide_style = 'style="width:100%;"';
 	}
-	$use_html_editor = get_option( 'eme_rsvp_send_html' );
+	$use_html_editor = get_option( 'eme_mail_send_html' );
 	?>
 <div id="div_event_contactperson_email_ipn">
 	<b><?php esc_html_e( 'Contact Person Payment Gateway Notification Email Subject', 'events-made-easy' ); ?></b>
@@ -7459,7 +7459,7 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
 
 function eme_meta_box_div_event_registration_approved_email( $event, $templates_array ) {
 	
-	$use_html_editor = get_option( 'eme_rsvp_send_html' );
+	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_respondent_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7605,7 +7605,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 
 function eme_meta_box_div_event_registration_userpending_email( $event, $templates_array ) {
 	
-	$use_html_editor = get_option( 'eme_rsvp_send_html' );
+	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_userpending_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7663,7 +7663,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
 
 function eme_meta_box_div_event_registration_pending_email( $event, $templates_array ) {
 	
-	$use_html_editor = get_option( 'eme_rsvp_send_html' );
+	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7807,7 +7807,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 }
 
 function eme_meta_box_div_event_registration_updated_email( $event, $templates_array ) {
-	$use_html_editor = get_option( 'eme_rsvp_send_html' );
+	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_updated_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7859,7 +7859,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
 
 function eme_meta_box_div_event_registration_reminder_email( $event, $templates_array ) {
 	
-	$use_html_editor = get_option( 'eme_rsvp_send_html' );
+	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_reminder_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7951,7 +7951,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 }
 
 function eme_meta_box_div_event_registration_cancelled_email( $event, $templates_array ) {
-	$use_html_editor = get_option( 'eme_rsvp_send_html' );
+	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_cancelled_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -8050,7 +8050,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 }
 
 function eme_meta_box_div_event_registration_paid_email( $event, $templates_array ) {
-	$use_html_editor = get_option( 'eme_rsvp_send_html' );
+	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_paid_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -8195,7 +8195,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 
 function eme_meta_box_div_event_registration_trashed_email( $event, $templates_array ) {
 	
-	$use_html_editor = get_option( 'eme_rsvp_send_html' );
+	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_trashed_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -9995,7 +9995,7 @@ function eme_admin_enqueue_js() {
 			'translate_action'          => __( 'Action', 'events-made-easy' ),
 			'translate_mailingreport'   => __( 'Mailing report', 'events-made-easy' ),
 			'translate_selectevents'    => __( 'Select one or more events', 'events-made-easy' ),
-			'translate_htmlmail'        => get_option( 'eme_rsvp_send_html' ) ? 'yes' : 'no',
+			'translate_htmlmail'        => get_option( 'eme_mail_send_html' ) ? 'yes' : 'no',
 			'translate_addatachments'   => __( 'Add attachments', 'events-made-easy' ),
 			'translate_selecteddates'   => __( 'Selected dates:', 'events-made-easy' ),
 			'translate_firstDayOfWeek'  => get_option( 'start_of_week' ),

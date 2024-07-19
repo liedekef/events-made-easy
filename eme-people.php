@@ -3056,7 +3056,7 @@ function eme_people_birthday_emails() {
 	}
 	$person_ids = $wpdb->get_col( $sql );
 
-	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
 	$contact_email = get_option( 'eme_mail_sender_address' );
 	$contact_name  = get_option( 'eme_mail_sender_name' );

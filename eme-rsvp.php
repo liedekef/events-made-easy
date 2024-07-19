@@ -4013,7 +4013,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 	$contact        = eme_get_event_contact( $event );
 	$contact_email  = $contact->user_email;
 	$contact_name   = $contact->display_name;
-	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
 	// and now send the wanted mails
 	$person_name            = eme_format_full_name( $person['firstname'], $person['lastname'] );
@@ -6347,7 +6347,7 @@ function eme_ajax_action_mark_booking_unpaid( $ids_arr, $action, $send_mail, $re
 
 function eme_ajax_action_send_booking_mails( $ids_arr, $subject_template_id, $body_template_id ) {
 	$mail_ok        = 1;
-	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 	$subject        = eme_get_template_format_plain( $subject_template_id );
 	$body           = eme_get_template_format_plain( $body_template_id );
 	foreach ( $ids_arr as $booking_id ) {

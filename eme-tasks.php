@@ -1370,7 +1370,7 @@ function eme_email_tasksignup_action( $signup, $action ) {
 	$contact        = eme_get_event_contact( $event );
 	$contact_email  = $contact->user_email;
 	$contact_name   = $contact->display_name;
-	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
 	// first get the initial values
 	if ( $action == 'pending' ) {

@@ -4319,7 +4319,7 @@ function eme_email_member_action( $member, $action ) {
 	$contact        = eme_get_contact( $membership['properties']['contact_id'] );
 	$contact_email  = $contact->user_email;
 	$contact_name   = $contact->display_name;
-	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'htmlmail' : 'text';
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
 	// first get the initial values
 	$member_subject  = '';
@@ -6738,7 +6738,7 @@ function eme_ajax_manage_memberships() {
 
 function eme_ajax_action_send_member_mails( $ids_arr, $subject_template_id, $body_template_id ) {
 	$mail_ok        = 1;
-	$mail_text_html = get_option( 'eme_rsvp_send_html' ) ? 'html' : 'text';
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'html' : 'text';
 	$subject        = eme_get_template_format_plain( $subject_template_id );
 	$body           = eme_get_template_format_plain( $body_template_id );
 	$ajaxResult     = [];

@@ -100,6 +100,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.4.52 (2024/07/17) =
 * Fix an option code typo
+* A renamed option was not taken into account in all pages
 
 = 2.4.51 (2024/07/17) =
 * Add an EME dashboard to the main WP dashboard page

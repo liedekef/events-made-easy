@@ -427,7 +427,7 @@ function eme_get_template_format( $template_id, $nl2br_wanted = 1 ) {
 	}
 
 	if ( preg_match( '/mail/', $template['type'] ) ) {
-		if ( get_option( 'eme_rsvp_send_html' ) ) {
+		if ( get_option( 'eme_mail_send_html' ) ) {
 			return eme_nl2br_save_html( $format );
 		} else {
 			return $format;

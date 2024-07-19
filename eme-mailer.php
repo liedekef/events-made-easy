@@ -323,74 +323,11 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 }
 
 function eme_db_insert_ongoing_mailing( $mailing_name, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions = [] ) {
-	global $wpdb;
-	$mailing_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-
-	if ( empty( $fromemail ) ) {
-		$fromemail = $replytoemail;
-		$fromname  = $replytoname;
-	}
-	// if forced or fromemail is still empty
-	if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
-		$default_sender_address = get_option( 'eme_mail_sender_address' );
-		if ( eme_is_email( $default_sender_address ) ) {
-			$fromemail = $default_sender_address;
-			if ( $fromemail != $default_sender_address ) {
-				$fromname  = get_option( 'eme_mail_sender_name' );
-			}
-		} else {
-			$contact   = eme_get_contact();
-			$fromemail = $contact->user_email;
-			$fromname  = $contact->display_name;
-		}
-		// Still empty from, then we go further up
-		if ( empty( $fromemail ) ) {
-			$fromemail = get_option( 'admin_email' );
-		}
-		if ( empty( $fromname ) ) {
-			$fromname = get_option( 'blogname' );
-		}
-		$replytoemail = $fromemail;
-		$replytoname = $fromname;
-	}
-	// now the from should never be empty, so just check reply to again
-	if ( empty( $replytoemail ) ) {
-		$replytoemail = $fromemail;
-	}
-	if ( empty( $replytoname ) ) {
-		$replytoname = $fromname;
-	}
-
 	$now           = current_time( 'mysql', false );
-	$mailing       = [
-		'name'           => mb_substr( $mailing_name, 0, 255 ),
-		'planned_on'     => $now,
-		'status'         => 'ongoing',
-		'subject'        => mb_substr( $subject, 0, 255 ),
-		'body'           => $body,
-		'fromemail'      => $fromemail,
-		'fromname'       => mb_substr( $fromname, 0, 255 ),
-		'replytoemail'   => $replytoemail,
-		'replytoname'    => mb_substr( $replytoname, 0, 255 ),
-		'mail_text_html' => $mail_text_html,
-		'creation_date'  => $now,
-		'conditions'     => eme_serialize( $conditions ),
-	];
-
-	// add userid if possible
-	$current_userid = get_current_user_id();
-	if (!empty($current_userid)) {
-		$mailing['created_by'] = $current_userid;
-	}
-
-	if ( $wpdb->insert( $mailing_table, $mailing ) === false ) {
-		return false;
-	} else {
-		return $wpdb->insert_id;
-	}
+	return eme_db_insert_mailing( $mailing_name, $now, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions, "ongoing" );
 }
 
-function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions ) {
+function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions, $status = "initial" ) {
 	global $wpdb;
 	$mailing_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 
@@ -433,7 +370,7 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 	$mailing       = [
 		'name'           => mb_substr( $mailing_name, 0, 255 ),
 		'planned_on'     => $planned_on,
-		'status'         => 'initial',
+		'status'         => $status,
 		'subject'        => mb_substr( $subject, 0, 255 ),
 		'body'           => $body,
 		'fromemail'      => $fromemail,
@@ -450,6 +387,7 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 	if (!empty($current_userid)) {
 		$mailing['created_by'] = $current_userid;
 	}
+
 	if ( $wpdb->insert( $mailing_table, $mailing ) === false ) {
 		return false;
 	} else {
@@ -1631,10 +1569,10 @@ function eme_send_mails_ajax_actions( $action ) {
 		wp_die();
 	}
 
+	$queue = intval( get_option( 'eme_queue_mails' ) );
+	$fast_queue = 0;
 	$conditions['action'] = $action;
 	if ( $action == 'genericmail' || $action == 'previewmail' ) {
-		$queue = intval( get_option( 'eme_queue_mails' ) );
-
 		if ( ! empty( $_POST['genericmail_ignore_massmail_setting'] ) ) {
 			$conditions['ignore_massmail_setting'] = 1;
 		}
@@ -1727,17 +1665,13 @@ function eme_send_mails_ajax_actions( $action ) {
 			if ( ! empty( $_POST['genericmail_mailing_name'] ) ) {
 				$mailing_name = eme_sanitize_request( $_POST['genericmail_mailing_name'] );
 			} else {
-				//$mailing_name = 'mailing ' . $eme_date_obj_now->getDateTime();
-				$mailing_name = '';
+				$mailing_name = 'mailing ' . $eme_date_obj_now->getDateTime();
 			}
 			if ( ! empty( $_POST['genericmail_actualstartdate'] ) ) {
 				$mailing_datetime = eme_sanitize_request( $_POST['genericmail_actualstartdate'] );
 			} else {
-				// if both name and time are empty, act as individual mails being done (so no mailing)
-				if (empty($mailing_name))
-					$queue = 0;
-				else
-					$mailing_datetime = $eme_date_obj_now->getDateTime();
+				$mailing_datetime = $eme_date_obj_now->getDateTime();
+				$fast_queue=1;
 			}
 			if ( isset( $_POST['eme_send_all_people'] ) ) {
 				$conditions['eme_send_all_people'] = 1;
@@ -1758,7 +1692,10 @@ function eme_send_mails_ajax_actions( $action ) {
 					$conditions['eme_send_memberships'] = join( ',', $_POST['eme_send_memberships'] );
 				}
 			}
-			if ( $queue ) {
+			if ( $queue && $fast_queue ) {
+				$mailing_id = eme_db_insert_ongoing_mailing( $mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
+				$res = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
+			} elseif ( $queue ) {
 				// in case we want a mailing to be done at multiple times, the times are separated by ","
 				$dates = explode( ',', $mailing_datetime );
 				foreach ( $dates as $datetime ) {
@@ -1803,7 +1740,6 @@ function eme_send_mails_ajax_actions( $action ) {
 	}
 
 	if ( $action == 'eventmail' || $action == 'previeweventmail' ) {
-		$queue = intval( get_option( 'eme_queue_mails' ) );
 		if ( ! empty( $_POST['eventmail_ignore_massmail_setting'] ) ) {
 			$conditions['ignore_massmail_setting'] = 1;
 		}
@@ -1847,17 +1783,13 @@ function eme_send_mails_ajax_actions( $action ) {
 		if ( ! empty( $_POST['eventmail_mailing_name'] ) ) {
 			$mailing_name = eme_sanitize_request( $_POST['eventmail_mailing_name'] );
 		} else {
-			//$mailing_name = 'event mailing ' . $eme_date_obj_now->getDateTime();
-			$mailing_name = '';
+			$mailing_name = 'event mailing ' . $eme_date_obj_now->getDateTime();
 		}
 		if ( ! empty( $_POST['eventmail_actualstartdate'] ) ) {
 			$mailing_datetime = eme_sanitize_request( $_POST['eventmail_actualstartdate'] );
 		} else {
-			// if both name and time are empty, act as individual mails being done (so no mailing)
-			if (empty($mailing_name))
-				$queue = 0;
-			else
-				$mailing_datetime = $eme_date_obj_now->getDateTime();
+			$mailing_datetime = $eme_date_obj_now->getDateTime();
+			$fast_queue=1;
 		}
 		if ( $action == 'previeweventmail' ) {
 			// let's add attachments too
@@ -1957,7 +1889,10 @@ function eme_send_mails_ajax_actions( $action ) {
 				$contact_name   = $contact->display_name;
 				$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
-				if ( $queue ) {
+				if ( $queue && $fast_queue ) {
+					$mailing_id = eme_db_insert_ongoing_mailing( $mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
+					$res = eme_update_mailing_receivers( $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions, $mailing_id );
+				} elseif ( $queue ) {
 					// in case we want a mailing to be done at multiple times, the times are separated by ","
 					$dates = explode( ',', $mailing_datetime );
 					foreach ( $dates as $datetime ) {

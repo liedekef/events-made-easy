@@ -1519,11 +1519,12 @@ function eme_send_mails_ajax_actions( $action ) {
 				$row .= '<td>&nbsp;</td>';
 				$row .= '<td>&nbsp;</td>';
 				$row .= '<td>&nbsp;</td>';
-				// if the mail is not part of a mailing, allow to cancel it (otherwise it will be re-added anyway by eme_check_mailing_receivers)
-				if ( $actions_allowed && $item['mailing_id'] == 0 ) {
-					$row .= "<td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . "</a><br><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a></td>';
-				} else {
-					$row .= '<td>' . __( 'This mail is part of a mailing, cancel the corresponding mailing if you want to cancel this mail.', 'events-made-easy' ) . '</td>';
+				if ( $actions_allowed ) {
+					$row .= "<td>";
+					if ( $item['mailing_id'] > 0 ) {
+						$row .= __('This mail is part of a mailing','events-made-easy') . "<br>";
+					}
+					$row .= "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . "</a><br><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a></td>';
 				}
 			}
 			$row .= '</tr>';

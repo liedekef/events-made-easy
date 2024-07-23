@@ -6,8 +6,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 
 function eme_add_event_form_shortcode( $atts ) {
-        eme_enqueue_frontend();
+	eme_enqueue_frontend();
 	$eme_fs_options = get_option('eme_fs');
+	if (!$eme_fs_options['success_page']) {
+?>
+	    <div class="emefs_error">
+	    <h2><?php _e('Basic Configuration is Missing', 'events-made-easy-frontend-submit'); ?></h2>
+	    <p><?php _e('You have to configure the page where successful submissions will be redirected to.', 'events-made-easy-frontend-submit'); ?></p>
+	    </div>
+<?php
+		return false;
+	}
+	$is_user_logged_in=is_user_logged_in();
+	if ((!$is_user_logged_in && !$eme_fs_optionsoptions['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
+		if ($eme_fs_options['redirect_to_login']) {
+			//auth_redirect();
+			global $wp;
+			$current_url = home_url( add_query_arg( array(), $wp->request ) );
+			if (is_user_logged_in())
+				$login_url = wp_login_url($current_url,true);
+			else
+				$login_url = wp_login_url($current_url);
+			echo eme_js_redirect($login_url);
+		} else {
+			if (empty($eme_fs_options['guest_not_allowed_text']))
+				$eme_fs_options['guest_not_allowed_text']=__("Sorry, but you're not allowed to submit new events.","events-made-easy-frontend-submit");
+?>
+		 <div class="emefs_not_allowed">
+<?php
+			echo $eme_fs_options['guest_not_allowed_text'];
+?>
+		 </div>
+<?php
+		}
+		return false;
+	}
+
 	$map_enabled = intval($eme_fs_options['map_enabled']);
 	wp_enqueue_style( 'eme-leaflet-css' );
 	wp_enqueue_style( 'emefs_stylesheet', EME_PLUGIN_URL . 'css/emefs.css', [], EME_VERSION );
@@ -15,6 +49,7 @@ function eme_add_event_form_shortcode( $atts ) {
 	wp_localize_script( 'eme-fs-map', 'emefs', $translation_array );
 	wp_enqueue_script( 'eme-fs-map' );
         extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
+
 	$form_html = '<div id="new_event_form">
         <form id="new_event" name="new_event" method="post" enctype="multipart/form-data" action="'. get_permalink() .'">';
 	$form_html .= eme_event_fs_form( $id );

@@ -123,7 +123,7 @@ function eme_event_fs_form( $template_id ) {
                         } else {
                                 $label = __( 'Create event', 'events-made-easy' );
                         }
-                        $replacement = "<img id='member_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_nowptrans_esc_html( $label ) . "'>";
+                        $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_nowptrans_esc_html( $label ) . "'>";
                 } else {
                         $found = 0;
                 }
@@ -179,22 +179,22 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
                       break;
               case 'event_start_time':
                       $localized_field_id='localized-start-time';
-                      $more .= "required='required' readonly='readonly' class='eme_fs_formfield_fdatepicker'";
+                      $more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
                       $type = 'localized_text';
                       break;
               case 'event_end_time':
                       $localized_field_id='localized-end-time';
-                      $more .= "readonly='readonly' class='eme_fs_formfield_fdatepicker'";
+                      $more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
                       $type = 'localized_text';
                       break;
               case 'event_start_date':
                       $localized_field_id='localized-start-date';
-                      $more .= "required='required' readonly='readonly' class='eme_fs_formfield_fdatepicker'";
+                      $more .= "required='required' readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_start_date'";
                       $type = 'localized_text';
                       break;
               case 'event_end_date':
                       $localized_field_id='localized-end-date';
-                      $more .= "readonly='readonly' class='eme_fs_formfield_fdatepicker'";
+                      $more .= "readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_end_date'";
                       $type = 'localized_text';
                       break;
               case 'event_name':

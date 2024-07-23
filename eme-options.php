@@ -578,10 +578,85 @@ function eme_add_options( $reset = 0 ) {
 			'redirect_to_login' => 0,
 			'cap_add_event' => 'edit_posts',
 			'force_location_creation' => 0,
+			'use_captcha' => 0,
+			'use_hcaptcha' => 0,
+			'use_cfcaptcha' => 0,
+			'use_recaptcha' => 0,
 			'use_honeypot' => 1,
 			'use_wysiwyg' => 0,
 			'allow_upload' => 0,
-			'map_enabled' => 1
+			'map_enabled' => 1,
+			'form_format' => '<h2>Event Information</h2>
+		<div class="input">
+			<label for="event_name">Event Name</label><br />
+			#_FIELD{event_name}
+		</div>
+                <div class="input select">
+                        <label for="event_category_ids">Select the Event Category</label><br/>
+			#_FIELD{event_category_ids}
+                </div>
+		<fieldset>
+			<legend>Date & Time</legend>
+			<fieldset id="event_start">
+				<legend>Start</legend>
+				<div class="input">
+					<label for="event_start_date">Date</label>
+					#_FIELD{event_start_date}
+				</div>
+				<div class="input">
+					<label for="event_start_time">Time</label> 
+					#_FIELD{event_start_time}
+				</div>
+			</fieldset>
+			
+			<fieldset id="event_end">
+				<legend>End</legend>
+				<div class="input">
+					<label for="event_end_date">Date</label>
+					#_FIELD{event_end_date}
+				</div>
+				<div class="input">
+					<label for="event_end_time">Time</label> 
+					#_FIELD{event_end_time}
+				</div>
+			</fieldset>
+		</fieldset>
+                <div class="input">
+                        <label for="event_description">Description</label><br />
+			#REQ_FIELD{event_notes}
+                </div>
+
+                <div class="input">
+                        <label for="event_contactperson_email_body">Contact E-mail body</label><br />
+			#_FIELD{event_contactperson_email_body}{textarea}
+                </div>
+
+                <div class="input">
+                        <label for="event_url">Event External URL</label><br />
+			#_FIELD{event_url}
+                </div>
+                <h3>Location Information</h3>
+                <div class="input">
+                        <label for="location_name">Location name</label>
+                        #_FIELD{location_name}
+                </div>
+
+                <div class="input">
+                        <label for="location_address1">Address</label>
+                        #_FIELD{location_address1}
+                </div>
+
+                <div class="input">
+                        <label for="location_city">City or Town</label>
+                        #_FIELD{location_city}
+                </div>
+
+                <div class="map">
+                        <div id="event-map"></div>
+			#_FIELD{location_latitude}
+			#_FIELD{location_longitude}
+                </div>
+'
 		]
 	];
 
@@ -2792,8 +2867,14 @@ function eme_options_page() {
 			eme_options_textarea ( __( 'Guests not allowed text', 'events-made-easy'), eme_get_field_name('eme_fs','guest_not_allowed_text'), __( 'The text shown to a guest when trying to submit a new event when they are not allowed to do so.','events-made-easy'),1, 0, eme_get_field_value('eme_fs','guest_not_allowed_text'));
 			eme_options_radio_binary (__('Redirect to login page','events-made-easy'), eme_get_field_name('eme_fs','redirect_to_login'), __ ( 'Check this option if you want to redirect to the login page if not logged in (or no have the "edit posts" capability) and not show the "Guests not allowed text"', 'events-made-easy' ), eme_get_field_value('eme_fs','redirect_to_login'));
 			eme_options_select (__('Submit new event capabilty','events-made-easy'), eme_get_field_name('eme_fs','cap_add_event'), eme_get_all_caps (), sprintf(__('Permission needed to submit a new event when guest submit is not allowed. Default: %s','events-made-easy'), eme_capNamesCB('edit_posts')), eme_get_field_value('eme_fs','cap_add_event') );
+			eme_options_radio_binary (__('Use Google reCAPTCHA?','events-made-easy'), eme_get_field_name('eme_fs','use_recaptcha'), __ ( 'Check this option to require the use of Google reCAPTCHA.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_recaptcha'));
+			eme_options_radio_binary (__('Use hCaptcha?','events-made-easy'), eme_get_field_name('eme_fs','use_hcaptcha'), __ ( 'Check this option to require the use of hCaptcha.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_hcaptcha'));
+			eme_options_radio_binary (__('Use Cloudflare Turnstile captcha?','events-made-easy'), eme_get_field_name('eme_fs','use_cfcaptcha'), __ ( 'Check this option to require the use of Cloudflare Turnstile captcha.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_cfcaptcha'));
+			eme_options_radio_binary (__('Use captcha?','events-made-easy'), eme_get_field_name('eme_fs','use_captcha'), __ ( 'Check this option to require the use of a captcha.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_captcha'));
+
 			eme_options_radio_binary (__('Use wysiwyg?','events-made-easy'), eme_get_field_name('eme_fs','use_wysiwyg'), __ ( 'Check this option if you want to use a frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_wysiwyg'));
 			eme_options_radio_binary (__('Allow image upload?','events-made-easy'), eme_get_field_name('eme_fs','allow_upload'), __ ( 'Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','allow_upload'));
+                        eme_options_textarea( __( 'Default format', 'events-made-easy' ), eme_get_field_name('eme_fs','form_format'), __( 'The default format for a new event.', 'events-made-easy' ), 1, 0, eme_get_field_value('eme_fs','form_format') );
 			?>
 </table>
 			<?php

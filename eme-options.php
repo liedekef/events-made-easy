@@ -652,7 +652,7 @@ function eme_add_options( $reset = 0 ) {
                 </div>
 
                 <div class="map">
-                        <div id="event-map"></div>
+                        #_MAP
 			#_FIELD{location_latitude}
 			#_FIELD{location_longitude}
                 </div>

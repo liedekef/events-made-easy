@@ -8,11 +8,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 function eme_add_event_form_shortcode( $atts ) {
         eme_enqueue_frontend();
 	$eme_fs_options = get_option('eme_fs');
-	if ($eme_fs_options['map_enabled'])
-		wp_enqueue_script( 'eme-fs-map' );
+	$map_enabled = intval($eme_fs_options['map_enabled']);
+	wp_enqueue_style( 'eme-leaflet-css' );
+	wp_enqueue_style( 'emefs_stylesheet', EME_PLUGIN_URL . 'css/emefs.css', [], EME_VERSION );
+	$translation_array = [ 'ajax_url' => admin_url( 'admin-ajax.php' ), 'map_enabled' => $map_enabled, 'frontendnonce' => wp_create_nonce( 'eme_frontend' ) ];
+	wp_localize_script( 'eme-fs-map', 'emefs', $translation_array );
+	wp_enqueue_script( 'eme-fs-map' );
         extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
 	$form_html = '<div id="new_event_form">
-        <form id="new_post" name="new_post" method="post" enctype="multipart/form-data" action="'. get_permalink() .'">';
+        <form id="new_event" name="new_event" method="post" enctype="multipart/form-data" action="'. get_permalink() .'">';
 	$form_html .= eme_event_fs_form( $id );
 	// always add the honeypot field
 	$form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span></form>";
@@ -115,10 +119,11 @@ function eme_event_fs_form( $template_id ) {
                                 $replacement = eme_load_captcha_html();
                                 $captcha_set = 1;
                                 if ( ! $eme_is_admin_request ) {
-                                                $required = 1;
+					$required = 1;
                                 }
                         }
-
+                } elseif ( preg_match( '/#_MAP$/', $result ) ) {
+			$replacement = "<div id='event-map'></div>";
                 } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
@@ -385,4 +390,35 @@ function eme_fs_getbinaryselect($name,$field_id,$default) {
       $val.=" </select>";
       return $val;
    }
+
+add_action( 'wp_ajax_eme_fs_locations_list', 'eme_fs_ajax_locations_list' );
+add_action( 'wp_ajax_nopriv_eme_fs_locations_list', 'eme_fs_ajax_locations_list' );
+function eme_fs_ajax_locations_list() {
+        $res = array();
+        if (!isset($_POST["q"])) {
+                echo json_encode($res);
+                return;
+        }
+        check_ajax_referer( 'eme_frontend', 'frontend_nonce' );
+        $locations = eme_search_locations(eme_sanitize_request($_POST["q"]));
+        foreach($locations as $item) {
+                $record = array();
+                $record['id']       = $item['location_id'];
+                $record['name']     = eme_trans_sanitize_html($item['location_name']);
+                $record['address1'] = eme_trans_sanitize_html($item['location_address1']);
+                $record['address2'] = eme_trans_sanitize_html($item['location_address2']);
+                $record['city']     = eme_trans_sanitize_html($item['location_city']);
+                $record['state']    = eme_trans_sanitize_html($item['location_state']);
+                $record['zip']      = eme_trans_sanitize_html($item['location_zip']);
+                $record['country']  = eme_trans_sanitize_html($item['location_country']);
+                $record['latitude'] = eme_trans_sanitize_html($item['location_latitude']);
+                $record['longitude']= eme_trans_sanitize_html($item['location_longitude']);
+                $res[]  = $record;
+        }
+
+        print json_encode($res);
+        wp_die();
+}
+
+
 

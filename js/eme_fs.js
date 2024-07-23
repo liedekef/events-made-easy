@@ -1,3 +1,9 @@
+function htmlDecode(value){
+        return jQuery('<div/>').html(value).text();
+}
+
+function tog(v){return v?'addClass':'removeClass';}
+
 jQuery(document).ready(function($) {
 	if (jQuery("input#location_name").length > 0) {
 		jQuery('<input>').attr({
@@ -9,7 +15,7 @@ jQuery(document).ready(function($) {
 		jQuery("input#location_name").autocomplete({
 			source: function(request, response) {
 				jQuery.post(emefs.ajax_url,
-					{ frontend_nonce: emefs.frontendnonce, q: request.term, action: 'emefs_locations_list'},
+					{ frontend_nonce: emefs.frontendnonce, q: request.term, action: 'eme_fs_locations_list'},
 					function(data){
 						response(jQuery.map(data, function(item) {
 							return {
@@ -78,10 +84,6 @@ jQuery(document).ready(function($) {
 	}
 
 	if (typeof L !== 'undefined' && emefs.map_enabled=="1") {
-		if (emefs_map_hasSelectedLocation) {
-			emefs_displayAddress(1);
-		}
-
 		jQuery("input#location_name").change(function(){
 			emefs_displayAddress(0);
 		});
@@ -131,6 +133,7 @@ jQuery(document).ready(function($) {
 	}
 
 	var osm;
+	var map;
 	// create the tile layer with correct attribution
 	var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
@@ -155,11 +158,6 @@ jQuery(document).ready(function($) {
 			searchKey = loc_name + ', ' + address1 + ", " + address2 + "," + city + ", " + zip + ", " + state + ", " + country;
 		}
 
-		// to avoid the leaflet error 'Map container is already initialized'
-		if (map) {
-			map.off();
-			map.remove();
-		}
 
 		if (searchKey) {
 			var geocode_url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1';
@@ -170,6 +168,11 @@ jQuery(document).ready(function($) {
 					// first we show the map, so leaflet can check the size
 					//jQuery('#event-map').show();
 					jQuery("#event-map").show();
+					// to avoid the leaflet error 'Map container is already initialized'
+					if (map) {
+						map.off();
+						map.remove();
+					}
 					map = L.map('event-map', emefs_mapOptions);
 					map.addLayer(osm);
 					map.panTo([data[0].lat, data[0].lon]);

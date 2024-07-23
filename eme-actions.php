@@ -382,6 +382,7 @@ function eme_register_scripts() {
 	wp_register_style( 'eme-markercluster-css2', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/MarkerCluster.Default.css', [], EME_VERSION );
 	wp_register_style( 'eme-gestures-css', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.css', [], EME_VERSION );
 	wp_register_script( 'eme-location-map', EME_PLUGIN_URL . 'js/eme_location_map.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
+	wp_register_script( 'eme-fs-map', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'eme-leaflet-maps', 'jquery-ui-autocomplete' ], EME_VERSION, true );
 
 	if ( get_option( 'eme_recaptcha_for_forms' ) ) {
 		// using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...

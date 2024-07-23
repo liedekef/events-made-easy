@@ -7,6 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function eme_add_event_form_shortcode( $atts ) {
         eme_enqueue_frontend();
+	$eme_fs_options = get_option('eme_fs');
+	if ($eme_fs_options['map_enabled'])
+		wp_enqueue_script( 'eme-fs-map' );
         extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
 	$form_html = '<div id="new_event_form">
         <form id="new_post" name="new_post" method="post" enctype="multipart/form-data" action="'. get_permalink() .'">';

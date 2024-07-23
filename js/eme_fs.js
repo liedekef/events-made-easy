@@ -14,8 +14,8 @@ jQuery(document).ready(function($) {
 		jQuery("input#location_name").addClass( "clearable" );
 		jQuery("input#location_name").autocomplete({
 			source: function(request, response) {
-				jQuery.post(emefs.ajax_url,
-					{ frontend_nonce: emefs.frontendnonce, q: request.term, action: 'eme_fs_locations_list'},
+				jQuery.post(emefs.translate_ajax_url,
+					{ frontend_nonce: emefs.translate_frontendnonce, q: request.term, action: 'eme_fs_locations_list'},
 					function(data){
 						response(jQuery.map(data, function(item) {
 							return {
@@ -47,7 +47,7 @@ jQuery(document).ready(function($) {
 				jQuery('input#location_country').val(ui.item.country).attr("readonly", true);
 				jQuery('input#location_latitude').val(ui.item.latitude).attr("readonly", true);
 				jQuery('input#location_longitude').val(ui.item.longitude).attr("readonly", true);
-				if (typeof L !== 'undefined' && emefs.map_enabled=="1") {
+				if (typeof L !== 'undefined' && emefs.translate_map_enabled=="1") {
 					emefs_displayAddress(0);
 				}
 				return false;
@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
 
 	}
 
-	if (typeof L !== 'undefined' && emefs.map_enabled=="1") {
+	if (typeof L !== 'undefined' && emefs.translate_map_enabled=="1") {
 		jQuery("input#location_name").change(function(){
 			emefs_displayAddress(0);
 		});
@@ -137,7 +137,7 @@ jQuery(document).ready(function($) {
 	// create the tile layer with correct attribution
 	var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	if (typeof L !== 'undefined' && emefs.map_enabled=="1") {
+	if (typeof L !== 'undefined' && emefs.translate_map_enabled=="1") {
 		osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 	}
 

@@ -217,24 +217,28 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
                       $type = 'hidden';
                       break;
               case 'event_start_time':
-                      $localized_field_id='localized-start-time';
-                      $more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
-                      $type = 'localized_text';
+                      //$localized_field_id='localized-start-time';
+                      //$more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
+                      //$type = 'localized_datetime';
+		      $field = 'localized_start_time';
+                      $more .= "size=8 class='eme_formfield_timepicker'";
                       break;
               case 'event_end_time':
-                      $localized_field_id='localized-end-time';
-                      $more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
-                      $type = 'localized_text';
+                      //$localized_field_id='localized-end-time';
+                      //$more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
+                      //$type = 'localized_datetime';
+		      $field = 'localized_end_time';
+                      $more .= "size=8 class='eme_formfield_timepicker'";
                       break;
               case 'event_start_date':
                       $localized_field_id='localized-start-date';
                       $more .= "required='required' readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_start_date'";
-                      $type = 'localized_text';
+                      $type = 'localized_datetime';
                       break;
               case 'event_end_date':
                       $localized_field_id='localized-end-date';
                       $more .= "readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_end_date'";
-                      $type = 'localized_text';
+                      $type = 'localized_datetime';
                       break;
               case 'event_name':
                       $more .= "required='required'";
@@ -279,7 +283,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
             'number' => '<input type="number" id="%s" name="event[%s]" min="0" step="any" value="" %s/>',
             'text' => '<input type="text" id="%s" name="event[%s]" value="" %s/>',
             'url' => '<input type="url" id="%s" name="event[%s]" value="" %s/>',
-            'localized_text' => '<input type="text" id="%s" name="%s" value="" %s/>',
+            'localized_datetime' => '<input type="text" id="%s" name="%s" value="" %s/>',
             'textarea' => '<textarea id="%s" name="event[%s]" %s></textarea>',
             'hidden' => '<input type="hidden" id="%s" name="event[%s]" %s />',
             'attr-textarea' => '<textarea id="%s" name="event_attributes[%s]" %s></textarea>',
@@ -307,7 +311,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
 	    // Store the printed data in $editor variable
 	    return ob_get_clean();
             break;
-         case 'localized_text':
+         case 'localized_datetime':
             //echo sprintf($html_by_type['hidden'], $field_id, $field, '', $more);
             $res = sprintf($html_by_type['hidden'], $field_id, $field, $more);
             $res .= sprintf($html_by_type[$type], $localized_field_id, "event[$localized_field_id]", $more);
@@ -486,24 +490,22 @@ function eme_fs_process_newevent() {
 		$event_data['event_start_time'] = '00:00';
 		$event_data['event_end_time'] = "23:59";
 	} else {
-		if (!isset($event_data['event_start_time']) || empty($event_data['event_start_time'])) {
-			$eme_fs_event_errors[] = __('Enter the event\'s start time', 'events-made-easy');
-			$event_data['event_start_time'] = '00:00';
-		} elseif ( isset($event_data['event_start_time']) && !empty($event_data['event_start_time']) ) {
-			$event_data['event_start_time'] = $eme_date_obj_now->setTimestampFromString(eme_sanitize_request($event_data['event_start_time'])." ".EME_TIMEZONE)->format("H:i:00");
-		} else {
-			$event_data['event_start_time'] = '00:00';
-		}
-
-		if ( isset($event_data['event_end_time']) && !empty($event_data['event_end_time']) ) {
-			$event_data['event_end_time'] = $eme_date_obj_now->setTimestampFromString(eme_sanitize_request($event_data['event_end_time'])." ".EME_TIMEZONE)->format("H:i:00");
-		} else {
-			$event_data['event_end_time'] = $event_data['event_start_time'];
-		}
+		if ( ! empty( $event_data['localized_start_time'] ) ) {
+                        $start_date_obj   = ExpressiveDate::createFromFormat( EME_WP_TIME_FORMAT, eme_sanitize_request( $event_data['localized_start_time'] ), ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+                        $event_start_time = $start_date_obj->format( 'H:i:00' );
+                } else {
+                        $event_start_time = '00:00:00';
+                }
+                if ( ! empty( $event_data['localized_end_time'] ) ) {
+                        $end_date_obj   = ExpressiveDate::createFromFormat( EME_WP_TIME_FORMAT, eme_sanitize_request( $event_data['localized_end_time'] ), ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );
+                        $event_end_time = $end_date_obj->format( 'H:i:00' );
+                } else {
+                        $event_end_time = '23:59:59';
+                }
 	}
 
-	$event_data['event_start']=$event_data['event_start_date'].' '.$event_data['event_start_time'];
-	$event_data['event_end']=$event_data['event_end_date'].' '.$event_data['event_end_time'];
+	$event_data['event_start']=$event_data['event_start_date'].' '.$event_start_time;
+	$event_data['event_end']=$event_data['event_end_date'].' '.$event_end_time;
 	if ($event_data['event_start'] > $event_data['event_end']) {
 		$eme_fs_event_errors[] =  __('The end date/time must occur <strong>after</strong> the start date/time', 'events-made-easy');
 	}

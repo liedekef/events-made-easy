@@ -492,6 +492,10 @@ function eme_fs_process_newevent() {
 		$event_data['event_end_date'] = $event_data['event_start_date'];
 	}
 
+	if ( isset( $event_data['event_category_ids'] ) && eme_is_numeric_array( eme_sanitize_request( $event_data['event_category_ids'] ) ) ) {
+		$event_data['event_category_ids'] = join( ',', eme_sanitize_request( $event_data['event_category_ids'] ) );
+	}
+
 	if ($all_day) {
 		$event_data['event_start_time'] = '00:00';
 		$event_data['event_end_time'] = "23:59";

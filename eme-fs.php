@@ -10,7 +10,7 @@ function eme_add_event_form_shortcode( $atts ) {
 	$eme_fs_options = get_option('eme_fs');
 	$is_user_logged_in=is_user_logged_in();
 
-	if ((!$is_user_logged_in && !$eme_fs_optionsoptions['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
+	if ((!$is_user_logged_in && !$eme_fs_options['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
 		if ($eme_fs_options['redirect_to_login']) {
 			//auth_redirect();
 			global $wp;
@@ -479,6 +479,12 @@ function eme_fs_process_newevent() {
 		$eme_fs_event_errors[] = __('Please enter a name for the event', 'events-made-easy');
 	}
 
+	if ( isset($event_data['event_notes']) && empty($event_data['event_notes']) ) {
+		$eme_fs_event_errors[] = __('Please enter an event description', 'events-made-easy');
+	}
+	if ( isset($event_data['location_description']) && empty($event_data['location_description']) ) {
+		$eme_fs_event_errors[] = __('Please enter a location description', 'events-made-easy');
+	}
 	if ( !isset($event_data['event_start_date']) || empty($event_data['event_start_date']) ) {
 		$eme_fs_event_errors[] = __('Enter the event\'s start date', 'events-made-easy');
 	}

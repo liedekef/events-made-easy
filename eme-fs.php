@@ -297,9 +297,11 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
       switch($type) {
          case 'wysiwyg_textarea':
             if ($eme_fs_options['allow_upload'])
-                    $editor_settings=array('media_buttons'=>true,'textarea_name'=>"event[$field]");
+                    $editor_settings=['media_buttons'=>true,'textarea_name'=>"event[$field]"];
             else
-                    $editor_settings=array('media_buttons'=>false,'textarea_name'=>"event[$field]");
+                    $editor_settings=['media_buttons'=>false,'textarea_name'=>"event[$field]"];
+	    if ($required)
+		    $editor_settings['editor_class'] = "validate[required]";
 	    ob_start(); // Start output buffer
             wp_editor('',$field_id,$editor_settings);
 	    // Store the printed data in $editor variable

@@ -2846,6 +2846,7 @@ function eme_options_page() {
 		case 'emefs':
 			?>
 <h3><?php esc_html_e( 'Frontend Submit options', 'events-made-easy' ); ?></h3>
+<?php echo sprintf( __( "For all information concerning frontend subit, , see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ), '//www.e-dynamics.be/wordpress/category/documentation/6-placeholders/eme_add_event_form/' )
 <table class='form-table'>
 			<?php
 			$categories=eme_get_categories();

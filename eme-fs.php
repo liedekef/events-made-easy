@@ -93,15 +93,18 @@ function eme_event_fs_form( $template_id ) {
                         $required     = 1;
                 }               
 
-		#_FIELD{} 
-		#_ATTR{} of #_ATTR{}{} ==> zie #_SUBSCRIBE_TO_GROUP
+		#_FIELD{} or #_FIELD{}{}
+		#_ATT{} of #_ATT{}{} 
 		#_PROP{} of #_PROP{}{}
-		if ( preg_match( '/#_FIELD\{(.+)\}(\{.+?\})?$/', $result, $matches ) ) {
+		if ( preg_match( '/#_FIELD\{(.+)\}(\{.+?\})?(\{.+?\})?$/', $result, $matches ) ) {
 			$field = $matches[1];
 			if ( isset( $matches[2] ) ) {
 				$type = $matches[2];
 			}
-			$replacement = eme_get_fs_field_html(field: $field, required: $required, type: $type);
+			if ( isset( $matches[3] ) ) {
+				$more = $matches[3];
+			}
+			$replacement = eme_get_fs_field_html($field, $type , $more , $required);
 
                 } elseif ( preg_match( '/#_ATT\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			$att = $matches[1];
@@ -113,13 +116,14 @@ function eme_event_fs_form( $template_id ) {
 			}
 			$replacement = eme_get_fs_field_html('event-attributes', 'att-'.$type , $more , $required, $att);
 
-                } elseif ( preg_match( '/#_PROP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
+                } elseif ( preg_match( '/#_PROP\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			$prop = $matches[1];
 			if ( isset( $matches[2] ) ) {
-				$more = $matches[2];
+				$type = $matches[2];
 			}
-			// $type will get overwritten in the function call, but here it is easier to just 
-			// give it, otherwise I would need to specify all other args individually
+			if ( isset( $matches[3] ) ) {
+				$more = $matches[3];
+			}
 			$replacement = eme_get_fs_field_html('event-properties', 'prop-'.$type , $more , $required, $prop);
 
                 } elseif ( preg_match( '/#_CUSTOMFIELD\{(.+?)\}$/', $result ) ) {

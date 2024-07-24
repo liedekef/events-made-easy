@@ -98,6 +98,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.0 (2024//) =
+* Integrated the frontend submit form, using [eme_add_event_form] shortcode and templating support
+
 = 2.4.53 (2024/07/19) =
 * A renamed option was not taken into account in all pages
 

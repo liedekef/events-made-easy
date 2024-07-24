@@ -1238,7 +1238,7 @@ function eme_admin_tabs( $current = 'homepage' ) {
 		'gdpr'          => __( 'Data protection', 'events-made-easy' ),
 		'payments'      => __( 'Payments', 'events-made-easy' ),
 		'maps'          => __( 'Maps', 'events-made-easy' ),
-		//'emefs'         => __( 'Frontend Submit', 'events-made-easy' ),
+		'emefs'         => __( 'Frontend Submit', 'events-made-easy' ),
 		'other'         => __( 'Other', 'events-made-easy' ),
 	];
 	if ( ! get_option( 'eme_rsvp_enabled' ) ) {

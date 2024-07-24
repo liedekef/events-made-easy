@@ -36,7 +36,7 @@ add_shortcode( 'eme_locations_map', 'eme_global_map_shortcode' );
 add_shortcode( 'eme_location_map', 'eme_single_location_map_shortcode' );
 add_shortcode( 'eme_locations', 'eme_get_locations_shortcode' );
 add_shortcode( 'eme_location', 'eme_get_location_shortcode' );
-//add_shortcode( 'eme_add_event_form', 'eme_add_event_form_shortcode' );
+add_shortcode( 'eme_add_event_form', 'eme_add_event_form_shortcode' );
 add_shortcode( 'eme_add_booking_form', 'eme_add_booking_form_shortcode' );
 add_shortcode( 'eme_add_multibooking_form', 'eme_add_multibooking_form_shortcode' );
 add_shortcode( 'eme_add_simple_multibooking_form', 'eme_add_simple_multibooking_form_shortcode' );

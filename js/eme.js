@@ -795,7 +795,11 @@ jQuery(document).ready( function($) {
 		var form_id=$(this).attr('id');
 		eme_genericform_json(form_id,'tasks','eme_tasks');
 	});
-
+        $('[name=eme-fs-form]').on('submit', function(event) {
+                event.preventDefault();
+                var form_id=$(this).attr('id');
+                eme_genericform_json(form_id,'fs','eme_frontend_submit');
+        });
 	// when doing form changes, we set a small delay to avoid calling the json function too many times
 	var timer;
 	var delay = 1000; // 1 seconds delay after last input

@@ -10,11 +10,6 @@ function eme_add_event_form_shortcode( $atts ) {
 	$eme_fs_options = get_option('eme_fs');
 	$is_user_logged_in=is_user_logged_in();
 
-	if (isset($_POST['event']) && isset($_POST['new-event']) && wp_verify_nonce($_POST['new-event'], 'action_new_event')) {
-		eme_fs_process_newevent();
-		return;
-	}
-
 	if ((!$is_user_logged_in && !$eme_fs_optionsoptions['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
 		if ($eme_fs_options['redirect_to_login']) {
 			//auth_redirect();
@@ -27,9 +22,9 @@ function eme_add_event_form_shortcode( $atts ) {
 			echo eme_js_redirect($login_url);
 		} else {
 			if (empty($eme_fs_options['guest_not_allowed_text']))
-				$eme_fs_options['guest_not_allowed_text']=__("Sorry, but you're not allowed to submit new events.","events-made-easy-frontend-submit");
+				$eme_fs_options['guest_not_allowed_text'] = __("Sorry, but you're not allowed to submit new events.","events-made-easy");
 ?>
-		 <div class="emefs_not_allowed">
+		 <div class="eme_fs_not_allowed">
 <?php
 			echo $eme_fs_options['guest_not_allowed_text'];
 ?>
@@ -41,17 +36,21 @@ function eme_add_event_form_shortcode( $atts ) {
 
 	$map_enabled = intval($eme_fs_options['map_enabled']);
 	wp_enqueue_style( 'eme-leaflet-css' );
-	wp_enqueue_style( 'emefs_stylesheet', EME_PLUGIN_URL . 'css/emefs.css', [], EME_VERSION );
+	wp_enqueue_style( 'eme_fs_stylesheet', EME_PLUGIN_URL . 'css/emefs.css', [], EME_VERSION );
 	$translation_array = [ 'translate_ajax_url' => admin_url( 'admin-ajax.php' ), 'translate_map_enabled' => $map_enabled, 'translate_frontendnonce' => wp_create_nonce( 'eme_frontend' ) ];
 	wp_localize_script( 'eme-fs-map', 'emefs', $translation_array );
 	wp_enqueue_script( 'eme-fs-map' );
         extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
 
-	$form_html = '<div id="new_event_form">
-        <form id="new_event" name="new_event" method="post" enctype="multipart/form-data" action="'. get_permalink() .'">';
+        $form_id = uniqid();
+        $nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
+        $form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
+        <div id='eme-fs-message-ok-$form_id' class='eme-message-success eme-fs-message eme-fs-message-success eme-hidden'></div><div id='eme-fs-message-error-$form_id' class='eme-message-error eme-fs-message eme-fs-message-error eme-hidden'></div><div id='div_eme-fs-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-fs-form' method='post' action='#'>
+                $nonce
+                <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
+                ";
 	$form_html .= eme_event_fs_form( $id );
-	// always add the honeypot field
-	$form_html .= "<span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span></form>";
+        $form_html  .= '</form></div>';
 	return $form_html;
 }
 
@@ -454,6 +453,8 @@ function eme_fs_ajax_locations_list() {
 function eme_fs_process_newevent() {
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_fs_options = get_option('eme_fs');
+	if (empty($eme_fs_options['success_message']))
+		$eme_fs_options['success_message'] = __('New event succesfully created.','events-made-easy');
 	$event_data = eme_kses($_POST['event']);
 	// add in the event_attributes and properties
 	if (isset($_POST['event_attributes']) && !empty($_POST['event_attributes'])) {
@@ -467,184 +468,116 @@ function eme_fs_process_newevent() {
 	else
 		$all_day=0;
 
-         if ($this->settings->options['use_honeypot']) {
-            if (!isset($_POST['honeypot_check']) || !empty($_POST['honeypot_check'])) {
-               $emefs_event_errors['honeypot'] = __("Bot detected. If you believe you've received this message in error please contact the site owner.",'events-made-easy-frontend-submit');
-            }
-         }
+	$eme_fs_event_errors = [];
+	if ( !isset($event_data['event_name']) || empty($event_data['event_name']) ) {
+		$eme_fs_event_errors[] = __('Please enter a name for the event', 'events-made-easy');
+	}
 
-         if ($this->settings->options['use_recaptcha']) {
-            $captcha_res=eme_check_recaptcha();
-            if (!$captcha_res) {
-               $emefs_event_errors['recaptcha'] = __('Please check the Google reCAPTCHA box', 'events-made-easy-frontend-submit');
-            }
-         }
-         if ($this->settings->options['use_hcaptcha']) {
-            $captcha_res=eme_check_hcaptcha();
-            if (!$captcha_res) {
-               $emefs_event_errors['hcaptcha'] = __('Please check the hCaptcha box', 'events-made-easy-frontend-submit');
-            }
-         }
-         if ($this->settings->options['use_cfcaptcha']) {
-            $captcha_res=eme_check_cfcaptcha();
-            if (!$captcha_res) {
-               $emefs_event_errors['cfcaptcha'] = __('Please check the Cloudflare Turnstile box', 'events-made-easy-frontend-submit');
-            }
-         }
+	if ( !isset($event_data['event_start_date']) || empty($event_data['event_start_date']) ) {
+		$eme_fs_event_errors[] = __('Enter the event\'s start date', 'events-made-easy');
+	}
+	if ( !isset($event_data['event_end_date']) || empty($event_data['event_end_date']) ) {
+		$event_data['event_end_date'] = $event_data['event_start_date'];
+	}
 
-	          if ($this->settings->options['use_captcha']) {
-            $captcha_res=eme_check_captcha(0);
-            if (!$captcha_res) {
-               $emefs_event_errors['captcha'] = __('You entered an incorrect code. Please fill in the correct code.', 'events-made-easy-frontend-submit');
-            }
-         }
-         if ( !isset($event_data['event_name']) || empty($event_data['event_name']) ) {
-            $emefs_event_errors['event_name'] = __('Please enter a name for the event', 'events-made-easy-frontend-submit');
-         }
+	if ($all_day) {
+		$event_data['event_start_time'] = '00:00';
+		$event_data['event_end_time'] = "23:59";
+	} else {
+		if (!isset($event_data['event_start_time']) || empty($event_data['event_start_time'])) {
+			$eme_fs_event_errors[] = __('Enter the event\'s start time', 'events-made-easy');
+			$event_data['event_start_time'] = '00:00';
+		} elseif ( isset($event_data['event_start_time']) && !empty($event_data['event_start_time']) ) {
+			$event_data['event_start_time'] = $eme_date_obj_now->setTimestampFromString(eme_sanitize_request($event_data['event_start_time'])." ".EME_TIMEZONE)->format("H:i:00");
+		} else {
+			$event_data['event_start_time'] = '00:00';
+		}
 
-         if ( !isset($event_data['event_start_date']) || empty($event_data['event_start_date']) ) {
-            $emefs_event_errors['event_start_date'] = __('Enter the event\'s start date', 'events-made-easy-frontend-submit');
-         }
-         if ( !isset($event_data['event_end_date']) || empty($event_data['event_end_date']) ) {
-            $event_data['event_end_date'] = $event_data['event_start_date'];
-         }
+		if ( isset($event_data['event_end_time']) && !empty($event_data['event_end_time']) ) {
+			$event_data['event_end_time'] = $eme_date_obj_now->setTimestampFromString(eme_sanitize_request($event_data['event_end_time'])." ".EME_TIMEZONE)->format("H:i:00");
+		} else {
+			$event_data['event_end_time'] = $event_data['event_start_time'];
+		}
+	}
 
-         if ($all_day) {
-                 $event_data['event_start_time'] = '00:00';
-                 $event_data['event_end_time'] = "23:59";
-         } else {
-                 if (!isset($event_data['event_start_time']) || empty($event_data['event_start_time'])) {
-                         $emefs_event_errors['event_start_time'] = __('Enter the event\'s start time', 'events-made-easy-frontend-submit');
-                         $event_data['event_start_time'] = '00:00';
-                 } elseif ( isset($event_data['event_start_time']) && !empty($event_data['event_start_time']) ) {
-                         $event_data['event_start_time'] = $eme_date_obj->setTimestamp(strtotime($event_data['event_start_time'].' '.$eme_timezone))->format('H:i:00');
-                 } else {
-                         $event_data['event_start_time'] = '00:00';
-                 }
+	$event_data['event_start']=$event_data['event_start_date'].' '.$event_data['event_start_time'];
+	$event_data['event_end']=$event_data['event_end_date'].' '.$event_data['event_end_time'];
+	if ($event_data['event_start'] > $event_data['event_end']) {
+		$eme_fs_event_errors[] =  __('The end date/time must occur <strong>after</strong> the start date/time', 'events-made-easy');
+	}
 
-                 if ( isset($event_data['event_end_time']) && !empty($event_data['event_end_time']) ) {
-                         $event_data['event_end_time'] = $eme_date_obj->setTimestamp(strtotime($event_data['event_end_time'].' '.$eme_timezone))->format('H:i:00');
-                 } else {
-                         $event_data['event_end_time'] = $event_data['event_start_time'];
-                 }
-         }
+	if ( empty($eme_fs_event_errors) ) {
+		$force=0;
+		if ($eme_fs_options['force_location_creation'])
+			$force=1;
+		if (empty($event_data['location_id']))
+			$event_data['location_id'] = eme_fs_processlocation($event_data, $force);
 
-         $event_data['event_start']=$event_data['event_start_date'].' '.$event_data['event_start_time'];
-         $event_data['event_end']=$event_data['event_end_date'].' '.$event_data['event_end_time'];
-	 $time_start = $eme_date_obj->setTimestamp(strtotime($event_data['event_start'].' '.$eme_timezone))->getTimestamp();
-         $time_end = $eme_date_obj->setTimestamp(strtotime($event_data['event_end'].' '.$eme_timezone))->getTimestamp();
+		if (!isset($event_data['event_status']))
+			$event_data['event_status']=$eme_fs_options['auto_publish'];
+		if (!$event_data['event_category_ids'] && $eme_fs_options['default_cat'])
+			$event_data['event_category_ids']=$eme_fs_options['default_cat'];
 
-         if (!$time_start) {
-            $emefs_event_errors['event_start_time'] = __('Check the start date and time', 'events-made-easy-frontend-submit');
-         }
+		// make sure all event properties are set as expected
+		if (!empty($event_data['event_properties'])) {
+			$event_data['event_properties'] = eme_init_event_props($event_data['event_properties']);
+		}
 
-         if (!$time_end) {
-            $emefs_event_errors['event_end_time'] =  __('Check the end date and time', 'events-made-easy-frontend-submit');
-         }
+		$new_event = eme_new_event();
+		$event_data = array_merge($new_event,$event_data);
 
-         if ($time_start > $time_end) {
-            $emefs_event_errors['event_end_date'] =  __('The end date/time must occur <strong>after</strong> the start date/time', 'events-made-easy-frontend-submit');
-            $emefs_event_errors['event_end_time'] =  __('The end date/time must occur <strong>after</strong> the start date/time', 'events-made-easy-frontend-submit');
-         }
+		$event_data = eme_sanitize_event($event_data);
+		$validation_result = eme_validate_event ( $event_data );
+		$res_html = '';
+		if ($validation_result == "OK") {
+			if (has_filter('eme_fs_event_insert_filter')) $event_data=apply_filters('eme_fs_event_insert_filter',$event_data);
+			$event_id = eme_db_insert_event($event_data);
+			if ($event_id) {
+				eme_event_store_cf_answers($event_id);
+				eme_upload_files( $event_id, 'events' );
+				$event=eme_get_event($event_id);
+				if (has_action('eme_fs_submit_event_action')) {
+					do_action('eme_fs_submit_event_action',$event);
+				}
+				if ($eme_fs_options['always_success_message']) {
+					$res_html = $eme_fs_options['success_message'];
+				} elseif (is_user_logged_in() || $event['event_status'] != EME_EVENT_STATUS_DRAFT) {
+					$res_html = $eme_fs_options['success_message'];
+					$res_html .= eme_js_redirect(html_entity_decode(eme_event_url($event)));
+				} else {
+					$res_html = $eme_fs_options['success_message'];
+				}
+			} else {
+				$eme_fs_event_errors[] = __('Database insert failed!','events-made-easy');
+			}
+		} else {
+			$eme_fs_event_errors[] = $validation_result;
+		}
+	}
 
-         foreach ($emefs_event_errors as $error) {
-            if($error){
-               $emefs_has_errors = true;
-               break;
-            }
-         }
+	if (empty($eme_fs_event_errors)) {
+		return [
+			'Result'      => 'OK',
+			'htmlmessage' => $res_html
+		];
 
-         // after submit, not all event fields are present, so we will merge the submitted data with a new event
-         $new_event = eme_new_event();
-
-         if ( !$emefs_has_errors ) {
-            if ($this->settings->options['use_captcha']) {
-               eme_captcha_remove($captcha_res);
-            }
-            $force=0;
-            if ($this->settings->options['force_location_creation'])
-               $force=1;
-            if (empty($event_data['location_id']))
-                    $event_data = eme_fs_processlocation($event_data, $force);
-
-            $emefs_event_data_compiled = array_merge($emefs_event_data, $event_data);
-
-            if (!isset($emefs_event_data_compiled['event_status']))
-                $emefs_event_data_compiled['event_status']=$this->settings->options['auto_publish'];
-            if (!$emefs_event_data_compiled['event_category_ids'] && $this->settings->options['default_cat'])
-                $emefs_event_data_compiled['event_category_ids']=$this->settings->options['default_cat'];
-
-            if (is_user_logged_in()) {
-               $current_userid=get_current_user_id();
-               $emefs_event_data_compiled['event_author'] = $current_userid;
-            }
-
-            // make sure all event properties are set as expected
-            if (!empty($emefs_event_data_compiled['event_properties'])) {
-                    $emefs_event_data_compiled['event_properties'] = eme_init_event_props($emefs_event_data_compiled['event_properties']);
-            }
-            //unset($emefs_event_data_compiled['action']);
-
-            $emefs_event_data_compiled = array_merge($new_event,$emefs_event_data_compiled);
-
-            foreach ($emefs_event_data_compiled as $key => $value) {
-               // location info is not part of the event
-               if (strpos($key,'location') !== false && $key != 'location_id') {
-                  unset($emefs_event_data_compiled[$key]);
-               }
-               // localized info is not part of the event
-               if (strpos($key,'localized-') !== false) {
-                  unset($emefs_event_data_compiled[$key]);
-               }
-            }
-            $emefs_event_data_compiled = eme_sanitize_event($emefs_event_data_compiled);
-            $validation_result = eme_validate_event ( $emefs_event_data_compiled );
-            if ($validation_result == "OK") {
-               if (has_filter('emefs_event_insert_filter')) $emefs_event_data_compiled=apply_filters('emefs_event_insert_filter',$emefs_event_data_compiled);
-               $event_id = eme_db_insert_event($emefs_event_data_compiled);
-               if ($event_id) {
-                  eme_event_store_cf_answers($event_id);
-                  eme_upload_files( $event_id, 'events' );
-                  $event=eme_get_event($event_id);
-                  if (has_action('emefs_submit_event_action')) {
-                          do_action('emefs_submit_event_action',$event);
-                  }
-                  if ($this->settings->options['always_success_page']) {
-                     $success_url=apply_filters('emefs_success_url', get_permalink($this->settings->options['success_page']));
-                     wp_redirect($success_url);
-                  } elseif (is_user_logged_in() && $this->settings->options['auto_publish']!=EME_EVENT_STATUS_DRAFT) {
-                     wp_redirect(html_entity_decode(eme_event_url($event)));
-                  } elseif ($this->settings->options['auto_publish']==EME_EVENT_STATUS_PUBLIC) {
-                     wp_redirect(html_entity_decode(eme_event_url($event)));
-                  } else {
-                     $success_url=apply_filters('emefs_success_url', get_permalink($this->settings->options['success_page']));
-                     wp_redirect($success_url);
-                  }
-                  exit;
-               } else {
-                  $emefs_has_errors = true;
-                  $emefs_event_errors['insert_failed'] = __('Database insert failed!','events-made-easy-frontend-submit');
-               }
-            } else {
-               $emefs_has_errors = true;
-               $emefs_event_errors['validation_result'] = $validation_result;
-            }
-
-         }
-
-         if ($emefs_has_errors) {
-            $emefs_event_data = array_merge($emefs_event_data, $event_data);
-            $emefs_event_data = array_merge($new_event,$emefs_event_data);
-         }
-      }
-
-
-
+	} else {
+		return [
+			'Result'      => 'NOK',
+			'htmlmessage' => join('<br>',$eme_fs_event_errors)
+		];
+	}
 }
-
 
 function eme_fs_processlocation($event_data, $force=0) {
       $location = eme_new_location();
+      // for backwards compatibility
+      if (isset($event_data['location_address'])) {
+         $location['location_address1'] = $event_data['location_address1'];
+      }
+      if (isset($event_data['location_town'])) {
+         $location['location_city'] = $event_data['location_town'];
+      }
       $location['location_name'] = isset($event_data['location_name']) ? $event_data['location_name'] : '';
       $location['location_description'] = isset($event_data['location_description']) ? $event_data['location_description'] : '';
       $location['location_address1'] = isset($event_data['location_address1']) ? $event_data['location_address1'] : '';
@@ -655,16 +588,8 @@ function eme_fs_processlocation($event_data, $force=0) {
       $location['location_country'] = isset($event_data['location_country']) ? $event_data['location_country'] : '';
       $location['location_latitude'] = isset($event_data['location_latitude']) ? $event_data['location_latitude'] : '';
       $location['location_longitude'] = isset($event_data['location_longitude']) ? $event_data['location_longitude'] : '';
-      if (empty($location['location_name']) && empty($location['location_address1']) && empty($location['location_latitude']) && empty($location['location_longitude']))
+      if (empty($location['location_name']) && empty($location['location_address1']) && empty($location['location_latitude']) && empty($location['location_longitude'])) {
               return $event_data;
-      // for backwards compatibility
-      if (isset($event_data['location_address'])) {
-         $location['location_address1'] = $event_data['location_address1'];
-         unset($event_data['location_address']);
-      }
-      if (isset($event_data['location_town'])) {
-         $location['location_city'] = $event_data['location_town'];
-         unset($event_data['location_town']);
       }
       $location = eme_sanitize_location($location);
       $location_id=eme_get_identical_location_id($location);
@@ -679,7 +604,51 @@ function eme_fs_processlocation($event_data, $force=0) {
       } else {
          $event_data['location_id'] = $location_id;
       }
-      return $event_data;
-   }
+      return $location_id;
+}
 
+add_action( 'wp_ajax_eme_frontend_submit', 'eme_frontend_submit_ajax' );
+add_action( 'wp_ajax_nopriv_eme_frontend_submit', 'eme_frontend_submit_ajax' );
+function eme_frontend_submit_ajax() {
+	// check for spammers as early as possible
+	if ( get_option( 'eme_honeypot_for_forms' ) ) {
+		if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
+			$form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+			echo wp_json_encode(
+				[
+					'Result'      => 'NOK',
+					'htmlmessage' => $form_html,
+				]
+			);
+			wp_die();
+		}
+	}
+	if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
+		$form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+		echo wp_json_encode(
+			[
+				'Result'      => 'NOK',
+				'htmlmessage' => $form_html,
+			]
+		);
+		wp_die();
+	}
 
+	$eme_fs_options = get_option('eme_fs');
+	$is_user_logged_in=is_user_logged_in();
+	if ((!$is_user_logged_in && !$eme_fs_optionsoptions['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
+		$form_html = __("Sorry, but you're not allowed to submit new events.","events-made-easy");
+		echo wp_json_encode(
+			[
+				'Result'      => 'NOK',
+				'htmlmessage' => $form_html,
+			]
+		);
+		wp_die();
+	}
+
+	eme_check_captchas( $eme_fs_options );
+
+	echo wp_json_encode(eme_fs_process_newevent());
+        wp_die();
+}

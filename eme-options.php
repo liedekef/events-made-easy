@@ -571,8 +571,8 @@ function eme_add_options( $reset = 0 ) {
 		'eme_fs' => [
 			'auto_publish' => EME_EVENT_STATUS_PUBLIC,
 			'guest_submit' => false,
-			'success_page' => 0,
-			'always_success_page' => 0,
+			'success_message' => __('New event succesfully created.','events-made-easy'),
+			'always_success_message' => 0,
 			'default_cat' => 0,
 			'guest_not_allowed_text' => '',
 			'redirect_to_login' => 0,
@@ -2862,8 +2862,8 @@ function eme_options_page() {
 			eme_options_radio_binary (__('Force location creation?','events-made-easy'), eme_get_field_name('eme_fs','force_location_creation'), __ ( 'Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations.', 'events-made-easy' ), eme_get_field_value('eme_fs','force_location_creation'));
 			eme_options_radio_binary (__('Enable Maps integration?','events-made-easy'), eme_get_field_name('eme_fs','map_enabled'), __ ( 'Check this option to enable Map integration', 'events-made-easy' ), eme_get_field_value('eme_fs','map_enabled'));
 			eme_options_radio_binary (__('Allow guest submit?','events-made-easy'), eme_get_field_name('eme_fs','guest_submit'), __ ( 'Check this option if you want guests also to be able to add new events.', 'events-made-easy' ), eme_get_field_value('eme_fs','guest_submit'));
-			eme_options_select ( __ ( 'Success Page','events-made-easy'), eme_get_field_name('eme_fs','success_page'), eme_get_all_pages (), __ ( 'The page a person will be redirected to after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. If no page is selected, a default text will be shown.','events-made-easy'), eme_get_field_value('eme_fs','success_page'));
-			eme_options_radio_binary (__('Always show success page','events-made-easy'), eme_get_field_name('eme_fs','always_success_page'), __ ( 'Check this option if you want to redirect to the success page even if the person submitting the event has the right to see the newly submitted event.', 'events-made-easy' ), eme_get_field_value('eme_fs','always_success_page'));
+			eme_options_textarea ( __ ( 'Success Message','events-made-easy'), eme_get_field_name('eme_fs','success_message'), __ ( 'The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event.','events-made-easy'),1,0, eme_get_field_value('eme_fs','success_message'));
+			eme_options_radio_binary (__('Always show success page','events-made-easy'), eme_get_field_name('eme_fs','always_success_message'), __ ( 'Check this option if you want to always show the success page even if the person submitting the event has the right to see the newly submitted event.', 'events-made-easy' ), eme_get_field_value('eme_fs','always_success_message'));
 			eme_options_textarea ( __( 'Guests not allowed text', 'events-made-easy'), eme_get_field_name('eme_fs','guest_not_allowed_text'), __( 'The text shown to a guest when trying to submit a new event when they are not allowed to do so.','events-made-easy'),1, 0, eme_get_field_value('eme_fs','guest_not_allowed_text'));
 			eme_options_radio_binary (__('Redirect to login page','events-made-easy'), eme_get_field_name('eme_fs','redirect_to_login'), __ ( 'Check this option if you want to redirect to the login page if not logged in (or no have the "edit posts" capability) and not show the "Guests not allowed text"', 'events-made-easy' ), eme_get_field_value('eme_fs','redirect_to_login'));
 			eme_options_select (__('Submit new event capabilty','events-made-easy'), eme_get_field_name('eme_fs','cap_add_event'), eme_get_all_caps (), sprintf(__('Permission needed to submit a new event when guest submit is not allowed. Default: %s','events-made-easy'), eme_capNamesCB('edit_posts')), eme_get_field_value('eme_fs','cap_add_event') );

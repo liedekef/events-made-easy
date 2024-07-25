@@ -583,7 +583,6 @@ function eme_add_options( $reset = 0 ) {
 			'use_hcaptcha' => 0,
 			'use_cfcaptcha' => 0,
 			'use_recaptcha' => 0,
-			'use_honeypot' => 1,
 			'use_wysiwyg' => 0,
 			'allow_upload' => 0,
 			'map_enabled' => 1,

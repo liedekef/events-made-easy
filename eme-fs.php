@@ -524,6 +524,8 @@ function eme_fs_process_newevent() {
 		$eme_fs_event_errors[] =  __('The end date/time must occur <strong>after</strong> the start date/time', 'events-made-easy');
 	}
 
+	$res_html = '';
+	$res_code = 'OK';
 	if ( empty($eme_fs_event_errors) ) {
 		$force=0;
 		if ($eme_fs_options['force_location_creation'])
@@ -546,7 +548,6 @@ function eme_fs_process_newevent() {
 
 		$event_data = eme_sanitize_event($event_data);
 		$validation_result = eme_validate_event ( $event_data );
-		$res_html = '';
 		if ($validation_result == "OK") {
 			if (has_filter('eme_fs_event_insert_filter')) $event_data=apply_filters('eme_fs_event_insert_filter',$event_data);
 			$event_id = eme_db_insert_event($event_data);
@@ -562,7 +563,7 @@ function eme_fs_process_newevent() {
 				} elseif (is_user_logged_in() || $event['event_status'] != EME_EVENT_STATUS_DRAFT) {
 					$res_html = eme_js_redirect(eme_event_url($event), $eme_fs_options['redirect_timeout']);
 					if ($eme_fs_options['redirect_timeout'] == 0) {
-						$validation_result = 'REDIRECT_IMM';
+						$res_code = 'REDIRECT_IMM';
 					} else {
 						$res_html .= eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
 					}
@@ -579,7 +580,7 @@ function eme_fs_process_newevent() {
 
 	if (empty($eme_fs_event_errors)) {
 		return [
-			'Result'      => 'OK',
+			'Result'      => $res_code,
 			'htmlmessage' => $res_html
 		];
 

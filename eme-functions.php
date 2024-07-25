@@ -3996,9 +3996,18 @@ function eme_get_initials( $myname ) {
 	return $res;
 }
 
-function eme_js_redirect( $mylink ) {
+function eme_js_redirect( $mylink, $timeout=0 ) {
 	$mylink = wp_sanitize_redirect( $mylink );
-	return '<script type="text/javascript">window.location.href="' . $mylink . '";</script>';
+	$res = '<script type="text/javascript">';
+	if ($timeout) {
+		// timeout is in seconds
+		$timeout *= 1000;
+		$res .= "setTimeout(() => window.location.href='$mylink', $timeout);";
+	} else {
+		$res .= "window.location.href='$mylink';";
+	}
+	$res .= '</script>';
+	return $res;
 }
 
 function eme_mkdir_with_index( $targetPath ) {

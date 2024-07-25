@@ -165,7 +165,9 @@ jQuery(document).ready( function($) {
 		$.ajax({url: emebasic.translate_ajax_url, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
 		.done(function(data){
 			$('#'+form_id).find('#loading_gif').hide();
-			if (data.Result=='OK') {
+			if (data.Result=='REDIRECT_IMM') {
+				$('div#eme-'+form_name+'-message-ok-'+form_id).html(data.htmlmessage);
+			} else if (data.Result=='OK') {
 				$('div#eme-'+form_name+'-message-ok-'+form_id).html(data.htmlmessage);
 				$('div#eme-'+form_name+'-message-ok-'+form_id).show();
 				$('div#eme-'+form_name+'-message-error-'+form_id).hide();

@@ -553,17 +553,21 @@ function eme_fs_process_newevent() {
 			if ($event_id) {
 				eme_event_store_cf_answers($event_id);
 				eme_upload_files( $event_id, 'events' );
-				$event=eme_get_event($event_id);
+				$event = eme_get_event($event_id);
 				if (has_action('eme_fs_submit_event_action')) {
 					do_action('eme_fs_submit_event_action',$event);
 				}
 				if ($eme_fs_options['always_success_message']) {
-					$res_html = $eme_fs_options['success_message'];
+					$res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
 				} elseif (is_user_logged_in() || $event['event_status'] != EME_EVENT_STATUS_DRAFT) {
-					$res_html = $eme_fs_options['success_message'];
-					$res_html .= eme_js_redirect(html_entity_decode(eme_event_url($event)));
+					$res_html = eme_js_redirect(eme_event_url($event), $eme_fs_options['redirect_timeout']);
+					if ($eme_fs_options['redirect_timeout'] == 0) {
+						$validation_result = 'REDIRECT_IMM';
+					} else {
+						$res_html .= eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+					}
 				} else {
-					$res_html = $eme_fs_options['success_message'];
+					$res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
 				}
 			} else {
 				$eme_fs_event_errors[] = __('Database insert failed!','events-made-easy');

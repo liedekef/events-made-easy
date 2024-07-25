@@ -63,6 +63,9 @@ function eme_event_fs_form( $template_id ) {
 		$format = $eme_fs_options['form_format'];
 	}
 
+	// replace EME language tags as early as possible
+        $format = eme_translate_string_nowptrans( $format );
+
         $captcha_set = 0;
         if ( $eme_fs_options['use_recaptcha'] ) {
                 $format = eme_add_captcha_submit( $format, 'recaptcha' );
@@ -77,7 +80,7 @@ function eme_event_fs_form( $template_id ) {
         }
 
         $needle_offset = 0;
-        preg_match_all( '/#(REQ)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+        preg_match_all( '/#(REQ)?_[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
         foreach ( $placeholders[0] as $orig_result ) {
                 $result             = $orig_result[0];
                 $orig_result_needle = $orig_result[1] - $needle_offset;
@@ -93,9 +96,9 @@ function eme_event_fs_form( $template_id ) {
                         $required     = 1;
                 }               
 
-		#_FIELD{} or #_FIELD{}{}
-		#_ATT{} of #_ATT{}{} 
-		#_PROP{} of #_PROP{}{}
+		#_FIELD{} or #_FIELD{}{}{}
+		#_ATT{} of #_ATT{}{}{} 
+		#_PROP{} of #_PROP{}{}{}
 		if ( preg_match( '/#_FIELD\{(.+)\}(\{.+?\})?(\{.+?\})?$/', $result, $matches ) ) {
 			$field = $matches[1];
 			if ( isset( $matches[2] ) ) {
@@ -187,9 +190,7 @@ function eme_event_fs_form( $template_id ) {
                         $needle_offset += $orig_result_length - strlen( $replacement );
                 }
         }
-
 	return $format;
-
 }
 
 function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $required=0, $field_id = false) {

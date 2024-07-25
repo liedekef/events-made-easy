@@ -2845,7 +2845,7 @@ function eme_options_page() {
 		case 'emefs':
 			?>
 <h3><?php esc_html_e( 'Frontend Submit options', 'events-made-easy' ); ?></h3>
-<?php echo sprintf( __( "For all information concerning frontend subit, , see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ), '//www.e-dynamics.be/wordpress/category/documentation/6-placeholders/eme_add_event_form/' );
+<?php echo sprintf( __( "For all information concerning frontend submit, see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ), '//www.e-dynamics.be/wordpress/category/documentation/6-placeholders/eme_add_event_form/' );
 ?>
 <table class='form-table'>
 			<?php
@@ -2875,7 +2875,7 @@ function eme_options_page() {
 
 			eme_options_radio_binary (__('Use wysiwyg?','events-made-easy'), eme_get_field_name('eme_fs','use_wysiwyg'), __ ( 'Check this option if you want to use a frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_wysiwyg'));
 			eme_options_radio_binary (__('Allow image upload?','events-made-easy'), eme_get_field_name('eme_fs','allow_upload'), __ ( 'Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','allow_upload'));
-                        eme_options_textarea( __( 'Default format', 'events-made-easy' ), eme_get_field_name('eme_fs','form_format'), __( 'The default format for a new event.', 'events-made-easy' ), 1, 0, eme_get_field_value('eme_fs','form_format') );
+                        eme_options_textarea( __( 'Default form format', 'events-made-easy' ), eme_get_field_name('eme_fs','form_format'), __( 'The default form format for submitting a new event.', 'events-made-easy' ), 1, 0, eme_get_field_value('eme_fs','form_format') );
 			?>
 </table>
 			<?php

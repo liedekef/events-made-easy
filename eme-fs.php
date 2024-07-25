@@ -105,33 +105,39 @@ function eme_event_fs_form( $template_id ) {
 		#_FIELD{} or #_FIELD{}{}{}
 		#_ATT{} of #_ATT{}{}{} 
 		#_PROP{} of #_PROP{}{}{}
-		if ( preg_match( '/#_FIELD\{(.+)\}(\{.+?\})?(\{.+?\})?$/', $result, $matches ) ) {
+		if ( preg_match( '/#_FIELD\{(.+?)\}(\{.+?\})?(\{.+?\})?$/', $result, $matches ) ) {
 			$field = $matches[1];
 			if ( isset( $matches[2] ) ) {
-				$type = $matches[2];
+				// remove { and } (first and last char of second match)
+				$type = substr( $matches[2], 1, -1 );
 			}
 			if ( isset( $matches[3] ) ) {
-				$more = $matches[3];
+				// remove { and } (first and last char of second match)
+				$more = substr( $matches[3], 1, -1 );
 			}
 			$replacement = eme_get_fs_field_html($field, $type , $more , $required);
 
                 } elseif ( preg_match( '/#_ATT\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			$att = $matches[1];
 			if ( isset( $matches[2] ) ) {
-				$type = $matches[2];
+				// remove { and } (first and last char of second match)
+				$type = substr( $matches[2], 1, -1 );
 			}
 			if ( isset( $matches[3] ) ) {
-				$more = $matches[3];
+				// remove { and } (first and last char of second match)
+				$more = substr( $matches[3], 1, -1 );
 			}
 			$replacement = eme_get_fs_field_html('event-attributes', 'att-'.$type , $more , $required, $att);
 
                 } elseif ( preg_match( '/#_PROP\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			$prop = $matches[1];
 			if ( isset( $matches[2] ) ) {
-				$type = $matches[2];
+				// remove { and } (first and last char of second match)
+				$type = substr( $matches[2], 1, -1 );
 			}
 			if ( isset( $matches[3] ) ) {
-				$more = $matches[3];
+				// remove { and } (first and last char of second match)
+				$more = substr( $matches[3], 1, -1 );
 			}
 			$replacement = eme_get_fs_field_html('event-properties', 'prop-'.$type , $more , $required, $prop);
 

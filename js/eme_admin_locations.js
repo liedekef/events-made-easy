@@ -325,7 +325,7 @@ jQuery(document).ready(function ($) {
 		   // we call both functions to show the map, only 1 will work (either the select-based or the other) depending on the form shown
 		   if (ui.newPanel.attr('id') == 'tab-locationdetails') {
 			   // We need to call it here, because otherwise the map initially doesn't render correctly due to hidden tab div etc ...
-			   if(emelocations.translate_eme_map_is_active === 'true') {
+			   if(emelocations.translate_map_is_active === 'true') {
 				   eme_SelectdisplayAddress();
 				   eme_displayAddress(0);
 			   }

@@ -9580,9 +9580,9 @@ function eme_admin_enqueue_js() {
 		if ( get_option( 'eme_map_is_active' ) ) {
 			wp_enqueue_style( 'eme-leaflet-css' );
 			$translation_array = [
-				'translate_eme_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
+				'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
 				'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
-				'translate_eme_map_is_active' => 'true',
+				'translate_map_is_active' => 'true',
 			];
 			wp_localize_script( 'eme-admin-maps', 'emeadminmaps', $translation_array );
 			wp_enqueue_script( 'eme-admin-maps' );
@@ -9593,7 +9593,7 @@ function eme_admin_enqueue_js() {
 		// Now we can localize the script with our data.
 		$translation_array = [
 			'translate_nomatchevent'               => __( 'No matching event found', 'events-made-easy' ),
-			'translate_eme_map_is_active'          => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
+			'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
 			'translate_events'                     => __( 'Events', 'events-made-easy' ),
 			'translate_recurrences'                => __( 'Recurrences', 'events-made-easy' ),
 			'translate_rsvp'                       => __( 'RSVP', 'events-made-easy' ),

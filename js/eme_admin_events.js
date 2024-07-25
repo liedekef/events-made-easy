@@ -185,7 +185,7 @@ jQuery(document).ready( function($) {
                             $('input#eme_loc_prop_online_only').val(ui.item.online_only).attr('disabled',true);
                             $('input#location_url').val(ui.item.location_url).attr('readonly', true);
                             $('#img_edit_location').show();
-                            if(emeevents.translate_eme_map_is_active === 'true') {
+                            if(emeevents.translate_map_is_active === 'true') {
                                loadMapLatLong(ui.item.name, ui.item.address1, ui.item.address2, ui.item.city,ui.item.state,ui.item.zip,ui.item.country, ui.item.latitude, ui.item.longitude);
                             }
                             return false;
@@ -263,7 +263,7 @@ jQuery(document).ready( function($) {
                   $('input[name="location-select-country"]').val(item.country);
                   $('input[name="location-select-latitude"]').val(item.latitude);
                   $('input[name="location-select-longitude"]').val(item.longitude);
-                  if(emeevents.translate_eme_map_is_active === 'true') {
+                  if(emeevents.translate_map_is_active === 'true') {
                      loadMapLatLong(item.name,item.address1,item.address2,item.city,item.state,item.zip,item.country,item.latitude,item.longitude);
                   }
                })
@@ -396,7 +396,7 @@ jQuery(document).ready( function($) {
 		   // we call both functions to show the map, only 1 will work (either the select-based or the other) depending on the form shown
 		   if (ui.newPanel.attr('id') == 'tab-locationdetails') {
 			   // We need to call it here, because otherwise the map initially doesn't render correctly due to hidden tab div etc ...
-			   if(emeevents.translate_eme_map_is_active === 'true') {
+			   if(emeevents.translate_map_is_active === 'true') {
 				   eme_SelectdisplayAddress();
 				   eme_displayAddress(0);
 			   }

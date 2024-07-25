@@ -585,7 +585,6 @@ function eme_add_options( $reset = 0 ) {
 			'use_recaptcha' => 0,
 			'use_wysiwyg' => 0,
 			'allow_upload' => 0,
-			'map_enabled' => 1,
 			'form_format' => '<h2>Event Information</h2>
 		<div class="input">
 			<label for="event_name">Event Name</label><br />
@@ -2862,7 +2861,6 @@ function eme_options_page() {
 			eme_options_select (__('State for new event','events-made-easy'), eme_get_field_name('eme_fs','auto_publish'), eme_status_array(), __ ('The state for a newly submitted event.','events-made-easy'), eme_get_field_value('eme_fs','auto_publish') );
 			eme_options_select (__('Default category for new event','events-made-easy'), eme_get_field_name('eme_fs','default_cat'), $category_arr, __ ('The default category assigned to an event if nothing is selected in the form.','events-made-easy'), eme_get_field_value('eme_fs','default_cat') );
 			eme_options_radio_binary (__('Force location creation?','events-made-easy'), eme_get_field_name('eme_fs','force_location_creation'), __ ( 'Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations.', 'events-made-easy' ), eme_get_field_value('eme_fs','force_location_creation'));
-			eme_options_radio_binary (__('Enable Maps integration?','events-made-easy'), eme_get_field_name('eme_fs','map_enabled'), __ ( 'Check this option to enable Map integration', 'events-made-easy' ), eme_get_field_value('eme_fs','map_enabled'));
 			eme_options_radio_binary (__('Allow guest submit?','events-made-easy'), eme_get_field_name('eme_fs','guest_submit'), __ ( 'Check this option if you want guests also to be able to add new events.', 'events-made-easy' ), eme_get_field_value('eme_fs','guest_submit'));
 			eme_options_textarea ( __ ( 'Success Message','events-made-easy'), eme_get_field_name('eme_fs','success_message'), __ ( 'The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. This message can contain all event placeholders.','events-made-easy'),1,0, eme_get_field_value('eme_fs','success_message'));
 			eme_options_input_int( __( 'Redirect wait period', 'events-made-easy' ), eme_get_field_name('eme_fs','redirect_timeout'), __( 'Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately.', 'events-made-easy' ), 'text', eme_get_field_value('eme_fs','redirect_timeout') );

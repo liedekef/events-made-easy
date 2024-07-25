@@ -1,71 +1,71 @@
-form#new_event{
+form[name=eme-fs-form]{
 	display: block;
 	overflow: hidden;
 	width: 100%;
 }
 
-form#new_event > div,
-form#new_event > fieldset{
+form[name=eme-fs-form] > div,
+form[name=eme-fs-form] > fieldset{
 	margin-bottom: 1.5em;
 }
 
-form#new_event #event_name, 
-form#new_event #event_notes,
-form#new_event #event_contactperson_email_body,
-form#new_event #event_url,
-form#new_event #location_name,
-form#new_event #location_address,
-form#new_event #location_address1,
-form#new_event #location_address2,
-form#new_event #location_city,
-form#new_event #location_state,
-form#new_event #location_zip,
-form#new_event #location_country,
-form#new_event #location_town{
+form[name=eme-fs-form] #event_name, 
+form[name=eme-fs-form] #event_notes,
+form[name=eme-fs-form] #event_contactperson_email_body,
+form[name=eme-fs-form] #event_url,
+form[name=eme-fs-form] #location_name,
+form[name=eme-fs-form] #location_address,
+form[name=eme-fs-form] #location_address1,
+form[name=eme-fs-form] #location_address2,
+form[name=eme-fs-form] #location_city,
+form[name=eme-fs-form] #location_state,
+form[name=eme-fs-form] #location_zip,
+form[name=eme-fs-form] #location_country,
+form[name=eme-fs-form] #location_town{
 	width: 96%;
 }
 
-form#new_event #event_notes{
+form[name=eme-fs-form] #event_notes{
 	height: 120px;
 }
 
-form#new_event #submit{
+form[name=eme-fs-form] #submit{
 	width: 200px;
 	text-align: center;
 }
 
-form#new_event label {
+form[name=eme-fs-form] label {
 	font-weight: normal;
 	font-size: small;
 	padding: 0;
 }
 
-form#new_event label small,
-form#new_event legend small{
+form[name=eme-fs-form] label small,
+form[name=eme-fs-form] legend small{
 	font-size: smaller;
 	color: gray;
 }
 
-form#new_event fieldset {
+form[name=eme-fs-form] fieldset {
 	border: 1px solid #F1F1F1;
 	width: 96%;
 	padding: 2px;
 }
 
-form#new_event fieldset fieldset{
+form[name=eme-fs-form] fieldset fieldset{
 	width: 47%;
 	float: left;
 	margin: 1%;
 }
 
-form#new_event span.error{
+form[name=eme-fs-form] span.error{
 	font-size: smaller;
 	font-weight: bold;
 	color: #C00;
 }
 
-form#new_event #event-map{
-	width: 97%;
+form[name=eme-fs-form] #event-map{
+	width: 96%;
 	height: 400px;
 	display: none;
 }

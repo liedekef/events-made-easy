@@ -47,7 +47,7 @@ jQuery(document).ready(function($) {
 				jQuery('input#location_country').val(ui.item.country).attr("readonly", true);
 				jQuery('input#location_latitude').val(ui.item.latitude).attr("readonly", true);
 				jQuery('input#location_longitude').val(ui.item.longitude).attr("readonly", true);
-				if (typeof L !== 'undefined' && emefs.translate_map_enabled=="1") {
+				if (typeof L !== 'undefined' && emefs.translate_map_is_active==="true") {
 					emefs_displayAddress(0);
 				}
 				return false;
@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
 
 	}
 
-	if (typeof L !== 'undefined' && emefs.translate_map_enabled=="1") {
+	if (typeof L !== 'undefined' && emefs.translate_map_is_active==="true") {
 		jQuery("input#location_name").change(function(){
 			emefs_displayAddress(0);
 		});
@@ -124,7 +124,7 @@ jQuery(document).ready(function($) {
 		eventCountry = jQuery("input#location_country").val() || "";
 
 		if (ignore_coord) {
-			emefs_loadMapLatLong(eventLocation, eventAddress1, eventAddress2,eventCity,eventState,eventZip,eventCountry);
+			emefs_loadMap(eventLocation, eventAddress1, eventAddress2,eventCity,eventState,eventZip,eventCountry);
 		} else {
 			eventLat = jQuery("input#location_latitude").val();
 			eventLong = jQuery("input#location_longitude").val();
@@ -137,18 +137,16 @@ jQuery(document).ready(function($) {
 	// create the tile layer with correct attribution
 	var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 	var osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-	if (typeof L !== 'undefined' && emefs.translate_map_enabled=="1") {
+	if (typeof L !== 'undefined' && emefs.translate_map_is_active==="true") {
 		osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 	}
 
 	function emefs_loadMap(loc_name, address1, address2, city, state, zip, country) {
 		var emefs_mapCenter = L.latLng(-34.397, 150.644);
-		var emefs_map = false;
-
 		var emefs_mapOptions = {
-			zoom: 12,
+			zoom: 13,
 			center: emefs_mapCenter,
-			scrollWheelZoom: true,
+			scrollWheelZoom: emefs.translate_map_zooming,
 			doubleClickZoom: false
 		}
 
@@ -157,7 +155,6 @@ jQuery(document).ready(function($) {
 		} else {
 			searchKey = loc_name + ', ' + address1 + ", " + address2 + "," + city + ", " + zip + ", " + state + ", " + country;
 		}
-
 
 		if (searchKey) {
 			var geocode_url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1';
@@ -196,12 +193,10 @@ jQuery(document).ready(function($) {
 
 		if (lat != 0 && lon != 0) {
 			var emefs_mapCenter = L.latLng(lat, lon);
-			var emefs_map = false;
-
 			var emefs_mapOptions = {
-				zoom: 12,
+				zoom: 13,
 				center: emefs_mapCenter,
-				scrollWheelZoom: true,
+				scrollWheelZoom: emefs.translate_map_zooming,
 				doubleClickZoom: false
 			}
 			// to avoid the leaflet error 'Map container is already initialized'

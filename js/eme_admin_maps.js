@@ -6,7 +6,7 @@ var osmAttrib='Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap
 var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 
          function eme_displayAddress(ignore_coord){
-            var map_enabled = (emeadminmaps.translate_eme_map_is_active === 'true');
+            var map_enabled = (emeadminmaps.translate_map_is_active === 'true');
             if (map_enabled && jQuery('input[name=location_name]').length) {
                eventLocation = jQuery('input[name=location_name]').val() || '';
                eventAddress1 = jQuery('input#location_address1').val() || '';
@@ -28,7 +28,7 @@ var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
          }
 
          function eme_SelectdisplayAddress(){
-            var map_enabled = (emeadminmaps.translate_eme_map_is_active === 'true');
+            var map_enabled = (emeadminmaps.translate_map_is_active === 'true');
             if (map_enabled && jQuery('input[name="location-select-name"]').length) {
                eventLocation = jQuery('input[name="location-select-name"]').val() || '';
                eventAddress1 = jQuery('input[name="location-select-address1"]').val() || '';
@@ -49,7 +49,7 @@ var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
             }
             var myOptions = {
                zoom: 13,
-               scrollWheelZoom: emeadminmaps.translate_eme_map_zooming,
+               scrollWheelZoom: emeadminmaps.translate_map_zooming,
                doubleClickZoom: false
             }
             // to avoid the leaflet error 'Map container is already initialized'
@@ -140,7 +140,7 @@ var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 		    var myOptions = {
 			    zoom: 13,
 			    center: latlng,
-			    scrollWheelZoom: emeadminmaps.translate_eme_map_zooming,
+			    scrollWheelZoom: emeadminmaps.translate_map_zooming,
 			    doubleClickZoom: false
 		    }
                     // to avoid the leaflet error 'Map container is already initialized'

@@ -34,10 +34,16 @@ function eme_add_event_form_shortcode( $atts ) {
 		return false;
 	}
 
-	$map_enabled = intval($eme_fs_options['map_enabled']);
+	$map_enabled = get_option( 'eme_map_is_active' ) ? 'true' : 'false';
+	$zooming_enabled = get_option( 'eme_map_zooming' ) ? 'true' : 'false';
 	wp_enqueue_style( 'eme-leaflet-css' );
 	wp_enqueue_style( 'eme_fs_stylesheet', EME_PLUGIN_URL . 'css/emefs.css', [], EME_VERSION );
-	$translation_array = [ 'translate_ajax_url' => admin_url( 'admin-ajax.php' ), 'translate_map_enabled' => $map_enabled, 'translate_frontendnonce' => wp_create_nonce( 'eme_frontend' ) ];
+	$translation_array = [ 
+		'translate_ajax_url' => admin_url( 'admin-ajax.php' ),
+		'translate_map_is_active' => $map_enabled,
+		'translate_map_zooming' => $zooming_enabled,
+		'translate_frontendnonce' => wp_create_nonce( 'eme_frontend' )
+	];
 	wp_localize_script( 'eme-fs-map', 'emefs', $translation_array );
 	wp_enqueue_script( 'eme-fs-map' );
         extract( shortcode_atts( [ 'id' => 0 ], $atts ) );

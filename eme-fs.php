@@ -44,8 +44,8 @@ function eme_add_event_form_shortcode( $atts ) {
 		'translate_map_zooming' => $zooming_enabled,
 		'translate_frontendnonce' => wp_create_nonce( 'eme_frontend' )
 	];
-	wp_localize_script( 'eme-fs-map', 'emefs', $translation_array );
-	wp_enqueue_script( 'eme-fs-map' );
+	wp_localize_script( 'eme-fs-location', 'emefs', $translation_array );
+	wp_enqueue_script( 'eme-fs-location' );
         extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
 
         $form_id = uniqid();
@@ -85,6 +85,9 @@ function eme_event_fs_form( $template_id ) {
                 $format = eme_add_captcha_submit( $format );
         }
 
+	$latitude_added = 0;
+	$longitude_added = 0;
+	$location_id_added = 0;
         $needle_offset = 0;
         preg_match_all( '/#(REQ)?_[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
         foreach ( $placeholders[0] as $orig_result ) {
@@ -105,6 +108,7 @@ function eme_event_fs_form( $template_id ) {
 		#_FIELD{} or #_FIELD{}{}{}
 		#_ATT{} of #_ATT{}{}{} 
 		#_PROP{} of #_PROP{}{}{}
+		#_CUSTOMFIELD{}
 		if ( preg_match( '/#_FIELD\{(.+?)\}(\{.+?\})?(\{.+?\})?$/', $result, $matches ) ) {
 			$field = $matches[1];
 			if ( isset( $matches[2] ) ) {
@@ -115,8 +119,26 @@ function eme_event_fs_form( $template_id ) {
 				// remove { and } (first and last char of second match)
 				$more = substr( $matches[3], 1, -1 );
 			}
+			// for backwards compatibility
+			if ($field == "location_address") $field="location_address1";
+			if ($field == "location_town") $field="location_city";
 			$replacement = eme_get_fs_field_html($field, $type , $more , $required);
 
+			// location also needs id, latitude and longitude (these are hidden anyway)
+			if ( strstr( $field, 'location_' ) ) {
+				if (!$location_id_added) {
+					$replacement .= eme_get_fs_field_html("location_id");
+					$location_id_added = 1;
+				}
+				if (!$latitude_added) {
+					$replacement .= eme_get_fs_field_html("location_latitude");
+					$latitude_added = 1;
+				}
+				if (!$longitude_added) {
+					$replacement .= eme_get_fs_field_html("location_longitude");
+					$longitude_added = 1;
+				}
+			}
                 } elseif ( preg_match( '/#_ATT\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			$att = $matches[1];
 			if ( isset( $matches[2] ) ) {
@@ -128,7 +150,6 @@ function eme_event_fs_form( $template_id ) {
 				$more = substr( $matches[3], 1, -1 );
 			}
 			$replacement = eme_get_fs_field_html('event-attributes', 'att-'.$type , $more , $required, $att);
-
                 } elseif ( preg_match( '/#_PROP\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			$prop = $matches[1];
 			if ( isset( $matches[2] ) ) {
@@ -140,7 +161,6 @@ function eme_event_fs_form( $template_id ) {
 				$more = substr( $matches[3], 1, -1 );
 			}
 			$replacement = eme_get_fs_field_html('event-properties', 'prop-'.$type , $more , $required, $prop);
-
                 } elseif ( preg_match( '/#_CUSTOMFIELD\{(.+?)\}$/', $result ) ) {
 			$formfield = eme_sanitize_request($matches[1]);
 			if ($formfield && ($formfield['field_purpose']=='events' || $formfield['field_purpose']=='locations')) {
@@ -229,6 +249,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
               case 'event_rsvp':
                       $type = 'binary';
                       break;
+              case 'location_id':
               case 'location_latitude':
               case 'location_longitude':
                       $type = 'hidden';
@@ -238,27 +259,29 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
                       //$more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
                       //$type = 'localized_datetime';
 		      $field = 'localized_start_time';
-                      $more .= "size=8 class='eme_formfield_timepicker'";
+                      $more .= " size=8 class='eme_formfield_timepicker'";
                       break;
               case 'event_end_time':
                       //$localized_field_id='localized-end-time';
                       //$more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
                       //$type = 'localized_datetime';
 		      $field = 'localized_end_time';
-                      $more .= "size=8 class='eme_formfield_timepicker'";
+                      $more .= " size=8 class='eme_formfield_timepicker'";
                       break;
               case 'event_start_date':
                       $localized_field_id='localized-start-date';
-                      $more .= "required='required' readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_start_date'";
+                      $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_start_date'";
                       $type = 'localized_datetime';
+		      $required = 1;
                       break;
               case 'event_end_date':
                       $localized_field_id='localized-end-date';
-                      $more .= "readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_end_date'";
+                      $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_end_date'";
                       $type = 'localized_datetime';
                       break;
+              case 'location_name':
               case 'event_name':
-                      $more .= "required='required'";
+		      $required = 1;
                       $type = 'text';
                       break;
               case 'event_attributes':
@@ -294,7 +317,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
               }
       }
       if ($required) {
-	      $more .= "required='required'";
+	      $more .= " required='required'";
       }
       $html_by_type = array(
             'number' => '<input type="number" id="%s" name="event[%s]" min="0" step="any" value="" %s/>',
@@ -374,9 +397,6 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
          case 'number':
          case 'text':
          case 'url':
-            // for backwards compatibility
-            if ($field == "location_address") $field="location_address1";
-            if ($field == "location_town") $field="location_city";
             return sprintf($html_by_type[$type], $field_id, $field_id, $more);
             break;
       }
@@ -625,7 +645,7 @@ function eme_fs_processlocation($event_data, $force=0) {
       $location['location_latitude'] = isset($event_data['location_latitude']) ? $event_data['location_latitude'] : '';
       $location['location_longitude'] = isset($event_data['location_longitude']) ? $event_data['location_longitude'] : '';
       if (empty($location['location_name']) && empty($location['location_address1']) && empty($location['location_latitude']) && empty($location['location_longitude'])) {
-              return $event_data;
+              return 0;
       }
       $location = eme_sanitize_location($location);
       $location_id=eme_get_identical_location_id($location);
@@ -634,11 +654,7 @@ function eme_fs_processlocation($event_data, $force=0) {
          if ($validation_result == "OK") {
             $location_id = eme_insert_location($location, $force);
             eme_location_store_cf_answers($location_id);
-            if ($location_id)
-                    $event_data['location_id'] = $location_id;
          }
-      } else {
-         $event_data['location_id'] = $location_id;
       }
       return $location_id;
 }

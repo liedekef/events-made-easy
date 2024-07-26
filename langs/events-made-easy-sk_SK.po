@@ -15,7 +15,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:643
+#: eme-actions.php:652
 #: eme-gdpr.php:543
 #: events-manager.php:338
 msgid "Events Made Easy"
@@ -174,31 +174,31 @@ msgstr "Áno, som si istý"
 msgid "I want to receive mails"
 msgstr "Chcem dostávať emaily"
 
-#: eme-actions.php:453
+#: eme-actions.php:462
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Táto stránka zodpovedá stránke <strong>Events Made Easy</strong>. Jej obsah bude prepísaný pomocou <strong>Events Made Easy</strong>. Ak chcete zobraziť svoj obsah, môžete priradiť inú stránku pre <strong>Events Made Easy</strong> v časti <a href='%s'>Nastavenia</a>. "
 
-#: eme-actions.php:477
+#: eme-actions.php:486
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Ahojte, <strong>%s</strong>, vitajte v <strong>Events Made Easy</strong>! Dúfame, že sa vám tu bude páčiť.</p><p>Teraz je čas vložiť zoznamy podujatí prostredníctvom <a href='%s' title='Stránka widgetov'>widgetov</a>, <a href='%s' title='Dokumentácia značiek šablón'>značiek šablón</a> alebo <a href='%4$s' title='Dokumentácia skrátených kódov'>skrátených kódov </a>.</p><p>Mimochodom, prezreli ste si <a href='%5$s' title='Zmeniť nastavenia'>stránku nastavení</a>? Na tomto mieste si upravujete spôsob, akým sa podujatia a miesta zobrazujú.</p><p>Čo? Už vás nebaví vidieť túto radu? Chápem vás, <a href=\"%6$s\" title=\"Nezobrazovať túto radu znova\">kliknite sem</a> a toto sa už znova nezobrazí!</p>"
 
-#: eme-actions.php:485
+#: eme-actions.php:494
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy bol nainštalovaný alebo aktualizovaný"
 
-#: eme-actions.php:486
+#: eme-actions.php:495
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Prispejte prosím na vývoj pluginu Events Made Easy"
 
-#: eme-actions.php:488
+#: eme-actions.php:497
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Ak považujete <strong>Events Made Easy</strong> užitočné pre vás, zvážte poskytnutie malého daru, ktorý by prispel k môjmu investovanému času a ďalšiemu rozvoju. Ďakujeme za vašu láskavú podporu!"
 
-#: eme-actions.php:496
+#: eme-actions.php:505
 msgid "Dismiss"
 msgstr "Zamietnuť"
 
-#: eme-actions.php:649
+#: eme-actions.php:658
 msgid "List of next 10 events"
 msgstr "Zoznam nasledujúcich 10 podujatí"
 
@@ -1573,7 +1573,7 @@ msgstr "Pevná na miesto"
 #: eme-formfields.php:5191
 #: eme-formfields.php:5192
 #: eme-formfields.php:5193
-#: eme-fs.php:462
+#: eme-fs.php:447
 #: eme-gdpr.php:445
 #: eme-gdpr.php:446
 #: eme-gdpr.php:565
@@ -1604,7 +1604,7 @@ msgstr "Áno"
 #: eme-formfields.php:5191
 #: eme-formfields.php:5192
 #: eme-formfields.php:5193
-#: eme-fs.php:461
+#: eme-fs.php:446
 #: eme-gdpr.php:445
 #: eme-gdpr.php:446
 #: eme-gdpr.php:565
@@ -1709,7 +1709,7 @@ msgid "Edit Recurrence"
 msgstr "Upraviť opakovanie"
 
 #: eme-events.php:638
-#: eme-fs.php:607
+#: eme-fs.php:592
 msgid "Database insert failed!"
 msgstr "Zlyhalo pridanie do databázy!"
 
@@ -2215,7 +2215,7 @@ msgstr "Zobraziť/skryť extra filtre"
 
 #: eme-events.php:5974
 #: eme-events.php:6507
-#: eme-fs.php:445
+#: eme-fs.php:430
 msgid "Event Status"
 msgstr "Stav podujatia"
 
@@ -6131,7 +6131,7 @@ msgstr "Pri nahrávaní súborov sa vyskytli chyby"
 msgid "No such record"
 msgstr "Taký záznam neexistuje"
 
-#: eme-fs.php:668
+#: eme-fs.php:653
 #: eme-gdpr.php:53
 #: eme-gdpr.php:148
 #: eme-gdpr.php:231
@@ -6146,7 +6146,7 @@ msgstr "Taký záznam neexistuje"
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte vlastníka stránok."
 
-#: eme-fs.php:679
+#: eme-fs.php:664
 #: eme-gdpr.php:64
 #: eme-gdpr.php:159
 #: eme-gdpr.php:242
@@ -6170,7 +6170,7 @@ msgstr "Zistila sa manipulácia s formulárom. Ak sa domnievate, že ste túto s
 msgid "Thank you for your request, an email will be sent with further info."
 msgstr "Ďakujeme za vašu žiadosť, pošleme vám e-mail s ďalšími informáciami."
 
-#: eme-fs.php:53
+#: eme-fs.php:38
 #: eme-gdpr.php:130
 #: eme-gdpr.php:213
 #: eme-gdpr.php:335
@@ -13887,36 +13887,36 @@ msgid "Check this option if you want to allow image upload in the frontend wysiw
 msgstr ""
 
 #: eme-fs.php:25
-#: eme-fs.php:692
+#: eme-fs.php:677
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr ""
 
-#: eme-fs.php:202
+#: eme-fs.php:187
 msgid "Create event"
 msgstr ""
 
-#: eme-fs.php:500
+#: eme-fs.php:485
 #: eme-options.php:574
 msgid "New event succesfully created."
 msgstr ""
 
-#: eme-fs.php:516
+#: eme-fs.php:501
 msgid "Please enter a name for the event"
 msgstr ""
 
-#: eme-fs.php:520
+#: eme-fs.php:505
 msgid "Please enter an event description"
 msgstr ""
 
-#: eme-fs.php:523
+#: eme-fs.php:508
 msgid "Please enter a location description"
 msgstr ""
 
-#: eme-fs.php:526
+#: eme-fs.php:511
 msgid "Enter the event's start date"
 msgstr ""
 
-#: eme-fs.php:557
+#: eme-fs.php:542
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 

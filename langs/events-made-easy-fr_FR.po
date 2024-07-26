@@ -146,15 +146,15 @@ msgstr "Oui, je suis sûr"
 msgid "I want to receive mails"
 msgstr "Je veux recevoir des e-mails"
 
-#: eme-actions.php:453
+#: eme-actions.php:462
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Cette page correspond à la page des évènements <strong>Events Made Easy</strong>. Son contenu sera précisé par<strong>Events Made Easy</strong>. Si vous souhaitez afficher votre contenu, vous pouvez affecter une autre page à <strong>Events Made Easy</strong> dans les <a href='%s'>Réglages</a>. "
 
-#: eme-actions.php:477
+#: eme-actions.php:486
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Hey, <strong>%s</strong>, Bienvenue à <strong>Events Made Easy</strong>! Nous espérons que vous l'aimerez ici.</p><p>Maintenant il est temps d’insérer des listes d’évènements à travers<a href='%s' title=' Page des widgets'>widgets</a>, <a href='%s' title='Documentation sur les marqueurs de modèles'>marqueurs de modèle</a> ou <a href='%s' title='Documentation des codes courts'>codes courts</a>.</p><p>Au fait, avez-vous jeté un coup d’œil aux <a href='%s' title='Changer les paramètres'> Pages des paramètres</a> ? C'est là que vous personnalisez la manière dont les évènements et les emplacements sont affichés.</p><p>Quoi ? Fatigué de voir ce conseil ? Je vous entends, <a href=\"%s\" title=\"Ne plus afficher ce conseil\">cliquez ici</a> et vous ne le verrez plus !</p>"
 
-#: eme-actions.php:488
+#: eme-actions.php:497
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Si vous trouvez qu’<strong>Events Made Easy</strong> vous est utile, envisagez de faire un petit don pour contribuer au temps investi et aux développements ultérieurs. Merci de votre soutien !"
 
@@ -1525,7 +1525,7 @@ msgstr "Fixe par siège"
 #: eme-formfields.php:5191
 #: eme-formfields.php:5192
 #: eme-formfields.php:5193
-#: eme-fs.php:462
+#: eme-fs.php:447
 #: eme-gdpr.php:445
 #: eme-gdpr.php:446
 #: eme-gdpr.php:565
@@ -1556,7 +1556,7 @@ msgstr "Oui"
 #: eme-formfields.php:5191
 #: eme-formfields.php:5192
 #: eme-formfields.php:5193
-#: eme-fs.php:461
+#: eme-fs.php:446
 #: eme-gdpr.php:445
 #: eme-gdpr.php:446
 #: eme-gdpr.php:565
@@ -1661,7 +1661,7 @@ msgid "Edit Recurrence"
 msgstr "Modifier la périodicité"
 
 #: eme-events.php:638
-#: eme-fs.php:607
+#: eme-fs.php:592
 msgid "Database insert failed!"
 msgstr "L'insertion dans la base de données a échoué !"
 
@@ -2161,7 +2161,7 @@ msgstr "Afficher/masquer les filtres supplémentaires"
 
 #: eme-events.php:5974
 #: eme-events.php:6507
-#: eme-fs.php:445
+#: eme-fs.php:430
 msgid "Event Status"
 msgstr "Satus événement"
 
@@ -6018,7 +6018,7 @@ msgstr "Erreurs rencontrées lors du téléversement des fichiers"
 msgid "No such record"
 msgstr "Aucun enregistrement"
 
-#: eme-fs.php:668
+#: eme-fs.php:653
 #: eme-gdpr.php:53
 #: eme-gdpr.php:148
 #: eme-gdpr.php:231
@@ -6033,7 +6033,7 @@ msgstr "Aucun enregistrement"
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Robot détecté Si vous pensez avoir reçu ce message par erreur, veuillez contacter le propriétaire du site."
 
-#: eme-fs.php:679
+#: eme-fs.php:664
 #: eme-gdpr.php:64
 #: eme-gdpr.php:159
 #: eme-gdpr.php:242
@@ -6057,7 +6057,7 @@ msgstr "Falsification du formulaire détectée. Si vous pensez avoir reçu ce me
 msgid "Thank you for your request, an email will be sent with further info."
 msgstr "Merci pour votre demande, un e-mail sera envoyé avec de plus amples informations."
 
-#: eme-fs.php:53
+#: eme-fs.php:38
 #: eme-gdpr.php:130
 #: eme-gdpr.php:213
 #: eme-gdpr.php:335
@@ -6148,7 +6148,7 @@ msgstr "EME utilise éventuellement un cookie pour stocker la date et l'heure du
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:643
+#: eme-actions.php:652
 #: eme-gdpr.php:543
 #: events-manager.php:338
 msgid "Events Made Easy"
@@ -13759,15 +13759,15 @@ msgstr "À partir de %s (extension automatique)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Si le nombre de places pour une tâche est de 0, la description de la tâche sera traitée comme un en-tête de section pour la prochaine série de tâches."
 
-#: eme-actions.php:485
+#: eme-actions.php:494
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy a été installé ou mis à jour"
 
-#: eme-actions.php:486
+#: eme-actions.php:495
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Faites un don pour le développement d’Events Made Easy"
 
-#: eme-actions.php:496
+#: eme-actions.php:505
 msgid "Dismiss"
 msgstr "Rejeter"
 
@@ -13795,7 +13795,7 @@ msgstr "Corps de l’e-mail à la personne de contact d’un membre effacé"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "Le corps de l’e-mail envoyé à la personne de contact juste avant la suppression d'un membre."
 
-#: eme-actions.php:649
+#: eme-actions.php:658
 msgid "List of next 10 events"
 msgstr ""
 
@@ -13876,36 +13876,36 @@ msgid "Check this option if you want to allow image upload in the frontend wysiw
 msgstr ""
 
 #: eme-fs.php:25
-#: eme-fs.php:692
+#: eme-fs.php:677
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr ""
 
-#: eme-fs.php:202
+#: eme-fs.php:187
 msgid "Create event"
 msgstr ""
 
-#: eme-fs.php:500
+#: eme-fs.php:485
 #: eme-options.php:574
 msgid "New event succesfully created."
 msgstr ""
 
-#: eme-fs.php:516
+#: eme-fs.php:501
 msgid "Please enter a name for the event"
 msgstr ""
 
-#: eme-fs.php:520
+#: eme-fs.php:505
 msgid "Please enter an event description"
 msgstr ""
 
-#: eme-fs.php:523
+#: eme-fs.php:508
 msgid "Please enter a location description"
 msgstr ""
 
-#: eme-fs.php:526
+#: eme-fs.php:511
 msgid "Enter the event's start date"
 msgstr ""
 
-#: eme-fs.php:557
+#: eme-fs.php:542
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 

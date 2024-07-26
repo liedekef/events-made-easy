@@ -19,17 +19,11 @@ function eme_add_event_form_shortcode( $atts ) {
 				$login_url = wp_login_url($current_url,true);
 			else
 				$login_url = wp_login_url($current_url);
-			echo eme_js_redirect($login_url);
+			return eme_js_redirect($login_url);
 		} else {
 			if (empty($eme_fs_options['guest_not_allowed_text']))
 				$eme_fs_options['guest_not_allowed_text'] = __("Sorry, but you're not allowed to submit new events.","events-made-easy");
-?>
-		 <div class="eme_fs_not_allowed">
-<?php
-			echo $eme_fs_options['guest_not_allowed_text'];
-?>
-		 </div>
-<?php
+			return "<div class='eme_fs_not_allowed'>". $eme_fs_options['guest_not_allowed_text'] . "</div>";
 		}
 		return false;
 	}

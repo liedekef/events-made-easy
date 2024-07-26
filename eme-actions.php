@@ -387,6 +387,15 @@ function eme_register_scripts() {
 	} else {
 		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'jquery-ui-autocomplete' ], EME_VERSION, true );
 	}
+	$map_enabled = get_option( 'eme_map_is_active' ) ? 'true' : 'false';
+        $zooming_enabled = get_option( 'eme_map_zooming' ) ? 'true' : 'false';
+        $translation_array = [
+                'translate_ajax_url' => admin_url( 'admin-ajax.php' ),
+                'translate_map_is_active' => $map_enabled,
+                'translate_map_zooming' => $zooming_enabled,
+                'translate_frontendnonce' => wp_create_nonce( 'eme_frontend' )
+        ];
+        wp_localize_script( 'eme-fs-location', 'emefs', $translation_array );
 
 	if ( get_option( 'eme_recaptcha_for_forms' ) ) {
 		// using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...

@@ -178,7 +178,7 @@ function eme_event_fs_form( $template_id ) {
                                 }
                         }
                 } elseif ( preg_match( '/#_MAP$/', $result ) ) {
-			$replacement = "<div id='event-map'></div>";
+			$replacement = "<div id='eme-edit-location-map'></div>";
                 } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)

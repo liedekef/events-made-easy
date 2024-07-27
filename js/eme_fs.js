@@ -1,9 +1,3 @@
-function htmlDecode(value){
-        return jQuery('<div/>').html(value).text();
-}
-
-function tog(v){return v?'addClass':'removeClass';}
-
 jQuery(document).ready(function($) {
 	if (jQuery("input#location_name").length > 0) {
 		jQuery('<input>').attr({
@@ -15,13 +9,13 @@ jQuery(document).ready(function($) {
 		jQuery("input#location_name").autocomplete({
 			source: function(request, response) {
 				jQuery.post(emefs.translate_ajax_url,
-					{ frontend_nonce: emefs.translate_frontendnonce, q: request.term, action: 'eme_fs_locations_list'},
+					{ frontend_nonce: emefs.translate_frontendnonce, q: request.term, action: 'eme_locations_autocomplete_ajax'},
 					function(data){
 						response(jQuery.map(data, function(item) {
 							return {
 								id: item.id,
 								label: item.name,
-								name: htmlDecode(item.name),
+								name: eme_htmlDecode(item.name),
 								address1: item.address1,
 								address2: item.address2,
 								city: item.city,
@@ -55,7 +49,7 @@ jQuery(document).ready(function($) {
 			minLength: 1
 		}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 			return jQuery( "<li></li>" )
-				.append("<a><strong>"+htmlDecode(item.name)+'</strong><br /><small>'+htmlDecode(item.address1)+' - '+htmlDecode(item.city)+ '</small></a>')
+				.append("<a><strong>"+eme_htmlDecode(item.name)+'</strong><br /><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+ '</small></a>')
 				.appendTo( ul );
 		};
 		jQuery("input#location_name").change(function(){
@@ -72,15 +66,6 @@ jQuery(document).ready(function($) {
 				jQuery('input#location_longitude').val('').attr("readonly", false);
 			}
 		});
-		jQuery(document).on('input', '.clearable', function(){
-			jQuery(this)[tog(this.value)]('x');
-		}).on('mousemove', '.x', function( e ){
-			jQuery(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');
-		}).on('touchstart click', '.onX', function( ev ){
-			ev.preventDefault();
-			jQuery(this).removeClass('x onX').val('').change();
-		});
-
 	}
 
 	if (typeof L !== 'undefined' && emefs.translate_map_is_active==="true") {
@@ -160,17 +145,17 @@ jQuery(document).ready(function($) {
 			var geocode_url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1';
 			jQuery.getJSON( geocode_url, { 'q': searchKey}, function(data) {
 				if (data.length===0) {
-					jQuery("#event-map").hide();
+					jQuery("#eme-edit-location-map").hide();
 				} else {
 					// first we show the map, so leaflet can check the size
-					//jQuery('#event-map').show();
-					jQuery("#event-map").show();
+					//jQuery('#eme-edit-location-map').show();
+					jQuery("#eme-edit-location-map").show();
 					// to avoid the leaflet error 'Map container is already initialized'
 					if (map) {
 						map.off();
 						map.remove();
 					}
-					map = L.map('event-map', emefs_mapOptions);
+					map = L.map('eme-edit-location-map', emefs_mapOptions);
 					map.addLayer(osm);
 					map.panTo([data[0].lat, data[0].lon]);
 					var marker = L.marker(data[0]).addTo(map);
@@ -205,9 +190,9 @@ jQuery(document).ready(function($) {
 				map.remove();
 			}
 			// first we show the map, so leaflet can check the size
-			//jQuery("#event-map").slideDown('fast');
-			jQuery("#event-map").show();
-			map = L.map('event-map', emefs_mapOptions);
+			//jQuery("#eme-edit-location-map").slideDown('fast');
+			jQuery("#eme-edit-location-map").show();
+			map = L.map('eme-edit-location-map', emefs_mapOptions);
 			map.addLayer(osm);
 			var marker = L.marker(emefs_mapCenter).addTo(map);
 			var pop_content='<div class=\"eme-location-balloon\"><strong>' + loc_name +'</strong><p>' + address1 + ' ' + address2 + '<br />' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';

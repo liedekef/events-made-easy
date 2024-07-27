@@ -184,14 +184,7 @@ table#eme-location-data th {
 	margin-bottom: 1em;
 }
 /* this one influences the map appearance in the admin backend when editing events */
-div#eme-admin-map-not-found {
-	width: 400px;
-	font-size: 140%;
-	text-align: center;
-	margin-top: 100px;
-	display: none;
-}
-div#eme-admin-location-map {
+div#eme-edit-location-map {
 	width: 400px;
 	height: 300px;
 	display: none;

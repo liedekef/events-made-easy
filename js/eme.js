@@ -2,6 +2,8 @@ function eme_htmlDecode(value){
    return jQuery('<div/>').html(value).text(); 
 }
 
+function eme_tog(v){return v?'addClass':'removeClass';}
+
 // this function is being called in multiple js files, so needs to be global
 function eme_lastname_clearable() {
 		if (jQuery('input[name=lastname]').val()=='') {
@@ -125,11 +127,10 @@ jQuery(document).ready( function($) {
 	});
 
         // the next code adds an "X" to input fields of class clearable if not empty
-        function tog(v){return v?'addClass':'removeClass';}
         $(document).on('input', '.clearable', function(){
-                $(this)[tog(this.value)]('x');
+                $(this)[eme_tog(this.value)]('x');
         }).on('mousemove', '.x', function( e ){
-                $(this)[tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');
+                $(this)[eme_tog(this.offsetWidth-18 < e.clientX-this.getBoundingClientRect().left)]('onX');
         }).on('touchstart click', '.onX', function( ev ){
                 ev.preventDefault();
                 $(this).removeClass('x onX').val('').change();

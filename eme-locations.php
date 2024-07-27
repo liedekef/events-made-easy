@@ -601,12 +601,7 @@ function eme_meta_box_div_location_details( $location ) {
 		<?php
 		if ( $map_is_active ) {
 			?>
-		<div id='eme-admin-map-not-found'>
-		<p>
-			<?php esc_html_e( 'Map not found', 'events-made-easy' ); ?>
-		</p>
-		</div>
-		<div id='eme-admin-location-map'></div>
+		<div id='eme-edit-location-map'></div>
 			<?php
 		}
 		?>
@@ -1560,7 +1555,7 @@ function eme_global_map_shortcode( $atts ) {
 			wp_enqueue_script( 'eme-leaflet-gestures' );
 			wp_enqueue_style( 'eme-gestures-css' );
 		}
-		wp_enqueue_script( 'eme-location-map' );
+		wp_enqueue_script( 'eme-show-maps' );
 
 		$result           = '';
 		$prev_text        = '';
@@ -2734,7 +2729,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
 			wp_enqueue_script( 'eme-leaflet-gestures' );
 			wp_enqueue_style( 'eme-gestures-css' );
 		}
-		wp_enqueue_script( 'eme-location-map' );
+		wp_enqueue_script( 'eme-show-maps' );
 		//$id_base = $location['location_id'];
 		// we can't create a unique <div>-id based on location id alone, because you can have multiple maps on the sampe page for
 		// different events but they can go to the same location...
@@ -2824,17 +2819,19 @@ function eme_locations_search_ajax() {
 }
 
 function eme_locations_autocomplete_ajax( $no_wp_die = 0 ) {
+	if ( $no_wp_die == 0 ) {
+		if ( ( ! isset( $_REQUEST['eme_admin_nonce'] ) && ! isset( $_REQUEST['eme_frontend_nonce'] ) ) ||
+			( isset( $_REQUEST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_admin_nonce'], 'eme_admin' ) ) ||
+			( isset( $_REQUEST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
+			wp_die();
+		}
+	}
 	$res = [];
 	if ( ! isset( $_REQUEST['q'] ) ) {
 		echo wp_json_encode( $res );
 		return;
 	}
 
-	if ( ! $no_wp_die ) {
-		if ( ! current_user_can( get_option( 'eme_cap_list_locations' ) ) ) {
-			wp_die();
-		}
-	}
 	$locations = eme_search_locations( eme_sanitize_request($_REQUEST['q']) );
 	// change null to empty
 	$locations = array_map(
@@ -2865,12 +2862,14 @@ function eme_locations_autocomplete_ajax( $no_wp_die = 0 ) {
 }
 
 add_action( 'wp_ajax_eme_autocomplete_locations', 'eme_locations_autocomplete_ajax' );
+add_action( 'wp_ajax_nopriv_eme_autocomplete_locations', 'eme_locations_autocomplete_ajax' );
 add_action( 'wp_ajax_eme_locations_list', 'eme_ajax_locations_list' );
 add_action( 'wp_ajax_eme_manage_locations', 'eme_ajax_manage_locations' );
 function eme_ajax_locations_list() {
 	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+
 	if ( ! current_user_can( get_option( 'eme_cap_list_locations' ) ) ) {
 			$ajaxResult['Result']  = 'Error';
 			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );

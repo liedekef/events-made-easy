@@ -169,6 +169,7 @@ jQuery(document).ready(function ($) {
 			source: function(request, response) {
 				$.post(ajaxurl,
 					{ q: request.term,
+					  eme_admin_nonce: emelocations.translate_adminnonce,
 					  action: 'eme_autocomplete_locations'
 					},
 					function(data){

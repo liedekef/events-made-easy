@@ -146,6 +146,7 @@ jQuery(document).ready( function($) {
                source: function(request, response) {
                             $.get(self.location.href,
                                       { q: request.term,
+					eme_admin_nonce: emeevents.translate_adminnonce,
                                         eme_admin_action: 'autocomplete_locations'
                                       },
                                       function(data){
@@ -253,7 +254,7 @@ jQuery(document).ready( function($) {
    
        } else if ($('input[name="location-select-name"]').length) {
              $('#location-select-id').on("change",function() {
-               $.getJSON(self.location.href,{eme_admin_action: 'autocomplete_locations',id: $(this).val()}, function(item){
+               $.getJSON(self.location.href,{eme_admin_action: 'autocomplete_locations', eme_admin_nonce: emeevents.translate_adminnonce, id: $(this).val()}, function(item){
                   $('input[name="location-select-name"]').val(item.name);
                   $('input[name="location-select-address1"]').val(item.address1);
                   $('input[name="location-select-address2"]').val(item.address2);

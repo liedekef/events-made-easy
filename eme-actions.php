@@ -266,7 +266,7 @@ function eme_admin_register_scripts() {
 
 	wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
 	wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ 'jquery' ], EME_VERSION, true );
-	wp_register_script( 'eme-admin-maps', EME_PLUGIN_URL . 'js/eme_admin_maps.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
+	wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
 	wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'jquery-ui-autocomplete' ], EME_VERSION );
 	wp_register_script( 'eme-rememberme', EME_PLUGIN_URL . 'js/eme_localstorage.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-options', EME_PLUGIN_URL . 'js/eme_admin_options.js', [ 'jquery' ], EME_VERSION );
@@ -382,7 +382,7 @@ function eme_register_scripts() {
 		wp_register_style( 'eme-markercluster-css1', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/MarkerCluster.css', [], EME_VERSION );
 		wp_register_style( 'eme-markercluster-css2', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/MarkerCluster.Default.css', [], EME_VERSION );
 		wp_register_style( 'eme-gestures-css', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.css', [], EME_VERSION );
-		wp_register_script( 'eme-location-map', EME_PLUGIN_URL . 'js/eme_location_map.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
+		wp_register_script( 'eme-show-maps', EME_PLUGIN_URL . 'js/eme_show_maps.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
 		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'eme-leaflet-maps', 'jquery-ui-autocomplete' ], EME_VERSION, true );
 	} else {
 		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'jquery-ui-autocomplete' ], EME_VERSION, true );

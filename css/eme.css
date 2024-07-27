@@ -183,9 +183,15 @@ table#eme-location-data th {
 	line-height: 100%;
 	margin-bottom: 1em;
 }
-/* this one influences the map appearance in the admin backend when editing events */
-div#eme-edit-location-map {
+/* this one influences the map appearance when editing/adding events/locations */
+div.eme-adminedit-location-map {
 	width: 400px;
+	height: 300px;
+	display: none;
+	margin-right: 8px;
+}
+div.eme-frontendedit-location-map {
+	width: 96%;
 	height: 300px;
 	display: none;
 	margin-right: 8px;

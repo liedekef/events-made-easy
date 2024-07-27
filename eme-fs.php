@@ -31,6 +31,7 @@ function eme_add_event_form_shortcode( $atts ) {
 	wp_enqueue_style( 'eme-leaflet-css' );
 	wp_enqueue_style( 'eme_fs_stylesheet', EME_PLUGIN_URL . 'css/emefs.css', [], EME_VERSION );
 	wp_enqueue_script( 'eme-fs-location' );
+	wp_enqueue_script( 'eme-edit-maps' );
         extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
 
         $form_id = uniqid();
@@ -178,7 +179,7 @@ function eme_event_fs_form( $template_id ) {
                                 }
                         }
                 } elseif ( preg_match( '/#_MAP$/', $result ) ) {
-			$replacement = "<div id='eme-edit-location-map'></div>";
+			$replacement = "<div id='eme-edit-location-map' class='eme-frontendedit-location-map'></div>";
                 } elseif ( preg_match( '/#_SUBMIT(\{.+?\})?/', $result, $matches ) ) {
                         if ( isset( $matches[1] ) ) {
                                 // remove { and } (first and last char of second match)
@@ -265,6 +266,10 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
                       $type = 'localized_datetime';
                       break;
               case 'location_name':
+		      $required = 1;
+                      $type = 'text';
+		      $more .= " clearable";
+                      break;
               case 'event_name':
 		      $required = 1;
                       $type = 'text';
@@ -394,88 +399,59 @@ function eme_fs_getcategories() {
 }
 
 function eme_fs_getcategoriesradio($more) {
-      $categories = eme_fs_getcategories();
-      $category_radios = array();
-      if ( $categories ) {
-         // the first value should be empty, so if it is required, the browser can require it ...
-         $category_radios[] = '<input type="hidden" name="event[event_category_ids]" value="0" '.$more.' />';
-         foreach ($categories as $category){
-            $category_radios[] = sprintf('<input type="radio" id="event_category_ids_%s" value="%s" name="event[event_category_ids]" %s />', $category['category_id'], $category['category_id'], $checked);
-            $category_radios[] = sprintf('<label for="event_category_ids_%s">%s</label><br/>', $category['category_id'], $category['category_name']);
-         }
-      }
-      return implode("\n", $category_radios);
+	$categories = eme_fs_getcategories();
+	$category_radios = array();
+	if ( $categories ) {
+		// the first value should be empty, so if it is required, the browser can require it ...
+		$category_radios[] = '<input type="hidden" name="event[event_category_ids]" value="0" '.$more.' />';
+		foreach ($categories as $category){
+			$category_radios[] = sprintf('<input type="radio" id="event_category_ids_%s" value="%s" name="event[event_category_ids]" %s />', $category['category_id'], $category['category_id'], $checked);
+			$category_radios[] = sprintf('<label for="event_category_ids_%s">%s</label><br/>', $category['category_id'], $category['category_name']);
+		}
+	}
+	return implode("\n", $category_radios);
 }
 
 function eme_fs_getcategoriesselect($more) {
-      $category_select = array();
-      $category_select[] = '<select id="event_category_ids" name="event[event_category_ids]" '.$more.' >';
-      $categories = eme_fs_getcategories();
-      if ( $categories ) {
-         // the first value should be empty, so if it is required, the browser can require it ...
-         $category_select[] = '<option value="">&nbsp;</option>';
-         foreach ($categories as $category){
-            $category_select[] = sprintf('<option value="%s">%s</option>', $category['category_id'], $category['category_name']);
-         }
-      }
-      $category_select[] = '</select>';
-      return implode("\n", $category_select);
+	$category_select = array();
+	$category_select[] = '<select id="event_category_ids" name="event[event_category_ids]" '.$more.' >';
+	$categories = eme_fs_getcategories();
+	if ( $categories ) {
+		// the first value should be empty, so if it is required, the browser can require it ...
+		$category_select[] = '<option value="">&nbsp;</option>';
+		foreach ($categories as $category){
+			$category_select[] = sprintf('<option value="%s">%s</option>', $category['category_id'], $category['category_name']);
+		}
+	}
+	$category_select[] = '</select>';
+	return implode("\n", $category_select);
 }
 
 function eme_fs_getstatusselect($more) {
-      $event_status_array = eme_status_array ();
-      $status_select = array();
-      $status_select[] = '<select id="event_status" name="event[event_status]" '.$more.' >';
-         // the first value should be empty, so if it is required, the browser can require it ...
-         $category_select[] = '<option value="0">'.__('Event Status','events-made-easy').'</option>';
-         foreach ($event_status_array as $event_status_key=>$event_status_value) {
-            $status_select[] = "<option value='$event_status_key'> $event_status_value</option>";
-         }
-      $status_select[] = '</select>';
-      return implode("\n", $status_select);
-   }
+	$event_status_array = eme_status_array ();
+	$status_select = array();
+	$status_select[] = '<select id="event_status" name="event[event_status]" '.$more.' >';
+	// the first value should be empty, so if it is required, the browser can require it ...
+	$category_select[] = '<option value="0">'.__('Event Status','events-made-easy').'</option>';
+	foreach ($event_status_array as $event_status_key=>$event_status_value) {
+		$status_select[] = "<option value='$event_status_key'> $event_status_value</option>";
+	}
+	$status_select[] = '</select>';
+	return implode("\n", $status_select);
+}
 
 function eme_fs_getbinaryselect($name,$field_id,$default) {
-      $val = "<select name='$name' id='$field_id'>";
-      $selected_YES="";
-      $selected_NO="";
-      if ($default==1)
-         $selected_YES = "selected='selected'";
-      else
-         $selected_NO = "selected='selected'";
-      $val.= "<option value='0' $selected_NO>".__('No', 'events-made-easy')."</option>";
-      $val.= "<option value='1' $selected_YES>".__('Yes', 'events-made-easy')."</option>";
-      $val.=" </select>";
-      return $val;
-   }
-
-add_action( 'wp_ajax_eme_fs_locations_list', 'eme_fs_ajax_locations_list' );
-add_action( 'wp_ajax_nopriv_eme_fs_locations_list', 'eme_fs_ajax_locations_list' );
-function eme_fs_ajax_locations_list() {
-        $res = array();
-        if (!isset($_POST["q"])) {
-                echo json_encode($res);
-                return;
-        }
-        check_ajax_referer( 'eme_frontend', 'frontend_nonce' );
-        $locations = eme_search_locations(eme_sanitize_request($_POST["q"]));
-        foreach($locations as $item) {
-                $record = array();
-                $record['id']       = $item['location_id'];
-                $record['name']     = eme_trans_sanitize_html($item['location_name']);
-                $record['address1'] = eme_trans_sanitize_html($item['location_address1']);
-                $record['address2'] = eme_trans_sanitize_html($item['location_address2']);
-                $record['city']     = eme_trans_sanitize_html($item['location_city']);
-                $record['state']    = eme_trans_sanitize_html($item['location_state']);
-                $record['zip']      = eme_trans_sanitize_html($item['location_zip']);
-                $record['country']  = eme_trans_sanitize_html($item['location_country']);
-                $record['latitude'] = eme_trans_sanitize_html($item['location_latitude']);
-                $record['longitude']= eme_trans_sanitize_html($item['location_longitude']);
-                $res[]  = $record;
-        }
-
-        print json_encode($res);
-        wp_die();
+	$val = "<select name='$name' id='$field_id'>";
+	$selected_YES="";
+	$selected_NO="";
+	if ($default==1)
+		$selected_YES = "selected='selected'";
+	else
+		$selected_NO = "selected='selected'";
+	$val.= "<option value='0' $selected_NO>".__('No', 'events-made-easy')."</option>";
+	$val.= "<option value='1' $selected_YES>".__('Yes', 'events-made-easy')."</option>";
+	$val.=" </select>";
+	return $val;
 }
 
 function eme_fs_process_newevent() {

@@ -601,7 +601,7 @@ function eme_meta_box_div_location_details( $location ) {
 		<?php
 		if ( $map_is_active ) {
 			?>
-		<div id='eme-edit-location-map'></div>
+		<div id='eme-edit-location-map' class='eme-adminedit-location-map'></div></td>
 			<?php
 		}
 		?>

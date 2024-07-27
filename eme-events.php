@@ -8417,7 +8417,7 @@ function eme_meta_box_div_event_location( $event ) {
 		if ( $map_is_active ) {
 			?>
 		<td>
-		<div id='eme-edit-location-map'></div></td>
+		<div id='eme-edit-location-map' class='eme-adminedit-location-map'></div></td>
 			<?php
 		}
 		?>
@@ -9577,7 +9577,6 @@ function eme_admin_enqueue_js() {
 			$translation_array = [
 				'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
 				'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
-				'translate_map_is_active' => 'true',
 			];
 			wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
 			wp_enqueue_script( 'eme-edit-maps' );

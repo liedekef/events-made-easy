@@ -6,8 +6,7 @@ var osmAttrib='Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap
 var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 
          function eme_displayAddress(ignore_coord){
-            var map_enabled = (emeeditmaps.translate_map_is_active === 'true');
-            if (map_enabled && jQuery('input[name=location_name]').length) {
+            if (jQuery('input[name=location_name]').length) {
                eventLocation = jQuery('input[name=location_name]').val() || '';
                eventAddress1 = jQuery('input#location_address1').val() || '';
                eventAddress2 = jQuery('input#location_address2').val() || '';
@@ -28,8 +27,7 @@ var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
          }
 
          function eme_SelectdisplayAddress(){
-            var map_enabled = (emeeditmaps.translate_map_is_active === 'true');
-            if (map_enabled && jQuery('input[name="location-select-name"]').length) {
+            if (jQuery('input[name="location-select-name"]').length) {
                eventLocation = jQuery('input[name="location-select-name"]').val() || '';
                eventAddress1 = jQuery('input[name="location-select-address1"]').val() || '';
                eventAddress2 = jQuery('input[name="location-select-address2"]').val() || '';

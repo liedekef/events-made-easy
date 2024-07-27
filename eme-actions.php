@@ -383,7 +383,13 @@ function eme_register_scripts() {
 		wp_register_style( 'eme-markercluster-css2', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/MarkerCluster.Default.css', [], EME_VERSION );
 		wp_register_style( 'eme-gestures-css', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.css', [], EME_VERSION );
 		wp_register_script( 'eme-show-maps', EME_PLUGIN_URL . 'js/eme_show_maps.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
-		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'eme-leaflet-maps', 'jquery-ui-autocomplete' ], EME_VERSION, true );
+		wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
+		$translation_array = [
+			'translate_map_zooming'   => get_option( 'eme_map_zooming' ) ? 'true' : 'false',
+			'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
+		];
+		wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
+		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'eme-leaflet-maps', 'eme-edit-maps', 'jquery-ui-autocomplete' ], EME_VERSION, true );
 	} else {
 		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'jquery-ui-autocomplete' ], EME_VERSION, true );
 	}
@@ -392,7 +398,6 @@ function eme_register_scripts() {
         $translation_array = [
                 'translate_ajax_url' => admin_url( 'admin-ajax.php' ),
                 'translate_map_is_active' => $map_enabled,
-                'translate_map_zooming' => $zooming_enabled,
                 'translate_frontendnonce' => wp_create_nonce( 'eme_frontend' )
         ];
         wp_localize_script( 'eme-fs-location', 'emefs', $translation_array );

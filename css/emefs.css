@@ -1,16 +1,15 @@
-form[name=eme-fs-form]{
+form[name=eme-fs-form] {
 	display: block;
 	overflow: hidden;
 	width: 100%;
 }
 
 form[name=eme-fs-form] > div,
-form[name=eme-fs-form] > fieldset{
+form[name=eme-fs-form] > fieldset {
 	margin-bottom: 1.5em;
-}
+} 
 
 form[name=eme-fs-form] #event_name, 
-form[name=eme-fs-form] #event_notes,
 form[name=eme-fs-form] #event_contactperson_email_body,
 form[name=eme-fs-form] #event_url,
 form[name=eme-fs-form] #location_name,
@@ -21,11 +20,17 @@ form[name=eme-fs-form] #location_city,
 form[name=eme-fs-form] #location_state,
 form[name=eme-fs-form] #location_zip,
 form[name=eme-fs-form] #location_country,
-form[name=eme-fs-form] #location_town{
+form[name=eme-fs-form] #location_town {
 	width: 96%;
 }
 
-form[name=eme-fs-form] #event_notes{
+form[name=eme-fs-form] .eme_fs_notes_textarea,
+form[name=eme-fs-form] #wp-event_notes-wrap,
+form[name=eme-fs-form] #wp-location_description-wrap {
+	width: 96%;
+}
+
+form[name=eme-fs-form] #event_notes {
 	height: 120px;
 }
 
@@ -58,13 +63,13 @@ form[name=eme-fs-form] fieldset fieldset{
 	margin: 1%;
 }
 
-form[name=eme-fs-form] span.error{
+form[name=eme-fs-form] span.error {
 	font-size: smaller;
 	font-weight: bold;
 	color: #C00;
 }
 
-form[name=eme-fs-form] #event-map{
+form[name=eme-fs-form] div.eme-frontendedit-location-map {
 	width: 96%;
 	height: 400px;
 	display: none;

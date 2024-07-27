@@ -224,10 +224,11 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
               switch($field) {
               case 'event_notes':
               case 'location_description':
-                      if ($eme_fs_options['use_wysiwyg'])
+                      if ($eme_fs_options['use_wysiwyg']) {
                               $type = 'wysiwyg_textarea';
-                      else
+		      } else {
                               $type = 'textarea';
+		      }
                       break;
               case 'event_category_ids':
                       $type = ($type != 'radio')?'category_select':'category_radio';
@@ -337,8 +338,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
                     $editor_settings=['media_buttons'=>true,'textarea_name'=>"event[$field]"];
             else
                     $editor_settings=['media_buttons'=>false,'textarea_name'=>"event[$field]"];
-	    if ($required)
-		    $editor_settings['editor_class'] = "validate[required]";
+	    $editor_settings['editor_class'] = "eme_fs_wysiwig_editor_width";
 	    ob_start(); // Start output buffer
             wp_editor('',$field_id,$editor_settings);
 	    // Store the printed data in $editor variable

@@ -190,12 +190,6 @@ div.eme-adminedit-location-map {
 	display: none;
 	margin-right: 8px;
 }
-div.eme-frontendedit-location-map {
-	width: 96%;
-	height: 300px;
-	display: none;
-	margin-right: 8px;
-}
 /* for google maps to work ok in IE, we need at least 690px as max-width for the images */
 .eme_global_map img,
 .eme-location-map img {

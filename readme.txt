@@ -98,6 +98,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.2 (2024//) =
+* Remove duplicate code from frontend submit
+* Make sure location_id gets passed from frontend submit form, and latitude and longitude get added automatically
+
 = 2.5.1 (2024/07/26) =
 * Localising done earlier for the newly added javascript for frontend submit, so it works in all circumstances now (or it should)
 

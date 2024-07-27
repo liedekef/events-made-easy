@@ -489,8 +489,7 @@ function eme_meta_box_div_location_name( $location ) {
 	echo "<input type='hidden' id='location_id' name='location_id' value='" . intval( $location['location_id'] ) . "'>";
 	?>
 <div id="titlediv">
-	<!-- we need title for qtranslate as ID -->
-	<input name="location_name" id="title" type="text" required="required" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" value="<?php echo esc_html( $location['location_name'] ); ?>" size="40">
+	<input name="location_name" id="location_name" type="text" required="required" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" value="<?php echo esc_html( $location['location_name'] ); ?>" size="40">
 	<br>
 	<br>
 	<?php

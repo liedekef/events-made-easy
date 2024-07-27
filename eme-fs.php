@@ -108,7 +108,10 @@ function eme_event_fs_form( $template_id ) {
 			// for backwards compatibility
 			if ($field == "location_address") $field="location_address1";
 			if ($field == "location_town") $field="location_city";
-			$replacement = eme_get_fs_field_html($field, $type , $more , $required);
+
+			// ignore manual adding location_id, lat and long (they are added autom)
+			if ($field!="location_id" && $field!="location_latitude" && $field!="location_longitude")
+				$replacement = eme_get_fs_field_html($field, $type , $more , $required);
 
 			// location also needs id, latitude and longitude (these are hidden anyway)
 			if ( strstr( $field, 'location_' ) ) {

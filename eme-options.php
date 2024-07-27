@@ -652,8 +652,6 @@ function eme_add_options( $reset = 0 ) {
 
                 <div class="map">
                         #_MAP
-			#_FIELD{location_latitude}
-			#_FIELD{location_longitude}
                 </div>
 '
 		]
@@ -953,6 +951,11 @@ function eme_update_options( $db_version ) {
 				}
 			}
 			delete_option('eme_unique_email_per_person');
+		}
+		if ( $db_version < 393 ) {
+			$fs_options = get_option('eme_fs');
+			$fs_options['form_format'] = preg_replace('/#_FIELD{location_longitude}|#_FIELD{location_latitude}|#_FIELD{location_id}/','',$fs_options['form_format']);
+			update_option( 'eme_fs', $fs_options);
 		}
 	}
 	// make sure the captcha doesn't cause problems

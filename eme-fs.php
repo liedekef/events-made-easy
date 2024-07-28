@@ -29,7 +29,6 @@ function eme_add_event_form_shortcode( $atts ) {
 	}
 
 	wp_enqueue_style( 'eme-leaflet-css' );
-	wp_enqueue_style( 'eme_fs_stylesheet', EME_PLUGIN_URL . 'css/emefs.css', [], EME_VERSION );
 	wp_enqueue_script( 'eme-fs-location' );
 	wp_enqueue_script( 'eme-edit-maps' );
         extract( shortcode_atts( [ 'id' => 0 ], $atts ) );

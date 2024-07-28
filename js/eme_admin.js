@@ -1,11 +1,3 @@
-function base64_encode(data) {
-  if (!data) {
-    return data;
-  }
-
-  return window.btoa(unescape(encodeURIComponent(data)));
-}
-
 function areyousure(message) {
    if (!confirm(message)) {
       return false;

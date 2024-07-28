@@ -271,7 +271,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
               case 'location_name':
 		      $required = 1;
                       $type = 'text';
-		      $more .= " clearable";
+		      $more .= " class='clearable'";
                       break;
               case 'event_name':
 		      $required = 1;

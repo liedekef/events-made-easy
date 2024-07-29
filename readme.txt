@@ -17,6 +17,7 @@ Events Made Easy is a full-featured event and membership management solution for
 
 Main features:
 * Public, private, draft and recurring events with custom and dynamic fields in the RSVP form
+* Allow people to create events from the frontend using a specific shortcode
 * Membership management with custom and dynamic fields
 * Volunteer management for events (using event tasks)
 * Attendance reporting for events and memberships if the rsvp or member qrcode is scanned by someone with enough rights

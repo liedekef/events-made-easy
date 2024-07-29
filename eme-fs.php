@@ -75,6 +75,7 @@ function eme_event_fs_form( $template_id ) {
 	$location_id_added = 0;
         $needle_offset = 0;
         preg_match_all( '/#(REQ)?_[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+	$empty_event = eme_new_event();
         foreach ( $placeholders[0] as $orig_result ) {
                 $result             = $orig_result[0];
                 $orig_result_needle = $orig_result[1] - $needle_offset;
@@ -95,7 +96,7 @@ function eme_event_fs_form( $template_id ) {
 		#_PROP{} of #_PROP{}{}{}
 		#_CUSTOMFIELD{}
 		if ( preg_match( '/#_FIELD\{(.+?)\}(\{.+?\})?(\{.+?\})?$/', $result, $matches ) ) {
-			$field = $matches[1];
+			$field = eme_sanitize_request($matches[1]);
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
 				$type = substr( $matches[2], 1, -1 );
@@ -109,8 +110,14 @@ function eme_event_fs_form( $template_id ) {
 			if ($field == "location_town") $field="location_city";
 
 			// ignore manual adding location_id, lat and long (they are added autom)
-			if ($field!="location_id" && $field!="location_latitude" && $field!="location_longitude")
-				$replacement = eme_get_fs_field_html($field, $type , $more , $required);
+			if ($field!="location_id" && $field!="location_latitude" && $field!="location_longitude") {
+				// try to be intelligent: if a property exists, we use the property
+				if (!isset($empty_event[$field] && isset($empty_event['event_properties'][$field])) {
+					$replacement = eme_get_fs_field_html('event-properties', 'prop-'.$type , $more , $required, $prop);
+				} else {
+					$replacement = eme_get_fs_field_html($field, $type , $more , $required);
+				}
+			}
 
 			// location also needs id, latitude and longitude (these are hidden anyway)
 			if ( strstr( $field, 'location_' ) ) {
@@ -128,7 +135,7 @@ function eme_event_fs_form( $template_id ) {
 				}
 			}
                 } elseif ( preg_match( '/#_ATT\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
-			$att = $matches[1];
+			$att = eme_sanitize_request($matches[1]);
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
 				$type = substr( $matches[2], 1, -1 );
@@ -139,7 +146,7 @@ function eme_event_fs_form( $template_id ) {
 			}
 			$replacement = eme_get_fs_field_html('event-attributes', 'att-'.$type , $more , $required, $att);
                 } elseif ( preg_match( '/#_PROP\{(.+?)\}(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
-			$prop = $matches[1];
+			$prop = eme_sanitize_request($matches[1]);
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
 				$type = substr( $matches[2], 1, -1 );

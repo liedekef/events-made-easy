@@ -5653,8 +5653,7 @@ function eme_get_rsvp_event_arr( $event_ids ) {
 	}
 
 	// the 'order by' is of course only useful if the event_id argument for the function was an array of event id's
-	$sql = "SELECT * FROM $events_table
-      $where ORDER BY FIELD(event_id,$event_ids_joined)";
+	$sql = "SELECT * FROM $events_table $where ORDER BY FIELD(event_id,$event_ids_joined)";
 
 	$events = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $events as $key => $event ) {
@@ -5785,11 +5784,11 @@ function eme_import_csv_events() {
 			}
 
 			if ( ! empty( $line['event_start_date'] ) && ! eme_is_date( $line['event_start_date'] ) ) {
-								++$errors;
-								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_start_date', implode( ',', $row ) ) );
+					++$errors;
+					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_start_date', implode( ',', $row ) ) );
 			} elseif ( ! empty( $line['event_end_date'] ) && ! eme_is_date( $line['event_end_date'] ) ) {
-								++$errors;
-								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_end_date', implode( ',', $row ) ) );
+					++$errors;
+					$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'event_end_date', implode( ',', $row ) ) );
 			} elseif ( isset( $line['event_name'] ) ) {
 				if ( ! isset( $line['location_id'] ) ) {
 					$line['location_id'] = $location_id;
@@ -5798,7 +5797,7 @@ function eme_import_csv_events() {
 				// also import attributes
 				foreach ( $line as $key => $value ) {
 					if ( preg_match( '/^att_(.*)$/', $key, $matches ) ) {
-										$att = $matches[1];
+						$att = $matches[1];
 						if ( ! isset( $line['event_attributes'] ) ) {
 							$line['event_attributes'] = [];
 						}
@@ -5809,7 +5808,7 @@ function eme_import_csv_events() {
 				// also import properties
 				foreach ( $line as $key => $value ) {
 					if ( preg_match( '/^prop_(.*)$/', $key, $matches ) ) {
-										$prop = $matches[1];
+						$prop = $matches[1];
 						if ( ! isset( $line['event_properties'] ) ) {
 							$line['event_properties'] = [];
 						}

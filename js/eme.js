@@ -801,7 +801,7 @@ jQuery(document).ready( function($) {
         $('[name=eme-fs-form]').on('submit', function(event) {
                 event.preventDefault();
                 var form_id=$(this).attr('id');
-		if (emebasic.translate_fs_wysiwyg) {
+		if (emebasic.translate_fs_wysiwyg=="true") {
 			var editor = tinymce.get('event_notes');
 			if ( editor !== null) {
 				editor.save();

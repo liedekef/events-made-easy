@@ -352,7 +352,7 @@ function eme_register_scripts() {
 		'translate_yessure'            => __( "Yes, I'm sure", 'events-made-easy' ),
 		'translate_iwantmails'         => __( 'I want to receive mails', 'events-made-easy' ),
 		'translate_firstDayOfWeek'     => get_option( 'start_of_week' ),
-		'translate_fs_wysiwyg'         => $eme_fs_options['use_wysiwyg'],
+		'translate_fs_wysiwyg'         => $eme_fs_options['use_wysiwyg']? 'true': 'false',
 		'translate_flanguage'          => $language,
 		'translate_fdateformat'        => EME_WP_DATE_FORMAT,
 		'translate_ftimeformat'        => EME_WP_TIME_FORMAT,

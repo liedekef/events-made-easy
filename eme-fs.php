@@ -149,8 +149,8 @@ function eme_event_fs_form( $template_id ) {
 				$more = substr( $matches[3], 1, -1 );
 			}
 			$replacement = eme_get_fs_field_html('event-properties', 'prop-'.$type , $more , $required, $prop);
-                } elseif ( preg_match( '/#_CUSTOMFIELD\{(.+?)\}$/', $result ) ) {
-			$formfield = eme_sanitize_request($matches[1]);
+                } elseif ( preg_match( '/#_CUSTOMFIELD\{(.+?)\}$/', $result, $matches ) ) {
+			$formfield = eme_get_formfield($matches[1]);
 			if ($formfield && ($formfield['field_purpose']=='events' || $formfield['field_purpose']=='locations')) {
 				$postfield_name="FIELD".$formfield['field_id'];
 				if ($formfield['field_required'])

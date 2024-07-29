@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.3 (2024//) =
+* Fix a typo causing custom field not to be rendered in the frontend add event form
+
 = 2.5.2 (2024/07/28) =
 * Remove duplicate code from frontend submit
 * Make sure the location id gets passed from frontend submit form (if selecting existing location), and latitude and longitude get added automatically

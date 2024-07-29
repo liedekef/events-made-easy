@@ -1678,8 +1678,8 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 
 		</table><br><br>
 		<?php
-		esc_html_e( 'Member info', 'events-made-easy' );
-		echo '<br>';
+		//esc_html_e( 'Member info', 'events-made-easy' );
+		//echo '<br>';
 		echo eme_member_form( $member, $membership_id, 1 );
 		?>
 		</form>
@@ -1738,7 +1738,8 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 	$form_html .= "<input type='hidden' id='membership_id' name='membership_id' value='$membership_id'>";
 	$form_html .= "<input type='hidden' name='wp_id' value='$wp_id'>";
 
-	if (!empty($member['member_id'])) {
+	// in the backend start/end/status is already mentioned, so no need to that again
+	if (! $from_backend && !empty($member['member_id'])) {
 		$format_prefix = "<table class='eme-rsvp-form'>
 			<tr><th scope='row'>" . esc_html__( 'Start date', 'events-made-easy' ) . ":</th><td>#_STARTDATE</td></tr>
 			<tr><th scope='row'>" . esc_html__( 'End date', 'events-made-easy' ) . ":</th><td>#_ENDDATE</td></tr>

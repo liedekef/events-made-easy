@@ -339,6 +339,7 @@ function eme_register_scripts() {
 		}
 	}
 	wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
+	$eme_fs_options = get_option('eme_fs');
 	$translation_array = [
 		'translate_plugin_url'         => EME_PLUGIN_URL,
 		'translate_ajax_url'           => admin_url( 'admin-ajax.php' ),
@@ -351,6 +352,7 @@ function eme_register_scripts() {
 		'translate_yessure'            => __( "Yes, I'm sure", 'events-made-easy' ),
 		'translate_iwantmails'         => __( 'I want to receive mails', 'events-made-easy' ),
 		'translate_firstDayOfWeek'     => get_option( 'start_of_week' ),
+		'translate_fs_wysiwyg'         => $eme_fs_options['use_wysiwyg'],
 		'translate_flanguage'          => $language,
 		'translate_fdateformat'        => EME_WP_DATE_FORMAT,
 		'translate_ftimeformat'        => EME_WP_TIME_FORMAT,
@@ -374,7 +376,8 @@ function eme_register_scripts() {
 	}
 	wp_register_script( 'eme-rememberme', EME_PLUGIN_URL . 'js/eme_localstorage.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
 
-	if ( get_option( 'eme_map_is_active' ) ) {
+	$eme_map_is_active = get_option( 'eme_map_is_active' );
+	if ( $eme_map_is_active) {
 		wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ 'jquery' ], EME_VERSION, true );
 		wp_register_script( 'eme-leaflet-gestures', EME_PLUGIN_URL . 'js/leaflet-gesturehandling-1.2.1/leaflet-gesture-handling.min.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
 		wp_register_script( 'eme-leaflet-markercluster', EME_PLUGIN_URL . 'js/leaflet-markercluster-1.4.1/leaflet.markercluster.js', [ 'eme-leaflet-maps' ], EME_VERSION, true );
@@ -393,8 +396,7 @@ function eme_register_scripts() {
 	} else {
 		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'jquery-ui-autocomplete' ], EME_VERSION, true );
 	}
-	$map_enabled = get_option( 'eme_map_is_active' ) ? 'true' : 'false';
-        $zooming_enabled = get_option( 'eme_map_zooming' ) ? 'true' : 'false';
+	$map_enabled = $eme_map_is_active ? 'true' : 'false';
         $translation_array = [
                 'translate_ajax_url' => admin_url( 'admin-ajax.php' ),
                 'translate_map_is_active' => $map_enabled,

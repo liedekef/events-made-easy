@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.3 (2024//) =
 * Fix a typo causing custom field not to be rendered in the frontend add event form
+* Make frontend submit also work when wysiwyg not activated
 
 = 2.5.2 (2024/07/28) =
 * Remove duplicate code from frontend submit

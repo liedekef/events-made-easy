@@ -801,14 +801,16 @@ jQuery(document).ready( function($) {
         $('[name=eme-fs-form]').on('submit', function(event) {
                 event.preventDefault();
                 var form_id=$(this).attr('id');
-		var editor = tinymce.get('event_notes');
-                if ( editor !== null) {
-                   editor.save();
-                }
-		var editor2 = tinymce.get('location_description');
-                if ( editor2 !== null) {
-                   editor.save();
-                }
+		if (emebasic.translate_fs_wysiwyg) {
+			var editor = tinymce.get('event_notes');
+			if ( editor !== null) {
+				editor.save();
+			}
+			var editor2 = tinymce.get('location_description');
+			if ( editor2 !== null) {
+				editor.save();
+			}
+		}
                 eme_genericform_json(form_id,'fs','eme_frontend_submit');
         });
 	// when doing form changes, we set a small delay to avoid calling the json function too many times

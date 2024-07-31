@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.4 (2024//) =
+* Frontend submit now supports generic EME placeholders and interprets shortcodes too
+
 = 2.5.3 (2024/07/30) =
 * syntax error fix
 

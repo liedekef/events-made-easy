@@ -57,6 +57,9 @@ function eme_event_fs_form( $template_id ) {
 	// replace EME language tags as early as possible
         $format = eme_translate_string_nowptrans( $format );
 
+	// now the generic placeholders
+	$format = eme_replace_generic_placeholders( $format );
+
         $captcha_set = 0;
         if ( $eme_fs_options['use_recaptcha'] ) {
                 $format = eme_add_captcha_submit( $format, 'recaptcha' );
@@ -217,7 +220,7 @@ function eme_event_fs_form( $template_id ) {
                         $needle_offset += $orig_result_length - strlen( $replacement );
                 }
         }
-	return $format;
+	return do_shortcode( $format );
 }
 
 function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $required=0, $field_id = false) {

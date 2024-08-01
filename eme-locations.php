@@ -251,7 +251,7 @@ function eme_import_csv_locations() {
 	$headers = array_map( 'strtolower', fgetcsv( $handle, 0, $delimiter, $enclosure ) );
 
 	// check required columns
-	if ( ! in_array( 'location_name', $headers ) || ! in_array( 'location_address1', $headers ) ) {
+	if ( ! in_array( 'location_name', $headers ) || ! in_array( 'location_address1', $headers ) || ! in_array( 'location_city', $headers ) ) {
 		$result = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
 		$empty_props = [];
@@ -262,7 +262,7 @@ function eme_import_csv_locations() {
 			// remove columns with empty values
 			$line        = eme_array_remove_empty_elements( $line );
 			$location_id = 0;
-			if ( isset( $line['location_name'] ) && isset( $line['location_address1'] ) ) {
+			if ( isset( $line['location_name'] ) && isset( $line['location_address1'] ) && isset( $line['location_city'] ) ) {
 				// also import attributes
 				foreach ( $line as $key => $value ) {
 					if ( preg_match( '/^att_(.*)$/', $key, $matches ) ) {

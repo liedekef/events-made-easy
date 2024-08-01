@@ -312,7 +312,7 @@ function eme_insert_events_for_recurrence( $recurrence, $event ) {
 		$event['event_end'] = "$event_end_date $event_end_time";
 		$event_id           = eme_db_insert_event( $event, 1, $day_difference );
 		if ( $event_id ) {
-			eme_event_store_cf_answers( $event_id );
+			eme_event_store_answers( $event_id );
 		}
 		++$count;
 	}
@@ -431,7 +431,7 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 				$event['event_end'] = "$event_end_date $event_end_time";
 				$res                = eme_db_update_event( $event, $existing_event['event_id'], 1, $day_difference );
 				if ( $res ) {
-					eme_event_store_cf_answers( $existing_event['event_id'] );
+					eme_event_store_answers( $existing_event['event_id'] );
 				}
 			}
 			// we handled a specific day, so remove it from the array

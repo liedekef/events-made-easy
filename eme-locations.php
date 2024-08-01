@@ -165,7 +165,7 @@ function eme_locations_page() {
 				if ( $action == 'do_addlocation' ) {
 					$new_location_id = eme_insert_location( $location );
 					if ( $new_location_id ) {
-						eme_location_store_cf_answers( $new_location_id );
+						eme_location_store_answers( $new_location_id );
 						eme_upload_files( $new_location_id, 'locations' );
 						$new_location = eme_get_location( $new_location_id );
 						$message      = __( 'The location has been added.', 'events-made-easy' );
@@ -178,7 +178,7 @@ function eme_locations_page() {
 					}
 				} elseif ( $action == 'do_editlocation' ) {
 					if ( eme_update_location( $location, $location_id ) ) {
-						eme_location_store_cf_answers( $location_id );
+						eme_location_store_answers( $location_id );
 						eme_upload_files( $location_id, 'locations' );
 						$message = __( 'The location has been updated.', 'events-made-easy' );
 						if ( get_option( 'eme_stay_on_edit_page' ) ) {
@@ -3047,7 +3047,7 @@ function eme_ajax_manage_locations() {
 	wp_die();
 }
 
-function eme_get_location_post_cfs() {
+function eme_get_location_post_answers() {
 	$answers = [];
 	foreach ( $_POST as $key => $value ) {
 		if ( preg_match( '/^FIELD(\d+)$/', eme_sanitize_request( $key ), $matches ) ) {
@@ -3090,11 +3090,16 @@ function eme_get_location_answers( $location_id ) {
 	return $cf;
 }
 
+// for backwards compat
 function eme_location_store_cf_answers( $location_id ) {
+	return eme_location_store_answers( $location_id );
+}
+
+function eme_location_store_answers( $location_id ) {
 	$answer_ids_seen = [];
 
 	$all_answers   = eme_get_location_answers( $location_id );
-	$found_answers = eme_get_location_post_cfs();
+	$found_answers = eme_get_location_post_answers();
 	foreach ( $found_answers as $answer ) {
 		$formfield = eme_get_formfield( $answer['field_id'] );
 		if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'locations' ) {

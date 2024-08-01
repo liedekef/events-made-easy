@@ -558,7 +558,7 @@ function eme_fs_process_newevent() {
 			if (has_filter('eme_fs_event_insert_filter')) $event_data=apply_filters('eme_fs_event_insert_filter',$event_data);
 			$event_id = eme_db_insert_event($event_data);
 			if ($event_id) {
-				eme_event_store_cf_answers($event_id);
+				eme_event_store_answers($event_id);
 				eme_upload_files( $event_id, 'events' );
 				$event = eme_get_event($event_id);
 				if (has_action('eme_fs_submit_event_action')) {
@@ -626,7 +626,7 @@ function eme_fs_processlocation($event_data, $force=0) {
          $validation_result = eme_validate_location ( $location );
          if ($validation_result == "OK") {
             $location_id = eme_insert_location($location, $force);
-            eme_location_store_cf_answers($location_id);
+            eme_location_store_answers($location_id);
          }
       }
       return $location_id;

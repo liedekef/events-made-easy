@@ -2042,14 +2042,26 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 					} else {
 						$value = eme_sanitize_request( $value );
 					}
+					if ($formfield['field_purpose'] == 'people') {
+						$type = 'person';
+						$related_id = isset($booking['person_id'])?$booking['person_id']:0;
+					} else {
+						$type = 'booking';
+						$related_id = isset($booking['booking_id'])?$booking['booking_id']:0;
+					}
+					// some extra fields are added, so people can use these to check things: field_name, field_purpose, extra_charge (also used in code), grouping_id and occurence_id
 					$answer    = [
 						'field_name'    => $formfield['field_name'],
 						'field_id'      => $field_id,
 						'field_purpose' => $formfield['field_purpose'],
 						'extra_charge'  => $formfield['extra_charge'],
 						'answer'        => $value,
-						'grouping_id'   => 0,
+						'grouping_id '  => 0,
 						'occurence_id'  => 0,
+						'eme_grouping'  => 0,
+						'occurence'     => 0,
+						'type'          => $type,
+						'related_id'    => $related_id,
 					];
 					$answers[] = $answer;
 				}
@@ -2083,6 +2095,14 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 							} else {
 								$value = eme_sanitize_request( $value );
 							}
+							if ($formfield['field_purpose'] == 'people') {
+								$type = 'person';
+								$related_id = isset($booking['person_id'])?$booking['person_id']:0;
+							} else {
+								$type = 'booking';
+								$related_id = isset($booking['booking_id'])?$booking['booking_id']:0;
+							}
+							// some extra fields are added, so people can use these to check things: field_name, field_purpose, extra_charge (also used in code), grouping_id and occurence_id
 							$answer    = [
 								'field_name'    => $formfield['field_name'],
 								'field_id'      => $field_id,
@@ -2091,6 +2111,10 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 								'answer'        => $value,
 								'grouping_id'   => intval($group_id),
 								'occurence_id'  => intval($occurence_id),
+								'eme_grouping'  => intval($group_id),
+								'occurence'     => intval($occurence_id),
+								'type'          => $type,
+								'related_id'    => $related_id,
 							];
 							$answers[] = $answer;
 						}
@@ -2122,14 +2146,26 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 				} else {
 					$value = eme_sanitize_request( $value );
 				}
+				if ($formfield['field_purpose'] == 'people') {
+					$type = 'person';
+					$related_id = isset($booking['person_id'])?$booking['person_id']:0;
+				} else {
+					$type = 'booking';
+					$related_id = isset($booking['booking_id'])?$booking['booking_id']:0;
+				}
+				// some extra fields are added, so people can use these to check things: field_name, field_purpose, extra_charge (also used in code), grouping_id and occurence_id
 				$answer    = [
 					'field_name'    => $formfield['field_name'],
 					'field_id'      => $field_id,
 					'field_purpose' => $formfield['field_purpose'],
 					'extra_charge'  => $formfield['extra_charge'],
 					'answer'        => $value,
-					'grouping_id'   => 0,
+					'grouping_id '  => 0,
 					'occurence_id'  => 0,
+					'eme_grouping'  => 0,
+					'occurence'     => 0,
+					'type'          => $type,
+					'related_id'    => $related_id,
 				];
 				$answers[] = $answer;
 			}
@@ -2162,6 +2198,7 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
 	} else {
 		$booking_id = 0;
 	}
+	$booking['booking_id']=$booking_id;
 
 	$answer_ids_seen = [];
 	$found_answers   = eme_get_booking_post_answers( $booking );
@@ -2170,18 +2207,12 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
 			$extra_charge += $answer['answer'];
 		}
 		if ( $do_update ) {
-			if ( $answer['field_purpose'] == 'people' ) {
-				$answer_id = eme_get_answerid( $all_answers, $person_id, 'person', $answer['field_id'], $answer['grouping_id'], $answer['occurence_id'] );
-			} else {
-				$answer_id = eme_get_answerid( $all_answers, $booking_id, 'booking', $answer['field_id'], $answer['grouping_id'], $answer['occurence_id'] );
-			}
+			$answer_id = eme_get_answerid( $all_answers, $answer['related_id'], $answer['type'], $answer['field_id'], $answer['eme_grouping'], $answer['occurence'] );
 			if ( $answer_id ) {
 				eme_update_answer( $answer_id, $answer['answer'] );
 				$answer_ids_seen[] = $answer_id;
-			} elseif ( $answer['field_purpose'] == 'people' ) {
-				$answer_id = eme_insert_answer( 'person', $person_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
 			} else {
-				$answer_id = eme_insert_answer( 'booking', $booking_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
+				$answer_id = eme_insert_answer( $answer['type'], $answer['related_id'], $answer['field_id'], $answer['answer'], $answer['eme_grouping'], $answer['occurence'] );
 			}
 		}
 	}

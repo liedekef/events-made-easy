@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 393 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 394 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -1103,9 +1103,6 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
          answer_id int(11) NOT NULL auto_increment,
          type varchar(20) DEFAULT NULL,
          related_id mediumint(9) DEFAULT 0,
-         booking_id mediumint(9) DEFAULT 0,
-         person_id mediumint(9) DEFAULT 0,
-         member_id mediumint(9) DEFAULT 0,
          field_id int(11) DEFAULT 0,
          answer text NOT NULL,
          eme_grouping int(11) DEFAULT 0,
@@ -1178,6 +1175,12 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`location_id`,`answer`,'location' FROM $cf_table_name" );
 				eme_drop_table( $cf_table_name );
 			}
+		}
+		if ( $db_version < 394 ) {
+			// these were still added for new versions of EME, remove them ...
+			eme_maybe_drop_column( $table_name, 'person_id' );
+			eme_maybe_drop_column( $table_name, 'member_id' );
+			eme_maybe_drop_column( $table_name, 'booking_id' );
 		}
 	}
 }

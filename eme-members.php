@@ -3621,6 +3621,17 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1 ) {
 							} else {
 								$value = eme_sanitize_request( $value );
 							}
+							//         type varchar(20) DEFAULT NULL,
+							//         related_id mediumint(9) DEFAULT 0,
+
+							if ($formfield['field_purpose'] == 'people') {
+								$type = 'person';
+								$related_id = isset($member['person_id'])?$member['person_id']:0;
+							} else {
+								$type = 'member';
+								$related_id = isset($member['member_id'])?$member['member_id']:0;
+							}
+							// some extra fields are added, so people can use these to check things: field_name, field_purpose, extra_charge (also used in code), grouping_id and occurence_id
 							$answer    = [
 								'field_name'    => $formfield['field_name'],
 								'field_id'      => $field_id,
@@ -3629,6 +3640,10 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1 ) {
 								'answer'        => $value,
 								'grouping_id'   => $group_id,
 								'occurence_id'  => $occurence_id,
+								'eme_grouping'  => $group_id,
+								'occurence'     => $occurence_id,
+								'type'          => $type,
+								'related_id'    => $related_id,
 							];
 							$answers[] = $answer;
 						}
@@ -3661,6 +3676,14 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1 ) {
 				} else {
 					$value = eme_sanitize_request( $value );
 				}
+				if ($formfield['field_purpose'] == 'people') {
+					$type = 'person';
+					$related_id = isset($member['person_id'])?$member['person_id']:0;
+				} else {
+					$type = 'member';
+					$related_id = isset($member['member_id'])?$member['member_id']:0;
+				}
+				// some extra fields are added, so people can use these to check things: field_name, field_purpose, extra_charge (also used in code), grouping_id and occurence_id
 				$answer    = [
 					'field_name'    => $formfield['field_name'],
 					'field_id'      => $field_id,
@@ -3669,6 +3692,10 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1 ) {
 					'answer'        => $value,
 					'grouping_id'   => 0,
 					'occurence_id'  => 0,
+					'eme_grouping'  => 0,
+					'occurence'     => 0,
+					'type'          => $type,
+					'related_id'    => $related_id,
 				];
 				$answers[] = $answer;
 			}
@@ -3707,18 +3734,12 @@ function eme_store_member_answers( $member, $do_update = 1 ) {
 			$extra_charge += $answer['answer'];
 		}
 		if ( $do_update ) {
-			if ( $answer['field_purpose'] == 'people' ) {
-				$answer_id = eme_get_answerid( $all_answers, $person_id, 'person', $answer['field_id'], $answer['grouping_id'], $answer['occurence_id'] );
-			} else {
-				$answer_id = eme_get_answerid( $all_answers, $member_id, 'member', $answer['field_id'], $answer['grouping_id'], $answer['occurence_id'] );
-			}
+			$answer_id = eme_get_answerid( $all_answers, $answer['related_id'], $answer['type'], $answer['field_id'], $answer['eme_grouping'], $answer['occurence'] );
 			if ( $answer_id ) {
 				eme_update_answer( $answer_id, $answer['answer'] );
 				$answer_ids_seen[] = $answer_id;
-			} elseif ( $answer['field_purpose'] == 'people' ) {
-				$answer_id = eme_insert_answer( 'person', $person_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
-			} else {
-				$answer_id = eme_insert_answer( 'member', $member_id, $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence_id'] );
+			} elseif ($answer['related_id']) {
+				$answer_id = eme_insert_answer( $answer['type'], $answer['related_id'], $answer['field_id'], $answer['answer'], $answer['grouping_id'], $answer['occurence'] );
 			}
 		}
 	}

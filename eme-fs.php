@@ -452,7 +452,7 @@ function eme_fs_getstatusselect($more) {
 	$status_select = array();
 	$status_select[] = '<select id="event_status" name="event[event_status]" '.$more.' >';
 	// the first value should be empty, so if it is required, the browser can require it ...
-	$category_select[] = '<option value="0">'.__('Event Status','events-made-easy').'</option>';
+	$category_select[] = '<option value="">'.__('Event Status','events-made-easy').'</option>';
 	foreach ($event_status_array as $event_status_key=>$event_status_value) {
 		$status_select[] = "<option value='$event_status_key'> $event_status_value</option>";
 	}
@@ -547,9 +547,9 @@ function eme_fs_process_newevent() {
 		if (empty($event_data['location_id']))
 			$event_data['location_id'] = eme_fs_processlocation($event_data, $force);
 
-		if (!isset($event_data['event_status']))
+		if (empty($event_data['event_status']))
 			$event_data['event_status']=$eme_fs_options['auto_publish'];
-		if (!$event_data['event_category_ids'] && $eme_fs_options['default_cat'])
+		if (!isset($event_data['event_category_ids']) && !empty($eme_fs_options['default_cat']))
 			$event_data['event_category_ids']=$eme_fs_options['default_cat'];
 
 		// make sure all event properties are set as expected

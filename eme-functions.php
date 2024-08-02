@@ -1460,7 +1460,7 @@ function eme_js_datetime( $mydate, $timezone = '' ) {
 		//if ($safari)
 		//     return $eme_date_obj->format('U')*1000;
 		//  else
-			return $eme_date_obj->format( 'Y-m-d\TH:i:s' );
+		return $eme_date_obj->format( 'Y-m-d\TH:i:s' );
 	}
 }
 

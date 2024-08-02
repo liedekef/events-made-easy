@@ -1220,18 +1220,8 @@ function eme_events_page_content() {
 	if ( get_query_var( 'eme_city' ) ) {
 		$eme_city      = eme_sanitize_request( get_query_var( 'eme_city' ) );
 		$location_ids  = join( ',', eme_get_city_location_ids( $eme_city ) );
-		$stored_format = get_option( 'eme_event_list_item_format' );
 		if ( count( $location_ids ) > 0 ) {
-			$format_header = get_option( 'eme_event_list_item_format_header' );
-			if ( eme_is_empty_string( $format_header ) ) {
-				$format_header = DEFAULT_EVENT_LIST_HEADER_FORMAT;
-			}
-			$format_footer = get_option( 'eme_event_list_item_format_footer' );
-			if ( eme_is_empty_string( $format_footer ) ) {
-				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
-			}
-			$limit     = intval(get_option( 'eme_event_list_number_items' ));
-			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_ids: $location_ids );
+			$page_body = eme_get_events_list( location_ids: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
 		}
@@ -1240,18 +1230,8 @@ function eme_events_page_content() {
 	if ( get_query_var( 'eme_country' ) ) {
 		$eme_country   = eme_sanitize_request( get_query_var( 'eme_country' ) );
 		$location_ids  = join( ',', eme_get_country_location_ids( $eme_country ) );
-		$stored_format = get_option( 'eme_event_list_item_format' );
 		if ( count( $location_ids ) > 0 ) {
-			$format_header = get_option( 'eme_event_list_item_format_header' );
-			if ( eme_is_empty_string( $format_header ) ) {
-				$format_header = DEFAULT_EVENT_LIST_HEADER_FORMAT;
-			}
-			$format_footer = get_option( 'eme_event_list_item_format_footer' );
-			if ( eme_is_empty_string( $format_footer ) ) {
-				$format_footer = DEFAULT_EVENT_LIST_FOOTER_FORMAT;
-			}
-			$limit     = intval(get_option( 'eme_event_list_number_items' ));
-			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, location_ids: $location_ids );
+			$page_body = eme_get_events_list( location_ids: $location_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
 		}
@@ -1268,20 +1248,19 @@ function eme_events_page_content() {
 		return $page_body;
 	}
 	if ( ! get_query_var( 'calendar_day' ) && get_query_var( 'eme_event_cat' ) ) {
-		$format_header = get_option( 'eme_cat_event_list_item_format_header' );
-		if ( eme_is_empty_string( $format_header ) ) {
-			$format_header = DEFAULT_CAT_EVENT_LIST_HEADER_FORMAT;
-		}
-		$format_footer = get_option( 'eme_cat_event_list_item_format_footer' );
-		if ( eme_is_empty_string( $format_footer ) ) {
-			$format_footer = DEFAULT_CAT_EVENT_LIST_FOOTER_FORMAT;
-		}
 		$eme_event_cat = eme_sanitize_request( get_query_var( 'eme_event_cat' ) );
 		$cat_ids       = join( ',', eme_get_category_ids( $eme_event_cat ) );
-		$stored_format = get_option( 'eme_event_list_item_format' );
 		if ( ! empty( $cat_ids ) ) {
-			$limit = intval(get_option( 'eme_event_list_number_items' ));
-			$page_body = eme_get_events_list( limit: $limit, format: $stored_format, format_header: $format_header, format_footer: $format_footer, category: $cat_ids );
+			$stored_format = get_option( 'eme_event_list_item_format' );
+			$format_header = get_option( 'eme_cat_event_list_item_format_header' );
+			if ( eme_is_empty_string( $format_header ) ) {
+				$format_header = DEFAULT_CAT_EVENT_LIST_HEADER_FORMAT;
+			}
+			$format_footer = get_option( 'eme_cat_event_list_item_format_footer' );
+			if ( eme_is_empty_string( $format_footer ) ) {
+				$format_footer = DEFAULT_CAT_EVENT_LIST_FOOTER_FORMAT;
+			}
+			$page_body = eme_get_events_list( format: $stored_format, format_header: $format_header, format_footer: $format_footer, category: $cat_ids );
 		} else {
 			$page_body = "<span class='events-no-events'>" . do_shortcode( get_option( 'eme_no_events_message' ) ) . '</span>';
 		}
@@ -4109,13 +4088,15 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
 }
 
 // TEMPLATE TAGS
-function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format = '', $format_header = '', $format_footer = '', $echo = 0, $category = '', $showperiod = '', $long_events = 0, $author = '', $contact_person = '', $paging = 0, $event_ids = '', $location_ids = '', $user_registered_only = 0, $show_ongoing = 1, $link_showperiod = 0, $notcategory = '', $show_recurrent_events_once = 0, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $no_events_message = '', $template_id_no_events = 0, $limit_offset = 0 ) {
+function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $format = '', $format_header = '', $format_footer = '', $echo = 0, $category = '', $showperiod = '', $long_events = 0, $author = '', $contact_person = '', $paging = 0, $event_ids = '', $location_ids = '', $user_registered_only = 0, $show_ongoing = 1, $link_showperiod = 0, $notcategory = '', $show_recurrent_events_once = 0, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $no_events_message = '', $template_id_no_events = 0, $limit_offset = 0 ) {
 	global $post;
-	if ( $limit === '' ) {
-		$limit = intval(get_option( 'eme_event_list_number_items' ));
+	if ( $limit == -1 || $limit === '' ) {
+		$limit = get_option( 'eme_event_list_number_items' );
 	}
 	// now make sure limit is an int, this solves a prob if the option eme_event_list_number_items is empty
 	$limit = intval($limit);
+	// no stupid things
+	if ($limit<0) $limit=10;
 
 	$echo         = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
 	$long_events  = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
@@ -4505,11 +4486,10 @@ function eme_get_events_list( $limit, $scope = 'future', $order = 'ASC', $format
 
 function eme_get_events_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	$eme_event_list_number_events = intval(get_option( 'eme_event_list_number_items' ));
 	extract(
 	    shortcode_atts(
 		    [
-				'limit'                      => $eme_event_list_number_events,
+				'limit'                      => -1,
 				'scope'                      => 'future',
 				'order'                      => 'ASC',
 				'format'                     => '',
@@ -4528,7 +4508,7 @@ function eme_get_events_list_shortcode( $atts ) {
 				'template_id'                => 0,
 				'template_id_header'         => 0,
 				'template_id_footer'         => 0,
-				'no_events_message'          => 'NO EVENTS',
+				'no_events_message'          => 'NO EVENTS', // this string gets tested for
 				'template_id_no_events'      => 0,
 				'ignore_filter'              => 0,
 				'offset'                     => 0,

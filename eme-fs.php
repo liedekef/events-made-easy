@@ -31,7 +31,7 @@ function eme_add_event_form_shortcode( $atts ) {
 	wp_enqueue_style( 'eme-leaflet-css' );
 	wp_enqueue_script( 'eme-fs-location' );
 	wp_enqueue_script( 'eme-edit-maps' );
-        extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
+        extract( shortcode_atts( [ 'id' => 0, 'startdatetime' => '' ], $atts ) );
 
         $form_id = uniqid();
         $nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
@@ -40,12 +40,12 @@ function eme_add_event_form_shortcode( $atts ) {
                 $nonce
                 <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
                 ";
-	$form_html .= eme_event_fs_form( $id );
+	$form_html .= eme_event_fs_form( $id, $startdatetime );
         $form_html  .= '</form></div>';
 	return $form_html;
 }
 
-function eme_event_fs_form( $template_id ) {
+function eme_event_fs_form( $template_id, $startdatetime ) {
 	$eme_fs_options = get_option('eme_fs');
         if ( $template_id ) {
                 $format = eme_get_template_format( $template_id );
@@ -59,6 +59,15 @@ function eme_event_fs_form( $template_id ) {
 
 	// now the generic placeholders
 	$format = eme_replace_generic_placeholders( $format );
+
+	// if the start datetime should be set to now
+	$data_date = '';
+	$data_time = '';
+	if ($startdatetime == 'now') {
+		$data_date = "data-date='" . eme_js_datetime('now')."'";
+		$eme_date_obj_now = new ExpressiveDate( 'now' );
+		$data_time = "value='".$eme_date_obj_now->format( EME_WP_TIME_FORMAT )."'";
+	}
 
         $captcha_set = 0;
         if ( $eme_fs_options['use_recaptcha'] ) {
@@ -108,6 +117,14 @@ function eme_event_fs_form( $template_id ) {
 				// remove { and } (first and last char of second match)
 				$more = substr( $matches[3], 1, -1 );
 			}
+			// for now date/time
+			if ( $field == 'event_start_date' ) {
+				$more .= " $data_date";
+			}
+			if ( $field == 'event_start_time' ) {
+				$more .= " $data_time";
+			}
+
 			// for backwards compatibility
 			if ($field == "location_address") $field="location_address1";
 			if ($field == "location_town") $field="location_city";
@@ -259,6 +276,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
                       //$type = 'localized_datetime';
 		      $field = 'localized_start_time';
                       $more .= " size=8 class='eme_formfield_timepicker'";
+                      $type = 'localized_time';
                       break;
               case 'event_end_time':
                       //$localized_field_id='localized-end-time';
@@ -266,6 +284,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
                       //$type = 'localized_datetime';
 		      $field = 'localized_end_time';
                       $more .= " size=8 class='eme_formfield_timepicker'";
+                      $type = 'localized_time';
                       break;
               case 'event_start_date':
                       $localized_field_id='localized-start-date';
@@ -326,6 +345,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
             'number' => '<input type="number" id="%s" name="event[%s]" min="0" step="any" value="" %s/>',
             'text' => '<input type="text" id="%s" name="event[%s]" value="" %s/>',
             'url' => '<input type="url" id="%s" name="event[%s]" value="" %s/>',
+            'localized_time' => '<input type="text" id="%s" name="%s" %s/>',
             'localized_datetime' => '<input type="text" id="%s" name="%s" value="" %s/>',
             'textarea' => '<textarea id="%s" name="event[%s]" %s></textarea>',
             'hidden' => '<input type="hidden" id="%s" name="event[%s]" %s />',
@@ -386,19 +406,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
          case 'prop-binary':
             return eme_fs_getbinaryselect("event_properties[".$field_id."]",$field_id,0);
             break;
-         case 'attr-textarea':
-         case 'prop-hidden':
-         case 'prop-text':
-         case 'attr-hidden':
-         case 'attr-text':
-         case 'attr-tel':
-         case 'attr-email':
-         case 'attr-number':
-         case 'textarea':
-         case 'hidden':
-         case 'number':
-         case 'text':
-         case 'url':
+         default:
             return sprintf($html_by_type[$type], $field_id, $field_id, $more);
             break;
       }

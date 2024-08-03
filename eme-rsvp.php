@@ -3339,10 +3339,10 @@ function eme_get_bookings_list_for_wp_id( $wp_id, $scope, $template = '', $templ
 	// header and footer can't contain per booking info, so we don't replace booking placeholders there
 	// but for a person, no event info in header/footer either, so no replacement at all
 	if ( $template_id_header ) {
-		$format_header = eme_translate_string_nowptrans(eme_get_template_format( $template_id_header ));
+		$format_header = eme_replace_generic_placeholders(eme_get_template_format( $template_id_header ));
 	}
 	if ( $template_id_footer ) {
-		$format_footer = eme_translate_string_nowptrans(eme_get_template_format( $template_id_footer ));
+		$format_footer = eme_replace_generic_placeholders(eme_get_template_format( $template_id_footer ));
 	}
 
 	if ( $bookings ) {

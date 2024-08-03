@@ -3509,43 +3509,43 @@ function eme_dyndata_member_ajax() {
 
 				if ( $condition['condition'] == 'eq' && $entered_val == $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'ne' && $entered_val != $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'contains' && strpos( $entered_val, $condition['condval'] ) !== false ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'notcontains' && strpos( $entered_val, $condition['condval'] ) === false ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'incsv' && ( in_array( $condition['condval'], explode( ',', $entered_val ) ) || in_array( $condition['condval'], explode( ', ', $entered_val ) ) ) ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'notincsv' && ! ( in_array( $condition['condval'], explode( ',', $entered_val ) ) || in_array( $condition['condval'], explode( ', ', $entered_val ) ) ) ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'lt' && $entered_val < $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					if ( $condition['repeat'] ) {
 						$entered_val          = intval( $entered_val );
 						$condition['condval'] = intval( $condition['condval'] );
@@ -3555,11 +3555,11 @@ function eme_dyndata_member_ajax() {
 					} else {
 						$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
 					}
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'gt' && $entered_val > $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					if ( $condition['repeat'] ) {
 						$entered_val          = intval( $entered_val );
 						$condition['condval'] = intval( $condition['condval'] );
@@ -3569,11 +3569,11 @@ function eme_dyndata_member_ajax() {
 					} else {
 						$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
 					}
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'ge' && $entered_val >= $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					if ( $condition['repeat'] ) {
 						$entered_val          = intval( $entered_val );
 						$condition['condval'] = intval( $condition['condval'] );
@@ -3583,7 +3583,7 @@ function eme_dyndata_member_ajax() {
 					} else {
 						$form_html .= eme_replace_dynamic_membership_formfields_placeholders( $membership, $member, $template, $grouping );
 					}
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 			}
 		}
@@ -4575,12 +4575,12 @@ function eme_mymemberships_list_shortcode( $atts ) {
 		if ( $wp_id ) {
 			$format = eme_get_template_format( $template_id );
 			if ( ! empty( $template_id_header ) ) {
-				$header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
+				$header = eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) );
 			} else {
 				$header = "";
 			}
 			if ( ! empty( $template_id_footer ) ) {
-				$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
+				$footer = eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) );
 			} else {
 				$footer = "";
 			}
@@ -4672,10 +4672,10 @@ function eme_members_shortcode( $atts ) {
 	$eme_format_footer = '';
 	$format            = eme_get_template_format( $template_id );
 	if ( $template_id_header ) {
-		$eme_format_header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
+		$eme_format_header = eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) );
 	}
 	if ( $template_id_footer ) {
-		$eme_format_footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
+		$eme_format_footer = eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) );
 	}
 	$output = '';
 	$lang   = eme_detect_lang();
@@ -4771,7 +4771,7 @@ function eme_members_frontend_csv_report( $group_id, $membership_id, $template_i
 
 	if ( $template_id_header ) {
 		// no nl2br for csv output
-		$eme_format_header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header, 0 ) ) );
+		$eme_format_header = eme_replace_generic_placeholders( eme_get_template_format( $template_id_header, 0 ) );
 		$headers           = explode( ',', $eme_format_header );
 		eme_fputcsv( $fp, $headers );
 	}
@@ -7104,8 +7104,8 @@ function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_head
 	$template = eme_get_template( $template_id );
 	// the template format needs br-handling, so lets use a handy function
 	$format = eme_get_template_format( $template_id );
-	$header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
-	$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
+	$header = eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) );
+	$footer = eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) );
 
 	require_once 'dompdf/vendor/autoload.php';
 	// instantiate and use the dompdf class
@@ -7165,8 +7165,8 @@ $header
 function eme_ajax_generate_member_html( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {
 	// the template format needs br-handling, so lets use a handy function
 	$format = eme_get_template_format( $template_id );
-	$header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) );
-	$footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) );
+	$header = me_replace_generic_placeholders( eme_get_template_format( $template_id_header ) );
+	$footer = eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) );
 	$extra_html_header = get_option( 'eme_html_header' );
         $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
         $html  = "<html><head>$extra_html_header</head><body>$header";

@@ -142,7 +142,7 @@ function eme_translate( $value, $lang = '', $use_wp_trans = 1 ) {
 		}
 	} elseif ( function_exists( 'pll_translate_string' ) && function_exists( 'pll__' ) ) {
 		// pll language notation is different from what qtrans (and eme) support, so lets also translate the eme language tags
-		$value = eme_translate_string( $value, $lang );
+		$value = eme_translate_string( $value, $lang, $use_wp_trans );
 		if ( empty( $lang ) ) {
 			$translated = pll__( $value );
 		} else {

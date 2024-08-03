@@ -54,10 +54,7 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
 		$format = $eme_fs_options['form_format'];
 	}
 
-	// replace EME language tags as early as possible
-        $format = eme_translate_string_nowptrans( $format );
-
-	// now the generic placeholders
+	// the generic placeholders
 	$format = eme_replace_generic_placeholders( $format );
 
 	// if the start datetime should be set to now

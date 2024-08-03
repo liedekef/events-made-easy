@@ -2333,43 +2333,43 @@ function eme_dyndata_rsvp_ajax() {
 
 				if ( $condition['condition'] == 'eq' && $entered_val == $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_rsvp_formfields_placeholders( $event, $fake_booking, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'ne' && $entered_val != $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_rsvp_formfields_placeholders( $event, $fake_booking, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'contains' && strpos( $entered_val, $condition['condval'] ) !== false ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_rsvp_formfields_placeholders( $event, $fake_booking, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'notcontains' && strpos( $entered_val, $condition['condval'] ) === false ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_rsvp_formfields_placeholders( $event, $fake_booking, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'incsv' && ( in_array( $condition['condval'], explode( ',', $entered_val ) ) || in_array( $condition['condval'], explode( ', ', $entered_val ) ) ) ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_rsvp_formfields_placeholders( $event, $fake_booking, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'notincsv' && ! ( in_array( $condition['condval'], explode( ',', $entered_val ) ) || in_array( $condition['condval'], explode( ', ', $entered_val ) ) ) ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					$form_html .= eme_replace_dynamic_rsvp_formfields_placeholders( $event, $fake_booking, $template, $grouping );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'lt' && $entered_val < $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					if ( $condition['repeat'] ) {
 						$entered_val          = intval( $entered_val );
 						$condition['condval'] = intval( $condition['condval'] );
@@ -2379,11 +2379,11 @@ function eme_dyndata_rsvp_ajax() {
 					} else {
 						$form_html .= eme_replace_dynamic_rsvp_formfields_placeholders( $event, $fake_booking, $template, $grouping );
 					}
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'gt' && $entered_val > $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					if ( $condition['repeat'] ) {
 						$entered_val          = intval( $entered_val );
 						$condition['condval'] = intval( $condition['condval'] );
@@ -2393,11 +2393,11 @@ function eme_dyndata_rsvp_ajax() {
 					} else {
 						$form_html .= eme_replace_dynamic_rsvp_formfields_placeholders( $event, $fake_booking, $template, $grouping );
 					}
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 				if ( $condition['condition'] == 'ge' && $entered_val >= $condition['condval'] ) {
 					$template   = eme_get_template_format( $condition['template_id'] );
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_header'] ) );
 					if ( $condition['repeat'] ) {
 						$entered_val          = intval( $entered_val );
 						$condition['condval'] = intval( $condition['condval'] );
@@ -2407,7 +2407,7 @@ function eme_dyndata_rsvp_ajax() {
 					} else {
 						$form_html .= eme_replace_dynamic_rsvp_formfields_placeholders( $event, $fake_booking, $template, $grouping );
 					}
-					$form_html .= eme_translate( eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) ) );
+					$form_html .= eme_replace_generic_placeholders( eme_get_template_format( $condition['template_id_footer'] ) );
 				}
 			}
 		}

@@ -256,10 +256,10 @@ function eme_people_shortcode( $atts ) {
 		$format = eme_get_template_format( intval($atts['template_id']) );
 	}
 	if ( $atts['template_id_header'] ) {
-		$eme_format_header = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( intval($atts['template_id_header']) ) ) );
+		$eme_format_header = eme_replace_generic_placeholders( eme_get_template_format( intval($atts['template_id_header']) ) );
 	}
 	if ( $atts['template_id_footer'] ) {
-		$eme_format_footer = eme_translate( eme_replace_generic_placeholders( eme_get_template_format( intval($atts['template_id_footer']) ) ) );
+		$eme_format_footer = eme_replace_generic_placeholders( eme_get_template_format( intval($atts['template_id_footer']) ) );
 	}
 	$output = '';
 	if ( ! empty( $persons ) && is_array( $persons ) ) {
@@ -272,8 +272,8 @@ function eme_people_shortcode( $atts ) {
 }
 
 function eme_replace_email_event_placeholders( $format, $email, $lastname, $firstname, $event, $lang = '' ) {
-	// replace EME language tags as early as possible
-        $format = eme_translate_string_nowptrans( $format );
+	// EME language tags are already replaced
+        //$format = eme_translate_string_nowptrans( $format );
 
 	$needle_offset = 0;
 	preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
@@ -301,9 +301,6 @@ function eme_replace_email_event_placeholders( $format, $email, $lastname, $firs
 }
 
 function eme_replace_people_placeholders( $format, $person, $target = 'html', $lang = '', $do_shortcode = 1 ) {
-	// replace EME language tags as early as possible
-        $format = eme_translate_string_nowptrans( $format );
-
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
 		$target = 'html';

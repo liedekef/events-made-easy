@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Frontend submit now supports generic EME placeholders and interprets shortcodes too
 * New parameter for frontend submit: startdatetime=now, so the start date and time are by default set to now (as the old plugin did)
   Example: [eme_add_event_form startdatetime=now]
+* Add a status to memberships, so you can put memberships as inactive
 
 = 2.5.3 (2024/07/30) =
 * syntax error fix

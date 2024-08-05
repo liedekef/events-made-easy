@@ -151,6 +151,10 @@ jQuery(document).ready(function ($) {
 		name: {
 			title: ememembers.translate_name
 		},
+		status: {
+			title: ememembers.translate_status,
+			visibility: 'hidden'
+		},
 		description: {
 			title: ememembers.translate_description
 		},

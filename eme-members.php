@@ -12,6 +12,7 @@ function eme_new_membership() {
 		'name'            => '',
 		'description'     => '',
 		'type'            => '', // fixed/rolling
+		'status'          => 1, // active
 		'start_date'      => $today, // only for fixed
 		'duration_count'  => 1,
 		'duration_period' => 'years',
@@ -445,9 +446,9 @@ function eme_get_members( $member_ids, $extra_search = '' ) {
 function eme_get_memberships( $exclude_id = 0 ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
-	$sql   = "SELECT * FROM $table";
+	$sql   = "SELECT * FROM $table WHERE status=1";
 	if ( ! empty( $exclude_id ) ) {
-		$sql .= ' WHERE membership_id <> ' . intval( $exclude_id );
+		$sql .= ' AND membership_id <> ' . intval( $exclude_id );
 	}
 	$memberships = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $memberships as $key => $membership ) {
@@ -553,6 +554,14 @@ function eme_membership_types() {
 		'rolling' => __( 'Rolling period', 'events-made-easy' ),
 	];
 	return $type_array;
+}
+
+function eme_membership_status() {
+	$status_array = [
+		0   => __( 'Inactive', 'events-made-easy' ),
+		1 => __( 'Active', 'events-made-easy' ),
+	];
+	return $status_array;
 }
 
 function eme_membership_durations() {
@@ -1337,6 +1346,7 @@ function eme_add_update_membership( $membership_id = 0 ) {
 	$membership['duration_count']  = isset( $_POST['duration_count'] ) ? intval( $_POST['duration_count'] ) : 0;
 	$membership['duration_period'] = isset( $_POST['duration_period'] ) ? eme_sanitize_request( $_POST['duration_period'] ) : '';
 	$membership['type']            = isset( $_POST['type'] ) ? eme_sanitize_request( $_POST['type'] ) : '';
+	$membership['status']          = isset( $_POST['status'] ) ? eme_sanitize_request( $_POST['status'] ) : 1;
 	$membership_properties = [];
 	if ( isset( $_POST['properties'] ) ) {
 		foreach ( $_POST['properties'] as $key => $value ) {
@@ -1852,6 +1862,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	$currency_array             = eme_currency_array();
 	$type_array                 = eme_membership_types();
 	$duration_array             = eme_membership_durations();
+	$status_array               = eme_membership_status();
 	$registration_wp_users_only = ( $membership['properties']['registration_wp_users_only'] ) ? "checked='checked'" : '';
 	$captcha_only_logged_out    = ( $membership['properties']['captcha_only_logged_out'] ) ? "checked='checked'" : '';
 	$use_captcha                = ( $membership['properties']['use_captcha'] ) ? "checked='checked'" : '';
@@ -1888,6 +1899,12 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<td><label for="type"><?php esc_html_e( 'Type', 'events-made-easy' ); ?></label></td>
 	<td><?php echo eme_ui_select( $membership['type'], 'type', $type_array ); ?></td>
 	</tr>
+	<tr>
+	<td><label for="status"><?php esc_html_e( 'Status', 'events-made-easy' ); ?></label></td>
+	<td><?php echo eme_ui_select( $membership['status'], 'status', $status_array ); ?>
+		<br><p class='eme_smaller'><?php esc_html_e( 'Inactive memberships will not be shown in membership selection lists.', 'events-made-easy' ); ?></p>
+	</td>
+	</tr>
 	<tr id='startdate'>
 	<td><label for="start_date"><?php esc_html_e( 'Start date', 'events-made-easy' ); ?></label></td>
 	<td><input type='hidden' name='start_date' id='start_date' value='<?php echo $membership['start_date']; ?>'>
@@ -1897,7 +1914,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<tr>
 	<td><label for="duration_count"><?php esc_html_e( 'Duration period', 'events-made-easy' ); ?></label></td>
 	<td><input type="integer" id="duration_count" name="duration_count" value="<?php echo $membership['duration_count']; ?>" size="4"><?php echo eme_ui_select( $membership['duration_period'], 'duration_period', $duration_array ); ?>
-		<br><p class='eme_smaller'><?php esc_html_e( 'Once this duration period has passed, the membership start date for new members will be increased by the passed period.', 'events-made-easy' ); ?>
+		<br><p class='eme_smaller'><?php esc_html_e( 'Once this duration period has passed, the membership start date for new members will be increased by the passed period.', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
 	<tr id='freeperiod'>
@@ -6316,10 +6333,10 @@ function eme_ajax_memberships_list() {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
-			$ajaxResult['Result']      = 'Error';
-			$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
-			print wp_json_encode( $ajaxResult );
-			wp_die();
+		$ajaxResult['Result']      = 'Error';
+		$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $ajaxResult );
+		wp_die();
 	}
 	$status_active = EME_MEMBER_STATUS_ACTIVE;
 	$status_grace  = EME_MEMBER_STATUS_GRACE;
@@ -6328,6 +6345,7 @@ function eme_ajax_memberships_list() {
 	$ajaxResult    = [];
 
 	$formfields = eme_get_formfields( '', 'memberships' );
+	$membership_status_array = eme_membership_status();
 
 	$sql         = "SELECT COUNT(*) FROM $table";
 	$recordCount = $wpdb->get_var( $sql );
@@ -6345,7 +6363,7 @@ function eme_ajax_memberships_list() {
 	$res         = $wpdb->get_results( $sql, ARRAY_A );
 	$mainmembercount = [];
 	foreach ( $res as $val ) {
-			$mainmembercount[ $val['membership_id'] ] = $val['mainmembercount'];
+		$mainmembercount[ $val['membership_id'] ] = $val['mainmembercount'];
 	}
 
 	$sql     = "SELECT * FROM $table $sorting LIMIT $start,$pagesize";
@@ -6362,10 +6380,16 @@ function eme_ajax_memberships_list() {
 
 		$record                  = [];
 		$record['membership_id'] = $item['membership_id'];
+		if ($item['status']==0) {
+			$record['name'] = "<span style='text-decoration: line-through;'>";
+		}
 		if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
-			$record['name'] = "<a href='" . admin_url( 'admin.php?page=eme-memberships&amp;eme_admin_action=edit_membership&amp;membership_id=' . $item['membership_id'] ) . "' title='" . esc_html__( 'Edit membership', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a>';
+			$record['name'] .= "<a href='" . admin_url( 'admin.php?page=eme-memberships&amp;eme_admin_action=edit_membership&amp;membership_id=' . $item['membership_id'] ) . "' title='" . esc_html__( 'Edit membership', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a>';
 		} else {
-			$record['name'] = eme_esc_html( $item['name'] );
+			$record['name'] .= eme_esc_html( $item['name'] );
+		}
+		if ($item['status']==0) {
+			$record['name'] .= "</span>";
 		}
 
 		if ( eme_is_empty_string( $item['properties']['member_form_text'] ) && empty( $item['properties']['member_form_tpl'] ) ) {
@@ -6373,6 +6397,7 @@ function eme_ajax_memberships_list() {
 		}
 
 		$record['description'] = eme_esc_html( $item['description'] );
+		$record['status'] = eme_esc_html( $membership_status_array[$item['status']] );
 		if ( ! isset( $familymembercount[ $item['membership_id'] ] ) ) {
 			$familymembercount[ $item['membership_id'] ] = 0;
 		}
@@ -6428,10 +6453,10 @@ function eme_ajax_members_list( ) {
 	$ajaxResult              = [];
 
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
-			$ajaxResult['Result']      = 'Error';
-			$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
-			print wp_json_encode( $ajaxResult );
-			wp_die();
+		$ajaxResult['Result']      = 'Error';
+		$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $ajaxResult );
+		wp_die();
 	}
 
 	$start     = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
@@ -6574,11 +6599,11 @@ function eme_ajax_members_select2() {
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
-			$ajaxResult 		   = [];
-			$ajaxResult['Result']      = 'Error';
-			$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
-			print wp_json_encode( $ajaxResult );
-			wp_die();
+		$ajaxResult 		   = [];
+		$ajaxResult['Result']      = 'Error';
+		$ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $ajaxResult );
+		wp_die();
 	}
 
 	$people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
@@ -6587,9 +6612,9 @@ function eme_ajax_members_select2() {
 	$jTableResult      = [];
 	$q                 = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( ! empty( $q ) ) {
-			$where = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
+		$where = "(people.lastname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.firstname LIKE '%" . esc_sql( $wpdb->esc_like( $q ) ) . "%' OR people.email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
 	} else {
-			$where = '(1=1)';
+		$where = '(1=1)';
 	}
 	$pagesize = intval( $_REQUEST['pagesize'] );
 	//$start= isset($_REQUEST["page"]) ? intval($_REQUEST["page"])*$pagesize : 0;

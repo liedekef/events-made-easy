@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 394 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 395 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -1541,6 +1541,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          name varchar(50) DEFAULT NULL,
          description tinytext,
          type varchar(50) DEFAULT NULL,
+         status tinyint DEFAULT 1,
          start_date date DEFAULT '0000-00-00', 
          duration_count tinyint DEFAULT 0,
          duration_period varchar(50) DEFAULT '',
@@ -1550,6 +1551,7 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
+		maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinyint DEFAULT 1;" );
 		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		if ( $db_version < 386 ) {

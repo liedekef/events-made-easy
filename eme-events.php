@@ -9875,6 +9875,7 @@ function eme_admin_enqueue_js() {
 			'translate_answers'                    => __( 'Answers', 'events-made-easy' ),
 			'translate_edit'                       => __( 'Edit', 'events-made-easy' ),
 			'translate_membercount'                => __( 'Nbr Active Members', 'events-made-easy' ),
+			'translate_status'                     => __( 'Status', 'events-made-easy' ),
 			'translate_startdate'                  => __( 'Start', 'events-made-easy' ),
 			'translate_enddate'                    => __( 'End', 'events-made-easy' ),
 			'translate_usage_count'                => __( 'Usage count', 'events-made-easy' ),

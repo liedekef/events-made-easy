@@ -153,7 +153,8 @@ jQuery(document).ready(function ($) {
 		},
 		status: {
 			title: ememembers.translate_status,
-			visibility: 'hidden'
+			visibility: 'hidden',
+			sorting: false
 		},
 		description: {
 			title: ememembers.translate_description

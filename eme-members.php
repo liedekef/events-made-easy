@@ -6351,7 +6351,7 @@ function eme_ajax_memberships_list() {
 	$recordCount = $wpdb->get_var( $sql );
 	$start       = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 	$pagesize    = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( eme_sanitize_sql_orderby($_REQUEST['jtSorting']) ) : 'ORDER BY status DESC, name ASC';
+	$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY status DESC, ' . esc_sql( eme_sanitize_sql_orderby($_REQUEST['jtSorting']) ) : 'ORDER BY status DESC, name ASC';
 
 	$sql         = $wpdb->prepare("SELECT membership_id,COUNT(*) AS familymembercount FROM $members_table WHERE status IN (%d,%d) AND related_member_id>0 GROUP BY membership_id", $status_active, $status_grace);
 	$res         = $wpdb->get_results( $sql, ARRAY_A );

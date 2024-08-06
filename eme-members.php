@@ -3909,9 +3909,9 @@ function eme_member_recalculate_status( $member_id = 0 ) {
 	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 	// we only recalculate member status if status_automatic=1 and the member has paid
 	if ( $member_id ) {
-		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, a.properties as memberprops, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE a.member_id=$member_id AND a.status_automatic=1 AND a.paid=1 AND related_member_id=0";
+		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, a.properties as memberprops, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE b.status=1 AND a.member_id=$member_id AND a.status_automatic=1 AND a.paid=1 AND a.related_member_id=0";
 	} else {
-		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, a.properties as memberprops, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE a.status_automatic=1 AND a.paid=1 AND related_member_id=0";
+		$sql = "SELECT a.member_id, a.status, a.start_date, a.end_date, a.properties as memberprops, b.duration_period, b.properties FROM $members_table a LEFT JOIN $memberships_table b ON a.membership_id=b.membership_id WHERE b.status=1 AND a.status_automatic=1 AND a.paid=1 AND a.related_member_id=0";
 	}
 	$rows = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $rows as $item ) {

@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 2.5.4
+Stable tag: 2.5.5
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,14 +99,14 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.4 (2024/08/07) =
+= 2.5.5 (2024/08/07) =
 * Frontend submit now supports generic EME placeholders and interprets shortcodes too
 * New parameter for frontend submit: startdatetime=now. If used, the start date and time are by default set to
   the current date/time (as the old plugin did)
   Example: [eme_add_event_form startdatetime=now]
 * Add a status to memberships, so you can put memberships as inactive
 
-= 2.5.3 (2024/07/30) =
+= 2.5.4 (2024/07/30) =
 * syntax error fix
 
 = 2.5.3 (2024/07/30) =

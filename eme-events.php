@@ -860,7 +860,7 @@ function eme_events_page() {
 // array of all pages, bypasses the filter I set up :)
 function eme_get_all_pages() {
 	global $wpdb;
-	$query = 'SELECT id, post_title FROM ' . EME_DB_PREFIX . "posts WHERE post_type = 'page' AND post_status='publish'";
+	$query = 'SELECT id, post_title FROM ' . EME_DB_PREFIX . "posts WHERE post_type = 'page' AND post_status='publish' ORDER BY post_title ASC";
 	$pages = $wpdb->get_results( $query, ARRAY_A );
 	// get_pages() is better, but uses way more memory and it might be filtered by eme_filter_get_pages()
 	//$pages = get_pages();

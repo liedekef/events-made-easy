@@ -1334,7 +1334,7 @@ function eme_filter_events_page( $data ) {
 	// we change the content of the page only if we're "in the loop",
 	// otherwise this filter also gets applied if e.g. a widget calls
 	// the_content or the_excerpt to get the content of a page
-	if ( in_the_loop() && is_main_query() ) {
+	if ( is_singular() && in_the_loop() && is_main_query() ) {
 		if ( eme_is_events_page() && $eme_count_arr['the_content'] == 1 ) {
 			eme_enqueue_frontend();
 			return eme_events_page_content();

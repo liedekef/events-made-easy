@@ -724,7 +724,11 @@ function eme_get_events_page_id() {
 
 function eme_get_events_page( $justurl = 1, $text = '' ) {
 	$events_page_id = eme_get_events_page_id();
-	$page_link      = get_permalink( $events_page_id );
+	if (!empty($events_page_id)) {
+                $page_link      = get_permalink( $events_page_id );
+        } else {
+                $page_link      = trailingslashit( home_url() );
+        }
 	if ( $justurl || empty( $text ) ) {
 		$result = $page_link;
 	} else {

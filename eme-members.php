@@ -6380,6 +6380,7 @@ function eme_ajax_memberships_list() {
 
 		$record                  = [];
 		$record['membership_id'] = $item['membership_id'];
+		$record['name'] = "";
 		if ($item['status']==0) {
 			$record['name'] = "<span style='text-decoration: line-through;'>";
 		}

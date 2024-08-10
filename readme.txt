@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.6 (2024//) =
 * Fix guest frontend event submit
+* Fix redirection to event: if the submitted event is not public and a guest submitted it, we show the success message and don't redirect
 
 = 2.5.5 (2024/08/07) =
 * Frontend submit now supports generic EME placeholders and interprets shortcodes too

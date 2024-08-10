@@ -571,7 +571,8 @@ function eme_fs_process_newevent() {
 				}
 				if ($eme_fs_options['always_success_message']) {
 					$res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
-				} elseif (is_user_logged_in() || $event['event_status'] != EME_EVENT_STATUS_DRAFT) {
+				} elseif ((is_user_logged_in() && $event['event_status'] != EME_EVENT_STATUS_DRAFT) || 
+					  $event['event_status'] == EME_EVENT_STATUS_PUBLIC ) {
 					$res_html = eme_js_redirect(eme_event_url($event), $eme_fs_options['redirect_timeout']);
 					if ($eme_fs_options['redirect_timeout'] == 0) {
 						$res_code = 'REDIRECT_IMM';

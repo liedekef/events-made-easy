@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.5.4\n"
+"Project-Id-Version: Events Made Easy 2.5.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-07T08:29:59+00:00\n"
+"POT-Creation-Date: 2024-08-10T21:27:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -65,20 +65,20 @@ msgstr ""
 #: eme-formfields.php:5213
 #: eme-formfields.php:5235
 #: eme-formfields.php:5236
-#: eme-functions.php:3283
-#: eme-functions.php:3304
-#: eme-functions.php:3305
-#: eme-functions.php:3348
+#: eme-functions.php:3287
+#: eme-functions.php:3308
+#: eme-functions.php:3309
+#: eme-functions.php:3352
 #: eme-locations.php:2874
 #: eme-mailer.php:1301
 #: eme-mailer.php:1428
 #: eme-mailer.php:2703
 #: eme-mailer.php:2839
 #: eme-members.php:6337
-#: eme-members.php:6457
-#: eme-members.php:6604
-#: eme-members.php:6691
-#: eme-members.php:6762
+#: eme-members.php:6458
+#: eme-members.php:6605
+#: eme-members.php:6692
+#: eme-members.php:6763
 #: eme-options.php:138
 #: eme-payments.php:3941
 #: eme-people.php:3977
@@ -1079,12 +1079,12 @@ msgid "Incorrect country selection"
 msgstr ""
 
 #: eme-countries.php:1041
-#: eme-functions.php:3330
+#: eme-functions.php:3334
 msgid "Update failed: "
 msgstr ""
 
 #: eme-countries.php:1043
-#: eme-functions.php:3332
+#: eme-functions.php:3336
 msgid "Insert failed: "
 msgstr ""
 
@@ -1580,7 +1580,7 @@ msgstr ""
 #: eme-gdpr.php:565
 #: eme-gdpr.php:566
 #: eme-locations.php:2987
-#: eme-members.php:6538
+#: eme-members.php:6539
 #: eme-people.php:500
 #: eme-people.php:508
 #: eme-people.php:516
@@ -1611,7 +1611,7 @@ msgstr ""
 #: eme-gdpr.php:565
 #: eme-gdpr.php:566
 #: eme-locations.php:2987
-#: eme-members.php:6538
+#: eme-members.php:6539
 #: eme-people.php:500
 #: eme-people.php:508
 #: eme-people.php:516
@@ -1710,7 +1710,7 @@ msgid "Edit Recurrence"
 msgstr ""
 
 #: eme-events.php:638
-#: eme-fs.php:585
+#: eme-fs.php:586
 msgid "Database insert failed!"
 msgstr ""
 
@@ -2608,7 +2608,7 @@ msgstr ""
 
 #: eme-events.php:6562
 #: eme-events.php:10293
-#: eme-members.php:6526
+#: eme-members.php:6527
 #: eme-recurrence.php:729
 #: eme-rsvp.php:5743
 msgid "Max: "
@@ -5809,12 +5809,12 @@ msgstr ""
 
 #: eme-formfields.php:5222
 #: eme-formfields.php:5232
-#: eme-functions.php:3301
+#: eme-functions.php:3305
 msgid "Records deleted!"
 msgstr ""
 
 #: eme-fs.php:25
-#: eme-fs.php:670
+#: eme-fs.php:671
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr ""
 
@@ -5861,7 +5861,7 @@ msgstr ""
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 
-#: eme-fs.php:646
+#: eme-fs.php:647
 #: eme-gdpr.php:53
 #: eme-gdpr.php:148
 #: eme-gdpr.php:231
@@ -5876,7 +5876,7 @@ msgstr ""
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
-#: eme-fs.php:657
+#: eme-fs.php:658
 #: eme-gdpr.php:64
 #: eme-gdpr.php:159
 #: eme-gdpr.php:242
@@ -5918,23 +5918,23 @@ msgstr ""
 msgid "Please enter the displayed code."
 msgstr ""
 
-#: eme-functions.php:1415
+#: eme-functions.php:1419
 msgid "Public"
 msgstr ""
 
-#: eme-functions.php:1416
+#: eme-functions.php:1420
 msgid "Private"
 msgstr ""
 
-#: eme-functions.php:1417
+#: eme-functions.php:1421
 msgid "Unlisted"
 msgstr ""
 
-#: eme-functions.php:1418
+#: eme-functions.php:1422
 msgid "Draft"
 msgstr ""
 
-#: eme-functions.php:1424
+#: eme-functions.php:1428
 #: eme-people.php:1085
 #: eme-people.php:1409
 #: eme-people.php:1548
@@ -5943,262 +5943,262 @@ msgstr ""
 msgid "Pending"
 msgstr ""
 
-#: eme-functions.php:1425
+#: eme-functions.php:1429
 #: eme-members.php:562
 msgid "Active"
 msgstr ""
 
-#: eme-functions.php:1426
+#: eme-functions.php:1430
 #: eme-members.php:1928
 msgid "Grace period"
 msgstr ""
 
-#: eme-functions.php:1427
+#: eme-functions.php:1431
 #: eme-members.php:507
 msgid "Expired"
 msgstr ""
 
-#: eme-functions.php:1655
+#: eme-functions.php:1659
 msgid "Argentine Peso"
 msgstr ""
 
-#: eme-functions.php:1656
+#: eme-functions.php:1660
 msgid "Australian Dollar"
 msgstr ""
 
-#: eme-functions.php:1657
+#: eme-functions.php:1661
 msgid "Burundian Franc"
 msgstr ""
 
-#: eme-functions.php:1658
+#: eme-functions.php:1662
 msgid "Brazilian Real"
 msgstr ""
 
-#: eme-functions.php:1659
+#: eme-functions.php:1663
 msgid "Canadian Dollar"
 msgstr ""
 
-#: eme-functions.php:1660
+#: eme-functions.php:1664
 msgid "Chilean Peso"
 msgstr ""
 
-#: eme-functions.php:1661
+#: eme-functions.php:1665
 msgid "Chinese Yuan Renminbi"
 msgstr ""
 
-#: eme-functions.php:1662
+#: eme-functions.php:1666
 msgid "Czech Koruna"
 msgstr ""
 
-#: eme-functions.php:1663
+#: eme-functions.php:1667
 msgid "Danish Krone"
 msgstr ""
 
-#: eme-functions.php:1664
+#: eme-functions.php:1668
 msgid "Djiboutian Franc"
 msgstr ""
 
-#: eme-functions.php:1665
+#: eme-functions.php:1669
 msgid "Euro"
 msgstr ""
 
-#: eme-functions.php:1666
+#: eme-functions.php:1670
 msgid "Pound Sterling"
 msgstr ""
 
-#: eme-functions.php:1667
+#: eme-functions.php:1671
 msgid "Guinean Franc"
 msgstr ""
 
-#: eme-functions.php:1668
+#: eme-functions.php:1672
 msgid "Hong Kong Dollar"
 msgstr ""
 
-#: eme-functions.php:1669
+#: eme-functions.php:1673
 msgid "Hungarian Forint"
 msgstr ""
 
-#: eme-functions.php:1670
+#: eme-functions.php:1674
 msgid "Indian Rupee"
 msgstr ""
 
-#: eme-functions.php:1671
+#: eme-functions.php:1675
 msgid "Israeli New Sheqel"
 msgstr ""
 
-#: eme-functions.php:1672
+#: eme-functions.php:1676
 msgid "Japanese Yen"
 msgstr ""
 
-#: eme-functions.php:1673
+#: eme-functions.php:1677
 msgid "Comoro Franc"
 msgstr ""
 
-#: eme-functions.php:1674
+#: eme-functions.php:1678
 msgid "South Korean Won"
 msgstr ""
 
-#: eme-functions.php:1675
+#: eme-functions.php:1679
 msgid "Malagasy Ariary"
 msgstr ""
 
-#: eme-functions.php:1676
+#: eme-functions.php:1680
 msgid "Mexican Peso"
 msgstr ""
 
-#: eme-functions.php:1677
+#: eme-functions.php:1681
 msgid "Norwegian Krone"
 msgstr ""
 
-#: eme-functions.php:1678
+#: eme-functions.php:1682
 msgid "New Zealand Dollar"
 msgstr ""
 
-#: eme-functions.php:1679
+#: eme-functions.php:1683
 msgid "Philippine Peso"
 msgstr ""
 
-#: eme-functions.php:1680
+#: eme-functions.php:1684
 msgid "Polish Zloty"
 msgstr ""
 
-#: eme-functions.php:1681
+#: eme-functions.php:1685
 msgid "Paraguayan Guarani"
 msgstr ""
 
-#: eme-functions.php:1682
+#: eme-functions.php:1686
 msgid "Russian Ruble"
 msgstr ""
 
-#: eme-functions.php:1683
+#: eme-functions.php:1687
 msgid "Rwandan Franc"
 msgstr ""
 
-#: eme-functions.php:1684
+#: eme-functions.php:1688
 msgid "Singapore Dollar"
 msgstr ""
 
-#: eme-functions.php:1685
+#: eme-functions.php:1689
 msgid "Swedish Krona"
 msgstr ""
 
-#: eme-functions.php:1686
+#: eme-functions.php:1690
 msgid "Swiss Franc"
 msgstr ""
 
-#: eme-functions.php:1687
+#: eme-functions.php:1691
 msgid "Thai Baht"
 msgstr ""
 
-#: eme-functions.php:1688
+#: eme-functions.php:1692
 msgid "U.S. Dollar"
 msgstr ""
 
-#: eme-functions.php:1689
+#: eme-functions.php:1693
 msgid "Vietnamese dong"
 msgstr ""
 
-#: eme-functions.php:1690
+#: eme-functions.php:1694
 msgid "Vanuatu vatu"
 msgstr ""
 
-#: eme-functions.php:1691
+#: eme-functions.php:1695
 msgid "CFA Franc BEAC"
 msgstr ""
 
-#: eme-functions.php:1692
+#: eme-functions.php:1696
 msgid "CFA Franc BCEAO"
 msgstr ""
 
-#: eme-functions.php:1693
+#: eme-functions.php:1697
 msgid "CFP Franc (Franc Pacifique)"
 msgstr ""
 
-#: eme-functions.php:1694
+#: eme-functions.php:1698
 msgid "South African Rand"
 msgstr ""
 
-#: eme-functions.php:2215
+#: eme-functions.php:2219
 #: eme-mailer.php:2762
 #: eme-mailer.php:2876
 msgid "Extra info"
 msgstr ""
 
-#: eme-functions.php:2217
+#: eme-functions.php:2221
 msgid "Group"
 msgstr ""
 
-#: eme-functions.php:2874
+#: eme-functions.php:2878
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: eme-functions.php:2877
+#: eme-functions.php:2881
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
-#: eme-functions.php:2880
+#: eme-functions.php:2884
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: eme-functions.php:2883
+#: eme-functions.php:2887
 msgid "No file was uploaded"
 msgstr ""
 
-#: eme-functions.php:2886
+#: eme-functions.php:2890
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: eme-functions.php:2889
+#: eme-functions.php:2893
 msgid "Failed to write file to disk"
 msgstr ""
 
-#: eme-functions.php:2892
+#: eme-functions.php:2896
 msgid "File upload stopped by extension"
 msgstr ""
 
-#: eme-functions.php:2896
+#: eme-functions.php:2900
 msgid "Unknown upload error"
 msgstr ""
 
-#: eme-functions.php:2937
+#: eme-functions.php:2941
 msgid "Failure creating upload dir, please check your permissions."
 msgstr ""
 
-#: eme-functions.php:2972
-#: eme-functions.php:3033
+#: eme-functions.php:2976
+#: eme-functions.php:3037
 msgid "File upload is required."
 msgstr ""
 
-#: eme-functions.php:2980
-#: eme-functions.php:3041
+#: eme-functions.php:2984
+#: eme-functions.php:3045
 msgid "Illegal filename."
 msgstr ""
 
-#: eme-functions.php:2986
-#: eme-functions.php:3047
+#: eme-functions.php:2990
+#: eme-functions.php:3051
 msgid "File already exists."
 msgstr ""
 
-#: eme-functions.php:2992
-#: eme-functions.php:3053
+#: eme-functions.php:2996
+#: eme-functions.php:3057
 msgid "File too large."
 msgstr ""
 
-#: eme-functions.php:3008
-#: eme-functions.php:3069
+#: eme-functions.php:3012
+#: eme-functions.php:3073
 msgid "Incorrect file type."
 msgstr ""
 
-#: eme-functions.php:3013
-#: eme-functions.php:3074
+#: eme-functions.php:3017
+#: eme-functions.php:3078
 msgid "Upload failed."
 msgstr ""
 
-#: eme-functions.php:3081
+#: eme-functions.php:3085
 msgid "Errors encountered while uploading files"
 msgstr ""
 
-#: eme-functions.php:3317
+#: eme-functions.php:3321
 msgid "No such record"
 msgstr ""
 
@@ -6581,9 +6581,9 @@ msgstr ""
 #: eme-mailer.php:1732
 #: eme-mailer.php:1828
 #: eme-mailer.php:1930
-#: eme-members.php:6820
-#: eme-members.php:6899
-#: eme-members.php:7018
+#: eme-members.php:6821
+#: eme-members.php:6900
+#: eme-members.php:7019
 #: eme-rsvp.php:1190
 #: eme-rsvp.php:4836
 #: eme-rsvp.php:6406
@@ -6689,7 +6689,7 @@ msgstr ""
 #: eme-mailer.php:1722
 #: eme-mailer.php:1825
 #: eme-mailer.php:1923
-#: eme-members.php:6817
+#: eme-members.php:6818
 #: eme-rsvp.php:6403
 #: eme-rsvp.php:6423
 msgid "The mail has been sent."
@@ -7336,10 +7336,10 @@ msgstr ""
 
 #: eme-members.php:1475
 #: eme-members.php:1597
-#: eme-members.php:6490
-#: eme-members.php:6500
+#: eme-members.php:6491
 #: eme-members.php:6501
 #: eme-members.php:6502
+#: eme-members.php:6503
 msgid "Edit member"
 msgstr ""
 
@@ -8429,78 +8429,78 @@ msgstr ""
 msgid "Not imported (no matching person found): %s"
 msgstr ""
 
-#: eme-members.php:6387
+#: eme-members.php:6388
 msgid "Edit membership"
 msgstr ""
 
-#: eme-members.php:6396
+#: eme-members.php:6397
 msgid "No membership form has been defined for this membership, a simple default will be used."
 msgstr ""
 
-#: eme-members.php:6409
+#: eme-members.php:6410
 msgid "%d head of the family accounts + %d family members"
 msgstr ""
 
-#: eme-members.php:6486
+#: eme-members.php:6487
 #: eme-people.php:5115
 msgid "(family member)"
 msgstr ""
 
-#: eme-members.php:6491
+#: eme-members.php:6492
 msgid "Head of the family: "
 msgstr ""
 
-#: eme-members.php:6494
+#: eme-members.php:6495
 msgid "(head of the family)"
 msgstr ""
 
-#: eme-members.php:6540
+#: eme-members.php:6541
 msgid "This is based on the payment ID of the member: %d"
 msgstr ""
 
-#: eme-members.php:6657
+#: eme-members.php:6658
 #: eme-people.php:5316
 msgid "(Dynamic)"
 msgstr ""
 
-#: eme-members.php:6669
+#: eme-members.php:6670
 #: eme-people.php:5328
 msgid "Dynamic group added"
 msgstr ""
 
-#: eme-members.php:6671
+#: eme-members.php:6672
 #: eme-people.php:5330
 msgid "There was a problem adding the group"
 msgstr ""
 
-#: eme-members.php:6674
+#: eme-members.php:6675
 #: eme-people.php:5333
 msgid "Please enter a name for the group"
 msgstr ""
 
-#: eme-members.php:6725
-#: eme-members.php:6793
+#: eme-members.php:6726
+#: eme-members.php:6794
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr ""
 
-#: eme-members.php:6778
+#: eme-members.php:6779
 msgid "Memberships deleted."
 msgstr ""
 
-#: eme-members.php:6834
+#: eme-members.php:6835
 msgid "No corresponding persons found."
 msgstr ""
 
-#: eme-members.php:6844
+#: eme-members.php:6845
 msgid "Members deleted."
 msgstr ""
 
-#: eme-members.php:6870
-#: eme-members.php:6896
-#: eme-members.php:6959
-#: eme-members.php:6990
-#: eme-members.php:7015
-#: eme-members.php:7032
+#: eme-members.php:6871
+#: eme-members.php:6897
+#: eme-members.php:6960
+#: eme-members.php:6991
+#: eme-members.php:7016
+#: eme-members.php:7033
 #: eme-rsvp.php:6039
 #: eme-rsvp.php:6073
 #: eme-rsvp.php:6117
@@ -8517,8 +8517,8 @@ msgstr ""
 msgid "The action has been executed successfully."
 msgstr ""
 
-#: eme-members.php:6873
-#: eme-members.php:6993
+#: eme-members.php:6874
+#: eme-members.php:6994
 #: eme-rsvp.php:6042
 #: eme-rsvp.php:6076
 #: eme-rsvp.php:6120
@@ -8531,8 +8531,8 @@ msgstr ""
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr ""
 
-#: eme-members.php:6876
-#: eme-members.php:6996
+#: eme-members.php:6877
+#: eme-members.php:6997
 #: eme-rsvp.php:6045
 #: eme-rsvp.php:6079
 #: eme-rsvp.php:6114

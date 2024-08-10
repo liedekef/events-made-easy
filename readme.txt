@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.6 (2024//) =
+* Fix guest frontend event submit
+
 = 2.5.5 (2024/08/07) =
 * Frontend submit now supports generic EME placeholders and interprets shortcodes too
 * New parameter for frontend submit: startdatetime=now. If used, the start date and time are by default set to

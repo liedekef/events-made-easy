@@ -666,7 +666,7 @@ function eme_frontend_submit_ajax() {
 
 	$eme_fs_options = get_option('eme_fs');
 	$is_user_logged_in=is_user_logged_in();
-	if ((!$is_user_logged_in && !$eme_fs_optionsoptions['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
+	if ((!$is_user_logged_in && !$eme_fs_options['guest_submit']) || ($is_user_logged_in && !current_user_can($eme_fs_options['cap_add_event'])) ) {
 		$form_html = __("Sorry, but you're not allowed to submit new events.","events-made-easy");
 		echo wp_json_encode(
 			[

@@ -99,6 +99,12 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.7 (2024//) =
+* The filterform placeholders #_FILTERWEEKS, #_FILTERMONTHS, #_FILTERYEARS now take 2 extra optional placeholders that indicate the number of week/months/years in the past and the future you want the scope to be. Example:
+#_FILTERYEARS{5}{3} to create a year scope from 5 years in the past till 2 years in the future
+#_FILTERYEARS{5} to create a year scope from 5 years in the past till the default scope count (taken from the eme_filterform shortcode) in the future
+#_FILTERYEARS to create a year scope from now till the default scope count (taken from the eme_filterform shortcode) in the future
+
 = 2.5.6 (2024/08/10) =
 * Fix guest frontend event submit
 * Fix redirection to event: if the submitted event is not public and a guest submitted it, we show the success message and don't redirect

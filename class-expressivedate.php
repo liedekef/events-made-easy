@@ -326,6 +326,9 @@ class ExpressiveDate extends DateTime {
 	 */
 	public function modifyDays( $amount, $invert = false ) {
 		$amount = floatval($amount);
+		if (empty($amount)) {
+			return $this;
+		}
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -396,6 +399,9 @@ class ExpressiveDate extends DateTime {
 	 */
 	public function modifyMonths( $amount, $invert = false ) {
 		$amount = floatval($amount);
+		if (empty($amount)) {
+			return $this;
+		}
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -466,6 +472,9 @@ class ExpressiveDate extends DateTime {
 	 */
 	public function modifyYears( $amount, $invert = false ) {
 		$amount = floatval($amount);
+		if (empty($amount)) {
+			return $this;
+		}
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -536,6 +545,9 @@ class ExpressiveDate extends DateTime {
 	 */
 	public function modifyHours( $amount, $invert = false ) {
 		$amount = floatval($amount);
+		if (empty($amount)) {
+			return $this;
+		}
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -606,6 +618,9 @@ class ExpressiveDate extends DateTime {
 	 */
 	public function modifyMinutes( $amount, $invert = false ) {
 		$amount = floatval($amount);
+		if (empty($amount)) {
+			return $this;
+		}
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -677,6 +692,9 @@ class ExpressiveDate extends DateTime {
 	public function modifySeconds( $amount, $invert = false ) {
 		// seconds are the smallest unit here and need to be an integer, otherwise DateInterval will complain
 		$amount = intval($amount);
+		if (empty($amount)) {
+			return $this;
+		}
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;
@@ -742,6 +760,9 @@ class ExpressiveDate extends DateTime {
 	 */
 	public function modifyWeeks( $amount, $invert = false ) {
 		$amount = floatval($amount);
+		if (empty($amount)) {
+			return $this;
+		}
 		if ( $amount < 0 ) {
 			$amount = abs( $amount );
 			$invert = true;

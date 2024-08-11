@@ -62,9 +62,13 @@ function eme_filter_form_shortcode( $atts ) {
 	return $form;
 }
 
-function eme_create_week_scope( $count, $eventful = 0 ) {
+function eme_create_week_scope( $past_count, $future_count, $eventful = 0 ) {
 	$start_of_week = get_option( 'start_of_week' );
 	$eme_date_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
+	if ($past_count) {
+		$eme_date_obj->minusWeeks($past_count);
+	}
+	$count = $past_count + $future_count;
 	$eme_date_obj->setWeekStartDay( $start_of_week );
 	$scope = [];
 	for ( $i = 0; $i < $count; $i++ ) {
@@ -87,10 +91,14 @@ function eme_create_week_scope( $count, $eventful = 0 ) {
 	return $scope;
 }
 
-function eme_create_month_scope( $count, $eventful = 0 ) {
+function eme_create_month_scope( $past_count, $future_count, $eventful = 0 ) {
 	$scope        = [];
 	$scope[0]     = __( 'Select Month', 'events-made-easy' );
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	if ($past_count) {
+		$eme_date_obj->minusMonths($past_count);
+	}
+	$count = $past_count + $future_count;
 	for ( $i = 0; $i < $count; $i++ ) {
 		$limit_start   = $eme_date_obj->startOfMonth()->format( 'Y-m-d' );
 		$days_in_month = $eme_date_obj->getDaysInMonth();
@@ -112,12 +120,15 @@ function eme_create_month_scope( $count, $eventful = 0 ) {
 	return $scope;
 }
 
-function eme_create_year_scope( $count, $eventful = 0 ) {
-	
+function eme_create_year_scope( $past_count, $future_count, $eventful = 0 ) {
 	$scope    = [];
 	$scope[0] = __( 'Select Year', 'events-made-easy' );
 
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+	if ($past_count) {
+		$eme_date_obj->minusYears($past_count);
+	}
+	$count = $past_count + $future_count;
 	for ( $i = 0; $i < $count; $i++ ) {
 		$year        = $eme_date_obj->getYear();
 		$limit_start = "$year-01-01";
@@ -338,22 +349,46 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 					}
 				}
 			}
-		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_WEEKS/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_WEEKS(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
 				$eventful = 1;
+			}
+			if ( isset( $matches[2] ) ) {
+				// remove { and } (first and last char of second match)
+				$past_count = intval(substr( $matches[2], 1, -1 ));
+			} else {
+				$past_count = 0;
+			}
+			if ( isset( $matches[3] ) ) {
+				// remove { and } (first and last char of second match)
+				$future_count = intval(substr( $matches[3], 1, -1 ));
+			} else {
+				$future_count = $scope_count;
 			}
 			if ( $scope_fieldcount == 0 ) {
 				$label       = __( 'Select Week', 'events-made-easy' );
 				$aria_label  = 'aria-label="' . eme_esc_html( $label ) . '"';
-				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_week_scope( $scope_count, $eventful ), $label, 0, '', $aria_label );
+				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_week_scope( $past_count, $future_count, $eventful ), $label, 0, '', $aria_label );
 				++$scope_fieldcount;
 			}
-		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_MONTHS/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_MONTHS(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
 				$eventful = 1;
 			}
+			if ( isset( $matches[2] ) ) {
+				// remove { and } (first and last char of second match)
+				$past_count = intval(substr( $matches[2], 1, -1 ));
+			} else {
+				$past_count = 0;
+			}
+			if ( isset( $matches[3] ) ) {
+				// remove { and } (first and last char of second match)
+				$future_count = intval(substr( $matches[3], 1, -1 ));
+			} else {
+				$future_count = $scope_count;
+			}
 			if ( $scope_fieldcount == 0 ) {
-				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_month_scope( $scope_count, $eventful ) );
+				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_month_scope( $past_count, $future_count, $eventful ) );
 				++$scope_fieldcount;
 			}
 		} elseif ( preg_match( '/#_FILTER_MONTHRANGE/', $result ) ) {
@@ -364,12 +399,24 @@ function eme_replace_filter_form_placeholders( $format, $multiple, $multisize, $
 				eme_enqueue_datetimepicker();
 				++$scope_fieldcount;
 			}
-		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_YEARS/', $result, $matches ) ) {
+		} elseif ( preg_match( '/#_(EVENTFUL_)?FILTER_YEARS(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) && $matches[1] == 'EVENTFUL_' ) {
 				$eventful = 1;
 			}
+			if ( isset( $matches[2] ) ) {
+				// remove { and } (first and last char of second match)
+				$past_count = intval(substr( $matches[2], 1, -1 ));
+			} else {
+				$past_count = 0;
+			}
+			if ( isset( $matches[3] ) ) {
+				// remove { and } (first and last char of second match)
+				$future_count = intval(substr( $matches[3], 1, -1 ));
+			} else {
+				$future_count = $scope_count;
+			}
 			if ( $scope_fieldcount == 0 ) {
-				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_year_scope( $scope_count, $eventful ) );
+				$replacement = eme_ui_select( $selected_scope, $scope_post_name, eme_create_year_scope( $past_count, $future_count, $eventful ) );
 				++$scope_fieldcount;
 			}
 		} elseif ( preg_match( '/#_FILTER_CONTACT(\{.+?\})?(\{.+?\})?/', $result, $matches ) ) {

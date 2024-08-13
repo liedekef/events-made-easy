@@ -1704,6 +1704,7 @@ function eme_tasks_ajax() {
 				$nok      = 1;
 				continue;
 			}
+			$add_update_person_from_form_err = '';
 			if ( ! $person_id && isset( $_POST['task_lastname'] ) && isset( $_POST['task_email'] ) ) {
 				$bookerLastName = eme_sanitize_request( $_POST['task_lastname'] );
 				if ( isset( $_POST['task_firstname'] ) ) {
@@ -1712,6 +1713,7 @@ function eme_tasks_ajax() {
 				$bookerEmail = eme_sanitize_email( $_POST['task_email'] );
 				$res         = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail );
 				$person_id   = $res[0];
+				$add_update_person_from_form_err = $res[1];
 			}
 			if ( ! empty( $person_id ) ) {
 				// no doubles
@@ -1766,6 +1768,11 @@ function eme_tasks_ajax() {
 					$nok      = 1;
 					continue;
 				}
+			} else {
+				$message .= $add_update_person_from_form_err;
+				$message .= '<br>';
+				$nok      = 1;
+				continue;
 			}
 		}
 	}

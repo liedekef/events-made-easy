@@ -271,7 +271,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
                       //$localized_field_id='localized-start-time';
                       //$more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
                       //$type = 'localized_datetime';
-		      $field = 'localized_start_time';
+		      $field = 'event[localized_start_time]';
                       $more .= " size=8 class='eme_formfield_timepicker'";
                       $type = 'localized_time';
                       break;
@@ -279,7 +279,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
                       //$localized_field_id='localized-end-time';
                       //$more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
                       //$type = 'localized_datetime';
-		      $field = 'localized_end_time';
+		      $field = 'event[localized_end_time]';
                       $more .= " size=8 class='eme_formfield_timepicker'";
                       $type = 'localized_time';
                       break;
@@ -512,8 +512,8 @@ function eme_fs_process_newevent() {
 	}
 
 	if ($all_day) {
-		$event_data['event_start_time'] = '00:00';
-		$event_data['event_end_time'] = "23:59";
+		$event_start_time = '00:00';
+		$event_end_time = "23:59";
 	} else {
 		if ( ! empty( $event_data['localized_start_time'] ) ) {
                         $start_date_obj   = ExpressiveDate::createFromFormat( EME_WP_TIME_FORMAT, eme_sanitize_request( $event_data['localized_start_time'] ), ExpressiveDate::parseSuppliedTimezone( EME_TIMEZONE ) );

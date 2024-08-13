@@ -4214,7 +4214,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "V prípade opakovania nemôže byť začiatočný a konečný dátum totožný"
 
 #: eme-events.php:9597
-#: eme-filters.php:408
+#: eme-filters.php:455
 #: eme-options.php:1723
 msgid "Event author"
 msgstr "Autor podujatia"
@@ -4971,59 +4971,59 @@ msgstr "Stav podujatia aktualizovaný"
 msgid "Events added to category"
 msgstr "Podujatia pridané do kategórie"
 
-#: eme-filters.php:92
+#: eme-filters.php:96
 msgid "Select Month"
 msgstr "Vyberte mesiac"
 
-#: eme-filters.php:118
+#: eme-filters.php:125
 msgid "Select Year"
 msgstr "Vybrať rok"
 
-#: eme-filters.php:212
+#: eme-filters.php:223
 msgid "Select one or more categories"
 msgstr "Vybrať jednu alebo viac kategórií"
 
-#: eme-filters.php:214
+#: eme-filters.php:225
 msgid "Select a category"
 msgstr "Zvoliť kategóriu"
 
-#: eme-filters.php:247
+#: eme-filters.php:258
 msgid "Select one or more locations"
 msgstr "Vybrať jedno alebo viac miest"
 
-#: eme-filters.php:249
+#: eme-filters.php:260
 msgid "Select a location"
 msgstr "Vybrať miesto"
 
-#: eme-filters.php:281
+#: eme-filters.php:292
 msgid "Select one or more cities"
 msgstr "Vybrať jedno alebo viac miest"
 
-#: eme-filters.php:283
+#: eme-filters.php:294
 msgid "Select a city"
 msgstr "Vyberte mesto"
 
-#: eme-filters.php:315
+#: eme-filters.php:326
 msgid "Select one or more countries"
 msgstr "Vybrať jednu alebo viac krajín"
 
-#: eme-filters.php:317
+#: eme-filters.php:328
 msgid "Select a country"
 msgstr "Vybrať krajinu"
 
-#: eme-filters.php:346
+#: eme-filters.php:369
 msgid "Select Week"
 msgstr "Vybrať týždeň"
 
-#: eme-filters.php:361
+#: eme-filters.php:396
 msgid "Select a daterange"
 msgstr "Zvoliť rozsah dátumu"
 
-#: eme-filters.php:380
+#: eme-filters.php:427
 msgid "Event contact"
 msgstr "Kontakt na podujatie"
 
-#: eme-filters.php:454
+#: eme-filters.php:501
 msgid "Submit"
 msgstr "Odoslať"
 

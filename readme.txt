@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 2.5.6
+Stable tag: 2.5.7
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,11 +99,12 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.7 (2024//) =
+= 2.5.7 (2024/08/13) =
 * The filterform placeholders #_FILTERWEEKS, #_FILTERMONTHS, #_FILTERYEARS now take 2 extra optional placeholders that indicate the number of week/months/years in the past and the future you want the scope to be. Example:
 #_FILTERYEARS{5}{3} to create a year scope from 5 years in the past till 2 years in the future
 #_FILTERYEARS{5} to create a year scope from 5 years in the past till the default scope count (taken from the eme_filterform shortcode) in the future
 #_FILTERYEARS to create a year scope from now till the default scope count (taken from the eme_filterform shortcode) in the future
+* The new FS form did not correctly noted down event start/end times
 
 = 2.5.6 (2024/08/10) =
 * Fix guest frontend event submit

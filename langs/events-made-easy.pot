@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.5.5\n"
+"Project-Id-Version: Events Made Easy 2.5.6\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-08-10T21:27:56+00:00\n"
+"POT-Creation-Date: 2024-08-13T15:57:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -4206,7 +4206,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr ""
 
 #: eme-events.php:9597
-#: eme-filters.php:408
+#: eme-filters.php:455
 #: eme-options.php:1723
 msgid "Event author"
 msgstr ""
@@ -4963,59 +4963,59 @@ msgstr ""
 msgid "Events added to category"
 msgstr ""
 
-#: eme-filters.php:92
+#: eme-filters.php:96
 msgid "Select Month"
 msgstr ""
 
-#: eme-filters.php:118
+#: eme-filters.php:125
 msgid "Select Year"
 msgstr ""
 
-#: eme-filters.php:212
+#: eme-filters.php:223
 msgid "Select one or more categories"
 msgstr ""
 
-#: eme-filters.php:214
+#: eme-filters.php:225
 msgid "Select a category"
 msgstr ""
 
-#: eme-filters.php:247
+#: eme-filters.php:258
 msgid "Select one or more locations"
 msgstr ""
 
-#: eme-filters.php:249
+#: eme-filters.php:260
 msgid "Select a location"
 msgstr ""
 
-#: eme-filters.php:281
+#: eme-filters.php:292
 msgid "Select one or more cities"
 msgstr ""
 
-#: eme-filters.php:283
+#: eme-filters.php:294
 msgid "Select a city"
 msgstr ""
 
-#: eme-filters.php:315
+#: eme-filters.php:326
 msgid "Select one or more countries"
 msgstr ""
 
-#: eme-filters.php:317
+#: eme-filters.php:328
 msgid "Select a country"
 msgstr ""
 
-#: eme-filters.php:346
+#: eme-filters.php:369
 msgid "Select Week"
 msgstr ""
 
-#: eme-filters.php:361
+#: eme-filters.php:396
 msgid "Select a daterange"
 msgstr ""
 
-#: eme-filters.php:380
+#: eme-filters.php:427
 msgid "Event contact"
 msgstr ""
 
-#: eme-filters.php:454
+#: eme-filters.php:501
 msgid "Submit"
 msgstr ""
 

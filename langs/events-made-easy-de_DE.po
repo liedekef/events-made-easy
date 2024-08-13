@@ -4040,7 +4040,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "In einer Veranstaltungsserie dürfen Start- und End-Datum nicht identisch sein"
 
 #: eme-events.php:9597
-#: eme-filters.php:408
+#: eme-filters.php:455
 #: eme-options.php:1723
 msgid "Event author"
 msgstr "Veranstaltungsautor"
@@ -4864,59 +4864,59 @@ msgstr "Veranstaltungsstatus aktualisiert"
 msgid "Events added to category"
 msgstr "Veranstaltung der Kategorie hinzugefügt"
 
-#: eme-filters.php:92
+#: eme-filters.php:96
 msgid "Select Month"
 msgstr "Monat auswählen"
 
-#: eme-filters.php:118
+#: eme-filters.php:125
 msgid "Select Year"
 msgstr "Jahr auswählen"
 
-#: eme-filters.php:212
+#: eme-filters.php:223
 msgid "Select one or more categories"
 msgstr "Eine oder mehrere Kategorien auswählen"
 
-#: eme-filters.php:214
+#: eme-filters.php:225
 msgid "Select a category"
 msgstr "Wähle eine Kategorie"
 
-#: eme-filters.php:247
+#: eme-filters.php:258
 msgid "Select one or more locations"
 msgstr "Einen oder mehrere Veranstaltungsorte auswählen"
 
-#: eme-filters.php:249
+#: eme-filters.php:260
 msgid "Select a location"
 msgstr "Einen Veranstaltungsort auswählen"
 
-#: eme-filters.php:281
+#: eme-filters.php:292
 msgid "Select one or more cities"
 msgstr "Eine oder mehrere Orte auswählen"
 
-#: eme-filters.php:283
+#: eme-filters.php:294
 msgid "Select a city"
 msgstr "Wähle eine Stadt"
 
-#: eme-filters.php:315
+#: eme-filters.php:326
 msgid "Select one or more countries"
 msgstr "Wähle ein oder mehrere Länder"
 
-#: eme-filters.php:317
+#: eme-filters.php:328
 msgid "Select a country"
 msgstr "Wähle ein Land"
 
-#: eme-filters.php:346
+#: eme-filters.php:369
 msgid "Select Week"
 msgstr "Woche auswählen"
 
-#: eme-filters.php:361
+#: eme-filters.php:396
 msgid "Select a daterange"
 msgstr "Einen Datumsbereich auswählen"
 
-#: eme-filters.php:380
+#: eme-filters.php:427
 msgid "Event contact"
 msgstr "Veranstaltung Kontakt"
 
-#: eme-filters.php:454
+#: eme-filters.php:501
 msgid "Submit"
 msgstr "Senden"
 

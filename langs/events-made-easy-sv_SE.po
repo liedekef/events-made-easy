@@ -4051,7 +4051,7 @@ msgid "In a recurrence, start and end date can't be identical"
 msgstr "För ett återkommande kan inte start- och slutdatum vara lika"
 
 #: eme-events.php:9597
-#: eme-filters.php:408
+#: eme-filters.php:455
 #: eme-options.php:1723
 msgid "Event author"
 msgstr "Skapare av event"
@@ -4878,59 +4878,59 @@ msgstr "Eventstatus uppdaterades"
 msgid "Events added to category"
 msgstr "Event tillagda till kategori"
 
-#: eme-filters.php:92
+#: eme-filters.php:96
 msgid "Select Month"
 msgstr "Välj månad"
 
-#: eme-filters.php:118
+#: eme-filters.php:125
 msgid "Select Year"
 msgstr "Välj år"
 
-#: eme-filters.php:212
+#: eme-filters.php:223
 msgid "Select one or more categories"
 msgstr "Välj en eller flera kategorier"
 
-#: eme-filters.php:214
+#: eme-filters.php:225
 msgid "Select a category"
 msgstr "Välj en kategori"
 
-#: eme-filters.php:247
+#: eme-filters.php:258
 msgid "Select one or more locations"
 msgstr "Välj en eller flera platser"
 
-#: eme-filters.php:249
+#: eme-filters.php:260
 msgid "Select a location"
 msgstr "Välj en plats"
 
-#: eme-filters.php:281
+#: eme-filters.php:292
 msgid "Select one or more cities"
 msgstr "Välj en eller flera städer"
 
-#: eme-filters.php:283
+#: eme-filters.php:294
 msgid "Select a city"
 msgstr "Välj en stad"
 
-#: eme-filters.php:315
+#: eme-filters.php:326
 msgid "Select one or more countries"
 msgstr "Välj ett eller flera länder"
 
-#: eme-filters.php:317
+#: eme-filters.php:328
 msgid "Select a country"
 msgstr "Välj ett land"
 
-#: eme-filters.php:346
+#: eme-filters.php:369
 msgid "Select Week"
 msgstr "Välj vecka"
 
-#: eme-filters.php:361
+#: eme-filters.php:396
 msgid "Select a daterange"
 msgstr "Välj ett datumintervall"
 
-#: eme-filters.php:380
+#: eme-filters.php:427
 msgid "Event contact"
 msgstr ""
 
-#: eme-filters.php:454
+#: eme-filters.php:501
 msgid "Submit"
 msgstr "Skicka"
 

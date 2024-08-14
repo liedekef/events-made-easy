@@ -948,8 +948,6 @@ function eme_payment_form_stripe( $item_name, $payment, $baseprice, $cur, $multi
 	}
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		// stripe doesn't like the single quotes
-		$description = preg_replace( '/\'/', '', $description );
 		$filtername  = 'eme_member_paymentform_description_filter';
 	} elseif ( $multi_booking ) {
 		$description = __( 'Multiple booking request', 'events-made-easy' );
@@ -962,8 +960,8 @@ function eme_payment_form_stripe( $item_name, $payment, $baseprice, $cur, $multi
 		$description = apply_filters( $filtername, $description, $payment, $gateway );
 	}
 
-	// stripe doesn't like the single quotes
-	$description = preg_replace( '/\'/', '', $description );
+	// gateway doesn't like the single quotes
+	$description = str_replace( "'", '', $description );
 	$description = eme_esc_html( $description );
 
 	$price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
@@ -1148,22 +1146,20 @@ function eme_payment_form_mollie( $item_name, $payment, $baseprice, $cur, $multi
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		// mollie doesn't like the single quotes
-		$description = preg_replace( '/\'/', '', $description );
 		$filtername  = 'eme_member_paymentform_description_filter';
 	} elseif ( $multi_booking ) {
 		$description = __( 'Multiple booking request', 'events-made-easy' );
 		$filtername  = 'eme_rsvp_paymentform_description_filter';
 	} else {
 		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		// mollie doesn't like the single quotes
-		$description = preg_replace( '/\'/', '', $description );
 		$filtername  = 'eme_rsvp_paymentform_description_filter';
 	}
 	if ( has_filter( $filtername ) ) {
 		$description = apply_filters( $filtername, $description, $payment, $gateway );
 	}
 
+	// gateway doesn't like the single quotes
+	$description = str_replace( "'", '', $description );
 	$description = eme_esc_html( $description );
 
 	$price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
@@ -1207,22 +1203,20 @@ function eme_payment_form_payconiq( $item_name, $payment, $baseprice, $cur, $mul
 
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		// doesn't like the single quotes
-		$description = preg_replace( '/\'/', '', $description );
 		$filtername  = 'eme_member_paymentform_description_filter';
 	} elseif ( $multi_booking ) {
 		$description = __( 'Multiple booking request', 'events-made-easy' );
 		$filtername  = 'eme_rsvp_paymentform_description_filter';
 	} else {
 		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		// doesn't like the single quotes
-		$description = preg_replace( '/\'/', '', $description );
 		$filtername  = 'eme_rsvp_paymentform_description_filter';
 	}
 	if ( has_filter( $filtername ) ) {
 		$description = apply_filters( $filtername, $description, $payment, $gateway );
 	}
 
+	// gateway doesn't like the single quotes
+	$description = str_replace( "'", '', $description );
 	$description = eme_esc_html( $description );
 
 	$price            = eme_payment_gateway_total( $baseprice, $cur, $gateway );
@@ -1430,8 +1424,6 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
 	$payment_id = $payment['id'];
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		// doesn't like the single quotes
-		$description = preg_replace( '/\'/', '', $description );
 		$member      = eme_get_member_by_paymentid( $payment_id );
 		$person      = eme_get_person( $member['person_id'] );
 		$filtername  = 'eme_member_paymentform_description_filter';
@@ -1443,8 +1435,6 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
 		$filtername  = 'eme_rsvp_paymentform_description_filter';
 	} else {
 		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		// doesn't like the single quotes
-		$description = preg_replace( '/\'/', '', $description );
 		$booking_ids = eme_get_payment_booking_ids( $payment['id'] );
 		$booking     = eme_get_booking( $booking_ids[0] );
 		$person      = eme_get_person( $booking['person_id'] );
@@ -1453,6 +1443,9 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
 	if ( has_filter( $filtername ) ) {
 		$description = apply_filters( $filtername, $description, $payment, $gateway );
 	}
+
+	// gateway doesn't like the single quotes
+	$description = str_replace( "'", '', $description );
 	$item_name = esc_attr( get_option( 'blog_name' ) );
 	if ( empty( $item_name ) ) {
 		$item_name = $description;
@@ -1530,22 +1523,20 @@ function eme_payment_form_fondy( $event_or_memebership, $payment, $baseprice, $c
 	$payment_id = $payment['id'];
 	if ( $payment['target'] == 'member' ) {
 		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $event_or_memebership['name'] );
-		// doesn't like the single quotes
-		$description = str_replace( "'", '', $description );
 		$filtername  = 'eme_member_paymentform_description_filter';
 	} elseif ( $multi_booking ) {
 		$description = __( 'Multiple booking request', 'events-made-easy' );
 		$filtername  = 'eme_rsvp_paymentform_description_filter';
 	} else {
 		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $event_or_memebership['event_name'] );
-		// doesn't like the single quotes
-		$description = str_replace( "'", '', $description );
 		$filtername  = 'eme_rsvp_paymentform_description_filter';
 	}
 	if ( has_filter( $filtername ) ) {
 		$description = apply_filters( $filtername, $description, $payment, $gateway );
 	}
 
+	// gateway doesn't like the single quotes
+	$description = str_replace( "'", '', $description );
 	$description = eme_esc_html( $description );
 
 	$price      = eme_payment_gateway_total( $baseprice, $cur, $gateway );

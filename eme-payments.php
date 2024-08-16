@@ -65,17 +65,17 @@ function eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking ) 
 	return $description;
 }
 
-function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
+function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	$ret_string = '';
 	$payment    = eme_get_payment( $payment_id );
 	if ( empty( $payment ) ) {
 		return;
 	}
 	if ( $payment['target'] == 'member' ) {
-		return eme_payment_member_form( $payment_id, $resultcode, $standalone );
+		return eme_member_payment_form( $payment_id, $resultcode, $standalone );
 	}
 	if ( $payment['target'] == 'fs_event' ) {
-		return eme_payment_fs_event_form( $payment_id, $resultcode, $standalone );
+		return eme_fs_event_payment_form( $payment_id, $resultcode, $standalone );
 	}
 
 	$bookings = eme_get_bookings_by_paymentid( $payment_id );
@@ -261,7 +261,7 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	return $ret_string;
 }
 
-function eme_payment_member_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
+function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	if ( $resultcode > 0 ) {
 		$ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Payment failed for your membership for #_MEMBERSHIPNAME, please try again.', 'events-made-easy' ) . '</div>';
 	} else {

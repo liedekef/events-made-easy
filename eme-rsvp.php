@@ -983,7 +983,7 @@ function eme_add_bookings_ajax() {
 					]
 				);
 			} elseif ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
-				$payment_form = eme_payment_form( $payment_id );
+				$payment_form = eme_event_payment_form( $payment_id );
 				echo wp_json_encode(
 				    [
 						'Result'      => 'OK',
@@ -1011,7 +1011,7 @@ function eme_add_bookings_ajax() {
 					]
 				);
 			} else {
-				$payment_form = eme_payment_form( $payment_id );
+				$payment_form = eme_event_payment_form( $payment_id );
 				echo wp_json_encode(
 				    [
 						'Result'      => 'OK',

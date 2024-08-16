@@ -100,7 +100,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 	// if we require a user to be WP registered to be able to book
 	// in the backend we should not check this condition
 	if ( ! eme_is_admin_request() ) {
-		if ( ( $registration_wp_users_only || ! empty( $event['event_properties']['rsvp_required_group_ids']) || ! empty( $event['event_properties']['rsvp_required_membership_ids']) || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT ) && ! is_user_logged_in() ) {
+		if ( ( $registration_wp_users_only || ! empty( $event['event_properties']['rsvp_required_group_ids']) || ! empty( $event['event_properties']['rsvp_required_membership_ids']) || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) && ! is_user_logged_in() ) {
 			$form_html  = "<div class='eme-message-error eme-rsvp-message eme-rsvp-message-error'>";
 			$format     = get_option( 'eme_rsvp_login_required_string' );
 			$form_html .= eme_replace_event_placeholders( $format, $event );
@@ -184,7 +184,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 	if ( $only_if_not_registered ) {
 		$form_html .= "<input type='hidden' name='only_if_not_registered' value='$only_if_not_registered'>";
 	}
-	if ( ! eme_is_admin_request() && ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT ) ) {
+	if ( ! eme_is_admin_request() && ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) ) {
 		// if in the frontend and wp membership is required
 		// and we're logged in (otherwise we don't get here)
 		$form_html .= "<input type='hidden' name='wp_id' value='$current_userid'>";
@@ -749,7 +749,7 @@ function eme_cancel_bookings_form( $event_id ) {
 		return;
 	}
 	$registration_wp_users_only = $event['registration_wp_users_only'];
-	if ( ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT ) && ! is_user_logged_in() ) {
+	if ( ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT  ) && ! is_user_logged_in() ) {
 		// we require a user to be WP registered to be able to delete a booking
 		$form_html  = "<div class='eme-message-error eme-rsvp-message eme-rsvp-message-error'>";
 		$format     = get_option( 'eme_rsvp_login_required_string' );
@@ -1146,7 +1146,7 @@ function eme_cancel_bookings_ajax() {
 	$registration_wp_users_only = $event['registration_wp_users_only'];
 
 	$booking_ids = [];
-	if ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT ) {
+	if ( $registration_wp_users_only || $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) {
 		// we require a user to be WP registered to be able to book
 		if ( is_user_logged_in() ) {
 			$wp_id       = get_current_user_id();
@@ -1301,7 +1301,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 				$booker_wp_id = $current_userid;
 			}
 		}
-		if ( ( $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT ) && ! is_user_logged_in() ) {
+		if ( ( $event['event_status'] == EME_EVENT_STATUS_PRIVATE || $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT  ) && ! is_user_logged_in() ) {
 			$form_html .= __( 'WP membership required to continue', 'events-made-easy' );
 			continue;
 		}
@@ -4879,26 +4879,26 @@ function eme_import_csv_payments() {
 	$ignored_msg = '';
 	$handle      = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
 	if ( ! $handle ) {
-				return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
+		return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
 	}
 	// BOM as a string for comparison.
 		$bom = "\xef\xbb\xbf";
 		// Progress file pointer and get first 3 characters to compare to the BOM string.
 	if ( fgets( $handle, 4 ) !== $bom ) {
-			// BOM not found - rewind pointer to start of file.
-			rewind( $handle );
+		// BOM not found - rewind pointer to start of file.
+		rewind( $handle );
 	}
 
 	if ( ! eme_is_empty_string( $_POST['enclosure'] ) ) {
-				$enclosure = eme_sanitize_request( $_POST['enclosure'] );
-		$enclosure         = substr( $enclosure, 0, 1 );
+		$enclosure = eme_sanitize_request( $_POST['enclosure'] );
+		$enclosure = substr( $enclosure, 0, 1 );
 	} else {
-			$enclosure = '"';
+		$enclosure = '"';
 	}
 	if ( ! eme_is_empty_string( $_POST['delimiter'] ) ) {
-			$delimiter = eme_sanitize_request( $_POST['delimiter'] );
+		$delimiter = eme_sanitize_request( $_POST['delimiter'] );
 	} else {
-			$delimiter = ',';
+		$delimiter = ',';
 	}
 
 	// get the first row as keys and lowercase them
@@ -4909,7 +4909,7 @@ function eme_import_csv_payments() {
 		$result = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
 		$empty_props         = [];
-				$empty_props = eme_init_event_props( $empty_props );
+		$empty_props = eme_init_event_props( $empty_props );
 		// now loop over the rest
 		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
 			$line = array_combine( $headers, $row );
@@ -4945,14 +4945,14 @@ function eme_import_csv_payments() {
 			}
 
 			if ( empty( $payment_id ) ) {
-								++$ignored;
-								$ignored_msg .= '<br>' . eme_esc_html( sprintf( __( 'No linked payment found: %s', 'events-made-easy' ), implode( $delimiter, $row ) ) );
+				++$ignored;
+				$ignored_msg .= '<br>' . eme_esc_html( sprintf( __( 'No linked payment found: %s', 'events-made-easy' ), implode( $delimiter, $row ) ) );
 			} elseif ( ! eme_is_date( $payment_date ) ) {
-								++$errors;
-								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'payment_date', implode( $delimiter, $row ) ) );
+				++$errors;
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'payment_date', implode( $delimiter, $row ) ) );
 			} elseif ( empty( $amount ) ) {
-								++$errors;
-								$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'amount', implode( $delimiter, $row ) ) );
+				++$errors;
+				$error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Field %s not valid: %s', 'events-made-easy' ), 'amount', implode( $delimiter, $row ) ) );
 			} else {
 				$to_pay = eme_get_payment_price( $payment_id );
 				if ( $to_pay == 0 ) {

@@ -2203,32 +2203,21 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<?php
 	esc_html_e( 'If no payment method is selected, the "Member Added Message" will be shown. Otherwise the "Member Added Message" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings).', 'events-made-easy' );
 	echo '<br>';
-	$found_methods        = eme_get_configured_pgs();
-	$count_configured_pgs = count( $found_methods );
-	$pgs                  = eme_payment_gateways();
-	// for memberships, the offline payment is configured per membership (not globally), so remove that from the found methods
-	if ( isset( $found_methods['offline'] ) ) {
-		unset( $found_methods['offline'] );
-	}
-	foreach ( $pgs as $pg => $pg_desc ) {
-		// offline is handled per membership (not globally), so continue
-		if ( $pg == 'offline' ) {
-			continue;
-		}
+	$configured_pgs       = eme_get_configured_pgs();
+	$count_configured_pgs = count( $configured_pgs );
+	$pg_descriptions      = eme_payment_gateways();
+	foreach ( $configured_pgs as $pg ) {
 		// if it is a new membership and there's only one pg configured, select it by default
-		if ( $is_new_membership && $count_configured_pgs == 1 && $found_methods[0] == $pg ) {
+		if ( $is_new_membership && $count_configured_pgs == 1 ) {
 			$membership['properties'][ 'use_' . $pg ] = 1;
 		}
-		if ( ! in_array( $pg, $found_methods ) ) {
-			continue;
-		}
-		echo eme_ui_checkbox_binary( $membership['properties'][ 'use_' . $pg ], 'properties[use_' . $pg . ']', $pg_desc );
+		echo eme_ui_checkbox_binary( $membership['properties'][ 'use_' . $pg ], 'properties[use_' . $pg . ']', $pg_descriptions[$pg] );
 		echo '<br>';
 	}
 
 	echo eme_ui_checkbox_binary( $membership['properties']['use_offline'], 'properties[use_offline]', __( 'Offline', 'events-made-easy' ) );
 	echo '<br>';
-	if ( empty( $found_methods ) ) {
+	if ( empty( $configured_pgs ) ) {
 		esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
 	}
 

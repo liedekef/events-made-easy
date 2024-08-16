@@ -4,6 +4,35 @@ if ( ! defined( 'ABSPATH' ) ) {
         exit; // Exit if accessed directly.
 }
 
+function eme_email_fs_event_action( $event, $action ) {
+	$contact        = eme_get_event_contact( $event );
+	$contact_email  = $contact->user_email;
+	$contact_name   = $contact->display_name;
+	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
+
+	// first get the initial values
+	$contact_subject = '';
+	$contact_body    = '';
+	if ( $action == 'ipnReceived' ) {
+		$contact_subject = __('Payment received for event submission','events-made-easy');
+		$contact_body = __('Payment received for event submission','events-made-easy');
+	}
+
+	if ( ! empty( $contact_subject ) ) {
+		$contact_subject = eme_replace_event_placeholders( $contact_subject, $event, 'text' );
+	}
+	if ( ! empty( $contact_body ) ) {
+		$contact_body = eme_replace_event_placeholders( $contact_body, $event, $mail_text_html );
+	}
+
+	$mail_res = true; // make sure we return true if no mail is sent due to empty subject or body
+	if ( ! empty( $contact_subject ) && ! empty( $contact_body ) ) {
+		$mail_res = eme_queue_mail( $contact_subject, $contact_body, $contact_email, $contact_name, $contact_email, $contact_name, $contact_email, $contact_name );
+	}
+
+	return $mail_res;
+}
+
 
 function eme_add_event_form_shortcode( $atts ) {
 	eme_enqueue_frontend();

@@ -45,6 +45,26 @@ function eme_is_offline_pg( $pg ) {
 	}
 }
 
+function eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking ) {
+        if ( $payment['target'] == 'member' ) {
+                $description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
+                $filtername  = 'eme_member_paymentform_description_filter';
+	} elseif ( $payment['target'] == 'fs_event' ) {
+                $description = sprintf( __( "Event submission '%s'", 'events-made-easy' ), $item_name );
+                $filtername  = 'eme_fs_event_paymentform_description_filter';
+        } elseif ( $multi_booking ) {
+                $description = __( 'Multiple booking request', 'events-made-easy' );
+                $filtername  = 'eme_rsvp_paymentform_description_filter';
+        } else {
+                $description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
+                $filtername  = 'eme_rsvp_paymentform_description_filter';
+        }
+        if ( has_filter( $filtername ) ) {
+                $description = apply_filters( $filtername, $description, $payment, $gateway );
+        }
+	return $description;
+}
+
 function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	$ret_string = '';
 	$payment    = eme_get_payment( $payment_id );
@@ -53,6 +73,9 @@ function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	}
 	if ( $payment['target'] == 'member' ) {
 		return eme_payment_member_form( $payment_id, $resultcode, $standalone );
+	}
+	if ( $payment['target'] == 'fs_event' ) {
+		return eme_payment_fs_event_form( $payment_id, $resultcode, $standalone );
 	}
 
 	$bookings = eme_get_bookings_by_paymentid( $payment_id );
@@ -380,6 +403,11 @@ function eme_payment_allowed_to_pay( $payment_id ) {
 		$member      = eme_get_member_by_paymentid( $payment_id );
 		$membership  = eme_get_membership( $member['membership_id'] );
 		return eme_check_member_allowed_to_pay( $member, $membership );
+	} elseif ( $payment['target'] == 'fs_event' ) {
+		// events are simple :-)
+		if (empty($payment['pg_handled']))
+			return 1;
+		return 0;
 	} else {
 		$payment_paid = eme_get_payment_paid( $payment );
 		if ( $payment_paid ) {
@@ -454,19 +482,7 @@ function eme_payment_form_webmoney( $item_name, $payment, $baseprice, $cur, $mul
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	$description = eme_esc_html( $description );
 
@@ -521,20 +537,7 @@ function eme_payment_form_2co( $item_name, $payment, $baseprice, $cur, $multi_bo
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
-
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 	$description = eme_esc_html( $description );
 
 	$button_above = get_option( 'eme_' . $gateway . '_button_above' );
@@ -579,19 +582,8 @@ function eme_payment_form_worldpay( $item_name, $payment, $baseprice, $cur, $mul
 	// $success_link = eme_payment_return_url($payment,0);
 	// $fail_link = eme_payment_return_url($payment,1);
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	if ( get_option( 'eme_worldpay_demo' ) == 1 ) {
 		$url = 'https://secure-test.worldpay.com/wcc/purchase';
@@ -659,19 +651,7 @@ function eme_payment_form_opayo( $item_name, $payment, $baseprice, $cur, $multi_
 	$success_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $success_link );
 	$fail_link    = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $fail_link );
 
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	// the live or sandbox url
 	$opayo_demo = get_option( 'eme_opayo_demo' );
@@ -698,6 +678,8 @@ function eme_payment_form_opayo( $item_name, $payment, $baseprice, $cur, $multi_
 		if ( $member ) {
 			$person = eme_get_person( $member['person_id'] );
 		}
+	} elseif ( $payment['target'] == 'fs_event' ) {
+		$person = eme_new_person();
 	} else {
 		$booking_ids = eme_get_payment_booking_ids( $payment_id );
 		if ( $booking_ids ) {
@@ -852,19 +834,7 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
 	$return_link       = eme_payment_return_url( $payment, $gateway );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	$description = eme_esc_html( $description );
 
@@ -946,19 +916,8 @@ function eme_payment_form_stripe( $item_name, $payment, $baseprice, $cur, $multi
 	if ( ! $eme_stripe_public_key ) {
 		return;
 	}
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -1010,21 +969,8 @@ function eme_payment_form_fdgg( $item_name, $payment, $baseprice, $cur, $multi_b
 	$success_link     = eme_payment_return_url( $payment, 0 );
 	$fail_link        = eme_payment_return_url( $payment, 1 );
 
-	// we add the next lines to be conform with the others, but fdgg ignores the description anyway
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
-
+	// we add the next lines to be conform with the others, but fdgg ignores the description
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 	$description = eme_esc_html( $description );
 
 	// the live or sandbox url
@@ -1093,20 +1039,7 @@ function eme_payment_form_instamojo( $item_name, $payment, $baseprice, $cur, $mu
 	$return_link       = eme_payment_return_url( $payment, $gateway );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
-
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 	$description = eme_esc_html( $description );
 
 	$button_above = get_option( 'eme_' . $gateway . '_button_above' );
@@ -1144,19 +1077,7 @@ function eme_payment_form_mollie( $item_name, $payment, $baseprice, $cur, $multi
 		return;
 	}
 
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -1201,19 +1122,7 @@ function eme_payment_form_payconiq( $item_name, $payment, $baseprice, $cur, $mul
 		return;
 	}
 
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -1266,19 +1175,7 @@ function eme_payment_form_paypal( $item_name, $payment, $baseprice, $cur, $multi
 	// $fail_link = eme_payment_return_url($payment,1);
 	// $notification_link = add_query_arg(array('eme_eventAction'=>'paypal_notification'),$events_page_link);
 
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	$description = eme_esc_html( $description );
 
@@ -1325,19 +1222,7 @@ function eme_payment_form_legacypaypal( $item_name, $payment, $baseprice, $cur, 
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	$description = eme_esc_html( $description );
 
@@ -1422,27 +1307,7 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
 	MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
 
 	$payment_id = $payment['id'];
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $item_name );
-		$member      = eme_get_member_by_paymentid( $payment_id );
-		$person      = eme_get_person( $member['person_id'] );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$booking_ids = eme_get_payment_booking_ids( $payment['id'] );
-		$booking     = eme_get_booking( $booking_ids[0] );
-		$person      = eme_get_person( $booking['person_id'] );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $item_name );
-		$booking_ids = eme_get_payment_booking_ids( $payment['id'] );
-		$booking     = eme_get_booking( $booking_ids[0] );
-		$person      = eme_get_person( $booking['person_id'] );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -1511,7 +1376,7 @@ data-preference-id='" . $preference->id . "' data-button-label='$button_label'>
 	return $form_html;
 }
 
-function eme_payment_form_fondy( $event_or_memebership, $payment, $baseprice, $cur, $multi_booking = 0 ) {
+function eme_payment_form_fondy( $item_name, $payment, $baseprice, $cur, $multi_booking = 0 ) {
 	$gateway = 'fondy';
 
 	$merchant_id = get_option( "eme_{$gateway}_merchant_id" );
@@ -1521,19 +1386,7 @@ function eme_payment_form_fondy( $event_or_memebership, $payment, $baseprice, $c
 	}
 
 	$payment_id = $payment['id'];
-	if ( $payment['target'] == 'member' ) {
-		$description = sprintf( __( "Member signup for '%s'", 'events-made-easy' ), $event_or_memebership['name'] );
-		$filtername  = 'eme_member_paymentform_description_filter';
-	} elseif ( $multi_booking ) {
-		$description = __( 'Multiple booking request', 'events-made-easy' );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	} else {
-		$description = sprintf( __( "Booking for '%s'", 'events-made-easy' ), $event_or_memebership['event_name'] );
-		$filtername  = 'eme_rsvp_paymentform_description_filter';
-	}
-	if ( has_filter( $filtername ) ) {
-		$description = apply_filters( $filtername, $description, $payment, $gateway );
-	}
+	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -1996,6 +1849,9 @@ function eme_notification_fdgg() {
 			esc_html_e( 'Incorrect payment id.', 'events-made-easy' );
 			return;
 		}
+	} elseif ($payment['target'] == 'fs_event' ) {
+		// First Data only allows USD
+		$cur = 'USD';
 	} else {
 		$booking_ids = eme_get_payment_booking_ids( $payment_id );
 		if ( $booking_ids ) {
@@ -2005,13 +1861,16 @@ function eme_notification_fdgg() {
 				esc_html_e( 'No such event', 'events-made-easy' );
 				return;
 			} else {
-				$cur           = $event['currency'];
-				$multi_booking = isset( $_POST['eme_multibooking'] ) ? intval( $_POST['eme_multibooking'] ) : 0;
+				$cur = $event['currency'];
 			}
 		} else {
 			esc_html_e( 'Incorrect payment id.', 'events-made-easy' );
 			return;
 		}
+	}
+	if ($cur != 'USD') {
+		esc_html_e( 'Incorrect currency.', 'events-made-easy' );
+		return;
 	}
 	$datetime  = eme_localized_date( $payment['creation_date'], EME_TIMEZONE, 'Y:m:d-H:i:s' );
 	$cur_codes = eme_currency_codes();
@@ -2350,12 +2209,14 @@ function eme_charge_2co() {
 	$tco = new TwocheckoutFacade($config);
 
 	// prefill e-mail in form if possible
-	$booking_ids = eme_get_payment_booking_ids( $payment_id );
-	if ( $booking_ids ) {
-		$booking = eme_get_booking( $booking_ids[0] );
-		$person  = eme_get_person( $booking['person_id'] );
-		if (!empty($person)) {
-			$buyLinkParameters['email'] = $person['email'];
+	if ($payment['target'] == 'booking') {
+		$booking_ids = eme_get_payment_booking_ids( $payment_id );
+		if ( $booking_ids ) {
+			$booking = eme_get_booking( $booking_ids[0] );
+			$person  = eme_get_person( $booking['person_id'] );
+			if (!empty($person)) {
+				$buyLinkParameters['email'] = $person['email'];
+			}
 		}
 	}
 	if (get_option('eme_2co_demo')) {
@@ -3216,6 +3077,7 @@ function eme_notification_opayo() {
 
 function eme_get_configured_pgs() {
 	$pgs = wp_cache_get( 'eme_configured_pgs' );
+
         if ( $pgs === false ) {
 		$pgs = [];
 		if ( ! empty( get_option( 'eme_paypal_clientid' ) ) ) {
@@ -3224,9 +3086,6 @@ function eme_get_configured_pgs() {
 		if ( ! empty( get_option( 'eme_legacypaypal_business' ) ) ) {
 			$pgs[] = 'legacypaypal';
 		}
-		//if ( ! empty( get_option( 'eme_2co_business' ) ) ) {
-		//	$pgs[] = '2co';
-		//}
 		if ( ! empty( get_option( 'eme_webmoney_purse' ) ) ) {
 			$pgs[] = 'webmoney';
 		}
@@ -3279,8 +3138,8 @@ function eme_event_can_pay_online( $event ) {
 	return eme_event_has_pgs_configured( $event );
 }
 function eme_event_has_pgs_configured( $event ) {
-	$pgs = eme_payment_gateways();
-	foreach ( $pgs as $pg => $value ) {
+	$pgs = eme_get_configured_pgs();
+	foreach ( $pgs as $pg ) {
 		if ( $event['event_properties'][ 'use_' . $pg ] ) {
 			return 1;
 		}
@@ -3291,8 +3150,8 @@ function eme_membership_can_pay_online( $membership ) {
 	return eme_membership_has_pgs_configured( $membership );
 }
 function eme_membership_has_pgs_configured( $membership ) {
-	$pgs = eme_payment_gateways();
-	foreach ( $pgs as $pg => $value ) {
+	$pgs = eme_get_configured_pgs();
+	foreach ( $pgs as $pg ) {
 		if ( $membership['properties'][ 'use_' . $pg ] ) {
 			return 1;
 		}
@@ -3301,55 +3160,60 @@ function eme_membership_has_pgs_configured( $membership ) {
 }
 function eme_event_count_pgs( $event ) {
 	// count the payment gateways active for this event
-	$pgs      = eme_payment_gateways();
+	$pgs      = eme_get_configured_pgs();
 	$pg_count = 0;
-	foreach ( $pgs as $pg => $value ) {
+	foreach ( $pgs as $pg ) {
 		if ( $event['event_properties'][ 'use_' . $pg ] ) {
-				//if ($pg != "offline") {
-						++$pg_count;
-				//}
+			//if ($pg != "offline") {
+			++$pg_count;
+			//}
 		}
 	}
 	return $pg_count;
 }
 function eme_membership_count_pgs( $membership ) {
 	// count the payment gateways active for this event
-	$pgs      = eme_payment_gateways();
+	$pgs      = eme_get_configured_pgs();
 	$pg_count = 0;
-	foreach ( $pgs as $pg => $value ) {
+	foreach ( $pgs as $pg ) {
 		if ( $membership['properties'][ 'use_' . $pg ] ) {
-				//if ($pg != "offline") {
-						++$pg_count;
-				//}
+			++$pg_count;
 		}
 	}
 	return $pg_count;
 }
 function eme_event_get_first_pg( $event ) {
-	// count the payment gateways active for this event
-	$pgs      = eme_payment_gateways();
-	$pg_count = 0;
-	foreach ( $pgs as $pg => $value ) {
+	$pgs      = eme_get_configured_pgs();
+	foreach ( $pgs as $pg ) {
 		if ( $event['event_properties'][ 'use_' . $pg ] ) {
-			if ( $pg != 'offline' ) {
-				return $pg;
-			}
+			return $pg;
 		}
 	}
 	return false;
 }
 function eme_membership_get_first_pg( $membership ) {
-	// count the payment gateways active for this event
-	$pgs      = eme_payment_gateways();
-	$pg_count = 0;
+	$pgs      = eme_get_configured_pgs();
 	foreach ( $pgs as $pg => $value ) {
 		if ( $membership['properties'][ 'use_' . $pg ] ) {
-			if ( $pg != 'offline' ) {
-				return $pg;
-			}
+			return $pg;
 		}
 	}
 	return false;
+}
+
+function eme_create_fs_event_payment( $event_id ) {
+	global $wpdb;
+	$payments_table           = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
+	$payment_id               = false;
+	$payment                  = [];
+	$payment['random_id']     = eme_random_id();
+	$payment['related_id']    = $event_id;
+	$payment['target']        = 'fs_event';
+	$payment['creation_date'] = current_time( 'mysql', false );
+	if ( $wpdb->insert( $payments_table, $payment ) ) {
+		$payment_id = $wpdb->insert_id;
+	}
+	return $payment_id;
 }
 
 function eme_create_member_payment( $member_id ) {
@@ -3359,6 +3223,7 @@ function eme_create_member_payment( $member_id ) {
 	$payment_id               = false;
 	$payment                  = [];
 	$payment['random_id']     = eme_random_id();
+	$payment['related_id']    = $member_id;
 	$payment['target']        = 'member';
 	$payment['creation_date'] = current_time( 'mysql', false );
 	if ( $wpdb->insert( $payments_table, $payment ) ) {
@@ -3385,6 +3250,7 @@ function eme_create_payment( $booking_ids ) {
 	$payment                  = [];
 	$payment['random_id']     = eme_random_id();
 	$payment['target']        = 'booking';
+	// we don't set the related id here, since multiple bookings can be linked to one payment
 	$payment['creation_date'] = current_time( 'mysql', false );
 	if ( $wpdb->insert( $payments_table, $payment ) ) {
 		$payment_id      = $wpdb->insert_id;
@@ -3457,6 +3323,9 @@ function eme_get_payment_paid( $payment ) {
 	if ( $payment['target'] == 'member' ) {
 		$member = eme_get_member_by_paymentid( $payment['id'] );
 		return $member['paid'];
+	} elseif ( $payment['target'] == 'fs_event' ) {
+		// events are simple :-)
+		return $payment['pg_handled'];
 	} else {
 		$unpaid_count = eme_payment_count_unpaid_bookings( $payment['id'] );
 		if ( $unpaid_count > 0 ) {
@@ -3468,8 +3337,8 @@ function eme_get_payment_paid( $payment ) {
 }
 function eme_get_payment_seats( $payment ) {
 	$seats = 0;
-	// doesn't work for members of course
-	if ( $payment['target'] == 'member' ) {
+	// does only work for bookings of course
+	if ( $payment['target'] != 'booking' ) {
 		return 0;
 	}
 
@@ -3600,6 +3469,18 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 				do_action( 'eme_ipn_member_action', $member );
 			}
 		}
+	} elseif ( $payment['target'] == 'fs_event' ) {
+		// set event status to the wanted one of FS
+		$eme_fs_options = get_option('eme_fs');
+		eme_change_event_status($payment['related_id'],$eme_fs_options['auto_publish']);
+		if ( $is_ipn ) {
+			$event = eme_get_event($payment['related_id']);
+			// eme_email_fs_event_action( $event, 'ipnReceived' );
+			if ( has_action( 'eme_ipn_fs_event_action' ) ) {
+				do_action( 'eme_ipn_fs_event_action', $event );
+			}
+		}
+		return;
 	} else {
 		$booking_ids = eme_get_payment_booking_ids( $payment_id );
 		$total_price = eme_get_payment_price( $payment_id );

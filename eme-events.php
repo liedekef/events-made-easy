@@ -965,7 +965,7 @@ function eme_events_page_content() {
 		if ( ! $payment ) {
 			return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
 		}
-		if ( $payment['target'] == 'member' ) {
+		if ( $payment['target'] != 'booking' ) {
 			return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Attendance check only valid for events and bookings, not members', 'events-made-easy' ) . '</div>';
 		}
 		$booking_ids = eme_get_payment_booking_ids( $payment['id'] );
@@ -1111,9 +1111,9 @@ function eme_events_page_content() {
 		// other payment gateways (payconiq, paypal, sumup, stripe, instamojo, fondy) need EME to complete the transaction too
 		// so in all these case we check if a corresponding 'eme_complete_transaction_' . $result function exists 
 		// and execute it if appropriate
-		$result        = get_query_var( 'eme_pmt_result' );
-		$found_methods = eme_get_configured_pgs();
-                if ( is_string($result) && in_array( $result, $found_methods ) ) {
+		$result         = get_query_var( 'eme_pmt_result' );
+		$configured_pgs = eme_get_configured_pgs();
+                if ( is_string($result) && in_array( $result, $configured_pgs ) ) {
 			$paid   = eme_get_payment_paid( $payment );
 			$result = eme_sanitize_request($result);
 			$func = 'eme_complete_transaction_' . $result ;
@@ -1155,6 +1155,12 @@ function eme_events_page_content() {
 				}
 			}
 			return eme_replace_member_placeholders( $format, $membership, $member );
+		} elseif ( $payment['target'] == 'fs_event' ) {
+			if ( $result == 'success' ) {
+				$format = "<div class='eme-message-success eme-fs-event-message-success'>" . __( 'Payment success for your event submission', 'events-made-easy' ) . '</div>';
+			} else {
+				$format = "<div class='eme-message-error eme-fs-event-message-error'>" . __( 'Payment failed for your event submission', 'events-made-easy' ) . '</div>';
+			}
 		} else {
 			$booking_ids = eme_get_payment_booking_ids( $payment['id'] );
 			if ( count( $booking_ids ) == 1 ) {
@@ -1407,6 +1413,8 @@ function eme_page_title( $data, $post_id = null ) {
 				$page_title = get_option( 'eme_events_page_title' );
 			} elseif ( $payment['target'] == 'member' ) {
 				$page_title = eme_sanitize_request( __( 'Membership payment page', 'events-made-easy' ) );
+			} elseif ( $payment['target'] == 'fs_event' ) {
+				$page_title = eme_sanitize_request( __( 'Event submit payment page', 'events-made-easy' ) );
 			} else {
 				$booking_ids = eme_get_payment_booking_ids( $payment['id'] );
 				if ( count( $booking_ids ) == 1 ) {
@@ -1508,6 +1516,8 @@ function eme_html_title( $data ) {
 				$html_title = get_option( 'eme_events_page_title' );
 			} elseif ( $payment['target'] == 'member' ) {
 				$html_title = eme_sanitize_request( __( 'Membership payment page', 'events-made-easy' ) );
+			} elseif ( $payment['target'] == 'fs_event' ) {
+				$html_title = eme_sanitize_request( __( 'Event submit payment page', 'events-made-easy' ) );
 			} else {
 				$booking_ids = eme_get_payment_booking_ids( $payment['id'] );
 				if ( count( $booking_ids ) == 1 ) {
@@ -1743,7 +1753,7 @@ function eme_template_redir() {
 				} else {
 					auth_redirect();
 				}
-			} elseif ( $event['event_status'] == EME_EVENT_STATUS_DRAFT ) {
+			} elseif ( $event['event_status'] == EME_EVENT_STATUS_DRAFT || $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) {
 				// if the event is draft and not logged in: return not found
 				status_header( 404 );
 				eme_nocache_headers();
@@ -8583,21 +8593,18 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 				</p>
 				<p id='span_payment_methods'>
 	<?php
-	$found_methods        = eme_get_configured_pgs();
-	$count_configured_pgs = count( $found_methods );
-	$pgs                  = eme_payment_gateways();
-	foreach ( $pgs as $pg => $desc ) {
+	$configured_pgs       = eme_get_configured_pgs();
+	$count_configured_pgs = count( $configured_pgs );
+	$pg_descriptions      = eme_payment_gateways();
+	foreach ( $configured_pgs as $pg ) {
 		// if it is a new event and there's only one pg configured, select it by default
-		if ( $is_new_event && $count_configured_pgs == 1 && $found_methods[0] == $pg ) {
+		if ( $is_new_event && $count_configured_pgs == 1 ) {
 			$event['event_properties'][ 'use_' . $pg ] = 1;
 		}
-		if ( ! in_array( $pg, $found_methods ) ) {
-			continue;
-		}
-		echo eme_ui_checkbox_binary( $event['event_properties'][ 'use_' . $pg ], 'eme_prop_use_' . $pg, $desc );
+		echo eme_ui_checkbox_binary( $event['event_properties'][ 'use_' . $pg ], 'eme_prop_use_' . $pg, $pg_descriptions[$pg] );
 		echo '<br>';
 	}
-	if ( empty( $found_methods ) ) {
+	if ( empty( $configured_pgs ) ) {
 		esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
 	}
 	?>

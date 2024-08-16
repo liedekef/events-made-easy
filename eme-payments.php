@@ -24,7 +24,7 @@ function eme_payment_gateways() {
 		'offline'      => __( 'Offline', 'events-made-easy' ),
 	];
 
-	// allow people to change the sequence or (in the future) even add their own payment gateway
+	// allow people to change the sequence or add their own payment gateway
 	if ( has_filter( 'eme_payment_gateways' ) ) {
 		$pgs = apply_filters( 'eme_payment_gateways', $pgs );
 	}
@@ -482,7 +482,7 @@ function eme_payment_form_webmoney( $item_name, $payment, $baseprice, $cur, $mul
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	$description = eme_esc_html( $description );
 
@@ -537,7 +537,7 @@ function eme_payment_form_2co( $item_name, $payment, $baseprice, $cur, $multi_bo
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 	$description = eme_esc_html( $description );
 
 	$button_above = get_option( 'eme_' . $gateway . '_button_above' );
@@ -583,7 +583,7 @@ function eme_payment_form_worldpay( $item_name, $payment, $baseprice, $cur, $mul
 	// $fail_link = eme_payment_return_url($payment,1);
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	if ( get_option( 'eme_worldpay_demo' ) == 1 ) {
 		$url = 'https://secure-test.worldpay.com/wcc/purchase';
@@ -651,7 +651,7 @@ function eme_payment_form_opayo( $item_name, $payment, $baseprice, $cur, $multi_
 	$success_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $success_link );
 	$fail_link    = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $fail_link );
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	// the live or sandbox url
 	$opayo_demo = get_option( 'eme_opayo_demo' );
@@ -834,7 +834,7 @@ function eme_payment_form_sumup( $item_name, $payment, $baseprice, $cur, $multi_
 	$return_link       = eme_payment_return_url( $payment, $gateway );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	$description = eme_esc_html( $description );
 
@@ -917,7 +917,7 @@ function eme_payment_form_stripe( $item_name, $payment, $baseprice, $cur, $multi
 		return;
 	}
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -970,7 +970,7 @@ function eme_payment_form_fdgg( $item_name, $payment, $baseprice, $cur, $multi_b
 	$fail_link        = eme_payment_return_url( $payment, 1 );
 
 	// we add the next lines to be conform with the others, but fdgg ignores the description
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 	$description = eme_esc_html( $description );
 
 	// the live or sandbox url
@@ -1039,7 +1039,7 @@ function eme_payment_form_instamojo( $item_name, $payment, $baseprice, $cur, $mu
 	$return_link       = eme_payment_return_url( $payment, $gateway );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 	$description = eme_esc_html( $description );
 
 	$button_above = get_option( 'eme_' . $gateway . '_button_above' );
@@ -1077,7 +1077,7 @@ function eme_payment_form_mollie( $item_name, $payment, $baseprice, $cur, $multi
 		return;
 	}
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -1122,7 +1122,7 @@ function eme_payment_form_payconiq( $item_name, $payment, $baseprice, $cur, $mul
 		return;
 	}
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -1175,7 +1175,7 @@ function eme_payment_form_paypal( $item_name, $payment, $baseprice, $cur, $multi
 	// $fail_link = eme_payment_return_url($payment,1);
 	// $notification_link = add_query_arg(array('eme_eventAction'=>'paypal_notification'),$events_page_link);
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	$description = eme_esc_html( $description );
 
@@ -1222,7 +1222,7 @@ function eme_payment_form_legacypaypal( $item_name, $payment, $baseprice, $cur, 
 	$fail_link         = eme_payment_return_url( $payment, 1 );
 	$notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	$description = eme_esc_html( $description );
 
@@ -1307,7 +1307,7 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
 	MercadoPago\SDK::setAccessToken( $eme_mercadopago_access_token );
 
 	$payment_id = $payment['id'];
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -1386,7 +1386,7 @@ function eme_payment_form_fondy( $item_name, $payment, $baseprice, $cur, $multi_
 	}
 
 	$payment_id = $payment['id'];
-	$description = eme_get_payment_desc_filter( $item_name, $payment, $gateway, $multi_booking );
+	$description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
 
 	// gateway doesn't like the single quotes
 	$description = str_replace( "'", '', $description );
@@ -3076,6 +3076,7 @@ function eme_notification_opayo() {
 }
 
 function eme_get_configured_pgs() {
+	// allow people to change the sequence or even add their own payment gateway
 	$pgs = wp_cache_get( 'eme_configured_pgs' );
 
         if ( $pgs === false ) {

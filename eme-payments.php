@@ -65,7 +65,7 @@ function eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking ) 
 	return $description;
 }
 
-function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
+function eme_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
 	$ret_string = '';
 	$payment    = eme_get_payment( $payment_id );
 	if ( empty( $payment ) ) {
@@ -77,6 +77,12 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
 	if ( $payment['target'] == 'fs_event' ) {
 		return eme_fs_event_payment_form( $payment_id, $resultcode, $standalone );
 	}
+	return eme_event_payment_form( $payment_id, $resultcode, $standalone );
+}
+
+function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
+	$ret_string = '';
+	$payment    = eme_get_payment( $payment_id );
 
 	$bookings = eme_get_bookings_by_paymentid( $payment_id );
 	if ( empty( $bookings ) ) {
@@ -207,7 +213,7 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
 	if ( $eme_pg_submit_immediately ) {
 		$button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
 		$above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $event['event_properties']['vat_pct'], 'html', $person['lang'] );
-		if ( ! empty( $above_text ) ) {
+		if ( ! eme_is_empty_string( $above_text ) ) {
 			$ret_string .= "<div id='eme-payment-formtext-header' class='eme-message-success eme-rsvp-message-success'>";
 			$ret_string .= $above_text;
 			$ret_string .= '</div>';
@@ -279,7 +285,7 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
 	$total_price = eme_get_member_payment_price( $payment_id );
 	$membership  = eme_get_membership( $member['membership_id'] );
 
-	$check_allowed_to_pay = eme_check_member_allowed_to_pay( $member, $membership );
+	$check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
 	if ( ! empty( $check_allowed_to_pay )) {
 		// not allowed: return the reason and stop
 		return $check_allowed_to_pay;
@@ -320,7 +326,7 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
 		} elseif ( ! empty( $membership['properties']['payment_form_header_tpl'] ) ) {
 			$eme_payment_form_header_format = eme_get_template_format( $membership['properties']['payment_form_header_tpl'] );
 		}
-		if ( isset( $eme_payment_form_header_format ) ) {
+		if ( !eme_is_empty_string( $eme_payment_form_header_format ) ) {
 			$result = eme_replace_member_placeholders( $eme_payment_form_header_format, $membership, $member );
 			if ( ! eme_is_empty_string( $result ) ) {
 				$ret_string .= "<div id='eme-payment-formtext' class='eme-payment-formtext'>";
@@ -338,7 +344,7 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
 	if ( $eme_pg_submit_immediately ) {
 		$button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
 		$above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
-		if ( ! empty( $above_text ) ) {
+		if ( ! eme_is_empty_string( $above_text ) ) {
 			$ret_string .= "<div id='eme-payment-formtext-header' class='eme-message-success eme-rsvp-message-success'>";
 			$ret_string .= $above_text;
 			$ret_string .= '</div>';
@@ -386,8 +392,128 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
 		} elseif ( ! empty( $membership['properties']['payment_form_footer_tpl'] ) ) {
 			$eme_payment_form_footer_format = eme_get_template_format( $membership['properties']['payment_form_footer_tpl'] );
 		}
-		if ( isset( $eme_payment_form_footer_format ) ) {
+		if ( ! eme_is_empty_string( $eme_payment_form_footer_format ) ) {
 			$result      = eme_replace_member_placeholders( $eme_payment_form_footer_format, $membership, $member );
+			$ret_string .= "<div id='eme-payment-formtext' class='eme-payment-formtext'>";
+			$ret_string .= $result;
+			$ret_string .= '</div>';
+		}
+	}
+	return $ret_string;
+}
+
+function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 ) {
+	if ( $resultcode > 0 ) {
+		$ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Payment failed for your membership for #_MEMBERSHIPNAME, please try again.', 'events-made-easy' ) . '</div>';
+	} else {
+		$ret_string = '';
+	}
+
+	$payment = eme_get_payment( $payment_id );
+	$event   = eme_get_event( $payment['related_id'] );
+	if (empty($event)) {
+		// evnt has been deleted, but the payment id is still present
+		$ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( "No event found linked to this payment. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' ) . '</div>';
+		return $ret_string;
+	}
+
+	$check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );
+	if ( ! empty( $check_allowed_to_pay )) {
+		// not allowed: return the reason and stop
+		return $check_allowed_to_pay;
+	}
+
+	$eme_fs_options = get_option('eme_fs');
+	$total_price = $eme_fs_options['price'];
+	$cur = $eme_fs_options['cur'];
+	// now: count the payment gateways active for this membership
+	// if only 1 and the option to immediately submit is set, hide the divs and forms and submit it
+	$pg_count = eme_fs_event_count_pgs( );
+	if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
+		$eme_pg_submit_immediately = 1;
+		$hidden_class              = 'eme-hidden';
+		$pg_in_use                 = eme_fs_event_get_first_pg( );
+	} else {
+		$eme_pg_submit_immediately = 0;
+		$hidden_class              = '';
+		$pg_in_use                 = '';
+	}
+
+	// if not "submit immediately" or standalone: we show the header
+	if ( ! $eme_pg_submit_immediately || $standalone ) {
+		if ( ! eme_is_empty_string( $membership['properties']['payment_form_header_text'] ) ) {
+			$eme_payment_form_header_format = $membership['properties']['payment_form_header_text'];
+		} elseif ( ! empty( $membership['properties']['payment_form_header_tpl'] ) ) {
+			$eme_payment_form_header_format = eme_get_template_format( $membership['properties']['payment_form_header_tpl'] );
+		}
+		if ( !eme_is_empty_string( $eme_payment_form_header_format ) ) {
+			$result = eme_replace_event_placeholders( $eme_payment_form_header_format, $event );
+			if ( ! eme_is_empty_string( $result ) ) {
+				$ret_string .= "<div id='eme-payment-formtext' class='eme-payment-formtext'>";
+				$ret_string .= $result;
+				$ret_string .= '</div>';
+			}
+		} else {
+			$ret_string     .= "<div id='eme-payment-handling' class='eme-payment-handling'>" . __( 'Payment handling', 'events-made-easy' ) . '</div>';
+			$localized_price = eme_localized_price( $total_price, $cur );
+			$ret_string     .= "<div id='eme-payment-price-info' class='eme-payment-price-info'>" . sprintf( __( 'The amount to pay is %s', 'events-made-easy' ), $localized_price ) . '</div>';
+		}
+	}
+
+	// if "submit immediately": we show the button text, since the rest of the div is hidden
+	if ( $eme_pg_submit_immediately ) {
+		$button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
+		$above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $membership['properties']['vat_pct'] );
+		if ( !eme_is_empty_string( $above_text ) ) {
+			$ret_string .= "<div id='eme-payment-formtext-header' class='eme-message-success eme-rsvp-message-success'>";
+			$ret_string .= $above_text;
+			$ret_string .= '</div>';
+		}
+	}
+	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class'>";
+	$is_multi    = 0;
+	$pgs         = eme_payment_gateways();
+	foreach ( $pgs as $pg => $value ) {
+		if ( $membership['properties'][ 'use_' . $pg ] ) {
+			if ( eme_is_offline_pg( $pg ) ) {
+				if ( ! eme_is_empty_string( $membership['properties']['offline_payment_text'] ) ) {
+					$eme_offline_format = $membership['properties']['offline_payment_text'];
+				} else {
+					$eme_offline_format = eme_get_template_format( $membership['properties']['offline_payment_tpl'] );
+				}
+				$result      = eme_replace_member_placeholders( $eme_offline_format, $membership, $member );
+				$ret_string .= "<div id='eme-payment-offline' class='eme-payment-offline'>";
+				$ret_string .= $result;
+				$ret_string .= '</div>';
+			} else {
+				$func = 'eme_payment_form_' . $pg ;
+				if ( function_exists( $func ) ) {
+					$pg_form     = $func( $membership['name'], $payment, $total_price, $cur, $is_multi );
+					$ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
+					if ( $eme_pg_submit_immediately ) {
+						$waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
+						$ret_string .= '<script type="text/javascript">
+						   jQuery(document).ready( function($) {
+							setTimeout(function () {
+								$( "#eme_' . $pg . '_form" ).submit();
+                                        		}, ' . $waitperiod . ');
+						   });</script>;';
+						//$ret_string .= '<script type="text/javascript">jQuery(document).ready( function($) {$( "#eme_'.$pg.'_form" ).submit();});</script>;';
+					}
+				}
+			}
+		}
+	}
+	$ret_string .= '</div>';
+
+	if ( ! $eme_pg_submit_immediately || $standalone ) {
+		if ( ! eme_is_empty_string( $membership['properties']['payment_form_footer_text'] ) ) {
+			$eme_payment_form_footer_format = $membership['properties']['payment_form_footer_text'];
+		} elseif ( ! empty( $membership['properties']['payment_form_footer_tpl'] ) ) {
+			$eme_payment_form_footer_format = eme_get_template_format( $membership['properties']['payment_form_footer_tpl'] );
+		}
+		if ( !eme_is_empty_string( $eme_payment_form_footer_format ) ) {
+			$result      = eme_replace_event_placeholders( $eme_payment_form_footer_format, $event );
 			$ret_string .= "<div id='eme-payment-formtext' class='eme-payment-formtext'>";
 			$ret_string .= $result;
 			$ret_string .= '</div>';
@@ -405,9 +531,13 @@ function eme_payment_allowed_to_pay( $payment_id ) {
 		return eme_check_member_allowed_to_pay( $member, $membership );
 	} elseif ( $payment['target'] == 'fs_event' ) {
 		// events are simple :-)
-		if (empty($payment['pg_handled']))
-			return 1;
-		return 0;
+		$event = eme_get_event( $payment['related_id'] );
+		if (empty($payment['pg_handled']) && $event['event_status'] == EME_EVENT_STATUS_FS_DRAFT ) {
+			return 0;
+		} else { 
+			$message = get_option( 'eme_payment_booking_already_paid_format' );
+			return "<div class='eme-already-paid'>" . $message . '</div>';
+		}
 	} else {
 		$payment_paid = eme_get_payment_paid( $payment );
 		if ( $payment_paid ) {
@@ -415,7 +545,9 @@ function eme_payment_allowed_to_pay( $payment_id ) {
 			return "<div class='eme-already-paid'>" . $message . '</div>';
 		}
 	}
+	return 0;
 }
+
 function eme_payment_gateway_total( $price, $cur, $gateway ) {
 	$price                          += eme_payment_gateway_extra_charge( $price, $gateway );
 	$eme_zero_decimal_currencies_arr = eme_zero_decimal_currencies();
@@ -3159,6 +3291,7 @@ function eme_membership_has_pgs_configured( $membership ) {
 	}
 	return 0;
 }
+
 function eme_event_count_pgs( $event ) {
 	// count the payment gateways active for this event
 	$pgs      = eme_get_configured_pgs();
@@ -3172,6 +3305,7 @@ function eme_event_count_pgs( $event ) {
 	}
 	return $pg_count;
 }
+
 function eme_membership_count_pgs( $membership ) {
 	// count the payment gateways active for this event
 	$pgs      = eme_get_configured_pgs();
@@ -3183,6 +3317,22 @@ function eme_membership_count_pgs( $membership ) {
 	}
 	return $pg_count;
 }
+
+function eme_fs_event_count_pgs( $event ) {
+	// count the payment gateways active for this event
+	$pgs      = eme_get_configured_pgs();
+	$pg_count = 0;
+	$fs_options = get_option('eme_fs');
+	foreach ( $pgs as $pg ) {
+		if ( $fs_options[ 'use_' . $pg ] ) {
+			//if ($pg != "offline") {
+			++$pg_count;
+			//}
+		}
+	}
+	return $pg_count;
+}
+
 function eme_event_get_first_pg( $event ) {
 	$pgs      = eme_get_configured_pgs();
 	foreach ( $pgs as $pg ) {
@@ -3192,10 +3342,22 @@ function eme_event_get_first_pg( $event ) {
 	}
 	return false;
 }
+
 function eme_membership_get_first_pg( $membership ) {
 	$pgs      = eme_get_configured_pgs();
 	foreach ( $pgs as $pg => $value ) {
 		if ( $membership['properties'][ 'use_' . $pg ] ) {
+			return $pg;
+		}
+	}
+	return false;
+}
+
+function eme_fs_event_get_first_pg( ) {
+	$fs_options = get_option('eme_fs');
+	$pgs      = eme_get_configured_pgs();
+	foreach ( $pgs as $pg => $value ) {
+		if ( $fs_options[ 'use_' . $pg ] ) {
 			return $pg;
 		}
 	}
@@ -3237,7 +3399,7 @@ function eme_create_member_payment( $member_id ) {
 	return $payment_id;
 }
 
-function eme_create_payment( $booking_ids ) {
+function eme_create_booking_payment( $booking_ids ) {
 	global $wpdb;
 	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
@@ -3271,12 +3433,25 @@ function eme_create_payment( $booking_ids ) {
 function eme_get_payment( $payment_id=0, $payment_randomid = 0 ) {
 	global $wpdb;
 	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
+
 	if ( $payment_id ) {
-		$sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE id=%d", $payment_id );
+		$payment = wp_cache_get( "eme_payment $payment_id" );
 	} else {
-		$sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE random_id=%s", $payment_randomid );
+		$payment = false;
 	}
-	return $wpdb->get_row( $sql, ARRAY_A );
+
+        if ( $payment === false ) {
+		if ( $payment_id ) {
+			$sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE id=%d", $payment_id );
+		} else {
+			$sql = $wpdb->prepare( "SELECT * FROM $payments_table WHERE random_id=%s", $payment_randomid );
+		}
+		$payment = $wpdb->get_row( $sql, ARRAY_A );
+		if ($payment_id) {
+			wp_cache_set( "eme_payment $payment_id", $payment, '', 10 );
+		}
+	}
+	return $payment;
 }
 
 function eme_get_payment_by_pg_pid( $pg_pid ) {
@@ -3316,6 +3491,7 @@ function eme_delete_payment( $payment_id ) {
 	global $wpdb;
 	$payments_table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	$sql            = $wpdb->prepare( "DELETE FROM $payments_table WHERE id=%d", $payment_id );
+	wp_cache_delete( "eme_payment ".$payment_id );
 	return $wpdb->get_var( $sql );
 }
 
@@ -3433,6 +3609,7 @@ function eme_update_payment_pg_pid( $payment_id, $pg_pid = '' ) {
 	$table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET pg_pid=%s, pg_handled=0 WHERE id=%d", $pg_pid, $payment_id );
 	$wpdb->query( $sql );
+	wp_cache_delete( "eme_payment ".$payment_id );
 }
 
 function eme_update_payment_pg_handled( $payment_id ) {
@@ -3440,6 +3617,7 @@ function eme_update_payment_pg_handled( $payment_id ) {
 	$table = EME_DB_PREFIX . EME_PAYMENTS_TBNAME;
 	$sql   = $wpdb->prepare( "UPDATE $table SET pg_handled=1 WHERE id=%d", $payment_id );
 	$wpdb->query( $sql );
+	wp_cache_delete( "eme_payment ".$payment_id );
 }
 
 function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = '' ) {
@@ -3559,10 +3737,13 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 	}
 }
 
-function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $currency, $vat_pct, $target, $lang, $do_shortcode = 1 ) {
+function eme_replace_payment_gateway_placeholders( $format, $pg, $total_price, $currency, $vat_pct, $target='html', $lang='', $do_shortcode = 1 ) {
 	$orig_target  = $target;
 	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
 		$target = 'html';
+	}
+	if (empty($lang)) {
+		$lang = eme_detect_lang();
 	}
 
 	$charge        = eme_payment_gateway_extra_charge( $total_price, $pg );

@@ -1218,7 +1218,7 @@ function eme_events_page_content() {
 		// the next div is the same one as in eme_rsvp.php and eme_members.php for the payment form
 		$page_body = "<div id='div_eme-payment-form' class='eme-payment-form-div'>";
 		// the last 1 to indicate the form is shown standalone and not as a result of a booking
-		$page_body .= eme_event_payment_form( $payment['id'], $resultcode, 1 );
+		$page_body .= eme_payment_form( $payment['id'], $resultcode, 1 );
 		$page_body .= '</div>';
 		return $page_body;
 	}

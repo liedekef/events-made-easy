@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_email_fs_event_action( $event, $action ) {
-	$contact        = eme_get_event_contact( $event );
+	$contact        = eme_get_contact();
 	$contact_email  = $contact->user_email;
 	$contact_name   = $contact->display_name;
 	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';

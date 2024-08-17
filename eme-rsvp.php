@@ -983,7 +983,7 @@ function eme_add_bookings_ajax() {
 					]
 				);
 			} elseif ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
-				$payment_form = eme_event_payment_form( $payment_id );
+				$payment_form = eme_payment_form( $payment_id );
 				echo wp_json_encode(
 				    [
 						'Result'      => 'OK',
@@ -1011,7 +1011,7 @@ function eme_add_bookings_ajax() {
 					]
 				);
 			} else {
-				$payment_form = eme_event_payment_form( $payment_id );
+				$payment_form = eme_payment_form( $payment_id );
 				echo wp_json_encode(
 				    [
 						'Result'      => 'OK',
@@ -1626,7 +1626,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 	if ( ! empty( $booking_ids ) ) {
 		// the payment needs to be created before the mail is sent or placeholders replaced, otherwise you can't send a link to the payment ...
 		$booking_ids_done = join( ',', $booking_ids );
-		$payment_id       = eme_create_payment( $booking_ids_done );
+		$payment_id       = eme_create_booking_payment( $booking_ids_done );
 
 		if ( $simple ) {
 			$ok_format = eme_nl2br_save_html( get_option( 'eme_registration_recorded_ok_html' ) );

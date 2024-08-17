@@ -5000,7 +5000,7 @@ function eme_add_member_ajax() {
 
 		if ( $total_price > 0 ) {
 			if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
-				$payment_form = eme_member_payment_form( $payment_id );
+				$payment_form = eme_payment_form( $payment_id );
 				echo wp_json_encode(
 					[
 						'Result'      => 'OK',
@@ -5026,7 +5026,7 @@ function eme_add_member_ajax() {
 					]
 				);
 			} else {
-				$payment_form = eme_member_payment_form( $payment_id );
+				$payment_form = eme_payment_form( $payment_id );
 				echo wp_json_encode(
 					[
 						'Result'      => 'OK',

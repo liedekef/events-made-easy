@@ -426,6 +426,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 	$eme_fs_options = get_option('eme_fs');
 	$total_price = $eme_fs_options['price'];
 	$cur = $eme_fs_options['cur'];
+	$vat_pct = $eme_fs_options['vat_pct'];
 	// now: count the payment gateways active for this membership
 	// if only 1 and the option to immediately submit is set, hide the divs and forms and submit it
 	$pg_count = eme_fs_event_count_pgs( );
@@ -441,11 +442,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 
 	// if not "submit immediately" or standalone: we show the header
 	if ( ! $eme_pg_submit_immediately || $standalone ) {
-		if ( ! eme_is_empty_string( $membership['properties']['payment_form_header_text'] ) ) {
-			$eme_payment_form_header_format = $membership['properties']['payment_form_header_text'];
-		} elseif ( ! empty( $membership['properties']['payment_form_header_tpl'] ) ) {
-			$eme_payment_form_header_format = eme_get_template_format( $membership['properties']['payment_form_header_tpl'] );
-		}
+		$eme_payment_form_header_format = get_option( 'eme_payment_form_header_format' );
 		if ( !eme_is_empty_string( $eme_payment_form_header_format ) ) {
 			$result = eme_replace_event_placeholders( $eme_payment_form_header_format, $event );
 			if ( ! eme_is_empty_string( $result ) ) {
@@ -463,7 +460,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 	// if "submit immediately": we show the button text, since the rest of the div is hidden
 	if ( $eme_pg_submit_immediately ) {
 		$button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
-		$above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $membership['properties']['vat_pct'] );
+		$above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $vat_pct );
 		if ( !eme_is_empty_string( $above_text ) ) {
 			$ret_string .= "<div id='eme-payment-formtext-header' class='eme-message-success eme-rsvp-message-success'>";
 			$ret_string .= $above_text;
@@ -474,22 +471,18 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 	$is_multi    = 0;
 	$pgs         = eme_payment_gateways();
 	foreach ( $pgs as $pg => $value ) {
-		if ( $membership['properties'][ 'use_' . $pg ] ) {
+		if ( $fs_options[ 'use_' . $pg ] ) {
 			if ( eme_is_offline_pg( $pg ) ) {
-				if ( ! eme_is_empty_string( $membership['properties']['offline_payment_text'] ) ) {
-					$eme_offline_format = $membership['properties']['offline_payment_text'];
-				} else {
-					$eme_offline_format = eme_get_template_format( $membership['properties']['offline_payment_tpl'] );
-				}
-				$result      = eme_replace_member_placeholders( $eme_offline_format, $membership, $member );
+				$eme_offline_format = get_option( 'eme_offline_payment' );
+				$result      = eme_replace_event_placeholders( $eme_offline_format, $event );
 				$ret_string .= "<div id='eme-payment-offline' class='eme-payment-offline'>";
 				$ret_string .= $result;
 				$ret_string .= '</div>';
 			} else {
 				$func = 'eme_payment_form_' . $pg ;
 				if ( function_exists( $func ) ) {
-					$pg_form     = $func( $membership['name'], $payment, $total_price, $cur, $is_multi );
-					$ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
+				]	$pg_form     = $func( $event['event_name'], $payment, $total_price, $cur, $is_multi );
+					$ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $vat_pct );
 					if ( $eme_pg_submit_immediately ) {
 						$waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
 						$ret_string .= '<script type="text/javascript">
@@ -507,11 +500,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 	$ret_string .= '</div>';
 
 	if ( ! $eme_pg_submit_immediately || $standalone ) {
-		if ( ! eme_is_empty_string( $membership['properties']['payment_form_footer_text'] ) ) {
-			$eme_payment_form_footer_format = $membership['properties']['payment_form_footer_text'];
-		} elseif ( ! empty( $membership['properties']['payment_form_footer_tpl'] ) ) {
-			$eme_payment_form_footer_format = eme_get_template_format( $membership['properties']['payment_form_footer_tpl'] );
-		}
+		$eme_payment_form_footer_format = get_option( 'eme_payment_form_footer_format' );
 		if ( !eme_is_empty_string( $eme_payment_form_footer_format ) ) {
 			$result      = eme_replace_event_placeholders( $eme_payment_form_footer_format, $event );
 			$ret_string .= "<div id='eme-payment-formtext' class='eme-payment-formtext'>";

@@ -481,7 +481,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 			} else {
 				$func = 'eme_payment_form_' . $pg ;
 				if ( function_exists( $func ) ) {
-				]	$pg_form     = $func( $event['event_name'], $payment, $total_price, $cur, $is_multi );
+					$pg_form     = $func( $event['event_name'], $payment, $total_price, $cur, $is_multi );
 					$ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $vat_pct );
 					if ( $eme_pg_submit_immediately ) {
 						$waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;

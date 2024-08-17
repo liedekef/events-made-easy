@@ -2215,8 +2215,6 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		echo '<br>';
 	}
 
-	echo eme_ui_checkbox_binary( $membership['properties']['use_offline'], 'properties[use_offline]', __( 'Offline', 'events-made-easy' ) );
-	echo '<br>';
 	if ( empty( $configured_pgs ) ) {
 		esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
 	}

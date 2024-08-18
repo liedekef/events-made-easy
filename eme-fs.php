@@ -503,6 +503,7 @@ function eme_fs_getbinaryselect($name,$field_id,$default) {
 function eme_fs_process_newevent() {
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_fs_options = get_option('eme_fs');
+	$captcha_res = eme_check_captchas( $eme_fs_options );
 	if (empty($eme_fs_options['success_message']))
 		$eme_fs_options['success_message'] = __('New event succesfully created.','events-made-easy');
 	$event_data = eme_kses($_POST['event']);
@@ -586,19 +587,38 @@ function eme_fs_process_newevent() {
 		$new_event = eme_new_event();
 		$event_data = array_merge($new_event,$event_data);
 
+		$pg_count = eme_fs_event_count_pgs( );
+		if ($eme_fs_options['price']>0 && $pg_count>0) {
+			$event_data['event_status'] = EME_EVENT_STATUS_FS_DRAFT;
+		}
 		$event_data = eme_sanitize_event($event_data);
 		$validation_result = eme_validate_event ( $event_data );
 		if ($validation_result == "OK") {
 			if (has_filter('eme_fs_event_insert_filter')) $event_data=apply_filters('eme_fs_event_insert_filter',$event_data);
 			$event_id = eme_db_insert_event($event_data);
 			if ($event_id) {
+				eme_captcha_remove( $captcha_res );
 				eme_event_store_answers($event_id);
 				eme_upload_files( $event_id, 'events' );
 				$event = eme_get_event($event_id);
 				if (has_action('eme_fs_submit_event_action')) {
 					do_action('eme_fs_submit_event_action',$event);
 				}
-				if ($eme_fs_options['always_success_message']) {
+				if ($eme_fs_options['price']>0 && $pg_count>0) {
+					$payment_id  = eme_create_fs_event_payment($event_id);
+					$payment     = eme_get_payment( $payment_id );
+					$pg_submit_immediately = get_option( 'eme_pg_submit_immediately' );
+					if ($pg_submit_immediately)
+						$waitperiod = 0;
+					else
+						$waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) );
+					$res_html = eme_js_redirect(eme_payment_url($payment), $waitperiod);
+					if ($waitperiod == 0) {
+						$res_code = 'REDIRECT_IMM';
+					} else {
+						$res_html .= eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
+					}
+				} elseif ($eme_fs_options['always_success_message']) {
 					$res_html = eme_replace_event_placeholders($eme_fs_options['success_message'], $event);
 				} elseif ((is_user_logged_in() && $event['event_status'] != EME_EVENT_STATUS_DRAFT) || 
 					  $event['event_status'] == EME_EVENT_STATUS_PUBLIC ) {
@@ -706,8 +726,6 @@ function eme_frontend_submit_ajax() {
 		);
 		wp_die();
 	}
-
-	eme_check_captchas( $eme_fs_options );
 
 	echo wp_json_encode(eme_fs_process_newevent());
         wp_die();

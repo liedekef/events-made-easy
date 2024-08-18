@@ -425,8 +425,8 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 
 	$eme_fs_options = get_option('eme_fs');
 	$total_price = $eme_fs_options['price'];
-	$cur = $eme_fs_options['cur'];
-	$vat_pct = $eme_fs_options['vat_pct'];
+	$cur = get_option('eme_default_currency');
+	$vat_pct = get_option('eme_default_vat');
 	// now: count the payment gateways active for this membership
 	// if only 1 and the option to immediately submit is set, hide the divs and forms and submit it
 	$pg_count = eme_fs_event_count_pgs( );
@@ -471,7 +471,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 	$is_multi    = 0;
 	$pgs         = eme_payment_gateways();
 	foreach ( $pgs as $pg => $value ) {
-		if ( $fs_options[ 'use_' . $pg ] ) {
+		if ( isset($eme_fs_options['payment_gateways']) && in_array($pg, $eme_fs_options['payment_gateways']) ) {
 			if ( eme_is_offline_pg( $pg ) ) {
 				$eme_offline_format = get_option( 'eme_offline_payment' );
 				$result      = eme_replace_event_placeholders( $eme_offline_format, $event );
@@ -3255,6 +3255,16 @@ function eme_get_configured_pgs() {
 	return $pgs;
 }
 
+function eme_configured_pgs_descriptions() {
+	$pgs=eme_payment_gateways();
+	$configured_pgs = eme_get_configured_pgs();
+	foreach ($pgs as $pg=>$desc) {
+		if (!in_array($pg,$configured_pgs))
+			unset($pgs[$pg]);
+	}
+	return $pgs;
+}
+
 // old name
 function eme_event_can_pay_online( $event ) {
 	return eme_event_has_pgs_configured( $event );
@@ -3307,16 +3317,13 @@ function eme_membership_count_pgs( $membership ) {
 	return $pg_count;
 }
 
-function eme_fs_event_count_pgs( $event ) {
-	// count the payment gateways active for this event
+function eme_fs_event_count_pgs( ) {
 	$pgs      = eme_get_configured_pgs();
 	$pg_count = 0;
-	$fs_options = get_option('eme_fs');
+	$eme_fs_options = get_option('eme_fs');
 	foreach ( $pgs as $pg ) {
-		if ( $fs_options[ 'use_' . $pg ] ) {
-			//if ($pg != "offline") {
+		if ( isset($eme_fs_options['payment_gateways']) && in_array($pg, $eme_fs_options['payment_gateways']) ) {
 			++$pg_count;
-			//}
 		}
 	}
 	return $pg_count;
@@ -3343,10 +3350,10 @@ function eme_membership_get_first_pg( $membership ) {
 }
 
 function eme_fs_event_get_first_pg( ) {
-	$fs_options = get_option('eme_fs');
+	$eme_fs_options = get_option('eme_fs');
 	$pgs      = eme_get_configured_pgs();
 	foreach ( $pgs as $pg => $value ) {
-		if ( $fs_options[ 'use_' . $pg ] ) {
+		if ( isset($eme_fs_options['payment_gateways']) && in_array($pg, $eme_fs_options['payment_gateways']) ) {
 			return $pg;
 		}
 	}

@@ -677,7 +677,6 @@ function eme_get_member_by_paymentid( $id ) {
 	$sql   = $wpdb->prepare( "SELECT * FROM $table WHERE payment_id=%d AND related_member_id=0", $id );
 	$member = $wpdb->get_row( $sql, ARRAY_A );
 	$member = eme_get_extra_member_data( $member );
-
 	return $member;
 }
 
@@ -784,7 +783,7 @@ function eme_get_total_member_price( $member, $ignore_extras = 0 ) {
 			$price -= $member['discount'];
 		}
 	}
-		// we add the extra cost for new members
+	// we add the extra cost for new members
 	if ( $member['status'] == EME_MEMBER_STATUS_PENDING && ! empty( $membership['properties']['extra_charge'] ) ) {
 		$price += $membership['properties']['extra_charge'];
 	}

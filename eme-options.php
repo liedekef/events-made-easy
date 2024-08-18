@@ -52,10 +52,7 @@ function eme_add_options( $reset = 0 ) {
 	$cancelled_payment_format_localizable                    = __( 'The following bookings have been cancelled:', 'events-made-easy' ) . '<br>#_CANCEL_PAYMENT_LINE';
 	$eme_cpi_subject_localizable                             = __( 'Change personal info request', 'events-made-easy' );
 	$eme_cpi_body_localizable                                = __( 'Hi,<br><br>Please find below the info needed to change the personal info for each matching person<br>#_CHANGE_PERSON_INFO<br><br>Yours faithfully', 'events-made-easy' );
-	$eme_cpi_form_localizable                                = esc_html__( 'Last name: ', 'events-made-easy' ) . '#_LASTNAME <br>' .
-				esc_html__( 'First name: ', 'events-made-easy' ) . '#_FIRSTNAME <br>' .
-				esc_html__( 'Email: ', 'events-made-easy' ) . '#_EMAIL <br>';
-
+	$eme_cpi_form_localizable                                = esc_html__( 'Last name: ', 'events-made-easy' ) . '#_LASTNAME <br>' .  esc_html__( 'First name: ', 'events-made-easy' ) . '#_FIRSTNAME <br>' .  esc_html__( 'Email: ', 'events-made-easy' ) . '#_EMAIL <br>';
 	$eme_gdpr_page_title_localizable           = __( 'Personal info', 'events-made-easy' );
 	$eme_gdpr_subject_localizable              = __( 'Personal info request', 'events-made-easy' );
 	$eme_gdpr_body_localizable                 = __( 'Hi, please copy/paste this link in your browser to be able to see all your personal info: #_GDPR_URL', 'events-made-easy' );
@@ -69,7 +66,6 @@ function eme_add_options( $reset = 0 ) {
 	$eme_unsub_body_localizable                = __( 'Hi, please copy/paste this link in your browser to unsubscribe: #_UNSUB_CONFIRM_URL . This link will expire within one day.', 'events-made-easy' );
 	$eme_payment_button_label_localizable      = __( 'Pay via %s', 'events-made-easy' );
 	$eme_payment_button_above_localizable      = '<br>' . __( 'You can pay via %s. If you wish to do so, click the button below.', 'events-made-easy' );
-
 	$eme_rsvp_not_yet_allowed_localizable              = __( 'Bookings not yet allowed on this date.', 'events-made-easy' );
 	$eme_rsvp_no_longer_allowed_localizable            = __( 'Bookings no longer allowed on this date.', 'events-made-easy' );
 	$eme_rsvp_cancel_no_longer_allowed_localizable     = __( 'Cancellations no longer allowed on this date.', 'events-made-easy' );
@@ -585,6 +581,8 @@ function eme_add_options( $reset = 0 ) {
 			'use_recaptcha' => 0,
 			'use_wysiwyg' => 0,
 			'allow_upload' => 0,
+			'price' => 0,
+			'payment_gateways' => [],
 			'form_format' => '<h2>Event Information</h2>
 		<div class="input">
 			<label for="event_name">Event Name</label><br />
@@ -955,6 +953,12 @@ function eme_update_options( $db_version ) {
 		if ( $db_version < 393 ) {
 			$fs_options = get_option('eme_fs');
 			$fs_options['form_format'] = preg_replace('/#_FIELD{location_longitude}|#_FIELD{location_latitude}|#_FIELD{location_id}/','',$fs_options['form_format']);
+			update_option( 'eme_fs', $fs_options);
+		}
+		if ( $db_version < 397 ) {
+			$fs_options = get_option('eme_fs');
+			$fs_options['price'] = 0;
+			$fs_options['payment_gateways'] = [];
 			update_option( 'eme_fs', $fs_options);
 		}
 	}
@@ -2853,6 +2857,9 @@ function eme_options_page() {
 <table class='form-table'>
 			<?php
 			$categories=eme_get_categories();
+			$fs_options=get_option('eme_fs');
+			if (!isset($fs_options['payment_gateways']))
+				$fs_options['payment_gateways'] = [];
 			$category_arr=array();
 			$category_arr[0]='';
 			if ( $categories ) {
@@ -2861,24 +2868,27 @@ function eme_options_page() {
 					$category_arr[$category['category_id']] = $category['category_name'];
 				}
 			}
-			eme_options_select (__('State for new event','events-made-easy'), eme_get_field_name('eme_fs','auto_publish'), eme_status_array(), __ ('The state for a newly submitted event.','events-made-easy'), eme_get_field_value('eme_fs','auto_publish') );
-			eme_options_select (__('Default category for new event','events-made-easy'), eme_get_field_name('eme_fs','default_cat'), $category_arr, __ ('The default category assigned to an event if nothing is selected in the form.','events-made-easy'), eme_get_field_value('eme_fs','default_cat') );
-			eme_options_radio_binary (__('Force location creation?','events-made-easy'), eme_get_field_name('eme_fs','force_location_creation'), __ ( 'Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations.', 'events-made-easy' ), eme_get_field_value('eme_fs','force_location_creation'));
-			eme_options_radio_binary (__('Allow guest submit?','events-made-easy'), eme_get_field_name('eme_fs','guest_submit'), __ ( 'Check this option if you want guests also to be able to add new events.', 'events-made-easy' ), eme_get_field_value('eme_fs','guest_submit'));
-			eme_options_textarea ( __ ( 'Success Message','events-made-easy'), eme_get_field_name('eme_fs','success_message'), __ ( 'The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. This message can contain all event placeholders.','events-made-easy'),1,0, eme_get_field_value('eme_fs','success_message'));
-			eme_options_input_int( __( 'Redirect wait period', 'events-made-easy' ), eme_get_field_name('eme_fs','redirect_timeout'), __( 'Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately.', 'events-made-easy' ), 'text', eme_get_field_value('eme_fs','redirect_timeout') );
-			eme_options_radio_binary (__('Always show success message','events-made-easy'), eme_get_field_name('eme_fs','always_success_message'), __ ( 'Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen.', 'events-made-easy' ), eme_get_field_value('eme_fs','always_success_message'));
-			eme_options_textarea ( __( 'Guests not allowed text', 'events-made-easy'), eme_get_field_name('eme_fs','guest_not_allowed_text'), __( 'The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set.','events-made-easy'),1, 0, eme_get_field_value('eme_fs','guest_not_allowed_text'));
-			eme_options_radio_binary (__('Redirect to login page','events-made-easy'), eme_get_field_name('eme_fs','redirect_to_login'), __ ( 'Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events.', 'events-made-easy' ), eme_get_field_value('eme_fs','redirect_to_login'));
-			eme_options_select (__('Access right to submit new events','events-made-easy'), eme_get_field_name('eme_fs','cap_add_event'), eme_get_all_caps (), sprintf(__('Permission needed to submit a new event when guest submit is not allowed. Default: %s','events-made-easy'), eme_capNamesCB('edit_posts')), eme_get_field_value('eme_fs','cap_add_event') );
-			eme_options_radio_binary (__('Use Google reCAPTCHA?','events-made-easy'), eme_get_field_name('eme_fs','use_recaptcha'), __ ( 'Check this option to require the use of Google reCAPTCHA.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_recaptcha'));
-			eme_options_radio_binary (__('Use hCaptcha?','events-made-easy'), eme_get_field_name('eme_fs','use_hcaptcha'), __ ( 'Check this option to require the use of hCaptcha.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_hcaptcha'));
-			eme_options_radio_binary (__('Use Cloudflare Turnstile captcha?','events-made-easy'), eme_get_field_name('eme_fs','use_cfcaptcha'), __ ( 'Check this option to require the use of Cloudflare Turnstile captcha.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_cfcaptcha'));
-			eme_options_radio_binary (__('Use captcha?','events-made-easy'), eme_get_field_name('eme_fs','use_captcha'), __ ( 'Check this option to require the use of a captcha.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_captcha'));
+			eme_options_select (__('State for new event','events-made-easy'), eme_get_field_name('eme_fs','auto_publish'), eme_status_array(), __ ('The state for a newly submitted event.','events-made-easy'), $fs_options['auto_publish'] );
+			eme_options_input_text( __( 'Price', 'events-made-easy' ), eme_get_field_name('eme_fs','price'), __( 'The price to submit new events.', 'events-made-easy' ) . '<br>' . __( 'Use the point as decimal separator', 'events-made-easy' ), 'text', $fs_options['price'] );
+			eme_options_multiselect( __( 'Payment gateways', 'events-made-easy' ), eme_get_field_name('eme_fs','payment_gateways'), eme_configured_pgs_descriptions(), '', $fs_options['payment_gateways'], 'eme_select2_width50_class' );
 
-			eme_options_radio_binary (__('Use wysiwyg?','events-made-easy'), eme_get_field_name('eme_fs','use_wysiwyg'), __ ( 'Check this option if you want to use a frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','use_wysiwyg'));
-			eme_options_radio_binary (__('Allow image upload?','events-made-easy'), eme_get_field_name('eme_fs','allow_upload'), __ ( 'Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes.', 'events-made-easy' ), eme_get_field_value('eme_fs','allow_upload'));
-                        eme_options_textarea( __( 'Default form format', 'events-made-easy' ), eme_get_field_name('eme_fs','form_format'), __( 'The default form format for submitting a new event.', 'events-made-easy' ), 1, 0, eme_get_field_value('eme_fs','form_format') );
+			eme_options_select (__('Default category for new event','events-made-easy'), eme_get_field_name('eme_fs','default_cat'), $category_arr, __ ('The default category assigned to an event if nothing is selected in the form.','events-made-easy'), $fs_options['default_cat'] );
+			eme_options_radio_binary (__('Force location creation?','events-made-easy'), eme_get_field_name('eme_fs','force_location_creation'), __ ( 'Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations.', 'events-made-easy' ), $fs_options['force_location_creation']);
+			eme_options_radio_binary (__('Allow guest submit?','events-made-easy'), eme_get_field_name('eme_fs','guest_submit'), __ ( 'Check this option if you want guests also to be able to add new events.', 'events-made-easy' ), $fs_options['guest_submit']);
+			eme_options_textarea ( __ ( 'Success Message','events-made-easy'), eme_get_field_name('eme_fs','success_message'), __ ( 'The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. This message can contain all event placeholders.','events-made-easy'),1,0, $fs_options['success_message']);
+			eme_options_input_int( __( 'Redirect wait period', 'events-made-easy' ), eme_get_field_name('eme_fs','redirect_timeout'), __( 'Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately.', 'events-made-easy' ), 'text', $fs_options['redirect_timeout'] );
+			eme_options_radio_binary (__('Always show success message','events-made-easy'), eme_get_field_name('eme_fs','always_success_message'), __ ( 'Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen.', 'events-made-easy' ), $fs_options['always_success_message']);
+			eme_options_textarea ( __( 'Guests not allowed text', 'events-made-easy'), eme_get_field_name('eme_fs','guest_not_allowed_text'), __( 'The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set.','events-made-easy'),1, 0, $fs_options['guest_not_allowed_text']);
+			eme_options_radio_binary (__('Redirect to login page','events-made-easy'), eme_get_field_name('eme_fs','redirect_to_login'), __ ( 'Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events.', 'events-made-easy' ), $fs_options['redirect_to_login']);
+			eme_options_select (__('Access right to submit new events','events-made-easy'), eme_get_field_name('eme_fs','cap_add_event'), eme_get_all_caps (), sprintf(__('Permission needed to submit a new event when guest submit is not allowed. Default: %s','events-made-easy'), eme_capNamesCB('edit_posts')), $fs_options['cap_add_event'] );
+			eme_options_radio_binary (__('Use Google reCAPTCHA?','events-made-easy'), eme_get_field_name('eme_fs','use_recaptcha'), __ ( 'Check this option to require the use of Google reCAPTCHA.', 'events-made-easy' ), $fs_options['use_recaptcha']);
+			eme_options_radio_binary (__('Use hCaptcha?','events-made-easy'), eme_get_field_name('eme_fs','use_hcaptcha'), __ ( 'Check this option to require the use of hCaptcha.', 'events-made-easy' ), $fs_options['use_hcaptcha']);
+			eme_options_radio_binary (__('Use Cloudflare Turnstile captcha?','events-made-easy'), eme_get_field_name('eme_fs','use_cfcaptcha'), __ ( 'Check this option to require the use of Cloudflare Turnstile captcha.', 'events-made-easy' ), $fs_options['use_cfcaptcha']);
+			eme_options_radio_binary (__('Use captcha?','events-made-easy'), eme_get_field_name('eme_fs','use_captcha'), __ ( 'Check this option to require the use of a captcha.', 'events-made-easy' ), $fs_options['use_captcha']);
+
+			eme_options_radio_binary (__('Use wysiwyg?','events-made-easy'), eme_get_field_name('eme_fs','use_wysiwyg'), __ ( 'Check this option if you want to use a frontend wysiwyg editor for the event notes.', 'events-made-easy' ), $fs_options['use_wysiwyg']);
+			eme_options_radio_binary (__('Allow image upload?','events-made-easy'), eme_get_field_name('eme_fs','allow_upload'), __ ( 'Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes.', 'events-made-easy' ), $fs_options['allow_upload']);
+                        eme_options_textarea( __( 'Default form format', 'events-made-easy' ), eme_get_field_name('eme_fs','form_format'), __( 'The default form format for submitting a new event.', 'events-made-easy' ), 1, 0, $fs_options['form_format'] );
 			?>
 </table>
 			<?php

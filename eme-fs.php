@@ -17,11 +17,11 @@ function eme_email_fs_event_action( $event, $action ) {
 	$contact_subject = '';
 	$contact_body    = '';
 	if ( $action == 'ipnReceived' ) {
-		$contact_subject = __('Payment received for event submission','events-made-easy');
-		$contact_body = __('Payment received for event submission: #_EVENTNAME (#_STARTDATE #_STARTTIME)','events-made-easy');
+		$contact_subject = get_option('eme_fs_contactperson_paid_email_subject');
+		$contact_body = get_option('eme_fs_contactperson_paid_email_body');
 	} elseif ( $action == 'newevent' ) {
-		$contact_subject = __('New event submitted','events-made-easy');
-		$contact_body = __('A new event has been submitted: #_EVENTNAME (#_STARTDATE #_STARTTIME)','events-made-easy');
+		$contact_subject = get_option('eme_fs_contactperson_newevent_email_subject');
+		$contact_body = get_option('eme_fs_contactperson_newevent_email_body');
 	}
 
 	if ( ! empty( $contact_subject ) ) {

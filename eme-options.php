@@ -583,6 +583,7 @@ function eme_add_options( $reset = 0 ) {
 			'allow_upload' => 0,
 			'price' => 0,
 			'payment_gateways' => [],
+			'contact_person' => 0,
 			'form_format' => '<h2>Event Information</h2>
 		<div class="input">
 			<label for="event_name">Event Name</label><br />
@@ -2872,6 +2873,9 @@ function eme_options_page() {
 			eme_options_input_text( __( 'Price', 'events-made-easy' ), eme_get_field_name('eme_fs','price'), __( 'The price to submit new events.', 'events-made-easy' ) . '<br>' . __( 'Use the point as decimal separator', 'events-made-easy' ), 'text', $fs_options['price'] );
 			eme_options_multiselect( __( 'Payment gateways', 'events-made-easy' ), eme_get_field_name('eme_fs','payment_gateways'), eme_configured_pgs_descriptions(), '', $fs_options['payment_gateways'], 'eme_select2_width50_class' );
 
+			$indexed_users[-1] = __( 'No contact', 'events-made-easy' );
+			$indexed_users    += eme_get_indexed_users();
+			eme_options_select( __( 'Default contact person', 'events-made-easy' ), eme_get_field_name('eme_fs','contact_person'), $indexed_users, __( 'Select the contact person that will receive email notifications whenever an event gets submitted or paid for.', 'events-made-easy' ), $fs_options['contact_person'] );
 			eme_options_select (__('Default category for new event','events-made-easy'), eme_get_field_name('eme_fs','default_cat'), $category_arr, __ ('The default category assigned to an event if nothing is selected in the form.','events-made-easy'), $fs_options['default_cat'] );
 			eme_options_radio_binary (__('Force location creation?','events-made-easy'), eme_get_field_name('eme_fs','force_location_creation'), __ ( 'Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations.', 'events-made-easy' ), $fs_options['force_location_creation']);
 			eme_options_radio_binary (__('Allow guest submit?','events-made-easy'), eme_get_field_name('eme_fs','guest_submit'), __ ( 'Check this option if you want guests also to be able to add new events.', 'events-made-easy' ), $fs_options['guest_submit']);

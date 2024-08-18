@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.8 (2024//) =
+* Basic feature implementation to pay for event submissions
+
 = 2.5.7 (2024/08/13) =
 * The filterform placeholders #_FILTERWEEKS, #_FILTERMONTHS, #_FILTERYEARS now take 2 extra optional placeholders that indicate the number of week/months/years in the past and the future you want the scope to be. Example:
 #_FILTERYEARS{5}{3} to create a year scope from 5 years in the past till 2 years in the future

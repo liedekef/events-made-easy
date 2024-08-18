@@ -5,7 +5,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_email_fs_event_action( $event, $action ) {
-	$contact        = eme_get_contact();
+	$eme_fs_options = get_option('eme_fs');
+	if (empty($eme_fs_options['contact_person']) || $eme_fs_options['contact_person']<=0)
+		return;
+	$contact        = eme_get_contact($eme_fs_options['contact_person']);
 	$contact_email  = $contact->user_email;
 	$contact_name   = $contact->display_name;
 	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
@@ -15,7 +18,10 @@ function eme_email_fs_event_action( $event, $action ) {
 	$contact_body    = '';
 	if ( $action == 'ipnReceived' ) {
 		$contact_subject = __('Payment received for event submission','events-made-easy');
-		$contact_body = __('Payment received for event submission','events-made-easy');
+		$contact_body = __('Payment received for event submission: #_EVENTNAME (#_STARTDATE #_STARTTIME)','events-made-easy');
+	} elseif ( $action == 'newevent' ) {
+		$contact_subject = __('New event submitted','events-made-easy');
+		$contact_body = __('A new event has been submitted: #_EVENTNAME (#_STARTDATE #_STARTTIME)','events-made-easy');
 	}
 
 	if ( ! empty( $contact_subject ) ) {
@@ -601,6 +607,7 @@ function eme_fs_process_newevent() {
 				eme_event_store_answers($event_id);
 				eme_upload_files( $event_id, 'events' );
 				$event = eme_get_event($event_id);
+				eme_email_fs_event_action( $event, 'newevent' );
 				if (has_action('eme_fs_submit_event_action')) {
 					do_action('eme_fs_submit_event_action',$event);
 				}

@@ -3650,7 +3650,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
 		eme_change_event_status($payment['related_id'],$eme_fs_options['auto_publish']);
 		if ( $is_ipn ) {
 			$event = eme_get_event($payment['related_id']);
-			// eme_email_fs_event_action( $event, 'ipnReceived' );
+			eme_email_fs_event_action( $event, 'ipnReceived' );
 			if ( has_action( 'eme_ipn_fs_event_action' ) ) {
 				do_action( 'eme_ipn_fs_event_action', $event );
 			}

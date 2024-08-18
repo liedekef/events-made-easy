@@ -95,16 +95,6 @@ function _eme_install() {
 		eme_create_tables( $db_version );
 	}
 
-	// make sure no unintended cleanup happens
-	$cleanup_unpaid_minutes = intval( get_option( 'eme_cron_cleanup_unpaid_minutes' ) );
-	if ( ! wp_next_scheduled( 'eme_cron_cleanup_unpaid' ) && $cleanup_unpaid_minutes > 0 ) {
-		update_option( 'eme_cron_cleanup_unpaid_minutes', 0 );
-	}
-	$cleanup_unconfirmed_minutes = intval( get_option( 'eme_cron_cleanup_unconfirmed_minutes' ) );
-	if ( ! wp_next_scheduled( 'eme_cron_cleanup_unconfirmed' ) && $cleanup_unconfirmed_minutes > 0 ) {
-		update_option( 'eme_cron_cleanup_unconfirmed_minutes', 0 );
-	}
-
 	// some cron we want
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// midnight

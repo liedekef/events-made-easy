@@ -720,6 +720,45 @@ jQuery(document).ready( function($) {
                 $('#subscribe_remove_attach_button').hide();
         });
 
+	$('#fs_ipn_attach_button').on("click",function(e) {
+                e.preventDefault();
+                var custom_uploader = wp.media({
+                        title: emeadmin.translate_addattachments,
+                        button: {
+                                text: emeadmin.translate_addattachments
+                        },
+                        multiple: true  // Set this to true to allow multiple files to be selected
+                }).on('select', function() {
+                        var selection = custom_uploader.state().get('selection');
+                        // using map is not really needed, but this way we can reuse the code if multiple=true
+                        // var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        selection.map( function(attach) {
+                                attachment = attach.toJSON();
+                                $('#fs_ipn_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+				if ($('#eme_fs_ipn_attach_ids').val() != '') {
+					tmp_ids_arr=$('#eme_fs_ipn_attach_ids').val().split(',');
+				} else {
+					tmp_ids_arr=[];
+				}
+				tmp_ids_arr.push(attachment.id);
+				tmp_ids_val=tmp_ids_arr.join(',');
+                                $('#eme_fs_ipn_attach_ids').val(tmp_ids_val);
+                                $('#fs_ipn_remove_attach_button').show();
+                        });
+                }).open();
+        });
+        if ($('#eme_fs_ipn_attach_ids').val() != '') {
+		$('#fs_ipn_remove_attach_button').show();
+        } else {
+		$('#fs_ipn_remove_attach_button').hide();
+        }
+	$('#fs_ipn_remove_attach_button').on("click",function(e) {
+                e.preventDefault();
+		$('#fs_ipn_attach_links').html('');
+		$('#eme_fs_ipn_attach_ids').val('');
+		$('#fs_ipn_remove_attach_button').hide();
+	});
+
 	//$("input[placeholder]").each(function () {
 	//	$(this).attr('size', $(this).attr('placeholder').length);
 	//});

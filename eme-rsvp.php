@@ -6563,7 +6563,6 @@ $extra_html_header
 	$dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
 	$dompdf->render();
 	// now we know where to store it, so create the dir
-	$targetPath = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
 	if ( ! is_dir( $targetPath ) ) {
 		wp_mkdir_p( $targetPath );
 	}

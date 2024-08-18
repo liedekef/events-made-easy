@@ -13,17 +13,39 @@ function eme_email_fs_event_action( $event, $action ) {
 	$contact_name   = $contact->display_name;
 	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
+	$author         = eme_get_author($event);
+	$person         = eme_get_person_by_wp_id( $author->ID );
+	if ( empty( $person ) ) {
+		$person = eme_fake_person_by_wp_id( $author->ID );
+	}
+	$person_name    = eme_format_full_name( $person['firstname'], $person['lastname'] );
+
 	// first get the initial values
+	$person_subject  = '';
+	$person_body     = '';
 	$contact_subject = '';
 	$contact_body    = '';
+	$attachment_ids         = '';
+        $attachment_tmpl_ids_arr = [];
+
 	if ( $action == 'ipnReceived' ) {
-		$contact_subject = get_option('eme_fs_contactperson_paid_email_subject');
-		$contact_body = get_option('eme_fs_contactperson_paid_email_body');
+		$attachment_ids = get_option( 'eme_fs_ipn_attach_ids' );
+		$attachment_tmpl_ids_arr = get_option( 'eme_fs_ipn_attach_tmpl_ids' );
+		$contact_subject = get_option('eme_fs_contactperson_ipn_email_subject');
+		$contact_body = get_option('eme_fs_contactperson_ipn_email_body');
+		$person_subject = get_option('eme_fs_author_ipn_email_subject');
+		$person_body = get_option('eme_fs_author_ipn_email_body');
 	} elseif ( $action == 'newevent' ) {
 		$contact_subject = get_option('eme_fs_contactperson_newevent_email_subject');
 		$contact_body = get_option('eme_fs_contactperson_newevent_email_body');
 	}
 
+	if ( ! empty( $person_subject ) ) {
+		$person_subject = eme_replace_event_placeholders( $person_subject, $event, 'text' );
+	}
+	if ( ! empty( $person_body ) ) {
+		$person_body = eme_replace_event_placeholders( $person_body, $event, $mail_text_html );
+	}
 	if ( ! empty( $contact_subject ) ) {
 		$contact_subject = eme_replace_event_placeholders( $contact_subject, $event, 'text' );
 	}
@@ -35,11 +57,119 @@ function eme_email_fs_event_action( $event, $action ) {
 	if ( ! empty( $contact_subject ) && ! empty( $contact_body ) ) {
 		$mail_res = eme_queue_mail( $contact_subject, $contact_body, $contact_email, $contact_name, $contact_email, $contact_name, $contact_email, $contact_name );
 	}
+	if ( ! empty( $person_subject ) && ! empty( $person_body ) ) {
+		// this possibily overrides mail_res, but that's ok since errors for mail to people are more important than to the contact person
+		// to make sure the attachment_ids is an array ...
+		if ( empty( $attachment_ids ) ) {
+			$attachment_ids_arr = [];
+		} else {
+			$attachment_ids_arr = array_unique(explode( ',', $attachment_ids ));
+		}
+		// create and add the needed pdf attachments too
+		if ( !empty( $attachment_tmpl_ids_arr ) ) {
+			foreach ($attachment_tmpl_ids_arr as $attachment_tmpl_id) {
+				$attachment_ids_arr[] = eme_generate_fs_event_pdf( $person, $event, $attachment_tmpl_id );
+			}
+		}
+
+		$mail_res = eme_queue_mail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $person['person_id'], 0, $attachment_ids_arr );
+	}
 
 	return $mail_res;
 }
 
+function eme_generate_fs_event_pdf( $person, $event, $template_id ) {
+	$template = eme_get_template( $template_id );
 
+	// if the template is not meant for pdf, return
+	if ( $template['type'] != "pdf" ) {
+		return;
+	}
+
+	$targetPath  = EME_UPLOAD_DIR . '/fsevents/' . $person['wp_id'];
+	$pdf_path    = '';
+	if ( is_dir( $targetPath ) ) {
+		foreach ( glob( "$targetPath/fsevent-$template_id-*.pdf" ) as $filename ) {
+			$pdf_path = $filename;
+		}
+	}
+	// we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
+	if ( !empty( $pdf_path ) ) {
+		$pdf_mtime      = filemtime( $pdf_path );
+		$pdf_mtime_obj      = new ExpressiveDate( 'now', EME_TIMEZONE );
+		$pdf_mtime_obj->setTimestamp($pdf_mtime);
+		$booking_mtime_obj  = new ExpressiveDate( $booking['modif_date'], EME_TIMEZONE );
+		$event_mtime_obj    = new ExpressiveDate( $event['modif_date'], EME_TIMEZONE );
+		$template_mtime_obj = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
+		if ($booking_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
+			return $pdf_path;
+		}
+	}
+
+	// the template format needs br-handling, so lets use a handy function
+	$format = eme_get_template_format( $template_id );
+
+	require_once 'dompdf/vendor/autoload.php';
+	// instantiate and use the dompdf class
+	$options = new Dompdf\Options();
+	$options->set( 'isRemoteEnabled', true );
+	$options->set( 'isHtml5ParserEnabled', true );
+	$dompdf      = new Dompdf\Dompdf( $options );
+	$margin_info = 'margin: ' . $template['properties']['pdf_margins'];
+	$font_info       = 'font-family: ' . get_option( 'eme_pdf_font' );
+	$orientation = $template['properties']['pdf_orientation'];
+	$pagesize    = $template['properties']['pdf_size'];
+	if ( $pagesize == 'custom' ) {
+		$pagesize = [ 0, 0, $template['properties']['pdf_width'], $template['properties']['pdf_height'] ];
+	}
+
+	$dompdf->setPaper( $pagesize, $orientation );
+	$css = "\n<link rel='stylesheet' id='eme-css'  href='" . esc_url(EME_PLUGIN_URL) . "css/eme.css' type='text/css' media='all'>";
+	$eme_css_name = get_stylesheet_directory() . '/eme.css';
+	if ( file_exists( $eme_css_name ) ) {
+		$css        .= "\n<link rel='stylesheet' id='eme-css-extra'  href='" . get_stylesheet_directory_uri() . "/eme.css' type='text/css' media='all'>";
+	}
+	$extra_html_header = get_option( 'eme_html_header' );
+        $extra_html_header = trim( preg_replace( '/\r\n/', "\n", $extra_html_header ) );
+
+	$html = "<html>
+<head>
+<style>
+    @page { $margin_info; }
+    body { $margin_info; $font_info; }
+    div.page-break {
+        page-break-before: always;
+    }
+</style>$css
+$extra_html_header
+</head>
+<body>
+";
+	// avoid a loop between eme_replace_booking_placeholders and eme_generate_booking_pdf
+	$format = str_replace( '#_BOOKINGPDF_URL', '', $format );
+
+	$format = eme_replace_people_placeholders( $format, $person );
+	$html .= eme_replace_event_placeholders( $format, $event );
+	$html .= "</body></html>";
+	$dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
+	$dompdf->render();
+	// now we know where to store it, so create the dir
+	if ( ! is_dir( $targetPath ) ) {
+		wp_mkdir_p( $targetPath );
+	}
+	if ( ! is_file( $targetPath . '/index.html' ) ) {
+		touch( $targetPath . '/index.html' );
+	}
+	// unlink old pdf
+	array_map( 'wp_delete_file', glob( "$targetPath/fsevent-$template_id-*.pdf" ) );
+	// now put new one
+	$rand_id     = eme_random_id();
+	$target_file = $targetPath . "/fsevent-$template_id-$rand_id.pdf";
+	file_put_contents( $target_file, $dompdf->output() );
+	return $target_file;
+}
+
+ 
 function eme_add_event_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
 	$eme_fs_options = get_option('eme_fs');

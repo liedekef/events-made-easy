@@ -65,9 +65,9 @@ function _eme_install() {
 		eme_update_options( $db_version );
 	}
 
-	// some folders that need to be created
+	// some folders that need to be created (fsevents is for pdf creation when needed, includes is not for upload either)
 	eme_mkdir_with_index( EME_UPLOAD_DIR );
-	$upload_folders = [ 'events', 'locations', 'memberships', 'bookings', 'people', 'members', 'includes' ];
+	$upload_folders = [ 'events', 'locations', 'memberships', 'bookings', 'people', 'members', 'fsevents', 'includes' ];
 	foreach ($upload_folders as $upload_folder) {
 		eme_mkdir_with_index( EME_UPLOAD_DIR . '/' . $upload_folder );
 	}

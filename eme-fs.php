@@ -235,7 +235,7 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
 	if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
                 $format = eme_add_captcha_submit( $format );
 	} else {
-		$format = eme_add_captcha_submit( $format, $eme_fs_options['selected_captcha'] );
+		$format = eme_add_captcha_submit( $format, eme_get_selected_captcha($eme_fs_options) );
 	}
 
 	$latitude_added = 0;
@@ -347,12 +347,9 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
 				$configured_captchas = eme_get_configured_captchas();
 				 if (!array_key_exists($eme_fs_options['selected_captcha'], $configured_captchas))
 					 $eme_fs_options['selected_captcha'] = array_key_first($configured_captchas);
-				$captcha_function = 'eme_load_'.$eme_fs_options['selected_captcha'].'_html';
-				if (function_exists($captcha_function)) {
-					$replacement = $captcha_function();
-					if (!empty($replacement))
-						$captcha_set = 1;
-				}
+				 $replacement = eme_generate_captchas_html($eme_fs_options['selected_captcha']);
+				 if (!empty($replacement))
+					 $captcha_set = 1;
                         }
                 } elseif ( preg_match( '/#_MAP$/', $result ) ) {
 			$replacement = "<div id='eme-edit-location-map' class='eme-frontendedit-location-map'></div>";
@@ -392,6 +389,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
          return false;
       $localized_field_id='';
       $eme_fs_options = get_option('eme_fs');
+      $selected_captcha = eme_get_selected_captcha($eme_fs_options);
       // if the type is not hidden, set it to the sensible value
       if ($type != 'hidden') {
               switch($field) {
@@ -457,28 +455,10 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
               case 'event_properties':
                       break;
               case 'recaptcha':
-                      if ($eme_fs_options['use_recaptcha'])
-                              $type = 'recaptcha';
-                      else
-                              $type = '';
-                      break;
               case 'hcaptcha':
-                      if ($eme_fs_options['use_hcaptcha'])
-                              $type = 'hcaptcha';
-                      else
-                              $type = '';
-                      break;
               case 'cfcaptcha':
-                      if ($eme_fs_options['use_cfcaptcha'])
-                              $type = 'cfcaptcha';
-                      else
-                              $type = '';
-                      break;
               case 'captcha':
-                      if ($eme_fs_options['use_captcha'])
-                              $type = 'captcha';
-                      else
-                              $type = '';
+                      $type = $selected_captcha;
                       break;
               case 'event_image_url':
               case 'event_url':
@@ -536,16 +516,10 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
             return eme_fs_getcategoriesradio($more);
             break;
          case 'recaptcha':
-            return eme_load_recaptcha_html();
-            break;
          case 'hcaptcha':
-            return eme_load_hcaptcha_html();
-            break;
          case 'cfcaptcha':
-            return eme_load_cfcaptcha_html();
-            break;
          case 'captcha':
-            return eme_load_captcha_html();
+            return eme_generate_captchas_html();
             break;
          case 'binary':
             return eme_fs_getbinaryselect("event[".$field."]",$field_id,0);

@@ -210,10 +210,6 @@ function eme_captcha_generate( $file ) {
 }
 
 function eme_load_captcha_html() {
-	if ( eme_is_admin_request() ) {
-		return '';
-	}
-
 	$captcha_id  = eme_random_id();
 	$captcha_url = eme_captcha_url( $captcha_id );
 	if ( $captcha_url ) {
@@ -225,10 +221,6 @@ function eme_load_captcha_html() {
 }
 
 function eme_load_recaptcha_html() {
-	if ( eme_is_admin_request() ) {
-		return '';
-	}
-
 	if ( ! wp_script_is( 'eme-recaptcha', 'enqueued' ) ) {
 		wp_enqueue_script( 'eme-recaptcha' );
 	}
@@ -239,10 +231,6 @@ function eme_load_recaptcha_html() {
 }
 
 function eme_load_hcaptcha_html() {
-	if ( eme_is_admin_request() ) {
-		return '';
-	}
-
 	if ( ! wp_script_is( 'eme-hcaptcha', 'enqueued' ) ) {
 		wp_enqueue_script( 'eme-hcaptcha' );
 	}
@@ -253,10 +241,6 @@ function eme_load_hcaptcha_html() {
 }
 
 function eme_load_cfcaptcha_html() {
-	if ( eme_is_admin_request() ) {
-		return '';
-	}
-
 	if ( ! wp_script_is( 'eme-cfcaptcha', 'enqueued' ) ) {
 		wp_enqueue_script( 'eme-cfcaptcha' );
 	}
@@ -385,23 +369,10 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 		}
 	}
 	// catch old and new methods
-	$selected_captcha = '';
-	if (isset($properties['selected_captcha']))
-		$selected_captcha = $properties['selected_captcha'];
-	elseif (!empty($properties['use_recaptcha']))
-		$selected_captcha = 'recaptcha';
-	elseif (!empty($properties['use_hcaptcha']))
-		$selected_captcha = 'hcaptcha';
-	elseif (!empty($properties['use_cfcaptcha']))
-		$selected_captcha = 'cfcaptcha';
-	elseif (!empty($properties['use_captcha']))
-		$selected_captcha = 'captcha';
-
+	$selected_captcha = eme_get_selected_captcha($properties);
 	$configured_captchas = eme_get_configured_captchas();
-	if (!empty($selected_captcha) && !array_key_exists($selected_captcha, $configured_captchas))
-		$selected_captcha = array_key_first($configured_captchas);
 
-	if ( ( ! empty( $properties ) && $selected_captcha == 'recaptcha' ) || ( empty( $properties ) && get_option( 'eme_recaptcha_for_forms' ) ) ) {
+	if ( ( ! empty( $properties ) && $selected_captcha == 'recaptcha' ) || ( empty( $properties ) && isset( $configured_captchas['recaptcha'] ) ) ) {
 		$captcha_res = eme_check_recaptcha();
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
@@ -414,7 +385,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			wp_die();
 		}
 	}
-	if ( ( ! empty( $properties ) && $selected_captcha == 'hcaptcha' ) || ( empty( $properties ) && get_option( 'eme_hcaptcha_for_forms' ) ) ) {
+	if ( ( ! empty( $properties ) && $selected_captcha == 'hcaptcha' ) || ( empty( $properties ) && isset( $configured_captchas['hcaptcha'] ) ) ) {
 		$captcha_res = eme_check_hcaptcha();
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the hCaptcha box', 'events-made-easy' );
@@ -427,7 +398,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			wp_die();
 		}
 	}
-	if ( ( ! empty( $properties ) && $selected_captcha == 'cfcaptcha' ) || ( empty( $properties ) && get_option( 'eme_cfcaptcha_for_forms' ) ) ) {
+	if ( ( ! empty( $properties ) && $selected_captcha == 'cfcaptcha' ) || ( empty( $properties ) && isset( $configured_captchas['cfcaptcha'] ) ) ) {
 		$captcha_res = eme_check_cfcaptcha();
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
@@ -440,7 +411,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			wp_die();
 		}
 	}
-	if ( ( ! empty( $properties ) && $selected_captcha == 'captcha' ) || ( empty( $properties ) && get_option( 'eme_captcha_for_forms' ) ) ) {
+	if ( ( ! empty( $properties ) && $selected_captcha == 'captcha' ) || ( empty( $properties ) && isset( $configured_captchas['captcha'] ) ) ) {
 		$captcha_res = eme_check_captcha( $remove_captcha_if_ok );
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'You entered an incorrect code', 'events-made-easy' );
@@ -456,28 +427,22 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 	return $captcha_res;
 }
 
-function eme_generate_captchas_html() {
+function eme_generate_captchas_html($selected_captcha = '') {
+	if ( eme_is_admin_request() ) {
+		return '';
+	}
 	if ( get_option( 'eme_captcha_only_logged_out' ) && is_user_logged_in() ) {
 		return '';
 	}
-	$eme_captcha_for_forms   = get_option( 'eme_captcha_for_forms' );
-        $eme_recaptcha_for_forms = get_option( 'eme_recaptcha_for_forms' );
-        $eme_hcaptcha_for_forms  = get_option( 'eme_hcaptcha_for_forms' );
-        $eme_cfcaptcha_for_forms  = get_option( 'eme_cfcaptcha_for_forms' );
-        $captcha_html = "";
-        if ( $eme_cfcaptcha_for_forms ) {
-                $captcha_html .= eme_load_cfcaptcha_html();
-        }
-        if ( $eme_hcaptcha_for_forms ) {
-                $captcha_html .= eme_load_hcaptcha_html();
-        }
-        if ( $eme_recaptcha_for_forms ) {
-                $captcha_html .= eme_load_recaptcha_html();
-        }
-        if ( $eme_captcha_for_forms ) {
-                $captcha_html .= eme_load_captcha_html();
-        }
-	return $captcha_html;
+
+	$configured_captchas = eme_get_configured_captchas();
+	if (!empty($configured_captchas)) {
+		if (!empty($selected_captcha) && !array_key_exists($selected_captcha, $configured_captchas))
+			$selected_captcha = array_key_first($configured_captchas);
+		$captcha_function = 'eme_load_'.$selected_captcha.'_html';
+		if (function_exists($captcha_function))
+			return $captcha_function();
+	}
 }
 
 function eme_add_captcha_submit( $format, $captcha = '', $add_dyndata = 0 ) {
@@ -4067,13 +4032,32 @@ function eme_get_configured_captchas() {
 	$captchas = [];
 	if ( ! empty( get_option( 'eme_recaptcha_for_forms' ) ) && ! empty( get_option( 'eme_recaptcha_site_key' ) ) )
 		$captchas['recaptcha'] = __('Google reCAPTCHA','events-made-easy');
-	if ( ! empty( get_option( 'eme_cfcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_cfcaptcha_site_key' ) ) )
+	if ( ! empty( get_option( 'eme_hcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_hcaptcha_site_key' ) ) )
 		$captchas['hcaptcha'] = __('hCaptcha','events-made-easy');
 	if ( ! empty( get_option( 'eme_cfcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_cfcaptcha_site_key' ) ) )
 		$captchas['cfcaptcha'] = __('Cloudflare Turnstile','events-made-easy');
 	if ( ! empty( get_option( 'eme_captcha_for_forms' ) ) )
 		$captchas['captcha'] = __('Basic EME Captcha','events-made-easy');
 	return $captchas;
+}
+
+function eme_get_selected_captcha($properties) {
+	$selected_captcha = '';
+	if (isset($properties['selected_captcha']))
+                $selected_captcha = $properties['selected_captcha'];
+        elseif (!empty($properties['use_recaptcha']))
+                $selected_captcha = 'recaptcha';
+        elseif (!empty($properties['use_hcaptcha']))
+                $selected_captcha = 'hcaptcha';
+        elseif (!empty($properties['use_cfcaptcha']))
+                $selected_captcha = 'cfcaptcha';
+        elseif (!empty($properties['use_captcha']))
+                $selected_captcha = 'captcha';
+
+	$configured_captchas = eme_get_configured_captchas();
+	if (!empty($selected_captcha) && !array_key_exists($selected_captcha, $configured_captchas))
+		$selected_captcha = array_key_first($configured_captchas);
+	return $selected_captcha;
 }
 
 ?>

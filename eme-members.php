@@ -120,17 +120,10 @@ function eme_init_membership_props( $props = [] ) {
 	if ( ! isset( $props['vat_pct'] ) ) {
 		$props['vat_pct'] = get_option( 'eme_default_vat' );
 	}
-	if ( ! isset( $props['use_cfcaptcha'] ) ) {
-		$props['use_cfcaptcha'] = get_option( 'eme_cfcaptcha_for_forms' ) && $new_membership ? 1 : 0;
-	}
-	if ( ! isset( $props['use_hcaptcha'] ) ) {
-		$props['use_hcaptcha'] = get_option( 'eme_hcaptcha_for_forms' ) && $new_membership ? 1 : 0;
-	}
-	if ( ! isset( $props['use_recaptcha'] ) ) {
-		$props['use_recaptcha'] = get_option( 'eme_recaptcha_for_forms' ) && $new_membership ? 1 : 0;
-	}
-	if ( ! isset( $props['use_captcha'] ) ) {
-		$props['use_captcha'] = get_option( 'eme_captcha_for_forms' ) && $new_membership ? 1 : 0;
+	if ( ! isset( $props['selected_captcha'] ) ) {
+		$configured_captchas = eme_get_configured_captchas();
+		if (!empty($configured_captchas) && $new_membership)
+			$props['selected_captcha'] = array_key_first($configured_captchas);
 	}
 	// checking it here also takes care of the case GD gets disabled after membership creation
 	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
@@ -180,7 +173,7 @@ function eme_init_membership_props( $props = [] ) {
 	}
 
 	// for sure integers
-        $numbers = [ 'max_usage_count', 'remove_pending_days', 'registration_wp_users_only', 'one_free_period', 'contact_id', 'member_template_id', 'dyndata_all_fields', 'use_cfcaptcha', 'use_hcaptcha', 'use_recaptcha', 'use_captcha', 'captcha_only_logged_out', 'create_wp_user', 'renewal_cutoff_days', 'allow_renewal', 'attendancerecord', 'skippaymentoptions', 'family_membership', 'family_maxmembers', 'grace_period' ];
+        $numbers = [ 'max_usage_count', 'remove_pending_days', 'registration_wp_users_only', 'one_free_period', 'contact_id', 'member_template_id', 'dyndata_all_fields', 'captcha_only_logged_out', 'create_wp_user', 'renewal_cutoff_days', 'allow_renewal', 'attendancerecord', 'skippaymentoptions', 'family_membership', 'family_maxmembers', 'grace_period' ];
         foreach ( $numbers as $opt ) {
                 $props[$opt]=intval($props[$opt]);
         }
@@ -1377,16 +1370,6 @@ function eme_add_update_membership( $membership_id = 0 ) {
 		$membership['properties']['reminder_days'] = '';
 	}
 
-	if ( empty( get_option( 'eme_hcaptcha_for_forms' ) ) || empty( get_option( 'eme_hcaptcha_site_key' ) ) ) {
-		$membership['properties']['use_hcaptcha'] = 0;
-	}
-	if ( empty( get_option( 'eme_cfcaptcha_for_forms' ) ) || empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) {
-		$membership['properties']['use_cfcaptcha'] = 0;
-	}
-	if ( empty( get_option( 'eme_recaptcha_for_forms' ) ) || empty( get_option( 'eme_recaptcha_site_key' ) ) ) {
-		$membership['properties']['use_recaptcha'] = 0;
-	}
-
 	if ( isset( $membership['properties']['price'] ) ) {
 		if ( ! is_numeric( $membership['properties']['price'] ) ) {
 			$membership['properties']['price'] = 0;
@@ -1864,10 +1847,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	$status_array               = eme_membership_status();
 	$registration_wp_users_only = ( $membership['properties']['registration_wp_users_only'] ) ? "checked='checked'" : '';
 	$captcha_only_logged_out    = ( $membership['properties']['captcha_only_logged_out'] ) ? "checked='checked'" : '';
-	$use_captcha                = ( $membership['properties']['use_captcha'] ) ? "checked='checked'" : '';
-	$use_recaptcha              = ( $membership['properties']['use_recaptcha'] ) ? "checked='checked'" : '';
-	$use_hcaptcha               = ( $membership['properties']['use_hcaptcha'] ) ? "checked='checked'" : '';
-	$use_cfcaptcha              = ( $membership['properties']['use_cfcaptcha'] ) ? "checked='checked'" : '';
+	$selected_captcha           = eme_get_selected_captcha( $membership['properties'] );
 	$attendancerecord           = ( $membership['properties']['attendancerecord'] ) ? "checked='checked'" : '';
 	$allow_renewal              = ( $membership['properties']['allow_renewal'] ) ? "checked='checked'" : '';
 	$family_membership          = ( $membership['properties']['family_membership'] ) ? "checked='checked'" : '';
@@ -1961,40 +1941,11 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 		<br><p class='eme_smaller'><?php esc_html_e( 'Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default).', 'events-made-easy' ); ?></p>
 	</td>
 	</tr>
-	<?php if ( ! empty( get_option( 'eme_recaptcha_for_forms' ) ) && ! empty( get_option( 'eme_recaptcha_site_key' ) ) ) : ?>
-	<tr>
-	<td><label for="properties[use_recaptcha]"><?php esc_html_e( 'Google reCAPTCHA', 'events-made-easy' ); ?></label></td>
-	<td><input id="use_recaptcha" name="properties[use_recaptcha]" type="checkbox" value='1' <?php echo $use_recaptcha; ?>>
-		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the Google reCAPTCHA on the membership signup form.', 'events-made-easy' ); ?>
-		<br><?php esc_html_e( 'If this option is checked, make sure to use #_RECAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></span></p>
-	</td>
-	</tr>
-<?php endif; ?>
-	<?php if ( ! empty( get_option( 'eme_hcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_hcaptcha_site_key' ) ) ) : ?>
-	<tr>
-	<td><label for="use_hcaptcha"><?php esc_html_e( 'hCaptcha', 'events-made-easy' ); ?></label></td>
-	<td><input id="use_hcaptcha" name="properties[use_hcaptcha]" type="checkbox" value='1' <?php echo $use_hcaptcha; ?>>
-		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the hCaptcha on the membership signup form.', 'events-made-easy' ); ?>
-		<br><?php esc_html_e( 'If this option is checked, make sure to use #_HCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></p>
-	</td>
-	</tr>
-<?php endif; ?>
-	<?php if ( ! empty( get_option( 'eme_cfcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_cfcaptcha_site_key' ) ) ) : ?>
-	<tr>
-	<td><label for="use_cfcaptcha"><?php esc_html_e( 'Cloudflare Turnstile', 'events-made-easy' ); ?></label></td>
-	<td><input id="use_cfcaptcha" name="properties[use_cfcaptcha]" type="checkbox" value='1' <?php echo $use_cfcaptcha; ?>>
-		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use Cloudflare Turnstile on the membership signup form.', 'events-made-easy' ); ?>
-		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CFCAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></p>
-	</td>
-	</tr>
-<?php endif; ?>
-	<tr>
-	<td><label for="use_captcha"><?php esc_html_e( 'Captcha', 'events-made-easy' ); ?></label></td>
-	<td><input id="use_captcha" name="properties[use_captcha]" type="checkbox" value='1' <?php echo $use_captcha; ?>>
-		<br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want to use the captcha on the membership signup form.', 'events-made-easy' ); ?>
-		<br><?php esc_html_e( 'If this option is checked, make sure to use #_CAPTCHA in your membership signup form. If not present, it will be added just above the submit button.', 'events-made-easy' ); ?></p>
-	</td>
-	</tr>
+	<?php 
+		$configured_captchas = eme_get_configured_captchas();
+		if ( ! empty( $configured_captchas ) )
+			eme_options_select (__('Select a captcha to use','events-made-easy'), eme_get_field_name('properties','selected_captcha'), $configured_captchas, '', $selected_captcha, __('None','events-made-easy') );
+	?>
 	<tr>
 	<td><label for="captcha_only_logged_out"><?php esc_html_e( 'Only use captcha for logged out users?', 'events-made-easy' ); ?></label></td>
 	<td><input id="captcha_only_logged_out" name="properties[captcha_only_logged_out]" type="checkbox" value='1' <?php echo $captcha_only_logged_out; ?>>

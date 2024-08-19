@@ -969,19 +969,11 @@ function eme_update_options( $db_version ) {
 			$fs_options = get_option('eme_fs');
 			$fs_options['price'] = 0;
 			$fs_options['payment_gateways'] = [];
-			if (!empty($fs_options['use_recaptcha'])) {
-				$fs_options['selected_captcha'] = 'recaptcha';
-				unset($fs_options['use_recaptcha']);
-			} elseif (!empty($fs_options['use_hcaptcha'])) {
-				$fs_options['selected_captcha'] = 'hcaptcha';
-				unset($fs_options['use_hcaptcha']);
-			} elseif (!empty($fs_options['use_cfcaptcha'])) {
-				$fs_options['selected_captcha'] = 'cfcaptcha';
-				unset($fs_options['use_cfcaptcha']);
-			} elseif (!empty($fs_options['use_captcha'])) {
-				$fs_options['selected_captcha'] = 'captcha';
-				unset($fs_options['use_captcha']);
-			}
+			$fs_options['selected_captcha'] = eme_get_selected_captcha($fs_options);
+			unset($fs_options['use_recaptcha']);
+			unset($fs_options['use_hcaptcha']);
+			unset($fs_options['use_cfcaptcha']);
+			unset($fs_options['use_captcha']);
 			update_option( 'eme_fs', $fs_options);
 		}
 	}

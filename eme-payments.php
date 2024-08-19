@@ -442,7 +442,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 
 	// if not "submit immediately" or standalone: we show the header
 	if ( ! $eme_pg_submit_immediately || $standalone ) {
-		$eme_payment_form_header_format = get_option( 'eme_payment_form_header_format' );
+		$eme_payment_form_header_format = get_option( 'eme_fs_payment_form_header_format' );
 		if ( !eme_is_empty_string( $eme_payment_form_header_format ) ) {
 			$result = eme_replace_event_placeholders( $eme_payment_form_header_format, $event );
 			if ( ! eme_is_empty_string( $result ) ) {
@@ -500,7 +500,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 	$ret_string .= '</div>';
 
 	if ( ! $eme_pg_submit_immediately || $standalone ) {
-		$eme_payment_form_footer_format = get_option( 'eme_payment_form_footer_format' );
+		$eme_payment_form_footer_format = get_option( 'eme_fs_payment_form_footer_format' );
 		if ( !eme_is_empty_string( $eme_payment_form_footer_format ) ) {
 			$result      = eme_replace_event_placeholders( $eme_payment_form_footer_format, $event );
 			$ret_string .= "<div id='eme-payment-formtext' class='eme-payment-formtext'>";

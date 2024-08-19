@@ -384,7 +384,24 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			return true;
 		}
 	}
-	if ( ( ! empty( $properties ) && $properties['use_recaptcha'] ) || ( empty( $properties ) && get_option( 'eme_recaptcha_for_forms' ) ) ) {
+	// catch old and new methods
+	$selected_captcha = '';
+	if (isset($properties['selected_captcha']))
+		$selected_captcha = $properties['selected_captcha'];
+	elseif (!empty($properties['use_recaptcha']))
+		$selected_captcha = 'recaptcha';
+	elseif (!empty($properties['use_hcaptcha']))
+		$selected_captcha = 'hcaptcha';
+	elseif (!empty($properties['use_cfcaptcha']))
+		$selected_captcha = 'cfcaptcha';
+	elseif (!empty($properties['use_captcha']))
+		$selected_captcha = 'captcha';
+
+	$configured_captchas = eme_get_configured_captchas();
+	if (!empty($selected_captcha) && !array_key_exists($selected_captcha, $configured_captchas))
+		$selected_captcha = array_key_first($configured_captchas);
+
+	if ( ( ! empty( $properties ) && $selected_captcha == 'recaptcha' ) || ( empty( $properties ) && get_option( 'eme_recaptcha_for_forms' ) ) ) {
 		$captcha_res = eme_check_recaptcha();
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the Google reCAPTCHA box', 'events-made-easy' );
@@ -397,7 +414,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			wp_die();
 		}
 	}
-	if ( ( ! empty( $properties ) && $properties['use_hcaptcha'] ) || ( empty( $properties ) && get_option( 'eme_hcaptcha_for_forms' ) ) ) {
+	if ( ( ! empty( $properties ) && $selected_captcha == 'hcaptcha' ) || ( empty( $properties ) && get_option( 'eme_hcaptcha_for_forms' ) ) ) {
 		$captcha_res = eme_check_hcaptcha();
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the hCaptcha box', 'events-made-easy' );
@@ -410,7 +427,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			wp_die();
 		}
 	}
-	if ( ( ! empty( $properties ) && $properties['use_cfcaptcha'] ) || ( empty( $properties ) && get_option( 'eme_cfcaptcha_for_forms' ) ) ) {
+	if ( ( ! empty( $properties ) && $selected_captcha == 'cfcaptcha' ) || ( empty( $properties ) && get_option( 'eme_cfcaptcha_for_forms' ) ) ) {
 		$captcha_res = eme_check_cfcaptcha();
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
@@ -423,7 +440,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			wp_die();
 		}
 	}
-	if ( ( ! empty( $properties ) && $properties['use_captcha'] ) || ( empty( $properties ) && get_option( 'eme_captcha_for_forms' ) ) ) {
+	if ( ( ! empty( $properties ) && $selected_captcha == 'captcha' ) || ( empty( $properties ) && get_option( 'eme_captcha_for_forms' ) ) ) {
 		$captcha_res = eme_check_captcha( $remove_captcha_if_ok );
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'You entered an incorrect code', 'events-made-easy' );

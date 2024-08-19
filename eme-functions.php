@@ -437,7 +437,9 @@ function eme_generate_captchas_html($selected_captcha = '') {
 
 	$configured_captchas = eme_get_configured_captchas();
 	if (!empty($configured_captchas)) {
-		if (!empty($selected_captcha) && !array_key_exists($selected_captcha, $configured_captchas))
+		if (empty($selected_captcha))
+			$selected_captcha = array_key_first($configured_captchas);
+		elseif (!empty($selected_captcha) && !array_key_exists($selected_captcha, $configured_captchas))
 			$selected_captcha = array_key_first($configured_captchas);
 		$captcha_function = 'eme_load_'.$selected_captcha.'_html';
 		if (function_exists($captcha_function))

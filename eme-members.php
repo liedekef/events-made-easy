@@ -4505,6 +4505,7 @@ function eme_edit_member_form_shortcode( ) {
 			echo esc_html( __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' ));
 			wp_die();
 		}
+
 		$member = eme_get_member( $member_id );
 		if ( ! empty( $member ) ) {
 			return eme_member_form( $member, $member['membership_id'] );

@@ -979,10 +979,6 @@ function eme_update_options( $db_version ) {
 			update_option( 'eme_fs', $fs_options);
 		}
 	}
-	// make sure the captcha doesn't cause problems
-	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
-		update_option( 'eme_captcha_for_forms', 0 );
-	}
 
 	// always reset the drop data option
 	update_option( 'eme_uninstall_drop_data', 0 );

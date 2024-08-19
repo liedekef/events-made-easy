@@ -125,10 +125,6 @@ function eme_init_membership_props( $props = [] ) {
 		if (!empty($configured_captchas) && $new_membership)
 			$props['selected_captcha'] = array_key_first($configured_captchas);
 	}
-	// checking it here also takes care of the case GD gets disabled after membership creation
-	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
-		$props['use_captcha'] = 0;
-	}
 	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
                 $props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) && $new_membership ? 1 : 0;
         }

@@ -179,10 +179,6 @@ function eme_init_event_props( $props = [] ) {
                 if (!empty($configured_captchas) && $new_event)
                         $props['selected_captcha'] = array_key_first($configured_captchas);
         }
-	// checking it here also takes care of the case GD gets disabled after event creation
-	if ( ! function_exists( 'imagecreatetruecolor' ) ) {
-		$props['use_captcha'] = 0;
-	}
 	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
 		$props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) && $new_event ? 1 : 0;
 	}
@@ -5708,8 +5704,7 @@ function eme_import_csv_events() {
 	if ( ! in_array( 'event_name', $headers ) ) {
 		$result = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
-		$empty_props         = [];
-				$empty_props = eme_init_event_props( $empty_props );
+		$empty_props = eme_init_event_props( );
 		// now loop over the rest
 		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
 			$line = array_combine( $headers, $row );

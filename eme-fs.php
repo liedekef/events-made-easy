@@ -232,17 +232,11 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
 	}
 
         $captcha_set = 0;
-        if ( $eme_fs_options['use_recaptcha'] ) {
-                $format = eme_add_captcha_submit( $format, 'recaptcha' );
-        } elseif ( $eme_fs_options['use_hcaptcha'] ) {
-                $format = eme_add_captcha_submit( $format, 'hcaptcha' );
-        } elseif ( $eme_fs_options['use_cfcaptcha'] ) {
-                $format = eme_add_captcha_submit( $format, 'cfcaptcha' );
-        } elseif ( $eme_fs_options['use_captcha'] ) {
-                $format = eme_add_captcha_submit( $format, 'captcha' );
-        } else {
+	if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
                 $format = eme_add_captcha_submit( $format );
-        }
+	} else {
+		$format = eme_add_captcha_submit( $format, $eme_fs_options['selected_captcha'] );
+	}
 
 	$latitude_added = 0;
 	$longitude_added = 0;
@@ -346,28 +340,19 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
 					$required=1;
 				$replacement = eme_get_formfield_html($formfield,$postfield_name,'',$required);
 			}
-                } elseif ( preg_match( '/#_CFCAPTCHA$/', $result ) ) {
-                        if ( $eme_fs_options['use_cfcaptcha'] && ! $captcha_set ) {
-                                $replacement = eme_load_cfcaptcha_html();
-                                $captcha_set = 1;
-                        }
-                } elseif ( preg_match( '/#_HCAPTCHA$/', $result ) ) {
-                        if ( $eme_fs_options['use_hcaptcha'] && ! $captcha_set ) {
-                                $replacement = eme_load_hcaptcha_html();
-                                $captcha_set = 1;
-                        }
-                } elseif ( preg_match( '/#_RECAPTCHA$/', $result ) ) {
-                        if ( $eme_fs_options['use_recaptcha'] && ! $captcha_set ) {
-                                $replacement = eme_load_recaptcha_html();
-                                $captcha_set = 1;
-                        } 
-                } elseif ( preg_match( '/#_CAPTCHA$/', $result ) ) {
-                        if ( $eme_fs_options['use_captcha'] && ! $captcha_set ) {
-                                $replacement = eme_load_captcha_html();
-                                $captcha_set = 1;
-                                if ( ! $eme_is_admin_request ) {
-					$required = 1;
-                                }
+                } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) {
+			if (is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' )) {
+				$replacement = '';
+			} elseif ( !empty($eme_fs_options['selected_captcha']) && ! $captcha_set ) {
+				$configured_captchas = eme_get_configured_captchas();
+				 if (!array_key_exists($eme_fs_options['selected_captcha'], $configured_captchas))
+					 $eme_fs_options['selected_captcha'] = array_key_first($configured_captchas);
+				$captcha_function = 'eme_load_'.$eme_fs_options['selected_captcha'].'_html';
+				if (function_exists($captcha_function)) {
+					$replacement = $captcha_function();
+					if (!empty($replacement))
+						$captcha_set = 1;
+				}
                         }
                 } elseif ( preg_match( '/#_MAP$/', $result ) ) {
 			$replacement = "<div id='eme-edit-location-map' class='eme-frontendedit-location-map'></div>";

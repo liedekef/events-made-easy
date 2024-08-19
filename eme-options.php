@@ -587,10 +587,7 @@ function eme_add_options( $reset = 0 ) {
 			'redirect_to_login' => 0,
 			'cap_add_event' => 'edit_posts',
 			'force_location_creation' => 0,
-			'use_captcha' => 0,
-			'use_hcaptcha' => 0,
-			'use_cfcaptcha' => 0,
-			'use_recaptcha' => 0,
+			'selected_captcha' => '',
 			'use_wysiwyg' => 0,
 			'allow_upload' => 0,
 			'price' => 0,
@@ -972,6 +969,19 @@ function eme_update_options( $db_version ) {
 			$fs_options = get_option('eme_fs');
 			$fs_options['price'] = 0;
 			$fs_options['payment_gateways'] = [];
+			if (!empty($fs_options['use_recaptcha'])) {
+				$fs_options['selected_captcha'] = 'recaptcha';
+				unset($fs_options['use_recaptcha']);
+			} elseif (!empty($fs_options['use_hcaptcha'])) {
+				$fs_options['selected_captcha'] = 'hcaptcha';
+				unset($fs_options['use_hcaptcha']);
+			} elseif (!empty($fs_options['use_cfcaptcha'])) {
+				$fs_options['selected_captcha'] = 'cfcaptcha';
+				unset($fs_options['use_cfcaptcha']);
+			} elseif (!empty($fs_options['use_captcha'])) {
+				$fs_options['selected_captcha'] = 'captcha';
+				unset($fs_options['use_captcha']);
+			}
 			update_option( 'eme_fs', $fs_options);
 		}
 	}
@@ -2934,9 +2944,9 @@ function eme_options_page() {
 			eme_options_input_text( __( 'Price', 'events-made-easy' ), eme_get_field_name('eme_fs','price'), __( 'The price to submit new events.', 'events-made-easy' ) . '<br>' . __( 'Use the point as decimal separator', 'events-made-easy' ), 'text', $fs_options['price'] );
 			eme_options_multiselect( __( 'Payment gateways', 'events-made-easy' ), eme_get_field_name('eme_fs','payment_gateways'), eme_configured_pgs_descriptions(), '', $fs_options['payment_gateways'], 'eme_select2_width50_class' );
 
-			$indexed_users[-1] = __( 'No contact', 'events-made-easy' );
-			$indexed_users    += eme_get_indexed_users();
-			eme_options_select( __( 'Default contact person', 'events-made-easy' ), eme_get_field_name('eme_fs','contact_person'), $indexed_users, __( 'Select the contact person that will receive email notifications whenever an event gets submitted or paid for.', 'events-made-easy' ), $fs_options['contact_person'] );
+			//$indexed_users[-1] = __( 'No contact', 'events-made-easy' );
+			//$indexed_users    += eme_get_indexed_users();
+			eme_options_select( __( 'Default contact person', 'events-made-easy' ), eme_get_field_name('eme_fs','contact_person'), eme_get_indexed_users(), __( 'Select the contact person that will receive email notifications whenever an event gets submitted or paid for.', 'events-made-easy' ), $fs_options['contact_person'], __( 'No contact', 'events-made-easy' ) );
 			eme_options_select (__('Default category for new event','events-made-easy'), eme_get_field_name('eme_fs','default_cat'), $category_arr, __ ('The default category assigned to an event if nothing is selected in the form.','events-made-easy'), $fs_options['default_cat'] );
 			eme_options_radio_binary (__('Force location creation?','events-made-easy'), eme_get_field_name('eme_fs','force_location_creation'), __ ( 'Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations.', 'events-made-easy' ), $fs_options['force_location_creation']);
 			eme_options_radio_binary (__('Allow guest submit?','events-made-easy'), eme_get_field_name('eme_fs','guest_submit'), __ ( 'Check this option if you want guests also to be able to add new events.', 'events-made-easy' ), $fs_options['guest_submit']);
@@ -2946,11 +2956,10 @@ function eme_options_page() {
 			eme_options_textarea ( __( 'Guests not allowed text', 'events-made-easy'), eme_get_field_name('eme_fs','guest_not_allowed_text'), __( 'The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set.','events-made-easy'),1, 0, $fs_options['guest_not_allowed_text']);
 			eme_options_radio_binary (__('Redirect to login page','events-made-easy'), eme_get_field_name('eme_fs','redirect_to_login'), __ ( 'Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events.', 'events-made-easy' ), $fs_options['redirect_to_login']);
 			eme_options_select (__('Access right to submit new events','events-made-easy'), eme_get_field_name('eme_fs','cap_add_event'), eme_get_all_caps (), sprintf(__('Permission needed to submit a new event when guest submit is not allowed. Default: %s','events-made-easy'), eme_capNamesCB('edit_posts')), $fs_options['cap_add_event'] );
-			eme_options_radio_binary (__('Use Google reCAPTCHA?','events-made-easy'), eme_get_field_name('eme_fs','use_recaptcha'), __ ( 'Check this option to require the use of Google reCAPTCHA.', 'events-made-easy' ), $fs_options['use_recaptcha']);
-			eme_options_radio_binary (__('Use hCaptcha?','events-made-easy'), eme_get_field_name('eme_fs','use_hcaptcha'), __ ( 'Check this option to require the use of hCaptcha.', 'events-made-easy' ), $fs_options['use_hcaptcha']);
-			eme_options_radio_binary (__('Use Cloudflare Turnstile captcha?','events-made-easy'), eme_get_field_name('eme_fs','use_cfcaptcha'), __ ( 'Check this option to require the use of Cloudflare Turnstile captcha.', 'events-made-easy' ), $fs_options['use_cfcaptcha']);
-			eme_options_radio_binary (__('Use captcha?','events-made-easy'), eme_get_field_name('eme_fs','use_captcha'), __ ( 'Check this option to require the use of a captcha.', 'events-made-easy' ), $fs_options['use_captcha']);
-
+			$configured_captchas = eme_get_configured_captchas();
+			if (!empty($fs_options['selected_captcha']) && !array_key_exists($fs_options['selected_captcha'], $configured_captchas))
+				$fs_options['selected_captcha'] = array_key_first($configured_captchas);
+			eme_options_select (__('Select a captcha to use','events-made-easy'), eme_get_field_name('eme_fs','selected_captcha'), $configured_captchas, '', $fs_options['selected_captcha'], __('None','events-made-easy') );
 			eme_options_radio_binary (__('Use wysiwyg?','events-made-easy'), eme_get_field_name('eme_fs','use_wysiwyg'), __ ( 'Check this option if you want to use a frontend wysiwyg editor for the event notes.', 'events-made-easy' ), $fs_options['use_wysiwyg']);
 			eme_options_radio_binary (__('Allow image upload?','events-made-easy'), eme_get_field_name('eme_fs','allow_upload'), __ ( 'Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes.', 'events-made-easy' ), $fs_options['allow_upload']);
                         eme_options_textarea( __( 'Default form format', 'events-made-easy' ), eme_get_field_name('eme_fs','form_format'), __( 'The default form format for submitting a new event.', 'events-made-easy' ), 1, 0, $fs_options['form_format'] );

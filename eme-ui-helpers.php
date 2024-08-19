@@ -143,7 +143,7 @@ function eme_options_radio_binary( $title, $name, $description, $option_value = 
 	<?php
 }
 
-function eme_options_select( $title, $name, $list, $description, $option_value = false ) {
+function eme_options_select( $title, $name, $list, $description, $option_value = false, $add_empty_first = '' ) {
 	// make sure it is an array, otherwise just go back
 	if ( ! is_array( $list ) ) {
 		return;
@@ -158,7 +158,7 @@ function eme_options_select( $title, $name, $list, $description, $option_value =
 	<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 	<td>
 	<?php
-	echo eme_ui_select( $option_value, $name, $list );
+	echo eme_ui_select( $option_value, $name, $list, $add_empty_first );
 	if ( ! empty( $description ) ) {
 		echo '<br>' . $description;
 	}

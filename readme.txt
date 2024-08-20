@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.8 (2024//) =
 * Basic feature implementation to pay for event submissions
+* It's no longer needed to use #_CFCAPTCHA, #_HCAPTCHA, #RECAPTCHA. Just #_CAPTCHA is sufficient, since only one captcha is allowed and EME knows which one to use
 
 = 2.5.7 (2024/08/13) =
 * The filterform placeholders #_FILTERWEEKS, #_FILTERMONTHS, #_FILTERYEARS now take 2 extra optional placeholders that indicate the number of week/months/years in the past and the future you want the scope to be. Example:

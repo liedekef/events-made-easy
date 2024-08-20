@@ -175,9 +175,19 @@ function eme_init_event_props( $props = [] ) {
 		$props['wp_page_template'] = '';
 	}
 	if ( ! isset( $props['selected_captcha'] ) ) {
-                $configured_captchas = eme_get_configured_captchas();
-                if (!empty($configured_captchas) && $new_event)
-                        $props['selected_captcha'] = array_key_first($configured_captchas);
+		if ($new_event) {
+			$configured_captchas = eme_get_configured_captchas();
+			if (!empty($configured_captchas) )
+				$props['selected_captcha'] = array_key_first($configured_captchas);
+			else
+				$props['selected_captcha'] = '';
+		} else {
+			$props['selected_captcha'] = eme_get_selected_captcha($props);
+			unset($props['use_captcha']);
+			unset($props['use_reptcha']);
+			unset($props['use_cfptcha']);
+			unset($props['use_hptcha']);
+		}
         }
 	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
 		$props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) && $new_event ? 1 : 0;
@@ -8281,7 +8291,7 @@ function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
 function eme_meta_box_div_event_captcha_settings( $event ) {
 	
 	$eme_prop_captcha_only_logged_out   = ( $event['event_properties']['captcha_only_logged_out'] ) ? "checked='checked'" : '';
-	$selected_captcha   = eme_get_selected_captcha( $event['event_properties']);
+	$selected_captcha   = $event['event_properties']['selected_captcha'];
 	$configured_captchas = eme_get_configured_captchas();
 	?>
 <div id="div_event_captcha_settings">

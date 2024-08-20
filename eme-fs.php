@@ -598,7 +598,7 @@ function eme_fs_getbinaryselect($name,$field_id,$default) {
 function eme_fs_process_newevent() {
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_fs_options = get_option('eme_fs');
-	$captcha_res = eme_check_captchas( $eme_fs_options );
+	$captcha_res = eme_check_captcha( $eme_fs_options );
 	if (empty($eme_fs_options['success_message']))
 		$eme_fs_options['success_message'] = __('New event succesfully created.','events-made-easy');
 	$event_data = eme_kses($_POST['event']);

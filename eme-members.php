@@ -121,9 +121,19 @@ function eme_init_membership_props( $props = [] ) {
 		$props['vat_pct'] = get_option( 'eme_default_vat' );
 	}
 	if ( ! isset( $props['selected_captcha'] ) ) {
-		$configured_captchas = eme_get_configured_captchas();
-		if (!empty($configured_captchas) && $new_membership)
-			$props['selected_captcha'] = array_key_first($configured_captchas);
+		if ($new_membership) {
+			$configured_captchas = eme_get_configured_captchas();
+			if (!empty($configured_captchas) )
+				$props['selected_captcha'] = array_key_first($configured_captchas);
+			else
+				$props['selected_captcha'] = '';
+		} else {
+			$props['selected_captcha'] = eme_get_selected_captcha($props);
+			unset($props['use_captcha']);
+			unset($props['use_reptcha']);
+			unset($props['use_cfptcha']);
+			unset($props['use_hptcha']);
+		}
 	}
 	if ( ! isset( $props['captcha_only_logged_out'] ) ) {
                 $props['captcha_only_logged_out'] = get_option( 'eme_captcha_only_logged_out' ) && $new_membership ? 1 : 0;
@@ -1843,7 +1853,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	$status_array               = eme_membership_status();
 	$registration_wp_users_only = ( $membership['properties']['registration_wp_users_only'] ) ? "checked='checked'" : '';
 	$captcha_only_logged_out    = ( $membership['properties']['captcha_only_logged_out'] ) ? "checked='checked'" : '';
-	$selected_captcha           = eme_get_selected_captcha( $membership['properties'] );
+	$selected_captcha           = $membership['properties']['selected_captcha'];
 	$attendancerecord           = ( $membership['properties']['attendancerecord'] ) ? "checked='checked'" : '';
 	$allow_renewal              = ( $membership['properties']['allow_renewal'] ) ? "checked='checked'" : '';
 	$family_membership          = ( $membership['properties']['family_membership'] ) ? "checked='checked'" : '';
@@ -4894,7 +4904,7 @@ function eme_add_member_ajax() {
 		$membership = eme_get_membership( intval( $_POST['membership_id'] ) );
 	}
 
-        $captcha_res = eme_check_captchas( $membership['properties'] );
+        $captcha_res = eme_check_captcha( $membership['properties'] );
 
 	// check for wrong discount codes
 	$tmp_member     = eme_member_from_form( $membership );

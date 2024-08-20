@@ -1402,7 +1402,7 @@ function eme_replace_cancelformfields_placeholders( $event ) {
 		$format = eme_add_captcha_submit( $format );
         } else {
 		if (!$eme_is_admin_request)
-			$selected_captcha = eme_get_selected_captcha($event['event_properties']);
+			$selected_captcha = $event['event_properties']['selected_captcha'];
                 $format = eme_add_captcha_submit( $format, $selected_captcha );
         }
 
@@ -2477,7 +2477,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 			$format = eme_add_captcha_submit( $format );
 		} else {
 			if (!$eme_is_admin_request)
-				$selected_captcha = eme_get_selected_captcha($event['event_properties']);
+				$selected_captcha = $event['event_properties']['selected_captcha'];
 			$format = eme_add_captcha_submit( $format, $selected_captcha, $add_dyndata );
 		}
 	}
@@ -3680,7 +3680,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
                 $format = eme_add_captcha_submit( $format, '', $add_dyndata );
         } else {
                 if (!$eme_is_admin_request)
-                        $selected_captcha = eme_get_selected_captcha($membership['properties']);
+                        $selected_captcha = $membership['properties']['selected_captcha'];
                 $format = eme_add_captcha_submit( $format, $selected_captcha, $add_dyndata  );
         }
 

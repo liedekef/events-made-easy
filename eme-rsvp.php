@@ -895,7 +895,7 @@ function eme_add_bookings_ajax() {
 	}
 
 	$event       = $events[0];
-	$captcha_res = eme_check_captchas( $event['event_properties'] );
+	$captcha_res = eme_check_captcha( $event['event_properties'] );
 
 	if ( isset( $_POST['eme_is_multibooking'] ) && intval( $_POST['eme_is_multibooking'] ) > 0 ) {
 		$is_multibooking = 1;
@@ -1141,7 +1141,7 @@ function eme_cancel_bookings_ajax() {
 	}
 
 	// now the captcha
-	$captcha_res = eme_check_captchas( $event['event_properties'] );
+	$captcha_res = eme_check_captcha( $event['event_properties'] );
 
 	$registration_wp_users_only = $event['registration_wp_users_only'];
 

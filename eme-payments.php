@@ -3899,7 +3899,7 @@ function eme_cancel_payment_ajax() {
 	}
 
 	// check the captchas
-	$captcha_res = eme_check_captchas();
+	$captcha_res = eme_check_captcha();
 
 	$format      = get_option( 'eme_cancelled_payment_format' );
 	$booking_ids = eme_get_randompayment_booking_ids( $payment_randomid );

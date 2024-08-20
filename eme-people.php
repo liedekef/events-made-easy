@@ -4569,7 +4569,7 @@ function eme_subscribe_ajax() {
 	}
 
 	// verify captchas
-	$captcha_res = eme_check_captchas();
+	$captcha_res = eme_check_captcha();
 
 	$eme_lastname  = isset( $_POST['lastname'] ) ? eme_sanitize_request( $_POST['lastname'] ) : '';
 	$eme_firstname = isset( $_POST['firstname'] ) ? eme_sanitize_request( $_POST['firstname'] ) : '';
@@ -4655,7 +4655,7 @@ function eme_unsubscribe_ajax() {
 	}
 
 	// verify captchas
-	$captcha_res = eme_check_captchas();
+	$captcha_res = eme_check_captcha();
 
 	$eme_email = eme_sanitize_email( $_POST['email'] );
 	if ( eme_is_email( $eme_email, 1 ) ) {

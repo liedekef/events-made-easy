@@ -1660,7 +1660,7 @@ function eme_tasks_ajax() {
 		wp_die();
 	}
 
-	$captcha_res = eme_check_captchas();
+	$captcha_res = eme_check_captcha();
 
 	if ( is_user_logged_in() ) {
 		$booker_wp_id = get_current_user_id();

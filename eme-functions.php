@@ -324,7 +324,7 @@ function eme_check_cfcaptcha() {
 	}
 }
 
-function eme_check_captcha( $remove_upon_success = 0 ) {
+function eme_check_emecaptcha( $remove_upon_success = 0 ) {
 	if ( empty( $_POST['eme_captcha_id'] ) ) {
 		return false;
 	}
@@ -360,7 +360,7 @@ function eme_check_captcha( $remove_upon_success = 0 ) {
 	}
 }
 
-function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
+function eme_check_captcha( $properties = [], $remove_captcha_if_ok = 0 ) {
 	$captcha_res = false;
 	if ( (! empty( $properties ) && !empty($properties['captcha_only_logged_out'])) ||
 		(empty( $properties ) && get_option( 'eme_captcha_only_logged_out' ) ) ) 	 {
@@ -368,8 +368,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 			return true;
 		}
 	}
-	// catch old and new methods
-	$selected_captcha = eme_get_selected_captcha($properties);
+	$selected_captcha = $properties['selected_captcha'];
 	$configured_captchas = eme_get_configured_captchas();
 
 	if ( ( ! empty( $properties ) && $selected_captcha == 'recaptcha' ) || ( empty( $properties ) && isset( $configured_captchas['recaptcha'] ) ) ) {
@@ -412,7 +411,7 @@ function eme_check_captchas( $properties = [], $remove_captcha_if_ok = 0 ) {
 		}
 	}
 	if ( ( ! empty( $properties ) && $selected_captcha == 'captcha' ) || ( empty( $properties ) && isset( $configured_captchas['captcha'] ) ) ) {
-		$captcha_res = eme_check_captcha( $remove_captcha_if_ok );
+		$captcha_res = eme_check_emecaptcha( $remove_captcha_if_ok );
 		if ( ! $captcha_res ) {
 			$message = esc_html__( 'You entered an incorrect code', 'events-made-easy' );
 			echo wp_json_encode(

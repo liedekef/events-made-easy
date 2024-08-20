@@ -2936,7 +2936,7 @@ _e("Also check out the 'Email templates' and the 'Payment' sections for some ext
 			}
 			eme_options_select (__('State for new event','events-made-easy'), eme_get_field_name('eme_fs','auto_publish'), eme_status_array(), __ ('The state for a newly submitted event.','events-made-easy'), $fs_options['auto_publish'] );
 			eme_options_input_text( __( 'Price', 'events-made-easy' ), eme_get_field_name('eme_fs','price'), __( 'The price to submit new events. Leave empty or 0 if no price is to be paid', 'events-made-easy' ) . '<br>' . __( 'Use the point as decimal separator', 'events-made-easy' ), 'text', $fs_options['price'] );
-			eme_options_multiselect( __( 'Payment gateways', 'events-made-easy' ), eme_get_field_name('eme_fs','payment_gateways'), eme_configured_pgs_descriptions(), '', $fs_options['payment_gateways'], 'eme_select2_width50_class' );
+			eme_options_multiselect( __( 'Payment methods', 'events-made-easy' ), eme_get_field_name('eme_fs','payment_gateways'), eme_configured_pgs_descriptions(), '', $fs_options['payment_gateways'], 'eme_select2_width50_class' );
 
 			//$indexed_users[-1] = __( 'No contact', 'events-made-easy' );
 			//$indexed_users    += eme_get_indexed_users();

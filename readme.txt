@@ -101,7 +101,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.8 (2024//) =
 * Basic feature implementation to pay for event submissions
+* Event submissions can now send email to the person submitting (if logged in) and a defined contact person
 * It's no longer needed to use #_CFCAPTCHA, #_HCAPTCHA, #RECAPTCHA. Just #_CAPTCHA is sufficient, since only one captcha is allowed and EME knows which one to use
+* Action eme_ipn_fs_event_action added, executed after the submitted event is paid for (1 param: $event)
+* Action eme_fs_submit_event_action added, executed after the event is submitted into EME (1 param: $event)
 
 = 2.5.7 (2024/08/13) =
 * The filterform placeholders #_FILTERWEEKS, #_FILTERMONTHS, #_FILTERYEARS now take 2 extra optional placeholders that indicate the number of week/months/years in the past and the future you want the scope to be. Example:

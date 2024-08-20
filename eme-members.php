@@ -184,14 +184,20 @@ function eme_init_membership_props( $props = [] ) {
                 $props[$opt]=intval($props[$opt]);
         }
 
-	$payment_gateways = eme_payment_gateways();
-	foreach ( array_keys($payment_gateways) as $pg ) {
-		// the properties for payment gateways alsways have "use_" in front of them, so add it
-		if ( ! isset( $props[ 'use_' . $pg ] ) ) {
-			$props[ 'use_' . $pg ] = 0;
-		} else {
-			$props[ 'use_' . $pg ] = intval( $props[ 'use_' . $pg ] );
-		} 
+	$payment_gateways = eme_get_configured_pgs();
+	if (isset($props['payment_gateways'])) {
+		$props['payment_gateways'] = array_intersect($props['payment_gateways'],$payment_gateways);
+	} else {
+		$props['payment_gateways'] = [];
+		foreach ( $payment_gateways as $pg ) {
+			if ( ! empty( $props[ 'use_' . $pg ] ) )
+				$props['payment_gateways'][] = $pg;
+			// remove old-style pg
+			if ( isset( $props[ 'use_' . $pg ] ))
+				unset( $props[ 'use_' . $pg ]);
+		}
+		if ($new_membership && count($payment_gateways) == 1 )
+                        $props['payment_gateways'] = [$payment_gateways[0]];
 	}
 
 	if ( ! isset( $props['new_subject_format'] ) ) {
@@ -2159,22 +2165,12 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 	<?php
 	esc_html_e( 'If no payment method is selected, the "Member Added Message" will be shown. Otherwise the "Member Added Message" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings).', 'events-made-easy' );
 	echo '<br>';
-	$configured_pgs       = eme_get_configured_pgs();
-	$count_configured_pgs = count( $configured_pgs );
-	$pg_descriptions      = eme_payment_gateways();
-	foreach ( $configured_pgs as $pg ) {
-		// if it is a new membership and there's only one pg configured, select it by default
-		if ( $is_new_membership && $count_configured_pgs == 1 ) {
-			$membership['properties'][ 'use_' . $pg ] = 1;
-		}
-		echo eme_ui_checkbox_binary( $membership['properties'][ 'use_' . $pg ], 'properties[use_' . $pg . ']', $pg_descriptions[$pg] );
-		echo '<br>';
-	}
+	echo eme_ui_multiselect( $membership['properties']['payment_gateways'], eme_get_field_name('properties','payment_gateways'), eme_configured_pgs_descriptions(), 5, '', 0, 'eme_select2_width50_class' );
 
+	$configured_pgs = eme_get_configured_pgs();
 	if ( empty( $configured_pgs ) ) {
 		esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
 	}
-
 	?>
 		<p class='eme_smaller'><?php esc_html_e( 'If one or more payment methods are selected, the person signing up will be redirected to a payment page. In that case, make sure to check the different payment templates defined for this membership.', 'events-made-easy' ); ?></p>
 	</td>

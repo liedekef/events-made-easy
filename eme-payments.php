@@ -221,9 +221,9 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
 	}
 
 	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class'>";
-	$pgs         = eme_payment_gateways();
+	$pgs         = eme_configured_pgs_descriptions();
 	foreach ( $pgs as $pg => $value ) {
-		if ( $event['event_properties'][ 'use_' . $pg ] ) {
+		if ( isset($event['event_properties']['payment_gateways']) && in_array($pg, $event['event_properties']['payment_gateways']) ) {
 			if ( eme_is_offline_pg( $pg ) ) {
 				$eme_offline_format = get_option( 'eme_offline_payment' );
 				$result             = eme_replace_booking_placeholders( $eme_offline_format, $event, $booking, $is_multi );
@@ -352,9 +352,9 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
 	}
 	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class'>";
 	$is_multi    = 0;
-	$pgs         = eme_payment_gateways();
+	$pgs         = eme_configured_pgs_descriptions();
 	foreach ( $pgs as $pg => $value ) {
-		if ( $membership['properties'][ 'use_' . $pg ] ) {
+		if ( isset($membership['properties']['payment_gateways']) && in_array($pg, $membership['properties']['payment_gateways']) ) {
 			if ( eme_is_offline_pg( $pg ) ) {
 				if ( ! eme_is_empty_string( $membership['properties']['offline_payment_text'] ) ) {
 					$eme_offline_format = $membership['properties']['offline_payment_text'];
@@ -469,7 +469,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 	}
 	$ret_string .= "<div id='eme-payment-form' class='eme-payment-form $hidden_class'>";
 	$is_multi    = 0;
-	$pgs         = eme_payment_gateways();
+	$pgs         = eme_configured_pgs_descriptions();
 	foreach ( $pgs as $pg => $value ) {
 		if ( isset($eme_fs_options['payment_gateways']) && in_array($pg, $eme_fs_options['payment_gateways']) ) {
 			if ( eme_is_offline_pg( $pg ) ) {
@@ -3270,11 +3270,8 @@ function eme_event_can_pay_online( $event ) {
 	return eme_event_has_pgs_configured( $event );
 }
 function eme_event_has_pgs_configured( $event ) {
-	$pgs = eme_get_configured_pgs();
-	foreach ( $pgs as $pg ) {
-		if ( $event['event_properties'][ 'use_' . $pg ] ) {
-			return 1;
-		}
+	if ( !empty($event['event_properties']['payment_gateways'] )) {
+		return 1;
 	}
 	return 0;
 }
@@ -3282,24 +3279,21 @@ function eme_membership_can_pay_online( $membership ) {
 	return eme_membership_has_pgs_configured( $membership );
 }
 function eme_membership_has_pgs_configured( $membership ) {
-	$pgs = eme_get_configured_pgs();
-	foreach ( $pgs as $pg ) {
-		if ( $membership['properties'][ 'use_' . $pg ] ) {
-			return 1;
-		}
+	if ( !empty($membership['properties']['payment_gateways'] )) {
+		return 1;
 	}
 	return 0;
 }
 
 function eme_event_count_pgs( $event ) {
 	// count the payment gateways active for this event
+	if (empty($event['event_properties']['payment_gateways']) || !is_array($event['event_properties']['payment_gateways']))
+		return 0;
 	$pgs      = eme_get_configured_pgs();
 	$pg_count = 0;
 	foreach ( $pgs as $pg ) {
-		if ( $event['event_properties'][ 'use_' . $pg ] ) {
-			//if ($pg != "offline") {
+		if ( in_array($pg, $event['event_properties']['payment_gateways']) ) {
 			++$pg_count;
-			//}
 		}
 	}
 	return $pg_count;
@@ -3307,10 +3301,12 @@ function eme_event_count_pgs( $event ) {
 
 function eme_membership_count_pgs( $membership ) {
 	// count the payment gateways active for this event
+	if (empty($membership['properties']['payment_gateways']) || !is_array($membership['properties']['payment_gateways']))
+		return 0;
 	$pgs      = eme_get_configured_pgs();
 	$pg_count = 0;
 	foreach ( $pgs as $pg ) {
-		if ( $membership['properties'][ 'use_' . $pg ] ) {
+		if ( in_array($pg, $membership['properties']['payment_gateways']) ) {
 			++$pg_count;
 		}
 	}
@@ -3332,7 +3328,7 @@ function eme_fs_event_count_pgs( ) {
 function eme_event_get_first_pg( $event ) {
 	$pgs      = eme_get_configured_pgs();
 	foreach ( $pgs as $pg ) {
-		if ( $event['event_properties'][ 'use_' . $pg ] ) {
+		if ( !empty($event['event_properties']['payment_gateways']) && in_array($pg, $event['event_properties']['payment_gateways']) ) {
 			return $pg;
 		}
 	}
@@ -3342,7 +3338,7 @@ function eme_event_get_first_pg( $event ) {
 function eme_membership_get_first_pg( $membership ) {
 	$pgs      = eme_get_configured_pgs();
 	foreach ( $pgs as $pg => $value ) {
-		if ( $membership['properties'][ 'use_' . $pg ] ) {
+		if ( !empty($membership['properties']['payment_gateways']) && in_array($pg, $membership['properties']['payment_gateways']) ) {
 			return $pg;
 		}
 	}
@@ -3353,7 +3349,7 @@ function eme_fs_event_get_first_pg( ) {
 	$eme_fs_options = get_option('eme_fs');
 	$pgs      = eme_get_configured_pgs();
 	foreach ( $pgs as $pg => $value ) {
-		if ( isset($eme_fs_options['payment_gateways']) && in_array($pg, $eme_fs_options['payment_gateways']) ) {
+		if ( !empty($eme_fs_options['payment_gateways']) && in_array($pg, $eme_fs_options['payment_gateways']) ) {
 			return $pg;
 		}
 	}

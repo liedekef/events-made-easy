@@ -4025,6 +4025,7 @@ function eme_get_configured_captchas() {
 	return $captchas;
 }
 
+// easy function that allows transition from old use_* properties for captcha to newer
 function eme_get_selected_captcha($properties) {
 	$selected_captcha = '';
 	if (isset($properties['selected_captcha']))

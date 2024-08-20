@@ -143,14 +143,20 @@ function eme_init_event_props( $props = [] ) {
 		$props['rsvp_password'] = '';
 	}
 
-	$payment_gateways = eme_payment_gateways();
-	foreach ( array_keys($payment_gateways) as $pg ) {
-		// the properties for payment gateways alsways have "use_" in front of them, so add it
-		if ( ! isset( $props[ 'use_' . $pg ] ) ) {
-			$props[ 'use_' . $pg ] = 0;
-		} else {
-			$props[ 'use_' . $pg ] = intval( $props[ 'use_' . $pg ] );
+	$payment_gateways = eme_get_configured_pgs();
+	if (isset($props['payment_gateways'])) {
+		$props['payment_gateways'] = array_intersect($props['payment_gateways'],$payment_gateways);
+	} else {
+		$props['payment_gateways'] = [];
+		foreach ( $payment_gateways as $pg ) {
+			if ( ! empty( $props[ 'use_' . $pg ] ) )
+				$props['payment_gateways'][] = $pg;
+			// remove old-style pg
+			if ( isset( $props[ 'use_' . $pg ] ))
+				unset( $props[ 'use_' . $pg ]);
 		}
+		if ($new_event && count($payment_gateways) == 1 )
+			$props['payment_gateways'] = [$payment_gateways[0]];
 	}
 
 	if ( ! isset( $props['cancel_rsvp_days'] ) ) {
@@ -8570,22 +8576,14 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 	?>
 				</p>
 				<p id='span_payment_methods'>
-	<?php
-	$configured_pgs       = eme_get_configured_pgs();
-	$count_configured_pgs = count( $configured_pgs );
-	$pg_descriptions      = eme_payment_gateways();
-	foreach ( $configured_pgs as $pg ) {
-		// if it is a new event and there's only one pg configured, select it by default
-		if ( $is_new_event && $count_configured_pgs == 1 ) {
-			$event['event_properties'][ 'use_' . $pg ] = 1;
-		}
-		echo eme_ui_checkbox_binary( $event['event_properties'][ 'use_' . $pg ], 'eme_prop_use_' . $pg, $pg_descriptions[$pg] );
-		echo '<br>';
-	}
-	if ( empty( $configured_pgs ) ) {
-		esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
-	}
-	?>
+				<?php
+				echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', eme_configured_pgs_descriptions(), 5, '', 0, 'eme_select2_width50_class' );
+
+        			$configured_pgs = eme_get_configured_pgs();
+        			if ( empty( $configured_pgs ) ) {
+               				 esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
+        			}
+				?>
 				</p>
 				<p id='span_skippaymentoptions'>
 								<?php esc_html_e( 'Skip payment methods after booking', 'events-made-easy' ); ?><br>

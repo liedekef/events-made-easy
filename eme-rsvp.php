@@ -955,7 +955,7 @@ function eme_add_bookings_ajax() {
 
 	// let's decide for the first event wether or not payment is needed
 	if ( $payment_id && eme_event_has_pgs_configured( $event ) && ! $event['event_properties']['skippaymentoptions'] && ! $event['event_properties']['require_user_confirmation'] ) {
-		if ( $event['event_properties']['use_captcha'] ) {
+		if ( $event['event_properties']['selected_captcha'] == "captcha" ) {
 			eme_captcha_remove( $captcha_res );
 		}
 		$total_price = eme_get_payment_price( $payment_id );
@@ -1049,7 +1049,7 @@ function eme_add_bookings_ajax() {
 			}
 		}
 	} elseif ( $payment_id ) {
-		if ( $event['event_properties']['use_captcha'] ) {
+		if ( $event['event_properties']['selected_captcha'] == "captcha" ) {
 			eme_captcha_remove( $captcha_res );
 		}
 		// the booking is done, so if wanted let's indicate we want to show the form again
@@ -1192,7 +1192,9 @@ function eme_cancel_bookings_ajax() {
 	} else {
 		$form_html = __( 'There are no bookings associated to this name and email', 'events-made-easy' );
 	}
-	eme_captcha_remove ( $captcha_res );
+	if ( $event['event_properties']['selected_captcha'] == "captcha" ) {
+		eme_captcha_remove ( $captcha_res );
+	}
 	echo wp_json_encode(
 	    [
 			'Result'      => 'OK',

@@ -593,6 +593,7 @@ function eme_add_options( $reset = 0 ) {
 			'use_wysiwyg' => 0,
 			'allow_upload' => 0,
 			'price' => 0,
+			'currency' => '',
 			'payment_gateways' => [],
 			'contact_person' => 0,
 			'form_format' => '<h2>Event Information</h2>
@@ -2935,7 +2936,8 @@ _e("Also check out the 'Email templates' and the 'Payment' sections for some ext
 				}
 			}
 			eme_options_select (__('State for new event','events-made-easy'), eme_get_field_name('eme_fs','auto_publish'), eme_status_array(), __ ('The state for a newly submitted event.','events-made-easy'), $fs_options['auto_publish'] );
-			eme_options_input_text( __( 'Price', 'events-made-easy' ), eme_get_field_name('eme_fs','price'), __( 'The price to submit new events. Leave empty or 0 if no price is to be paid. Th currency is the default currency configured in EME. Configure the optional payment form header/footer sections in the EME Payment settings.', 'events-made-easy' ) . '<br>' . __( 'Use the point as decimal separator', 'events-made-easy' ), 'text', $fs_options['price'] );
+			eme_options_input_text( __( 'Price', 'events-made-easy' ), eme_get_field_name('eme_fs','price'), __( 'The price to submit new events. Leave empty or 0 if no price is to be paid. Configure the optional payment form header/footer sections in the EME Payment settings.', 'events-made-easy' ) . '<br>' . __( 'Use the point as decimal separator', 'events-made-easy' ), 'text', $fs_options['price'] );
+			eme_options_select( __( 'Currency', 'events-made-easy' ), eme_get_field_name('eme_fs','currency'), eme_currency_array(), '', $fs_options['currency'], __( 'Default currency', 'events-made-easy' ) );
 			eme_options_multiselect( __( 'Payment methods', 'events-made-easy' ), eme_get_field_name('eme_fs','payment_gateways'), eme_configured_pgs_descriptions(), '', $fs_options['payment_gateways'], 'eme_select2_width50_class' );
 
 			//$indexed_users[-1] = __( 'No contact', 'events-made-easy' );

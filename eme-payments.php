@@ -425,7 +425,7 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 
 	$eme_fs_options = get_option('eme_fs');
 	$total_price = $eme_fs_options['price'];
-	$cur = get_option('eme_default_currency');
+	$cur = $eme_fs_options['currency'] || get_option('eme_default_currency');
 	$vat_pct = get_option('eme_default_vat');
 	// now: count the payment gateways active for this membership
 	// if only 1 and the option to immediately submit is set, hide the divs and forms and submit it

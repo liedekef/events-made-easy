@@ -99,10 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.8 (2024//) =
-* Basic feature implementation to pay for event submissions
+= 2.5.8 (2024/08/21) =
+* New feature: pay for event submissions
 * Event submissions can now send email to the person submitting (if logged in) and a defined contact person
-* It's no longer needed to use #_CFCAPTCHA, #_HCAPTCHA, #RECAPTCHA. Just #_CAPTCHA is sufficient, since only one captcha is allowed and EME knows which one to use
+* It's no longer needed to use #_CFCAPTCHA, #_HCAPTCHA, #RECAPTCHA. Just #_CAPTCHA is sufficient, since only one captcha is allowed and EME knows which one to use. If more than one captcha is configured, certain forms will use the first configured one.
 * Action eme_ipn_fs_event_action added, executed after the submitted event is paid for (1 param: $event)
 * Action eme_fs_submit_event_action added, executed after the event is submitted into EME (1 param: $event)
 

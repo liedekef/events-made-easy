@@ -703,13 +703,8 @@ function eme_fs_process_newevent() {
 				if ($eme_fs_options['price']>0 && $pg_count>0) {
 					$payment_id  = eme_create_fs_event_payment($event_id);
 					$payment     = eme_get_payment( $payment_id );
-					$pg_submit_immediately = get_option( 'eme_pg_submit_immediately' );
-					if ($pg_submit_immediately)
-						$waitperiod = 0;
-					else
-						$waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) );
-					$res_html = eme_js_redirect(eme_payment_url($payment), $waitperiod);
-					if ($waitperiod == 0) {
+					$res_html = eme_js_redirect(eme_payment_url($payment), $eme_fs_options['redirect_timeout']);
+					if ($eme_fs_options['redirect_timeout'] == 0) {
 						$res_code = 'REDIRECT_IMM';
 					} else {
 						$res_html .= eme_replace_event_placeholders($eme_fs_options['success_message'], $event);

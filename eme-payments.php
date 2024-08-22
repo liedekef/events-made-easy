@@ -192,10 +192,10 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
 
 	// if not "submit immediately" or standalone: we show the header
 	if ( ! $eme_pg_submit_immediately || $standalone ) {
-		if ( ! $is_multi ) {
-			$eme_payment_form_header_format = get_option( 'eme_payment_form_header_format' );
-		} else {
+		if ( $is_multi ) {
 			$eme_payment_form_header_format = get_option( 'eme_multipayment_form_header_format' );
+		} else {
+			$eme_payment_form_header_format = get_option( 'eme_payment_form_header_format' );
 		}
 		if ( ! eme_is_empty_string( $eme_payment_form_header_format ) ) {
 			$result      = eme_replace_booking_placeholders( $eme_payment_form_header_format, $event, $booking, $is_multi );
@@ -251,10 +251,10 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
 	$ret_string .= '</div>';
 
 	if ( ! $eme_pg_submit_immediately || $standalone ) {
-		if ( ! $is_multi ) {
-			$eme_payment_form_footer_format = get_option( 'eme_payment_form_footer_format' );
-		} else {
+		if ( $is_multi ) {
 			$eme_payment_form_footer_format = get_option( 'eme_multipayment_form_footer_format' );
+		} else {
+			$eme_payment_form_footer_format = get_option( 'eme_payment_form_footer_format' );
 		}
 		if ( ! eme_is_empty_string( $eme_payment_form_footer_format ) ) {
 			$result      = eme_replace_booking_placeholders( $eme_payment_form_footer_format, $event, $booking, $is_multi );
@@ -325,6 +325,8 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
 			$eme_payment_form_header_format = $membership['properties']['payment_form_header_text'];
 		} elseif ( ! empty( $membership['properties']['payment_form_header_tpl'] ) ) {
 			$eme_payment_form_header_format = eme_get_template_format( $membership['properties']['payment_form_header_tpl'] );
+		} else {
+			$eme_payment_form_header_format = '';
 		}
 		if ( !eme_is_empty_string( $eme_payment_form_header_format ) ) {
 			$result = eme_replace_member_placeholders( $eme_payment_form_header_format, $membership, $member );
@@ -391,6 +393,8 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
 			$eme_payment_form_footer_format = $membership['properties']['payment_form_footer_text'];
 		} elseif ( ! empty( $membership['properties']['payment_form_footer_tpl'] ) ) {
 			$eme_payment_form_footer_format = eme_get_template_format( $membership['properties']['payment_form_footer_tpl'] );
+		} else {
+			$eme_payment_form_footer_format = '';
 		}
 		if ( ! eme_is_empty_string( $eme_payment_form_footer_format ) ) {
 			$result      = eme_replace_member_placeholders( $eme_payment_form_footer_format, $membership, $member );

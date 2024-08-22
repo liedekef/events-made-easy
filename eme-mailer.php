@@ -1336,7 +1336,10 @@ function eme_mailingreport_list() {
 		$record['receiveremail'] = $item['receiveremail'];
 		$record['receivername']  = $item['receivername'];
 		$record['status']        = $states[ $item['status'] ];
-		$record['read_count']    = $item['read_count'];
+		if ($item['status'] == 0) // for planned mails, the read count is empty (and not 0)
+			$record['read_count']    = '';
+		else
+			$record['read_count']    = $item['read_count'];
 		$record['error_msg']     = eme_esc_html( $item['error_msg'] );
 		if ( $item['status'] > 0 ) {
 			$localized_datetime      = eme_localized_datetime( $item['sent_datetime'] );
@@ -1445,17 +1448,16 @@ function eme_send_mails_ajax_actions( $action ) {
 			if ( ! empty( $_POST['search_failed'] ) ) {
 				$where = 'WHERE status=2';
 			}
-			$sql  = "SELECT * FROM $table $where ORDER BY id DESC LIMIT 100";
+			// subselect to first get the last 100, and then the outer select to reverse sort them (newer last)
+			$sql  = "SELECT * FROM (SELECT * FROM $table $where ORDER BY id DESC LIMIT 100) as q ORDER BY q.id";
 			$rows = $wpdb->get_results( $sql, ARRAY_A );
-			if ( ! empty( $rows ) ) {
-				$rows = array_reverse( $rows );
-			}
 		} else {
 			$search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
 			if ( ! empty( $_POST['search_failed'] ) ) {
 				$where = 'AND status=2';
 			}
-			$sql  = $wpdb->prepare( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where", $search_text, $search_text, $search_text );
+			//"order by status=0, id" will show the planned mails (status=0) last
+			$sql  = $wpdb->prepare( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where ORDER BY status=0,id", $search_text, $search_text, $search_text );
 			$rows = $wpdb->get_results( $sql, ARRAY_A );
 		}
 		if ( empty( $rows ) ) {

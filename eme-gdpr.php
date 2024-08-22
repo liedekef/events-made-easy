@@ -71,8 +71,7 @@ function eme_rpi_ajax() {
 			wp_die();
 	}
 
-	$remove_captcha_if_ok = 1;
-	eme_check_captcha( null, $remove_captcha_if_ok );
+	eme_check_captcha( remove_captcha_if_ok: 1 );
 
 	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 	// send email to client if it exists, otherwise do nothing, but always return the same message
@@ -166,8 +165,7 @@ function eme_gdpr_approve_ajax() {
 		wp_die();
 	}
 
-	$remove_captcha_if_ok = 1;
-	eme_check_captcha( null, $remove_captcha_if_ok );
+	eme_check_captcha( remove_captcha_if_ok: 1 );
 
 	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 	// send email to client if it exists, otherwise do nothing, but always return the same message
@@ -249,8 +247,7 @@ function eme_cpi_request_ajax() {
 		wp_die();
 	}
 
-	$remove_captcha_if_ok = 1;
-	eme_check_captcha( null, $remove_captcha_if_ok );
+	eme_check_captcha( remove_captcha_if_ok: 1 );
 
 	// send email to client if it exists, otherwise do nothing, but always return the same message
 	$email = eme_sanitize_email( $_POST['eme_email'] );

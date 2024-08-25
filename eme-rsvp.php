@@ -4910,8 +4910,7 @@ function eme_import_csv_payments() {
 	if ( ! in_array( 'payment_date', $headers ) || ! ( in_array( 'unique_nbr', $headers ) || in_array( 'payment_id', $headers ) || in_array( 'payment_randomid', $headers ) ) || ! in_array( 'amount', $headers ) ) {
 		$result = __( 'Not all required fields present.', 'events-made-easy' );
 	} else {
-		$empty_props         = [];
-		$empty_props = eme_init_event_props( $empty_props );
+		$empty_props = eme_init_event_props( );
 		// now loop over the rest
 		while ( ( $row = fgetcsv( $handle, 0, $delimiter, $enclosure ) ) !== false ) {
 			$line = array_combine( $headers, $row );

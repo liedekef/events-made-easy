@@ -676,7 +676,8 @@ function eme_fs_process_newevent() {
 
 		// make sure all event properties are set as expected
 		if (!empty($event_data['event_properties'])) {
-			$event_data['event_properties'] = eme_init_event_props($event_data['event_properties']);
+			// the not-set properties need to be treated as if a new event, so set new_event param to 1
+			$event_data['event_properties'] = eme_init_event_props($event_data['event_properties'], 1);
 		}
 
 		$new_event = eme_new_event();

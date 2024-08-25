@@ -17,7 +17,7 @@ function eme_new_membership() {
 		'duration_count'  => 1,
 		'duration_period' => 'years',
 	];
-	$membership['properties'] = eme_init_membership_props();
+	$membership['properties'] = eme_init_membership_props( );
 
 	return $membership;
 }
@@ -59,11 +59,11 @@ function eme_init_member_props( $props = [] ) {
 	return $props;
 }
 
-function eme_init_membership_props( $props = [] ) {
-	$new_membership = 0;
+function eme_init_membership_props( $props = [], $new_membership = 0 ) {
 	if (empty($props)) {
 		$new_membership = 1;
 	}
+
 	if ( ! isset( $props['reminder_days'] ) ) {
 		$props['reminder_days'] = '';
 	} else {

@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.9 (2024//) =
 * Fix some PHP warnings
+* Fix payment method setting via FS submit if only payment method is defined
 
 = 2.5.8 (2024/08/21) =
 * New feature: pay for event submissions

@@ -46,16 +46,15 @@ function eme_new_event() {
 		'recurrence_id'                           => 0,
 	];
 	// while in EME itself event_image_url can't be set when defining an event, it can be set in the frontend submit or a sync plugin
-	$event['event_properties'] = eme_init_event_props();
+	$event['event_properties'] = eme_init_event_props( );
 	return $event;
 }
 
-function eme_init_event_props( $props = [] ) {
-	$new_event=0;
+function eme_init_event_props( $props = [], $new_event=0 ) {
 	if (empty($props)) {
 		$new_event=1;
 	}
-	
+
 	if ( ! isset( $props['create_wp_user'] ) ) {
 		$props['create_wp_user'] = 0;
 	}
@@ -8655,8 +8654,8 @@ function eme_meta_box_div_attendance_info( $event, $templates_array ) {
 			</div>
 	<?php
 }
+
 function eme_meta_box_div_event_rsvp( $event ) {
-	
 	$currency_array                 = eme_currency_array();
 	$event_number_seats             = $event['event_seats'];
 	$registration_requires_approval = ( $event['registration_requires_approval'] ) ? "checked='checked'" : '';

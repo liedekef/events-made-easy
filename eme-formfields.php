@@ -1565,6 +1565,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 		$format = eme_add_captcha_submit( $format );
         } else {
 		$configured_captchas = eme_get_configured_captchas();
+		$eme_is_admin_request = eme_is_admin_request();
 		if (!empty($configured_captchas) && !$eme_is_admin_request)
 			$selected_captcha = array_key_first($configured_captchas);
                 $format = eme_add_captcha_submit( $format, $selected_captcha );

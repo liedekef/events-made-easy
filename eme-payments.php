@@ -4019,3 +4019,9 @@ function eme_ajax_get_payconiq_iban() {
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }
+
+function echo_configured_pg($pg) {
+	$configured_pgs = eme_get_configured_pgs();
+	if (in_array($pg, $configured_pgs))
+		echo '&nbsp;<b style="color: green;">'.__('Configured','events-made-easy').'</b>';
+}

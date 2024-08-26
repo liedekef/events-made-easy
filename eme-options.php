@@ -2454,7 +2454,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Offline payment info', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Offline payment info', 'events-made-easy' ); echo_configured_pg('offline');?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2463,7 +2463,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Paypal', 'events-made-easy' ); ?> <b>Deprecated, use Braintree</b></h3>
+<h3><?php esc_html_e( 'Paypal', 'events-made-easy' ); echo_configured_pg('paypal');?> <b>Deprecated, use Braintree</b></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2494,7 +2494,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Legacy Paypal', 'events-made-easy' ); ?> <b>Deprecated, use Braintree</b></h3>
+<h3><?php esc_html_e( 'Legacy Paypal', 'events-made-easy' ); echo_configured_pg('legacypaypal'); ?> <b>Deprecated, use Braintree</b></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2526,7 +2526,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Webmoney', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Webmoney', 'events-made-easy' ); echo_configured_pg('webmoney'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2559,7 +2559,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'First Data', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'First Data', 'events-made-easy' ); echo_configured_pg('fdgg'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2592,7 +2592,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Mollie', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Mollie', 'events-made-easy' ); echo_configured_pg('mollie'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2612,7 +2612,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Payconiq', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Payconiq', 'events-made-easy' ); echo_configured_pg('payconiq'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2644,7 +2644,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Worldpay', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Worldpay', 'events-made-easy' ); echo_configured_pg('worldpay'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2679,7 +2679,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Opayo', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Opayo', 'events-made-easy' ); echo_configured_pg('opayo'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2711,7 +2711,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'SumUp', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'SumUp', 'events-made-easy' ); echo_configured_pg('sumup'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2732,7 +2732,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Stripe', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Stripe', 'events-made-easy' ); echo_configured_pg('stripe'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2787,7 +2787,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Braintree', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Braintree', 'events-made-easy' ); echo_configured_pg('braintree'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2818,7 +2818,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Instamojo', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Instamojo', 'events-made-easy' ); echo_configured_pg('instamojo'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2849,7 +2849,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Mercado Pago', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Mercado Pago', 'events-made-easy' ); echo_configured_pg('mercadopago'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php
@@ -2879,7 +2879,7 @@ function eme_options_page() {
 </table>
 </div>
 
-<h3><?php esc_html_e( 'Fondy', 'events-made-easy' ); ?></h3>
+<h3><?php esc_html_e( 'Fondy', 'events-made-easy' ); echo_configured_pg('fondy'); ?></h3>
 <div>
 <table class='form-table'>
 			<?php

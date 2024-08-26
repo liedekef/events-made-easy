@@ -10672,15 +10672,15 @@ function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
 		foreach ( $val as $tmpval ) {
 			$tmpval = esc_sql( $tmpval );
 			if ( $is_multi ) {
-					$conditions[] = "answer REGEXP '^" . $tmpval . '|\\\\|' . $tmpval . '\\\\||\\\\|' . $tmpval . '$' . "'";
+				$conditions[] = "answer REGEXP '^" . $tmpval . '|\\\\|' . $tmpval . '\\\\||\\\\|' . $tmpval . '$' . "'";
 			} else {
-						$conditions[] = "answer LIKE '%$tmpval%'";
+				$conditions[] = "answer LIKE '%$tmpval%'";
 			}
 		}
 	} else {
 		$val = esc_sql( $val );
 		if ( $is_multi ) {
-				$conditions[] = "answer REGEXP '^" . $val . '|\\\\|' . $val . '\\\\||\\\\|' . $val . '$' . "'";
+			$conditions[] = "answer REGEXP '^" . $val . '|\\\\|' . $val . '\\\\||\\\\|' . $val . '$' . "'";
 		} else {
 			$conditions[] = "answer LIKE '%$val%'";
 		}

@@ -4781,6 +4781,10 @@ function eme_convert_answer_price( $answer ) {
 }
 
 function eme_get_answer_fieldids( $ids_arr ) {
+	return eme_get_booking_answers_fieldids( $ids_arr );
+}
+
+function eme_get_booking_answers_fieldids( $ids_arr ) {
 	global $wpdb;
 	$answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 	# use ORDER BY to get a predictable list of field ids (otherwise result could be different for each event/booking)
@@ -4788,7 +4792,7 @@ function eme_get_answer_fieldids( $ids_arr ) {
 		$ids_list = implode(',', $ids_arr);
 		return $wpdb->get_col( "SELECT DISTINCT field_id FROM $answers_table WHERE type='booking' AND eme_grouping=0 AND related_id IN ($ids_list) ORDER BY field_id" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	} else {
-		return false;
+		return [];
 	}
 }
 

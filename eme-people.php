@@ -1008,7 +1008,7 @@ function eme_csv_booking_report( $event_id ) {
 	echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
 	$bookings               = eme_get_bookings_for( $event_id );
 	$people_answer_fieldids = eme_get_people_export_fieldids();
-	$answer_fieldids        = eme_get_answer_fieldids( eme_get_bookingids_for( $event_id ) );
+	$booking_answer_fieldids = eme_get_booking_answers_fieldids( eme_get_bookingids_for( $event_id ) );
 	$out                    = fopen( 'php://output', 'w' );
 	if ( has_filter( 'eme_csv_header_filter' ) ) {
 		$line = apply_filters( 'eme_csv_header_filter', $event );
@@ -1057,7 +1057,7 @@ function eme_csv_booking_report( $event_id ) {
 	$line[] = __( 'Unique nbr', 'events-made-easy' );
 	$line[] = __( 'Attendance count', 'events-made-easy' );
 	$line[] = __( 'Comment', 'events-made-easy' );
-	foreach ( $answer_fieldids as $field_id ) {
+	foreach ( $booking_answer_fieldids as $field_id ) {
 		$tmp_formfield = eme_get_formfield( $field_id );
 		if ( ! empty( $tmp_formfield ) ) {
 			$line[] = $tmp_formfield['field_name'];
@@ -1176,7 +1176,7 @@ function eme_csv_booking_report( $event_id ) {
 		$line[]  = intval( $booking['attend_count'] );
 		$line[]  = $booking['booking_comment'];
 		$answers = eme_get_nodyndata_booking_answers( $booking['booking_id'] );
-		foreach ( $answer_fieldids as $field_id ) {
+		foreach ( $booking_answer_fieldids as $field_id ) {
 			$found = 0;
 			foreach ( $answers as $answer ) {
 				if ( $answer['field_id'] == $field_id ) {
@@ -1237,7 +1237,7 @@ function eme_printable_booking_report( $event_id ) {
 	$is_multiprice   = eme_is_multi( $event['price'] );
 	$is_multiseat    = eme_is_multi( $event['event_seats'] );
 	$bookings        = eme_get_bookings_for( $event_id );
-	$answer_fieldids = eme_get_answer_fieldids( eme_get_bookingids_for( $event_id ) );
+	$booking_answer_fieldids = eme_get_booking_answers_fieldids( eme_get_bookingids_for( $event_id ) );
 	$available_seats = eme_get_available_seats( $event_id );
 	$total_seats     = eme_get_total( $event['event_seats'] );
 	$booked_seats    = eme_get_booked_seats( $event_id );
@@ -1384,7 +1384,7 @@ function eme_printable_booking_report( $event_id ) {
 			?>
 			</th> 
 				<?php
-				foreach ( $answer_fieldids as $field_id ) {
+				foreach ( $booking_answer_fieldids as $field_id ) {
 					$class         = 'eme_print_formfield' . $field_id;
 					$tmp_formfield = eme_get_formfield( $field_id );
 					if ( ! empty( $tmp_formfield ) ) {
@@ -1408,7 +1408,7 @@ function eme_printable_booking_report( $event_id ) {
 				} elseif ( $booking['status'] == EME_RSVP_STATUS_PENDING ) {
 					$status_string = __( 'Pending', 'events-made-easy' );
 				} elseif ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
-						$status_string = __( 'Awaiting user confirmation', 'events-made-easy' );
+					$status_string = __( 'Awaiting user confirmation', 'events-made-easy' );
 				} elseif ( $booking['status'] == EME_RSVP_STATUS_APPROVED ) {
 					$status_string = __( 'Approved', 'events-made-easy' );
 				}
@@ -1472,12 +1472,12 @@ function eme_printable_booking_report( $event_id ) {
 			<td class='eme_print_comment'><?php echo eme_esc_html( $booking['booking_comment'] ); ?></td> 
 					<?php
 					$answers = eme_get_nodyndata_booking_answers( $booking['booking_id'] );
-					foreach ( $answer_fieldids as $field_id ) {
+					foreach ( $booking_answer_fieldids as $field_id ) {
 						$found = 0;
 						foreach ( $answers as $answer ) {
 							if ( $answer['field_id'] == $field_id ) {
-									$class         = 'eme_print_formfield' . $answer['field_id'];
-									$tmp_formfield = eme_get_formfield( $answer['field_id'] );
+								$class         = 'eme_print_formfield' . $answer['field_id'];
+								$tmp_formfield = eme_get_formfield( $answer['field_id'] );
 								if ( ! empty( $tmp_formfield ) ) {
 									print "<td class='$class'>" . eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', 'html' ) . '</td>';
 								}

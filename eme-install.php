@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 397 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 398 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -1458,6 +1458,8 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
          last_seen datetime DEFAULT '0000-00-00 00:00:00',
          start_date date NOT NULL DEFAULT '0000-00-00', 
          end_date date NOT NULL DEFAULT '0000-00-00', 
+         previous_start date NOT NULL DEFAULT '0000-00-00', 
+         previous_end date NOT NULL DEFAULT '0000-00-00', 
          reminder INT(11) DEFAULT 0,
          reminder_date datetime DEFAULT '0000-00-00 00:00:00',
          renewal_count INT(11) DEFAULT 0,
@@ -1486,6 +1488,8 @@ function eme_create_members_table( $charset, $collate, $db_version, $db_prefix )
 		maybe_add_column( $table_name, 'payment_date', "ALTER TABLE $table_name ADD payment_date datetime DEFAULT '0000-00-00 00:00:00';" );
 		maybe_add_column( $table_name, 'reminder_date', "ALTER TABLE $table_name ADD reminder_date datetime DEFAULT '0000-00-00 00:00:00';" );
 		maybe_add_column( $table_name, 'last_seen', "ALTER TABLE $table_name ADD last_seen datetime DEFAULT '0000-00-00 00:00:00';" );
+		maybe_add_column( $table_name, 'previous_start', "ALTER TABLE $table_name ADD previous_start date DEFAULT '0000-00-00';" );
+		maybe_add_column( $table_name, 'previous_end', "ALTER TABLE $table_name ADD previous_end date DEFAULT '0000-00-00';" );
 		maybe_add_column( $table_name, 'paid', "ALTER TABLE $table_name ADD paid bool DEFAULT 0;" );
 		maybe_add_column( $table_name, 'creation_date', "ALTER TABLE $table_name ADD creation_date datetime;" );
 		maybe_add_column( $table_name, 'modif_date', "ALTER TABLE $table_name ADD modif_date datetime;" );

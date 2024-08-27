@@ -172,7 +172,7 @@ function eme_holidays_edit_layout( $message = '' ) {
 
 	if ( isset( $_GET['id'] ) ) {
 			$holidays_id   = intval( $_GET['id'] );
-		$holidays          = eme_get_holiday_list( $holidays_id );
+			$holidays      = eme_get_holiday_list( $holidays_id );
 			$h1_string     = esc_html__( 'Edit holidays list', 'events-made-easy' );
 			$action_string = esc_attr__( 'Update list of holidays', 'events-made-easy' );
 	} else {
@@ -230,6 +230,7 @@ function eme_get_holiday_lists() {
 }
 function eme_get_holiday_list( $id ) {
 	global $wpdb;
+	$id = intval($id);
 	$holidays_table = EME_DB_PREFIX . EME_HOLIDAYS_TBNAME;
 	$sql            = $wpdb->prepare( "SELECT * FROM $holidays_table WHERE id = %d", $id ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	return $wpdb->get_row( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -277,7 +278,6 @@ function eme_get_holidays_array_by_id() {
 
 # return number of days until next event or until the specified event
 function eme_holidays_shortcode( $atts ) {
-	
 	eme_enqueue_frontend();
 	extract(
 	    shortcode_atts(

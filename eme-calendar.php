@@ -375,7 +375,7 @@ function eme_get_calendar( $args = '' ) {
 	$holidays                     = [];
 	$holiday_titles               = [];
 	if ( $holiday_id ) {
-		$holidays = eme_get_holiday_listinfo( $holiday_id );
+		$holidays = eme_get_holiday_listinfo( intval($holiday_id) );
 		if ( $holidays ) {
 			foreach ( $holidays as $day_key => $info ) {
 				if ( ! empty( $info['name'] ) ) {

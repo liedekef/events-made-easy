@@ -962,17 +962,30 @@ function eme_add_update_member( $member_id = 0, $send_mail = 1 ) {
 		if ( isset( $_POST['status_automatic'] ) ) {
 			$member['status_automatic'] = intval( $_POST['status_automatic'] );
 		}
-		if ( ! eme_is_empty_date( $_POST['start_date'] ) && eme_is_date( $_POST['start_date'] ) ) {
+		if ( eme_is_date( $_POST['start_date'] ) ) {
 			$member['start_date'] = eme_sanitize_request( $_POST['start_date'] );
 		}
-		if ( $transfer && ! eme_is_empty_date( $member['start_date'] ) && eme_is_empty_date( $_POST['end_date'] ) ) {
-			$membership         = eme_get_membership( $membership_id );
-			$member['end_date'] = eme_get_next_end_date( $membership, $member['start_date'] );
-		} elseif ( eme_is_date( $_POST['end_date'] ) ) {
-			$member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
+		if ($_POST['status'] != EME_MEMBER_STATUS_EXPIRED) {
+			if ( $transfer && ! eme_is_date( $_POST['start_date'] ) && eme_is_empty_date( $_POST['end_date'] ) ) {
+				$membership         = eme_get_membership( $membership_id );
+				$member['end_date'] = eme_get_next_end_date( $membership, $_POST['start_date'] );
+			} elseif ( eme_is_date( $_POST['end_date'] ) ) {
+				$member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
+			} elseif ( eme_is_date( $_POST['start_date'] ) ) {
+				$membership         = eme_get_membership( $membership_id );
+				$member['end_date'] = eme_get_next_end_date( $membership, $_POST['start_date'] );
+			}
 		} else {
-			$membership         = eme_get_membership( $membership_id );
-			$member['end_date'] = eme_get_next_end_date( $membership, $member['start_date'] );
+			if ( eme_is_date( $_POST['start_date'] ) ) {
+				$member['start_date'] = eme_sanitize_request( $_POST['start_date'] );
+			} else {
+				$member['start_date'] = '0000-00-00';
+			}
+			if ( eme_is_date( $_POST['end_date'] ) ) {
+				$member['end_date'] = eme_sanitize_request( $_POST['end_date'] );
+			} else {
+				$member['end_date'] = "0000-00-00";
+			}
 		}
 		if ( isset( $_POST['properties'] ) ) {
 			$member['properties'] = eme_kses( $_POST['properties'] );
@@ -1469,7 +1482,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 	} else {
 		$action     = 'edit';
 		$h1_message = __( 'Edit member', 'events-made-easy' );
-		if ( eme_is_empty_date( $member['start_date'] ) ) {
+		if ( eme_is_empty_date( $member['start_date'] ) && $member['status'] != EME_MEMBER_STATUS_EXPIRED ) {
 			$member['start_date'] = eme_get_start_date( $membership, $member );
 			$member['end_date']   = eme_get_next_end_date( $membership, $member['start_date'] );
 		}

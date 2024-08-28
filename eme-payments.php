@@ -414,11 +414,13 @@ function eme_fs_event_payment_form( $payment_id, $resultcode = 0, $standalone = 
 	}
 
 	$payment = eme_get_payment( $payment_id );
+	if (empty($payment)) {
+		return "<div class='eme-message-error eme-rsvp-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
+	}
 	$event   = eme_get_event( $payment['related_id'] );
 	if (empty($event)) {
-		// evnt has been deleted, but the payment id is still present
-		$ret_string = "<div class='eme-message-error eme-rsvp-message-error'>" . __( "No event found linked to this payment. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' ) . '</div>';
-		return $ret_string;
+		// event has been deleted, but the payment id is still present
+		return "<div class='eme-message-error eme-rsvp-message-error'>" . __( "No event found linked to this payment. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' ) . '</div>';
 	}
 
 	$check_allowed_to_pay = eme_payment_allowed_to_pay( $payment_id );

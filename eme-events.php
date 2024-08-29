@@ -9961,7 +9961,6 @@ function eme_admin_enqueue_js() {
 
 # return number of days until next event or until the specified event
 function eme_countdown_shortcode( $atts ) {
-	
 	extract(
 	    shortcode_atts(
 		    [
@@ -9973,6 +9972,7 @@ function eme_countdown_shortcode( $atts ) {
 		)
 	);
 
+	$id = eme_sanitize_request($id);
 	if ( ! empty( $id ) ) {
 		$event = eme_get_event( $id );
 	} elseif ( $recurrence_id ) {

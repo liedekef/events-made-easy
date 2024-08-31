@@ -99,10 +99,12 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.10 (2024//) =
+* CLI tool can allow mail from everywhere: allowed_senders=ALL
+
 = 2.5.9 (2024/08/26) =
 * Fix some PHP warnings
 * Fix payment method setting via FS submit if only payment method is defined
-* CLI tool can allow mail from everywhere: allowed_senders=ALL
 
 = 2.5.8 (2024/08/21) =
 * New feature: pay for event submissions

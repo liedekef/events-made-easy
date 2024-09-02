@@ -76,8 +76,9 @@ jQuery(document).ready( function($) {
 		contact_person_chosen = (typeof contact_person_chosen == 'undefined')? '' : contact_person_chosen;
 		location_chosen = (typeof location_chosen == 'undefined')? '' : location_chosen;
 		template_chosen = (typeof template_chosen == 'undefined')? 0 : template_chosen;
-		holiday_chosen = (typeof template_chosen == 'undefined')? 0 : holiday_chosen;
+		holiday_chosen = (typeof holiday_chosen == 'undefined')? 0 : holiday_chosen;
 		weekdays = (typeof weekdays == 'undefined')? '' : weekdays;
+		language = (typeof language == 'undefined')? '' : language;
 		$.post(emebasic.translate_ajax_url, {
 			eme_frontend_nonce: emebasic.translate_frontendnonce,
 			action: 'eme_calendar',

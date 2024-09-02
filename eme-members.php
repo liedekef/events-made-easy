@@ -1594,7 +1594,11 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 		<td style="vertical-align:top"><label for="chooserelatedmember"><?php esc_html_e( "'Head of the family' account", 'events-made-easy' ); ?></label></td>
 		<td> <input type="hidden" name="related_member_id" id="related_member_id" value="<?php echo intval( $member['related_member_id'] ); ?>">
 		<?php
-		$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
+		if (isset( $member['member_id'] )) {
+			$related_member_ids = eme_get_family_member_ids( $member['member_id'] );
+		} else {
+			$related_member_ids = [];
+		}
 		if ( $action == 'edit' && ! empty( $related_member_ids ) ) {
 			esc_html_e( 'This member is head of the family for other members.', 'events-made-easy' );
 			print '<br>' . esc_html__( 'Family members:', 'events-made-easy' );
@@ -6239,6 +6243,7 @@ function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
 }
 
 function eme_member_main_account_autocomplete_ajax() {
+	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
 		wp_die();

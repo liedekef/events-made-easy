@@ -588,7 +588,7 @@ jQuery(document).ready(function ($) {
 					  'member_id': $('#member_id').val(),
 					  'membership_id': $('#membership_id').val(),
 					  'eme_admin_nonce': ememembers.translate_adminnonce,
-					  action: 'wp_ajax_eme_autocomplete_membermainaccount'
+					  action: 'eme_autocomplete_membermainaccount'
 					},
 					function(data){
 						response($.map(data, function(item) {

@@ -284,9 +284,10 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
 			// for backwards compatibility
 			if ($field == "location_address") $field="location_address1";
 			if ($field == "location_town") $field="location_city";
+			if ($field == "location_id") $location_id_added=1;
 
-			// ignore manual adding location_id, lat and long (they are added autom)
-			if ($field!="location_id" && $field!="location_latitude" && $field!="location_longitude") {
+			// ignore manual adding lat and long (they are added autom)
+			if ($field!="location_latitude" && $field!="location_longitude") {
 				// try to be intelligent: if a property exists, we use the property
 				if (!isset($empty_event[$field]) && isset($empty_event['event_properties'][$field])) {
 					$replacement = eme_get_fs_field_html('event-properties', 'prop-'.$type , $more , $required, $prop);

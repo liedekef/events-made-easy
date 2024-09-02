@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.5.10 (2024//) =
 * CLI tool can allow mail from everywhere: allowed_senders=ALL
 * Allow 'value=' for some fs fields
+* Fix deleting holiday lists
 
 = 2.5.9 (2024/08/26) =
 * Fix some PHP warnings

@@ -64,7 +64,7 @@ function eme_holidays_page() {
 			$holidays = eme_sanitize_request($_POST['holidays']);
 			if ( is_array( $holidays ) && eme_is_numeric_array( $holidays ) ) {
 				//Run the query if we have an array of holidays ids
-				if ( count( $holidays > 0 ) ) {
+				if ( count( $holidays) > 0 ) {
 					$ids_list = implode(',', $holidays);
 					$validation_result = $wpdb->query( "DELETE FROM $holidays_table WHERE id IN ( $ids_list )"); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 					if ( $validation_result !== false ) {

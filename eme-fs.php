@@ -469,11 +469,11 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
 	      $more .= " required='required'";
       }
       $html_by_type = array(
-            'number' => '<input type="number" id="%s" name="event[%s]" min="0" step="any" value="" %s/>',
-            'text' => '<input type="text" id="%s" name="event[%s]" value="" %s/>',
-            'url' => '<input type="url" id="%s" name="event[%s]" value="" %s/>',
+            'number' => '<input type="number" id="%s" name="event[%s]" min="0" step="any" %s/>',
+            'text' => '<input type="text" id="%s" name="event[%s]" %s/>',
+            'url' => '<input type="url" id="%s" name="event[%s]" %s/>',
             'localized_time' => '<input type="text" id="%s" name="%s" %s/>',
-            'localized_datetime' => '<input type="text" id="%s" name="%s" value="" %s/>',
+            'localized_datetime' => '<input type="text" id="%s" name="%s" %s/>',
             'textarea' => '<textarea id="%s" name="event[%s]" %s></textarea>',
             'hidden' => '<input type="hidden" id="%s" name="event[%s]" %s />',
             'attr-textarea' => '<textarea id="%s" name="event_attributes[%s]" %s></textarea>',

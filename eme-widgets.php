@@ -261,7 +261,7 @@ class WP_Widget_eme_calendar extends WP_Widget {
 			$instance['authorid'] = -1;
 		}
 		$title       = apply_filters( 'widget_title', $instance['title'] );
-		$long_events = empty( $instance['long_events'] ) ? false : true;
+		$long_events = empty( $instance['long_events'] ) ? 0 : 1;
 		$category    = empty( $instance['category'] ) ? '' : $instance['category'];
 		$notcategory = empty( $instance['notcategory'] ) ? '' : $instance['notcategory'];
 		$holiday_id  = empty( $instance['holiday_id'] ) ? 0 : $instance['holiday_id'];
@@ -279,11 +279,6 @@ class WP_Widget_eme_calendar extends WP_Widget {
 			$notcategory = implode( '+', $notcategory );
 		}
 
-		$options                = [];
-		$options['title']       = $title;
-		$options['long_events'] = $long_events;
-		$options['category']    = $category;
-		$options['notcategory'] = $notcategory;
 		// the month shown depends on the calendar day clicked
 		// make sure it is a valid date though ...
 		if ( get_query_var( 'calendar_day' ) && eme_is_date( get_query_var( 'calendar_day' ) ) ) {
@@ -291,16 +286,14 @@ class WP_Widget_eme_calendar extends WP_Widget {
 		} else {
 			$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 		}
-		$options['month']      = $eme_date_obj->format( 'm' );
-		$options['year']       = $eme_date_obj->format( 'Y' );
-		$options['author']     = $author;
-		$options['holiday_id'] = $holiday_id;
+		$month = $eme_date_obj->format( 'm' );
+		$year  = $eme_date_obj->format( 'Y' );
 
 		echo $args['before_widget'];
 		if ( $title ) {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
-		echo eme_get_calendar( $options );
+		echo eme_get_calendar( long_events: $long_events, category: $category, notcategory: $notcategory, month: $month, year: $year, author: $author, holiday_id: $holiday_id );
 		echo $args['after_widget'];
 	}
 

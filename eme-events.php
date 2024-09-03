@@ -1298,7 +1298,7 @@ function eme_events_page_content() {
 	} else {
 		// Defaults events page
 		if ( get_option( 'eme_display_calendar_in_events_page' ) ) {
-			$page_body = eme_get_calendar( 'full=1' );
+			$page_body = eme_get_calendar( full: 1 );
 		}
 		if ( get_option( 'eme_display_events_in_events_page' ) ) {
 			$scope      = isset( $_GET['scope'] ) ? urlencode( eme_sanitize_request( urldecode( $_GET['scope'] ) ) ) : 'future';

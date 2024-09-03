@@ -121,32 +121,13 @@ function eme_get_calendar_shortcode( $atts ) {
 		$location_id = join( ',', $location_id_arr );
 	}
 
-	$result = eme_get_calendar( "full={$full}&month={$month}&year={$year}&echo={$echo}&long_events={$long_events}&category={$category}&author={$author}&contact_person={$contact_person}&location_id={$location_id}&notcategory={$notcategory}&template_id={$template_id}&weekdays={$weekdays}&holiday_id={$holiday_id}&htmltable={$htmltable}&htmldiv={$htmldiv}" );
+	$result = eme_get_calendar( full: $full, month: $month, year: $year, echo: $echo, long_events: $long_events; category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory, template_id: $template_id, weekdays: $weekdays, holiday_id: $holiday_id, htmltable: $htmltable, htmldiv: $htmldiv );
 	return $result;
 }
 
-function eme_get_calendar( $args = '' ) {
+function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $year='', $echo=0, $long_events=0, $author='', $contact_person='', $location_id='', $template_id=0, $holiday_id=0, $htmltable=1, $htmldiv=0, $weekdays='' ) {
 	global $wp_locale;
 
-	$defaults = [
-		'category'       => 0,
-		'notcategory'    => 0,
-		'full'           => 0,
-		'month'          => '',
-		'year'           => '',
-		'echo'           => 0,
-		'long_events'    => 0,
-		'author'         => '',
-		'contact_person' => '',
-		'location_id'    => '',
-		'template_id'    => 0,
-		'holiday_id'     => 0,
-		'htmltable'      => 1,
-		'htmldiv'        => 0,
-		'weekdays'       => '',
-	];
-	$r        = wp_parse_args( $args, $defaults );
-	extract( $r );
 	$echo        = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
         $full        = filter_var( $full, FILTER_VALIDATE_BOOLEAN );
         $long_events = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
@@ -662,7 +643,7 @@ function eme_calendar_ajax() {
 	( ! empty( $_POST['holiday_id'] ) ) ? $holiday_id         = intval( $_POST['holiday_id'] ) : $holiday_id = '';
 	( ! empty( $_POST['weekdays'] ) ) ? $weekdays             = eme_sanitize_request( $_POST['weekdays'] ) : $weekdays = ''; // this can be a string like 0,2,3,5
 
-	echo eme_get_calendar( "full={$full}&month={$month}&year={$year}&long_events={$long_events}&category={$category}&author={$author}&contact_person={$contact_person}&location_id={$location_id}&notcategory={$notcategory}&template_id={$template_id}&weekdays={$weekdays}&holiday_id={$holiday_id}&htmltable={$htmltable}&htmldiv={$htmldiv}" );
+	echo eme_get_calendar( full: $full, month: $month, year: $year, long_events: $long_events; category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory, template_id: $template_id, weekdays: $weekdays, holiday_id: $holiday_id, htmltable: $htmltable, htmldiv: $htmldiv );
 	wp_die();
 }
 

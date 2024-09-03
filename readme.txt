@@ -107,7 +107,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
     eme_rsvp_email_from_pending_to_waitinglist_subject
     eme_rsvp_email_from_pending_to_waitinglist_body
     eme_rsvp_email_from_waitinglist_to_pending_subject
-    eme_rsvp_email_from_waitinglist_to_pending_subject
+    eme_rsvp_email_from_waitinglist_to_pending_body
   By default they have the same value as the pending mail/subject
 
 = 2.5.9 (2024/08/26) =

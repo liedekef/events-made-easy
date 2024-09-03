@@ -128,7 +128,7 @@ function eme_get_calendar_shortcode( $atts ) {
 function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $year='', $do_echo=0, $long_events=0, $author='', $contact_person='', $location_id='', $template_id=0, $holiday_id=0, $htmltable=1, $htmldiv=0, $weekdays='' ) {
 	global $wp_locale;
 
-	$do_echo     = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
+	$do_echo     = filter_var( $do_echo, FILTER_VALIDATE_BOOLEAN );
         $full        = filter_var( $full, FILTER_VALIDATE_BOOLEAN );
         $long_events = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
 

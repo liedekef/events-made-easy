@@ -24,7 +24,7 @@ function help( $progname ) {
 	echo "Or   : $progname --groupid=<groupid>\n";
 	echo "-d <email>\tCauses the email to be forwarded to the EME group with the specified email address\n";
 	echo "-groupid=<groupid>\tCauses the email to be forwarded to the EME group with the specified ID\n";
-	echo "Optional provide --allowed_senders, to indicate specific email addresses that can send to the group (comma-separated) By default everyone in that group can send to the group, this option limits it to just the mentioned email addresses or the keyword "ALL", which allows the world to send.\n";
+	echo "Optional provide --allowed_senders, to indicate specific email addresses that can send to the group (comma-separated) By default everyone in that group can send to the group, this option limits it to just the mentioned email addresses or the keyword 'ALL', which allows the world to send.\n";
 	echo "Optional provide --extra_allowed_senders, to allow extra email addresses to send to this group (comma-separated list)\n";
 	echo "Optional provide -f, to indicate the sender email. Normally this is extracted from the email, but programs like postfix can provide this already too and are more suited for email parsing\n";
 	echo "Optional provide -a, to indicate all people in the group should receive the mail, and not only those with the 'massmail' option active.\n";

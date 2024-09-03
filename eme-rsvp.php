@@ -4099,6 +4099,72 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 			$person_subject_filter = 'confirmed_subject';
 			$person_body_filter    = 'confirmed_body';
 			break;
+		case 'toWaitingList':
+			// can only be called from within the backend interface
+			// so we don't send the mail to the event contact
+			if ( $mailing_pending ) {
+				$attachment_ids = $event['event_properties']['pending_attach_ids'];
+				if ( empty( $attachment_ids ) ) {
+					$attachment_ids = get_option( 'eme_pending_attach_ids' );
+				}
+				$attachment_tmpl_ids_arr = $event['event_properties']['pending_attach_tmpl_ids'];
+				if ( empty( $attachment_tmpl_ids_arr ) ) {
+					$attachment_tmpl_ids_arr = get_option( 'eme_pending_attach_tmpl_ids' );
+				}
+				if ( ! empty( $event['event_properties']['event_registration_pending_email_subject'] ) ) {
+					$person_subject = $event['event_properties']['event_registration_pending_email_subject'];
+				} elseif ( $event['event_properties']['event_registration_pending_email_subject_tpl'] > 0 ) {
+					$person_subject = eme_get_template_format_plain( $event['event_properties']['event_registration_pending_email_subject_tpl'] );
+				} else {
+					$person_subject = get_option( 'eme_registration_pending_email_subject' );
+				}
+
+				if ( ! empty( $event['event_registration_pending_email_body'] ) ) {
+					$person_body = $event['event_registration_pending_email_body'];
+				} elseif ( $event['event_properties']['event_registration_pending_email_body_tpl'] > 0 ) {
+					$person_body = eme_get_template_format_plain( $event['event_properties']['event_registration_pending_email_body_tpl'] );
+				} else {
+					$person_body = get_option( 'eme_registration_pending_email_body' );
+				}
+			} else {
+				return true;
+			}
+			$person_subject_filter = 'from_pending_to_waitinglist_subject';
+			$person_body_filter    = 'from_pending_to_waitinglist_body';
+			break;
+		case 'fromWaitingList':
+			// can only be called from within the backend interface
+			// so we don't send the mail to the event contact
+			if ( $mailing_pending ) {
+				$attachment_ids = $event['event_properties']['pending_attach_ids'];
+				if ( empty( $attachment_ids ) ) {
+					$attachment_ids = get_option( 'eme_pending_attach_ids' );
+				}
+				$attachment_tmpl_ids_arr = $event['event_properties']['pending_attach_tmpl_ids'];
+				if ( empty( $attachment_tmpl_ids_arr ) ) {
+					$attachment_tmpl_ids_arr = get_option( 'eme_pending_attach_tmpl_ids' );
+				}
+				if ( ! empty( $event['event_properties']['event_registration_pending_email_subject'] ) ) {
+					$person_subject = $event['event_properties']['event_registration_pending_email_subject'];
+				} elseif ( $event['event_properties']['event_registration_pending_email_subject_tpl'] > 0 ) {
+					$person_subject = eme_get_template_format_plain( $event['event_properties']['event_registration_pending_email_subject_tpl'] );
+				} else {
+					$person_subject = get_option( 'eme_registration_pending_email_subject' );
+				}
+
+				if ( ! empty( $event['event_registration_pending_email_body'] ) ) {
+					$person_body = $event['event_registration_pending_email_body'];
+				} elseif ( $event['event_properties']['event_registration_pending_email_body_tpl'] > 0 ) {
+					$person_body = eme_get_template_format_plain( $event['event_properties']['event_registration_pending_email_body_tpl'] );
+				} else {
+					$person_body = get_option( 'eme_registration_pending_email_body' );
+				}
+			} else {
+				return true;
+			}
+			$person_subject_filter = 'from_waitinglist_to_pending_subject';
+			$person_body_filter    = 'from_waitinglist_to_pending_body';
+			break;
 		case 'pendingBooking':
 			// can only be called from within the backend interface
 			// so we don't send the mail to the event contact
@@ -6054,8 +6120,8 @@ function eme_ajax_action_remove_waitinglist( $ids_arr, $action, $send_mail ) {
 	$mail_ok   = 1;
 	foreach ( $ids_arr as $booking_id ) {
 		// waiting list can only be removed for pending bookings
-		// so set the action to "pending"
-		$action = 'pendingBooking';
+		// so set the action to "fromWaitingList"
+		$action = 'fromWaitingList';
 		$res    = eme_remove_from_waitinglist( $booking_id );
 		if ( $res ) {
 			$booking = eme_get_booking( $booking_id );
@@ -6090,7 +6156,7 @@ function eme_ajax_action_move_waitinglist( $ids_arr, $action, $send_mail, $refun
 	foreach ( $ids_arr as $booking_id ) {
 		// waiting list can only be removed for pending bookings
 		// so set the action to "pending"
-		$action = 'pendingBooking';
+		$action = 'toWaitingList';
 		$res    = eme_move_on_waitinglist( $booking_id );
 		if ( $res ) {
 			$booking = eme_get_booking( $booking_id );

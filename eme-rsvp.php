@@ -1339,7 +1339,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 		if ( ! $eme_is_admin_request ) {
 			// we require an email, but only in the frontend
 			// this allows the rare case of persons without email to be booked for an event
-			if ( ! eme_is_email( $bookerEmail, 1 ) ) {
+			if ( ! eme_is_email_frontend( $bookerEmail ) ) {
 				$form_html .= __( 'Please enter a valid email address', 'events-made-easy' );
 				continue;
 			}

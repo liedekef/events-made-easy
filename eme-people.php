@@ -2730,7 +2730,7 @@ function eme_get_person_by_post() {
 			$firstname = '';
 		}
 		$email = eme_sanitize_email( $_POST['email'] );
-		if ( ! eme_is_email( $email, 1 ) ) {
+		if ( ! eme_is_email_frontend( $email ) ) {
 			return false;
 		}
 		$person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
@@ -3841,7 +3841,7 @@ function eme_add_update_person_from_backend( $person_id = 0 ) {
 	}
 
 	// if the email is not empty, it needs to be valid
-	if ( ! empty( $person['email'] ) && ! eme_is_email( $person['email'], 1 ) ) {
+	if ( ! empty( $person['email'] ) && ! eme_is_email( $person['email'] ) ) {
 		$failure   = '<p>' . esc_html__( 'Please enter a valid email address', 'events-made-easy' ) . '</p>';
 		$person_id = 0;
 		$res       = [
@@ -3926,7 +3926,7 @@ function eme_add_update_group( $group_id = 0 ) {
 	$group['search_terms'] = eme_serialize( $search_terms );
 
 	// let's check if the email is unique
-	if ( ! eme_is_empty_string( $_POST['email'] ) && eme_is_email( $_POST['email'], 1 ) ) {
+	if ( ! eme_is_empty_string( $_POST['email'] ) && eme_is_email( $_POST['email'] ) ) {
 		$email = eme_sanitize_email( $_POST['email'] );
 		if ( $group_id ) {
 			$sql = $wpdb->prepare( "SELECT COUNT(group_id) from $table WHERE email=%s AND group_id<>%d", $email, $group_id );
@@ -3990,7 +3990,7 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
 	} else {
 		$email = '';
 	}
-	if ( ! empty( $email ) && ! eme_is_email( $email, 1 ) ) {
+	if ( ! empty( $email ) && ! eme_is_email_frontend( $email ) ) {
 		return [
 			0 => 0,
 			1 => esc_html__( 'Please enter a valid email address', 'events-made-easy' ),
@@ -4093,7 +4093,7 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
 function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname = '', $email = '', $wp_id = 0, $create_wp_user = 0, $return_fake_person = 0 ) {
 	$person = [];
 
-	if ( ! $return_fake_person && ! empty( $email ) && ! eme_is_email( $email, 1 ) ) {
+	if ( ! $return_fake_person && ! empty( $email ) && ! eme_is_email_frontend( $email ) ) {
 		return [
 			0 => 0,
 			1 => esc_html__( 'Please enter a valid email address', 'events-made-easy' ),
@@ -4293,7 +4293,7 @@ function eme_add_update_person_from_form( $person_id, $lastname = '', $firstname
 		} else {
 			$person['email'] = $person_being_updated['email'];
 		}
-		if ( eme_is_empty_string( $person['email'] ) || ! eme_is_email( $person['email'], 1 ) ) {
+		if ( eme_is_empty_string( $person['email'] ) || ! eme_is_email_frontend( $person['email'] ) ) {
 			return [
 				0 => 0,
 				1 => esc_html__( 'Please enter a valid email address', 'events-made-easy' ),
@@ -4574,7 +4574,7 @@ function eme_subscribe_ajax() {
 	$eme_lastname  = isset( $_POST['lastname'] ) ? eme_sanitize_request( $_POST['lastname'] ) : '';
 	$eme_firstname = isset( $_POST['firstname'] ) ? eme_sanitize_request( $_POST['firstname'] ) : '';
 	$eme_email     = eme_sanitize_email( $_POST['email'] );
-	if ( eme_is_email( $eme_email, 1 ) ) {
+	if ( eme_is_email_frontend( $eme_email ) ) {
 		eme_captcha_remove ( $captcha_res );
 		if ( isset( $_POST['email_groups'] ) && eme_is_numeric_array( $_POST['email_groups'] ) ) {
 			$eme_email_groups = join( ',', $_POST['email_groups'] );
@@ -4658,7 +4658,7 @@ function eme_unsubscribe_ajax() {
 	$captcha_res = eme_check_captcha();
 
 	$eme_email = eme_sanitize_email( $_POST['email'] );
-	if ( eme_is_email( $eme_email, 1 ) ) {
+	if ( eme_is_email_frontend( $eme_email ) ) {
 		eme_captcha_remove ( $captcha_res );
 		if ( isset( $_POST['email_groups'] ) && eme_is_numeric_array( $_POST['email_groups'] ) ) {
 			$eme_email_groups = join( ',', $_POST['email_groups'] );

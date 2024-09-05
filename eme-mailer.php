@@ -1541,7 +1541,7 @@ function eme_send_mails_ajax_actions( $action ) {
 
 	if ( $action == 'testmail' ) {
 		$testmail_to = eme_sanitize_email( $_POST['testmail_to'] );
-		if ( ! eme_is_email( $testmail_to, 1 ) ) {
+		if ( ! eme_is_email( $testmail_to ) ) {
 			$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Please enter a valid email address', 'events-made-easy' ) . '</p></div>';
 			$ajaxResult['Result']      = 'ERROR';
 			echo wp_json_encode( $ajaxResult );

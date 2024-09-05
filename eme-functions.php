@@ -1918,6 +1918,11 @@ function eme_is_url( $url ) {
 	return filter_var( $url, FILTER_VALIDATE_URL );
 }
 
+// emails entered via frontend form need to be checked better
+function eme_is_email_frontend( $email ) {
+	return eme_is_email( $email, 1);
+}
+
 function eme_is_email( $email, $extra_checks_required = 0 ) {
 	if ( eme_is_empty_string( $email ) ) {
 		return false;

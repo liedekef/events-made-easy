@@ -184,7 +184,7 @@ function eme_ajax_attendances_list() {
 		$recordCount = $wpdb->get_var( $sql );
 		$start       = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 		$pagesize    = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql(eme_sanitize_sql_orderby($_REQUEST['jtSorting'])) : '';
+		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
 		$sql         = "SELECT * FROM $table $where $sorting LIMIT $start,$pagesize";
 		$rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		foreach ( $rows as $key => $row ) {

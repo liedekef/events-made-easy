@@ -2908,7 +2908,7 @@ function eme_ajax_locations_list() {
 	$jTableResult = [];
 	$start        = intval( $_REQUEST['jtStartIndex'] );
 	$pagesize     = intval( $_REQUEST['jtPageSize'] );
-	$sorting      = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( eme_sanitize_sql_orderby($_REQUEST['jtSorting'] )) : '';
+	$sorting      = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( $_REQUEST['jtSorting'] ) : '';
 
 	if ( empty( $formfields_searchable ) ) {
 			$count_sql = "SELECT COUNT(*) FROM $table AS locations $where";

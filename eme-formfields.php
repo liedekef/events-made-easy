@@ -5006,7 +5006,7 @@ function eme_ajax_formfields_list() {
 		$recordCount = $wpdb->get_var( $sql );
 		$start       = intval( $_REQUEST['jtStartIndex'] );
 		$pagesize    = intval( $_REQUEST['jtPageSize'] );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql(eme_sanitize_sql_orderby($_REQUEST['jtSorting'])) : '';
+		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
 		$sql         = "SELECT * FROM $table $where $sorting LIMIT $start,$pagesize";
 		$rows        = $wpdb->get_results( $sql, ARRAY_A );
 		$res         = [];

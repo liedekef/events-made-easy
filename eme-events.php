@@ -10075,7 +10075,7 @@ function eme_ajax_events_list() {
 
 	$jtStartIndex      = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 	$jtPageSize        = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$jtSorting         = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? esc_sql(eme_sanitize_sql_orderby( $_REQUEST['jtSorting']) ) : 'ASC';
+	$jtSorting         = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? esc_sql( $_REQUEST['jtSorting'] ) : 'ASC';
 	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'future';
 	$category          = isset( $_REQUEST['category'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['category'] ) ) : '';
 	$status            = isset( $_REQUEST['status'] ) ? intval( $_REQUEST['status'] ) : '';

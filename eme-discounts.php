@@ -1588,7 +1588,7 @@ function eme_ajax_discounts_list() {
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql(eme_sanitize_sql_orderby($_REQUEST['jtSorting'])) : '';
+		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
 
 		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
 				$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
@@ -1667,7 +1667,8 @@ function eme_ajax_discountgroups_list() {
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql(eme_sanitize_sql_orderby($_REQUEST['jtSorting'])) : '';
+		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
+
 		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
 			$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
 		} else {

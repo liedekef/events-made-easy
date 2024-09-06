@@ -5500,7 +5500,7 @@ function eme_ajax_bookings_list() {
 
 	$jtStartIndex   = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 	$jtPageSize     = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$jtSorting      = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? esc_sql(eme_sanitize_sql_orderby( $_REQUEST['jtSorting']) ) : 'creation_date ASC';
+	$jtSorting      = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? esc_sql( $_REQUEST['jtSorting'] ) : 'creation_date ASC';
 	$booking_status = ( isset( $_REQUEST['booking_status'] ) ) ? eme_sanitize_request( $_REQUEST['booking_status'] ) : 'APPROVED';
 	$search_event   = isset( $_REQUEST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_event']) ) ) : '';
 	$search_person  = isset( $_REQUEST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_person']) ) ) : '';

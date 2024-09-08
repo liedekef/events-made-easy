@@ -1709,8 +1709,6 @@ add_filter( 'get_edit_post_link', 'eme_edit_post_link' );
 
 function eme_template_redir() {
 	# We need to catch the request as early as possible, but
-	# since it needs to be working for both permalinks and normal,
-	# I can't use just any action hook. parse_query seems to do just fine
 	global $post;
 	$redir_url         = get_option( 'eme_redir_protected_pages_url' );
 	$is_user_logged_in = is_user_logged_in();

@@ -130,14 +130,7 @@ function eme_categories_table_layout( $message = '' ) {
                               <th>' . __( 'Name', 'events-made-easy' ) . "</th>
                            </tr>
                         </thead>
-                        <tfoot>
-                           <tr>
-                              <td class='manage-column column-cb check-column' scope='col'><input type='checkbox' class='select-all' value='1'></td>
-                              <td>" . __( 'ID', 'events-made-easy' ) . '</td>
-                              <td>' . __( 'Name', 'events-made-easy' ) . '</td>
-                           </tr>
-                        </tfoot>
-                        <tbody>';
+                        <tbody>";
 		foreach ( $categories as $this_category ) {
 			if ( empty( $this_category['category_name'] ) ) {
 				$this_category['category_name'] = __( 'No name', 'events-made-easy' );
@@ -154,6 +147,13 @@ function eme_categories_table_layout( $message = '' ) {
 		$delete_button_text = esc_html__( 'Delete', 'events-made-easy' );
 		$table             .= "
                         </tbody>
+                        <tfoot>
+                           <tr>
+                              <td class='manage-column column-cb check-column' scope='col'><input type='checkbox' class='select-all' value='1'></td>
+                              <td>" . __( 'ID', 'events-made-easy' ) . '</td>
+                              <td>' . __( 'Name', 'events-made-easy' ) . '</td>
+                           </tr>
+                        </tfoot>
                      </table>
    
                      <div class='tablenav'>

@@ -809,6 +809,7 @@ function eme_delete_mailing_mails( $id ) {
 	$sql         = $wpdb->prepare( "DELETE FROM $queue_table WHERE mailing_id=%d", $id );
 	$wpdb->query( $sql );
 }
+
 function eme_delete_mailing( $id ) {
 	global $wpdb;
 	eme_delete_mailing_mails( $id );

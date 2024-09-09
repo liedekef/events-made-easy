@@ -1485,21 +1485,9 @@ function eme_localized_date( $mydate, $timezone = '', $date_format = '' ) {
 	} catch ( Exception $error ) {
 		return $mydate;
 	}
-	if ( function_exists( 'wp_date' ) ) {
-		$eme_tz_obj = new DateTimeZone( $timezone );
-		$result     = wp_date( $date_format, $eme_date_obj->getTimestamp(), $eme_tz_obj );
-	} else {
-		// Currently in the backend, the timezone is UTC, but maybe that changes in future wp versions
-		//   so we search for the current timezone using date_default_timezone_get
-		// Since DateTime::format doesn't respect the locale, we use date_i18n here
-		//   but date_i18n uses the WP backend timezone, so we need to account for the timezone difference
-		// All this because we don't want to use date_default_timezone_set() and wp doesn't set the backend
-		//   timezone correctly ...
-		$wp_date = new ExpressiveDate( $eme_date_obj->getDateTime(), date_default_timezone_get() );
-		$tz_diff = $eme_date_obj->getOffset() - $wp_date->getOffset();
-		// reason to add the tz_diff: getTimestamp returns the timestamp in the current timezoneformat set on the server
-		$result = date_i18n( $date_format, $eme_date_obj->getTimestamp() + $tz_diff );
-	}
+
+	$eme_tz_obj = new DateTimeZone( $timezone );
+	$result     = wp_date( $date_format, $eme_date_obj->getTimestamp(), $eme_tz_obj );
 	return $result;
 }
 

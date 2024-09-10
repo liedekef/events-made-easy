@@ -336,6 +336,13 @@ function eme_count_event_task_signups( $event_id ) {
 	return $return_arr;
 }
 
+function eme_count_event_task_person_signups( $event_id, $person_id ) {
+	global $wpdb;
+	$table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
+	$sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE event_id=%d AND person_id=%d", $event_id, $person_id );
+	return $wpdb->get_var( $sql );
+}
+
 function eme_count_person_task_signups( $task_id, $person_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
@@ -811,6 +818,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 function eme_meta_box_div_event_task_settings( $event ) {
 	$eme_prop_task_registered_users_only = ( $event['event_properties']['task_registered_users_only'] ) ? "checked='checked'" : '';
 	$eme_prop_task_requires_approval     = ( $event['event_properties']['task_requires_approval'] ) ? "checked='checked'" : '';
+	$eme_prop_task_only_one_signup_pp    = ( $event['event_properties']['task_only_one_signup_pp'] ) ? "checked='checked'" : '';
 	$eme_prop_task_allow_overlap         = ( $event['event_properties']['task_allow_overlap'] ) ? "checked='checked'" : '';
 	$eme_prop_task_reminder_days         = eme_esc_html( $event['event_properties']['task_reminder_days'] );
 	?>
@@ -825,6 +833,10 @@ function eme_meta_box_div_event_task_settings( $event ) {
 		<p id='p_task_requires_approval'>
 			<input id="eme_prop_task_requires_approval" name='eme_prop_task_requires_approval' value='1' type='checkbox' <?php echo $eme_prop_task_requires_approval; ?>>
 		<label for="eme_prop_task_requires_approval"><?php esc_html_e( 'Require approval for task signups?', 'events-made-easy' ); ?></label>
+		</p>
+		<p id='p_task_only_one_signup_pp'>
+			<input id="eme_prop_task_only_one_signup_pp" name='eme_prop_task_only_one_signup_pp' value='1' type='checkbox' <?php echo $eme_prop_task_only_one_signup_pp; ?>>
+		<label for="eme_prop_task_only_one_signup_pp"><?php esc_html_e( 'Allow only one sign up for tasks per event for a person?', 'events-made-easy' ); ?></label>
 		</p>
 		<p id='p_task_allow_overlap'>
 			<input id="eme_prop_task_allow_overlap" name='eme_prop_task_allow_overlap' value='1' type='checkbox' <?php echo $eme_prop_task_allow_overlap; ?>>
@@ -1292,6 +1304,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 	$open_tasks_found = 0;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$lang = eme_detect_lang();
+	$event_count = count($events);
 	foreach ( $events as $event ) {
 		// we add the event ids for the autocomplete check, not used for anything else
 		$result               .= "<input type='hidden' name='eme_event_ids[]' id='eme_event_ids[]' value='" . $event['event_id'] . "'>";
@@ -1328,7 +1341,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 			if ( $task['spaces'] == 0 ) {
 				$result .= '<br><span class="eme_task_section_header">'.eme_translate( $task['name'], $lang ).'</span><br>';
 			} elseif ( ! $skip ) {
-				$result .= eme_replace_eventtaskformfields_placeholders( $format, $task, $event );
+				$result .= eme_replace_eventtaskformfields_placeholders( $format, $task, $event, $event_count );
 			}
 		}
 		$result .= '<br>';
@@ -1675,22 +1688,44 @@ function eme_tasks_ajax() {
 	if (isset($_POST['task_comment'])) {
 		$bookerComment = eme_sanitize_textarea( $_POST['task_comment'] );
 	}
+	if (isset($_POST['task_lastname'])) {
+		$bookerLastName = eme_sanitize_request( $_POST['task_lastname'] );
+	}
+	if ( isset( $_POST['task_firstname'] ) ) {
+		$bookerFirstName = eme_sanitize_request( $_POST['task_firstname'] );
+	}
+	if (isset($_POST['task_email'])) {
+		$bookerEmail = eme_sanitize_email( $_POST['task_email'] );
+	}
 
 	// start with an empty person_id, once needed it will get a real id
 	$person_id = 0;
 	$message   = '';
 	$nok       = 0;
 	$ok        = 0;
+	$t_person = eme_get_person_by_name_and_email( $bookerLastName, $bookerFirstName, $bookerEmail );
+	if (!empty($t_person)) {
+		$person_id = $t_person['person_id'];
+	}
 	foreach ( $_POST['eme_task_signups'] as $event_id => $task_id_arr ) {
 		$event_id              = intval( $event_id );
 		$event                 = eme_get_event( $event_id );
 		$allow_overlap         = $event['event_properties']['task_allow_overlap'];
 		$registered_users_only = $event['event_properties']['task_registered_users_only'];
+		$only_one_signup_pp    = $event['event_properties']['task_only_one_signup_pp'];
 		$signup_status         = ($event['event_properties']['task_requires_approval'])? 0 : 1;
 		if ( $registered_users_only && ! $booker_wp_id ) {
 			$message .= get_option( 'eme_rsvp_login_required_string' );
 			$nok      = 1;
 			continue;
+		}
+		if ($only_one_signup_pp && !empty($person_id)) {
+			$event_task_count_person_signups = eme_count_event_task_person_signups( $event_id, $person_id );
+			if ($event_task_count_person_signups > 0) {
+				$message .= __( 'Only one signup allowed', 'events-made-easy' );
+				$nok      = 1;
+				continue;
+			}
 		}
 		// the next is an array with as key the task id and value the number of signups for it
 		$event_task_count_signups = eme_count_event_task_signups( $event_id );
@@ -1705,12 +1740,7 @@ function eme_tasks_ajax() {
 				continue;
 			}
 			$add_update_person_from_form_err = '';
-			if ( ! $person_id && isset( $_POST['task_lastname'] ) && isset( $_POST['task_email'] ) ) {
-				$bookerLastName = eme_sanitize_request( $_POST['task_lastname'] );
-				if ( isset( $_POST['task_firstname'] ) ) {
-					$bookerFirstName = eme_sanitize_request( $_POST['task_firstname'] );
-				}
-				$bookerEmail = eme_sanitize_email( $_POST['task_email'] );
+			if ( ! $person_id && !empty($bookerLastName) && !empty($bookerEmail) ) {
 				$res         = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail );
 				$person_id   = $res[0];
 				$add_update_person_from_form_err = $res[1];

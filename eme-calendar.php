@@ -360,7 +360,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 		if ( $holidays ) {
 			foreach ( $holidays as $day_key => $info ) {
 				if ( ! empty( $info['name'] ) ) {
-						$holiday_title = trim( eme_esc_html( $info['name'] ) );
+					$holiday_title = trim( eme_esc_html( $info['name'] ) );
 					$eme_holiday_class = 'eme-cal-holidays';
 					if ( empty( $info['class'] ) ) {
 						$class = $eme_holiday_class;
@@ -377,11 +377,11 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 					// if there's an event that day, the day-number is a link and will be set later on
 					// otherwise we set the day-number
 					if ( isset( $eventful_days[ $day_key ] ) ) {
-									$holiday_titles[ $day_key ] = $holiday_title;
-							$cells[ $day_key ]                  = "<br><span class='$class'>$holiday_text</span><br>";
+						$holiday_titles[ $day_key ] = $holiday_title;
+						$cells[ $day_key ]          = "<br><span class='$class'>$holiday_text</span><br>";
 					} else {
-							$event_date = explode( '-', $day_key );
-							$event_day  = ltrim( $event_date[2], '0' );
+						$event_date = explode( '-', $day_key );
+						$event_day  = ltrim( $event_date[2], '0' );
 						if ( ! empty( $info['link'] ) ) {
 							$event_day = "<a href='" . $info['link'] . "' target='_blank'>" . $event_day . '</a>';
 						}
@@ -452,7 +452,6 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 		$cells[ $day_key ] = "<span class='span-eme-calday span-eme-calday-$event_day'><a title='$link_title' href='$cal_day_link' $class>$event_day</a></span>";
 		if ( $full ) {
 			$cells[ $day_key ] .= "$holiday_info<ul class='eme-calendar-day-event'>";
-
 			foreach ( $events as $event ) {
 				$cal_day_content    = eme_replace_event_placeholders( $event_format, $event, 'html', $lang, 0 );
 				$cal_day_content    = eme_replace_calendar_placeholders( $cal_day_content, $event, $day_key, 'html', $lang );

@@ -2312,11 +2312,11 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				$exclude_cats         = $matches[2];
 				$extra_conditions_arr = [];
 				$order_by             = '';
-				if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
+				if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
 					$extra_conditions_arr[] = "category_id IN ($include_cats)";
 					$order_by = "FIELD(category_id,$include_cats)";
 				}
-				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats )) {
 					$extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
 				}
 				$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -2346,11 +2346,11 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				$exclude_cats         = $matches[2];
 				$extra_conditions_arr = [];
 				$order_by             = '';
-				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $include_cats )) {
 					$extra_conditions_arr[] = "category_id IN ($include_cats)";
 					$order_by = "FIELD(category_id,$include_cats)";
 				}
-				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats )) {
 					$extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
 				}
 				$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -2370,11 +2370,11 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
 				$exclude_cats         = $matches[2];
 				$extra_conditions_arr = [];
 				$order_by             = '';
-				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($include_cats)) {
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $include_cats )) {
 					$extra_conditions_arr[] = "category_id IN ($include_cats)";
 					$order_by = "FIELD(category_id,$include_cats)";
 				}
-				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats)) {
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats )) {
 					$extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
 				}
 				$extra_conditions = join( ' AND ', $extra_conditions_arr );

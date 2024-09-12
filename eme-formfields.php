@@ -484,7 +484,7 @@ function eme_get_formfields( $ids = '', $purpose = '' ) {
 	$formfields_table = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	$where            = '';
 	$where_arr        = [];
-	if ( ! empty( $ids ) && eme_is_list_of_int($ids) ) {
+	if ( ! empty( $ids ) && eme_is_list_of_int( $ids ) ) {
 		$where_arr[] = "field_id IN ($ids)";
 	}
 	if ( ! empty( $purpose ) ) {

@@ -264,10 +264,19 @@ function eme_init_event_props( $props = [], $new_event=0 ) {
 		$props[$opt]=intval($props[$opt]);
 	}
 	// for integers or floats
-	$numbers = [ 'rsvp_end_number_days', 'rsvp_end_number_hours', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'cancel_rsvp_days', 'cancel_rsvp_age', 'attendance_begin', 'attendance_end', 'task_reminder_days', 'rsvp_pending_reminder_days', 'rsvp_approved_reminder_days' ];
+	$numbers = [ 'rsvp_end_number_days', 'rsvp_end_number_hours', 'rsvp_start_number_days', 'rsvp_start_number_hours', 'cancel_rsvp_days', 'cancel_rsvp_age', 'attendance_begin', 'attendance_end' ];
 	foreach ( $numbers as $opt ) {
 		if (eme_isFloat($props[$opt])) {
 			$props[$opt]=floatval($props[$opt]);
+		} else {
+			$props[$opt]=intval($props[$opt]);
+		}
+	}
+	// for list of integers or floats
+	$numbers = [ 'task_reminder_days', 'rsvp_pending_reminder_days', 'rsvp_approved_reminder_days' ];
+	foreach ( $numbers as $opt ) {
+		if (eme_is_list_of_numbers($props[$opt])) {
+			$props[$opt]=$props[$opt];
 		} else {
 			$props[$opt]=intval($props[$opt]);
 		}
@@ -2033,7 +2042,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 				$people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 				if ( $wp_id ) {
 					// optimize a bit: we can do it in 1 go if it is a list of group ids
-					if (eme_is_list_of_int($groups)) {
+					if (eme_is_list_of_int( $groups )) {
 						if ( ! empty( eme_get_groups_person_ids( $groups, "people.wp_id = $wp_id" ) ) ) {
 							$replacement = 1;
 						}
@@ -3521,11 +3530,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$exclude_cats         = $matches[2];
 				$extra_conditions_arr = [];
 				$order_by                 = '';
-				if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
+				if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
 					$extra_conditions_arr[] = "category_id IN ($include_cats)";
 					$order_by = "FIELD(category_id,$include_cats)";
 				}
-				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats) ) {
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
 					$extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
 				}
 				$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -3555,11 +3564,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$exclude_cats         = $matches[2];
 				$extra_conditions_arr = [];
 				$order_by                 = '';
-				if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
+				if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
 					$extra_conditions_arr[] = "category_id IN ($include_cats)";
 					$order_by = "FIELD(category_id,$include_cats)";
 				}
-				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats) ) {
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
 					$extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
 				}
 				$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -3579,11 +3588,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$exclude_cats         = $matches[2];
 				$extra_conditions_arr = [];
 				$order_by             = '';
-				if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
+				if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
 					$extra_conditions_arr[] = "category_id IN ($include_cats)";
 					$order_by = "FIELD(category_id,$include_cats)";
 				}
-				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats) ) {
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
 					$extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
 				}
 				$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -3605,11 +3614,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 				$exclude_cats         = $matches[3];
 				$extra_conditions_arr = [];
 				$order_by                 = '';
-				if ( ! empty( $include_cats ) && eme_is_list_of_int($include_cats) ) {
+				if ( ! empty( $include_cats ) && eme_is_list_of_int( $include_cats ) ) {
 					$extra_conditions_arr[] = "category_id IN ($include_cats)";
 					$order_by = "FIELD(category_id,$include_cats)";
 				}
-				if ( ! empty( $exclude_cats ) && eme_is_list_of_int($exclude_cats) ) {
+				if ( ! empty( $exclude_cats ) && eme_is_list_of_int( $exclude_cats ) ) {
 					$extra_conditions_arr[] = "category_id NOT IN ($exclude_cats)";
 				}
 				$extra_conditions = join( ' AND ', $extra_conditions_arr );
@@ -10523,7 +10532,7 @@ function eme_ajax_action_events_status( $ids_arr, $status ) {
 function eme_ajax_action_events_addcat( $ids, $category_id ) {
 	global $wpdb;
 	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-        if (eme_is_list_of_int($ids) ) {
+        if (eme_is_list_of_int( $ids ) ) {
 		$sql = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
 		   WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id);
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -10536,7 +10545,7 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
 function eme_trash_events( $ids, $send_trashmails = 0 ) {
 	global $wpdb;
 	$table_name     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-        if (!eme_is_list_of_int($ids) ) {
+        if (!eme_is_list_of_int( $ids ) ) {
 		return;
 	}
 	$sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_TRASH); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
@@ -10568,7 +10577,7 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 function eme_untrash_events( $ids ) {
 	global $wpdb;
 	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-        if (eme_is_list_of_int($ids) ) {
+        if (eme_is_list_of_int( $ids ) ) {
 		$sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_DRAFT); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}

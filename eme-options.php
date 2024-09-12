@@ -1174,6 +1174,11 @@ function eme_sanitize_option( $option_value, $option_name ) {
 		'eme_smtp_port' => 25,
                 'eme_mail_sleep' => 0,
 	];
+	$numeric_list_options = [
+		'eme_rsvp_pending_reminder_days' => 0,
+		'eme_rsvp_approved_reminder_days' => 0,
+		'eme_task_reminder_days' => 0
+	];
 
 	if ( is_array( $option_value ) ) {
 		$output = [];
@@ -1185,6 +1190,9 @@ function eme_sanitize_option( $option_value, $option_name ) {
 			}
 			if (array_key_exists($key,$numeric_options) && ! is_numeric( $output[$key] ) ) {
 				$output[$key] = $numeric_options[$key];
+			}
+			if (array_key_exists($key,$numeric_list_options) && ! eme_is_list_of_numbers( $output[$key] ) ) {
+				$output[$key] = $numeric_list_options[$key];
 			}
 			if ( $key == 'eme_sub_body' && ! strstr( $output[$key], '#_SUB_CONFIRM_URL' ) )
 				$output[$key] .= "\n#_SUB_CONFIRM_URL";
@@ -1216,6 +1224,9 @@ function eme_sanitize_option( $option_value, $option_name ) {
 		}
 		if (array_key_exists($option_name,$numeric_options) && ! is_numeric( $output ) ) {
 			$output = $numeric_options[$option_name];
+		}
+		if (array_key_exists($option_name,$numeric_list_options) && ! eme_is_list_of_numbers( $output ) ) {
+			$output = $numeric_list_options[$option_name];
 		}
 		if ( $option_name == 'eme_sub_body' && ! strstr( $output, '#_SUB_CONFIRM_URL' ) )
 			$output .= "\n#_SUB_CONFIRM_URL";

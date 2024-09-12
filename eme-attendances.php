@@ -43,7 +43,7 @@ function eme_delete_old_attendances() {
 function eme_delete_attendances( $ids ) {
 	global $wpdb;
 	$attendances_table = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
-	if (eme_is_list_of_int($ids) ) {
+	if (eme_is_list_of_int( $ids ) ) {
 		$wpdb->query( "DELETE FROM $attendances_table WHERE id IN ($ids)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 }
@@ -51,7 +51,7 @@ function eme_delete_attendances( $ids ) {
 function eme_delete_person_attendances( $ids ) {
 	global $wpdb;
 	$attendances_table = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
-	if (eme_is_list_of_int($ids) ) {
+	if (eme_is_list_of_int( $ids ) ) {
 		$wpdb->query( "DELETE FROM $attendances_table WHERE person_id IN ($ids)" ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 }

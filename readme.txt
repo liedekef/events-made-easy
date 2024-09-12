@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Added task option to limit task signups to one per event per person
 * Added task formfield placeholder #_TASKHTMLID. This can be used in the tast formfield to e.g. enclose extra task info in a html-label in the task signup form format:
   #_TASKSIGNUPCHECKBOX <label for="#_TASKHTMLID">#_TASKNAME (#_TASKBEGIN - #_TASKEND) (#_FREETASKSPACES/#_TASKSPACES)</label> <br />
+* reminder-options are lists of numbers but were converted to a single value when creating new events
 
 = 2.5.10 (2024/09/05) =
 * CLI tool can allow mail from everywhere: allowed_senders=ALL

@@ -1837,38 +1837,37 @@ function eme_array_le( $array1, $array2 ) {
 	return 1;
 }
 
+// returns true if the array values are all numeric
+function eme_is_numeric_array( $only_numbers ) {
+	if ( ! is_array( $only_numbers ) ) {
+		return false;
+	}
+	return array_filter( $only_numbers, 'is_numeric' ) === $only_numbers;
+}
+
+function eme_is_list_of_numbers( $text ) {
+	if ( strstr( $text, ',' ) ) {
+		$id_arr = explode( ',', $text );
+		return eme_is_numeric_array( $id_arr );
+	} elseif ( ! is_numeric( $text ) ) {
+		return false;
+	}
+	return true;
+}
+
 // returns true if the array values are all integers
-function eme_is_numeric_array( $only_integers ) {
+function eme_is_integer_array( $only_integers ) {
 	if ( ! is_array( $only_integers ) ) {
 		return false;
 	}
-	return array_filter( $only_integers, 'is_numeric' ) === $only_integers;
-	/* the next code works to check if the array is actual only positive integers (or strings of), but we don't need to go that far (mysql itself will protect us here)
-	$tmp_arr = array_filter( $only_integers, 'is_numeric' );
-        // if the filtered array is identical to the original, it only contains numeric values
-        if ($tmp_arr === $only_integers) {
-                // now check the values, to eliminate negatives and floating point
-                $tmp_arr = array_map(function ($value) {
-                        // let's use non-signed integers in one array
-                        return abs((int)$value);
-                }, $tmp_arr);
-
-                $only_integers = array_map(function ($value) {
-                        // let's convert the original to numbers using a trick
-                        return $value+0;
-                }, $only_integers);
-                return $tmp_arr === $only_integers;
-        } else {
-                return false;
-        }
-	 */
+	return array_filter( $only_integers, 'eme_isInt' ) === $only_integers;
 }
 
 function eme_is_list_of_int( $text ) {
 	if ( strstr( $text, ',' ) ) {
 		$id_arr = explode( ',', $text );
-		return eme_is_numeric_array( $id_arr );
-	} elseif ( ! is_numeric( $text ) ) {
+		return eme_is_integer_array( $id_arr );
+	} elseif ( ! is_int( $text ) ) {
 		return false;
 	}
 	return true;
@@ -3994,7 +3993,15 @@ function eme_isFloat($amount ): bool {
 	// if not numeric, return false
 	if (!is_numeric($amount)) return false;
         $amount +=0; // this converts strings to int or float
+	// we want to know if it is really a floating point, not an integer
 	return is_float( $amount ) && intval( $amount ) != $amount;
+}
+
+function eme_isInt($amount ): bool {
+	// if not numeric, return false
+	if (!is_numeric($amount)) return false;
+        $amount +=0; // this converts strings to int or float
+	return is_int( $amount );
 }
 
 function eme_get_field_name($eme_opt_group, $opt_name, $is_arr=0) {

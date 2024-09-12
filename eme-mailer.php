@@ -2138,7 +2138,7 @@ function eme_emails_page() {
 					}
 				}
 				// reuse the attachments too
-				if ( ! empty( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int($conditions['eme_generic_attach_ids']) ) {
+				if ( ! empty( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_generic_attach_ids'] ) ) {
 					$generic_mail_attachment_ids     = $conditions['eme_generic_attach_ids'];
 					// now also build the attach_url_string variable
 					$attachment_ids_arr = explode( ',', $generic_mail_attachment_ids );

@@ -1087,10 +1087,14 @@ function eme_tasks_signups_shortcode( $atts ) {
 		$result .= eme_replace_event_placeholders( $header, $event );
 		$result .= '<br>';
 		foreach ( $tasks as $task ) {
-			$signups = eme_get_task_signups( $task['task_id'] );
-			foreach ( $signups as $signup ) {
-				$person  = eme_get_person( $signup['person_id'] );
-				$result .= eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task );
+			if ( $task['spaces'] == 0 ) {
+				$result .= '<br><span class="eme_task_section_header">'.eme_translate( $task['name'], $lang ).'</span><br>';
+			} else {
+				$signups = eme_get_task_signups( $task['task_id'] );
+				foreach ( $signups as $signup ) {
+					$person  = eme_get_person( $signup['person_id'] );
+					$result .= eme_replace_tasksignup_placeholders( $format, $signup, $person, $event, $task );
+				}
 			}
 		}
 		$result .= '<br>';

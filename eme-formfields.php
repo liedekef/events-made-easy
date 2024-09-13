@@ -993,7 +993,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
 	return $html;
 }
 
-function eme_replace_eventtaskformfields_placeholders( $format, $task, $event, $event_count=0 ) {
+function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) {
 	$used_spaces = eme_count_task_approved_signups( $task['task_id'] );
 	$free_spaces = $task['spaces'] - $used_spaces;
 
@@ -1004,7 +1004,7 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event, $
 		$task_ended = 1;
 	}
 	$use_radiobox = 0;
-	if ($event['event_properties']['task_only_one_signup_pp'] && $event_count==1) {
+	if ( $event['event_properties']['task_only_one_signup_pp'] ) {
 		$use_radiobox = 1;
 	}
 

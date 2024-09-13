@@ -1304,7 +1304,6 @@ function eme_tasks_signupform_shortcode( $atts ) {
 	$open_tasks_found = 0;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$lang = eme_detect_lang();
-	$event_count = count($events);
 	foreach ( $events as $event ) {
 		// we add the event ids for the autocomplete check, not used for anything else
 		$result               .= "<input type='hidden' name='eme_event_ids[]' id='eme_event_ids[]' value='" . $event['event_id'] . "'>";
@@ -1341,7 +1340,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 			if ( $task['spaces'] == 0 ) {
 				$result .= '<br><span class="eme_task_section_header">'.eme_translate( $task['name'], $lang ).'</span><br>';
 			} elseif ( ! $skip ) {
-				$result .= eme_replace_eventtaskformfields_placeholders( $format, $task, $event, $event_count );
+				$result .= eme_replace_eventtaskformfields_placeholders( $format, $task, $event );
 			}
 		}
 		$result .= '<br>';

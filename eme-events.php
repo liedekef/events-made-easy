@@ -4174,14 +4174,44 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 		$extra_conditions = '(' . join( ' AND ', $extra_conditions_arr ) . ')';
 	}
 
+	$this_page_url = get_permalink( $post->ID );
 	$prev_text   = '';
 	$next_text   = '';
 	$limit_start = 0;
 	$limit_end   = 0;
 
-	// for browsing: if limit=0,paging=1 and only for this_week,this_month or today
-	if ( $limit > 0 && $paging == 1 && isset( $_GET['eme_offset'] ) ) {
-		$limit_offset = intval( $_GET['eme_offset'] );
+	if ( $paging == 1 ) {
+		// we add possible fields from the filter section
+		$eme_filters['eme_eventAction']    = 1;
+		$eme_filters['eme_cat_filter']     = 1;
+		$eme_filters['eme_loc_filter']     = 1;
+		$eme_filters['eme_city_filter']    = 1;
+		$eme_filters['eme_country_filter'] = 1;
+		$eme_filters['eme_scope_filter']   = 1;
+		$eme_filters['eme_contact_filter'] = 1;
+		$eme_filters['eme_author_filter']  = 1;
+		foreach ( $_REQUEST as $key => $item ) {
+			$key = eme_sanitize_request( $key );
+			$item = eme_sanitize_request( $item );
+
+			if ( isset( $eme_filters[ $key ] ) ) {
+				# if you selected multiple items, $item is an array, but rawurlencode needs a string
+				if ( is_array( $item ) ) {
+					$item = join( ',', $item );
+				}
+				if ( ! empty( $item ) ) {
+					$this_page_url = add_query_arg( [ $key => $item ], $this_page_url );
+				}
+			}
+		}
+	}
+
+	if ( $paging == 1 && $limit > 0 ) {
+		if ( !empty( $_GET['eme_offset'] ) ) {
+			$limit_offset = intval( $_GET['eme_offset'] );
+		}
+		$prev_text     = __( 'Previous page', 'events-made-easy' );
+		$next_text     = __( 'Next page', 'events-made-easy' );
 	}
 
 	if ( $paging == 1 && $limit == 0 ) {
@@ -4189,7 +4219,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 		$scope_offset = 0;
 		$scope_text   = '';
 		if ( isset( $_GET['eme_offset'] ) ) {
-			$scope_offset = eme_sanitize_request( $_GET['eme_offset'] );
+			$scope_offset = intval( $_GET['eme_offset'] );
 		}
 		$prev_offset = $scope_offset - 1;
 		$next_offset = $scope_offset + 1;
@@ -4256,6 +4286,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 	$id_base          = rand() . '_' . $id_base;
 	$pagination_top   = "<div id='div_events-pagination-top_$id_base' class='events-pagination-top'> ";
 	$nav_hidden_class = "style='visibility:hidden;'";
+
 	if ( $paging == 1 && $limit > 0 ) {
 		// for normal paging and there're no events, we go back to offset=0 and try again
 		if ( $events_count == 0 ) {
@@ -4263,37 +4294,7 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 			$events       = eme_get_events( limit: $limit + 1, scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
 			$events_count = count( $events );
 		}
-		$prev_text     = __( 'Previous page', 'events-made-easy' );
-		$next_text     = __( 'Next page', 'events-made-easy' );
 		$page_number   = floor( $limit_offset / $limit ) + 1;
-		$this_page_url = get_permalink( $post->ID );
-		//$this_page_url=$_SERVER['REQUEST_URI'];
-		// remove the offset info
-		$this_page_url = remove_query_arg( 'eme_offset', $this_page_url );
-
-		// we add possible fields from the filter section
-		$eme_filters['eme_eventAction']    = 1;
-		$eme_filters['eme_cat_filter']     = 1;
-		$eme_filters['eme_loc_filter']     = 1;
-		$eme_filters['eme_city_filter']    = 1;
-		$eme_filters['eme_country_filter'] = 1;
-		$eme_filters['eme_scope_filter']   = 1;
-		$eme_filters['eme_contact_filter'] = 1;
-		$eme_filters['eme_author_filter']  = 1;
-		foreach ( $_REQUEST as $key => $item ) {
-			$key = eme_sanitize_request( $key );
-			$item = eme_sanitize_request( $item );
-
-			if ( isset( $eme_filters[ $key ] ) ) {
-				# if you selected multiple items, $item is an array, but rawurlencode needs a string
-				if ( is_array( $item ) ) {
-					$item = join( ',', $item );
-				}
-				if ( ! empty( $item ) ) {
-					$this_page_url = add_query_arg( [ $key => $item ], $this_page_url );
-				}
-			}
-		}
 
 		// we always provide the text, so everything stays in place (but we just hide it if needed, and change the link to empty
 		// to prevent going on indefinitely and thus allowing search bots to go on for ever
@@ -4321,33 +4322,6 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 		}
 	}
 	if ( $paging == 1 && $limit == 0 ) {
-		$this_page_url = $_SERVER['REQUEST_URI'];
-		// remove the offset info
-		$this_page_url = remove_query_arg( 'eme_offset', $this_page_url );
-
-		// we add possible fields from the filter section
-		$eme_filters['eme_eventAction']    = 1;
-		$eme_filters['eme_cat_filter']     = 1;
-		$eme_filters['eme_loc_filter']     = 1;
-		$eme_filters['eme_city_filter']    = 1;
-		$eme_filters['eme_country_filter'] = 1;
-		$eme_filters['eme_scope_filter']   = 1;
-		$eme_filters['eme_contact_filter'] = 1;
-		$eme_filters['eme_author_filter']  = 1;
-		foreach ( $_REQUEST as $key => $item ) {
-			$key = eme_sanitize_request( $key );
-			$item = eme_sanitize_request( $item );
-			if ( isset( $eme_filters[ $key ] ) ) {
-				# if you selected multiple items, $item is an array, but rawurlencode needs a string
-				if ( is_array( $item ) ) {
-					$item = join( ',', $item );
-				}
-				if ( ! empty( $item ) ) {
-					$this_page_url = add_query_arg( [ $key => $item ], $this_page_url );
-				}
-			}
-		}
-
 		// to prevent going on indefinitely and thus allowing search bots to go on for ever,
 		// we stop providing links if there are no more events left
 		$count_older_events = eme_get_events( limit: 1, scope: '--' . $limit_start, order: $order, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, count: 1 );

@@ -995,9 +995,9 @@ function eme_csv_booking_report( $event_id ) {
 		die;
 	}
 
-	$separator = get_option( 'eme_csv_separator' );
-	if ( eme_is_empty_string( $separator ) ) {
-		$separator = ',';
+	$delimiter = get_option( 'eme_csv_separator' );
+	if ( eme_is_empty_string( $delimiter ) ) {
+		$delimiter = ',';
 	}
 
 	//header("Content-type: application/octet-stream");
@@ -1005,14 +1005,18 @@ function eme_csv_booking_report( $event_id ) {
 	header( 'Content-Encoding: UTF-8' );
 	header( 'Content-Disposition: attachment; filename="export.csv"' );
 	eme_nocache_headers();
-	echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
+
 	$bookings               = eme_get_bookings_for( $event_id );
 	$people_answer_fieldids = eme_get_people_export_fieldids();
 	$booking_answer_fieldids = eme_get_booking_answers_fieldids( eme_get_bookingids_for( $event_id ) );
-	$out                    = fopen( 'php://output', 'w' );
+
+        // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
+	$out = fopen( 'php://output', 'w' );
+        fwrite($out, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
+
 	if ( has_filter( 'eme_csv_header_filter' ) ) {
 		$line = apply_filters( 'eme_csv_header_filter', $event );
-		eme_fputcsv( $out, $line, $separator );
+		eme_fputcsv( $out, $line, $delimiter );
 	}
 	$line   = [];
 	$line[] = __( 'ID', 'events-made-easy' );
@@ -1068,7 +1072,7 @@ function eme_csv_booking_report( $event_id ) {
 		$line = apply_filters( 'eme_csv_column_filter', $line, $event, $line_nbr );
 	}
 
-	eme_fputcsv( $out, $line, $separator );
+	eme_fputcsv( $out, $line, $delimiter );
 	foreach ( $bookings as $booking ) {
 		$localized_booking_datetime = eme_localized_datetime( $booking['creation_date'], EME_TIMEZONE, 1 );
 		$person                     = eme_get_person( $booking['person_id'] );
@@ -1211,12 +1215,12 @@ function eme_csv_booking_report( $event_id ) {
 		if ( has_filter( 'eme_csv_column_filter' ) ) {
 			$line = apply_filters( 'eme_csv_column_filter', $line, $event, $line_nbr );
 		}
-		eme_fputcsv( $out, $line, $separator );
+		eme_fputcsv( $out, $line, $delimiter );
 	}
 
 	if ( has_filter( 'eme_csv_footer_filter' ) ) {
 		$line = apply_filters( 'eme_csv_footer_filter', $event );
-		eme_fputcsv( $out, $line, $separator );
+		eme_fputcsv( $out, $line, $delimiter );
 	}
 	fclose( $out );
 	die();

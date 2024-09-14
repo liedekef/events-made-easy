@@ -4738,21 +4738,30 @@ function eme_members_frontend_csv_report( $group_id, $membership_id, $template_i
 		return '';
 	}
 
+	$delimiter = get_option( 'eme_csv_separator' );
+        if ( eme_is_empty_string( $delimiter ) ) {
+                $delimiter = ',';
+        }
+
 	$format            = '';
 	$eme_format_header = '';
 	// no nl2br for csv output
 	$format = eme_get_template_format( $template_id, 0 );
 
-	eme_nocache_headers();
-	header( 'Content-type: text/csv' );
+	header( 'Content-type: text/csv; charset=UTF-8' );
+        header( 'Content-Encoding: UTF-8' );
 	header( 'Content-Disposition: attachment; filename=report-' . date( 'Ymd-His' ) . '.csv' );
+        eme_nocache_headers();
+
+        // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
 	$fp = fopen( 'php://output', 'w' );
+        fwrite($fp, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
 
 	if ( $template_id_header ) {
 		// no nl2br for csv output
 		$eme_format_header = eme_replace_generic_placeholders( eme_get_template_format( $template_id_header, 0 ) );
 		$headers           = explode( ',', $eme_format_header );
-		eme_fputcsv( $fp, $headers );
+		eme_fputcsv( $fp, $headers, $delimiter );
 	}
 
 	$lang = eme_detect_lang();
@@ -4783,7 +4792,7 @@ function eme_members_frontend_csv_report( $group_id, $membership_id, $template_i
 					$output[] = '';
 				}
 			}
-			eme_fputcsv( $fp, $output );
+			eme_fputcsv( $fp, $output, $delimiter );
 		}
 	}
 	fclose( $fp );

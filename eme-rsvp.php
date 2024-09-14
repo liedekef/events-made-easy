@@ -609,9 +609,9 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 		return '';
 	}
 
-	$separator = get_option( 'eme_csv_separator' );
-        if ( eme_is_empty_string( $separator ) ) {
-                $separator = ',';
+	$delimiter = get_option( 'eme_csv_separator' );
+        if ( eme_is_empty_string( $delimiter ) ) {
+                $delimiter = ',';
         }
 
 	$format            = '';
@@ -623,15 +623,16 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
         header( 'Content-Encoding: UTF-8' );
 	header( 'Content-Disposition: attachment; filename=report-' . date( 'Ymd-His' ) . '.csv' );
         eme_nocache_headers();
-        echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
 
+        // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
 	$fp = fopen( 'php://output', 'w' );
+	fwrite($fp, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
 
 	if ( $template_id_header ) {
 		// no nl2br for csv output
 		$eme_format_header = eme_get_template_format( $template_id_header, 0 );
 		$headers           = explode( ',', $eme_format_header );
-		eme_fputcsv( $fp, $headers, $separator );
+		eme_fputcsv( $fp, $headers, $delimiter );
 	}
 
 	$event = eme_get_event( $event_id );
@@ -661,7 +662,7 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 						$output[] = '';
 					}
 				}
-				eme_fputcsv( $fp, $output, $separator );
+				eme_fputcsv( $fp, $output, $delimiter );
 			}
 		}
 	}
@@ -681,10 +682,19 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
 		$event_format = '#_EVENTNAME #_STARTTIME';
 	}
 
-	eme_nocache_headers();
-	header( 'Content-type: text/csv' );
+	$delimiter = get_option( 'eme_csv_separator' );
+        if ( eme_is_empty_string( $delimiter ) ) {
+                $delimiter = ',';
+        }
+
+	header( 'Content-type: text/csv; charset=UTF-8' );
+        header( 'Content-Encoding: UTF-8' );
 	header( 'Content-Disposition: attachment; filename=report-' . date( 'Ymd-His' ) . '.csv' );
+        eme_nocache_headers();
+
+        // echo "\xEF\xBB\xBF"; // UTF-8 BOM, Excell otherwise doesn't show the characters correctly ...
 	$fp      = fopen( 'php://output', 'w' );
+	fwrite($fp, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) )); // UTF-8 BOM, Excell otherwise doesn't show the characters correctly
 	$headers = [ __( 'Title\Date', 'events-made-easy' ) ];
 
 	$all_attendees     = [];
@@ -705,7 +715,7 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
 	foreach ( $all_dates as $event_start_date => $val ) {
 		$headers[] = $event_start_date;
 	}
-	eme_fputcsv( $fp, $headers );
+	eme_fputcsv( $fp, $headers, $delimiter );
 	$handled_recurrence_ids = [];
 	foreach ( $events as $event ) {
 		$line          = [];
@@ -735,7 +745,7 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
 		if ( $recurrence_id ) {
 			$handled_recurrence_ids[ $recurrence_id ] = 1;
 		}
-		eme_fputcsv( $fp, $line );
+		eme_fputcsv( $fp, $line, $delimiter );
 	}
 	fclose( $fp );
 	exit;

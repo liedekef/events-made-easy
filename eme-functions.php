@@ -3173,7 +3173,7 @@ function eme_is_admin_request() {
 
 // a eme_fputcsv function to replace the original fputcsv
 // reason: we want to enclose all fields with $enclosure
-function eme_fputcsv( $fh, $fields, $delimiter = ';', $enclosure = '"', $mysql_null = false ) {
+function eme_fputcsv( $fh, $fields, $delimiter = ';', $enclosure = '"' ) {
 	$delimiter_esc = preg_quote( $delimiter, '/' );
 	$enclosure_esc = preg_quote( $enclosure, '/' );
 
@@ -3184,17 +3184,12 @@ function eme_fputcsv( $fh, $fields, $delimiter = ';', $enclosure = '"', $mysql_n
 
 	$output = [];
 	foreach ( $fields as $field ) {
-		if ( $field === null && $mysql_null ) {
-			$output[] = 'NULL';
-			continue;
-		}
-
 		$output[] = preg_match( "/(?:{$delimiter_esc}|{$enclosure_esc}|\s|\r|\t|\n)/", $field ) ? (
 		    $enclosure . str_replace( $enclosure, $enclosure . $enclosure, $field ) . $enclosure
 		) : $enclosure . $field . $enclosure;
 	}
 
-	fwrite( $fh, join( $delimiter, $output ) . "\n" );
+	fwrite( $fh, join( $delimiter, $output ) . "\r\n" );
 }
 
 function eme_nocache_headers() {

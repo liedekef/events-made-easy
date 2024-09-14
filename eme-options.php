@@ -540,7 +540,7 @@ function eme_add_options( $reset = 0 ) {
 		'eme_enable_notes_placeholders'                   => 0,
 		'eme_uninstall_drop_data'                         => 0,
 		'eme_uninstall_drop_settings'                     => 0,
-		'eme_csv_separator'                               => ';',
+		'eme_csv_delimiter'                               => ';',
 		'eme_decimals'                                    => 2,
 		'eme_timepicker_minutesstep'                      => 5,
 		'eme_localize_price'                              => 1,
@@ -980,6 +980,18 @@ function eme_update_options( $db_version ) {
 			unset($fs_options['use_captcha']);
 			update_option( 'eme_fs', $fs_options);
 		}
+		if ( $db_version < 400 ) {
+			// rename some options
+			$rename_options = [
+				'eme_csv_separator' => 'eme_csv_delimiter',
+			];
+			foreach ( $rename_options as $old_option => $new_option ) {
+				if ( get_option( $old_option ) ) {
+					update_option( $new_option, get_option( $old_option ) );
+					delete_option( $old_option );
+				}
+			}
+		}
 	}
 
 	// always reset the drop data option
@@ -1149,7 +1161,7 @@ function eme_options_register() {
 			break;
 		case 'other':
 			// put eme_allowed_style_attr and eme_allowed_html first, so it has a immediate impact on the other options
-			$options = [ 'eme_allowed_style_attr', 'eme_allowed_html', 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_separator', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_version', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' ];
+			$options = [ 'eme_allowed_style_attr', 'eme_allowed_html', 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_delimiter', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_version', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' ];
 			break;
 	}
 
@@ -2984,7 +2996,7 @@ _e("Also check out the 'Email templates' and the 'Payment' sections for some ext
 			<?php
 				eme_options_radio_binary( __( 'Stay on edit page after save?', 'events-made-easy' ), 'eme_stay_on_edit_page', __( 'This allows you to stay on the edit page after saving events, locations, templates, formfields, people, groups or memberships.', 'events-made-easy' ) );
 				eme_options_radio_binary( __( 'Remove leading zeros from minutes?', 'events-made-easy' ), 'eme_time_remove_leading_zeros', __( 'PHP date/time functions have no notation to show minutes without leading zeros. Checking this option will return e.g. 9 for 09 and empty for 00. This setting affects custom time placeholders and also the generic *DATE and *TIME placeholders', 'events-made-easy' ) );
-				eme_options_input_text( __( 'CSV separator', 'events-made-easy' ), 'eme_csv_separator', __( 'Set the separator used in CSV exports.', 'events-made-easy' ) );
+				eme_options_input_text( __( 'CSV delimiter', 'events-made-easy' ), 'eme_csv_delimiter', __( 'Set the delimiter used in CSV exports.', 'events-made-easy' ) );
 				eme_options_radio_binary( __( 'Localize price', 'events-made-easy' ), 'eme_localize_price', __( "If selected, all prices will be shown in the current locale with the price symbol. If you don't want this, deselect this option to regain the old behavior of localized prices where you need to take care of the decimal accuracy, the currency symbol and it's location yourself. This option only works if the php class NumberFormatter is present, which is always the case in newer php versions but just don't forget to load the INTL extension in php.", 'events-made-easy' ) );
 				eme_options_input_int( __( 'Decimals accuracy', 'events-made-easy' ), 'eme_decimals', __( 'EME tries to show the prices in the frontend in the current locale, with the decimals accuracy set here. Defaults to 2.', 'events-made-easy' ) . '<br>' . __( 'This option is not used if the localize price option above is active and the php class NumberFormatter is present.', 'events-made-easy' ) );
 				eme_options_input_int( __( 'Timepicker step interval', 'events-made-easy' ), 'eme_timepicker_minutesstep', __( 'The timepicker step interval. Defaults to 5-minutes interval (meaning steps of 5 minutes will be taken)', 'events-made-easy' ) );

@@ -5100,7 +5100,7 @@ function eme_ajax_people_list( ) {
 	$jTableResult = [];
 	$start        = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 	$pagesize     = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
+	$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
 	$count_sql    = eme_get_sql_people_searchfields( $_POST, $start, $pagesize, $sorting, 1 );
 	$sql          = eme_get_sql_people_searchfields( $_POST, $start, $pagesize, $sorting );
 	$recordCount  = $wpdb->get_var( $count_sql );
@@ -5216,7 +5216,7 @@ function eme_ajax_groups_list() {
 
 	$start    = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 	$pagesize = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
+	$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
 	$sql      = "SELECT * FROM $table $sorting LIMIT $start,$pagesize";
 	$groups   = $wpdb->get_results( $sql, ARRAY_A );
 	$records  = [];

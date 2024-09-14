@@ -876,7 +876,7 @@ function eme_ajax_countries_list() {
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
+		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
 		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
 			$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
 		} else {
@@ -908,7 +908,7 @@ function eme_ajax_states_list() {
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table";
 		$recordCount = $wpdb->get_var( $sql );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
+		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
 		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
 			$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
 		} else {

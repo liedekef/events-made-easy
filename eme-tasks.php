@@ -1931,7 +1931,7 @@ function eme_ajax_task_signups_list() {
 		$recordCount = $wpdb->get_var( $sql );
 		$start       = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
 		$pagesize    = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : 'ORDER BY task_start ASC, task_end ASC, task_seq ASC';
+		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : 'ORDER BY task_start ASC, task_end ASC, task_seq ASC';
 		$sql         = "SELECT signups.*, events.event_id,events.event_name, events.event_start, events.event_end, people.person_id,people.lastname, people.firstname, people.email, tasks.name AS task_name, task_start, task_end FROM $signups_table AS signups $join $where $sorting LIMIT $start,$pagesize";
 		$rows        = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {

@@ -2755,8 +2755,8 @@ function eme_sanitize_email( $email ) {
 	return $email;
 }
 
-// same as wp function, but also allow the "." for table names
-function eme_sanitize_sql_orderby( $orderby ) {
+// same as wp sanitize_sql_orderby function, but also allow the "." for table names
+function eme_verify_sql_orderby( $orderby ) {
 	if ( preg_match( '/^\s*(([a-z0-9_\.]+|`[a-z0-9_\.]+`)(\s+(ASC|DESC))?\s*(,\s*(?=[a-z0-9_\.`])|$))+$/i', $orderby ) || preg_match( '/^\s*RAND\(\s*\)\s*$/i', $orderby ) ) {
 		return $orderby;
 	}
@@ -3225,7 +3225,7 @@ function eme_ajax_record_list( $tablename, $cap ) {
 	if ( current_user_can( get_option( $cap ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_sanitize_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( $_REQUEST['jtSorting'] ) : '';
+		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( $_REQUEST['jtSorting'] ) : '';
 		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
 			$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
 		} else {

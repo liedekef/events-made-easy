@@ -4174,7 +4174,11 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 		$extra_conditions = '(' . join( ' AND ', $extra_conditions_arr ) . ')';
 	}
 
-	$this_page_url = get_permalink( $post->ID );
+	if (!is_null($post)) {
+		$this_page_url = get_permalink( $post->ID );
+	} else {
+		$this_page_url = $_SERVER['REQUEST_URI'];
+	}
 	$prev_text   = '';
 	$next_text   = '';
 	$limit_start = 0;

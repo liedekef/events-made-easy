@@ -2245,7 +2245,9 @@ function eme_emails_page() {
 	<input type="text" class="clearable" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=10>
 	<button id="ReportLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter', 'events-made-easy' ); ?></button>
 	</form>
+	<!--
 	<p><?php esc_html_e( 'Remark: the list of recipients below is just an indication based on the moment the mailing was created. Just before the mailing will actually start, this list will be refreshed based on the conditions the mailing was created with.', 'events-made-easy' ); ?></p>
+	-->
 	<div id="MailingReportTableContainer"></div>
 		</div>
 		</div>
@@ -2821,7 +2823,7 @@ function eme_ajax_mailings_div() {
                 } else {
                         print '<td>' . eme_esc_html( $extra ) . '</td>';
                 }
-		if ( $mailing['status'] == 'archived' ) {
+		if ( $mailing['status'] == 'archived' || $mailing['status'] == 'planned' ) {
 			print '<td>&nbsp;</td>';
 		} else {
 			print "<td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=report_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Report', 'events-made-easy' ) . '</a></td>';

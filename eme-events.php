@@ -4174,17 +4174,14 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 		$extra_conditions = '(' . join( ' AND ', $extra_conditions_arr ) . ')';
 	}
 
-	if (!is_null($post)) {
-		$this_page_url = get_permalink( $post->ID );
-	} else {
-		$this_page_url = $_SERVER['REQUEST_URI'];
-	}
+	$this_page_url = ''; // this var is only used when paging=1, so not needed but to be sure
 	$prev_text   = '';
 	$next_text   = '';
 	$limit_start = 0;
 	$limit_end   = 0;
 
 	if ( $paging == 1 ) {
+		$this_page_url = get_permalink($post->ID);
 		// we add possible fields from the filter section
 		$eme_filters['eme_eventAction']    = 1;
 		$eme_filters['eme_cat_filter']     = 1;

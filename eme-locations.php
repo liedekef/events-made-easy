@@ -1510,6 +1510,7 @@ function eme_location_has_events( $location_id ) {
 }
 
 function eme_global_map_shortcode( $atts ) {
+	global $post;
 	eme_enqueue_frontend();
 
 	if ( get_option( 'eme_map_is_active' ) ) {
@@ -1656,9 +1657,9 @@ function eme_global_map_shortcode( $atts ) {
 		// get the paging output ready
 		if ( $paging == 1 ) {
 			$pagination_top = "<div id='div_locations-pagination-top_$id_base' class='locations-pagination-top'> ";
-			$this_page_url  = $_SERVER['REQUEST_URI'];
+			$this_page_url = get_permalink($post->ID);
 			// remove the offset info
-			$this_page_url = remove_query_arg( 'eme_offset', $this_page_url );
+			// $this_page_url = remove_query_arg( 'eme_offset', $this_page_url );
 			if ( $prev_text != '' ) {
 				$pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
 			}

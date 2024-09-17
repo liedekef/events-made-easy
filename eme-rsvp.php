@@ -5289,12 +5289,23 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 		$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
 		$extrafieldsearchable_arr[] = $formfield['searchable'];
 	}
-	// add the formfields of events as last
+	// add the formfields of events and people last
 	// first a separator (will be used in the js)
 	$formfields               = eme_get_formfields( '', 'events' );
 	if (!empty($formfields)) {
 		$extrafields_arr[]          = 'SEPARATOR';
 		$extrafieldnames_arr[]      = '<b>'.__('Event fields','events-made-easy').'</b>';
+		$extrafieldsearchable_arr[] = 0;
+		foreach ( $formfields as $formfield ) {
+			$extrafields_arr[]          = $formfield['field_id'];
+			$extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
+			$extrafieldsearchable_arr[] = $formfield['searchable'];
+		}
+	}
+	$formfields               = eme_get_formfields( '', 'people' );
+	if (!empty($formfields)) {
+		$extrafields_arr[]          = 'SEPARATOR';
+		$extrafieldnames_arr[]      = '<b>'.__('People fields','events-made-easy').'</b>';
 		$extrafieldsearchable_arr[] = 0;
 		foreach ( $formfields as $formfield ) {
 			$extrafields_arr[]          = $formfield['field_id'];
@@ -5713,6 +5724,7 @@ function eme_ajax_bookings_list() {
 	foreach ( $bookings as $booking ) {
 		$line     = [];
 		$event_id = $booking['event_id'];
+		$person_id = $booking['person_id'];
 		$event    = eme_get_event( $event_id );
 		$answers  = eme_get_event_answers( $event_id );
 		$answers  = array_merge($answers,eme_get_booking_answers( $booking['booking_id'] ));
@@ -5730,9 +5742,11 @@ function eme_ajax_bookings_list() {
 				$line['wp_user'] = '';
 			}
 			$line['booker'] = "<a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person['person_id'] ) . "' title='" . __( 'Click the name of the booker in order to see and/or edit the details of the booker.', 'events-made-easy' ) . "'>" . eme_esc_html( $person_info_shown ) . '</a>';
+			$line['person_id'] = $booking['person_id'];
 		} else {
 			$line['booker']  = __( 'Anonymous', 'events-made-easy' );
 			$line['wp_user'] = '';
+			$line['person_id'] = '';
 		}
 
 		$date_obj             = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );

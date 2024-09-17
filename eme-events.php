@@ -9864,6 +9864,7 @@ function eme_admin_enqueue_js() {
 			'translate_bookings'                   => __( 'Bookings', 'events-made-easy' ),
 			'translate_id'                         => __( 'ID', 'events-made-easy' ),
 			'translate_event_id'                   => __( 'Event ID', 'events-made-easy' ),
+			'translate_person_id'                  => __( 'Person ID', 'events-made-easy' ),
 			'translate_rsvp'                       => __( 'RSVP', 'events-made-easy' ),
 			'translate_eventinfo'                  => __( 'Event info', 'events-made-easy' ),
 			'translate_datetime'                   => __( 'Date and time', 'events-made-easy' ),

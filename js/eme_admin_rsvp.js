@@ -16,6 +16,11 @@ jQuery(document).ready(function ($) {
                     sorting: false,
 	            visibility: 'hidden'
                 },
+                person_id: {
+                    title: emersvp.translate_person_id,
+                    sorting: false,
+	            visibility: 'hidden'
+                },
                 rsvp: {
                     title: emersvp.translate_rsvp,
                     sorting: false,

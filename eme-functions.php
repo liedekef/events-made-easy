@@ -1864,13 +1864,8 @@ function eme_is_integer_array( $only_integers ) {
 }
 
 function eme_is_list_of_int( $text ) {
-	if ( strstr( $text, ',' ) ) {
-		$id_arr = explode( ',', $text );
-		return eme_is_integer_array( $id_arr );
-	} elseif ( ! is_int( $text ) ) {
-		return false;
-	}
-	return true;
+	$id_arr = explode( ',', $text );
+	return eme_is_integer_array( $id_arr );
 }
 
 function eme_array_remove_empty_elements( $arr ) {

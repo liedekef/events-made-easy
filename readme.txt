@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 2.5.11
+Stable tag: 2.5.12
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.12 (2024/09/17) =
+* Fix a small check causing membership stats to not work as expected
+
 = 2.5.11 (2024/09/16) =
 * Added task option to limit task signups to one per event per person. The task signup checkbox then becomes a radiobox too
 * Added task formfield placeholder #_TASKHTMLID. This can be used in the tast formfield to e.g. enclose extra task info in a html-label in the task signup form format:

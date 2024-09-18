@@ -1020,6 +1020,7 @@ function eme_csv_booking_report( $event_id ) {
 	}
 	$line   = [];
 	$line[] = __( 'ID', 'events-made-easy' );
+	$line[] = __( 'Person ID', 'events-made-easy' );
 	$line[] = __( 'Last name', 'events-made-easy' );
 	$line[] = __( 'First name', 'events-made-easy' );
 	$line[] = get_option( 'eme_address1_string' );
@@ -1030,8 +1031,11 @@ function eme_csv_booking_report( $event_id ) {
 	$line[] = __( 'Country', 'events-made-easy' );
 	$line[] = __( 'Email', 'events-made-easy' );
 	$line[] = __( 'Phone number', 'events-made-easy' );
+	$line[] = __( 'Date of birth', 'events-made-easy' );
+	$line[] = __( 'Place of birth', 'events-made-easy' );
 	$line[] = __( 'MassMail', 'events-made-easy' );
 	$line[] = __( 'Newsletter', 'events-made-easy' );
+	$line[] = __( 'Birthday email', 'events-made-easy' );
 	foreach ( $people_answer_fieldids as $field_id ) {
 		$tmp_formfield = eme_get_formfield( $field_id );
 		if ( ! empty( $tmp_formfield ) ) {
@@ -1094,6 +1098,7 @@ function eme_csv_booking_report( $event_id ) {
 		}
 
 		$line[] = $booking['booking_id'];
+		$line[] = $booking['person_id'];
 		$line[] = $person['lastname'];
 		$line[] = $person['firstname'];
 		$line[] = $person['address1'];
@@ -1104,8 +1109,11 @@ function eme_csv_booking_report( $event_id ) {
 		$line[] = eme_get_country_name( $person['country_code'] );
 		$line[] = $person['email'];
 		$line[] = $person['phone'];
+		$line[] = $person['birthdate'];
+		$line[] = $person['birthplace'];
 		$line[] = $person['massmail'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 		$line[] = $person['newsletter'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+		$line[] = $person['bd_email'] ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
 		foreach ( $people_answer_fieldids as $field_id ) {
 			$found = 0;
 			foreach ( $person_answers as $answer ) {

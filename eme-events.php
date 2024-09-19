@@ -2177,6 +2177,35 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 					}
 				}
 			}
+		} elseif ( preg_match( '/#_USER_GROUPS/', $result ) ) {
+			if ( $wp_id ) {
+				$t_person = eme_get_person_by_wp_id( $wp_id );
+			} else {
+				$t_person = '';
+			}
+                        if (!empty($t_person) && !empty($t_person['person_id']))
+                                $replacement = join( ', ', eme_get_persongroup_names( $t_person['person_id'] ) );
+                        if ( $target == 'html' ) {
+                                $replacement = eme_esc_html( $replacement );
+                                $replacement = apply_filters( 'eme_general', $replacement );
+                        } else {
+                                $replacement = apply_filters( 'eme_text', $replacement );
+                        }
+                } elseif ( preg_match( '/#_USER_MEMBERSHIPS/', $result ) ) {
+			if ( $wp_id ) {
+				$t_person = eme_get_person_by_wp_id( $wp_id );
+			} else {
+				$t_person = '';
+			}
+                        if (!empty($t_person) && !empty($t_person['person_id']))
+                                $replacement = eme_get_activemembership_names_by_personid( $t_person['person_id'] );
+                        if ( $target == 'html' ) {
+                                $replacement = eme_esc_html( $replacement );
+                                $replacement = apply_filters( 'eme_general', $replacement );
+                        } else {
+                                $replacement = apply_filters( 'eme_text', $replacement );
+                        }
+
 		} elseif ( preg_match( '/#_INCLUDE_TEMPLATE\{(.+?)\}$/', $result, $matches ) ) {
 			$template_id = $matches[1];
 			if ( preg_match( '/#_/', $template_id ) ) {

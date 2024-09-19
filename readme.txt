@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.13 (2024//) =
+* Add generic placeholders #_USER_GROUPS and #_USER_MEMBERSHIPS
+
 = 2.5.12 (2024/09/17) =
 * Fix a small check causing membership stats to not work as expected
 

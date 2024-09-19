@@ -2905,7 +2905,6 @@ function eme_get_person_by_wp_id( $wp_id ) {
 		$person['properties'] = eme_init_person_props( eme_unserialize( $person['properties'] ) );
 	} else {
 		// imagine there is no user yet, but someone matching with this info (lastname, firstname, email), then we add the wp id to that existing user
-		// if still no EME person matching: take the info from the WP profile and return a basis $person array if use_wp_info=1
 		$person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
 		if ( ! $person ) {
 			$person = eme_get_person_by_email_only( $email );

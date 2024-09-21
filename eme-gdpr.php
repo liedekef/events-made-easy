@@ -530,7 +530,7 @@ function eme_show_personal_info( $email ) {
  * Add the suggested privacy policy text to the policy postbox.
  */
 function eme_gdpr_add_suggested_privacy_content() {
-		$content =
+	$content =
 		'<h3>' . __( 'What personal data we collect and why we collect it', 'events-made-easy' ) . '</h3>' .
 		'<p>' . __( 'EME collects data based on the RSVP and member forms and optionally extra info in the backend for people. These are configured using by the person operating the site and thus should be explained in a global manner.', 'events-made-easy' ) . '</p>' .
 		'<p>' . __( 'The data export will not show the info stored by RSVP forms if that info was unique to that event, however upon deletion all that data will be removed too.', 'events-made-easy' ) . '</p>' .

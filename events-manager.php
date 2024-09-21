@@ -286,7 +286,6 @@ $myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
 // Create the Manage Events and the Options submenus
 add_action( 'admin_menu', 'eme_create_events_submenu' );
 function eme_create_events_submenu() {
-	
 	# just in case: make sure the Settings page can be reached if something is not correct with the security settings
 	if ( get_option( 'eme_cap_settings' ) == '' ) {
 		$cap_settings = DEFAULT_CAP_SETTINGS;

@@ -522,7 +522,6 @@ function eme_get_categories_shortcode( $atts ) {
 }
 
 function eme_replace_categories_placeholders( $format, $cat = '', $target = 'html', $do_shortcode = 1, $lang = '' ) {
-
 	if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
 		$target = 'html';
 	}

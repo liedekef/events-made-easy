@@ -360,7 +360,6 @@ function eme_check_task_signup_overlap( $task, $person_id ) {
 
 // for CRON
 function eme_tasks_send_signup_reminders() {
-	
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	// this gets us future and ongoing events with tasks enabled
 	$events = eme_get_events( extra_conditions: 'event_tasks=1' );

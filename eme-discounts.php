@@ -1727,6 +1727,7 @@ function eme_ajax_discounts_select2() {
 	print wp_json_encode( $jTableResult );
 	wp_die();
 }
+
 function eme_ajax_dgroups_select2() {
 	global $wpdb;
 
@@ -1824,6 +1825,7 @@ function eme_ajax_manage_discounts() {
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }
+
 function eme_ajax_manage_discountgroups() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if (! current_user_can( get_option( 'eme_cap_discounts' ) ) ) {

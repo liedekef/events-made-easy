@@ -4815,7 +4815,6 @@ function eme_get_people_export_fieldids() {
 }
 
 function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids ) {
-	
 	$eme_dyndata_conditions = eme_get_dyndata_conditions();
 	?>
 	<div id="div_dyndata">

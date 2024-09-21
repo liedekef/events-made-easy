@@ -2852,7 +2852,6 @@ function eme_get_approved_multiseats( $event_id ) {
 }
 
 function eme_get_young_pending_seats( $event_id, $exclude_booking_id = 0 ) {
-	
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$old_date         = $eme_date_obj_now->minusMinutes( 5 )->getDateTime();
 	return eme_get_pending_seats( $event_id, $old_date, $exclude_booking_id );
@@ -2891,11 +2890,11 @@ function eme_get_total_seats( $event_id ) {
 }
 
 function eme_get_young_pending_multiseats( $event_id, $exclude_booking_id = 0 ) {
-	
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$old_date         = $eme_date_obj_now->minusMinutes( 5 )->getDateTime();
 	return eme_get_pending_multiseats( $event_id, $old_date, $exclude_booking_id );
 }
+
 function eme_get_pending_multiseats( $event_id, $old_date = '', $exclude_booking_id = 0 ) {
 	global $wpdb;
 	$bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;

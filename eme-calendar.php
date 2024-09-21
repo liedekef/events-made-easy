@@ -5,7 +5,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_get_calendar_shortcode( $atts ) {
-	
 	eme_enqueue_frontend();
 	extract(
 	    shortcode_atts(

@@ -597,7 +597,6 @@ function eme_enqueue_fdatepicker() {
 }
 
 function eme_enqueue_datetimepicker() {
-	
 	if ( get_option( 'eme_load_js_in_header' ) ) {
 		$load_js_in_footer = false;
 	} else {

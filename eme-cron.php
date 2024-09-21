@@ -68,7 +68,6 @@ function eme_plan_queue_mails() {
 
 add_action( 'eme_cron_send_new_events', 'eme_cron_send_new_events_function' );
 function eme_cron_send_new_events_function() {
-	
 	// if not data master, then don't do this
 	if ( ! eme_is_datamaster() ) {
 		return;

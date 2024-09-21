@@ -1342,7 +1342,6 @@ function eme_events_count_for( $date ) {
 
 // filter function to call the event page when appropriate
 function eme_filter_events_page( $data ) {
-
 	global $wp_current_filter;
 	// we need to make sure we do this only once. Reason being: other plugins can call the_content as well
 	// Suppose you add a shortcode from another plugin to the detail part of an event and that other plugin
@@ -6724,7 +6723,6 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 }
 
 function eme_validate_event( $event ) {
-
 	$event_properties = $event['event_properties'];
 
 	$required_fields = [
@@ -7085,7 +7083,6 @@ function eme_meta_box_div_event_name( $event, $edit_recurrence = 0 ) {
 }
 
 function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence = 0 ) {
-	
 	// check if the user wants AM/PM or 24 hour notation
 	// make sure that escaped characters are filtered out first
 	$start_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
@@ -7429,7 +7426,6 @@ function eme_meta_box_div_event_dyndata_allfields( $dyndata_all_fields, $templat
 }
 
 function eme_meta_box_div_event_registration_recorded_ok_html( $event, $templates_array ) {
-	
 	if ( eme_is_empty_string( $event['event_registration_recorded_ok_html'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -7461,7 +7457,6 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
 }
 
 function eme_meta_box_div_event_registration_approved_email( $event, $templates_array ) {
-	
 	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_respondent_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7607,7 +7602,6 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 }
 
 function eme_meta_box_div_event_registration_userpending_email( $event, $templates_array ) {
-	
 	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_userpending_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7665,7 +7659,6 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
 }
 
 function eme_meta_box_div_event_registration_pending_email( $event, $templates_array ) {
-	
 	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7861,7 +7854,6 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
 }
 
 function eme_meta_box_div_event_registration_reminder_email( $event, $templates_array ) {
-	
 	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_reminder_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -8197,7 +8189,6 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 }
 
 function eme_meta_box_div_event_registration_trashed_email( $event, $templates_array ) {
-	
 	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_trashed_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -8249,7 +8240,6 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
 }
 
 function eme_meta_box_div_event_registration_form_format( $event, $templates_array ) {
-	
 	if ( eme_is_empty_string( $event['event_registration_form_format'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -8278,7 +8268,6 @@ function eme_meta_box_div_event_registration_form_format( $event, $templates_arr
 }
 
 function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
-	
 	if ( eme_is_empty_string( $event['event_cancel_form_format'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
 	} else {
@@ -8308,7 +8297,6 @@ function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
 }
 
 function eme_meta_box_div_event_captcha_settings( $event ) {
-	
 	$eme_prop_captcha_only_logged_out   = ( $event['event_properties']['captcha_only_logged_out'] ) ? "checked='checked'" : '';
 	$selected_captcha   = $event['event_properties']['selected_captcha'];
 	$configured_captchas = eme_get_configured_captchas();
@@ -8608,7 +8596,6 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 }
 
 function eme_meta_box_div_attendance_info( $event, $templates_array ) {
-	
 	$eme_prop_attendancerecord = ( $event['event_properties']['attendancerecord'] ) ? "checked='checked'" : '';
 	if ( eme_is_empty_string( $event['event_properties']['attendance_unauth_scan_tpl'] ) ) {
 		$showhide_style_unauth = 'style="display:none; width:100%;"';

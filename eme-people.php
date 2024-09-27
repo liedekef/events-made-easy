@@ -3035,7 +3035,9 @@ function eme_people_birthday_emails() {
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$members_table    = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
+	$year_month_day   = $eme_date_obj_now->format( 'Y-m-d' );
 	$month_day        = $eme_date_obj_now->format( 'm-d' );
+	$month            = $eme_date_obj_now->format( 'm' );
 	// let's do the leap year logic outside the db
 	if ( get_option( 'eme_bd_email_members_only' ) ) {
 		$join          = "LEFT JOIN $members_table ON $people_table.person_id=$members_table.person_id";
@@ -3046,12 +3048,17 @@ function eme_people_birthday_emails() {
 		$join         = '';
 		$members_only = '';
 	}
-	if ( $month_day == '03-01' ) {
+
+	if ( $month == '02' ) {
+		// in feb: we check if someones birthday is now
+		// but also the special case: if someone was born on 02-29
+		// 	we check if the current day of the month is the last day of the month
+		// 	so if this year the last day of feb is 02-28, we also take those with 02-29 along
 		$sql = "SELECT DISTINCT $people_table.person_id FROM $people_table $join
 			WHERE 
 			$people_table.bd_email=1
-			AND (DATE_FORMAT(birthdate,'%m-%d') = '$month_day'
-			OR DATE_FORMAT(birthdate,'%m-%d') = '02-29')
+			AND ( DATE_FORMAT(birthdate,'%m-%d') = '$month_day'
+			      OR (DATE_FORMAT(birthdate,'%m-%d') = '02-29' AND LAST_DAY($year_month_day) = '$year_month_day'))
 			AND $people_table.status=" . EME_PEOPLE_STATUS_ACTIVE . "
 			$members_only";
 	} else {

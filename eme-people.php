@@ -1649,7 +1649,7 @@ function eme_person_verify_layout() {
 				} else {
 					print '<td>' . esc_html__('Non-existing WP user linked!!','events-made-easy' ) . '</td>';
 				}
-				$membership_names = eme_get_activemembership_names_by_personid( $person_id );
+				$membership_names = eme_get_linked_activemembership_names_by_personid( $person_id );
 				print "<td>$membership_names</td>";
 				$future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
 				if (!empty($future_bookings)) {
@@ -1692,7 +1692,7 @@ function eme_person_verify_layout() {
 					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['lastname'] ) . '</a></td>';
 					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['firstname'] ) . '</a></td>';
 					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['email'] ) . '</a></td>';
-					$membership_names = eme_get_activemembership_names_by_personid( $person_id );
+					$membership_names = eme_get_linked_activemembership_names_by_personid( $person_id );
 					print "<td>$membership_names</td>";
 					$future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
 					if (!empty($future_bookings)) {
@@ -1735,7 +1735,7 @@ function eme_person_verify_layout() {
 					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['lastname'] ) . '</a></td>';
 					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['firstname'] ) . '</a></td>';
 					print "<td><a href='" . admin_url( 'admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=' . $person_id ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( $row['email'] ) . '</a></td>';
-					$membership_names = eme_get_activemembership_names_by_personid( $person_id );
+					$membership_names = eme_get_linked_activemembership_names_by_personid( $person_id );
 					print "<td>$membership_names</td>";
 					$future_bookings = eme_get_bookings_by_person_id( $person_id, "future" );
 					if (!empty($future_bookings)) {
@@ -2416,7 +2416,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		</tr>
 	<?php 
 		if ($action == 'edit' ) {
-			$membership_names = eme_get_activemembership_names_by_personid( $person['person_id'] );
+			$membership_names = eme_get_linked_activemembership_names_by_personid( $person['person_id'] );
 		} else {
 			$membership_names = '';
 		}
@@ -4361,7 +4361,7 @@ function eme_user_profile( $user ) {
 		</tr>
 		<tr>
 		<th><label for="eme_bookings"><?php esc_html_e( 'Bookings made for future events', 'events-made-easy' ); ?></label></th>
-	<td><?php echo eme_get_bookings_list_for_wp_id( $user->ID, 'future', $template ); ?>
+		<td><?php echo eme_get_bookings_list_for_wp_id( $user->ID, 'future', $template ); ?>
 		</tr>
 		<tr>
 		<th><label for="eme_memberships"><?php esc_html_e( 'Active memberships', 'events-made-easy' ); ?></label></th>

@@ -643,6 +643,21 @@ function eme_get_activemembership_names_by_personid( $person_id ) {
 	return $memberships_list;
 }
 
+function eme_get_linked_activemembership_names_by_personid( $person_id ) {
+	global $wpdb;
+	$status_active     = EME_MEMBER_STATUS_ACTIVE;
+	$status_grace      = EME_MEMBER_STATUS_GRACE;
+	$members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+	$memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
+	$sql               = $wpdb->prepare( "SELECT DISTINCT memberships.name, members.member_id FROM $memberships_table AS memberships,$members_table AS members WHERE memberships.membership_id=members.membership_id AND members.person_id = %d AND members.status IN ($status_active,$status_grace)", $person_id );
+	$rows = $wpdb->get_results( $sql, ARRAY_A );
+	$memberships_list = '';
+	foreach ($rows as $item) {
+		$memberships_list .= "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a><br>';
+	}
+	return $memberships_list;
+}
+
 function eme_get_active_membershipids_by_wpid( $wp_id ) {
 	global $wpdb;
 	$status_active = EME_MEMBER_STATUS_ACTIVE;

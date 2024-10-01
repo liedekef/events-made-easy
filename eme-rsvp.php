@@ -6087,10 +6087,18 @@ function eme_ajax_action_rsvp_markpaidandapprove( $ids_arr ) {
 		if ( $booking['booking_paid'] && $booking['status'] == EME_RSVP_STATUS_APPROVED ) {
 			continue;
 		}
+		$paid_mail_gets_precedence = 0;
 		if ( $booking['booking_paid'] ) {
 			$res = eme_approve_booking( $booking_id );
 		} else {
 			$res = eme_mark_booking_paid_approved( $booking );
+			// for auto_approval: act as if we just marked it as paid (so the payment mail gets precedence)
+			// if a ticket is to be sent upon payment: we send the payment mail too
+			// in any other case we send the approval mail
+			$event = eme_get_event( $booking['event_id'] );
+			if ( $event['event_properties']['auto_approve'] || $event['event_properties']['ticket_template_id'] && $event['event_properties']['ticket_mail'] == 'payment') {
+				$paid_mail_gets_precedence = 1;
+			}
 		}
 		if ( $res ) {
 			$booking = eme_get_booking( $booking_id );
@@ -6098,7 +6106,12 @@ function eme_ajax_action_rsvp_markpaidandapprove( $ids_arr ) {
 				do_action( 'eme_approve_rsvp_action', $booking );
 			}
 			// if we need to send out approval mails, we don't send out the paid mails too
-			if ( $mailing_approved ) {
+			if ( $mailing_paid && $paid_mail_gets_precedence ) {
+				$res2 = eme_email_booking_action( $booking, 'paidBooking' );
+				if ( ! $res2 ) {
+					$mail_ok = 0;
+				}
+			} elseif ( $mailing_approved ) {
 				$res2 = eme_email_booking_action( $booking, 'approveBooking' );
 				if ( ! $res2 ) {
 					$mail_ok = 0;

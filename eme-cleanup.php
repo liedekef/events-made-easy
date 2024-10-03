@@ -11,7 +11,7 @@ function eme_cleanup_people() {
 	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$tasksignup_table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-	$sql              = $wpdb->prepare( "SELECT $people_table.person_id FROM $people_table WHERE NOT EXISTS (SELECT 1 FROM $bookings_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $members_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $usergroups_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $tasksignup_table WHERE $bookings_table.person_id=$people_table.person_id) AND status !=%d ", EME_PEOPLE_STATUS_TRASH );
+	$sql              = $wpdb->prepare( "SELECT $people_table.person_id FROM $people_table WHERE NOT EXISTS (SELECT 1 FROM $bookings_table WHERE $bookings_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $members_table WHERE $members_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $usergroups_table WHERE $usergroups_table.person_id=$people_table.person_id) AND NOT EXISTS (SELECT 1 FROM $tasksignup_table WHERE $tasksignup_table.person_id=$people_table.person_id) AND status !=%d ", EME_PEOPLE_STATUS_TRASH );
 	$person_ids       = $wpdb->get_col( $sql );
 	$count            = count( $person_ids );
 	$tmp_ids          = join( ',', $person_ids );

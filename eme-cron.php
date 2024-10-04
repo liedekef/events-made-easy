@@ -184,6 +184,7 @@ function eme_cron_events_daily_actions() {
 		return;
 	}
 	eme_tasks_send_signup_reminders();
+	eme_todos_send_reminders();
 	eme_rsvp_send_pending_reminders();
 	eme_rsvp_send_approved_reminders();
 	$recurrences = eme_get_perpetual_recurrences();

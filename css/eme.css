@@ -45,6 +45,18 @@
 	font-size:.7em;
 }
 
+.eme_todos {
+	width: 100%;
+}
+
+textarea.eme_fullresizable {
+	resize: both; 
+	width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
 table.eme_event_admin_table td {
 	vertical-align: top;
 }

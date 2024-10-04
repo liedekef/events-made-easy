@@ -201,6 +201,14 @@ jQuery(document).ready( function($) {
 		axis: 'y'
 	});
 
+	$("#eme_todos_tbody").sortable({
+		distance: 5,
+		opacity: 0.6,
+		cursor: 'move',
+		handle: '.eme-sortable-handle',
+		axis: 'y'
+	});
+
 	// since we don't clone the events when adding a row (because that causes trouble for cloned datepickers),
 	//   we need to re-add the events on the new row (like the datepickers and the add/remove)
 	//   So we'll define the eme_add_task_function/eme_remove_task_function
@@ -350,6 +358,103 @@ jQuery(document).ready( function($) {
 			myId = myId +1;
 		}
 	});
+
+	// since we don't clone the events when adding a row (because that causes trouble for cloned datepickers),
+	//   we need to re-add the events on the new row (like the datepickers and the add/remove)
+	//   So we'll define the eme_add_todo_function/eme_remove_todo_function
+	$('.eme_add_todo').on("click",function(event) {
+		event.preventDefault();
+		eme_add_todo_function($(this));
+	});
+	$('.eme_remove_todo').on("click",function(event) {
+		event.preventDefault();
+		eme_remove_todo_function($(this));
+	});
+	function eme_add_todo_function(myel) {
+		var selectedItem = $(myel.parent().parent().get(0));
+                var currentId = selectedItem.attr('id').replace('eme_row_todo_','');
+                //Get All meta rows
+                //var metas = $('#eme_todos_tbody').children();
+                //Copy first row and change values, but not the events (that causes trouble for cloned datepickers)
+                //var metaCopy = $(metas[0]).clone(false);
+		var metaCopy = selectedItem.clone(false);
+		var newId = 0;
+		// make sure the newId doesn't exist yet
+		while ($('#eme_row_todo_'+newId).length) {
+			newId++;
+		}
+		var currentId = metaCopy.attr('id').replace('eme_row_todo_','');
+		metaCopy.attr('id', 'eme_row_todo_'+newId);
+		metaCopy.find('a').attr('rel', newId);
+		// lets change the name, id and value for all text fields
+		var metafields=['todo_id','name','todo_offset','description'];
+		var arrayLength = metafields.length;
+		for (var i = 0; i < arrayLength; i++) {
+		   metaCopy.find('[name="eme_todos['+currentId+']['+metafields[i]+']"]').attr({
+				'name':'eme_todos['+newId+']['+metafields[i]+']' ,
+				'id':'eme_todos['+newId+']['+metafields[i]+']'
+		   });
+		}
+		// set all values to defaults
+		metaCopy.find('[name="eme_todos['+newId+'][name]"]').val('');
+		metaCopy.find('[name="eme_todos['+newId+'][todo_offset]"]').val('0');
+		metaCopy.find('[name="eme_todos['+newId+'][description]"]').val('');
+		// set the html of the parent of the todo_id field to empty
+		// this also removes the hidden todo_id field, it will dynamically added and set by EME
+		metaCopy.find('[name="eme_todos['+newId+'][todo_id]"]').parent().html('');
+		// Insert at end of table body
+		$('#eme_todos_tbody').append(metaCopy);
+		// Now we add/remove events
+		$('#eme_row_todo_'+newId+' .eme_add_todo').on("click",function(event) {
+			event.preventDefault();
+			eme_add_todo_function($(this));
+		});
+		$('#eme_row_todo_'+newId+' .eme_remove_todo').on("click",function(event) {
+			event.preventDefault();
+			eme_remove_todo_function($(this));
+		});
+	}
+	
+	function eme_remove_todo_function(myel) {
+		//Get All meta rows
+		var metas = $('#eme_todos_tbody').children();
+		//Only remove if there's more than 1 meta tag
+		if(metas.length > 1){
+			//Remove the item
+			$(myel.parent().parent().get(0)).remove();
+		} else {
+			// Get first row and change values (no clone this time)
+			var metaCopy = $(myel.parent().parent().get(0));
+			var newId = 0;
+			// make sure the newId doesn't exist yet
+			while ($('#eme_row_todo_'+newId).length) {
+				newId++;
+			}
+			var currentId = metaCopy.attr('id').replace('eme_row_todo_','');
+			metaCopy.attr('id', 'eme_row_todo_'+newId);
+			metaCopy.find('a').attr('rel', newId);
+			// lets change the name, id and value for all text fields
+			var metafields=['todo_id','name','todo_offset','description'];
+			var arrayLength = metafields.length;
+			for (var i = 0; i < arrayLength; i++) {
+				metaCopy.find('[name="eme_todos['+currentId+']['+metafields[i]+']"]').attr({
+					'name':'eme_todos['+newId+']['+metafields[i]+']' ,
+					'id':'eme_todos['+newId+']['+metafields[i]+']'
+				});
+			}
+			// set all values to defaults
+			metaCopy.find('[name="eme_todos['+newId+'][name]"]').val('');
+			metaCopy.find('[name="eme_todos['+newId+'][todo_offset]"]').val('0');
+			metaCopy.find('[name="eme_todos['+newId+'][description]"]').val('');
+			// set the html of the parent of the todo_id field to empty
+			// this also removes the hidden todo_id field, it will dynamically added and set by EME
+			metaCopy.find('[name="eme_todos['+newId+'][todo_id]"]').parent().html('');
+			// since it is the first row, don't put stuff as required, it would prevent form submit
+			for (var i = 0; i < arrayLength; i++) {
+				metaCopy.find('[name="eme_todos['+newId+']['+metafields[i]+']"]').prop('required',false);
+			}
+		}
+	}
 
 	$('.showhidebutton').on("click",function (e) {
 		e.preventDefault();

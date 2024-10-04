@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.13 (2024//) =
 * Add generic placeholders #_USER_GROUPS and #_USER_MEMBERSHIPS
+* Add list of todos for an event. Each passed todo will send a mail to the contact person so you can use this to plan your event and not forget things
 
 = 2.5.12 (2024/09/17) =
 * Fix a small check causing membership stats to not work as expected

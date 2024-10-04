@@ -46,7 +46,7 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
 			$eme_task['task_start'] = $eme_date_obj_start->addDays( $day_difference )->getDateTime();
 			$eme_task['task_end']   = $eme_date_obj_end->addDays( $day_difference )->getDateTime();
 		}
-		$eme_task['description'] = eme_sanitize_request( $eme_task['description'] );
+		$eme_task['description'] = eme_sanitize_textarea( $eme_task['description'] );
 		// we check for task nbr to know if we need an update or insert
 		if ( empty( $eme_task['task_nbr'] ) ) {
 			$eme_task['task_nbr'] = $next_task_nbr;
@@ -786,7 +786,7 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 				<input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][spaces]" name="eme_tasks[<?php echo $count; ?>][spaces]" size="12" aria-label="spaces" value="<?php echo $task['spaces']; ?>">
 				</td>
 				<td>
-				<textarea id="eme_tasks[<?php echo $count; ?>][description]" name="eme_tasks[<?php echo $count; ?>][description]" ><?php echo eme_esc_html( $task['description'] ); ?></textarea>
+				<textarea class="eme_fullresizable" id="eme_tasks[<?php echo $count; ?>][description]" name="eme_tasks[<?php echo $count; ?>][description]" ><?php echo eme_esc_html( $task['description'] ); ?></textarea>
 				</td>
 				<td>
 				<a href="#" class='eme_remove_task'><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/cross.png' alt='" . esc_attr__( 'Remove', 'events-made-easy' ) . "' title='" . esc_attr__( 'Remove', 'events-made-easy' ) . "'>"; ?></a><a href="#" class="eme_add_task"><?php echo "<img src='" . esc_url(EME_PLUGIN_URL) . "images/plus_16.png' alt='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "' title='" . esc_attr__( 'Add new task', 'events-made-easy' ) . "'>"; ?></a>

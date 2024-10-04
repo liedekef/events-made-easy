@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 400 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 401 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -33,6 +33,7 @@ define( 'EME_MEMBERSHIPS_CF_TBNAME', 'eme_memberships_cf' );
 define( 'EME_COUNTRIES_TBNAME', 'eme_countries' );
 define( 'EME_STATES_TBNAME', 'eme_states' );
 define( 'EME_ATTENDANCES_TBNAME', 'eme_attendances' );
+define( 'EME_TODOS_TBNAME', 'eme_todos' );
 define( 'EME_TASKS_TBNAME', 'eme_tasks' );
 define( 'EME_TASK_SIGNUPS_TBNAME', 'eme_task_signups' );
 
@@ -230,6 +231,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 		eme_drop_table( $db_prefix . EME_COUNTRIES_TBNAME );
 		eme_drop_table( $db_prefix . EME_STATES_TBNAME );
 		eme_drop_table( $db_prefix . EME_ATTENDANCES_TBNAME );
+		eme_drop_table( $db_prefix . EME_TODOS_TBNAME );
 		eme_drop_table( $db_prefix . EME_TASKS_TBNAME );
 		eme_drop_table( $db_prefix . EME_TASK_SIGNUPS_TBNAME );
 	}
@@ -305,6 +307,7 @@ function eme_create_tables( $db_version ) {
 	eme_create_states_table( $charset, $collate, $db_version, $db_prefix );
 	eme_create_attendances_table( $charset, $collate, $db_version, $db_prefix );
 	eme_create_task_tables( $charset, $collate, $db_version, $db_prefix );
+	eme_create_todos_tables( $charset, $collate, $db_version, $db_prefix );
 }
 
 function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) {
@@ -329,6 +332,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 			event_notes longtext,
 			event_rsvp bool DEFAULT 0,
 			event_tasks bool DEFAULT 0,
+			event_todos bool DEFAULT 0,
 			price text,
 			currency text,
 			event_seats text,
@@ -414,6 +418,7 @@ function eme_create_events_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'event_end', "ALTER TABLE $table_name ADD event_end datetime;" );
 		maybe_add_column( $table_name, 'event_rsvp', "ALTER TABLE $table_name ADD event_rsvp bool DEFAULT 0;" );
 		maybe_add_column( $table_name, 'event_tasks', "ALTER TABLE $table_name ADD event_tasks bool DEFAULT 0;" );
+		maybe_add_column( $table_name, 'event_todos', "ALTER TABLE $table_name ADD event_todos bool DEFAULT 0;" );
 		maybe_add_column( $table_name, 'price', "ALTER TABLE $table_name ADD price text;" );
 		maybe_add_column( $table_name, 'currency', "ALTER TABLE $table_name ADD currency text;" );
 		maybe_add_column( $table_name, 'event_seats', "ALTER TABLE $table_name ADD event_seats text;" );
@@ -1608,7 +1613,7 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
 
 	// the sequence of the tasks is decided per event and stored as task_seq
 	// when updating a task, we will use the combo event_id and task_nbr, so we can use that for
-	// recurrences too
+	// recurrences too (using task_id for updating would update it for 1 event only)
 	if ( ! eme_table_exists( $table_name ) ) {
 		$sql = 'CREATE TABLE ' . $table_name . " (
          task_id mediumint(9) NOT NULL AUTO_INCREMENT,
@@ -1650,6 +1655,31 @@ function eme_create_task_tables( $charset, $collate, $db_version, $db_prefix ) {
 		if ( $db_version < 367 ) {
 			$wpdb->query( "ALTER TABLE $table_name ADD signup_status BOOL DEFAULT 1;" );
 		}
+	}
+}
+
+function eme_create_todos_tables( $charset, $collate, $db_version, $db_prefix ) {
+	global $wpdb;
+	$table_name = $db_prefix . EME_TODOS_TBNAME;
+
+	// the sequence of the todos is decided per event and stored as todo_seq (for showwing the list of todos in certain sequence)
+	// when updating a todo, we will use the combo event_id and todo_nbr, so we can use that for
+	// recurrences too (using todo_id for updating would update it for 1 event only)
+	if ( ! eme_table_exists( $table_name ) ) {
+		$sql = 'CREATE TABLE ' . $table_name . " (
+         todo_id mediumint(9) NOT NULL AUTO_INCREMENT,
+         event_id mediumint(9) NOT NULL,
+         todo_offset int DEFAULT 0,
+         todo_seq smallint DEFAULT 1,
+         todo_nbr smallint DEFAULT 1,
+         reminder smallint DEFAULT 1,
+         reminder_sent smallint DEFAULT 0,
+         name varchar(50) DEFAULT NULL,
+	 description text,
+         UNIQUE KEY  (todo_id),
+         KEY  (reminder_sent)
+         ) $charset $collate;";
+		maybe_create_table( $table_name, $sql );
 	}
 }
 

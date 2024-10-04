@@ -15,6 +15,7 @@ function eme_new_event() {
 		'event_notes'                             => '',
 		'event_rsvp'                              => get_option( 'eme_rsvp_reg_for_new_events' ) ? 1 : 0,
 		'event_tasks'                             => 0,
+		'event_todos'                             => 0,
 		'price'                                   => get_option( 'eme_default_price' ),
 		'currency'                                => get_option( 'eme_default_currency' ),
 		'registration_requires_approval'          => get_option( 'eme_rsvp_require_approval' ) ? 1 : 0,
@@ -429,7 +430,7 @@ function eme_events_page() {
 		}
 
 		// now for the select boxes, we need to set to 0 if not in the _POST
-		$select_post_vars = [ 'event_tasks', 'event_rsvp', 'registration_requires_approval', 'registration_wp_users_only', 'task_requires_approval' ];
+		$select_post_vars = [ 'event_tasks', 'event_todos', 'event_rsvp', 'registration_requires_approval', 'registration_wp_users_only', 'task_requires_approval' ];
 		foreach ( $select_post_vars as $post_var ) {
 			if ( isset( $_POST[ $post_var ] ) ) {
 				$event[ $post_var ] = intval( $_POST[ $post_var ] );
@@ -6285,6 +6286,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	<?php if ( get_option( 'eme_tasks_enabled' ) ) : ?>
 	<li><a href="#tab-tasks"><?php esc_html_e( 'Tasks', 'events-made-easy' ); ?></a></li>
 	<?php endif; ?>
+	<li><a href="#tab-todos"><?php esc_html_e( 'Todos', 'events-made-easy' ); ?></a></li>
 	<?php if ( get_option( 'eme_attributes_enabled' ) ) : ?>
 	<li><a href="#tab-eventattributes"><?php esc_html_e( 'Attributes', 'events-made-easy' ); ?></a></li>
 	<?php endif; ?>
@@ -6456,6 +6458,24 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	</div>
 	</div>
 	<?php endif; ?>
+
+	<div id="tab-todos">
+	<div class="inside">
+		<p id='p_todos'>
+		<?php echo eme_ui_checkbox_binary( $event['event_todos'], 'event_todos', __( 'Enable todos for this event', 'events-made-easy' ) ); ?>
+		</p>
+		<p>
+		<?php  esc_html_e( "Each todo with a date in the past will send a mail to the contact person so you can use this to plan your event and not forget things. The date of the todo is based on the event start date and the todo offset parameter in days: an offset of 5 means 5 days before the event starts, an offset of -2 means 2 days after the event started.", 'events-made-easy' ); ?>
+		</p>
+	</div>
+	<div id="tab-todos-container">
+	<h3><?php esc_html_e( 'List of todos', 'events-made-easy' ); ?></h3>
+	<div>
+		<?php eme_meta_box_div_event_todos( $event ); ?>
+	</div>
+	</div>
+
+	</div>
 
 	<?php if ( get_option( 'eme_attributes_enabled' ) ) : ?>
 	<div id="tab-eventattributes">
@@ -9228,7 +9248,7 @@ function eme_sanitize_event( $event ) {
 	}
 
 	// some things just need to be integers, let's brute-force them
-	$int_vars = [ 'event_contactperson_id', 'event_author', 'event_tasks', 'event_rsvp', 'registration_requires_approval', 'registration_wp_users_only', 'event_image_id' ];
+	$int_vars = [ 'event_contactperson_id', 'event_author', 'event_tasks', 'event_todos', 'event_rsvp', 'registration_requires_approval', 'registration_wp_users_only', 'event_image_id' ];
 	foreach ( $int_vars as $int_var ) {
 		if ( isset( $event[ $int_var ] ) ) {
 			$event[ $int_var ] = intval( $event[ $int_var ] );
@@ -9316,6 +9336,7 @@ function eme_db_insert_event( $line, $event_is_part_of_recurrence = 0, $day_diff
 		$event_id             = $wpdb->insert_id;
 		$new_line['event_id'] = $event_id;
 		eme_handle_tasks_post_adminform( $event_id, $day_difference );
+		eme_handle_todos_post_adminform( $event_id );
 		return $event_id;
 	}
 }
@@ -9380,6 +9401,12 @@ function eme_db_update_event( $line, $event_id, $event_is_part_of_recurrence = 0
 		} else {
 			eme_delete_event_tasks( $event_id );
 		}
+		$todo_ids = eme_handle_todos_post_adminform( $event_id, $day_difference );
+		if ( ! empty( $todo_ids ) ) {
+			eme_delete_event_old_todos( $event_id, $todo_ids );
+		} else {
+			eme_delete_event_todos( $event_id );
+		}
 		return true;
 	}
 }
@@ -9440,6 +9467,7 @@ function eme_db_delete_event( $event_id, $event_is_part_of_recurrence = 0 ) {
 		eme_delete_event_answers( $event_id );
 		eme_delete_uploaded_files( $event_id, 'events' );
 		eme_delete_event_tasks( $event_id );
+		eme_delete_event_todos( $event_id );
 	}
 }
 

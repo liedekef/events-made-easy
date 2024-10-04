@@ -102,6 +102,13 @@ jQuery(document).ready( function($) {
          $('div#tab-tasks-container').fadeOut();
       }
    }
+   function updateShowHideTodos() {
+      if ($('input#event_todos').prop('checked')) {
+         $('div#tab-todos-container').fadeIn();
+      } else {
+         $('div#tab-todos-container').fadeOut();
+      }
+   }
 
    function updateShowHideRsvpAutoApprove() {
       if ($('input#approval_required-checkbox').prop('checked')) {
@@ -428,6 +435,7 @@ jQuery(document).ready( function($) {
    updateShowHideRecurrence();
    updateShowHideRsvp();
    updateShowHideTasks();
+   updateShowHideTodos();
    updateShowHideRsvpAutoApprove();
    if ($('select#recurrence-frequency').length) {
 	   updateIntervalDescriptor(); 
@@ -438,6 +446,7 @@ jQuery(document).ready( function($) {
    updateShowHideMultiPriceDescription();
    $('input#event-recurrence').on("change",updateShowHideRecurrence);
    $('input#event_tasks').on("change",updateShowHideTasks);
+   $('input#event_todos').on("change",updateShowHideTodos);
    $('input#event_rsvp').on("change",updateShowHideRsvp);
    $('input#eme_prop_all_day').on("change",updateShowHideTime);
    $('input#price').on("change",updateShowHideMultiPriceDescription);

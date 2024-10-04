@@ -6545,7 +6545,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 						?>
 						</select><br>
 						<?php
-							esc_html_e( 'Private events are only visible for logged in users, draft events are not visible from the front end.', 'events-made-easy' );
+							esc_html_e( 'Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted events are not shown in any list or calendar. Frontend Draft is normally the state for events submitted via the frontend submit form.', 'events-made-easy' );
 						?>
 						</p>
 					</div>

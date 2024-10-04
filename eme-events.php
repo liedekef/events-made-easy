@@ -6400,6 +6400,9 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		<p id='p_tasks'>
 		<?php echo eme_ui_checkbox_binary( $event['event_tasks'], 'event_tasks', __( 'Enable tasks for this event', 'events-made-easy' ) ); ?>
 		</p>
+		<p>
+		<?php  esc_html_e( "Tasks can be used to rally volunteers to help with an event (e.g. 5 people behind the bar per shift, cleanup duty, ...) or to allow people to subscribe for a certain timeframe for an event (appointment-like). While you can impose limits and ask for confirmation for tasks, there is no price per task so no payment is possible upon subscribing for a task.", 'events-made-easy' ); ?>
+		</p>
 	</div>
 	<div id="tab-tasks-container">
 	<h3><?php esc_html_e( 'Tasks', 'events-made-easy' ); ?></h3>

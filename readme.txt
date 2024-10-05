@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.6
-Stable tag: 2.5.12
+Stable tag: 2.5.13
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,9 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.13 (2024//) =
+= 2.5.13 (2024/10/05) =
 * Add generic placeholders #_USER_GROUPS and #_USER_MEMBERSHIPS
-* Add list of todos for an event. Each passed todo will send a mail to the contact person so you can use this to plan your event and not forget things
+* Add list of todos for an event. Each passed todo will send a mail to the contact person so you can use this to plan your event and not forget things. Difference with tasks: volunteers can subscribe to tasks, not todos. The todos are just a list of things you don't want to forget.
 
 = 2.5.12 (2024/09/17) =
 * Fix a small check causing membership stats to not work as expected

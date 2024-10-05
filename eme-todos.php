@@ -243,6 +243,7 @@ function eme_get_past_unsent_todos() {
 function eme_email_todo($todo) {
 	$event = eme_get_event( $todo['event_id'] );
 	$contact = eme_get_event_contact( $event );
+	[$from_name, $from_email] = eme_get_default_mailer_info();
 	$contact_email  = $contact->user_email;
         $contact_name   = $contact->display_name;
 
@@ -251,7 +252,7 @@ function eme_email_todo($todo) {
 	$contact_subject = eme_replace_event_placeholders($contact_subject, $event, 'text');
 	$contact_body = eme_replace_event_placeholders($contact_body, $event);
 
-	return eme_queue_mail( $contact_subject, $contact_body, $contact_email, $contact_name, $contact_email, $contact_name, $contact_email, $contact_name );
+	return eme_queue_mail( $contact_subject, $contact_body, $from_email, $from_name, $contact_email, $contact_name );
 }
 
 // for CRON

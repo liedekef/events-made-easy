@@ -26,26 +26,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 	}
 	// if forced or fromemail is still empty
 	if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
-		$default_sender_address = get_option( 'eme_mail_sender_address' );
-		if ( eme_is_email( $default_sender_address ) ) {
-			$fromemail = $default_sender_address;
-			if ( $fromemail != $default_sender_address ) {
-				$fromname  = get_option( 'eme_mail_sender_name' );
-			}
-		} else {
-			$contact   = eme_get_contact();
-			$fromemail = $contact->user_email;
-			$fromname  = $contact->display_name;
-		}
-		// Still empty from, then we go further up
-		if ( empty( $fromemail ) ) {
-			$fromemail = get_option( 'admin_email' );
-		}
-		if ( empty( $fromname ) ) {
-			$fromname = get_option( 'blogname' );
-		}
-		$replytoemail = $fromemail;
-		$replytoname = $fromname;
+		[$fromname, $fromemail] = eme_get_default_mailer_info();
 	}
 	// now the from should never be empty, so just check reply to again
 	if ( empty( $replytoemail ) ) {
@@ -337,26 +318,7 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 	}
 	// if forced or fromemail is still empty
 	if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
-		$default_sender_address = get_option( 'eme_mail_sender_address' );
-		if ( eme_is_email( $default_sender_address ) ) {
-			$fromemail = $default_sender_address;
-			if ( $fromemail != $default_sender_address ) {
-				$fromname  = get_option( 'eme_mail_sender_name' );
-			}
-		} else {
-			$contact   = eme_get_contact();
-			$fromemail = $contact->user_email;
-			$fromname  = $contact->display_name;
-		}
-		// Still empty from, then we go further up
-		if ( empty( $fromemail ) ) {
-			$fromemail = get_option( 'admin_email' );
-		}
-		if ( empty( $fromname ) ) {
-			$fromname = get_option( 'blogname' );
-		}
-		$replytoemail = $fromemail;
-		$replytoname = $fromname;
+		[$fromname, $fromemail] = eme_get_default_mailer_info();
 	}
 	// now the from should never be empty, so just check reply to again
 	if ( empty( $replytoemail ) ) {
@@ -426,26 +388,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
 		}
 		// if forced or fromemail is still empty
 		if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
-			$default_sender_address = get_option( 'eme_mail_sender_address' );
-			if ( eme_is_email( $default_sender_address ) ) {
-				$fromemail = $default_sender_address;
-				if ( $fromemail != $default_sender_address ) {
-					$fromname  = get_option( 'eme_mail_sender_name' );
-				}
-			} else {
-				$contact   = eme_get_contact();
-				$fromemail = $contact->user_email;
-				$fromname  = $contact->display_name;
-			}
-			// Still empty from, then we go further up
-			if ( empty( $fromemail ) ) {
-				$fromemail = get_option( 'admin_email' );
-			}
-			if ( empty( $fromname ) ) {
-				$fromname = get_option( 'blogname' );
-			}
-			$replytoemail = $fromemail;
-			$replytoname = $fromname;
+			[$fromname, $fromemail] = eme_get_default_mailer_info();
 		}
 		// now the from should never be empty, so just check reply to again
 		if ( empty( $replytoemail ) ) {
@@ -2904,6 +2847,28 @@ function eme_ajax_mail_archive_div() {
 	}
 	print '</tbody></table></form>';
 	wp_die();
+}
+
+function eme_get_default_mailer_info() {
+	$fromemail = '';
+	$fromname = '';
+	$default_sender_address = get_option( 'eme_mail_sender_address' );
+	if ( eme_is_email( $default_sender_address ) ) {
+		$fromemail = $default_sender_address;
+		$fromname  = get_option( 'eme_mail_sender_name' );
+	} else {
+		$contact   = eme_get_contact();
+		$fromemail = $contact->user_email;
+		$fromname  = $contact->display_name;
+	}
+	// Still empty from, then we go further up
+	if ( empty( $fromemail ) ) {
+		$fromemail = get_option( 'admin_email' );
+	}
+	if ( empty( $fromname ) ) {
+		$fromname = get_option( 'blogname' );
+	}
+	return [$fromname,$fromemail];
 }
 
 ?>

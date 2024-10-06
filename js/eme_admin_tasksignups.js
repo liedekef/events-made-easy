@@ -129,15 +129,13 @@ jQuery(document).ready( function($) {
                     return false;
                  }
 
-                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_task_signups', 'send_mail': send_mail, 'do_action': do_action, 'eme_admin_nonce': emetasks.translate_adminnonce }, function() {
+                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_task_signups', 'send_mail': send_mail, 'do_action': do_action, 'eme_admin_nonce': emetasks.translate_adminnonce }, function(data) {
 			 $('#TaskSignupsTableContainer').jtable('reload');
 			 $('#TaskSignupsActionsButton').text(emetasks.translate_apply);
-			 if (do_action=='deleteTaskSignups') {
-				 $('div#tasksignups-message').html(emetasks.translate_deleted);
-				 $('div#tasksignups-message').show();
-				 $('div#tasksignups-message').delay(3000).fadeOut('slow');
-			 }
-                 });
+			 $('div#tasksignups-message').html(data.htmlmessage);
+			 $('div#tasksignups-message').show();
+			 $('div#tasksignups-message').delay(3000).fadeOut('slow');
+		 }, 'json');
               }
            }
            // return false to make sure the real form doesn't submit

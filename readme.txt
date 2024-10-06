@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.14 (2024/10/) =
+* Bulk action to task signups added to send reminders
+
 = 2.5.13 (2024/10/05) =
 * Add generic placeholders #_USER_GROUPS and #_USER_MEMBERSHIPS
 * Add list of todos for an event. Each passed todo will send a mail to the contact person so you can use this to plan your event and not forget things. Difference with tasks: volunteers can subscribe to tasks, not todos. The todos are just a list of things you don't want to forget.

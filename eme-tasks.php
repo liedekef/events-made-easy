@@ -480,6 +480,7 @@ function eme_task_signups_table_layout( $message = '' ) {
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
 	<option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
+	<option value="sendReminders"><?php esc_html_e( 'Send reminders for task signups', 'events-made-easy' ); ?></option>
 	<option value="approveTaskSignups"><?php esc_html_e( 'Approve selected task signups', 'events-made-easy' ); ?></option>
 	<option value="deleteTaskSignups"><?php esc_html_e( 'Delete selected task signups', 'events-made-easy' ); ?></option>
 	</select>
@@ -1979,6 +1980,9 @@ function eme_ajax_manage_task_signups() {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		$send_mail = ( isset( $_REQUEST['send_mail'] ) ) ? intval( $_REQUEST['send_mail'] ) : 1;
 		switch ( $do_action ) {
+			case 'sendReminders':
+				eme_ajax_action_send_reminders( $ids_arr );
+				break;
 			case 'approveTaskSignups':
 				eme_ajax_action_signup_approve( $ids_arr, $send_mail );
 				break;
@@ -1988,6 +1992,25 @@ function eme_ajax_manage_task_signups() {
 		}
 	}
 	wp_die();
+}
+
+function eme_ajax_action_send_reminders( $ids_arr ) {
+	$action_ok = 1;
+	foreach ( $ids_arr as $signup_id ) {
+		$signup = eme_get_task_signup( $signup_id );
+		$res = eme_email_tasksignup_action( $signup, 'reminder' );
+		if ( ! $res )
+			$action_ok = 0;
+	}
+	$ajaxResult = [];
+	if ( $action_ok ) {
+		$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+		$ajaxResult['Result']      = 'OK';
+	} else {
+		$ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There was a problem executing the desired action, please check your logs.', 'events-made-easy' ) . '</p></div>';
+		$ajaxResult['Result']      = 'ERROR';
+	}
+	print wp_json_encode( $ajaxResult );
 }
 
 function eme_ajax_action_signup_approve( $ids_arr, $send_mail=1 ) {

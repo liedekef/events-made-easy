@@ -364,7 +364,7 @@ jQuery(document).ready(function ($) {
 				$('div#groups-message').show();
 				$('div#groups-message').delay(3000).fadeOut('slow');
 			 }
-                 });
+		 }, 'json');
               }
            }
            // return false to make sure the real form doesn't submit

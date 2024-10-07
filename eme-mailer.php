@@ -1558,15 +1558,7 @@ function eme_send_mails_ajax_actions( $action ) {
 			$contact_name  = eme_sanitize_request( $_POST['generic_mail_from_name'] );
 			$contact_email = eme_sanitize_request( $_POST['generic_mail_from_email'] );
 		} else {
-			$contact_email = get_option( 'eme_mail_sender_address' );
-			$contact_name  = get_option( 'eme_mail_sender_name' );
-			if ( ! eme_is_email( $contact_email ) ) {
-				$contact       = eme_get_contact();
-				$contact_email = $contact->user_email;
-				$contact_name  = $contact->display_name;
-			}
-			$contact_name  = eme_sanitize_request( $contact_name );
-			$contact_email = eme_sanitize_request( $contact_email );
+			[$contact_name, $contact_email] = eme_get_default_mailer_info();
 		}
 
 		if ( empty( $contact_email ) ) {
@@ -1961,13 +1953,7 @@ function eme_emails_page() {
 	#$attachment_ids    = '';
 	#$attach_url_string = '';
 
-	$generic_mail_from_email = get_option( 'eme_mail_sender_address' );
-	$generic_mail_from_name  = get_option( 'eme_mail_sender_name' );
-	if ( ! eme_is_email( $generic_mail_from_email ) ) {
-		$contact                 = eme_get_contact();
-		$generic_mail_from_email = $contact->user_email;
-		$generic_mail_from_name  = $contact->display_name;
-	}
+	[$generic_mail_from_name, $generic_mail_from_email] = eme_get_default_mailer_info();
 
 	$peoplegroups = eme_get_groups();
 	$membergroups = eme_get_membergroups();

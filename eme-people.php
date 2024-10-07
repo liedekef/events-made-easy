@@ -3073,13 +3073,7 @@ function eme_people_birthday_emails() {
 
 	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
-	$contact_email = get_option( 'eme_mail_sender_address' );
-	$contact_name  = get_option( 'eme_mail_sender_name' );
-	if ( empty( $contact_email ) ) {
-		$contact       = eme_get_contact();
-		$contact_email = $contact->user_email;
-		$contact_name  = $contact->display_name;
-	}
+	[$contact_name, $contact_email] = eme_get_default_mailer_info();
 
 	$subject_template = get_option( 'eme_bd_email_subject' );
 	$body_template    = eme_translate( get_option( 'eme_bd_email_body' ) );
@@ -4731,13 +4725,7 @@ function eme_unsubform_shortcode( $atts = [] ) {
 }
 
 function eme_sub_send_mail( $lastname, $firstname, $email, $groups ) {
-	$contact_email = get_option( 'eme_mail_sender_address' );
-	$contact_name  = get_option( 'eme_mail_sender_name' );
-	if ( empty( $contact_email ) ) {
-		$contact       = eme_get_contact();
-		$contact_email = $contact->user_email;
-		$contact_name  = $contact->display_name;
-	}
+	[$contact_name, $contact_email] = eme_get_default_mailer_info();
 	$sub_link    = eme_sub_confirm_url( $lastname, $firstname, $email, $groups );
 	$sub_subject = eme_translate( get_option( 'eme_sub_subject' ) );
 	$sub_body    = eme_translate( get_option( 'eme_sub_body' ) );
@@ -4753,13 +4741,7 @@ function eme_unsub_send_mail( $email, $groupids ) {
 	// find persons with matching email in the mentioned groups
 	$person_id = eme_get_person_by_email_in_groups( $email, $groupids );
 	if ( ! empty( $person_id ) ) {
-		$contact_email = get_option( 'eme_mail_sender_address' );
-		$contact_name  = get_option( 'eme_mail_sender_name' );
-		if ( empty( $contact_email ) ) {
-			$contact       = eme_get_contact();
-			$contact_email = $contact->user_email;
-			$contact_name  = $contact->display_name;
-		}
+		[$contact_name, $contact_email] = eme_get_default_mailer_info();
 		$unsub_link    = eme_unsub_confirm_url( $email, $groupids );
 		$unsub_subject = get_option( 'eme_unsub_subject' );
 		$unsub_body    = eme_translate( get_option( 'eme_unsub_body' ) );

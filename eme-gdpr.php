@@ -78,13 +78,7 @@ function eme_rpi_ajax() {
 	$email = eme_sanitize_email( $_POST['eme_email'] );
 	// check if email is found, if so: send the gdpr url
 	if ( eme_count_persons_by_email( $email ) > 0 ) {
-		$contact_email = get_option( 'eme_mail_sender_address' );
-		$contact_name  = get_option( 'eme_mail_sender_name' );
-		if ( empty( $contact_email ) ) {
-			$contact       = eme_get_contact();
-			$contact_email = $contact->user_email;
-			$contact_name  = $contact->display_name;
-		}
+		[$contact_name, $contact_email] = eme_get_default_mailer_info();
 		$gdpr_link    = eme_gdpr_url( $email );
 		$gdpr_subject = eme_translate( get_option( 'eme_gdpr_subject' ) );
 		$gdpr_body    = eme_translate( get_option( 'eme_gdpr_body' ) );
@@ -172,13 +166,7 @@ function eme_gdpr_approve_ajax() {
 	$email = eme_sanitize_email( $_POST['eme_email'] );
 	// check if email is found, if so: send the gdpr url
 	if ( eme_count_persons_by_email( $email ) > 0 ) {
-		$contact_email = get_option( 'eme_mail_sender_address' );
-		$contact_name  = get_option( 'eme_mail_sender_name' );
-		if ( empty( $contact_email ) ) {
-			$contact       = eme_get_contact();
-			$contact_email = $contact->user_email;
-			$contact_name  = $contact->display_name;
-		}
+		[$contact_name, $contact_email] = eme_get_default_mailer_info();
 		$gdpr_link    = eme_gdpr_approve_url( $email );
 		$gdpr_subject = eme_translate( get_option( 'eme_gdpr_approve_subject' ) );
 		$gdpr_body    = eme_translate( get_option( 'eme_gdpr_approve_body' ) );
@@ -255,13 +243,7 @@ function eme_cpi_request_ajax() {
 	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 	$person_ids     = eme_get_personids_by_email( $email );
 	if ( ! empty( $person_ids ) ) {
-		$contact_email = get_option( 'eme_mail_sender_address' );
-		$contact_name  = get_option( 'eme_mail_sender_name' );
-		if ( empty( $contact_email ) ) {
-			$contact       = eme_get_contact();
-			$contact_email = $contact->user_email;
-			$contact_name  = $contact->display_name;
-		}
+		[$contact_name, $contact_email] = eme_get_default_mailer_info();
 		$change_subject = eme_translate( get_option( 'eme_cpi_subject' ) );
 		$change_body    = eme_translate( get_option( 'eme_cpi_body' ) );
 		if ( $mail_text_html == 'htmlmail' ) {

@@ -2807,13 +2807,16 @@ function eme_strip_tags( $value ) {
 	return $value;
 }
 
-function eme_sanitize_filenamechars( $filename ) {
-	$filename = trim( $filename );
-	return preg_replace( '/[^\da-z]/i', '_', $filename );
+function eme_sanitize_filenamechars( $filepart ) {
+	$filepart = trim( $filepart );
+	return preg_replace( '/[^\da-z]/i', '_', $filepart );
 }
 
-function eme_sanitize_upload_filename( $fName, $field_id, $extra_id = '' ) {
+function eme_sanitize_filename( $fName ) {
 	$fName    = trim( $fName );
+	if ( empty( $fName ) ) {
+		return false;
+	}
 	$indexOFF = strrpos( $fName, '.' );
 	if ( $indexOFF ) {
 		$nameFile  = substr( $fName, 0, $indexOFF );
@@ -2822,13 +2825,24 @@ function eme_sanitize_upload_filename( $fName, $field_id, $extra_id = '' ) {
 		$nameFile  = $fName;
 		$extension = 'none';
 	}
-	if ( empty( $fName ) ) {
+	if ( empty( $nameFile ) ) {
 		return false;
 	}
 	$clean     = eme_sanitize_filenamechars( $nameFile );
 	$clean_ext = eme_sanitize_filenamechars( $extension );
+	return "$clean.$clean_ext";
+}
+
+function eme_sanitize_upload_filename( $fName, $field_id, $extra_id = '' ) {
+	if ( empty( $fName ) ) {
+		return false;
+	}
+	$sanitized_fName = eme_sanitize_filename( $fName );
+	if ( empty( $sanitized_fName ) ) {
+		return false;
+	}
 	$rand_id   = eme_random_id();
-	return "$rand_id-$field_id-$extra_id-$clean.$clean_ext";
+	return "$rand_id-$field_id-$extra_id-$sanitized_fName";
 }
 
 function eme_upload_file_err( $code ) {

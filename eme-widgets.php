@@ -21,7 +21,6 @@ class WP_Widget_eme_list extends WP_Widget {
 
 	public function widget( $args, $instance ) {
 		eme_enqueue_frontend();
-		//extract($args);
 		//$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Events','eme' ) : $instance['title'], $instance, $this->id_base);
 		//$title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 		$title                = apply_filters( 'widget_title', $instance['title'] );
@@ -251,7 +250,6 @@ class WP_Widget_eme_calendar extends WP_Widget {
 
 	public function widget( $args, $instance ) {
 		eme_enqueue_frontend();
-		//extract($args);
 		//$title = apply_filters('widget_title', empty( $instance['title'] ) ? __( 'Calendar','eme' ) : $instance['title'], $instance, $this->id_base);
 		//$title = apply_filters('widget_title', $instance['title'], $instance, $this->id_base);
 		if ( ! isset( $instance['title'] ) ) {

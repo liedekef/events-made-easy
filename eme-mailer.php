@@ -571,7 +571,6 @@ function eme_send_queued() {
 
 	// now handle any queued mails
 	$mails = eme_get_queued( $now );
-	error_log(print_r($mails,true));
 	foreach ( $mails as $mail ) {
 		if ( empty( $mail['receiveremail'] ) ) {
 			eme_mark_mail_ignored( $mail['id'] );

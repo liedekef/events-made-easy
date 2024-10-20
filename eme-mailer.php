@@ -80,7 +80,19 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 				}
 			} elseif ( is_array( $attachment ) ) {
 				if ( file_exists( $attachment[1] ) ) {
-					$attachment_paths_arr[$attachment[0]] = $attachment[1];
+					if (eme_is_empty_string($attachment[0])) {
+						$filename = basename($attachment[1]);
+						$extension = pathinfo($filename, PATHINFO_EXTENSION);
+						// first remove the extension
+						$filename = preg_replace( '/\.$extension$/','', $filename );
+						// now rename parts of the file
+						$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
+						$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
+						$attachment_paths_arr[$filename.'.'.$extension] = $attachment[1];
+					} else {
+						$filename = $attachment[0];
+						$attachment_paths_arr[$filename] = $attachment[1];
+					}
 				}
 			} else {
 				// if it is not a numeric id, it is a file path (like for pdf tickets)

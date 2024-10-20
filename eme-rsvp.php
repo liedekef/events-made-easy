@@ -4615,7 +4615,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
 		} else {
 			$attachment_ids_arr = array_unique(explode( ',', $attachment_ids ));
 		}
-		// add the optional ticket template too, but since it is not a wp attachment, we directly add the ticket file path
+		// add the optional ticket template too
 		if ( ! empty( $ticket_attachment ) ) {
 			$attachment_ids_arr[] = $ticket_attachment;
 		}
@@ -6615,8 +6615,6 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 		$event_mtime_obj    = new ExpressiveDate( $event['modif_date'], EME_TIMEZONE );
 		$template_mtime_obj = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
 		if ($booking_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
-			if (empty($pdf_attach_name))
-				$pdf_attach_name = basename($pdf_path);
 			return [ $pdf_attach_name, $pdf_path ];
 		}
 	}
@@ -6680,8 +6678,6 @@ $extra_html_header
 	$rand_id     = eme_random_id();
 	$target_file = $targetPath . "/booking-$template_id-$rand_id.pdf";
 	file_put_contents( $target_file, $dompdf->output() );
-	if (empty($pdf_attach_name))
-		$pdf_attach_name = basename($target_file);
 	return [ $pdf_attach_name, $target_file ];
 }
 

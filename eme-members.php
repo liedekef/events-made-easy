@@ -7058,8 +7058,6 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 		$membership_mtime_obj = new ExpressiveDate( $membership['modif_date'], EME_TIMEZONE );
 		$template_mtime_obj   = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
 		if ($member_mtime_obj<$pdf_mtime_obj && $membership_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
-			if (empty($pdf_attach_name))
-				$pdf_attach_name = basename($pdf_path);
 			return [ $pdf_attach_name, $pdf_path ];
 		}
 	}
@@ -7122,8 +7120,6 @@ $extra_html_header
 	$rand_id     = eme_random_id();
 	$target_file = $targetPath . "/member-$template_id-$rand_id.pdf";
 	file_put_contents( $target_file, $dompdf->output() );
-        if (empty($pdf_attach_name))
-                $pdf_attach_name = basename($target_file);
         return [ $pdf_attach_name, $target_file ];
 }
 

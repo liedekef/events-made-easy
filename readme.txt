@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.14 (2024/10/) =
 * Bulk action to task signups added to send reminders
+* PDF templates have a setting to change the mail attachment name if the template is used in member or booking related mails
 
 = 2.5.13 (2024/10/05) =
 * Add generic placeholders #_USER_GROUPS and #_USER_MEMBERSHIPS

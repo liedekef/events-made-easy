@@ -32,6 +32,9 @@ function eme_init_template_props( $props ) {
 	if ( ! isset( $props['pdf_margins'] ) || empty( $props['pdf_margins'] ) ) {
 		$props['pdf_margins'] = '0';
 	}
+	if ( ! isset( $props['pdf_attach_format'] ) || empty( $props['pdf_attach_format'] ) ) {
+		$props['pdf_attach_format'] = '';
+	}
 	return $props;
 }
 
@@ -290,8 +293,8 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 			<tr>
 			<td style='vertical-align:top'><?php esc_html_e( 'Type', 'events-made-easy' ); ?></label></td>
 			<td><?php echo eme_ui_select( $template['type'], 'type', $template_types ); ?>
-		<br><?php esc_html_e( 'The type allows you to indicate where you want to use this template. This helps to limit the dropdown list of templates to chose from in other parts of EME.', 'events-made-easy' ); ?>
-		<br><?php esc_html_e( "The type 'All' means it can be selected anywhere where template selections are possible.", 'events-made-easy' ); ?>
+			<br><?php esc_html_e( 'The type allows you to indicate where you want to use this template. This helps to limit the dropdown list of templates to chose from in other parts of EME.', 'events-made-easy' ); ?>
+			<br><?php esc_html_e( "The type 'All' means it can be selected anywhere where template selections are possible.", 'events-made-easy' ); ?>
 			<br><?php esc_html_e( "The type 'PDF' is used for PDF templating and allows more settings concerning page size, orientation, ...", 'events-made-easy' ); ?>
 			<br><?php esc_html_e( "If you know the template is only used in/for shortcodes, use the type 'Shortcode'.", 'events-made-easy' ); ?>
 			</td>
@@ -300,7 +303,7 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 
 		<table class='form-table' id='pdf_properties'>
 			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF size', 'events-made-easy' ); ?></th>
+			<th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF size', 'events-made-easy' ); ?></th>
 			<td><?php echo eme_ui_select( $template['properties']['pdf_size'], 'properties[pdf_size]', $size_array ); ?><br>
 			<?php esc_html_e( "If you select 'Custom', you can enter your own widht/height below.", 'events-made-easy' ); ?></td>
 			</tr>
@@ -311,17 +314,22 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 			<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF margins', 'events-made-easy' ); ?></th>
 			<td><input type='text' name='properties[pdf_margins]' id='properties[pdf_margins]' value='<?php echo eme_esc_html( $template['properties']['pdf_margins'] ); ?>' size='40'><br>
-		<?php esc_html_e( "See <a href='https://www.w3schools.com/cssref/pr_margin.asp'>this page</a> for info on what you can enter here.", 'events-made-easy' ); ?></td>
+			<?php esc_html_e( "See <a href='https://www.w3schools.com/cssref/pr_margin.asp'>this page</a> for info on what you can enter here.", 'events-made-easy' ); ?></td>
 			</tr>
 			<tr class='form-field template-pdf-custom'>
 			<th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF width', 'events-made-easy' ); ?></th>
 			<td><input type='text' name='properties[pdf_width]' id='properties[pdf_width]' value='<?php echo eme_esc_html( $template['properties']['pdf_width'] ); ?>' size='40'><br>
-		<?php esc_html_e( 'The width of the PDF document (in pt)', 'events-made-easy' ); ?></td>
+			<?php esc_html_e( 'The width of the PDF document (in pt)', 'events-made-easy' ); ?></td>
 			</tr>
 			<tr class='form-field template-pdf-custom'>
 			<th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF height', 'events-made-easy' ); ?></th>
 			<td><input type='text' name='properties[pdf_height]' id='properties[pdf_height]' value='<?php echo eme_esc_html( $template['properties']['pdf_height'] ); ?>' size='40'><br>
-		<?php esc_html_e( 'The heigth of the PDF document (in pt)', 'events-made-easy' ); ?></td>
+			<?php esc_html_e( 'The heigth of the PDF document (in pt)', 'events-made-easy' ); ?></td>
+			</tr>
+			<tr class='form-field'>
+			<th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF mail attach format', 'events-made-easy' ); ?></th>
+			<td><input type='text' name='properties[pdf_attach_format]' id='properties[pdf_attach_format]' value='<?php echo eme_esc_html( $template['properties']['pdf_attach_format'] ); ?>' size='40'><br>
+			<?php esc_html_e( "When the template is being used as an attacment in a mail, the attachment has a default name. If you don't like the name given to the attachment in the name, you can change it here. Relevant placeholders are allowed in their context (event/membership/booking/member/...). The '.pdf' extension will get added automatically, so no need to mention it.", 'events-made-easy' ); ?></td>
 			</tr>
 		</table>
 		<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo $action_string; ?>'></p>

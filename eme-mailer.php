@@ -78,6 +78,10 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 					$filename = basename($file_path);
 					$attachment_paths_arr[$filename] = $file_path;
 				}
+			} elseif ( is_array( $attachment ) ) {
+				if ( file_exists( $attachment[1] ) ) {
+					$attachment_paths_arr[$attachment[0]] = $attachment[1];
+				}
 			} else {
 				// if it is not a numeric id, it is a file path (like for pdf tickets)
 				if ( file_exists( $attachment ) ) {
@@ -567,6 +571,7 @@ function eme_send_queued() {
 
 	// now handle any queued mails
 	$mails = eme_get_queued( $now );
+	error_log(print_r($mails,true));
 	foreach ( $mails as $mail ) {
 		if ( empty( $mail['receiveremail'] ) ) {
 			eme_mark_mail_ignored( $mail['id'] );
@@ -2000,11 +2005,10 @@ function eme_emails_page() {
 			// reuse the attachments too
 			if ( ! empty( $mail['attachments'] ) ) {
 				$attachment_ids_arr = eme_unserialize( $mail['attachments'] );
-				if ( ! empty( $attachment_ids_arr ) ) {
-					$generic_mail_attachment_ids = join( ',', $attachment_ids_arr );
-				}
 				// now also build the attach_url_string variable
 				foreach ( $attachment_ids_arr as $attachment_id ) {
+					if (is_int( $attachment_id )) 
+						$generic_mail_attachment_ids[] = $attachment_id;
 					$attach_link = eme_get_attachment_link( $attachment_id );
 					if ( ! empty( $attach_link ) ) {
 						$generic_mail_attach_url_string .= $attach_link;

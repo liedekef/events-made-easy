@@ -3657,9 +3657,9 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			}
 		} elseif ( preg_match( '/#_PDF_URL\{(\d+)\}/', $result, $matches ) ) {
 			$template_id = intval( $matches[1] );
-			$pdf_path = eme_generate_booking_pdf( $booking, $event, $template_id );
-			if ( ! empty( $pdf_path ) ) {
-				$replacement = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'] . '/' . basename( $pdf_path );
+			$generated_pdf = eme_generate_booking_pdf( $booking, $event, $template_id );
+			if ( ! empty( $generated_pdf ) ) {
+				$replacement = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'] . '/' . basename( $generated_pdf[1] );
 			}
 		} elseif ( preg_match( '/#_TOTALPRICE\{(\d+)\}/', $result, $matches ) ) {
 			// total price to pay per price if multiprice
@@ -6582,6 +6582,17 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 		return;
 	}
 
+	$pdf_attach_format = $template['properties']['pdf_attach_format'];
+	if (!eme_is_empty_string($pdf_attach_format)) {
+		$pdf_attach_name = eme_replace_booking_placeholders( $pdf_attach_format, $event, $booking );
+		if (!preg_match( '/\.pdf$/i', $pdf_attach_name)) {
+			$pdf_attach_name .= '.pdf';
+		}
+		$pdf_attach_name = eme_sanitize_filename(basename($pdf_attach_name));
+	} else {
+		$pdf_attach_name = '';
+	}
+
 	$targetPath  = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
 	$pdf_path    = '';
 	if ( is_dir( $targetPath ) ) {
@@ -6604,7 +6615,9 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 		$event_mtime_obj    = new ExpressiveDate( $event['modif_date'], EME_TIMEZONE );
 		$template_mtime_obj = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
 		if ($booking_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
-			return $pdf_path;
+			if (empty($pdf_attach_name))
+				$pdf_attach_name = basename($pdf_path);
+			return [ $pdf_attach_name, $pdf_path ];
 		}
 	}
 
@@ -6667,7 +6680,9 @@ $extra_html_header
 	$rand_id     = eme_random_id();
 	$target_file = $targetPath . "/booking-$template_id-$rand_id.pdf";
 	file_put_contents( $target_file, $dompdf->output() );
-	return $target_file;
+	if (empty($pdf_attach_name))
+		$pdf_attach_name = basename($target_file);
+	return [ $pdf_attach_name, $target_file ];
 }
 
 function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {

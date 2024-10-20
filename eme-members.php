@@ -5405,9 +5405,9 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
 			}
 		} elseif ( preg_match( '/#_PDF_URL\{(\d+)\}/', $result, $matches ) ) {
 			$template_id = intval( $matches[1] );
-			$pdf_path = eme_generate_member_pdf( $member, $membership, $template_id );
-			if ( ! empty( $pdf_path ) ) {
-				$replacement = EME_UPLOAD_URL . '/members/' . $member['member_id'] . '/' . basename( $pdf_path );
+			$generated_pdf = eme_generate_member_pdf( $member, $membership, $template_id );
+			if ( ! empty( $generated_pdf ) ) {
+				$replacement = EME_UPLOAD_URL . '/members/' . $member['member_id'] . '/' . basename( $generated_pdf[1] );
 			}
 		} elseif ( preg_match( '/#_PAYMENTID/', $result ) ) {
 			$replacement = $member['payment_id'];
@@ -7030,6 +7030,17 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 		return;
 	}
 
+	$pdf_attach_format = $template['properties']['pdf_attach_format'];
+	if (!eme_is_empty_string($pdf_attach_format)) {
+		$pdf_attach_name = eme_replace_member_placeholders( $pdf_attach_format, $membership, $member );
+		if (!preg_match( '/\.pdf$/i', $pdf_attach_name)) {
+			$pdf_attach_name .= '.pdf';
+		}
+		$pdf_attach_name = eme_sanitize_filename(basename($pdf_attach_name));
+	} else {
+		$pdf_attach_name = '';
+	}
+
 	$targetPath  = EME_UPLOAD_DIR . '/members/' . $member['member_id'];
 	$pdf_path    = '';
 	if ( is_dir( $targetPath ) ) {
@@ -7047,7 +7058,9 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 		$membership_mtime_obj = new ExpressiveDate( $membership['modif_date'], EME_TIMEZONE );
 		$template_mtime_obj   = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
 		if ($member_mtime_obj<$pdf_mtime_obj && $membership_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
-			return $pdf_path;
+			if (empty($pdf_attach_name))
+				$pdf_attach_name = basename($pdf_path);
+			return [ $pdf_attach_name, $pdf_path ];
 		}
 	}
 
@@ -7109,7 +7122,9 @@ $extra_html_header
 	$rand_id     = eme_random_id();
 	$target_file = $targetPath . "/member-$template_id-$rand_id.pdf";
 	file_put_contents( $target_file, $dompdf->output() );
-	return $target_file;
+        if (empty($pdf_attach_name))
+                $pdf_attach_name = basename($target_file);
+        return [ $pdf_attach_name, $target_file ];
 }
 
 function eme_ajax_generate_member_pdf( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {

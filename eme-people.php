@@ -2565,7 +2565,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
 		</tr>
 		<tr>
 		<td><label for="email"><?php esc_html_e( 'Group email', 'events-made-easy' ); ?></label></td>
-		<td><input id="email" name="email" type="text" value="<?php echo eme_esc_html( $group['email'] ); ?>" size="40"><br>
+		<td><input id="email" name="email" type="email" value="<?php echo eme_esc_html( $group['email'] ); ?>" size="40"><br>
 			<?php esc_html_e( 'If you want to be able to send mail to this group via your mail client (and not just via EME), you need to configure the cli_mail method (see doc) and enter a unique email address for this group. This can be left empty.', 'events-made-easy' ); ?>
 			</td>
 		</tr>

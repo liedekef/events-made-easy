@@ -75,37 +75,35 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 			if ( is_numeric( $attachment ) ) {
 				$file_path = get_attached_file( $attachment );
 				if ( ! empty( $file_path ) && file_exists( $file_path ) ) {
-					$filename = basename($file_path);
-					$attachment_paths_arr[$filename] = $file_path;
+					$attach_name = eme_sanitize_filename(basename($file_path));
+					if (!empty($attach_name))
+						$attachment_paths_arr[$attach_name] = $file_path;
 				}
 			} elseif ( is_array( $attachment ) ) {
 				if ( file_exists( $attachment[1] ) ) {
 					if (eme_is_empty_string($attachment[0])) {
-						$filename = basename($attachment[1]);
-						$extension = pathinfo($filename, PATHINFO_EXTENSION);
-						// first remove the extension
-						$filename = preg_replace( '/\.$extension$/','', $filename );
+						$filename = pathinfo($attachment[1], PATHINFO_FILENAME);
+						$extension = pathinfo($attachment[1], PATHINFO_EXTENSION);
 						// now rename parts of the file
 						$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
 						$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
-						$attachment_paths_arr[$filename.'.'.$extension] = $attachment[1];
+						$attach_name = eme_sanitize_filename($filename.'.'.$extension);
+						$attachment_paths_arr[$attach_name] = $attachment[1];
 					} else {
-						$filename = $attachment[0];
-						$attachment_paths_arr[$filename] = $attachment[1];
+						$filename = eme_sanitize_filename($attachment[0]);
+						$attachment_paths_arr[$attach_name] = $attachment[1];
 					}
 				}
 			} else {
 				// if it is not a numeric id, it is a file path (like for pdf tickets)
 				if ( file_exists( $attachment ) ) {
-					$filename = basename($attachment);
+					$filename = pathinfo($attachment, PATHINFO_FILENAME);
 					$extension = pathinfo($filename, PATHINFO_EXTENSION);
-					// first remove the extension
-					$filename = preg_replace( '/\.$extension$/','', $filename );
 					// now rename parts of the file
 					$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
 					$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
-					// re-add the extension
-					$attachment_paths_arr[$filename.'.'.$extension] = $attachment;
+					$attach_name = eme_sanitize_filename($filename.'.'.$extension);
+					$attachment_paths_arr[$attach_name] = $attachment;
 				}
 			}
 		}

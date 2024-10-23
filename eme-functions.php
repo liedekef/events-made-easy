@@ -2809,7 +2809,7 @@ function eme_strip_tags( $value ) {
 
 function eme_sanitize_filenamechars( $filepart ) {
 	$filepart = trim( $filepart );
-	return preg_replace( '/[^\da-z]/i', '_', $filepart );
+	return preg_replace( '/[^\da-z \-]/i', '_', $filepart );
 }
 
 function eme_sanitize_filename( $fName ) {
@@ -2817,19 +2817,21 @@ function eme_sanitize_filename( $fName ) {
 	if ( empty( $fName ) ) {
 		return false;
 	}
-	$indexOFF = strrpos( $fName, '.' );
-	if ( $indexOFF ) {
-		$nameFile  = substr( $fName, 0, $indexOFF );
-		$extension = substr( $fName, $indexOFF + 1 );
-	} else {
-		$nameFile  = $fName;
-		$extension = 'none';
-	}
+
+	$nameFile = pathinfo($fName, PATHINFO_FILENAME);
 	if ( empty( $nameFile ) ) {
 		return false;
 	}
+	$extension = pathinfo($fName, PATHINFO_EXTENSION);
+	if (empty($extension)) {
+		$extension = 'none';
+	}
+
 	$clean     = eme_sanitize_filenamechars( $nameFile );
 	$clean_ext = eme_sanitize_filenamechars( $extension );
+	if (empty($clean) || empty($clean_ext)) {
+		return false;
+	}
 	return "$clean.$clean_ext";
 }
 
@@ -3345,9 +3347,9 @@ function eme_get_attachment_link( $id ) {
 				$url       = esc_url( wp_get_attachment_url( $_post->ID ) );
 				$link_text = $_post->post_title;
 				if ( '' === trim( $link_text ) ) {
-					$link_text = esc_html( pathinfo( get_attached_file( $_post->ID ), PATHINFO_FILENAME ) );
+					$link_text = pathinfo( get_attached_file( $_post->ID ), PATHINFO_FILENAME );
 				}
-				return "<a target='_blank' href='$url'>$link_text</a>";
+				return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
 			}
 		} elseif ( is_array( $id ) ){
 			if (eme_is_empty_string($id[0])) {
@@ -3365,7 +3367,6 @@ function eme_get_attachment_link( $id ) {
 			$link_text = pathinfo( $id, PATHINFO_FILENAME ); // the link shouldn't show the extension
 			$link_text = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
 			$link_text = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
-			#$link_text = var_dump($id);
 			$url = str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id );
 			return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
 		}

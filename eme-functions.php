@@ -3355,8 +3355,8 @@ function eme_get_attachment_link( $id ) {
 			if (eme_is_empty_string($id[0])) {
 				$link_text = pathinfo( $id[1], PATHINFO_FILENAME ); // the link shouldn't show the extension
 				// now rename parts of the file
-				$link_text = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
-				$link_text = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
+				$link_text = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $link_text );
+				$link_text = preg_replace( '/.*-(qrcode.*)/', '$1', $link_text );
 			} else {
 				$link_text = pathinfo( $id[0], PATHINFO_FILENAME ); // the link shouldn't show the extension
 			}
@@ -3365,8 +3365,8 @@ function eme_get_attachment_link( $id ) {
 		} else {
 			// not numeric ? Then it is a path
 			$link_text = pathinfo( $id, PATHINFO_FILENAME ); // the link shouldn't show the extension
-			$link_text = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
-			$link_text = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
+			$link_text = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $link_text );
+			$link_text = preg_replace( '/.*-(qrcode.*)/', '$1', $link_text );
 			$url = str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id );
 			return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
 		}

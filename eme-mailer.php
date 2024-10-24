@@ -80,18 +80,20 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 						$attachment_paths_arr[$attach_name] = $file_path;
 				}
 			} elseif ( is_array( $attachment ) ) {
+				// an array: the first element is the desired attach name, the second the real path of the file to attach
 				if ( file_exists( $attachment[1] ) ) {
 					if (eme_is_empty_string($attachment[0])) {
+						// if no desired name, we base ourselves on the real path but remove some ugly parts
 						$filename = pathinfo($attachment[1], PATHINFO_FILENAME);
 						$extension = pathinfo($attachment[1], PATHINFO_EXTENSION);
-						// now rename parts of the file
+						// now remove parts of the file
 						$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
 						$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
 						$attach_name = eme_sanitize_filename($filename.'.'.$extension);
 						$attachment_paths_arr[$attach_name] = $attachment[1];
 					} else {
 						$filename = eme_sanitize_filename($attachment[0]);
-						$attachment_paths_arr[$attach_name] = $attachment[1];
+						$attachment_paths_arr[$filename] = $attachment[1];
 					}
 				}
 			} else {
@@ -99,7 +101,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 				if ( file_exists( $attachment ) ) {
 					$filename = pathinfo($attachment, PATHINFO_FILENAME);
 					$extension = pathinfo($filename, PATHINFO_EXTENSION);
-					// now rename parts of the file
+					// now remove parts of the file
 					$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
 					$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
 					$attach_name = eme_sanitize_filename($filename.'.'.$extension);

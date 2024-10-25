@@ -86,6 +86,8 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 						// if no desired name, we base ourselves on the real path but remove some ugly parts
 						$filename = pathinfo($attachment[1], PATHINFO_FILENAME);
 						$extension = pathinfo($attachment[1], PATHINFO_EXTENSION);
+						if (empty($extension))
+							$extension = "none";
 						// now remove parts of the file
 						$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
 						$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
@@ -101,6 +103,8 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 				if ( file_exists( $attachment ) ) {
 					$filename = pathinfo($attachment, PATHINFO_FILENAME);
 					$extension = pathinfo($filename, PATHINFO_EXTENSION);
+					if (empty($extension))
+						$extension = "none";
 					// now remove parts of the file
 					$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
 					$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );

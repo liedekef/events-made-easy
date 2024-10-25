@@ -3347,26 +3347,34 @@ function eme_get_attachment_link( $id ) {
 				$url       = esc_url( wp_get_attachment_url( $_post->ID ) );
 				$link_text = $_post->post_title;
 				if ( '' === trim( $link_text ) ) {
-					$link_text = pathinfo( get_attached_file( $_post->ID ), PATHINFO_FILENAME );
+					$link_text = pathinfo( get_attached_file( $_post->ID ), PATHINFO_BASENAME );
 				}
 				return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
 			}
 		} elseif ( is_array( $id ) ){
 			if (eme_is_empty_string($id[0])) {
-				$link_text = pathinfo( $id[1], PATHINFO_FILENAME ); // the link shouldn't show the extension
+				$link_text = pathinfo( $id[1], PATHINFO_FILENAME );
+				$extension = pathinfo( $id[1], PATHINFO_EXTENSION);
+				if (empty($extension))
+					$extension = "none";
 				// now rename parts of the file
 				$link_text = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $link_text );
 				$link_text = preg_replace( '/.*-(qrcode.*)/', '$1', $link_text );
+				$link_text .= ".$extension";
 			} else {
-				$link_text = pathinfo( $id[0], PATHINFO_FILENAME ); // the link shouldn't show the extension
+				$link_text = pathinfo( $id[0], PATHINFO_BASENAME );
 			}
 			$url = str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id[1] );
 			return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
 		} else {
 			// not numeric ? Then it is a path
-			$link_text = pathinfo( $id, PATHINFO_FILENAME ); // the link shouldn't show the extension
+			$link_text = pathinfo( $id, PATHINFO_FILENAME );
+			$extension = pathinfo( $id, PATHINFO_EXTENSION);
+			if (empty($extension))
+				$extension = "none";
 			$link_text = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $link_text );
 			$link_text = preg_replace( '/.*-(qrcode.*)/', '$1', $link_text );
+			$link_text .= ".$extension";
 			$url = str_replace( EME_UPLOAD_DIR, EME_UPLOAD_URL, $id );
 			return "<a target='_blank' href='$url'>".esc_html($link_text)."</a>";
 		}

@@ -139,10 +139,12 @@ function eme_locations_page() {
 			}
 
 			$location_attributes = [];
-			for ( $i = 1; isset( $_POST[ "eme_attr_{$i}_ref" ] ) && trim( $_POST[ "eme_attr_{$i}_ref" ] ) != ''; $i++ ) {
-				if ( trim( $_POST[ "eme_attr_{$i}_name" ] ) != '' ) {
+			$i=1;
+			while (isset( $_POST[ "eme_attr_{$i}_ref" ] ) && !eme_is_empty_string( $_POST[ "eme_attr_{$i}_ref" ] ) ) {
+				if ( !eme_is_empty_string( $_POST[ "eme_attr_{$i}_name" ] ) ) {
 					$location_attributes[ $_POST[ "eme_attr_{$i}_ref" ] ] = eme_kses( $_POST[ "eme_attr_{$i}_name" ] );
 				}
+				$i++;
 			}
 			$location['location_attributes'] = $location_attributes;
 

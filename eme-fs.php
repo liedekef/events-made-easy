@@ -385,7 +385,7 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
 	return do_shortcode( $format );
 }
 
-function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $required=0, $field_id = false) {
+function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $required=0, $field_id = false) {
       if (!$field)
          return false;
       $localized_field_id='';
@@ -489,6 +489,7 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
 
       $field_id = ($field_id)?$field_id:$field;
 
+      $res = '';
       switch($type) {
          case 'wysiwyg_textarea':
             if ($eme_fs_options['allow_upload'])
@@ -499,39 +500,39 @@ function eme_get_fs_field_html($field = false, $type = 'text', $more = '', $requ
 	    ob_start(); // Start output buffer
             wp_editor('',$field_id,$editor_settings);
 	    // Store the printed data in $editor variable
-	    return ob_get_clean();
+	    $res = ob_get_clean();
             break;
          case 'localized_datetime':
             //echo sprintf($html_by_type['hidden'], $field_id, $field, '', $more);
             $res = sprintf($html_by_type['hidden'], $field_id, $field, $more);
             $res .= sprintf($html_by_type[$type], $localized_field_id, "event[$localized_field_id]", $more);
-	    return $res;
             break;
          case 'status_select':
-            return eme_fs_getstatusselect($more);
+            $res = eme_fs_getstatusselect($more);
             break;
          case 'category_select':
-            return eme_fs_getcategoriesselect($more);
+            $res = eme_fs_getcategoriesselect($more);
             break;
          case 'category_radio':
-            return eme_fs_getcategoriesradio($more);
+            $res = eme_fs_getcategoriesradio($more);
             break;
          case 'recaptcha':
          case 'hcaptcha':
          case 'cfcaptcha':
          case 'captcha':
-            return eme_generate_captchas_html();
+            $res = eme_generate_captchas_html();
             break;
          case 'binary':
-            return eme_fs_getbinaryselect("event[".$field."]",$field_id,0);
+            $res = eme_fs_getbinaryselect("event[".$field."]",$field_id,0);
             break;
          case 'prop-binary':
-            return eme_fs_getbinaryselect("event_properties[".$field_id."]",$field_id,0);
+            $res = eme_fs_getbinaryselect("event_properties[".$field_id."]",$field_id,0);
             break;
          default:
-            return sprintf($html_by_type[$type], $field_id, $field_id, $more);
+            $res = sprintf($html_by_type[$type], $field_id, $field_id, $more);
             break;
       }
+      return $res;
 }
 
 function eme_fs_getcategories() {
@@ -540,7 +541,7 @@ function eme_fs_getcategories() {
 	return($categories);
 }
 
-function eme_fs_getcategoriesradio($more) {
+function eme_fs_getcategoriesradio( $more ) {
 	$categories = eme_fs_getcategories();
 	$category_radios = array();
 	if ( $categories ) {
@@ -554,7 +555,7 @@ function eme_fs_getcategoriesradio($more) {
 	return implode("\n", $category_radios);
 }
 
-function eme_fs_getcategoriesselect($more) {
+function eme_fs_getcategoriesselect( $more ) {
 	$category_select = array();
 	$category_select[] = '<select id="event_category_ids" name="event[event_category_ids]" '.$more.' >';
 	$categories = eme_fs_getcategories();
@@ -569,7 +570,7 @@ function eme_fs_getcategoriesselect($more) {
 	return implode("\n", $category_select);
 }
 
-function eme_fs_getstatusselect($more) {
+function eme_fs_getstatusselect( $more ) {
 	$event_status_array = eme_status_array ();
 	$status_select = array();
 	$status_select[] = '<select id="event_status" name="event[event_status]" '.$more.' >';
@@ -582,7 +583,7 @@ function eme_fs_getstatusselect($more) {
 	return implode("\n", $status_select);
 }
 
-function eme_fs_getbinaryselect($name,$field_id,$default) {
+function eme_fs_getbinaryselect( $name, $field_id, $default ) {
 	$val = "<select name='$name' id='$field_id'>";
 	$selected_YES="";
 	$selected_NO="";
@@ -602,7 +603,11 @@ function eme_fs_process_newevent() {
 	$captcha_res = eme_check_captcha( $eme_fs_options );
 	if (empty($eme_fs_options['success_message']))
 		$eme_fs_options['success_message'] = __('New event succesfully created.','events-made-easy');
-	$event_data = eme_kses($_POST['event']);
+	if (empty($_POST['event'])) {
+		$event_data = [];
+	} else {
+		$event_data = eme_kses($_POST['event']);
+	}
 	// add in the event_attributes and properties
 	if (isset($_POST['event_attributes']) && !empty($_POST['event_attributes'])) {
 		$event_data['event_attributes'] = eme_kses($_POST['event_attributes']);
@@ -746,7 +751,7 @@ function eme_fs_process_newevent() {
 	}
 }
 
-function eme_fs_processlocation($event_data, $force=0) {
+function eme_fs_processlocation( $event_data, $force=0 ) {
       $location = eme_new_location();
       // for backwards compatibility
       if (isset($event_data['location_address'])) {

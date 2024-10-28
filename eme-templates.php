@@ -329,7 +329,7 @@ function eme_templates_edit_layout( $template_id = 0, $message = '', $template =
 			<tr class='form-field'>
 			<th scope='row' style='vertical-align:top'><?php esc_html_e( 'PDF mail attach format', 'events-made-easy' ); ?></th>
 			<td><input type='text' name='properties[pdf_attach_format]' id='properties[pdf_attach_format]' value='<?php echo eme_esc_html( $template['properties']['pdf_attach_format'] ); ?>' size='40'><br>
-			<?php esc_html_e( "When the template is being used as an attacment in a mail, the attachment has a default name. If you don't like the name given to the attachment in the name, you can change it here. Relevant placeholders are allowed in their context (event/membership/booking/member/...). The '.pdf' extension will get added automatically, so no need to mention it.", 'events-made-easy' ); ?></td>
+			<?php esc_html_e( "When the template is being used as an attacment in a mail, the attachment has a default name. If you don't like the name given to the attachment in the mail, you can change it here. Relevant placeholders are allowed in their context (event/membership/booking/member/...). The '.pdf' extension will get added automatically, so no need to mention it.", 'events-made-easy' ); ?></td>
 			</tr>
 		</table>
 		<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo $action_string; ?>'></p>

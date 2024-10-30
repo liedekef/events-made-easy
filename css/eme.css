@@ -586,3 +586,30 @@ form[name=eme-fs-form] .ui-autocomplete {
 form[name=eme-fs-form] .ui-autocomplete li { }
 form[name=eme-fs-form] .ui-autocomplete li a { display: block; padding: .5em 1em; border-radius:3px; cursor: pointer; text-decoration: none; line-height:1em; }
 form[name=eme-fs-form] .ui-autocomplete li a:hover { background:#f8f8f8; text-decoration: none; }
+
+/* accordeon */
+details.eme_accordion > summary {
+  padding: 4px;
+  background-color: #eeeeee;
+  border: none;
+  box-shadow: 1px 1px 2px #bbbbbb;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+details.eme_accordion[open] {
+  background-color: white;
+}
+details.eme_accordion[open] > summary  {
+  background-color: #eeeeee;
+}
+details.eme_accordion > table {
+  width: 99%;
+  margin: 1px auto 5px auto;
+}
+details.eme_accordion > p {
+  background-color: #eeeeee;
+  padding: 4px;
+  margin: 0;
+  box-shadow: 1px 1px 2px #bbbbbb;
+}
+

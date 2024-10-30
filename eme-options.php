@@ -1494,9 +1494,8 @@ function eme_options_page() {
 <h3><?php esc_html_e( 'Access rights', 'events-made-easy' ); ?></h3>
 <p><?php esc_html_e( 'Tip: Use a plugin like "User Role Editor" to add/edit capabilities and roles.', 'events-made-easy' ); ?></p>
 
-<div id="eme-payments-accordion">
-<h3><?php esc_html_e( 'Events', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Events', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 				eme_options_select( __( 'List events', 'events-made-easy' ), 'eme_cap_list_events', eme_get_all_caps(), sprintf( __( 'Permission needed to list all events, useful for CSV exports for bookings and such. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_LIST_EVENTS ) ) . '<br><b>' . __( 'All your Events Made Easy admins need this as well, otherwise the main menu will not show.', 'events-made-easy' ) . '</b>' );
@@ -1508,9 +1507,9 @@ function eme_options_page() {
 				eme_options_select( __( 'Manage task signups', 'events-made-easy' ), 'eme_cap_manage_task_signups', eme_get_all_caps(), sprintf( __( 'Permission needed to manage all task signups. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_MANAGE_TASK_SIGNUPS ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Locations', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Locations', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'List locations', 'events-made-easy' ), 'eme_cap_list_locations', eme_get_all_caps(), sprintf( __( 'Permission needed to list all locations. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_LIST_LOCATIONS ) ) . '<br><b>' . __( 'All your location admins need this as well, otherwise the locations menu will not show.', 'events-made-easy' ) . '</b>' );
@@ -1519,41 +1518,41 @@ function eme_options_page() {
 			eme_options_select( __( 'Edit locations', 'events-made-easy' ), 'eme_cap_edit_locations', eme_get_all_caps(), sprintf( __( 'Permission needed to edit all locations. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_EDIT_LOCATIONS ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Categories', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Categories', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Edit categories', 'events-made-easy' ), 'eme_cap_categories', eme_get_all_caps(), sprintf( __( 'Permission needed to edit all categories. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_CATEGORIES ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Holidays', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Holidays', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Holidays', 'events-made-easy' ), 'eme_cap_holidays', eme_get_all_caps(), sprintf( __( 'Permission needed to manage holidays. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_HOLIDAYS ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Templates', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Templates', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Edit templates', 'events-made-easy' ), 'eme_cap_templates', eme_get_all_caps(), sprintf( __( 'Permission needed to edit all templates. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_TEMPLATES ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Discounts', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Discounts', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Manage disounts', 'events-made-easy' ), 'eme_cap_discounts', eme_get_all_caps(), sprintf( __( 'Permission needed to manage discounts. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_DISCOUNTS ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'People and groups', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'People and groups', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Access to people and groups', 'events-made-easy' ), 'eme_cap_access_people', eme_get_all_caps(), sprintf( __( 'Permission needed to access the people or groups menu. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_ACCESS_PEOPLE ) ) . '<br><b>' . __( 'All your people admins need this, otherwise the people and groups menus will not show.', 'events-made-easy' ) . '</b>' );
@@ -1562,9 +1561,9 @@ function eme_options_page() {
 			eme_options_select( __( 'Edit people and groups', 'events-made-easy' ), 'eme_cap_edit_people', eme_get_all_caps(), sprintf( __( 'Permission needed to manage registered people. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_EDIT_PEOPLE ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Memberships', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Memberships', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Access to members and memberships', 'events-made-easy' ), 'eme_cap_access_members', eme_get_all_caps(), sprintf( __( 'Permission needed to access the members or memberships menu. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_ACCESS_MEMBERS ) ) . '<br><b>' . __( 'All your member admins need this, otherwise the members and memberships menus will not show.', 'events-made-easy' ) . '</b>' );
@@ -1574,9 +1573,9 @@ function eme_options_page() {
 			eme_options_select( __( 'Member check', 'events-made-easy' ), 'eme_cap_membercheck', eme_get_all_caps(), sprintf( __( 'Permission needed to check if a member is active (link generated by #_QRCODE in a member context). Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_MEMBERCHECK ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Bookings', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Bookings', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'List pending bookings', 'events-made-easy' ), 'eme_cap_list_approve', eme_get_all_caps(), sprintf( __( 'Permission needed to list pending bookings. If someone does not have this role, the menu concerning pending bookings will not appear. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_LIST_APPROVE ) ) );
@@ -1588,9 +1587,9 @@ function eme_options_page() {
 			eme_options_select( __( 'Attendance check', 'events-made-easy' ), 'eme_cap_attendancecheck', eme_get_all_caps(), sprintf( __( 'Permission needed to check attendance for events (link generated by #_QRCODE in a RSVP context). Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_ATTENDANCECHECK ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Emails', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Emails', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Send emails for own events', 'events-made-easy' ), 'eme_cap_send_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send mails for own events and be able to access the mailing submenu. Default: %s.', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_MAILS ) ) );
@@ -1600,41 +1599,40 @@ function eme_options_page() {
 			eme_options_select( __( 'Manage mailings and mail queue', 'events-made-easy' ), 'eme_cap_send_other_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to manage planned mailings and the mail queue. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_MANAGE_MAILS ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Edit form fields', 'events-made-easy' ), 'eme_cap_forms', eme_get_all_caps(), sprintf( __( 'Permission needed to edit form fields. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_FORMS ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Attendances', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Attendances', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'List attendances', 'events-made-easy' ), 'eme_cap_list_attendances', eme_get_all_caps(), sprintf( __( 'Permission needed to list attendances. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_LIST_ATTENDANCES ) ) );
 			eme_options_select( __( 'Manage attendances', 'events-made-easy' ), 'eme_cap_manage_attendances', eme_get_all_caps(), sprintf( __( 'Permission needed to manage (add/delete) attendances. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_MANAGE_ATTENDANCES ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Actions', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Actions', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Actions', 'events-made-easy' ), 'eme_cap_cleanup', eme_get_all_caps(), sprintf( __( 'Permission needed to execute cleanup actions, manage cron settings and import actions. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_CLEANUP ) ) );
 			?>
 </table>
-</div>
-<h3><?php esc_html_e( 'Settings', 'events-made-easy' ); ?></h3> 
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Settings', 'events-made-easy' ); ?></summary> 
 <table class="form-table">
 			<?php
 			eme_options_select( __( 'Edit settings', 'events-made-easy' ), 'eme_cap_settings', eme_get_all_caps(), sprintf( __( 'Permission needed to edit settings. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SETTINGS ) ) );
 			?>
 </table>
-</div>
-</div>
+</details>
 
 			<?php
 			break;
@@ -1988,18 +1986,17 @@ function eme_options_page() {
 			}
 			?>
 
-<div id="eme-mailtemplates-accordion">
-<h3><?php esc_html_e( 'Full name format', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Full name format', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 				eme_options_input_text( __( 'Full name format', 'events-made-easy' ), 'eme_full_name_format', __( 'The format of the full name of a person, used when sending mails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is "#_LASTNAME #_FIRSTNAME".', 'events-made-easy' ) );
 			?>
 			 
 </table>
-</div>
-<h3><?php esc_html_e( 'Booking Made or Approved Email', 'events-made-easy' ); ?></h3>
-<div>
+</details>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Booking Made or Approved Email', 'events-made-easy' ); ?></summary>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
 				print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
@@ -2052,10 +2049,10 @@ function eme_options_page() {
         }
 ?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Booking Pending Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Booking Pending Email', 'events-made-easy' ); ?></summary>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
 				print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
@@ -2109,10 +2106,10 @@ function eme_options_page() {
         }
 ?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Booking Updated Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Booking Updated Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
@@ -2122,10 +2119,10 @@ function eme_options_page() {
 			eme_options_textarea( __( 'Booking Updated Email Body', 'events-made-easy' ), 'eme_registration_updated_email_body', __( 'The body of the email which will be sent to the respondent if the booking has been updated by an admin.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Booking Reminder Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Booking Reminder Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
@@ -2137,10 +2134,10 @@ function eme_options_page() {
 			eme_options_textarea( __( 'Accepted Booking Reminder Email Body', 'events-made-easy' ), 'eme_registration_reminder_email_body', __( 'The body of the email which will be sent to the respondent as a reminder of an approved booking.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Booking Cancelled Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Booking Cancelled Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
@@ -2152,10 +2149,10 @@ function eme_options_page() {
 			eme_options_textarea( __( 'Contact Person Cancelled Booking Email Body', 'events-made-easy' ), 'eme_contactperson_cancelled_email_body', __( 'The body of the email which will be sent to the contact person when a respondent cancels all his bookings for an event.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Booking Deleted Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Booking Deleted Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
@@ -2165,10 +2162,10 @@ function eme_options_page() {
 			eme_options_textarea( __( 'Booking Deleted Email Body', 'events-made-easy' ), 'eme_registration_trashed_email_body', __( 'The body of the email which will be sent to the respondent if the booking is deleted by an admin.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a>', $use_html_editor, $use_full );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Booking Paid Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Booking Paid Email', 'events-made-easy' ); ?></summary>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
 				print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
@@ -2219,10 +2216,10 @@ function eme_options_page() {
         }
 ?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Booking Payment Gateway Notification Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Booking Payment Gateway Notification Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
@@ -2232,10 +2229,10 @@ function eme_options_page() {
 			eme_options_textarea( __( 'Contact Person Payment Notification Email Body', 'events-made-easy' ), 'eme_contactperson_ipn_email_body', __( 'The body of the email which will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Frontend Event Submit Notification Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Frontend Event Submit Notification Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_input_text( __( 'Contact Person New Event Email Subject', 'events-made-easy' ), 'eme_fs_contactperson_newevent_email_subject', __( 'The subject of the email which will be sent to the contact person when a new event is submitted.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='https://www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-2-events/'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
@@ -2281,10 +2278,10 @@ function eme_options_page() {
         }
 ?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Mailing group subscription Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Mailing group subscription Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_input_text( __( 'Subscribe email subject', 'events-made-easy' ), 'eme_sub_subject', __( 'The subject of the email which will be sent to the person asking to subscribe to a mailing group.', 'events-made-easy' ) . '<br>' . __( 'No placeholders can be used.', 'events-made-easy' ) );
@@ -2319,10 +2316,10 @@ function eme_options_page() {
 			eme_options_textarea( __( 'Unsubscribe email body', 'events-made-easy' ), 'eme_unsub_body', __( 'The body of the email which will be sent to the person asking to unsubscribe.', 'events-made-easy' ) . '<br>' . __( 'Can contain all people placeholders and one additional required placeholder, namely #_UNSUB_CONFIRM_URL (which will be replaced with the unsubscribe confirmation url).', 'events-made-easy' ), $use_html_editor, $use_full );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Task Signup Pending Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Task Signup Pending Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_input_text( __( 'Task Signup Pending Email Subject', 'events-made-easy' ), 'eme_task_signup_pending_email_subject', __( 'The subject of the email sent to the respondent when that person signs up for a task that requires approval.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
@@ -2332,10 +2329,10 @@ function eme_options_page() {
 			?>
 			 
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Task Signup Made Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Task Signup Made Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_input_text( __( 'Task Signup Made Email Subject', 'events-made-easy' ), 'eme_task_signup_email_subject', __( 'The subject of the email sent to the respondent when that person signs up for a task.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
@@ -2345,20 +2342,20 @@ function eme_options_page() {
 			?>
 			 
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Task Signup Reminder Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Task Signup Reminder Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_input_text( __( 'Task Signup Reminder Email Subject', 'events-made-easy' ), 'eme_task_signup_reminder_email_subject', __( 'The subject of the reminder email which will be sent to the respondent.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
 			eme_options_textarea( __( 'Task Signup Reminder Email Body', 'events-made-easy' ), 'eme_task_signup_reminder_email_body', __( 'The body of the reminder email which will be sent to the respondent.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Task Signup Cancelled Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Task Signup Cancelled Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_input_text( __( 'Task Signup Cancelled Email Subject', 'events-made-easy' ), 'eme_task_signup_cancelled_email_subject', __( 'The subject of the email which will be sent to the respondent when he himself cancels a task signup.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
@@ -2367,28 +2364,27 @@ function eme_options_page() {
 			eme_options_textarea( __( 'Contact Person Task Signup Cancelled Email Body', 'events-made-easy' ), 'eme_cp_task_signup_cancelled_email_body', __( 'The body of the email which will be sent to the contact person when a respondent cancels a task signup.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Task Signup Deleted Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Task Signup Deleted Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_input_text( __( 'Task Signup Deleted Email Subject', 'events-made-easy' ), 'eme_task_signup_trashed_email_subject', __( 'The subject of the email which will be sent to the respondent if the task signup is deleted by an admin.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
 			eme_options_textarea( __( 'Task Signup Deleted Email Body', 'events-made-easy' ), 'eme_task_signup_trashed_email_body', __( 'The body of the email which will be sent to the respondent if the task signup is deleted by an admin.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>', $use_html_editor, $use_full );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Birthday Email', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Birthday Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_input_text( __( 'Birthday Email Subject', 'events-made-easy' ), 'eme_bd_email_subject', __( 'The subject of the email which will be sent to people on their birthday (if active for them).', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
 			eme_options_textarea( __( 'Birthday Email Body', 'events-made-easy' ), 'eme_bd_email_body', __( 'The body of the email which will be sent to  to people on their birthday (if active for them).', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-16-taskssignups/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>', $use_html_editor, $use_full );
 			?>
 </table>
-</div>
-</div>
+</details>
 
 			<?php
 			break;
@@ -2450,9 +2446,8 @@ function eme_options_page() {
 			$events_page_link = eme_get_events_page();
 			?>
 
-<div id="eme-payments-accordion">
-<h3><?php esc_html_e( 'General options', 'events-made-easy' ); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'General options', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
 				eme_options_select( __( 'Default currency', 'events-made-easy' ), 'eme_default_currency', eme_currency_array(), __( 'Select the default currency for payments.', 'events-made-easy' ) );
@@ -2477,19 +2472,19 @@ function eme_options_page() {
 				eme_options_radio_binary( __( 'Allow refunds?', 'events-made-easy' ), 'eme_payment_refund_ok', __( 'In case of a cancelled booking, the option to refund is presented (if the payment gateway supports it). If you want to disable this, select No.', 'events-made-easy' ) );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Offline payment info', 'events-made-easy' ); echo_configured_pg('offline');?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Offline payment info', 'events-made-easy' ); echo_configured_pg('offline');?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_textarea( __( 'Offline payment info', 'events-made-easy' ), 'eme_offline_payment', __( 'The text containing all info for offline payment. Can contain HTML and placeholders like the payment header/footer settings.', 'events-made-easy' ) . ' ' . __( 'This option is only valid for event bookings, for memberships this can be defined for each membership individually.', 'events-made-easy' ), 1 );
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Paypal', 'events-made-easy' ); echo_configured_pg('paypal');?> <b>Deprecated, use Braintree</b></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Paypal', 'events-made-easy' ); echo_configured_pg('paypal');?> <b>Deprecated, use Braintree</b></summary>
 <table class='form-table'>
 			<?php
 			echo "<tr><td colspan='2' class='notice notice-warning'>" . esc_html__( 'Remark: due to the incomplete PHP implementation by Paypal, it is not recommended to use this method. It works fine, but has some shortcomings: no webhook functionality (meaning: if someone closes the browser immediately after payment, the payment will not get marked as paid in EME) and refunding is not possible.', 'events-made-easy' ) . '</td></tr>';
@@ -2517,10 +2512,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Legacy Paypal', 'events-made-easy' ); echo_configured_pg('legacypaypal'); ?> <b>Deprecated, use Braintree</b></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Legacy Paypal', 'events-made-easy' ); echo_configured_pg('legacypaypal'); ?> <b>Deprecated, use Braintree</b></summary>
 <table class='form-table'>
 			<?php
 			$notification_link = add_query_arg( [ 'eme_eventAction' => 'legacypaypal_notification' ], $events_page_link );
@@ -2549,10 +2544,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Webmoney', 'events-made-easy' ); echo_configured_pg('webmoney'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Webmoney', 'events-made-easy' ); echo_configured_pg('webmoney'); ?></summary>
 <table class='form-table'>
 			<?php
 			$notification_link = add_query_arg( [ 'eme_eventAction' => 'webmoney_notification' ], $events_page_link );
@@ -2582,10 +2577,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'First Data', 'events-made-easy' ); echo_configured_pg('fdgg'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'First Data', 'events-made-easy' ); echo_configured_pg('fdgg'); ?></summary>
 <table class='form-table'>
 			<?php
 			$notification_link = add_query_arg( [ 'eme_eventAction' => 'fdgg_notification' ], $events_page_link );
@@ -2615,10 +2610,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Mollie', 'events-made-easy' ); echo_configured_pg('mollie'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Mollie', 'events-made-easy' ); echo_configured_pg('mollie'); ?></summary>
 <table class='form-table'>
 			<?php
 			$notification_link = add_query_arg( [ 'eme_eventAction' => 'mollie_notification' ], $events_page_link );
@@ -2635,10 +2630,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Payconiq', 'events-made-easy' ); echo_configured_pg('payconiq'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Payconiq', 'events-made-easy' ); echo_configured_pg('payconiq'); ?></summary>
 <table class='form-table'>
 			<?php
 			$notification_link = add_query_arg( [ 'eme_eventAction' => 'payconiq_notification' ], $events_page_link );
@@ -2667,10 +2662,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is implemented but the way payconiq works it might still require manual transfer of the funds to the relevant bank accounts anyway.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Worldpay', 'events-made-easy' ); echo_configured_pg('worldpay'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Worldpay', 'events-made-easy' ); echo_configured_pg('worldpay'); ?></summary>
 <table class='form-table'>
 			<?php
 			$notification_link = add_query_arg( [ 'eme_eventAction' => 'worldpay_notification' ], $events_page_link );
@@ -2702,10 +2697,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Opayo', 'events-made-easy' ); echo_configured_pg('opayo'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Opayo', 'events-made-easy' ); echo_configured_pg('opayo'); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_select(
@@ -2734,10 +2729,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'SumUp', 'events-made-easy' ); echo_configured_pg('sumup'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'SumUp', 'events-made-easy' ); echo_configured_pg('sumup'); ?></summary>
 <table class='form-table'>
 			<?php
 			$notification_link = add_query_arg( [ 'eme_eventAction' => 'sumup_notification' ], $events_page_link );
@@ -2755,10 +2750,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Stripe', 'events-made-easy' ); echo_configured_pg('stripe'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Stripe', 'events-made-easy' ); echo_configured_pg('stripe'); ?></summary>
 <table class='form-table'>
 			<?php
 			$notification_link = add_query_arg( [ 'eme_eventAction' => 'stripe_notification' ], $events_page_link );
@@ -2810,10 +2805,10 @@ function eme_options_page() {
 			}
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Braintree', 'events-made-easy' ); echo_configured_pg('braintree'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Braintree', 'events-made-easy' ); echo_configured_pg('braintree'); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_select(
@@ -2841,10 +2836,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Instamojo', 'events-made-easy' ); echo_configured_pg('instamojo'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Instamojo', 'events-made-easy' ); echo_configured_pg('instamojo'); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_select(
@@ -2872,10 +2867,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Mercado Pago', 'events-made-easy' ); echo_configured_pg('mercadopago'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Mercado Pago', 'events-made-easy' ); echo_configured_pg('mercadopago'); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_select(
@@ -2902,10 +2897,10 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-<h3><?php esc_html_e( 'Fondy', 'events-made-easy' ); echo_configured_pg('fondy'); ?></h3>
-<div>
+<details class="eme_accordion">
+<summary><?php esc_html_e( 'Fondy', 'events-made-easy' ); echo_configured_pg('fondy'); ?></summary>
 <table class='form-table'>
 			<?php
 			eme_options_input_text( __( 'Fondy Merchant ID', 'events-made-easy' ), 'eme_fondy_merchant_id', __( 'Fondy Merchant ID', 'events-made-easy' ) );
@@ -2920,9 +2915,8 @@ function eme_options_page() {
 			echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 			?>
 </table>
-</div>
+</details>
 
-</div>
 			<?php
 			break;
 		case 'maps':

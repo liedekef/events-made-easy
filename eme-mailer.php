@@ -2625,7 +2625,7 @@ function eme_emails_page() {
 	</p></div>
 	<form id='search_mail' name='search_mail' action="#" method="post" onsubmit="return false;">
 	<label for='search_text'><?php esc_html_e( 'Enter the search text (leave empty to show the last 100 emails sent)', 'events-made-easy' ); ?></label>
-	<input type="text" name="search_text" id="search_text" value="">
+	<input type="search" name="search_text" id="search_text" value="">
 	<input id="search_failed" name='search_failed' value='1' type='checkbox' ><label for='search_failed'><?php esc_html_e( 'Only show failed emails', 'events-made-easy' ); ?></label>
 	<button id='searchmailButton' class="button-primary action"> <?php esc_html_e( 'Search', 'events-made-easy' ); ?></button>
 	</form>

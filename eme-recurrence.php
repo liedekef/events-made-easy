@@ -362,16 +362,6 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 		$recurrence['recurrence_end_date'] = $last_day;
 	}
 
-	if ( $only_change_recdates ) {
-		// if the new start/end dates are identical and we only want to change the dates
-		// then nothing needs to happen and we return
-		$orig_recurrence = eme_get_recurrence($recurrence['recurrence_id']);
-		if ($orig_recurrence['recurrence_start_date'] == $recurrence['recurrence_start_date'] &&
-			$orig_recurrence['recurrence_end_date'] == $recurrence['recurrence_end_date'] ) {
-			return;
-		}
-	}
-
 	$where = [ 'recurrence_id' => $recurrence['recurrence_id'] ];
 	$wpdb->update( $recurrence_table, $recurrence, $where );
 	$event['recurrence_id'] = $recurrence['recurrence_id'];

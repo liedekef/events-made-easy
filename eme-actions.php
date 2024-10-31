@@ -262,7 +262,7 @@ function eme_admin_register_scripts() {
 	} else {
 		wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery', 'eme-select2' ], EME_VERSION );
 	}
-	wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jtable-storage', 'jquery-ui-accordion', 'jquery-ui-autocomplete', 'jquery-ui-tabs', 'jquery-ui-sortable', 'eme-jquery-validate', 'eme-print' ], EME_VERSION );
+	wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jtable-storage', 'jquery-ui-autocomplete', 'jquery-ui-tabs', 'jquery-ui-sortable', 'eme-jquery-validate', 'eme-print' ], EME_VERSION );
 
 	wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
 	wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ 'jquery' ], EME_VERSION, true );

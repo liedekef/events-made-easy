@@ -78,7 +78,7 @@ jQuery(document).ready( function($) {
    
    function updateShowHideRsvp() {
       if ($('input#event_rsvp').prop('checked')) {
-	      $('div#rsvp-accordion').fadeIn();
+	      $('div#rsvp-details').fadeIn();
 	      //$('#event-tabs').tabs('enable','#tab-mailformats');
 	      $('div#div_event_rsvp').fadeIn();
 	      $('div#div_dyndata').fadeIn();
@@ -88,11 +88,9 @@ jQuery(document).ready( function($) {
 	      $('div#div_event_cancel_form_format').fadeIn();
 	      $('div#div_event_registration_recorded_ok_html').fadeIn();
 	      $('div#div_event_attendance_info').fadeIn();
-	      $('div#div_mailformats').fadeIn();
       } else {
          //$('#event-tabs').tabs('disable','#tab-mailformats');
-         $('div#rsvp-accordion').fadeOut();
-         $('div#div_mailformats').fadeOut();
+         $('div#rsvp-details').fadeOut();
       }
    }
    function updateShowHideTasks() {

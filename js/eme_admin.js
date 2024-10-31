@@ -636,42 +636,6 @@ jQuery(document).ready( function($) {
 		}
 	});
 
-	if ($('#eme-mailtemplates-accordion').length) {
-		$("#eme-mailtemplates-accordion").accordion({
-			collapsible: true, active: false, heightStyle: "content"
-		});
-	}
-	if ($('#eme-payments-accordion').length) {
-		$("#eme-payments-accordion").accordion({
-			collapsible: true, active: false, heightStyle: "content"
-		});
-	}
-	if ($('#tasks-accordion').length) {
-		$("#tasks-accordion").accordion({
-			collapsible: true, active: false, heightStyle: "content"
-		});
-	}
-	if ($('#tasks-settings-accordion').length) {
-		$("#tasks-settings-accordion").accordion({
-			collapsible: true, active: false, heightStyle: "content"
-		});
-	}
-	if ($('#tasks-mailtemplates-accordion').length) {
-		$("#tasks-mailtemplates-accordion").accordion({
-			collapsible: true, active: false, heightStyle: "content"
-		});
-	}
-	if ($('#rsvp-accordion').length) {
-		$("#rsvp-accordion").accordion({
-			collapsible: true, active: false, heightStyle: "content"
-		});
-	}
-	if ($('#mailformats-accordion').length) {
-		$("#mailformats-accordion").accordion({
-			collapsible: true, active: false, heightStyle: "content"
-		});
-	}
-
 	$('#booking_attach_button').on("click",function(e) {
                 e.preventDefault();
                 var custom_uploader = wp.media({

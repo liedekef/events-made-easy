@@ -288,9 +288,9 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 
 function eme_add_booking_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
-	if ( $id ) {
-		return eme_add_booking_form( $id );
+	$atts = shortcode_atts( [ 'id' => 0 ], $atts );
+	if ( !empty($atts['id']) ) {
+		return eme_add_booking_form( intval($atts['id']) );
 	}
 }
 
@@ -795,8 +795,10 @@ function eme_cancel_bookings_form( $event_id ) {
 }
 
 function eme_cancel_bookings_form_shortcode( $atts ) {
-	extract( shortcode_atts( [ 'id' => 0 ], $atts ) );
-	return eme_cancel_bookings_form( $id );
+	$atts = shortcode_atts( [ 'id' => 0 ], $atts );
+	if ( !empty($atts['id']) ) {
+		return eme_cancel_bookings_form( intval($atts['id']) );
+	}
 }
 
 add_action( 'wp_ajax_eme_add_bookings', 'eme_add_bookings_ajax' );

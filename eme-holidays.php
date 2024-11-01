@@ -279,18 +279,18 @@ function eme_get_holidays_array_by_id() {
 # return number of days until next event or until the specified event
 function eme_holidays_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
-				'id'    => '',
+				'id'    => 0,
 				'scope' => 'all',
 			],
 		    $atts
-		)
 	);
 
-	if ( ! empty( $id ) && is_numeric( $id ) ) {
-		$holiday_list = eme_get_holiday_list( intval( $id ) );
+	$id = intval($atts['id']);
+	$scope = eme_sanitize_request($atts['scope']);
+	if ( ! empty( $id ) ) {
+		$holiday_list = eme_get_holiday_list( $id );
 	} else {
 		return;
 	}

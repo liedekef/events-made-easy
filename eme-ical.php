@@ -161,8 +161,7 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 }
 
 function eme_ical_link_shortcode( $atts ) {
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 				'justurl'        => 0,
 				'text'           => 'ICAL',
@@ -174,11 +173,10 @@ function eme_ical_link_shortcode( $atts ) {
 				'notcategory'    => '',
 			],
 		    $atts
-		)
 	);
 
-	$justurl = filter_var( $justurl, FILTER_VALIDATE_BOOLEAN );
-	$result  = eme_ical_link( $justurl, 0, $text, $category, $location_id, $scope, $author, $contact_person, $notcategory );
+	$justurl = filter_var( $atts['justurl'], FILTER_VALIDATE_BOOLEAN );
+	$result  = eme_ical_link( $justurl, 0, $atts['text'], $atts['category'], $atts['location_id'], $atts['scope'], $atts['author'], $atts['contact_person'], $atts['notcategory'] );
 	return $result;
 }
 

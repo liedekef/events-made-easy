@@ -4594,8 +4594,7 @@ function eme_mymemberships_list_shortcode( $atts ) {
 function eme_members_report_link_shortcode( $atts ) {
 	global $post;
 	eme_enqueue_frontend();
-	extract(
-		shortcode_atts(
+	$atts = shortcode_atts(
 			[
 				'group_id'           => 0,
 				'membership_id'      => 0,
@@ -4605,29 +4604,30 @@ function eme_members_report_link_shortcode( $atts ) {
 				'public_access'      => 0,
 			],
 			$atts
-		)
 	);
-	$public_access = filter_var( $public_access, FILTER_VALIDATE_BOOLEAN );
+	$atts['public_access'] = filter_var( $public_access, FILTER_VALIDATE_BOOLEAN );
 
-	if ( ( ! is_user_logged_in() || ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) && ! $public_access ) {
+	if ( ( ! is_user_logged_in() || ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) && ! $atts['public_access'] ) {
 		return;
 	}
 	// public access? Then page needs to be password protected
-	if ( $public_access && empty( $post->post_password ) ) {
+	if ( $atts['public_access'] && empty( $post->post_password ) ) {
 		return;
 	}
 
 	if ( empty( $template_id ) ) {
 		return '';
 	}
-	$args                = compact( 'group_id', 'membership_id', 'template_id', 'template_id_header', 'public_access' );
+	$args                = $atts;
+	unset($args['link_text']);
 	$args['eme_members'] = 'report';
 	$url                 = eme_current_page_url( $args );
 	// add nonce, so public access can't be faked
-	if ( $public_access ) {
+	if ( $atts['public_access'] ) {
+		$public_access = intval($atts['public_access']);
 		$url = wp_nonce_url( $url, "eme_members $public_access", 'eme_members_nonce' );
 	}
-	return "<a href='$url' title='" . esc_attr( $link_text ) . "'>" . esc_html( $link_text ) . '</a>';
+	return "<a href='$url' title='" . esc_attr( $atts['link_text'] ) . "'>" . esc_html( $atts['link_text'] ) . '</a>';
 }
 
 function eme_members_shortcode( $atts ) {

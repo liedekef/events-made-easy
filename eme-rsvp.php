@@ -528,8 +528,7 @@ function eme_attendee_list_shortcode( $atts ) {
 function eme_attendees_report_link_shortcode( $atts ) {
 	global $post;
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 				'title'              => __( 'Attendees CSV', 'events-made-easy' ),
 				'scope'              => 'this_month',
@@ -540,32 +539,32 @@ function eme_attendees_report_link_shortcode( $atts ) {
 				'public_access'      => 0,
 			],
 		    $atts
-		)
 	);
-	$public_access = filter_var( $public_access, FILTER_VALIDATE_BOOLEAN );
-	if ( ( ! is_user_logged_in() || ! current_user_can( get_option( 'eme_cap_list_registrations' ) ) ) && ! $public_access ) {
+	$atts['public_access'] = filter_var( $atts['public_access'], FILTER_VALIDATE_BOOLEAN );
+	if ( ( ! is_user_logged_in() || ! current_user_can( get_option( 'eme_cap_list_registrations' ) ) ) && ! $atts['public_access'] ) {
 		return;
 	}
 	// public access? Then page needs to be password protected
-	if ( $public_access && empty( $post->post_password ) ) {
+	if ( $atts['public_access'] && empty( $post->post_password ) ) {
 		return;
 	}
 
-	$args                  = compact( 'scope', 'event_template_id', 'attend_template_id', 'category', 'notcategory', 'public_access' );
+	$args = $atts;
+	unset($args['title']);
 	$args['eme_attendees'] = 'report';
 	$url                   = eme_current_page_url( $args );
 	// add nonce, so public access can't be faked
-	if ( $public_access ) {
+	if ( $atts['public_access'] ) {
+		$public_access = intval($atts['public_access']);
 		$url = wp_nonce_url( $url, "eme_attendees $public_access", 'eme_attendees_nonce' );
 	}
-	return "<a href='$url' title='" . esc_attr( $title ) . "'>" . esc_html( $title ) . '</a>';
+	return "<a href='$url' title='" . esc_attr( $atts['title'] ) . "'>" . esc_html( $atts['title'] ) . '</a>';
 }
 
 function eme_bookings_report_link_shortcode( $atts ) {
 	global $post;
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 				'title'              => __( 'Bookings CSV', 'events-made-easy' ),
 				'event_id'           => 0,
@@ -574,28 +573,29 @@ function eme_bookings_report_link_shortcode( $atts ) {
 				'public_access'      => 0,
 			],
 		    $atts
-		)
 	);
-	$public_access = filter_var( $public_access, FILTER_VALIDATE_BOOLEAN );
-	if ( ( ! is_user_logged_in() || ! current_user_can( get_option( 'eme_cap_list_registrations' ) ) ) && ! $public_access ) {
+	$atts['public_access'] = filter_var( $atts['public_access'], FILTER_VALIDATE_BOOLEAN );
+	if ( ( ! is_user_logged_in() || ! current_user_can( get_option( 'eme_cap_list_registrations' ) ) ) && ! $atts['public_access'] ) {
 		return;
 	}
 	// public access? Then page needs to be password protected
-	if ( $public_access && empty( $post->post_password ) ) {
+	if ( $atts['public_access'] && empty( $post->post_password ) ) {
 		return;
 	}
-	if ( empty( $event_id ) || empty( $template_id ) ) {
+	if ( empty( $atts['event_id'] ) || empty( $atts['template_id'] ) ) {
 		return;
 	}
 
-	$args                 = compact( 'event_id', 'template_id', 'template_id_header', 'public_access' );
+	$args = $atts;
+	unset($args['title']);
 	$args['eme_bookings'] = 'report';
 	$url                  = eme_current_page_url( $args );
 	// add nonce, so public access can't be faked
-	if ( $public_access ) {
+	if ( $atts['public_access'] ) {
+		$public_access = intval($atts['public_access']);
 		$url = wp_nonce_url( $url, "eme_bookings $public_access", 'eme_bookings_nonce' );
 	}
-	return "<a href='$url' title='" . esc_attr( $title ) . "'>" . esc_html( $title ) . '</a>';
+	return "<a href='$url' title='" . esc_attr( $atts['title'] ) . "'>" . esc_html( $atts['title'] ) . '</a>';
 }
 
 function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id_header ) {

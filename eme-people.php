@@ -840,8 +840,7 @@ function eme_import_csv_people() {
 		return sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 	}
 	if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
-		return esc_html__( 'Problem detected while uploading the file', 'events-made-easy' );
-		return $result;
+		return __( 'Problem detected while uploading the file', 'events-made-easy' );
 	}
 	$updated   = 0;
 	$inserted  = 0;
@@ -849,7 +848,7 @@ function eme_import_csv_people() {
 	$error_msg = '';
 	$handle    = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
 	if ( ! $handle ) {
-		return esc_html__( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
+		return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
 	}
 	// BOM as a string for comparison.
 	$bom = "\xef\xbb\xbf";

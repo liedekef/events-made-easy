@@ -4939,11 +4939,10 @@ function eme_import_csv_payments() {
 	//validate whether uploaded file is a csv file
 	$csvMimes = [ 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/octet-stream', 'application/vnd.ms-excel', 'application/x-csv', 'text/x-csv', 'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain' ];
 	if ( empty( $_FILES['eme_csv']['name'] ) || ! in_array( $_FILES['eme_csv']['type'], $csvMimes ) ) {
-		return sprintf( __( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
+		return sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 	}
 	if ( ! is_uploaded_file( $_FILES['eme_csv']['tmp_name'] ) ) {
 		return __( 'Problem detected while uploading the file', 'events-made-easy' );
-		return $result;
 	}
 	$updated     = 0;
 	$ignored     = 0;
@@ -4955,8 +4954,8 @@ function eme_import_csv_payments() {
 		return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
 	}
 	// BOM as a string for comparison.
-		$bom = "\xef\xbb\xbf";
-		// Progress file pointer and get first 3 characters to compare to the BOM string.
+	$bom = "\xef\xbb\xbf";
+	// Progress file pointer and get first 3 characters to compare to the BOM string.
 	if ( fgets( $handle, 4 ) !== $bom ) {
 		// BOM not found - rewind pointer to start of file.
 		rewind( $handle );

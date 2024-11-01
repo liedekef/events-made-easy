@@ -93,7 +93,7 @@ function eme_countries_page() {
 					$message = __( 'Problem detected while uploading the file', 'events-made-easy' );
 				}
 			} else {
-				$message = sprintf( __( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
+				$message = sprintf( esc_html__( 'No CSV file detected: %s', 'events-made-easy' ), $_FILES['eme_csv']['type'] );
 			}
 		} elseif ( $_POST['eme_admin_action'] == 'do_importstates' && isset( $_FILES['eme_csv'] ) && current_user_can( get_option( 'eme_cap_cleanup' ) ) ) {
 			$inserted  = 0;

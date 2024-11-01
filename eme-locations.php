@@ -1514,36 +1514,31 @@ function eme_global_map_shortcode( $atts ) {
 	eme_enqueue_frontend();
 
 	if ( get_option( 'eme_map_is_active' ) ) {
-		// the locations shortcode has been deteced, so we indicate
-		// that we want the javascript in the footer as well
-		extract(
-		    shortcode_atts(
-			    [
-					'show_locations'    => true,
-					'letter_icons'      => true,
-					'show_events'       => false,
-					'eventful'          => false,
-					'marker_clustering' => false,
-					'ignore_filter'     => false,
-					'scope'             => 'all',
-					'paging'            => 0,
-					'category'          => '',
-					'notcategory'       => '',
-					'author'            => '',
-					'contact_person'    => '',
-					'width'             => 450,
-					'height'            => 300,
-					'list_location'     => 'after',
-				],
-			    $atts
-			)
-		);
-		$eventful          = filter_var( $eventful, FILTER_VALIDATE_BOOLEAN );
-		$show_events       = filter_var( $show_events, FILTER_VALIDATE_BOOLEAN );
-		$show_locations    = filter_var( $show_locations, FILTER_VALIDATE_BOOLEAN );
-		$marker_clustering = filter_var( $marker_clustering, FILTER_VALIDATE_BOOLEAN );
-		$ignore_filter     = filter_var( $ignore_filter, FILTER_VALIDATE_BOOLEAN );
-		$letter_icons      = filter_var( $letter_icons, FILTER_VALIDATE_BOOLEAN );
+		$defaults = [
+			'show_locations'    => true,
+			'letter_icons'      => true,
+			'show_events'       => false,
+			'eventful'          => false,
+			'marker_clustering' => false,
+			'ignore_filter'     => false,
+			'scope'             => 'all',
+			'paging'            => 0,
+			'category'          => '',
+			'notcategory'       => '',
+			'author'            => '',
+			'contact_person'    => '',
+			'width'             => 450,
+			'height'            => 300,
+			'list_location'     => 'after',
+		];
+		$atts = shortcode_atts( $defaults, $atts );
+
+		$eventful          = filter_var( $atts['eventful'], FILTER_VALIDATE_BOOLEAN );
+		$show_events       = filter_var( $atts['show_events'], FILTER_VALIDATE_BOOLEAN );
+		$show_locations    = filter_var( $atts['show_locations'], FILTER_VALIDATE_BOOLEAN );
+		$marker_clustering = filter_var( $atts['marker_clustering'], FILTER_VALIDATE_BOOLEAN );
+		$ignore_filter     = filter_var( $atts['ignore_filter'], FILTER_VALIDATE_BOOLEAN );
+		$letter_icons      = filter_var( $atts['letter_icons'], FILTER_VALIDATE_BOOLEAN );
 
 		wp_enqueue_style( 'eme-leaflet-css' );
 		if ( $marker_clustering ) {
@@ -1561,8 +1556,8 @@ function eme_global_map_shortcode( $atts ) {
 		$prev_text        = '';
 		$next_text        = '';
 		$scope_offset     = 0;
-		// for browsing: if paging=1 and only for this_week,this_month or today
-		if ( $eventful && $paging == 1 ) {
+
+		if ( $eventful && $atts['paging'] == 1 ) {
 			$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 
 			if ( isset( $_GET['eme_offset'] ) ) {
@@ -1570,7 +1565,8 @@ function eme_global_map_shortcode( $atts ) {
 			}
 			$prev_offset = $scope_offset - 1;
 			$next_offset = $scope_offset + 1;
-			if ( $scope == 'this_week' ) {
+
+			if ( $atts['scope'] == 'this_week' ) {
 				$start_of_week = get_option( 'start_of_week' );
 				$eme_date_obj->setWeekStartDay( $start_of_week );
 				$eme_date_obj->modifyWeeks( $scope_offset );
@@ -1581,18 +1577,17 @@ function eme_global_map_shortcode( $atts ) {
 				$prev_text   = __( 'Previous week', 'events-made-easy' );
 				$next_text   = __( 'Next week', 'events-made-easy' );
 
-			} elseif ( $scope == 'this_year' ) {
+			} elseif ( $atts['scope'] == 'this_year' ) {
 				$eme_date_obj->modifyYears( $scope_offset );
 				$year        = $eme_date_obj->getYear();
 				$limit_start = "$year-01-01";
 				$limit_end   = "$year-12-31";
 				$scope       = "$limit_start--$limit_end";
-				$scope       = "$limit_start--$limit_end";
 				$scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE, get_option( 'eme_show_period_yearly_dateformat' ) );
 				$prev_text   = __( 'Previous year', 'events-made-easy' );
 				$next_text   = __( 'Next year', 'events-made-easy' );
 
-			} elseif ( $scope == 'today' ) {
+			} elseif ( $atts['scope'] == 'today' ) {
 				$scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
 				$limit_start = $scope;
 				$limit_end   = $scope;
@@ -1600,7 +1595,7 @@ function eme_global_map_shortcode( $atts ) {
 				$prev_text   = __( 'Previous day', 'events-made-easy' );
 				$next_text   = __( 'Next day', 'events-made-easy' );
 
-			} elseif ( $scope == 'tomorrow' ) {
+			} elseif ( $atts['scope'] == 'tomorrow' ) {
 				++$scope_offset;
 				$scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
 				$limit_start = $scope;
@@ -1610,7 +1605,6 @@ function eme_global_map_shortcode( $atts ) {
 				$next_text   = __( 'Next day', 'events-made-easy' );
 
 			} else {
-				// let's take "this_month" as default/fallback
 				$eme_date_obj->modifyMonths( $scope_offset );
 				$limit_start = $eme_date_obj->startOfMonth()->format( 'Y-m-d' );
 				$limit_end   = $eme_date_obj->endOfMonth()->format( 'Y-m-d' );
@@ -1621,10 +1615,8 @@ function eme_global_map_shortcode( $atts ) {
 
 			}
 
-			// to prevent going on indefinitely and thus allowing search bots to go on for ever,
-			// we stop providing links if there are no more events left
-			$older_events = eme_get_events( 1, '--' . $limit_start, 'ASC', 0, 0, $category, '', '', 1, $notcategory );
-			$newer_events = eme_get_events( 1, '++' . $limit_end, 'ASC', 0, 0, $category, '', '', 1, $notcategory );
+			$older_events = eme_get_events( 1, '--' . $limit_start, 'ASC', 0, 0, $atts['category'], '', '', 1, $atts['notcategory'] );
+			$newer_events = eme_get_events( 1, '++' . $limit_end, 'ASC', 0, 0, $atts['category'], '', '', 1, $atts['notcategory'] );
 			if ( count( $older_events ) == 0 ) {
 				$prev_text = '';
 			}
@@ -1636,14 +1628,14 @@ function eme_global_map_shortcode( $atts ) {
 		$limit         = 0;
 		$ignore_filter = false;
 		$random_order  = false;
-		$locations     = eme_get_locations( eventful: $eventful, scope: $scope, category: $category, notcategory: $notcategory, limit: $limit, ignore_filter: $ignore_filter, random_order: $random_order, author: $author, contact_person: $contact_person );
+		$locations     = eme_get_locations( eventful: $eventful, scope: $scope, category: $atts['category'], notcategory: $atts['notcategory'], limit: $limit, ignore_filter: $ignore_filter, random_order: $random_order, author: $atts['author'], contact_person: $atts['contact_person'] );
 		$id_base       = preg_replace( '/\D/', '_', microtime( 1 ) );
 		$id_base       = rand() . '_' . $id_base;
-		if ( ! preg_match( '/\%$|px$/', $width ) ) {
-			$width = $width . 'px';
+		if ( ! preg_match( '/\%$|px$/', $atts['width'] ) ) {
+			$width = $atts['width'] . 'px';
 		}
-		if ( ! preg_match( '/\%$|px$/', $height ) ) {
-			$height = $height . 'px';
+		if ( ! preg_match( '/\%$|px$/', $atts['height'] ) ) {
+			$height = $atts['height'] . 'px';
 		}
 		if ( ! empty( $locations ) ) {
 			$result           = "<div id='eme_global_map_$id_base' class='eme_global_map' style='width: $width; height: $height'>map</div>";
@@ -1654,12 +1646,9 @@ function eme_global_map_shortcode( $atts ) {
          </script>";
 		}
 
-		// get the paging output ready
-		if ( $paging == 1 ) {
+		if ( $atts['paging'] == 1 ) {
 			$pagination_top = "<div id='div_locations-pagination-top_$id_base' class='locations-pagination-top'> ";
 			$this_page_url = get_permalink($post->ID);
-			// remove the offset info
-			// $this_page_url = remove_query_arg( 'eme_offset', $this_page_url );
 			if ( $prev_text != '' ) {
 				$pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
 			}
@@ -1672,7 +1661,6 @@ function eme_global_map_shortcode( $atts ) {
 			$result            = $pagination_top . $result . $pagination_bottom;
 		}
 
-		// we add the list if wanted (only for "before" or "after")
 		$loc_list = "<div id='eme_div_locations_list_$id_base' class='eme_div_locations_list'><ol id='eme_locations_list_$id_base' class='eme_locations_list'>";
 		if ( $letter_icons ) {
 			$letter_style = "style='list-style-type: upper-alpha'";
@@ -1688,7 +1676,7 @@ function eme_global_map_shortcode( $atts ) {
 				eme_trans_esc_html( $location['location_name'] ) . '</a></li>';
 			}
 			if ( $show_events ) {
-				$events    = eme_get_events( 0, $scope, 'ASC', $scope_offset, $location['location_id'], $category );
+				$events    = eme_get_events( 0, $scope, 'ASC', $scope_offset, $location['location_id'], $atts['category'] );
 				$loc_list .= "<ol id='eme_events_list'>";
 				foreach ( $events as $event ) {
 					if ( $show_locations ) {
@@ -1703,16 +1691,14 @@ function eme_global_map_shortcode( $atts ) {
 				}
 				$loc_list .= '</ol>';
 			}
-			// cool: we can increment strings in php, so we can mimic the CSS "style='list-style-type: upper-alpha'" thingie
-			// useful when we show events (more than one event per location)
 			if ( $letter_icons ) {
 					++$firstletter;
 			}
 		}
 		$loc_list .= '</ol></div>';
-		if ( $list_location == 'before' ) {
+		if ( $atts['list_location'] == 'before' ) {
 			$result = $loc_list . $result;
-		} elseif ( $list_location == 'after' ) {
+		} elseif ( $atts['list_location'] == 'after' ) {
 			$result .= $loc_list;
 		}
 	} else {
@@ -1784,45 +1770,43 @@ function eme_get_location_shortcode( $atts ) {
 
 function eme_get_locations_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'eventful'           => false,
-				'ignore_filter'      => false,
-				'random_order'       => false,
-				'category'           => '',
-				'notcategory'        => '',
-				'author'             => '',
-				'contact_person'     => '',
-				'scope'              => 'all',
-				'limit'              => 0,
-				'template_id'        => 0,
-				'template_id_header' => 0,
-				'template_id_footer' => 0,
-			],
-		    $atts
-		)
+	$atts = shortcode_atts(
+		[
+			'eventful'           => false,
+			'ignore_filter'      => false,
+			'random_order'       => false,
+			'category'           => '',
+			'notcategory'        => '',
+			'author'             => '',
+			'contact_person'     => '',
+			'scope'              => 'all',
+			'limit'              => 0,
+			'template_id'        => 0,
+			'template_id_header' => 0,
+			'template_id_footer' => 0,
+		],
+		$atts
 	);
-	$eventful      = filter_var( $eventful, FILTER_VALIDATE_BOOLEAN );
-	$ignore_filter = filter_var( $ignore_filter, FILTER_VALIDATE_BOOLEAN );
-	$random_order  = filter_var( $random_order, FILTER_VALIDATE_BOOLEAN );
+	
+	$eventful      = filter_var( $atts['eventful'], FILTER_VALIDATE_BOOLEAN );
+	$ignore_filter = filter_var( $atts['ignore_filter'], FILTER_VALIDATE_BOOLEAN );
+	$random_order  = filter_var( $atts['random_order'], FILTER_VALIDATE_BOOLEAN );
 
-	$locations = eme_get_locations( eventful: $eventful, scope: $scope, category: $category, notcategory: $notcategory, limit: $limit, ignore_filter: $ignore_filter, random_order: $random_order, author: $author, contact_person: $contact_person );
+	$locations = eme_get_locations( eventful: $eventful, scope: $atts['scope'], category: $atts['category'], notcategory: $atts['notcategory'], limit: $atts['limit'], ignore_filter: $ignore_filter, random_order: $random_order, author: $atts['author'], contact_person: $atts['contact_person'] );
 
-	// format is not a locations shortcode, so we need to set the value to "" here, to avoid php warnings
 	$format            = '';
 	$eme_format_header = '';
 	$eme_format_footer = '';
 
-	if ( $template_id ) {
-		$format = eme_get_template_format( $template_id );
+	if ( $atts['template_id'] ) {
+		$format = eme_get_template_format( $atts['template_id'] );
 	}
-	if ( $template_id_header ) {
-		$format_header     = eme_get_template_format( $template_id_header );
+	if ( $atts['template_id_header'] ) {
+		$format_header     = eme_get_template_format( $atts['template_id_header'] );
 		$eme_format_header = eme_replace_locations_placeholders( $format_header );
 	}
-	if ( $template_id_footer ) {
-		$format_footer     = eme_get_template_format( $template_id_footer );
+	if ( $atts['template_id_footer'] ) {
+		$format_footer     = eme_get_template_format( $atts['template_id_footer'] );
 		$eme_format_footer = eme_replace_locations_placeholders( $format_footer );
 	}
 	if ( empty( $format ) ) {
@@ -1845,6 +1829,7 @@ function eme_get_locations_shortcode( $atts ) {
 	$output = $eme_format_header . $output . $eme_format_footer;
 	return $output;
 }
+
 
 function eme_replace_event_location_placeholders( $format, $event, $target = 'html', $do_shortcode = 1, $lang = '' ) {
 	// replace EME language tags as early as possible

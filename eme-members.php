@@ -4550,30 +4550,25 @@ function eme_edit_member_form_shortcode( ) {
 
 function eme_mymemberships_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-			    'template_id'        => 0,
-			    'template_id_header' => 0,
-			    'template_id_footer' => 0,
-		    ],
-		    $atts
-	    )
+	$atts = shortcode_atts(
+	    [
+		    'template_id'        => 0,
+		    'template_id_header' => 0,
+		    'template_id_footer' => 0,
+	    ],
+	    $atts
 	);
+	
+	$template_id = $atts['template_id'];
+	$template_id_header = $atts['template_id_header'];
+	$template_id_footer = $atts['template_id_footer'];
+
 	if ( is_user_logged_in() ) {
 		$wp_id = get_current_user_id();
 		if ( $wp_id ) {
 			$format = eme_get_template_format( $template_id );
-			if ( ! empty( $template_id_header ) ) {
-				$header = eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) );
-			} else {
-				$header = "";
-			}
-			if ( ! empty( $template_id_footer ) ) {
-				$footer = eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) );
-			} else {
-				$footer = "";
-			}
+			$header = ! empty( $template_id_header ) ? eme_replace_generic_placeholders( eme_get_template_format( $template_id_header ) ) : "";
+			$footer = ! empty( $template_id_footer ) ? eme_replace_generic_placeholders( eme_get_template_format( $template_id_footer ) ) : "";
 			$ids_arr = eme_get_memberids_by_wpid( $wp_id );
 
 			$result = $header;
@@ -4632,18 +4627,22 @@ function eme_members_report_link_shortcode( $atts ) {
 
 function eme_members_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-		shortcode_atts(
-			[
-				'group_id'           => 0,
-				'membership_id'      => 0,
-				'template_id'        => 0,
-				'template_id_header' => 0,
-				'template_id_footer' => 0,
-			],
-			$atts
-		)
+	$atts = shortcode_atts(
+		[
+			'group_id'           => 0,
+			'membership_id'      => 0,
+			'template_id'        => 0,
+			'template_id_header' => 0,
+			'template_id_footer' => 0,
+		],
+		$atts
 	);
+
+	$group_id           = $atts['group_id'];
+	$membership_id      = $atts['membership_id'];
+	$template_id        = $atts['template_id'];
+	$template_id_header = $atts['template_id_header'];
+	$template_id_footer = $atts['template_id_footer'];
 
 	if ( ! empty( $group_id ) ) {
 		$member_ids = eme_get_groups_member_ids( $group_id );
@@ -4680,16 +4679,18 @@ function eme_members_shortcode( $atts ) {
 
 function eme_person_memberinfo_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-		shortcode_atts(
-			[
-				'person_id'          => 0,
-				'membership_id'      => 0,
-				'template_id'        => 0,
-			],
-			$atts
-		)
+	$atts = shortcode_atts(
+		[
+			'person_id'   => 0,
+			'membership_id' => 0,
+			'template_id' => 0,
+		],
+		$atts
 	);
+
+	$person_id = $atts['person_id'];
+	$membership_id = $atts['membership_id'];
+	$template_id = $atts['template_id'];
 
 	if ( empty( $membership_id ) || empty( $template_id ) || empty( $person_id ) ) {
 		return '';
@@ -4707,15 +4708,16 @@ function eme_person_memberinfo_shortcode( $atts ) {
 
 function eme_mymemberinfo_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-		shortcode_atts(
-			[
-				'membership_id'      => 0,
-				'template_id'        => 0,
-			],
-			$atts
-		)
+	$atts = shortcode_atts(
+		[
+			'membership_id' => 0,
+			'template_id'   => 0,
+		],
+		$atts
 	);
+
+	$membership_id = $atts['membership_id'];
+	$template_id   = $atts['template_id'];
 
 	if ( empty( $membership_id ) || empty( $template_id ) ) {
 		return '';

@@ -4512,162 +4512,178 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 }
 
 function eme_get_events_list_shortcode( $atts ) {
-	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'limit'                      => -1,
-				'scope'                      => 'future',
-				'order'                      => 'ASC',
-				'format'                     => '',
-				'category'                   => '',
-				'showperiod'                 => '',
-				'author'                     => '',
-				'contact_person'             => '',
-				'paging'                     => 0,
-				'long_events'                => 0,
-				'location_id'                => 0,
-				'user_registered_only'       => 0,
-				'show_ongoing'               => 1,
-				'link_showperiod'            => 0,
-				'notcategory'                => '',
-				'show_recurrent_events_once' => 0,
-				'template_id'                => 0,
-				'template_id_header'         => 0,
-				'template_id_footer'         => 0,
-				'no_events_message'          => 'NO EVENTS', // this string gets tested for
-				'template_id_no_events'      => 0,
-				'ignore_filter'              => 0,
-				'offset'                     => 0,
-				'distance'                   => 0,
-			],
-		    $atts
-		)
-	);
+    eme_enqueue_frontend();
+    
+    $atts = shortcode_atts(
+        [
+            'limit'                      => -1,
+            'scope'                      => 'future',
+            'order'                      => 'ASC',
+            'format'                     => '',
+            'category'                   => '',
+            'showperiod'                 => '',
+            'author'                     => '',
+            'contact_person'             => '',
+            'paging'                     => 0,
+            'long_events'                => 0,
+            'location_id'                => 0,
+            'user_registered_only'       => 0,
+            'show_ongoing'               => 1,
+            'link_showperiod'            => 0,
+            'notcategory'                => '',
+            'show_recurrent_events_once' => 0,
+            'template_id'                => 0,
+            'template_id_header'         => 0,
+            'template_id_footer'         => 0,
+            'no_events_message'          => 'NO EVENTS',
+            'template_id_no_events'      => 0,
+            'ignore_filter'              => 0,
+            'offset'                     => 0,
+            'distance'                   => 0,
+        ],
+        $atts
+    );
 
-	$event_id        = '';
-	$event_id_arr    = [];
-	$location_id_arr = [];
+    $event_id        = '';
+    $event_id_arr    = [];
+    $location_id_arr = [];
 
-	// the filter list overrides the settings
-	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
-		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
-			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
-		}
-		if ( ! empty( $_REQUEST['eme_author_filter'] ) && intval( $_REQUEST['eme_author_filter'] ) > 0 ) {
-			$author = intval( $_REQUEST['eme_author_filter'] );
-		}
-		if ( ! empty( $_REQUEST['eme_contact_filter'] ) && intval( $_REQUEST['eme_contact_filter'] ) > 0 ) {
-			$contact_person = intval( $_REQUEST['eme_contact_filter'] );
-		}
-		if ( ! empty( $_REQUEST['eme_loc_filter'] ) ) {
-			if ( is_array( $_REQUEST['eme_loc_filter'] ) ) {
-				$arr = eme_array_remove_empty_elements( eme_sanitize_request( $_REQUEST['eme_loc_filter'] ) );
-				if ( ! empty( $arr ) ) {
-					$location_id_arr = $arr;
-				}
-			} else {
-				$location_id_arr[] = eme_sanitize_request( $_REQUEST['eme_loc_filter'] );
-			}
-			if ( empty( $location_id_arr ) ) {
-				$location_id = -1;
-			}
-		}
-		if ( ! empty( $_REQUEST['eme_city_filter'] ) ) {
-			$cities  = eme_sanitize_request( $_REQUEST['eme_city_filter'] );
-			$tmp_ids = eme_get_city_location_ids( $cities );
-			if ( empty( $location_id_arr ) ) {
-				$location_id_arr = $tmp_ids;
-			} else {
-				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
-			}
-			if ( empty( $location_id_arr ) ) {
-				$location_id = -1;
-			}
-		}
-		if ( ! empty( $_REQUEST['eme_country_filter'] ) ) {
-			$countries = eme_sanitize_request( $_REQUEST['eme_country_filter'] );
-			$tmp_ids   = eme_get_country_location_ids( $countries );
-			if ( empty( $location_id_arr ) ) {
-				$location_id_arr = $tmp_ids;
-			} else {
-				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
-			}
-			if ( empty( $location_id_arr ) ) {
-				$location_id = -1;
-			}
-		}
-		if ( ! empty( $_REQUEST['eme_cat_filter'] ) ) {
-			if ( is_array( $_REQUEST['eme_cat_filter'] ) ) {
-				$arr = eme_array_remove_empty_elements( eme_sanitize_request( $_REQUEST['eme_cat_filter'] ) );
-				if ( ! empty( $arr ) ) {
-					$category = join( ',', $arr );
-				}
-			} else {
-				$category = eme_sanitize_request( $_REQUEST['eme_cat_filter'] );
-			}
-		}
-		foreach ( $_REQUEST as $key => $value ) {
-			$key = eme_sanitize_request( $key );
-			$value = eme_sanitize_request( $value );
-			if ( preg_match( '/eme_customfield_filter(\d+)/', $key, $matches ) ) {
-				$field_id  = intval( $matches[1] );
-				$formfield = eme_get_formfield( $field_id );
-				if ( ! empty( $formfield ) ) {
-					$is_multi = eme_is_multifield( $formfield['field_type'] );
-					if ( $formfield['field_purpose'] == 'events' ) {
-						$tmp_ids = eme_get_cf_event_ids( $value, $field_id, $is_multi );
-						if ( empty( $event_id_arr ) ) {
-							$event_id_arr = $tmp_ids;
-						} else {
-							$event_id_arr = array_intersect( $event_id_arr, $tmp_ids );
-						}
-						if ( empty( $event_id_arr ) ) {
-							$event_id = -1;
-						}
-					}
-					if ( $formfield['field_purpose'] == 'locations' ) {
-						$tmp_ids = eme_get_cf_location_ids( $value, $field_id, $is_multi );
-						if ( empty( $location_id_arr ) ) {
-							$location_id_arr = $tmp_ids;
-						} else {
-							$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
-						}
-						if ( empty( $location_id_arr ) ) {
-							$location_id = -1;
-						}
-					}
-				}
-			}
-		}
-	}
-	if ( $event_id != -1 && ! empty( $event_id_arr ) ) {
-		$event_id = join( ',', $event_id_arr );
-	}
-	if ( ! empty( $distance ) && ! empty( $location_id ) ) {
-		$location            = eme_get_location( $location_id );
-		$location_ids_only   = 1;
-			$location_id_arr = eme_get_locations_by_distance( $location['longitude'], $location['latitude'], $distance, $location_ids_only );
-	}
-	if ( $location_id != -1 && ! empty( $location_id_arr ) ) {
-		$location_id = join( ',', $location_id_arr );
-	}
+    if ( ! $atts['ignore_filter'] && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
+        if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
+            $atts['scope'] = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
+        }
+        if ( ! empty( $_REQUEST['eme_author_filter'] ) && intval( $_REQUEST['eme_author_filter'] ) > 0 ) {
+            $atts['author'] = intval( $_REQUEST['eme_author_filter'] );
+        }
+        if ( ! empty( $_REQUEST['eme_contact_filter'] ) && intval( $_REQUEST['eme_contact_filter'] ) > 0 ) {
+            $atts['contact_person'] = intval( $_REQUEST['eme_contact_filter'] );
+        }
+        if ( ! empty( $_REQUEST['eme_loc_filter'] ) ) {
+            if ( is_array( $_REQUEST['eme_loc_filter'] ) ) {
+                $arr = eme_array_remove_empty_elements( eme_sanitize_request( $_REQUEST['eme_loc_filter'] ) );
+                if ( ! empty( $arr ) ) {
+                    $location_id_arr = $arr;
+                }
+            } else {
+                $location_id_arr[] = eme_sanitize_request( $_REQUEST['eme_loc_filter'] );
+            }
+            if ( empty( $location_id_arr ) ) {
+                $atts['location_id'] = -1;
+            }
+        }
+        if ( ! empty( $_REQUEST['eme_city_filter'] ) ) {
+            $cities  = eme_sanitize_request( $_REQUEST['eme_city_filter'] );
+            $tmp_ids = eme_get_city_location_ids( $cities );
+            if ( empty( $location_id_arr ) ) {
+                $location_id_arr = $tmp_ids;
+            } else {
+                $location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
+            }
+            if ( empty( $location_id_arr ) ) {
+                $atts['location_id'] = -1;
+            }
+        }
+        if ( ! empty( $_REQUEST['eme_country_filter'] ) ) {
+            $countries = eme_sanitize_request( $_REQUEST['eme_country_filter'] );
+            $tmp_ids   = eme_get_country_location_ids( $countries );
+            if ( empty( $location_id_arr ) ) {
+                $location_id_arr = $tmp_ids;
+            } else {
+                $location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
+            }
+            if ( empty( $location_id_arr ) ) {
+                $atts['location_id'] = -1;
+            }
+        }
+        if ( ! empty( $_REQUEST['eme_cat_filter'] ) ) {
+            if ( is_array( $_REQUEST['eme_cat_filter'] ) ) {
+                $arr = eme_array_remove_empty_elements( eme_sanitize_request( $_REQUEST['eme_cat_filter'] ) );
+                if ( ! empty( $arr ) ) {
+                    $atts['category'] = join( ',', $arr );
+                }
+            } else {
+                $atts['category'] = eme_sanitize_request( $_REQUEST['eme_cat_filter'] );
+            }
+        }
+        foreach ( $_REQUEST as $key => $value ) {
+            $key = eme_sanitize_request( $key );
+            $value = eme_sanitize_request( $value );
+            if ( preg_match( '/eme_customfield_filter(\d+)/', $key, $matches ) ) {
+                $field_id  = intval( $matches[1] );
+                $formfield = eme_get_formfield( $field_id );
+                if ( ! empty( $formfield ) ) {
+                    $is_multi = eme_is_multifield( $formfield['field_type'] );
+                    if ( $formfield['field_purpose'] == 'events' ) {
+                        $tmp_ids = eme_get_cf_event_ids( $value, $field_id, $is_multi );
+                        if ( empty( $event_id_arr ) ) {
+                            $event_id_arr = $tmp_ids;
+                        } else {
+                            $event_id_arr = array_intersect( $event_id_arr, $tmp_ids );
+                        }
+                        if ( empty( $event_id_arr ) ) {
+                            $event_id = -1;
+                        }
+                    }
+                    if ( $formfield['field_purpose'] == 'locations' ) {
+                        $tmp_ids = eme_get_cf_location_ids( $value, $field_id, $is_multi );
+                        if ( empty( $location_id_arr ) ) {
+                            $location_id_arr = $tmp_ids;
+                        } else {
+                            $location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
+                        }
+                        if ( empty( $location_id_arr ) ) {
+                            $atts['location_id'] = -1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if ( $event_id != -1 && ! empty( $event_id_arr ) ) {
+        $event_id = join( ',', $event_id_arr );
+    }
+    if ( ! empty( $atts['distance'] ) && ! empty( $atts['location_id'] ) ) {
+        $location            = eme_get_location( $atts['location_id'] );
+        $location_ids_only   = 1;
+        $location_id_arr = eme_get_locations_by_distance( $location['longitude'], $location['latitude'], $atts['distance'], $location_ids_only );
+    }
+    if ( $atts['location_id'] != -1 && ! empty( $location_id_arr ) ) {
+        $atts['location_id'] = join( ',', $location_id_arr );
+    }
 
-	// if format is given as argument, sometimes people need url-encoded strings inside so WordPress doesn't get confused, so we decode them here again
-	$format = urldecode( $format );
-	// to avoid shortcode-XSS by a contributor (eme_strip_js is identical to eme_kses, so we call that)
-	$format = eme_kses( $format );
+    $atts['format'] = urldecode( $atts['format'] );
+    $atts['format'] = eme_kses( $atts['format'] );
 
-	// for format: sometimes people want to give placeholders as options, but when using the shortcode inside
-	// another (e.g. when putting[eme_events format="#_EVENTNAME"] inside the "display single event" setting,
-	// the replacement of the placeholders happens too soon (placeholders get replaced first, before any other
-	// shortcode is interpreted). So we add the option that people can use "#OTHER_", and we replace this with
-	// "#_" here
-	$format = preg_replace( '/#OTHER/', '#', $format );
+    $atts['format'] = preg_replace( '/#OTHER/', '#', $atts['format'] );
 
-	$result = eme_get_events_list( limit: $limit, scope: $scope, order: $order, format: $format, category: $category, showperiod: $showperiod, long_events: $long_events, author: $author, contact_person: $contact_person, paging: $paging, event_ids: $event_id, location_ids: $location_id, user_registered_only: $user_registered_only, show_ongoing: $show_ongoing, link_showperiod: $link_showperiod, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, template_id: $template_id, template_id_header: $template_id_header, template_id_footer: $template_id_footer, no_events_message: $no_events_message, template_id_no_events: $template_id_no_events, limit_offset: $offset );
-	return $result;
+    $result = eme_get_events_list( 
+        $atts['limit'], 
+        $atts['scope'], 
+        $atts['order'], 
+        $atts['format'], 
+        $atts['category'], 
+        $atts['showperiod'], 
+        $atts['long_events'], 
+        $atts['author'], 
+        $atts['contact_person'], 
+        $atts['paging'], 
+        $event_id, 
+        $atts['location_id'], 
+        $atts['user_registered_only'], 
+        $atts['show_ongoing'], 
+        $atts['link_showperiod'], 
+        $atts['notcategory'], 
+        $atts['show_recurrent_events_once'], 
+        $atts['template_id'], 
+        $atts['template_id_header'], 
+        $atts['template_id_footer'], 
+        $atts['no_events_message'], 
+        $atts['template_id_no_events'], 
+        $atts['offset'] 
+    );
+    return $result;
 }
+
 
 function eme_display_single_event( $event_id, $template_id = 0, $ignore_url = 0 ) {
 	$page_body = '';
@@ -4696,33 +4712,28 @@ function eme_display_single_event( $event_id, $template_id = 0, $ignore_url = 0 
 }
 
 function eme_display_single_event_shortcode( $atts ) {
-	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'id'          => '',
-				'template_id' => 0,
-				'ignore_url'  => 0,
-			],
-		    $atts
-		)
-	);
-	return eme_display_single_event( $id, $template_id, $ignore_url );
+    eme_enqueue_frontend();
+    $atts = shortcode_atts(
+        [
+            'id'          => '',
+            'template_id' => 0,
+            'ignore_url'  => 0,
+        ],
+        $atts
+    );
+    return eme_display_single_event( $atts['id'], $atts['template_id'], $atts['ignore_url'] );
 }
 
 function eme_get_events_page_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	// we don't want just the url, but the clickable link by default for the shortcode
-	extract(
-	    shortcode_atts(
-		    [
-				'justurl' => 0,
-				'text'    => get_option( 'eme_events_page_title' ),
-			],
-		    $atts
-		)
+	$atts = shortcode_atts(
+		[
+			'justurl' => 0,
+			'text'    => get_option( 'eme_events_page_title' ),
+		],
+		$atts
 	);
-	$result = eme_get_events_page( $justurl, $text );
+	$result = eme_get_events_page( $atts['justurl'], $atts['text'] );
 	return $result;
 }
 
@@ -8908,38 +8919,49 @@ function eme_rss_link( $justurl = 0, $echo = 0, $text = 'RSS', $scope = 'future'
 }
 
 function eme_rss_link_shortcode( $atts ) {
-	extract(
-	    shortcode_atts(
-		    [
-				'justurl'        => 0,
-				'show_ongoing'   => 1,
-				'text'           => 'RSS',
-				'scope'          => 'future',
-				'order'          => 'ASC',
-				'category'       => '',
-				'author'         => '',
-				'contact_person' => '',
-				'limit'          => 5,
-				'location_id'    => '',
-				'title'          => '',
-			],
-		    $atts
-		)
-	);
-	$limit = intval( $limit );
-	$justurl = filter_var( $justurl, FILTER_VALIDATE_BOOLEAN );
-	$show_ongoing = filter_var( $show_ongoing, FILTER_VALIDATE_BOOLEAN );
-	$text = eme_sanitize_request($text);
-	$scope = eme_sanitize_request($scope);
-	$order = eme_sanitize_request($order);
-	$category = eme_sanitize_request($category);
-	$author = eme_sanitize_request($author);
-	$contact_person = eme_sanitize_request($contact_person);
-	$location_id = eme_sanitize_request($location_id);
-	$title = eme_sanitize_request($title);
+    $atts = shortcode_atts(
+        [
+            'justurl'        => 0,
+            'show_ongoing'   => 1,
+            'text'           => 'RSS',
+            'scope'          => 'future',
+            'order'          => 'ASC',
+            'category'       => '',
+            'author'         => '',
+            'contact_person' => '',
+            'limit'          => 5,
+            'location_id'    => '',
+            'title'          => '',
+        ],
+        $atts
+    );
 
-	$result = eme_rss_link( justurl: $justurl, show_ongoing: $show_ongoing, text: $text, limit: $limit, scope: $scope, order: $order, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, title: $title );
-	return $result;
+    $limit = intval( $atts['limit'] );
+    $justurl = filter_var( $atts['justurl'], FILTER_VALIDATE_BOOLEAN );
+    $show_ongoing = filter_var( $atts['show_ongoing'], FILTER_VALIDATE_BOOLEAN );
+    $text = eme_sanitize_request($atts['text']);
+    $scope = eme_sanitize_request($atts['scope']);
+    $order = eme_sanitize_request($atts['order']);
+    $category = eme_sanitize_request($atts['category']);
+    $author = eme_sanitize_request($atts['author']);
+    $contact_person = eme_sanitize_request($atts['contact_person']);
+    $location_id = eme_sanitize_request($atts['location_id']);
+    $title = eme_sanitize_request($atts['title']);
+
+    $result = eme_rss_link( 
+        justurl: $justurl, 
+        show_ongoing: $show_ongoing, 
+        text: $text, 
+        limit: $limit, 
+        scope: $scope, 
+        order: $order, 
+        category: $category, 
+        author: $author, 
+        contact_person: $contact_person, 
+        location_id: $location_id, 
+        title: $title 
+    );
+    return $result;
 }
 
 function eme_rss() {
@@ -9986,28 +10008,25 @@ function eme_admin_enqueue_js() {
 
 # return number of days until next event or until the specified event
 function eme_countdown_shortcode( $atts ) {
-	extract(
-	    shortcode_atts(
-		    [
-				'id'            => '',
-				'recurrence_id' => 0,
-				'category_id'   => 0,
-			],
-		    $atts
-		)
+	$atts = shortcode_atts(
+		[
+			'id'            => '',
+			'recurrence_id' => 0,
+			'category_id'   => 0,
+		],
+		$atts
 	);
 
-	$id = eme_sanitize_request($id);
+	$id = eme_sanitize_request($atts['id']);
 	if ( ! empty( $id ) ) {
 		$event = eme_get_event( $id );
-	} elseif ( $recurrence_id ) {
-		// we only want future events, so set the second arg to 1
-		$ids = eme_get_recurrence_eventids( intval( $recurrence_id ), 1 );
+	} elseif ( $atts['recurrence_id'] ) {
+		$ids = eme_get_recurrence_eventids( intval( $atts['recurrence_id'] ), 1 );
 		if ( ! empty( $ids ) ) {
 			$event = eme_get_event( $ids[0] );
 		}
-	} elseif ( $category_id ) {
-		$ids = eme_get_category_eventids( intval( $category_id ) );
+	} elseif ( $atts['category_id'] ) {
+		$ids = eme_get_category_eventids( intval( $atts['category_id'] ) );
 		if ( ! empty( $ids ) ) {
 			$event = eme_get_event( $ids[0] );
 		}

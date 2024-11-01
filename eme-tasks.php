@@ -908,54 +908,51 @@ function eme_mytasks_signups_shortcode( $atts ) {
 
 function eme_tasks_signups_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'scope'                      => 'future',
-				'order'                      => 'ASC',
-				'category'                   => '',
-				'showperiod'                 => '',
-				'author'                     => '',
-				'contact_person'             => '',
-				'event_id'                   => 0,
-				'location_id'                => 0,
-				'task_id'                    => 0,
-				'show_ongoing'               => 1,
-				'notcategory'                => '',
-				'show_recurrent_events_once' => 0,
-				'template_id'                => 0,
-				'template_id_header'         => 0,
-				'template_id_footer'         => 0,
-				'ignore_filter'              => 0,
-			],
-		    $atts
-		)
+	$atts = shortcode_atts(
+		[
+			'scope'                      => 'future',
+			'order'                      => 'ASC',
+			'category'                   => '',
+			'showperiod'                 => '',
+			'author'                     => '',
+			'contact_person'             => '',
+			'event_id'                   => 0,
+			'location_id'                => 0,
+			'task_id'                    => 0,
+			'show_ongoing'               => 1,
+			'notcategory'                => '',
+			'show_recurrent_events_once' => 0,
+			'template_id'                => 0,
+			'template_id_header'         => 0,
+			'template_id_footer'         => 0,
+			'ignore_filter'              => 0,
+		],
+		$atts
 	);
+
 	$event_id_arr    = [];
 	$location_id_arr = [];
 	$result          = '';
 
-	// per event, the header and footer are repeated, the template_id itself is repeated per task
 	$format = '';
 	$header = '';
 	$footer = '';
-	if ( ! empty( $template_id ) ) {
-		$format = eme_get_template_format( $template_id );
+	if ( ! empty( $atts['template_id'] ) ) {
+		$format = eme_get_template_format( $atts['template_id'] );
 	}
 	if ( empty( $format ) ) {
 		$format = get_option( 'eme_task_signup_format' );
 	}
 
-	if ( ! empty( $template_id_header ) ) {
-		$header = eme_get_template_format( $template_id_header );
+	if ( ! empty( $atts['template_id_header'] ) ) {
+		$header = eme_get_template_format( $atts['template_id_header'] );
 	}
 
-	if ( ! empty( $template_id_footer ) ) {
-		$footer = eme_get_template_format( $template_id_footer );
+	if ( ! empty( $atts['template_id_footer'] ) ) {
+		$footer = eme_get_template_format( $atts['template_id_footer'] );
 	}
 
-	// if a task id is set, show only the signups for that task
-	$task_id = intval( $task_id );
+	$task_id = intval( $atts['task_id'] );
 	if ( $task_id > 0 ) {
 		$signups = eme_get_task_signups( $task_id );
 		foreach ( $signups as $signup ) {
@@ -965,8 +962,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 		return $result;
 	}
 
-	// the filter list overrides the settings
-	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
+	if ( ! $atts['ignore_filter'] && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
 		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
 			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
 		}
@@ -998,7 +994,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-					$location_id = -1;
+				$location_id = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_country_filter'] ) ) {
@@ -1010,7 +1006,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-					$location_id = -1;
+				$location_id = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_cat_filter'] ) ) {
@@ -1057,7 +1053,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 			}
 		}
 	}
-	if ( $event_id != -1 && ! empty( $event_id_arr ) ) {
+	if ( $atts['event_id'] != -1 && ! empty( $event_id_arr ) ) {
 		$event_id = join( ',', $event_id_arr );
 	}
 	if ( $location_id != -1 && ! empty( $location_id_arr ) ) {
@@ -1079,7 +1075,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 	}
 
 	$extra_conditions_arr[] = 'event_tasks = 1';
-	$events                 = eme_get_events( scope: $scope, order: $order, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
+	$events                 = eme_get_events( scope: $atts['scope'], order: $atts['order'], location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $atts['show_ongoing'], notcategory: $atts['notcategory'], show_recurrent_events_once: $atts['show_recurrent_events_once'], extra_conditions: $extra_conditions );
 
 	$lang = eme_detect_lang();
 	foreach ( $events as $event ) {
@@ -1111,19 +1107,18 @@ function eme_tasks_signups_shortcode( $atts ) {
 
 function eme_tasks_signupform_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 				'scope'                      => 'future',
 				'order'                      => 'ASC',
 				'category'                   => '',
+				'notcategory'                => '',
 				'showperiod'                 => '',
 				'author'                     => '',
 				'contact_person'             => '',
 				'event_id'                   => 0,
 				'location_id'                => 0,
 				'show_ongoing'               => 1,
-				'notcategory'                => '',
 				'show_recurrent_events_once' => 0,
 				'template_id'                => 0,
 				'template_id_header'         => 0,
@@ -1133,11 +1128,29 @@ function eme_tasks_signupform_shortcode( $atts ) {
 				'ignore_filter'              => 0,
 			],
 		    $atts
-		)
 	);
 	$event_id_arr    = [];
 	$location_id_arr = [];
 	$result          = '';
+
+	$scope = eme_sanitize_request($atts['scope']);
+	$order = eme_sanitize_request($atts['order']);
+	$category = eme_sanitize_request($atts['category']);
+	$showperiod = eme_sanitize_request($atts['showperiod']);
+	$notcategory = eme_sanitize_request($atts['notcategory']);
+	$author = eme_sanitize_request($atts['author']);
+	$contact_person = eme_sanitize_request($atts['contact_person']);
+	$event_id = eme_sanitize_request($atts['event_id']);
+	$location_id = eme_sanitize_request($atts['location_id']);
+
+	$show_ongoing = intval($atts['show_ongoing']);
+	$show_recurrent_events_once = intval($atts['show_recurrent_events_once']);
+	$template_id = intval($atts['template_id']);
+	$template_id_header = intval($atts['template_id_header']);
+	$template_id_footer = intval($atts['template_id_footer']);
+	$signupform_template_id = intval($atts['signupform_template_id']);
+	$skip_full = intval($atts['skip_full']);
+	$ignore_filter = intval($atts['ignore_filter']);
 
 	// the filter list overrides the settings
 	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {

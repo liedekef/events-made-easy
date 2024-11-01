@@ -296,131 +296,128 @@ function eme_add_booking_form_shortcode( $atts ) {
 
 function eme_add_simple_multibooking_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'id'                     => 0,
-				'recurrence_id'          => 0,
-				'category_id'            => 0,
-				'template_id_header'     => 0,
-				'template_id'            => 0,
-				'template_id_footer'     => 0,
-				'register_empty_seats'   => 0,
-				'only_if_not_registered' => 0,
-				'only_one_event'         => 0,
-				'only_one_seat'          => 0,
-				'scope'                  => '',
-				'order'                  => 'ASC',
-			],
-		    $atts
-		)
+	$atts = shortcode_atts(
+		[
+			'id'                     => 0,
+			'recurrence_id'          => 0,
+			'category_id'            => 0,
+			'template_id_header'     => 0,
+			'template_id'            => 0,
+			'template_id_footer'     => 0,
+			'register_empty_seats'   => 0,
+			'only_if_not_registered' => 0,
+			'only_one_event'         => 0,
+			'only_one_seat'          => 0,
+			'scope'                  => '',
+			'order'                  => 'ASC',
+		],
+		$atts
 	);
-	$register_empty_seats   = filter_var( $register_empty_seats, FILTER_VALIDATE_BOOLEAN );
-	$only_if_not_registered = filter_var( $only_if_not_registered, FILTER_VALIDATE_BOOLEAN );
-	$only_one_event         = filter_var( $only_one_event, FILTER_VALIDATE_BOOLEAN );
-	$only_one_seat          = filter_var( $only_one_seat, FILTER_VALIDATE_BOOLEAN );
-	$ids                    = explode( ',', $id );
-	if ( ! empty( $recurrence_id ) ) {
-		// we only want future events, so set the second arg to 1
-		$ids    = eme_get_recurrence_eventids( $recurrence_id, 1 );
+	
+	$register_empty_seats   = filter_var( $atts['register_empty_seats'], FILTER_VALIDATE_BOOLEAN );
+	$only_if_not_registered = filter_var( $atts['only_if_not_registered'], FILTER_VALIDATE_BOOLEAN );
+	$only_one_event         = filter_var( $atts['only_one_event'], FILTER_VALIDATE_BOOLEAN );
+	$only_one_seat          = filter_var( $atts['only_one_seat'], FILTER_VALIDATE_BOOLEAN );
+	$ids                    = explode( ',', $atts['id'] );
+
+	if ( ! empty( $atts['recurrence_id'] ) ) {
+		$ids    = eme_get_recurrence_eventids( $atts['recurrence_id'], 1 );
 		$events = eme_get_rsvp_event_arr( $ids );
-	} elseif ( ! empty( $category_id ) || ! empty( $scope ) ) {
-		$events = eme_get_events( scope: $scope, order: $order, category: $category_id );
+	} elseif ( ! empty( $atts['category_id'] ) || ! empty( $atts['scope'] ) ) {
+		$events = eme_get_events( scope: $atts['scope'], order: $atts['order'], category: $atts['category_id'] );
 	} else {
 		$events = eme_get_rsvp_event_arr( $ids );
 	}
-	//if ($ids && $template_id_header && $template_id && $template_id_footer)
+
 	if ( ! empty( $events ) ) {
-		return eme_add_multibooking_form( $events, $template_id_header, $template_id, 0, $template_id_footer, $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, 1 );
+		return eme_add_multibooking_form( $events, $atts['template_id_header'], $atts['template_id'], 0, $atts['template_id_footer'], $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, 1 );
 	}
 }
 
 function eme_add_multibooking_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'id'                     => '',
-				'recurrence_id'          => 0,
-				'category_id'            => 0,
-				'template_id_header'     => 0,
-				'template_id'            => 0,
-				'multiprice_template_id' => 0,
-				'template_id_footer'     => 0,
-				'register_empty_seats'   => 0,
-				'only_if_not_registered' => 0,
-				'only_one_event'         => 0,
-				'only_one_seat'          => 0,
-				'scope'                  => '',
-				'order'                  => 'ASC',
-				'simple'                 => 0,
-			],
-		    $atts
-		)
+	$atts = shortcode_atts(
+		[
+			'id'                     => '',
+			'recurrence_id'          => 0,
+			'category_id'            => 0,
+			'template_id_header'     => 0,
+			'template_id'            => 0,
+			'multiprice_template_id' => 0,
+			'template_id_footer'     => 0,
+			'register_empty_seats'   => 0,
+			'only_if_not_registered' => 0,
+			'only_one_event'         => 0,
+			'only_one_seat'          => 0,
+			'scope'                  => '',
+			'order'                  => 'ASC',
+			'simple'                 => 0,
+		],
+		$atts
 	);
-	$register_empty_seats   = filter_var( $register_empty_seats, FILTER_VALIDATE_BOOLEAN );
-	$only_if_not_registered = filter_var( $only_if_not_registered, FILTER_VALIDATE_BOOLEAN );
-	$only_one_event         = filter_var( $only_one_event, FILTER_VALIDATE_BOOLEAN );
-	$only_one_seat          = filter_var( $only_one_seat, FILTER_VALIDATE_BOOLEAN );
-	$simple                 = filter_var( $simple, FILTER_VALIDATE_BOOLEAN );
-	$ids                    = explode( ',', $id );
-	if ( ! empty( $recurrence_id ) ) {
-		// we only want future events, so set the second arg to 1
-		$ids    = eme_get_recurrence_eventids( $recurrence_id, 1 );
+	
+	$register_empty_seats   = filter_var( $atts['register_empty_seats'], FILTER_VALIDATE_BOOLEAN );
+	$only_if_not_registered = filter_var( $atts['only_if_not_registered'], FILTER_VALIDATE_BOOLEAN );
+	$only_one_event         = filter_var( $atts['only_one_event'], FILTER_VALIDATE_BOOLEAN );
+	$only_one_seat          = filter_var( $atts['only_one_seat'], FILTER_VALIDATE_BOOLEAN );
+	$simple                 = filter_var( $atts['simple'], FILTER_VALIDATE_BOOLEAN );
+	$ids                    = explode( ',', $atts['id'] );
+
+	if ( ! empty( $atts['recurrence_id'] ) ) {
+		$ids    = eme_get_recurrence_eventids( $atts['recurrence_id'], 1 );
 		$events = eme_get_rsvp_event_arr( $ids );
-	} elseif ( ! empty( $category_id ) || ! empty( $scope ) ) {
-		$events = eme_get_events( scope: $scope, order: $order, category: $category_id, extra_conditions: 'event_rsvp=1' );
+	} elseif ( ! empty( $atts['category_id'] ) || ! empty( $atts['scope'] ) ) {
+		$events = eme_get_events( scope: $atts['scope'], order: $atts['order'], category: $atts['category_id'], extra_conditions: 'event_rsvp=1' );
 	} else {
 		$events = eme_get_rsvp_event_arr( $ids );
 	}
-	//if ($ids && $template_id_header && $template_id && $template_id_footer)
+
 	if ( ! empty( $events ) ) {
-		return eme_add_multibooking_form( $events, $template_id_header, $template_id, $multiprice_template_id, $template_id_footer, $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, $simple );
+		return eme_add_multibooking_form( $events, $atts['template_id_header'], $atts['template_id'], $atts['multiprice_template_id'], $atts['template_id_footer'], $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, $simple );
 	}
 }
 
 function eme_booking_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'id'                 => 0,
-				'template_id'        => 0,
-				'template_id_header' => 0,
-				'template_id_footer' => 0,
-				'rsvp_status'        => 0,
-				'approval_status'    => 0,
-				'paid_status'        => 0,
-				'order'              => '',
-				'scope'              => 'future',
-				'always_header_footer' => 0,
-			],
-		    $atts
-		)
+	$atts = shortcode_atts(
+		[
+			'id'                 => 0,
+			'template_id'        => 0,
+			'template_id_header' => 0,
+			'template_id_footer' => 0,
+			'rsvp_status'        => 0,
+			'approval_status'    => 0,
+			'paid_status'        => 0,
+			'order'              => '',
+			'scope'              => 'future',
+			'always_header_footer' => 0,
+		],
+		$atts
 	);
-	$always_header_footer = intval( $always_header_footer );
-	$approval_status = intval( $approval_status );
-	$rsvp_status     = intval( $rsvp_status );
+	
+	$always_header_footer = intval( $atts['always_header_footer'] );
+	$approval_status = intval( $atts['approval_status'] );
+	$rsvp_status     = intval( $atts['rsvp_status'] );
 	if ( $approval_status == 1 ) {
 		$rsvp_status = EME_RSVP_STATUS_PENDING;
 	}
 	if ( $approval_status == 2 ) {
 		$rsvp_status = EME_RSVP_STATUS_APPROVED;
 	}
-	$paid_status = intval( $paid_status );
-	if ( empty( $id ) && eme_is_single_event_page() ) {
-		$id = eme_sanitize_request( get_query_var( 'event_id' ) );
+	$paid_status = intval( $atts['paid_status'] );
+	if ( empty( $atts['id'] ) && eme_is_single_event_page() ) {
+		$atts['id'] = eme_sanitize_request( get_query_var( 'event_id' ) );
 	}
-	if ( !empty( $id ) ) {
-		$event = eme_get_event( $id );
+	if ( !empty( $atts['id'] ) ) {
+		$event = eme_get_event( $atts['id'] );
 		if ( ! empty( $event ) ) {
-			return eme_get_bookings_list_for_event( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, 0, $order, $always_header_footer );
+			return eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status, 0, $atts['order'], $always_header_footer );
 		}
-	} elseif (!empty($scope)) {
-		$events = eme_get_events( scope: $scope, extra_conditions: 'event_rsvp=1' );
+	} elseif (!empty($atts['scope'])) {
+		$events = eme_get_events( scope: $atts['scope'], extra_conditions: 'event_rsvp=1' );
 		$res = '';
 		foreach ($events as $event) {
-			$res .= eme_get_bookings_list_for_event( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, 0, $order, $always_header_footer );
+			$res .= eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status, 0, $atts['order'], $always_header_footer );
 		}
 		return $res;
 	} else {
@@ -430,27 +427,26 @@ function eme_booking_list_shortcode( $atts ) {
 
 function eme_mybooking_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'id'                 => 0,
-				'template_id'        => 0,
-				'template_id_header' => 0,
-				'template_id_footer' => 0,
-				'future'             => null,
-				'scope'              => 'future',
-				'rsvp_status'        => 0,
-				'approval_status'    => 0,
-				'paid_status'        => 0,
-			],
-		    $atts
-		)
+	$atts = shortcode_atts(
+		[
+			'id'                 => 0,
+			'template_id'        => 0,
+			'template_id_header' => 0,
+			'template_id_footer' => 0,
+			'future'             => null,
+			'scope'              => 'future',
+			'rsvp_status'        => 0,
+			'approval_status'    => 0,
+			'paid_status'        => 0,
+		],
+		$atts
 	);
-	$approval_status = intval( $approval_status );
-	$rsvp_status     = intval( $rsvp_status );
-	// future (old param) overrides scope if set
-	if ( ! is_null( $future ) ) {
-		$scope = intval( $future );
+	
+	$approval_status = intval( $atts['approval_status'] );
+	$rsvp_status     = intval( $atts['rsvp_status'] );
+
+	if ( ! is_null( $atts['future'] ) ) {
+		$atts['scope'] = intval( $atts['future'] );
 	}
 	if ( $approval_status == 1 ) {
 		$rsvp_status = EME_RSVP_STATUS_PENDING;
@@ -458,18 +454,19 @@ function eme_mybooking_list_shortcode( $atts ) {
 	if ( $approval_status == 2 ) {
 		$rsvp_status = EME_RSVP_STATUS_APPROVED;
 	}
-	$paid_status = intval( $paid_status );
+	$paid_status = intval( $atts['paid_status'] );
+
 	if ( is_user_logged_in() ) {
 		$wp_id = get_current_user_id();
-		if ( $id && $wp_id ) {
-			$event = eme_get_event( $id );
+		if ( $atts['id'] && $wp_id ) {
+			$event = eme_get_event( $atts['id'] );
 			if ( ! empty( $event ) ) {
-					return eme_get_bookings_list_for_event( $event, $template_id, $template_id_header, $template_id_footer, 0, 0, $wp_id, $order );
+				return eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], 0, 0, $wp_id, $order );
 			} else {
 				return '';
 			}
 		} elseif ( $wp_id ) {
-			return eme_get_bookings_list_for_wp_id( $wp_id, $scope, '', $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status );
+			return eme_get_bookings_list_for_wp_id( $wp_id, $atts['scope'], '', $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status );
 		} else {
 			return '';
 		}
@@ -478,46 +475,45 @@ function eme_mybooking_list_shortcode( $atts ) {
 
 function eme_attendee_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'id'                 => 0,
-				'template_id'        => 0,
-				'template_id_header' => 0,
-				'template_id_footer' => 0,
-				'rsvp_status'        => 0,
-				'approval_status'    => 0,
-				'paid_status'        => 0,
-				'order'              => '',
-				'scope'              => 'future',
-				'always_header_footer' => 0,
-			],
-		    $atts
-		)
+	$atts = shortcode_atts(
+		[
+			'id'                 => 0,
+			'template_id'        => 0,
+			'template_id_header' => 0,
+			'template_id_footer' => 0,
+			'rsvp_status'        => 0,
+			'approval_status'    => 0,
+			'paid_status'        => 0,
+			'order'              => '',
+			'scope'              => 'future',
+			'always_header_footer' => 0,
+		],
+		$atts
 	);
-	$always_header_footer = intval( $always_header_footer );
-	$approval_status = intval( $approval_status );
-	$rsvp_status     = intval( $rsvp_status );
+	
+	$always_header_footer = intval( $atts['always_header_footer'] );
+	$approval_status = intval( $atts['approval_status'] );
+	$rsvp_status     = intval( $atts['rsvp_status'] );
 	if ( $approval_status == 1 ) {
 		$rsvp_status = EME_RSVP_STATUS_PENDING;
 	}
 	if ( $approval_status == 2 ) {
 		$rsvp_status = EME_RSVP_STATUS_APPROVED;
 	}
-	$paid_status = intval( $paid_status );
-	if ( empty( $id ) && eme_is_single_event_page() ) {
-		$id = eme_sanitize_request( get_query_var( 'event_id' ) );
+	$paid_status = intval( $atts['paid_status'] );
+	if ( empty( $atts['id'] ) && eme_is_single_event_page() ) {
+		$atts['id'] = eme_sanitize_request( get_query_var( 'event_id' ) );
 	}
-	if ( !empty( $id ) ) {
-		$event = eme_get_event( $id );
+	if ( !empty( $atts['id'] ) ) {
+		$event = eme_get_event( $atts['id'] );
 		if ( ! empty( $event ) ) {
-			return eme_get_attendees_list( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, $order, $always_header_footer );
+			return eme_get_attendees_list( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status, $atts['order'], $always_header_footer );
 		}
-	} elseif (!empty($scope)) {
-		$events = eme_get_events( scope: $scope, extra_conditions: 'event_rsvp=1' );
+	} elseif (!empty($atts['scope'])) {
+		$events = eme_get_events( scope: $atts['scope'], extra_conditions: 'event_rsvp=1' );
 		$res = '';
 		foreach ($events as $event) {
-			$res .= eme_get_attendees_list( $event, $template_id, $template_id_header, $template_id_footer, $rsvp_status, $paid_status, $order, $always_header_footer );
+			$res .= eme_get_attendees_list( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status, $atts['order'], $always_header_footer );
 		}
 		return $res;
 	} else {

@@ -6,8 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function eme_filter_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 				'multiple'    => 0,
 				'multisize'   => 5,
@@ -19,16 +18,15 @@ function eme_filter_form_shortcode( $atts ) {
 				'template_id' => 0,
 			],
 		    $atts
-		)
 	);
-	$multiple = filter_var( $multiple, FILTER_VALIDATE_BOOLEAN );
-	$old_select = filter_var( $old_select, FILTER_VALIDATE_BOOLEAN );
-	$multisize = intval($multisize);
-	$scope_count = intval($scope_count);
-	$template_id = intval($template_id);
-	$category = eme_sanitize_request($category);
-	$notcategory = eme_sanitize_request($notcategory);
-	$submit = eme_trans_esc_html($submit);
+	$multiple = filter_var( $atts['multiple'], FILTER_VALIDATE_BOOLEAN );
+	$old_select = filter_var( $atts['old_select'], FILTER_VALIDATE_BOOLEAN );
+	$multisize = intval($atts['multisize']);
+	$scope_count = intval($atts['scope_count']);
+	$template_id = intval($atts['template_id']);
+	$category = eme_sanitize_request($atts['category']);
+	$notcategory = eme_sanitize_request($atts['notcategory']);
+	$submit = eme_trans_esc_html($atts['submit']);
 
 	if ( $template_id ) {
 		// when using a template, don't bother with fields, the template should contain the things needed

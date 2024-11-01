@@ -1723,8 +1723,7 @@ function eme_global_map_shortcode( $atts ) {
 
 function eme_single_location_map_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 				'id'     => '',
 				'width'  => 0,
@@ -1732,8 +1731,12 @@ function eme_single_location_map_shortcode( $atts ) {
 				'zoom'   => get_option( 'eme_indiv_zoom_factor' ),
 			],
 		    $atts
-		)
 	);
+	$id = eme_sanitize_request($atts['id']);
+	$width = eme_sanitize_request($atts['width']);
+	$height = eme_sanitize_request($atts['height']);
+	$zoom = eme_sanitize_request($atts['zoom']);
+
 	$location = eme_get_location( $id );
 	if ( ! empty( $location ) ) {
 		$map_div = eme_single_location_map( $location, $width, $height, $zoom );
@@ -1765,17 +1768,17 @@ function eme_display_single_location( $location_id, $template_id = 0, $ignore_ur
 
 function eme_get_location_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 				'id'          => '',
 				'template_id' => 0,
 				'ignore_url'  => 0,
 			],
 		    $atts
-		)
 	);
-	$ignore_url = filter_var( $ignore_url, FILTER_VALIDATE_BOOLEAN );
+	$ignore_url = filter_var( $atts['ignore_url'], FILTER_VALIDATE_BOOLEAN );
+	$id = eme_sanitize_request($atts['id']);
+	$template_id = intval($atts['template_id']);
 	return eme_display_single_location( $id, $template_id, $ignore_url );
 }
 

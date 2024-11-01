@@ -1552,8 +1552,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 
 	// now check location capacity, per event overlapping on the same location
 	foreach ($booking_info_to_be_made as $t_info) {
-		// the extract call will give us $event, $tmp_booking etc ... in the current symbol space
-		extract($t_info);
+		$event = $t_info['event'];
 		if (!empty($event['location_id'])) {
 			$location = eme_get_location($event['location_id']);
 		} else {
@@ -1589,9 +1588,8 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 
 	// now we have all booking info ready to be made without errors
 	foreach ($booking_info_to_be_made as $t_info) {
-		// the extract call will give us $event, $tmp_booking etc ... in the current symbol space
-		extract($t_info);
-		$res       = eme_add_update_person_from_form( 0, $bookerLastName, $bookerFirstName, $bookerEmail, $booker_wp_id, $event['event_properties']['create_wp_user'] );
+		$event = $t_info['event'];
+		$res   = eme_add_update_person_from_form( 0, $t_info['bookerLastName'], $t_info['bookerFirstName'], $t_info['bookerEmail'], $t_info['booker_wp_id'], $event['event_properties']['create_wp_user'] );
 		$person_id = $res[0];
 		// ok, just to be safe: check the person_id of the booker
 		if ( $person_id ) {
@@ -1600,7 +1598,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 			if ( ! empty( $booker['wp_id'] ) && ! eme_is_empty_string( $booker['phone'] ) ) {
 				eme_update_user_phone( $booker['wp_id'], $booker['phone'] );
 			}
-			$booking_id = eme_db_insert_booking( $event, $booker, $tmp_booking );
+			$booking_id = eme_db_insert_booking( $event, $booker, $t_info['tmp_booking'] );
 			if ( $booking_id ) {
 				// now upload the wanted files. If uploading fails, show that and delete the booking
 				$booking         = eme_get_booking( $booking_id );
@@ -1622,8 +1620,8 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 
 					// everything ok? So then we add the user in WP if desired
 					// this will only do it if the booker is not logged in and his email doesn't exist in wp yet
-					if ( $event['event_properties']['create_wp_user'] > 0 && ! $booker_wp_id && ! email_exists( $booker['email'] ) ) {
-						//$wp_userid=eme_create_wp_user($booker);
+					// we don't check the result of the eme_create_wp_user function
+					if ( $event['event_properties']['create_wp_user'] > 0 && ! $t_info['booker_wp_id'] && ! email_exists( $booker['email'] ) ) {
 						eme_create_wp_user( $booker );
 					}
 					// now everything is done, so execute the hook if present

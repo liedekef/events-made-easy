@@ -197,6 +197,9 @@ function eme_add_event_form_shortcode( $atts ) {
 	wp_enqueue_script( 'eme-fs-location' );
 	wp_enqueue_script( 'eme-edit-maps' );
         $atts = shortcode_atts( [ 'id' => 0, 'startdatetime' => '' ], $atts );
+	$atts['id'] = intval($atts['id']);
+	if ( $atts['startdatetime'] != 'now' )
+		$atts['startdatetime'] = '';
 
         $form_id = uniqid();
         $nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );

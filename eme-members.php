@@ -4497,15 +4497,15 @@ function eme_email_member_action( $member, $action ) {
 
 function eme_add_member_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 			    'id'   => 0,
 			    'name' => '',
 		    ],
 		    $atts
-	    )
 	);
+	$id = intval($atts['id']);
+	$name = eme_sanitize_request($atts['name']);
 	if ( ! empty( $name ) ) {
 		$membership = eme_get_membership( $name );
 		$id         = $membership['membership_id'];

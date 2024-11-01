@@ -466,20 +466,25 @@ function eme_get_category_id_by_name_slug ($cat_name ) {
 
 function eme_get_categories_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'event_id'           => 0,
-				'eventful'           => false,
-				'scope'              => 'all',
-				'template_id'        => 0,
-				'template_id_header' => 0,
-				'template_id_footer' => 0,
-			],
-		    $atts
-		)
+
+	$atts = shortcode_atts(
+		[
+			'event_id'           => 0,
+			'eventful'           => false,
+			'scope'              => 'all',
+			'template_id'        => 0,
+			'template_id_header' => 0,
+			'template_id_footer' => 0,
+		],
+		$atts
 	);
-	$eventful = filter_var( $eventful, FILTER_VALIDATE_BOOLEAN );
+
+	$event_id = $atts['event_id'];
+	$eventful = filter_var( $atts['eventful'], FILTER_VALIDATE_BOOLEAN );
+	$scope = $atts['scope'];
+	$template_id = $atts['template_id'];
+	$template_id_header = $atts['template_id_header'];
+	$template_id_footer = $atts['template_id_footer'];
 
 	if ( $event_id ) {
 		$categories = eme_get_event_categories( $event_id );
@@ -487,8 +492,8 @@ function eme_get_categories_shortcode( $atts ) {
 		$categories = eme_get_categories( $eventful, $scope );
 	}
 
-	// format is not a locations shortcode, so we need to set the value to "" here, to avoid php warnings
-	$format            = '';
+	// Initialize format and templates for header/footer
+	$format = '';
 	$eme_format_header = '';
 	$eme_format_footer = '';
 
@@ -496,28 +501,32 @@ function eme_get_categories_shortcode( $atts ) {
 		$format = eme_get_template_format( $template_id );
 	}
 	if ( $template_id_header ) {
-		$format_header     = eme_get_template_format( $template_id_header );
+		$format_header = eme_get_template_format( $template_id_header );
 		$eme_format_header = eme_replace_categories_placeholders( $format_header );
 	}
 	if ( $template_id_footer ) {
-		$format_footer     = eme_get_template_format( $template_id_footer );
+		$format_footer = eme_get_template_format( $template_id_footer );
 		$eme_format_footer = eme_replace_categories_placeholders( $format_footer );
 	}
-	if ( eme_is_empty_string( $format ) ) {
+
+	// Set default format if not defined
+	if (eme_is_empty_string( $format )) {
 		$format = '<li class="cat-#_CATEGORYFIELD{category_id}">#_CATEGORYFIELD{category_name}</li>';
 	}
-	if ( eme_is_empty_string( $eme_format_header ) ) {
+	if (eme_is_empty_string( $eme_format_header )) {
 		$eme_format_header = '<ul>';
 	}
-	if ( eme_is_empty_string( $eme_format_footer ) ) {
-		$eme_format_header = '</ul>';
+	if (eme_is_empty_string( $eme_format_footer )) {
+		$eme_format_footer = '</ul>';
 	}
 
+	// Build output using categories
 	$output = '';
-	foreach ( $categories as $cat ) {
+	foreach ($categories as $cat) {
 		$output .= eme_replace_categories_placeholders( $format, $cat );
 	}
 	$output = $eme_format_header . $output . $eme_format_footer;
+
 	return $output;
 }
 

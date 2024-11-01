@@ -6,121 +6,149 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function eme_get_calendar_shortcode( $atts ) {
 	eme_enqueue_frontend();
-	extract(
-	    shortcode_atts(
-		    [
-				'category'       => 0,
-				'notcategory'    => 0,
-				'full'           => 0,
-				'month'          => '',
-				'year'           => '',
-				'echo'           => 0,
-				'long_events'    => 0,
-				'ignore_filter'  => 0,
-				'author'         => '',
-				'contact_person' => '',
-				'location_id'    => '',
-				'template_id'    => 0,
-				'holiday_id'     => 0,
-				'htmltable'      => 1,
-				'htmldiv'        => 0,
-				'weekdays'       => '',
-			],
-		    $atts
-		)
+
+	$atts = shortcode_atts(
+		[
+			'category'       => 0,
+			'notcategory'    => 0,
+			'full'           => 0,
+			'month'          => '',
+			'year'           => '',
+			'echo'           => 0,
+			'long_events'    => 0,
+			'ignore_filter'  => 0,
+			'author'         => '',
+			'contact_person' => '',
+			'location_id'    => '',
+			'template_id'    => 0,
+			'holiday_id'     => 0,
+			'htmltable'      => 1,
+			'htmldiv'        => 0,
+			'weekdays'       => '',
+		],
+		$atts
 	);
 
-	$echo        = filter_var( $echo, FILTER_VALIDATE_BOOLEAN );
-        $full        = filter_var( $full, FILTER_VALIDATE_BOOLEAN );
-        $long_events = filter_var( $long_events, FILTER_VALIDATE_BOOLEAN );
+	$echo = filter_var($atts['echo'], FILTER_VALIDATE_BOOLEAN);
+	$full = filter_var($atts['full'], FILTER_VALIDATE_BOOLEAN);
+	$long_events = filter_var($atts['long_events'], FILTER_VALIDATE_BOOLEAN);
 
-	// this allows people to use specific months/years to show the calendar on
-	if ( isset( $_GET['calmonth'] ) && $_GET['calmonth'] != '' ) {
+	$month = $atts['month'];
+	$year = intval($atts['year']);
+	$category = $atts['category'];
+	$notcategory = $atts['notcategory'];
+	$author = $atts['author'];
+	$contact_person = $atts['contact_person'];
+	$location_id = $atts['location_id'];
+	$template_id = $atts['template_id'];
+	$holiday_id = $atts['holiday_id'];
+	$htmltable = $atts['htmltable'];
+	$htmldiv = $atts['htmldiv'];
+	$weekdays = $atts['weekdays'];
+	$ignore_filter = $atts['ignore_filter'];
+
+	// Allow specific months/years for the calendar display
+	if (isset($_GET['calmonth']) && $_GET['calmonth'] != '') {
 		$month = eme_sanitize_request($_GET['calmonth']);
 	}
-	if ( $month != 'this_month' && $month != 'next_month' ) {
-		$month = intval( $month );
+	if ($month != 'this_month' && $month != 'next_month') {
+		$month = intval($month);
 	}
-	if ( $month == 'this_month' ) {
-		$eme_date_obj_tmp = new ExpressiveDate( 'now', EME_TIMEZONE );
+	if ($month == 'this_month') {
+		$eme_date_obj_tmp = new ExpressiveDate('now', EME_TIMEZONE);
 		$eme_date_obj_tmp->startOfMonth();
-		$month = $eme_date_obj_tmp->format( 'm' );
+		$month = $eme_date_obj_tmp->format('m');
 	}
-	if ( isset( $_GET['calyear'] ) && $_GET['calyear'] != '' ) {
+	if (isset($_GET['calyear']) && $_GET['calyear'] != '') {
 		$year = intval($_GET['calyear']);
 	}
-	$year = intval( $year );
-	// if a year was specified but not a month, show the first month of that year
-	if ( ! empty( $year ) && empty( $month ) ) {
+
+	if (!empty($year) && empty($month)) {
 		$month = 1;
 	}
 
 	$location_id_arr = [];
-	// the filter list overrides the settings
-	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
-		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
-			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
-			if ( preg_match( '/^([0-9]{4})-([0-9]{2})-[0-9]{2}--[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $scope, $matches ) ) {
+	if (!$ignore_filter && isset($_REQUEST['eme_eventAction']) && eme_sanitize_request($_REQUEST['eme_eventAction']) == 'filter') {
+		if (!empty($_REQUEST['eme_scope_filter'])) {
+			$scope = eme_sanitize_request($_REQUEST['eme_scope_filter']);
+			if (preg_match('/^([0-9]{4})-([0-9]{2})-[0-9]{2}--[0-9]{4}-[0-9]{2}-[0-9]{2}$/', $scope, $matches)) {
 				$year  = $matches[1];
 				$month = $matches[2];
 			}
 		}
-		if ( ! empty( $_REQUEST['eme_author_filter'] ) && intval( $_REQUEST['eme_author_filter'] ) > 0 ) {
-			$author = intval( $_REQUEST['eme_author_filter'] );
+		if (!empty($_REQUEST['eme_author_filter']) && intval($_REQUEST['eme_author_filter']) > 0) {
+			$author = intval($_REQUEST['eme_author_filter']);
 		}
-		if ( ! empty( $_REQUEST['eme_contact_filter'] ) && intval( $_REQUEST['eme_contact_filter'] ) > 0 ) {
-			$contact_person = intval( $_REQUEST['eme_contact_filter'] );
+		if (!empty($_REQUEST['eme_contact_filter']) && intval($_REQUEST['eme_contact_filter']) > 0) {
+			$contact_person = intval($_REQUEST['eme_contact_filter']);
 		}
-		if ( ! empty( $_REQUEST['eme_loc_filter'] ) ) {
-			if ( is_array( $_REQUEST['eme_loc_filter'] ) ) {
-				$arr = eme_array_remove_empty_elements( eme_sanitize_request( $_REQUEST['eme_loc_filter'] ) );
-				if ( ! empty( $arr ) ) {
+		if (!empty($_REQUEST['eme_loc_filter'])) {
+			if (is_array($_REQUEST['eme_loc_filter'])) {
+				$arr = eme_array_remove_empty_elements(eme_sanitize_request($_REQUEST['eme_loc_filter']));
+				if (!empty($arr)) {
 					$location_id_arr = $arr;
 				}
 			} else {
-				$location_id_arr[] = eme_sanitize_request( $_REQUEST['eme_loc_filter'] );
+				$location_id_arr[] = eme_sanitize_request($_REQUEST['eme_loc_filter']);
 			}
 		}
-		if ( ! empty( $_REQUEST['eme_city_filter'] ) ) {
-			$cities  = eme_sanitize_request( $_REQUEST['eme_city_filter'] );
-			$tmp_ids = eme_get_city_location_ids( $cities );
-			if ( empty( $location_id_arr ) ) {
+		if (!empty($_REQUEST['eme_city_filter'])) {
+			$cities  = eme_sanitize_request($_REQUEST['eme_city_filter']);
+			$tmp_ids = eme_get_city_location_ids($cities);
+			if (empty($location_id_arr)) {
 				$location_id_arr = $tmp_ids;
 			} else {
-				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
+				$location_id_arr = array_intersect($location_id_arr, $tmp_ids);
 			}
-			if ( empty( $location_id_arr ) ) {
+			if (empty($location_id_arr)) {
 				$location_id = -1;
 			}
 		}
-		if ( ! empty( $_REQUEST['eme_country_filter'] ) ) {
-			$countries = eme_sanitize_request( $_REQUEST['eme_country_filter'] );
-			$tmp_ids   = eme_get_country_location_ids( $countries );
-			if ( empty( $location_id_arr ) ) {
+		if (!empty($_REQUEST['eme_country_filter'])) {
+			$countries = eme_sanitize_request($_REQUEST['eme_country_filter']);
+			$tmp_ids   = eme_get_country_location_ids($countries);
+			if (empty($location_id_arr)) {
 				$location_id_arr = $tmp_ids;
 			} else {
-				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
+				$location_id_arr = array_intersect($location_id_arr, $tmp_ids);
 			}
-			if ( empty( $location_id_arr ) ) {
+			if (empty($location_id_arr)) {
 				$location_id = -1;
 			}
 		}
-		if ( ! empty( $_REQUEST['eme_cat_filter'] ) ) {
-			if ( is_array( $_REQUEST['eme_cat_filter'] ) ) {
-				$arr = eme_array_remove_empty_elements( eme_sanitize_request( $_REQUEST['eme_cat_filter'] ) );
-				if ( ! empty( $arr ) ) {
-					$category = join( ',', $arr );
+		if (!empty($_REQUEST['eme_cat_filter'])) {
+			if (is_array($_REQUEST['eme_cat_filter'])) {
+				$arr = eme_array_remove_empty_elements(eme_sanitize_request($_REQUEST['eme_cat_filter']));
+				if (!empty($arr)) {
+					$category = join(',', $arr);
 				}
 			} else {
-				$category = eme_sanitize_request( $_REQUEST['eme_cat_filter'] );
+				$category = eme_sanitize_request($_REQUEST['eme_cat_filter']);
 			}
 		}
 	}
-	if ( $location_id != -1 && ! empty( $location_id_arr ) ) {
-		$location_id = join( ',', $location_id_arr );
+	if ($location_id != -1 && !empty($location_id_arr)) {
+		$location_id = join(',', $location_id_arr);
 	}
 
-	$result = eme_get_calendar( full: $full, month: $month, year: $year, do_echo: $echo, long_events: $long_events, category: $category, author: $author, contact_person: $contact_person, location_id: $location_id, notcategory: $notcategory, template_id: $template_id, weekdays: $weekdays, holiday_id: $holiday_id, htmltable: $htmltable, htmldiv: $htmldiv );
+	$result = eme_get_calendar(
+		full: $full,
+		month: $month,
+		year: $year,
+		do_echo: $echo,
+		long_events: $long_events,
+		category: $category,
+		author: $author,
+		contact_person: $contact_person,
+		location_id: $location_id,
+		notcategory: $notcategory,
+		template_id: $template_id,
+		weekdays: $weekdays,
+		holiday_id: $holiday_id,
+		htmltable: $htmltable,
+		htmldiv: $htmldiv
+	);
+
 	return $result;
 }
 

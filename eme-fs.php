@@ -196,7 +196,7 @@ function eme_add_event_form_shortcode( $atts ) {
 	wp_enqueue_style( 'eme-leaflet-css' );
 	wp_enqueue_script( 'eme-fs-location' );
 	wp_enqueue_script( 'eme-edit-maps' );
-        extract( shortcode_atts( [ 'id' => 0, 'startdatetime' => '' ], $atts ) );
+        $atts = shortcode_atts( [ 'id' => 0, 'startdatetime' => '' ], $atts );
 
         $form_id = uniqid();
         $nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
@@ -205,7 +205,7 @@ function eme_add_event_form_shortcode( $atts ) {
                 $nonce
                 <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
                 ";
-	$form_html .= eme_event_fs_form( $id, $startdatetime );
+	$form_html .= eme_event_fs_form( $atts['id'], $atts['startdatetime'] );
         $form_html  .= '</form></div>';
 	return $form_html;
 }

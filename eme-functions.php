@@ -487,145 +487,143 @@ function eme_captcha_remove( $captcha_file ) {
 	}
 }
 
-function eme_if_shortcode( $atts, $content ) {
-	extract(
-	    shortcode_atts(
-		    [
-			    'tag'         => '',
-			    'value'       => '',
-			    'eq'          => '',
-			    'notvalue'    => '',
-			    'ne'          => '',
-			    'lt'          => '',
-			    'le'          => '',
-			    'gt'          => '',
-			    'ge'          => '',
-			    'contains'    => '',
-			    'notcontains' => '',
-			    'is_empty'    => 0,
-			    'incsv'       => '',
-			    'notincsv'    => '',
-		    ],
-		    $atts
-		)
+function eme_if_shortcode($atts, $content) {
+	$atts = shortcode_atts(
+		[
+			'tag'         => '',
+			'value'       => '',
+			'eq'          => '',
+			'notvalue'    => '',
+			'ne'          => '',
+			'lt'          => '',
+			'le'          => '',
+			'gt'          => '',
+			'ge'          => '',
+			'contains'    => '',
+			'notcontains' => '',
+			'is_empty'    => 0,
+			'incsv'       => '',
+			'notincsv'    => '',
+		],
+		$atts
 	);
-	// replace placeholders if eme_if is used outside EME shortcodes
-	$tag     = eme_replace_generic_placeholders( $tag );
-	$content = eme_replace_generic_placeholders( $content );
-	if ( $is_empty ) {
-		if ( empty( $tag ) ) {
-			return do_shortcode( $content );
+
+	$tag = eme_replace_generic_placeholders($atts['tag']);
+	$content = eme_replace_generic_placeholders($content);
+
+	if ($atts['is_empty']) {
+		if (empty($tag)) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $value ) || ! empty( $value ) ) {
-		if ( $tag == $value ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['value']) || !empty($atts['value'])) {
+		if ($tag == $atts['value']) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $eq ) || ! empty( $eq ) ) {
-		if ( $tag == $eq ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['eq']) || !empty($atts['eq'])) {
+		if ($tag == $atts['eq']) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $ne ) || ! empty( $ne ) ) {
-		if ( $tag != $ne ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['ne']) || !empty($atts['ne'])) {
+		if ($tag != $atts['ne']) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $notvalue ) || ! empty( $notvalue ) ) {
-		if ( $tag != $notvalue ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['notvalue']) || !empty($atts['notvalue'])) {
+		if ($tag != $atts['notvalue']) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $lt ) || ! empty( $lt ) ) {
-		if ( $tag < $lt ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['lt']) || !empty($atts['lt'])) {
+		if ($tag < $atts['lt']) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $le ) || ! empty( $le ) ) {
-		if ( $tag <= $le ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['le']) || !empty($atts['le'])) {
+		if ($tag <= $atts['le']) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $gt ) || ! empty( $gt ) ) {
-		if ( $tag > $gt ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['gt']) || !empty($atts['gt'])) {
+		if ($tag > $atts['gt']) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $ge ) || ! empty( $ge ) ) {
-		if ( $tag >= $ge ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['ge']) || !empty($atts['ge'])) {
+		if ($tag >= $atts['ge']) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $contains ) || ! empty( $contains ) ) {
-		if ( strpos( $tag, "$contains" ) !== false ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['contains']) || !empty($atts['contains'])) {
+		if (strpos($tag, $atts['contains']) !== false) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $notcontains ) || ! empty( $notcontains ) ) {
-		if ( strpos( $tag, "$notcontains" ) === false ) {
-			return do_shortcode( $content );
+	} elseif (is_numeric($atts['notcontains']) || !empty($atts['notcontains'])) {
+		if (strpos($tag, $atts['notcontains']) === false) {
+			return do_shortcode($content);
 		}
-	} elseif ( is_numeric( $incsv ) || ! empty( $incsv ) ) {
-		if ( preg_match( '/,/', $incsv ) ) {
-			$incsv_arr = explode( ',', $incsv );
-			foreach ( $incsv_arr as $incsv ) {
-				$incsv = trim( $incsv );
-				if ( in_array( $incsv, explode( ',', $tag ) ) || in_array( $incsv, explode( ', ', $tag ) ) ) {
-					return do_shortcode( $content );
+	} elseif (is_numeric($atts['incsv']) || !empty($atts['incsv'])) {
+		if (preg_match('/,/', $atts['incsv'])) {
+			$incsv_arr = explode(',', $atts['incsv']);
+			foreach ($incsv_arr as $incsv) {
+				$incsv = trim($incsv);
+				if (in_array($incsv, explode(',', $tag)) || in_array($incsv, explode(', ', $tag))) {
+					return do_shortcode($content);
 				}
 			}
-		} elseif ( preg_match( '/\+/', $incsv ) ) {
-			$incsv_arr = preg_split( '/\+/', $incsv, 0, PREG_SPLIT_NO_EMPTY );
+		} elseif (preg_match('/\+/', $atts['incsv'])) {
+			$incsv_arr = preg_split('/\+/', $atts['incsv'], 0, PREG_SPLIT_NO_EMPTY);
 			$found = 1;
-			foreach ( $incsv_arr as $incsv ) {
-				$incsv = trim( $incsv );
-				if ( ! ( in_array( $incsv, explode( ',', $tag ) ) || in_array( $incsv, explode( ', ', $tag ) ) ) ) {
-						$found = 0;
+			foreach ($incsv_arr as $incsv) {
+				$incsv = trim($incsv);
+				if (!(in_array($incsv, explode(',', $tag)) || in_array($incsv, explode(', ', $tag)))) {
+					$found = 0;
 				}
 			}
-			if ( $found ) {
-				return do_shortcode( $content );
+			if ($found) {
+				return do_shortcode($content);
 			}
 		} else {
-			$incsv = trim( $incsv );
-			if ( in_array( $incsv, explode( ',', $tag ) ) || in_array( $incsv, explode( ', ', $tag ) ) ) {
-				return do_shortcode( $content );
+			$incsv = trim($atts['incsv']);
+			if (in_array($incsv, explode(',', $tag)) || in_array($incsv, explode(', ', $tag))) {
+				return do_shortcode($content);
 			}
 		}
-	} elseif ( is_numeric( $notincsv ) || ! empty( $notincsv ) ) {
-		if ( preg_match( '/,/', $notincsv ) ) {
-			$notincsv_arr = explode( ',', $notincsv );
+	} elseif (is_numeric($atts['notincsv']) || !empty($atts['notincsv'])) {
+		if (preg_match('/,/', $atts['notincsv'])) {
+			$notincsv_arr = explode(',', $atts['notincsv']);
 			$found = 0;
-			foreach ( $notincsv_arr as $notincsv ) {
-				$notincsv = trim( $notincsv );
-				if ( in_array( $notincsv, explode( ',', $tag ) ) || in_array( $notincsv, explode( ', ', $tag ) ) ) {
+			foreach ($notincsv_arr as $notincsv) {
+				$notincsv = trim($notincsv);
+				if (in_array($notincsv, explode(',', $tag)) || in_array($notincsv, explode(', ', $tag))) {
 					$found = 1;
 				}
 			}
-			if ( ! $found ) {
-				return do_shortcode( $content );
+			if (!$found) {
+				return do_shortcode($content);
 			}
-		} elseif ( preg_match( '/\+/', $notincsv ) ) {
-			$notincsv_arr = preg_split( '/\+/', $notincsv, 0, PREG_SPLIT_NO_EMPTY );
+		} elseif (preg_match('/\+/', $atts['notincsv'])) {
+			$notincsv_arr = preg_split('/\+/', $atts['notincsv'], 0, PREG_SPLIT_NO_EMPTY);
 			$found = 0;
-			foreach ( $notincsv_arr as $notincsv ) {
-				$notincsv = trim( $notincsv );
-				if ( in_array( $notincsv, explode( ',', $tag ) ) || in_array( $notincsv, explode( ', ', $tag ) ) ) {
-						$found = 1;
+			foreach ($notincsv_arr as $notincsv) {
+				$notincsv = trim($notincsv);
+				if (in_array($notincsv, explode(',', $tag)) || in_array($notincsv, explode(', ', $tag))) {
+					$found = 1;
 				} else {
 					$found = 0;
 				}
 			}
-			if ( ! $found ) {
-				return do_shortcode( $content );
+			if (!$found) {
+				return do_shortcode($content);
 			}
 		} else {
-			$notincsv = trim( $notincsv );
-			if ( ! ( in_array( $notincsv, explode( ',', $tag ) ) || in_array( $notincsv, explode( ', ', $tag ) ) ) ) {
-				return do_shortcode( $content );
+			$notincsv = trim($atts['notincsv']);
+			if (!(in_array($notincsv, explode(',', $tag)) || in_array($notincsv, explode(', ', $tag)))) {
+				return do_shortcode($content);
 			}
 		}
-	} elseif ( ! empty( $tag ) ) {
-		return do_shortcode( $content );
+	} elseif (!empty($tag)) {
+		return do_shortcode($content);
 	}
 	// return empty in all other cases
 	return '';
 }
 
 function eme_for_shortcode( $atts, $content ) {
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 			    'min'  => 1,
 			    'max'  => 0,
@@ -633,16 +631,15 @@ function eme_for_shortcode( $atts, $content ) {
 			    'sep'  => ',',
 		    ],
 		    $atts
-	    )
 	);
 	$min         = intval( $min );
 	$max         = intval( $max );
 	$result      = '';
 	$loopcounter = 1;
-	if ( ! empty( $list ) ) {
-		$list   = eme_replace_generic_placeholders($list); // currently mainly usefull to loop over all categories when using #_ALLCATEGORYIDS
+	if ( ! empty( $atts['list'] ) ) {
+		$list   = eme_replace_generic_placeholders($atts['list']); // currently mainly usefull to loop over all categories when using #_ALLCATEGORYIDS
 		$search = [ '#_LOOPVALUE', '#URL_LOOPVALUE', '#_LOOPCOUNTER' ];
-		$array_values = explode( $sep, $list );
+		$array_values = explode( $atts['sep'], $list );
 		foreach ( $array_values as $val ) {
 			$url_val     = rawurlencode( $val );
 			$esc_val     = eme_sanitize_request( eme_esc_html( preg_replace( '/\n|\r/', '', $val ) ) );

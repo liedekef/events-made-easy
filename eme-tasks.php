@@ -861,8 +861,7 @@ function eme_mytasks_signups_shortcode( $atts ) {
 	if ( empty( $person ) ) {
 		return;
 	}
-	extract(
-	    shortcode_atts(
+	$atts = shortcode_atts(
 		    [
 				'scope'              => 'future',
 				'task_id'            => 0,
@@ -872,11 +871,15 @@ function eme_mytasks_signups_shortcode( $atts ) {
 				'template_id_footer' => 0,
 			],
 		    $atts
-		)
 	);
 	$format = '';
 	$header = '';
 	$footer = '';
+	$template_id = intval($atts['template_id']);
+	$template_id_header = intval($atts['template_id_header']);
+	$template_id_footer = intval($atts['template_id_footer']);
+	$event_id = intval($atts['event_id']);
+	$task_id = intval($atts['task_id']);
 	if ( ! empty( $template_id ) ) {
 		$format = eme_get_template_format( $template_id );
 	}

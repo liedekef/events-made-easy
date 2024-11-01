@@ -292,6 +292,7 @@ function eme_add_booking_form_shortcode( $atts ) {
 	if ( !empty($atts['id']) ) {
 		return eme_add_booking_form( intval($atts['id']) );
 	}
+	return ''; // Return an empty string if 'id' is not valid
 }
 
 function eme_add_simple_multibooking_form_shortcode( $atts ) {
@@ -332,6 +333,7 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 	if ( ! empty( $events ) ) {
 		return eme_add_multibooking_form( $events, $atts['template_id_header'], $atts['template_id'], 0, $atts['template_id_footer'], $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, 1 );
 	}
+	return '';
 }
 
 function eme_add_multibooking_form_shortcode( $atts ) {
@@ -375,6 +377,7 @@ function eme_add_multibooking_form_shortcode( $atts ) {
 	if ( ! empty( $events ) ) {
 		return eme_add_multibooking_form( $events, $atts['template_id_header'], $atts['template_id'], $atts['multiprice_template_id'], $atts['template_id_footer'], $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, $simple );
 	}
+	return '';
 }
 
 function eme_booking_list_shortcode( $atts ) {
@@ -471,6 +474,7 @@ function eme_mybooking_list_shortcode( $atts ) {
 			return '';
 		}
 	}
+	return '';
 }
 
 function eme_attendee_list_shortcode( $atts ) {

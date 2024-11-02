@@ -600,6 +600,10 @@ details.eme_accordion > summary {
   margin: 2px;
   padding: 7.5px 7.5px 7.5px 15px;
 }
+details.eme_accordion > summary:hover {
+  background-color: #ccc;
+}
+
 details.eme_accordion[open] {
   background-color: white;
   border: 1px solid #aaa;

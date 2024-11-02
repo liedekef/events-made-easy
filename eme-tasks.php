@@ -1984,15 +1984,15 @@ function eme_ajax_task_signups_list() {
 function eme_ajax_manage_task_signups() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
-			$ajaxResult            = [];
-			$ajaxResult['Result']  = 'Error';
-			$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-			print wp_json_encode( $ajaxResult );
-			wp_die();
+		$ajaxResult            = [];
+		$ajaxResult['Result']  = 'Error';
+		$ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+		print wp_json_encode( $ajaxResult );
+		wp_die();
 	}
 
 	if ( isset( $_REQUEST['do_action'] ) ) {
-		$ids_arr   = explode( ',', eme_sanitize_request($_POST['id']) );
+		$ids_arr   = ( isset( $_POST['id'] ) ) ? explode( ',', eme_sanitize_request($_POST['id']) ) : [];
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		$send_mail = ( isset( $_REQUEST['send_mail'] ) ) ? intval( $_REQUEST['send_mail'] ) : 1;
 		switch ( $do_action ) {

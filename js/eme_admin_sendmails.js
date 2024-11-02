@@ -139,23 +139,6 @@ jQuery(document).ready( function($) {
           });
    }
 
-   // initially the div is not shown using display:none, so jquery has time to render it and then we call show()
-   // we use localStorage to remember the last active tab
-   $('#mail-tabs').tabs({
-	   active: localStorage.getItem('mailtabs_currentIdx'),
-	   activate: function(event, ui) {
-		   localStorage.setItem('mailtabs_currentIdx', $(this).tabs('option', 'active'));
-		   // if tab-sentmail
-		   if ($(this).tabs('option', 'active') == 4) {
-			   $('#searchmailButton').trigger('click');
-		   }
-	   }
-   });
-   $('#mail-tabs').show();
-   if ($('#mail-tabs').data('showtab')>=0) {
-	   $('#mail-tabs').tabs( 'option', 'active', $('#mail-tabs').data('showtab') );
-   }
-
    $('#eventmailButton').on("click",function (e) {
            e.preventDefault();
 	   // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit

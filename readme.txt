@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.15 (2024//) =
+* Replaced the use of jquery-ui-tabs and jquery-ui-accordion by regular html5, css and a little bit of JS. This should speed up things
+
 = 2.5.14 (2024/10/26) =
 * Bulk action to task signups added to send reminders
 * PDF templates have a setting to change the mail attachment name if the template is used in member or booking related mails

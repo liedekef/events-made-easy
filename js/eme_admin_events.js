@@ -79,7 +79,6 @@ jQuery(document).ready( function($) {
    function updateShowHideRsvp() {
       if ($('input#event_rsvp').prop('checked')) {
 	      $('div#rsvp-details').fadeIn();
-	      //$('#event-tabs').tabs('enable','#tab-mailformats');
 	      $('div#div_event_rsvp').fadeIn();
 	      $('div#div_dyndata').fadeIn();
 	      $('div#div_event_dyndata_allfields').fadeIn();
@@ -89,7 +88,6 @@ jQuery(document).ready( function($) {
 	      $('div#div_event_registration_recorded_ok_html').fadeIn();
 	      $('div#div_event_attendance_info').fadeIn();
       } else {
-         //$('#event-tabs').tabs('disable','#tab-mailformats');
          $('div#rsvp-details').fadeOut();
       }
    }
@@ -394,22 +392,9 @@ jQuery(document).ready( function($) {
    text_focus_blur('textarea#event_registration_form_format',eme_registration_form_format());
    text_focus_blur('textarea#event_cancel_form_format',eme_cancel_form_format());
 
-   if ($('#event-tabs').length) {
-	   // initially the div is not shown using display:none, so jquery has time to render it and then we call show()
-	   $('#event-tabs').tabs();
-	   $('#event-tabs').show();
-	   $('#event-tabs').on('tabsactivate', function( event, ui ) {
-		   // we call both functions to show the map, only 1 will work (either the select-based or the other) depending on the form shown
-		   if (ui.newPanel.attr('id') == 'tab-locationdetails') {
-			   // We need to call it here, because otherwise the map initially doesn't render correctly due to hidden tab div etc ...
-			   if(emeevents.translate_map_is_active === 'true') {
-				   eme_SelectdisplayAddress();
-				   eme_displayAddress(0);
-			   }
-			   // also initialize the code for auto-complete of location info
-			   eme_event_location_autocomplete();
-		   }
-	   });
+   if ($('#eventForm').length) {
+	   // initialize the code for auto-complete of location info
+	   eme_event_location_autocomplete();
 	   // the validate plugin can take other tabs/hidden fields into account
 	   $('#eventForm').validate({
 		   // ignore: false is added so the fields of tabs that are not visible when editing an event are evaluated too
@@ -419,12 +404,10 @@ jQuery(document).ready( function($) {
 		   invalidHandler: function(e,validator) {
 			   $.each(validator.invalid, function(key, value) {
 				   // get the closest tabname
-                                   var tabname=$('[name="'+key+'"]').closest('.ui-tabs-panel').attr('id');
-                                   // activate the tab that has the error
-                                   var tabindex = $('#event-tabs a[href="#'+tabname+'"]').parent().index();
-                                   $("#event-tabs").tabs("option", "active", tabindex);
-                                   // break the loop, we only want to switch to the first tab with the error
-                                   return false;
+				   var tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
+				   activateTab(tabname);
+				   // break the loop, we only want to switch to the first tab with the error
+				   return false;
 			   });
 		   }
 	   });

@@ -1917,7 +1917,7 @@ function eme_emails_page() {
 	$member_ids      = [];
 	// if we get a request for mailings, set the active tab to the 'tab-genericmails' tab (which is index 1)
 	if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'new_mailing' ) {
-		$data_forced_tab = 'data-showtab=1';
+		$data_forced_tab = 'data-showtab="tab-genericmails"';
 		if ( isset( $_POST['tasksignup_ids'] ) ) {
 			// when editing, select2 needs a populated list of selected items
 			$tasksignup_ids = eme_sanitize_request($_POST['tasksignup_ids']);
@@ -2031,7 +2031,7 @@ function eme_emails_page() {
 					}
 				}
 			}
-			$data_forced_tab = 'data-showtab=1';
+			$data_forced_tab = 'data-showtab="tab-genericmails"';
 		}
 	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'retry_failed_mailing' && isset( $_GET['id'] ) ) {
@@ -2057,7 +2057,7 @@ function eme_emails_page() {
 				$generic_mail_message    = $mailing['body'];
 				$generic_mail_from_name  = $mailing['fromname'];
 				$generic_mail_from_email = $mailing['fromemail'];
-				$data_forced_tab         = 'data-showtab=1';
+				$data_forced_tab         = 'data-showtab="tab-genericmails"';
 				if ( ! empty( $conditions['eme_send_all_people'] ) ) {
 					$send_to_all_people_checked = "checked='checked'";
 				} else {
@@ -2113,7 +2113,7 @@ function eme_emails_page() {
 				if ( ! empty( $conditions['only_unpaid'] ) ) {
                                         $only_unpaid_checked = "checked='checked'";
 				}
-				$data_forced_tab    = 'data-showtab=0';
+				$data_forced_tab    = 'data-showtab="tab-eventmails"';
 				if ( ! empty( $conditions['event_id'] ) ) {
 					$event_ids = explode( ',', $conditions['event_id'] );
 					$events    = eme_get_events(  extra_conditions: 'event_id IN ('.$conditions['event_id'].')' );
@@ -2210,16 +2210,21 @@ function eme_emails_page() {
 <div class="wrap">
 <div id="icon-events" class="icon32">
 </div>
-<div id="mail-tabs" style="display: none; overflow-x: auto;" <?php echo $data_forced_tab; ?>>
-	<ul>
-	<li><a href="#tab-eventmails"><?php esc_html_e( 'Event related email', 'events-made-easy' ); ?></a></li>
-	<li><a href="#tab-genericmails"><?php esc_html_e( 'Generic email', 'events-made-easy' ); ?></a></li>
-	<li><a href="<?php echo wp_nonce_url( admin_url( 'admin-ajax.php?action=eme_get_mailings_div' ), 'eme_admin', 'eme_admin_nonce' ); ?>"><?php esc_html_e( 'Mailings', 'events-made-easy' ); ?></a></li>
-	<li><a href="<?php echo wp_nonce_url( admin_url( 'admin-ajax.php?action=eme_get_mail_archive_div' ), 'eme_admin', 'eme_admin_nonce' ); ?>"><?php esc_html_e( 'Mailings archive', 'events-made-easy' ); ?></a></li>
-	<li><a href="#tab-sentmail"><?php esc_html_e( 'Sent emails', 'events-made-easy' ); ?></a></li>
-	<li><a href="#tab-testmail"><?php esc_html_e( 'Test email', 'events-made-easy' ); ?></a></li>
-	</ul>
-	<div id="tab-eventmails">
+<div class="eme-tabs" <?php echo $data_forced_tab; ?>>
+	<div class="eme-tab" data-tab="tab-eventmails"><?php esc_html_e( 'Event related email', 'events-made-easy' ); ?></div>
+	<div class="eme-tab" data-tab="tab-genericmails"><?php esc_html_e( 'Generic email', 'events-made-easy' ); ?></div>
+	<div class="eme-tab" data-tab="tab-mailings"><?php esc_html_e( 'Mailings', 'events-made-easy' ); ?></div>
+	<div class="eme-tab" data-tab="tab-mailingsarchive"><?php esc_html_e( 'Mailings archive', 'events-made-easy' ); ?></div>
+	<div class="eme-tab" data-tab="tab-sentmail"><?php esc_html_e( 'Sent emails', 'events-made-easy' ); ?></div>
+	<div class="eme-tab" data-tab="tab-testmail"><?php esc_html_e( 'Test email', 'events-made-easy' ); ?></div>
+</div>
+	<div class="eme-tab-content" id="tab-mailings">
+		<?php eme_mailings_div(); ?>
+	</div>
+	<div class="eme-tab-content" id="tab-mailingsarchive">
+		<?php eme_mailings_archive_div(); ?>
+	</div>
+	<div class="eme-tab-content" id="tab-eventmails">
 	<h1><?php esc_html_e( 'Send event related emails', 'events-made-easy' ); ?></h1>
 	<form id='send_mail' name='send_mail' action="#" method="post" onsubmit="return false;">
 	<div id='send_event_mail_div'>
@@ -2433,7 +2438,7 @@ function eme_emails_page() {
 	<div id="eventmail-message" style="display:none;" ></div>
 	</div>
 
-	<div id="tab-genericmails">
+	<div class="eme-tab-content" id="tab-genericmails">
 	<h1><?php esc_html_e( 'Send generic emails', 'events-made-easy' ); ?></h1>
 	<?php esc_html_e( "Use the below form to send a generic mail. Don't forget to use the #_UNSUB_URL for unsubscribe possibility.", 'events-made-easy' ); ?>
 	<form id='send_generic_mail' name='send_generic_mail' action="#" method="post" onsubmit="return false;">
@@ -2611,7 +2616,7 @@ function eme_emails_page() {
 	<div id="genericmail-message" style="display:none;" ></div>
 	</div>
 
-	<div id="tab-sentmail">
+	<div class="eme-tab-content" id="tab-sentmail" style="overflow: auto;">
 	<h1><?php esc_html_e( 'Sent emails', 'events-made-easy' ); ?></h1>
 	<div class='eme-message-admin'><p>
 	<?php 
@@ -2632,7 +2637,7 @@ function eme_emails_page() {
 	<br>
 	<div id="searchmail-message" style="display:none;" ></div>
 	</div>
-	<div id="tab-testmail">
+	<div class="eme-tab-content" id="tab-testmail">
 	<h1><?php esc_html_e( 'Test mail settings', 'events-made-easy' ); ?></h1>
 	<div id="testmail-message" style="display:none;" ></div>
 	<?php esc_html_e( 'Use the below form to send a test mail', 'events-made-easy' ); ?>
@@ -2642,15 +2647,12 @@ function eme_emails_page() {
 	<button id='testmailButton' class="button-primary action"> <?php esc_html_e( 'Send Email', 'events-made-easy' ); ?></button>
 	</form>
 	</div>
-</div> <!-- mail-tabs -->
 
 </div> <!-- wrap -->
 	<?php
 }
 
-add_action( 'wp_ajax_eme_get_mailings_div', 'eme_ajax_mailings_div' );
-function eme_ajax_mailings_div() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+function eme_mailings_div() {
 	if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
 		print "<div class='eme-message-admin'><p>";
 		esc_html_e( 'Access denied!', 'events-made-easy' );
@@ -2781,12 +2783,9 @@ function eme_ajax_mailings_div() {
 		print '</tr>';
 	}
 	print '</tbody></table></form>';
-	wp_die();
 }
 
-add_action( 'wp_ajax_eme_get_mail_archive_div', 'eme_ajax_mail_archive_div' );
-function eme_ajax_mail_archive_div() {
-	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+function eme_mailings_archive_div() {
 	if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
 		print "<div class='eme-message-admin'><p>";
 		esc_html_e( 'Access denied!', 'events-made-easy' );
@@ -2851,7 +2850,6 @@ function eme_ajax_mail_archive_div() {
 		print '</tr>';
 	}
 	print '</tbody></table></form>';
-	wp_die();
 }
 
 function eme_get_default_mailer_info() {

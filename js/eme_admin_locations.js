@@ -316,39 +316,23 @@ jQuery(document).ready(function ($) {
 		$('#location_remove_image_button' ).hide();
 		$('#eme_location_image_example' ).hide();
 	}
+	if ($('#locationForm').length) {
+		// the validate plugin can take other tabs/hidden fields into account
+		$('#locationForm').validate({
+			// ignore: false is added so the fields of tabs that are not visible when editing an event are evaluated too
+			ignore: false,
+			focusCleanup: true,
+			errorClass: "eme_required",
+			invalidHandler: function(e,validator) {
+				$.each(validator.invalid, function(key, value) {
+					// get the closest tabname
+					var tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
+					activateTab(tabname);
+					// break the loop, we only want to switch to the first tab with the error
+					return false;
+				});
+			}
+		});
+	}
 
-
-   if ($('#location-tabs').length) {
-	   // initially the div is not shown using display:none, so jquery has time to render it and then we call show()
-	   $('#location-tabs').tabs();
-	   $('#location-tabs').show();
-	   $('#location-tabs').on( 'tabsactivate', function( event, ui ) {
-		   // we call both functions to show the map, only 1 will work (either the select-based or the other) depending on the form shown
-		   if (ui.newPanel.attr('id') == 'tab-locationdetails') {
-			   // We need to call it here, because otherwise the map initially doesn't render correctly due to hidden tab div etc ...
-			   if(emelocations.translate_map_is_active === 'true') {
-				   eme_SelectdisplayAddress();
-				   eme_displayAddress(0);
-			   }
-		   }
-	   });
-	   // the validate plugin can take other tabs/hidden fields into account
-	   $('#locationForm').validate({
-                   // ignore: false is added so the fields of tabs that are not visible when editing an event are evaluated too
-		   ignore: false,
-		   focusCleanup: true,
-		   errorClass: "eme_required",
-		   invalidHandler: function(e,validator) {
-			   $.each(validator.invalid, function(key, value) {
-				   // get the closest tabname
-                                   var tabname=$('[name='+key+']').closest('.ui-tabs-panel').attr('id');
-                                   // activate the tab that has the error
-                                   var tabindex = $('#location-tabs a[href="#'+tabname+'"]').parent().index();
-                                   $("#location-tabs").tabs("option", "active", tabindex);
-                                   // break the loop, we only want to switch to the first tab with the error
-                                   return false;
-			   });
-		   }
-	   });
-   }
 });

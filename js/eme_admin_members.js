@@ -554,10 +554,7 @@ jQuery(document).ready(function ($) {
 	updateShowHideOffline();
 
 	// initially the div is not shown using display:none, so jquery has time to render it and then we call show()
-	if ($('#membership-tabs').length) {
-		$('#membership-tabs').tabs();
-		$('#membership-tabs').show();
-		// the validate plugin can take other tabs/hidden fields into account
+	if ($('#membershipForm').length) {
 		$('#membershipForm').validate({
 			// ignore: false is added so the fields of tabs that are not visible when editing an event are evaluated too
 			ignore: false,
@@ -566,16 +563,13 @@ jQuery(document).ready(function ($) {
 			invalidHandler: function(e,validator) {
 				$.each(validator.invalid, function(key, value) {
 					// get the closest tabname
-					var tabname=$('[name='+key+']').closest('.ui-tabs-panel').attr('id');
-					// activate the tab that has the error
-					var tabindex = $('#membership-tabs a[href="#'+tabname+'"]').parent().index();
-					$("#membership-tabs").tabs("option", "active", tabindex);
-					// break the loop, we only want to switch to the first tab with the error
-					return false;
+                                        var tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
+                                        activateTab(tabname);
+                                        // break the loop, we only want to switch to the first tab with the error
+                                        return false;
 				});
 			}
 		});
-
 	}
 
 	// for autocomplete to work, the element needs to exist, otherwise JS errors occur

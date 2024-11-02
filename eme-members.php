@@ -1859,22 +1859,20 @@ function eme_membership_edit_layout( $membership, $message = '' ) {
 		<div id="poststuff">
 		<div id="post-body" class="metabox-holder">
 			<div id="post-body-content">
-				<div id="membership-tabs" style="display: none;">
-					<ul>
-					<li><a href="#tab-membershipdetails"><?php esc_html_e( 'Membership details', 'events-made-easy' ); ?></a></li>
-					<li><a href="#tab-mailformats"><?php esc_html_e( 'Mail format settings', 'events-made-easy' ); ?></a></li>
-					<li><a href="#tab-customfields"><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></a></li>
-					</ul>
-					<div id="tab-membershipdetails">
+				<div class="eme-tabs">
+					<div class="eme-tab" data-tab="tab-membershipdetails"><?php esc_html_e( 'Membership details', 'events-made-easy' ); ?></div>
+					<div class="eme-tab" data-tab="tab-mailformats"><?php esc_html_e( 'Mail format settings', 'events-made-easy' ); ?></div>
+					<div class="eme-tab" data-tab="tab-customfields"><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></div>
+				</div>
+				<div class="eme-tab-content" id="tab-membershipdetails">
 					<?php eme_meta_box_div_membershipdetails( $membership, $is_new_membership ); ?>
-					</div>
-					<div id="tab-mailformats">
+				</div>
+				<div class="eme-tab-content" id="tab-mailformats">
 					<?php eme_meta_box_div_membershipmailformats( $membership ); ?>
-					</div>
-					<div id="tab-customfields">
+				</div>
+				<div class="eme-tab-content" id="tab-customfields">
 					<?php eme_meta_box_div_membershipcustomfields( $membership ); ?>
-					</div>
-				</div> <!-- end membership-tabs -->
+				</div>
 				<p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $is_new_membership == 1 ) { esc_html_e( 'Add membership', 'events-made-easy' ); } else { esc_html_e( 'Update membership', 'events-made-easy' ); } ?>"></p>
 			</div>
 		</div>

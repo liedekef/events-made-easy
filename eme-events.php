@@ -6288,23 +6288,22 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 				<?php
 				$templates_array = eme_get_templates_array_by_id( 'event' );
 				?>
-<div id="event-tabs" style="display: none;">
-	<ul>
-	<li><a href="#tab-eventdetails"><?php esc_html_e( 'Event', 'events-made-easy' ); ?></a></li>
-	<li><a href="#tab-locationdetails"><?php esc_html_e( 'Location', 'events-made-easy' ); ?></a></li>
+<div class="eme-tabs">
+	<div class="eme-tab" data-tab="tab-eventdetails"><?php esc_html_e( 'Event', 'events-made-easy' ); ?></div>
+	<div class="eme-tab" data-tab="tab-locationdetails"><?php esc_html_e( 'Location', 'events-made-easy' ); ?></div>
 	<?php if ( get_option( 'eme_rsvp_enabled' ) ) : ?>
-	<li><a href="#tab-rsvp"><?php esc_html_e( 'RSVP', 'events-made-easy' ); ?></a></li>
+	<div class="eme-tab" data-tab="tab-rsvp"><?php esc_html_e( 'RSVP', 'events-made-easy' ); ?></div>
 	<?php endif; ?>
 	<?php if ( get_option( 'eme_tasks_enabled' ) ) : ?>
-	<li><a href="#tab-tasks"><?php esc_html_e( 'Tasks', 'events-made-easy' ); ?></a></li>
+	<div class="eme-tab" data-tab="tab-tasks"><?php esc_html_e( 'Tasks', 'events-made-easy' ); ?></div>
 	<?php endif; ?>
-	<li><a href="#tab-todos"><?php esc_html_e( 'Todos', 'events-made-easy' ); ?></a></li>
+	<div class="eme-tab" data-tab="tab-todos"><?php esc_html_e( 'Todos', 'events-made-easy' ); ?></div>
 	<?php if ( get_option( 'eme_attributes_enabled' ) ) : ?>
-	<li><a href="#tab-eventattributes"><?php esc_html_e( 'Attributes', 'events-made-easy' ); ?></a></li>
+	<div class="eme-tab" data-tab="tab-eventattributes"><?php esc_html_e( 'Attributes', 'events-made-easy' ); ?></div>
 	<?php endif; ?>
-	<li><a href="#tab-eventcustomfields"><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></a></li>
-	</ul>
-	<div id="tab-eventdetails">
+	<div class="eme-tab" data-tab="tab-eventcustomfields"><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></div>
+</div>
+	<div class="eme-tab-content" id="tab-eventdetails">
 	<?php
 	eme_meta_box_div_event_name( $event, $edit_recurrence );
 	eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence );
@@ -6316,14 +6315,14 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	eme_meta_box_div_event_url( $event );
 	?>
 	</div>
-	<div id="tab-locationdetails">
+	<div class="eme-tab-content" id="tab-locationdetails">
 	<?php
 	eme_meta_box_div_event_location( $event );
 	?>
 	</div>
 
 	<?php if ( get_option( 'eme_rsvp_enabled' ) ) : ?>
-	<div id="tab-rsvp">
+	<div class="eme-tab-content" id="tab-rsvp">
 		<?php eme_meta_box_div_event_rsvp_enabled( $event ); ?>
 		<div id='rsvp-details'>
 		<?php
@@ -6405,7 +6404,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	<?php
 	if ( get_option( 'eme_tasks_enabled' ) ) :
 		?>
-	<div id="tab-tasks">
+	<div class="eme-tab-content" id="tab-tasks">
 	<div class="inside">
 		<p id='p_tasks'>
 		<?php echo eme_ui_checkbox_binary( $event['event_tasks'], 'event_tasks', __( 'Enable tasks for this event', 'events-made-easy' ) ); ?>
@@ -6414,7 +6413,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		<?php  esc_html_e( "Tasks can be used to rally volunteers to help with an event (e.g. 5 people behind the bar per shift, cleanup duty, ...) or to allow people to subscribe for a certain timeframe for an event (appointment-like). While you can impose limits and ask for confirmation for tasks, there is no price per task so no payment is possible upon subscribing for a task.", 'events-made-easy' ); ?>
 		</p>
 	</div>
-	<div id="tab-tasks-container">
+	<div class="eme-tab-content" id="tab-tasks-container">
 	<h3><?php esc_html_e( 'Tasks', 'events-made-easy' ); ?></h3>
 	<details class="eme_accordion">
 	<summary><?php esc_html_e( 'List of tasks', 'events-made-easy' ); ?></summary>
@@ -6461,7 +6460,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	</div>
 	<?php endif; ?>
 
-	<div id="tab-todos">
+	<div class="eme-tab-content" id="tab-todos">
 	<div class="inside">
 		<p id='p_todos'>
 		<?php echo eme_ui_checkbox_binary( $event['event_todos'], 'event_todos', __( 'Enable todos for this event', 'events-made-easy' ) ); ?>
@@ -6480,18 +6479,17 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	</div>
 
 	<?php if ( get_option( 'eme_attributes_enabled' ) ) : ?>
-	<div id="tab-eventattributes">
+	<div class="eme-tab-content" id="tab-eventattributes">
 		<?php
 		eme_meta_box_div_event_attributes( $event );
 		?>
 	</div>
 	<?php endif; ?>
-	<div id="tab-eventcustomfields">
+	<div class="eme-tab-content" id="tab-eventcustomfields">
 	<?php
 	eme_meta_box_div_event_customfields( $event );
 	?>
 	</div>
-</div> <!-- end event-tabs -->
 
 				<p class="submit">
 					<?php if ( $is_new_event ) { ?>
@@ -9528,6 +9526,7 @@ function eme_admin_enqueue_js() {
 			'translate_setimg'             => __( 'Set image', 'events-made-easy' ),
 			'translate_chooseimg'          => __( 'Choose image', 'events-made-easy' ),
 			'translate_replaceimg'         => __( 'Replace image', 'events-made-easy' ),
+			'translate_map_is_active'      => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
 		];
 		wp_localize_script( 'eme-basic', 'emebasic', $translation_array );
 		wp_enqueue_script( 'eme-basic' );

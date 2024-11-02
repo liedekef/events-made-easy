@@ -386,15 +386,14 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 		<div id="post-body" class="metabox-holder columns-2">
 			<!-- MAIN -->
 			<div id="post-body-content">
-<div id="location-tabs" style="display: none;">
-	<ul>
-	<li><a href="#tab-locationdetails"><?php esc_html_e( 'Location', 'events-made-easy' ); ?></a></li>
+	<div class="eme-tabs">
+        <div class="eme-tab" data-tab="tab-locationdetails"><?php esc_html_e( 'Location', 'events-made-easy' ); ?></div>
 	<?php if ( get_option( 'eme_attributes_enabled' ) ) : ?>
-	<li><a href="#tab-locationattributes"><?php esc_html_e( 'Attributes', 'events-made-easy' ); ?></a></li>
+        <div class="eme-tab" data-tab="tab-locationattributes"><?php esc_html_e( 'Attributes', 'events-made-easy' ); ?></div>
 	<?php endif; ?>
-	<li><a href="#tab-locationcustomfields"><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></a></li>
-	</ul>
-	<div id="tab-locationdetails">
+        <div class="eme-tab" data-tab="tab-locationcustomfields"><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></div>
+	</div>
+	<div class="eme-tab-content" id="tab-locationdetails">
 	<?php
 	eme_meta_box_div_location_name( $location );
 	eme_meta_box_div_location_details( $location );
@@ -404,18 +403,18 @@ function eme_locations_edit_layout( $location, $message = '' ) {
 	?>
 	</div>
 	<?php if ( get_option( 'eme_attributes_enabled' ) ) : ?>
-	<div id="tab-locationattributes">
+	<div class="eme-tab-content" id="tab-locationattributes">
 		<?php
 		eme_meta_box_div_location_attributes( $location );
 		?>
 	</div>
 	<?php endif; ?>
-	<div id="tab-locationcustomfields">
+	<div class="eme-tab-content" id="tab-locationcustomfields">
 	<?php
 	eme_meta_box_div_location_customfields( $location );
 	?>
 	</div>
-</div> <!-- end location-tabs -->
+
 <p class="submit"><input type="submit" class="button-primary" name="submit" value="<?php if ( $action == 'add' ) { esc_html_e( 'Add location', 'events-made-easy' ); } else { esc_html_e( 'Update location', 'events-made-easy' ); } ?>"></p>
 </div>
 <!-- END OF MAIN -->
@@ -490,6 +489,9 @@ function eme_meta_box_div_location_name( $location ) {
 	echo "<input type='hidden' id='location_id' name='location_id' value='" . intval( $location['location_id'] ) . "'>";
 	?>
 <div id="titlediv">
+	<?php if ( $action == 'edit' ) { ?>
+		<b> <?php esc_html_e( 'Location name: ', 'events-made-easy' ); ?></b>
+	<?php } ?>
 	<input name="location_name" id="location_name" type="text" required="required" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" value="<?php echo esc_html( $location['location_name'] ); ?>" size="40">
 	<br>
 	<br>

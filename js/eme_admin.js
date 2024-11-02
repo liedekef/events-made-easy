@@ -6,7 +6,32 @@ function areyousure(message) {
    }
 }
 
+function activateTab(target) {
+	jQuery('.eme-tab').removeClass('active');
+	jQuery('.eme-tab-content').removeClass('active');
+
+	jQuery(`.eme-tab[data-tab="${target}"]`).addClass('active');
+	jQuery(`#${target}`).addClass('active');
+}
 jQuery(document).ready( function($) {
+	$('.eme-tab').on('click', function() {
+		activateTab($(this).data('tab'));
+		// we execute this code when the location details become active
+		if ($(this).data('tab') == "tab-locationdetails") {
+			eme_SelectdisplayAddress();
+			eme_displayAddress(0);
+		}
+	});
+
+	if ($('.eme-tabs').length) {
+		// Activate tab based on anchor
+		const preferredtab = $('.eme-tabs').data('showtab');
+		if (preferredtab) {
+			activateTab(preferredtab);
+		} else {
+			activateTab($('.eme-tab').first().data('tab')); // Default tab
+		}
+	}
 
 	// let's set the default size to match placeholders if present
         $("input[placeholder]").each(function () {

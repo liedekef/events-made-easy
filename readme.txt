@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.15 (2024//) =
 * Replaced the use of jquery-ui-tabs and jquery-ui-accordion by regular html5, css and a little bit of JS. This should speed up things
+* Removed the use of jquery-ui-dialog in the frontend. Once jtable no longer needs it, it will be removed in the backend too
 
 = 2.5.14 (2024/10/26) =
 * Bulk action to task signups added to send reminders

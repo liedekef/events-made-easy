@@ -350,7 +350,6 @@ function eme_register_scripts() {
 		'translate_clear'              => __( 'Clear', 'events-made-easy' ),
 		'translate_mailingpreferences' => __( 'Mailing preferences', 'events-made-easy' ),
 		'translate_yessure'            => __( "Yes, I'm sure", 'events-made-easy' ),
-		'translate_iwantmails'         => __( 'I want to receive mails', 'events-made-easy' ),
 		'translate_firstDayOfWeek'     => get_option( 'start_of_week' ),
 		'translate_fs_wysiwyg'         => $eme_fs_options['use_wysiwyg']? 'true': 'false',
 		'translate_flanguage'          => $language,
@@ -427,9 +426,6 @@ function eme_enqueue_frontend() {
 		}
 		// for english, no translation code is needed)
 		wp_enqueue_script( 'eme-basic' );
-		if ( get_option( 'eme_massmail_popup' ) ) {
-			wp_enqueue_script( 'jquery-ui-dialog' );
-		}
 		wp_enqueue_style( 'eme-jquery-ui-css', EME_PLUGIN_URL . 'css/jquery-ui-theme-smoothness-1.11.3/jquery-ui.min.css', [], EME_VERSION );
 		wp_enqueue_style( 'eme-jquery-ui-autocomplete', EME_PLUGIN_URL . 'css/jquery.autocomplete.css', [], EME_VERSION );
 		wp_enqueue_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css', [], EME_VERSION );

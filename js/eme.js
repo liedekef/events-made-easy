@@ -137,28 +137,6 @@ jQuery(document).ready( function($) {
                 $(this).removeClass('x onX').val('').change();
         });
 
-	if ($('#MassMailDialog').length) {
-	     $('#MassMailDialog').dialog({
-		autoOpen: false,
-		modal: true,
-		minWidth: 200,
-		title: emebasic.translate_mailingpreferences,
-		buttons: [
-			{ text: emebasic.translate_yessure,
-			  click: function() {
-				$(this).dialog('close');
-			  }
-			},
-			{ text: emebasic.translate_iwantmails,
-			  click: function() {
-				$('#massmail').val(1);
-				$(this).dialog('close');
-			  }
-			}
-			]
-	     });
-	}
-
 	function eme_genericform_json(form_id,form_name,ajax_action) {
 		$('#'+form_id).find('#loading_gif').show();
 		$('#'+form_id).find(':submit').hide();
@@ -733,11 +711,20 @@ jQuery(document).ready( function($) {
 	$('[name=eme-rsvp-form]').on('submit', function(event) {
 		event.preventDefault();
 		var form_id=$(this).attr('id');
-		if ($(this).find('#massmail').length && $(this).find('#massmail').val()!=1 && $(this).find('#MassMailDialog').hasClass('ui-dialog-content')) {
-			$(this).find('#MassMailDialog').dialog( "open" );
-			$(this).find('#MassMailDialog').on('dialogclose', function(event, ui) {
+		if ($(this).find('#massmail').length && $(this).find('#massmail').val()!=1 && $(this).find('#MassMailDialog').length) {
+			var dialog = $('#MassMailDialog')[0];
+			dialog.showModal();
+
+			$('#dialog-confirm').on('click', function(e) {
+				e.preventDefault();
+				dialog.close();
 				eme_add_booking_json(form_id);
-			});	
+			});
+
+			$('#dialog-cancel').on('click', function(e) {
+				e.preventDefault();
+				dialog.close();
+			});
 		} else {
 			eme_add_booking_json(form_id);
 		}
@@ -745,11 +732,20 @@ jQuery(document).ready( function($) {
 	$('[name=eme-member-form]').on('submit', function(event) {
 		event.preventDefault();
 		var form_id=$(this).attr('id');
-		if ($(this).find('#massmail').length && $(this).find('#massmail').val()!=1 && $(this).find('#MassMailDialog').hasClass('ui-dialog-content')) {
-			$(this).find('#MassMailDialog').dialog( "open" );
-			$(this).find('#MassMailDialog').on('dialogclose', function(event, ui) {
+		if ($(this).find('#massmail').length && $(this).find('#massmail').val()!=1 && $(this).find('#MassMailDialog').length) {
+			var dialog = $('#MassMailDialog')[0];
+			dialog.showModal();
+
+			$('#dialog-confirm').on('click', function(e) {
+				e.preventDefault();
+				dialog.close();
 				eme_add_member_json(form_id);
-			});	
+			});
+
+			$('#dialog-cancel').on('click', function(e) {
+				e.preventDefault();
+				dialog.close();
+			});
 		} else {
 			eme_add_member_json(form_id);
 		}

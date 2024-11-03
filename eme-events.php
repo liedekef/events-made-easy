@@ -9516,7 +9516,6 @@ function eme_admin_enqueue_js() {
 			'translate_error'              => __( 'An error has occurred', 'events-made-easy' ),
 			'translate_mailingpreferences' => __( 'Mailing preferences', 'events-made-easy' ),
 			'translate_yessure'            => __( "Yes, I'm sure", 'events-made-easy' ),
-			'translate_iwantmails'         => __( 'I want to receive mails', 'events-made-easy' ),
 			'translate_firstDayOfWeek'     => get_option( 'start_of_week' ),
 			'translate_flanguage'          => $language,
 			'translate_minutesStep'        => get_option( 'eme_timepicker_minutesstep' ),

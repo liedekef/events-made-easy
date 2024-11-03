@@ -9526,7 +9526,6 @@ function eme_admin_enqueue_js() {
 			'translate_setimg'             => __( 'Set image', 'events-made-easy' ),
 			'translate_chooseimg'          => __( 'Choose image', 'events-made-easy' ),
 			'translate_replaceimg'         => __( 'Replace image', 'events-made-easy' ),
-			'translate_map_is_active'      => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
 		];
 		wp_localize_script( 'eme-basic', 'emebasic', $translation_array );
 		wp_enqueue_script( 'eme-basic' );
@@ -9549,6 +9548,7 @@ function eme_admin_enqueue_js() {
 			'translate_minutesStep'                => get_option( 'eme_timepicker_minutesstep' ),
 			'translate_fdateformat'                => EME_WP_DATE_FORMAT,
 			'translate_ftimeformat'                => EME_WP_TIME_FORMAT,
+			'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
 		];
 		wp_localize_script( 'eme-admin', 'emeadmin', $translation_array );
 		wp_enqueue_script( 'eme-admin' );

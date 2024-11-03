@@ -13,18 +13,18 @@ function activateTab(target) {
 	jQuery(`.eme-tab[data-tab="${target}"]`).addClass('active');
 	jQuery(`#${target}`).addClass('active');
 }
+
 jQuery(document).ready( function($) {
 	$('.eme-tab').on('click', function() {
 		activateTab($(this).data('tab'));
-		// we execute this code when the location details become active
-		if ($(this).data('tab') == "tab-locationdetails") {
+		if ($(this).data('tab') == "tab-locationdetails" && emeadmin.translate_map_is_active === 'true') {
 			eme_SelectdisplayAddress();
 			eme_displayAddress(0);
 		}
 	});
 
 	if ($('.eme-tabs').length) {
-		// Activate tab based on anchor
+		// Activate tab based on data
 		const preferredtab = $('.eme-tabs').data('showtab');
 		if (preferredtab) {
 			activateTab(preferredtab);

@@ -38,7 +38,7 @@ function eme_add_booking_form( $event_id, $only_if_not_registered = 0 ) {
 	return eme_add_multibooking_form( $event_ids, 0, 0, 0, 0, 0, $is_multibooking, $only_if_not_registered );
 }
 
-function eme_add_multibooking_form( $events, $template_id_header = 0, $template_id_entry = 0, $multiprice_template_id_entry = 0, $template_id_footer = 0, $eme_register_empty_seats = 0, $is_multibooking = 1, $only_if_not_registered = 0, $only_one_event = 0, $only_one_seat = 0, $simple = 0 ) {
+function eme_add_multibooking_form( $events, $template_id_header = 0, $template_id_entry = 0, $multiprice_template_id_entry = 0, $template_id_footer = 0, $eme_register_empty_seats = 0, $is_multibooking = 1, $only_if_not_registered = 0, $only_one_event = 0, $only_one_seat = 0, $simple = 0, $all_events = 0 ) {
 	
 	// we need template ids
 	$format_entry            = '';
@@ -147,6 +147,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 				return $form_html;
 			}
 		}
+
 		if (! is_user_logged_in() && get_option('eme_rememberme')) {
 			wp_enqueue_script( 'eme-rememberme' );
 			$form_class = "class='eme-rememberme'";
@@ -247,8 +248,12 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 					$form_html .= "<option value='$event_id'>" . eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event ) . '</option>';
 				}
 			} elseif ( $is_multibooking && $simple ) {
-				$value      = eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event );
-				$form_html .= "<input type='checkbox' name='eme_event_ids[]' id='eme_event_ids_{$event_id}' value='$event_id'> <label for='eme_event_ids_{$event_id}'>" . eme_esc_html( $value ) . '</label>';
+				if ($all_events) {
+					$form_html .= "<input type='hidden' name='eme_event_ids[]' value='$event_id'>";
+				} else {
+				        $value      = eme_replace_event_placeholders( $event_booking_format_entry, $tmp_event );
+					$form_html .= "<input type='checkbox' name='eme_event_ids[]' id='eme_event_ids_{$event_id}' value='$event_id'> <label for='eme_event_ids_{$event_id}'>" . eme_esc_html( $value ) . '</label>';
+				}
 			} else {
 				$form_html .= "<input type='hidden' name='eme_event_ids[]' value='$event_id'>";
 			}
@@ -308,6 +313,7 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 			'register_empty_seats'   => 0,
 			'only_if_not_registered' => 0,
 			'only_one_event'         => 0,
+			'all_events'             => 0,
 			'only_one_seat'          => 0,
 			'scope'                  => '',
 			'order'                  => 'ASC',
@@ -319,6 +325,7 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 	$only_if_not_registered = filter_var( $atts['only_if_not_registered'], FILTER_VALIDATE_BOOLEAN );
 	$only_one_event         = filter_var( $atts['only_one_event'], FILTER_VALIDATE_BOOLEAN );
 	$only_one_seat          = filter_var( $atts['only_one_seat'], FILTER_VALIDATE_BOOLEAN );
+	$all_events             = filter_var( $atts['all_events'], FILTER_VALIDATE_BOOLEAN );
 	$ids                    = explode( ',', $atts['id'] );
 
 	if ( ! empty( $atts['recurrence_id'] ) ) {
@@ -331,7 +338,7 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 	}
 
 	if ( ! empty( $events ) ) {
-		return eme_add_multibooking_form( $events, $atts['template_id_header'], $atts['template_id'], 0, $atts['template_id_footer'], $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, 1 );
+		return eme_add_multibooking_form( $events, $atts['template_id_header'], $atts['template_id'], 0, $atts['template_id_footer'], $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, 1, $all_events );
 	}
 	return '';
 }
@@ -354,6 +361,7 @@ function eme_add_multibooking_form_shortcode( $atts ) {
 			'scope'                  => '',
 			'order'                  => 'ASC',
 			'simple'                 => 0,
+			'all_events'             => 0,
 		],
 		$atts
 	);
@@ -363,6 +371,7 @@ function eme_add_multibooking_form_shortcode( $atts ) {
 	$only_one_event         = filter_var( $atts['only_one_event'], FILTER_VALIDATE_BOOLEAN );
 	$only_one_seat          = filter_var( $atts['only_one_seat'], FILTER_VALIDATE_BOOLEAN );
 	$simple                 = filter_var( $atts['simple'], FILTER_VALIDATE_BOOLEAN );
+	$all_events             = filter_var( $atts['all_events'], FILTER_VALIDATE_BOOLEAN );
 	$ids                    = explode( ',', $atts['id'] );
 
 	if ( ! empty( $atts['recurrence_id'] ) ) {
@@ -375,7 +384,7 @@ function eme_add_multibooking_form_shortcode( $atts ) {
 	}
 
 	if ( ! empty( $events ) ) {
-		return eme_add_multibooking_form( $events, $atts['template_id_header'], $atts['template_id'], $atts['multiprice_template_id'], $atts['template_id_footer'], $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, $simple );
+		return eme_add_multibooking_form( $events, $atts['template_id_header'], $atts['template_id'], $atts['multiprice_template_id'], $atts['template_id_footer'], $register_empty_seats, 1, $only_if_not_registered, $only_one_event, $only_one_seat, $simple, $all_events );
 	}
 	return '';
 }

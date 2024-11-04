@@ -437,9 +437,9 @@ function eme_task_signups_table_layout( $message = '' ) {
 	<?php if (isset($_GET['event_id'])) { ?>
 		<input type="hidden" name="search_eventid" id="search_eventid" value="<?php echo intval($_GET['event_id']);?>">
 	<?php } else { ?>
-		<input type="text" class="clearable" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Task name', 'events-made-easy' ); ?>" size=20>
-		<input type="text" class="clearable" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" size=20>
-		<input type="text" class="clearable" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=20>
+		<input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Task name', 'events-made-easy' ); ?>" size=20>
+		<input type="search" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" size=20>
+		<input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=20>
 		<select id="search_scope" name="search_scope">
 		<?php
 		$scope_names           = [];

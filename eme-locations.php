@@ -872,7 +872,7 @@ function eme_locations_table( $message = '' ) {
 	<?php
 	$formfields_searchable = eme_get_searchable_formfields( 'locations' );
 	if ( ! empty( $formfields_searchable ) ) {
-		echo '<input type="text" class="clearable" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
+		echo '<input type="search" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
 		$label = __( 'Custom fields to filter on', 'events-made-easy' );
                 $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
 		echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2', $extra_attributes, 1 );

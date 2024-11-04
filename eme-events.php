@@ -5978,7 +5978,7 @@ function eme_events_table( $message = '' ) {
 	}
 	?>
 	</select>
-	<input type="text" class="clearable" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" size=10>
+	<input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" size=10>
 	<input id="search_start_date" type="hidden" name="search_start_date" value="">
 	<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate'>
 	<input id="search_end_date" type="hidden" name="search_end_date" value="">
@@ -5998,7 +5998,7 @@ function eme_events_table( $message = '' ) {
 		}
 		?>
 	</select>
-        <input type="text" name="search_location" id="search_location" placeholder="<?php esc_attr_e( 'Filter on location', 'events-made-easy' ); ?>" size=15>
+        <input type="search" name="search_location" id="search_location" placeholder="<?php esc_attr_e( 'Filter on location', 'events-made-easy' ); ?>" size=15>
 	<?php
 	$formfields_searchable = eme_get_searchable_formfields( 'events' );
 	if ( ! empty( $formfields_searchable ) ) {
@@ -10146,6 +10146,7 @@ function eme_ajax_events_list() {
 	        $location_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
 		$query = "SELECT location_id FROM $location_table WHERE location_name LIKE '%$search_location%'";
 		$location_ids_arr = $wpdb->get_col( $query );
+		$location_ids = -1;
 		if (!empty($location_ids_arr)) {
 			$location_ids = join(',',$location_ids_arr);
 		}

@@ -220,7 +220,7 @@ function eme_formfields_table_layout( $message = '' ) {
 	<form action="#" method="post">
 	<?php echo eme_ui_select( '', 'search_type', $field_types, __( 'Any', 'events-made-easy' ) ); ?>
 	<?php echo eme_ui_select( '', 'search_purpose', $field_purposes, __( 'Any', 'events-made-easy' ) ); ?>
-	<input type="text" name="search_name" id="search_name" placeholder="<?php esc_html_e( 'Field name', 'events-made-easy' ); ?>" size=10>
+	<input type="search" name="search_name" id="search_name" placeholder="<?php esc_html_e( 'Field name', 'events-made-easy' ); ?>" size=10>
 	<button id="FormfieldsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter fields', 'events-made-easy' ); ?></button>
 	</form>
 

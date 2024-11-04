@@ -1898,7 +1898,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 	} else {
 		$value = '';
 	}
-	echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
+	echo '<input type="search" value="' . esc_attr($value) . '" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
 
 	if ($limit_to_group) {
 		echo '<input type="hidden" name="search_groups" id="'.$id_prefix.'search_groups" value="' . esc_attr($limit_to_group) . '">';
@@ -1944,7 +1944,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 		} else {
 			$value = '';
 		}
-		echo '<input type="text" value="' . esc_attr($value) . '" class="clearable" name="search_customfields" id="'.$id_prefix.'search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
+		echo '<input type="search" value="' . esc_attr($value) . '" name="search_customfields" id="'.$id_prefix.'search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
 
 		if ( $edit_group ) {
 			echo '</td></tr><tr><td>' . esc_html__( 'Custom field to search', 'events-made-easy' ) . '</td><td>';

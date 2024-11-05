@@ -7230,8 +7230,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 		$recurrence_start_date = $recurrence['recurrence_start_date'];
 	}
 	?>
-<div id="div_recurrence_date" style="background-color: lightgrey;">
-	<br>
+<div id="div_recurrence_date" style="background-color: lightgrey; padding: 5px;">
 	<b><?php esc_html_e( 'Recurrence dates', 'events-made-easy' ); ?></b>
 	<input id="rec-start-date-to-submit" type="hidden" name="recurrence_start_date" value="">
 	<input id="localized-rec-start-date" type="text" name="localized_recurrence_date" value="" style="background: #FCFFAA;" readonly="readonly" data-date='<?php echo eme_js_datetime( $recurrence_start_date ); ?>' data-alt-field='rec-start-date-to-submit' class='eme_formfield_fdate'>

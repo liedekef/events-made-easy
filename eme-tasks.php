@@ -964,13 +964,13 @@ function eme_tasks_signups_shortcode( $atts ) {
 
 	if ( ! $atts['ignore_filter'] && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
 		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
-			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
+			$atts['scope'] = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
 		}
 		if ( ! empty( $_REQUEST['eme_author_filter'] ) && intval( $_REQUEST['eme_author_filter'] ) > 0 ) {
-			$author = intval( $_REQUEST['eme_author_filter'] );
+			$atts['author'] = intval( $_REQUEST['eme_author_filter'] );
 		}
 		if ( ! empty( $_REQUEST['eme_contact_filter'] ) && intval( $_REQUEST['eme_contact_filter'] ) > 0 ) {
-			$contact_person = intval( $_REQUEST['eme_contact_filter'] );
+			$atts['contact_person'] = intval( $_REQUEST['eme_contact_filter'] );
 		}
 		if ( ! empty( $_REQUEST['eme_loc_filter'] ) ) {
 			if ( is_array( $_REQUEST['eme_loc_filter'] ) ) {
@@ -982,7 +982,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 				$location_id_arr[] = eme_sanitize_request( $_REQUEST['eme_loc_filter'] );
 			}
 			if ( empty( $location_id_arr ) ) {
-				$location_id = -1;
+				$atts['location_id'] = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_city_filter'] ) ) {
@@ -994,7 +994,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-				$location_id = -1;
+				$atts['location_id'] = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_country_filter'] ) ) {
@@ -1006,17 +1006,17 @@ function eme_tasks_signups_shortcode( $atts ) {
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-				$location_id = -1;
+				$atts['location_id'] = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_cat_filter'] ) ) {
 			if ( is_array( $_REQUEST['eme_cat_filter'] ) ) {
 				$arr = eme_array_remove_empty_elements( eme_sanitize_request( $_REQUEST['eme_cat_filter'] ) );
 				if ( ! empty( $arr ) ) {
-					$category = join( ',', $arr );
+					$atts['category'] = join( ',', $arr );
 				}
 			} else {
-				$category = eme_sanitize_request( $_REQUEST['eme_cat_filter'] );
+				$atts['category'] = eme_sanitize_request( $_REQUEST['eme_cat_filter'] );
 			}
 		}
 		foreach ( $_REQUEST as $key => $value ) {
@@ -1035,7 +1035,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 							$event_id_arr = array_intersect( $event_id_arr, $tmp_ids );
 						}
 						if ( empty( $event_id_arr ) ) {
-							$event_id = -1;
+							$atts['event_id'] = -1;
 						}
 					}
 					if ( $formfield['field_purpose'] == 'locations' ) {
@@ -1046,7 +1046,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 							$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 						}
 						if ( empty( $location_id_arr ) ) {
-							$location_id = -1;
+							$atts['location_id'] = -1;
 						}
 					}
 				}
@@ -1054,19 +1054,19 @@ function eme_tasks_signups_shortcode( $atts ) {
 		}
 	}
 	if ( $atts['event_id'] != -1 && ! empty( $event_id_arr ) ) {
-		$event_id = join( ',', $event_id_arr );
+		$atts['event_id'] = join( ',', $event_id_arr );
 	}
-	if ( $location_id != -1 && ! empty( $location_id_arr ) ) {
-		$location_id = join( ',', $location_id_arr );
+	if ( $atts['location_id'] != -1 && ! empty( $location_id_arr ) ) {
+		$atts['location_id'] = join( ',', $location_id_arr );
 	}
 
 	$extra_conditions_arr = [];
 	$extra_conditions     = '';
-	if ( ! empty( $event_id ) ) {
-		if ( strstr( ',', $event_id ) ) {
-			$extra_conditions_arr[] = "event_id in ($event_id)";
+	if ( ! empty( $atts['event_id'] ) ) {
+		if ( strstr( ',', $atts['event_id'] ) ) {
+			$extra_conditions_arr[] = "event_id in (".$atts['event_id'].")";
 		} else {
-			$extra_conditions_arr[] = 'event_id = ' . intval( $event_id );
+			$extra_conditions_arr[] = 'event_id = ' . intval( $atts['event_id'] );
 		}
 	}
 

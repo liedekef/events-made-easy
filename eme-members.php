@@ -4598,7 +4598,7 @@ function eme_members_report_link_shortcode( $atts ) {
 			],
 			$atts
 	);
-	$atts['public_access'] = filter_var( $public_access, FILTER_VALIDATE_BOOLEAN );
+	$atts['public_access'] = filter_var( $atts['public_access'], FILTER_VALIDATE_BOOLEAN );
 
 	if ( ( ! is_user_logged_in() || ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) && ! $atts['public_access'] ) {
 		return;
@@ -4636,11 +4636,11 @@ function eme_members_shortcode( $atts ) {
 		$atts
 	);
 
-	$group_id           = $atts['group_id'];
-	$membership_id      = $atts['membership_id'];
-	$template_id        = $atts['template_id'];
-	$template_id_header = $atts['template_id_header'];
-	$template_id_footer = $atts['template_id_footer'];
+	$group_id           = eme_sanitize_request($atts['group_id']);
+	$membership_id      = eme_sanitize_request($atts['membership_id']);
+	$template_id        = intval($atts['template_id']);
+	$template_id_header = intval($atts['template_id_header']);
+	$template_id_footer = intval($atts['template_id_footer']);
 
 	if ( ! empty( $group_id ) ) {
 		$member_ids = eme_get_groups_member_ids( $group_id );

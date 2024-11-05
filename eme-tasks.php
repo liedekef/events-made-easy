@@ -880,6 +880,7 @@ function eme_mytasks_signups_shortcode( $atts ) {
 	$template_id_footer = intval($atts['template_id_footer']);
 	$event_id = intval($atts['event_id']);
 	$task_id = intval($atts['task_id']);
+	$scope = eme_sanitize_request($atts['scope']);
 	if ( ! empty( $template_id ) ) {
 		$format = eme_get_template_format( $template_id );
 	}
@@ -913,6 +914,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 			'scope'                      => 'future',
 			'order'                      => 'ASC',
 			'category'                   => '',
+			'notcategory'                => '',
 			'showperiod'                 => '',
 			'author'                     => '',
 			'contact_person'             => '',
@@ -920,7 +922,6 @@ function eme_tasks_signups_shortcode( $atts ) {
 			'location_id'                => 0,
 			'task_id'                    => 0,
 			'show_ongoing'               => 1,
-			'notcategory'                => '',
 			'show_recurrent_events_once' => 0,
 			'template_id'                => 0,
 			'template_id_header'         => 0,
@@ -930,6 +931,23 @@ function eme_tasks_signups_shortcode( $atts ) {
 		$atts
 	);
 
+	$scope = eme_sanitize_request($atts['scope']);
+	$order = eme_sanitize_request($atts['order']);
+	$category = eme_sanitize_request($atts['category']);
+	$notcategory = eme_sanitize_request($atts['notcategory']);
+	$showperiod = eme_sanitize_request($atts['showperiod']);
+	$author = eme_sanitize_request($atts['author']);
+	$contact_person = eme_sanitize_request($atts['contact_person']);
+	$event_id = eme_sanitize_request($atts['event_id']);
+	$location_id = eme_sanitize_request($atts['location_id']);
+	$task_id = intval($atts['task_id']);
+	$show_ongoing = intval($atts['show_ongoing']);
+	$show_recurrent_events_once = intval($atts['show_recurrent_events_once']);
+	$template_id = intval($atts['template_id']);
+	$template_id_header = intval($atts['template_id_header']);
+	$template_id_footer = intval($atts['template_id_footer']);
+	$ignore_filter = intval($atts['ignore_filter']);
+
 	$event_id_arr    = [];
 	$location_id_arr = [];
 	$result          = '';
@@ -937,22 +955,21 @@ function eme_tasks_signups_shortcode( $atts ) {
 	$format = '';
 	$header = '';
 	$footer = '';
-	if ( ! empty( $atts['template_id'] ) ) {
-		$format = eme_get_template_format( $atts['template_id'] );
+	if ( ! empty( $template_id ) ) {
+		$format = eme_get_template_format( $template_id );
 	}
 	if ( empty( $format ) ) {
 		$format = get_option( 'eme_task_signup_format' );
 	}
 
-	if ( ! empty( $atts['template_id_header'] ) ) {
-		$header = eme_get_template_format( $atts['template_id_header'] );
+	if ( ! empty( $template_id_header ) ) {
+		$header = eme_get_template_format( $template_id_header );
 	}
 
-	if ( ! empty( $atts['template_id_footer'] ) ) {
-		$footer = eme_get_template_format( $atts['template_id_footer'] );
+	if ( ! empty( $template_id_footer ) ) {
+		$footer = eme_get_template_format( $template_id_footer );
 	}
 
-	$task_id = intval( $atts['task_id'] );
 	if ( $task_id > 0 ) {
 		$signups = eme_get_task_signups( $task_id );
 		foreach ( $signups as $signup ) {
@@ -962,15 +979,15 @@ function eme_tasks_signups_shortcode( $atts ) {
 		return $result;
 	}
 
-	if ( ! $atts['ignore_filter'] && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
+	if ( ! $ignore_filter && isset( $_REQUEST['eme_eventAction'] ) && eme_sanitize_request( $_REQUEST['eme_eventAction']) == 'filter' ) {
 		if ( ! empty( $_REQUEST['eme_scope_filter'] ) ) {
-			$atts['scope'] = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
+			$scope = eme_sanitize_request( $_REQUEST['eme_scope_filter'] );
 		}
 		if ( ! empty( $_REQUEST['eme_author_filter'] ) && intval( $_REQUEST['eme_author_filter'] ) > 0 ) {
-			$atts['author'] = intval( $_REQUEST['eme_author_filter'] );
+			$author = intval( $_REQUEST['eme_author_filter'] );
 		}
 		if ( ! empty( $_REQUEST['eme_contact_filter'] ) && intval( $_REQUEST['eme_contact_filter'] ) > 0 ) {
-			$atts['contact_person'] = intval( $_REQUEST['eme_contact_filter'] );
+			$contact_person = intval( $_REQUEST['eme_contact_filter'] );
 		}
 		if ( ! empty( $_REQUEST['eme_loc_filter'] ) ) {
 			if ( is_array( $_REQUEST['eme_loc_filter'] ) ) {
@@ -982,7 +999,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 				$location_id_arr[] = eme_sanitize_request( $_REQUEST['eme_loc_filter'] );
 			}
 			if ( empty( $location_id_arr ) ) {
-				$atts['location_id'] = -1;
+				$location_id = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_city_filter'] ) ) {
@@ -994,7 +1011,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-				$atts['location_id'] = -1;
+				$location_id = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_country_filter'] ) ) {
@@ -1006,17 +1023,17 @@ function eme_tasks_signups_shortcode( $atts ) {
 				$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 			}
 			if ( empty( $location_id_arr ) ) {
-				$atts['location_id'] = -1;
+				$location_id = -1;
 			}
 		}
 		if ( ! empty( $_REQUEST['eme_cat_filter'] ) ) {
 			if ( is_array( $_REQUEST['eme_cat_filter'] ) ) {
 				$arr = eme_array_remove_empty_elements( eme_sanitize_request( $_REQUEST['eme_cat_filter'] ) );
 				if ( ! empty( $arr ) ) {
-					$atts['category'] = join( ',', $arr );
+					$category = join( ',', $arr );
 				}
 			} else {
-				$atts['category'] = eme_sanitize_request( $_REQUEST['eme_cat_filter'] );
+				$category = eme_sanitize_request( $_REQUEST['eme_cat_filter'] );
 			}
 		}
 		foreach ( $_REQUEST as $key => $value ) {
@@ -1035,7 +1052,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 							$event_id_arr = array_intersect( $event_id_arr, $tmp_ids );
 						}
 						if ( empty( $event_id_arr ) ) {
-							$atts['event_id'] = -1;
+							$event_id = -1;
 						}
 					}
 					if ( $formfield['field_purpose'] == 'locations' ) {
@@ -1046,27 +1063,27 @@ function eme_tasks_signups_shortcode( $atts ) {
 							$location_id_arr = array_intersect( $location_id_arr, $tmp_ids );
 						}
 						if ( empty( $location_id_arr ) ) {
-							$atts['location_id'] = -1;
+							$location_id = -1;
 						}
 					}
 				}
 			}
 		}
 	}
-	if ( $atts['event_id'] != -1 && ! empty( $event_id_arr ) ) {
-		$atts['event_id'] = join( ',', $event_id_arr );
+	if ( $event_id != -1 && ! empty( $event_id_arr ) ) {
+		$event_id = join( ',', $event_id_arr );
 	}
-	if ( $atts['location_id'] != -1 && ! empty( $location_id_arr ) ) {
-		$atts['location_id'] = join( ',', $location_id_arr );
+	if ( $location_id != -1 && ! empty( $location_id_arr ) ) {
+		$location_id = join( ',', $location_id_arr );
 	}
 
 	$extra_conditions_arr = [];
 	$extra_conditions     = '';
-	if ( ! empty( $atts['event_id'] ) ) {
-		if ( strstr( ',', $atts['event_id'] ) ) {
-			$extra_conditions_arr[] = "event_id in (".$atts['event_id'].")";
+	if ( ! empty( $event_id ) ) {
+		if ( strstr( ',', $event_id ) ) {
+			$extra_conditions_arr[] = "event_id in (".$event_id.")";
 		} else {
-			$extra_conditions_arr[] = 'event_id = ' . intval( $atts['event_id'] );
+			$extra_conditions_arr[] = 'event_id = ' . intval( $event_id );
 		}
 	}
 
@@ -1075,7 +1092,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 	}
 
 	$extra_conditions_arr[] = 'event_tasks = 1';
-	$events                 = eme_get_events( scope: $atts['scope'], order: $atts['order'], location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $atts['show_ongoing'], notcategory: $atts['notcategory'], show_recurrent_events_once: $atts['show_recurrent_events_once'], extra_conditions: $extra_conditions );
+	$events                 = eme_get_events( scope: $scope, order: $order, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
 
 	$lang = eme_detect_lang();
 	foreach ( $events as $event ) {

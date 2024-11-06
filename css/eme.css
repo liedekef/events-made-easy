@@ -603,7 +603,6 @@ details.eme_accordion > summary {
 details.eme_accordion > summary:hover {
   background-color: #ccc;
 }
-
 details.eme_accordion[open] {
   background-color: white;
   border: 1px solid #aaa;
@@ -619,8 +618,8 @@ details.eme_accordion > table {
   padding: 5px;
 }
 details.eme_accordion > div, details.eme_accordion > p {
-  background-color: #white;
   padding: 5px;
+  background-color: white;
 }
 
 /* tabs */
@@ -630,7 +629,6 @@ details.eme_accordion > div, details.eme_accordion > p {
     cursor: pointer;
     background-color: #ccc;
 }
-
 .eme-tab {
     padding: 7px 20px;
     background-color: #f1f1f1;
@@ -638,16 +636,13 @@ details.eme_accordion > div, details.eme_accordion > p {
     border-radius: 3px;
     margin-left: 5px;
 }
-
 .eme-tab:hover {
     background-color: #ddd;
 }
-
 .eme-tab.active {
     background-color: #fff;
     font-weight: bold;
 }
-
 .eme-tab-content {
     border: 1px solid #ccc;
     border-top: 0px;
@@ -658,4 +653,3 @@ details.eme_accordion > div, details.eme_accordion > p {
     display: block;
     background-color: #fff;
 }
-

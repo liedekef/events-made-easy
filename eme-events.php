@@ -6469,7 +6469,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		<?php echo eme_ui_checkbox_binary( $event['event_todos'], 'event_todos', __( 'Enable todos for this event', 'events-made-easy' ) ); ?>
 		</p>
 		<p>
-		<?php  esc_html_e( "Each todo with a date in the past will send a mail to the contact person so you can use this to plan your event and not forget things. The date of the todo is based on the event start date and the todo offset parameter in days: an offset of 5 means 5 days before the event starts, an offset of -2 means 2 days after the event started.", 'events-made-easy' ); ?>
+		<?php esc_html_e( "Each todo with a date in the past will send a mail to the contact person so you can use this to plan your event and not forget things. The date of the todo is based on the event start date and the todo offset parameter in days: an offset of 5 means 5 days before the event starts, an offset of -2 means 2 days after the event started.", 'events-made-easy' ); ?>
 		</p>
 	</div>
 	<div id="tab-todos-container">
@@ -6507,12 +6507,12 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 						<?php if ( ! $edit_recurrence ) { ?>
 					<input type="submit" class="button-primary" id="event_delete_button" name="event_delete_button" value="<?php esc_attr_e( 'Delete Event', 'events-made-easy' ); ?> &raquo;" onclick="return areyousure('<?php echo $delete_button_text; ?>');">
 							<?php
-								$view_button_text = __( 'View' );
+								$view_button_text = __( 'View', 'events-made-easy' );
 								$view_button      = sprintf(
 								    '%s<span class="screen-reader-text"> %s</span> &raquo;',
 								    $view_button_text,
 									/* translators: Accessibility text. */
-										__( '(opens in a new tab)' )
+										__( '(opens in a new tab)', 'events-made-easy' )
 								);
 							?>
 					<a class="button-primary" href="<?php echo eme_event_url( $event ); ?>" target="wp-view-<?php echo intval($event['event_id']); ?>" id="event-view"><?php echo $view_button; ?></a>

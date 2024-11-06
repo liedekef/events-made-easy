@@ -2703,17 +2703,15 @@ function eme_convert_charset( $table, $charset, $collate ) {
 function eme_get_total( $multistring ) {
 	if ( eme_is_multi( $multistring ) ) {
 		return array_sum( eme_convert_multi2array( $multistring ) );
-	} else {
-		return $multistring+0; // convert to a number (type is float if string is a float, otherwise it is int)
 	}
+	return $multistring+0; // convert to a number (type is float if string is a float, otherwise it is int)
 }
 
 function eme_get_wpid_by_post() {
 	if ( ! empty( $_POST['wp_id'] ) ) {
 		return intval( $_POST['wp_id'] );
-	} else {
-		return 0;
 	}
+	return 0;
 }
 
 // sanitize_text_field and sanitize_textarea_field strip html tags, be aware
@@ -2723,18 +2721,16 @@ function eme_sanitize_textarea( $value ) {
 	}
 	if ( function_exists( 'sanitize_textarea_field' ) ) {
 		return sanitize_textarea_field( wp_unslash( $value ) );
-	} else {
-		return sanitize_text_field( wp_unslash( $value ) );
 	}
+	return sanitize_text_field( wp_unslash( $value ) );
 }
 
 // sanitize_text_field and sanitize_textarea_field strip html tags, be aware
 function eme_sanitize_request( $value ) {
 	if ( is_array( $value ) ) {
 		return array_map( 'eme_sanitize_request', $value );
-	} else {
-		return sanitize_text_field( wp_unslash( $value ) );
 	}
+	return sanitize_text_field( wp_unslash( $value ) );
 }
 
 function eme_sanitize_email( $email ) {
@@ -2785,9 +2781,8 @@ function eme_esc_html( $value, $keep_br=0 ) {
 	}
 	if ( is_array( $value ) ) {
 		return array_map( 'eme_esc_html', $value );
-	} else {
-		return esc_html( $value );
 	}
+	return esc_html( $value );
 }
 
 // unused function
@@ -2797,11 +2792,9 @@ function eme_strip_tags( $value ) {
 	}
 	if ( is_array( $value ) ) {
 		return array_map( 'eme_strip_tags', $value );
-	} else {
-		$value = preg_replace( '/^\s*$/', '', wp_strip_all_tags( $value ) );
-		return eme_sanitize_request( eme_strip_weird( $value ) );
 	}
-	return $value;
+	$value = preg_replace( '/^\s*$/', '', wp_strip_all_tags( $value ) );
+	return eme_sanitize_request( eme_strip_weird( $value ) );
 }
 
 function eme_sanitize_filenamechars( $filepart ) {

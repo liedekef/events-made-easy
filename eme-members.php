@@ -7032,7 +7032,7 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
 		if (!preg_match( '/\.pdf$/i', $pdf_attach_name)) {
 			$pdf_attach_name .= '.pdf';
 		}
-		$pdf_attach_name = eme_sanitize_filename(basename($pdf_attach_name));
+		$pdf_attach_name = eme_sanitize_attach_filename(basename($pdf_attach_name));
 	} else {
 		$pdf_attach_name = '';
 	}

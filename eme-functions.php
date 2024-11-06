@@ -2802,12 +2802,47 @@ function eme_sanitize_filenamechars( $filepart ) {
 	return preg_replace( '/[^\da-z \-]/i', '_', $filepart );
 }
 
-function eme_sanitize_filename( $fName ) {
+function eme_sanitize_attach_filename( $fName ) {
 	$fName    = trim( $fName );
 	if ( empty( $fName ) ) {
 		return false;
 	}
 
+	$filename = preg_replace(
+		'~
+		[<>:"/\\\|?*]|           # file system reserved https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
+		[\x00-\x1F]|             # control characters http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx
+		[\x7F\xA0\xAD]|          # non-printing characters DEL, NO-BREAK SPACE, SOFT HYPHEN
+		[#\[\]@!$&\'()+,;=]|     # URI reserved https://www.rfc-editor.org/rfc/rfc3986#section-2.2
+		[{}^\~`]                 # URL unsafe characters https://www.ietf.org/rfc/rfc1738.txt
+		~x',
+	'-', $fName);
+	// avoids ".", ".." or ".hiddenFiles"
+	$filename = ltrim($filename, '.');
+	// reduce consecutive characters
+	$filename = preg_replace(array(
+		'/ +/', // "file   name.zip" becomes "file-name.zip"
+		'/_+/', // "file___name.zip" becomes "file-name.zip"
+		'/-+/' // "file---name.zip" becomes "file-name.zip"
+	), '-', $filename);
+
+        $filename = preg_replace(array(
+                '/-*\.-*/', // "file--.--.-.--name.zip" becomes "file.name.zip"
+                '/\.{2,}/' // "file...name..zip" becomes "file.name.zip"
+        ), '.', $filename);
+        // ".file-name.-" becomes "file-name"
+        $filename = trim($filename, '.-');
+        // maximize filename length to 255 bytes http://serverfault.com/a/9548/44086
+        $ext = pathinfo($filename, PATHINFO_EXTENSION);
+        if (empty($ext)) {
+                $ext= 'none';
+        }
+
+        $filename = mb_strcut(pathinfo($filename, PATHINFO_FILENAME), 0, 255 - ($ext ? strlen($ext) + 1 : 0), mb_detect_encoding($filename)) . ($ext ? '.' . $ext : '');
+
+        return $filename;
+
+	/*
 	$nameFile = pathinfo($fName, PATHINFO_FILENAME);
 	if ( empty( $nameFile ) ) {
 		return false;
@@ -2823,13 +2858,29 @@ function eme_sanitize_filename( $fName ) {
 		return false;
 	}
 	return "$clean.$clean_ext";
+	 */
 }
 
 function eme_sanitize_upload_filename( $fName, $field_id, $extra_id = '' ) {
+	//$sanitized_fName = eme_sanitize_filename( $fName );
 	if ( empty( $fName ) ) {
 		return false;
 	}
-	$sanitized_fName = eme_sanitize_filename( $fName );
+	$nameFile = pathinfo($fName, PATHINFO_FILENAME);
+	if ( empty( $nameFile ) ) {
+		return false;
+	}
+	$extension = pathinfo($fName, PATHINFO_EXTENSION);
+	if (empty($extension)) {
+		$extension = 'none';
+	}
+
+	$clean     = eme_sanitize_filenamechars( $nameFile );
+	$clean_ext = eme_sanitize_filenamechars( $extension );
+	if (empty($clean) || empty($clean_ext)) {
+		return false;
+	}
+	$sanitized_fName = "$clean.$clean_ext";
 	if ( empty( $sanitized_fName ) ) {
 		return false;
 	}

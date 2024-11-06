@@ -70,12 +70,15 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 
 	// allow either an array of file paths or of attachment ids
 	$attachment_paths_arr = [];
+	if ( ! is_array( $atts_arr ) ) {
+		$atts_arr = [];
+	}
 	foreach ( $atts_arr as $attachment ) {
 		if ( ! empty( $attachment ) ) {
 			if ( is_numeric( $attachment ) ) {
 				$file_path = get_attached_file( $attachment );
 				if ( ! empty( $file_path ) && file_exists( $file_path ) ) {
-					$attach_name = eme_sanitize_filename(basename($file_path));
+					$attach_name = eme_sanitize_attach_filename(basename($file_path));
 					if (!empty($attach_name))
 						$attachment_paths_arr[$attach_name] = $file_path;
 				}
@@ -91,10 +94,10 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 						// now remove parts of the file
 						$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
 						$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
-						$attach_name = eme_sanitize_filename($filename.'.'.$extension);
+						$attach_name = eme_sanitize_attach_filename($filename.'.'.$extension);
 						$attachment_paths_arr[$attach_name] = $attachment[1];
 					} else {
-						$filename = eme_sanitize_filename($attachment[0]);
+						$filename = eme_sanitize_attach_filename($attachment[0]);
 						$attachment_paths_arr[$filename] = $attachment[1];
 					}
 				}
@@ -108,7 +111,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 					// now remove parts of the file
 					$filename = preg_replace( '/(member-\d+|booking-\d+)-.*/', '$1', $filename );
 					$filename = preg_replace( '/.*-(qrcode.*)/', '$1', $filename );
-					$attach_name = eme_sanitize_filename($filename.'.'.$extension);
+					$attach_name = eme_sanitize_attach_filename($filename.'.'.$extension);
 					$attachment_paths_arr[$attach_name] = $attachment;
 				}
 			}
@@ -134,7 +137,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 				}
 			}
 		}
-		if ( ! empty( $custom_headers ) ) {
+		if ( ! empty( $custom_headers ) && is_array( $custom_headers ) ) {
 			foreach ( $custom_headers as $custom_header ) {
 				$headers[] = $custom_header;
 			}
@@ -189,7 +192,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
 		$mail->addCustomHeader('Auto-Submitted: auto-generated');
 		$mail->addCustomHeader('X-Auto-Response-Suppress: all');
 		// add custom headers
-		if ( ! empty( $custom_headers ) ) {
+		if ( ! empty( $custom_headers ) && is_array( $custom_headers ) ) {
 			foreach ( $custom_headers as $custom_header ) {
 				$mail->addCustomHeader( $custom_header );
 			}
@@ -593,7 +596,11 @@ function eme_send_queued() {
 			continue; // the continue-statement continues the higher foreach-loop
 		}
 		$body = $mail['body'];
-		$atts = eme_unserialize( $mail['attachments'] );
+		if (eme_is_serialized( $mail['attachments'] )) {
+			$atts = eme_unserialize( $mail['attachments'] );
+		} else {
+			$atts = [];
+		}
 		if ( $add_tracking && ! empty( $mail['random_id'] ) ) {
 			$track_url  = eme_tracker_url( $mail['random_id'] );
 			$track_html = "<img src='$track_url' alt=''>";

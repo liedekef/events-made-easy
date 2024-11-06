@@ -619,7 +619,7 @@ function eme_events_page() {
 					eme_location_store_answers( $new_location_id );
 					if ( ! $new_location_id ) {
 						echo "<div id='message' class='error '>
-                        <p>" . __( "Could not create the new location for this event: either you don't have the right to insert locations or there's a DB problem.", 'eme', 'events-made-easy' ) . "</p>
+                        <p>" . __( "Could not create the new location for this event: either you don't have the right to insert locations or there's a DB problem.", 'events-made-easy' ) . "</p>
 			<p>$press_back</p>
                         </div>";
 						return;

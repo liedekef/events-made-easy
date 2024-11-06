@@ -646,7 +646,7 @@ details.eme_accordion > div, details.eme_accordion > p {
 .eme-tab-content {
     border: 1px solid #ccc;
     border-top: 0px;
-    padding: 20px;
+    padding: 10px;
     display: none;
 }
 .eme-tab-content.active {

@@ -201,7 +201,7 @@ class <proxyShortClassName> extends \<className> implements \<baseProxyInterface
      * {@inheritDoc}
      * @internal generated method: use only when explicitly handling proxy specific loading logic
      */
-    public function __setInitializer(\Closure $initializer = null): void
+    public function __setInitializer(?\Closure $initializer = null): void
     {
         $this->__initializer__ = $initializer;
     }
@@ -219,7 +219,7 @@ class <proxyShortClassName> extends \<className> implements \<baseProxyInterface
      * {@inheritDoc}
      * @internal generated method: use only when explicitly handling proxy specific loading logic
      */
-    public function __setCloner(\Closure $cloner = null): void
+    public function __setCloner(?\Closure $cloner = null): void
     {
         $this->__cloner__ = $cloner;
     }
@@ -940,7 +940,7 @@ EOT;
             if ($this->isShortIdentifierGetter($method, $class)) {
                 $identifier = lcfirst(substr($name, 3));
                 $fieldType  = $class->getTypeOfField($identifier);
-                $cast       = in_array($fieldType, ['integer', 'smallint']) ? '(int) ' : '';
+                $cast       = in_array($fieldType, ['integer', 'smallint'], true) ? '(int) ' : '';
 
                 $methods .= '        if ($this->__isInitialized__ === false) {' . "\n";
                 $methods .= '            ';
@@ -1282,7 +1282,6 @@ EOT;
         if (
             $type->allowsNull()
             && ! in_array($name, ['mixed', 'null'], true)
-            && ($parameter === null || ! $parameter->isDefaultValueAvailable() || $parameter->getDefaultValue() !== null)
         ) {
             $name = '?' . $name;
         }

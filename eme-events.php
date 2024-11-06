@@ -7273,10 +7273,10 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 			</span>
 			<span class="alternate-selector" id="monthly-selector">
 				<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
-				<select id="monthly-modifier" name="monthly_recurrence_byweekno">
+				<select id="monthly_recurrence_byweekno" name="monthly_recurrence_byweekno">
 					<?php eme_option_items( $weekno_options, $recurrence['recurrence_byweekno'] ); ?>
 				</select>
-				<select id="recurrence-weekday" name="monthly_recurrence_byday">
+				<select id="monthly_recurrence_byday" name="monthly_recurrence_byday">
 					<?php eme_option_items( $days_names, $recurrence['recurrence_byday'] ); ?>
 				</select>
 				<?php esc_html_e( 'Day of month', 'events-made-easy' ); ?>
@@ -7286,10 +7286,10 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 			</span>
 			<span class="alternate-selector" id="specific_months-selector">
 				<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
-				<select id="monthly-modifier" name="specific_months_recurrence_byweekno">
+				<select id="specific_months_recurrence_byweekno" name="specific_months_recurrence_byweekno">
 					<?php eme_option_items( $weekno_options, $recurrence['recurrence_byweekno'] ); ?>
 				</select>
-				<select id="recurrence-weekday" name="specific_months_recurrence_byday">
+				<select id="specific_months_recurrence_byday" name="specific_months_recurrence_byday">
 					<?php eme_option_items( $days_names, $recurrence['recurrence_byday'] ); ?>
 				</select>
 				<?php esc_html_e( 'Day of month', 'events-made-easy' ); ?>

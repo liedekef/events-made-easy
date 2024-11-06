@@ -64,6 +64,6 @@
             "install-path": "../instamojo/instamojo-php"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }

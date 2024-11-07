@@ -18,8 +18,13 @@ jQuery(document).ready( function($) {
 	$('.eme-tab').on('click', function() {
 		activateTab($(this).data('tab'));
 		if ($(this).data('tab') == "tab-locationdetails" && emeadmin.translate_map_is_active === 'true') {
+			// do this only when the tab is active, so leaflet knows the visible width and height of the map
 			eme_SelectdisplayAddress();
 			eme_displayAddress(0);
+		}
+		if ($(this).data('tab') == "tab-sentmail" ) {
+			// do this only when the tab is active, to avoid doing mail lookups if not needed
+			$('#searchmailButton').trigger('click');
 		}
 	});
 

@@ -282,7 +282,6 @@ jQuery(document).ready( function($) {
 	   });
            return false;
    });
-   $('#searchmailButton').trigger('click');
 
    $('#testmailButton').on("click",function (e) {
            e.preventDefault();

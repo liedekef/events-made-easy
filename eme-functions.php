@@ -2802,13 +2802,31 @@ function eme_sanitize_filenamechars( $filepart ) {
 	return preg_replace( '/[^\da-z \-]/i', '_', $filepart );
 }
 
-function eme_sanitize_attach_filename( $fName ) {
-	$fName    = trim( $fName );
-	if ( empty( $fName ) ) {
+function eme_sanitize_attach_filename( $filename, $use_wp_sanitize=0 ) {
+	$filename    = trim( $filename );
+	if ( empty( $filename ) ) {
 		return false;
 	}
 
-	$filename = sanitize_file_name( $fName );
+	// check if pcre has utf-8 support and if fileame then seems utf8, we do our own function
+	$utf8_pcre = @preg_match( '/^./u', 'a' ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+	if (!$use_wp_sanitize && $utf8_pcre && seems_utf8( $filename ) ) {
+		$filename = preg_replace(
+			'~
+			[<>:"/\\\|?*]|           # file system reserved https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
+			[\x00-\x1F]|             # control characters http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx
+			[\x7F\xA0\xAD]|          # non-printing characters DEL, NO-BREAK SPACE, SOFT HYPHEN
+			[#\[\]@!$&\'()+,;=]|     # URI reserved https://www.rfc-editor.org/rfc/rfc3986#section-2.2
+			[{}^\~`]                 # URL unsafe characters https://www.ietf.org/rfc/rfc1738.txt
+			~xu',
+	'-', $filename);
+	} else {
+		$filename = sanitize_file_name( $filename );
+	}
+
+	/*
+	 * Now some cleanup
+	 */
 	$filename = ltrim($filename, '.');
 	// reduce consecutive characters
 	$filename = preg_replace(array(
@@ -2823,14 +2841,9 @@ function eme_sanitize_attach_filename( $fName ) {
         ), '.', $filename);
         // ".file-name.-" becomes "file-name"
         $filename = trim($filename, '.-');
-        // maximize filename length to 255 bytes http://serverfault.com/a/9548/44086
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        if (empty($ext)) {
-                $ext= 'none';
-        }
-
-        $filename = mb_strcut(pathinfo($filename, PATHINFO_FILENAME), 0, 255 - ($ext ? strlen($ext) + 1 : 0), mb_detect_encoding($filename)) . ($ext ? '.' . $ext : '');
-
+	if ( empty( $filename ) ) {
+		return false;
+	}
         return $filename;
 
 	/*
@@ -2856,7 +2869,7 @@ function eme_sanitize_upload_filename( $fName, $field_id, $extra_id = '' ) {
 	if ( empty( $fName ) ) {
 		return false;
 	}
-	$sanitized_fName = sanitize_file_name( $fName );
+	$sanitized_fName = eme_sanitize_attach_filename( $fName, 1 ); // we force the use of the wp sanitize function and clean up the resulting name
 	if ( empty( $sanitized_fName ) ) {
 		return false;
 	}

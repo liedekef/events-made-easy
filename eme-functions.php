@@ -2808,16 +2808,7 @@ function eme_sanitize_attach_filename( $fName ) {
 		return false;
 	}
 
-	$filename = preg_replace(
-		'~
-		[<>:"/\\\|?*]|           # file system reserved https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
-		[\x00-\x1F]|             # control characters http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx
-		[\x7F\xA0\xAD]|          # non-printing characters DEL, NO-BREAK SPACE, SOFT HYPHEN
-		[#\[\]@!$&\'()+,;=]|     # URI reserved https://www.rfc-editor.org/rfc/rfc3986#section-2.2
-		[{}^\~`]                 # URL unsafe characters https://www.ietf.org/rfc/rfc1738.txt
-		~x',
-	'-', $fName);
-	// avoids ".", ".." or ".hiddenFiles"
+	$filename = sanitize_file_name( $fName );
 	$filename = ltrim($filename, '.');
 	// reduce consecutive characters
 	$filename = preg_replace(array(
@@ -2862,25 +2853,10 @@ function eme_sanitize_attach_filename( $fName ) {
 }
 
 function eme_sanitize_upload_filename( $fName, $field_id, $extra_id = '' ) {
-	//$sanitized_fName = eme_sanitize_filename( $fName );
 	if ( empty( $fName ) ) {
 		return false;
 	}
-	$nameFile = pathinfo($fName, PATHINFO_FILENAME);
-	if ( empty( $nameFile ) ) {
-		return false;
-	}
-	$extension = pathinfo($fName, PATHINFO_EXTENSION);
-	if (empty($extension)) {
-		$extension = 'none';
-	}
-
-	$clean     = eme_sanitize_filenamechars( $nameFile );
-	$clean_ext = eme_sanitize_filenamechars( $extension );
-	if (empty($clean) || empty($clean_ext)) {
-		return false;
-	}
-	$sanitized_fName = "$clean.$clean_ext";
+	$sanitized_fName = sanitize_file_name( $fName );
 	if ( empty( $sanitized_fName ) ) {
 		return false;
 	}

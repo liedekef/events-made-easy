@@ -2802,15 +2802,16 @@ function eme_sanitize_filenamechars( $filepart ) {
 	return preg_replace( '/[^\da-z \-]/i', '_', $filepart );
 }
 
-function eme_sanitize_attach_filename( $filename, $use_wp_sanitize=0 ) {
+function eme_sanitize_attach_filename( $filename, $use_simple_sanitize=0 ) {
 	$filename    = trim( $filename );
 	if ( empty( $filename ) ) {
 		return false;
 	}
 
-	// check if pcre has utf-8 support and if fileame then seems utf8, we do our own function
+	// if use_simple_sanitize=0: check if pcre has utf-8 support and if fileame then seems utf8, we do our own function
+	// to check if pcre has utf-8 support: do a small pcre check with the u-flag, hide the warning and catch the result
 	$utf8_pcre = @preg_match( '/^./u', 'a' ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-	if (!$use_wp_sanitize && $utf8_pcre && seems_utf8( $filename ) ) {
+	if (!$use_simple_sanitize && $utf8_pcre && seems_utf8( $filename ) ) {
 		$filename = preg_replace(
 			'~
 			[<>:"/\\\|?*]|           # file system reserved https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
@@ -2822,6 +2823,23 @@ function eme_sanitize_attach_filename( $filename, $use_wp_sanitize=0 ) {
 	'-', $filename);
 	} else {
 		$filename = sanitize_file_name( $filename );
+	/*
+		$nameFile = pathinfo($filename, PATHINFO_FILENAME);
+		if ( empty( $nameFile ) ) {
+			return false;
+		}
+		$extension = pathinfo($filename, PATHINFO_EXTENSION);
+		if (empty($extension)) {
+			$extension = 'none';
+		}
+
+		$clean     = eme_sanitize_filenamechars( $nameFile );
+		$clean_ext = eme_sanitize_filenamechars( $extension );
+		if (empty($clean) || empty($clean_ext)) {
+			return false;
+		}
+		$filename = "$clean.$clean_ext";
+	 */
 	}
 
 	/*
@@ -2846,23 +2864,6 @@ function eme_sanitize_attach_filename( $filename, $use_wp_sanitize=0 ) {
 	}
         return $filename;
 
-	/*
-	$nameFile = pathinfo($fName, PATHINFO_FILENAME);
-	if ( empty( $nameFile ) ) {
-		return false;
-	}
-	$extension = pathinfo($fName, PATHINFO_EXTENSION);
-	if (empty($extension)) {
-		$extension = 'none';
-	}
-
-	$clean     = eme_sanitize_filenamechars( $nameFile );
-	$clean_ext = eme_sanitize_filenamechars( $extension );
-	if (empty($clean) || empty($clean_ext)) {
-		return false;
-	}
-	return "$clean.$clean_ext";
-	 */
 }
 
 function eme_sanitize_upload_filename( $fName, $field_id, $extra_id = '' ) {

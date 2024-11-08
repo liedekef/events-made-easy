@@ -9576,10 +9576,9 @@ function eme_admin_enqueue_js() {
 		}
 	}
 	if ( in_array( $plugin_page, [ 'eme-new_event', 'eme-manager' ] ) ) {
-		wp_enqueue_style( 'eme-jquery-ui-autocomplete' );
 		// Now we can localize the script with our data.
 		$translation_array = [
-			'translate_nomatchevent'               => __( 'No matching event found', 'events-made-easy' ),
+			'translate_nomatchlocation'            => __( 'No matching location found', 'events-made-easy' ),
 			'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
 			'translate_events'                     => __( 'Events', 'events-made-easy' ),
 			'translate_recurrences'                => __( 'Recurrences', 'events-made-easy' ),
@@ -9623,7 +9622,6 @@ function eme_admin_enqueue_js() {
 		wp_enqueue_script( 'eme-options' );
 	}
 	if ( in_array( $plugin_page, [ 'eme-attendance-reports' ] ) ) {
-		wp_enqueue_style( 'eme-jquery-ui-autocomplete' );
 		$translation_array = [
 			'translate_id'                     => __( 'ID', 'events-made-easy' ),
 			'translate_type'                   => __( 'Type', 'events-made-easy' ),
@@ -9965,7 +9963,6 @@ function eme_admin_enqueue_js() {
 		wp_enqueue_script( 'eme-rsvp' );
 	}
 	if ( in_array( $plugin_page, [ 'eme-emails' ] ) ) {
-		wp_enqueue_style( 'eme-jquery-ui-autocomplete' );
 		// if html mails are disabled, this is needed
 		wp_enqueue_media();
 		$translation_array = [
@@ -10046,6 +10043,10 @@ function eme_countdown_shortcode( $atts ) {
 
 function eme_ajax_events_search() {
 	$return = [];
+	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+		wp_die();
+	}
 	if ( isset( $_REQUEST['q'] ) ) {
 		$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	}

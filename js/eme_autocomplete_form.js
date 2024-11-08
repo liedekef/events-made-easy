@@ -1,115 +1,124 @@
 jQuery(document).ready( function($) {
     function eme_tasklastname_clearable() {
-                if ($('input[name=task_lastname]').val()=='') {
-			$('input[name=task_lastname]').attr('readonly', false).removeClass('clearable');
-                        $('input[name=task_firstname]').val('').attr('readonly', false);
-                        $('input[name=task_address1]').val('').attr('readonly', false);
-                        $('input[name=task_address2]').val('').attr('readonly', false);
-                        $('input[name=task_city]').val('').attr('readonly', false);
-                        $('input[name=task_state]').val('').attr('readonly', false);
-                        $('input[name=task_zip]').val('').attr('readonly', false);
-                        $('input[name=task_country]').val('').attr('readonly', false);
-                        $('input[name=task_email]').val('').attr('readonly', false);
-                        $('input[name=task_phone]').val('').attr('readonly', false);
-                }
-                if ($('input[name=task_lastname]').val()!='') {
-                        $('input[name=task_lastname]').addClass('clearable x');
-                }
+        if ($('input[name=task_lastname]').val()=='') {
+            $('input[name=task_lastname]').attr('readonly', false).removeClass('clearable');
+            $('input[name=task_firstname]').val('').attr('readonly', false);
+            $('input[name=task_address1]').val('').attr('readonly', false);
+            $('input[name=task_address2]').val('').attr('readonly', false);
+            $('input[name=task_city]').val('').attr('readonly', false);
+            $('input[name=task_state]').val('').attr('readonly', false);
+            $('input[name=task_zip]').val('').attr('readonly', false);
+            $('input[name=task_country]').val('').attr('readonly', false);
+            $('input[name=task_email]').val('').attr('readonly', false);
+            $('input[name=task_phone]').val('').attr('readonly', false);
+        }
+        if ($('input[name=task_lastname]').val()!='') {
+            $('input[name=task_lastname]').addClass('clearable x');
+        }
     }
 
     // for autocomplete to work, the element needs to exist, otherwise JS errors occur
     // we check for that using length
     if ($("input[name=lastname]").length) {
-	    $("input[name=lastname]").autocomplete({
-		    source: function(request, response) {
-			    alldata = $("input[name=lastname]").parents('form:first').serializeArray();
-			    alldata.push({name: 'eme_ajax_action', value: 'rsvp_autocomplete_people'});
-			    $.post(self.location.href, alldata,
-				    function(data){
-					    response($.map(data, function(item) {
-						    return {
-							    person_id: eme_htmlDecode(item.person_id),
-							    lastname: eme_htmlDecode(item.lastname),
-							    firstname: eme_htmlDecode(item.firstname),
-							    address1: eme_htmlDecode(item.address1),
-							    address2: eme_htmlDecode(item.address2),
-							    city: eme_htmlDecode(item.city),
-							    state: eme_htmlDecode(item.state),
-							    zip: eme_htmlDecode(item.zip),
-							    country: eme_htmlDecode(item.country),
-							    wp_id: item.wp_id,
-							    email: eme_htmlDecode(item.email),
-							    phone: eme_htmlDecode(item.phone)
-						    };
-					    }));
-				    }, "json");
-		    },
-		    select:function(evt, ui) {
-			    // when a person is selected, populate related fields in this form
-			    $('input[name=lastname]').attr('readonly', true).val(ui.item.lastname);
-			    $('input[name=firstname]').attr('readonly', true).val(ui.item.firstname);
-			    $('input[name=address1]').attr('readonly', true).val(ui.item.address1);
-			    $('input[name=address2]').attr('readonly', true).val(ui.item.address2);
-			    $('input[name=city]').attr('readonly', true).val(ui.item.city);
-			    $('input[name=state]').attr('readonly', true).val(ui.item.state);
-			    $('input[name=zip]').attr('readonly', true).val(ui.item.zip);
-			    $('input[name=country]').attr('readonly', true).val(ui.item.country);
-			    $('input[name=email]').attr('readonly', true).val(ui.item.email);
-			    $('input[name=phone]').attr('readonly', true).val(ui.item.phone);
-			    $('input[name=wp_id]').attr('readonly', true).val(ui.item.wp_id);
-			    $('input[name=person_id]').attr('readonly', true).val(ui.item.person_id);
-			    $("input[name=lastname]").addClass('clearable x');
-			    $('input[name=wp_id]').trigger('input');
-			    return false;
-		    },
-		    minLength: 2
-	    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-		    return $( "<li></li>" )
-			    .append("<a><strong>"+item.lastname+' '+item.firstname+'</strong><br /><small>'+item.email+' - '+item.phone+ '</small></a>')
-			    .appendTo( ul );
-	    };
+        let frontend_lastname_timeout; // Declare a variable to hold the timeout ID
+        $("input[name=lastname]").on("input", function() {
+            clearTimeout(frontend_lastname_timeout); // Clear the previous timeout
+            var inputField = $(this);
+            var inputValue = inputField.val();
+            $(".eme-autocomplete-suggestions").remove();
+            if (inputValue.length >= 2) {
+                var requestData = inputField.parents('form:first').serializeArray();
+                requestData.push({name: 'eme_ajax_action', value: 'rsvp_autocomplete_people'});
+                frontend_lastname_timeout = setTimeout(function() {
+                    $.post(self.location.href, requestData, function(data) {
+                        var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
 
-	    // if this js gets loaded, the lastname is always clearable, so call those functions
-	    $('input[name=lastname]').on("change",eme_lastname_clearable);
-	    eme_lastname_clearable();
+                        $.each(data, function(index, item) {
+                            suggestions.append(
+                                $("<div class='eme-autocomplete-suggestion'></div>")
+                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br /><small>" + eme_htmlDecode(item.email) + ' - ' + eme_htmlDecode(item.phone) + "</small>")
+                                .data("item", item)
+                                .on("click", function() {
+                                    var selectedItem = $(this).data("item");
+                                    $('input[name=lastname]').val(selectedItem.lastname).attr('readonly', true);
+                                    $('input[name=firstname]').val(selectedItem.firstname).attr('readonly', true);
+                                    $('input[name=address1]').val(selectedItem.address1).attr('readonly', true);
+                                    $('input[name=address2]').val(selectedItem.address2).attr('readonly', true);
+                                    $('input[name=city]').val(selectedItem.city).attr('readonly', true);
+                                    $('input[name=state]').val(selectedItem.state).attr('readonly', true);
+                                    $('input[name=zip]').val(selectedItem.zip).attr('readonly', true);
+                                    $('input[name=country]').val(selectedItem.country).attr('readonly', true);
+                                    $('input[name=email]').val(selectedItem.email).attr('readonly', true);
+                                    $('input[name=phone]').val(selectedItem.phone).attr('readonly', true);
+                                    $('input[name=wp_id]').val(selectedItem.wp_id).attr('readonly', true);
+                                    $('input[name=person_id]').val(selectedItem.person_id).attr('readonly', true);
+                                    $('.eme-autocomplete-suggestions').remove();
+                                })
+                            );
+                        });
+
+                        if (!data.length) {
+                            $(".eme-autocomplete-suggestions").remove();
+                        }
+                        inputField.after(suggestions);
+                    }, "json");
+                }, 500); // Delay of 0.5 second
+            }
+        });
+
+        $(document).on("click", function() {
+            $(".eme-autocomplete-suggestions").remove();
+        });
+
+        // if this js gets loaded, the lastname is always clearable, so call those functions
+        $('input[name=lastname]').on("change",eme_lastname_clearable);
+        eme_lastname_clearable();
     }
 
     if ($("input[name=task_lastname]").length) {
-	    $("input[name=task_lastname]").autocomplete({
-		    source: function(request, response) {
-			    alldata = $("input[name=task_lastname]").parents('form:first').serializeArray();
-			    alldata.push({name: 'eme_ajax_action', value: 'task_autocomplete_people'});
-			    $.post(self.location.href, alldata,
-				    function(data){
-					    response($.map(data, function(item) {
-						    return {
-							    lastname: eme_htmlDecode(item.lastname),
-							    firstname: eme_htmlDecode(item.firstname),
-							    email: eme_htmlDecode(item.email),
-							    phone: eme_htmlDecode(item.phone)
-						    };
-					    }));
-				    }, "json");
-		    },
-		    select:function(evt, ui) {
-			    // when a person is selected, populate related fields in this form
-			    $('input[name=task_lastname]').attr('readonly', true).val(ui.item.lastname);
-			    $('input[name=task_firstname]').attr('readonly', true).val(ui.item.firstname);
-			    $('input[name=task_email]').attr('readonly', true).val(ui.item.email);
-			    $('input[name=task_phone]').attr('readonly', true).val(ui.item.phone);
-			    $('input[name=task_lastname]').addClass('clearable x');
-			    return false;
-		    },
-		    minLength: 2
-	    }).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
-		    return $( "<li></li>" )
-			    .append("<a><strong>"+item.lastname+' '+item.firstname+'</strong><br /><small>'+item.email+ '</small></a>')
-			    .appendTo( ul );
-	    };
+        let frontend_tasklastname_timeout; // Declare a variable to hold the timeout ID
+        $("input[name=task_lastname]").on("input", function() {
+            clearTimeout(frontend_tasklastname_timeout); // Clear the previous timeout
+            var inputField = $(this);
+            var inputValue = inputField.val();
+            $(".eme-autocomplete-suggestions").remove();
+            if (inputField.length >= 2) {
+                var requestData = inputField.parents('form:first').serializeArray();
+                requestData.push({name: 'eme_ajax_action', value: 'task_autocomplete_people'});
+                frontend_tasklastname_timeout = setTimeout(function() {
+                    $.post(self.location.href, requestData, function(data) {
+                        var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
 
-	    // if this js gets loaded, the lastname is always clearable, so call those functions
-	    //$('input[name=task_lastname]').on("input",eme_tasklastname_clearable).on("change",eme_tasklastname_clearable);
-	    $('input[name=task_lastname]').on("change",eme_tasklastname_clearable);
-	    eme_tasklastname_clearable();
+                        $.each(data, function(index, item) {
+                            suggestions.append(
+                                $("<div class='eme-autocomplete-suggestion'></div>")
+                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br /><small>" + eme_htmlDecode(item.email) + "</small>")
+                                .data("item", item)
+                                .on("click", function() {
+                                    var selectedItem = $(this).data("item");
+                                    $('input[name=task_lastname]').val(eme_htmlDecode(selectedItem.lastname)).attr('readonly', true);
+                                    $('input[name=task_firstname]').val(eme_htmlDecode(selectedItem.firstname)).attr('readonly', true);
+                                    $('input[name=task_email]').val(eme_htmlDecode(selectedItem.email)).attr('readonly', true);
+                                    $('input[name=task_phone]').val(eme_htmlDecode(selectedItem.phone)).attr('readonly', true);
+                                    $('.eme-autocomplete-suggestions').remove();
+                                })
+                            );
+                        });
+                        if (!data.length) {
+                            $(".eme-autocomplete-suggestions").remove();
+                        }
+                        inputField.after(suggestions);
+                    }, "json");
+                }, 500); // Delay of 0.5 second
+            }
+        });
+
+        $(document).on("click", function() {
+            $(".eme-autocomplete-suggestions").remove();
+        });
+
+        // if this js gets loaded, the lastname is always clearable, so call those functions
+        $('input[name=task_lastname]').on("change",eme_tasklastname_clearable);
+        eme_tasklastname_clearable();
     }
 });

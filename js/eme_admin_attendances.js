@@ -79,67 +79,62 @@ jQuery(document).ready( function($) {
 
 	// for autocomplete to work, the element needs to exist, otherwise JS errors occur
 	// we check for that using length
-	if ($('input[name=chooseperson]').length) {
-		$('input[name=chooseperson]').autocomplete({
-			source: function(request, response) {
-				$.post(ajaxurl,
-					{ q: request.term,
-						action: 'eme_autocomplete_people',
-						'eme_admin_nonce': emeattendances.translate_adminnonce,
-						eme_searchlimit: 'people'
-					},
-					function(data){
-						response($.map(data, function(item) {
-							return {
-								lastname: eme_htmlDecode(item.lastname),
-								firstname: eme_htmlDecode(item.firstname),
-								email: eme_htmlDecode(item.email),
-								person_id: eme_htmlDecode(item.person_id)
-							};
-						}));
-					}, 'json');
-			},
-			change: function (event, ui) {
-				if(!ui.item){
-					$(event.target).val("");
-				}
-			},
-			response: function (event, ui) {
-				if (!ui.content.length) {
-					ui.content.push({ person_id: 0 });
-					$(event.target).val("");
-				}
-			},
-			select:function(event, ui) {
-				// when a person is selected, populate related fields in this form
-				if (ui.item.person_id>0) {
-					$('input[name=person_id]').val(ui.item.person_id);
-					$(event.target).val(ui.item.lastname+' '+ui.item.firstname+' ('+ui.item.person_id+')').attr('readonly', true).addClass('clearable x');
+    if ($('input[name=chooseperson]').length) {
+        let emeadmin_attendance_timeout; // Declare a variable to hold the timeout ID
+        $("input[name=chooseperson]").on("input", function(e) {
+            clearTimeout(emeadmin_attendance_timeout); // Clear the previous timeout
+            var inputField = $(this);
+            var inputValue = inputField.val();
+            $(".eme-autocomplete-suggestions").remove();
+            if (inputValue.length >= 2) {
+                emeadmin_attendance_timeout = setTimeout(function() {
+                    $.post(ajaxurl,
+                        { 
+                            'lastname': inputValue,
+                            'eme_admin_nonce': emeattendances.translate_adminnonce,
+                            'action': 'eme_autocomplete_people',
+                            'eme_searchlimit': 'people'
+                        },
+                        function(data) {
+                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            $.each(data, function(index, item) {
+                                suggestions.append(
+                                    $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .data("item", item)
+                                    .on("click", function(e) {
+                                        e.preventDefault();
+                                        var selectedItem = $(this).data("item");
+                                        if (selectedItem.person_id) {
+                                            $('input[name=person_id]').val(eme_htmlDecode(selectedItem.person_id));
+                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname) +' ('+eme_htmlDecode(selectedItem.person_id)+')').attr('readonly', true).addClass('clearable x');
+                                        }
+                                    })
+                                );
+                            });
+                            if (!data.length) {
+                                suggestions.append(
+                                    $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+emeattendances.translate_nomatchperson+'</strong>')
+                                );
+                            }
+                            inputField.after(suggestions);
+                        }, "json");
+                }, 500); // Delay of 0.5 second
+            }
+        });
+        $(document).on("click", function() {
+            $(".eme-autocomplete-suggestions").remove();
+        });
 
-				}
-				return false;
-			},
-			minLength: 2
-		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
-			if (item.person_id==0) {
-				return $( '<li></li>' )
-					.append('<strong>'+emeattendances.translate_nomatchperson+'</strong>')
-					.appendTo( ul );
-			} else {
-				return $( '<li></li>' )
-					.append('<a><strong>'+item.lastname+' '+item.firstname+' ('+item.person_id+')'+'</strong><br /><small>'+item.email+ '</small></a>')
-					.appendTo( ul );
-			}
-		};
-
-		// if manual input: set the hidden field empty again
-		$('input[name=chooseperson]').on("keyup",function() {
-			$('input[name=person_id]').val('');
-		}).on("change",function() {
-			if ($('input[name=chooseperson]').val()=='') {
-				$('input[name=person_id]').val('');
-				$('input[name=chooseperson]').attr('readonly', false).removeClass('clearable');
-			}
-		});
-	}
+        // if manual input: set the hidden field empty again
+        $('input[name=chooseperson]').on("keyup",function() {
+            $('input[name=person_id]').val('');
+        }).change(function() {
+            if ($(this).val()=='') {
+                $('input[name=person_id]').val('');
+                $(this).attr('readonly', false).removeClass('clearable');
+            }
+        });
+    }
 });

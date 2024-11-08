@@ -2781,27 +2781,27 @@ function eme_events_in_location_list( $location, $scope = 'future', $order = 'AS
 // API function, leave it as is
 function eme_locations_search_ajax() {
 	header( 'Content-type: application/json; charset=utf-8' );
-	if ( isset( $_GET['id'] ) && $_GET['id'] != '' ) {
+	if ( !empty( $_GET['id'] ) ) {
 		$item   = eme_get_location( intval( $_GET['id'] ) );
-		$record = [];
 		if ( empty( $item ) ) {
+			echo wp_json_encode( [] );
+		} else {
+			$record = [];
+			$record['id']           = $item['location_id'];
+			$record['name']         = eme_trans_esc_html( $item['location_name'] );
+			$record['address1']     = eme_trans_esc_html( $item['location_address1'] );
+			$record['address2']     = eme_trans_esc_html( $item['location_address2'] );
+			$record['city']         = eme_trans_esc_html( $item['location_city'] );
+			$record['state']        = eme_trans_esc_html( $item['location_state'] );
+			$record['zip']          = eme_trans_esc_html( $item['location_zip'] );
+			$record['country']      = eme_trans_esc_html( $item['location_country'] );
+			$record['latitude']     = eme_trans_esc_html( $item['location_latitude'] );
+			$record['longitude']    = eme_trans_esc_html( $item['location_longitude'] );
+			$record['map_icon']     = eme_trans_esc_html( $item['location_properties']['map_icon'] );
+			$record['online_only']  = eme_trans_esc_html( $item['location_properties']['online_only'] );
+			$record['location_url'] = eme_trans_esc_html( $item['location_url'] );
 			echo wp_json_encode( $record );
-			return;
 		}
-		$record['id']           = $item['location_id'];
-		$record['name']         = eme_trans_esc_html( $item['location_name'] );
-		$record['address1']     = eme_trans_esc_html( $item['location_address1'] );
-		$record['address2']     = eme_trans_esc_html( $item['location_address2'] );
-		$record['city']         = eme_trans_esc_html( $item['location_city'] );
-		$record['state']        = eme_trans_esc_html( $item['location_state'] );
-		$record['zip']          = eme_trans_esc_html( $item['location_zip'] );
-		$record['country']      = eme_trans_esc_html( $item['location_country'] );
-		$record['latitude']     = eme_trans_esc_html( $item['location_latitude'] );
-		$record['longitude']    = eme_trans_esc_html( $item['location_longitude'] );
-		$record['map_icon']     = eme_trans_esc_html( $item['location_properties']['map_icon'] );
-		$record['online_only']  = eme_trans_esc_html( $item['location_properties']['online_only'] );
-		$record['location_url'] = eme_trans_esc_html( $item['location_url'] );
-		echo wp_json_encode( $record );
 	} else {
 		eme_locations_autocomplete_ajax( 1 );
 	}
@@ -2816,12 +2816,12 @@ function eme_locations_autocomplete_ajax( $no_wp_die = 0 ) {
 		}
 	}
 	$res = [];
-	if ( ! isset( $_REQUEST['q'] ) ) {
+	if ( ! isset( $_REQUEST['name'] ) ) {
 		echo wp_json_encode( $res );
 		return;
 	}
 
-	$locations = eme_search_locations( eme_sanitize_request($_REQUEST['q']) );
+	$locations = eme_search_locations( eme_sanitize_request($_REQUEST['name']) );
 	// change null to empty
 	$locations = array_map(
 	    function( $v ) {

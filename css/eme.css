@@ -575,18 +575,6 @@ form[name=eme-fs-form] div.eme-frontendedit-location-map {
 	display: none;
 }
 
-/* Autocomplete */
-form[name=eme-fs-form] .ui-autocomplete {
-   list-style:none; width:400px; background:#fff;
-   border:1px solid #ccc; border-radius:3px;
-   -webkit-box-shadow: 4px 10px 15px -3px rgba(0,0,0,.05), 1px 2px 4px -1px rgba(0,0,0,.1), -2px -1px 5px rgba(0,0,0,.025);
-   -moz-box-shadow:4px 10px 15px -3px rgba(0,0,0,.05), 1px 2px 4px -1px rgba(0,0,0,.1), -2px -1px 5px rgba(0,0,0,.025);
-   box-shadow:4px 10px 15px -3px rgba(0,0,0,.05), 1px 2px 4px -1px rgba(0,0,0,.1), -2px -1px 5px rgba(0,0,0,.025);
-}
-form[name=eme-fs-form] .ui-autocomplete li { }
-form[name=eme-fs-form] .ui-autocomplete li a { display: block; padding: .5em 1em; border-radius:3px; cursor: pointer; text-decoration: none; line-height:1em; }
-form[name=eme-fs-form] .ui-autocomplete li a:hover { background:#f8f8f8; text-decoration: none; }
-
 /* accordeon */
 details.eme_accordion {
   overflow: auto;
@@ -607,7 +595,7 @@ details.eme_accordion[open] {
   background-color: white;
   border: 1px solid #aaa;
   border-radius: 3px;
-  margin-top: 5px;
+  margin-top: 2px;
 }
 details.eme_accordion[open] > summary:hover {
   background-color: #e6e6e6;
@@ -653,3 +641,21 @@ details.eme_accordion > div, details.eme_accordion > p {
     display: block;
     background-color: #fff;
 }
+
+/* autocomplete */
+.eme-autocomplete-suggestions {
+	border: 1px solid #ccc;
+	max-height: 200px;
+	overflow-y: auto;
+	position: relative;
+	z-index: 1000;
+	background: #fff;
+}
+.eme-autocomplete-suggestion {
+	padding: 10px;
+	cursor: pointer;
+}
+.eme-autocomplete-suggestion:hover {
+	background: #f0f0f0;
+}
+

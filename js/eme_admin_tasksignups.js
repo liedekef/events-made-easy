@@ -1,59 +1,58 @@
 jQuery(document).ready( function($) {
-
-        $('#TaskSignupsTableContainer').jtable({
-            title: emetasks.translate_signups,
-            paging: true,
-            sorting: true,
-            jqueryuiTheme: true,
-            defaultSorting: 'name ASC',
-            selecting: true, //Enable selecting
-            multiselect: true, //Allow multiple selecting
-            selectingCheckboxes: true, //Show checkboxes on first column
-            selectOnRowClick: true,
-            toolbar: {
-                items: [{
-                        text: emetasks.translate_csv,
-                        click: function () {
-                                  jtable_csv('#TaskSignupsTableContainer');
-                               }
-                        },
-                        {
-                        text: emetasks.translate_print,
-                        click: function () {
-                                  $('#TaskSignupsTableContainer').printElement();
-                               }
-                        }
-                        ]
+    $('#TaskSignupsTableContainer').jtable({
+        title: emetasks.translate_signups,
+        paging: true,
+        sorting: true,
+        jqueryuiTheme: true,
+        defaultSorting: 'name ASC',
+        selecting: true, //Enable selecting
+        multiselect: true, //Allow multiple selecting
+        selectingCheckboxes: true, //Show checkboxes on first column
+        selectOnRowClick: true,
+        toolbar: {
+            items: [{
+                text: emetasks.translate_csv,
+                click: function () {
+                    jtable_csv('#TaskSignupsTableContainer');
+                }
             },
-            deleteConfirmation: function(data) {
-               data.deleteConfirmMessage = emetasks.translate_pressdeletetoremove;
+                {
+                    text: emetasks.translate_print,
+                    click: function () {
+                        $('#TaskSignupsTableContainer').printElement();
+                    }
+                }
+            ]
+        },
+        deleteConfirmation: function(data) {
+            data.deleteConfirmMessage = emetasks.translate_pressdeletetoremove;
+        },
+        actions: {
+            listAction: ajaxurl+'?action=eme_task_signups_list&eme_admin_nonce='+emetasks.translate_adminnonce,
+            deleteAction: ajaxurl+'?action=eme_manage_task_signups&do_action=deleteTaskSignups&eme_admin_nonce='+emetasks.translate_adminnonce
+        },
+        fields: {
+            id: {
+                key: true,
+                visibility: 'hidden',
+                title: emetasks.translate_id
             },
-            actions: {
-                listAction: ajaxurl+'?action=eme_task_signups_list&eme_admin_nonce='+emetasks.translate_adminnonce,
-                deleteAction: ajaxurl+'?action=eme_manage_task_signups&do_action=deleteTaskSignups&eme_admin_nonce='+emetasks.translate_adminnonce
+            event_name: {
+                visibility: 'fixed',
+                title: emetasks.translate_event
             },
-            fields: {
-                id: {
-                    key: true,
-                    visibility: 'hidden',
-		    title: emetasks.translate_id
-                },
-                event_name: {
-                    visibility: 'fixed',
-		    title: emetasks.translate_event
-                },
-                task_name: {
-                    visibility: 'fixed',
-		    title: emetasks.translate_taskname
-                },
-                task_start: {
-		    title: emetasks.translate_taskstart
-                },
-                task_end: {
-		    title: emetasks.translate_taskend
-                },
-                signup_status: {
-                    visibility: 'hidden',
+            task_name: {
+                visibility: 'fixed',
+                title: emetasks.translate_taskname
+            },
+            task_start: {
+                title: emetasks.translate_taskstart
+            },
+            task_end: {
+                title: emetasks.translate_taskend
+            },
+            signup_status: {
+                visibility: 'hidden',
 		    title: emetasks.translate_tasksignup_status
                 },
                 signup_date: {

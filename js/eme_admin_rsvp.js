@@ -473,66 +473,65 @@ jQuery(document).ready(function ($) {
     // for autocomplete to work, the element needs to exist, otherwise JS errors occur
     // we check for that using length
     if ($('input[name=chooseevent]').length) {
-          $('input[name=chooseevent]').autocomplete({
-            source: function(request, response) {
-		        var search_all=0;
-                        if ($('#eventsearch_all').is(':checked')) {
-                                    search_all=1;
-                        }
-                         $.post(ajaxurl,
-                                  { q: request.term,
-                                    exclude_id: $('#event_id').val(),
-                                    only_rsvp: 1,
-                                    search_all: search_all,
-                                    action: 'eme_autocomplete_event'
-                                  },
-                                  function(data){
-                                       response($.map(data, function(item) {
-                                          return {
-                                             eventinfo: eme_htmlDecode(item.eventinfo),
-                                             transferto_id: eme_htmlDecode(item.event_id),
-                                          };
-                                       }));
-                                  }, 'json');
-            },
-            change: function (event, ui) {
-                       if(!ui.item){
-                            $(event.target).val("");
-                       }
-            },
-            response: function (event, ui) {
-                       if (!ui.content.length) {
-                            ui.content.push({ transferto_id: 0 });
-                            $(event.target).val("");
-                       }
-            },
-            select:function(event, ui) {
-                    // when a person is selected, populate related fields in this form
-                    if (ui.item.transferto_id>0) {
-                         $('input[name=transferto_id]').val(ui.item.transferto_id);
-                         $(event.target).val(ui.item.eventinfo).attr("readonly", true).addClass('clearable x');
+        let emeadmin_chooseevent_timeout; // Declare a variable to hold the timeout ID
+        $("input[name=chooseevent]").on("input", function(e) {
+            clearTimeout(emeadmin_chooseevent_timeout); // Clear the previous timeout
+            var inputField = $(this);
+            var inputValue = inputField.val();
+            $(".eme-autocomplete-suggestions").remove();
+            if (inputValue.length >= 2) {
+                emeadmin_chooseevent_timeout = setTimeout(function() {
+                    var search_all=0;
+                    if ($('#eventsearch_all').is(':checked')) {
+                        search_all=1;
                     }
-                    return false;
-            },
-            minLength: 2
-          }).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
-            if (item.transferto_id==0) {
-               return $( '<li></li>' )
-               .append('<strong>'+emersvp.translate_nomatchevent+'</strong>')
-               .appendTo( ul );
-            } else {
-               return $( '<li></li>' )
-               .append('<a><strong>'+item.eventinfo+'</strong></a>')
-               .appendTo( ul );
+                    $.post(ajaxurl,
+                        { 
+                            'q': inputValue,
+                            'exclude_id': $('#event_id').val(),
+                            'only_rsvp': 1,
+                            'search_all': search_all,
+                            'eme_admin_nonce': emersvp.translate_adminnonce,
+                            'action': 'eme_autocomplete_event'
+                        },
+                        function(data) {
+                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            $.each(data, function(index, item) {
+                                suggestions.append(
+                                    $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+eme_htmlDecode(item.eventinfo)+"</strong>")
+                                    .data("item", item)
+                                    .on("click", function(e) {
+                                        e.preventDefault();
+                                        var selectedItem = $(this).data("item");
+                                        if (selectedItem.event_id) {
+                                            $('input[name=transferto_id]').val(eme_htmlDecode(selectedItem.event_id));
+                                            inputField.val(eme_htmlDecode(selectedItem.name)).attr('readonly', true).addClass('clearable x');
+                                        }
+                                    })
+                                );
+                            });
+                            if (!data.length) {
+                                suggestions.append(
+                                    $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+emersvp.translate_nomatchevent+'</strong>')
+                                );
+                            }
+                            inputField.after(suggestions);
+                        }, "json");
+                }, 500); // Delay of 0.5 second
             }
-          };
+        });
+        $(document).on("click", function() {
+            $(".eme-autocomplete-suggestions").remove();
+        });
 
-          // if manual input: set the hidden field empty again
-          $('input[name=chooseevent]').on("change",function() {
-             if ($(this).val()=='') {
-		$(this).attr('readonly', false).removeClass('clearable');
+        // if manual input: set the hidden field empty again
+        $('input[name=chooseevent]').on("change",function() {
+            if ($(this).val()=='') {
+                $(this).attr('readonly', false).removeClass('clearable');
                 $('input[name=transferto_id]').val('');
-             }
-          });
+            }
+        });
     }
 });

@@ -1,5 +1,4 @@
 jQuery(document).ready( function($) {
-
         $('#TemplatesTableContainer').jtable({
             title: emetemplates.translate_templates,
             paging: true,

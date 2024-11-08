@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.5.15 (2024//) =
 * Replaced the use of jquery-ui-tabs and jquery-ui-accordion by regular html5, css and a little bit of JS. This should speed up things
 * Removed the use of jquery-ui-dialog in the frontend. Once jtable no longer needs it, it will be removed in the backend too
+* Removed the use of jquery-ui-autocomplete
 * Added option all_events to eme_simple_multibooking_form, so all events are selected to attend.
 * Allow more characters in pdf attach names (for templates, when used as mail attachments only)
 

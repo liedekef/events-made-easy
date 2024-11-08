@@ -4967,19 +4967,17 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
 		wp_die();
 	}
-        if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
-                ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
-                ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
-		wp_die();
-        }
+    if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
+        ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_admin_nonce']), 'eme_admin' ) ) ||
+        ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) ) {
+        wp_die();
+    }
 	$return = [];
-	$q      = '';
+	$lastname      = '';
 	if ( isset( $_REQUEST['lastname'] ) ) {
-		$q = strtolower( eme_sanitize_request( $_REQUEST['lastname'] ) );
+		$lastname = strtolower( eme_sanitize_request( $_REQUEST['lastname'] ) );
 	} elseif ( isset( $_REQUEST['task_lastname'] ) ) {
-		$q = strtolower( eme_sanitize_request( $_REQUEST['task_lastname'] ) );
-	} elseif ( isset( $_REQUEST['q'] ) ) {
-		$q = strtolower( eme_sanitize_request( $_REQUEST['q'] ) );
+		$lastname = strtolower( eme_sanitize_request( $_REQUEST['task_lastname'] ) );
 	}
 
 	if ( isset( $_REQUEST['exclude_personids'] ) ) {
@@ -4994,7 +4992,7 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 	}
 
 	header( 'Content-type: application/json; charset=utf-8' );
-	if ( empty( $q ) ) {
+	if ( empty( $lastname ) ) {
 		echo wp_json_encode( $return );
 		if ( ! $no_wp_die ) {
 			wp_die();
@@ -5012,7 +5010,7 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 
 	$wp_ids_seen = [];
 	if ( $search_tables == 'people' || $search_tables == 'both' ) {
-		$search = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($q) ) . "%')";
+		$search = "(lastname LIKE '%" . esc_sql( $wpdb->esc_like($lastname) ) . "%' OR firstname LIKE '%" . esc_sql( $wpdb->esc_like($lastname) ) . "%' OR email LIKE '%" . esc_sql( $wpdb->esc_like($lastname) ) . "%')";
 		if ( ! empty( $exclude_personids ) ) {
 			$search .= " AND person_id NOT IN ($exclude_personids)";
 		}
@@ -5041,7 +5039,7 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 	}
 	if ( $search_tables == 'wp_users' || $search_tables == 'both' ) {
 		// we don't want to include the people linked in EME, so we exclude those
-		[$wp_users, $total] = eme_get_wp_users( search: $q, wp_ids_to_exclude: $wp_ids_seen );
+		[$wp_users, $total] = eme_get_wp_users( search: $lastname, wp_ids_to_exclude: $wp_ids_seen );
 		foreach ( $wp_users as $wp_user ) {
 			$record             = [];
 			$phone              = eme_esc_html( eme_get_user_phone( $wp_user->ID ) );

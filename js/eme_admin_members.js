@@ -572,128 +572,182 @@ jQuery(document).ready(function ($) {
 		});
 	}
 
-	// for autocomplete to work, the element needs to exist, otherwise JS errors occur
-	// we check for that using length
-	if ($('input[name=chooserelatedmember]').length) {
-		$('input[name=chooserelatedmember]').autocomplete({
-			source: function(request, response) {
-				$.post(ajaxurl,
-					{ q: request.term,
-					  'member_id': $('#member_id').val(),
-					  'membership_id': $('#membership_id').val(),
-					  'eme_admin_nonce': ememembers.translate_adminnonce,
-					  action: 'eme_autocomplete_membermainaccount'
-					},
-					function(data){
-						response($.map(data, function(item) {
-							return {
-								lastname: eme_htmlDecode(item.lastname),
-								firstname: eme_htmlDecode(item.firstname),
-								email: eme_htmlDecode(item.email),
-								member_id: eme_htmlDecode(item.member_id)
-							};
-						}));
-					}, 'json');
-			},
-			change: function (event, ui) {
-				if(!ui.item){
-					$(event.target).val("");
-				}
-			},
-			response: function (event, ui) {
-				if (!ui.content.length) {
-					ui.content.push({ member_id: 0 });
-					$(event.target).val("");
-				}
-			},
-			select:function(event, ui) {
-				// when a person is selected, populate related fields in this form
-				if (ui.item.member_id>0) {
-					$('input[name=related_member_id]').val(ui.item.member_id);
-					$(event.target).val(ui.item.lastname+' '+ui.item.firstname+' ('+ui.item.member_id+')').attr('readonly', true).addClass('clearable x');
-				}
-				return false;
-			},
-			minLength: 2
-		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
-			if (item.member_id==0) {
-				return $( '<li></li>' )
-					.append('<strong>'+ememembers.translate_nomatchmember+'</strong>')
-					.appendTo( ul );
-			} else {
-				return $( '<li></li>' )
-					.append('<a><strong>'+item.lastname+' '+item.firstname+' ('+item.member_id+')'+'</strong><br /><small>'+item.email+ '</small></a>')
-					.appendTo( ul );
-			}
-		};
+    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
+    // we check for that using length
+    if ($('input[name=transferperson]').length) {
+        let emeadmin_transferperson_timeout; // Declare a variable to hold the timeout ID
+        $("input[name=transferperson]").on("input", function(e) {
+            clearTimeout(emeadmin_transferperson_timeout); // Clear the previous timeout
+            var inputField = $(this);
+            var inputValue = inputField.val();
+            $(".eme-autocomplete-suggestions").remove();
+            if (inputValue.length >= 2) {
+                emeadmin_transferperson_timeout = setTimeout(function() {
+                    $.post(ajaxurl,
+                        { 
+                            'q': inputValue,
+                            'eme_admin_nonce': ememembers.translate_adminnonce,
+                            'action': 'eme_autocomplete_memberperson',
+                            'exclude_personid': $('input[name=person_id]').val(),
+                            'membership_id': $('#membership_id').val(),
+                            'related_member_id': $('#related_member_id').val()
+                        },
+                        function(data) {
+                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            $.each(data, function(index, item) {
+                                suggestions.append(
+                                    $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.person_id)+')</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .data("item", item)
+                                    .on("click", function(e) {
+                                        e.preventDefault();
+                                        var selectedItem = $(this).data("item");
+                                        if (selectedItem.person_id) {
+                                            $('input[name=transferto_personid]').val(eme_htmlDecode(selectedItem.person_id));
+                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)+' ('+eme_htmlDecode(selectedItem.person_id)+')').attr('readonly', true).addClass('clearable x');
+                                        }
+                                    })
+                                );
+                            });
+                            suggestions.css({
+                                left: inputField.position().left,
+                            });
+                            inputField.after(suggestions);
+                        }, "json");
+                }, 500); // Delay of 0.5 second
+            }
+        });
+        $(document).on("click", function() {
+            $(".eme-autocomplete-suggestions").remove();
+        });
 
-		// if manual input: set the hidden field empty again
-		$('input[name=chooserelatedmember]').on("keyup",function() {
-			$('input[name=related_member_id]').val('');
-		}).on("change",function() {
-			if ($('input[name=chooserelatedmember]').val()=='') {
-				$('input[name=related_member_id]').val('');
-				$('input[name=chooserelatedmember]').attr('readonly', false).removeClass('clearable');
-			}
-		});
-	}
+        // if manual input: set the hidden field empty again
+        $('input[name=transferperson]').on("keyup",function() {
+            $('input[name=transferto_personid]').val('');
+        }).change(function() {
+            if ($(this).val()=='') {
+                $('input[name=transferto_personid]').val('');
+                $(this).attr('readonly', false).removeClass('clearable');
+            }
+        });
+    }
+ 
+    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
+    // we check for that using length
+    if ($('input[name=chooserelatedmember]').length) {
+        let emeadmin_chooserelatedmember_timeout; // Declare a variable to hold the timeout ID
+        $("input[name=chooserelatedmember]").on("input", function(e) {
+            clearTimeout(emeadmin_chooserelatedmember_timeout); // Clear the previous timeout
+            var inputField = $(this);
+            var inputValue = inputField.val();
+            $(".eme-autocomplete-suggestions").remove();
+            if (inputValue.length >= 2) {
+                emeadmin_chooserelatedmember_timeout = setTimeout(function() {
+                    $.post(ajaxurl,
+                        { 
+                            'q': inputValue,
+                            'member_id': $('#member_id').val(),
+                            'membership_id': $('#membership_id').val(),
+                            'eme_admin_nonce': ememembers.translate_adminnonce,
+                            'action': 'eme_autocomplete_membermainaccount'
+                        },
+                        function(data) {
+                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            $.each(data, function(index, item) {
+                                suggestions.append(
+                                    $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.member_id)+')</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .data("item", item)
+                                    .on("click", function(e) {
+                                        e.preventDefault();
+                                        var selectedItem = $(this).data("item");
+                                        if (selectedItem.person_id) {
+                                            $('input[name=related_member_id]').val(eme_htmlDecode(selectedItem.person_id));
+                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)+' ('+eme_htmlDecode(item.member_id)).attr('readonly', true).addClass('clearable x');
+                                        }
+                                    })
+                                );
+                            });
+                            if (!data.length) {
+                                $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+ememembers.translate_nomatchmember+'</strong>')
+                            }
+                            inputField.after(suggestions);
+                        }, "json");
+                }, 500); // Delay of 0.5 second
+            }
+        });
+        $(document).on("click", function() {
+            $(".eme-autocomplete-suggestions").remove();
+        });
 
-	// for autocomplete to work, the element needs to exist, otherwise JS errors occur
-	// we check for that using length
-	if ($('input[name=chooseperson]').length) {
-		$('input[name=chooseperson]').autocomplete({
-			source: function(request, response) {
-				$.post(ajaxurl,
-					{ q: request.term,
-					  'eme_admin_nonce': ememembers.translate_adminnonce,
-					  action: 'eme_autocomplete_people',
-					},
-					function(data){
-						response($.map(data, function(item) {
-							return {
-								lastname: eme_htmlDecode(item.lastname),
-								firstname: eme_htmlDecode(item.firstname),
-								email: eme_htmlDecode(item.email),
-								person_id: item.person_id,
-								wp_id: item.wp_id
-							};
-						}));
-					}, 'json');
-			},
-			change: function (event, ui) {
-				if(!ui.item){
-					$(event.target).val('');
-				}
-			},
-			response: function (event, ui) {
-				if (!ui.content.length) {
-					ui.content.push({ person_id: 0 });
-					$(event.target).val('');
-				}
-			},
-			select:function(event, ui) {
-				// when a person is selected, populate some fields in this form, hide the rest of personal info (too complicated)
-				event.preventDefault();
-				$('.personal_info').hide();
-				$('input[name=lastname]').val(ui.item.lastname).attr('readonly', true).show();
-				$('input[name=firstname]').val(ui.item.firstname).attr('readonly', true).show();
-				$('input[name=email]').val(ui.item.email).attr('readonly', true).show();
-				$('input[name=person_id]').val(ui.item.person_id);
-				$(event.target).val(ui.item.lastname+' '+ui.item.firstname).attr('readonly', true).addClass('clearable x');
-				$('input[name=wp_id]').val(ui.item.wp_id);
-				$('input[name=wp_id]').trigger('input');
-				return false;
-			},
-			minLength: 2
-		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
-			return $( '<li></li>' )
-				.append('<a><strong>'+item.lastname+' '+item.firstname+'</strong><br /><small>'+item.email+'</small></a>')
-				.appendTo( ul );
-		};
+        // if manual input: set the hidden field empty again
+        $('input[name=chooserelatedmember]').on("keyup",function() {
+            $('input[name=related_member_id]').val('');
+        }).change(function() {
+            if ($(this).val()=='') {
+                $('input[name=related_member_id]').val('');
+                $(this).attr('readonly', false).removeClass('clearable');
+            }
+        });
+    }
 
-		// if manual input: set the hidden field empty again
-		$('input[name=chooseperson]').on("change",function() {
-			if ($(this).val()=='') {
+    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
+    // we check for that using length
+    if ($('input[name=chooseperson]').length) {
+        let emeadmin_chooseperson_timeout; // Declare a variable to hold the timeout ID
+        $("input[name=chooseperson]").on("input", function(e) {
+            clearTimeout(emeadmin_chooseperson_timeout); // Clear the previous timeout
+            var inputField = $(this);
+            var inputValue = inputField.val();
+            $(".eme-autocomplete-suggestions").remove();
+            if (inputValue.length >= 2) {
+                emeadmin_chooseperson_timeout = setTimeout(function() {
+                    $.post(ajaxurl,
+                        { 
+                            'lastname': inputValue,
+                            'eme_admin_nonce': ememembers.translate_adminnonce,
+                            'action': 'eme_autocomplete_people',
+                            'eme_searchlimit': 'people'
+                        },
+                        function(data) {
+                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            $.each(data, function(index, item) {
+                                suggestions.append(
+                                    $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .data("item", item)
+                                    .on("click", function(e) {
+                                        e.preventDefault();
+                                        var selectedItem = $(this).data("item");
+                                        if (selectedItem.person_id) {
+                                            $('.personal_info').hide();
+                                            $('input[name=lastname]').val(eme_htmlDecode(selectedItem.lastname)).attr('readonly', true).show();
+                                            $('input[name=firstname]').val(eme_htmlDecode(selectedItem.firstname)).attr('readonly', true).show();
+                                            $('input[name=email]').val(eme_htmlDecode(selectedItem.email)).attr('readonly', true).show();
+                                            $('input[name=person_id]').val(eme_htmlDecode(selectedItem.person_id));
+                                            $('input[name=wp_id]').val(eme_htmlDecode(selectedItem.wp_id)).trigger('input');
+                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)).attr('readonly', true).addClass('clearable x');
+                                        }
+                                    })
+                                );
+                            });
+                            if (!data.length) {
+                                $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+ememembers.translate_nomatchperson+'</strong>')
+                            }
+                            inputField.after(suggestions);
+                        }, "json");
+                }, 500); // Delay of 0.5 second
+            }
+        });
+        $(document).on("click", function() {
+            $(".eme-autocomplete-suggestions").remove();
+        });
+
+        // if manual input: set the hidden field empty again
+        $('input[name=chooseperson]').on("change",function() {
+            if ($(this).val()=='') {
 				$('input[name=person_id]').val('');
 				$('input[name=lastname]').val('').attr('readonly', false);
 				$('input[name=firstname]').val('').attr('readonly', false);
@@ -702,75 +756,9 @@ jQuery(document).ready(function ($) {
 				$('input[name=wp_id]').trigger('input');
 				$(this).attr('readonly', false).removeClass('clearable');
 				$('.personal_info').show();
-			}
-		});
-	}
-
-	// for autocomplete to work, the element needs to exist, otherwise JS errors occur
-	// we check for that using length
-	if ($('input[name=transferperson]').length) {
-		$('input[name=transferperson]').autocomplete({
-			source: function(request, response) {
-				$.post(ajaxurl,
-					{ 'q': request.term,
-					  'eme_admin_nonce': ememembers.translate_adminnonce,
-					  'action': 'eme_autocomplete_memberperson',
-					  'exclude_personid': $('input[name=person_id]').val(),
-					  'membership_id': $('#membership_id').val(),
-					  'related_member_id': $('#related_member_id').val()
-					},
-					function(data){
-						response($.map(data, function(item) {
-							return {
-								lastname: eme_htmlDecode(item.lastname),
-								firstname: eme_htmlDecode(item.firstname),
-								email: eme_htmlDecode(item.email),
-								person_id: item.person_id
-							};
-						}));
-					}, 'json');
-			},
-			change: function (event, ui) {
-				if(!ui.item){
-					$(event.target).val('');
-				}
-			},
-			response: function (event, ui) {
-				if (!ui.content.length) {
-					ui.content.push({ person_id: 0 });
-					$(event.target).val('');
-				}
-			},
-			select:function(event, ui) {
-				event.preventDefault();
-				if (ui.item.person_id>0) {
-					$('input[name=transferto_personid]').val(ui.item.person_id);
-					$(event.target).val(ui.item.lastname+' '+ui.item.firstname).attr('readonly', true).addClass('clearable x');
-				}
-				return false;
-			},
-			minLength: 2
-		}).data( 'ui-autocomplete' )._renderItem = function( ul, item ) {
-			if (item.person_id==0) {
-				return $( '<li></li>' )
-					.append('<strong>'+ememembers.translate_nomatchperson+'</strong>')
-					.appendTo( ul );
-			} else {
-				return $( '<li></li>' )
-					.append('<a><strong>'+item.lastname+' '+item.firstname+' ('+item.person_id+')'+'</strong><br /><small>'+item.email+ '</small></a>')
-					.appendTo( ul );
-			}
-		};
-
-		// if manual input: set the hidden field empty again
-		$('input[name=transferperson]').on("change",function() {
-			if ($(this).val()=='') {
-				$('input[name=transferto_personid]').val('');
-				$(this).attr('readonly', false).removeClass('clearable');
-			}
-		});
-	}
-
+            }
+        });
+    }
 	function updateShowHideAdminActions () {
            var action=$('select#eme_admin_action').val();
            if ($.inArray(action,['acceptPayment','stopMembership']) >= 0) {

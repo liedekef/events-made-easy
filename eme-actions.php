@@ -262,12 +262,12 @@ function eme_admin_register_scripts() {
 	} else {
 		wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery', 'eme-select2' ], EME_VERSION );
 	}
-	wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jtable-storage', 'jquery-ui-autocomplete', 'jquery-ui-sortable', 'eme-jquery-validate', 'eme-print' ], EME_VERSION );
+	wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jtable-storage', 'jquery-ui-sortable', 'eme-jquery-validate', 'eme-print' ], EME_VERSION );
 
 	wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
 	wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ 'jquery' ], EME_VERSION, true );
 	wp_register_script( 'eme-edit-maps', EME_PLUGIN_URL . 'js/eme_edit_maps.js', [ 'jquery', 'eme-leaflet-maps' ], EME_VERSION, true );
-	wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'jquery-ui-autocomplete' ], EME_VERSION );
+	wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-rememberme', EME_PLUGIN_URL . 'js/eme_localstorage.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-options', EME_PLUGIN_URL . 'js/eme_admin_options.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-formfields', EME_PLUGIN_URL . 'js/eme_admin_fields.js', [ 'jquery' ], EME_VERSION );
@@ -305,7 +305,6 @@ function eme_admin_register_scripts() {
 	if ( file_exists( $eme_css_name ) ) {
 		wp_register_style( 'eme_stylesheet_extra', get_stylesheet_directory_uri() . '/eme.css', [ 'eme_stylesheet' ], EME_VERSION );
 	}
-	wp_register_style( 'eme-jquery-ui-autocomplete', EME_PLUGIN_URL . 'css/jquery.autocomplete.css' );
 	wp_register_style( 'eme-jquery-ui-css', EME_PLUGIN_URL . 'css/jquery-ui-theme-smoothness-1.11.3/jquery-ui.min.css' );
 	wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-2.5.0/themes/jqueryui/jtable_jqueryui.css' );
 	wp_register_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css' );
@@ -371,7 +370,7 @@ function eme_register_scripts() {
 	// the frontend also needs the autocomplete (rsvp form)
 	$search_tables = get_option( 'eme_autocomplete_sources' );
 	if ( $search_tables != 'none' && is_user_logged_in() ) {
-		wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ 'jquery-ui-autocomplete' ], EME_VERSION, $load_js_in_footer );
+		wp_register_script( 'eme-autocomplete-form', EME_PLUGIN_URL . 'js/eme_autocomplete_form.js', [ ], EME_VERSION, $load_js_in_footer );
 	}
 	wp_register_script( 'eme-rememberme', EME_PLUGIN_URL . 'js/eme_localstorage.js', [ 'jquery' ], EME_VERSION, $load_js_in_footer );
 
@@ -391,9 +390,9 @@ function eme_register_scripts() {
 			'translate_default_map_icon'  => get_option( 'eme_location_map_icon' ),
 		];
 		wp_localize_script( 'eme-edit-maps', 'emeeditmaps', $translation_array );
-		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'eme-leaflet-maps', 'eme-edit-maps', 'jquery-ui-autocomplete' ], EME_VERSION, true );
+		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'eme-leaflet-maps', 'eme-edit-maps' ], EME_VERSION, true );
 	} else {
-		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery', 'jquery-ui-autocomplete' ], EME_VERSION, true );
+		wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery' ], EME_VERSION, true );
 	}
 	$map_enabled = $eme_map_is_active ? 'true' : 'false';
         $translation_array = [
@@ -427,7 +426,6 @@ function eme_enqueue_frontend() {
 		// for english, no translation code is needed)
 		wp_enqueue_script( 'eme-basic' );
 		wp_enqueue_style( 'eme-jquery-ui-css', EME_PLUGIN_URL . 'css/jquery-ui-theme-smoothness-1.11.3/jquery-ui.min.css', [], EME_VERSION );
-		wp_enqueue_style( 'eme-jquery-ui-autocomplete', EME_PLUGIN_URL . 'css/jquery.autocomplete.css', [], EME_VERSION );
 		wp_enqueue_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css', [], EME_VERSION );
 
 		wp_enqueue_style( 'eme_textsec', EME_PLUGIN_URL . 'css/text-security/text-security-disc.css', [], EME_VERSION );

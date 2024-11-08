@@ -1,14 +1,14 @@
 <?php
 
 if ( ! defined( 'ABSPATH' ) ) {
-        exit; // Exit if accessed directly.
+    exit; // Exit if accessed directly.
 }
 
 function eme_email_fs_event_action( $event, $action ) {
 	$eme_fs_options = get_option('eme_fs');
 	if (empty($eme_fs_options['contact_person']) || $eme_fs_options['contact_person']<=0)
-		return;
-	$contact        = eme_get_contact($eme_fs_options['contact_person']);
+        return;
+    $contact        = eme_get_contact($eme_fs_options['contact_person']);
 	$contact_email  = $contact->user_email;
 	$contact_name   = $contact->display_name;
 	$mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
@@ -196,31 +196,31 @@ function eme_add_event_form_shortcode( $atts ) {
 	wp_enqueue_style( 'eme-leaflet-css' );
 	wp_enqueue_script( 'eme-fs-location' );
 	wp_enqueue_script( 'eme-edit-maps' );
-        $atts = shortcode_atts( [ 'id' => 0, 'startdatetime' => '' ], $atts );
+    $atts = shortcode_atts( [ 'id' => 0, 'startdatetime' => '' ], $atts );
 	$atts['id'] = intval($atts['id']);
 	if ( $atts['startdatetime'] != 'now' )
 		$atts['startdatetime'] = '';
 
-        $form_id = uniqid();
-        $nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
-        $form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
+    $form_id = uniqid();
+    $nonce = wp_nonce_field( 'eme_frontend', 'eme_frontend_nonce', false, false );
+    $form_html   = "<noscript><div class='eme-noscriptmsg'>" . __( 'Javascript is required for this form to work properly', 'events-made-easy' ) . "</div></noscript>
         <div id='eme-fs-message-ok-$form_id' class='eme-message-success eme-fs-message eme-fs-message-success eme-hidden'></div><div id='eme-fs-message-error-$form_id' class='eme-message-error eme-fs-message eme-fs-message-error eme-hidden'></div><div id='div_eme-fs-form-$form_id' style='display: none' class='eme-showifjs'><form id='$form_id' name='eme-fs-form' method='post' action='#'>
-                $nonce
-                <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
-                ";
-	$form_html .= eme_event_fs_form( $atts['id'], $atts['startdatetime'] );
-        $form_html  .= '</form></div>';
+        $nonce
+        <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
+        ";
+    $form_html .= eme_event_fs_form( $atts['id'], $atts['startdatetime'] );
+    $form_html  .= '</form></div>';
 	return $form_html;
 }
 
 function eme_event_fs_form( $template_id, $startdatetime ) {
-	$eme_fs_options = get_option('eme_fs');
-        if ( $template_id ) {
-                $format = eme_get_template_format( $template_id );
-	}
-	if (empty($format)) {
-		$format = $eme_fs_options['form_format'];
-	}
+    $eme_fs_options = get_option('eme_fs');
+    if ( $template_id ) {
+        $format = eme_get_template_format( $template_id );
+    }
+    if (empty($format)) {
+        $format = $eme_fs_options['form_format'];
+    }
 
 	// the generic placeholders
 	$format = eme_replace_generic_placeholders( $format );
@@ -236,7 +236,7 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
 
         $captcha_set = 0;
 	if ( is_user_logged_in() && get_option( 'eme_captcha_only_logged_out' ) ) {
-                $format = eme_add_captcha_submit( $format );
+        $format = eme_add_captcha_submit( $format );
 	} else {
 		$format = eme_add_captcha_submit( $format, eme_get_selected_captcha($eme_fs_options) );
 	}
@@ -244,23 +244,23 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
 	$latitude_added = 0;
 	$longitude_added = 0;
 	$location_id_added = 0;
-        $needle_offset = 0;
-        preg_match_all( '/#(REQ)?_[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
+    $needle_offset = 0;
+    preg_match_all( '/#(REQ)?_[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );
 	$empty_event = eme_new_event();
-        foreach ( $placeholders[0] as $orig_result ) {
-                $result             = $orig_result[0];
-                $orig_result_needle = $orig_result[1] - $needle_offset;
-                $orig_result_length = strlen( $orig_result[0] );
-                $found              = 1;
-                $required           = 0;
-                $replacement        = '';
-                $more               = '';
-		$type               = 'text';
-                        
-                if ( strstr( $result, '#REQ' ) ) {
-                        $result       = str_replace( '#REQ', '#', $result );
-                        $required     = 1;
-                }               
+    foreach ( $placeholders[0] as $orig_result ) {
+        $result             = $orig_result[0];
+        $orig_result_needle = $orig_result[1] - $needle_offset;
+        $orig_result_length = strlen( $orig_result[0] );
+        $found              = 1;
+        $required           = 0;
+        $replacement        = '';
+        $more               = '';
+        $type               = 'text';
+
+        if ( strstr( $result, '#REQ' ) ) {
+            $result       = str_replace( '#REQ', '#', $result );
+            $required     = 1;
+        }               
 
 		#_FIELD{} or #_FIELD{}{}{}
 		#_ATT{} of #_ATT{}{}{} 
@@ -396,78 +396,78 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
       $selected_captcha = eme_get_selected_captcha($eme_fs_options);
       // if the type is not hidden, set it to the sensible value
       if ($type != 'hidden') {
-              switch($field) {
+          switch($field) {
               case 'event_notes':
               case 'location_description':
-                      if ($eme_fs_options['use_wysiwyg']) {
-                              $type = 'wysiwyg_textarea';
-		      } else {
-                              $type = 'textarea';
-		      }
-                      break;
+                  if ($eme_fs_options['use_wysiwyg']) {
+                      $type = 'wysiwyg_textarea';
+                  } else {
+                      $type = 'textarea';
+                  }
+                  break;
               case 'event_category_ids':
-                      $type = ($type != 'radio')?'category_select':'category_radio';
-                      break;
+                  $type = ($type != 'radio')?'category_select':'category_radio';
+                  break;
               case 'event_status':
-                      $type = 'status_select';
-                      break;
+                  $type = 'status_select';
+                  break;
               case 'event_rsvp':
-                      $type = 'binary';
-                      break;
+                  $type = 'binary';
+                  break;
               case 'location_id':
               case 'location_latitude':
               case 'location_longitude':
-                      $type = 'hidden';
-                      break;
+                  $type = 'hidden';
+                  break;
               case 'event_start_time':
-                      //$localized_field_id='localized-start-time';
-                      //$more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
-                      //$type = 'localized_datetime';
-		      $field = 'event[localized_start_time]';
-                      $more .= " size=8 class='eme_formfield_timepicker'";
-                      $type = 'localized_time';
-                      break;
+                  //$localized_field_id='localized-start-time';
+                  //$more .= "required='required' readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_start_time'";
+                  //$type = 'localized_datetime';
+                  $field = 'event[localized_start_time]';
+                  $more .= " size=8 class='eme_formfield_timepicker'";
+                  $type = 'localized_time';
+                  break;
               case 'event_end_time':
-                      //$localized_field_id='localized-end-time';
-                      //$more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
-                      //$type = 'localized_datetime';
-		      $field = 'event[localized_end_time]';
-                      $more .= " size=8 class='eme_formfield_timepicker'";
-                      $type = 'localized_time';
-                      break;
+                  //$localized_field_id='localized-end-time';
+                  //$more .= "readonly='readonly' class='eme_formfield_ftime' data-alt-field='event_end_time'";
+                  //$type = 'localized_datetime';
+                  $field = 'event[localized_end_time]';
+                  $more .= " size=8 class='eme_formfield_timepicker'";
+                  $type = 'localized_time';
+                  break;
               case 'event_start_date':
-                      $localized_field_id='localized-start-date';
-                      $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_start_date'";
-                      $type = 'localized_datetime';
-		      $required = 1;
-                      break;
+                  $localized_field_id='localized-start-date';
+                  $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_start_date'";
+                  $type = 'localized_datetime';
+                  $required = 1;
+                  break;
               case 'event_end_date':
-                      $localized_field_id='localized-end-date';
-                      $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_end_date'";
-                      $type = 'localized_datetime';
-                      break;
+                  $localized_field_id='localized-end-date';
+                  $more .= " readonly='readonly' class='eme_formfield_fdate' data-alt-field='event_end_date'";
+                  $type = 'localized_datetime';
+                  break;
               case 'location_name':
-		      $required = 1;
-                      $type = 'text';
-		      $more .= " class='clearable'";
-                      break;
+                  $required = 1;
+                  $type = 'text';
+                  $more .= " class='clearable'";
+                  break;
               case 'event_name':
-		      $required = 1;
-                      $type = 'text';
-                      break;
+                  $required = 1;
+                  $type = 'text';
+                  break;
               case 'event_attributes':
               case 'event_properties':
-                      break;
+                  break;
               case 'recaptcha':
               case 'hcaptcha':
               case 'cfcaptcha':
               case 'captcha':
-                      $type = $selected_captcha;
-                      break;
+                  $type = $selected_captcha;
+                  break;
               case 'event_image_url':
               case 'event_url':
-                      $type = ($type != 'url')?'text':'url';
-              }
+                  $type = ($type != 'url')?'text':'url';
+          }
       }
       if ($required) {
 	      $more .= " required='required'";

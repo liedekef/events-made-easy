@@ -38,12 +38,12 @@ jQuery(document).ready( function($) {
 		}
 	}
 
-    /*
 	// let's set the default size to match placeholders if present
-        $("input[placeholder]").each(function () {
-                $(this).attr('size', $(this).attr('placeholder').length);
-        });
-    */
+    $("input[placeholder]").each(function () {
+        if ($(this).attr('placeholder').length>$(this).attr('size')) {
+            $(this).attr('size', $(this).attr('placeholder').length);
+        }
+    });
 
 	// using this on-syntax also works for selects added to the page afterwards
 	$(document).on('click', 'input.select-all', function() {

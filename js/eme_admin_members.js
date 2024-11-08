@@ -609,9 +609,6 @@ jQuery(document).ready(function ($) {
                                     })
                                 );
                             });
-                            suggestions.css({
-                                left: inputField.position().left,
-                            });
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second

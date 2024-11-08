@@ -2313,7 +2313,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		<tr>
 		<td style="vertical-align:top"><label for="chooserelatedperson"><?php esc_html_e( 'Related family member', 'events-made-easy' ); ?></label></td>
 		<td> <input type="hidden" name="related_person_id" id="related_person_id" value="<?php echo intval( $person['related_person_id'] ); ?>">
-		<input type='text' id='chooserelatedperson' name='chooserelatedperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>" value="<?php echo $related_person_name; ?>" <?php echo $related_person_class; ?>>
+		<input type='text' id='chooserelatedperson' name='chooserelatedperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>" value="<?php echo $related_person_name; ?>" size="40" <?php echo $related_person_class; ?>>
 			<?php
 			if ( $person['related_person_id'] > 0 ) {
 				print "<a href='" . admin_url( "admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=$related_person_id" ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . esc_html__( 'Click here to edit that person', 'events-made-easy' ) . '</a>';

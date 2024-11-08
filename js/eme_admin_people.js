@@ -574,7 +574,8 @@ jQuery(document).ready(function ($) {
                             'lastname': inputValue,
                             'eme_admin_nonce': emepeople.translate_adminnonce,
                             'action': 'eme_autocomplete_people',
-                            'eme_searchlimit': 'people'
+                            'eme_searchlimit': 'people',
+                            'exclude_personids': $('input[name=person_id]').val()
                         },
                         function(data) {
                             var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
@@ -588,7 +589,7 @@ jQuery(document).ready(function ($) {
                                         var selectedItem = $(this).data("item");
                                         if (selectedItem.person_id) {
                                             $('input[name=related_person_id]').val(eme_htmlDecode(selectedItem.person_id));
-                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)+' ('+eme_htmlDecode(selectedItem.person_id)+')').attr('readonly', true).addClass('clearable x');
+                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)+' ('+eme_htmlDecode(selectedItem.email)+')').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

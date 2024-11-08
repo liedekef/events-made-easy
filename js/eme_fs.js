@@ -18,7 +18,8 @@ jQuery(document).ready(function($) {
                                     $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+eme_htmlDecode(item.name)+'</strong><br /><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+ '</small>')
                                     .data("item", item)
-                                    .on("click", function() {
+                                    .on("click", function(e) {
+                                        e.preventDefault();
                                         var selectedItem = $(this).data("item");
                                         $('input#location_id').val(eme_htmlDecode(selectedItem.location_id)).attr("readonly", true);
                                         $('input#location_name').val(eme_htmlDecode(selectedItem.name)).attr("readonly", true);
@@ -30,11 +31,10 @@ jQuery(document).ready(function($) {
                                         $('input#location_country').val(eme_htmlDecode(selectedItem.country)).attr("readonly", true);
                                         $('input#location_latitude').val(eme_htmlDecode(selectedItem.latitude)).attr("readonly", true);
                                         $('input#location_longitude').val(eme_htmlDecode(selectedItem.longitude)).attr("readonly", true);
-                                        $('input#location_url').val(eme_htmlDecode(selectedItem.location_url)).attr("readonly", true),
-                                            $('input#eme_loc_prop_map_icon').val(eme_htmlDecode(selectedItem.map_icon)).attr("readonly", true),
-                                            $('input#eme_loc_prop_online_only').val(eme_htmlDecode(selectedItem.online_only)).attr("disabled", true),
-
-                                            $('.eme-autocomplete-suggestions').remove();
+                                        $('input#location_url').val(eme_htmlDecode(selectedItem.location_url)).attr("readonly", true);
+                                        $('input#eme_loc_prop_map_icon').val(eme_htmlDecode(selectedItem.map_icon)).attr("readonly", true);
+                                        $('input#eme_loc_prop_online_only').val(eme_htmlDecode(selectedItem.online_only)).attr("disabled", true);
+                                        $('.eme-autocomplete-suggestions').remove();
                                         if (typeof L !== 'undefined' && emefs.translate_map_is_active==="true") {
                                             eme_displayAddress(0);
                                         }
@@ -66,6 +66,9 @@ jQuery(document).ready(function($) {
                 $('input#eme_loc_prop_map_icon').val('').attr('readonly', false);
                 $('input#eme_loc_prop_online_only').attr('disabled',false);
                 $('input#location_url').val('').attr('readonly', false);
+                if (typeof L !== 'undefined' && emefs.translate_map_is_active==="true") {
+                    eme_displayAddress(0);
+                }
             }
         });
     }

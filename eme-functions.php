@@ -4105,4 +4105,35 @@ function eme_get_selected_captcha($properties) {
 	return $selected_captcha;
 }
 
+function eme_get_datatables_sorting($request) {
+	$order = '';
+
+	if ( isset($request['order']) && count($request['order']) ) {
+		$orderBy = [];
+
+		$ien=count($request['order']);
+		for ( $i=0 ; $i<$ien ; $i++ ) {
+			// Convert the column index into the column data property
+			$columnIdx = intval($request['order'][$i]['column']);
+			$requestColumn = $request['columns'][$columnIdx];
+
+			if ( $requestColumn['orderable'] == 'true' ) {
+				$dir = $request['order'][$i]['dir'] === 'asc' ?
+					'ASC' :
+					'DESC';
+
+				$orderBy[] = '`'.$requestColumn['data'].'` '.$dir;
+			}
+		}
+
+		if ( count( $orderBy ) ) {
+			$orderByText = implode(', ', $orderBy);
+			if (!empty(eme_verify_sql_orderby($orderByText))) {
+				$order = 'ORDER BY '.$orderByText;
+			}
+		}
+	}
+	return $order;
+}
+
 ?>

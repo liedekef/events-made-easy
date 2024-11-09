@@ -10047,9 +10047,8 @@ function eme_ajax_events_search() {
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
 		wp_die();
 	}
-	if ( isset( $_REQUEST['q'] ) ) {
-		$q            = isset( $_REQUEST['q'] ) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
-	}
+
+    $q = (!empty( $_REQUEST['q'] )) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
 	if ( empty( $q ) ) {
 		echo wp_json_encode( $return );
 		return;

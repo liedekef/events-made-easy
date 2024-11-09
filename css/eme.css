@@ -391,13 +391,10 @@ table.eme_admin_table , table.eme_admin_table th , table.eme_admin_table td {
 	padding-right: 18px;
 }
 
-/* datatable fix so the footer doesn't overlap with the table in some browsers */
-.dataTables_wrapper {
-	float: left;
-	width: 100%;
-}
-div.dt-buttons {
-	float: right;
+/* datatable */
+div.dt-length select.dt-input {
+	-webkit-appearance: auto;
+	background: none;
 }
 
 /* jtable fix so the footer doesn't overlap with the table in some browsers */

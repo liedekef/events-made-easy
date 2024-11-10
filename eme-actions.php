@@ -425,7 +425,7 @@ function eme_enqueue_frontend() {
 		}
 		// for english, no translation code is needed)
 		wp_enqueue_script( 'eme-basic' );
-		wp_enqueue_style( 'eme-jquery-ui-css', EME_PLUGIN_URL . 'css/jquery-ui-theme-smoothness-1.11.3/jquery-ui.min.css', [], EME_VERSION );
+		//wp_enqueue_style( 'eme-jquery-ui-css', EME_PLUGIN_URL . 'css/jquery-ui-theme-smoothness-1.11.3/jquery-ui.min.css', [], EME_VERSION );
 		wp_enqueue_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css', [], EME_VERSION );
 
 		wp_enqueue_style( 'eme_textsec', EME_PLUGIN_URL . 'css/text-security/text-security-disc.css', [], EME_VERSION );

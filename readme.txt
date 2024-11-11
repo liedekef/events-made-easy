@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.16 (2024//) =
 * Added some details/summary (accordion) open/close animations and open only 1 details at the same time by adding the name attribute
+* For family-type memberships: enfore the presence of #_FAMILYCOUNT and only 1-time presence of both #_FAMILYCOUNT -a #_FAMILYMEMBERS
   
 = 2.5.15 (2024/11/10) =
 * Replaced the use of jquery-ui-tabs and jquery-ui-accordion by regular html5, css and a little bit of JS. This should speed up things

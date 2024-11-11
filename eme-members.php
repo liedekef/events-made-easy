@@ -3405,8 +3405,8 @@ function eme_calc_memberprice_ajax() {
 add_action( 'wp_ajax_eme_dyndata_familymember', 'eme_dyndata_familymember_ajax' );
 add_action( 'wp_ajax_nopriv_eme_dyndata_familymember', 'eme_dyndata_familymember_ajax' );
 function eme_dyndata_familymember_ajax() {
-        // has an extra frontend nonce set (even if executed in the backend)
-        check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
+    // has an extra frontend nonce set (even if executed in the backend)
+    check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 
 	header( 'Content-type: application/json; charset=utf-8' );
 	if ( isset( $_POST['membership_id'] ) ) {
@@ -3414,7 +3414,7 @@ function eme_dyndata_familymember_ajax() {
 	} else {
 		return;
 	}
-	$count      = intval( $_POST['familycount'] );
+    $count      = !empty( $_POST['familycount'] ) ? intval( $_POST['familycount'] ) : 1;
 	$form_html  = '';
 	$membership = eme_get_membership( $membership_id );
 	if ( ! eme_is_empty_string( $membership['properties']['familymember_form_text'] ) ) {

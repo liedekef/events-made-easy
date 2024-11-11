@@ -863,6 +863,35 @@ jQuery(document).ready( function($) {
 	//$("input[placeholder]").each(function () {
 	//	$(this).attr('size', $(this).attr('placeholder').length);
 	//});
+
+    // animate details summary with slidedown/up and opacity
+    // we need to do this like this because css transitions don't work reliably for details/summary on all browsers for now
+	$('details summary').each(function() {
+		var $Wrapper = $(this).nextAll().wrapAll('<div></div>').parent();
+		// Hide elements that are not open by default
+		if(!$(this).parent('details').attr('open'))
+			$Wrapper.hide();
+		$(this).click(function(Event) {
+			Event.preventDefault();
+			if($(this).parent('details').attr('open')) {
+				$Wrapper.slideUp(function() {
+					// Remove the open attribute after sliding so, so the animation is visible in browsers supporting the <details> element
+					$(this).parent('details').removeAttr('open');
+					});
+			} else {
+				// Add the open attribute before sliding down, so the animation is visible in browsers supporting the <details> element
+				$(this).parent('details').attr('open', true);
+				$Wrapper
+					.css('opacity', 0)
+					.slideDown('slow')
+					.animate(
+						{ opacity: 1 },
+						{ queue: false, duration: 'slow' }
+					);
+			}
+		});
+	});
+
 });
 
 // the next is a Jtable CSV export function

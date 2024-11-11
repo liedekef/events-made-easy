@@ -1494,7 +1494,7 @@ function eme_options_page() {
 <h3><?php esc_html_e( 'Access rights', 'events-made-easy' ); ?></h3>
 <p><?php esc_html_e( 'Tip: Use a plugin like "User Role Editor" to add/edit capabilities and roles.', 'events-made-easy' ); ?></p>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Events', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1508,7 +1508,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Locations', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1519,7 +1519,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Categories', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1527,7 +1527,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Holidays', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1535,7 +1535,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Templates', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1543,7 +1543,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Discounts', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1551,7 +1551,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'People and groups', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1562,7 +1562,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Memberships', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1574,7 +1574,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Bookings', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1588,7 +1588,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Emails', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1600,7 +1600,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Custom fields', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1608,7 +1608,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Attendances', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1617,7 +1617,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Actions', 'events-made-easy' ); ?></summary>
 <table class="form-table">
 			<?php
@@ -1625,7 +1625,7 @@ function eme_options_page() {
 			?>
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Settings', 'events-made-easy' ); ?></summary> 
 <table class="form-table">
 			<?php
@@ -1986,7 +1986,7 @@ function eme_options_page() {
 			}
 			?>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Full name format', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -1995,7 +1995,7 @@ function eme_options_page() {
 			 
 </table>
 </details>
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Booking Made or Approved Email', 'events-made-easy' ); ?></summary>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
@@ -2051,7 +2051,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Booking Pending Email', 'events-made-easy' ); ?></summary>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
@@ -2108,7 +2108,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Booking Updated Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2121,7 +2121,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Booking Reminder Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2136,7 +2136,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Booking Cancelled Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2151,7 +2151,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Booking Deleted Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2164,7 +2164,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Booking Paid Email', 'events-made-easy' ); ?></summary>
 			<?php
 			if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
@@ -2218,7 +2218,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Booking Payment Gateway Notification Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2231,7 +2231,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Frontend Event Submit Notification Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2280,7 +2280,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Mailing group subscription Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2318,7 +2318,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Task Signup Pending Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2331,7 +2331,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Task Signup Made Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2344,7 +2344,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Task Signup Reminder Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2354,7 +2354,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Task Signup Cancelled Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2366,7 +2366,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Task Signup Deleted Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2376,7 +2376,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Birthday Email', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2446,7 +2446,7 @@ function eme_options_page() {
 			$events_page_link = eme_get_events_page();
 			?>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'General options', 'events-made-easy' ); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2474,7 +2474,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Offline payment info', 'events-made-easy' ); echo_configured_pg('offline');?></summary>
 <table class='form-table'>
 			<?php
@@ -2483,7 +2483,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Paypal', 'events-made-easy' ); echo_configured_pg('paypal');?> <b>Deprecated, use Braintree</b></summary>
 <table class='form-table'>
 			<?php
@@ -2514,7 +2514,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Legacy Paypal', 'events-made-easy' ); echo_configured_pg('legacypaypal'); ?> <b>Deprecated, use Braintree</b></summary>
 <table class='form-table'>
 			<?php
@@ -2546,7 +2546,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Webmoney', 'events-made-easy' ); echo_configured_pg('webmoney'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2579,7 +2579,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'First Data', 'events-made-easy' ); echo_configured_pg('fdgg'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2612,7 +2612,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Mollie', 'events-made-easy' ); echo_configured_pg('mollie'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2632,7 +2632,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Payconiq', 'events-made-easy' ); echo_configured_pg('payconiq'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2664,7 +2664,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Worldpay', 'events-made-easy' ); echo_configured_pg('worldpay'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2699,7 +2699,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Opayo', 'events-made-easy' ); echo_configured_pg('opayo'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2731,7 +2731,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'SumUp', 'events-made-easy' ); echo_configured_pg('sumup'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2752,7 +2752,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Stripe', 'events-made-easy' ); echo_configured_pg('stripe'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2807,7 +2807,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Braintree', 'events-made-easy' ); echo_configured_pg('braintree'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2838,7 +2838,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Instamojo', 'events-made-easy' ); echo_configured_pg('instamojo'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2869,7 +2869,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Mercado Pago', 'events-made-easy' ); echo_configured_pg('mercadopago'); ?></summary>
 <table class='form-table'>
 			<?php
@@ -2899,7 +2899,7 @@ function eme_options_page() {
 </table>
 </details>
 
-<details class="eme_accordion">
+<details name='eme_details_options' class="eme_accordion">
 <summary><?php esc_html_e( 'Fondy', 'events-made-easy' ); echo_configured_pg('fondy'); ?></summary>
 <table class='form-table'>
 			<?php

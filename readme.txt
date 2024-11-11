@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.16 (2024//) =
+* Added some details/summary (accordion) open/close animations and open only 1 details at the same time by adding the name attribute
+  
 = 2.5.15 (2024/11/10) =
 * Replaced the use of jquery-ui-tabs and jquery-ui-accordion by regular html5, css and a little bit of JS. This should speed up things
 * Removed the use of jquery-ui-dialog in the frontend. Once jtable no longer needs it, it will be removed in the backend too

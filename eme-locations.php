@@ -1540,7 +1540,8 @@ function eme_global_map_shortcode( $atts ) {
 		$marker_clustering = filter_var( $atts['marker_clustering'], FILTER_VALIDATE_BOOLEAN );
 		$ignore_filter     = filter_var( $atts['ignore_filter'], FILTER_VALIDATE_BOOLEAN );
 		$letter_icons      = filter_var( $atts['letter_icons'], FILTER_VALIDATE_BOOLEAN );
-
+		$scope             = eme_sanitize_request( $atts['scope'] );
+		
 		wp_enqueue_style( 'eme-leaflet-css' );
 		if ( $marker_clustering ) {
 			wp_enqueue_script( 'eme-leaflet-markercluster' );
@@ -1562,12 +1563,12 @@ function eme_global_map_shortcode( $atts ) {
 			$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 
 			if ( isset( $_GET['eme_offset'] ) ) {
-				$scope_offset = eme_sanitize_request( $_GET['eme_offset'] );
+				$scope_offset = intval( $_GET['eme_offset'] );
 			}
 			$prev_offset = $scope_offset - 1;
 			$next_offset = $scope_offset + 1;
 
-			if ( $atts['scope'] == 'this_week' ) {
+			if ( $scope == 'this_week' ) {
 				$start_of_week = get_option( 'start_of_week' );
 				$eme_date_obj->setWeekStartDay( $start_of_week );
 				$eme_date_obj->modifyWeeks( $scope_offset );
@@ -1578,7 +1579,7 @@ function eme_global_map_shortcode( $atts ) {
 				$prev_text   = __( 'Previous week', 'events-made-easy' );
 				$next_text   = __( 'Next week', 'events-made-easy' );
 
-			} elseif ( $atts['scope'] == 'this_year' ) {
+			} elseif ( $scope == 'this_year' ) {
 				$eme_date_obj->modifyYears( $scope_offset );
 				$year        = $eme_date_obj->getYear();
 				$limit_start = "$year-01-01";
@@ -1588,7 +1589,7 @@ function eme_global_map_shortcode( $atts ) {
 				$prev_text   = __( 'Previous year', 'events-made-easy' );
 				$next_text   = __( 'Next year', 'events-made-easy' );
 
-			} elseif ( $atts['scope'] == 'today' ) {
+			} elseif ( $scope == 'today' ) {
 				$scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
 				$limit_start = $scope;
 				$limit_end   = $scope;
@@ -1596,7 +1597,7 @@ function eme_global_map_shortcode( $atts ) {
 				$prev_text   = __( 'Previous day', 'events-made-easy' );
 				$next_text   = __( 'Next day', 'events-made-easy' );
 
-			} elseif ( $atts['scope'] == 'tomorrow' ) {
+			} elseif ( $scope == 'tomorrow' ) {
 				++$scope_offset;
 				$scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
 				$limit_start = $scope;
@@ -1633,10 +1634,10 @@ function eme_global_map_shortcode( $atts ) {
 		$id_base       = preg_replace( '/\D/', '_', microtime( 1 ) );
 		$id_base       = rand() . '_' . $id_base;
 		if ( ! preg_match( '/\%$|px$/', $atts['width'] ) ) {
-			$width = $atts['width'] . 'px';
+			$atts['width'] .= 'px';
 		}
 		if ( ! preg_match( '/\%$|px$/', $atts['height'] ) ) {
-			$height = $atts['height'] . 'px';
+			$atts['height'] .= 'px';
 		}
 		if ( ! empty( $locations ) ) {
 			$result           = "<div id='eme_global_map_$id_base' class='eme_global_map' style='width: $width; height: $height'>map</div>";

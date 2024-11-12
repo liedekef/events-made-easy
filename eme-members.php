@@ -38,6 +38,8 @@ function eme_new_member() {
 		'previous_start'    => '0000-00-00',
 		'previous_end'      => '0000-00-00',
 		'payment_date'      => '0000-00-00 00:00',
+		'reminder'          => 0,
+		'reminder_date'     => '0000-00-00 00:00',
 		'discount'          => '',
 		'discountids'       => '',
 		'dcodes_entered'    => [],

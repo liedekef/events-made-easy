@@ -1,7 +1,8 @@
 jQuery(document).ready(function($) {
     if ($("input#location_name").length > 0) {
         let frontend_submit_timeout; // Declare a variable to hold the timeout ID
-        $("input#location_name").on("input", function() {
+        $("input#location_name").on("input", function(e) {
+            e.preventDefault();
             clearTimeout(frontend_submit_timeout); // Clear the previous timeout
             var inputField = $(this);
             var inputValue = inputField.val();
@@ -51,7 +52,8 @@ jQuery(document).ready(function($) {
             $(".eme-autocomplete-suggestions").remove();
         });
 
-        $("input#location_name").change(function(){
+        $("input#location_name").change(function(e){
+            e.preventDefault();
             if ($("input#location_name").val()=='') {
                 $('input#location_id').val('');
                 $('input#location_name').val('').attr("readonly", false);

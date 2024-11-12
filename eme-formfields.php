@@ -2702,9 +2702,6 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 	$lastname_found = 0;
 	$email_found    = 0;
 	$seats_found    = 0;
-    // #_FAMILYCOUNT and #_FAMILYMEMBERS can only be present once
-    $familycount_found   = 0;
-    $familymembers_found = 0;
 
 	if ( ! empty( $event['event_properties']['rsvp_password'] ) && ! $eme_is_admin_request ) {
 		$password_found = 0;
@@ -3732,6 +3729,9 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
     $lastname_found  = 0;
     $firstname_found = 0;
     $email_found     = 0;
+    // #_FAMILYCOUNT and #_FAMILYMEMBERS can only be present once
+    $familycount_found   = 0;
+    $familymembers_found = 0;
 
     # we need 3 required fields: #_NAME, #_EMAIL and #_SEATS
     # if these are not present: we don't replace anything and the form is worthless

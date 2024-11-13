@@ -736,6 +736,8 @@ function eme_delete_member( $member_id, $send_mail=0 ) {
 	$members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
 	if ( ! empty( $member_id ) ) {
 		$member = eme_get_member($member_id);
+        if (empty($member))
+            return;
 		// we send the mail first, so we still have all the member answers that can then be used in the mail
 		if ($send_mail) {
 			eme_email_member_action( $member, 'deleteMember' );

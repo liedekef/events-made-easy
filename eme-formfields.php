@@ -3384,7 +3384,6 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 }
 
 function eme_replace_membership_familyformfields_placeholders( $format, $counter ) {
-
 	$lastname_found  = 0;
 	$firstname_found = 0;
 

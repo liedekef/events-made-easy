@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.16
+Stable tag: 2.5.17
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,11 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.17 (2024//) =
+= 2.5.17 (2024/11/14) =
 * New introduced WP bug causes the translation strings to no longer load as expected
   So the logic to loading translation strings has been rewritten to no longer use load_plugin_textdomain but load_textdomain
 * Delimiter option was renamed but the old option name was still being used in some places
-* Fix the console error "Not allowed to navigate top frame to data URL 'data:'..." in some browsers
+* Fix the console error "Not allowed to navigate top frame to data URL 'data:'..." in some browsers when clicking the CSV export button
 
 = 2.5.16 (2024/11/13) =
 * Added some details/summary (accordion) open/close animations and open only 1 details at the same time by adding the name attribute

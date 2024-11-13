@@ -15,7 +15,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:652
+#: eme-actions.php:648
 #: eme-gdpr.php:522
 #: events-manager.php:339
 msgid "Events Made Easy"
@@ -104,14 +104,14 @@ msgstr "v mene %s"
 msgid "Access denied!"
 msgstr "Prístup zamietnutý!"
 
-#: eme-actions.php:210
+#: eme-actions.php:206
 #: eme-events.php:6295
 #: eme-events.php:9649
 #: eme-templates.php:44
 msgid "Event"
 msgstr "Podujatie"
 
-#: eme-actions.php:219
+#: eme-actions.php:215
 #: eme-events.php:6296
 #: eme-events.php:8384
 #: eme-events.php:9595
@@ -119,7 +119,7 @@ msgstr "Podujatie"
 msgid "Location"
 msgstr "Miesto"
 
-#: eme-actions.php:345
+#: eme-actions.php:341
 #: eme-events.php:9515
 #: eme-events.php:9749
 #: eme-events.php:9782
@@ -134,7 +134,7 @@ msgstr "Miesto"
 msgid "State"
 msgstr "Štát"
 
-#: eme-actions.php:346
+#: eme-actions.php:342
 #: eme-countries.php:517
 #: eme-events.php:9516
 #: eme-events.php:9748
@@ -150,50 +150,50 @@ msgstr "Štát"
 msgid "Country"
 msgstr "Krajina"
 
-#: eme-actions.php:348
+#: eme-actions.php:344
 #: eme-events.php:9518
 msgid "An error has occurred"
 msgstr "Vyskytla sa chyba"
 
-#: eme-actions.php:349
+#: eme-actions.php:345
 msgid "Clear"
 msgstr "Vyčistiť"
 
-#: eme-actions.php:350
+#: eme-actions.php:346
 #: eme-events.php:9519
 msgid "Mailing preferences"
 msgstr "Nastavenia emailov"
 
-#: eme-actions.php:351
+#: eme-actions.php:347
 #: eme-events.php:9520
 msgid "Yes, I'm sure"
 msgstr "Áno, som si istý"
 
-#: eme-actions.php:463
+#: eme-actions.php:459
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Táto stránka zodpovedá stránke <strong>Events Made Easy</strong>. Jej obsah bude prepísaný pomocou <strong>Events Made Easy</strong>. Ak chcete zobraziť svoj obsah, môžete priradiť inú stránku pre <strong>Events Made Easy</strong> v časti <a href='%s'>Nastavenia</a>. "
 
-#: eme-actions.php:487
+#: eme-actions.php:483
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Ahojte, <strong>%s</strong>, vitajte v <strong>Events Made Easy</strong>! Dúfame, že sa vám tu bude páčiť.</p><p>Teraz je čas vložiť zoznamy podujatí prostredníctvom <a href='%s' title='Stránka widgetov'>widgetov</a>, <a href='%s' title='Dokumentácia značiek šablón'>značiek šablón</a> alebo <a href='%4$s' title='Dokumentácia skrátených kódov'>skrátených kódov </a>.</p><p>Mimochodom, prezreli ste si <a href='%5$s' title='Zmeniť nastavenia'>stránku nastavení</a>? Na tomto mieste si upravujete spôsob, akým sa podujatia a miesta zobrazujú.</p><p>Čo? Už vás nebaví vidieť túto radu? Chápem vás, <a href=\"%6$s\" title=\"Nezobrazovať túto radu znova\">kliknite sem</a> a toto sa už znova nezobrazí!</p>"
 
-#: eme-actions.php:495
+#: eme-actions.php:491
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy bol nainštalovaný alebo aktualizovaný"
 
-#: eme-actions.php:496
+#: eme-actions.php:492
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Prispejte prosím na vývoj pluginu Events Made Easy"
 
-#: eme-actions.php:498
+#: eme-actions.php:494
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Ak považujete <strong>Events Made Easy</strong> užitočné pre vás, zvážte poskytnutie malého daru, ktorý by prispel k môjmu investovanému času a ďalšiemu rozvoju. Ďakujeme za vašu láskavú podporu!"
 
-#: eme-actions.php:506
+#: eme-actions.php:502
 msgid "Dismiss"
 msgstr "Zamietnuť"
 
-#: eme-actions.php:658
+#: eme-actions.php:654
 msgid "List of next 10 events"
 msgstr "Zoznam nasledujúcich 10 podujatí"
 

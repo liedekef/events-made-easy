@@ -76,14 +76,14 @@ msgstr ""
 msgid "Access denied!"
 msgstr "Åtkomst nekad!"
 
-#: eme-actions.php:210
+#: eme-actions.php:206
 #: eme-events.php:6295
 #: eme-events.php:9649
 #: eme-templates.php:44
 msgid "Event"
 msgstr "Event"
 
-#: eme-actions.php:219
+#: eme-actions.php:215
 #: eme-events.php:6296
 #: eme-events.php:8384
 #: eme-events.php:9595
@@ -91,7 +91,7 @@ msgstr "Event"
 msgid "Location"
 msgstr "Plats"
 
-#: eme-actions.php:345
+#: eme-actions.php:341
 #: eme-events.php:9515
 #: eme-events.php:9749
 #: eme-events.php:9782
@@ -106,7 +106,7 @@ msgstr "Plats"
 msgid "State"
 msgstr "Stat"
 
-#: eme-actions.php:346
+#: eme-actions.php:342
 #: eme-countries.php:517
 #: eme-events.php:9516
 #: eme-events.php:9748
@@ -122,34 +122,34 @@ msgstr "Stat"
 msgid "Country"
 msgstr "Land"
 
-#: eme-actions.php:348
+#: eme-actions.php:344
 #: eme-events.php:9518
 msgid "An error has occurred"
 msgstr "Ett fel har uppstått"
 
-#: eme-actions.php:349
+#: eme-actions.php:345
 msgid "Clear"
 msgstr "Rensa"
 
-#: eme-actions.php:350
+#: eme-actions.php:346
 #: eme-events.php:9519
 msgid "Mailing preferences"
 msgstr "Alternativ för e-postutskick"
 
-#: eme-actions.php:351
+#: eme-actions.php:347
 #: eme-events.php:9520
 msgid "Yes, I'm sure"
 msgstr "Ja, jag är säker"
 
-#: eme-actions.php:463
+#: eme-actions.php:459
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Denna sida motsvarar <strong>Events Made Easy</strong> eventsida. Dess innehåll kommer att skrivas över av <strong>Events Made Easy</strong>. Om du vill visa ditt innehåll kan du tilldela en annan sida för <strong>Events Made Easy</strong> i <a href='%s'>Inställningarna</a>."
 
-#: eme-actions.php:487
+#: eme-actions.php:483
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr ""
 
-#: eme-actions.php:498
+#: eme-actions.php:494
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Om du finner <strong>Events Made Easy</strong> användbart, vänligen fundera på att ge ett litet bidrag för den tid jag investerat och för att möjliggöra fortsatt utveckling. Tack för ditt stöd!"
 
@@ -6183,7 +6183,7 @@ msgstr "EME använder som option en cookie att lagra klientdatum och tid för at
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:652
+#: eme-actions.php:648
 #: eme-gdpr.php:522
 #: events-manager.php:339
 msgid "Events Made Easy"
@@ -13758,15 +13758,15 @@ msgstr ""
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr ""
 
-#: eme-actions.php:495
+#: eme-actions.php:491
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: eme-actions.php:496
+#: eme-actions.php:492
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: eme-actions.php:506
+#: eme-actions.php:502
 msgid "Dismiss"
 msgstr ""
 
@@ -13794,7 +13794,7 @@ msgstr ""
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr ""
 
-#: eme-actions.php:658
+#: eme-actions.php:654
 msgid "List of next 10 events"
 msgstr ""
 

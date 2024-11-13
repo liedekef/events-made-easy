@@ -76,14 +76,14 @@ msgstr "in naam van %s"
 msgid "Access denied!"
 msgstr "Toegang geweigerd!"
 
-#: eme-actions.php:210
+#: eme-actions.php:206
 #: eme-events.php:6295
 #: eme-events.php:9649
 #: eme-templates.php:44
 msgid "Event"
 msgstr "Evenement"
 
-#: eme-actions.php:219
+#: eme-actions.php:215
 #: eme-events.php:6296
 #: eme-events.php:8384
 #: eme-events.php:9595
@@ -91,7 +91,7 @@ msgstr "Evenement"
 msgid "Location"
 msgstr "Locatie"
 
-#: eme-actions.php:345
+#: eme-actions.php:341
 #: eme-events.php:9515
 #: eme-events.php:9749
 #: eme-events.php:9782
@@ -106,7 +106,7 @@ msgstr "Locatie"
 msgid "State"
 msgstr "Staat/Provincie"
 
-#: eme-actions.php:346
+#: eme-actions.php:342
 #: eme-countries.php:517
 #: eme-events.php:9516
 #: eme-events.php:9748
@@ -122,34 +122,34 @@ msgstr "Staat/Provincie"
 msgid "Country"
 msgstr "Land"
 
-#: eme-actions.php:348
+#: eme-actions.php:344
 #: eme-events.php:9518
 msgid "An error has occurred"
 msgstr "Een fout is opgetreden"
 
-#: eme-actions.php:349
+#: eme-actions.php:345
 msgid "Clear"
 msgstr "Leegmaken"
 
-#: eme-actions.php:350
+#: eme-actions.php:346
 #: eme-events.php:9519
 msgid "Mailing preferences"
 msgstr "Mailing voorkeuren"
 
-#: eme-actions.php:351
+#: eme-actions.php:347
 #: eme-events.php:9520
 msgid "Yes, I'm sure"
 msgstr "Ja, ik ben zeker"
 
-#: eme-actions.php:463
+#: eme-actions.php:459
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Deze pagina komt overeen met de <strong>Events Made Easy</strong> evenementen pagina. De inhoud wordt overschreven door <strong>Events Made Easy</strong>. Wilt je aangepaste content gebruiken, dan kun je een andere pagina toewijzen aan <strong>Events Manager Easy</strong> via <a href='%s'>Instellingen</a>. "
 
-#: eme-actions.php:487
+#: eme-actions.php:483
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Hallo, <strong>%s</strong>, welkom bij <strong>Events Made Easy</strong>. We hopen dat je het hier naar je zin hebt.</p><p>Je kunt nu evenementlijsten invoegen met behulp van <a href='%2$s' title='Widgets pagina'>widgets</a>, <a href='%3$s' title='Template tags documentatien'>template tags</a> of <a href='%4$s' title='Shortcodes documentatie'>shortcodes</a>.</p><p>Heb je al bij de <a href='%5$s' title='Wijzig instellingen'>Instellingen</a> gekeken? Daar kun je de manier waarop evenementen en locaties worden weergegeven aanpassen.</p><p>Wat? Genoeg van deze aankondiging? Ik snap het, <a href=\"%6$s\" title=\"Toon dit advies niet meer\">klik hier</a> en je ziet dit nooit meer</p>"
 
-#: eme-actions.php:498
+#: eme-actions.php:494
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Indien je <strong>Events Made Easy</strong> nuttig vindt, overweeg aub even om een kleine donatie te doen om bij te dragen aan de tijd die ik erin geïnvesteerd heb en voor verdere ontwikkeling. Alvast bedankt hiervoor!"
 
@@ -6161,7 +6161,7 @@ msgstr "Indien zo ingesteld, gebruikt EME een cookie voor het opslaan van de cli
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:652
+#: eme-actions.php:648
 #: eme-gdpr.php:522
 #: events-manager.php:339
 msgid "Events Made Easy"
@@ -13689,15 +13689,15 @@ msgstr "Vanaf %s (automatisch verlengd)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Als het aantal plaatsen voor een taak 0 is, wordt de taakbeschrijving behandeld als sectiehoofd voor de volgende reeks taken."
 
-#: eme-actions.php:495
+#: eme-actions.php:491
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy is geïnstalleerd of geüpgraded"
 
-#: eme-actions.php:496
+#: eme-actions.php:492
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Doneer alstublieft aan de ontwikkeling van Events Made Easy"
 
-#: eme-actions.php:506
+#: eme-actions.php:502
 msgid "Dismiss"
 msgstr "Negeren"
 
@@ -13725,7 +13725,7 @@ msgstr "Concactpersoon lid verwijderd e-mail inhoud"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "De inhoud van de e-mail die naar de contactpersoon is verzonden vlak voordat een lid wordt verwijderd."
 
-#: eme-actions.php:658
+#: eme-actions.php:654
 msgid "List of next 10 events"
 msgstr "Lijst met de volgende 10 evenementen"
 

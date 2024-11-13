@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.17 (2024//) =
+* New introduced WP bug causes the translation strings to no longer load as expected
+  So the logic to loading translation strings has been rewritten to no longer use load_plugin_textdomain but load_textdomain
+
 = 2.5.16 (2024/11/13) =
 * Added some details/summary (accordion) open/close animations and open only 1 details at the same time by adding the name attribute
 * For family-type memberships: enfore the presence of #_FAMILYCOUNT and only 1-time presence of both #_FAMILYCOUNT -a #_FAMILYMEMBERS

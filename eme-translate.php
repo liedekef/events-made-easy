@@ -5,27 +5,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function eme_load_textdomain() {
-	// WordPress loads the site locale by default
-	// If the user profile is set to something else besides the site locale, we do something here, so we check for logged in users
-//	if ( ! is_user_logged_in() ) {
-//		return;
-//	}
-
-	$language = eme_detect_lang();
-	// make sure no textdomain is loaded if the locale is en (since nobody has translated EME into English)
-	// This is the case if the site language is something else than English but the user profile is set to English
-	if ( $language == 'en' ) {
-		if ( is_textdomain_loaded( 'events-made-easy' ) ) {
-			unload_textdomain( 'events-made-easy' );
-		}
-	} else {
-		// load the correct textdomain
-		// This is the case if the site locale is English (so no textdomain gets loaded by default since nobody has translated EME into English)
-		// but the user profile is set to something else besides English
-		if ( ! is_textdomain_loaded( 'events-made-easy' ) ) {
-			load_plugin_textdomain( 'events-made-easy', false, basename(eme_plugin_dir()).'/langs' );
-		}
-	}
+        $domain = 'events-made-easy';
+        $locale = determine_locale();
+        $moFile = $domain . '-' . $locale . '.mo';
+        $path = eme_plugin_dir().'/langs';
+        if ($path && file_exists($path)) {
+                load_textdomain($domain, $path . '/' . $moFile);
+        }
 }
 
 function eme_detect_lang() {

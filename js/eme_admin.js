@@ -942,6 +942,8 @@ function jtable_csv(container) {
 		}
 	});
 
+    // we create a link and click on it. window.open-call to 'data:' fails on some browsers due to security limitations with the 
+    // error: "Not allowed to navigate top frame to data URL 'data:text/csv;charset=utf8...."
 	let mydata = csvData.join('\r\n');
     let blob = new Blob([mydata], { type: 'text/csv;charset=utf-8' });
     let link = document.createElement('a');

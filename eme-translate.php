@@ -10,7 +10,8 @@ function eme_load_textdomain() {
         $moFile = $domain . '-' . $locale . '.mo';
         $path = eme_plugin_dir() . '/langs';
         if ( file_exists( $path ) ) {
-                load_textdomain($domain, $path . '/' . $moFile);
+            // the locale is optional, but we already have the info, so it makes the function just a bit faster
+            load_textdomain($domain, $path . '/' . $moFile, $locale);
         }
 }
 

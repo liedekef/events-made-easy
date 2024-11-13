@@ -8,8 +8,8 @@ function eme_load_textdomain() {
         $domain = 'events-made-easy';
         $locale = determine_locale();
         $moFile = $domain . '-' . $locale . '.mo';
-        $path = eme_plugin_dir().'/langs';
-        if ($path && file_exists($path)) {
+        $path = eme_plugin_dir() . '/langs';
+        if ( file_exists( $path ) ) {
                 load_textdomain($domain, $path . '/' . $moFile);
         }
 }

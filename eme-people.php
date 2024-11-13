@@ -994,9 +994,9 @@ function eme_csv_booking_report( $event_id ) {
 		die;
 	}
 
-	$delimiter = get_option( 'eme_csv_separator' );
+	$delimiter = get_option( 'eme_csv_delimiter' );
 	if ( eme_is_empty_string( $delimiter ) ) {
-		$delimiter = ',';
+		$delimiter = ';';
 	}
 
 	//header("Content-type: application/octet-stream");

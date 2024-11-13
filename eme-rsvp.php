@@ -618,9 +618,9 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 		return '';
 	}
 
-	$delimiter = get_option( 'eme_csv_separator' );
+	$delimiter = get_option( 'eme_csv_delimiter' );
         if ( eme_is_empty_string( $delimiter ) ) {
-                $delimiter = ',';
+                $delimiter = ';';
         }
 
 	$format            = '';
@@ -691,9 +691,9 @@ function eme_attendees_frontend_csv_report( $scope, $category, $notcategory, $ev
 		$event_format = '#_EVENTNAME #_STARTTIME';
 	}
 
-	$delimiter = get_option( 'eme_csv_separator' );
+	$delimiter = get_option( 'eme_csv_delimiter' );
         if ( eme_is_empty_string( $delimiter ) ) {
-                $delimiter = ',';
+                $delimiter = ';';
         }
 
 	header( 'Content-type: text/csv; charset=UTF-8' );

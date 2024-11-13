@@ -901,7 +901,7 @@ function jtable_csv(container) {
 	// fix HTML table
 
 	var csvData = [];
-	var separator = emeadmin.translate_separator
+	var delimiter = emeadmin.translate_delimiter
 
 	//header
 	var tmpRow = []; // construct header avalible array
@@ -915,7 +915,7 @@ function jtable_csv(container) {
 			tmpRow[tmpRow.length] = formatcsv(val);
 		}
 	});
-	csvData[csvData.length] = tmpRow.join(separator);
+	csvData[csvData.length] = tmpRow.join(delimiter);
 
 	// tr - remove attributes
 	//newTable.find('tr').each(function () {
@@ -938,7 +938,7 @@ function jtable_csv(container) {
 			}
 		});
 		if (tmpRow.length>0) {
-			csvData[csvData.length] = tmpRow.join(separator);
+			csvData[csvData.length] = tmpRow.join(delimiter);
 		}
 	});
 	var mydata = csvData.join('\r\n');

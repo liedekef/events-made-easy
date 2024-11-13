@@ -4753,9 +4753,9 @@ function eme_members_frontend_csv_report( $group_id, $membership_id, $template_i
 		return '';
 	}
 
-	$delimiter = get_option( 'eme_csv_separator' );
+	$delimiter = get_option( 'eme_csv_delimiter' );
         if ( eme_is_empty_string( $delimiter ) ) {
-                $delimiter = ',';
+                $delimiter = ';';
         }
 
 	$format            = '';

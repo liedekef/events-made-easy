@@ -102,6 +102,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.5.17 (2024//) =
 * New introduced WP bug causes the translation strings to no longer load as expected
   So the logic to loading translation strings has been rewritten to no longer use load_plugin_textdomain but load_textdomain
+* Delimiter option was renamed but the old option name was still being used in some places
 
 = 2.5.16 (2024/11/13) =
 * Added some details/summary (accordion) open/close animations and open only 1 details at the same time by adding the name attribute

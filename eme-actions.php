@@ -185,10 +185,6 @@ function eme_actions_admin_init() {
 }
 add_action( 'admin_init', 'eme_actions_admin_init' );
 
-#// for loading text domains, now happens automatically so normally the action is no longer needed
-#// but if you don't call this, then the site language is taken and not the user language, which gets confusing in the admin backend
-//add_action( 'plugins_loaded', 'eme_load_textdomain' );
-
 // GDPR export and erase filters
 add_filter( 'wp_privacy_personal_data_exporters', 'eme_gdpr_register_exporters' );
 add_filter( 'wp_privacy_personal_data_erasers', 'eme_gdpr_register_erasers' );

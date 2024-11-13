@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.15
+Stable tag: 2.5.16
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.16 (2024//) =
+= 2.5.16 (2024/11/13) =
 * Added some details/summary (accordion) open/close animations and open only 1 details at the same time by adding the name attribute
 * For family-type memberships: enfore the presence of #_FAMILYCOUNT and only 1-time presence of both #_FAMILYCOUNT -a #_FAMILYMEMBERS
 * Frontend submit js and php warning fixes

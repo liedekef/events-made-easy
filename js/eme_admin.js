@@ -941,9 +941,17 @@ function jtable_csv(container) {
 			csvData[csvData.length] = tmpRow.join(delimiter);
 		}
 	});
-	var mydata = csvData.join('\r\n');
-	var url='data:text/csv;charset=utf8,' + encodeURIComponent(mydata);
-	window.open(url);
+
+	let mydata = csvData.join('\r\n');
+    let blob = new Blob([mydata], { type: 'text/csv;charset=utf-8' });
+    let link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'table_data.csv'; // Specify the file name
+    link.click();
+    link.remove();
+
+	//var url='data:text/csv;charset=utf8,' + encodeURIComponent(mydata);
+	//window.open(url);
 	return true;
 }
 

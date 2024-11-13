@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * New introduced WP bug causes the translation strings to no longer load as expected
   So the logic to loading translation strings has been rewritten to no longer use load_plugin_textdomain but load_textdomain
 * Delimiter option was renamed but the old option name was still being used in some places
+* Fix the console error "Not allowed to navigate top frame to data URL 'data:'..." in some browsers
 
 = 2.5.16 (2024/11/13) =
 * Added some details/summary (accordion) open/close animations and open only 1 details at the same time by adding the name attribute

@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.18 (2024/11/14) =
+* eme_locations_map shortcode was parsing width and heigth wrong due to new code
+
 = 2.5.17 (2024/11/14) =
 * New introduced WP bug causes the translation strings to no longer load as expected
   So the logic to loading translation strings has been rewritten to no longer use load_plugin_textdomain but load_textdomain

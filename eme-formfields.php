@@ -3538,7 +3538,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 		} elseif ( preg_match( '/#_FIELD\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $formfield ) && $formfield['field_purpose'] == 'people' ) {
+            if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'members', 'people' ] ) ) {
 				$field_id = $formfield['field_id'];
 				// all the people fields are dynamic fields in the backend, and the function eme_store_person_answers searches for that, so we need that name again
 				$var_prefix     = "familymember[$counter][";

@@ -2056,9 +2056,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 					if ( is_array( $value ) ) {
 						$value = eme_convert_array2multi( $value );
 					}
-					if ( $formfield['field_type'] == 'textarea' ) {
-						$value = eme_sanitize_textarea( $value );
-					} elseif ( $formfield['field_type'] == 'time_js' ) {
+					if ( $formfield['field_type'] == 'time_js' ) {
 						$value = eme_convert_localized_time( $formfield['field_attributes'], eme_sanitize_request( $value ) );
 					} else {
 						$value = eme_sanitize_request( $value );
@@ -2109,9 +2107,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 							if ( is_array( $value ) ) {
 								$value = eme_convert_array2multi( $value );
 							}
-							if ( $formfield['field_type'] == 'textarea' ) {
-								$value = eme_sanitize_textarea( $value );
-							} elseif ( $formfield['field_type'] == 'time_js' ) {
+							if ( $formfield['field_type'] == 'time_js' ) {
 								$value = eme_convert_localized_time( $formfield['field_attributes'], eme_sanitize_request( $value ) );
 							} else {
 								$value = eme_sanitize_request( $value );
@@ -2160,9 +2156,7 @@ function eme_get_booking_post_answers( $booking, $include_dynamicdata = 1 ) {
 				if ( is_array( $value ) ) {
 					$value = eme_convert_array2multi( $value );
 				}
-				if ( $formfield['field_type'] == 'textarea' ) {
-					$value = eme_sanitize_textarea( $value );
-				} elseif ( $formfield['field_type'] == 'time_js' ) {
+				if ( $formfield['field_type'] == 'time_js' ) {
 					$value = eme_convert_localized_time( $formfield['field_attributes'], eme_sanitize_request( $value ) );
 				} else {
 					$value = eme_sanitize_request( $value );
@@ -3465,7 +3459,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			}
 		} elseif ( preg_match( '/#_(RESP)?CANCELCOMMENT/', $result ) ) {
 			if ( isset( $_POST['eme_cancelcomment'] ) ) {
-				$replacement = eme_sanitize_textarea( $_POST['eme_cancelcomment'] );
+				$replacement = eme_sanitize_request( $_POST['eme_cancelcomment'] );
 			}
 			if ( $target == 'html' ) {
 				$replacement = eme_esc_html( $replacement );
@@ -4826,7 +4820,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 			}
 
 			if ( isset( $_POST['eme_rsvpcomment'] ) ) {
-				$booking['booking_comment'] = eme_sanitize_textarea( $_POST['eme_rsvpcomment'] );
+				$booking['booking_comment'] = eme_sanitize_request( $_POST['eme_rsvpcomment'] );
 			}
 
 			$update_message  = '';

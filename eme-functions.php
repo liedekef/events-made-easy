@@ -2083,9 +2083,9 @@ function eme_booking_from_form( $event ) {
 	}
 
 	if ( isset( $_POST['bookings'][ $event_id ]['eme_rsvpcomment'] ) ) {
-		$bookerComment = eme_sanitize_textarea( $_POST['bookings'][ $event_id ]['eme_rsvpcomment'] );
+		$bookerComment = eme_sanitize_request( $_POST['bookings'][ $event_id ]['eme_rsvpcomment'] );
 	} elseif ( isset( $_POST['eme_rsvpcomment'] ) ) {
-		$bookerComment = eme_sanitize_textarea( $_POST['eme_rsvpcomment'] );
+		$bookerComment = eme_sanitize_request( $_POST['eme_rsvpcomment'] );
 	} else {
 		$bookerComment = '';
 	}
@@ -2715,22 +2715,15 @@ function eme_get_wpid_by_post() {
 }
 
 // sanitize_text_field and sanitize_textarea_field strip html tags, be aware
-function eme_sanitize_textarea( $value ) {
-	if ( is_array( $value ) ) {
-		return array_map( 'eme_sanitize_textarea', $value );
-	}
-	if ( function_exists( 'sanitize_textarea_field' ) ) {
-		return sanitize_textarea_field( wp_unslash( $value ) );
-	}
-	return sanitize_text_field( wp_unslash( $value ) );
-}
-
-// sanitize_text_field and sanitize_textarea_field strip html tags, be aware
 function eme_sanitize_request( $value ) {
 	if ( is_array( $value ) ) {
 		return array_map( 'eme_sanitize_request', $value );
 	}
-	return sanitize_text_field( wp_unslash( $value ) );
+    if (str_contains($value, "\n")) {
+		return sanitize_textarea_field( wp_unslash( $value ) );
+    } else {
+        return sanitize_text_field( wp_unslash( $value ) );
+    }
 }
 
 function eme_sanitize_email( $email ) {

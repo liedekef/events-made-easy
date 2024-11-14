@@ -46,7 +46,7 @@ function eme_handle_tasks_post_adminform( $event_id, $day_difference = 0 ) {
 			$eme_task['task_start'] = $eme_date_obj_start->addDays( $day_difference )->getDateTime();
 			$eme_task['task_end']   = $eme_date_obj_end->addDays( $day_difference )->getDateTime();
 		}
-		$eme_task['description'] = eme_sanitize_textarea( $eme_task['description'] );
+		$eme_task['description'] = eme_sanitize_request( $eme_task['description'] );
 		// we check for task nbr to know if we need an update or insert
 		if ( empty( $eme_task['task_nbr'] ) ) {
 			$eme_task['task_nbr'] = $next_task_nbr;
@@ -1723,7 +1723,7 @@ function eme_tasks_ajax() {
 	$bookerComment   = '';
 	// comment will be added to each task signup
 	if (isset($_POST['task_comment'])) {
-		$bookerComment = eme_sanitize_textarea( $_POST['task_comment'] );
+		$bookerComment = eme_sanitize_request( $_POST['task_comment'] );
 	}
 	if (isset($_POST['task_lastname'])) {
 		$bookerLastName = eme_sanitize_request( $_POST['task_lastname'] );

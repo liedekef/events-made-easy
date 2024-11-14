@@ -43,7 +43,7 @@ function eme_holidays_page() {
 			// holidays update required
 			$holidays         = [];
 			$holidays['name'] = eme_sanitize_request( $_POST['name'] );
-			$holidays['list'] = eme_sanitize_textarea( $_POST['list'] );
+			$holidays['list'] = eme_sanitize_request( $_POST['list'] );
 			if ( ! empty( $_POST['id'] ) ) {
 				$validation_result = $wpdb->update( $holidays_table, $holidays, [ 'id' => intval( $_POST['id'] ) ] );
 				if ( $validation_result !== false ) {

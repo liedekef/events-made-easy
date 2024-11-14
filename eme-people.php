@@ -4032,13 +4032,13 @@ function eme_add_familymember_from_frontend( $main_person_id, $familymember ) {
 	}
 
 	if ( ! empty( $familymember['birthdate'] ) && eme_is_date( $familymember['birthdate'] ) ) {
-		$person['birthdate'] = eme_sanitize_request( $familymember['birthdate'] );
+		$person['birthdate'] = $familymember['birthdate'];
 	}
 	if ( ! empty( $familymember['birthplace'] ) ) {
-		$person['birthplace'] = eme_sanitize_request( $familymember['birthplace'] );
+		$person['birthplace'] = $familymember['birthplace'];
 	}
 	if ( ! empty( $familymember['phone'] ) ) {
-		$person['phone'] = eme_sanitize_request( $familymember['phone'] );
+		$person['phone'] = $familymember['phone'];
 	} elseif ( ! empty( $_POST['phone'] ) ) {
 		$person['phone'] = eme_sanitize_request( $_POST['phone'] );
 	}
@@ -4888,9 +4888,7 @@ function eme_store_person_answers( $person_id, $new_person = 0, $backend = 0 ) {
 					if ( is_array( $value ) ) {
 						$value = eme_convert_array2multi( $value );
 					}
-					if ( $formfield['field_type'] == 'textarea' ) {
-						$value = eme_sanitize_textarea( $value );
-					} elseif ( $formfield['field_type'] == 'time_js' ) {
+					if ( $formfield['field_type'] == 'time_js' ) {
 						$value = eme_convert_localized_time( $formfield['field_attributes'], eme_sanitize_request( $value ) );
 					} else {
 						$value = eme_sanitize_request( $value );
@@ -4936,9 +4934,7 @@ function eme_store_family_answers( $person_id, $familymember ) {
 				if ( is_array( $value ) ) {
 					$value = eme_convert_array2multi( $value );
 				}
-				if ( $formfield['field_type'] == 'textarea' ) {
-					$value = eme_sanitize_textarea( $value );
-				} elseif ( $formfield['field_type'] == 'time_js' ) {
+				if ( $formfield['field_type'] == 'time_js' ) {
 					$value = eme_convert_localized_time( $formfield['field_attributes'], eme_sanitize_request( $value ) );
 				} else {
 					$value = eme_sanitize_request( $value );

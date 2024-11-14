@@ -895,7 +895,7 @@ jQuery(document).ready( function($) {
 });
 
 // the next is a Jtable CSV export function
-function jtable_csv(container) {
+function jtable_csv(container,csv_name) {
 	// create a copy to avoid messing with visual layout
 	var newTable = jQuery(container).clone();
 	// fix HTML table
@@ -948,7 +948,7 @@ function jtable_csv(container) {
     let blob = new Blob([mydata], { type: 'text/csv;charset=utf-8' });
     let link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'table_data.csv'; // Specify the file name
+    link.download = csv_name+'_data.csv'; // Specify the file name
     link.click();
     link.remove();
 

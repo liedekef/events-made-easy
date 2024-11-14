@@ -621,7 +621,7 @@ jQuery(document).ready( function($) {
                 items: [{
                     text: emeevents.translate_csv,
                     click: function () {
-                        jtable_csv('#EventsTableContainer');
+                        jtable_csv('#EventsTableContainer','events');
                     }
                 },
                     {
@@ -735,7 +735,7 @@ jQuery(document).ready( function($) {
                 items: [{
                     text: emeevents.translate_csv,
                     click: function () {
-                        jtable_csv('#RecurrencesTableContainer');
+                        jtable_csv('#RecurrencesTableContainer','recurrences');
                     }
                 },
                     {

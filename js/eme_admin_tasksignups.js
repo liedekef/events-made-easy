@@ -13,7 +13,7 @@ jQuery(document).ready( function($) {
             items: [{
                 text: emetasks.translate_csv,
                 click: function () {
-                    jtable_csv('#TaskSignupsTableContainer');
+                    jtable_csv('#TaskSignupsTableContainer','task_signups');
                 }
             },
                 {

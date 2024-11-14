@@ -242,7 +242,7 @@ jQuery(document).ready(function ($) {
                     {
                         text: emersvp.translate_csv,
                         click: function () {
-                            jtable_csv('#BookingsTableContainer');
+                            jtable_csv('#BookingsTableContainer','bookings');
                         }
                     },
                     {

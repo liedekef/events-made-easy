@@ -99,7 +99,7 @@ jQuery(document).ready(function ($) {
                 items: [{
                     text: emelocations.translate_csv,
                     click: function () {
-                        jtable_csv('#LocationsTableContainer');
+                        jtable_csv('#LocationsTableContainer','locations');
                     }
                 },
                     {

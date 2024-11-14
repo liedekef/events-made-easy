@@ -42,7 +42,7 @@ jQuery(document).ready( function($) {
                 items: [{
 			text: emeattendances.translate_csv,
 			click: function () {
-				jtable_csv('#AttendancesTableContainer');
+				jtable_csv('#AttendancesTableContainer','attendences');
 			}
 		},
 		{

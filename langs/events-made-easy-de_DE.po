@@ -40,7 +40,7 @@ msgstr "im Namen von %s"
 #: eme-functions.php:3309
 #: eme-functions.php:3310
 #: eme-functions.php:3353
-#: eme-locations.php:2865
+#: eme-locations.php:2872
 #: eme-mailer.php:1272
 #: eme-mailer.php:1402
 #: eme-mailer.php:2665
@@ -426,7 +426,7 @@ msgstr "Name"
 #: eme-events.php:10225
 #: eme-formfields.php:5065
 #: eme-holidays.php:136
-#: eme-locations.php:2942
+#: eme-locations.php:2949
 #: eme-members.php:6361
 #: eme-people.php:5219
 #: eme-templates.php:489
@@ -1538,7 +1538,7 @@ msgstr "Fest pro Platz"
 #: eme-gdpr.php:425
 #: eme-gdpr.php:544
 #: eme-gdpr.php:545
-#: eme-locations.php:2978
+#: eme-locations.php:2985
 #: eme-members.php:6526
 #: eme-people.php:500
 #: eme-people.php:508
@@ -1579,7 +1579,7 @@ msgstr "Ja"
 #: eme-gdpr.php:425
 #: eme-gdpr.php:544
 #: eme-gdpr.php:545
-#: eme-locations.php:2978
+#: eme-locations.php:2985
 #: eme-members.php:6526
 #: eme-people.php:500
 #: eme-people.php:508
@@ -1955,7 +1955,7 @@ msgstr "Events Made Easy Plugin-Seite"
 #: eme-events.php:9751
 #: eme-events.php:9891
 #: eme-events.php:9946
-#: eme-locations.php:2393
+#: eme-locations.php:2400
 #: eme-rsvp.php:5772
 msgid "Edit"
 msgstr "Bearbeiten"
@@ -2011,46 +2011,46 @@ msgstr[0] "%d Jahr"
 msgstr[1] "%d Jahre"
 
 #: eme-events.php:4266
-#: eme-locations.php:1579
+#: eme-locations.php:1581
 msgid "Previous week"
 msgstr "Vorherige Woche"
 
 #: eme-events.php:4267
-#: eme-locations.php:1580
+#: eme-locations.php:1582
 msgid "Next week"
 msgstr "Nächste Woche"
 
 #: eme-events.php:4277
-#: eme-locations.php:1615
+#: eme-locations.php:1617
 msgid "Previous month"
 msgstr "Vorheriger Monat"
 
 #: eme-events.php:4278
-#: eme-locations.php:1616
+#: eme-locations.php:1618
 msgid "Next month"
 msgstr "Nächster Monat"
 
 #: eme-events.php:4287
-#: eme-locations.php:1589
+#: eme-locations.php:1591
 msgid "Previous year"
 msgstr "Vorjahr"
 
 #: eme-events.php:4288
-#: eme-locations.php:1590
+#: eme-locations.php:1592
 msgid "Next year"
 msgstr "Nächstes Jahr"
 
 #: eme-events.php:4295
 #: eme-events.php:4304
-#: eme-locations.php:1597
-#: eme-locations.php:1606
+#: eme-locations.php:1599
+#: eme-locations.php:1608
 msgid "Previous day"
 msgstr "Vorheriger Tag"
 
 #: eme-events.php:4296
 #: eme-events.php:4305
-#: eme-locations.php:1598
-#: eme-locations.php:1607
+#: eme-locations.php:1600
+#: eme-locations.php:1609
 msgid "Next day"
 msgstr "Nächster Tag"
 
@@ -2562,7 +2562,7 @@ msgstr "Da der Autor für diese Veranstaltung nicht gesetzt wurde, wird jede Ref
 #: eme-events.php:9934
 #: eme-events.php:10237
 #: eme-locations.php:449
-#: eme-locations.php:2952
+#: eme-locations.php:2959
 #: eme-recurrence.php:731
 #: eme-widgets.php:179
 #: eme-widgets.php:343
@@ -4809,13 +4809,13 @@ msgstr "Aufgabeninfo: %d Aufgaben"
 
 #: eme-events.php:10355
 #: eme-locations.php:534
-#: eme-locations.php:2946
+#: eme-locations.php:2953
 #: eme-recurrence.php:749
 msgid "Edit location"
 msgstr "Veranstaltungsort bearbeiten"
 
 #: eme-events.php:10357
-#: eme-locations.php:2948
+#: eme-locations.php:2955
 #: eme-recurrence.php:751
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Koordinaten der Landkarte sind leer! Bitte bearbeite den Veranstaltungsort um den Fehler zu beheben, ansonsten wird die Darstellung auf der Seite fehlerhaft sein."
@@ -6370,8 +6370,8 @@ msgid "Location maximum capacity"
 msgstr "Veranstaltungsort maximale Kapazität"
 
 #: eme-locations.php:644
-#: eme-locations.php:2964
-#: eme-locations.php:2965
+#: eme-locations.php:2971
+#: eme-locations.php:2972
 msgid "Max capacity"
 msgstr "Maximale Kapazität"
 
@@ -6449,19 +6449,19 @@ msgstr "Adresse der Veranstaltung"
 msgid "The location city"
 msgstr "Die Stadt der Veranstaltung"
 
-#: eme-locations.php:2641
+#: eme-locations.php:2648
 msgid "Your Street Address"
 msgstr "Anreise planen von"
 
-#: eme-locations.php:2645
+#: eme-locations.php:2652
 msgid "Get Directions"
 msgstr "Wegbeschreibung anzeigen"
 
-#: eme-locations.php:2980
+#: eme-locations.php:2987
 msgid "View location"
 msgstr "Veranstaltungsortansicht"
 
-#: eme-locations.php:2981
+#: eme-locations.php:2988
 msgid "Duplicate this location"
 msgstr "Kopiere diesen Veranstaltungsort"
 

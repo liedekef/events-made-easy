@@ -206,7 +206,7 @@ jQuery(document).ready(function ($) {
 				items: [{
 						text: ememembers.translate_csv,
 						click: function () {
-							jtable_csv('#MembersTableContainer','members");
+							jtable_csv('#MembersTableContainer','members');
 						}
 					},
 					{

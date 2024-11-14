@@ -253,7 +253,7 @@ jQuery(document).ready(function ($) {
 				items: [{
 						text: emepeople.translate_csv,
 						click: function () {
-							jtable_csv('#PeopleTableContainer','people");
+							jtable_csv('#PeopleTableContainer','people');
 						}
 					},
 					{

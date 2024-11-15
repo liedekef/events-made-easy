@@ -2716,6 +2716,8 @@ function eme_get_wpid_by_post() {
 
 // sanitize_text_field and sanitize_textarea_field strip html tags, be aware
 function eme_sanitize_request( $value ) {
+    if (is_null($value) || empty($value))
+        return $value;
 	if ( is_array( $value ) ) {
 		return array_map( 'eme_sanitize_request', $value );
 	}

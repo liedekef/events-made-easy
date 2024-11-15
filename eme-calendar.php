@@ -177,7 +177,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 	}
 	$eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
 
-	if ( get_option( 'eme_use_client_clock' ) && isset( $_COOKIE['eme_client_time'] ) ) {
+	if ( get_option( 'eme_use_client_clock' ) && !empty( $_COOKIE['eme_client_time'] ) ) {
 		try {
 			$client_timeinfo = eme_sanitize_request( json_decode( $_COOKIE['eme_client_time'], true ) );
 			if ( ! is_array( $client_timeinfo ) ) {

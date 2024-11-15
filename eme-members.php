@@ -3410,7 +3410,7 @@ function eme_dyndata_familymember_ajax() {
     } else {
         return;
     }
-    $count      = !empty( $_POST['familycount'] ) ? intval( $_POST['familycount'] ) : 1;
+    $count      = isset( $_POST['familycount'] ) ? intval( $_POST['familycount'] ) : 0;
     $form_html  = '';
     $membership = eme_get_membership( $membership_id );
     if ( ! eme_is_empty_string( $membership['properties']['familymember_form_text'] ) ) {

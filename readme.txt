@@ -99,8 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.19 (2024//) =
+= 2.5.19 (2024/11/20) =
 * Family members form template can now also contain custom fields of type "member" (next to those of type "people")
+* Fix membership update due to invisible required field
 
 = 2.5.18 (2024/11/14) =
 * eme_locations_map shortcode was parsing width and heigth wrong due to new code

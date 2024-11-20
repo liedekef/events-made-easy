@@ -795,9 +795,11 @@ jQuery(document).ready(function ($) {
                 if ($('input#family_membership').prop('checked')) {
                         $('tr#tr_family_maxmembers').fadeIn();
                         $('tr#tr_familymember_form_tpl').fadeIn();
+                        $('select[name="properties[familymember_form_tpl]"]').prop('required',true);
                 } else {
                         $('tr#tr_family_maxmembers').fadeOut();
                         $('tr#tr_familymember_form_tpl').fadeOut();
+                        $('select[name="properties[familymember_form_tpl]"]').prop('required',false);
                 }
         }
         $('input#family_membership').on("change",updateShowHideFamilytpl);

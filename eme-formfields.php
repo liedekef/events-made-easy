@@ -4908,7 +4908,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
                         <input type='text' id="eme_dyndata[<?php echo $count; ?>][grouping]" name="eme_dyndata[<?php echo $count; ?>][grouping]" aria-label="hidden grouping index" size="5" maxlength="5" value="<?php echo $info['grouping']; ?>">
                         <?php else : ?>
                         <?php if ($dyn_count_total>0) echo $info['grouping']; ?>
-                        <input type='hidden' id="eme_dyndata[<?php echo $count; ?>][grouping]" name="eme_dyndata[<?php echo $count; ?>][grouping]" aria-label="hidden grouping index" size="5" maxlength="5" value="<?php echo $info['grouping']; ?>">
+                        <input type='hidden' id="eme_dyndata[<?php echo $count; ?>][grouping]" name="eme_dyndata[<?php echo $count; ?>][grouping]" aria-label="hidden grouping index" value="<?php echo $info['grouping']; ?>">
                         <?php endif; ?>
 					</td>
 					<td>

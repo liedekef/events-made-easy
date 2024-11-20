@@ -483,15 +483,21 @@ function eme_ajax_templates_list() {
 		$pagesize    = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
 		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
 		$sql         = "SELECT * FROM $table $where $sorting LIMIT $start,$pagesize";
-		$rows        = $wpdb->get_results( $sql, ARRAY_A );
-		foreach ( $rows as $key => $row ) {
-			if ( empty( $row['name'] ) ) {
-				$row['name'] = __( 'No name', 'events-made-easy' );
-			}
-			$rows[ $key ]['type'] = $template_types[ $row['type'] ];
-			$rows[ $key ]['name'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=edit_template&amp;id=' . $row['id'] ) . "'>" . $row['name'] . '</a>';
-			$rows[ $key ]['copy'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=copy_template&amp;id=' . $row['id'] ) . "' title='" . __( 'Duplicate this template', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_16.png'></a>";
-		}
+        $res         = $wpdb->get_results( $sql, ARRAY_A );
+        $rows        = [];
+        foreach ( $res  as $key => $val ) {
+            if ( empty( $val['name'] ) ) {
+                $val['name'] = __( 'No name', 'events-made-easy' );
+            }
+
+            $row = [];
+            $row['id'] = $val['id'];
+            $row['description'] = $val['description'];
+            $row[ 'type'] = $template_types[ $val['type'] ];
+            $row[ 'name'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=edit_template&amp;id=' . $val['id'] ) . "'>" . $val['name'] . '</a>';
+            $row[ 'copy'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=copy_template&amp;id=' . $val['id'] ) . "' title='" . __( 'Duplicate this template', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_16.png'></a>";
+            $rows[] = $row;
+        }
 
 		$jTableResult['Result']           = 'OK';
 		$jTableResult['TotalRecordCount'] = $recordCount;

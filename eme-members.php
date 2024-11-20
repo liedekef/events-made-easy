@@ -1661,7 +1661,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
 <?php if ( $membership['properties']['max_usage_count'] > 0 ) { ?>
     <tr>
     <td><label for="properties[usage_count]"><?php esc_html_e( 'Usage count', 'events-made-easy' ); ?></label></td>
-    <td><input type="integer" id="properties[usage_count]" name="properties[usage_count]" value="<?php echo $member['properties']['usage_count']; ?>" size="40">
+    <td><input type="number" id="properties[usage_count]" name="properties[usage_count]" value="<?php echo $member['properties']['usage_count']; ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'This indicates the amount of times this member has RSVP-ed to an event that requires this membership.', 'events-made-easy' ); ?>
 <?php 
                             if ( $member['properties']['usage_count'] >= $membership['properties']['max_usage_count'] ) {
@@ -1932,7 +1932,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="duration_count"><?php esc_html_e( 'Duration period', 'events-made-easy' ); ?></label></td>
-    <td><input type="integer" id="duration_count" name="duration_count" value="<?php echo $membership['duration_count']; ?>" size="4"><?php echo eme_ui_select( $membership['duration_period'], 'duration_period', $duration_array ); ?>
+    <td><input type="number" id="duration_count" name="duration_count" value="<?php echo $membership['duration_count']; ?>" size="4"><?php echo eme_ui_select( $membership['duration_period'], 'duration_period', $duration_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'Once this duration period has passed, the membership start date for new members will be increased by the passed period.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
@@ -1952,7 +1952,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr>
     <td><label for="properties[max_usage_count]"><?php esc_html_e( 'Maximum usage', 'events-made-easy' ); ?></label></td>
-    <td><input type="integer" id="properties[max_usage_count]" name="properties[max_usage_count]" value="<?php echo $membership['properties']['max_usage_count']; ?>" size="40">
+    <td><input type="number" id="properties[max_usage_count]" name="properties[max_usage_count]" value="<?php echo $membership['properties']['max_usage_count']; ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'If set to something bigger than 0, this will indicate the maximum times a member can RSVP to an event that requires this membership.', 'events-made-easy' ); ?>
     </td>
     </tr>
@@ -2048,13 +2048,13 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
         <br><p class='eme_smaller'><?php esc_html_e( 'Require users to be logged-in before being able to sign up for this membership.', 'events-made-easy' ); ?></p>
     </td>
     </tr>
-    <tr id='attendancerecord'>
+    <tr id='tr_attendancerecord'>
     <td><label for="attendancerecord"><?php esc_html_e( 'Keep attendance records?', 'events-made-easy' ); ?></label></td>
     <td><input id="attendancerecord" name="properties[attendancerecord]" type="checkbox" value='1' <?php echo $attendancerecord; ?>>
         <br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want an attendance record to be kept everytime the member QRCODE is scanned by an EME admin.', 'events-made-easy' ); ?>
     </td>
     </tr>
-    <tr id="member_form_tpl">
+    <tr id="tr_member_form_tpl">
     <td><label for="properties[member_form_tpl]"><?php esc_html_e( 'Member Form:', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select_key_value( $membership['properties']['member_form_tpl'], 'properties[member_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'This is the form that will be shown when a new member wants to sign up for this membership.', 'events-made-easy' ); ?>
@@ -2089,7 +2089,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <td><label for="properties[familymember_form_tpl]"><?php esc_html_e( 'Family Member Form:', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select_key_value( $membership['properties']['familymember_form_tpl'], 'properties[familymember_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'This is the form that will be shown/repeated for the family members when a new member wants to sign up for this membership.', 'events-made-easy' ); ?>
-        <br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple default will be used.', 'events-made-easy' ); ?></p>
+        <br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple default will be used.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'The template may contain the person placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL, #_OPT_IN (or #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE and placeholders referring to custom person fields, nothing else. #_LASTNAME, #_FIRSTNAME are required. If #_EMAIL, #_PHONE, #_OPT_IN (or #_OPT_OUT) is not set, it is copied over from the person signing up. The address info is always copied over from the person signing up.', 'events-made-easy' ); ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_familymember_form_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2188,7 +2188,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </td>
     </tr>
     <tr>
-    <td><?php esc_html_e( 'Payment methods', 'events-made-easy' ); ?></label></td>
+    <td><label for='properties[payment_gateways]'><?php esc_html_e( 'Payment methods', 'events-made-easy' ); ?></label></td>
     <td>
 <?php
     esc_html_e( 'If no payment method is selected, the "Member Added Message" will be shown. Otherwise the "Member Added Message" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings).', 'events-made-easy' );
@@ -2256,7 +2256,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
 function eme_meta_box_div_membershipmailformats( $membership ) {
     $templates_array = eme_get_templates_array_by_id( 'membershipmail' );
 ?>
-<div id="tab-mailformats">
+<div id="div-mailformats">
     <details name='eme_details_memberships' class="eme_accordion">
     <summary><?php esc_html_e( 'New member email', 'events-made-easy' ); ?></summary>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the member that is signing up.', 'events-made-easy' ); ?>
@@ -2271,7 +2271,8 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <tr>
     <td><label for="properties[new_body_format_tpl]"><?php esc_html_e( 'New member email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['new_body_format_tpl'], 'properties[new_body_format_tpl]', $templates_array ); ?>
-        <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the person signing up as a member.', 'events-made-easy' ); ?><br>
+        <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the person signing up as a member.', 'events-made-easy' ); ?>
+        </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -2286,7 +2287,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_new_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[new_body_text]', $membership['properties']['new_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     <tr><td><?php esc_html_e( 'New member mail attachments', 'events-made-easy' ); ?></td>
@@ -2342,6 +2342,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><label for="name"><?php esc_html_e( 'Contactperson new member email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['contact_new_body_format_tpl'], 'properties[contact_new_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the contactperson when someone signes up as a member.', 'events-made-easy' ); ?><br>
+        </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -2356,7 +2357,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_contact_new_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_new_body_text]', $membership['properties']['contact_new_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     </table>
@@ -2376,7 +2376,8 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><label for="name"><?php esc_html_e( 'Updated member email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['updated_body_format_tpl'], 'properties[updated_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member upon changes.', 'events-made-easy' ); ?>
-        <br><p class='eme_smaller'><?php esc_html_e( 'Currently only used when a member is manually marked as unpaid.', 'events-made-easy' ); ?></p><br>
+        <br><?php esc_html_e( 'Currently only used when a member is manually marked as unpaid.', 'events-made-easy' ); ?><br>
+        </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -2391,7 +2392,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_updated_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[updated_body_text]', $membership['properties']['updated_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     </table>
@@ -2412,6 +2412,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><label for="name"><?php esc_html_e( 'Membership extended email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['extended_body_format_tpl'], 'properties[extended_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member when the membership is extended.', 'events-made-easy' ); ?><br>
+        </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -2426,7 +2427,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_extended_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[extended_body_text]', $membership['properties']['extended_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     <tr><td><?php esc_html_e( 'Mail attachments', 'events-made-easy' ); ?></td>
@@ -2489,6 +2489,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><label for="name"><?php esc_html_e( 'Membership paid email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['paid_body_format_tpl'], 'properties[paid_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member when marked as paid.', 'events-made-easy' ); ?><br>
+        </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -2503,7 +2504,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_paid_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[paid_body_text]', $membership['properties']['paid_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     <tr><td><?php esc_html_e( 'Mail attachments', 'events-made-easy' ); ?></td>
@@ -2559,6 +2559,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><label for="name"><?php esc_html_e( 'Contactperson membership paid email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['contact_paid_body_format_tpl'], 'properties[contact_paid_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the contactperson after a member is marked as paid.', 'events-made-easy' ); ?><br>
+        </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -2573,7 +2574,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_contact_paid_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_paid_body_text]', $membership['properties']['contact_paid_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     </table>
@@ -2596,8 +2596,9 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><label for="name"><?php esc_html_e( 'Membership reminder email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['reminder_body_format_tpl'], 'properties[reminder_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership.', 'events-made-easy' ); ?><br>
-                <br><?php esc_html_e( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ); ?>
-                <br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
+        <br><?php esc_html_e( 'This reminder email does NOT take into account an optional grace period.', 'events-made-easy' ); ?>
+        </p>
+        <br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_reminder_body_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2611,7 +2612,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_reminder_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[reminder_body_text]', $membership['properties']['reminder_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     </table>
@@ -2635,6 +2635,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><?php echo eme_ui_select( $membership['properties']['stop_body_format_tpl'], 'properties[stop_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the member when a membership has expired or is marked as stopped.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
+        </p>
         <br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -2649,7 +2650,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_stop_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[stop_body_text]', $membership['properties']['stop_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     <tr>
@@ -2665,8 +2665,9 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><label for="name"><?php esc_html_e( 'Contactperson membership stopped email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['contact_stop_body_format_tpl'], 'properties[contact_stop_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the contactperson when a membership has expired or is stopped.', 'events-made-easy' ); ?>
-                <br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
-                <br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
+        <br><?php esc_html_e( 'If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period.', 'events-made-easy' ); ?>
+        </p>
+        <br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_stop_body_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2680,7 +2681,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_contact_stop_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_stop_body_text]', $membership['properties']['contact_stop_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     </table>
@@ -2701,7 +2701,8 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><label for="name"><?php esc_html_e( 'Contactperson member deleted email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['contact_deleted_body_format_tpl'], 'properties[contact_deleted_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the mail sent to the contactperson just before a member is deleted.', 'events-made-easy' ); ?>
-                <br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
+        </p>
+        <br><?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
         <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_membership_properties_contact_deleted_body_text" style="cursor: pointer; vertical-align: middle; ">
@@ -2715,7 +2716,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_contact_deleted_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_deleted_body_text]', $membership['properties']['contact_deleted_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     </table>
@@ -2735,6 +2735,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td><label for="name"><?php esc_html_e( 'Contactperson payment notification email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['contact_ipn_body_format_tpl'], 'properties[contact_ipn_body_format_tpl]', $templates_array ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'The body of the email which will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?><br>
+        </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>
@@ -2749,7 +2750,6 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
         <div id="div_membership_properties_contact_ipn_body_text" <?php echo $showhide_style; ?>>
         <?php eme_wysiwyg_textarea( 'properties[contact_ipn_body_text]', $membership['properties']['contact_ipn_body_text'], 1, 0 ); ?>
         </div>
-        </p>
     </td>
     </tr>
     </table>

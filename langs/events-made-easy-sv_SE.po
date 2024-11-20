@@ -36,43 +36,43 @@ msgstr ""
 #: eme-formfields.php:5092
 #: eme-formfields.php:5114
 #: eme-formfields.php:5115
-#: eme-functions.php:3288
-#: eme-functions.php:3309
-#: eme-functions.php:3310
-#: eme-functions.php:3353
+#: eme-functions.php:3283
+#: eme-functions.php:3304
+#: eme-functions.php:3305
+#: eme-functions.php:3348
 #: eme-locations.php:2872
 #: eme-mailer.php:1272
 #: eme-mailer.php:1402
 #: eme-mailer.php:2665
 #: eme-mailer.php:2798
-#: eme-members.php:6324
-#: eme-members.php:6445
-#: eme-members.php:6592
-#: eme-members.php:6679
-#: eme-members.php:6750
+#: eme-members.php:6359
+#: eme-members.php:6480
+#: eme-members.php:6627
+#: eme-members.php:6714
+#: eme-members.php:6785
 #: eme-options.php:138
 #: eme-payments.php:3993
 #: eme-people.php:3988
-#: eme-people.php:5086
-#: eme-people.php:5195
-#: eme-people.php:5267
-#: eme-people.php:5306
-#: eme-people.php:5345
-#: eme-people.php:5427
+#: eme-people.php:5082
+#: eme-people.php:5191
+#: eme-people.php:5263
+#: eme-people.php:5302
+#: eme-people.php:5341
+#: eme-people.php:5423
 #: eme-recurrence.php:623
 #: eme-recurrence.php:792
 #: eme-rsvp.php:1241
-#: eme-rsvp.php:4660
-#: eme-rsvp.php:4667
-#: eme-rsvp.php:4698
-#: eme-rsvp.php:4705
-#: eme-rsvp.php:4753
-#: eme-rsvp.php:5550
-#: eme-rsvp.php:5572
+#: eme-rsvp.php:4654
+#: eme-rsvp.php:4661
+#: eme-rsvp.php:4692
+#: eme-rsvp.php:4699
+#: eme-rsvp.php:4747
+#: eme-rsvp.php:5544
+#: eme-rsvp.php:5566
 #: eme-tasks.php:1890
 #: eme-tasks.php:1995
 #: eme-tasks.php:2006
-#: eme-templates.php:501
+#: eme-templates.php:507
 msgid "Access denied!"
 msgstr "Åtkomst nekad!"
 
@@ -201,9 +201,9 @@ msgstr "Lägg till en närvaropost manuellt"
 #: eme-locations.php:903
 #: eme-mailer.php:2419
 #: eme-mailer.php:2598
-#: eme-members.php:1565
-#: eme-members.php:1587
-#: eme-members.php:1635
+#: eme-members.php:1557
+#: eme-members.php:1579
+#: eme-members.php:1627
 #: eme-people.php:1829
 #: eme-people.php:2316
 msgid "Start typing a name"
@@ -228,7 +228,7 @@ msgstr "Om en OSA eller medlems WR-kod scannas av någon med tillräckliga behö
 #: eme-attendances.php:134
 #: eme-events.php:5986
 #: eme-events.php:6135
-#: eme-rsvp.php:5182
+#: eme-rsvp.php:5176
 #: eme-tasks.php:471
 msgid "Filter on start date"
 msgstr ""
@@ -236,7 +236,7 @@ msgstr ""
 #: eme-attendances.php:136
 #: eme-events.php:5988
 #: eme-events.php:6137
-#: eme-rsvp.php:5184
+#: eme-rsvp.php:5178
 #: eme-tasks.php:473
 msgid "Filter on end date"
 msgstr "Filtrera efter slutdatum"
@@ -254,11 +254,11 @@ msgstr ""
 #: eme-events.php:6157
 #: eme-formfields.php:235
 #: eme-locations.php:907
-#: eme-members.php:2915
-#: eme-members.php:3312
+#: eme-members.php:2907
+#: eme-members.php:3304
 #: eme-people.php:1849
 #: eme-people.php:2656
-#: eme-rsvp.php:5285
+#: eme-rsvp.php:5279
 #: eme-tasks.php:495
 #: eme-templates.php:207
 msgid "Hint: rightclick on the column headers to show/hide columns"
@@ -277,17 +277,17 @@ msgstr "Tips: högerklicka på kolumnrubrikerna för att visa/dölja kolumner"
 #: eme-people.php:2254
 #: eme-people.php:2319
 #: eme-people.php:2334
-#: eme-people.php:5111
-#: eme-people.php:5125
-#: eme-people.php:5126
-#: eme-people.php:5127
+#: eme-people.php:5107
+#: eme-people.php:5121
+#: eme-people.php:5122
+#: eme-people.php:5123
 #: eme-tasks.php:1987
 msgid "Edit person"
 msgstr "Redigera person"
 
 #: eme-attendances.php:217
 #: eme-events.php:10426
-#: eme-rsvp.php:5891
+#: eme-rsvp.php:5885
 msgid "All day"
 msgstr "Heldag"
 
@@ -415,7 +415,7 @@ msgstr "ID"
 #: eme-mailer.php:1442
 #: eme-mailer.php:2718
 #: eme-mailer.php:2830
-#: eme-members.php:1918
+#: eme-members.php:1910
 #: eme-people.php:2558
 #: eme-tasks.php:745
 #: eme-templates.php:273
@@ -428,9 +428,9 @@ msgstr "Namn"
 #: eme-formfields.php:5065
 #: eme-holidays.php:136
 #: eme-locations.php:2949
-#: eme-members.php:6361
-#: eme-people.php:5219
-#: eme-templates.php:489
+#: eme-members.php:6396
+#: eme-people.php:5215
+#: eme-templates.php:490
 msgid "No name"
 msgstr "Inget namn"
 
@@ -595,11 +595,11 @@ msgstr "Månad(er)"
 #: eme-locations.php:905
 #: eme-mailer.php:2708
 #: eme-mailer.php:2820
-#: eme-members.php:2913
-#: eme-members.php:3310
+#: eme-members.php:2905
+#: eme-members.php:3302
 #: eme-people.php:1847
 #: eme-people.php:2654
-#: eme-rsvp.php:5283
+#: eme-rsvp.php:5277
 #: eme-tasks.php:493
 #: eme-templates.php:205
 msgid "Apply"
@@ -669,10 +669,10 @@ msgstr "Du har inte behörighet att hantera rabatter!"
 #: eme-discounts.php:172
 #: eme-events.php:5722
 #: eme-locations.php:229
-#: eme-members.php:5875
-#: eme-members.php:6061
+#: eme-members.php:5910
+#: eme-members.php:6096
 #: eme-people.php:851
-#: eme-rsvp.php:4967
+#: eme-rsvp.php:4961
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
 msgstr "Problem att komma åt den uppladdade filen, kan vara något säkerhetsproblem?"
 
@@ -682,10 +682,10 @@ msgstr "Problem att komma åt den uppladdade filen, kan vara något säkerhetspr
 #: eme-discounts.php:197
 #: eme-events.php:5749
 #: eme-locations.php:256
-#: eme-members.php:5901
-#: eme-members.php:6087
+#: eme-members.php:5936
+#: eme-members.php:6122
 #: eme-people.php:878
-#: eme-rsvp.php:4994
+#: eme-rsvp.php:4988
 msgid "Not all required fields present."
 msgstr "Alla obligatoriska fält finns inte med."
 
@@ -700,7 +700,7 @@ msgstr "Inte importerat: %s"
 #: eme-countries.php:144
 #: eme-discounts.php:150
 #: eme-discounts.php:209
-#: eme-members.php:6186
+#: eme-members.php:6221
 msgid "Import finished: %d inserts, %d errors"
 msgstr ""
 
@@ -710,10 +710,10 @@ msgstr ""
 #: eme-discounts.php:217
 #: eme-events.php:5714
 #: eme-locations.php:221
-#: eme-members.php:5867
-#: eme-members.php:6054
+#: eme-members.php:5902
+#: eme-members.php:6089
 #: eme-people.php:843
-#: eme-rsvp.php:4958
+#: eme-rsvp.php:4952
 msgid "Problem detected while uploading the file"
 msgstr "Ett problem upptäcktes vid uppladdning av filen"
 
@@ -723,10 +723,10 @@ msgstr "Ett problem upptäcktes vid uppladdning av filen"
 #: eme-discounts.php:220
 #: eme-events.php:5711
 #: eme-locations.php:218
-#: eme-members.php:5864
-#: eme-members.php:6051
+#: eme-members.php:5899
+#: eme-members.php:6086
 #: eme-people.php:840
-#: eme-rsvp.php:4955
+#: eme-rsvp.php:4949
 msgid "No CSV file detected: %s"
 msgstr "Ingen CSV-fil hittades: %s"
 
@@ -814,7 +814,7 @@ msgstr "Lägg till land"
 #: eme-discounts.php:505
 #: eme-events.php:5942
 #: eme-locations.php:851
-#: eme-members.php:3230
+#: eme-members.php:3222
 #: eme-people.php:2154
 msgid "Click on the icon to show the import form"
 msgstr "Klicka på ikonen för att visa importformuläret"
@@ -825,10 +825,10 @@ msgstr "Klicka på ikonen för att visa importformuläret"
 #: eme-discounts.php:512
 #: eme-events.php:5949
 #: eme-locations.php:858
-#: eme-members.php:3237
-#: eme-members.php:3248
+#: eme-members.php:3229
+#: eme-members.php:3240
 #: eme-people.php:2161
-#: eme-rsvp.php:5134
+#: eme-rsvp.php:5128
 msgid "Delimiter:"
 msgstr "Avgränsare:"
 
@@ -838,10 +838,10 @@ msgstr "Avgränsare:"
 #: eme-discounts.php:514
 #: eme-events.php:5951
 #: eme-locations.php:860
-#: eme-members.php:3239
-#: eme-members.php:3250
+#: eme-members.php:3231
+#: eme-members.php:3242
 #: eme-people.php:2163
-#: eme-rsvp.php:5136
+#: eme-rsvp.php:5130
 msgid "Enclosure:"
 msgstr "Bilaga:"
 
@@ -852,7 +852,7 @@ msgstr "Bilaga:"
 #: eme-events.php:5954
 #: eme-locations.php:863
 #: eme-people.php:2166
-#: eme-rsvp.php:5139
+#: eme-rsvp.php:5133
 msgid "Import"
 msgstr "Importera"
 
@@ -880,11 +880,11 @@ msgstr ""
 #: eme-locations.php:897
 #: eme-mailer.php:2704
 #: eme-mailer.php:2817
-#: eme-members.php:2872
-#: eme-members.php:3304
+#: eme-members.php:2864
+#: eme-members.php:3296
 #: eme-people.php:1797
 #: eme-people.php:2649
-#: eme-rsvp.php:5205
+#: eme-rsvp.php:5199
 #: eme-tasks.php:481
 #: eme-templates.php:202
 msgid "Bulk Actions"
@@ -1032,12 +1032,12 @@ msgid "Incorrect country selection"
 msgstr "Felaktigt landsval"
 
 #: eme-countries.php:1040
-#: eme-functions.php:3335
+#: eme-functions.php:3330
 msgid "Update failed: "
 msgstr "Uppdatering misslyckades:"
 
 #: eme-countries.php:1042
-#: eme-functions.php:3337
+#: eme-functions.php:3332
 msgid "Insert failed: "
 msgstr "Tillägg misslyckades:"
 
@@ -1331,7 +1331,7 @@ msgstr "Namnet på rabatten"
 #: eme-events.php:9712
 #: eme-events.php:9809
 #: eme-events.php:9866
-#: eme-members.php:1922
+#: eme-members.php:1914
 #: eme-people.php:2562
 #: eme-tasks.php:749
 #: eme-templates.php:277
@@ -1344,7 +1344,7 @@ msgstr "Beskrivning"
 #: eme-events.php:9672
 #: eme-events.php:9691
 #: eme-events.php:9718
-#: eme-members.php:1926
+#: eme-members.php:1918
 #: eme-templates.php:294
 msgid "Type"
 msgstr "Typ"
@@ -1415,7 +1415,7 @@ msgid "People need to be invited and click on the invitation URL for this discou
 msgstr "Kräv att användare är inloggade för att rabatten ska gälla."
 
 #: eme-discounts.php:888
-#: eme-members.php:2054
+#: eme-members.php:2046
 msgid "Logged-in users only"
 msgstr "Endast inloggade användare"
 
@@ -1438,7 +1438,7 @@ msgid "Require EME membership"
 msgstr "Kräv EME medlemskap"
 
 #: eme-discounts.php:906
-#: eme-members.php:3221
+#: eme-members.php:3213
 msgid "No memberships defined yet!"
 msgstr "Inga medlemskap definierade än!"
 
@@ -1546,7 +1546,7 @@ msgstr "Fast per plats"
 #: eme-gdpr.php:544
 #: eme-gdpr.php:545
 #: eme-locations.php:2985
-#: eme-members.php:6526
+#: eme-members.php:6561
 #: eme-people.php:500
 #: eme-people.php:508
 #: eme-people.php:516
@@ -1555,12 +1555,12 @@ msgstr "Fast per plats"
 #: eme-people.php:1115
 #: eme-people.php:1150
 #: eme-people.php:1450
-#: eme-people.php:5130
-#: eme-people.php:5147
-#: eme-people.php:5148
-#: eme-people.php:5222
-#: eme-rsvp.php:3835
-#: eme-rsvp.php:5928
+#: eme-people.php:5126
+#: eme-people.php:5143
+#: eme-people.php:5144
+#: eme-people.php:5218
+#: eme-rsvp.php:3829
+#: eme-rsvp.php:5922
 #: eme-ui-helpers.php:134
 #: eme-ui-helpers.php:231
 msgid "Yes"
@@ -1587,7 +1587,7 @@ msgstr "Ja"
 #: eme-gdpr.php:544
 #: eme-gdpr.php:545
 #: eme-locations.php:2985
-#: eme-members.php:6526
+#: eme-members.php:6561
 #: eme-people.php:500
 #: eme-people.php:508
 #: eme-people.php:516
@@ -1596,12 +1596,12 @@ msgstr "Ja"
 #: eme-people.php:1115
 #: eme-people.php:1150
 #: eme-people.php:1452
-#: eme-people.php:5130
-#: eme-people.php:5147
-#: eme-people.php:5148
-#: eme-people.php:5222
-#: eme-rsvp.php:3835
-#: eme-rsvp.php:5928
+#: eme-people.php:5126
+#: eme-people.php:5143
+#: eme-people.php:5144
+#: eme-people.php:5218
+#: eme-rsvp.php:3829
+#: eme-rsvp.php:5922
 #: eme-ui-helpers.php:135
 #: eme-ui-helpers.php:230
 msgid "No"
@@ -1644,7 +1644,7 @@ msgstr "Tryck på bakåtknappen i din webbläsare för att komma tillbaka till f
 #: eme-mailer.php:1797
 #: eme-payments.php:152
 #: eme-payments.php:1988
-#: eme-rsvp.php:5098
+#: eme-rsvp.php:5092
 msgid "No such event"
 msgstr ""
 
@@ -1918,8 +1918,8 @@ msgstr ""
 
 #: eme-events.php:1494
 #: eme-events.php:1588
-#: eme-rsvp.php:3780
-#: eme-rsvp.php:3794
+#: eme-rsvp.php:3774
+#: eme-rsvp.php:3788
 msgid "Cancel booking"
 msgstr "Avboka"
 
@@ -1963,7 +1963,7 @@ msgstr ""
 #: eme-events.php:9891
 #: eme-events.php:9946
 #: eme-locations.php:2400
-#: eme-rsvp.php:5772
+#: eme-rsvp.php:5766
 msgid "Edit"
 msgstr "Redigera"
 
@@ -2081,10 +2081,10 @@ msgstr "Plats importerades inte: %s"
 
 #: eme-events.php:5807
 #: eme-events.php:5810
-#: eme-members.php:5932
-#: eme-members.php:5937
-#: eme-members.php:5942
-#: eme-members.php:5947
+#: eme-members.php:5967
+#: eme-members.php:5972
+#: eme-members.php:5977
+#: eme-members.php:5982
 #: eme-people.php:907
 #, fuzzy
 msgid "Not imported (field %s not valid): %s"
@@ -2100,33 +2100,33 @@ msgstr ""
 
 #: eme-events.php:5882
 #: eme-locations.php:337
-#: eme-members.php:5927
-#: eme-members.php:6115
+#: eme-members.php:5962
+#: eme-members.php:6150
 msgid "Not imported (not all required fields are present): %s"
 msgstr ""
 
 #: eme-events.php:5885
 #: eme-locations.php:340
-#: eme-members.php:6032
+#: eme-members.php:6067
 #: eme-people.php:970
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr ""
 
 #: eme-events.php:5904
-#: eme-rsvp.php:5070
+#: eme-rsvp.php:5064
 #: eme-tasks.php:446
 msgid "Past events"
 msgstr "Tidigare event"
 
 #: eme-events.php:5905
-#: eme-rsvp.php:5071
+#: eme-rsvp.php:5065
 #: eme-tasks.php:447
 #: events-manager.php:342
 msgid "All events"
 msgstr "Alla event"
 
 #: eme-events.php:5906
-#: eme-rsvp.php:5072
+#: eme-rsvp.php:5066
 #: eme-tasks.php:448
 msgid "Future events"
 msgstr "Kommande event"
@@ -2152,13 +2152,13 @@ msgstr "Hantera återkommande"
 
 #: eme-events.php:5937
 #: eme-people.php:2149
-#: eme-rsvp.php:5122
+#: eme-rsvp.php:5116
 msgid "Show regular content"
 msgstr "Visa vanliga innehållet"
 
 #: eme-events.php:5939
 #: eme-people.php:2151
-#: eme-rsvp.php:5124
+#: eme-rsvp.php:5118
 msgid "Show trash content"
 msgstr "Visa innehållet i papperskorgen"
 
@@ -2167,12 +2167,12 @@ msgid "If you want, use this to import events into the database"
 msgstr "Om du önskar, använd detta för att importera event i databasen"
 
 #: eme-events.php:5976
-#: eme-rsvp.php:5172
+#: eme-rsvp.php:5166
 msgid "All categories"
 msgstr "Alla kategorier"
 
 #: eme-events.php:5977
-#: eme-rsvp.php:5173
+#: eme-rsvp.php:5167
 msgid "Events without category"
 msgstr "Event utan kategori"
 
@@ -2184,7 +2184,7 @@ msgid "Event name"
 msgstr "Eventets namn"
 
 #: eme-events.php:5989
-#: eme-rsvp.php:5189
+#: eme-rsvp.php:5183
 msgid "Show/hide extra filters"
 msgstr "Visa/dölj extra filter"
 
@@ -2201,8 +2201,8 @@ msgstr "FIltrera plats"
 
 #: eme-events.php:6008
 #: eme-locations.php:875
-#: eme-members.php:3007
-#: eme-members.php:3014
+#: eme-members.php:2999
+#: eme-members.php:3006
 #: eme-people.php:1940
 #: eme-people.php:1947
 msgid "Custom field value to search"
@@ -2210,7 +2210,7 @@ msgstr "Anpassat fältvärde att söka efter"
 
 #: eme-events.php:6009
 #: eme-locations.php:876
-#: eme-members.php:3023
+#: eme-members.php:3015
 #: eme-people.php:1957
 msgid "Custom fields to filter on"
 msgstr "Anpassade fält att filtrera på"
@@ -2221,14 +2221,14 @@ msgstr "Filtrera event"
 
 #: eme-events.php:6020
 #: eme-locations.php:886
-#: eme-members.php:2861
+#: eme-members.php:2853
 #: eme-people.php:1786
 msgid "Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the \"Custom fields to filter on\" select-box shown."
 msgstr "Tips: när du söker efter värden i anpassade fält, kan du om du önskar begränsa vilka anpassade fält du söker i genom kryssrutan ”Anpassade fält att filtrera på”."
 
 #: eme-events.php:6021
 #: eme-locations.php:887
-#: eme-members.php:2862
+#: eme-members.php:2854
 #: eme-people.php:1787
 msgid "If you can't see your custom field in the \"Custom fields to filter on\" select-box, make sure you marked it as \"searchable\" in the field definition."
 msgstr "Om du inte ser ditt anpassade fält bland ”Anpassade fält att filtrera på”, se till att du markerat det som ”sökbart” i fältdefinitionen."
@@ -2348,7 +2348,7 @@ msgstr "Om du ändrar detta even kommer det att bli ett fristående event och ta
 #: eme-events.php:9926
 #: eme-events.php:10396
 #: eme-options.php:1278
-#: eme-rsvp.php:5850
+#: eme-rsvp.php:5844
 msgid "RSVP"
 msgstr "OSA"
 
@@ -2368,8 +2368,8 @@ msgstr "Attribut"
 #: eme-events.php:8505
 #: eme-locations.php:394
 #: eme-locations.php:758
-#: eme-members.php:1869
-#: eme-members.php:2776
+#: eme-members.php:1861
+#: eme-members.php:2768
 #: eme-options.php:1604
 msgid "Custom fields"
 msgstr "Anpassade fält"
@@ -2379,7 +2379,7 @@ msgid "Generic RSVP info"
 msgstr ""
 
 #: eme-events.php:6337
-#: eme-members.php:2199
+#: eme-members.php:2191
 #: eme-options.php:2960
 msgid "Payment methods"
 msgstr "Betalningsmetoder"
@@ -2537,8 +2537,8 @@ msgstr "Radera återkommande"
 #: eme-events.php:9980
 #: eme-mailer.php:1445
 #: eme-mailer.php:2721
-#: eme-members.php:1788
-#: eme-members.php:1930
+#: eme-members.php:1780
+#: eme-members.php:1922
 #: eme-people.php:1057
 #: eme-people.php:1363
 msgid "Status"
@@ -2930,24 +2930,24 @@ msgstr "Välj antingen en mall:"
 #: eme-events.php:8314
 #: eme-events.php:8658
 #: eme-events.php:8673
-#: eme-members.php:2070
-#: eme-members.php:2102
-#: eme-members.php:2120
-#: eme-members.php:2138
-#: eme-members.php:2156
-#: eme-members.php:2174
-#: eme-members.php:2218
-#: eme-members.php:2285
-#: eme-members.php:2355
-#: eme-members.php:2390
-#: eme-members.php:2425
-#: eme-members.php:2502
-#: eme-members.php:2572
-#: eme-members.php:2610
-#: eme-members.php:2648
-#: eme-members.php:2679
-#: eme-members.php:2714
-#: eme-members.php:2748
+#: eme-members.php:2062
+#: eme-members.php:2094
+#: eme-members.php:2112
+#: eme-members.php:2130
+#: eme-members.php:2148
+#: eme-members.php:2166
+#: eme-members.php:2210
+#: eme-members.php:2278
+#: eme-members.php:2348
+#: eme-members.php:2383
+#: eme-members.php:2418
+#: eme-members.php:2495
+#: eme-members.php:2565
+#: eme-members.php:2603
+#: eme-members.php:2641
+#: eme-members.php:2672
+#: eme-members.php:2707
+#: eme-members.php:2741
 #: eme-widgets.php:230
 msgid "Or enter your own (if anything is entered here, it takes precedence over the selected template): "
 msgstr "Eller fyll i en egen (om någonting anges här har det företräde över den valda mallen):"
@@ -2971,7 +2971,7 @@ msgstr ""
 #: eme-locations.php:765
 #: eme-mailer.php:2363
 #: eme-mailer.php:2545
-#: eme-members.php:2783
+#: eme-members.php:2775
 #: eme-templates.php:286
 msgid "Your account has the ability to post unrestricted HTML content here, except javascript."
 msgstr ""
@@ -2981,7 +2981,7 @@ msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr "Ärenderad kontaktperson om betald bokning via betalningslösning"
 
 #: eme-events.php:7399
-#: eme-members.php:2738
+#: eme-members.php:2730
 #: eme-options.php:2228
 #: eme-options.php:2242
 msgid "The subject of the email which will be sent to the contact person when a payment notification is received via a payment gateway."
@@ -2992,14 +2992,14 @@ msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr "Meddelandetext kontaktperson om mottagen betalning via betalningslösning"
 
 #: eme-events.php:7421
-#: eme-members.php:2745
+#: eme-members.php:2737
 #: eme-options.php:2229
 #: eme-options.php:2243
 msgid "The body of the email which will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "Meddelandetext som sänds till kontaktpersonen när en betalningsnotifiering tas emot från en betalningslösning."
 
 #: eme-events.php:7445
-#: eme-members.php:2255
+#: eme-members.php:2247
 msgid "Dynamic data check on every field"
 msgstr "Dynamisk datakontroll på alla fält"
 
@@ -3099,9 +3099,9 @@ msgstr "E-postbilagor för gjord bokning"
 #: eme-events.php:9985
 #: eme-mailer.php:2388
 #: eme-mailer.php:2567
-#: eme-members.php:2320
-#: eme-members.php:2460
-#: eme-members.php:2537
+#: eme-members.php:2312
+#: eme-members.php:2452
+#: eme-members.php:2529
 #: eme-options.php:2036
 #: eme-options.php:2093
 #: eme-options.php:2203
@@ -3115,9 +3115,9 @@ msgstr "Lägg till bilaga"
 #: eme-events.php:8196
 #: eme-mailer.php:2389
 #: eme-mailer.php:2568
-#: eme-members.php:2321
-#: eme-members.php:2461
-#: eme-members.php:2538
+#: eme-members.php:2313
+#: eme-members.php:2453
+#: eme-members.php:2530
 #: eme-options.php:2037
 #: eme-options.php:2094
 #: eme-options.php:2204
@@ -3413,13 +3413,13 @@ msgid "Use EME captcha for forms?"
 msgstr ""
 
 #: eme-events.php:8341
-#: eme-members.php:1998
+#: eme-members.php:1990
 #: eme-options.php:1447
 msgid "Only use captcha for logged out users?"
 msgstr ""
 
 #: eme-events.php:8342
-#: eme-members.php:2000
+#: eme-members.php:1992
 #: eme-options.php:1447
 msgid "If this option is checked, the captcha will only be used for logged out users."
 msgstr ""
@@ -3462,7 +3462,7 @@ msgstr ""
 
 #: eme-events.php:8560
 #: eme-locations.php:809
-#: eme-members.php:2821
+#: eme-members.php:2813
 msgid "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr "Anpassade fält av typ ”dold” är meningslösa här och kommer naturligtvis inte att visas."
 
@@ -3485,7 +3485,7 @@ msgid "If no payment method is selected, the \"Booking Recorded Message\" (defin
 msgstr ""
 
 #: eme-events.php:8610
-#: eme-members.php:2208
+#: eme-members.php:2200
 msgid "No payment methods configured yet. Go in the EME payment settings and configure some."
 msgstr ""
 
@@ -3612,8 +3612,8 @@ msgid "For multiprice events, separate the values by '||'"
 msgstr "För event som är multipris, separera värdena med ”||”"
 
 #: eme-events.php:8770
-#: eme-members.php:2012
-#: eme-members.php:2018
+#: eme-members.php:2004
+#: eme-members.php:2010
 #: eme-options.php:2454
 #: eme-options.php:2958
 msgid "Use the point as decimal separator"
@@ -3640,7 +3640,7 @@ msgid "VAT percentage: "
 msgstr "Moms-procent: "
 
 #: eme-events.php:8783
-#: eme-members.php:2026
+#: eme-members.php:2018
 msgid "VAT percentage"
 msgstr "Moms-procent"
 
@@ -3649,22 +3649,22 @@ msgid "The price you indicate for events is VAT included, special placeholders a
 msgstr ""
 
 #: eme-events.php:8788
-#: eme-members.php:2032
+#: eme-members.php:2024
 msgid "Discount to apply"
 msgstr "Rabatt att tillämpa"
 
 #: eme-events.php:8789
-#: eme-members.php:2033
+#: eme-members.php:2025
 msgid "The discount name you want to apply (is overridden by discount group if used)."
 msgstr "Namnet på rabatten du vill tillämpa (kommer åsidosättas av rabattgrupp om sådan används)."
 
 #: eme-events.php:8792
-#: eme-members.php:2036
+#: eme-members.php:2028
 msgid "Discount group to apply"
 msgstr "Rabattgrupp att tillämpa"
 
 #: eme-events.php:8793
-#: eme-members.php:2037
+#: eme-members.php:2029
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr "Namn på rabattgruppen du vill använda (åsidosätter rabatten)."
 
@@ -3751,13 +3751,13 @@ msgid "Require logged-in user to be a member of one of the selected EME membersh
 msgstr "Kräv att den inloggade användaren är medlem i någon av de valda EME medlemskapstyperna för att rabatten ska gälla."
 
 #: eme-events.php:8837
-#: eme-members.php:2189
+#: eme-members.php:2181
 #: eme-tasks.php:831
 msgid "Group to add people to"
 msgstr "Grupp att lägga till personer i"
 
 #: eme-events.php:8838
-#: eme-members.php:2190
+#: eme-members.php:2182
 #: eme-tasks.php:832
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "Gruppen du vill att personer automatiskt blir medlemmar av när de startar en prenumeration."
@@ -4346,8 +4346,8 @@ msgstr "Grupper"
 #: eme-gdpr.php:250
 #: eme-gdpr.php:428
 #: eme-gdpr.php:552
-#: eme-members.php:1802
-#: eme-members.php:3431
+#: eme-members.php:1794
+#: eme-members.php:3423
 #: eme-options.php:34
 #: eme-options.php:44
 #: eme-options.php:83
@@ -4375,8 +4375,8 @@ msgstr "Efternamn"
 #: eme-gdpr.php:250
 #: eme-gdpr.php:429
 #: eme-gdpr.php:556
-#: eme-members.php:1803
-#: eme-members.php:3432
+#: eme-members.php:1795
+#: eme-members.php:3424
 #: eme-options.php:35
 #: eme-options.php:45
 #: eme-options.php:84
@@ -4408,8 +4408,8 @@ msgstr "Förnamn"
 #: eme-gdpr.php:430
 #: eme-gdpr.php:560
 #: eme-mailer.php:1443
-#: eme-members.php:1804
-#: eme-members.php:3433
+#: eme-members.php:1796
+#: eme-members.php:3425
 #: eme-options.php:36
 #: eme-options.php:46
 #: eme-options.php:85
@@ -4522,7 +4522,7 @@ msgstr "Medlemmar"
 #: eme-events.php:9865
 #: eme-gdpr.php:468
 #: eme-gdpr.php:652
-#: eme-members.php:1605
+#: eme-members.php:1597
 msgid "Membership"
 msgstr "Medlemskap"
 
@@ -4553,7 +4553,7 @@ msgid "End"
 msgstr "Slut"
 
 #: eme-events.php:9896
-#: eme-members.php:1671
+#: eme-members.php:1663
 #, fuzzy
 msgid "Usage count"
 msgstr "Uppdatera land"
@@ -4673,8 +4673,8 @@ msgid "Mark paid and approve"
 msgstr "Markera som betald och godkänn"
 
 #: eme-events.php:9945
-#: eme-rsvp.php:5217
-#: eme-rsvp.php:5232
+#: eme-rsvp.php:5211
+#: eme-rsvp.php:5226
 msgid "Mark paid"
 msgstr "Markera som betald"
 
@@ -4741,20 +4741,20 @@ msgid "Select one or more events"
 msgstr "Välj ett eller flera event"
 
 #: eme-events.php:10232
-#: eme-rsvp.php:5781
+#: eme-rsvp.php:5775
 #: eme-tasks.php:1976
 msgid "Edit event"
 msgstr "Redigera event"
 
 #: eme-events.php:6570
 #: eme-events.php:10249
-#: eme-rsvp.php:5785
+#: eme-rsvp.php:5779
 msgid "RSVP Info: "
 msgstr "OSA info:"
 
 #: eme-events.php:6598
 #: eme-events.php:10277
-#: eme-rsvp.php:5814
+#: eme-rsvp.php:5808
 msgid "Free: "
 msgstr "Tillgängligt:"
 
@@ -4767,8 +4767,8 @@ msgstr "Tillgängligt:"
 #: eme-events.php:10288
 #: eme-events.php:10345
 #: eme-events.php:10347
-#: eme-rsvp.php:5788
-#: eme-rsvp.php:5877
+#: eme-rsvp.php:5782
+#: eme-rsvp.php:5871
 msgid "Approved:"
 msgstr "Godkänd:"
 
@@ -4778,46 +4778,46 @@ msgstr "Godkänd:"
 #: eme-events.php:10296
 #: eme-events.php:10339
 #: eme-events.php:10341
-#: eme-rsvp.php:5875
+#: eme-rsvp.php:5869
 msgid "Pending:"
 msgstr ""
 
 #: eme-events.php:6611
 #: eme-events.php:10303
 #: eme-events.php:10305
-#: eme-rsvp.php:5827
+#: eme-rsvp.php:5821
 msgid "Absent:"
 msgstr ""
 
 #: eme-events.php:6614
 #: eme-events.php:10309
-#: eme-members.php:6514
+#: eme-members.php:6549
 #: eme-recurrence.php:719
-#: eme-rsvp.php:5830
+#: eme-rsvp.php:5824
 msgid "Max: "
 msgstr "Max:"
 
 #: eme-events.php:6617
 #: eme-events.php:10312
-#: eme-rsvp.php:5833
+#: eme-rsvp.php:5827
 msgid "(%d waiting list seats included)"
 msgstr ""
 
 #: eme-events.php:6622
 #: eme-events.php:10317
-#: eme-rsvp.php:5839
+#: eme-rsvp.php:5833
 msgid "Printable view"
 msgstr "Utskriftsvänlig vy"
 
 #: eme-events.php:6623
 #: eme-events.php:10318
-#: eme-rsvp.php:5840
+#: eme-rsvp.php:5834
 msgid "CSV export"
 msgstr "CSV-export"
 
 #: eme-events.php:6644
 #: eme-events.php:10336
-#: eme-rsvp.php:5873
+#: eme-rsvp.php:5867
 msgid "Task Info: %d tasks"
 msgstr ""
 
@@ -4847,12 +4847,12 @@ msgid "Duplicate this event"
 msgstr "Skapa kopia av detta event"
 
 #: eme-events.php:10396
-#: eme-rsvp.php:5850
+#: eme-rsvp.php:5844
 msgid "Add booking for this event"
 msgstr "Lägg till bokning till detta event"
 
 #: eme-events.php:10398
-#: eme-rsvp.php:5852
+#: eme-rsvp.php:5846
 msgid "Password protected"
 msgstr "Lösenordsskyddad"
 
@@ -5189,11 +5189,11 @@ msgstr "För mer information om formulärfält, se "
 
 #: eme-formfields.php:441
 #: eme-holidays.php:215
-#: eme-members.php:2119
-#: eme-members.php:2137
-#: eme-members.php:2155
-#: eme-members.php:2173
-#: eme-members.php:2217
+#: eme-members.php:2111
+#: eme-members.php:2129
+#: eme-members.php:2147
+#: eme-members.php:2165
+#: eme-members.php:2209
 #: eme-options.php:1658
 #: eme-options.php:1663
 #: eme-options.php:1673
@@ -5582,10 +5582,10 @@ msgstr "Använd rabattgrupp %d finns inte längre"
 
 #: eme-formfields.php:3316
 #: eme-formfields.php:4054
-#: eme-members.php:5151
+#: eme-members.php:5186
 #: eme-people.php:1175
 #: eme-people.php:1475
-#: eme-rsvp.php:3592
+#: eme-rsvp.php:3586
 msgid "Applied discount %d no longer exists"
 msgstr "Använd rabatt %d finns inte längre "
 
@@ -5744,7 +5744,7 @@ msgstr "Använd platshållaren #_DYNAMICDATA för att visa de dynamiska formulä
 
 #: eme-formfields.php:5101
 #: eme-formfields.php:5111
-#: eme-functions.php:3306
+#: eme-functions.php:3301
 msgid "Records deleted!"
 msgstr "Poster borttagna!"
 
@@ -5800,7 +5800,7 @@ msgid "Active"
 msgstr "Aktiv"
 
 #: eme-functions.php:1399
-#: eme-members.php:1955
+#: eme-members.php:1947
 msgid "Grace period"
 msgstr "Respittid"
 
@@ -5979,77 +5979,77 @@ msgstr "Extra info"
 msgid "Group"
 msgstr "Grupp"
 
-#: eme-functions.php:2884
+#: eme-functions.php:2879
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: eme-functions.php:2887
+#: eme-functions.php:2882
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
-#: eme-functions.php:2890
+#: eme-functions.php:2885
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: eme-functions.php:2893
+#: eme-functions.php:2888
 msgid "No file was uploaded"
 msgstr ""
 
-#: eme-functions.php:2896
+#: eme-functions.php:2891
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: eme-functions.php:2899
+#: eme-functions.php:2894
 msgid "Failed to write file to disk"
 msgstr ""
 
-#: eme-functions.php:2902
+#: eme-functions.php:2897
 msgid "File upload stopped by extension"
 msgstr ""
 
-#: eme-functions.php:2906
+#: eme-functions.php:2901
 msgid "Unknown upload error"
 msgstr ""
 
-#: eme-functions.php:2947
+#: eme-functions.php:2942
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Fel vid skapande av mapp för uppladdning, vänligen kontrollera dina behörigheter."
 
-#: eme-functions.php:2982
-#: eme-functions.php:3043
+#: eme-functions.php:2977
+#: eme-functions.php:3038
 msgid "File upload is required."
 msgstr "Filuppladdning krävs."
 
-#: eme-functions.php:2990
-#: eme-functions.php:3051
+#: eme-functions.php:2985
+#: eme-functions.php:3046
 msgid "Illegal filename."
 msgstr "Ogiltigt filnamn."
 
-#: eme-functions.php:2996
-#: eme-functions.php:3057
+#: eme-functions.php:2991
+#: eme-functions.php:3052
 msgid "File already exists."
 msgstr "Filen finns redan"
 
-#: eme-functions.php:3002
-#: eme-functions.php:3063
+#: eme-functions.php:2997
+#: eme-functions.php:3058
 msgid "File too large."
 msgstr "För stor fil."
 
-#: eme-functions.php:3018
-#: eme-functions.php:3079
+#: eme-functions.php:3013
+#: eme-functions.php:3074
 msgid "Incorrect file type."
 msgstr "Felaktig filtyp."
 
-#: eme-functions.php:3023
-#: eme-functions.php:3084
+#: eme-functions.php:3018
+#: eme-functions.php:3079
 msgid "Upload failed."
 msgstr "Uppladdning misslyckades."
 
-#: eme-functions.php:3091
+#: eme-functions.php:3086
 msgid "Errors encountered while uploading files"
 msgstr "Fel påträffades vid uppladdning av filer"
 
-#: eme-functions.php:3322
+#: eme-functions.php:3317
 msgid "No such record"
 msgstr "Ingen sådan post"
 
@@ -6058,7 +6058,7 @@ msgstr "Ingen sådan post"
 #: eme-gdpr.php:141
 #: eme-gdpr.php:217
 #: eme-gdpr.php:332
-#: eme-members.php:4913
+#: eme-members.php:4948
 #: eme-payments.php:3882
 #: eme-people.php:4561
 #: eme-people.php:4646
@@ -6075,8 +6075,8 @@ msgstr "Bot upptäckt. Om du anser att du får detta meddelande felaktig, vänli
 #: eme-gdpr.php:343
 #: eme-gdpr.php:354
 #: eme-members.php:1057
-#: eme-members.php:4542
-#: eme-members.php:4926
+#: eme-members.php:4577
+#: eme-members.php:4961
 #: eme-payments.php:3893
 #: eme-people.php:4572
 #: eme-people.php:4658
@@ -6097,7 +6097,7 @@ msgstr ""
 #: eme-gdpr.php:199
 #: eme-gdpr.php:314
 #: eme-gdpr.php:397
-#: eme-members.php:1775
+#: eme-members.php:1767
 #: eme-people.php:4632
 #: eme-people.php:4716
 #: eme-rsvp.php:167
@@ -6489,13 +6489,13 @@ msgstr "Skapa kopia av denna plats"
 #: eme-mailer.php:1697
 #: eme-mailer.php:1793
 #: eme-mailer.php:1895
-#: eme-members.php:6808
-#: eme-members.php:6887
-#: eme-members.php:7006
+#: eme-members.php:6843
+#: eme-members.php:6922
+#: eme-members.php:7041
 #: eme-rsvp.php:1211
-#: eme-rsvp.php:4922
-#: eme-rsvp.php:6506
-#: eme-rsvp.php:6526
+#: eme-rsvp.php:4916
+#: eme-rsvp.php:6500
+#: eme-rsvp.php:6520
 msgid "There were some problems while sending mail."
 msgstr "Problem uppstod när e-post skulle sändas."
 
@@ -6593,9 +6593,9 @@ msgstr ""
 #: eme-mailer.php:1687
 #: eme-mailer.php:1790
 #: eme-mailer.php:1888
-#: eme-members.php:6805
-#: eme-rsvp.php:6503
-#: eme-rsvp.php:6523
+#: eme-members.php:6840
+#: eme-rsvp.php:6497
+#: eme-rsvp.php:6517
 msgid "The mail has been sent."
 msgstr "E-postmeddelandet har skickats"
 
@@ -6693,7 +6693,7 @@ msgid "Send event related emails"
 msgstr ""
 
 #: eme-mailer.php:2247
-#: eme-rsvp.php:4726
+#: eme-rsvp.php:4720
 msgid "Check this box to search through all events and not just future ones."
 msgstr ""
 
@@ -7149,400 +7149,400 @@ msgstr ""
 msgid "Please enter at least the last name for a new member"
 msgstr ""
 
-#: eme-members.php:1164
+#: eme-members.php:1154
 msgid "This person is already a member"
 msgstr "Denna person är redan medlem"
 
-#: eme-members.php:1179
+#: eme-members.php:1169
 msgid "Payment not possible for this member."
 msgstr ""
 
-#: eme-members.php:1181
+#: eme-members.php:1171
 msgid "This person is already a member, but the membership has expired. No updates have been done. Please click <a href=\"%s\">here</a> to complete the payment process and reactivate the membership."
 msgstr ""
 
-#: eme-members.php:1183
+#: eme-members.php:1173
 msgid "This person is already a member, but has not paid yet. Please click <a href=\"%s\">here</a> to complete the payment process."
 msgstr ""
 
-#: eme-members.php:1201
+#: eme-members.php:1191
 msgid "Member added, but there were some problems uploading files"
 msgstr "Medlem tillagd, men det var vissa problem med att ladda upp filer"
 
-#: eme-members.php:1204
+#: eme-members.php:1194
 msgid "There were some problems uploading files, please try again"
 msgstr "Det var vissa problem med att ladda upp filer, vänligen försök igen"
 
-#: eme-members.php:1264
-#: eme-members.php:1269
+#: eme-members.php:1256
+#: eme-members.php:1261
 msgid "Member added, but there were some problems sending out the mail"
 msgstr "Medlem tillagd, men det var problem med att sända e-postmeddelandet"
 
-#: eme-members.php:1267
+#: eme-members.php:1259
 msgid "Member added"
 msgstr "Medlem tillagd"
 
-#: eme-members.php:1280
+#: eme-members.php:1272
 msgid "Problem detected while adding personal info: at least last name, first name and email need to be present"
 msgstr ""
 
-#: eme-members.php:1331
+#: eme-members.php:1323
 #: eme-options.php:538
 msgid "This has already been paid for"
 msgstr "Denna har redan betalats"
 
-#: eme-members.php:1345
+#: eme-members.php:1337
 msgid "Your membership is currently active until %s. It is not allowed to extend the membership yet (too soon)."
 msgstr ""
 
-#: eme-members.php:1353
+#: eme-members.php:1345
 msgid "Your membership has expired but renewal is not allowed, please contact %s."
 msgstr ""
 
-#: eme-members.php:1496
-#: eme-members.php:3216
+#: eme-members.php:1488
+#: eme-members.php:3208
 msgid "Add member"
 msgstr "Lägg till medlem"
 
 #: eme-members.php:658
-#: eme-members.php:1503
-#: eme-members.php:1629
-#: eme-members.php:6478
-#: eme-members.php:6488
-#: eme-members.php:6489
-#: eme-members.php:6490
+#: eme-members.php:1495
+#: eme-members.php:1621
+#: eme-members.php:6513
+#: eme-members.php:6523
+#: eme-members.php:6524
+#: eme-members.php:6525
 msgid "Edit member"
 msgstr "Redigera medlem"
 
-#: eme-members.php:1528
-#: eme-rsvp.php:4713
+#: eme-members.php:1520
+#: eme-rsvp.php:4707
 msgid "Click on this link to edit the corresponding person info"
 msgstr "Klicka på denna länk för att redigera motsvarande persons info."
 
-#: eme-members.php:1557
+#: eme-members.php:1549
 msgid "Send mail to new member?"
 msgstr "Sänd e-post till ny medlem?"
 
-#: eme-members.php:1563
+#: eme-members.php:1555
 msgid "If you want, select an existing person to become a member"
 msgstr "Om du vill, gör en befintlig person till medlem"
 
-#: eme-members.php:1578
+#: eme-members.php:1570
 #, fuzzy
 msgid "Send mail for changed member?"
 msgstr "Sänd e-post till ny medlem?"
 
-#: eme-members.php:1585
+#: eme-members.php:1577
 msgid "If you want, select an existing person to transfer this member to"
 msgstr ""
 
-#: eme-members.php:1591
+#: eme-members.php:1583
 msgid "If you want, select a different membership to transfer this member to: "
 msgstr ""
 
-#: eme-members.php:1600
+#: eme-members.php:1592
 msgid "Warning: if you transfer a member from one membership to another, make sure both memberships have the same index values for dynamic fields, otherwise the answers to those fields will either get mixed up or become empty."
 msgstr ""
 
-#: eme-members.php:1613
+#: eme-members.php:1605
 msgid "'Head of the family' account"
 msgstr ""
 
-#: eme-members.php:1622
+#: eme-members.php:1614
 msgid "This member is head of the family for other members."
 msgstr ""
 
-#: eme-members.php:1623
+#: eme-members.php:1615
 #: eme-people.php:2326
 msgid "Family members:"
 msgstr ""
 
-#: eme-members.php:1636
+#: eme-members.php:1628
 msgid "You can link this member to a 'head of the family' account, after which this member's start/end date and status are linked to the values of the head of the family and the below values for those fields are then ignored. This person will then no longer be charged for his membership too."
 msgstr ""
 
-#: eme-members.php:1640
+#: eme-members.php:1632
 msgid "Since this member relates to another family member, you can't edit the basic membership info. Please first remove the relationship (by emptying this field) and press save if you want to do that."
 msgstr ""
 
-#: eme-members.php:1647
-#: eme-members.php:1786
-#: eme-members.php:1936
+#: eme-members.php:1639
+#: eme-members.php:1778
+#: eme-members.php:1928
 msgid "Start date"
 msgstr "Startdatum"
 
-#: eme-members.php:1658
-#: eme-members.php:1787
+#: eme-members.php:1650
+#: eme-members.php:1779
 msgid "End date"
 msgstr "Slutdatum"
 
-#: eme-members.php:1673
+#: eme-members.php:1665
 msgid "This indicates the amount of times this member has RSVP-ed to an event that requires this membership."
 msgstr ""
 
-#: eme-members.php:1676
+#: eme-members.php:1668
 msgid "Warning: usage count is at its maximum, the status will therefore always be set to Expired!"
 msgstr ""
 
-#: eme-members.php:1683
+#: eme-members.php:1675
 msgid "Member status calculated automatically"
 msgstr "Automatisk beräkning av medlemsstatus"
 
-#: eme-members.php:1687
+#: eme-members.php:1679
 msgid "Warning: membership is not paid for, so automatic status calculation will not happen!"
 msgstr "Varning: medlemskapet är inte ännu betalt, därför kommer automatisk statusberäkning inte att ske!"
 
-#: eme-members.php:1690
+#: eme-members.php:1682
 msgid "If set to automatic and the membership is paid for, the status will be recalculated on a daily basis."
 msgstr "Om inställt på automatiskt och medlemskapet betalats för, kommer status att kalkyleras om dagligen."
 
-#: eme-members.php:1692
+#: eme-members.php:1684
 msgid "Member status"
 msgstr "Medlemsstatus"
 
-#: eme-members.php:1695
+#: eme-members.php:1687
 msgid "Has the member paid?"
 msgstr ""
 
-#: eme-members.php:1698
+#: eme-members.php:1690
 msgid "Last payment received date"
 msgstr ""
 
-#: eme-members.php:1709
+#: eme-members.php:1701
 msgid "This indicates the last date a payment was received. Changing this will only change that date, no new payment will actually be processed and the membership state is not influenced by this."
 msgstr ""
 
-#: eme-members.php:1741
+#: eme-members.php:1733
 msgid "No membership with ID %d found"
 msgstr ""
 
-#: eme-members.php:1838
+#: eme-members.php:1830
 msgid "Add a membership definition"
 msgstr "Lägg till en medlemskapsdefinition"
 
-#: eme-members.php:1840
+#: eme-members.php:1832
 msgid "Edit membership '%s'"
 msgstr ""
 
-#: eme-members.php:1867
+#: eme-members.php:1859
 msgid "Membership details"
 msgstr "Detaljer om medlemskap"
 
-#: eme-members.php:1868
+#: eme-members.php:1860
 msgid "Mail format settings"
 msgstr ""
 
-#: eme-members.php:1880
-#: eme-members.php:3294
+#: eme-members.php:1872
+#: eme-members.php:3286
 msgid "Add membership"
 msgstr "Lägg till medlemskap"
 
-#: eme-members.php:1880
+#: eme-members.php:1872
 msgid "Update membership"
 msgstr "Uppdatera medlemskap"
 
-#: eme-members.php:1942
+#: eme-members.php:1934
 msgid "Duration period"
 msgstr "Varaktighet"
 
-#: eme-members.php:1944
+#: eme-members.php:1936
 msgid "Once this duration period has passed, the membership start date for new members will be increased by the passed period."
 msgstr "När denna varaktiga period passerats, kommer medlemskapets startdatum för nya medlemmar att ökas på med den passerade perioden."
 
-#: eme-members.php:1948
+#: eme-members.php:1940
 msgid "One extra free period"
 msgstr "En extra gratisperiod"
 
-#: eme-members.php:1950
+#: eme-members.php:1942
 msgid "When someone becomes a member, the end date is the end date of the current period calculated for this membership."
 msgstr "När någon blir medlem är slutdatumet det slutdatum för nuvarande period som beräknats för detta medlemskap."
 
-#: eme-members.php:1951
+#: eme-members.php:1943
 msgid "If you want new members to get one extra membership period for free, set this option."
 msgstr "Om du vill att nya medlemmar får en extra medlemsperiod gratis, använd detta val. "
 
-#: eme-members.php:1957
+#: eme-members.php:1949
 msgid "After a membership has expired, people can still be considered as a member until this many days have passed."
 msgstr "Efter att ett medlemskap har gått ut, kan personer fortfarande anses vara medlemmar tills efter så här många dagar."
 
-#: eme-members.php:1958
+#: eme-members.php:1950
 msgid "After the mentioned number of days have passed, the membership will be set to expired."
 msgstr "Efter att det angivna antalet dagar passerat kommer medlemskapet att ändras till utgånget."
 
-#: eme-members.php:1962
+#: eme-members.php:1954
 #, fuzzy
 msgid "Maximum usage"
 msgstr "Maximalt antal nyttjanden"
 
-#: eme-members.php:1964
+#: eme-members.php:1956
 msgid "If set to something bigger than 0, this will indicate the maximum times a member can RSVP to an event that requires this membership."
 msgstr ""
 
-#: eme-members.php:1968
+#: eme-members.php:1960
 msgid "Reminder"
 msgstr "Påminnelse"
 
-#: eme-members.php:1970
+#: eme-members.php:1962
 msgid "Set the number of days before membership expiration a reminder will be sent out."
 msgstr "Välj antal dagar innan medlemskap upphör för att sända ut en påminnelse."
 
-#: eme-members.php:1971
+#: eme-members.php:1963
 msgid "If you want to send out multiple reminders, seperate the days here by commas. This can contain negative numbers too, if you want to send out a reminder past the membership end date, e.g. during the grace period."
 msgstr "Om du vill sända ut flera påminnelser, separera datumen med kommatecken. Kan även innehålla negativa nummer, ifall du vill sända ut en påminnelse efter att medlemskapet gått ut, t.ex. under respittiden."
 
-#: eme-members.php:1975
+#: eme-members.php:1967
 msgid "Automatically remove pending members"
 msgstr "Ta automatiskt bort medlemmar som inväntar granskning"
 
-#: eme-members.php:1977
+#: eme-members.php:1969
 msgid "Set the number of days after which pending members are automatically removed. Leave empty or 0 for no automatic removal."
 msgstr "Välj antal dagar efter vilket medlemmar som inväntar granskning automatiskt tas bort. Lämna blank eller sätt 0 för inte använda automatisk borttagning. "
 
-#: eme-members.php:1981
+#: eme-members.php:1973
 msgid "Allow membership renewal"
 msgstr ""
 
-#: eme-members.php:1983
+#: eme-members.php:1975
 msgid "Select this option if you want members to be able to renew/extend the membership after payment via the unique payment url generated by the member placeholder #_PAYMENT_URL or the generic placeholder #_MEMBERSHIP_PAYMENT_URL{xx} (with xx being the membership id, see the doc)."
 msgstr ""
 
-#: eme-members.php:1987
+#: eme-members.php:1979
 msgid "Renewal for active members based on end date"
 msgstr ""
 
-#: eme-members.php:1989
+#: eme-members.php:1981
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr ""
 
-#: eme-functions.php:4076
+#: eme-functions.php:4071
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4078
+#: eme-functions.php:4073
 msgid "hCaptcha"
 msgstr ""
 
-#: eme-functions.php:4080
+#: eme-functions.php:4075
 msgid "Cloudflare Turnstile"
 msgstr ""
 
-#: eme-members.php:2004
+#: eme-members.php:1996
 msgid "Create WP user after signup"
 msgstr ""
 
-#: eme-members.php:2006
+#: eme-members.php:1998
 msgid "This will create a WP user after the membership signup is completed, as if the person registered in WP itself. This will only create a user if the person signing up was not logged in and the email is not yet taken by another WP user."
 msgstr ""
 
-#: eme-members.php:2010
+#: eme-members.php:2002
 #: eme-options.php:2958
 msgid "Price"
 msgstr "Pris"
 
-#: eme-members.php:2016
+#: eme-members.php:2008
 msgid "Extra charge for new members"
 msgstr ""
 
-#: eme-members.php:2022
+#: eme-members.php:2014
 #: eme-options.php:2959
 msgid "Currency"
 msgstr "Valuta"
 
-#: eme-members.php:2028
+#: eme-members.php:2020
 msgid "The price you indicate for memberships is VAT included, special placeholders are foreseen to indicate the price without VAT."
 msgstr ""
 
-#: eme-members.php:2040
+#: eme-members.php:2032
 #: eme-options.php:2964
 msgid "Contact person"
 msgstr "Kontaktperson"
 
-#: eme-members.php:2046
+#: eme-members.php:2038
 msgid "WP Admin"
 msgstr "WP-admin"
 
-#: eme-members.php:2056
+#: eme-members.php:2048
 msgid "Require users to be logged-in before being able to sign up for this membership."
 msgstr "Kräv att användare är inloggade innan de kan ansöka om detta medlemskap."
 
-#: eme-members.php:2060
+#: eme-members.php:2052
 msgid "Keep attendance records?"
 msgstr ""
 
-#: eme-members.php:2062
+#: eme-members.php:2054
 msgid "Select this option if you want an attendance record to be kept everytime the member QRCODE is scanned by an EME admin."
 msgstr ""
 
-#: eme-members.php:2066
+#: eme-members.php:2058
 msgid "Member Form:"
 msgstr "Medlemskapsformulär:"
 
-#: eme-members.php:2067
-#: eme-members.php:2098
-#: eme-members.php:2905
-#: eme-members.php:2910
+#: eme-members.php:2059
+#: eme-members.php:2090
+#: eme-members.php:2897
+#: eme-members.php:2902
 #: eme-people.php:1839
 #: eme-people.php:1844
-#: eme-rsvp.php:5275
-#: eme-rsvp.php:5280
+#: eme-rsvp.php:5269
+#: eme-rsvp.php:5274
 msgid "Please select a template"
 msgstr "Vänligen välj en mall"
 
-#: eme-members.php:2068
+#: eme-members.php:2060
 msgid "This is the form that will be shown when a new member wants to sign up for this membership."
 msgstr "Detta formulär visas när en ny medlem vill registrera sig för detta medlemskap."
 
-#: eme-members.php:2069
+#: eme-members.php:2061
 #, fuzzy
 msgid "The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If empty, a simple default will be used."
 msgstr "Mallen ska åtminstone innehålla platshållarna #_LASTNAME, #_FIRSTNAME, #_EMAIL och #_SUBMIT. Annars kommer formuläret inte att visas."
 
-#: eme-members.php:2085
+#: eme-members.php:2077
 msgid "Ask for family member info when someone signs up"
 msgstr ""
 
-#: eme-members.php:2087
+#: eme-members.php:2079
 msgid "Select this option if you want to ask for extra info for each family member of the person that signs up. These will also become a member but payment will only be handled by the initial member that signs up. The membership member form must include the placeholder \"#_FAMILYCOUNT\" to ask for the number of extra family members and \"#_FAMILYMEMBERS\" to ask for the extra family members info."
 msgstr ""
 
-#: eme-members.php:2091
+#: eme-members.php:2083
 msgid "Maximum number of family members"
 msgstr ""
 
-#: eme-members.php:2093
+#: eme-members.php:2085
 #, fuzzy
 msgid "The maximum number of family members allowed to sign up."
 msgstr "Maximalt antal platser en person kan boka vid ett tillfälle."
 
-#: eme-members.php:2097
+#: eme-members.php:2089
 msgid "Family Member Form:"
 msgstr ""
 
-#: eme-members.php:2099
+#: eme-members.php:2091
 msgid "This is the form that will be shown/repeated for the family members when a new member wants to sign up for this membership."
 msgstr ""
 
-#: eme-members.php:2100
+#: eme-members.php:2092
 msgid "The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple default will be used."
 msgstr ""
 
-#: eme-members.php:2101
+#: eme-members.php:2093
 msgid "The template may contain the person placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL, #_OPT_IN (or #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE and placeholders referring to custom person fields, nothing else. #_LASTNAME, #_FIRSTNAME are required. If #_EMAIL, #_PHONE, #_OPT_IN (or #_OPT_OUT) is not set, it is copied over from the person signing up. The address info is always copied over from the person signing up."
 msgstr ""
 
-#: eme-members.php:2117
+#: eme-members.php:2109
 msgid "Member Added Message:"
 msgstr "Meddelande för ny medlem:"
 
-#: eme-members.php:2119
+#: eme-members.php:2111
 msgid "The format of the text shown after someone subscribed. If left empty, a default message will be shown."
 msgstr "Format på texten som visas efter att någon börjat prenumerera. Om blankt kommer ett standardmeddelande att visas."
 
-#: eme-members.php:2119
-#: eme-members.php:2137
-#: eme-members.php:2155
-#: eme-members.php:2173
-#: eme-members.php:2217
+#: eme-members.php:2111
+#: eme-members.php:2129
+#: eme-members.php:2147
+#: eme-members.php:2165
+#: eme-members.php:2209
 #: eme-options.php:1658
 #: eme-options.php:1663
 #: eme-options.php:1673
@@ -7645,41 +7645,41 @@ msgstr "Format på texten som visas efter att någon börjat prenumerera. Om bla
 msgid "For all possible placeholders, see "
 msgstr "För alla möjliga platshållare, se "
 
-#: eme-members.php:2135
+#: eme-members.php:2127
 msgid "Payment Form Header:"
 msgstr "Sidhuvud för betalningsformulär:"
 
-#: eme-members.php:2137
+#: eme-members.php:2129
 #: eme-options.php:2460
 msgid "The format of the text shown above the payment buttons. If left empty, a default message will be shown."
 msgstr "Format för texten som visas ovanför betalningsknapparna. Om det lämnas tomt kommer ett standardmeddelande att visas."
 
-#: eme-members.php:2153
+#: eme-members.php:2145
 msgid "Payment Form Footer:"
 msgstr "Sidfot för betalningsformulär:"
 
-#: eme-members.php:2155
+#: eme-members.php:2147
 #: eme-options.php:2461
 msgid "The format of the text shown below the payment buttons. Default: empty."
 msgstr "Format för texten som visas under betalningsknapparna. Standard: blankt."
 
-#: eme-members.php:2171
+#: eme-members.php:2163
 msgid "Payment Success Message:"
 msgstr "Meddelande för lyckad betalning:"
 
-#: eme-members.php:2173
+#: eme-members.php:2165
 msgid "The message shown when the payment is succesfull for membership signup. Default: see global EME settings for payments, subsection \"General options\"."
 msgstr ""
 
-#: eme-members.php:2193
+#: eme-members.php:2185
 msgid "Membership card PDF template"
 msgstr "PDF-mall för medlemskort"
 
-#: eme-members.php:2195
+#: eme-members.php:2187
 msgid "This optional template is used to send a PDF attachment in the mail when the membership is paid for."
 msgstr "Denna valfria mall används för att sända en PDF-bilaga i e-postmeddelandet när medlemskapet betalats."
 
-#: eme-members.php:2202
+#: eme-members.php:2194
 msgid "If no payment method is selected, the \"Member Added Message\" will be shown. Otherwise the \"Member Added Message\" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings)."
 msgstr ""
 
@@ -7687,656 +7687,656 @@ msgstr ""
 msgid "Offline"
 msgstr "Offline"
 
-#: eme-members.php:2211
+#: eme-members.php:2203
 msgid "If one or more payment methods are selected, the person signing up will be redirected to a payment page. In that case, make sure to check the different payment templates defined for this membership."
 msgstr ""
 
-#: eme-members.php:2215
+#: eme-members.php:2207
 msgid "Offline Payment Format:"
 msgstr "Format för offlinebetalning:"
 
-#: eme-members.php:2217
+#: eme-members.php:2209
 msgid "The format of the text shown for the offline payment method. Default: empty."
 msgstr "Format på texten som visas för offline betalningsmetoden. Standard: blankt."
 
-#: eme-members.php:2233
+#: eme-members.php:2225
 msgid "Skip payment methods after registration:"
 msgstr ""
 
-#: eme-members.php:2234
+#: eme-members.php:2226
 #, fuzzy
 msgid "Skip payment methods"
 msgstr "Betalningsmetoder"
 
-#: eme-members.php:2236
+#: eme-members.php:2228
 msgid "If you want to skip the possibility to pay immediately after registration, select this option. This might be useful if you for example want to approve unpaid members internally and only then send them the payment link using #_PAYMENT_URL (for example via the Reminder template)."
 msgstr ""
 
-#: eme-members.php:2257
+#: eme-members.php:2249
 msgid "By default the dynamic data check only happens for the fields mentioned in your dynamic data condition if those are present in your membership form definition. Using this option, you can use all membership placeholders, even if not defined in your membership form. The small disadvantage is that more requests will be made to the backend, so use only when absolutely needed."
 msgstr ""
 
-#: eme-members.php:2258
+#: eme-members.php:2250
 msgid "If your membership uses a discount of type code and you want the dynamic price (using #_DYNAMICPRICE) to be updated taking that discount into account too, then also check this option."
 msgstr ""
 
-#: eme-members.php:2269
+#: eme-members.php:2261
 msgid "New member email"
 msgstr "E-post om ny medlem"
 
-#: eme-members.php:2270
+#: eme-members.php:2262
 msgid "Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the member that is signing up."
 msgstr ""
 
-#: eme-members.php:2273
+#: eme-members.php:2265
 msgid "New member email subject"
 msgstr "Ärenderad ny medlem"
 
-#: eme-members.php:2275
+#: eme-members.php:2267
 msgid "The subject of the mail sent to the person signing up as a member."
 msgstr "Ärenderaden i e-postmeddelandet som skickas till personen som registrerar sig som medlem."
 
-#: eme-members.php:2280
+#: eme-members.php:2272
 msgid "New member email body"
 msgstr "Meddelandetext ny medlem"
 
-#: eme-members.php:2282
+#: eme-members.php:2274
 msgid "The body of the mail sent to the person signing up as a member."
 msgstr "Meddelandetext som sänds till den som anmäler sig som medlem."
 
-#: eme-members.php:2283
-#: eme-members.php:2353
-#: eme-members.php:2388
-#: eme-members.php:2423
-#: eme-members.php:2500
-#: eme-members.php:2570
-#: eme-members.php:2608
-#: eme-members.php:2646
-#: eme-members.php:2677
-#: eme-members.php:2712
-#: eme-members.php:2746
+#: eme-members.php:2276
+#: eme-members.php:2346
+#: eme-members.php:2381
+#: eme-members.php:2416
+#: eme-members.php:2493
+#: eme-members.php:2563
+#: eme-members.php:2601
+#: eme-members.php:2639
+#: eme-members.php:2670
+#: eme-members.php:2705
+#: eme-members.php:2739
 msgid "No template shown in the list? Then go in the section Templates and create a template of type \"Membership related mail\"."
 msgstr "Visas ingen mall i listan? Gå i så fall till sektionen Mallar och skapa en mall av typen ”E-postmeddelande kopplat till medlemskap”."
 
-#: eme-members.php:2300
+#: eme-members.php:2292
 msgid "New member mail attachments"
 msgstr "Ny medlem e-postbilagor"
 
-#: eme-members.php:2322
+#: eme-members.php:2314
 msgid "Optionally add attachments to the mail when a new member signs up."
 msgstr "Lägg valfritt till bilagor till e-postmeddelandet när en ny medlem registreras."
 
-#: eme-members.php:2343
+#: eme-members.php:2335
 msgid "Contactperson new member email subject"
 msgstr "Ärenderad kontaktperson om ny medlem"
 
-#: eme-members.php:2345
+#: eme-members.php:2337
 msgid "The subject of the mail sent to the contactperson when someone signes up as a member."
 msgstr "Ärenderad för e-post som sänds till kontaktpersonen när någon registrerar sig som medlem."
 
-#: eme-members.php:2350
+#: eme-members.php:2342
 msgid "Contactperson new member email body"
 msgstr "Meddelandetext kontaktperson om ny medlem"
 
-#: eme-members.php:2352
+#: eme-members.php:2344
 msgid "The body of the mail sent to the contactperson when someone signes up as a member."
 msgstr "E-postmeddelanden att sända till kontaktpersonen när någon registrerar sig som medlem."
 
-#: eme-members.php:2374
+#: eme-members.php:2366
 msgid "Member updated Email"
 msgstr ""
 
-#: eme-members.php:2377
+#: eme-members.php:2369
 msgid "Updated member email subject"
 msgstr "Ärenderad om uppdaterat medlemskap"
 
-#: eme-members.php:2379
+#: eme-members.php:2371
 msgid "The subject of the mail sent to the member upon changes."
 msgstr "Ärenderad att sända till medlemmen vid ändringar."
 
-#: eme-members.php:2380
-#: eme-members.php:2387
+#: eme-members.php:2372
+#: eme-members.php:2379
 msgid "Currently only used when a member is manually marked as unpaid."
 msgstr ""
 
-#: eme-members.php:2384
+#: eme-members.php:2376
 msgid "Updated member email body"
 msgstr "Meddelandetext uppdaterat medlemskap"
 
-#: eme-members.php:2386
+#: eme-members.php:2378
 msgid "The body of the mail sent to the member upon changes."
 msgstr "Meddelandetext att sända till medlemmen vid ändringar."
 
-#: eme-members.php:2409
+#: eme-members.php:2401
 msgid "Membership extended email"
 msgstr ""
 
-#: eme-members.php:2410
-#: eme-members.php:2487
-#: eme-members.php:2630
+#: eme-members.php:2402
+#: eme-members.php:2479
+#: eme-members.php:2622
 msgid "Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members."
 msgstr ""
 
-#: eme-members.php:2413
+#: eme-members.php:2405
 msgid "Membership extended email subject"
 msgstr "Ärenderad förlängt medlemskap"
 
-#: eme-members.php:2415
+#: eme-members.php:2407
 msgid "The subject of the mail sent to the member when the membership is extended."
 msgstr "Ärenderad att sända till medlem när medlemskap förlängs."
 
-#: eme-members.php:2420
+#: eme-members.php:2412
 msgid "Membership extended email body"
 msgstr "Meddelandetext förlängt medlemskap"
 
-#: eme-members.php:2422
+#: eme-members.php:2414
 msgid "The body of the mail sent to the member when the membership is extended."
 msgstr "Innehållet i e-postmeddelandet som skickas till en medlem när medlemskapet förlängs."
 
-#: eme-members.php:2486
+#: eme-members.php:2478
 msgid "Membership paid email"
 msgstr ""
 
-#: eme-members.php:2490
+#: eme-members.php:2482
 msgid "Membership paid email subject"
 msgstr "Ärenderad om medlemskap betalt"
 
-#: eme-members.php:2492
+#: eme-members.php:2484
 msgid "The subject of the mail sent to the member when marked as paid."
 msgstr "Ärenderad att sända till medlemmen när medlemskapet markerats som betalt."
 
-#: eme-members.php:2497
+#: eme-members.php:2489
 msgid "Membership paid email body"
 msgstr "Meddelandetext medlemskap betalt"
 
-#: eme-members.php:2499
+#: eme-members.php:2491
 msgid "The body of the mail sent to the member when marked as paid."
 msgstr "Meddelandetext att sända till en medlem som markerats som betald."
 
-#: eme-members.php:2560
+#: eme-members.php:2552
 msgid "Contactperson membership paid email subject"
 msgstr "Ärenderad kontaktperson om medlemskap betalt"
 
-#: eme-members.php:2562
+#: eme-members.php:2554
 msgid "The subject of the mail sent to the contactperson after a member is marked as paid."
 msgstr "Ärenderad att sända till kontaktpersonen när en medlem är markerad som betald."
 
-#: eme-members.php:2567
+#: eme-members.php:2559
 msgid "Contactperson membership paid email body"
 msgstr "Meddelandetext kontaktperson om medlemskap betalt"
 
-#: eme-members.php:2569
+#: eme-members.php:2561
 msgid "The body of the mail sent to the contactperson after a member is marked as paid."
 msgstr "E-postmeddelanden att sända till kontaktpersonen när en medlem är markerad som betald."
 
-#: eme-members.php:2591
+#: eme-members.php:2583
 msgid "Membership reminder email"
 msgstr ""
 
-#: eme-members.php:2592
+#: eme-members.php:2584
 msgid "Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the head of the family."
 msgstr ""
 
-#: eme-members.php:2595
+#: eme-members.php:2587
 msgid "Membership reminder email subject"
 msgstr "Ärenderad om påminnelse om medlemskap"
 
-#: eme-members.php:2597
+#: eme-members.php:2589
 msgid "The subject of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership."
 msgstr "Ärenderad att sända till medlemmen när medlemskapet är på väg att upphöra. Dessa påminnelser skickas dagligen, baserat på inställningen för påminnelser för det definierade medlemskapet. "
 
-#: eme-members.php:2598
-#: eme-members.php:2607
+#: eme-members.php:2590
+#: eme-members.php:2599
 msgid "This reminder email does NOT take into account an optional grace period."
 msgstr ""
 
-#: eme-members.php:2604
+#: eme-members.php:2596
 msgid "Membership reminder email body"
 msgstr "Meddelandetext påminnelse om medlemskap"
 
-#: eme-members.php:2606
+#: eme-members.php:2598
 msgid "The body of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership."
 msgstr "Meddelandetext att sända till medlemmen när medlemskapet är på väg att upphöra. Dessa påminnelser skickas dagligen, baserat på inställningen för påminnelser för det definierade medlemskapet."
 
-#: eme-members.php:2629
+#: eme-members.php:2621
 msgid "Membership stopped email"
 msgstr ""
 
-#: eme-members.php:2633
+#: eme-members.php:2625
 msgid "Membership stopped email subject"
 msgstr "Ärenderad om medlemskap avslutat"
 
-#: eme-members.php:2635
+#: eme-members.php:2627
 msgid "The subject of the mail sent to the member when a membership has expired or is marked as stopped."
 msgstr ""
 
-#: eme-members.php:2636
-#: eme-members.php:2645
-#: eme-members.php:2667
-#: eme-members.php:2676
+#: eme-members.php:2628
+#: eme-members.php:2637
+#: eme-members.php:2659
+#: eme-members.php:2668
 msgid "If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period."
 msgstr ""
 
-#: eme-members.php:2642
+#: eme-members.php:2634
 msgid "Membership stopped email body"
 msgstr "Meddelandetext medlemskap avslutat"
 
-#: eme-members.php:2644
+#: eme-members.php:2636
 msgid "The body of the mail sent to the member when a membership has expired or is marked as stopped."
 msgstr ""
 
-#: eme-members.php:2664
+#: eme-members.php:2656
 msgid "Contactperson membership stopped email subject"
 msgstr "Ärenderad kontaktperson om medlemskap avslutat"
 
-#: eme-members.php:2666
+#: eme-members.php:2658
 msgid "The subject of the mail sent to the contactperson when a membership has expired or is stopped."
 msgstr "Ärenderad att sända till kontaktpersonen när ett medlemskap löpt ut eller avslutats. "
 
-#: eme-members.php:2673
+#: eme-members.php:2665
 msgid "Contactperson membership stopped email body"
 msgstr "Meddelandetext kontaktperson om medlemskap avslutat"
 
-#: eme-members.php:2675
+#: eme-members.php:2667
 msgid "The body of the mail sent to the contactperson when a membership has expired or is stopped."
 msgstr "E-postmeddelanden att sända till kontaktpersonen när ett medlemskap löpt ut eller avslutats."
 
-#: eme-members.php:2733
+#: eme-members.php:2725
 msgid "Contactperson payment notification email"
 msgstr ""
 
-#: eme-members.php:2736
+#: eme-members.php:2728
 msgid "Contactperson payment notification email subject"
 msgstr ""
 
-#: eme-members.php:2743
+#: eme-members.php:2735
 msgid "Contactperson payment notification email body"
 msgstr ""
 
-#: eme-members.php:2779
+#: eme-members.php:2771
 msgid "Here custom fields of type 'Membership' are shown."
 msgstr "Här visas anpassade fält av typen ”Medlemskap”."
 
-#: eme-members.php:2844
+#: eme-members.php:2836
 msgid "Filter members"
 msgstr "Filtrera medlemmar"
 
-#: eme-members.php:2848
+#: eme-members.php:2840
 #: eme-people.php:1773
 msgid "Store result as dynamic group"
 msgstr "Lagra resultatet som en dynamisk grupp"
 
-#: eme-members.php:2849
+#: eme-members.php:2841
 #: eme-people.php:1774
 msgid "Enter a name for this dynamic group"
 msgstr "Ange ett namn för denna dynamiska grupp"
 
-#: eme-members.php:2850
+#: eme-members.php:2842
 #: eme-people.php:1775
 msgid "Store dynamic group"
 msgstr "Lagra dynamisk grupp"
 
-#: eme-members.php:2874
+#: eme-members.php:2866
 msgid "Accept membership payment"
 msgstr "Ta emot betalning för medlemskap"
 
-#: eme-members.php:2875
+#: eme-members.php:2867
 msgid "Set membership unpaid"
 msgstr "Markera medlemskap som obetalt"
 
-#: eme-members.php:2876
+#: eme-members.php:2868
 msgid "Stop membership"
 msgstr "Avsluta medlemskap"
 
-#: eme-members.php:2877
+#: eme-members.php:2869
 msgid "Delete selected members"
 msgstr "Ta bort markerade medlemmar"
 
-#: eme-members.php:2878
+#: eme-members.php:2870
 msgid "Resend the mail for pending members"
 msgstr "Sänd om e-post om medlemmar som inväntar granskning"
 
-#: eme-members.php:2879
+#: eme-members.php:2871
 msgid "Resend the mail for paid members"
 msgstr ""
 
-#: eme-members.php:2880
+#: eme-members.php:2872
 msgid "Resend the expiration reminder mail"
 msgstr ""
 
-#: eme-members.php:2881
+#: eme-members.php:2873
 #: eme-people.php:1802
-#: eme-rsvp.php:5222
-#: eme-rsvp.php:5236
+#: eme-rsvp.php:5216
+#: eme-rsvp.php:5230
 #: eme-tasks.php:482
 msgid "Send generic email to selected persons"
 msgstr ""
 
-#: eme-members.php:2882
+#: eme-members.php:2874
 msgid "Send membership related email to selected members"
 msgstr ""
 
-#: eme-members.php:2884
+#: eme-members.php:2876
 #: eme-people.php:1818
-#: eme-rsvp.php:5224
-#: eme-rsvp.php:5238
+#: eme-rsvp.php:5218
+#: eme-rsvp.php:5232
 msgid "PDF output"
 msgstr "PDF-utmatning"
 
-#: eme-members.php:2885
+#: eme-members.php:2877
 #: eme-people.php:1819
-#: eme-rsvp.php:5225
-#: eme-rsvp.php:5239
+#: eme-rsvp.php:5219
+#: eme-rsvp.php:5233
 msgid "HTML output"
 msgstr "HTML utdata"
 
-#: eme-members.php:2889
+#: eme-members.php:2881
 msgid "Send mails to members upon changes being made?"
 msgstr "Sänd e-post till medlemmar vid ändringar?"
 
-#: eme-members.php:2895
+#: eme-members.php:2887
 msgid "Move corresponding persons to the trash bin?"
 msgstr "Flytta motsvarande personer till papperskorgen?"
 
-#: eme-members.php:2900
-#: eme-rsvp.php:5270
+#: eme-members.php:2892
+#: eme-rsvp.php:5264
 msgid "Select a subject template"
 msgstr "Välj en ämnesmall"
 
-#: eme-members.php:2901
-#: eme-rsvp.php:5271
+#: eme-members.php:2893
+#: eme-rsvp.php:5265
 msgid "Please select a body template"
 msgstr "Välj en innehållsmall"
 
-#: eme-members.php:2904
-#: eme-members.php:2909
+#: eme-members.php:2896
+#: eme-members.php:2901
 #: eme-people.php:1838
 #: eme-people.php:1843
-#: eme-rsvp.php:5274
-#: eme-rsvp.php:5279
+#: eme-rsvp.php:5268
+#: eme-rsvp.php:5273
 msgid "Select an optional header template"
 msgstr "Välj en valfri sidhuvudsmall"
 
-#: eme-members.php:2906
-#: eme-members.php:2911
+#: eme-members.php:2898
+#: eme-members.php:2903
 #: eme-people.php:1840
 #: eme-people.php:1845
-#: eme-rsvp.php:5276
-#: eme-rsvp.php:5281
+#: eme-rsvp.php:5270
+#: eme-rsvp.php:5275
 msgid "Select an optional footer template"
 msgstr "Välj en valfri sidfotsmall"
 
-#: eme-members.php:2965
+#: eme-members.php:2957
 #: eme-people.php:1918
 msgid "Select memberships"
 msgstr ""
 
-#: eme-members.php:2974
+#: eme-members.php:2966
 #: eme-people.php:1928
 msgid "Select member status"
 msgstr ""
 
-#: eme-members.php:2983
-#: eme-members.php:2990
+#: eme-members.php:2975
+#: eme-members.php:2982
 #: eme-people.php:1894
 #: eme-people.php:1901
-#: eme-rsvp.php:5192
+#: eme-rsvp.php:5186
 msgid "Filter on person"
 msgstr "Filtrera på person"
 
-#: eme-members.php:2993
-#: eme-members.php:3000
+#: eme-members.php:2985
+#: eme-members.php:2992
 msgid "Filter on member ID"
 msgstr "Filtrera på medlems-ID"
 
-#: eme-members.php:3001
-#: eme-rsvp.php:5196
+#: eme-members.php:2993
+#: eme-rsvp.php:5190
 msgid "Filter on payment id"
 msgstr ""
 
-#: eme-members.php:3002
-#: eme-rsvp.php:5197
+#: eme-members.php:2994
+#: eme-rsvp.php:5191
 msgid "Filter on payment GW id"
 msgstr ""
 
-#: eme-members.php:3016
+#: eme-members.php:3008
 #: eme-people.php:1950
 msgid "Custom field to search"
 msgstr ""
 
-#: eme-members.php:3207
+#: eme-members.php:3199
 msgid "Add a new member"
 msgstr "Lägg till en ny medlem"
 
-#: eme-members.php:3226
+#: eme-members.php:3218
 msgid "Manage members"
 msgstr "Hantera medlemmar"
 
-#: eme-members.php:3242
+#: eme-members.php:3234
 msgid "Import members"
 msgstr "Importera medlemmar"
 
-#: eme-members.php:3243
+#: eme-members.php:3235
 msgid "If you want, use this to import members info into the database"
 msgstr "Om du önskar, använd detta för att importera medlemmar i databasen"
 
-#: eme-members.php:3253
+#: eme-members.php:3245
 msgid "Import dynamic field answers"
 msgstr "Importera dynamiska fältsvar"
 
-#: eme-members.php:3254
+#: eme-members.php:3246
 msgid "Once you finished importing members, use this to import dynamic field answers into the database"
 msgstr "När du slutfört medlemsimporten, använd detta för att importera svar på dynamiska fält i databasen"
 
-#: eme-members.php:3289
+#: eme-members.php:3281
 msgid "Add a new membership definition"
 msgstr "Lägg till en ny definition på medlemskap"
 
-#: eme-members.php:3299
+#: eme-members.php:3291
 msgid "Manage memberships"
 msgstr "Hantera medlemskap"
 
-#: eme-members.php:3306
+#: eme-members.php:3298
 msgid "Delete selected memberships"
 msgstr "Ta bort markerade medlemskap"
 
-#: eme-members.php:3307
+#: eme-members.php:3299
 #, fuzzy
 msgid "Show membership statistics"
 msgstr "Markera medlemskap som obetalt"
 
-#: eme-members.php:4600
+#: eme-members.php:4635
 msgid "Members CSV"
 msgstr ""
 
-#: eme-members.php:4842
+#: eme-members.php:4877
 msgid "Limit access to EME members of"
 msgstr ""
 
-#: eme-members.php:4848
+#: eme-members.php:4883
 msgid "Allow access after the membership has been active for this many days (drip content):"
 msgstr ""
 
-#: eme-members.php:4851
+#: eme-members.php:4886
 msgid "Limit access to EME people that are members of the following groups"
 msgstr ""
 
-#: eme-members.php:4858
+#: eme-members.php:4893
 msgid "Access denied message template"
 msgstr ""
 
-#: eme-members.php:4862
+#: eme-members.php:4897
 msgid "The format of the text shown if access to the page is denied. If left empty, a default message will be shown."
 msgstr ""
 
-#: eme-members.php:4937
+#: eme-members.php:4972
 msgid "No membership selected"
 msgstr "Inget medlemskap valt"
 
-#: eme-members.php:4957
+#: eme-members.php:4992
 #: eme-rsvp.php:1502
 msgid "You did not enter a valid discount code"
 msgstr "Du angav inte en giltig rabattkod"
 
-#: eme-members.php:5223
-#: eme-rsvp.php:5920
+#: eme-members.php:5258
+#: eme-rsvp.php:5914
 msgid "Never"
 msgstr "Aldrig"
 
-#: eme-members.php:5254
-#: eme-members.php:5272
-#: eme-members.php:5311
-#: eme-members.php:5333
+#: eme-members.php:5289
+#: eme-members.php:5307
+#: eme-members.php:5346
+#: eme-members.php:5368
 msgid "no end date"
 msgstr "inget slutdatum"
 
-#: eme-members.php:5327
+#: eme-members.php:5362
 msgid "expired"
 msgstr "löpt ut"
 
-#: eme-members.php:5859
-#: eme-members.php:6045
+#: eme-members.php:5894
+#: eme-members.php:6080
 msgid "Access denied"
 msgstr "Åtkomst nekad"
 
-#: eme-members.php:5970
+#: eme-members.php:6005
 #: eme-people.php:935
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr ""
 
-#: eme-members.php:5976
-#: eme-members.php:6132
+#: eme-members.php:6011
+#: eme-members.php:6167
 msgid "Not imported (membership does not exist): %s"
 msgstr "Inte importerad (medlemskap finns inte): %s"
 
-#: eme-members.php:6026
+#: eme-members.php:6061
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr "Inte importerad (problem med att infoga medlemmen i databasen): %s"
 
-#: eme-members.php:6127
+#: eme-members.php:6162
 msgid "Not imported (person does not exist): %s"
 msgstr "Inte importerad (personen finns inte): %s"
 
-#: eme-members.php:6177
+#: eme-members.php:6212
 msgid "Not imported (member does not exist): %s"
 msgstr "Inte importerad (medlem finns inte): %s"
 
-#: eme-members.php:6375
+#: eme-members.php:6410
 msgid "Edit membership"
 msgstr "Redigera medlemskap"
 
-#: eme-members.php:6384
+#: eme-members.php:6419
 msgid "No membership form has been defined for this membership, a simple default will be used."
 msgstr ""
 
-#: eme-members.php:6397
+#: eme-members.php:6432
 msgid "%d head of the family accounts + %d family members"
 msgstr ""
 
-#: eme-members.php:6474
-#: eme-people.php:5112
+#: eme-members.php:6509
+#: eme-people.php:5108
 msgid "(family member)"
 msgstr ""
 
-#: eme-members.php:6479
+#: eme-members.php:6514
 msgid "Head of the family: "
 msgstr ""
 
-#: eme-members.php:6482
+#: eme-members.php:6517
 msgid "(head of the family)"
 msgstr ""
 
-#: eme-members.php:6528
+#: eme-members.php:6563
 msgid "This is based on the payment ID of the member: %d"
 msgstr ""
 
-#: eme-members.php:6645
-#: eme-people.php:5313
+#: eme-members.php:6680
+#: eme-people.php:5309
 msgid "(Dynamic)"
 msgstr "(Dynamisk)"
 
-#: eme-members.php:6657
-#: eme-people.php:5325
+#: eme-members.php:6692
+#: eme-people.php:5321
 msgid "Dynamic group added"
 msgstr "Dynamisk grupp tillagd"
 
-#: eme-members.php:6659
-#: eme-people.php:5327
+#: eme-members.php:6694
+#: eme-people.php:5323
 #, fuzzy
 msgid "There was a problem adding the group"
 msgstr "Det uppstod ett problem med att lägga till fältet"
 
-#: eme-members.php:6662
-#: eme-people.php:5330
+#: eme-members.php:6697
+#: eme-people.php:5326
 msgid "Please enter a name for the group"
 msgstr "Vänligen ange ett namn för gruppen"
 
-#: eme-members.php:6713
-#: eme-members.php:6781
+#: eme-members.php:6748
+#: eme-members.php:6816
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr ""
 
-#: eme-members.php:6766
+#: eme-members.php:6801
 msgid "Memberships deleted."
 msgstr "Medlemskap borttagna."
 
-#: eme-members.php:6822
+#: eme-members.php:6857
 msgid "No corresponding persons found."
 msgstr "Inga motsvarande personer kan hittas"
 
-#: eme-members.php:6832
+#: eme-members.php:6867
 msgid "Members deleted."
 msgstr "Medlemmarna borttagna."
 
-#: eme-members.php:6858
-#: eme-members.php:6884
-#: eme-members.php:6947
-#: eme-members.php:6978
-#: eme-members.php:7003
-#: eme-members.php:7020
-#: eme-rsvp.php:6139
-#: eme-rsvp.php:6173
-#: eme-rsvp.php:6217
-#: eme-rsvp.php:6257
-#: eme-rsvp.php:6279
-#: eme-rsvp.php:6321
-#: eme-rsvp.php:6382
-#: eme-rsvp.php:6424
-#: eme-rsvp.php:6473
-#: eme-rsvp.php:6535
-#: eme-rsvp.php:6571
+#: eme-members.php:6893
+#: eme-members.php:6919
+#: eme-members.php:6982
+#: eme-members.php:7013
+#: eme-members.php:7038
+#: eme-members.php:7055
+#: eme-rsvp.php:6133
+#: eme-rsvp.php:6167
+#: eme-rsvp.php:6211
+#: eme-rsvp.php:6251
+#: eme-rsvp.php:6273
+#: eme-rsvp.php:6315
+#: eme-rsvp.php:6376
+#: eme-rsvp.php:6418
+#: eme-rsvp.php:6467
+#: eme-rsvp.php:6529
+#: eme-rsvp.php:6565
 #: eme-tasks.php:2040
 #: eme-tasks.php:2066
 #: eme-tasks.php:2090
 msgid "The action has been executed successfully."
 msgstr "Handlingen har utförts."
 
-#: eme-members.php:6861
-#: eme-members.php:6981
-#: eme-rsvp.php:6142
-#: eme-rsvp.php:6176
-#: eme-rsvp.php:6220
-#: eme-rsvp.php:6260
-#: eme-rsvp.php:6324
-#: eme-rsvp.php:6385
-#: eme-rsvp.php:6427
-#: eme-rsvp.php:6470
-#: eme-rsvp.php:6574
+#: eme-members.php:6896
+#: eme-members.php:7016
+#: eme-rsvp.php:6136
+#: eme-rsvp.php:6170
+#: eme-rsvp.php:6214
+#: eme-rsvp.php:6254
+#: eme-rsvp.php:6318
+#: eme-rsvp.php:6379
+#: eme-rsvp.php:6421
+#: eme-rsvp.php:6464
+#: eme-rsvp.php:6568
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "Handlingen har utförts men det var problem med att sända e-post."
 
-#: eme-members.php:6864
-#: eme-members.php:6984
-#: eme-rsvp.php:6145
-#: eme-rsvp.php:6179
-#: eme-rsvp.php:6214
-#: eme-rsvp.php:6263
-#: eme-rsvp.php:6282
-#: eme-rsvp.php:6318
-#: eme-rsvp.php:6388
-#: eme-rsvp.php:6430
-#: eme-rsvp.php:6466
-#: eme-rsvp.php:6568
+#: eme-members.php:6899
+#: eme-members.php:7019
+#: eme-rsvp.php:6139
+#: eme-rsvp.php:6173
+#: eme-rsvp.php:6208
+#: eme-rsvp.php:6257
+#: eme-rsvp.php:6276
+#: eme-rsvp.php:6312
+#: eme-rsvp.php:6382
+#: eme-rsvp.php:6424
+#: eme-rsvp.php:6460
+#: eme-rsvp.php:6562
 #: eme-tasks.php:2043
 #: eme-tasks.php:2069
 #: eme-tasks.php:2093
@@ -8889,7 +8889,7 @@ msgid "Autocomplete sources"
 msgstr "Källor för automatisk komplettering"
 
 #: eme-events.php:8335
-#: eme-members.php:1995
+#: eme-members.php:1987
 #: eme-options.php:1453
 #: eme-options.php:1958
 #: eme-options.php:2977
@@ -12520,7 +12520,7 @@ msgid "Edit dynamic group of members"
 msgstr "Medlemmar i dynamisk grupp"
 
 #: eme-people.php:2531
-#: eme-people.php:5224
+#: eme-people.php:5220
 msgid "Edit group"
 msgstr "Redigera grupp"
 
@@ -12641,83 +12641,83 @@ msgstr "Om du vill avsluta prenumeration för framtida utskick, vänligen gör s
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr "Vänligen välj de grupper du vill avsluta prenumeration för."
 
-#: eme-people.php:5106
+#: eme-people.php:5102
 msgid "No surname"
 msgstr "Inget efternamn"
 
-#: eme-people.php:5230
+#: eme-people.php:5226
 msgid "Dynamic group of people"
 msgstr "Dynamisk grupp av personer"
 
-#: eme-people.php:5236
+#: eme-people.php:5232
 msgid "(1 person)"
 msgid_plural "(%d persons)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-people.php:5240
+#: eme-people.php:5236
 msgid "Dynamic group of members"
 msgstr "Medlemmar i dynamisk grupp"
 
-#: eme-people.php:5246
+#: eme-people.php:5242
 msgid "(1 member)"
 msgid_plural "(%d members)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-people.php:5444
+#: eme-people.php:5440
 msgid "People recovered from trash bin."
 msgstr "Personer återskapade från papperskorgen."
 
-#: eme-people.php:5456
+#: eme-people.php:5452
 msgid "People moved to trash bin."
 msgstr "Personer flyttade till papperskorgen."
 
-#: eme-people.php:5464
+#: eme-people.php:5460
 msgid "Personal data removed and moved to trash bin."
 msgstr "Persondata borttagen och flyttad till papperskorgen."
 
-#: eme-people.php:5472
+#: eme-people.php:5468
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "Sätt GDPR-godkännande till ”Ja” (säkerställ att markerade personer är medvetna om detta)."
 
-#: eme-people.php:5480
+#: eme-people.php:5476
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr ""
 
-#: eme-people.php:5488
+#: eme-people.php:5484
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr ""
 
-#: eme-people.php:5496
+#: eme-people.php:5492
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr ""
 
-#: eme-people.php:5504
+#: eme-people.php:5500
 msgid "Birthday email set to \"Yes\"."
 msgstr ""
 
-#: eme-people.php:5512
+#: eme-people.php:5508
 msgid "Birthday email set to \"No\"."
 msgstr ""
 
-#: eme-people.php:5521
+#: eme-people.php:5517
 msgid "Language updated."
 msgstr ""
 
-#: eme-people.php:5534
+#: eme-people.php:5530
 msgid "People deleted."
 msgstr "Personer har tagits bort."
 
-#: eme-people.php:5544
+#: eme-people.php:5540
 msgid "People added to group."
 msgstr "Personer tillagda i gruppen."
 
-#: eme-people.php:5555
+#: eme-people.php:5551
 msgid "People removed from group."
 msgstr ""
 
-#: eme-people.php:5564
+#: eme-people.php:5560
 msgid "Groups deleted."
 msgstr "Grupper borttagna"
 
@@ -12883,265 +12883,265 @@ msgstr ""
 msgid "Warning: there was a problem sending you the booking mail, please contact the site administrator to sort this out."
 msgstr "Varning: det var problem med att skicka registreringsmeddelandet, vänligen kontakta webbplatsadministratören för att reda ut detta."
 
-#: eme-rsvp.php:3278
-#: eme-rsvp.php:3332
+#: eme-rsvp.php:3272
+#: eme-rsvp.php:3326
 msgid "No responses yet!"
 msgstr "Inga svar än!"
 
-#: eme-rsvp.php:3379
+#: eme-rsvp.php:3373
 msgid "No bookings found."
 msgstr "Inga bokningar funna."
 
-#: eme-rsvp.php:4673
+#: eme-rsvp.php:4667
 msgid "Add booking"
 msgstr "Lägg till bokning"
 
-#: eme-rsvp.php:4675
+#: eme-rsvp.php:4669
 msgid "Be aware: the overbooking option is set."
 msgstr "Notera: överbokning är valt."
 
-#: eme-rsvp.php:4679
+#: eme-rsvp.php:4673
 msgid "Send mails for new booking?"
 msgstr "Sänd e-post för ny bokning?"
 
-#: eme-rsvp.php:4712
+#: eme-rsvp.php:4706
 msgid "Edit booking"
 msgstr "Redigera bokning"
 
-#: eme-rsvp.php:4721
+#: eme-rsvp.php:4715
 msgid "Send mails for changed booking?"
 msgstr "Sänd e-post för ändrad bokning"
 
-#: eme-rsvp.php:4722
+#: eme-rsvp.php:4716
 msgid "Move booking to event"
 msgstr "Flytta bokning till event"
 
-#: eme-rsvp.php:4725
+#: eme-rsvp.php:4719
 msgid "Start typing an event name"
 msgstr "Börja skriva namnet på ett event"
 
-#: eme-rsvp.php:4727
+#: eme-rsvp.php:4721
 msgid "Has the booking been paid?"
 msgstr ""
 
-#: eme-rsvp.php:4730
+#: eme-rsvp.php:4724
 msgid "Warning: the event related to this booking has been removed, editing is no longer allowed!"
 msgstr "Varning: eventet kopplat till denna bokning har tagits bort, ändringar tillåts inte längre!"
 
-#: eme-rsvp.php:4732
+#: eme-rsvp.php:4726
 msgid "Warning: the price of the event has changed compared to this booking, the new price will be taken into account for changes!"
 msgstr "Varning: priset på eventet har ändrats jämfört med denna bokning, det nya priset kommer att användas vid ändringar!"
 
-#: eme-rsvp.php:4907
+#: eme-rsvp.php:4901
 msgid "Booking updated"
 msgstr "Bokningen är uppdaterad"
 
-#: eme-rsvp.php:4926
+#: eme-rsvp.php:4920
 msgid "During the time of your change, some free seats were taken leaving not enough free seats available anymore"
 msgstr "Under tiden det tog att ändra har några platser blivit upptagna, vilket gör att det inte längre finns tillräckligt med lediga platser."
 
-#: eme-rsvp.php:5033
+#: eme-rsvp.php:5027
 msgid "No linked payment found: %s"
 msgstr ""
 
-#: eme-rsvp.php:5036
-#: eme-rsvp.php:5039
+#: eme-rsvp.php:5030
+#: eme-rsvp.php:5033
 msgid "Field %s not valid: %s"
 msgstr ""
 
-#: eme-rsvp.php:5044
+#: eme-rsvp.php:5038
 msgid "Already paid in full: %s"
 msgstr ""
 
-#: eme-rsvp.php:5050
+#: eme-rsvp.php:5044
 msgid "Amount paid (%s) is not equal to the expected amount (%s): %s"
 msgstr ""
 
-#: eme-rsvp.php:5054
+#: eme-rsvp.php:5048
 msgid "Import finished: %d entries marked as paid, %d ignored, %d errors"
 msgstr ""
 
-#: eme-rsvp.php:5056
+#: eme-rsvp.php:5050
 msgid "Ignored entries"
 msgstr ""
 
-#: eme-rsvp.php:5059
+#: eme-rsvp.php:5053
 msgid "Erronous entries"
 msgstr ""
 
-#: eme-rsvp.php:5103
+#: eme-rsvp.php:5097
 msgid "Manage pending bookings for %s"
 msgstr "Hantera väntande bokningar till %s"
 
-#: eme-rsvp.php:5105
+#: eme-rsvp.php:5099
 msgid "Manage approved bookings for %s"
 msgstr "Hantera godkända bokningar till %s"
 
-#: eme-rsvp.php:5112
+#: eme-rsvp.php:5106
 msgid "Manage trashed bookings"
 msgstr ""
 
-#: eme-rsvp.php:5114
+#: eme-rsvp.php:5108
 msgid "Manage pending bookings"
 msgstr "Hantera väntande bokningar"
 
-#: eme-rsvp.php:5116
+#: eme-rsvp.php:5110
 msgid "Manage approved bookings"
 msgstr "Hantera godkända bokningar"
 
-#: eme-rsvp.php:5127
+#: eme-rsvp.php:5121
 msgid "Click on the icon to show the import form to import payments"
 msgstr ""
 
-#: eme-rsvp.php:5140
+#: eme-rsvp.php:5134
 msgid "If you want, use this to import booking payments"
 msgstr ""
 
-#: eme-rsvp.php:5181
+#: eme-rsvp.php:5175
 msgid "Filter on event"
 msgstr "Filtrera på event"
 
-#: eme-rsvp.php:5194
+#: eme-rsvp.php:5188
 msgid "Filter on custom field answer"
 msgstr "Filtrera på anpassade fältsvar"
 
-#: eme-rsvp.php:5195
+#: eme-rsvp.php:5189
 msgid "Filter on unique nbr"
 msgstr "Filtrera på unikt nummer"
 
-#: eme-rsvp.php:5199
+#: eme-rsvp.php:5193
 msgid "Filter bookings"
 msgstr "Filtrera bokningar"
 
-#: eme-rsvp.php:5207
+#: eme-rsvp.php:5201
 msgid "Permanently delete booking"
 msgstr "Permanent borttagning av bokning"
 
-#: eme-rsvp.php:5208
+#: eme-rsvp.php:5202
 msgid "Restore booking and mark pending and awaiting user confirmation"
 msgstr ""
 
-#: eme-rsvp.php:5209
+#: eme-rsvp.php:5203
 msgid "Restore booking and mark pending"
 msgstr "Återställ bokning och markera som inväntar granskning"
 
-#: eme-rsvp.php:5210
+#: eme-rsvp.php:5204
 msgid "Restore booking and mark approved"
 msgstr "Återställ bokning och markera som godkänd"
 
-#: eme-rsvp.php:5212
+#: eme-rsvp.php:5206
 msgid "Approve booking"
 msgstr "Godkänn bokning"
 
-#: eme-rsvp.php:5213
-#: eme-rsvp.php:5228
+#: eme-rsvp.php:5207
+#: eme-rsvp.php:5222
 msgid "Delete booking (move to trash)"
 msgstr "Radera bokning (flytta till papperskorgen)"
 
-#: eme-rsvp.php:5215
+#: eme-rsvp.php:5209
 msgid "Resend the mail for pending booking"
 msgstr "Sänd om e-post om bokning som inväntar granskning"
 
-#: eme-rsvp.php:5218
-#: eme-rsvp.php:5233
+#: eme-rsvp.php:5212
+#: eme-rsvp.php:5227
 msgid "Mark unpaid"
 msgstr "Markera som obetald"
 
-#: eme-rsvp.php:5219
-#: eme-rsvp.php:5234
+#: eme-rsvp.php:5213
+#: eme-rsvp.php:5228
 msgid "Partial payment"
 msgstr "Delbetalning"
 
-#: eme-rsvp.php:5220
+#: eme-rsvp.php:5214
 msgid "Move booking off the waitinglist"
 msgstr "Flytta bokningen från kölistan"
 
-#: eme-rsvp.php:5221
-#: eme-rsvp.php:5235
+#: eme-rsvp.php:5215
+#: eme-rsvp.php:5229
 msgid "Put booking on the waitinglist"
 msgstr "Lägg bokningen på kölistan"
 
-#: eme-rsvp.php:5223
-#: eme-rsvp.php:5237
+#: eme-rsvp.php:5217
+#: eme-rsvp.php:5231
 msgid "Send booking related email to selected bookings"
 msgstr ""
 
-#: eme-rsvp.php:5227
+#: eme-rsvp.php:5221
 msgid "Make booking pending"
 msgstr "Markera som inväntar granskning"
 
-#: eme-rsvp.php:5230
+#: eme-rsvp.php:5224
 msgid "Resend the mail for approved booking"
 msgstr "Sänd om e-post om godkänd bokning"
 
-#: eme-rsvp.php:5244
+#: eme-rsvp.php:5238
 #, fuzzy
 msgid "Send mails to contact person too?"
 msgstr "Standardkontaktperson"
 
-#: eme-rsvp.php:5250
+#: eme-rsvp.php:5244
 msgid "Send mails to attendees upon changes being made?"
 msgstr "Sänd e-post till deltagare vid gjorda ändringar?"
 
-#: eme-rsvp.php:5257
+#: eme-rsvp.php:5251
 msgid "Refund if possible?"
 msgstr ""
 
-#: eme-rsvp.php:5264
+#: eme-rsvp.php:5258
 msgid "Partial payment amount"
 msgstr ""
 
-#: eme-rsvp.php:5304
+#: eme-rsvp.php:5298
 #, fuzzy
 msgid "Event fields"
 msgstr "Eventfältet"
 
-#: eme-rsvp.php:5740
+#: eme-rsvp.php:5734
 msgid "Click the name of the booker in order to see and/or edit the details of the booker."
 msgstr "Klicka på namnet på bokaren för att se och/eller ändra på bokarens detaljer."
 
-#: eme-rsvp.php:5743
+#: eme-rsvp.php:5737
 msgid "Anonymous"
 msgstr ""
 
-#: eme-rsvp.php:5772
+#: eme-rsvp.php:5766
 msgid "Click here to see and/or edit the details of the booking."
 msgstr "Klicka här för att se och/eller ändra detaljerna för bokningen."
 
-#: eme-rsvp.php:5822
+#: eme-rsvp.php:5816
 msgid "Pending: "
 msgstr "Inväntar granskning:"
 
-#: eme-rsvp.php:5912
+#: eme-rsvp.php:5906
 msgid "(On waitinglist)"
 msgstr "(På kölistan)"
 
-#: eme-rsvp.php:5915
+#: eme-rsvp.php:5909
 msgid "(Awaiting user confirmation)"
 msgstr ""
 
-#: eme-rsvp.php:5927
+#: eme-rsvp.php:5921
 msgid "This is based on the payment ID of the booking: %d"
 msgstr "Detta baseras på betalnings-ID för bokningen: %d"
 
-#: eme-rsvp.php:6145
-#: eme-rsvp.php:6263
+#: eme-rsvp.php:6139
+#: eme-rsvp.php:6257
 msgid "Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list."
 msgstr "Tips: för en registrering på kölistan är den enda tillåtna handlingen att flytta den från kölistan."
 
-#: eme-rsvp.php:6223
-#: eme-rsvp.php:6327
-#: eme-rsvp.php:6577
+#: eme-rsvp.php:6217
+#: eme-rsvp.php:6321
+#: eme-rsvp.php:6571
 msgid "The action has been executed successfully but there were some problems refunding the payment."
 msgstr ""
 
-#: eme-rsvp.php:6226
-#: eme-rsvp.php:6330
-#: eme-rsvp.php:6580
+#: eme-rsvp.php:6220
+#: eme-rsvp.php:6324
+#: eme-rsvp.php:6574
 msgid "The action has been executed successfully but there were some problems sending mail and refunding the payment."
 msgstr ""
 
-#: eme-rsvp.php:6464
+#: eme-rsvp.php:6458
 msgid "There was a problem refunding the payment, please check your logs."
 msgstr ""
 
@@ -13456,7 +13456,7 @@ msgstr "Höjden för PDF-dokumentet (i punkter)"
 msgid "No templates defined yet!"
 msgstr "Inga mallar har definierats än!"
 
-#: eme-templates.php:493
+#: eme-templates.php:498
 msgid "Duplicate this template"
 msgstr ""
 
@@ -13612,11 +13612,11 @@ msgstr "https://www.e-dynamics.be/"
 msgid "Only take unpaid bookings into account"
 msgstr ""
 
-#: eme-members.php:1422
+#: eme-members.php:1414
 msgid "The membership price is not a valid price and has been reset to 0"
 msgstr ""
 
-#: eme-members.php:1430
+#: eme-members.php:1422
 msgid "The extra charge for the membership is not a valid price and has been reset to 0"
 msgstr ""
 
@@ -13631,9 +13631,9 @@ msgstr ""
 #: eme-events.php:7612
 #: eme-events.php:7813
 #: eme-events.php:8199
-#: eme-members.php:2326
-#: eme-members.php:2466
-#: eme-members.php:2543
+#: eme-members.php:2318
+#: eme-members.php:2458
+#: eme-members.php:2535
 #: eme-options.php:2043
 #: eme-options.php:2100
 #: eme-options.php:2210
@@ -13644,12 +13644,12 @@ msgstr ""
 #: eme-events.php:7618
 #: eme-events.php:7819
 #: eme-events.php:8205
-#: eme-members.php:2332
-#: eme-members.php:2335
-#: eme-members.php:2472
-#: eme-members.php:2475
-#: eme-members.php:2549
-#: eme-members.php:2552
+#: eme-members.php:2324
+#: eme-members.php:2327
+#: eme-members.php:2464
+#: eme-members.php:2467
+#: eme-members.php:2541
+#: eme-members.php:2544
 #: eme-options.php:2045
 #: eme-options.php:2102
 #: eme-options.php:2212
@@ -13660,9 +13660,9 @@ msgstr ""
 #: eme-events.php:7622
 #: eme-events.php:7823
 #: eme-events.php:8209
-#: eme-members.php:2337
-#: eme-members.php:2477
-#: eme-members.php:2554
+#: eme-members.php:2329
+#: eme-members.php:2469
+#: eme-members.php:2546
 #: eme-options.php:2048
 #: eme-options.php:2105
 #: eme-options.php:2215
@@ -13675,16 +13675,16 @@ msgstr ""
 msgid "Optionally add attachments to the mail when a booking is pending."
 msgstr ""
 
-#: eme-members.php:2440
-#: eme-members.php:2517
+#: eme-members.php:2432
+#: eme-members.php:2509
 msgid "Mail attachments"
 msgstr ""
 
-#: eme-members.php:2462
+#: eme-members.php:2454
 msgid "Optionally add attachments to the mail when a member extends its membership."
 msgstr ""
 
-#: eme-members.php:2539
+#: eme-members.php:2531
 msgid "Optionally add attachments to the mail when a member has paid for the membership."
 msgstr ""
 
@@ -13716,14 +13716,14 @@ msgstr ""
 msgid "If set, the value must be greater than the number of days after which you want expired members to be anonymized."
 msgstr ""
 
-#: eme-members.php:3027
-#: eme-members.php:3039
+#: eme-members.php:3019
+#: eme-members.php:3031
 #: eme-people.php:1961
 #: eme-people.php:1973
 msgid "Exact custom field search match"
 msgstr ""
 
-#: eme-members.php:3037
+#: eme-members.php:3029
 #: eme-people.php:1971
 msgid "Exact?"
 msgstr ""
@@ -13736,13 +13736,13 @@ msgstr ""
 msgid "No member found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
-#: eme-members.php:5915
-#: eme-members.php:6103
+#: eme-members.php:5950
+#: eme-members.php:6138
 #: eme-people.php:895
 msgid "Not imported (both email and lastname are empty): %s"
 msgstr ""
 
-#: eme-members.php:6181
+#: eme-members.php:6216
 msgid "Not imported (no matching person found): %s"
 msgstr ""
 
@@ -13774,23 +13774,23 @@ msgstr ""
 msgid "Member deleted"
 msgstr ""
 
-#: eme-members.php:2698
+#: eme-members.php:2690
 msgid "Member deleted email"
 msgstr ""
 
-#: eme-members.php:2701
+#: eme-members.php:2693
 msgid "Contactperson member deleted email subject"
 msgstr ""
 
-#: eme-members.php:2703
+#: eme-members.php:2695
 msgid "The subject of the mail sent to the contactperson just before a member is deleted."
 msgstr ""
 
-#: eme-members.php:2709
+#: eme-members.php:2701
 msgid "Contactperson member deleted email body"
 msgstr ""
 
-#: eme-members.php:2711
+#: eme-members.php:2703
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr ""
 
@@ -13948,7 +13948,7 @@ msgstr ""
 msgid "Inactive"
 msgstr ""
 
-#: eme-members.php:1932
+#: eme-members.php:1924
 msgid "Inactive memberships will not be shown in membership selection lists."
 msgstr ""
 
@@ -13966,7 +13966,7 @@ msgid "Event submit payment page"
 msgstr ""
 
 #: eme-events.php:8337
-#: eme-members.php:1995
+#: eme-members.php:1987
 #: eme-options.php:2977
 msgid "Select a captcha to use"
 msgstr ""
@@ -13975,7 +13975,7 @@ msgstr ""
 msgid "Frontend Draft (unpaid)"
 msgstr ""
 
-#: eme-functions.php:4082
+#: eme-functions.php:4077
 msgid "Basic EME Captcha"
 msgstr ""
 

@@ -36,43 +36,43 @@ msgstr "in naam van %s"
 #: eme-formfields.php:5092
 #: eme-formfields.php:5114
 #: eme-formfields.php:5115
-#: eme-functions.php:3288
-#: eme-functions.php:3309
-#: eme-functions.php:3310
-#: eme-functions.php:3353
+#: eme-functions.php:3283
+#: eme-functions.php:3304
+#: eme-functions.php:3305
+#: eme-functions.php:3348
 #: eme-locations.php:2872
 #: eme-mailer.php:1272
 #: eme-mailer.php:1402
 #: eme-mailer.php:2665
 #: eme-mailer.php:2798
-#: eme-members.php:6324
-#: eme-members.php:6445
-#: eme-members.php:6592
-#: eme-members.php:6679
-#: eme-members.php:6750
+#: eme-members.php:6359
+#: eme-members.php:6480
+#: eme-members.php:6627
+#: eme-members.php:6714
+#: eme-members.php:6785
 #: eme-options.php:138
 #: eme-payments.php:3993
 #: eme-people.php:3988
-#: eme-people.php:5086
-#: eme-people.php:5195
-#: eme-people.php:5267
-#: eme-people.php:5306
-#: eme-people.php:5345
-#: eme-people.php:5427
+#: eme-people.php:5082
+#: eme-people.php:5191
+#: eme-people.php:5263
+#: eme-people.php:5302
+#: eme-people.php:5341
+#: eme-people.php:5423
 #: eme-recurrence.php:623
 #: eme-recurrence.php:792
 #: eme-rsvp.php:1241
-#: eme-rsvp.php:4660
-#: eme-rsvp.php:4667
-#: eme-rsvp.php:4698
-#: eme-rsvp.php:4705
-#: eme-rsvp.php:4753
-#: eme-rsvp.php:5550
-#: eme-rsvp.php:5572
+#: eme-rsvp.php:4654
+#: eme-rsvp.php:4661
+#: eme-rsvp.php:4692
+#: eme-rsvp.php:4699
+#: eme-rsvp.php:4747
+#: eme-rsvp.php:5544
+#: eme-rsvp.php:5566
 #: eme-tasks.php:1890
 #: eme-tasks.php:1995
 #: eme-tasks.php:2006
-#: eme-templates.php:501
+#: eme-templates.php:507
 msgid "Access denied!"
 msgstr "Toegang geweigerd!"
 
@@ -201,9 +201,9 @@ msgstr "Voeg manueel een aanwezigheidsrecord toe"
 #: eme-locations.php:903
 #: eme-mailer.php:2419
 #: eme-mailer.php:2598
-#: eme-members.php:1565
-#: eme-members.php:1587
-#: eme-members.php:1635
+#: eme-members.php:1557
+#: eme-members.php:1579
+#: eme-members.php:1627
 #: eme-people.php:1829
 #: eme-people.php:2316
 msgid "Start typing a name"
@@ -228,7 +228,7 @@ msgstr "Als een RSVP of QRCODE van een lid wordt gescand door iemand met voldoen
 #: eme-attendances.php:134
 #: eme-events.php:5986
 #: eme-events.php:6135
-#: eme-rsvp.php:5182
+#: eme-rsvp.php:5176
 #: eme-tasks.php:471
 msgid "Filter on start date"
 msgstr "Filter op startdatum"
@@ -236,7 +236,7 @@ msgstr "Filter op startdatum"
 #: eme-attendances.php:136
 #: eme-events.php:5988
 #: eme-events.php:6137
-#: eme-rsvp.php:5184
+#: eme-rsvp.php:5178
 #: eme-tasks.php:473
 msgid "Filter on end date"
 msgstr "Filter op einddatum"
@@ -254,11 +254,11 @@ msgstr "Filter aanwezigen"
 #: eme-events.php:6157
 #: eme-formfields.php:235
 #: eme-locations.php:907
-#: eme-members.php:2915
-#: eme-members.php:3312
+#: eme-members.php:2907
+#: eme-members.php:3304
 #: eme-people.php:1849
 #: eme-people.php:2656
-#: eme-rsvp.php:5285
+#: eme-rsvp.php:5279
 #: eme-tasks.php:495
 #: eme-templates.php:207
 msgid "Hint: rightclick on the column headers to show/hide columns"
@@ -277,17 +277,17 @@ msgstr "Hint: klik rechts op de kolom hoofdings om kolommen te tonen/verbergen"
 #: eme-people.php:2254
 #: eme-people.php:2319
 #: eme-people.php:2334
-#: eme-people.php:5111
-#: eme-people.php:5125
-#: eme-people.php:5126
-#: eme-people.php:5127
+#: eme-people.php:5107
+#: eme-people.php:5121
+#: eme-people.php:5122
+#: eme-people.php:5123
 #: eme-tasks.php:1987
 msgid "Edit person"
 msgstr "Pas persoon aan"
 
 #: eme-attendances.php:217
 #: eme-events.php:10426
-#: eme-rsvp.php:5891
+#: eme-rsvp.php:5885
 msgid "All day"
 msgstr "Hele dag"
 
@@ -414,7 +414,7 @@ msgstr "ID"
 #: eme-mailer.php:1442
 #: eme-mailer.php:2718
 #: eme-mailer.php:2830
-#: eme-members.php:1918
+#: eme-members.php:1910
 #: eme-people.php:2558
 #: eme-tasks.php:745
 #: eme-templates.php:273
@@ -427,9 +427,9 @@ msgstr "Naam"
 #: eme-formfields.php:5065
 #: eme-holidays.php:136
 #: eme-locations.php:2949
-#: eme-members.php:6361
-#: eme-people.php:5219
-#: eme-templates.php:489
+#: eme-members.php:6396
+#: eme-people.php:5215
+#: eme-templates.php:490
 msgid "No name"
 msgstr "Geen naam"
 
@@ -592,11 +592,11 @@ msgstr "Maand(en)"
 #: eme-locations.php:905
 #: eme-mailer.php:2708
 #: eme-mailer.php:2820
-#: eme-members.php:2913
-#: eme-members.php:3310
+#: eme-members.php:2905
+#: eme-members.php:3302
 #: eme-people.php:1847
 #: eme-people.php:2654
-#: eme-rsvp.php:5283
+#: eme-rsvp.php:5277
 #: eme-tasks.php:493
 #: eme-templates.php:205
 msgid "Apply"
@@ -665,10 +665,10 @@ msgstr "U heeft geen rechten om kortingen te beheren!"
 #: eme-discounts.php:172
 #: eme-events.php:5722
 #: eme-locations.php:229
-#: eme-members.php:5875
-#: eme-members.php:6061
+#: eme-members.php:5910
+#: eme-members.php:6096
 #: eme-people.php:851
-#: eme-rsvp.php:4967
+#: eme-rsvp.php:4961
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
 msgstr "Probleem bij het openen van het geüploade bestand, misschien een beveiligingsprobleem?"
 
@@ -678,10 +678,10 @@ msgstr "Probleem bij het openen van het geüploade bestand, misschien een beveil
 #: eme-discounts.php:197
 #: eme-events.php:5749
 #: eme-locations.php:256
-#: eme-members.php:5901
-#: eme-members.php:6087
+#: eme-members.php:5936
+#: eme-members.php:6122
 #: eme-people.php:878
-#: eme-rsvp.php:4994
+#: eme-rsvp.php:4988
 msgid "Not all required fields present."
 msgstr "Niet alle vereiste velden zijn aanwezig."
 
@@ -696,7 +696,7 @@ msgstr "Niet geïmporteerd: %s"
 #: eme-countries.php:144
 #: eme-discounts.php:150
 #: eme-discounts.php:209
-#: eme-members.php:6186
+#: eme-members.php:6221
 msgid "Import finished: %d inserts, %d errors"
 msgstr "Import gedaan: %d toevoegingen, %d fouten"
 
@@ -706,10 +706,10 @@ msgstr "Import gedaan: %d toevoegingen, %d fouten"
 #: eme-discounts.php:217
 #: eme-events.php:5714
 #: eme-locations.php:221
-#: eme-members.php:5867
-#: eme-members.php:6054
+#: eme-members.php:5902
+#: eme-members.php:6089
 #: eme-people.php:843
-#: eme-rsvp.php:4958
+#: eme-rsvp.php:4952
 msgid "Problem detected while uploading the file"
 msgstr "Probleem ondervonden tijdens het uploaden van de file"
 
@@ -719,10 +719,10 @@ msgstr "Probleem ondervonden tijdens het uploaden van de file"
 #: eme-discounts.php:220
 #: eme-events.php:5711
 #: eme-locations.php:218
-#: eme-members.php:5864
-#: eme-members.php:6051
+#: eme-members.php:5899
+#: eme-members.php:6086
 #: eme-people.php:840
-#: eme-rsvp.php:4955
+#: eme-rsvp.php:4949
 msgid "No CSV file detected: %s"
 msgstr "Geen CSV file gedetecteerd: %s"
 
@@ -810,7 +810,7 @@ msgstr "Voeg land toe"
 #: eme-discounts.php:505
 #: eme-events.php:5942
 #: eme-locations.php:851
-#: eme-members.php:3230
+#: eme-members.php:3222
 #: eme-people.php:2154
 msgid "Click on the icon to show the import form"
 msgstr "Klik op het pictogram om het importeer-formulier te tonen"
@@ -821,10 +821,10 @@ msgstr "Klik op het pictogram om het importeer-formulier te tonen"
 #: eme-discounts.php:512
 #: eme-events.php:5949
 #: eme-locations.php:858
-#: eme-members.php:3237
-#: eme-members.php:3248
+#: eme-members.php:3229
+#: eme-members.php:3240
 #: eme-people.php:2161
-#: eme-rsvp.php:5134
+#: eme-rsvp.php:5128
 msgid "Delimiter:"
 msgstr "Scheidingsteken:"
 
@@ -834,10 +834,10 @@ msgstr "Scheidingsteken:"
 #: eme-discounts.php:514
 #: eme-events.php:5951
 #: eme-locations.php:860
-#: eme-members.php:3239
-#: eme-members.php:3250
+#: eme-members.php:3231
+#: eme-members.php:3242
 #: eme-people.php:2163
-#: eme-rsvp.php:5136
+#: eme-rsvp.php:5130
 msgid "Enclosure:"
 msgstr "Omsluiting:"
 
@@ -848,7 +848,7 @@ msgstr "Omsluiting:"
 #: eme-events.php:5954
 #: eme-locations.php:863
 #: eme-people.php:2166
-#: eme-rsvp.php:5139
+#: eme-rsvp.php:5133
 msgid "Import"
 msgstr "Importeer"
 
@@ -876,11 +876,11 @@ msgstr "De taal zou moeten overeenkomen met één van de WordPress talen die je 
 #: eme-locations.php:897
 #: eme-mailer.php:2704
 #: eme-mailer.php:2817
-#: eme-members.php:2872
-#: eme-members.php:3304
+#: eme-members.php:2864
+#: eme-members.php:3296
 #: eme-people.php:1797
 #: eme-people.php:2649
-#: eme-rsvp.php:5205
+#: eme-rsvp.php:5199
 #: eme-tasks.php:481
 #: eme-templates.php:202
 msgid "Bulk Actions"
@@ -1027,12 +1027,12 @@ msgid "Incorrect country selection"
 msgstr "Ongeldige land selectie"
 
 #: eme-countries.php:1040
-#: eme-functions.php:3335
+#: eme-functions.php:3330
 msgid "Update failed: "
 msgstr "Aanpassen mislukt: "
 
 #: eme-countries.php:1042
-#: eme-functions.php:3337
+#: eme-functions.php:3332
 msgid "Insert failed: "
 msgstr "Invoegen mislukt: "
 
@@ -1325,7 +1325,7 @@ msgstr "De naam van de korting"
 #: eme-events.php:9712
 #: eme-events.php:9809
 #: eme-events.php:9866
-#: eme-members.php:1922
+#: eme-members.php:1914
 #: eme-people.php:2562
 #: eme-tasks.php:749
 #: eme-templates.php:277
@@ -1338,7 +1338,7 @@ msgstr "Beschrijving"
 #: eme-events.php:9672
 #: eme-events.php:9691
 #: eme-events.php:9718
-#: eme-members.php:1926
+#: eme-members.php:1918
 #: eme-templates.php:294
 msgid "Type"
 msgstr "Type"
@@ -1407,7 +1407,7 @@ msgid "People need to be invited and click on the invitation URL for this discou
 msgstr "Mensen moeten zijn uitgenodigd en op de uitnodigings-URL klikken vooraleer deze korting wordt toegepast."
 
 #: eme-discounts.php:888
-#: eme-members.php:2054
+#: eme-members.php:2046
 msgid "Logged-in users only"
 msgstr "Alleen aangemelde gebruikers"
 
@@ -1430,7 +1430,7 @@ msgid "Require EME membership"
 msgstr "Vereis EME lidmaatschap"
 
 #: eme-discounts.php:906
-#: eme-members.php:3221
+#: eme-members.php:3213
 msgid "No memberships defined yet!"
 msgstr "Nog geen lidmaatschappen gedefinieerd!"
 
@@ -1538,7 +1538,7 @@ msgstr "Vast per plaats"
 #: eme-gdpr.php:544
 #: eme-gdpr.php:545
 #: eme-locations.php:2985
-#: eme-members.php:6526
+#: eme-members.php:6561
 #: eme-people.php:500
 #: eme-people.php:508
 #: eme-people.php:516
@@ -1547,12 +1547,12 @@ msgstr "Vast per plaats"
 #: eme-people.php:1115
 #: eme-people.php:1150
 #: eme-people.php:1450
-#: eme-people.php:5130
-#: eme-people.php:5147
-#: eme-people.php:5148
-#: eme-people.php:5222
-#: eme-rsvp.php:3835
-#: eme-rsvp.php:5928
+#: eme-people.php:5126
+#: eme-people.php:5143
+#: eme-people.php:5144
+#: eme-people.php:5218
+#: eme-rsvp.php:3829
+#: eme-rsvp.php:5922
 #: eme-ui-helpers.php:134
 #: eme-ui-helpers.php:231
 msgid "Yes"
@@ -1579,7 +1579,7 @@ msgstr "Ja"
 #: eme-gdpr.php:544
 #: eme-gdpr.php:545
 #: eme-locations.php:2985
-#: eme-members.php:6526
+#: eme-members.php:6561
 #: eme-people.php:500
 #: eme-people.php:508
 #: eme-people.php:516
@@ -1588,12 +1588,12 @@ msgstr "Ja"
 #: eme-people.php:1115
 #: eme-people.php:1150
 #: eme-people.php:1452
-#: eme-people.php:5130
-#: eme-people.php:5147
-#: eme-people.php:5148
-#: eme-people.php:5222
-#: eme-rsvp.php:3835
-#: eme-rsvp.php:5928
+#: eme-people.php:5126
+#: eme-people.php:5143
+#: eme-people.php:5144
+#: eme-people.php:5218
+#: eme-rsvp.php:3829
+#: eme-rsvp.php:5922
 #: eme-ui-helpers.php:135
 #: eme-ui-helpers.php:230
 msgid "No"
@@ -1636,7 +1636,7 @@ msgstr "Druk op de Back-knop in je browser om naar het vorige scherm terug te ke
 #: eme-mailer.php:1797
 #: eme-payments.php:152
 #: eme-payments.php:1988
-#: eme-rsvp.php:5098
+#: eme-rsvp.php:5092
 msgid "No such event"
 msgstr "Geen dergelijk evenement"
 
@@ -1909,8 +1909,8 @@ msgstr "Uitschrijven van mailings"
 
 #: eme-events.php:1494
 #: eme-events.php:1588
-#: eme-rsvp.php:3780
-#: eme-rsvp.php:3794
+#: eme-rsvp.php:3774
+#: eme-rsvp.php:3788
 msgid "Cancel booking"
 msgstr "Annuleer je reservering"
 
@@ -1954,7 +1954,7 @@ msgstr "Events Made Easy plugin pagina"
 #: eme-events.php:9891
 #: eme-events.php:9946
 #: eme-locations.php:2400
-#: eme-rsvp.php:5772
+#: eme-rsvp.php:5766
 msgid "Edit"
 msgstr "Bewerken"
 
@@ -2072,10 +2072,10 @@ msgstr "Locatie niet geïmporteerd: %s"
 
 #: eme-events.php:5807
 #: eme-events.php:5810
-#: eme-members.php:5932
-#: eme-members.php:5937
-#: eme-members.php:5942
-#: eme-members.php:5947
+#: eme-members.php:5967
+#: eme-members.php:5972
+#: eme-members.php:5977
+#: eme-members.php:5982
 #: eme-people.php:907
 msgid "Not imported (field %s not valid): %s"
 msgstr "Niet geïmporteerd (veld %s niet geldig): %s"
@@ -2090,33 +2090,33 @@ msgstr "Niet geïmporteerd (probleem bij het invoegen van het evenement in de da
 
 #: eme-events.php:5882
 #: eme-locations.php:337
-#: eme-members.php:5927
-#: eme-members.php:6115
+#: eme-members.php:5962
+#: eme-members.php:6150
 msgid "Not imported (not all required fields are present): %s"
 msgstr "Niet geïmporteerd (niet alle vereiste velden zijn aanwezig): %s"
 
 #: eme-events.php:5885
 #: eme-locations.php:340
-#: eme-members.php:6032
+#: eme-members.php:6067
 #: eme-people.php:970
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr "Import gedaan: %d toevoegingen, %d aanpassingen, %d fouten"
 
 #: eme-events.php:5904
-#: eme-rsvp.php:5070
+#: eme-rsvp.php:5064
 #: eme-tasks.php:446
 msgid "Past events"
 msgstr "Voorbije evenementen"
 
 #: eme-events.php:5905
-#: eme-rsvp.php:5071
+#: eme-rsvp.php:5065
 #: eme-tasks.php:447
 #: events-manager.php:342
 msgid "All events"
 msgstr "Alle evenementen"
 
 #: eme-events.php:5906
-#: eme-rsvp.php:5072
+#: eme-rsvp.php:5066
 #: eme-tasks.php:448
 msgid "Future events"
 msgstr "Komende evenementen"
@@ -2142,13 +2142,13 @@ msgstr "Beheer herhalingen"
 
 #: eme-events.php:5937
 #: eme-people.php:2149
-#: eme-rsvp.php:5122
+#: eme-rsvp.php:5116
 msgid "Show regular content"
 msgstr "Toon de gewone inhoud"
 
 #: eme-events.php:5939
 #: eme-people.php:2151
-#: eme-rsvp.php:5124
+#: eme-rsvp.php:5118
 msgid "Show trash content"
 msgstr "Toon inhoud prullenbak"
 
@@ -2157,12 +2157,12 @@ msgid "If you want, use this to import events into the database"
 msgstr "Gebruik dit eventueel om evenementen te importeren in de database"
 
 #: eme-events.php:5976
-#: eme-rsvp.php:5172
+#: eme-rsvp.php:5166
 msgid "All categories"
 msgstr "Alle categorieën"
 
 #: eme-events.php:5977
-#: eme-rsvp.php:5173
+#: eme-rsvp.php:5167
 msgid "Events without category"
 msgstr "Evenementen zonder categorie"
 
@@ -2174,7 +2174,7 @@ msgid "Event name"
 msgstr "Naam van het evenement"
 
 #: eme-events.php:5989
-#: eme-rsvp.php:5189
+#: eme-rsvp.php:5183
 msgid "Show/hide extra filters"
 msgstr "Toon/verberg extra filters"
 
@@ -2190,8 +2190,8 @@ msgstr "Filter op locatie"
 
 #: eme-events.php:6008
 #: eme-locations.php:875
-#: eme-members.php:3007
-#: eme-members.php:3014
+#: eme-members.php:2999
+#: eme-members.php:3006
 #: eme-people.php:1940
 #: eme-people.php:1947
 msgid "Custom field value to search"
@@ -2199,7 +2199,7 @@ msgstr "Eigen aangemaakte veldwaarden om te zoeken"
 
 #: eme-events.php:6009
 #: eme-locations.php:876
-#: eme-members.php:3023
+#: eme-members.php:3015
 #: eme-people.php:1957
 msgid "Custom fields to filter on"
 msgstr "Eigen aangemaakte velden om op te filteren"
@@ -2210,14 +2210,14 @@ msgstr "Filter evenementen"
 
 #: eme-events.php:6020
 #: eme-locations.php:886
-#: eme-members.php:2861
+#: eme-members.php:2853
 #: eme-people.php:1786
 msgid "Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the \"Custom fields to filter on\" select-box shown."
 msgstr "Tip: wanneer u naar aangepaste veldwaarden zoekt, kunt u optioneel beperken welke aangepaste velden u wilt doorzoeken in het selectievakje \"Eigen aangemaakte velden om te filteren\"."
 
 #: eme-events.php:6021
 #: eme-locations.php:887
-#: eme-members.php:2862
+#: eme-members.php:2854
 #: eme-people.php:1787
 msgid "If you can't see your custom field in the \"Custom fields to filter on\" select-box, make sure you marked it as \"searchable\" in the field definition."
 msgstr "Als u uw aangepaste veld niet kunt zien in het selectieveld \"Eigen aangemaakte velden om te filteren\", moet u het in de velddefinitie als \"doorzoekbaar\" markeren."
@@ -2337,7 +2337,7 @@ msgstr "Als u dit evenement wijzigt, wordt deze een onafhankelijk evenement en w
 #: eme-events.php:9926
 #: eme-events.php:10396
 #: eme-options.php:1278
-#: eme-rsvp.php:5850
+#: eme-rsvp.php:5844
 msgid "RSVP"
 msgstr "RSVP"
 
@@ -2357,8 +2357,8 @@ msgstr "Attributen"
 #: eme-events.php:8505
 #: eme-locations.php:394
 #: eme-locations.php:758
-#: eme-members.php:1869
-#: eme-members.php:2776
+#: eme-members.php:1861
+#: eme-members.php:2768
 #: eme-options.php:1604
 msgid "Custom fields"
 msgstr "Eigen aangemaakte velden"
@@ -2368,7 +2368,7 @@ msgid "Generic RSVP info"
 msgstr "Algemene RSVP info"
 
 #: eme-events.php:6337
-#: eme-members.php:2199
+#: eme-members.php:2191
 #: eme-options.php:2960
 msgid "Payment methods"
 msgstr "Betaalmethodes"
@@ -2524,8 +2524,8 @@ msgstr "Verwijder herhaling"
 #: eme-events.php:9980
 #: eme-mailer.php:1445
 #: eme-mailer.php:2721
-#: eme-members.php:1788
-#: eme-members.php:1930
+#: eme-members.php:1780
+#: eme-members.php:1922
 #: eme-people.php:1057
 #: eme-people.php:1363
 msgid "Status"
@@ -2916,24 +2916,24 @@ msgstr "Ofwel kies uit een template: "
 #: eme-events.php:8314
 #: eme-events.php:8658
 #: eme-events.php:8673
-#: eme-members.php:2070
-#: eme-members.php:2102
-#: eme-members.php:2120
-#: eme-members.php:2138
-#: eme-members.php:2156
-#: eme-members.php:2174
-#: eme-members.php:2218
-#: eme-members.php:2285
-#: eme-members.php:2355
-#: eme-members.php:2390
-#: eme-members.php:2425
-#: eme-members.php:2502
-#: eme-members.php:2572
-#: eme-members.php:2610
-#: eme-members.php:2648
-#: eme-members.php:2679
-#: eme-members.php:2714
-#: eme-members.php:2748
+#: eme-members.php:2062
+#: eme-members.php:2094
+#: eme-members.php:2112
+#: eme-members.php:2130
+#: eme-members.php:2148
+#: eme-members.php:2166
+#: eme-members.php:2210
+#: eme-members.php:2278
+#: eme-members.php:2348
+#: eme-members.php:2383
+#: eme-members.php:2418
+#: eme-members.php:2495
+#: eme-members.php:2565
+#: eme-members.php:2603
+#: eme-members.php:2641
+#: eme-members.php:2672
+#: eme-members.php:2707
+#: eme-members.php:2741
 #: eme-widgets.php:230
 msgid "Or enter your own (if anything is entered here, it takes precedence over the selected template): "
 msgstr "Of voer zelf een in (als hier iets wordt ingevoerd, gaat dat voor het geselecteerde template): "
@@ -2957,7 +2957,7 @@ msgstr "Dit bepaalt de lay-out van uw evenement (waar de evenementbeschrijving k
 #: eme-locations.php:765
 #: eme-mailer.php:2363
 #: eme-mailer.php:2545
-#: eme-members.php:2783
+#: eme-members.php:2775
 #: eme-templates.php:286
 msgid "Your account has the ability to post unrestricted HTML content here, except javascript."
 msgstr "Je account heeft de mogelijkheid om hier onbeperkte HTML inhoud te plaatsen, behalve javascript."
@@ -2967,7 +2967,7 @@ msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr "Contactpersoon betalingsgateway-melding e-mail onderwerp"
 
 #: eme-events.php:7399
-#: eme-members.php:2738
+#: eme-members.php:2730
 #: eme-options.php:2228
 #: eme-options.php:2242
 msgid "The subject of the email which will be sent to the contact person when a payment notification is received via a payment gateway."
@@ -2978,14 +2978,14 @@ msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr "Contactpersoon betalingsgateway-melding e-mail inhoud"
 
 #: eme-events.php:7421
-#: eme-members.php:2745
+#: eme-members.php:2737
 #: eme-options.php:2229
 #: eme-options.php:2243
 msgid "The body of the email which will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr "De inhoud van de e-mail die naar de contactpersoon wordt verzonden wanneer een betalingskennisgeving via een betalingsportaal wordt ontvangen."
 
 #: eme-events.php:7445
-#: eme-members.php:2255
+#: eme-members.php:2247
 msgid "Dynamic data check on every field"
 msgstr "Dynamische gegevenscontrole voor elk veld"
 
@@ -3085,9 +3085,9 @@ msgstr "Boeking gemaakt e-mail bijlagen"
 #: eme-events.php:9985
 #: eme-mailer.php:2388
 #: eme-mailer.php:2567
-#: eme-members.php:2320
-#: eme-members.php:2460
-#: eme-members.php:2537
+#: eme-members.php:2312
+#: eme-members.php:2452
+#: eme-members.php:2529
 #: eme-options.php:2036
 #: eme-options.php:2093
 #: eme-options.php:2203
@@ -3101,9 +3101,9 @@ msgstr "Voeg bijlagen toe"
 #: eme-events.php:8196
 #: eme-mailer.php:2389
 #: eme-mailer.php:2568
-#: eme-members.php:2321
-#: eme-members.php:2461
-#: eme-members.php:2538
+#: eme-members.php:2313
+#: eme-members.php:2453
+#: eme-members.php:2530
 #: eme-options.php:2037
 #: eme-options.php:2094
 #: eme-options.php:2204
@@ -3399,13 +3399,13 @@ msgid "Use EME captcha for forms?"
 msgstr "Gebruik EME captcha voor formulieren?"
 
 #: eme-events.php:8341
-#: eme-members.php:1998
+#: eme-members.php:1990
 #: eme-options.php:1447
 msgid "Only use captcha for logged out users?"
 msgstr "Captcha alleen gebruiken voor uitgelogde gebruikers?"
 
 #: eme-events.php:8342
-#: eme-members.php:2000
+#: eme-members.php:1992
 #: eme-options.php:1447
 msgid "If this option is checked, the captcha will only be used for logged out users."
 msgstr "Als deze optie is aangevinkt, wordt de captcha alleen gebruikt voor uitgelogde gebruikers."
@@ -3448,7 +3448,7 @@ msgstr "Als er een eigen aangemaakt veld met de naam 'performer' bestaat, wordt 
 
 #: eme-events.php:8560
 #: eme-locations.php:809
-#: eme-members.php:2821
+#: eme-members.php:2813
 msgid "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr "Eigen aangemaakte velden van het type \"verborgen\" zijn hier nutteloos en zullen uiteraard niet getoond worden."
 
@@ -3471,7 +3471,7 @@ msgid "If no payment method is selected, the \"Booking Recorded Message\" (defin
 msgstr "Als er geen betalingsmethode is geselecteerd, wordt het \"Boeking opgenomen bericht\" (gedefinieerd in de instellingen van het RSVP-formulier) weergegeven. Anders wordt het \"Boeking opgenomen bericht\" weergegeven en wordt de gebruiker na enkele seconden doorgestuurd naar de betalingspagina (zie de generieke EME-instellingen over de time-out voor omleiding en meer betalingsinstellingen)."
 
 #: eme-events.php:8610
-#: eme-members.php:2208
+#: eme-members.php:2200
 msgid "No payment methods configured yet. Go in the EME payment settings and configure some."
 msgstr "Er zijn nog geen betaalmethoden geconfigureerd. Ga naar de EME-betalingsinstellingen en configureer er een paar."
 
@@ -3598,8 +3598,8 @@ msgid "For multiprice events, separate the values by '||'"
 msgstr "Bij evenementen met meerdere prijzen, scheidt de waardes met '||'"
 
 #: eme-events.php:8770
-#: eme-members.php:2012
-#: eme-members.php:2018
+#: eme-members.php:2004
+#: eme-members.php:2010
 #: eme-options.php:2454
 #: eme-options.php:2958
 msgid "Use the point as decimal separator"
@@ -3626,7 +3626,7 @@ msgid "VAT percentage: "
 msgstr "BTW-percentage: "
 
 #: eme-events.php:8783
-#: eme-members.php:2026
+#: eme-members.php:2018
 msgid "VAT percentage"
 msgstr "BTW-percentage"
 
@@ -3635,22 +3635,22 @@ msgid "The price you indicate for events is VAT included, special placeholders a
 msgstr "De prijs die u aangeeft voor evenementen is inclusief BTW, er zijn speciale placeholders voorzien om de prijs exclusief BTW aan te geven."
 
 #: eme-events.php:8788
-#: eme-members.php:2032
+#: eme-members.php:2024
 msgid "Discount to apply"
 msgstr "Toe te passen korting"
 
 #: eme-events.php:8789
-#: eme-members.php:2033
+#: eme-members.php:2025
 msgid "The discount name you want to apply (is overridden by discount group if used)."
 msgstr "The discount name you want to apply (is overridden by discount group if used)."
 
 #: eme-events.php:8792
-#: eme-members.php:2036
+#: eme-members.php:2028
 msgid "Discount group to apply"
 msgstr "Toe te passen kortingsgroep"
 
 #: eme-events.php:8793
-#: eme-members.php:2037
+#: eme-members.php:2029
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr "The discount group name you want applied (overrides the discount)."
 
@@ -3735,13 +3735,13 @@ msgid "Require logged-in user to be a member of one of the selected EME membersh
 msgstr "Vereis dat aangemelde gebruiker lid is van één van de geselecteerde EME lidmaatschappen om te kunnen reserveren."
 
 #: eme-events.php:8837
-#: eme-members.php:2189
+#: eme-members.php:2181
 #: eme-tasks.php:831
 msgid "Group to add people to"
 msgstr "Groep om mensen aan toe te voegen"
 
 #: eme-events.php:8838
-#: eme-members.php:2190
+#: eme-members.php:2182
 #: eme-tasks.php:832
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "De groep waar mensen automatisch lid van worden als ze inschrijven."
@@ -4328,8 +4328,8 @@ msgstr "Groepen"
 #: eme-gdpr.php:250
 #: eme-gdpr.php:428
 #: eme-gdpr.php:552
-#: eme-members.php:1802
-#: eme-members.php:3431
+#: eme-members.php:1794
+#: eme-members.php:3423
 #: eme-options.php:34
 #: eme-options.php:44
 #: eme-options.php:83
@@ -4357,8 +4357,8 @@ msgstr "Achternaam"
 #: eme-gdpr.php:250
 #: eme-gdpr.php:429
 #: eme-gdpr.php:556
-#: eme-members.php:1803
-#: eme-members.php:3432
+#: eme-members.php:1795
+#: eme-members.php:3424
 #: eme-options.php:35
 #: eme-options.php:45
 #: eme-options.php:84
@@ -4390,8 +4390,8 @@ msgstr "Voornaam"
 #: eme-gdpr.php:430
 #: eme-gdpr.php:560
 #: eme-mailer.php:1443
-#: eme-members.php:1804
-#: eme-members.php:3433
+#: eme-members.php:1796
+#: eme-members.php:3425
 #: eme-options.php:36
 #: eme-options.php:46
 #: eme-options.php:85
@@ -4504,7 +4504,7 @@ msgstr "Leden"
 #: eme-events.php:9865
 #: eme-gdpr.php:468
 #: eme-gdpr.php:652
-#: eme-members.php:1605
+#: eme-members.php:1597
 msgid "Membership"
 msgstr "Lidmaatschap"
 
@@ -4535,7 +4535,7 @@ msgid "End"
 msgstr "Einde"
 
 #: eme-events.php:9896
-#: eme-members.php:1671
+#: eme-members.php:1663
 msgid "Usage count"
 msgstr "Aantal keren gebruikt"
 
@@ -4653,8 +4653,8 @@ msgid "Mark paid and approve"
 msgstr "Markeer als betaald en keur goed"
 
 #: eme-events.php:9945
-#: eme-rsvp.php:5217
-#: eme-rsvp.php:5232
+#: eme-rsvp.php:5211
+#: eme-rsvp.php:5226
 msgid "Mark paid"
 msgstr "Markeer betaald"
 
@@ -4721,20 +4721,20 @@ msgid "Select one or more events"
 msgstr "Selecteer één of meerdere evenementen"
 
 #: eme-events.php:10232
-#: eme-rsvp.php:5781
+#: eme-rsvp.php:5775
 #: eme-tasks.php:1976
 msgid "Edit event"
 msgstr "Wijzig activiteit"
 
 #: eme-events.php:6570
 #: eme-events.php:10249
-#: eme-rsvp.php:5785
+#: eme-rsvp.php:5779
 msgid "RSVP Info: "
 msgstr "RSVP info: "
 
 #: eme-events.php:6598
 #: eme-events.php:10277
-#: eme-rsvp.php:5814
+#: eme-rsvp.php:5808
 msgid "Free: "
 msgstr "Vrij: "
 
@@ -4747,8 +4747,8 @@ msgstr "Vrij: "
 #: eme-events.php:10288
 #: eme-events.php:10345
 #: eme-events.php:10347
-#: eme-rsvp.php:5788
-#: eme-rsvp.php:5877
+#: eme-rsvp.php:5782
+#: eme-rsvp.php:5871
 msgid "Approved:"
 msgstr "Goedgekeurd:"
 
@@ -4758,46 +4758,46 @@ msgstr "Goedgekeurd:"
 #: eme-events.php:10296
 #: eme-events.php:10339
 #: eme-events.php:10341
-#: eme-rsvp.php:5875
+#: eme-rsvp.php:5869
 msgid "Pending:"
 msgstr "Goed te keuren:"
 
 #: eme-events.php:6611
 #: eme-events.php:10303
 #: eme-events.php:10305
-#: eme-rsvp.php:5827
+#: eme-rsvp.php:5821
 msgid "Absent:"
 msgstr "Afwezig:"
 
 #: eme-events.php:6614
 #: eme-events.php:10309
-#: eme-members.php:6514
+#: eme-members.php:6549
 #: eme-recurrence.php:719
-#: eme-rsvp.php:5830
+#: eme-rsvp.php:5824
 msgid "Max: "
 msgstr "Max: "
 
 #: eme-events.php:6617
 #: eme-events.php:10312
-#: eme-rsvp.php:5833
+#: eme-rsvp.php:5827
 msgid "(%d waiting list seats included)"
 msgstr "(%d plaatsen op de wachtlijst inbegrepen)"
 
 #: eme-events.php:6622
 #: eme-events.php:10317
-#: eme-rsvp.php:5839
+#: eme-rsvp.php:5833
 msgid "Printable view"
 msgstr "Afdrukvoorbeeld"
 
 #: eme-events.php:6623
 #: eme-events.php:10318
-#: eme-rsvp.php:5840
+#: eme-rsvp.php:5834
 msgid "CSV export"
 msgstr "CSV export"
 
 #: eme-events.php:6644
 #: eme-events.php:10336
-#: eme-rsvp.php:5873
+#: eme-rsvp.php:5867
 msgid "Task Info: %d tasks"
 msgstr "Taak Info: %d taken"
 
@@ -4827,12 +4827,12 @@ msgid "Duplicate this event"
 msgstr "Dupliceer dit evenement"
 
 #: eme-events.php:10396
-#: eme-rsvp.php:5850
+#: eme-rsvp.php:5844
 msgid "Add booking for this event"
 msgstr "Voeg boeking toe voor dit evenement"
 
 #: eme-events.php:10398
-#: eme-rsvp.php:5852
+#: eme-rsvp.php:5846
 msgid "Password protected"
 msgstr "Beschermd met wachtwoord"
 
@@ -5165,11 +5165,11 @@ msgstr "Voor meer informatie over formulier velden, zie "
 
 #: eme-formfields.php:441
 #: eme-holidays.php:215
-#: eme-members.php:2119
-#: eme-members.php:2137
-#: eme-members.php:2155
-#: eme-members.php:2173
-#: eme-members.php:2217
+#: eme-members.php:2111
+#: eme-members.php:2129
+#: eme-members.php:2147
+#: eme-members.php:2165
+#: eme-members.php:2209
 #: eme-options.php:1658
 #: eme-options.php:1663
 #: eme-options.php:1673
@@ -5557,10 +5557,10 @@ msgstr "Toegepaste kortingsgroep %d bestaat niet langer"
 
 #: eme-formfields.php:3316
 #: eme-formfields.php:4054
-#: eme-members.php:5151
+#: eme-members.php:5186
 #: eme-people.php:1175
 #: eme-people.php:1475
-#: eme-rsvp.php:3592
+#: eme-rsvp.php:3586
 msgid "Applied discount %d no longer exists"
 msgstr "Toegepaste korting %d bestaat niet langer"
 
@@ -5719,7 +5719,7 @@ msgstr "Gebruik de placeholder #_DYNAMICDATA om de dynamische formulieren in uw 
 
 #: eme-formfields.php:5101
 #: eme-formfields.php:5111
-#: eme-functions.php:3306
+#: eme-functions.php:3301
 msgid "Records deleted!"
 msgstr "Records verwijderd!"
 
@@ -5778,7 +5778,7 @@ msgid "Active"
 msgstr "Actief"
 
 #: eme-functions.php:1399
-#: eme-members.php:1955
+#: eme-members.php:1947
 msgid "Grace period"
 msgstr "Respijtperiode"
 
@@ -5957,77 +5957,77 @@ msgstr "Extra info"
 msgid "Group"
 msgstr "Groep"
 
-#: eme-functions.php:2884
+#: eme-functions.php:2879
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr "Het geüploade bestand overschrijdt de richtlijn upload_max_filesize in php.ini"
 
-#: eme-functions.php:2887
+#: eme-functions.php:2882
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr "Het geüploade bestand overschrijdt de MAX_FILE_SIZE-richtlijn die is opgegeven in het HTML-formulier"
 
-#: eme-functions.php:2890
+#: eme-functions.php:2885
 msgid "The uploaded file was only partially uploaded"
 msgstr "Het geüploade bestand is slechts gedeeltelijk geüpload"
 
-#: eme-functions.php:2893
+#: eme-functions.php:2888
 msgid "No file was uploaded"
 msgstr "Er is geen file ge-uploaded"
 
-#: eme-functions.php:2896
+#: eme-functions.php:2891
 msgid "Missing a temporary folder"
 msgstr "Tijdelijke folder ontbreekt"
 
-#: eme-functions.php:2899
+#: eme-functions.php:2894
 msgid "Failed to write file to disk"
 msgstr "Kan bestand niet naar schijf schrijven"
 
-#: eme-functions.php:2902
+#: eme-functions.php:2897
 msgid "File upload stopped by extension"
 msgstr "Uploaden van bestanden geweigerd door extensie"
 
-#: eme-functions.php:2906
+#: eme-functions.php:2901
 msgid "Unknown upload error"
 msgstr "Onbekende upload fout"
 
-#: eme-functions.php:2947
+#: eme-functions.php:2942
 msgid "Failure creating upload dir, please check your permissions."
 msgstr "Probleem bij het aanmaken van de upload folder, kijk de folder rechten na."
 
-#: eme-functions.php:2982
-#: eme-functions.php:3043
+#: eme-functions.php:2977
+#: eme-functions.php:3038
 msgid "File upload is required."
 msgstr "Bestand uploaden is vereist."
 
-#: eme-functions.php:2990
-#: eme-functions.php:3051
+#: eme-functions.php:2985
+#: eme-functions.php:3046
 msgid "Illegal filename."
 msgstr "Ongeldige filenaam."
 
-#: eme-functions.php:2996
-#: eme-functions.php:3057
+#: eme-functions.php:2991
+#: eme-functions.php:3052
 msgid "File already exists."
 msgstr "Bestand bestaat reeds."
 
-#: eme-functions.php:3002
-#: eme-functions.php:3063
+#: eme-functions.php:2997
+#: eme-functions.php:3058
 msgid "File too large."
 msgstr "Bestand te groot."
 
-#: eme-functions.php:3018
-#: eme-functions.php:3079
+#: eme-functions.php:3013
+#: eme-functions.php:3074
 msgid "Incorrect file type."
 msgstr "Foutief bestandstype."
 
-#: eme-functions.php:3023
-#: eme-functions.php:3084
+#: eme-functions.php:3018
+#: eme-functions.php:3079
 msgid "Upload failed."
 msgstr "Uploaden gefaald."
 
-#: eme-functions.php:3091
+#: eme-functions.php:3086
 msgid "Errors encountered while uploading files"
 msgstr "Er waren problemen bij het uploaden van bestanden"
 
-#: eme-functions.php:3322
+#: eme-functions.php:3317
 msgid "No such record"
 msgstr "Geen gegevens gevonden"
 
@@ -6036,7 +6036,7 @@ msgstr "Geen gegevens gevonden"
 #: eme-gdpr.php:141
 #: eme-gdpr.php:217
 #: eme-gdpr.php:332
-#: eme-members.php:4913
+#: eme-members.php:4948
 #: eme-payments.php:3882
 #: eme-people.php:4561
 #: eme-people.php:4646
@@ -6053,8 +6053,8 @@ msgstr "Bot gedetecteerd. Als je denkt dat je deze boodschap ten onrechte ontvan
 #: eme-gdpr.php:343
 #: eme-gdpr.php:354
 #: eme-members.php:1057
-#: eme-members.php:4542
-#: eme-members.php:4926
+#: eme-members.php:4577
+#: eme-members.php:4961
 #: eme-payments.php:3893
 #: eme-people.php:4572
 #: eme-people.php:4658
@@ -6075,7 +6075,7 @@ msgstr "Bedankt voor uw aanvraag, u ontvangt een e-mail met verdere informatie."
 #: eme-gdpr.php:199
 #: eme-gdpr.php:314
 #: eme-gdpr.php:397
-#: eme-members.php:1775
+#: eme-members.php:1767
 #: eme-people.php:4632
 #: eme-people.php:4716
 #: eme-rsvp.php:167
@@ -6465,13 +6465,13 @@ msgstr "Dupliceer deze locatie"
 #: eme-mailer.php:1697
 #: eme-mailer.php:1793
 #: eme-mailer.php:1895
-#: eme-members.php:6808
-#: eme-members.php:6887
-#: eme-members.php:7006
+#: eme-members.php:6843
+#: eme-members.php:6922
+#: eme-members.php:7041
 #: eme-rsvp.php:1211
-#: eme-rsvp.php:4922
-#: eme-rsvp.php:6506
-#: eme-rsvp.php:6526
+#: eme-rsvp.php:4916
+#: eme-rsvp.php:6500
+#: eme-rsvp.php:6520
 msgid "There were some problems while sending mail."
 msgstr "Er waren problemen tijdens het versturen van de e-mail."
 
@@ -6569,9 +6569,9 @@ msgstr "Voer een geldig e-mailadres in"
 #: eme-mailer.php:1687
 #: eme-mailer.php:1790
 #: eme-mailer.php:1888
-#: eme-members.php:6805
-#: eme-rsvp.php:6503
-#: eme-rsvp.php:6523
+#: eme-members.php:6840
+#: eme-rsvp.php:6497
+#: eme-rsvp.php:6517
 msgid "The mail has been sent."
 msgstr "De mail is verstuurd."
 
@@ -6669,7 +6669,7 @@ msgid "Send event related emails"
 msgstr "Verzend evenement gerelateerde e-mails"
 
 #: eme-mailer.php:2247
-#: eme-rsvp.php:4726
+#: eme-rsvp.php:4720
 msgid "Check this box to search through all events and not just future ones."
 msgstr "Vink dit vakje aan om alle evenementen te doorzoeken en niet alleen toekomstige."
 
@@ -7123,396 +7123,396 @@ msgstr "Geen dergelijke persoon gevonden."
 msgid "Please enter at least the last name for a new member"
 msgstr "Voer ten minste de achternaam van een nieuw lid in"
 
-#: eme-members.php:1164
+#: eme-members.php:1154
 msgid "This person is already a member"
 msgstr "Deze persoon is reeds lid"
 
-#: eme-members.php:1179
+#: eme-members.php:1169
 msgid "Payment not possible for this member."
 msgstr "Betaling niet mogelijk voor dit lid."
 
-#: eme-members.php:1181
+#: eme-members.php:1171
 msgid "This person is already a member, but the membership has expired. No updates have been done. Please click <a href=\"%s\">here</a> to complete the payment process and reactivate the membership."
 msgstr "Deze persoon is al lid, maar het lidmaatschap is verlopen. Er zijn geen updates uitgevoerd. Klik <a href=\"%s\"> hier </a> om het betalingsproces te voltooien en het lidmaatschap opnieuw te activeren."
 
-#: eme-members.php:1183
+#: eme-members.php:1173
 msgid "This person is already a member, but has not paid yet. Please click <a href=\"%s\">here</a> to complete the payment process."
 msgstr "Deze persoon is al lid, maar heeft nog niet betaald. Klik <a href=\"%s\">hier</a> om het betalingsproces te voltooien."
 
-#: eme-members.php:1201
+#: eme-members.php:1191
 msgid "Member added, but there were some problems uploading files"
 msgstr "Lid toegevoegd, maar er waren problemen bij het uploaden van bestanden"
 
-#: eme-members.php:1204
+#: eme-members.php:1194
 msgid "There were some problems uploading files, please try again"
 msgstr "Er waren problemen bij het uploaden van bestanden, probeer opnieuw"
 
-#: eme-members.php:1264
-#: eme-members.php:1269
+#: eme-members.php:1256
+#: eme-members.php:1261
 msgid "Member added, but there were some problems sending out the mail"
 msgstr "Lid toegevoegd, maar er waren problemen met het verzenden van de e-mail"
 
-#: eme-members.php:1267
+#: eme-members.php:1259
 msgid "Member added"
 msgstr "Lid toegevoegd"
 
-#: eme-members.php:1280
+#: eme-members.php:1272
 msgid "Problem detected while adding personal info: at least last name, first name and email need to be present"
 msgstr "Probleem gedetecteerd bij het toevoegen van persoonlijke info: minstens achternaam, voornaam en email moeten aanwezig zijn"
 
-#: eme-members.php:1331
+#: eme-members.php:1323
 #: eme-options.php:538
 msgid "This has already been paid for"
 msgstr "Dit is reeds betaald"
 
-#: eme-members.php:1345
+#: eme-members.php:1337
 msgid "Your membership is currently active until %s. It is not allowed to extend the membership yet (too soon)."
 msgstr "Je lidmaatschap is momenteel actief tot %s. Het is nog niet toegestaan om het lidmaatschap te verlengen (te vroeg)."
 
-#: eme-members.php:1353
+#: eme-members.php:1345
 msgid "Your membership has expired but renewal is not allowed, please contact %s."
 msgstr "Uw lidmaatschap is verlopen, maar verlenging is niet toegestaan. Neem contact op met %s."
 
-#: eme-members.php:1496
-#: eme-members.php:3216
+#: eme-members.php:1488
+#: eme-members.php:3208
 msgid "Add member"
 msgstr "Voeg lid toe"
 
 #: eme-members.php:658
-#: eme-members.php:1503
-#: eme-members.php:1629
-#: eme-members.php:6478
-#: eme-members.php:6488
-#: eme-members.php:6489
-#: eme-members.php:6490
+#: eme-members.php:1495
+#: eme-members.php:1621
+#: eme-members.php:6513
+#: eme-members.php:6523
+#: eme-members.php:6524
+#: eme-members.php:6525
 msgid "Edit member"
 msgstr "Wijzig lid"
 
-#: eme-members.php:1528
-#: eme-rsvp.php:4713
+#: eme-members.php:1520
+#: eme-rsvp.php:4707
 msgid "Click on this link to edit the corresponding person info"
 msgstr "Klik deze link voor aanpassen van bijbehorende persoonsinformatie"
 
-#: eme-members.php:1557
+#: eme-members.php:1549
 msgid "Send mail to new member?"
 msgstr "Verstuur e-mail naar nieuw lid?"
 
-#: eme-members.php:1563
+#: eme-members.php:1555
 msgid "If you want, select an existing person to become a member"
 msgstr "Indien je dit wenst, selecteer een bestaand persoon om lid te worden"
 
-#: eme-members.php:1578
+#: eme-members.php:1570
 msgid "Send mail for changed member?"
 msgstr "Verstuur e-mail naar gewijzigd lid?"
 
-#: eme-members.php:1585
+#: eme-members.php:1577
 msgid "If you want, select an existing person to transfer this member to"
 msgstr "Selecteer desgewenst een bestaande persoon om dit lid naar over te dragen"
 
-#: eme-members.php:1591
+#: eme-members.php:1583
 msgid "If you want, select a different membership to transfer this member to: "
 msgstr "Selecteer desgewenst een ander lidmaatschap om dit lid naartoe te verplaatsen: "
 
-#: eme-members.php:1600
+#: eme-members.php:1592
 msgid "Warning: if you transfer a member from one membership to another, make sure both memberships have the same index values for dynamic fields, otherwise the answers to those fields will either get mixed up or become empty."
 msgstr "Waarschuwing: als je een lid van het ene lidmaatschap naar het andere overzet, zorg er dan voor dat beide lidmaatschappen dezelfde indexwaarden hebben voor dynamische velden, anders worden de antwoorden op die velden verwisseld of worden ze leeg."
 
-#: eme-members.php:1613
+#: eme-members.php:1605
 msgid "'Head of the family' account"
 msgstr "'Gezinshoofd' account"
 
-#: eme-members.php:1622
+#: eme-members.php:1614
 msgid "This member is head of the family for other members."
 msgstr "Dit lid is hoofd van het gezin voor andere leden."
 
-#: eme-members.php:1623
+#: eme-members.php:1615
 #: eme-people.php:2326
 msgid "Family members:"
 msgstr "Familieleden:"
 
-#: eme-members.php:1636
+#: eme-members.php:1628
 msgid "You can link this member to a 'head of the family' account, after which this member's start/end date and status are linked to the values of the head of the family and the below values for those fields are then ignored. This person will then no longer be charged for his membership too."
 msgstr "U kunt dit lid koppelen aan een 'gezinshoofd'-account, waarna de start/einddatum en status van dit lid worden gekoppeld aan de waarden van het gezinshoofd en de onderstaande waarden voor die velden worden dan genegeerd. Deze persoon betaalt dan ook zijn lidmaatschap niet meer."
 
-#: eme-members.php:1640
+#: eme-members.php:1632
 msgid "Since this member relates to another family member, you can't edit the basic membership info. Please first remove the relationship (by emptying this field) and press save if you want to do that."
 msgstr "Aangezien dit lid betrekking heeft op een ander gezinslid, kunt u de basislidmaatschapsgegevens niet bewerken. Verwijder eerst de relatie (door dit veld leeg te maken) en druk op opslaan als je dat wilt."
 
-#: eme-members.php:1647
-#: eme-members.php:1786
-#: eme-members.php:1936
+#: eme-members.php:1639
+#: eme-members.php:1778
+#: eme-members.php:1928
 msgid "Start date"
 msgstr "Startdatum"
 
-#: eme-members.php:1658
-#: eme-members.php:1787
+#: eme-members.php:1650
+#: eme-members.php:1779
 msgid "End date"
 msgstr "Einddatum"
 
-#: eme-members.php:1673
+#: eme-members.php:1665
 msgid "This indicates the amount of times this member has RSVP-ed to an event that requires this membership."
 msgstr "Dit geeft aan hoe vaak dit lid heeft ingeschreven op een evenement waarvoor dit lidmaatschap is vereist."
 
-#: eme-members.php:1676
+#: eme-members.php:1668
 msgid "Warning: usage count is at its maximum, the status will therefore always be set to Expired!"
 msgstr "Waarschuwing: het gebruiksaantal heeft het maximum bereikt, de status zal daarom altijd op Verlopen staan!"
 
-#: eme-members.php:1683
+#: eme-members.php:1675
 msgid "Member status calculated automatically"
 msgstr "Status lid automatisch berekenen"
 
-#: eme-members.php:1687
+#: eme-members.php:1679
 msgid "Warning: membership is not paid for, so automatic status calculation will not happen!"
 msgstr "Waarschuwing: lidmaatschap is niet betaald, dus automatische berekening van de status zal niet gebeuren!"
 
-#: eme-members.php:1690
+#: eme-members.php:1682
 msgid "If set to automatic and the membership is paid for, the status will be recalculated on a daily basis."
 msgstr "Als dit op automatisch staat en het lidmaatschap is betaald, zal de status dagelijks herberekend worden."
 
-#: eme-members.php:1692
+#: eme-members.php:1684
 msgid "Member status"
 msgstr "Status lid"
 
-#: eme-members.php:1695
+#: eme-members.php:1687
 msgid "Has the member paid?"
 msgstr "Heeft het lid betaald?"
 
-#: eme-members.php:1698
+#: eme-members.php:1690
 msgid "Last payment received date"
 msgstr "Datum ontvangst laatste betaling"
 
-#: eme-members.php:1709
+#: eme-members.php:1701
 msgid "This indicates the last date a payment was received. Changing this will only change that date, no new payment will actually be processed and the membership state is not influenced by this."
 msgstr "Dit geeft de laatste datum aan waarop een betaling is ontvangen. Als u dit wijzigt, verandert alleen die datum, er wordt geen nieuwe betaling verwerkt en de lidmaatschapsstatus wordt hier niet door beïnvloed."
 
-#: eme-members.php:1741
+#: eme-members.php:1733
 msgid "No membership with ID %d found"
 msgstr "Geen lidmaatschap met ID %d gevonden"
 
-#: eme-members.php:1838
+#: eme-members.php:1830
 msgid "Add a membership definition"
 msgstr "Toevoegen van lidmaatschap definitie"
 
-#: eme-members.php:1840
+#: eme-members.php:1832
 msgid "Edit membership '%s'"
 msgstr "Bewerk lidmaatschap '%s'"
 
-#: eme-members.php:1867
+#: eme-members.php:1859
 msgid "Membership details"
 msgstr "Lidmaatschap details"
 
-#: eme-members.php:1868
+#: eme-members.php:1860
 msgid "Mail format settings"
 msgstr "E-mail format instellingen"
 
-#: eme-members.php:1880
-#: eme-members.php:3294
+#: eme-members.php:1872
+#: eme-members.php:3286
 msgid "Add membership"
 msgstr "Voeg lidmaatschap toe"
 
-#: eme-members.php:1880
+#: eme-members.php:1872
 msgid "Update membership"
 msgstr "Pas lidmaatschap aan"
 
-#: eme-members.php:1942
+#: eme-members.php:1934
 msgid "Duration period"
 msgstr "Duurtijd periode"
 
-#: eme-members.php:1944
+#: eme-members.php:1936
 msgid "Once this duration period has passed, the membership start date for new members will be increased by the passed period."
 msgstr "Als deze periode voorbij is, zal de startdatum voor nieuwe laden verhoogd worden met deze van de voorbije periode."
 
-#: eme-members.php:1948
+#: eme-members.php:1940
 msgid "One extra free period"
 msgstr "Eén extra gratis periode"
 
-#: eme-members.php:1950
+#: eme-members.php:1942
 msgid "When someone becomes a member, the end date is the end date of the current period calculated for this membership."
 msgstr "Als iemand lid wordt, dan is de einddatum de einddatum van de huidige periode berekend voor dit lidmaatschap."
 
-#: eme-members.php:1951
+#: eme-members.php:1943
 msgid "If you want new members to get one extra membership period for free, set this option."
 msgstr "Als je wil dat nieuwe leden één gratis lidmaatschapsperiode krijgen, vink dit aan."
 
-#: eme-members.php:1957
+#: eme-members.php:1949
 msgid "After a membership has expired, people can still be considered as a member until this many days have passed."
 msgstr "Als een lidmaatschap is vervallen, kunnen mensen nog steeds als lid beschouwd worden tot dit aantal dagen voorbij zijn."
 
-#: eme-members.php:1958
+#: eme-members.php:1950
 msgid "After the mentioned number of days have passed, the membership will be set to expired."
 msgstr "Nadat het vermelde aantal dagen voorbij zijn, zal het lidmaatschap vervallen."
 
-#: eme-members.php:1962
+#: eme-members.php:1954
 msgid "Maximum usage"
 msgstr "Maximaal gebruik"
 
-#: eme-members.php:1964
+#: eme-members.php:1956
 msgid "If set to something bigger than 0, this will indicate the maximum times a member can RSVP to an event that requires this membership."
 msgstr "Indien ingesteld op iets groter dan 0, geeft dit aan hoe vaak een lid maximaal kan inschrijven op een evenement waarvoor dit lidmaatschap vereist is."
 
-#: eme-members.php:1968
+#: eme-members.php:1960
 msgid "Reminder"
 msgstr "Herinnering"
 
-#: eme-members.php:1970
+#: eme-members.php:1962
 msgid "Set the number of days before membership expiration a reminder will be sent out."
 msgstr "Stel het aantal dagen in voordat het lidmaatschap vervalt er een herinnering wordt verstuurd."
 
-#: eme-members.php:1971
+#: eme-members.php:1963
 msgid "If you want to send out multiple reminders, seperate the days here by commas. This can contain negative numbers too, if you want to send out a reminder past the membership end date, e.g. during the grace period."
 msgstr "Als je op verschillende dagen herinneringen wil uitsturen, scheidt dan de dagen met komma's. Dit kan ook negatieve getallen bevatten, als je een herinnering wil versturen voorbij de (lidmaatschaps)einddatum, bijv. gedurende de respijtperiode."
 
-#: eme-members.php:1975
+#: eme-members.php:1967
 msgid "Automatically remove pending members"
 msgstr "Verwijder nog niet goedgekeurde leden automatisch"
 
-#: eme-members.php:1977
+#: eme-members.php:1969
 msgid "Set the number of days after which pending members are automatically removed. Leave empty or 0 for no automatic removal."
 msgstr "Zet het aantal dagen na dewelke nog niet goedgekeurde leden automatisch verwijderd worden. Laat leeg of zet op 0 voor geen automatische verwijdering."
 
-#: eme-members.php:1981
+#: eme-members.php:1973
 msgid "Allow membership renewal"
 msgstr "Verlenging van lidmaatschap toestaan"
 
-#: eme-members.php:1983
+#: eme-members.php:1975
 msgid "Select this option if you want members to be able to renew/extend the membership after payment via the unique payment url generated by the member placeholder #_PAYMENT_URL or the generic placeholder #_MEMBERSHIP_PAYMENT_URL{xx} (with xx being the membership id, see the doc)."
 msgstr "Selecteer deze optie als u wilt dat leden het lidmaatschap kunnen verlengen na betaling via de unieke betalings-url gegenereerd door de lid-placeholder  #_PAYMENT_URL of de generieke placeholder #_MEMBERSHIP_PAYMENT_URL{xx} (waarbij xx de lidmaatschaps-id is, zie de documentatie)."
 
-#: eme-members.php:1987
+#: eme-members.php:1979
 msgid "Renewal for active members based on end date"
 msgstr "Verlenging voor actieve leden op basis van einddatum"
 
-#: eme-members.php:1989
+#: eme-members.php:1981
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "Laat actieve leden alleen betalen voor een verlenging als de einddatum van het lidmaatschap minder is dan het genoemde aantal dagen. Dit voorkomt dat mensen vele malen achter elkaar betalen. Voer 0 of niets in om dit uit te schakelen (de standaardinstelling)."
 
-#: eme-functions.php:4076
+#: eme-functions.php:4071
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4078
+#: eme-functions.php:4073
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4080
+#: eme-functions.php:4075
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
-#: eme-members.php:2004
+#: eme-members.php:1996
 msgid "Create WP user after signup"
 msgstr "Maak WP gebruiker aan na inschrijven"
 
-#: eme-members.php:2006
+#: eme-members.php:1998
 msgid "This will create a WP user after the membership signup is completed, as if the person registered in WP itself. This will only create a user if the person signing up was not logged in and the email is not yet taken by another WP user."
 msgstr "Hiermee wordt een WP-gebruiker gemaakt nadat de aanmelding voor het lidmaatschap is afgerond, alsof de persoon in WP zelf is geregistreerd. Er wordt alleen een gebruiker gemaakt als de persoon die zich aanmeldt niet is aangemeld in WP en de e-mail nog niet door een andere WP-gebruiker is genomen."
 
-#: eme-members.php:2010
+#: eme-members.php:2002
 #: eme-options.php:2958
 msgid "Price"
 msgstr "Prijs"
 
-#: eme-members.php:2016
+#: eme-members.php:2008
 msgid "Extra charge for new members"
 msgstr "Extra kost voor nieuwe leden"
 
-#: eme-members.php:2022
+#: eme-members.php:2014
 #: eme-options.php:2959
 msgid "Currency"
 msgstr "Munteenheid"
 
-#: eme-members.php:2028
+#: eme-members.php:2020
 msgid "The price you indicate for memberships is VAT included, special placeholders are foreseen to indicate the price without VAT."
 msgstr "De prijs die u aangeeft voor lidmaatschappen is inclusief BTW, er zijn speciale placeholders voorzien om de prijs exclusief BTW aan te geven."
 
-#: eme-members.php:2040
+#: eme-members.php:2032
 #: eme-options.php:2964
 msgid "Contact person"
 msgstr "Contactpersoon"
 
-#: eme-members.php:2046
+#: eme-members.php:2038
 msgid "WP Admin"
 msgstr "WP Admin"
 
-#: eme-members.php:2056
+#: eme-members.php:2048
 msgid "Require users to be logged-in before being able to sign up for this membership."
 msgstr "Vereis dat personen aangemeld zijn vooraleer te kunnen aanmelden voor dit lidmaatschap."
 
-#: eme-members.php:2060
+#: eme-members.php:2052
 msgid "Keep attendance records?"
 msgstr "Bijhouden aanwezigheidsrecords?"
 
-#: eme-members.php:2062
+#: eme-members.php:2054
 msgid "Select this option if you want an attendance record to be kept everytime the member QRCODE is scanned by an EME admin."
 msgstr "Selecteer deze optie als u wilt dat een aanwezigheidsrecord wordt bijgehouden telkens wanneer de QRCODE van een lid wordt gescand door een EME-beheerder."
 
-#: eme-members.php:2066
+#: eme-members.php:2058
 msgid "Member Form:"
 msgstr "Lid formulier:"
 
-#: eme-members.php:2067
-#: eme-members.php:2098
-#: eme-members.php:2905
-#: eme-members.php:2910
+#: eme-members.php:2059
+#: eme-members.php:2090
+#: eme-members.php:2897
+#: eme-members.php:2902
 #: eme-people.php:1839
 #: eme-people.php:1844
-#: eme-rsvp.php:5275
-#: eme-rsvp.php:5280
+#: eme-rsvp.php:5269
+#: eme-rsvp.php:5274
 msgid "Please select a template"
 msgstr "Selecteer aub een template"
 
-#: eme-members.php:2068
+#: eme-members.php:2060
 msgid "This is the form that will be shown when a new member wants to sign up for this membership."
 msgstr "Dit is het formulier dat wordt getoond wanneer een nieuw lid zich wil aanmelden voor dit lidmaatschap."
 
-#: eme-members.php:2069
+#: eme-members.php:2061
 msgid "The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If empty, a simple default will be used."
 msgstr "De template moet ten minste de placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL bevatten. Zo niet, dan wordt het formulier niet getoond. Indien leeg, wordt een eenvoudige standaard opmaak gebruikt."
 
-#: eme-members.php:2085
+#: eme-members.php:2077
 msgid "Ask for family member info when someone signs up"
 msgstr "Vraag om informatie over gezinsleden wanneer iemand zich aanmeldt"
 
-#: eme-members.php:2087
+#: eme-members.php:2079
 msgid "Select this option if you want to ask for extra info for each family member of the person that signs up. These will also become a member but payment will only be handled by the initial member that signs up. The membership member form must include the placeholder \"#_FAMILYCOUNT\" to ask for the number of extra family members and \"#_FAMILYMEMBERS\" to ask for the extra family members info."
 msgstr "Selecteer deze optie als je extra info wilt vragen voor elk gezinslid van de persoon die zich aanmeldt. Deze worden ook lid, maar de betaling wordt alleen afgehandeld door het eerste lid dat zich aanmeldt. Het lidmaatschapsformulier moet de placeholder \"#_FAMILYCOUNT\" bevatten om het aantal extra gezinsleden te vragen en \"#_FAMILYMEMBERS\" om de informatie over de extra gezinsleden op te vragen."
 
-#: eme-members.php:2091
+#: eme-members.php:2083
 msgid "Maximum number of family members"
 msgstr "Maximaal aantal gezinsleden"
 
-#: eme-members.php:2093
+#: eme-members.php:2085
 msgid "The maximum number of family members allowed to sign up."
 msgstr "Het maximaal aantal gezinsleden dat zich mag aanmelden."
 
-#: eme-members.php:2097
+#: eme-members.php:2089
 msgid "Family Member Form:"
 msgstr "Gezinslid formulier:"
 
-#: eme-members.php:2099
+#: eme-members.php:2091
 msgid "This is the form that will be shown/repeated for the family members when a new member wants to sign up for this membership."
 msgstr "Dit is het formulier dat getoond/herhaald zal worden voor de gezinsleden wanneer een nieuw lid zich wil aanmelden voor dit lidmaatschap."
 
-#: eme-members.php:2100
+#: eme-members.php:2092
 msgid "The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple default will be used."
 msgstr "De template moet ten minste de placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL bevatten. Zo niet, dan wordt het formulier niet getoond. Indien leeg, wordt een eenvoudige standaard opmaak gebruikt."
 
-#: eme-members.php:2101
+#: eme-members.php:2093
 msgid "The template may contain the person placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL, #_OPT_IN (or #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE and placeholders referring to custom person fields, nothing else. #_LASTNAME, #_FIRSTNAME are required. If #_EMAIL, #_PHONE, #_OPT_IN (or #_OPT_OUT) is not set, it is copied over from the person signing up. The address info is always copied over from the person signing up."
 msgstr "De template kan de persoons placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL, #_OPT_IN (of #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE en placeholders die verwijzen naar eigen aangemaakte persoonsvelden bevatten, niets anders. #_LASTNAME, #_FIRSTNAME zijn vereist. Als #_EMAIL, #_PHONE, #_OPT_IN (of #_OPT_OUT) niet is ingesteld, wordt het gekopieerd van de persoon die zich aanmeldt. De adresgegevens worden altijd overgenomen van de persoon die zich aanmeldt."
 
-#: eme-members.php:2117
+#: eme-members.php:2109
 msgid "Member Added Message:"
 msgstr "Lid Toegevoegd Boodschap:"
 
-#: eme-members.php:2119
+#: eme-members.php:2111
 msgid "The format of the text shown after someone subscribed. If left empty, a default message will be shown."
 msgstr "Opmaak van het bericht dat wordt getoond nadat iemand heeft ingeschreven. Indien dit leeg wordt gelaten, dan wordt een standaard-tekst geplaatst."
 
-#: eme-members.php:2119
-#: eme-members.php:2137
-#: eme-members.php:2155
-#: eme-members.php:2173
-#: eme-members.php:2217
+#: eme-members.php:2111
+#: eme-members.php:2129
+#: eme-members.php:2147
+#: eme-members.php:2165
+#: eme-members.php:2209
 #: eme-options.php:1658
 #: eme-options.php:1663
 #: eme-options.php:1673
@@ -7615,41 +7615,41 @@ msgstr "Opmaak van het bericht dat wordt getoond nadat iemand heeft ingeschreven
 msgid "For all possible placeholders, see "
 msgstr "Voor alle mogelijke placeholders, zie "
 
-#: eme-members.php:2135
+#: eme-members.php:2127
 msgid "Payment Form Header:"
 msgstr "Betalingsformulier Koptekst:"
 
-#: eme-members.php:2137
+#: eme-members.php:2129
 #: eme-options.php:2460
 msgid "The format of the text shown above the payment buttons. If left empty, a default message will be shown."
 msgstr "Het format van de tekst getoond boven de betalingsknoppen. Indien leeg wordt een standaardtekst getoond."
 
-#: eme-members.php:2153
+#: eme-members.php:2145
 msgid "Payment Form Footer:"
 msgstr "Betalingsformulier Voettekst:"
 
-#: eme-members.php:2155
+#: eme-members.php:2147
 #: eme-options.php:2461
 msgid "The format of the text shown below the payment buttons. Default: empty."
 msgstr "Het format van de tekst getoond onder de betalingsknoppen. Standaard: leeg."
 
-#: eme-members.php:2171
+#: eme-members.php:2163
 msgid "Payment Success Message:"
 msgstr "Betalingsuccesbericht:"
 
-#: eme-members.php:2173
+#: eme-members.php:2165
 msgid "The message shown when the payment is succesfull for membership signup. Default: see global EME settings for payments, subsection \"General options\"."
 msgstr "Bericht weergegeven wanneer de betaling voor het aanmelden van lidmaatschap succesvol is. Standaard: zie algemene EME-instellingen voor betalingen, subsectie \"Algemene opties\"."
 
-#: eme-members.php:2193
+#: eme-members.php:2185
 msgid "Membership card PDF template"
 msgstr "Lidmaatschapkaart PDF template"
 
-#: eme-members.php:2195
+#: eme-members.php:2187
 msgid "This optional template is used to send a PDF attachment in the mail when the membership is paid for."
 msgstr "Deze optionele template wordt gebruikt om een PDF bijlage mee te sturen in de e-mail wanneer het lidmaatschap betaald is."
 
-#: eme-members.php:2202
+#: eme-members.php:2194
 msgid "If no payment method is selected, the \"Member Added Message\" will be shown. Otherwise the \"Member Added Message\" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings)."
 msgstr "Als er geen betaalmethode is geselecteerd, wordt de \"Lid toegevoegd boodschap\" weergegeven. Anders wordt de \"Lid toegevoegd boodschap\" weergegeven en wordt de gebruiker na enkele seconden doorgestuurd naar de betalingspagina (zie de algemene EME-instellingen over de time-out voor omleiding en meer betalingsinstellingen)."
 
@@ -7657,653 +7657,653 @@ msgstr "Als er geen betaalmethode is geselecteerd, wordt de \"Lid toegevoegd boo
 msgid "Offline"
 msgstr "Offline"
 
-#: eme-members.php:2211
+#: eme-members.php:2203
 msgid "If one or more payment methods are selected, the person signing up will be redirected to a payment page. In that case, make sure to check the different payment templates defined for this membership."
 msgstr "Als een of meer betaalmethoden zijn geselecteerd, wordt de persoon die zich aanmeldt doorgestuurd naar een betaalpagina. Controleer in dat geval de verschillende betalingstemplates die voor dit lidmaatschap zijn gedefinieerd."
 
-#: eme-members.php:2215
+#: eme-members.php:2207
 msgid "Offline Payment Format:"
 msgstr "Opmaak offline betalen:"
 
-#: eme-members.php:2217
+#: eme-members.php:2209
 msgid "The format of the text shown for the offline payment method. Default: empty."
 msgstr "De indeling van de tekst die wordt weergegeven voor de offline betaalmethode. Standaard: leeg."
 
-#: eme-members.php:2233
+#: eme-members.php:2225
 msgid "Skip payment methods after registration:"
 msgstr "Sla betalingsmethoden over na registratie:"
 
-#: eme-members.php:2234
+#: eme-members.php:2226
 msgid "Skip payment methods"
 msgstr "Sla betalingsmethoden over"
 
-#: eme-members.php:2236
+#: eme-members.php:2228
 msgid "If you want to skip the possibility to pay immediately after registration, select this option. This might be useful if you for example want to approve unpaid members internally and only then send them the payment link using #_PAYMENT_URL (for example via the Reminder template)."
 msgstr "Selecteer deze optie als je de mogelijkheid om direct na het registreren te betalen wilt overslaan. Dit kan handig zijn als u bijvoorbeeld onbetaalde leden intern wilt goedkeuren en pas daarna de betaallink wilt sturen met #_PAYMENT_URL (bv. via de Herinnerings-template)."
 
-#: eme-members.php:2257
+#: eme-members.php:2249
 msgid "By default the dynamic data check only happens for the fields mentioned in your dynamic data condition if those are present in your membership form definition. Using this option, you can use all membership placeholders, even if not defined in your membership form. The small disadvantage is that more requests will be made to the backend, so use only when absolutely needed."
 msgstr "Standaard vindt de dynamische gegevenscontrole alleen plaats voor de velden die worden genoemd in uw dynamische gegevensconditie als deze aanwezig zijn in uw lidmaatschap-formulierdefinitie. Met deze optie kunt u alle plaatshouders van lidmaatschappen gebruiken, zelfs als deze niet in uw lidmaatschap-formulier zijn gedefinieerd. Het kleine nadeel is dat er meer verzoeken aan de backend worden gedaan, dus gebruik deze alleen wanneer dit absoluut noodzakelijk is."
 
-#: eme-members.php:2258
+#: eme-members.php:2250
 msgid "If your membership uses a discount of type code and you want the dynamic price (using #_DYNAMICPRICE) to be updated taking that discount into account too, then also check this option."
 msgstr "Als je lidmaatschap een kortingscode gebruikt en je wilt dat de dynamische prijs (met #_DYNAMICPRICE) ook met die korting wordt bijgewerkt, vink dan ook deze optie aan."
 
-#: eme-members.php:2269
+#: eme-members.php:2261
 msgid "New member email"
 msgstr "Email nieuw lid"
 
-#: eme-members.php:2270
+#: eme-members.php:2262
 msgid "Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the member that is signing up."
 msgstr "Waarschuwing: wanneer het lidmaatschap is geconfigureerd om informatie over gezinsleden te vragen, wordt deze e-mail NIET naar elk van de gezinsleden verzonden, alleen naar het lid dat zich aanmeldt."
 
-#: eme-members.php:2273
+#: eme-members.php:2265
 msgid "New member email subject"
 msgstr "Nieuw lid e-mail onderwerp"
 
-#: eme-members.php:2275
+#: eme-members.php:2267
 msgid "The subject of the mail sent to the person signing up as a member."
 msgstr "Het onderwerp van de e-mail verzonden naar de persoon die lid wil worden."
 
-#: eme-members.php:2280
+#: eme-members.php:2272
 msgid "New member email body"
 msgstr "Nieuw lid e-mail inhoud"
 
-#: eme-members.php:2282
+#: eme-members.php:2274
 msgid "The body of the mail sent to the person signing up as a member."
 msgstr "De inhoud van de e-mail verzonden naar de persoon die lid wil worden."
 
-#: eme-members.php:2283
-#: eme-members.php:2353
-#: eme-members.php:2388
-#: eme-members.php:2423
-#: eme-members.php:2500
-#: eme-members.php:2570
-#: eme-members.php:2608
-#: eme-members.php:2646
-#: eme-members.php:2677
-#: eme-members.php:2712
-#: eme-members.php:2746
+#: eme-members.php:2276
+#: eme-members.php:2346
+#: eme-members.php:2381
+#: eme-members.php:2416
+#: eme-members.php:2493
+#: eme-members.php:2563
+#: eme-members.php:2601
+#: eme-members.php:2639
+#: eme-members.php:2670
+#: eme-members.php:2705
+#: eme-members.php:2739
 msgid "No template shown in the list? Then go in the section Templates and create a template of type \"Membership related mail\"."
 msgstr "Geen template getoond in de lijst? Ga dan in de sectie Templates en maak een  template van type \"Lidmaatschap gerelateerde mail \" aan."
 
-#: eme-members.php:2300
+#: eme-members.php:2292
 msgid "New member mail attachments"
 msgstr "Nieuw lid e-mail bijlagen"
 
-#: eme-members.php:2322
+#: eme-members.php:2314
 msgid "Optionally add attachments to the mail when a new member signs up."
 msgstr "Voeg optioneel bijlagen toe aan de e-mail wanneer een nieuw lid inschrijft."
 
-#: eme-members.php:2343
+#: eme-members.php:2335
 msgid "Contactperson new member email subject"
 msgstr "Contactpersoon nieuw lid e-mail onderwerp"
 
-#: eme-members.php:2345
+#: eme-members.php:2337
 msgid "The subject of the mail sent to the contactperson when someone signes up as a member."
 msgstr "Het onderwerp van de e-mail verstuurd naar de contactpersoon wanneer iemand lid wordt."
 
-#: eme-members.php:2350
+#: eme-members.php:2342
 msgid "Contactperson new member email body"
 msgstr "Contactpersoon nieuw lid e-mail inhoud"
 
-#: eme-members.php:2352
+#: eme-members.php:2344
 msgid "The body of the mail sent to the contactperson when someone signes up as a member."
 msgstr "De inhoud van de e-mail verstuurd naar de contactpersoon wanneer iemand lid wordt."
 
-#: eme-members.php:2374
+#: eme-members.php:2366
 msgid "Member updated Email"
 msgstr "Email lid aangepast"
 
-#: eme-members.php:2377
+#: eme-members.php:2369
 msgid "Updated member email subject"
 msgstr "Lid aangepast e-mail onderwerp"
 
-#: eme-members.php:2379
+#: eme-members.php:2371
 msgid "The subject of the mail sent to the member upon changes."
 msgstr "Het onderwerp van de e-mail verzonden naar het lid na wijzigingen."
 
-#: eme-members.php:2380
-#: eme-members.php:2387
+#: eme-members.php:2372
+#: eme-members.php:2379
 msgid "Currently only used when a member is manually marked as unpaid."
 msgstr "Momenteel alleen gebruikt wanneer een lid handmatig als onbetaald is gemarkeerd."
 
-#: eme-members.php:2384
+#: eme-members.php:2376
 msgid "Updated member email body"
 msgstr "Lid aangepast e-mail inhoud"
 
-#: eme-members.php:2386
+#: eme-members.php:2378
 msgid "The body of the mail sent to the member upon changes."
 msgstr "De inhoud van de e-mail verzonden naar het lid na wijzigingen."
 
-#: eme-members.php:2409
+#: eme-members.php:2401
 msgid "Membership extended email"
 msgstr "Email lidmaatschap verlengd"
 
-#: eme-members.php:2410
-#: eme-members.php:2487
-#: eme-members.php:2630
+#: eme-members.php:2402
+#: eme-members.php:2479
+#: eme-members.php:2622
 msgid "Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members."
 msgstr "Waarschuwing: wanneer het lidmaatschap is geconfigureerd om informatie over gezinsleden te vragen, wordt deze e-mail OOK naar elk van de gezinsleden verzonden."
 
-#: eme-members.php:2413
+#: eme-members.php:2405
 msgid "Membership extended email subject"
 msgstr "Lidmaatschap verlengd e-mail onderwerp"
 
-#: eme-members.php:2415
+#: eme-members.php:2407
 msgid "The subject of the mail sent to the member when the membership is extended."
 msgstr "Het onderwerp van de e-mail verstuurd naar het lid wanneer het lidmaatschap verlengd is."
 
-#: eme-members.php:2420
+#: eme-members.php:2412
 msgid "Membership extended email body"
 msgstr "Lidmaatschap verlengd e-mail inhoud"
 
-#: eme-members.php:2422
+#: eme-members.php:2414
 msgid "The body of the mail sent to the member when the membership is extended."
 msgstr "De inhoud van de e-mail verstuurd naar het lid wanneer het lidmaatschap verlengd is."
 
-#: eme-members.php:2486
+#: eme-members.php:2478
 msgid "Membership paid email"
 msgstr "Email lidmaatschap betaald"
 
-#: eme-members.php:2490
+#: eme-members.php:2482
 msgid "Membership paid email subject"
 msgstr "Lidmaatschap betaald e-mail onderwerp"
 
-#: eme-members.php:2492
+#: eme-members.php:2484
 msgid "The subject of the mail sent to the member when marked as paid."
 msgstr "Het onderwerp van de e-mail verstuurd naar het lid wanneer zijn lidmaatschap betaald is."
 
-#: eme-members.php:2497
+#: eme-members.php:2489
 msgid "Membership paid email body"
 msgstr "Lidmaatschap betaald e-mail inhoud"
 
-#: eme-members.php:2499
+#: eme-members.php:2491
 msgid "The body of the mail sent to the member when marked as paid."
 msgstr "De inhoud van de e-mail verstuurd naar het lid wanneer zijn lidmaatschap betaald is."
 
-#: eme-members.php:2560
+#: eme-members.php:2552
 msgid "Contactperson membership paid email subject"
 msgstr "Contactpersoon lidmaatschap betaald e-mail onderwerp"
 
-#: eme-members.php:2562
+#: eme-members.php:2554
 msgid "The subject of the mail sent to the contactperson after a member is marked as paid."
 msgstr "Het onderwerp van de e-mail verstuurd naar de contactpersoon wanneer een lid betaald heeft."
 
-#: eme-members.php:2567
+#: eme-members.php:2559
 msgid "Contactperson membership paid email body"
 msgstr "Contactpersoon lidmaatschap betaald e-mail inhoud"
 
-#: eme-members.php:2569
+#: eme-members.php:2561
 msgid "The body of the mail sent to the contactperson after a member is marked as paid."
 msgstr "De inhoud van de e-mail verstuurd naar de contactpersoon wanneer een lid betaald heeft."
 
-#: eme-members.php:2591
+#: eme-members.php:2583
 msgid "Membership reminder email"
 msgstr "Email lidmaatschap herinnering"
 
-#: eme-members.php:2592
+#: eme-members.php:2584
 msgid "Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the head of the family."
 msgstr "Waarschuwing: wanneer het lidmaatschap is geconfigureerd om informatie over gezinsleden te vragen, wordt deze e-mail NIET naar elk van de gezinsleden verzonden, alleen naar het hoofd van het gezin."
 
-#: eme-members.php:2595
+#: eme-members.php:2587
 msgid "Membership reminder email subject"
 msgstr "Lidmaatschap herinnering e-mail onderwerp"
 
-#: eme-members.php:2597
+#: eme-members.php:2589
 msgid "The subject of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership."
 msgstr "Onderwerp van de e-mail gestuurd naar het lid wiens lidmaatschap dreigt te verlopen. Deze herinneringen worden eens per dag gestuurd, op basis van verloop-instellingen van het lidmaatschap."
 
-#: eme-members.php:2598
-#: eme-members.php:2607
+#: eme-members.php:2590
+#: eme-members.php:2599
 msgid "This reminder email does NOT take into account an optional grace period."
 msgstr "Deze herinneringsmail houdt GEEN rekening met een optionele respijtperiode."
 
-#: eme-members.php:2604
+#: eme-members.php:2596
 msgid "Membership reminder email body"
 msgstr "Lidmaatschap herinnering e-mail inhoud"
 
-#: eme-members.php:2606
+#: eme-members.php:2598
 msgid "The body of the mail sent to the member when membership is about to expire. These reminders will be sent once a day, based on the reminder settings of the defined membership."
 msgstr "Inhoud van de e-mail gestuurd naar het lid wiens lidmaatschap dreigt te verlopen. Deze herinneringen worden eens per dag gestuurd, op basis van verloop-instellingen van het lidmaatschap."
 
-#: eme-members.php:2629
+#: eme-members.php:2621
 msgid "Membership stopped email"
 msgstr "Email lidmaatschap gestopt"
 
-#: eme-members.php:2633
+#: eme-members.php:2625
 msgid "Membership stopped email subject"
 msgstr "Lidmaatschap gestopt e-mail onderwerp"
 
-#: eme-members.php:2635
+#: eme-members.php:2627
 msgid "The subject of the mail sent to the member when a membership has expired or is marked as stopped."
 msgstr "Het onderwerp van de e-mail verstuurd naar het lid wanneer een lidmaatschap vervallen of gemarkeerd is als gestopt."
 
-#: eme-members.php:2636
-#: eme-members.php:2645
-#: eme-members.php:2667
-#: eme-members.php:2676
+#: eme-members.php:2628
+#: eme-members.php:2637
+#: eme-members.php:2659
+#: eme-members.php:2668
 msgid "If a grace period is defined for the membership, the expiry email is only sent at the end of the grace period."
 msgstr "Als er een respijtperiode is gedefinieerd voor het lidmaatschap, wordt de e-mail met de vervaldatum pas aan het einde van de respijtperiode verzonden."
 
-#: eme-members.php:2642
+#: eme-members.php:2634
 msgid "Membership stopped email body"
 msgstr "Lidmaatschap gestopt e-mail inhoud"
 
-#: eme-members.php:2644
+#: eme-members.php:2636
 msgid "The body of the mail sent to the member when a membership has expired or is marked as stopped."
 msgstr "De inhoud van de e-mail verstuurd naar het lid wanneer een lidmaatschap vervallen of gemarkeerd is als gestopt."
 
-#: eme-members.php:2664
+#: eme-members.php:2656
 msgid "Contactperson membership stopped email subject"
 msgstr "Contactpersoon lidmaatschap gestopt e-mail onderwerp"
 
-#: eme-members.php:2666
+#: eme-members.php:2658
 msgid "The subject of the mail sent to the contactperson when a membership has expired or is stopped."
 msgstr "Het onderwerp van de e-mail verstuurd naar de contactpersoon wanneer een lidmaatschap vervallen of gestopt is."
 
-#: eme-members.php:2673
+#: eme-members.php:2665
 msgid "Contactperson membership stopped email body"
 msgstr "Contactpersoon lidmaatschap gestopt e-mail inhoud"
 
-#: eme-members.php:2675
+#: eme-members.php:2667
 msgid "The body of the mail sent to the contactperson when a membership has expired or is stopped."
 msgstr "De inhoud van de e-mail verstuurd naar de contactpersoon wanneer een lidmaatschap vervallen of gestopt is."
 
-#: eme-members.php:2733
+#: eme-members.php:2725
 msgid "Contactperson payment notification email"
 msgstr "Email naar contactpersoon met betalingsmelding"
 
-#: eme-members.php:2736
+#: eme-members.php:2728
 msgid "Contactperson payment notification email subject"
 msgstr "Email-onderwerp naar contactpersoon met betalingsmelding"
 
-#: eme-members.php:2743
+#: eme-members.php:2735
 msgid "Contactperson payment notification email body"
 msgstr "Email-tekst naar contactpersoon met betalingsmelding"
 
-#: eme-members.php:2779
+#: eme-members.php:2771
 msgid "Here custom fields of type 'Membership' are shown."
 msgstr "Hier worden eigen aangemaakte velden van het type 'Lidmaatschap' getoond."
 
-#: eme-members.php:2844
+#: eme-members.php:2836
 msgid "Filter members"
 msgstr "Filter leden"
 
-#: eme-members.php:2848
+#: eme-members.php:2840
 #: eme-people.php:1773
 msgid "Store result as dynamic group"
 msgstr "Sla resultaat op als dynamische groep"
 
-#: eme-members.php:2849
+#: eme-members.php:2841
 #: eme-people.php:1774
 msgid "Enter a name for this dynamic group"
 msgstr "Geef een naam voor deze dynamische groep"
 
-#: eme-members.php:2850
+#: eme-members.php:2842
 #: eme-people.php:1775
 msgid "Store dynamic group"
 msgstr "Sla dynamische groep op"
 
-#: eme-members.php:2874
+#: eme-members.php:2866
 msgid "Accept membership payment"
 msgstr "Noteer betaling lidmaatschap"
 
-#: eme-members.php:2875
+#: eme-members.php:2867
 msgid "Set membership unpaid"
 msgstr "Zet lidmaatschap op onbetaald"
 
-#: eme-members.php:2876
+#: eme-members.php:2868
 msgid "Stop membership"
 msgstr "Stop lidmaatschap"
 
-#: eme-members.php:2877
+#: eme-members.php:2869
 msgid "Delete selected members"
 msgstr "Verwijder geselecteerde leden"
 
-#: eme-members.php:2878
+#: eme-members.php:2870
 msgid "Resend the mail for pending members"
 msgstr "Stuur nogmaals de e-mail voor nog goed te keuren leden"
 
-#: eme-members.php:2879
+#: eme-members.php:2871
 msgid "Resend the mail for paid members"
 msgstr "Verstuur nogmaals de e-mail voor betaalde leden"
 
-#: eme-members.php:2880
+#: eme-members.php:2872
 msgid "Resend the expiration reminder mail"
 msgstr "Verstuur de herinneringsmail opnieuw"
 
-#: eme-members.php:2881
+#: eme-members.php:2873
 #: eme-people.php:1802
-#: eme-rsvp.php:5222
-#: eme-rsvp.php:5236
+#: eme-rsvp.php:5216
+#: eme-rsvp.php:5230
 #: eme-tasks.php:482
 msgid "Send generic email to selected persons"
 msgstr "Verstuur een algemene e-mail naar geselecteerde personen"
 
-#: eme-members.php:2882
+#: eme-members.php:2874
 msgid "Send membership related email to selected members"
 msgstr "Verstuur lidmaatschap-gerelateerde e-mail naar geselecteerde leden"
 
-#: eme-members.php:2884
+#: eme-members.php:2876
 #: eme-people.php:1818
-#: eme-rsvp.php:5224
-#: eme-rsvp.php:5238
+#: eme-rsvp.php:5218
+#: eme-rsvp.php:5232
 msgid "PDF output"
 msgstr "PDF output"
 
-#: eme-members.php:2885
+#: eme-members.php:2877
 #: eme-people.php:1819
-#: eme-rsvp.php:5225
-#: eme-rsvp.php:5239
+#: eme-rsvp.php:5219
+#: eme-rsvp.php:5233
 msgid "HTML output"
 msgstr "HTML output"
 
-#: eme-members.php:2889
+#: eme-members.php:2881
 msgid "Send mails to members upon changes being made?"
 msgstr "Stuur e-mails naar leden als er wijzigingen zijn aangebracht?"
 
-#: eme-members.php:2895
+#: eme-members.php:2887
 msgid "Move corresponding persons to the trash bin?"
 msgstr "Verplaats overeenkomstige personen naar de prullenbak?"
 
-#: eme-members.php:2900
-#: eme-rsvp.php:5270
+#: eme-members.php:2892
+#: eme-rsvp.php:5264
 msgid "Select a subject template"
 msgstr "Selecteer een onderwerptemplate"
 
-#: eme-members.php:2901
-#: eme-rsvp.php:5271
+#: eme-members.php:2893
+#: eme-rsvp.php:5265
 msgid "Please select a body template"
 msgstr "Selecteer een inhoudstemplate aub"
 
-#: eme-members.php:2904
-#: eme-members.php:2909
+#: eme-members.php:2896
+#: eme-members.php:2901
 #: eme-people.php:1838
 #: eme-people.php:1843
-#: eme-rsvp.php:5274
-#: eme-rsvp.php:5279
+#: eme-rsvp.php:5268
+#: eme-rsvp.php:5273
 msgid "Select an optional header template"
 msgstr "Selecteer een optionele koptekst-template"
 
-#: eme-members.php:2906
-#: eme-members.php:2911
+#: eme-members.php:2898
+#: eme-members.php:2903
 #: eme-people.php:1840
 #: eme-people.php:1845
-#: eme-rsvp.php:5276
-#: eme-rsvp.php:5281
+#: eme-rsvp.php:5270
+#: eme-rsvp.php:5275
 msgid "Select an optional footer template"
 msgstr "Selecteer een optionele voettekst-template"
 
-#: eme-members.php:2965
+#: eme-members.php:2957
 #: eme-people.php:1918
 msgid "Select memberships"
 msgstr "Selecteer lidmaatschappen"
 
-#: eme-members.php:2974
+#: eme-members.php:2966
 #: eme-people.php:1928
 msgid "Select member status"
 msgstr "Selecteer ledenstatus"
 
-#: eme-members.php:2983
-#: eme-members.php:2990
+#: eme-members.php:2975
+#: eme-members.php:2982
 #: eme-people.php:1894
 #: eme-people.php:1901
-#: eme-rsvp.php:5192
+#: eme-rsvp.php:5186
 msgid "Filter on person"
 msgstr "Filter op personen"
 
-#: eme-members.php:2993
-#: eme-members.php:3000
+#: eme-members.php:2985
+#: eme-members.php:2992
 msgid "Filter on member ID"
 msgstr "Filter op lid ID"
 
-#: eme-members.php:3001
-#: eme-rsvp.php:5196
+#: eme-members.php:2993
+#: eme-rsvp.php:5190
 msgid "Filter on payment id"
 msgstr "Zoek op betalings-ID"
 
-#: eme-members.php:3002
-#: eme-rsvp.php:5197
+#: eme-members.php:2994
+#: eme-rsvp.php:5191
 msgid "Filter on payment GW id"
 msgstr "Zoek op betalingsportaal-ID"
 
-#: eme-members.php:3016
+#: eme-members.php:3008
 #: eme-people.php:1950
 msgid "Custom field to search"
 msgstr "Eigen aangemaakt veld om op te zoeken"
 
-#: eme-members.php:3207
+#: eme-members.php:3199
 msgid "Add a new member"
 msgstr "Voeg een nieuw lid toe"
 
-#: eme-members.php:3226
+#: eme-members.php:3218
 msgid "Manage members"
 msgstr "Beheer leden"
 
-#: eme-members.php:3242
+#: eme-members.php:3234
 msgid "Import members"
 msgstr "Importeer leden"
 
-#: eme-members.php:3243
+#: eme-members.php:3235
 msgid "If you want, use this to import members info into the database"
 msgstr "Indien je wil, gebruik dit om leden te importeren"
 
-#: eme-members.php:3253
+#: eme-members.php:3245
 msgid "Import dynamic field answers"
 msgstr "Importeer dynamische veld-antwoorden"
 
-#: eme-members.php:3254
+#: eme-members.php:3246
 msgid "Once you finished importing members, use this to import dynamic field answers into the database"
 msgstr "Eens gedaan met het importeren van leden, gebruik dit voor het importeren van dynamische veld-antwoorden"
 
-#: eme-members.php:3289
+#: eme-members.php:3281
 msgid "Add a new membership definition"
 msgstr "Voeg een nieuw lidmaatschap toe"
 
-#: eme-members.php:3299
+#: eme-members.php:3291
 msgid "Manage memberships"
 msgstr "Beheer lidmaatschappen"
 
-#: eme-members.php:3306
+#: eme-members.php:3298
 msgid "Delete selected memberships"
 msgstr "Verwijder geselecteerde lidmaatschappen"
 
-#: eme-members.php:3307
+#: eme-members.php:3299
 msgid "Show membership statistics"
 msgstr "Toon lidmaatschapsstatistieken"
 
-#: eme-members.php:4600
+#: eme-members.php:4635
 msgid "Members CSV"
 msgstr "Leden CSV"
 
-#: eme-members.php:4842
+#: eme-members.php:4877
 msgid "Limit access to EME members of"
 msgstr "Beperk de toegang tot EME-leden van"
 
-#: eme-members.php:4848
+#: eme-members.php:4883
 msgid "Allow access after the membership has been active for this many days (drip content):"
 msgstr "Toegang toestaan nadat het lidmaatschap al zoveel dagen actief is (inhoud langzaam vrijgeven):"
 
-#: eme-members.php:4851
+#: eme-members.php:4886
 msgid "Limit access to EME people that are members of the following groups"
 msgstr "Beperk toegang to EME personen die lid zijn van de volgende groepen"
 
-#: eme-members.php:4858
+#: eme-members.php:4893
 msgid "Access denied message template"
 msgstr "Template toegang geweigerd boodschap"
 
-#: eme-members.php:4862
+#: eme-members.php:4897
 msgid "The format of the text shown if access to the page is denied. If left empty, a default message will be shown."
 msgstr "De opmaak van de getoonde tekst als toegang tot de pagina wordt geweigerd. Indien leeg gelaten, wordt een standaardbericht getoond."
 
-#: eme-members.php:4937
+#: eme-members.php:4972
 msgid "No membership selected"
 msgstr "Geen lidmaatschap geselecteerd"
 
-#: eme-members.php:4957
+#: eme-members.php:4992
 #: eme-rsvp.php:1502
 msgid "You did not enter a valid discount code"
 msgstr "U heeft geen geldige kortingscode ingevuld"
 
-#: eme-members.php:5223
-#: eme-rsvp.php:5920
+#: eme-members.php:5258
+#: eme-rsvp.php:5914
 msgid "Never"
 msgstr "Nooit"
 
-#: eme-members.php:5254
-#: eme-members.php:5272
-#: eme-members.php:5311
-#: eme-members.php:5333
+#: eme-members.php:5289
+#: eme-members.php:5307
+#: eme-members.php:5346
+#: eme-members.php:5368
 msgid "no end date"
 msgstr "geen einddatum"
 
-#: eme-members.php:5327
+#: eme-members.php:5362
 msgid "expired"
 msgstr "verlopen"
 
-#: eme-members.php:5859
-#: eme-members.php:6045
+#: eme-members.php:5894
+#: eme-members.php:6080
 msgid "Access denied"
 msgstr "Toegang geweigerd"
 
-#: eme-members.php:5970
+#: eme-members.php:6005
 #: eme-people.php:935
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr "Niet geïmporteerd (probleem bij het updaten van de persoon in de database): %s"
 
-#: eme-members.php:5976
-#: eme-members.php:6132
+#: eme-members.php:6011
+#: eme-members.php:6167
 msgid "Not imported (membership does not exist): %s"
 msgstr "Niet geïmporteerd (lidmaatschap bestaat niet): %s"
 
-#: eme-members.php:6026
+#: eme-members.php:6061
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr "Niet geïmporteerd (probleem bij het invoegen van het lid in de database): %s"
 
-#: eme-members.php:6127
+#: eme-members.php:6162
 msgid "Not imported (person does not exist): %s"
 msgstr "Niet geïmporteerd (persoon bestaat niet): %s"
 
-#: eme-members.php:6177
+#: eme-members.php:6212
 msgid "Not imported (member does not exist): %s"
 msgstr "Niet geïmporteerd (lid bestaat niet): %s"
 
-#: eme-members.php:6375
+#: eme-members.php:6410
 msgid "Edit membership"
 msgstr "Wijzig lidmaatschap"
 
-#: eme-members.php:6384
+#: eme-members.php:6419
 msgid "No membership form has been defined for this membership, a simple default will be used."
 msgstr "Er is geen lidmaatschapsformulier gedefinieerd voor dit lidmaatschap, er zal een eenvoudige standaard worden gebruikt."
 
-#: eme-members.php:6397
+#: eme-members.php:6432
 msgid "%d head of the family accounts + %d family members"
 msgstr "%d gezinshoofd accounts + %d familieleden"
 
-#: eme-members.php:6474
-#: eme-people.php:5112
+#: eme-members.php:6509
+#: eme-people.php:5108
 msgid "(family member)"
 msgstr "(familielid)"
 
-#: eme-members.php:6479
+#: eme-members.php:6514
 msgid "Head of the family: "
 msgstr "Gezinshoofd: "
 
-#: eme-members.php:6482
+#: eme-members.php:6517
 msgid "(head of the family)"
 msgstr "(gezinshoofd)"
 
-#: eme-members.php:6528
+#: eme-members.php:6563
 msgid "This is based on the payment ID of the member: %d"
 msgstr "Dit is gebaseerd op het betalings-ID van het lid: %d"
 
-#: eme-members.php:6645
-#: eme-people.php:5313
+#: eme-members.php:6680
+#: eme-people.php:5309
 msgid "(Dynamic)"
 msgstr "(Dynamisch)"
 
-#: eme-members.php:6657
-#: eme-people.php:5325
+#: eme-members.php:6692
+#: eme-people.php:5321
 msgid "Dynamic group added"
 msgstr "Dynamische groep toegevoegd"
 
-#: eme-members.php:6659
-#: eme-people.php:5327
+#: eme-members.php:6694
+#: eme-people.php:5323
 msgid "There was a problem adding the group"
 msgstr "Er was een probleem bij het toevoegen van de groep"
 
-#: eme-members.php:6662
-#: eme-people.php:5330
+#: eme-members.php:6697
+#: eme-people.php:5326
 msgid "Please enter a name for the group"
 msgstr "Vul aub een naam voor de groep in"
 
-#: eme-members.php:6713
-#: eme-members.php:6781
+#: eme-members.php:6748
+#: eme-members.php:6816
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr "Inhoud van onderwerp of tekst was leeg, er is geen mail verzonden."
 
-#: eme-members.php:6766
+#: eme-members.php:6801
 msgid "Memberships deleted."
 msgstr "Lidmaatschappen verwijderd."
 
-#: eme-members.php:6822
+#: eme-members.php:6857
 msgid "No corresponding persons found."
 msgstr "Geen overeenkomstige personen gevonden."
 
-#: eme-members.php:6832
+#: eme-members.php:6867
 msgid "Members deleted."
 msgstr "Leden verwijderd."
 
-#: eme-members.php:6858
-#: eme-members.php:6884
-#: eme-members.php:6947
-#: eme-members.php:6978
-#: eme-members.php:7003
-#: eme-members.php:7020
-#: eme-rsvp.php:6139
-#: eme-rsvp.php:6173
-#: eme-rsvp.php:6217
-#: eme-rsvp.php:6257
-#: eme-rsvp.php:6279
-#: eme-rsvp.php:6321
-#: eme-rsvp.php:6382
-#: eme-rsvp.php:6424
-#: eme-rsvp.php:6473
-#: eme-rsvp.php:6535
-#: eme-rsvp.php:6571
+#: eme-members.php:6893
+#: eme-members.php:6919
+#: eme-members.php:6982
+#: eme-members.php:7013
+#: eme-members.php:7038
+#: eme-members.php:7055
+#: eme-rsvp.php:6133
+#: eme-rsvp.php:6167
+#: eme-rsvp.php:6211
+#: eme-rsvp.php:6251
+#: eme-rsvp.php:6273
+#: eme-rsvp.php:6315
+#: eme-rsvp.php:6376
+#: eme-rsvp.php:6418
+#: eme-rsvp.php:6467
+#: eme-rsvp.php:6529
+#: eme-rsvp.php:6565
 #: eme-tasks.php:2040
 #: eme-tasks.php:2066
 #: eme-tasks.php:2090
 msgid "The action has been executed successfully."
 msgstr "De actie is successvol uitgevoerd."
 
-#: eme-members.php:6861
-#: eme-members.php:6981
-#: eme-rsvp.php:6142
-#: eme-rsvp.php:6176
-#: eme-rsvp.php:6220
-#: eme-rsvp.php:6260
-#: eme-rsvp.php:6324
-#: eme-rsvp.php:6385
-#: eme-rsvp.php:6427
-#: eme-rsvp.php:6470
-#: eme-rsvp.php:6574
+#: eme-members.php:6896
+#: eme-members.php:7016
+#: eme-rsvp.php:6136
+#: eme-rsvp.php:6170
+#: eme-rsvp.php:6214
+#: eme-rsvp.php:6254
+#: eme-rsvp.php:6318
+#: eme-rsvp.php:6379
+#: eme-rsvp.php:6421
+#: eme-rsvp.php:6464
+#: eme-rsvp.php:6568
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "De actie is uitgevoerd maar er waren problemen bij het versturen van de e-mail."
 
-#: eme-members.php:6864
-#: eme-members.php:6984
-#: eme-rsvp.php:6145
-#: eme-rsvp.php:6179
-#: eme-rsvp.php:6214
-#: eme-rsvp.php:6263
-#: eme-rsvp.php:6282
-#: eme-rsvp.php:6318
-#: eme-rsvp.php:6388
-#: eme-rsvp.php:6430
-#: eme-rsvp.php:6466
-#: eme-rsvp.php:6568
+#: eme-members.php:6899
+#: eme-members.php:7019
+#: eme-rsvp.php:6139
+#: eme-rsvp.php:6173
+#: eme-rsvp.php:6208
+#: eme-rsvp.php:6257
+#: eme-rsvp.php:6276
+#: eme-rsvp.php:6312
+#: eme-rsvp.php:6382
+#: eme-rsvp.php:6424
+#: eme-rsvp.php:6460
+#: eme-rsvp.php:6562
 #: eme-tasks.php:2043
 #: eme-tasks.php:2069
 #: eme-tasks.php:2093
@@ -8854,7 +8854,7 @@ msgid "Autocomplete sources"
 msgstr "Autocomplete sources"
 
 #: eme-events.php:8335
-#: eme-members.php:1995
+#: eme-members.php:1987
 #: eme-options.php:1453
 #: eme-options.php:1958
 #: eme-options.php:2977
@@ -12459,7 +12459,7 @@ msgid "Edit dynamic group of members"
 msgstr "Wijzig dynamische groep van leden"
 
 #: eme-people.php:2531
-#: eme-people.php:5224
+#: eme-people.php:5220
 msgid "Edit group"
 msgstr "Pas groep aan"
 
@@ -12580,83 +12580,83 @@ msgstr "Als je wil uitschrijven voor toekomstige mailings, vul hier je e-mail in
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr "Selecteer de groepen waarvan je je wenst uit te schrijven."
 
-#: eme-people.php:5106
+#: eme-people.php:5102
 msgid "No surname"
 msgstr "Geen familienaam"
 
-#: eme-people.php:5230
+#: eme-people.php:5226
 msgid "Dynamic group of people"
 msgstr "Dynamische groep van personen"
 
-#: eme-people.php:5236
+#: eme-people.php:5232
 msgid "(1 person)"
 msgid_plural "(%d persons)"
 msgstr[0] "(1 persoon)"
 msgstr[1] "(%d personen)"
 
-#: eme-people.php:5240
+#: eme-people.php:5236
 msgid "Dynamic group of members"
 msgstr "Dynamische groep van leden"
 
-#: eme-people.php:5246
+#: eme-people.php:5242
 msgid "(1 member)"
 msgid_plural "(%d members)"
 msgstr[0] "(1 lid)"
 msgstr[1] "(%d leden)"
 
-#: eme-people.php:5444
+#: eme-people.php:5440
 msgid "People recovered from trash bin."
 msgstr "Personen hersteld vanuit de prullenbak."
 
-#: eme-people.php:5456
+#: eme-people.php:5452
 msgid "People moved to trash bin."
 msgstr "Verplaatst naar de prullenbak."
 
-#: eme-people.php:5464
+#: eme-people.php:5460
 msgid "Personal data removed and moved to trash bin."
 msgstr "Persoonlijke gegevens verwijderd en verplaatst naar de prullenbak."
 
-#: eme-people.php:5472
+#: eme-people.php:5468
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "GDPR toestemming is op \"Ja\" gezet (wees er zeker van dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5480
+#: eme-people.php:5476
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "GDPR goedkeuring ingesteld op \"Nee\" (zorg ervoor dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5488
+#: eme-people.php:5484
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "Massmail ingesteld op \"Ja\" (zorg ervoor dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5496
+#: eme-people.php:5492
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "Massmail ingesteld op \"Nee\" (zorg ervoor dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5504
+#: eme-people.php:5500
 msgid "Birthday email set to \"Yes\"."
 msgstr "Verjaardagsmail ingesteld op \"Ja\"."
 
-#: eme-people.php:5512
+#: eme-people.php:5508
 msgid "Birthday email set to \"No\"."
 msgstr "Verjaardagsmail ingesteld op \"Nee\"."
 
-#: eme-people.php:5521
+#: eme-people.php:5517
 msgid "Language updated."
 msgstr "Taal geüpdatet."
 
-#: eme-people.php:5534
+#: eme-people.php:5530
 msgid "People deleted."
 msgstr "Personen verwijderd."
 
-#: eme-people.php:5544
+#: eme-people.php:5540
 msgid "People added to group."
 msgstr "Personen toegevoegd aan groep."
 
-#: eme-people.php:5555
+#: eme-people.php:5551
 msgid "People removed from group."
 msgstr "Personen verwijderd uit groep."
 
-#: eme-people.php:5564
+#: eme-people.php:5560
 msgid "Groups deleted."
 msgstr "Groepen verwijderd."
 
@@ -12820,263 +12820,263 @@ msgstr "De locatie laat niet toe dat er zoveel mensen tegelijk aanwezig zijn."
 msgid "Warning: there was a problem sending you the booking mail, please contact the site administrator to sort this out."
 msgstr "Waarschuwing: er was een probleem om de boeking e-mail te versturen. Contacteer de website eigenaar om dit op te lossen."
 
-#: eme-rsvp.php:3278
-#: eme-rsvp.php:3332
+#: eme-rsvp.php:3272
+#: eme-rsvp.php:3326
 msgid "No responses yet!"
 msgstr "Nog geen reacties!"
 
-#: eme-rsvp.php:3379
+#: eme-rsvp.php:3373
 msgid "No bookings found."
 msgstr "Geen boekingen gevonden."
 
-#: eme-rsvp.php:4673
+#: eme-rsvp.php:4667
 msgid "Add booking"
 msgstr "Voeg boeking toe"
 
-#: eme-rsvp.php:4675
+#: eme-rsvp.php:4669
 msgid "Be aware: the overbooking option is set."
 msgstr "Pas op: overboekings-optie is ingesteld."
 
-#: eme-rsvp.php:4679
+#: eme-rsvp.php:4673
 msgid "Send mails for new booking?"
 msgstr "Verstuur e-mails voor nieuwe boeking?"
 
-#: eme-rsvp.php:4712
+#: eme-rsvp.php:4706
 msgid "Edit booking"
 msgstr "Aanpassen boeking"
 
-#: eme-rsvp.php:4721
+#: eme-rsvp.php:4715
 msgid "Send mails for changed booking?"
 msgstr "Verstuur e-mail bij gewijzigde boeking?"
 
-#: eme-rsvp.php:4722
+#: eme-rsvp.php:4716
 msgid "Move booking to event"
 msgstr "Breng boeking over naar evenement"
 
-#: eme-rsvp.php:4725
+#: eme-rsvp.php:4719
 msgid "Start typing an event name"
 msgstr "Begin met het typen van een evenementnaam"
 
-#: eme-rsvp.php:4727
+#: eme-rsvp.php:4721
 msgid "Has the booking been paid?"
 msgstr "Is de boeking betaald?"
 
-#: eme-rsvp.php:4730
+#: eme-rsvp.php:4724
 msgid "Warning: the event related to this booking has been removed, editing is no longer allowed!"
 msgstr "Waarschuwing: het evenement verbonden aan deze boeking is verwijderd, wijzigingen zijn niet langer toegestaan!"
 
-#: eme-rsvp.php:4732
+#: eme-rsvp.php:4726
 msgid "Warning: the price of the event has changed compared to this booking, the new price will be taken into account for changes!"
 msgstr "Waarschuwing: de prijs van het evenement is veranderd t.o.v. deze reservatie, de nieuwe prijs zal in rekening worden gebracht voor wijzigingen!"
 
-#: eme-rsvp.php:4907
+#: eme-rsvp.php:4901
 msgid "Booking updated"
 msgstr "Boeking bijgewerkt"
 
-#: eme-rsvp.php:4926
+#: eme-rsvp.php:4920
 msgid "During the time of your change, some free seats were taken leaving not enough free seats available anymore"
 msgstr "Tijdens doorvoeren van je wijzigingen zijn een aantal vrije plaatsen ingenomen waardoor er nu geen voldoende plaatsen meer beschikbaar zijn"
 
-#: eme-rsvp.php:5033
+#: eme-rsvp.php:5027
 msgid "No linked payment found: %s"
 msgstr "Geen gekoppelde betaling gevonden: %s"
 
-#: eme-rsvp.php:5036
-#: eme-rsvp.php:5039
+#: eme-rsvp.php:5030
+#: eme-rsvp.php:5033
 msgid "Field %s not valid: %s"
 msgstr "Veld %s niet geldig: %s"
 
-#: eme-rsvp.php:5044
+#: eme-rsvp.php:5038
 msgid "Already paid in full: %s"
 msgstr "Reeds volledig betaald: %s"
 
-#: eme-rsvp.php:5050
+#: eme-rsvp.php:5044
 msgid "Amount paid (%s) is not equal to the expected amount (%s): %s"
 msgstr "Betaald bedrag (%s) is niet gelijk aan het verwachte bedrag (%s): %s"
 
-#: eme-rsvp.php:5054
+#: eme-rsvp.php:5048
 msgid "Import finished: %d entries marked as paid, %d ignored, %d errors"
 msgstr "Import voltooid: %d lijnen gemarkeerd als betaald, %d genegeerd, %d fouten"
 
-#: eme-rsvp.php:5056
+#: eme-rsvp.php:5050
 msgid "Ignored entries"
 msgstr "Genegeerde lijnen"
 
-#: eme-rsvp.php:5059
+#: eme-rsvp.php:5053
 msgid "Erronous entries"
 msgstr "Foutieve lijnen"
 
-#: eme-rsvp.php:5103
+#: eme-rsvp.php:5097
 msgid "Manage pending bookings for %s"
 msgstr "Beheer nog goed te keuren boekingen voor %s"
 
-#: eme-rsvp.php:5105
+#: eme-rsvp.php:5099
 msgid "Manage approved bookings for %s"
 msgstr "Beheer goedgekeurde boekingen voor %s"
 
-#: eme-rsvp.php:5112
+#: eme-rsvp.php:5106
 msgid "Manage trashed bookings"
 msgstr "Beheer boekingen in de prullenbak"
 
-#: eme-rsvp.php:5114
+#: eme-rsvp.php:5108
 msgid "Manage pending bookings"
 msgstr "Beheer nog goed te keuren boekingen"
 
-#: eme-rsvp.php:5116
+#: eme-rsvp.php:5110
 msgid "Manage approved bookings"
 msgstr "Beheer goedgekeurde boekingen"
 
-#: eme-rsvp.php:5127
+#: eme-rsvp.php:5121
 msgid "Click on the icon to show the import form to import payments"
 msgstr "Klik op het icoon om het importformulier te tonen om betalingen te importeren"
 
-#: eme-rsvp.php:5140
+#: eme-rsvp.php:5134
 msgid "If you want, use this to import booking payments"
 msgstr "Indien gewenst, gebruik dit om boekingsbetalingen te importeren"
 
-#: eme-rsvp.php:5181
+#: eme-rsvp.php:5175
 msgid "Filter on event"
 msgstr "Filter op evenement"
 
-#: eme-rsvp.php:5194
+#: eme-rsvp.php:5188
 msgid "Filter on custom field answer"
 msgstr "Filter op eigen aangemaakt veld antwoord"
 
-#: eme-rsvp.php:5195
+#: eme-rsvp.php:5189
 msgid "Filter on unique nbr"
 msgstr "Filter op uniek nummer"
 
-#: eme-rsvp.php:5199
+#: eme-rsvp.php:5193
 msgid "Filter bookings"
 msgstr "Filter boekingen"
 
-#: eme-rsvp.php:5207
+#: eme-rsvp.php:5201
 msgid "Permanently delete booking"
 msgstr "Verwijder boeking definitief"
 
-#: eme-rsvp.php:5208
+#: eme-rsvp.php:5202
 msgid "Restore booking and mark pending and awaiting user confirmation"
 msgstr "Boeking herstellen en markeren als in behandeling en in afwachting van gebruikersbevestiging"
 
-#: eme-rsvp.php:5209
+#: eme-rsvp.php:5203
 msgid "Restore booking and mark pending"
 msgstr "Herstel boeking en markeer als goed te keuren"
 
-#: eme-rsvp.php:5210
+#: eme-rsvp.php:5204
 msgid "Restore booking and mark approved"
 msgstr "Herstel boeking en keur goed"
 
-#: eme-rsvp.php:5212
+#: eme-rsvp.php:5206
 msgid "Approve booking"
 msgstr "Keur boeking goed"
 
-#: eme-rsvp.php:5213
-#: eme-rsvp.php:5228
+#: eme-rsvp.php:5207
+#: eme-rsvp.php:5222
 msgid "Delete booking (move to trash)"
 msgstr "Verwijder boeking (verplaats naar prullenbak)"
 
-#: eme-rsvp.php:5215
+#: eme-rsvp.php:5209
 msgid "Resend the mail for pending booking"
 msgstr "Stuur nogmaals de e-mail voor goed te keuren boekingen"
 
-#: eme-rsvp.php:5218
-#: eme-rsvp.php:5233
+#: eme-rsvp.php:5212
+#: eme-rsvp.php:5227
 msgid "Mark unpaid"
 msgstr "Markeer onbetaald"
 
-#: eme-rsvp.php:5219
-#: eme-rsvp.php:5234
+#: eme-rsvp.php:5213
+#: eme-rsvp.php:5228
 msgid "Partial payment"
 msgstr "Gedeeltelijke betaling"
 
-#: eme-rsvp.php:5220
+#: eme-rsvp.php:5214
 msgid "Move booking off the waitinglist"
 msgstr "Haal boeking van de wachtlijst"
 
-#: eme-rsvp.php:5221
-#: eme-rsvp.php:5235
+#: eme-rsvp.php:5215
+#: eme-rsvp.php:5229
 msgid "Put booking on the waitinglist"
 msgstr "Zet boeking op de wachtlijst"
 
-#: eme-rsvp.php:5223
-#: eme-rsvp.php:5237
+#: eme-rsvp.php:5217
+#: eme-rsvp.php:5231
 msgid "Send booking related email to selected bookings"
 msgstr "Verstuur boekingsgerelateerde e-mail naar geselecteerde boekingen"
 
-#: eme-rsvp.php:5227
+#: eme-rsvp.php:5221
 msgid "Make booking pending"
 msgstr "Markeer boeking als goed te keuren"
 
-#: eme-rsvp.php:5230
+#: eme-rsvp.php:5224
 msgid "Resend the mail for approved booking"
 msgstr "Stuur nogmaals de e-mail voor goedgekeurde boekingen"
 
-#: eme-rsvp.php:5244
+#: eme-rsvp.php:5238
 msgid "Send mails to contact person too?"
 msgstr "Ook mails naar contactpersoon sturen?"
 
-#: eme-rsvp.php:5250
+#: eme-rsvp.php:5244
 msgid "Send mails to attendees upon changes being made?"
 msgstr "Verstuur e-mails naar aanwezigen over doorgevoerde wijzigingen?"
 
-#: eme-rsvp.php:5257
+#: eme-rsvp.php:5251
 msgid "Refund if possible?"
 msgstr "Terugbetalen indien mogelijk?"
 
-#: eme-rsvp.php:5264
+#: eme-rsvp.php:5258
 msgid "Partial payment amount"
 msgstr "Bedrag gedeeltelijke betaling"
 
-#: eme-rsvp.php:5304
+#: eme-rsvp.php:5298
 msgid "Event fields"
 msgstr "Evenementen-velden"
 
-#: eme-rsvp.php:5740
+#: eme-rsvp.php:5734
 msgid "Click the name of the booker in order to see and/or edit the details of the booker."
 msgstr "Klik op de naam van de reserveerder om de details te zien en/of te wijzigen."
 
-#: eme-rsvp.php:5743
+#: eme-rsvp.php:5737
 msgid "Anonymous"
 msgstr "Anoniem"
 
-#: eme-rsvp.php:5772
+#: eme-rsvp.php:5766
 msgid "Click here to see and/or edit the details of the booking."
 msgstr "Klik hier voor tonen en/of veranderen van boekingsdetails."
 
-#: eme-rsvp.php:5822
+#: eme-rsvp.php:5816
 msgid "Pending: "
 msgstr "Goed te keuren: "
 
-#: eme-rsvp.php:5912
+#: eme-rsvp.php:5906
 msgid "(On waitinglist)"
 msgstr "(Op wachtlijst)"
 
-#: eme-rsvp.php:5915
+#: eme-rsvp.php:5909
 msgid "(Awaiting user confirmation)"
 msgstr "(Wachtend op bevestiging gebruiker)"
 
-#: eme-rsvp.php:5927
+#: eme-rsvp.php:5921
 msgid "This is based on the payment ID of the booking: %d"
 msgstr "Dit is gebaseerd op het betalings-ID van de boeking: %d"
 
-#: eme-rsvp.php:6145
-#: eme-rsvp.php:6263
+#: eme-rsvp.php:6139
+#: eme-rsvp.php:6257
 msgid "Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list."
 msgstr "Hint: voor een boeking op de wachtlijst, de enige toegelaten actie om terug van de wachtlijst af te halen."
 
-#: eme-rsvp.php:6223
-#: eme-rsvp.php:6327
-#: eme-rsvp.php:6577
+#: eme-rsvp.php:6217
+#: eme-rsvp.php:6321
+#: eme-rsvp.php:6571
 msgid "The action has been executed successfully but there were some problems refunding the payment."
 msgstr "De actie is met succes uitgevoerd, maar er waren enkele problemen met het terugbetalen van de betaling."
 
-#: eme-rsvp.php:6226
-#: eme-rsvp.php:6330
-#: eme-rsvp.php:6580
+#: eme-rsvp.php:6220
+#: eme-rsvp.php:6324
+#: eme-rsvp.php:6574
 msgid "The action has been executed successfully but there were some problems sending mail and refunding the payment."
 msgstr "De actie is met succes uitgevoerd, maar er waren enkele problemen bij het verzenden van e-mail en het terugbetalen van de betaling."
 
-#: eme-rsvp.php:6464
+#: eme-rsvp.php:6458
 msgid "There was a problem refunding the payment, please check your logs."
 msgstr "Er is een probleem opgetreden bij het terugbetalen van de betaling. Controleer je logbestanden."
 
@@ -13389,7 +13389,7 @@ msgstr "De hoogte van het PDF document (in pt)"
 msgid "No templates defined yet!"
 msgstr "Nog geen templates aangemaakt!"
 
-#: eme-templates.php:493
+#: eme-templates.php:498
 msgid "Duplicate this template"
 msgstr "Dupliceer deze template"
 
@@ -13543,11 +13543,11 @@ msgstr "https://www.e-dynamics.be/"
 msgid "Only take unpaid bookings into account"
 msgstr "Houd alleen rekening met onbetaalde boekingen"
 
-#: eme-members.php:1422
+#: eme-members.php:1414
 msgid "The membership price is not a valid price and has been reset to 0"
 msgstr "De lidmaatschapsprijs is geen geldige prijs en is teruggezet op 0"
 
-#: eme-members.php:1430
+#: eme-members.php:1422
 msgid "The extra charge for the membership is not a valid price and has been reset to 0"
 msgstr "De extra kosten voor het lidmaatschap zijn geen geldige prijs en zijn teruggezet op 0"
 
@@ -13562,9 +13562,9 @@ msgstr "Inschrijvingsdatum"
 #: eme-events.php:7612
 #: eme-events.php:7813
 #: eme-events.php:8199
-#: eme-members.php:2326
-#: eme-members.php:2466
-#: eme-members.php:2543
+#: eme-members.php:2318
+#: eme-members.php:2458
+#: eme-members.php:2535
 #: eme-options.php:2043
 #: eme-options.php:2100
 #: eme-options.php:2210
@@ -13575,12 +13575,12 @@ msgstr "PDF templates als bijlagen"
 #: eme-events.php:7618
 #: eme-events.php:7819
 #: eme-events.php:8205
-#: eme-members.php:2332
-#: eme-members.php:2335
-#: eme-members.php:2472
-#: eme-members.php:2475
-#: eme-members.php:2549
-#: eme-members.php:2552
+#: eme-members.php:2324
+#: eme-members.php:2327
+#: eme-members.php:2464
+#: eme-members.php:2467
+#: eme-members.php:2541
+#: eme-members.php:2544
 #: eme-options.php:2045
 #: eme-options.php:2102
 #: eme-options.php:2212
@@ -13591,9 +13591,9 @@ msgstr "Voeg optioneel PDF-templates toe als bijlagen bij de e-mail."
 #: eme-events.php:7622
 #: eme-events.php:7823
 #: eme-events.php:8209
-#: eme-members.php:2337
-#: eme-members.php:2477
-#: eme-members.php:2554
+#: eme-members.php:2329
+#: eme-members.php:2469
+#: eme-members.php:2546
 #: eme-options.php:2048
 #: eme-options.php:2105
 #: eme-options.php:2215
@@ -13606,16 +13606,16 @@ msgstr "Nog geen PDF templates gedefinieerd."
 msgid "Optionally add attachments to the mail when a booking is pending."
 msgstr "Voeg optioneel bijlagen toe aan de e-mail wanneer een boeking in behandeling is."
 
-#: eme-members.php:2440
-#: eme-members.php:2517
+#: eme-members.php:2432
+#: eme-members.php:2509
 msgid "Mail attachments"
 msgstr "E-mail bijlagen"
 
-#: eme-members.php:2462
+#: eme-members.php:2454
 msgid "Optionally add attachments to the mail when a member extends its membership."
 msgstr "Voeg optioneel bijlagen toe aan de e-mail wanneer een lid zijn lidmaatschap verlengt."
 
-#: eme-members.php:2539
+#: eme-members.php:2531
 msgid "Optionally add attachments to the mail when a member has paid for the membership."
 msgstr "Voeg optioneel bijlagen toe aan de mail wanneer een lid voor het lidmaatschap heeft betaald."
 
@@ -13647,14 +13647,14 @@ msgstr "Stel het aantal dagen in waarna verlopen leden automatisch worden geanon
 msgid "If set, the value must be greater than the number of days after which you want expired members to be anonymized."
 msgstr "Indien ingesteld, moet de waarde groter zijn dan het aantal dagen waarna u wilt dat verlopen leden worden geanonimiseerd."
 
-#: eme-members.php:3027
-#: eme-members.php:3039
+#: eme-members.php:3019
+#: eme-members.php:3031
 #: eme-people.php:1961
 #: eme-people.php:1973
 msgid "Exact custom field search match"
 msgstr "Exact zoeken op eigen aangemaakte veldwaarden"
 
-#: eme-members.php:3037
+#: eme-members.php:3029
 #: eme-people.php:1971
 msgid "Exact?"
 msgstr "Exact?"
@@ -13667,13 +13667,13 @@ msgstr "Hernieuwd"
 msgid "No member found linked to this payment. If you believe you've received this message in error please contact the site owner."
 msgstr "Er is geen lid gevonden dat aan deze betaling is gekoppeld. Als u denkt dat u dit bericht ten onrechte heeft ontvangen, neem dan contact op met de site-eigenaar."
 
-#: eme-members.php:5915
-#: eme-members.php:6103
+#: eme-members.php:5950
+#: eme-members.php:6138
 #: eme-people.php:895
 msgid "Not imported (both email and lastname are empty): %s"
 msgstr "Niet geïmporteerd (zowel email als naam zijn leeg): %s"
 
-#: eme-members.php:6181
+#: eme-members.php:6216
 msgid "Not imported (no matching person found): %s"
 msgstr "Niet geïmporteerd (geen overeenkomstige persoon gevonden): %s"
 
@@ -13705,23 +13705,23 @@ msgstr "Negeren"
 msgid "Member deleted"
 msgstr "Lid verwijderd"
 
-#: eme-members.php:2698
+#: eme-members.php:2690
 msgid "Member deleted email"
 msgstr "Lid verwijderd e-mail"
 
-#: eme-members.php:2701
+#: eme-members.php:2693
 msgid "Contactperson member deleted email subject"
 msgstr "Concactpersoon lid verwijderd e-mail onderwerp"
 
-#: eme-members.php:2703
+#: eme-members.php:2695
 msgid "The subject of the mail sent to the contactperson just before a member is deleted."
 msgstr "Het onderrwerp van de e-mail die naar de contactpersoon is verzonden vlak voordat een lid wordt verwijderd."
 
-#: eme-members.php:2709
+#: eme-members.php:2701
 msgid "Contactperson member deleted email body"
 msgstr "Concactpersoon lid verwijderd e-mail inhoud"
 
-#: eme-members.php:2711
+#: eme-members.php:2703
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "De inhoud van de e-mail die naar de contactpersoon is verzonden vlak voordat een lid wordt verwijderd."
 
@@ -13879,7 +13879,7 @@ msgstr "Toegangsrecht om nieuwe evenementen in te dienen"
 msgid "Inactive"
 msgstr "Inactief"
 
-#: eme-members.php:1932
+#: eme-members.php:1924
 msgid "Inactive memberships will not be shown in membership selection lists."
 msgstr "Inactieve lidmaatschappen worden niet weergegeven in de lidmaatschapsselectielijsten."
 
@@ -13897,7 +13897,7 @@ msgid "Event submit payment page"
 msgstr "Betalingspagina voor indienen evenement"
 
 #: eme-events.php:8337
-#: eme-members.php:1995
+#: eme-members.php:1987
 #: eme-options.php:2977
 msgid "Select a captcha to use"
 msgstr "Selecteer een captcha die u wilt gebruiken"
@@ -13906,7 +13906,7 @@ msgstr "Selecteer een captcha die u wilt gebruiken"
 msgid "Frontend Draft (unpaid)"
 msgstr "Frontend Draft (onbetaald)"
 
-#: eme-functions.php:4082
+#: eme-functions.php:4077
 msgid "Basic EME Captcha"
 msgstr "Basis EME-captcha"
 

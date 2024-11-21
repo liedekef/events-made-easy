@@ -6330,15 +6330,15 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		<div id='rsvp-details'>
 		<?php
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Generic RSVP info', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Generic RSVP info', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_rsvp( $event );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Payment methods', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Payment methods', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_payment_methods( $event, $is_new_event );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Dynamic data', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Dynamic data', 'events-made-easy' ) . '</summary><div>';
 		$templates_array = eme_get_templates_array_by_id( 'rsvpform' );
 		if ( ! empty( $event['event_id'] ) ) {
 			$used_groupingids = eme_get_event_cf_answers_groupingids( $event['event_id'] );
@@ -6347,58 +6347,58 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		}
 		eme_dyndata_adminform( $event['event_properties']['rsvp_dyndata'], $templates_array, $used_groupingids );
 		eme_meta_box_div_event_dyndata_allfields( $event['event_properties']['dyndata_all_fields'], $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'RSVP form format', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'RSVP form format', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_form_format( $event, $templates_array );
 		eme_meta_box_div_event_registration_recorded_ok_html( $event, $templates_array );
 		eme_meta_box_div_event_cancel_form_format( $event, $templates_array );
 		eme_meta_box_div_event_captcha_settings( $event );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Attendance settings', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Attendance settings', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_attendance_info( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		?>
 		<h3><?php esc_html_e( 'RSVP Email format settings', 'events-made-easy' ); ?></h3>
 		<?php
 		$templates_array = eme_get_templates_array_by_id( 'rsvpmail' );
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Booking Made or Approved Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Booking Made or Approved Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_approved_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Booking Awaiting User Confirmation Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Booking Awaiting User Confirmation Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_userpending_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Booking Pending Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Booking Pending Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_pending_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Booking Updated Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Booking Updated Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_updated_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Booking Reminder Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Booking Reminder Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_reminder_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Booking Cancelled Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Booking Cancelled Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_cancelled_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Booking Deleted Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Booking Deleted Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_trashed_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Booking Paid Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Booking Paid Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_paid_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Booking Payment Gateway Notification Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Booking Payment Gateway Notification Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		?>
 		</div>
 	</div>
@@ -6419,45 +6419,45 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	<div class="eme-tab-content" id="tab-tasks-container">
 	<h3><?php esc_html_e( 'Tasks', 'events-made-easy' ); ?></h3>
 	<details name="eme_details_tasks" class="eme_accordion">
-	<summary><?php esc_html_e( 'List of tasks', 'events-made-easy' ); ?></summary>
+	<summary><?php esc_html_e( 'List of tasks', 'events-made-easy' ); ?></summary><div>
 		<?php eme_meta_box_div_event_tasks( $event, $edit_recurrence ); ?>
-	</details>
+	</div></details>
 
 	<h3><?php esc_html_e( 'Tasks settings', 'events-made-easy' ); ?></h3>
 	<details name="eme_details_tasks" class="eme_accordion">
-	<summary><?php esc_html_e( 'Tasks generic settings', 'events-made-easy' ); ?></summary>
+	<summary><?php esc_html_e( 'Tasks generic settings', 'events-made-easy' ); ?></summary><div>
 		<?php eme_meta_box_div_event_task_settings( $event ); ?>
-	</details>
+	</div></details>
 	<details name="eme_details_tasks" class="eme_accordion">
-	<summary><?php esc_html_e( 'Tasks form format', 'events-made-easy' ); ?></summary>
+	<summary><?php esc_html_e( 'Tasks form format', 'events-made-easy' ); ?></summary><div>
 		<?php
 		eme_meta_box_div_event_task_signup_form_format( $event, $templates_array );
 		eme_meta_box_div_event_task_signup_recorded_ok_html( $event, $templates_array );
 		?>
-	</details>
+	</div></details>
 	<h3><?php esc_html_e( 'Tasks Email format settings', 'events-made-easy' ); ?></h3>
 		<?php
 		$templates_array = eme_get_templates_array_by_id( 'task' );
 		echo '<details name="eme_details_tasks" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Task Signup Pending Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Task Signup Pending Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_task_signup_pending_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_tasks" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Task Signup Made Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Task Signup Made Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_task_signup_made_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_tasks" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Task Signup Reminder Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Task Signup Reminder Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_task_signup_reminder_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_tasks" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Task Signup Cancelled Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Task Signup Cancelled Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		echo '<details name="eme_details_tasks" class="eme_accordion">';
-		echo '<summary>' . esc_html__( 'Task Signup Deleted Email', 'events-made-easy' ) . '</summary>';
+		echo '<summary>' . esc_html__( 'Task Signup Deleted Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_task_signup_trashed_email( $event, $templates_array );
-		echo '</details>';
+		echo '</div></details>';
 		?>
 	</div>
 	</div>
@@ -7489,7 +7489,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 		$showhide_style = 'style="width:100%;"';
 	}
 	echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
-		esc_html_e( 'When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid.', 'events-made-easy' );
+    esc_html_e( 'When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid.', 'events-made-easy' );
 	if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
 		print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
 	} elseif ( ! get_option( 'eme_rsvp_mail_notify_approved' ) ) {
@@ -8710,7 +8710,7 @@ function eme_meta_box_div_event_rsvp( $event ) {
 		<br>
 	<?php
 	if ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
-				print "<span id='span_approval_required_mail_warning'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</span>';
+        print "<span id='span_approval_required_mail_warning'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</span>';
 	}
 	?>
 	</p>

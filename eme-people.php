@@ -1296,9 +1296,9 @@ function eme_printable_booking_report( $event_id ) {
 			$price_arr = eme_convert_multi2array( $event['price'] );
 			$multprice_desc_arr = eme_convert_multi2array( $event['event_properties']['multiprice_desc'] );
 			foreach ($price_arr as $key=>$price) {
-                                $res_arr[] = eme_localized_price( $price, $event['currency']) . " " . esc_html($multprice_desc_arr[$key]);
-                        }
-                        echo eme_convert_array2multi( $res_arr, '<br>');
+                $res_arr[] = eme_localized_price( $price, $event['currency']) . " " . esc_html($multprice_desc_arr[$key]);
+            }
+            echo eme_convert_array2multi( $res_arr, '<br>');
 		} else {
 			echo eme_localized_price( $event['price'], $event['currency']);
 			if (!empty($event['event_properties']['price_desc'])) {

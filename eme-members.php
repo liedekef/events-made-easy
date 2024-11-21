@@ -2087,7 +2087,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id="tr_familymember_form_tpl">
     <td><label for="properties[familymember_form_tpl]"><?php esc_html_e( 'Family Member Form:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select_key_value( $membership['properties']['familymember_form_tpl'], 'properties[familymember_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
+    <td><?php echo eme_ui_select_key_value( $membership['properties']['familymember_form_tpl'], 'properties[familymember_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ) ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'This is the form that will be shown/repeated for the family members when a new member wants to sign up for this membership.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL. If not, the form will not be shown. If empty, a simple default will be used.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'The template may contain the person placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL, #_OPT_IN (or #_OPT_OUT), #_BIRTHDATE, #_BIRTHPLACE, #_PHONE and placeholders referring to custom person fields, nothing else. #_LASTNAME, #_FIRSTNAME are required. If #_EMAIL, #_PHONE, #_OPT_IN (or #_OPT_OUT) is not set, it is copied over from the person signing up. The address info is always copied over from the person signing up.', 'events-made-easy' ); ?></p>
@@ -2259,6 +2259,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
 <div id="div-mailformats">
     <details name='eme_details_memberships' class="eme_accordion">
     <summary><?php esc_html_e( 'New member email', 'events-made-easy' ); ?></summary>
+    <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the member that is signing up.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
     <tr>
@@ -2360,10 +2361,12 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </td>
     </tr>
     </table>
+    </div>
     </details>
 
     <details name='eme_details_memberships' class="eme_accordion">
     <summary><?php esc_html_e( 'Member updated Email', 'events-made-easy' ); ?></summary>
+    <div>
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Updated member email subject', 'events-made-easy' ); ?></label></td>
@@ -2395,10 +2398,12 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </td>
     </tr>
     </table>
+    </div>
     </details>
 
     <details name='eme_details_memberships' class="eme_accordion">
     <summary><?php esc_html_e( 'Membership extended email', 'events-made-easy' ); ?></summary>
+    <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
     <tr>
@@ -2472,10 +2477,12 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </td>
     </tr>
     </table>
+    </div>
     </details>
 
     <details name='eme_details_memberships' class="eme_accordion">
     <summary><?php esc_html_e( 'Membership paid email', 'events-made-easy' ); ?></summary>
+    <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
     <tr>
@@ -2577,10 +2584,12 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </td>
     </tr>
     </table>
+    </div>
     </details>
 
     <details name='eme_details_memberships' class="eme_accordion">
     <summary><?php esc_html_e( 'Membership reminder email', 'events-made-easy' ); ?></summary>
+    <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is NOT sent to each of the family members, just the head of the family.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
     <tr>
@@ -2615,10 +2624,12 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </td>
     </tr>
     </table>
+    </div>
     </details>
 
     <details name='eme_details_memberships' class="eme_accordion">
     <summary><?php esc_html_e( 'Membership stopped email', 'events-made-easy' ); ?></summary>
+    <div>
     <img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL); ?>images/warning.png' alt='warning'><?php esc_html_e( 'Warning: when the membership is configured to ask for family member info, this mail is ALSO sent to each of the family members.', 'events-made-easy' ); ?>
     <table class="eme_membership_admin_table">
     <tr>
@@ -2684,10 +2695,12 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </td>
     </tr>
     </table>
+    </div>
     </details>
 
     <details name='eme_details_memberships' class="eme_accordion">
     <summary><?php esc_html_e( 'Member deleted email', 'events-made-easy' ); ?></summary>
+    <div>
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson member deleted email subject', 'events-made-easy' ); ?></label></td>
@@ -2719,10 +2732,12 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </td>
     </tr>
     </table>
+    </div>
     </details>
 
     <details name='eme_details_memberships' class="eme_accordion">
     <summary><?php esc_html_e( 'Contactperson payment notification email', 'events-made-easy' ); ?></summary>
+    <div>
     <table class="eme_membership_admin_table">
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson payment notification email subject', 'events-made-easy' ); ?></label></td>
@@ -2753,6 +2768,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     </td>
     </tr>
     </table>
+    </div>
     </details>
 </div>
 <?php

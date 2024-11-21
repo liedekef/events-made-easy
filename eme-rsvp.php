@@ -3230,9 +3230,6 @@ function eme_get_attendees_list_for( $event, $template_id = 0, $template_id_head
 }
 
 function eme_get_attendees_list( $event, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $rsvp_status = 0, $paid_status = 0, $order = '', $always_header_footer=0 ) {
-	if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
-		$rsvp_status = EME_RSVP_STATUS_APPROVED;
-	}
 	$attendee_ids  = eme_get_attendee_ids( $event['event_id'], $rsvp_status, $paid_status, $order );
 	$format        = get_option( 'eme_attendees_list_format' );
 	$format_header = DEFAULT_BOOKINGS_LIST_HEADER_FORMAT;
@@ -3277,9 +3274,6 @@ function eme_get_attendees_list( $event, $template_id = 0, $template_id_header =
 }
 
 function eme_get_bookings_list_for_event( $event, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $rsvp_status = 0, $paid_status = 0, $wp_id = 0, $order = '', $always_header_footer=0 ) {
-	if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
-		$rsvp_status = EME_RSVP_STATUS_APPROVED;
-	}
 	if ( $wp_id ) {
 		$bookings = eme_get_bookings_for_event_wp_id( $event['event_id'], $wp_id, $order );
 	} else {
@@ -4841,7 +4835,9 @@ function eme_registration_seats_page( $pending = 0 ) {
 				$bookedSeats_mp    = [];
 				// start with the existing mp bookedseats, in case a #_SEATSxx is missing (due to a eme_if condition maybe), it is then not touched
 				foreach ( $booking_prices_mp as $key => $value ) {
-					$bookedSeats_mp[ $key ] = intval( $already_booked_seats_mp[ $key ] );
+                    if (isset($already_booked_seats_mp[ $key ] ) ) {
+                        $bookedSeats_mp[ $key ] = intval( $already_booked_seats_mp[ $key ] );
+                    }
 				}
 				foreach ( $_POST['bookings'][ $event_id ] as $key => $value ) {
 					if ( preg_match( '/bookedSeats(\d+)/', $key, $matches ) ) {
@@ -5381,7 +5377,11 @@ function eme_get_total_booking_multiprice_arr( $booking ) {
 		$prices = eme_convert_multi2array( $basic_price );
 		$seats  = eme_convert_multi2array( $booking['booking_seats_mp'] );
 		foreach ( $prices as $key => $val ) {
-			$price[] = floatval( $val ) * floatval( $seats[ $key ] );
+            if ( ! isset( $seats[ $key ] ) ) {
+                $price[] = 0;
+            } else {
+                $price[] = floatval( $val ) * floatval( $seats[ $key ] );
+            }
 		}
 	}
 	return $price;

@@ -3377,7 +3377,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			} elseif ( preg_match( '/#_ATTENDEES/', $result ) ) {
-				$replacement = eme_get_attendees_list( $event );
+                $rsvp_status = 0;
+                if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
+                    $rsvp_status = EME_RSVP_STATUS_APPROVED;
+                }
+				$replacement = eme_get_attendees_list( event: $event, rsvp_status: $rsvp_status );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {
@@ -3386,7 +3390,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 					$replacement = apply_filters( 'eme_text', $replacement );
 				}
 			} elseif ( preg_match( '/#_BOOKINGS/', $result ) ) {
-				$replacement = eme_get_bookings_list_for_event( $event );
+                $rsvp_status = 0;
+                if ( get_option( 'eme_attendees_list_ignore_pending' ) ) {
+                    $rsvp_status = EME_RSVP_STATUS_APPROVED;
+                }
+				$replacement = eme_get_bookings_list_for_event( event: $event, rsvp_status: $rsvp_status );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} elseif ( $target == 'rss' ) {

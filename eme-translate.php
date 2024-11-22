@@ -18,15 +18,15 @@ function eme_load_textdomain() {
 function eme_detect_lang() {
 	$language = wp_cache_get( 'eme_language' );
 	if ( $language === false ) {
-                if ( ! empty( $_GET['lang'] ) ) {
-                        $language = eme_sanitize_request( $_GET['lang'] );
-                } else {
-                        $language = substr( determine_locale(), 0, 2 );
-                }
-                // no spaces allowed, so remove everything after the first space
-                $language = preg_replace( '/\s+.*/', '', $language );
-                wp_cache_set( 'eme_language', $language, '', 10 );
+        if ( ! empty( $_GET['lang'] ) ) {
+            $language = eme_sanitize_request( $_GET['lang'] );
+        } else {
+            $language = substr( determine_locale(), 0, 2 );
         }
+        // no spaces allowed, so remove everything after the first space
+        $language = preg_replace( '/\s+.*/', '', $language );
+        wp_cache_set( 'eme_language', $language, '', 10 );
+    }
 	return $language;
 }
 

@@ -490,7 +490,7 @@ function eme_meta_box_div_location_name( $location ) {
 ?>
 <div id="titlediv">
     <?php if ( $action == 'edit' ) { ?>
-        <b> <?php esc_html_e( 'Location name ', 'events-made-easy' ); ?> </b>
+        <b> <?php esc_html_e( 'Location name', 'events-made-easy' ); ?> </b>
     <?php } ?>
     <input name="location_name" id="location_name" type="text" required="required" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" value="<?php echo esc_html( $location['location_name'] ); ?>" size="40">
     <br>

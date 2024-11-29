@@ -2995,7 +2995,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    echo '<input type="search" value="' . esc_html($value) . '" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_html__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
+    echo '<input type="search" value="' . esc_html($value) . '" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_html__( 'Filter on person', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
 
     if ( $edit_group ) {
         echo '</td></tr><tr><td>' . esc_html__( 'Filter on member ID', 'events-made-easy' ) . '</td><td>';
@@ -3005,9 +3005,9 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     } else {
         $value = '';
     }
-    echo '<input type="number" value="' . esc_html($value) . '" name="search_memberid" id="'.$id_prefix.'search_memberid" placeholder="' . esc_html__( 'Filter on member ID', 'events-made-easy' ) . '" size=15>';
-    echo '<input type="search" name="search_paymentid" id="'.$id_prefix.'search_paymentid" placeholder="' . esc_html__( 'Filter on payment id', 'events-made-easy' ) . '" size=15>';
-    echo '<input type="search" name="search_pg_pid" id="'.$id_prefix.'search_pg_pid" placeholder="' . esc_html__( 'Filter on payment GW id', 'events-made-easy' ) . '" size=15>';
+    echo '<input type="number" value="' . esc_html($value) . '" name="search_memberid" id="'.$id_prefix.'search_memberid" placeholder="' . esc_html__( 'Filter on member ID', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
+    echo '<input type="search" name="search_paymentid" id="'.$id_prefix.'search_paymentid" placeholder="' . esc_html__( 'Filter on payment id', 'events-made-easy' ) . '" class="eme_searchfilter">';
+    echo '<input type="search" name="search_pg_pid" id="'.$id_prefix.'search_pg_pid" placeholder="' . esc_html__( 'Filter on payment GW id', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
 
     $formfields_searchable = eme_get_searchable_formfields( 'members', 1 );
     if ( ! empty( $formfields_searchable ) ) {

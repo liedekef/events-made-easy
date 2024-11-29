@@ -5989,11 +5989,11 @@ function eme_events_table( $message = '' ) {
 	}
 	?>
 	</select>
-	<input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" size=10>
-	<input id="search_start_date" type="hidden" name="search_start_date" value="">
-	<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate'>
+	<input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" class='eme_searchfilter'>
+	<input id="search_start_date" type="hidden" name="search_start_date" value="" size=10>
+	<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
 	<input id="search_end_date" type="hidden" name="search_end_date" value="">
-	<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate'>
+	<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
 	<a onclick='return false;' href='#'  class="showhidebutton" alt="show/hide" data-showhide="extra_searchfields"><?php esc_html_e( 'Show/hide extra filters', 'events-made-easy' ); ?></a>
 	<div id="extra_searchfields" style="display:none;">
 	<select id="status" name="status">
@@ -6009,7 +6009,7 @@ function eme_events_table( $message = '' ) {
 		}
 		?>
 	</select>
-        <input type="search" name="search_location" id="search_location" placeholder="<?php esc_attr_e( 'Filter on location', 'events-made-easy' ); ?>" size=15>
+        <input type="search" name="search_location" id="search_location" placeholder="<?php esc_attr_e( 'Filter on location', 'events-made-easy' ); ?>" class="eme_searchfilter">
 	<?php
 	$formfields_searchable = eme_get_searchable_formfields( 'events' );
 	if ( ! empty( $formfields_searchable ) ) {
@@ -6140,9 +6140,9 @@ function eme_recurrences_table( $message = '' ) {
 	</select>
 	<input type="text" class="clearable" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" size=10>
 	<input id="search_start_date" type="hidden" name="search_start_date" value="">
-	<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate'>
+	<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
 	<input id="search_end_date" type="hidden" name="search_end_date" value="">
-	<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate'>
+	<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
 	<button id="RecurrencesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter recurrences', 'events-made-easy' ); ?></button>
 	</form>
 	<form action="#" method="post">

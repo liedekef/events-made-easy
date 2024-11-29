@@ -656,3 +656,10 @@ details.eme_accordion > div, details.eme_accordion > p {
 	background: #f0f0f0;
 }
 
+/* for some fields, only works in chrome for now
+ * see https://developer.chrome.com/docs/css-ui/css-field-sizing
+ * */
+.eme_formfield_fdatetime, .eme_formfield_fdate, #chooseperson, .eme_searchfilter {
+    field-sizing: content;
+    min-inline-size: 10ch;
+}

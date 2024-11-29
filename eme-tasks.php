@@ -437,9 +437,9 @@ function eme_task_signups_table_layout( $message = '' ) {
 	<?php if (isset($_GET['event_id'])) { ?>
 		<input type="hidden" name="search_eventid" id="search_eventid" value="<?php echo intval($_GET['event_id']);?>">
 	<?php } else { ?>
-		<input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Task name', 'events-made-easy' ); ?>" size=20>
-		<input type="search" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" size=20>
-		<input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=20>
+		<input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Task name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
+		<input type="search" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Event name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
+		<input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
 		<select id="search_scope" name="search_scope">
 		<?php
 		$scope_names           = [];
@@ -468,9 +468,9 @@ function eme_task_signups_table_layout( $message = '' ) {
 		?>
 
 		<input id="search_start_date" type="hidden" name="search_start_date" value="">
-		<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate'>
+		<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
 		<input id="search_end_date" type="hidden" name="search_end_date" value="">
-		<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate'>
+		<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
 		<button id="TaskSignupsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter task signups', 'events-made-easy' ); ?></button>
 	<?php } ?>
 	</form>

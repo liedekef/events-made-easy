@@ -1898,7 +1898,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 	} else {
 		$value = '';
 	}
-	echo '<input type="search" value="' . esc_attr($value) . '" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" size=15>';
+	echo '<input type="search" value="' . esc_attr($value) . '" name="search_person" id="'.$id_prefix.'search_person" placeholder="' . esc_attr__( 'Filter on person', 'events-made-easy' ) . '" class="eme_searchfilter" size=15>';
 
 	if ($limit_to_group) {
 		echo '<input type="hidden" name="search_groups" id="'.$id_prefix.'search_groups" value="' . esc_attr($limit_to_group) . '">';
@@ -1911,7 +1911,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 		} else {
 			$value = '';
 		}
-		echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2_people_groups_class', id_prefix: $id_prefix );
+        echo eme_ui_multiselect_key_value( $value, 'search_groups', $groups, 'group_id', 'name', 5, '', 0, 'eme_select2_people_groups_class', id_prefix: $id_prefix );
 	}
 
 	if ( $edit_group ) {

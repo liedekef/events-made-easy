@@ -5168,10 +5168,10 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 		?>
 		</select>
 
-		<input type="search" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Filter on event', 'events-made-easy' ); ?>" size=15>
-		<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate'>
+		<input type="search" name="search_event" id="search_event" placeholder="<?php esc_attr_e( 'Filter on event', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
+		<input id="eme_localized_search_start_date" type="text" name="eme_localized_search_start_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on start date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_start_date' class='eme_formfield_fdate eme_searchfilter'>
 		<input id="search_start_date" type="hidden" name="search_start_date" value="">
-		<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate'>
+		<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
 		<input id="search_end_date" type="hidden" name="search_end_date" value="">
 		<?php
 	}
@@ -5179,12 +5179,12 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	<a onclick='return false;' href='#'  class="showhidebutton" alt="show/hide" data-showhide="extra_searchfields"><?php esc_html_e( 'Show/hide extra filters', 'events-made-easy' ); ?></a>
 	<div id="extra_searchfields" style="display:none;">
 	<?php if ( ! $person_id ) : ?>
-	<input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Filter on person', 'events-made-easy' ); ?>" size=15>
+	<input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Filter on person', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
 <?php endif; ?>
-	<input type="search" name="search_customfields" id="search_customfields" placeholder="<?php esc_attr_e( 'Filter on custom field answer', 'events-made-easy' ); ?>" size=20>
-	<input type="search" name="search_unique" id="search_unique" placeholder="<?php esc_attr_e( 'Filter on unique nbr', 'events-made-easy' ); ?>" size=15>
-	<input type="search" name="search_paymentid" id="search_paymentid" placeholder="<?php esc_attr_e( 'Filter on payment id', 'events-made-easy' ); ?>" <?php if (isset($_GET['paymentid'])) esc_attr_e(intval($_GET['paymentid'])); else echo ''; ?> size=15>
-	<input type="search" name="search_pg_pid" id="search_pg_pid" placeholder="<?php esc_attr_e( 'Filter on payment GW id', 'events-made-easy' ); ?>" size=15>
+	<input type="search" name="search_customfields" id="search_customfields" placeholder="<?php esc_attr_e( 'Filter on custom field answer', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
+	<input type="search" name="search_unique" id="search_unique" placeholder="<?php esc_attr_e( 'Filter on unique nbr', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
+	<input type="search" name="search_paymentid" id="search_paymentid" placeholder="<?php esc_attr_e( 'Filter on payment id', 'events-made-easy' ); ?>" <?php if (isset($_GET['paymentid'])) esc_attr_e(intval($_GET['paymentid'])); else echo ''; ?> class='eme_searchfilter' size=15>
+	<input type="search" name="search_pg_pid" id="search_pg_pid" placeholder="<?php esc_attr_e( 'Filter on payment GW id', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
 	</div>
 	<button id="BookingsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter bookings', 'events-made-easy' ); ?></button>
 	</form>

@@ -2056,7 +2056,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     </tr>
     <tr id="tr_member_form_tpl">
     <td><label for="properties[member_form_tpl]"><?php esc_html_e( 'Member Form:', 'events-made-easy' ); ?></label></td>
-    <td><?php echo eme_ui_select_key_value( $membership['properties']['member_form_tpl'], 'properties[member_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ), 1 ); ?>
+    <td><?php echo eme_ui_select_key_value( $membership['properties']['member_form_tpl'], 'properties[member_form_tpl]', $templates_array2, 'id', 'name', __( 'Please select a template', 'events-made-easy' ) ); ?>
         <br><p class='eme_smaller'><?php esc_html_e( 'This is the form that will be shown when a new member wants to sign up for this membership.', 'events-made-easy' ); ?>
         <br><?php esc_html_e( 'The template should at least contain the placeholders #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT. If not, the form will not be shown. If empty, a simple default will be used.', 'events-made-easy' ); ?></p>
         <?php esc_html_e( 'Or enter your own (if anything is entered here, it takes precedence over the selected template): ', 'events-made-easy' ); ?>

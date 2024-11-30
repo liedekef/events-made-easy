@@ -2197,7 +2197,7 @@ function eme_emails_page() {
 		</div>
 		<h1><?php esc_html_e( 'Mailing report', 'events-made-easy' ); ?></h1>
 	<form action="#" method="post">
-	<input type="text" class="clearable" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=10>
+	<input type="search" class="eme_searchfilter" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Person name', 'events-made-easy' ); ?>" size=10>
 	<button id="ReportLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter', 'events-made-easy' ); ?></button>
 	</form>
 	<!--

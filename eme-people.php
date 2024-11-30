@@ -1944,7 +1944,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 		} else {
 			$value = '';
 		}
-		echo '<input type="search" value="' . esc_attr($value) . '" name="search_customfields" id="'.$id_prefix.'search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
+		echo '<input type="search" value="' . esc_attr($value) . '" name="search_customfields" id="'.$id_prefix.'search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
 
 		if ( $edit_group ) {
 			echo '</td></tr><tr><td>' . esc_html__( 'Custom field to search', 'events-made-easy' ) . '</td><td>';

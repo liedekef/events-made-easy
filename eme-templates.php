@@ -192,7 +192,7 @@ function eme_templates_table_layout( $message = '' ) {
 	<br><br>
 	<form action="#" method="post">
 	<?php echo eme_ui_select( '', 'search_type', $template_types ); ?>
-	<input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Template name', 'events-made-easy' ); ?>" size=20>
+	<input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Template name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=20>
 	<button id="TemplatesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter templates', 'events-made-easy' ); ?></button>
 	</form>
 

@@ -3019,7 +3019,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
         } else {
             $value = '';
         }
-        echo '<input type="search" value="' . esc_html($value) . '" name="search_customfields" id="search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
+        echo '<input type="search" value="' . esc_html($value) . '" name="search_customfields" id="search_customfields" placeholder="' . esc_html__( 'Custom field value to search', 'events-made-easy' ) . '" class="eme_searchfilter" size=20>';
         if ( $edit_group ) {
             echo '</td></tr><tr><td>' . esc_html__( 'Custom field to search', 'events-made-easy' ) . '</td><td>';
         }

@@ -322,15 +322,15 @@ function eme_create_events_submenu() {
 			$main_menu_label = '';
 		} else {
 			// show the count on the main menu if we're not in the EME menu
-			$main_menu_label = " <span class='update-plugins count-$pending_count'><span class='update-count'>" . number_format_i18n( $pending_count ) . '</span></span>';
+			$main_menu_label = " <span class='update-plugins'>" . number_format_i18n( $pending_count ) . '</span>';
 		}
 		if ( $pending_bookings_count ) {
-			$pending_bookings_menu_label = " <span class='update-plugins count-$pending_bookings_count' title='$pending_bookings_title'><span class='update-count'>" . number_format_i18n( $pending_bookings_count ) . '</span></span>';
+			$pending_bookings_menu_label = " <span class='update-plugins' title='$pending_bookings_title'>" . number_format_i18n( $pending_bookings_count ) . '</span>';
 		} else {
 			$pending_bookings_menu_label = '';
 		}
 		if ( $pending_members_count ) {
-			$members_menu_label = " <span class='update-plugins count-$pending_members_count' title='$pending_members_title'><span class='update-count'>" . number_format_i18n( $pending_members_count ) . '</span></span>';
+			$members_menu_label = " <span class='update-plugins' title='$pending_members_title'>" . number_format_i18n( $pending_members_count ) . '</span>';
 		} else {
 			$members_menu_label = '';
 		}

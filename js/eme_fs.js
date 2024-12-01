@@ -38,6 +38,12 @@ jQuery(document).ready(function($) {
                                     })
                                 );
                             });
+                            if (!data.length) {
+                                suggestions.append(
+                                    $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+emefs.translate_nomatchlocation+'</strong>')
+                                );
+                            }
                             $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");

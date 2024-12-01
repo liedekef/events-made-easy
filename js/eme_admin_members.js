@@ -607,6 +607,10 @@ jQuery(document).ready(function ($) {
                                     })
                                 );
                             });
+                            if (!data.length) {
+                                $("<div class='eme-autocomplete-suggestion'></div>")
+                                    .html("<strong>"+ememembers.translate_nomatchperson+'</strong>')
+                            }
                             $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");

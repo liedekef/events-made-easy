@@ -54,7 +54,6 @@ jQuery(document).ready( function($) {
                                 })
                             );
                         });
-
                         $(".eme-autocomplete-suggestions").remove();
                         inputField.after(suggestions);
                     }, "json");

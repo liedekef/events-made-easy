@@ -499,13 +499,11 @@ jQuery(document).ready(function ($) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+eme_htmlDecode(item.eventinfo)+"</strong>")
-                                    .data("item", item)
                                     .on("click", function(e) {
                                         e.preventDefault();
-                                        var selectedItem = $(this).data("item");
-                                        if (selectedItem.event_id) {
-                                            $('input[name=transferto_id]').val(eme_htmlDecode(selectedItem.event_id));
-                                            inputField.val(eme_htmlDecode(selectedItem.name)).attr('readonly', true).addClass('clearable x');
+                                        if (item.event_id) {
+                                            $('input[name=transferto_id]').val(eme_htmlDecode(item.event_id));
+                                            inputField.val(eme_htmlDecode(item.eventinfo)).attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

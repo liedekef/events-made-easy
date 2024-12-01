@@ -185,13 +185,11 @@ jQuery(document).ready(function ($) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>#"+eme_htmlDecode(item.location_id)+' '+eme_htmlDecode(item.name)+'</strong><br /><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+'</small>')
-                                    .data("item", item)
                                     .on("click", function(e) {
                                         e.preventDefault();
-                                        var selectedItem = $(this).data("item");
-                                        if (selectedItem.person_id) {
-                                            $('input[name=transferto_id]').val(eme_htmlDecode(selectedItem.person_id));
-                                            inputField.val(eme_htmlDecode(selectedItem.name)).attr('readonly', true).addClass('clearable x');
+                                        if (item.person_id) {
+                                            $('input[name=transferto_id]').val(eme_htmlDecode(item.person_id));
+                                            inputField.val(eme_htmlDecode(item.name)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

@@ -38,13 +38,11 @@ jQuery(document).ready( function($) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
-                                    .data("item", item)
                                     .on("click", function(e) {
                                         e.preventDefault();
-                                        var selectedItem = $(this).data("item");
-                                        if (selectedItem.person_id) {
-                                            $('input[name=send_previewmailto_id]').val(eme_htmlDecode(selectedItem.person_id));
-                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)).attr('readonly', true).addClass('clearable x');
+                                        if (item.person_id) {
+                                            $('input[name=send_previewmailto_id]').val(eme_htmlDecode(item.person_id));
+                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );
@@ -97,13 +95,11 @@ jQuery(document).ready( function($) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
-                                    .data("item", item)
                                     .on("click", function(e) {
                                         e.preventDefault();
-                                        var selectedItem = $(this).data("item");
-                                        if (selectedItem.person_id) {
-                                            $('input[name=send_previeweventmailto_id]').val(eme_htmlDecode(selectedItem.person_id));
-                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)).attr('readonly', true).addClass('clearable x');
+                                        if (item.person_id) {
+                                            $('input[name=send_previeweventmailto_id]').val(eme_htmlDecode(item.person_id));
+                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

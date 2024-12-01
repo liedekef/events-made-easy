@@ -598,13 +598,11 @@ jQuery(document).ready(function ($) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.person_id)+')</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
-                                    .data("item", item)
                                     .on("click", function(e) {
                                         e.preventDefault();
-                                        var selectedItem = $(this).data("item");
-                                        if (selectedItem.person_id) {
-                                            $('input[name=transferto_personid]').val(eme_htmlDecode(selectedItem.person_id));
-                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)+' ('+eme_htmlDecode(selectedItem.person_id)+')').attr('readonly', true).addClass('clearable x');
+                                        if (item.person_id) {
+                                            $('input[name=transferto_personid]').val(eme_htmlDecode(item.person_id));
+                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.person_id)+')  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );
@@ -654,13 +652,11 @@ jQuery(document).ready(function ($) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.member_id)+')</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
-                                    .data("item", item)
                                     .on("click", function(e) {
                                         e.preventDefault();
-                                        var selectedItem = $(this).data("item");
-                                        if (selectedItem.person_id) {
-                                            $('input[name=related_member_id]').val(eme_htmlDecode(selectedItem.person_id));
-                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)+' ('+eme_htmlDecode(item.member_id)).attr('readonly', true).addClass('clearable x');
+                                        if (item.person_id) {
+                                            $('input[name=related_member_id]').val(eme_htmlDecode(item.person_id));
+                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.member_id)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );
@@ -713,18 +709,16 @@ jQuery(document).ready(function ($) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
-                                    .data("item", item)
                                     .on("click", function(e) {
                                         e.preventDefault();
-                                        var selectedItem = $(this).data("item");
-                                        if (selectedItem.person_id) {
+                                        if (item.person_id) {
                                             $('.personal_info').hide();
-                                            $('input[name=lastname]').val(eme_htmlDecode(selectedItem.lastname)).attr('readonly', true).show();
-                                            $('input[name=firstname]').val(eme_htmlDecode(selectedItem.firstname)).attr('readonly', true).show();
-                                            $('input[name=email]').val(eme_htmlDecode(selectedItem.email)).attr('readonly', true).show();
-                                            $('input[name=person_id]').val(eme_htmlDecode(selectedItem.person_id));
-                                            $('input[name=wp_id]').val(eme_htmlDecode(selectedItem.wp_id)).trigger('input');
-                                            inputField.val(eme_htmlDecode(selectedItem.lastname)+' '+eme_htmlDecode(selectedItem.firstname)).attr('readonly', true).addClass('clearable x');
+                                            $('input[name=lastname]').val(eme_htmlDecode(item.lastname)).attr('readonly', true).show();
+                                            $('input[name=firstname]').val(eme_htmlDecode(item.firstname)).attr('readonly', true).show();
+                                            $('input[name=email]').val(eme_htmlDecode(item.email)).attr('readonly', true).show();
+                                            $('input[name=person_id]').val(eme_htmlDecode(item.person_id));
+                                            $('input[name=wp_id]').val(eme_htmlDecode(item.wp_id)).trigger('input');
+                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

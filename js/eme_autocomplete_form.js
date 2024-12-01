@@ -37,22 +37,20 @@ jQuery(document).ready( function($) {
                             suggestions.append(
                                 $("<div class='eme-autocomplete-suggestion'></div>")
                                 .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br /><small>" + eme_htmlDecode(item.email) + ' - ' + eme_htmlDecode(item.phone) + "</small>")
-                                .data("item", item)
                                 .on("click", function(e) {
                                     e.preventDefault();
-                                    var selectedItem = $(this).data("item");
-                                    $('input[name=lastname]').val(selectedItem.lastname).attr('readonly', true);
-                                    $('input[name=firstname]').val(selectedItem.firstname).attr('readonly', true);
-                                    $('input[name=address1]').val(selectedItem.address1).attr('readonly', true);
-                                    $('input[name=address2]').val(selectedItem.address2).attr('readonly', true);
-                                    $('input[name=city]').val(selectedItem.city).attr('readonly', true);
-                                    $('input[name=state]').val(selectedItem.state).attr('readonly', true);
-                                    $('input[name=zip]').val(selectedItem.zip).attr('readonly', true);
-                                    $('input[name=country]').val(selectedItem.country).attr('readonly', true);
-                                    $('input[name=email]').val(selectedItem.email).attr('readonly', true);
-                                    $('input[name=phone]').val(selectedItem.phone).attr('readonly', true);
-                                    $('input[name=wp_id]').val(selectedItem.wp_id).attr('readonly', true);
-                                    $('input[name=person_id]').val(selectedItem.person_id).attr('readonly', true);
+                                    $('input[name=lastname]').val(item.lastname).attr('readonly', true);
+                                    $('input[name=firstname]').val(item.firstname).attr('readonly', true);
+                                    $('input[name=address1]').val(item.address1).attr('readonly', true);
+                                    $('input[name=address2]').val(item.address2).attr('readonly', true);
+                                    $('input[name=city]').val(item.city).attr('readonly', true);
+                                    $('input[name=state]').val(item.state).attr('readonly', true);
+                                    $('input[name=zip]').val(item.zip).attr('readonly', true);
+                                    $('input[name=country]').val(item.country).attr('readonly', true);
+                                    $('input[name=email]').val(item.email).attr('readonly', true);
+                                    $('input[name=phone]').val(item.phone).attr('readonly', true);
+                                    $('input[name=wp_id]').val(item.wp_id).attr('readonly', true);
+                                    $('input[name=person_id]').val(item.person_id).attr('readonly', true);
                                     $('.eme-autocomplete-suggestions').remove();
                                 })
                             );
@@ -94,14 +92,12 @@ jQuery(document).ready( function($) {
                             suggestions.append(
                                 $("<div class='eme-autocomplete-suggestion'></div>")
                                 .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br /><small>" + eme_htmlDecode(item.email) + "</small>")
-                                .data("item", item)
                                 .on("click", function(e) {
                                     e.preventDefault();
-                                    var selectedItem = $(this).data("item");
-                                    $('input[name=task_lastname]').val(eme_htmlDecode(selectedItem.lastname)).attr('readonly', true);
-                                    $('input[name=task_firstname]').val(eme_htmlDecode(selectedItem.firstname)).attr('readonly', true);
-                                    $('input[name=task_email]').val(eme_htmlDecode(selectedItem.email)).attr('readonly', true);
-                                    $('input[name=task_phone]').val(eme_htmlDecode(selectedItem.phone)).attr('readonly', true);
+                                    $('input[name=task_lastname]').val(eme_htmlDecode(item.lastname)).attr('readonly', true);
+                                    $('input[name=task_firstname]').val(eme_htmlDecode(item.firstname)).attr('readonly', true);
+                                    $('input[name=task_email]').val(eme_htmlDecode(item.email)).attr('readonly', true);
+                                    $('input[name=task_phone]').val(eme_htmlDecode(item.phone)).attr('readonly', true);
                                     $('.eme-autocomplete-suggestions').remove();
                                 })
                             );

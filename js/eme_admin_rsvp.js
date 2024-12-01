@@ -503,7 +503,7 @@ jQuery(document).ready(function ($) {
                                         e.preventDefault();
                                         if (item.event_id) {
                                             $('input[name=transferto_id]').val(eme_htmlDecode(item.event_id));
-                                            inputField.val(eme_htmlDecode(item.eventinfo)).attr('readonly', true).addClass('clearable x');
+                                            inputField.val(eme_htmlDecode(item.eventinfo)+"  ").attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

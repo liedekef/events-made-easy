@@ -18,23 +18,21 @@ jQuery(document).ready(function($) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+eme_htmlDecode(item.name)+'</strong><br /><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+ '</small>')
-                                    .data("item", item)
                                     .on("click", function(e) {
                                         e.preventDefault();
-                                        var selectedItem = $(this).data("item");
-                                        $('input#location_id').val(eme_htmlDecode(selectedItem.location_id)).attr("readonly", true);
-                                        $('input#location_name').val(eme_htmlDecode(selectedItem.name)).attr("readonly", true);
-                                        $('input#location_address1').val(eme_htmlDecode(selectedItem.address1)).attr("readonly", true);
-                                        $('input#location_address2').val(eme_htmlDecode(selectedItem.address2)).attr("readonly", true);
-                                        $('input#location_city').val(eme_htmlDecode(selectedItem.city)).attr("readonly", true);
-                                        $('input#location_state').val(eme_htmlDecode(selectedItem.state)).attr("readonly", true);
-                                        $('input#location_zip').val(eme_htmlDecode(selectedItem.zip)).attr("readonly", true);
-                                        $('input#location_country').val(eme_htmlDecode(selectedItem.country)).attr("readonly", true);
-                                        $('input#location_latitude').val(eme_htmlDecode(selectedItem.latitude)).attr("readonly", true);
-                                        $('input#location_longitude').val(eme_htmlDecode(selectedItem.longitude)).attr("readonly", true);
-                                        $('input#location_url').val(eme_htmlDecode(selectedItem.location_url)).attr("readonly", true);
-                                        $('input#eme_loc_prop_map_icon').val(eme_htmlDecode(selectedItem.map_icon)).attr("readonly", true);
-                                        $('input#eme_loc_prop_online_only').val(eme_htmlDecode(selectedItem.online_only)).attr("disabled", true);
+                                        $('input#location_id').val(eme_htmlDecode(item.location_id)).attr("readonly", true);
+                                        $('input#location_name').val(eme_htmlDecode(item.name)).attr("readonly", true);
+                                        $('input#location_address1').val(eme_htmlDecode(item.address1)).attr("readonly", true);
+                                        $('input#location_address2').val(eme_htmlDecode(item.address2)).attr("readonly", true);
+                                        $('input#location_city').val(eme_htmlDecode(item.city)).attr("readonly", true);
+                                        $('input#location_state').val(eme_htmlDecode(item.state)).attr("readonly", true);
+                                        $('input#location_zip').val(eme_htmlDecode(item.zip)).attr("readonly", true);
+                                        $('input#location_country').val(eme_htmlDecode(item.country)).attr("readonly", true);
+                                        $('input#location_latitude').val(eme_htmlDecode(item.latitude)).attr("readonly", true);
+                                        $('input#location_longitude').val(eme_htmlDecode(item.longitude)).attr("readonly", true);
+                                        $('input#location_url').val(eme_htmlDecode(item.location_url)).attr("readonly", true);
+                                        $('input#eme_loc_prop_map_icon').val(eme_htmlDecode(item.map_icon)).attr("readonly", true);
+                                        $('input#eme_loc_prop_online_only').val(eme_htmlDecode(item.online_only)).attr("disabled", true);
                                         $('.eme-autocomplete-suggestions').remove();
                                         if (typeof L !== 'undefined' && emefs.translate_map_is_active==="true") {
                                             eme_displayAddress(0);

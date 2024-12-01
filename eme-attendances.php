@@ -105,7 +105,7 @@ function eme_attendances_table_layout( $message = '' ) {
 	 <form action='#' method='post'>$nonce_field
          <input type='hidden' name='eme_admin_action' value='add_attendance'>
          <input type='hidden' name='person_id' value=''>
-         <input type='text' id='chooseperson' name='chooseperson' placeholder='" . esc_html__( 'Start typing a name', 'events-made-easy' ) . "'>
+         <input type='search' id='chooseperson' name='chooseperson' placeholder='" . esc_html__( 'Start typing a name', 'events-made-easy' ) . "'>
          " . esc_html__( 'Optional attendance date and time: ', 'events-made-easy' ) . "
          <input type='hidden' name='attendance_actualdate' id='attendance_actualdate' value=''>
          <input type='text' readonly='readonly' name='attendance_date' id='attendance_date' data-date='' data-alt-field='attendance_actualdate' data-multiple-dates='false' style='background: #FCFFAA;' class='eme_formfield_fdatetime'><br>

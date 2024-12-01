@@ -13,7 +13,6 @@ jQuery(document).ready(function($) {
                         { 'frontend_nonce': emefs.translate_frontendnonce, 'name': inputValue, 'action': 'eme_autocomplete_locations'},
                         function(data) {
                             var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
-
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
@@ -33,13 +32,13 @@ jQuery(document).ready(function($) {
                                         $('input#location_url').val(eme_htmlDecode(item.location_url)).attr("readonly", true);
                                         $('input#eme_loc_prop_map_icon').val(eme_htmlDecode(item.map_icon)).attr("readonly", true);
                                         $('input#eme_loc_prop_online_only').val(eme_htmlDecode(item.online_only)).attr("disabled", true);
-                                        $('.eme-autocomplete-suggestions').remove();
                                         if (typeof L !== 'undefined' && emefs.translate_map_is_active==="true") {
                                             eme_displayAddress(0);
                                         }
                                     })
                                 );
                             });
+                            $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second

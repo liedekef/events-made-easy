@@ -607,6 +607,7 @@ jQuery(document).ready(function ($) {
                                     })
                                 );
                             });
+                            $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second
@@ -665,6 +666,7 @@ jQuery(document).ready(function ($) {
                                 $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+ememembers.translate_nomatchmember+'</strong>')
                             }
+                            $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second
@@ -727,6 +729,7 @@ jQuery(document).ready(function ($) {
                                 $("<div class='eme-autocomplete-suggestion'></div>")
                                     .html("<strong>"+ememembers.translate_nomatchperson+'</strong>')
                             }
+                            $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second

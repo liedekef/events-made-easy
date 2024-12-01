@@ -51,14 +51,11 @@ jQuery(document).ready( function($) {
                                     $('input[name=phone]').val(item.phone).attr('readonly', true);
                                     $('input[name=wp_id]').val(item.wp_id).attr('readonly', true);
                                     $('input[name=person_id]').val(item.person_id).attr('readonly', true);
-                                    $('.eme-autocomplete-suggestions').remove();
                                 })
                             );
                         });
 
-                        if (!data.length) {
-                            $(".eme-autocomplete-suggestions").remove();
-                        }
+                        $(".eme-autocomplete-suggestions").remove();
                         inputField.after(suggestions);
                     }, "json");
                 }, 500); // Delay of 0.5 second
@@ -98,13 +95,10 @@ jQuery(document).ready( function($) {
                                     $('input[name=task_firstname]').val(eme_htmlDecode(item.firstname)).attr('readonly', true);
                                     $('input[name=task_email]').val(eme_htmlDecode(item.email)).attr('readonly', true);
                                     $('input[name=task_phone]').val(eme_htmlDecode(item.phone)).attr('readonly', true);
-                                    $('.eme-autocomplete-suggestions').remove();
                                 })
                             );
                         });
-                        if (!data.length) {
-                            $(".eme-autocomplete-suggestions").remove();
-                        }
+                        $('.eme-autocomplete-suggestions').remove();
                         inputField.after(suggestions);
                     }, "json");
                 }, 500); // Delay of 0.5 second

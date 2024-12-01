@@ -116,6 +116,7 @@ jQuery(document).ready( function($) {
                                     .html("<strong>"+emeattendances.translate_nomatchperson+'</strong>')
                                 );
                             }
+                            $(".eme-autocomplete-suggestions").remove();
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second

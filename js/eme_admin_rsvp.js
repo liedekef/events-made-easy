@@ -514,6 +514,7 @@ jQuery(document).ready(function ($) {
                                     .html("<strong>"+emersvp.translate_nomatchevent+'</strong>')
                                 );
                             }
+                            $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second

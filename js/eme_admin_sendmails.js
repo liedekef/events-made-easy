@@ -53,6 +53,7 @@ jQuery(document).ready( function($) {
                                     .html("<strong>"+ememails.translate_nomatchperson+'</strong>')
                                 );
                             }
+                            $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second
@@ -110,6 +111,7 @@ jQuery(document).ready( function($) {
                                     .html("<strong>"+ememails.translate_nomatchperson+'</strong>')
                                 );
                             }
+                            $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second

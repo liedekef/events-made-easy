@@ -1826,7 +1826,7 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
 	<span id="span_transferto" class="eme-hidden">
 	<?php esc_html_e( 'Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):', 'events-made-easy' ); ?>
 	<input type='hidden' id='transferto_id' name='transferto_id'>
-	<input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>">
+	<input type='search' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>">
 	</span>
 	<span id="span_addtogroup" class="eme-hidden">
 	<?php echo eme_ui_select_key_value( '', 'addtogroup', $groups, 'group_id', 'name', __( 'Select a group', 'events-made-easy' ), 1 ); ?>

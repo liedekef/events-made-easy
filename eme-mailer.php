@@ -2416,7 +2416,7 @@ function eme_emails_page() {
 		<hr>
 		<?php esc_html_e( 'Enter a test recipient', 'events-made-easy' ); ?>
 		<input type="hidden" name="send_previeweventmailto_id" id="send_previeweventmailto_id" value="">
-		<input type='text' id='eventmail_chooseperson' name='eventmail_chooseperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>">
+		<input type='search' id='eventmail_chooseperson' name='eventmail_chooseperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>">
 		<button id='previeweventmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
 		<div id="previeweventmail-message" style="display:none;" ></div>
 		<hr>
@@ -2595,7 +2595,7 @@ function eme_emails_page() {
 		<hr>
 		<?php esc_html_e( 'Enter a test recipient', 'events-made-easy' ); ?>
 		<input type="hidden" name="send_previewmailto_id" id="send_previewmailto_id" value="">
-		<input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>">
+		<input type='search' id='chooseperson' name='chooseperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>">
 		<button id='previewmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
 		<div id="previewmail-message" style="display:none;" ></div>
 		<hr>

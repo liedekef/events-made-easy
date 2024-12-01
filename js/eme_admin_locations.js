@@ -200,6 +200,7 @@ jQuery(document).ready(function ($) {
                                     .html("<strong>"+emelocations.translate_nomatchlocation+'</strong>')
                                 );
                             }
+                            $('.eme-autocomplete-suggestions').remove();
                             inputField.after(suggestions);
                         }, "json");
                 }, 500); // Delay of 0.5 second

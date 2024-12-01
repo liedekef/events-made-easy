@@ -1554,7 +1554,7 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <tr><td>
         <?php esc_html_e( 'If you want, select an existing person to become a member', 'events-made-easy' ); ?>
         </td><td>
-            <input type='text' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
+            <input type='search' id='chooseperson' name='chooseperson' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" class="nodynamicupdates">
         </td></tr>
     <?php } else { ?>
 <?php

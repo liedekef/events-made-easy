@@ -157,7 +157,6 @@ jQuery(document).ready( function($) {
                             { eme_admin_nonce: emeevents.translate_adminnonce, name: inputValue, action: 'eme_autocomplete_locations'},
                             function(data) {
                                 var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
-
                                 $.each(data, function(index, item) {
                                     suggestions.append(
                                         $("<div class='eme-autocomplete-suggestion'></div>")
@@ -179,7 +178,6 @@ jQuery(document).ready( function($) {
                                             $('input#eme_loc_prop_map_icon').val(eme_htmlDecode(item.map_icon)).attr("readonly", true);
                                             $('input#eme_loc_prop_max_capacity').val(eme_htmlDecode(item.max_capacity)).attr("readonly", true);
                                             $('input#eme_loc_prop_online_only').val(eme_htmlDecode(item.online_only)).attr("disabled", true);
-                                            $('.eme-autocomplete-suggestions').remove();
                                             $('#img_edit_location').show();
                                             if (typeof L !== 'undefined' && emeevents.translate_map_is_active==="true") {
                                                 eme_displayAddress(0);
@@ -193,6 +191,7 @@ jQuery(document).ready( function($) {
                                         .html("<strong>"+emeevents.translate_nomatchlocation+'</strong>')
                                     );
                                 }
+                                $('.eme-autocomplete-suggestions').remove();
                                 inputField.after(suggestions);
                             }, "json");
                     }, 500); // Delay of 0.5 second

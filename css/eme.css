@@ -642,6 +642,7 @@ details.eme_accordion > div, details.eme_accordion > p {
 /* autocomplete */
 .eme-autocomplete-suggestions {
 	border: 1px solid #ccc;
+    width: fit-content;
 	max-height: 200px;
 	overflow-y: auto;
 	position: relative;

@@ -512,10 +512,11 @@ function eme_ui_checkbox_binary( $option_value, $name, $label = '', $required = 
 	}
 
 	$name = wp_strip_all_tags( $name );
-	$val  = "<input $required_att type='checkbox' name='{$name}' id='{$name}' $class_att value='1' $selected $extra_attributes>";
+	$val  = "<div class='eme-item'><input $required_att type='checkbox' name='{$name}' id='{$name}' $class_att value='1' $selected $extra_attributes>";
 	if ( ! empty( $label ) ) {
 		$val .= "&nbsp;<label for='{$name}'>" . eme_esc_html_keep_br( $label ) . '</label>';
 	}
+    $val .= "</div>";
 	return $val;
 }
 

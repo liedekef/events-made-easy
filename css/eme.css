@@ -27,6 +27,8 @@
 .select2-search__field {
     min-height: unset;
     margin-bottom: 5px;
+    field-sizing: content;
+    min-inline-size: 10ch;
 }
 
 .select2-selection--multiple ul li {
@@ -663,4 +665,10 @@ details.eme_accordion > div, details.eme_accordion > p {
 .eme_formfield_fdatetime, .eme_formfield_fdate, #chooseperson, #chooseevent, .eme_searchfilter {
     field-sizing: content;
     min-inline-size: 10ch;
+}
+
+/* class to keep things on 1 line */
+.eme-item {
+    white-space: nowrap;
+    display:inline;
 }

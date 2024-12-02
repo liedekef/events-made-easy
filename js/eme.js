@@ -56,7 +56,7 @@ jQuery(document).ready( function($) {
                         return params;
                 }
         }
-	var $_GET = getQueryParams(document.location.search);
+       var $_GET = getQueryParams(document.location.search);
 
 	function loadCalendar(tableDiv, fullcalendar, htmltable, htmldiv, showlong_events, month, year, cat_chosen, author_chosen, contact_person_chosen, location_chosen, not_cat_chosen,template_chosen,holiday_chosen,weekdays,language) {
 		if (fullcalendar === undefined) {

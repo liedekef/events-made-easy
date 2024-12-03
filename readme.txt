@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.21 (2024//) =
+* Extra bulk action when managing bookings, to indicate attendance
+
 = 2.5.20 (2024/11/24) =
 * Some HTML fixes
 * Make the option 'Attendees list ignore pending' work as advertised (only for the placeholders, not the shortcodes)

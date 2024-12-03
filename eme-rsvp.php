@@ -5222,6 +5222,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	<option value="markPaid"><?php esc_html_e( 'Mark paid', 'events-made-easy' ); ?></option>
 	<option value="markUnpaid"><?php esc_html_e( 'Mark unpaid', 'events-made-easy' ); ?></option>
 	<option value="partialPayment"><?php esc_html_e( 'Partial payment', 'events-made-easy' ); ?></option>
+	<option value="noteAttendance"><?php esc_html_e( 'Mark person as present (attendance record)', 'events-made-easy' ); ?></option>
 	<option value="setwaitinglistBooking"><?php esc_html_e( 'Put booking on the waitinglist', 'events-made-easy' ); ?></option>
 	<option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
 	<option value="rsvpMails"><?php esc_html_e( 'Send booking related email to selected bookings', 'events-made-easy' ); ?></option>
@@ -6043,6 +6044,9 @@ function eme_ajax_manage_bookings() {
 				case 'pendingBooking':
 					eme_ajax_action_mark_pending( $ids_arr, $do_action, $send_mail, $refund );
 					break;
+				case 'noteAttendance':
+					eme_ajax_action_mark_attendance( $ids_arr, $do_action );
+					break;
 				case 'unsetwaitinglistBooking':
 					eme_ajax_action_remove_waitinglist( $ids_arr, $do_action, $send_mail );
 					break;
@@ -6527,6 +6531,21 @@ function eme_ajax_action_mark_userconfirm( $ids, $action ) {
 	eme_mark_booking_userconfirm( $ids );
 	$ajaxResult                = [];
 	$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The action has been executed successfully.', 'events-made-easy' ) . '</p></div>';
+	$ajaxResult['Result']      = 'OK';
+	print wp_json_encode( $ajaxResult );
+}
+
+function eme_ajax_action_mark_attendance( $ids, $action ) {
+	foreach ( $ids_arr as $booking_id ) {
+        eme_update_attendance_count( $booking_id );
+        $booking = eme_get_booking( $booking );
+        $event = eme_get_event( $booking['event_id'] );
+        if ( $event['event_properties']['attendancerecord'] ) {
+            eme_db_insert_attendance( 'event', $booking['person_id'], '', $booking['event_id'] );
+        }
+    }
+	$ajaxResult                = [];
+	$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'Attendance noted.', 'events-made-easy' ) . '</p></div>';
 	$ajaxResult['Result']      = 'OK';
 	print wp_json_encode( $ajaxResult );
 }

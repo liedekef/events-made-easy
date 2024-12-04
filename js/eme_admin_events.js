@@ -2,7 +2,7 @@ jQuery(document).ready( function($) {
     if (typeof getQueryParams === 'undefined') {
         function getQueryParams(qs) {
             qs = qs.split('+').join(' ');
-            var params = {},
+            let params = {},
                 tokens,
                 re = /[?&]?([^=]+)=([^&]*)/g;
 
@@ -25,11 +25,11 @@ jQuery(document).ready( function($) {
             $('input#recurrence-interval').show();
             $('span#specific_months_span').hide();
         }
-        var number = '-plural';
+        let number = '-plural';
         if ($('input#recurrence-interval').val() == 1 || $('input#recurrence-interval').val() == '') {
             number = '-singular';
         }
-        var descriptor = 'span#interval-'+$('select#recurrence-frequency').val()+number;
+        let descriptor = 'span#interval-'+$('select#recurrence-frequency').val()+number;
         $(descriptor).show();
     }
 
@@ -148,15 +148,16 @@ jQuery(document).ready( function($) {
             let emeadmin_locationname_timeout; // Declare a variable to hold the timeout ID
             $("input#location_name").on("input", function() {
                 clearTimeout(emeadmin_locationname_timeout); // Clear the previous timeout
-                var inputField = $(this)
-                var inputValue = inputField.val()
+                let suggestions;
+                let inputField = $(this);
+                let inputValue = inputField.val();
                 $(".eme-autocomplete-suggestions").remove();
                 if (inputValue.length >= 2) {
                     emeadmin_locationname_timeout = setTimeout(function() {
                         $.post(ajaxurl,
                             { eme_admin_nonce: emeevents.translate_adminnonce, name: inputValue, action: 'eme_autocomplete_locations'},
                             function(data) {
-                                var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                                suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
                                 $.each(data, function(index, item) {
                                     suggestions.append(
                                         $("<div class='eme-autocomplete-suggestion'></div>")
@@ -428,7 +429,7 @@ jQuery(document).ready( function($) {
             invalidHandler: function(e,validator) {
                 $.each(validator.invalid, function(key, value) {
                     // get the closest tabname
-                    var tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
+                    let tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
                     activateTab(tabname);
                     // break the loop, we only want to switch to the first tab with the error
                     return false;
@@ -464,7 +465,7 @@ jQuery(document).ready( function($) {
 
     function validateEventForm() {
         // users cannot submit the event form unless some fields are filled
-        var recurring = $('input[name=repeated_event]:checked').val();
+        let recurring = $('input[name=repeated_event]:checked').val();
 
         if (recurring && $('input#localized-rec-start-date').val() == $('input#localized-rec-end-date').val()) {
             alert (emeevents.translate_startenddate_identical); 
@@ -669,13 +670,13 @@ jQuery(document).ready( function($) {
             if (action_ok==1) {
                 $('#EventsActionsButton').text(emeevents.translate_pleasewait);
                 $('#EventsActionsButton').prop('disabled', true);
-                var ids = [];
+                let ids = [];
                 selectedRows.each(function () {
                     ids.push($(this).data('record')['event_id']);
                 });
 
-                var idsjoined = ids.join(); //will be such a string '2,5,7'
-                var params = {
+                let idsjoined = ids.join(); //will be such a string '2,5,7'
+                let params = {
                     'event_id': idsjoined,
                     'action': 'eme_manage_events',
                     'do_action': do_action,
@@ -782,13 +783,13 @@ jQuery(document).ready( function($) {
             if (action_ok==1) {
                 $('#RecurrencesActionsButton').text(emeevents.translate_pleasewait);
                 $('#RecurrencesActionsButton').prop('disabled', true);
-                var ids = [];
+                let ids = [];
                 selectedRows.each(function () {
                     ids.push($(this).data('record')['recurrence_id']);
                 });
 
-                var idsjoined = ids.join(); //will be such a string '2,5,7'
-                var params = {
+                let idsjoined = ids.join(); //will be such a string '2,5,7'
+                let params = {
                     'recurrence_id': idsjoined,
                     'action': 'eme_manage_recurrences',
                     'do_action': do_action,

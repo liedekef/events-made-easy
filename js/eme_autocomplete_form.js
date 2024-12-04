@@ -23,15 +23,16 @@ jQuery(document).ready( function($) {
         let frontend_lastname_timeout; // Declare a variable to hold the timeout ID
         $("input[name=lastname]").on("input", function() {
             clearTimeout(frontend_lastname_timeout); // Clear the previous timeout
-            var inputField = $(this);
-            var inputValue = inputField.val();
+            let suggestions;
+            let inputField = $(this);
+            let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
             if (inputValue.length >= 2) {
-                var requestData = inputField.parents('form:first').serializeArray();
+                let requestData = inputField.parents('form:first').serializeArray();
                 requestData.push({name: 'eme_ajax_action', value: 'rsvp_autocomplete_people'});
                 frontend_lastname_timeout = setTimeout(function() {
                     $.post(self.location.href, requestData, function(data) {
-                        var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                        suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
 
                         $.each(data, function(index, item) {
                             suggestions.append(
@@ -74,15 +75,16 @@ jQuery(document).ready( function($) {
         let frontend_tasklastname_timeout; // Declare a variable to hold the timeout ID
         $("input[name=task_lastname]").on("input", function() {
             clearTimeout(frontend_tasklastname_timeout); // Clear the previous timeout
-            var inputField = $(this);
-            var inputValue = inputField.val();
+            let suggestions;
+            let inputField = $(this);
+            let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
             if (inputField.length >= 2) {
-                var requestData = inputField.parents('form:first').serializeArray();
+                let requestData = inputField.parents('form:first').serializeArray();
                 requestData.push({name: 'eme_ajax_action', value: 'task_autocomplete_people'});
                 frontend_tasklastname_timeout = setTimeout(function() {
                     $.post(self.location.href, requestData, function(data) {
-                        var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                        suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
 
                         $.each(data, function(index, item) {
                             suggestions.append(

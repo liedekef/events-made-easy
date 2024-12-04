@@ -93,21 +93,21 @@
         // Actions button
         $('#CountriesActionsButton').on("click",function (e) {
 	   e.preventDefault();
-           var selectedRows = $('#CountriesTableContainer').jtable('selectedRows');
-           var do_action = $('#eme_admin_action').val();
-           var action_ok=1;
+           let selectedRows = $('#CountriesTableContainer').jtable('selectedRows');
+           let do_action = $('#eme_admin_action').val();
+           let action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteCountries') && !confirm(emecountries.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if (action_ok==1) {
                  $('#CountriesActionsButton').text(emecountries.translate_pleasewait);
-                 var ids = [];
+                 let ids = [];
                  selectedRows.each(function () {
                    ids.push($(this).data('record')['id']);
                  });
 
-                 var idsjoined = ids.join(); //will be such a string '2,5,7'
+                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                  $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_countries', 'do_action': do_action, 'eme_admin_nonce': emecountries.translate_adminnonce }, function() {
 			 $('#CountriesTableContainer').jtable('reload');
 			 $('#CountriesActionsButton').text(emecountries.translate_apply);
@@ -126,21 +126,21 @@
         // Actions button
         $('#StatesActionsButton').on("click",function (e) {
 	   e.preventDefault();
-           var selectedRows = $('#StatesTableContainer').jtable('selectedRows');
-           var do_action = $('#eme_admin_action').val();
-           var action_ok=1;
+           let selectedRows = $('#StatesTableContainer').jtable('selectedRows');
+           let do_action = $('#eme_admin_action').val();
+           let action_ok=1;
            if (selectedRows.length > 0 && do_action != '') {
               if ((do_action=='deleteStates') && !confirm(emecountries.translate_areyousuretodeleteselected)) {
                  action_ok=0;
               }
               if (action_ok==1) {
                  $('#StatesActionsButton').text(emecountries.translate_pleasewait);
-                 var ids = [];
+                 let ids = [];
                  selectedRows.each(function () {
                    ids.push($(this).data('record')['id']);
                  });
 
-                 var idsjoined = ids.join(); //will be such a string '2,5,7'
+                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                  $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_states', 'do_action': do_action, 'eme_admin_nonce': emecountries.translate_adminnonce }, function() {
 			 $('#StatesTableContainer').jtable('reload');
 			 $('#StatesActionsButton').text(emecountries.translate_apply);

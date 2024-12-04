@@ -50,21 +50,21 @@ jQuery(document).ready( function($) {
     // Actions button
     $('#TemplatesActionsButton').on("click",function (e) {
         e.preventDefault();
-        var selectedRows = $('#TemplatesTableContainer').jtable('selectedRows');
-        var do_action = $('#eme_admin_action').val();
-        var action_ok=1;
+        let selectedRows = $('#TemplatesTableContainer').jtable('selectedRows');
+        let do_action = $('#eme_admin_action').val();
+        let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
             if ((do_action=='deleteTemplates') && !confirm(emetemplates.translate_areyousuretodeleteselected)) {
                 action_ok=0;
             }
             if (action_ok==1) {
                 $('#TemplatesActionsButton').text(emetemplates.translate_pleasewait);
-                var ids = [];
+                let ids = [];
                 selectedRows.each(function () {
                     ids.push($(this).data('record')['id']);
                 });
 
-                var idsjoined = ids.join(); //will be such a string '2,5,7'
+                let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_templates', 'do_action': do_action, 'eme_admin_nonce': emetemplates.translate_adminnonce }, function() {
                     $('#TemplatesTableContainer').jtable('reload');
                     $('#TemplatesActionsButton').text(emetemplates.translate_apply);
@@ -92,20 +92,20 @@ jQuery(document).ready( function($) {
     });
 
     // because the fieldname contains a '[' we do it a bit differently
-    var pdfsize_name='properties[pdf_size]';
+    let pdfsize_name = 'properties[pdf_size]';
     function updateShowHideStuff () {
         if ($('select#type').val() == 'pdf') {
             $('table#pdf_properties').show();
         } else {
             $('table#pdf_properties').hide();
         }
-        if ($('select[name="'+pdfsize_name+'"]').val() == 'custom') {
+        if ($('select[name="' + pdfsize_name + '"]').val() == 'custom') {
             $('tr.template-pdf-custom').show();
         } else {
             $('tr.template-pdf-custom').hide();
         }
     }
     $('select#type').on("change",updateShowHideStuff);
-    $('select[name="'+pdfsize_name+'"]').on("change",updateShowHideStuff);
+    $('select[name="' + pdfsize_name + '"]').on("change",updateShowHideStuff);
     updateShowHideStuff();
 });

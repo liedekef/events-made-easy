@@ -2,7 +2,7 @@ jQuery(document).ready( function($) {
     if (typeof getQueryParams === 'undefined') {
         function getQueryParams(qs) {
             qs = qs.split('+').join(' ');
-            var params = {},
+            let params = {},
                 tokens,
                 re = /[?&]?([^=]+)=([^&]*)/g;
 
@@ -20,8 +20,9 @@ jQuery(document).ready( function($) {
         let emeadmin_chooseperson_timeout; // Declare a variable to hold the timeout ID
         $("input[name=chooseperson]").on("input", function(e) {
             clearTimeout(emeadmin_chooseperson_timeout); // Clear the previous timeout
-            var inputField = $(this);
-            var inputValue = inputField.val();
+            let suggestions;
+            let inputField = $(this);
+            let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
             if (inputValue.length >= 2) {
                 emeadmin_chooseperson_timeout = setTimeout(function() {
@@ -33,7 +34,7 @@ jQuery(document).ready( function($) {
                             'eme_searchlimit': 'people'
                         },
                         function(data) {
-                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
@@ -78,8 +79,9 @@ jQuery(document).ready( function($) {
         let emeadmin_eventmailchooseperson_timeout; // Declare a variable to hold the timeout ID
         $("input[name=eventmail_chooseperson]").on("input", function(e) {
             clearTimeout(emeadmin_eventmailchooseperson_timeout); // Clear the previous timeout
-            var inputField = $(this);
-            var inputValue = inputField.val();
+            let suggestions;
+            let inputField = $(this);
+            let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
             if (inputValue.length >= 2) {
                 emeadmin_eventmailchooseperson_timeout = setTimeout(function() {
@@ -91,7 +93,7 @@ jQuery(document).ready( function($) {
                             'eme_searchlimit': 'people'
                         },
                         function(data) {
-                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
@@ -136,13 +138,13 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
         if (ememails.translate_htmlmail=='yes') {
-            var editor = tinymce.get('event_mail_message');
+            let editor = tinymce.get('event_mail_message');
             if ( editor !== null) {
                 editor.save();
             }
         }
-        var form_id = $(this.form).attr('id');
-        var alldata = new FormData($('#'+form_id)[0]);
+        let form_id = $(this.form).attr('id');
+        let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_eventmail');
         alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
         $('#eventmailButton').text(ememails.translate_pleasewait);
@@ -174,13 +176,13 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
         if (ememails.translate_htmlmail=='yes') {
-            var editor = tinymce.get('generic_mail_message');
+            let editor = tinymce.get('generic_mail_message');
             if ( editor !== null) {
                 editor.save();
             }
         }
-        var form_id = $(this.form).attr('id');
-        var alldata = new FormData($('#'+form_id)[0]);
+        let form_id = $(this.form).attr('id');
+        let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_genericmail');
         alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
         $('#genericmailButton').text(ememails.translate_pleasewait);
@@ -213,13 +215,13 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
         if (ememails.translate_htmlmail=='yes') {
-            var editor = tinymce.get('event_mail_message');
+            let editor = tinymce.get('event_mail_message');
             if ( editor !== null) {
                 editor.save();
             }
         }
-        var form_id = $(this.form).attr('id');
-        var alldata = new FormData($('#'+form_id)[0]);
+        let form_id = $(this.form).attr('id');
+        let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_previeweventmail');
         alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
         $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
@@ -239,13 +241,13 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
         if (ememails.translate_htmlmail=='yes') {
-            var editor = tinymce.get('generic_mail_message');
+            let editor = tinymce.get('generic_mail_message');
             if ( editor !== null) {
                 editor.save();
             }
         }
-        var form_id = $(this.form).attr('id');
-        var alldata = new FormData($('#'+form_id)[0]);
+        let form_id = $(this.form).attr('id');
+        let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_previewmail');
         alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
         $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
@@ -264,8 +266,8 @@ jQuery(document).ready( function($) {
 
     $('#searchmailButton').on("click",function (e) {
         e.preventDefault();
-        var form_id = $(this.form).attr('id');
-        var alldata = new FormData($('#'+form_id)[0]);
+        let form_id = $(this.form).attr('id');
+        let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_searchmail');
         alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
         $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
@@ -278,8 +280,8 @@ jQuery(document).ready( function($) {
 
     $('#testmailButton').on("click",function (e) {
         e.preventDefault();
-        var form_id = $(this.form).attr('id');
-        var alldata = new FormData($('#'+form_id)[0]);
+        let form_id = $(this.form).attr('id');
+        let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_testmail');
         alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
         $('#testmailButton').text(ememails.translate_pleasewait);
@@ -322,7 +324,7 @@ jQuery(document).ready( function($) {
             function(data){
                 $('textarea#event_mail_message').val(data.htmlmessage);
                 if (ememails.translate_htmlmail=='yes') {
-                    var editor = tinymce.get('event_mail_message');
+                    let editor = tinymce.get('event_mail_message');
                     if ( editor !== null) {
                         editor.setContent(data.htmlmessage);
                         editor.save();
@@ -356,7 +358,7 @@ jQuery(document).ready( function($) {
             function(data){
                 $('textarea#generic_mail_message').val(data.htmlmessage);
                 if (ememails.translate_htmlmail=='yes') {
-                    var editor = tinymce.get('generic_mail_message');
+                    let editor = tinymce.get('generic_mail_message');
                     if ( editor !== null) {
                         editor.setContent(data.htmlmessage);
                         editor.save();
@@ -424,7 +426,7 @@ jQuery(document).ready( function($) {
             dataType: 'json',
             delay: 1000,
             data: function (params) {
-                var search_all=0;
+                let search_all=0;
                 if ($('#eventsearch_all').is(':checked')) {
                     search_all=1;
                 }
@@ -515,16 +517,16 @@ jQuery(document).ready( function($) {
 
     $('#eventmail_attach_button').on("click",function(e) {
         e.preventDefault();
-        var custom_uploader = wp.media({
+        let custom_uploader = wp.media({
             title: ememails.translate_addattachments,
             button: {
                 text: ememails.translate_addattachments
             },
             multiple: true  // Set this to true to allow multiple files to be selected
         }).on('select', function() {
-            var selection = custom_uploader.state().get('selection');
+            let selection = custom_uploader.state().get('selection');
             // using map is not really needed, but this way we can reuse the code if multiple=true
-            // var attachment = custom_uploader.state().get('selection').first().toJSON();
+            // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
                 $('#eventmail_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
@@ -554,16 +556,16 @@ jQuery(document).ready( function($) {
 
     $('#generic_attach_button').on("click",function(e) {
         e.preventDefault();
-        var custom_uploader = wp.media({
+        let custom_uploader = wp.media({
             title: ememails.translate_addattachments,
             button: {
                 text: ememails.translate_addattachments
             },
             multiple: true  // Set this to true to allow multiple files to be selected
         }).on('select', function() {
-            var selection = custom_uploader.state().get('selection');
+            let selection = custom_uploader.state().get('selection');
             // using map is not really needed, but this way we can reuse the code if multiple=true
-            // var attachment = custom_uploader.state().get('selection').first().toJSON();
+            // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
                 $('#generic_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");

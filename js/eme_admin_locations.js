@@ -168,8 +168,9 @@ jQuery(document).ready(function ($) {
         let emeadmin_chooselocation_timeout; // Declare a variable to hold the timeout ID
         $("input[name=chooselocation]").on("input", function(e) {
             clearTimeout(emeadmin_chooselocation_timeout); // Clear the previous timeout
-            var inputField = $(this);
-            var inputValue = inputField.val();
+            let suggestions;
+            let inputField = $(this);
+            let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
             if (inputValue.length >= 2) {
                 emeadmin_chooselocation_timeoutsetTimeout(function() {
@@ -180,7 +181,7 @@ jQuery(document).ready(function ($) {
                             'action': 'eme_autocomplete_locations'
                         },
                         function(data) {
-                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
@@ -234,12 +235,12 @@ jQuery(document).ready(function ($) {
             }
             if (action_ok==1) {
                 $('#LocationsActionsButton').text(emelocations.translate_pleasewait);
-                var ids = [];
+                let ids = [];
                 selectedRows.each(function () {
                     ids.push($(this).data('record')['location_id']);
                 });
 
-                var idsjoined = ids.join(); //will be such a string '2,5,7'
+                let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {
                     'location_id': idsjoined,
                     'action': 'eme_manage_locations',

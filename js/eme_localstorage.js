@@ -1,6 +1,6 @@
 jQuery(document).ready( function($) {
 	if ($("form.eme-rememberme input#eme_rememberme").length) {
-		var eme_rememberme_checked = localStorage.getItem('eme_rememberme');
+		let eme_rememberme_checked = localStorage.getItem('eme_rememberme');
 		if (eme_rememberme_checked == 1) {
 			$("form.eme-rememberme input#eme_rememberme").prop("checked",true);
 		}

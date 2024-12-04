@@ -128,7 +128,7 @@ jQuery(document).ready(function ($) {
     if (typeof getQueryParams === 'undefined') {
         function getQueryParams(qs) {
             qs = qs.split('+').join(' ');
-            var params = {},
+            let params = {},
                 tokens,
                 re = /[?&]?([^=]+)=([^&]*)/g;
 
@@ -191,14 +191,14 @@ jQuery(document).ready(function ($) {
                     text: emersvp.translate_markpaidandapprove,
                     cssClass: 'eme_jtable_button_for_pending_only',
                     click: function () {
-                        var selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
-                        var do_action = 'markpaidandapprove';
+                        let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
+                        let do_action = 'markpaidandapprove';
                         if (selectedRows.length > 0) {
-                            var ids = [];
+                            let ids = [];
                             selectedRows.each(function () {
                                 ids.push($(this).data('record')['booking_id']);
                             });
-                            var idsjoined = ids.join(); //will be such a string '2,5,7'
+                            let idsjoined = ids.join(); //will be such a string '2,5,7'
                             $('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_pleasewait);
                             $.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': emersvp.translate_adminnonce }, function(data) {
                                 if (data.Result!='OK') {
@@ -217,14 +217,14 @@ jQuery(document).ready(function ($) {
                         text: emersvp.translate_markpaid,
                         cssClass: 'eme_jtable_button_for_approved_only',
                         click: function () {
-                            var selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
-                            var do_action = 'markPaid';
+                            let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
+                            let do_action = 'markPaid';
                             if (selectedRows.length > 0) {
-                                var ids = [];
+                                let ids = [];
                                 selectedRows.each(function () {
                                     ids.push($(this).data('record')['booking_id']);
                                 });
-                                var idsjoined = ids.join(); //will be such a string '2,5,7'
+                                let idsjoined = ids.join(); //will be such a string '2,5,7'
                                 $('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(emersvp.translate_pleasewait);
                                 $.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': emersvp.translate_adminnonce }, function(data) {
                                     if (data.Result!='OK') {
@@ -282,7 +282,7 @@ jQuery(document).ready(function ($) {
     }
 
     function updateShowHideStuff () {
-        var action=$('select#eme_admin_action').val();
+        let action=$('select#eme_admin_action').val();
         if ($.inArray(action,['resendApprovedBooking']) >= 0) {
             $('span#span_sendtocontact').show();
         } else {
@@ -340,22 +340,22 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#BookingsActionsButton').on("click",function (e) {
         e.preventDefault();
-        var selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
-        var do_action = $('#eme_admin_action').val();
-        var send_to_contact_too = $('#send_to_contact_too').val();
-        var send_mail = $('#send_mail').val();
-        var refund = $('#refund').val();
-        var partial_amount = $('#partial_amount').val();
-        var rsvpmail_template = $('#rsvpmail_template').val();
-        var rsvpmail_template_subject = $('#rsvpmail_template_subject').val();
-        var pdf_template = $('#pdf_template').val();
-        var pdf_template_header = $('#pdf_template_header').val();
-        var pdf_template_footer = $('#pdf_template_footer').val();
-        var html_template = $('#html_template').val();
-        var html_template_header = $('#html_template_header').val();
-        var html_template_footer = $('#html_template_footer').val();
+        let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
+        let do_action = $('#eme_admin_action').val();
+        let send_to_contact_too = $('#send_to_contact_too').val();
+        let send_mail = $('#send_mail').val();
+        let refund = $('#refund').val();
+        let partial_amount = $('#partial_amount').val();
+        let rsvpmail_template = $('#rsvpmail_template').val();
+        let rsvpmail_template_subject = $('#rsvpmail_template_subject').val();
+        let pdf_template = $('#pdf_template').val();
+        let pdf_template_header = $('#pdf_template_header').val();
+        let pdf_template_footer = $('#pdf_template_footer').val();
+        let html_template = $('#html_template').val();
+        let html_template_header = $('#html_template_header').val();
+        let html_template_footer = $('#html_template_footer').val();
 
-        var action_ok=1;
+        let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
             if ((do_action=='deleteRegistration') && !confirm(emersvp.translate_areyousuretodeleteselected)) {
                 action_ok=0;
@@ -367,14 +367,14 @@ jQuery(document).ready(function ($) {
             if (action_ok==1) {
                 $('#BookingsActionsButton').text(emersvp.translate_pleasewait);
                 $('#BookingsActionsButton').prop('disabled', true);
-                var ids = [];
-                var form;
+                let ids = [];
+                let form;
                 selectedRows.each(function () {
                     ids.push($(this).data('record')['booking_id']);
                 });
 
-                var idsjoined = ids.join(); //will be such a string '2,5,7'
-                var params = {
+                let idsjoined = ids.join(); //will be such a string '2,5,7'
+                let params = {
                     'booking_ids': idsjoined,
                     'action': 'eme_manage_bookings',
                     'do_action': do_action,
@@ -455,7 +455,7 @@ jQuery(document).ready(function ($) {
     // we add the on-click to the body and limit to the .eme_iban_button class, so that the iban-buttons that are only added via ajax are handled as well
     $('body').on('click', '.eme_iban_button', function(e) {
         e.preventDefault();
-        var params = {
+        let params = {
             'action': 'eme_get_payconiq_iban',
             'pg_pid': $(this).data('pg_pid'),
             'eme_admin_nonce': emersvp.translate_adminnonce
@@ -475,12 +475,13 @@ jQuery(document).ready(function ($) {
         let emeadmin_chooseevent_timeout; // Declare a variable to hold the timeout ID
         $("input[name=chooseevent]").on("input", function(e) {
             clearTimeout(emeadmin_chooseevent_timeout); // Clear the previous timeout
-            var inputField = $(this);
-            var inputValue = inputField.val();
+            let suggestions;
+            let inputField = $(this);
+            let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
             if (inputValue.length >= 2) {
                 emeadmin_chooseevent_timeout = setTimeout(function() {
-                    var search_all=0;
+                    let search_all=0;
                     if ($('#eventsearch_all').is(':checked')) {
                         search_all=1;
                     }
@@ -494,7 +495,7 @@ jQuery(document).ready(function ($) {
                             'action': 'eme_autocomplete_event'
                         },
                         function(data) {
-                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")

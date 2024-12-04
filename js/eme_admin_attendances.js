@@ -83,8 +83,9 @@ jQuery(document).ready( function($) {
         let emeadmin_attendance_timeout; // Declare a variable to hold the timeout ID
         $("input[name=chooseperson]").on("input", function(e) {
             clearTimeout(emeadmin_attendance_timeout); // Clear the previous timeout
-            var inputField = $(this);
-            var inputValue = inputField.val();
+            let suggestions;
+            let inputField = $(this);
+            let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
             if (inputValue.length >= 2) {
                 emeadmin_attendance_timeout = setTimeout(function() {
@@ -96,7 +97,7 @@ jQuery(document).ready( function($) {
                             'eme_searchlimit': 'people'
                         },
                         function(data) {
-                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")

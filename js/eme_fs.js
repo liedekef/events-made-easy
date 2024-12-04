@@ -4,15 +4,16 @@ jQuery(document).ready(function($) {
         $("input#location_name").on("input", function(e) {
             e.preventDefault();
             clearTimeout(frontend_submit_timeout); // Clear the previous timeout
-            var inputField = $(this);
-            var inputValue = inputField.val();
+            let suggestions;
+            let inputField = $(this);
+            let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
             if (inputValue.length >= 2) {
                 frontend_submit_timeout = setTimeout(function() {
                     $.post(emefs.translate_ajax_url,
                         { 'frontend_nonce': emefs.translate_frontendnonce, 'name': inputValue, 'action': 'eme_autocomplete_locations'},
                         function(data) {
-                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")

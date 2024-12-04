@@ -4353,11 +4353,11 @@ function eme_user_profile( $user ) {
 		<?php esc_html_e( 'The phone number used by Events Made Easy when the user is indicated as the contact person for an event.', 'events-made-easy' ); ?></td>
 		</tr>
 		<tr>
-		<th><label for="eme_bookings"><?php esc_html_e( 'Bookings made for future events', 'events-made-easy' ); ?></label></th>
+		<th><?php esc_html_e( 'Bookings made for future events', 'events-made-easy' ); ?></th>
 		<td><?php echo eme_get_bookings_list_for_wp_id( $user->ID, 'future', $template ); ?>
 		</tr>
 		<tr>
-		<th><label for="eme_memberships"><?php esc_html_e( 'Active memberships', 'events-made-easy' ); ?></label></th>
+		<th><?php esc_html_e( 'Active memberships', 'events-made-easy' ); ?></th>
 		<td><?php echo $memberships_list; ?></td>
 		</tr>
 	</table>

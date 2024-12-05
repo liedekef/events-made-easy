@@ -14,8 +14,6 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    var $_GET = getQueryParams(document.location.search);
-
     function eme_dynamic_people_data_json(form_id) {
         if ($('div#eme_dynpersondata').length) {
             let alldata = new FormData($('#'+form_id)[0]);
@@ -104,7 +102,7 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    var personfields = {
+    let personfields = {
         'people.person_id': {
             key: true,
             title: emepeople.translate_personid,
@@ -216,13 +214,13 @@ jQuery(document).ready(function ($) {
     }
 
     if ($('#PeopleTableContainer').length) {
-        var extrafields=$('#PeopleTableContainer').data('extrafields').toString().split(',');
-        var extrafieldnames=$('#PeopleTableContainer').data('extrafieldnames').toString().split(',');
-        var extrafieldsearchable=$('#PeopleTableContainer').data('extrafieldsearchable').toString().split(',');
+        let extrafields=$('#PeopleTableContainer').data('extrafields').toString().split(',');
+        let extrafieldnames=$('#PeopleTableContainer').data('extrafieldnames').toString().split(',');
+        let extrafieldsearchable=$('#PeopleTableContainer').data('extrafieldsearchable').toString().split(',');
         $.each(extrafields, function( index, value ) {
             if (value != '') {
-                var fieldindex='FIELD_'+value;
-                var extrafield = {}
+                let fieldindex='FIELD_'+value;
+                let extrafield = {}
                 if (extrafieldsearchable[index]=='1') {
                     sorting=true;
                 } else {
@@ -238,6 +236,7 @@ jQuery(document).ready(function ($) {
         });
 
         //Prepare jtable plugin
+        let $_GET = getQueryParams(document.location.search);
         $('#PeopleTableContainer').jtable({
             title: emepeople.translate_people,
             paging: true,

@@ -59,9 +59,9 @@ jQuery(document).ready( function($) {
 
         $('div[data-dismissible] button.notice-dismiss').on("click",function (event) {
             event.preventDefault();
-            var $el = $('div[data-dismissible]');
+            let $el = $('div[data-dismissible]');
 
-            var attr_value, option_name, dismissible_length;
+            let attr_value, option_name, dismissible_length;
 
             attr_value = $el.attr('data-dismissible').split('-');
 
@@ -70,7 +70,7 @@ jQuery(document).ready( function($) {
 
             option_name = attr_value.join('-');
 
-            var ajaxdata = {
+            let ajaxdata = {
                 'action': 'eme_dismiss_admin_notice',
                 'option_name': option_name,
                 'dismissible_length': dismissible_length,
@@ -85,10 +85,10 @@ jQuery(document).ready( function($) {
 	$('#eme_attr_add_tag').on("click",function(event) {
 		event.preventDefault();
 		//Get All meta rows
-		var metas = $('#eme_attr_body').children();
+		let metas = $('#eme_attr_body').children();
 		//Copy first row and change values
-		var metaCopy = $(metas[0]).clone(true);
-		var newId = metas.length + 1;
+		let metaCopy = $(metas[0]).clone(true);
+		let newId = metas.length + 1;
 		metaCopy.attr('id', 'eme_attr_'+newId);
 		metaCopy.find('a').attr('rel', newId);
 		metaCopy.find('[name=eme_attr_1_ref]').attr({
@@ -116,9 +116,9 @@ jQuery(document).ready( function($) {
 			$($(this).parent().parent().get(0)).remove();
 			//Renumber all the items
 			$('#eme_attr_body').children().each( function(id){
-				var metaCopy = $(this);
-				var oldId = metaCopy.attr('id').replace('eme_attr_','');
-				var newId = id+1;
+				let metaCopy = $(this);
+				let oldId = metaCopy.attr('id').replace('eme_attr_','');
+				let newId = id+1;
 				metaCopy.attr('id', 'eme_attr_'+newId);
 				metaCopy.find('a').attr('rel', newId);
 				metaCopy.find('[name=eme_attr_'+ oldId +'_ref]').attr('name', 'eme_attr_'+newId+'_ref');
@@ -126,7 +126,7 @@ jQuery(document).ready( function($) {
 				metaCopy.find('[name=eme_attr_'+ oldId +'_name]').attr( 'name', 'eme_attr_'+newId+'_name');
 			});
 		} else {
-			var metaCopy = $($(this).parent().parent().get(0));
+			let metaCopy = $($(this).parent().parent().get(0));
 			metaCopy.find('[name=eme_attr_1_ref]').attr('value', '');
 			metaCopy.find('[name=eme_attr_1_content]').attr('value', '');
 			metaCopy.find('[name=eme_attr_1_name]').attr( 'value', '');
@@ -144,21 +144,21 @@ jQuery(document).ready( function($) {
 	$('.eme_dyndata_add_tag').on("click",function(event) {
 		event.preventDefault();
 		//Get All meta rows
-		var metas = $('#eme_dyndata_tbody').children();
+		let metas = $('#eme_dyndata_tbody').children();
 		//Copy first row and change values
-		var metaCopy = $(metas[0]).clone(true);
-		var newId = 0;
+		let metaCopy = $(metas[0]).clone(true);
+		let newId = 0;
 		// make sure the newId doesn't exist yet
 		while ($('#eme_dyndata_'+newId).length) {
 			newId++;
 		}
-		var currentId = metaCopy.attr('id').replace('eme_dyndata_','');
+		let currentId = metaCopy.attr('id').replace('eme_dyndata_','');
 		metaCopy.attr('id', 'eme_dyndata_'+newId);
 		metaCopy.find('a').attr('rel', newId);
 		// lets change the name, id and value for all text fields
-		var metafields=['field','condition','condval','template_id_header','template_id','template_id_footer','repeat','grouping'];
-		var arrayLength = metafields.length;
-		for (var i = 0; i < arrayLength; i++) {
+		let metafields=['field','condition','condval','template_id_header','template_id','template_id_footer','repeat','grouping'];
+		let arrayLength = metafields.length;
+		for (let i = 0; i < arrayLength; i++) {
 		   metaCopy.find('[name="eme_dyndata['+currentId+']['+metafields[i]+']"]').attr({
 				'name':'eme_dyndata['+newId+']['+metafields[i]+']' ,
 				'id':'eme_dyndata['+newId+']['+metafields[i]+']'
@@ -182,26 +182,26 @@ jQuery(document).ready( function($) {
 	$('.eme_remove_dyndatacondition').on("click",function(event) {
 		event.preventDefault();
 		//Get All meta rows
-		var metas = $('#eme_dyndata_tbody').children();
+		let metas = $('#eme_dyndata_tbody').children();
 		//Only remove if there's more than 1 meta tag
 		if(metas.length > 1){
 			//Remove the item
 			$($(this).parent().parent().get(0)).remove();
 		} else {
 			// Get first row and change values (no clone this time)
-			var metaCopy = $($(this).parent().parent().get(0));
-			var newId = 0;
+			let metaCopy = $($(this).parent().parent().get(0));
+			let newId = 0;
 			// make sure the newId doesn't exist yet
 			while ($('#eme_dyndata_'+newId).length) {
 				newId++;
 			}
-			var currentId = metaCopy.attr('id').replace('eme_dyndata_','');
+			let currentId = metaCopy.attr('id').replace('eme_dyndata_','');
 			metaCopy.attr('id', 'eme_dyndata_'+newId);
 			metaCopy.find('a').attr('rel', newId);
 			// lets change the name, id and value for all text fields
-			var metafields=['field','condition','condval','template_id_header','template_id','template_id_footer','repeat','grouping'];
-			var arrayLength = metafields.length;
-			for (var i = 0; i < arrayLength; i++) {
+			let metafields=['field','condition','condval','template_id_header','template_id','template_id_footer','repeat','grouping'];
+			let arrayLength = metafields.length;
+			for (let i = 0; i < arrayLength; i++) {
 				metaCopy.find('[name="eme_dyndata['+currentId+']['+metafields[i]+']"]').attr({
 					'name':'eme_dyndata['+newId+']['+metafields[i]+']' ,
 					'id':'eme_dyndata['+newId+']['+metafields[i]+']'
@@ -219,7 +219,7 @@ jQuery(document).ready( function($) {
 			// this also removes the hidden grouping field, it will dynamically added and set by EME
 			metaCopy.find('[name="eme_dyndata['+newId+'][grouping]"]').parent().html('');
 			// since it is the first row, don't put stuff as required, it would prevent form submit
-			for (var i = 0; i < arrayLength; i++) {
+			for (let i = 0; i < arrayLength; i++) {
 				metaCopy.find('[name="eme_dyndata['+newId+']['+metafields[i]+']"]').prop('required',false);
 			}
 		}
@@ -253,25 +253,24 @@ jQuery(document).ready( function($) {
 		eme_remove_task_function($(this));
 	});
 	function eme_add_task_function(myel) {
-		var selectedItem = $(myel.parent().parent().get(0));
-                var currentId = selectedItem.attr('id').replace('eme_row_task_','');
+		let selectedItem = $(myel.parent().parent().get(0));
                 //Get All meta rows
-                //var metas = $('#eme_tasks_tbody').children();
+                //let metas = $('#eme_tasks_tbody').children();
                 //Copy first row and change values, but not the events (that causes trouble for cloned datepickers)
-                //var metaCopy = $(metas[0]).clone(false);
-		var metaCopy = selectedItem.clone(false);
-		var newId = 0;
+                //let metaCopy = $(metas[0]).clone(false);
+		let metaCopy = selectedItem.clone(false);
+		let newId = 0;
 		// make sure the newId doesn't exist yet
 		while ($('#eme_row_task_'+newId).length) {
 			newId++;
 		}
-		var currentId = metaCopy.attr('id').replace('eme_row_task_','');
+		let currentId = metaCopy.attr('id').replace('eme_row_task_','');
 		metaCopy.attr('id', 'eme_row_task_'+newId);
 		metaCopy.find('a').attr('rel', newId);
 		// lets change the name, id and value for all text fields
-		var metafields=['task_id','name','task_start','task_end','spaces','dp_task_start','dp_task_end','description'];
-		var arrayLength = metafields.length;
-		for (var i = 0; i < arrayLength; i++) {
+		let metafields=['task_id','name','task_start','task_end','spaces','dp_task_start','dp_task_end','description'];
+		let arrayLength = metafields.length;
+		for (let i = 0; i < arrayLength; i++) {
 		   metaCopy.find('[name="eme_tasks['+currentId+']['+metafields[i]+']"]').attr({
 				'name':'eme_tasks['+newId+']['+metafields[i]+']' ,
 				'id':'eme_tasks['+newId+']['+metafields[i]+']'
@@ -328,26 +327,26 @@ jQuery(document).ready( function($) {
 	
 	function eme_remove_task_function(myel) {
 		//Get All meta rows
-		var metas = $('#eme_tasks_tbody').children();
+		let metas = $('#eme_tasks_tbody').children();
 		//Only remove if there's more than 1 meta tag
 		if(metas.length > 1){
 			//Remove the item
 			$(myel.parent().parent().get(0)).remove();
 		} else {
 			// Get first row and change values (no clone this time)
-			var metaCopy = $(myel.parent().parent().get(0));
-			var newId = 0;
+			let metaCopy = $(myel.parent().parent().get(0));
+			let newId = 0;
 			// make sure the newId doesn't exist yet
 			while ($('#eme_row_task_'+newId).length) {
 				newId++;
 			}
-			var currentId = metaCopy.attr('id').replace('eme_row_task_','');
+			let currentId = metaCopy.attr('id').replace('eme_row_task_','');
 			metaCopy.attr('id', 'eme_row_task_'+newId);
 			metaCopy.find('a').attr('rel', newId);
 			// lets change the name, id and value for all text fields
-			var metafields=['task_id','name','task_start','task_end','spaces','dp_task_start','dp_task_end','description'];
-			var arrayLength = metafields.length;
-			for (var i = 0; i < arrayLength; i++) {
+			let metafields=['task_id','name','task_start','task_end','spaces','dp_task_start','dp_task_end','description'];
+			let arrayLength = metafields.length;
+			for (let i = 0; i < arrayLength; i++) {
 				metaCopy.find('[name="eme_tasks['+currentId+']['+metafields[i]+']"]').attr({
 					'name':'eme_tasks['+newId+']['+metafields[i]+']' ,
 					'id':'eme_tasks['+newId+']['+metafields[i]+']'
@@ -368,16 +367,16 @@ jQuery(document).ready( function($) {
 			// this also removes the hidden task_id field, it will dynamically added and set by EME
 			metaCopy.find('[name="eme_tasks['+newId+'][task_id]"]').parent().html('');
 			// since it is the first row, don't put stuff as required, it would prevent form submit
-			for (var i = 0; i < arrayLength; i++) {
+			for (let i = 0; i < arrayLength; i++) {
 				metaCopy.find('[name="eme_tasks['+newId+']['+metafields[i]+']"]').prop('required',false);
 			}
 		}
 	}
 	$('#change_task_days').on("click",function (e) {
 		e.preventDefault();
-		var offset= parseInt($('#task_offset').val());
+		let offset= parseInt($('#task_offset').val());
 
-		var myId=0;
+		let myId=0;
 		while ($('[name="eme_tasks['+myId+'][task_start]"]').length) {
 			current_start=$('[name="eme_tasks['+myId+'][task_start]"]').val();
 			current_end=$('[name="eme_tasks['+myId+'][task_end]"]').val();
@@ -403,25 +402,24 @@ jQuery(document).ready( function($) {
 		eme_remove_todo_function($(this));
 	});
 	function eme_add_todo_function(myel) {
-		var selectedItem = $(myel.parent().parent().get(0));
-                var currentId = selectedItem.attr('id').replace('eme_row_todo_','');
+		let selectedItem = $(myel.parent().parent().get(0));
                 //Get All meta rows
-                //var metas = $('#eme_todos_tbody').children();
+                //let metas = $('#eme_todos_tbody').children();
                 //Copy first row and change values, but not the events (that causes trouble for cloned datepickers)
-                //var metaCopy = $(metas[0]).clone(false);
-		var metaCopy = selectedItem.clone(false);
-		var newId = 0;
+                //let metaCopy = $(metas[0]).clone(false);
+		let metaCopy = selectedItem.clone(false);
+		let newId = 0;
 		// make sure the newId doesn't exist yet
 		while ($('#eme_row_todo_'+newId).length) {
 			newId++;
 		}
-		var currentId = metaCopy.attr('id').replace('eme_row_todo_','');
+		let currentId = metaCopy.attr('id').replace('eme_row_todo_','');
 		metaCopy.attr('id', 'eme_row_todo_'+newId);
 		metaCopy.find('a').attr('rel', newId);
 		// lets change the name, id and value for all text fields
-		var metafields=['todo_id','name','todo_offset','description'];
-		var arrayLength = metafields.length;
-		for (var i = 0; i < arrayLength; i++) {
+		let metafields=['todo_id','name','todo_offset','description'];
+		let arrayLength = metafields.length;
+		for (let i = 0; i < arrayLength; i++) {
 		   metaCopy.find('[name="eme_todos['+currentId+']['+metafields[i]+']"]').attr({
 				'name':'eme_todos['+newId+']['+metafields[i]+']' ,
 				'id':'eme_todos['+newId+']['+metafields[i]+']'
@@ -449,26 +447,26 @@ jQuery(document).ready( function($) {
 	
 	function eme_remove_todo_function(myel) {
 		//Get All meta rows
-		var metas = $('#eme_todos_tbody').children();
+		let metas = $('#eme_todos_tbody').children();
 		//Only remove if there's more than 1 meta tag
 		if(metas.length > 1){
 			//Remove the item
 			$(myel.parent().parent().get(0)).remove();
 		} else {
 			// Get first row and change values (no clone this time)
-			var metaCopy = $(myel.parent().parent().get(0));
-			var newId = 0;
+			let metaCopy = $(myel.parent().parent().get(0));
+			let newId = 0;
 			// make sure the newId doesn't exist yet
 			while ($('#eme_row_todo_'+newId).length) {
 				newId++;
 			}
-			var currentId = metaCopy.attr('id').replace('eme_row_todo_','');
+			let currentId = metaCopy.attr('id').replace('eme_row_todo_','');
 			metaCopy.attr('id', 'eme_row_todo_'+newId);
 			metaCopy.find('a').attr('rel', newId);
 			// lets change the name, id and value for all text fields
-			var metafields=['todo_id','name','todo_offset','description'];
-			var arrayLength = metafields.length;
-			for (var i = 0; i < arrayLength; i++) {
+			let metafields=['todo_id','name','todo_offset','description'];
+			let arrayLength = metafields.length;
+			for (let i = 0; i < arrayLength; i++) {
 				metaCopy.find('[name="eme_todos['+currentId+']['+metafields[i]+']"]').attr({
 					'name':'eme_todos['+newId+']['+metafields[i]+']' ,
 					'id':'eme_todos['+newId+']['+metafields[i]+']'
@@ -482,7 +480,7 @@ jQuery(document).ready( function($) {
 			// this also removes the hidden todo_id field, it will dynamically added and set by EME
 			metaCopy.find('[name="eme_todos['+newId+'][todo_id]"]').parent().html('');
 			// since it is the first row, don't put stuff as required, it would prevent form submit
-			for (var i = 0; i < arrayLength; i++) {
+			for (let i = 0; i < arrayLength; i++) {
 				metaCopy.find('[name="eme_todos['+newId+']['+metafields[i]+']"]').prop('required',false);
 			}
 		}
@@ -490,7 +488,7 @@ jQuery(document).ready( function($) {
 
 	$('.showhidebutton').on("click",function (e) {
 		e.preventDefault();
-		var elname= $(this).data( 'showhide' );
+		let elname= $(this).data( 'showhide' );
 		$('#'+elname).toggle();
         });
 
@@ -652,12 +650,12 @@ jQuery(document).ready( function($) {
 	$('body').on('click', '.eme_del_upload-button', function() {
 		event.preventDefault();
 		if (confirm(emeadmin.translate_areyousuretodeletefile)) {
-			var id = $(this).data('id');
-			var name = $(this).data('name');
-			var type = $(this).data('type');
-			var random_id = $(this).data('random_id');
-			var field_id = $(this).data('field_id');
-			var extra_id = $(this).data('extra_id');
+			let id = $(this).data('id');
+			let name = $(this).data('name');
+			let type = $(this).data('type');
+			let random_id = $(this).data('random_id');
+			let field_id = $(this).data('field_id');
+			let extra_id = $(this).data('extra_id');
 			$.post(ajaxurl, {'id': id, 'name': name, 'type': type, 'field_id': field_id, 'random_id': random_id, 'extra_id': extra_id, 'action': 'eme_del_upload', 'eme_admin_nonce': eme.translate_adminnonce }, function(data) {
 				// we will delete the span, but the parent contains also the input-file field, so first count it: if the length of the parent is 2 (2 elements), show the input field too and then delete the span
 				if ($('span#span_'+random_id).parent().children().length == 2) {
@@ -670,16 +668,16 @@ jQuery(document).ready( function($) {
 
 	$('#booking_attach_button').on("click",function(e) {
                 e.preventDefault();
-                var custom_uploader = wp.media({
+                let custom_uploader = wp.media({
                         title: emeadmin.translate_addattachments,
                         button: {
                                 text: emeadmin.translate_addattachments
                         },
                         multiple: true  // Set this to true to allow multiple files to be selected
                 }).on('select', function() {
-                        var selection = custom_uploader.state().get('selection');
+                        let selection = custom_uploader.state().get('selection');
                         // using map is not really needed, but this way we can reuse the code if multiple=true
-                        // var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        // let attachment = custom_uploader.state().get('selection').first().toJSON();
                         selection.map( function(attach) {
                                 attachment = attach.toJSON();
                                 $('#booking_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
@@ -708,16 +706,16 @@ jQuery(document).ready( function($) {
 	});
 	$('#pending_attach_button').on("click",function(e) {
                 e.preventDefault();
-                var custom_uploader = wp.media({
+                let custom_uploader = wp.media({
                         title: emeadmin.translate_addattachments,
                         button: {
                                 text: emeadmin.translate_addattachments
                         },
                         multiple: true  // Set this to true to allow multiple files to be selected
                 }).on('select', function() {
-                        var selection = custom_uploader.state().get('selection');
+                        let selection = custom_uploader.state().get('selection');
                         // using map is not really needed, but this way we can reuse the code if multiple=true
-                        // var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        // let attachment = custom_uploader.state().get('selection').first().toJSON();
                         selection.map( function(attach) {
                                 attachment = attach.toJSON();
                                 $('#pending_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
@@ -746,16 +744,16 @@ jQuery(document).ready( function($) {
 	});
 	$('#paid_attach_button').on("click",function(e) {
                 e.preventDefault();
-                var custom_uploader = wp.media({
+                let custom_uploader = wp.media({
                         title: emeadmin.translate_addattachments,
                         button: {
                                 text: emeadmin.translate_addattachments
                         },
                         multiple: true  // Set this to true to allow multiple files to be selected
                 }).on('select', function() {
-                        var selection = custom_uploader.state().get('selection');
+                        let selection = custom_uploader.state().get('selection');
                         // using map is not really needed, but this way we can reuse the code if multiple=true
-                        // var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        // let attachment = custom_uploader.state().get('selection').first().toJSON();
                         selection.map( function(attach) {
                                 attachment = attach.toJSON();
                                 $('#paid_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
@@ -784,16 +782,16 @@ jQuery(document).ready( function($) {
 	});
         $('#subscribe_attach_button').on("click",function(e) {
                 e.preventDefault();
-                var custom_uploader = wp.media({
+                let custom_uploader = wp.media({
                         title: emeadmin.translate_addattachments,
                         button: {
                                 text: emeadmin.translate_addattachments
                         },
                         multiple: true  // Set this to true to allow multiple files to be selected
                 }).on('select', function() {
-                        var selection = custom_uploader.state().get('selection');
+                        let selection = custom_uploader.state().get('selection');
                         // using map is not really needed, but this way we can reuse the code if multiple=true
-                        // var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        // let attachment = custom_uploader.state().get('selection').first().toJSON();
                         selection.map( function(attach) {
                                 attachment = attach.toJSON();
                                 $('#subscribe_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
@@ -823,16 +821,16 @@ jQuery(document).ready( function($) {
 
 	$('#fs_ipn_attach_button').on("click",function(e) {
                 e.preventDefault();
-                var custom_uploader = wp.media({
+                let custom_uploader = wp.media({
                         title: emeadmin.translate_addattachments,
                         button: {
                                 text: emeadmin.translate_addattachments
                         },
                         multiple: true  // Set this to true to allow multiple files to be selected
                 }).on('select', function() {
-                        var selection = custom_uploader.state().get('selection');
+                        let selection = custom_uploader.state().get('selection');
                         // using map is not really needed, but this way we can reuse the code if multiple=true
-                        // var attachment = custom_uploader.state().get('selection').first().toJSON();
+                        // let attachment = custom_uploader.state().get('selection').first().toJSON();
                         selection.map( function(attach) {
                                 attachment = attach.toJSON();
                                 $('#fs_ipn_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
@@ -867,7 +865,7 @@ jQuery(document).ready( function($) {
     // animate details summary with slidedown/up and opacity
     // we need to do this like this because css transitions don't work reliably for details/summary on all browsers for now
     $('details summary').each(function() {
-        var $Wrapper = $(this).nextAll().wrapAll('<div></div>').parent();
+        let $Wrapper = $(this).nextAll().wrapAll('<div></div>').parent();
         // Hide elements that are not open by default
         if(!$(this).parent('details').attr('open'))
             $Wrapper.hide();
@@ -897,21 +895,21 @@ jQuery(document).ready( function($) {
 // the next is a Jtable CSV export function
 function jtable_csv(container,csv_name) {
 	// create a copy to avoid messing with visual layout
-	var newTable = jQuery(container).clone();
+	let newTable = jQuery(container).clone();
 	// fix HTML table
 
-	var csvData = [];
-	var delimiter = emeadmin.translate_delimiter
+	let csvData = [];
+	let delimiter = emeadmin.translate_delimiter
 
 	//header
-	var tmpRow = []; // construct header avalible array
+	let tmpRow = []; // construct header avalible array
 
 	// th - remove attributes and header divs from jTable
 	// newTable.find('th').each(function () {
 	// use slice(1) to remove the first column, since that is the select box
 	jQuery.each(newTable.find('th').slice(1),function () {
 		if (jQuery(this).css('display') != 'none') {
-			var val = jQuery(this).find('.jtable-column-header-text').text();
+			let val = jQuery(this).find('.jtable-column-header-text').text();
 			tmpRow[tmpRow.length] = formatcsv(val);
 		}
 	});
@@ -920,7 +918,7 @@ function jtable_csv(container,csv_name) {
 	// tr - remove attributes
 	//newTable.find('tr').each(function () {
 	jQuery.each(newTable.find('tr'),function () {
-		var tmpRow = [];
+		let tmpRow = [];
 		//jQuery(this).find('td').each(function() {
 		// use slice(1) to remove the first column, since that is the select box
 		jQuery.each(jQuery(this).find('td').slice(1),function() {
@@ -930,8 +928,8 @@ function jtable_csv(container,csv_name) {
 				if (jQuery(this).find('button').length > 0)
 					jQuery(this).html('');
 				// we take the html and replace br
-				var val = jQuery(this).html();
-				var regexp = new RegExp(/\<br ?\/?\>/g);
+				let val = jQuery(this).html();
+				let regexp = new RegExp(/\<br ?\/?\>/g);
 				val = val.replace(regexp, '\n');
 				jQuery(this).html(val);
 				tmpRow[tmpRow.length] = formatcsv(jQuery(this).text());
@@ -952,15 +950,15 @@ function jtable_csv(container,csv_name) {
     link.click();
     link.remove();
 
-	//var url='data:text/csv;charset=utf8,' + encodeURIComponent(mydata);
+	//let url='data:text/csv;charset=utf8,' + encodeURIComponent(mydata);
 	//window.open(url);
 	return true;
 }
 
 function formatcsv(input) {
 	// double " according to rfc4180
-	var regexp = new RegExp(/["]/g);
-	var output = input.replace(regexp, '""');
+	let regexp = new RegExp(/["]/g);
+	let output = input.replace(regexp, '""');
 	//HTML
 	regexp = new RegExp(/\<[^\<]+\>/g);
 	output = output.replace(regexp, "");

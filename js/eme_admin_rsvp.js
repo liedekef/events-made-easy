@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) { 
-    var rsvpfields = {
+    let rsvpfields = {
         booking_id: {
             title: emersvp.translate_id,
             key: true,
@@ -117,7 +117,7 @@ jQuery(document).ready(function ($) {
             visibility: 'hidden'
         }
     }
-    var editfield = {
+    let editfield = {
         edit_link: {
             title: emersvp.translate_edit,
             sorting: false,
@@ -138,17 +138,17 @@ jQuery(document).ready(function ($) {
             return params;
         }
     }
-    var $_GET = getQueryParams(document.location.search);
 
     //Prepare jtable plugin
     if ($('#BookingsTableContainer').length) {
-        var extrafields=$('#BookingsTableContainer').data('extrafields').toString().split(',');
-        var extrafieldnames=$('#BookingsTableContainer').data('extrafieldnames').toString().split(',');
-        var extrafieldsearchable=$('#BookingsTableContainer').data('extrafieldsearchable').toString().split(',');
+        let $_GET = getQueryParams(document.location.search);
+        let extrafields=$('#BookingsTableContainer').data('extrafields').toString().split(',');
+        let extrafieldnames=$('#BookingsTableContainer').data('extrafieldnames').toString().split(',');
+        let extrafieldsearchable=$('#BookingsTableContainer').data('extrafieldsearchable').toString().split(',');
         $.each(extrafields, function( index, value ) {
             if (value == 'SEPARATOR') {
-                var fieldindex='SEPARATOR_'+index;
-                var extrafield = {};
+                let fieldindex='SEPARATOR_'+index;
+                let extrafield = {};
                 extrafield[fieldindex] = {
                     title: extrafieldnames[index],
                     sorting: false,
@@ -156,8 +156,8 @@ jQuery(document).ready(function ($) {
                 };
                 $.extend(rsvpfields,extrafield);
             } else if (value != '') {
-                var fieldindex='FIELD_'+value;
-                var extrafield = {};
+                let fieldindex='FIELD_'+value;
+                let extrafield = {};
                 if (extrafieldsearchable[index]=='1') {
                     sorting=true;
                 } else {

@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) { 
-    var locationfields = {
+    let locationfields = {
         location_id: {
             key: true,
             title: emelocations.translate_id,
@@ -63,13 +63,13 @@ jQuery(document).ready(function ($) {
     }
 
     if ($('#LocationsTableContainer').length) {
-        var extrafields=$('#LocationsTableContainer').data('extrafields').toString().split(',');
-        var extrafieldnames=$('#LocationsTableContainer').data('extrafieldnames').toString().split(',');
-        var extrafieldsearchable=$('#LocationsTableContainer').data('extrafieldsearchable').toString().split(',');
+        let extrafields=$('#LocationsTableContainer').data('extrafields').toString().split(',');
+        let extrafieldnames=$('#LocationsTableContainer').data('extrafieldnames').toString().split(',');
+        let extrafieldsearchable=$('#LocationsTableContainer').data('extrafieldsearchable').toString().split(',');
         $.each(extrafields, function( index, value ) {
             if (value != '') {
-                var fieldindex='FIELD_'+value;
-                var extrafield = {};
+                let fieldindex='FIELD_'+value;
+                let extrafield = {};
                 if (extrafieldsearchable[index]=='1') {
                     sorting=true;
                 } else {
@@ -128,7 +128,7 @@ jQuery(document).ready(function ($) {
     }
 
     function updateShowHideStuff () {
-        var $action=$('select#eme_admin_action').val();
+        let $action=$('select#eme_admin_action').val();
         if ($action == 'deleteLocations') {
             $('span#span_transferto').show();
         } else {
@@ -148,7 +148,7 @@ jQuery(document).ready(function ($) {
     $('input#eme_loc_prop_online_only').on("change",updateShowHideStuff);
 
     function changeLocationAdminPageTitle() {
-        var locationame=$('input[name=location_name]').val();
+        let locationame=$('input[name=location_name]').val();
         if (!locationame) {
             title=emelocations.translate_insertnewlocation;
         } else {
@@ -225,10 +225,10 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#LocationsActionsButton').on("click",function (e) {
         e.preventDefault();
-        var selectedRows = $('#LocationsTableContainer').jtable('selectedRows');
-        var do_action = $('#eme_admin_action').val();
-        var nonce = $('#eme_admin_nonce').val();
-        var action_ok=1;
+        let selectedRows = $('#LocationsTableContainer').jtable('selectedRows');
+        let do_action = $('#eme_admin_action').val();
+        let nonce = $('#eme_admin_nonce').val();
+        let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
             if ((do_action=='deleteLocations') && !confirm(emelocations.translate_areyousuretodeleteselected)) {
                 action_ok=0;
@@ -279,7 +279,7 @@ jQuery(document).ready(function ($) {
     $('#location_image_button').on("click",function(e) {
         e.preventDefault();
 
-        var custom_uploader = wp.media({
+        let custom_uploader = wp.media({
             title: emelocations.translate_selectfeaturedimage,
             button: {
                 text: emelocations.translate_setfeaturedimage
@@ -290,9 +290,9 @@ jQuery(document).ready(function ($) {
             },
             multiple: false  // Set this to true to allow multiple files to be selected
         }).on('select', function() {
-            var selection = custom_uploader.state().get('selection');
+            let selection = custom_uploader.state().get('selection');
             // using map is not really needed, but this way we can reuse the code if multiple=true
-            // var attachment = custom_uploader.state().get('selection').first().toJSON();
+            // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
                 $('#location_image_url').val(attachment.url);
@@ -322,7 +322,7 @@ jQuery(document).ready(function ($) {
             invalidHandler: function(e,validator) {
                 $.each(validator.invalid, function(key, value) {
                     // get the closest tabname
-                    var tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
+                    let tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
                     activateTab(tabname);
                     // break the loop, we only want to switch to the first tab with the error
                     return false;

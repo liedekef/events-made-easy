@@ -12,7 +12,6 @@ jQuery(document).ready( function($) {
             return params;
         }
     }
-    var $_GET = getQueryParams(document.location.search);
 
     function updateIntervalDescriptor () { 
         $('.interval-desc').hide();
@@ -480,7 +479,7 @@ jQuery(document).ready( function($) {
     }
     $('#eventForm').bind('submit', validateEventForm);
 
-    var eventfields = {
+    let eventfields = {
         event_id: {
             key: true,
             title: emeevents.translate_id,
@@ -532,7 +531,7 @@ jQuery(document).ready( function($) {
             sorting: false
         }
     }
-    var recurrencefields = {
+    let recurrencefields = {
         recurrence_id: {
             key: true,
             title: emeevents.translate_id,
@@ -582,13 +581,13 @@ jQuery(document).ready( function($) {
         }
     }
     if ($('#EventsTableContainer').length) {
-        var extrafields=$('#EventsTableContainer').data('extrafields').toString().split(',');
-        var extrafieldnames=$('#EventsTableContainer').data('extrafieldnames').toString().split(',');
-        var extrafieldsearchable=$('#EventsTableContainer').data('extrafieldsearchable').toString().split(',');
+        let extrafields=$('#EventsTableContainer').data('extrafields').toString().split(',');
+        let extrafieldnames=$('#EventsTableContainer').data('extrafieldnames').toString().split(',');
+        let extrafieldsearchable=$('#EventsTableContainer').data('extrafieldsearchable').toString().split(',');
         $.each(extrafields, function( index, value ) {
             if (value != '') {
-                var fieldindex='FIELD_'+value;
-                var extrafield = {};
+                let fieldindex='FIELD_'+value;
+                let extrafield = {};
                 if (extrafieldsearchable[index]=='1') {
                     sorting=true;
                 } else {
@@ -604,6 +603,7 @@ jQuery(document).ready( function($) {
         });
 
         //Prepare jtable plugin
+        let $_GET = getQueryParams(document.location.search);
         $('#EventsTableContainer').jtable({
             title: emeevents.translate_events,
             paging: true,
@@ -657,12 +657,12 @@ jQuery(document).ready( function($) {
     // Actions button
     $('#EventsActionsButton').on("click",function (e) {
         e.preventDefault();
-        var selectedRows = $('#EventsTableContainer').jtable('selectedRows');
-        var do_action = $('#eme_admin_action').val();
-        var send_trashmails = $('#send_trashmails').val();
-        var addtocategory = $('#addtocategory').val();
+        let selectedRows = $('#EventsTableContainer').jtable('selectedRows');
+        let do_action = $('#eme_admin_action').val();
+        let send_trashmails = $('#send_trashmails').val();
+        let addtocategory = $('#addtocategory').val();
 
-        var action_ok=1;
+        let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
             if ((do_action=='deleteEvents' || do_action=='deleteRecurrences') && !confirm(emeevents.translate_areyousuretodeleteselected)) {
                 action_ok=0;
@@ -717,6 +717,7 @@ jQuery(document).ready( function($) {
     });
 
     if ($('#RecurrencesTableContainer').length) {
+        let $_GET = getQueryParams(document.location.search);
         //Prepare jtable plugin
         $('#RecurrencesTableContainer').jtable({
             title: emeevents.translate_recurrences,
@@ -770,12 +771,12 @@ jQuery(document).ready( function($) {
     // Actions button
     $('#RecurrencesActionsButton').on("click",function (e) {
         e.preventDefault();
-        var selectedRows = $('#RecurrencesTableContainer').jtable('selectedRows');
-        var do_action = $('#eme_admin_action').val();
-        var rec_new_start_date = $('#rec_new_start_date').val();
-        var rec_new_end_date = $('#rec_new_end_date').val();
+        let selectedRows = $('#RecurrencesTableContainer').jtable('selectedRows');
+        let do_action = $('#eme_admin_action').val();
+        let rec_new_start_date = $('#rec_new_start_date').val();
+        let rec_new_end_date = $('#rec_new_end_date').val();
 
-        var action_ok=1;
+        let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
             if (do_action=='deleteRecurrences' && !confirm(emeevents.translate_areyousuretodeleteselected)) {
                 action_ok=0;
@@ -829,7 +830,7 @@ jQuery(document).ready( function($) {
     });
 
     function updateShowHideStuff () {
-        var action=$('select#eme_admin_action').val();
+        let action=$('select#eme_admin_action').val();
         if (action == 'addCategory') {
             jQuery('span#span_addtocategory').show();
         } else {
@@ -850,7 +851,7 @@ jQuery(document).ready( function($) {
     $('select#eme_admin_action').on("change",updateShowHideStuff);
 
     function changeEventAdminPageTitle() {
-        var eventname=$('input[name=event_name]').val();
+        let eventname=$('input[name=event_name]').val();
         if (!eventname) {
             title=emeevents.translate_insertnewevent;
         } else {
@@ -874,7 +875,7 @@ jQuery(document).ready( function($) {
     });
     $('#event_image_button').on("click",function(e) {
         e.preventDefault();
-        var custom_uploader = wp.media({
+        let custom_uploader = wp.media({
             title: emeevents.translate_selectfeaturedimg,
             button: {
                 text: emeevents.translate_setfeaturedimg
@@ -885,9 +886,9 @@ jQuery(document).ready( function($) {
             },
             multiple: false  // Set this to true to allow multiple files to be selected
         }).on('select', function() {
-            var selection = custom_uploader.state().get('selection');
+            let selection = custom_uploader.state().get('selection');
             // using map is not really needed, but this way we can reuse the code if multiple=true
-            // var attachment = custom_uploader.state().get('selection').first().toJSON();
+            // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
                 $('#event_image_url').val(attachment.url);

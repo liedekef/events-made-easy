@@ -1,6 +1,6 @@
 jQuery(document).ready(function ($) { 
 
-    var memberfields = {
+    let memberfields = {
         'members.member_id': {
             key: true,
             title: ememembers.translate_memberid,
@@ -142,7 +142,7 @@ jQuery(document).ready(function ($) {
             visibility: 'hidden'
         }
     }
-    var membershipfields = {
+    let membershipfields = {
         membership_id: {
             key: true,
             title: ememembers.translate_id,
@@ -169,13 +169,13 @@ jQuery(document).ready(function ($) {
         }
     }
     if ($('#MembersTableContainer').length) {
-        var extrafields=$('#MembersTableContainer').data('extrafields').toString().split(',');
-        var extrafieldnames=$('#MembersTableContainer').data('extrafieldnames').toString().split(',');
-        var extrafieldsearchable=$('#MembersTableContainer').data('extrafieldsearchable').toString().split(',');
+        let extrafields=$('#MembersTableContainer').data('extrafields').toString().split(',');
+        let extrafieldnames=$('#MembersTableContainer').data('extrafieldnames').toString().split(',');
+        let extrafieldsearchable=$('#MembersTableContainer').data('extrafieldsearchable').toString().split(',');
         $.each(extrafields, function( index, value ) {
             if (value != '') {
-                var fieldindex='FIELD_'+value;
-                var extrafield = {};
+                let fieldindex='FIELD_'+value;
+                let extrafield = {};
                 if (extrafieldsearchable[index]=='1') {
                     sorting=true;
                 } else {
@@ -222,7 +222,7 @@ jQuery(document).ready(function ($) {
             },
             fields: memberfields
         });
-        var exactmatch;
+        let exactmatch;
         if ($('#search_exactmatch').is(":checked")) {
             exactmatch = 1;
         } else {
@@ -242,13 +242,13 @@ jQuery(document).ready(function ($) {
     }
 
     if ($('#MembershipsTableContainer').length) {
-        var extrafields=$('#MembershipsTableContainer').data('extrafields').toString().split(',');
-        var extrafieldnames=$('#MembershipsTableContainer').data('extrafieldnames').toString().split(',');
-        var extrafieldsearchable=$('#MembershipsTableContainer').data('extrafieldsearchable').toString().split(',');
+        let extrafields=$('#MembershipsTableContainer').data('extrafields').toString().split(',');
+        let extrafieldnames=$('#MembershipsTableContainer').data('extrafieldnames').toString().split(',');
+        let extrafieldsearchable=$('#MembershipsTableContainer').data('extrafieldsearchable').toString().split(',');
         $.each(extrafields, function( index, value ) {
             if (value != '') {
-                var fieldindex='FIELD_'+value;
-                var extrafield = {};
+                let fieldindex='FIELD_'+value;
+                let extrafield = {};
                 if (extrafieldsearchable[index]=='1') {
                     sorting=true;
                 } else {
@@ -405,7 +405,7 @@ jQuery(document).ready(function ($) {
     // Re-load records when user click 'load records' button.
     $('#MembersLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        var exactmatch;
+        let exactmatch;
         if ($('#search_exactmatch').is(":checked")) {
             exactmatch = 1;
         } else {
@@ -440,13 +440,13 @@ jQuery(document).ready(function ($) {
     });
     $('#StoreQuerySubmitButton').on("click",function (e) {
         e.preventDefault();
-        var exactmatch;
+        let exactmatch;
         if ($('#search_exactmatch').is(":checked")) {
             exactmatch = 1;
         } else {
             exactmatch = 0;
         }
-        var params = {
+        let params = {
             'search_person': $('#search_person').val(),
             'search_memberstatus': $('#search_memberstatus').val(),
             'search_membershipids': $('#search_membershipids').val(),
@@ -474,7 +474,7 @@ jQuery(document).ready(function ($) {
     // we add the on-click to the body and limit to the .eme_iban_button class, so that the iban-buttons that are only added via ajax are handled as well
     $('body').on('click', '.eme_iban_button', function(e) {
         e.preventDefault();
-        var params = {
+        let params = {
             'action': 'eme_get_payconiq_iban',
             'pg_pid': $(this).data('pg_pid'),
             'eme_admin_nonce': ememembers.translate_adminnonce
@@ -515,7 +515,7 @@ jQuery(document).ready(function ($) {
     if ($('select#paid').length) {
         $('select#paid').on("change",function(){
             if ($('select#paid').val() == '1' && $('input#dp_payment_date').val() == '') {
-                var curdate=new Date();
+                let curdate=new Date();
                 $('#dp_payment_date').fdatepicker().data('fdatepicker').selectDate(curdate);
             }
         });
@@ -563,7 +563,7 @@ jQuery(document).ready(function ($) {
             invalidHandler: function(e,validator) {
                 $.each(validator.invalid, function(key, value) {
                     // get the closest tabname
-                    var tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
+                    let tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
                     activateTab(tabname);
                     // break the loop, we only want to switch to the first tab with the error
                     return false;
@@ -699,8 +699,9 @@ jQuery(document).ready(function ($) {
         let emeadmin_chooseperson_timeout; // Declare a variable to hold the timeout ID
         $("input[name=chooseperson]").on("input", function(e) {
             clearTimeout(emeadmin_chooseperson_timeout); // Clear the previous timeout
-            var inputField = $(this);
-            var inputValue = inputField.val();
+            let suggestions;
+            let inputField = $(this);
+            let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
             if (inputValue.length >= 2) {
                 emeadmin_chooseperson_timeout = setTimeout(function() {
@@ -712,7 +713,7 @@ jQuery(document).ready(function ($) {
                             'eme_searchlimit': 'people'
                         },
                         function(data) {
-                            var suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
@@ -760,7 +761,7 @@ jQuery(document).ready(function ($) {
         });
     }
     function updateShowHideAdminActions () {
-        var action=$('select#eme_admin_action').val();
+        let action=$('select#eme_admin_action').val();
         if ($.inArray(action,['acceptPayment','stopMembership']) >= 0) {
             $('#send_mail').val(1);
             $('span#span_sendmails').show();
@@ -810,16 +811,16 @@ jQuery(document).ready(function ($) {
 
     $('#newmember_attach_button').on("click",function(e) {
         e.preventDefault();
-        var custom_uploader = wp.media({
+        let custom_uploader = wp.media({
             title: ememembers.translate_addattachments,
             button: {
                 text: ememembers.translate_addattachments
             },
             multiple: true  // Set this to true to allow multiple files to be selected
         }).on('select', function() {
-            var selection = custom_uploader.state().get('selection');
+            let selection = custom_uploader.state().get('selection');
             // using map is not really needed, but this way we can reuse the code if multiple=true
-            // var attachment = custom_uploader.state().get('selection').first().toJSON();
+            // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
                 $('#newmember_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
@@ -850,16 +851,16 @@ jQuery(document).ready(function ($) {
 
     $('#extended_attach_button').on("click",function(e) {
         e.preventDefault();
-        var custom_uploader = wp.media({
+        let custom_uploader = wp.media({
             title: ememembers.translate_addattachments,
             button: {
                 text: ememembers.translate_addattachments
             },
             multiple: true  // Set this to true to allow multiple files to be selected
         }).on('select', function() {
-            var selection = custom_uploader.state().get('selection');
+            let selection = custom_uploader.state().get('selection');
             // using map is not really needed, but this way we can reuse the code if multiple=true
-            // var attachment = custom_uploader.state().get('selection').first().toJSON();
+            // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
                 $('#extended_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
@@ -889,16 +890,16 @@ jQuery(document).ready(function ($) {
     });
     $('#paid_attach_button').on("click",function(e) {
         e.preventDefault();
-        var custom_uploader = wp.media({
+        let custom_uploader = wp.media({
             title: ememembers.translate_addattachments,
             button: {
                 text: ememembers.translate_addattachments
             },
             multiple: true  // Set this to true to allow multiple files to be selected
         }).on('select', function() {
-            var selection = custom_uploader.state().get('selection');
+            let selection = custom_uploader.state().get('selection');
             // using map is not really needed, but this way we can reuse the code if multiple=true
-            // var attachment = custom_uploader.state().get('selection').first().toJSON();
+            // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
                 $('#paid_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");

@@ -12,7 +12,6 @@ jQuery(document).ready( function($) {
             return params;
         }
     }
-    var $_GET = getQueryParams(document.location.search);
 
     // for autocomplete to work, the element needs to exist, otherwise JS errors occur
     // we check for that using length
@@ -452,6 +451,7 @@ jQuery(document).ready( function($) {
     });
 
     //Prepare jtable plugin
+    let $_GET = getQueryParams(document.location.search);
     jQuery('#MailingReportTableContainer').jtable({
         title: ememails.translate_mailingreport,
         paging: true,

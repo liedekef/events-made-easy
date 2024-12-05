@@ -56,7 +56,6 @@ jQuery(document).ready( function($) {
             return params;
         }
     }
-    var $_GET = getQueryParams(document.location.search);
 
     function loadCalendar(tableDiv, fullcalendar, htmltable, htmldiv, showlong_events, month, year, cat_chosen, author_chosen, contact_person_chosen, location_chosen, not_cat_chosen,template_chosen,holiday_chosen,weekdays,language) {
         if (fullcalendar === undefined) {
@@ -235,6 +234,7 @@ jQuery(document).ready( function($) {
         alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action','eme_add_bookings');
         // we add the following 4 params to the request too, so we can check in the backend if it comes from an invite
+        let $_GET = getQueryParams(document.location.search);
         if (typeof $_GET['eme_invite']!=='undefined') {
             alldata.append('eme_invite',$_GET['eme_invite']);
         }

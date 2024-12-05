@@ -333,6 +333,7 @@ table.eme_admin_table , table.eme_admin_table th , table.eme_admin_table td {
 }
 .emeDivTableHeading {
 	display: table-header-group;
+	font-weight: bold;
 }
 .emeDivTableCell {
 	height: 4em;
@@ -348,10 +349,6 @@ table.eme_admin_table , table.eme_admin_table th , table.eme_admin_table td {
 	padding-left: 3px;
 	font-size: 0.7em;
 	line-height: normal;
-}
-.emeDivTableHeading {
-	display: table-header-group;
-	font-weight: bold;
 }
 .emeDivTableFoot {
 	display: table-footer-group;
@@ -446,9 +443,10 @@ div.dt-length select.dt-input {
 /* for the dyndata table in the admin backend */
 .eme_dyndata {
         border-collapse: collapse;
+	width: 100%;
 }
-.eme_dyndata_body tr {
-        border-bottom: 1px solid black;
+.eme_dyndata_tbody tr {
+        border: solid thin;
 }
 
 div.eme_notice_unfiltered_html {

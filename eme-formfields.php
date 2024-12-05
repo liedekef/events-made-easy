@@ -4865,9 +4865,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 			<tr>
 				<th></th>
 				<th><strong><?php esc_html_e( 'Index', 'events-made-easy' ); ?></strong></th>
-				<th><strong><?php esc_html_e( 'Field', 'events-made-easy' ); ?></strong></th>
-				<th><strong><?php esc_html_e( 'Condition', 'events-made-easy' ); ?></strong></th>
-				<th><strong><?php esc_html_e( 'Condition value', 'events-made-easy' ); ?></strong></th>
+				<th><strong><?php esc_html_e( 'Field condition', 'events-made-easy' ); ?></strong></th>
 				<th><strong><?php esc_html_e( 'Templates', 'events-made-easy' ); ?></strong></th>
 				<th><strong><?php esc_html_e( 'Repeat', 'events-made-easy' ); ?></strong></th>
 				<th></th>
@@ -4897,7 +4895,7 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
 			foreach ( $eme_data as $count => $info ) {
 				$grouping_used = in_array( $info['grouping'], $used_groupingids ) ? 1 : 0;
 				?>
-					<tr id="eme_dyndata_<?php echo $count; ?>" >
+					<tr id="eme_dyndata_<?php echo $count; ?>">
 					<td>
 				<?php echo "<img class='eme-sortable-handle' src='" . esc_url(EME_PLUGIN_URL) . "images/reorder.png' alt='" . esc_attr__( 'Reorder', 'events-made-easy' ) . "'>"; ?>
 					</td>
@@ -4911,20 +4909,17 @@ function eme_dyndata_adminform( $eme_data, $templates_array, $used_groupingids )
                         <input type='hidden' id="eme_dyndata[<?php echo $count; ?>][grouping]" name="eme_dyndata[<?php echo $count; ?>][grouping]" aria-label="hidden grouping index" value="<?php echo $info['grouping']; ?>">
                         <?php endif; ?>
 					</td>
-					<td>
-			<input <?php echo $required; ?> id="eme_dyndata[<?php echo $count; ?>][field]" name="eme_dyndata[<?php echo $count; ?>][field]" size="12" aria-label="field" value="<?php echo $info['field']; ?>">
-					</td>
-					<td>
-				<?php echo eme_ui_select( $info['condition'], 'eme_dyndata[' . $count . '][condition]', $eme_dyndata_conditions, '', 0, '', "aria-label='condition'" ); ?>
-					</td>
-					<td>
-			<input <?php echo $required; ?> id="eme_dyndata[<?php echo $count; ?>][condval]" name="eme_dyndata[<?php echo $count; ?>][condval]" aria-label="condition value" size="12" value="<?php echo $info['condval']; ?>">
+					<td><table style="">
+						<tr><td><?php esc_html_e( 'Field', 'events-made-easy' ); ?></td><td><input <?php echo $required; ?> id="eme_dyndata[<?php echo $count; ?>][field]" name="eme_dyndata[<?php echo $count; ?>][field]" size="12" aria-label="field" value="<?php echo $info['field']; ?>"></td></tr>
+						<tr><td><?php esc_html_e( 'Condition', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['condition'], 'eme_dyndata[' . $count . '][condition]', $eme_dyndata_conditions, '', 0, '', "aria-label='condition'" ); ?></td></tr>
+						<tr><td><?php esc_html_e( 'Condition value', 'events-made-easy' ); ?></td><td><input <?php echo $required; ?> id="eme_dyndata[<?php echo $count; ?>][condval]" name="eme_dyndata[<?php echo $count; ?>][condval]" aria-label="condition value" size="12" value="<?php echo $info['condval']; ?>"></td></tr>
+					</table>
 					</td>
 					<td><table style="">
-			<tr><td><?php esc_html_e( 'Header template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_header'], 'eme_dyndata[' . $count . '][template_id_header]', $templates_array, '', 0, '', "aria-label='template_id_header'" ); ?></td></tr>
-			<tr><td><?php esc_html_e( 'Template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id'], 'eme_dyndata[' . $count . '][template_id]', $templates_array, '', 0, '', "aria-label='template_id'" ); ?></td></tr>
-			<tr><td><?php esc_html_e( 'Footer template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_footer'], 'eme_dyndata[' . $count . '][template_id_footer]', $templates_array, '', 0, '', "aria-label='template_id_footer'" ); ?></td></tr>
-			</table>
+						<tr><td><?php esc_html_e( 'Header template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_header'], 'eme_dyndata[' . $count . '][template_id_header]', $templates_array, '', 0, '', "aria-label='template_id_header'" ); ?></td></tr>
+						<tr><td><?php esc_html_e( 'Template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id'], 'eme_dyndata[' . $count . '][template_id]', $templates_array, '', 0, '', "aria-label='template_id'" ); ?></td></tr>
+						<tr><td><?php esc_html_e( 'Footer template', 'events-made-easy' ); ?></td><td><?php echo eme_ui_select( $info['template_id_footer'], 'eme_dyndata[' . $count . '][template_id_footer]', $templates_array, '', 0, '', "aria-label='template_id_footer'" ); ?></td></tr>
+					</table>
 					</td>
 					<td>
 				<?php echo eme_ui_select_binary( $info['repeat'], 'eme_dyndata[' . $count . '][repeat]', 0, '', "aria-label='repeat'" ); ?>

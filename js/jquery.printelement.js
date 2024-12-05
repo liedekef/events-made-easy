@@ -14,10 +14,10 @@
 */
 /*global window,focus,setTimeout,navigator*/
 (function (window, undefined) {
-    var document = window.document;
-    var $ = window.jQuery;
+    let document = window.document;
+    let $ = window.jQuery;
     $.fn.printElement = function (options) {
-        var mainOptions = $.extend({}, $.fn.printElement.defaults, options);
+        let mainOptions = $.extend({}, $.fn.printElement.defaults, options);
         /*
         //iframe mode is not supported for opera and chrome 3.0 (it prints the entire page).
         //http://www.google.com/support/forum/p/Webmasters/thread?tid=2cb0f08dce8821c3&hl=en
@@ -32,7 +32,7 @@
 
         return this.each(function () {
             //Support Metadata Plug-in if available
-            var opts = $.meta ? $.extend({}, mainOptions, $(this).data()) : mainOptions;
+            let opts = $.meta ? $.extend({}, mainOptions, $(this).data()) : mainOptions;
             _printElement($(this), opts);
         });
     };
@@ -61,20 +61,20 @@
     };
     function _printElement(element, opts) {
         //Create markup to be printed
-        var html = _getMarkup(element, opts);
+        let html = _getMarkup(element, opts);
 
-        var popupOrIframe = null;
-        var documentToWriteTo = null;
+        let popupOrIframe = null;
+        let documentToWriteTo = null;
         if (opts.printMode.toLowerCase() === 'popup') {
             // IE duplication name bug: http://stackoverflow.com/questions/7146767/i-get-access-is-denied-when-i-try-to-print-a-page-using-jquery-printelement-js
-            var windowName = 'printElementWindow_' + (Math.round(Math.random() * 99999)).toString();
+            let windowName = 'printElementWindow_' + (Math.round(Math.random() * 99999)).toString();
             popupOrIframe = window.open('about:blank', windowName, 'width=650,height=440,scrollbars=yes');
             documentToWriteTo = popupOrIframe.document;
         } else {
             //The random ID is to overcome a safari bug http://www.cjboco.com.sharedcopy.com/post.cfm/442dc92cd1c0ca10a5c35210b8166882.html
-            var printElementID = "printElement_" + (Math.round(Math.random() * 99999)).toString();
+            let printElementID = "printElement_" + (Math.round(Math.random() * 99999)).toString();
             //Native creation of the element is faster..
-            var iframe = document.createElement('IFRAME');
+            let iframe = document.createElement('IFRAME');
             $(iframe).attr({
                 style: opts.iframeElementOptions.styleToAdd,
                 id: printElementID,
@@ -109,7 +109,7 @@
     }
 
     function _getElementHTMLIncludingFormElements(element) {
-        var $element = $(element);
+        let $element = $(element);
         //Radiobuttons and checkboxes
         $(":checked", $element).each(function () {
             this.setAttribute('checked', 'checked');
@@ -119,7 +119,7 @@
             this.setAttribute('value', $(this).val());
         });
         $("select", $element).each(function () {
-            var $select = $(this);
+            let $select = $(this);
             $("option", $select).each(function () {
                 if ($select.val() === $(this).val()) {
                     this.setAttribute('selected', 'selected');
@@ -128,7 +128,7 @@
         });
         $("textarea", $element).each(function () {
             //Thanks http://blog.ekini.net/2009/02/24/jquery-getting-the-latest-textvalue-inside-a-textarea/
-            var value = $(this).attr('value');
+            let value = $(this).attr('value');
             //fix for issue 7 (http://plugins.jquery.com/node/13503 and http://github.com/erikzaadi/jQueryPlugins/issues#issue/7)
             if (this.firstChild) {
                 this.firstChild.textContent = value;
@@ -137,29 +137,29 @@
             }
         });
         //http://dbj.org/dbj/?p=91
-        var elementHtml = $('<div></div>').append($element.clone()).html();
+        let elementHtml = $('<div></div>').append($element.clone()).html();
         return elementHtml;
     }
 
     function _getBaseHref() {
-        var port = (window.location.port) ? ':' + window.location.port : '';
+        let port = (window.location.port) ? ':' + window.location.port : '';
         return window.location.protocol + '//' + window.location.hostname + port + window.location.pathname;
     }
 
     function _getMarkup(element, opts) {
-        var $element = $(element);
-        var elementHtml = _getElementHTMLIncludingFormElements(element);
+        let $element = $(element);
+        let elementHtml = _getElementHTMLIncludingFormElements(element);
 
-        var html = [];
+        let html = [];
         html.push('<html><head><title>' + opts.pageTitle + '</title>');
         if (opts.overrideElementCSS) {
             if (opts.overrideElementCSS.length > 0) {
-                for (var x = 0; x < opts.overrideElementCSS.length; x += 1) {
-                    var current = opts.overrideElementCSS[x];
+                for (let x = 0; x < opts.overrideElementCSS.length; x += 1) {
+                    let current = opts.overrideElementCSS[x];
                     if (typeof (current) === 'string') {
                         html.push('<link type="text/css" rel="stylesheet" href="' + current + '" >');
                     } else {
-                        var media = current.media || '';
+                        let media = current.media || '';
                         html.push('<link type="text/css" rel="stylesheet" href="' + current.href + '" media="' + media + '" >');
                     }
                 }
@@ -168,7 +168,7 @@
             $("link", document).filter(function () {
                 return $(this).attr("rel").toLowerCase() === "stylesheet";
             }).each(function () {
-                var media = $(this).attr('media') || '';
+                let media = $(this).attr('media') || '';
                 html.push('<link type="text/css" rel="stylesheet" href="' + $(this).attr("href") + '" media="' + media + '" >');
             });
         }

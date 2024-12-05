@@ -1,9 +1,9 @@
 // to avoid the leaflet error 'Map container is already initialized' we use a global var to create the map later on
-var map;
+let map;
 // create the tile layer with correct attribution
-var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-var osmAttrib='Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+let osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+let osmAttrib='Map data &copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 
 function eme_displayAddress(ignore_coord){
     if (jQuery('input#location_name').length) {
@@ -45,7 +45,7 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
     if (map_icon === undefined) {
         map_icon = '';
     }
-    var myOptions = {
+    let myOptions = {
         zoom: 13,
         scrollWheelZoom: emeeditmaps.translate_map_zooming,
         doubleClickZoom: false
@@ -61,7 +61,7 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
     map.addLayer(osm);
     // to account for a hidden layer where leaflet doesn't read the dimensions correctly, we call invalidateSize
     //map.invalidateSize(false);
-    var searchKey_arr = [];
+    let searchKey_arr = [];
     if (address1) {
         searchKey_arr.push(address1);
     }
@@ -86,13 +86,13 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
     }
 
     if (searchKey) {
-        var geocode_url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1';
+        let geocode_url = 'https://nominatim.openstreetmap.org/search?format=json&limit=1';
         jQuery.getJSON( geocode_url, { 'q': searchKey}, function(data) {
             if (data.length===0) {
                 jQuery('#eme-edit-location-map').hide();
             } else {
                 map.panTo([data[0].lat, data[0].lon]);
-                var myIcon;
+                let myIcon;
                 if (map_icon!='') {
                     myIcon = L.icon({iconUrl: map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
                 } else if (emeeditmaps.translate_default_map_icon!='') {
@@ -100,8 +100,8 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
                 } else {
                     myIcon = new L.Icon.Default();
                 }
-                var marker = L.marker([data[0].lat, data[0].lon], {icon: myIcon}).addTo(map);
-                var pop_content='<div class=\"eme-location-balloon\"><strong>' + loc_name +'</strong><p>' + address1 + ' ' + address2 + '<br />' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
+                let marker = L.marker([data[0].lat, data[0].lon], {icon: myIcon}).addTo(map);
+                let pop_content='<div class=\"eme-location-balloon\"><strong>' + loc_name +'</strong><p>' + address1 + ' ' + address2 + '<br />' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
                 marker.bindPopup(pop_content).openPopup();
                 jQuery('input#location_latitude').val(data[0].lat);
                 jQuery('input#location_longitude').val(data[0].lon);
@@ -130,8 +130,8 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
     }
 
     if (lat != 0 && lng != 0) {
-        var latlng = L.latLng(lat, lng);
-        var myOptions = {
+        let latlng = L.latLng(lat, lng);
+        let myOptions = {
             zoom: 13,
             center: latlng,
             scrollWheelZoom: emeeditmaps.translate_map_zooming,
@@ -149,7 +149,7 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
         // to account for a hidden layer where leaflet doesn't read the dimensions correctly, we call invalidateSize
         //map.invalidateSize(false);
         //map.panTo(latlng);
-        var myIcon;
+        let myIcon;
         if (map_icon!='') {
             myIcon = L.icon({iconUrl: map_icon, iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[1,-28],tooltipAnchor:[16,-24]});
         } else if (emeeditmaps.translate_default_map_icon!='') {
@@ -157,8 +157,8 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
         } else {
             myIcon = new L.Icon.Default();
         }
-        var marker = L.marker(latlng, {icon: myIcon}).addTo(map);
-        var pop_content='<div class=\"eme-location-balloon\"><strong>' + loc_name +'</strong><p>' + address1 + ' ' + address2 + '<br />' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
+        let marker = L.marker(latlng, {icon: myIcon}).addTo(map);
+        let pop_content='<div class=\"eme-location-balloon\"><strong>' + loc_name +'</strong><p>' + address1 + ' ' + address2 + '<br />' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
         marker.bindPopup(pop_content).openPopup();
     } else {
         loadMap(loc_name, address1, address2, city, state, zip, country, map_icon);

@@ -395,6 +395,17 @@ div.dt-length select.dt-input {
 	-webkit-appearance: auto;
 	background: none;
 }
+/* to disable WP checkbox styles */
+.dt-select-checkbox:checked::before {
+    content: none !important;
+}
+/* better background */
+.eme-dt-row-selected{
+    background: #F2F5A9 !important;
+}
+.dataTable tr:hover {
+    background: #AAF5F3 !important;
+}
 
 /* jtable fix so the footer doesn't overlap with the table in some browsers */
 .jtable-main-container {

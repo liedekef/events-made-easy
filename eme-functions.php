@@ -4110,48 +4110,50 @@ function eme_get_datatables_limit() {
 }
 
 function eme_get_datatables_orderby($preferred_sorting='') {
-    // currently jtable:
-    $orderby = '';
-    if ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) {
-        if ( ! empty( $preferred_sorting ) ) {
-            $orderby = "ORDER BY $preferred_sorting, " . esc_sql($_REQUEST['jtSorting']);
-        } else {
-            $orderby = "ORDER BY " . esc_sql($_REQUEST['jtSorting']);
-        } 
-    }
-    return $orderby;
-
-    $request = eme_sanitize_request($_REQUEST);
-    $order = '';
-    if ( isset($request['order']) && count($request['order']) ) {
-        $orderBy = [];
-        if (!empty($preferred_sorting)) {
-            $orderBy[] = $preferred_sorting;
+    if ( isset( $_REQUEST['jtSorting'] ) ) {
+        $orderby = '';
+        if ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) {
+            if ( ! empty( $preferred_sorting ) ) {
+                $orderby = "ORDER BY $preferred_sorting, " . esc_sql($_REQUEST['jtSorting']);
+            } else {
+                $orderby = "ORDER BY " . esc_sql($_REQUEST['jtSorting']);
+            } 
         }
+        return $orderby;
+    } elseif ( isset( $_REQUEST['order'] ) ) {
+        $request = eme_sanitize_request($_REQUEST);
+        $order = '';
+        if ( count($request['order']) ) {
+            $orderBy = [];
+            if (!empty($preferred_sorting)) {
+                $orderBy[] = $preferred_sorting;
+            }
 
-        $ien=count($request['order']);
-        for ( $i=0 ; $i<$ien ; $i++ ) {
-            // Convert the column index into the column data property
-            $columnIdx = intval($request['order'][$i]['column']);
-            $requestColumn = $request['columns'][$columnIdx];
+            $ien=count($request['order']);
+            for ( $i=0 ; $i<$ien ; $i++ ) {
+                // Convert the column index into the column data property
+                $columnIdx = intval($request['order'][$i]['column']);
+                $requestColumn = $request['columns'][$columnIdx];
 
-            if ( $requestColumn['orderable'] == 'true' ) {
-                $dir = $request['order'][$i]['dir'] === 'asc' ?
-                    'ASC' :
-                    'DESC';
+                if ( $requestColumn['orderable'] == 'true' ) {
+                    $dir = $request['order'][$i]['dir'] === 'asc' ?
+                        'ASC' :
+                        'DESC';
 
-                $orderBy[] = '`'.$requestColumn['data'].'` '.$dir;
+                    $orderBy[] = '`'.$requestColumn['data'].'` '.$dir;
+                }
+            }
+
+            if ( count( $orderBy ) ) {
+                $orderByText = implode(', ', $orderBy);
+                if (!empty(eme_verify_sql_orderby($orderByText))) {
+                    $order = 'ORDER BY '.$orderByText;
+                }
             }
         }
-
-        if ( count( $orderBy ) ) {
-            $orderByText = implode(', ', $orderBy);
-            if (!empty(eme_verify_sql_orderby($orderByText))) {
-                $order = 'ORDER BY '.$orderByText;
-            }
-        }
+        return $order;
     }
-    return $order;
+    return '';
 }
 
 ?>

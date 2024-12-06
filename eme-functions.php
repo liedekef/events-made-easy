@@ -4107,7 +4107,14 @@ function eme_get_datatables_limit() {
 
 function eme_get_datatables_orderby($preferred_sorting='') {
     // currently jtable:
-    $orderby     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY $preferred_sorting, ' . esc_sql($_REQUEST['jtSorting']) : '';
+    $orderby = '';
+    if ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) {
+        if ( ! empty( $preferred_sorting ) ) {
+            $orderby = "ORDER BY $preferred_sorting, " . esc_sql($_REQUEST['jtSorting']);
+        } else {
+            $orderby = "ORDER BY " . esc_sql($_REQUEST['jtSorting']);
+        } 
+    }
     return $orderby;
 
     $request = eme_sanitize_request($_REQUEST);

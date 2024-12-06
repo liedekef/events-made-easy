@@ -4099,9 +4099,13 @@ function eme_get_selected_captcha($properties) {
 }
 
 function eme_get_datatables_limit() {
-    $limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ?: 0 ) . ',' . intval( $_REQUEST['jtPageSize'] ?: 10 );
-    // for datatables
-    //$limit = ' LIMIT ' . intval( $_REQUEST['start'] ?: 0 ) . ',' . intval( $_REQUEST['length'] ?: 10 );
+    $limit = '';
+    if ( isset( $_REQUEST['jtStartIndex'] ) ) {
+        $limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ?: 0 ) . ',' . intval( $_REQUEST['jtPageSize'] ?: 10 );
+    } elseif (isset( $_REQUEST['start'] ) ) {
+        // for datatables
+        $limit = ' LIMIT ' . intval( $_REQUEST['start'] ?: 0 ) . ',' . intval( $_REQUEST['length'] ?: 10 );
+    }
     return $limit;
 }
 

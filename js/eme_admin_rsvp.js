@@ -139,9 +139,9 @@ jQuery(document).ready(function ($) {
         }
     }
 
+    let $_GET = getQueryParams(document.location.search);
     //Prepare jtable plugin
     if ($('#BookingsTableContainer').length) {
-        let $_GET = getQueryParams(document.location.search);
         let extrafields=$('#BookingsTableContainer').data('extrafields').toString().split(',');
         let extrafieldnames=$('#BookingsTableContainer').data('extrafieldnames').toString().split(',');
         let extrafieldsearchable=$('#BookingsTableContainer').data('extrafieldsearchable').toString().split(',');
@@ -258,12 +258,9 @@ jQuery(document).ready(function ($) {
             },
             fields: rsvpfields
         });
-    }
 
-    // Load list from server, but only if the container is there
-    // and only in the initial load we take a possible person id in the url into account
-    // This person id can come from the eme_people page when clicking on "view all bookings"
-    if ($('#BookingsTableContainer').length) {
+        // Only in the initial load we take a possible person id in the url into account
+        // This person id can come from the eme_people page when clicking on "view all bookings"
         $('#BookingsTableContainer').jtable('load', {
             'scope': $('#scope').val(),
             'category': $('#category').val(),
@@ -281,7 +278,7 @@ jQuery(document).ready(function ($) {
         });
     }
 
-    function updateShowHideStuff () {
+    function updateShowHideStuff() {
         let action=$('select#eme_admin_action').val();
         if ($.inArray(action,['resendApprovedBooking']) >= 0) {
             $('span#span_sendtocontact').show();

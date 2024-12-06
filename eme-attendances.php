@@ -182,10 +182,9 @@ function eme_ajax_attendances_list() {
 	if ( current_user_can( get_option( 'eme_cap_list_attendances' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$start       = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-		$pagesize    = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
-		$sql         = "SELECT * FROM $table $where $sorting LIMIT $start,$pagesize";
+        $limit       = eme_get_datatables_limit();
+		$orderby     = eme_get_datatables_orderby();
+		$sql         = "SELECT * FROM $table $where $orderby $limit";
 		$rows        = $wpdb->get_results( $sql, ARRAY_A ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		foreach ( $rows as $key => $row ) {
 				$rows[ $key ]['type']      = $att_types[ $row['type'] ];
@@ -231,8 +230,10 @@ function eme_ajax_attendances_list() {
 			}
 		}
 		$jTableResult['Result']           = 'OK';
-		$jTableResult['TotalRecordCount'] = $recordCount;
 		$jTableResult['Records']          = $rows;
+		$jTableResult['TotalRecordCount'] = $recordCount;
+        $jTableResult['recordsTotal']     = $recordCount;
+        $jTableResult['recordsFiltered']  = $recordCount;
 	} else {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );

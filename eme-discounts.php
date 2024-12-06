@@ -1588,15 +1588,10 @@ function eme_ajax_discounts_list() {
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
+        $limit       = eme_get_datatables_limit();
+		$orderby     = eme_get_datatables_orderby();
 
-		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
-				$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
-		} else {
-			$limit = '';
-		}
-
-		$sql  = "SELECT * FROM $table $where $sorting $limit";
+		$sql  = "SELECT * FROM $table $where $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
 			$selected_dgroup = $row['dgroup'];
@@ -1637,8 +1632,10 @@ function eme_ajax_discounts_list() {
 				$rows[ $key ]['name']         = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=edit_discount&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
 		$jTableResult['Result']           = 'OK';
-		$jTableResult['TotalRecordCount'] = $recordCount;
 		$jTableResult['Records']          = $rows;
+		$jTableResult['TotalRecordCount'] = $recordCount;
+        $jTableResult['recordsTotal']     = $recordCount;
+        $jTableResult['recordsFiltered']  = $recordCount;
 	} else {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
@@ -1667,22 +1664,19 @@ function eme_ajax_discountgroups_list() {
 	if ( current_user_can( get_option( 'eme_cap_discounts' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
+        $limit       = eme_get_datatables_limit();
+		$orderby     = eme_get_datatables_orderby();
 
-		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
-			$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
-		} else {
-			$limit = '';
-		}
-
-		$sql  = "SELECT * FROM $table $where $sorting $limit";
+		$sql  = "SELECT * FROM $table $where $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
 				$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-discounts&amp;eme_admin_action=edit_dgroup&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
 		$jTableResult['Result']           = 'OK';
-		$jTableResult['TotalRecordCount'] = $recordCount;
 		$jTableResult['Records']          = $rows;
+		$jTableResult['TotalRecordCount'] = $recordCount;
+        $jTableResult['recordsTotal']     = $recordCount;
+        $jTableResult['recordsFiltered']  = $recordCount;
 	} else {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );

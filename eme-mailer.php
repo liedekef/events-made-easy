@@ -1294,10 +1294,9 @@ function eme_mailingreport_list() {
 	$jTableResult = [];
 	$sql          = "SELECT COUNT(*) FROM $table $where";
 	$recordCount  = $wpdb->get_var( $sql );
-	$start        = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-	$pagesize     = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$sorting      = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( $_REQUEST['jtSorting'] ) : '';
-	$sql          = "SELECT * FROM $table $where $sorting LIMIT $start,$pagesize";
+    $limit        = eme_get_datatables_limit();
+    $orderby      = eme_get_datatables_orderby();
+	$sql          = "SELECT * FROM $table $where $orderby $limit";
 	$rows         = $wpdb->get_results( $sql, ARRAY_A );
 	$records      = [];
 	$states       = eme_mail_localizedstates();
@@ -1340,8 +1339,10 @@ function eme_mailingreport_list() {
 		$records[] = $record;
 	}
 	$jTableResult['Result']           = 'OK';
-	$jTableResult['TotalRecordCount'] = $recordCount;
 	$jTableResult['Records']          = $records;
+	$jTableResult['TotalRecordCount'] = $recordCount;
+    $jTableResult['recordsTotal']     = $recordCount;
+    $jTableResult['recordsFiltered']  = $recordCount;
 	print wp_json_encode( $jTableResult );
 	wp_die();
 }

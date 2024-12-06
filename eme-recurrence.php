@@ -629,9 +629,8 @@ function eme_ajax_recurrences_list() {
 	$today              = $eme_date_obj->getDate();
 	$event_status_array = eme_status_array();
 
-	$start             = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-	$pagesize          = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$sorting           = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
+    $limit             = eme_get_datatables_limit();
+	$orderby           = eme_get_datatables_orderby();
 	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'ongoing';
 	$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
 	$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_start_date']) ) : '';
@@ -665,11 +664,11 @@ function eme_ajax_recurrences_list() {
 		$events_table      = EME_DB_PREFIX . EME_EVENTS_TBNAME;
 		$count_sql         = "SELECT COUNT(recurrence_id) FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where";
 		$recurrences_count = $wpdb->get_var( $count_sql );
-		$sql               = "SELECT * FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where $sorting LIMIT $start,$pagesize";
+		$sql               = "SELECT * FROM $recurrence_table NATURAL JOIN ( SELECT * FROM $events_table WHERE recurrence_id >0 GROUP BY recurrence_id ) as event $where $orderby $limit";
 	} else {
 		$count_sql         = "SELECT COUNT(recurrence_id) FROM $recurrence_table $where";
 		$recurrences_count = $wpdb->get_var( $count_sql );
-		$sql               = "SELECT * FROM $recurrence_table $where $sorting LIMIT $start,$pagesize";
+		$sql               = "SELECT * FROM $recurrence_table $where $orderby $limit";
 	}
 	$recurrences = $wpdb->get_results( $sql, ARRAY_A );
 
@@ -772,8 +771,10 @@ function eme_ajax_recurrences_list() {
 
 	$ajaxResult                     = [];
 	$ajaxResult['Result']           = 'OK';
-	$ajaxResult['TotalRecordCount'] = $recurrences_count;
 	$ajaxResult['Records']          = $rows;
+	$ajaxResult['TotalRecordCount'] = $recurrences_count;
+    $ajaxResult['recordsTotal']     = $recordCount;
+    $ajaxResult['recordsFiltered']  = $recordCount;
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }

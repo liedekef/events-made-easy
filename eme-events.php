@@ -10124,9 +10124,22 @@ function eme_ajax_events_list() {
 	}
 	$wp_id = get_current_user_id();
 
-	$jtStartIndex      = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-	$jtPageSize        = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$jtSorting         = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? esc_sql( $_REQUEST['jtSorting'] ) : 'ASC';
+    // the following code is to support both jtable and datatables
+    // TODO: once switched to datatables part can be removed
+    // we can't use the function eme_get_datatables_limit, since the "limit" and "offset" parts can be used separately
+    $StartIndex = 0;
+    if ( isset( $_REQUEST['jtStartIndex'] ) ) {
+        $StartIndex = intval( $_REQUEST['jtStartIndex'] );
+    } elseif ( isset( $_REQUEST['start'] ) ) {
+        $StartIndex = intval( $_REQUEST['start'] );
+    }
+    $PageSize = 0;
+    if ( isset( $_REQUEST['jtPageSize'] ) ) {
+        $PageSize = intval( $_REQUEST['jtPageSize'] );
+    } elseif ( isset( $_REQUEST['length'] ) ) {
+        $PageSize = intval( $_REQUEST['length'] );
+    }
+	$orderby           = eme_get_datatables_orderby() ?: 'ASC';
 	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'future';
 	$category          = isset( $_REQUEST['category'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['category'] ) ) : '';
 	$status            = isset( $_REQUEST['status'] ) ? intval( $_REQUEST['status'] ) : '';
@@ -10213,8 +10226,8 @@ function eme_ajax_events_list() {
 	// datetime is a column in the javascript definition of the events jtable, but of course the db doesn't know this
 	// so we need to change this into something known, but since eme_get_events can work with "ASC/DESC" only and
 	// then sorts on date/time, we just remove the word here
-	$jtSorting          = str_replace( 'datetime ', '', $jtSorting );
-	$events             = eme_get_events( limit: $jtPageSize, scope: $scope, order: $jtSorting, offset: $jtStartIndex, location_id: $location_ids, category: $category, extra_conditions: $where, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
+	$orderby = str_replace( 'datetime ', '', $orderby );
+	$events  = eme_get_events( limit: $PageSize, scope: $scope, order: $orderby, offset: $StartIndex, location_id: $location_ids, category: $category, extra_conditions: $where, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
 	$event_status_array = eme_status_array();
 	$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
 
@@ -10486,8 +10499,10 @@ function eme_ajax_events_list() {
 
 	$ajaxResult                     = [];
 	$ajaxResult['Result']           = 'OK';
-	$ajaxResult['TotalRecordCount'] = $events_count;
 	$ajaxResult['Records']          = $rows;
+	$ajaxResult['TotalRecordCount'] = $events_count;
+    $ajaxResult['recordsTotal']     = $events_count;
+    $ajaxResult['recordsFiltered']  = $events_count;
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }

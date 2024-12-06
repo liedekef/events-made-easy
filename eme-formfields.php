@@ -5049,10 +5049,9 @@ function eme_ajax_formfields_list() {
 	if ( current_user_can( get_option( 'eme_cap_forms' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$start       = intval( $_REQUEST['jtStartIndex'] );
-		$pagesize    = intval( $_REQUEST['jtPageSize'] );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
-		$sql         = "SELECT * FROM $table $where $sorting LIMIT $start,$pagesize";
+        $limit       = eme_get_datatables_limit();
+		$orderby     = eme_get_datatables_orderby();
+		$sql         = "SELECT * FROM $table $where $orderby $limit";
 		$rows        = $wpdb->get_results( $sql, ARRAY_A );
 		$res         = [];
 		foreach ( $rows as $key => $row ) {
@@ -5068,8 +5067,10 @@ function eme_ajax_formfields_list() {
 			$rows[ $key ]['field_name']     = "<a href='" . admin_url( 'admin.php?page=eme-formfields&amp;eme_admin_action=edit_formfield&amp;field_id=' . $row['field_id'] ) . "'>" . $row['field_name'] . '</a>';
 		}
 		$jTableResult['Result']           = 'OK';
-		$jTableResult['TotalRecordCount'] = $recordCount;
 		$jTableResult['Records']          = $rows;
+		$jTableResult['TotalRecordCount'] = $recordCount;
+        $jTableResult['recordsTotal']     = $recordCount;
+        $jTableResult['recordsFiltered']  = $recordCount;
 	} else {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );

@@ -3049,15 +3049,15 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     }
 }
 
-function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize = 0, $sorting = '', $count = 0, $memberids_only = 0, $peopleids_only = 0, $emails_only = 0, $where_arr = [] ) {
+function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids_only = 0, $peopleids_only = 0, $emails_only = 0, $where_arr = [] ) {
     global $wpdb;
     $members_table           = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
     $people_table            = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $answers_table           = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 
-    if (preg_match('/membership_name/', $sorting ) ) {
-        $sorting = str_replace( 'membership_name', 'memberships.name', $sorting );
+    if (preg_match('/membership_name/', $orderby ) ) {
+        $orderby = str_replace( 'membership_name', 'memberships.name', $orderby );
         $membership_join = "LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id";
     } else {
         $membership_join = "";
@@ -3175,17 +3175,16 @@ function eme_get_sql_members_searchfields( $search_terms, $start = 0, $pagesize 
     if ( $count ) {
         $sql = "SELECT COUNT(*) FROM $members_table AS members $people_join $membership_join $sql_join $where";
     } elseif ( $memberids_only ) {
-        $sql = "SELECT members.member_id FROM $members_table AS members $people_join $membership_join $sql_join $where $sorting";
+        $sql = "SELECT members.member_id FROM $members_table AS members $people_join $membership_join $sql_join $where $orderby";
     } elseif ( $peopleids_only ) {
-        $sql = "SELECT people.person_id FROM $members_table AS members $people_join $membership_join $sql_join $where $sorting";
+        $sql = "SELECT people.person_id FROM $members_table AS members $people_join $membership_join $sql_join $where $orderby";
     } elseif ( $emails_only ) {
-        $sql = "SELECT people.email FROM $members_table AS members $people_join $membership_join $sql_join $where $sorting";
+        $sql = "SELECT people.email FROM $members_table AS members $people_join $membership_join $sql_join $where $orderby";
     } else {
+        $limit   = eme_get_datatables_limit();
+        $orderby = eme_get_datatables_orderby();
         $sql = "SELECT members.*, people.lastname, people.firstname, people.email, people.birthdate, people.birthplace, people.address1, people.address2, people.zip, people.city, people.state_code, people.country_code, people.wp_id
-            FROM $members_table AS members $people_join $membership_join $sql_join $where $sorting";
-        if ( ! empty( $pagesize ) ) {
-            $sql .= " LIMIT $start,$pagesize";
-        }
+            FROM $members_table AS members $people_join $membership_join $sql_join $where $orderby $limit";
     }
     return $sql;
 }
@@ -6387,9 +6386,8 @@ function eme_ajax_memberships_list() {
 
     $sql         = "SELECT COUNT(*) FROM $table";
     $recordCount = $wpdb->get_var( $sql );
-    $start       = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-    $pagesize    = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-    $sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY status DESC, ' . esc_sql( $_REQUEST['jtSorting'] ) : 'ORDER BY status DESC, name ASC';
+    $limit       = eme_get_datatables_limit();
+    $orderby     = eme_get_datatables_orderby('status DESC') ?: 'ORDER BY status DESC, name ASC';
 
     $sql         = $wpdb->prepare("SELECT membership_id,COUNT(*) AS familymembercount FROM $members_table WHERE status IN (%d,%d) AND related_member_id>0 GROUP BY membership_id", $status_active, $status_grace);
     $res         = $wpdb->get_results( $sql, ARRAY_A );
@@ -6404,7 +6402,7 @@ function eme_ajax_memberships_list() {
         $mainmembercount[ $val['membership_id'] ] = $val['mainmembercount'];
     }
 
-    $sql     = "SELECT * FROM $table $sorting LIMIT $start,$pagesize";
+    $sql     = "SELECT * FROM $table $orderby $limit";
     $rows    = $wpdb->get_results( $sql, ARRAY_A );
     $records = [];
     foreach ( $rows as $item ) {
@@ -6478,8 +6476,10 @@ function eme_ajax_memberships_list() {
         $records[] = $record;
     }
     $ajaxResult['Result']           = 'OK';
-    $ajaxResult['TotalRecordCount'] = $recordCount;
     $ajaxResult['Records']          = $records;
+    $ajaxResult['TotalRecordCount'] = $recordCount;
+    $ajaxResult['recordsTotal']     = $recordCount;
+    $ajaxResult['recordsFiltered']  = $recordCount;
     print wp_json_encode( $ajaxResult );
     wp_die();
 }
@@ -6498,11 +6498,9 @@ function eme_ajax_members_list( ) {
         wp_die();
     }
 
-    $start     = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-    $pagesize  = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-    $sorting   = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( $_REQUEST['jtSorting'] ) : '';
-    $count_sql = eme_get_sql_members_searchfields( $_POST, $start, $pagesize, $sorting, 1 );
-    $sql       = eme_get_sql_members_searchfields( $_POST, $start, $pagesize, $sorting );
+    $search_terms = eme_sanitize_request($_POST);
+    $count_sql = eme_get_sql_members_searchfields( $search_terms, 1 );
+    $sql       = eme_get_sql_members_searchfields( $search_terms);
 
     $recordCount = $wpdb->get_var( $count_sql );
     $rows        = $wpdb->get_results( $sql, ARRAY_A );
@@ -6627,8 +6625,10 @@ function eme_ajax_members_list( ) {
         $records[] = $record;
     }
     $ajaxResult['Result']           = 'OK';
-    $ajaxResult['TotalRecordCount'] = $recordCount;
     $ajaxResult['Records']          = $records;
+    $ajaxResult['TotalRecordCount'] = $recordCount;
+    $ajaxResult['recordsTotal']     = $recordCount;
+    $ajaxResult['recordsFiltered']  = $recordCount;
     print wp_json_encode( $ajaxResult );
     wp_die();
 }
@@ -6679,8 +6679,8 @@ function eme_ajax_members_select2() {
         $record['text'] = eme_format_full_name( $member['firstname'], $member['lastname'], $member['email'] ) . ' (' . $member['membership_name'] . ')';
         $records[]      = $record;
     }
-    $jTableResult['TotalRecordCount'] = $recordCount;
     $jTableResult['Records']          = $records;
+    $jTableResult['TotalRecordCount'] = $recordCount;
     print wp_json_encode( $jTableResult );
     wp_die();
 }

@@ -1962,10 +1962,9 @@ function eme_ajax_task_signups_list() {
 	if ( current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $signups_table AS signups $join $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$start       = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-		$pagesize    = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : 'ORDER BY task_start ASC, task_end ASC, task_seq ASC';
-		$sql         = "SELECT signups.*, events.event_id,events.event_name, events.event_start, events.event_end, people.person_id,people.lastname, people.firstname, people.email, tasks.name AS task_name, task_start, task_end FROM $signups_table AS signups $join $where $sorting LIMIT $start,$pagesize";
+        $limit       = eme_get_datatables_limit();
+		$orderby     = eme_get_datatables_orderby() ?: 'ORDER BY task_start ASC, task_end ASC, task_seq ASC';
+		$sql         = "SELECT signups.*, events.event_id,events.event_name, events.event_start, events.event_end, people.person_id,people.lastname, people.firstname, people.email, tasks.name AS task_name, task_start, task_end FROM $signups_table AS signups $join $where $orderby $limit";
 		$rows        = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
 			$localized_start_date        = eme_localized_date( $row['event_start'], EME_TIMEZONE, 1 );
@@ -1988,8 +1987,10 @@ function eme_ajax_task_signups_list() {
 		}
 
 		$jTableResult['Result']           = 'OK';
-		$jTableResult['TotalRecordCount'] = $recordCount;
 		$jTableResult['Records']          = $rows;
+		$jTableResult['TotalRecordCount'] = $recordCount;
+        $jTableResult['recordsTotal']     = $recordCount;
+        $jTableResult['recordsFiltered']  = $recordCount;
 	} else {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );

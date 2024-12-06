@@ -2885,15 +2885,17 @@ function eme_ajax_locations_list() {
 
     // if the person is not allowed to manage all locations, show only events he can edit
     if ( ! current_user_can( get_option( 'eme_cap_edit_locations' ) ) ) {
-            $wp_id = get_current_user_id();
+        $wp_id = get_current_user_id();
         if ( ! $wp_id ) {
-            $ajaxResult['Result']               = 'OK';
-                $ajaxResult['TotalRecordCount'] = 0;
-                $ajaxResult['Records']          = [];
-                print wp_json_encode( $ajaxResult );
-                wp_die();
+            $ajaxResult['Result']           = 'OK';
+            $ajaxResult['Records']          = [];
+            $ajaxResult['TotalRecordCount'] = 0;
+            $ajaxResult['recordsTotal']     = $recordCount;
+            $ajaxResult['recordsFiltered']  = $recordCount;
+            print wp_json_encode( $ajaxResult );
+            wp_die();
         }
-            $where_arr[] = "(location_author=$wp_id)";
+        $where_arr[] = "(location_author=$wp_id)";
     }
 
     if ( $where_arr ) {
@@ -2904,15 +2906,14 @@ function eme_ajax_locations_list() {
     $formfields            = eme_get_formfields( '', 'locations' );
 
     $jTableResult = [];
-    $start        = intval( $_REQUEST['jtStartIndex'] );
-    $pagesize     = intval( $_REQUEST['jtPageSize'] );
-    $sorting      = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( $_REQUEST['jtSorting'] ) : '';
+    $limit    = eme_get_datatables_limit();
+    $orderby  = eme_get_datatables_orderby();
 
     if ( empty( $formfields_searchable ) ) {
-            $count_sql = "SELECT COUNT(*) FROM $table AS locations $where";
-        $sql           = "SELECT locations.* FROM $table AS locations $where $sorting LIMIT $start,$pagesize";
+        $count_sql = "SELECT COUNT(*) FROM $table AS locations $where";
+        $sql       = "SELECT locations.* FROM $table AS locations $where $orderby $limit";
     } else {
-            $field_ids_arr = [];
+        $field_ids_arr = [];
         foreach ( $formfields_searchable as $formfield ) {
             $field_ids_arr[] = $formfield['field_id'];
         }
@@ -2937,7 +2938,7 @@ function eme_ajax_locations_list() {
                    ON locations.location_id=ans.related_id";
         }
         $count_sql = "SELECT COUNT(*) FROM $table AS locations $sql_join $where";
-        $sql       = "SELECT locations.* FROM $table AS locations $sql_join $where $sorting LIMIT $start,$pagesize";
+        $sql       = "SELECT locations.* FROM $table AS locations $sql_join $where $orderby $limit";
     }
 
     $recordCount = $wpdb->get_var( $count_sql );
@@ -3014,8 +3015,10 @@ function eme_ajax_locations_list() {
         $records[] = $record;
     }
     $jTableResult['Result']           = 'OK';
-    $jTableResult['TotalRecordCount'] = $recordCount;
     $jTableResult['Records']          = $records;
+    $jTableResult['TotalRecordCount'] = $recordCount;
+    $jTableResult['recordsTotal']     = $recordCount;
+    $jTableResult['recordsFiltered']  = $recordCount;
     print wp_json_encode( $jTableResult );
     wp_die();
 }

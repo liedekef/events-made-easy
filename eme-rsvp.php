@@ -5510,9 +5510,8 @@ function eme_ajax_bookings_list() {
 	$people_table   = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$answers_table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
 
-	$jtStartIndex   = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-	$jtPageSize     = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$jtSorting      = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? esc_sql( $_REQUEST['jtSorting'] ) : 'creation_date ASC';
+    $limit          = eme_get_datatables_limit();
+	$orderby        = eme_get_datatables_orderby() ?: 'ORDER BY creation_date ASC';
 	$booking_status = ( isset( $_REQUEST['booking_status'] ) ) ? eme_sanitize_request( $_REQUEST['booking_status'] ) : 'APPROVED';
 	$search_event   = isset( $_REQUEST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_event']) ) ) : '';
 	$search_person  = isset( $_REQUEST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_person']) ) ) : '';
@@ -5552,8 +5551,10 @@ function eme_ajax_bookings_list() {
 			$event_ids_arr  = eme_get_eventids_by_author( $current_userid, $scope, $event_id );
 			if ( empty( $event_ids_arr ) ) {
 				$jTableResult['Result']           = 'OK';
-				$jTableResult['TotalRecordCount'] = 0;
 				$jTableResult['Records']          = [];
+				$jTableResult['TotalRecordCount'] = 0;
+                $jTableResult['recordsTotal']     = $recordCount;
+                $jTableResult['recordsFiltered']  = $recordCount;
 				print wp_json_encode( $jTableResult );
 				wp_die();
 			} else {
@@ -5574,8 +5575,10 @@ function eme_ajax_bookings_list() {
 			$event_ids_arr  = eme_get_eventids_by_author( $current_userid, $scope, $event_id );
 			if ( empty( $event_ids_arr ) ) {
 				$jTableResult['Result']           = 'OK';
-				$jTableResult['TotalRecordCount'] = 0;
 				$jTableResult['Records']          = [];
+				$jTableResult['TotalRecordCount'] = 0;
+                $jTableResult['recordsTotal']     = $recordCount;
+                $jTableResult['recordsFiltered']  = $recordCount;
 				print wp_json_encode( $jTableResult );
 				wp_die();
 			} else {
@@ -5632,10 +5635,10 @@ function eme_ajax_bookings_list() {
 	}
 
 	// match some non-existing column names in the ajax for sorting to good ones
-	$jtSorting = str_replace( 'booker ASC', 'lastname ASC, firstname ASC', $jtSorting );
-	$jtSorting = str_replace( 'booker DESC', 'lastname DESC, firstname DESC', $jtSorting );
-	$jtSorting = str_replace( 'datetime ASC', 'event_start ASC', $jtSorting );
-	$jtSorting = str_replace( 'datetime DESC', 'event_start DESC', $jtSorting );
+	$orderby = str_replace( 'booker ASC', 'lastname ASC, firstname ASC', $orderby );
+	$orderby = str_replace( 'booker DESC', 'lastname DESC, firstname DESC', $orderby );
+	$orderby = str_replace( 'datetime ASC', 'event_start ASC', $orderby );
+	$orderby = str_replace( 'datetime DESC', 'event_start DESC', $orderby );
 
 	$eme_date_obj_reminder = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_date_obj_now      = new ExpressiveDate( 'now', EME_TIMEZONE );
@@ -5702,7 +5705,7 @@ function eme_ajax_bookings_list() {
 	}
 
 	$sql1        = "SELECT count(bookings.booking_id) FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id $sql_join $where";
-	$sql2        = "SELECT bookings.* FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id $sql_join $where ORDER BY $jtSorting LIMIT $jtStartIndex,$jtPageSize";
+	$sql2        = "SELECT bookings.* FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id $sql_join $where $orderby $limit";
 	$recordCount = $wpdb->get_var( $sql1 );
 	$bookings    = $wpdb->get_results( $sql2, ARRAY_A );
 	$wp_users    = eme_get_indexed_users();
@@ -5971,8 +5974,10 @@ function eme_ajax_bookings_list() {
 		$rows[] = $line;
 	}
 	$jTableResult['Result']           = 'OK';
-	$jTableResult['TotalRecordCount'] = $recordCount;
 	$jTableResult['Records']          = $rows;
+	$jTableResult['TotalRecordCount'] = $recordCount;
+    $jTableResult['recordsTotal']     = $recordCount;
+    $jTableResult['recordsFiltered']  = $recordCount;
 	print wp_json_encode( $jTableResult );
 	wp_die();
 }

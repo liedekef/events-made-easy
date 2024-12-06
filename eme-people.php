@@ -1975,7 +1975,7 @@ function eme_render_people_searchfields( $limit_to_group = 0, $group_to_edit = [
 	}
 }
 
-function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize = 0, $sorting = '', $count = 0, $ids_only = 0, $emails_only = 0, $where_arr=[] ) {
+function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only = 0, $emails_only = 0, $where_arr=[] ) {
 	global $wpdb;
 	$people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
 	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
@@ -2102,10 +2102,9 @@ function eme_get_sql_people_searchfields( $search_terms, $start = 0, $pagesize =
 	} elseif ( $emails_only ) {
 		$sql = "SELECT people.email FROM $people_table AS people $usergroup_join $member_join $sql_join $where GROUP BY people.person_id";
 	} else {
-		$sql = "SELECT people.* FROM $people_table AS people $usergroup_join $member_join $sql_join $where GROUP BY people.person_id $sorting";
-		if ( ! empty( $pagesize ) ) {
-			$sql .= " LIMIT $start,$pagesize";
-		}
+        $limit   = eme_get_datatables_limit();
+        $orderby = eme_get_datatables_orderby();
+		$sql = "SELECT people.* FROM $people_table AS people $usergroup_join $member_join $sql_join $where GROUP BY people.person_id $orderby $limit";
 	}
 	return $sql;
 }
@@ -5087,11 +5086,11 @@ function eme_ajax_people_list( ) {
 	$formfields = eme_get_formfields( '', 'people' );
 
 	$jTableResult = [];
-	$start        = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-	$pagesize     = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
-	$count_sql    = eme_get_sql_people_searchfields( $_POST, $start, $pagesize, $sorting, 1 );
-	$sql          = eme_get_sql_people_searchfields( $_POST, $start, $pagesize, $sorting );
+    $limit        = eme_get_datatables_limit();
+	$orderby      = eme_get_datatables_orderby();
+    $search_terms = eme_sanitize_request($_POST);
+	$count_sql    = eme_get_sql_people_searchfields( $search_terms, 1 );
+	$sql          = eme_get_sql_people_searchfields( $search_terms );
 	$recordCount  = $wpdb->get_var( $count_sql );
 	$rows         = $wpdb->get_results( $sql, ARRAY_A );
 	$wp_users     = eme_get_indexed_users();
@@ -5174,8 +5173,10 @@ function eme_ajax_people_list( ) {
 		$records[] = $record;
 	}
 	$jTableResult['Result']           = 'OK';
-	$jTableResult['TotalRecordCount'] = $recordCount;
 	$jTableResult['Records']          = $records;
+	$jTableResult['TotalRecordCount'] = $recordCount;
+    $jTableResult['recordsTotal']     = $recordCount;
+    $jTableResult['recordsFiltered']  = $recordCount;
 	print wp_json_encode( $jTableResult );
 	wp_die();
 }
@@ -5203,10 +5204,9 @@ function eme_ajax_groups_list() {
 		$groupcount[ $val['group_id'] ] = $val['eme_groupcount'];
 	}
 
-	$start    = ( isset( $_REQUEST['jtStartIndex'] ) ) ? intval( $_REQUEST['jtStartIndex'] ) : 0;
-	$pagesize = ( isset( $_REQUEST['jtPageSize'] ) ) ? intval( $_REQUEST['jtPageSize'] ) : 10;
-	$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
-	$sql      = "SELECT * FROM $table $sorting LIMIT $start,$pagesize";
+    $limit    = eme_get_datatables_limit();
+	$orderby  = eme_get_datatables_orderby();
+	$sql      = "SELECT * FROM $table $orderby $limit";
 	$groups   = $wpdb->get_results( $sql, ARRAY_A );
 	$records  = [];
 	foreach ( $groups as $group ) {
@@ -5226,7 +5226,7 @@ function eme_ajax_groups_list() {
 			$record['groupcount'] = esc_html__( 'Dynamic group of people', 'events-made-easy' );
 			if ( ! empty( $group['search_terms'] ) ) {
 				$search_terms = eme_unserialize( $group['search_terms'] );
-				$count_sql    = eme_get_sql_people_searchfields( $search_terms, 0, 0, '', 1 );
+				$count_sql    = eme_get_sql_people_searchfields( $search_terms, 1 );
 				$count        = $wpdb->get_var( $count_sql );
 				if ( $count > 0 ) {
 					$record['groupcount'] .= '&nbsp;' . sprintf( _n( '(1 person)', '(%d persons)', $count, 'events-made-easy' ), $count );
@@ -5248,8 +5248,10 @@ function eme_ajax_groups_list() {
 		$records[] = $record;
 	}
 	$jTableResult['Result']           = 'OK';
-	$jTableResult['TotalRecordCount'] = $recordCount;
 	$jTableResult['Records']          = $records;
+	$jTableResult['TotalRecordCount'] = $recordCount;
+    $jTableResult['recordsTotal']     = $recordCount;
+    $jTableResult['recordsFiltered']  = $recordCount;
 	print wp_json_encode( $jTableResult );
 	wp_die();
 }
@@ -5289,8 +5291,8 @@ function eme_ajax_people_select2() {
 		$record['text'] = eme_format_full_name( $person['firstname'], $person['lastname'] ) . ' (' . $person['email'] . ')';
 		$records[]      = $record;
 	}
-	$jTableResult['TotalRecordCount'] = $recordCount;
 	$jTableResult['Records']          = $records;
+	$jTableResult['TotalRecordCount'] = $recordCount;
 	print wp_json_encode( $jTableResult );
 	wp_die();
 }

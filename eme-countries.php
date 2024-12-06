@@ -875,21 +875,18 @@ function eme_ajax_countries_list() {
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table $where";
 		$recordCount = $wpdb->get_var( $sql );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
-		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
-			$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
-		} else {
-			$limit = '';
-		}
-
-		$sql  = "SELECT * FROM $table $where $sorting $limit";
+        $limit       = eme_get_datatables_limit();
+		$orderby     = eme_get_datatables_orderby();
+		$sql  = "SELECT * FROM $table $where $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
 			$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_country&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
 		$jTableResult['Result']           = 'OK';
-		$jTableResult['TotalRecordCount'] = $recordCount;
 		$jTableResult['Records']          = $rows;
+		$jTableResult['TotalRecordCount'] = $recordCount;
+        $jTableResult['recordsTotal']     = $recordCount;
+        $jTableResult['recordsFiltered']  = $recordCount;
 	} else {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
@@ -907,22 +904,19 @@ function eme_ajax_states_list() {
 	if ( current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		$sql         = "SELECT COUNT(*) FROM $table";
 		$recordCount = $wpdb->get_var( $sql );
-		$sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql($_REQUEST['jtSorting']) : '';
-		if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
-			$limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
-		} else {
-			$limit = '';
-		}
-
-		$sql  = "SELECT state.*,country.lang,country.name AS country_name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id $sorting $limit";
+        $limit       = eme_get_datatables_limit();
+		$orderby     = eme_get_datatables_orderby();
+		$sql  = "SELECT state.*,country.lang,country.name AS country_name FROM $table AS state LEFT JOIN $countries_table AS country ON state.country_id=country.id $orderby $limit";
 		$rows = $wpdb->get_results( $sql, ARRAY_A );
 		foreach ( $rows as $key => $row ) {
 			$rows[ $key ]['name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-countries&amp;eme_admin_action=edit_state&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['name'] . '</a>';
 		}
 
 		$jTableResult['Result']           = 'OK';
-		$jTableResult['TotalRecordCount'] = $recordCount;
 		$jTableResult['Records']          = $rows;
+		$jTableResult['TotalRecordCount'] = $recordCount;
+        $jTableResult['recordsTotal']     = $recordCount;
+        $jTableResult['recordsFiltered']  = $recordCount;
 	} else {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );

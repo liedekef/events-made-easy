@@ -3262,21 +3262,19 @@ function eme_ajax_record_list( $tablename, $cap ) {
     if ( current_user_can( get_option( $cap ) ) ) {
         $sql         = "SELECT COUNT(*) FROM $table $where";
         $recordCount = $wpdb->get_var( $sql );
-        $sorting     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY ' . esc_sql( $_REQUEST['jtSorting'] ) : '';
-        if ( isset( $_REQUEST['jtStartIndex'] ) && isset( $_REQUEST['jtPageSize'] ) ) {
-            $limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ) . ',' . intval( $_REQUEST['jtPageSize'] );
-        } else {
-            $limit = '';
-        }
+        $limit       = eme_get_datatables_limit();
+        $orderby     = eme_get_datatables_orderby();
 
-        $sql                    = "SELECT * FROM $table $where $sorting $limit";
+        $sql                    = "SELECT * FROM $table $where $orderby $limit";
         $rows                   = $wpdb->get_results( $sql, ARRAY_A );
         $jTableResult['Result'] = 'OK';
         if ( isset( $_REQUEST['options_list'] ) ) {
             $jTableResult['Options'] = $rows;
         } else {
-            $jTableResult['TotalRecordCount'] = $recordCount;
             $jTableResult['Records']          = $rows;
+            $jTableResult['TotalRecordCount'] = $recordCount;
+            $jTableResult['recordsTotal']     = $recordCount;
+            $jTableResult['recordsFiltered']  = $recordCount;
         }
     } else {
         $jTableResult['Result']  = 'Error';
@@ -4100,11 +4098,25 @@ function eme_get_selected_captcha($properties) {
     return $selected_captcha;
 }
 
-function eme_get_datatables_sorting($request) {
-    $order = '';
+function eme_get_datatables_limit() {
+    $limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ?: 0 ) . ',' . intval( $_REQUEST['jtPageSize'] ?: 10 );
+    // for datatables
+    //$limit = ' LIMIT ' . intval( $_REQUEST['start'] ?: 0 ) . ',' . intval( $_REQUEST['length'] ?: 10 );
+    return $limit;
+}
 
+function eme_get_datatables_orderby($preferred_sorting='') {
+    // currently jtable:
+    $orderby     = ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) ? 'ORDER BY $preferred_sorting, ' . esc_sql($_REQUEST['jtSorting']) : '';
+    return $orderby;
+
+    $request = eme_sanitize_request($_REQUEST);
+    $order = '';
     if ( isset($request['order']) && count($request['order']) ) {
         $orderBy = [];
+        if (!empty($preferred_sorting)) {
+            $orderBy[] = $preferred_sorting;
+        }
 
         $ien=count($request['order']);
         for ( $i=0 ; $i<$ien ; $i++ ) {

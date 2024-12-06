@@ -4833,30 +4833,15 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
 
 	// we can provide our own order statements
 	$orderby = '';
-	// remove trailing ','
-	$order = preg_replace( '/,$/', '', $order );
+	// remove trailing ',' and initial "ORDER BY " if present (it will be re-added)
+	$order = preg_replace( '/,$|ORDER BY /i', '', $order );
 	if ( ! eme_is_empty_string( $order )) {
 		if ( $order == 'ASC' || $order == 'DESC' ) {
 			$orderby = "ORDER BY event_start $order, event_name $order";
-		} elseif ( preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
-			$order_arr = [];
-			$order_by  = '';
-			if ( preg_match( '/^[\w_\-\, ]+$/', $order ) ) {
-				$order_tmp_arr = explode( ',', $order );
-				foreach ( $order_tmp_arr as $order_ell ) {
-					$asc_desc = 'ASC';
-					if ( preg_match( '/DESC$/', $order_ell ) ) {
-						$asc_desc = 'DESC';
-					}
-					$order_ell   = trim( preg_replace( '/ASC$|DESC$|\s/', '', $order_ell ) );
-					$order_arr[] = "$order_ell $asc_desc";
-				}
-			}
-			if ( ! empty( $order_arr ) ) {
-				$orderby = 'ORDER BY ' . join( ', ', $order_arr );
-			} else {
-				$orderby = 'ORDER BY event_start ASC, event_name ASC';
-			}
+		} elseif ( eme_verify_sql_orderby( $order ) ) {
+            $orderby = 'ORDER BY ' . $order;
+        } else {
+            $orderby = 'ORDER BY event_start ASC, event_name ASC';
 		}
 	}
 

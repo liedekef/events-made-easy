@@ -110,19 +110,10 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 
 		// check group memberships
 		if ( ! empty( $event['event_properties']['rsvp_required_group_ids'] ) ) {
-			$person = eme_get_person_by_wp_id( $current_userid );
-			if ( empty( $person ) ) {
-				return '';
-			}
-			$person_groupids = eme_get_persongroup_ids( $person['person_id'] );
-			if ( ! empty( $person_groupids ) ) {
-				$res_intersect   = array_intersect( $person_groupids, $event['event_properties']['rsvp_required_group_ids'] );
-			} else {
-				$res_intersect = 0;
-			}
-			if ( empty( $res_intersect ) ) {
-				return '';
-			}
+            $groups = join( ',', $event['event_properties']['rsvp_required_group_ids'] );
+            if ( empty( eme_get_groups_person_ids( $groups, "people.wp_id = $current_userid" ) ) ) {
+                return '';
+            }
 		}
 
 		// check memberships

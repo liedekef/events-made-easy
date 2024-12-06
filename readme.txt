@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.21 (2024//) =
 * Extra bulk action when managing bookings, to indicate attendance
+* Allow dynamic groups also as condition in the setting 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.'
 
 = 2.5.20 (2024/11/24) =
 * Some HTML fixes

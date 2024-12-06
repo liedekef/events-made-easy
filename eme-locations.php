@@ -1061,7 +1061,7 @@ function eme_get_locations( $eventful = false, $scope = 'all', $category = '', $
     // The function eme_global_map_json tries to remove these, but the data is not needed and better be safe than sorry
     $eventful = filter_var( $eventful, FILTER_VALIDATE_BOOLEAN );
     if ( $eventful ) {
-        $events = eme_get_events( 0, $scope, 'ASC', 0, $location_id, $category, $author, $contact_person, 1, $notcategory );
+        $events = eme_get_events( scope: $scope, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: 1, notcategory: $notcategory );
         if ( $events ) {
             foreach ( $events as $event ) {
                 $event_location_id = $event['location_id'];
@@ -1619,8 +1619,8 @@ function eme_global_map_shortcode( $atts ) {
 
             }
 
-            $older_events = eme_get_events( 1, '--' . $limit_start, 'ASC', 0, 0, $atts['category'], '', '', 1, $atts['notcategory'] );
-            $newer_events = eme_get_events( 1, '++' . $limit_end, 'ASC', 0, 0, $atts['category'], '', '', 1, $atts['notcategory'] );
+            $older_events = eme_get_events( limit: 1, scope: '--' . $limit_start, category: $atts['category'], show_ongoing: 1, notcategory: $atts['notcategory'] );
+            $newer_events = eme_get_events( limit: 1, scope: '++' . $limit_end, category: $atts['category'], show_ongoing: 1, notcategory: $atts['notcategory'] );
             if ( count( $older_events ) == 0 ) {
                 $prev_text = '';
             }
@@ -1685,7 +1685,7 @@ function eme_global_map_shortcode( $atts ) {
                 eme_trans_esc_html( $location['location_name'] ) . '</a></li>';
             }
             if ( $show_events ) {
-                $events    = eme_get_events( 0, $scope, 'ASC', $scope_offset, $location['location_id'], $atts['category'] );
+                $events    = eme_get_events( scope: $scope, offset: $scope_offset, location_id: $location['location_id'], category: $atts['category'] );
                 $loc_list .= "<ol id='eme_events_list'>";
                 foreach ( $events as $event ) {
                     if ( $show_locations ) {
@@ -2774,7 +2774,7 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
 
 function eme_events_in_location_list( $location, $scope = 'future', $order = 'ASC' ) {
     $eme_event_list_number_events = intval(get_option( 'eme_event_list_number_items' ));
-    $events                       = eme_get_events( $eme_event_list_number_events, $scope, $order, '', $location['location_id'] );
+    $events                       = eme_get_events( limit: $eme_event_list_number_events, scope: $scope, order: $order, location_id: $location['location_id'] );
     $list                         = '';
     if ( count( $events ) > 0 ) {
         foreach ( $events as $event ) {

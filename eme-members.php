@@ -3051,11 +3051,14 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
 
 function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids_only = 0, $peopleids_only = 0, $emails_only = 0, $where_arr = [] ) {
     global $wpdb;
-    $members_table           = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-    $people_table            = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $answers_table           = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+    $members_table     = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
+    $people_table      = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+    $answers_table     = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $memberships_table = EME_DB_PREFIX . EME_MEMBERSHIPS_TBNAME;
 
+    $limit   = eme_get_datatables_limit();
+    $orderby = eme_get_datatables_orderby();
+    // if we don't sort on membership_name, we don't need to JOIN on the memberships table too, a bit more efficient then
     if (preg_match('/membership_name/', $orderby ) ) {
         $orderby = str_replace( 'membership_name', 'memberships.name', $orderby );
         $membership_join = "LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id";
@@ -3181,8 +3184,6 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
     } elseif ( $emails_only ) {
         $sql = "SELECT people.email FROM $members_table AS members $people_join $membership_join $sql_join $where $orderby";
     } else {
-        $limit   = eme_get_datatables_limit();
-        $orderby = eme_get_datatables_orderby();
         $sql = "SELECT members.*, people.lastname, people.firstname, people.email, people.birthdate, people.birthplace, people.address1, people.address2, people.zip, people.city, people.state_code, people.country_code, people.wp_id
             FROM $members_table AS members $people_join $membership_join $sql_join $where $orderby $limit";
     }

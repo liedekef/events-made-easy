@@ -2053,33 +2053,33 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
 			$group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
 	}
 
-        $search_formfield_sql = '';
-        if ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfields'] ) ) {
-                // small optimization
-                if ( $search_terms['search_customfields'] == '' ) {
-                        $search_customfields = '';
-                        $search_formfield_sql = " AND answer = '' ";
-                } elseif (! empty($search_terms['search_exactmatch']))  {
-                        $search_customfields = esc_sql( $search_terms['search_customfields'] );
-                        $search_formfield_sql = " AND answer = '$search_customfields' ";
-                } else  {
-                        $search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
-                        $search_formfield_sql = " AND answer LIKE '%$search_customfields%' ";
-                }
-                if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
-                        $field_ids = join( ',', $search_terms['search_customfieldids'] );
-                        $search_formfield_sql .= " AND field_id IN ($field_ids) ";
-                } else {
-                        // we don't search for a specific field, so search in all, but then the search value is not allowed to be empty
-			// so if it is empty, set this var to empty
-                        $field_ids = join( ',', $field_ids_arr );
-                        if ($search_terms['search_customfields'] == '' ) {
-                                $search_formfield_sql = "";
-                        } else {
-                                $search_formfield_sql .= " AND field_id IN ($field_ids) ";
-                        }
-                }
+    $search_formfield_sql = '';
+    if ( ! empty( $formfields_searchable ) && isset( $search_terms['search_customfields'] ) ) {
+        // small optimization
+        if ( $search_terms['search_customfields'] == '' ) {
+            $search_customfields = '';
+            $search_formfield_sql = " AND answer = '' ";
+        } elseif (! empty($search_terms['search_exactmatch']))  {
+            $search_customfields = esc_sql( $search_terms['search_customfields'] );
+            $search_formfield_sql = " AND answer = '$search_customfields' ";
+        } else  {
+            $search_customfields = esc_sql( $wpdb->esc_like($search_terms['search_customfields']) );
+            $search_formfield_sql = " AND answer LIKE '%$search_customfields%' ";
         }
+        if ( ! empty( $search_terms['search_customfieldids'] ) && eme_is_numeric_array( $search_terms['search_customfieldids'] ) ) {
+            $field_ids = join( ',', $search_terms['search_customfieldids'] );
+            $search_formfield_sql .= " AND field_id IN ($field_ids) ";
+        } else {
+            // we don't search for a specific field, so search in all, but then the search value is not allowed to be empty
+            // so if it is empty, set this var to empty
+            $field_ids = join( ',', $field_ids_arr );
+            if ($search_terms['search_customfields'] == '' ) {
+                $search_formfield_sql = "";
+            } else {
+                $search_formfield_sql .= " AND field_id IN ($field_ids) ";
+            }
+        }
+    }
 	if (!empty($search_formfield_sql)) {
 		$sql_join = "
 		   INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table

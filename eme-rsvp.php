@@ -3733,9 +3733,9 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			} else {
 				$size = 'medium';
 			}
-			$targetBasePath                = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
-			$targetBaseUrl                 = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'];
-			$url_to_encode                 = eme_check_rsvp_url( $payment, $booking['booking_id'] );
+			$targetBasePath             = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
+			$targetBaseUrl              = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'];
+			$url_to_encode              = eme_check_rsvp_url( $payment, $booking['booking_id'] );
 			[$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
 			if ( is_file( $target_file ) ) {
 				[$width, $height, $type, $attr] = getimagesize( $target_file );

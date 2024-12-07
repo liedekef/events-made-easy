@@ -1113,6 +1113,19 @@ function eme_check_rsvp_url( $payment, $booking_id ) {
     return $the_link;
 }
 
+function eme_rsvp_proof_url( $payment, $booking_id ) {
+    $the_link = eme_get_events_page();
+    $the_link = add_query_arg(
+        [
+            'eme_rsvp_proof' => 1,
+            'eme_pmt_rndid'  => $payment['random_id'],
+            'bid'  => $booking_id,
+        ],
+        $the_link
+    );
+    return $the_link;
+}
+
 function eme_cpi_url( $person_id, $orig_email ) {
     $language = eme_detect_lang();
 

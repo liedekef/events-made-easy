@@ -3746,6 +3746,11 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			if ( $target == 'html' ) {
 				$replacement = esc_url( $replacement );
 			}
+		} elseif ( $payment && preg_match( '/#_ATTENDANCEPROOF_URL$/', $result ) ) {
+			$replacement = eme_rsvp_proof_url( $payment, $booking['booking_id'] );
+			if ( $target == 'html' ) {
+				$replacement = esc_url( $replacement );
+			}
 		} elseif ( $payment && preg_match( '/#_CANCEL_URL$/', $result ) ) {
 			$replacement = eme_cancel_url( $payment );
 			if ( $target == 'html' ) {
@@ -6591,7 +6596,7 @@ function eme_ajax_action_mark_pending( $ids_arr, $action, $send_mail, $refund ) 
 	print wp_json_encode( $ajaxResult );
 }
 
-function eme_generate_booking_pdf( $booking, $event, $template_id ) {
+function eme_generate_booking_pdf( $booking, $event, $template_id, $stream_directly=0 ) {
 	$template = eme_get_template( $template_id );
 
 	// if the template is not meant for pdf, return
@@ -6610,31 +6615,33 @@ function eme_generate_booking_pdf( $booking, $event, $template_id ) {
 		$pdf_attach_name = '';
 	}
 
-	$targetPath  = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
-	$pdf_path    = '';
-	if ( is_dir( $targetPath ) ) {
-		foreach ( glob( "$targetPath/booking-$template_id-*.pdf" ) as $filename ) {
-			$pdf_path = $filename;
-		}
-		// support the older "ticket-" name convention too
-		if ( empty( $pdf_path ) ) {
-			foreach ( glob( "$targetPath/ticket-$template_id-*.pdf" ) as $filename ) {
-				$pdf_path = $filename;
-			}
-		}
-	}
-	// we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
-	if ( !empty( $pdf_path ) ) {
-		$pdf_mtime      = filemtime( $pdf_path );
-		$pdf_mtime_obj      = new ExpressiveDate( 'now', EME_TIMEZONE );
-		$pdf_mtime_obj->setTimestamp($pdf_mtime);
-		$booking_mtime_obj  = new ExpressiveDate( $booking['modif_date'], EME_TIMEZONE );
-		$event_mtime_obj    = new ExpressiveDate( $event['modif_date'], EME_TIMEZONE );
-		$template_mtime_obj = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
-		if ($booking_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
-			return [ $pdf_attach_name, $pdf_path ];
-		}
-	}
+    if (!$stream_directly) {
+        $targetPath  = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
+        $pdf_path    = '';
+        if ( is_dir( $targetPath ) ) {
+            foreach ( glob( "$targetPath/booking-$template_id-*.pdf" ) as $filename ) {
+                $pdf_path = $filename;
+            }
+            // support the older "ticket-" name convention too
+            if ( empty( $pdf_path ) ) {
+                foreach ( glob( "$targetPath/ticket-$template_id-*.pdf" ) as $filename ) {
+                    $pdf_path = $filename;
+                }
+            }
+        }
+        // we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
+        if ( !empty( $pdf_path ) ) {
+            $pdf_mtime      = filemtime( $pdf_path );
+            $pdf_mtime_obj      = new ExpressiveDate( 'now', EME_TIMEZONE );
+            $pdf_mtime_obj->setTimestamp($pdf_mtime);
+            $booking_mtime_obj  = new ExpressiveDate( $booking['modif_date'], EME_TIMEZONE );
+            $event_mtime_obj    = new ExpressiveDate( $event['modif_date'], EME_TIMEZONE );
+            $template_mtime_obj = new ExpressiveDate( $template['modif_date'], EME_TIMEZONE );
+            if ($booking_mtime_obj<$pdf_mtime_obj && $event_mtime_obj<$pdf_mtime_obj && $template_mtime_obj<$pdf_mtime_obj) {
+                return [ $pdf_attach_name, $pdf_path ];
+            }
+        }
+    }
 
 	// the template format needs br-handling, so lets use a handy function
 	$format = eme_get_template_format( $template_id );
@@ -6682,20 +6689,25 @@ $extra_html_header
 	$html .= "</body></html>";
 	$dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
 	$dompdf->render();
-	// now we know where to store it, so create the dir
-	if ( ! is_dir( $targetPath ) ) {
-		wp_mkdir_p( $targetPath );
-	}
-	if ( ! is_file( $targetPath . '/index.html' ) ) {
-		touch( $targetPath . '/index.html' );
-	}
-	// unlink old pdf
-	array_map( 'wp_delete_file', glob( "$targetPath/booking-$template_id-*.pdf" ) );
-	// now put new one
-	$rand_id     = eme_random_id();
-	$target_file = $targetPath . "/booking-$template_id-$rand_id.pdf";
-	file_put_contents( $target_file, $dompdf->output() );
-	return [ $pdf_attach_name, $target_file ];
+
+    if ($stream_directly) {
+        $dompdf->stream();
+    } else {
+        // now we know where to store it, so create the dir
+        if ( ! is_dir( $targetPath ) ) {
+            wp_mkdir_p( $targetPath );
+        }
+        if ( ! is_file( $targetPath . '/index.html' ) ) {
+            touch( $targetPath . '/index.html' );
+        }
+        // unlink old pdf
+        array_map( 'wp_delete_file', glob( "$targetPath/booking-$template_id-*.pdf" ) );
+        // now put new one
+        $rand_id     = eme_random_id();
+        $target_file = $targetPath . "/booking-$template_id-$rand_id.pdf";
+        file_put_contents( $target_file, $dompdf->output() );
+        return [ $pdf_attach_name, $target_file ];
+    }
 }
 
 function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_header = 0, $template_id_footer = 0 ) {

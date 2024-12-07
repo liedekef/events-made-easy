@@ -22,6 +22,23 @@ function eme_actions_early_init() {
 		exit;
 	}
 
+    if ( get_query_var( 'eme_rsvp_proof' ) && get_query_var( 'eme_pmt_rndid' ) && !empty($_GET['bid']) ) {
+        $payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
+        $payment          = eme_get_payment( payment_randomid: $payment_randomid );
+        if ( $payment && $payment['target'] == 'booking' ) {
+            $booking_ids = eme_get_payment_booking_ids( $payment['id'] );
+            $booking_id = intval( $_GET['bid'] );
+            if ( in_array( $booking_id, $booking_ids ) ) {
+                $booking = eme_get_booking( $booking_id );
+                $event   = eme_get_event( $booking['event_id'] );
+                if ( $booking['attend_count'] > 0 ) {
+                    // the 1 param at the end causes direct streaming to the browser
+                    eme_generate_booking_pdf($booking, $event, $event['event_properties']['attendance_rsvp_proof_tpl'], 1);
+                }
+            }
+        }
+    }
+
 	if ( isset( $_POST['eme_ajax_action'] ) && $_POST['eme_ajax_action'] == 'task_autocomplete_people' && isset( $_POST['task_lastname'] ) ) {
 		check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 		$no_wp_die = 1;

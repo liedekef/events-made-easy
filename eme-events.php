@@ -283,7 +283,7 @@ function eme_init_event_props( $props = [], $new_event=0 ) {
 		}
 	}
 
-	$template_override = [ 'event_page_title_format_tpl', 'event_single_event_format_tpl', 'event_contactperson_email_body_tpl', 'event_registration_recorded_ok_html_tpl', 'event_respondent_email_body_tpl', 'event_registration_pending_email_body_tpl', 'event_registration_userpending_email_body_tpl', 'event_registration_updated_email_body_tpl', 'event_registration_cancelled_email_body_tpl', 'event_registration_trashed_email_body_tpl', 'event_registration_form_format_tpl', 'event_cancel_form_format_tpl', 'event_registration_paid_email_body_tpl', 'event_contactperson_email_subject_tpl', 'event_respondent_email_subject_tpl', 'event_registration_pending_email_subject_tpl', 'event_registration_userpending_email_subject_tpl', 'event_registration_updated_email_subject_tpl', 'event_registration_cancelled_email_subject_tpl', 'event_registration_trashed_email_subject_tpl', 'event_registration_paid_email_subject_tpl', 'contactperson_registration_pending_email_subject_tpl', 'contactperson_registration_pending_email_body_tpl', 'contactperson_registration_cancelled_email_subject_tpl', 'contactperson_registration_cancelled_email_body_tpl', 'contactperson_registration_ipn_email_subject_tpl', 'contactperson_registration_ipn_email_body_tpl', 'contactperson_registration_paid_email_subject_tpl', 'contactperson_registration_paid_email_body_tpl', 'attendance_unauth_scan_tpl', 'attendance_auth_scan_tpl', 'task_signup_email_subject_tpl', 'task_signup_email_body_tpl', 'cp_task_signup_email_subject_tpl', 'cp_task_signup_email_body_tpl', 'task_signup_pending_email_subject_tpl', 'task_signup_pending_email_body_tpl', 'cp_task_signup_pending_email_subject_tpl', 'cp_task_signup_pending_email_body_tpl', 'task_signup_updated_email_subject_tpl', 'task_signup_updated_email_body_tpl', 'task_signup_cancelled_email_subject_tpl', 'task_signup_cancelled_email_body_tpl', 'cp_task_signup_cancelled_email_subject_tpl', 'cp_task_signup_cancelled_email_body_tpl', 'task_signup_trashed_email_subject_tpl', 'task_signup_trashed_email_body_tpl', 'task_signup_form_format_tpl', 'task_signup_recorded_ok_html_tpl', 'task_signup_reminder_email_subject_tpl', 'task_signup_reminder_email_body_tpl', 'event_registration_reminder_email_subject_tpl', 'event_registration_reminder_email_body_tpl', 'event_registration_pending_reminder_email_subject_tpl', 'event_registration_pending_reminder_email_body_tpl' ];
+	$template_override = [ 'event_page_title_format_tpl', 'event_single_event_format_tpl', 'event_contactperson_email_body_tpl', 'event_registration_recorded_ok_html_tpl', 'event_respondent_email_body_tpl', 'event_registration_pending_email_body_tpl', 'event_registration_userpending_email_body_tpl', 'event_registration_updated_email_body_tpl', 'event_registration_cancelled_email_body_tpl', 'event_registration_trashed_email_body_tpl', 'event_registration_form_format_tpl', 'event_cancel_form_format_tpl', 'event_registration_paid_email_body_tpl', 'event_contactperson_email_subject_tpl', 'event_respondent_email_subject_tpl', 'event_registration_pending_email_subject_tpl', 'event_registration_userpending_email_subject_tpl', 'event_registration_updated_email_subject_tpl', 'event_registration_cancelled_email_subject_tpl', 'event_registration_trashed_email_subject_tpl', 'event_registration_paid_email_subject_tpl', 'contactperson_registration_pending_email_subject_tpl', 'contactperson_registration_pending_email_body_tpl', 'contactperson_registration_cancelled_email_subject_tpl', 'contactperson_registration_cancelled_email_body_tpl', 'contactperson_registration_ipn_email_subject_tpl', 'contactperson_registration_ipn_email_body_tpl', 'contactperson_registration_paid_email_subject_tpl', 'contactperson_registration_paid_email_body_tpl', 'attendance_unauth_scan_tpl', 'attendance_auth_scan_tpl', 'attendance_proof_tpl', 'task_signup_email_subject_tpl', 'task_signup_email_body_tpl', 'cp_task_signup_email_subject_tpl', 'cp_task_signup_email_body_tpl', 'task_signup_pending_email_subject_tpl', 'task_signup_pending_email_body_tpl', 'cp_task_signup_pending_email_subject_tpl', 'cp_task_signup_pending_email_body_tpl', 'task_signup_updated_email_subject_tpl', 'task_signup_updated_email_body_tpl', 'task_signup_cancelled_email_subject_tpl', 'task_signup_cancelled_email_body_tpl', 'cp_task_signup_cancelled_email_subject_tpl', 'cp_task_signup_cancelled_email_body_tpl', 'task_signup_trashed_email_subject_tpl', 'task_signup_trashed_email_body_tpl', 'task_signup_form_format_tpl', 'task_signup_recorded_ok_html_tpl', 'task_signup_reminder_email_subject_tpl', 'task_signup_reminder_email_body_tpl', 'event_registration_reminder_email_subject_tpl', 'event_registration_reminder_email_body_tpl', 'event_registration_pending_reminder_email_subject_tpl', 'event_registration_pending_reminder_email_body_tpl' ];
 	foreach ( $template_override as $line ) {
 		if ( ! isset( $props[ $line ] ) ) {
 			$props[ $line ] = 0;
@@ -978,7 +978,7 @@ function eme_events_page_content() {
 		} else {
 			return "<div class='eme-message-error eme-cpi-message-error'>" . __( 'This link is no longer valid, please request a new link.', 'events-made-easy' ) . '</div>';
 		}
-	} elseif ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) ) {
+	} elseif ( get_query_var( 'eme_check_rsvp' ) && get_query_var( 'eme_pmt_rndid' ) && ! empty( $_GET['bid'] ) ) {
 		$payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
 		$payment          = eme_get_payment( payment_randomid: $payment_randomid );
 		if ( ! $payment ) {
@@ -991,14 +991,11 @@ function eme_events_page_content() {
 		if ( empty( $booking_ids ) ) {
 			return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Invalid URL', 'events-made-easy' ) . '</div>';
 		}
-		if ( ! empty( $_GET['bid'] ) ) {
-			$booking_id = intval( $_GET['bid'] );
-			if ( ! in_array( $booking_id, $booking_ids ) ) {
-				$booking_id = $booking_ids[0];
-			}
-		} else {
-			$booking_id = $booking_ids[0];
-		}
+        // bid is required too now, we no longer take the 
+        $booking_id = intval( $_GET['bid'] );
+        if ( ! in_array( $booking_id, $booking_ids ) ) {
+            return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Invalid URL', 'events-made-easy' ) . '</div>';
+        }
 		$booking = eme_get_booking( $booking_id );
 		$event   = eme_get_event( $booking['event_id'] );
 		if ( empty( $event ) ) {
@@ -8653,7 +8650,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array ) {
 				<br>
 				<div id="attendance_unauth_scan_format_div" <?php echo $showhide_style_unauth; ?>>
 				<?php eme_wysiwyg_textarea( 'eme_prop_attendance_unauth_scan_format', $event['event_properties']['attendance_unauth_scan_format'], 1, 0 ); ?> 
-					</div>
+				</div>
 				</div>
 				<div id='span_attendance_auth_scan_format'>
 				<b><?php esc_html_e( 'Extra attendance info for authorized users', 'events-made-easy' ); ?></b>
@@ -8668,7 +8665,17 @@ function eme_meta_box_div_attendance_info( $event, $templates_array ) {
 				<br>
 				<div id="attendance_auth_scan_format_div" <?php echo $showhide_style_auth; ?>>
 				<?php eme_wysiwyg_textarea( 'eme_prop_attendance_auth_scan_format', $event['event_properties']['attendance_auth_scan_format'], 1, 0 ); ?> 
-					</div>
+				</div>
+				</div>
+
+				<div id='span_attendance_proof'>
+				<b><?php esc_html_e( 'Attendance PDF proof', 'events-made-easy' ); ?></b>
+				<br><span class="eme_smaller"><?php esc_html_e( 'When the URL generated by #_ATTENDANCEPROOF_URL is visited, the selected PDF template will be used to generate a PDF for the user that can serve as proof of attendance. All event and RSVP placeholders are allowed.', 'events-made-easy' ); ?></span><br>
+				<?php
+                $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
+				esc_html_e( 'Choose from a template: ', 'events-made-easy' );
+				echo eme_ui_select( $event['event_properties']['attendance_proof_tpl'], 'eme_prop_attendance_proof_tpl', $pdftemplates );
+				?>
 				</div>
 			</div>
 	<?php
@@ -8693,8 +8700,7 @@ function eme_meta_box_div_event_rsvp( $event ) {
 		$dgroup_arr = [ $eme_prop_rsvp_discountgroup => eme_get_dgroup_name( $eme_prop_rsvp_discountgroup ) ];
 	}
 
-	$pdftemplates = eme_get_templates( 'pdf', 1 );
-
+	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
 	?>
 <div id="div_event_rsvp">
 	<p id='p_approval_required'>
@@ -8842,7 +8848,7 @@ function eme_meta_box_div_event_rsvp( $event ) {
 	<tr><td colspan="2">&nbsp;</td></tr>
 	<tr id='row_ticket'>
 		<td><label for='eme_prop_ticket_template_id'><?php esc_html_e( 'Ticket PDF template', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_select_key_value( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdftemplates, 'id', 'name', '&nbsp;' ); ?>
+		<td><?php echo eme_ui_select( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdftemplates, ''&nbsp;' ); ?>
 			<p class="eme_smaller"><?php esc_html_e( 'This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included).', 'events-made-easy' ); ?><br>
 			<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a PDF template.', 'events-made-easy' ); ?></p>
 		</td>

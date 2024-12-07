@@ -8848,7 +8848,7 @@ function eme_meta_box_div_event_rsvp( $event ) {
 	<tr><td colspan="2">&nbsp;</td></tr>
 	<tr id='row_ticket'>
 		<td><label for='eme_prop_ticket_template_id'><?php esc_html_e( 'Ticket PDF template', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_select( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdftemplates, ''&nbsp;' ); ?>
+		<td><?php echo eme_ui_select( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdftemplates, '&nbsp;' ); ?>
 			<p class="eme_smaller"><?php esc_html_e( 'This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included).', 'events-made-easy' ); ?><br>
 			<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a PDF template.', 'events-made-easy' ); ?></p>
 		</td>

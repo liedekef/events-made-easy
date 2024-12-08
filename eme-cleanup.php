@@ -69,7 +69,7 @@ function eme_cleanup_trashed_bookings( $eme_number, $eme_period ) {
 			break;
 	}
 	$datetime = $eme_date_obj->getDateTime();
-	$sql      = $wpdb->prepare("SELECT count(*) FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
+	$sql      = $wpdb->prepare("SELECT COUNT(*) FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
 	$count    = $wpdb->get_col( $sql );
         $sql      = $wpdb->prepare("DELETE FROM $bookings_table WHERE modif_date < %s AND status = %d", $datetime, EME_RSVP_STATUS_TRASH);
 	$wpdb->query( $sql );
@@ -109,7 +109,7 @@ function eme_cleanup_unconfirmed( $eme_number ) {
 		$diff                         = abs( $eme_date_obj_booking_created->getDifferenceInMinutes( $eme_date_obj_person_modified ) );
 		// if the person was modified at most 2 minutes after booking creation (meaning in fact never), we also delete the person if no other bookings or members match that person
 		if ( $diff < 2 ) {
-			$sql   = $wpdb->prepare( "select (select count(*) from $bookings_table where person_id=%d AND status != %d) + (select count(*) from $members_table where person_id=%d AND status != %d)", $booking['person_id'], EME_RSVP_STATUS_TRASH, $booking['person_id'], EME_MEMBER_STATUS_EXPIRED );
+			$sql   = $wpdb->prepare( "SELECT (SELECT COUNT(*) FROM $bookings_table WHERE person_id=%d AND status != %d) + (SELECT COUNT(*) FROM $members_table WHERE person_id=%d AND status != %d)", $booking['person_id'], EME_RSVP_STATUS_TRASH, $booking['person_id'], EME_MEMBER_STATUS_EXPIRED );
 			$count = $wpdb->get_var( $sql );
 			if ( $count == 0 ) {
 				eme_trash_people( $booking['person_id'] );

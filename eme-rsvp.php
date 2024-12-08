@@ -5700,7 +5700,7 @@ function eme_ajax_bookings_list() {
 		$where = ' WHERE ' . implode( ' AND ', $where_arr );
 	}
 
-	$sql1        = "SELECT count(bookings.booking_id) FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id $sql_join $where";
+	$sql1        = "SELECT COUNT(bookings.booking_id) FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id $sql_join $where";
 	$sql2        = "SELECT bookings.* FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id LEFT JOIN $people_table AS people ON bookings.person_id=people.person_id $sql_join $where $orderby $limit";
 	$recordCount = $wpdb->get_var( $sql1 );
 	$bookings    = $wpdb->get_results( $sql2, ARRAY_A );
@@ -6882,7 +6882,7 @@ function eme_count_pending_bookings() {
 	$bookings_table   = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$now              = $eme_date_obj_now->getDateTime();
-	$sql              = $wpdb->prepare( "SELECT count(bookings.booking_id) FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id WHERE bookings.status IN (%d,%d) AND events.event_end >= %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $now );
+	$sql              = $wpdb->prepare( "SELECT COUNT(bookings.booking_id) FROM $bookings_table AS bookings LEFT JOIN $events_table AS events ON bookings.event_id=events.event_id WHERE bookings.status IN (%d,%d) AND events.event_end >= %s", EME_RSVP_STATUS_PENDING, EME_RSVP_STATUS_USERPENDING, $now );
 	return $wpdb->get_var( $sql );
 }
 

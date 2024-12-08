@@ -624,7 +624,7 @@ function eme_get_localized_states( $country_code = '' ) {
 function eme_get_countries_count() {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
-	$sql   = "SELECT count(*) FROM $table";
+	$sql   = "SELECT COUNT(*) FROM $table";
 	return $wpdb->get_var( $sql );
 }
 function eme_get_countries() {

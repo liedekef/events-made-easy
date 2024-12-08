@@ -521,29 +521,29 @@ function eme_get_membership_stats( $ids ) {
         $limit_end     = $eme_date_obj->format( "Y-m-$days_in_month" );
         if ( $counter == $difference ) {
             // for current month: just count active members
-            $sql = "SELECT count(*) FROM $table WHERE status=1 AND membership_id IN ($ids)";
+            $sql = "SELECT COUNT(*) FROM $table WHERE status=1 AND membership_id IN ($ids)";
             $member_nbr = $wpdb->get_var( $sql );
         } else {
             // for previous months: take members that started before the end of the month and were still a member after the end of the month
             // Always ignore pending (a member could've signed up months ago and still not paid)
-            $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE ( (start_date<=%s AND (end_date > %s OR end_date = '0000-00-00') ) OR (previous_end>=%s AND previous_end<=%s) OR (previous_start<=%s AND previous_end>%s)) AND status<>0 AND membership_id IN ($ids)", $limit_end, $limit_end, $limit_start, $limit_end, $limit_start, $limit_end );
+            $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE ( (start_date<=%s AND (end_date > %s OR end_date = '0000-00-00') ) OR (previous_end>=%s AND previous_end<=%s) OR (previous_start<=%s AND previous_end>%s)) AND status<>0 AND membership_id IN ($ids)", $limit_end, $limit_end, $limit_start, $limit_end, $limit_start, $limit_end );
             $member_nbr = $wpdb->get_var( $sql );
         }
         // sql for new members
-        $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND renewal_count=0 AND membership_id IN ($ids)", $limit_start, $limit_end );
+        $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND renewal_count=0 AND membership_id IN ($ids)", $limit_start, $limit_end );
         $member_nbr_new = $wpdb->get_var( $sql );
         // sql for expired members
-        $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
+        $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
         $member_nbr_expired = $wpdb->get_var( $sql );
         // sql for renewed members
-        $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND renewal_count>0 AND membership_id IN ($ids)", $limit_start, $limit_end );
+        $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND renewal_count>0 AND membership_id IN ($ids)", $limit_start, $limit_end );
         $member_nbr_renewed = $wpdb->get_var( $sql );
                 /*
-                $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
+                $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE start_date>=%s AND start_date <= %s AND status=1 AND membership_id IN ($ids)", $limit_start, $limit_end );
                 $member_nbr_new = $wpdb->get_var( $sql );
-                $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
+                $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE end_date>=%s AND end_date <= %s AND status=100 AND membership_id IN ($ids)", $limit_start, $limit_end );
                 $member_nbr_expired = $wpdb->get_var( $sql );
-                $sql = $wpdb->prepare( "SELECT count(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND membership_id IN ($ids)", $limit_start, $limit_end );
+                $sql = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE payment_date>=%s AND payment_date <= %s AND membership_id IN ($ids)", $limit_start, $limit_end );
                 $member_nbr_paid = $wpdb->get_var( $sql );
                 $member_nbr_renewed = $member_nbr_paid - $member_nbr_new;
                 if ($member_nbr_renewed<0) $member_nbr_renewed=0; // can happen for memberships that have no ending, so only new ones
@@ -6664,7 +6664,7 @@ function eme_ajax_members_select2() {
         LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
         LEFT JOIN $people_table as people ON members.person_id=people.person_id
         WHERE $where ORDER BY people.lastname, people.firstname LIMIT $start,$pagesize";
-    $count_sql = "SELECT count(*)
+    $count_sql = "SELECT COUNT(*)
         FROM $members_table AS members
         LEFT JOIN $memberships_table AS memberships ON members.membership_id=memberships.membership_id
         LEFT JOIN $people_table as people ON members.person_id=people.person_id

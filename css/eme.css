@@ -681,3 +681,7 @@ details.eme_accordion > div, details.eme_accordion > p {
     white-space: nowrap;
     display:inline;
 }
+/* ui override */
+.jtable-data-row a {
+    color: #0073aa !important;
+}

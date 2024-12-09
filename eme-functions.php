@@ -1101,13 +1101,13 @@ function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
 }
 
 function eme_check_rsvp_url( $booking_id ) {
-    $hash = wp_hash( $booking_id , 'nonce' );
+    $hash = wp_hash( $booking_id . '|' . 'check_rsvp' , 'nonce' );
     $the_link = eme_get_events_page();
     $the_link = add_query_arg(
         [
             'eme_check_rsvp' => 1,
             'bid'  => $booking_id,
-            'nonce' => $hash,
+            'eme_hash' => $hash,
         ],
         $the_link
     );
@@ -1115,13 +1115,13 @@ function eme_check_rsvp_url( $booking_id ) {
 }
 
 function eme_rsvp_proof_url( $booking_id ) {
-    $hash = wp_hash( $booking_id , 'nonce' );
+    $hash = wp_hash( $booking_id . '|' . 'rsvp_proof' , 'nonce' );
     $the_link = eme_get_events_page();
     $the_link = add_query_arg(
         [
             'eme_rsvp_proof' => 1,
             'bid'  => $booking_id,
-            'nonce' => $hash,
+            'eme_hash' => $hash,
         ],
         $the_link
     );

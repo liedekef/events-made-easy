@@ -22,10 +22,10 @@ function eme_actions_early_init() {
 		exit;
 	}
 
-    if ( get_query_var( 'eme_rsvp_proof' ) && !empty( $_GET['bid'] ) && !empty( $_GET['nonce'] ) ) {
+    if ( get_query_var( 'eme_rsvp_proof' ) && !empty( $_GET['bid'] ) && !empty( $_GET['eme_hash'] ) ) {
         $booking_id = intval( $_GET['bid'] );
-        $get_rsvp_proof_hash = eme_sanitize_request( $_GET['nonce'] );
-        $calc_rsvp_proof_hash = wp_hash( $booking_id , 'nonce' );
+        $get_rsvp_proof_hash = eme_sanitize_request( $_GET['eme_hash'] );
+        $calc_rsvp_proof_hash = wp_hash( $booking_id . '|' . 'rsvp_proof' , 'nonce' );
         if ( $get_rsvp_proof_hash == $calc_rsvp_proof_hash ) {
             $booking = eme_get_booking( $booking_id );
             if (!empty($booking) && $booking['attend_count'] > 0 ) {

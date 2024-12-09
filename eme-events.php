@@ -978,12 +978,30 @@ function eme_events_page_content() {
 		} else {
 			return "<div class='eme-message-error eme-cpi-message-error'>" . __( 'This link is no longer valid, please request a new link.', 'events-made-easy' ) . '</div>';
 		}
-	} elseif ( get_query_var( 'eme_check_rsvp' ) && ! empty( $_GET['nonce'] ) && ! empty( $_GET['bid'] ) ) {
+	} elseif ( get_query_var( 'eme_check_rsvp' ) && ! empty( $_GET['bid'] ) ) {
         $booking_id = intval( $_GET['bid'] );
-        $get_check_rsvp_hash = eme_sanitize_request( $_GET['nonce'] );
-        $calc_check_rsvp_hash = wp_hash( $booking_id , 'nonce' );
-        if ( $get_check_rsvp_hash != $calc_check_rsvp_hash ) {
-			return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Invalid URL', 'events-made-easy' ) . '</div>';
+        // old school uses the random id, the new style uses a timeless nonce
+        if ( get_query_var( 'eme_pmt_rndid' )) {
+            $payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
+            $payment          = eme_get_payment( payment_randomid: $payment_randomid );
+            if ( $payment ) {
+                return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Nothing linked to this payment id', 'events-made-easy' ) . '</div>';
+            }
+            if ( $payment['target'] != 'booking' ) {
+                return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Attendance check only valid for events and bookings, not members', 'events-made-easy' ) . '</div>';
+            }
+            $booking_ids = eme_get_payment_booking_ids( $payment['id'] );
+            if ( empty( $booking_ids ) || ! in_array( $booking_id, $booking_ids ) ) {
+                return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Invalid URL', 'events-made-easy' ) . '</div>';
+            }
+        } elseif (! empty( $_GET['eme_hash'] ) ) {
+            $get_check_rsvp_hash = eme_sanitize_request( $_GET['eme_hash'] );
+            $calc_check_rsvp_hash = wp_hash( $booking_id . '|' . 'check_rsvp' , 'nonce' );
+            if ( $get_check_rsvp_hash != $calc_check_rsvp_hash ) {
+                return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Invalid URL', 'events-made-easy' ) . '</div>';
+            }
+        } else {
+            return "<div class='eme-message-error eme-attendance-message-error'>" . __( 'Invalid URL', 'events-made-easy' ) . '</div>';
         }
 		$booking = eme_get_booking( $booking_id );
 		if ( empty( $booking ) ) {

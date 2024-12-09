@@ -1100,26 +1100,28 @@ function eme_invite_url( $event, $email, $lastname, $firstname, $lang ) {
     return $the_link;
 }
 
-function eme_check_rsvp_url( $payment, $booking_id ) {
+function eme_check_rsvp_url( $booking_id ) {
+    $hash = wp_hash( $booking_id , 'nonce' );
     $the_link = eme_get_events_page();
     $the_link = add_query_arg(
         [
             'eme_check_rsvp' => 1,
-            'eme_pmt_rndid'  => $payment['random_id'],
             'bid'  => $booking_id,
+            'nonce' => $hash,
         ],
         $the_link
     );
     return $the_link;
 }
 
-function eme_rsvp_proof_url( $payment, $booking_id ) {
+function eme_rsvp_proof_url( $booking_id ) {
+    $hash = wp_hash( $booking_id , 'nonce' );
     $the_link = eme_get_events_page();
     $the_link = add_query_arg(
         [
             'eme_rsvp_proof' => 1,
-            'eme_pmt_rndid'  => $payment['random_id'],
             'bid'  => $booking_id,
+            'nonce' => $hash,
         ],
         $the_link
     );

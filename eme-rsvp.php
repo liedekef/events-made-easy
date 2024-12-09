@@ -3735,19 +3735,19 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 			}
 			$targetBasePath             = EME_UPLOAD_DIR . '/bookings/' . $booking['booking_id'];
 			$targetBaseUrl              = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'];
-			$url_to_encode              = eme_check_rsvp_url( $payment, $booking['booking_id'] );
+			$url_to_encode              = eme_check_rsvp_url( $booking['booking_id'] );
 			[$target_file, $target_url] = eme_generate_qrcode( $url_to_encode, $targetBasePath, $targetBaseUrl, $size );
 			if ( is_file( $target_file ) ) {
 				[$width, $height, $type, $attr] = getimagesize( $target_file );
 				$replacement                    = "<img width='$width' height='$height' src='$target_url'>";
 			}
 		} elseif ( $payment && preg_match( '/#_ATTENDANCE_URL$/', $result ) ) {
-			$replacement = eme_check_rsvp_url( $payment, $booking['booking_id'] );
+			$replacement = eme_check_rsvp_url( $booking['booking_id'] );
 			if ( $target == 'html' ) {
 				$replacement = esc_url( $replacement );
 			}
 		} elseif ( $payment && preg_match( '/#_ATTENDANCEPROOF_URL$/', $result ) ) {
-			$replacement = eme_rsvp_proof_url( $payment, $booking['booking_id'] );
+			$replacement = eme_rsvp_proof_url( $booking['booking_id'] );
 			if ( $target == 'html' ) {
 				$replacement = esc_url( $replacement );
 			}

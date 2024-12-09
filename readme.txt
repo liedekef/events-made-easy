@@ -103,6 +103,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Extra bulk action when managing bookings, to indicate attendance
 * Allow dynamic groups also as condition in the setting 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.'
 * Added #_ATTENDANCEPROOF_URL placeholder, which generates a link that - when clicked - will generate a pdf if the booking attendance count was > 0. The pdf template can be set in the event attendance settings.
+* The url to check for attendance is now nonce-protected, meaning: old url's will no longer work!!
 
 = 2.5.20 (2024/11/24) =
 * Some HTML fixes

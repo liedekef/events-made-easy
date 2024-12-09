@@ -22,16 +22,16 @@ function eme_actions_early_init() {
 		exit;
 	}
 
-    if ( get_query_var( 'eme_rsvp_proof' ) && get_query_var( 'eme_pmt_rndid' ) && !empty($_GET['bid']) ) {
-        $payment_randomid = eme_sanitize_request( get_query_var( 'eme_pmt_rndid' ) );
-        $payment          = eme_get_payment( payment_randomid: $payment_randomid );
-        if ( $payment && $payment['target'] == 'booking' ) {
-            $booking_ids = eme_get_payment_booking_ids( $payment['id'] );
-            $booking_id = intval( $_GET['bid'] );
-            if ( in_array( $booking_id, $booking_ids ) ) {
-                $booking = eme_get_booking( $booking_id );
+    if ( get_query_var( 'eme_rsvp_proof' ) && !empty( $_GET['bid'] ) && !empty( $_GET['nonce'] ) ) {
+        $booking_id = intval( $_GET['bid'] );
+        $get_rsvp_proof_hash = eme_sanitize_request( $_GET['nonce'] );
+        $calc_rsvp_proof_hash = wp_hash( $booking_id , 'nonce' );
+        if ( $get_rsvp_proof_hash == $calc_rsvp_proof_hash ) {
+            $booking = eme_get_booking( $booking_id );
+            if (!empty($booking) && $booking['attend_count'] > 0 ) {
+                $payment = eme_get_payment ($booking['payment_id']);
                 $event   = eme_get_event( $booking['event_id'] );
-                if ( $booking['attend_count'] > 0 ) {
+                if ( $event && $payment && $payment['target'] == 'booking' ) {
                     // the 1 param at the end causes direct streaming to the browser
                     eme_generate_booking_pdf($booking, $event, $event['event_properties']['attendance_rsvp_proof_tpl'], 1);
                 }

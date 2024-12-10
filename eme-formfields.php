@@ -5017,6 +5017,7 @@ function eme_ajax_formfields_list() {
 	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
 		$ajaxResult            = [];
 		$ajaxResult['Result']  = 'Error';

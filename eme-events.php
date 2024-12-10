@@ -10123,6 +10123,7 @@ function eme_ajax_events_list() {
 	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
@@ -10255,11 +10256,10 @@ function eme_ajax_events_list() {
 		$date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 
 		if ($no_edit_links==1) {
-			$record['event_name_simple'] = "<strong>" . eme_trans_esc_html( $event['event_name'] ) . '</strong>';
+			$record['event_name'] = "<strong>" . eme_trans_esc_html( $event['event_name'] ) . '</strong>';
 		} else {
-			$record['event_name_simple'] = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
+			$record['event_name'] = "<strong><a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=edit_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Edit event', 'events-made-easy' ) . "'>" . eme_trans_esc_html( $event['event_name'] ) . '</a></strong>';
 		}
-		$record['event_name']        = $record['event_name_simple'];
 		if ( ! empty( $event['event_category_ids'] ) ) {
 			$categories            = explode( ',', $event['event_category_ids'] );
 			$record['event_name'] .= "<br><span class='eme_small' title='" . __( 'Category', 'events-made-easy' ) . "'>";

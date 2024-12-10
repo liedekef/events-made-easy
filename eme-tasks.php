@@ -1884,6 +1884,7 @@ function eme_ajax_task_signups_list() {
 	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_manage_task_signups' ) ) ) {
 			$ajaxResult            = [];
 			$ajaxResult['Result']  = 'Error';

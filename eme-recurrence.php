@@ -617,6 +617,7 @@ function eme_ajax_recurrences_list() {
 	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
 		$ajaxResult                = [];
 			$ajaxResult['Result']  = 'Error';
@@ -773,8 +774,8 @@ function eme_ajax_recurrences_list() {
 	$ajaxResult['Result']           = 'OK';
 	$ajaxResult['Records']          = $rows;
 	$ajaxResult['TotalRecordCount'] = $recurrences_count;
-    $ajaxResult['recordsTotal']     = $recordCount;
-    $ajaxResult['recordsFiltered']  = $recordCount;
+    $ajaxResult['recordsTotal']     = $recurrences_count;
+    $ajaxResult['recordsFiltered']  = $recurrences_count;
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }

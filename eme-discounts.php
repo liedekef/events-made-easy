@@ -1571,6 +1571,7 @@ add_action( 'wp_ajax_eme_dgroups_select2', 'eme_ajax_dgroups_select2' );
 function eme_ajax_discounts_list() {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
@@ -1647,6 +1648,7 @@ function eme_ajax_discounts_list() {
 function eme_ajax_discountgroups_list() {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	$table        = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input

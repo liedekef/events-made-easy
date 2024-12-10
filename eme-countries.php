@@ -858,6 +858,7 @@ add_action( 'wp_ajax_eme_manage_states', 'eme_ajax_manage_states' );
 function eme_ajax_countries_list() {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	$table        = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
@@ -898,6 +899,7 @@ function eme_ajax_countries_list() {
 function eme_ajax_states_list() {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	$table           = EME_DB_PREFIX . EME_STATES_TBNAME;
 	$countries_table = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$jTableResult    = [];

@@ -6370,6 +6370,7 @@ add_action( 'wp_ajax_eme_store_members_query', 'eme_ajax_store_members_query' );
 function eme_ajax_memberships_list() {
     global $wpdb;
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
         $ajaxResult['Result']      = 'Error';
         $ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
@@ -6488,6 +6489,7 @@ function eme_ajax_memberships_list() {
 function eme_ajax_members_list( ) {
     global $wpdb;
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
     $eme_member_status_array = eme_member_status_array();
     $pgs                     = eme_payment_gateways();
     $ajaxResult              = [];

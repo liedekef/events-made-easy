@@ -458,6 +458,7 @@ add_action( 'wp_ajax_eme_get_template', 'eme_ajax_get_template' );
 function eme_ajax_templates_list() {
     global $wpdb;
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
     $table          = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
     $template_types = eme_template_types();
     $jTableResult   = [];

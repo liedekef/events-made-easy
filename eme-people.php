@@ -5076,6 +5076,7 @@ add_action( 'wp_ajax_eme_store_people_query', 'eme_ajax_store_people_query' );
 function eme_ajax_people_list( ) {
 	global $wpdb;
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
 		$ajaxResult['Result']  = 'Error';
 		$ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
@@ -5187,6 +5188,7 @@ function eme_ajax_groups_list() {
 	$usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
 		$ajaxResult['Result']  = 'Error';
 		$ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );

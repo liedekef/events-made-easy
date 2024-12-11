@@ -1,130 +1,4 @@
 jQuery(document).ready(function ($) { 
-    let rsvpfields = {
-        booking_id: {
-            title: emersvp.translate_id,
-            key: true,
-            list: true,
-            width: '2%',
-            listClass: 'eme-jtable-center'
-        },
-        event_name: {
-            title: emersvp.translate_eventinfo
-        },
-        event_id: {
-            title: emersvp.translate_event_id,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        person_id: {
-            title: emersvp.translate_person_id,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        rsvp: {
-            title: emersvp.translate_rsvp,
-            sorting: false,
-            width: '2%',
-            listClass: 'eme-jtable-center'
-        },
-        datetime: {
-            title: emersvp.translate_datetime,
-            sorting: true
-        },
-        booker: {
-            title: emersvp.translate_booker
-        },
-        creation_date: {
-            title: emersvp.translate_bookingdate
-        },
-        seats: {
-            title: emersvp.translate_seats,
-            sorting: false,
-            listClass: 'eme-jtable-center'
-        },
-        eventprice: {
-            title: emersvp.translate_eventprice,
-            sorting: false
-        },
-        event_cats: {
-            title: emersvp.translate_event_cats,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        discount: {
-            title: emersvp.translate_discount,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        dcodes_used: {
-            title: emersvp.translate_dcodes_used,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        totalprice: {
-            title: emersvp.translate_totalprice,
-            sorting: false
-        },
-        unique_nbr: {
-            title: emersvp.translate_uniquenbr,
-            visibility: 'hidden'
-        },
-        booking_paid: {
-            title: emersvp.translate_paid,
-            visibility: 'hidden'
-        },
-        remaining: {
-            title: emersvp.translate_remaining,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        received: {
-            title: emersvp.translate_received,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        payment_date: {
-            title: emersvp.translate_paymentdate,
-            visibility: 'hidden'
-        },
-        pg: {
-            title: emersvp.translate_pg,
-            visibility: 'hidden'
-        },
-        pg_pid: {
-            title: emersvp.translate_pg_pid,
-            visibility: 'hidden'
-        },
-        payment_id: {
-            title: emersvp.translate_paymentid
-        },
-        attend_count: {
-            title: emersvp.translate_attend_count,
-            visibility: 'hidden'
-        },
-        lastreminder: {
-            title: emersvp.translate_lastreminder,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        booking_comment: {
-            title: emersvp.translate_comment,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        wp_user: {
-            title: emersvp.translate_wpuser,
-            sorting: false,
-            visibility: 'hidden'
-        }
-    }
-    let editfield = {
-        edit_link: {
-            title: emersvp.translate_edit,
-            sorting: false,
-            visibility: 'fixed',
-            listClass: 'eme-jtable-center'
-        }
-    }
     if (typeof getQueryParams === 'undefined') {
         function getQueryParams(qs) {
             qs = qs.split('+').join(' ');
@@ -142,6 +16,132 @@ jQuery(document).ready(function ($) {
     let $_GET = getQueryParams(document.location.search);
     //Prepare jtable plugin
     if ($('#BookingsTableContainer').length) {
+        let rsvpfields = {
+            booking_id: {
+                title: emersvp.translate_id,
+                key: true,
+                list: true,
+                width: '2%',
+                listClass: 'eme-jtable-center'
+            },
+            event_name: {
+                title: emersvp.translate_eventinfo
+            },
+            event_id: {
+                title: emersvp.translate_event_id,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            person_id: {
+                title: emersvp.translate_person_id,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            rsvp: {
+                title: emersvp.translate_rsvp,
+                sorting: false,
+                width: '2%',
+                listClass: 'eme-jtable-center'
+            },
+            datetime: {
+                title: emersvp.translate_datetime,
+                sorting: true
+            },
+            booker: {
+                title: emersvp.translate_booker
+            },
+            creation_date: {
+                title: emersvp.translate_bookingdate
+            },
+            seats: {
+                title: emersvp.translate_seats,
+                sorting: false,
+                listClass: 'eme-jtable-center'
+            },
+            eventprice: {
+                title: emersvp.translate_eventprice,
+                sorting: false
+            },
+            event_cats: {
+                title: emersvp.translate_event_cats,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            discount: {
+                title: emersvp.translate_discount,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            dcodes_used: {
+                title: emersvp.translate_dcodes_used,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            totalprice: {
+                title: emersvp.translate_totalprice,
+                sorting: false
+            },
+            unique_nbr: {
+                title: emersvp.translate_uniquenbr,
+                visibility: 'hidden'
+            },
+            booking_paid: {
+                title: emersvp.translate_paid,
+                visibility: 'hidden'
+            },
+            remaining: {
+                title: emersvp.translate_remaining,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            received: {
+                title: emersvp.translate_received,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            payment_date: {
+                title: emersvp.translate_paymentdate,
+                visibility: 'hidden'
+            },
+            pg: {
+                title: emersvp.translate_pg,
+                visibility: 'hidden'
+            },
+            pg_pid: {
+                title: emersvp.translate_pg_pid,
+                visibility: 'hidden'
+            },
+            payment_id: {
+                title: emersvp.translate_paymentid
+            },
+            attend_count: {
+                title: emersvp.translate_attend_count,
+                visibility: 'hidden'
+            },
+            lastreminder: {
+                title: emersvp.translate_lastreminder,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            booking_comment: {
+                title: emersvp.translate_comment,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            wp_user: {
+                title: emersvp.translate_wpuser,
+                sorting: false,
+                visibility: 'hidden'
+            }
+        }
+        let editfield = {
+            edit_link: {
+                title: emersvp.translate_edit,
+                sorting: false,
+                visibility: 'fixed',
+                listClass: 'eme-jtable-center'
+            }
+        }
         let extrafields=$('#BookingsTableContainer').data('extrafields').toString().split(',');
         let extrafieldnames=$('#BookingsTableContainer').data('extrafieldnames').toString().split(',');
         let extrafieldsearchable=$('#BookingsTableContainer').data('extrafieldsearchable').toString().split(',');
@@ -187,32 +187,33 @@ jQuery(document).ready(function ($) {
             selectingCheckboxes: true, //Show checkboxes on first column
             selectOnRowClick: true, //Enable this to only select using checkboxes
             toolbar: {
-                items: [{
-                    text: emersvp.translate_markpaidandapprove,
-                    cssClass: 'eme_jtable_button_for_pending_only',
-                    click: function () {
-                        let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
-                        let do_action = 'markpaidandapprove';
-                        if (selectedRows.length > 0) {
-                            let ids = [];
-                            selectedRows.each(function () {
-                                ids.push($(this).data('record')['booking_id']);
-                            });
-                            let idsjoined = ids.join(); //will be such a string '2,5,7'
-                            $('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_pleasewait);
-                            $.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': emersvp.translate_adminnonce }, function(data) {
-                                if (data.Result!='OK') {
-                                    $('div#bookings-message').html(data.htmlmessage);
-                                    $('div#bookings-message').show();
-                                    $('div#bookings-message').delay(3000).fadeOut('slow');
-                                }
+                items: [
+                    {
+                        text: emersvp.translate_markpaidandapprove,
+                        cssClass: 'eme_jtable_button_for_pending_only',
+                        click: function () {
+                            let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
+                            let do_action = 'markpaidandapprove';
+                            if (selectedRows.length > 0) {
+                                let ids = [];
+                                selectedRows.each(function () {
+                                    ids.push($(this).data('record')['booking_id']);
+                                });
+                                let idsjoined = ids.join(); //will be such a string '2,5,7'
+                                $('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_pleasewait);
+                                $.post(ajaxurl, {'booking_ids': idsjoined, 'action': 'eme_manage_bookings', 'do_action': do_action, 'eme_admin_nonce': emersvp.translate_adminnonce }, function(data) {
+                                    if (data.Result!='OK') {
+                                        $('div#bookings-message').html(data.htmlmessage);
+                                        $('div#bookings-message').show();
+                                        $('div#bookings-message').delay(3000).fadeOut('slow');
+                                    }
 
-                                $('#BookingsTableContainer').jtable('reload');
-                                $('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_markpaidandapprove);
-                            }, 'json');
+                                    $('#BookingsTableContainer').jtable('load');
+                                    $('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_markpaidandapprove);
+                                }, 'json');
+                            }
                         }
-                    }
-                },
+                    },
                     {
                         text: emersvp.translate_markpaid,
                         cssClass: 'eme_jtable_button_for_approved_only',
@@ -233,7 +234,7 @@ jQuery(document).ready(function ($) {
                                         $('div#bookings-message').delay(3000).fadeOut('slow');
                                     }
 
-                                    $('#BookingsTableContainer').jtable('reload');
+                                    $('#BookingsTableContainer').jtable('load');
                                     $('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(emersvp.translate_markpaid);
                                 }, 'json');
                             }
@@ -254,28 +255,36 @@ jQuery(document).ready(function ($) {
                 ]
             },
             actions: {
-                listAction: ajaxurl+'?action=eme_bookings_list&eme_admin_nonce='+emersvp.translate_adminnonce+'&trash='+$_GET['trash']
+                listAction: ajaxurl
+            },
+            listQueryParams: function () {
+                let params = {
+                    'action': "eme_bookings_list",
+                    'eme_admin_nonce': emersvp.translate_adminnonce,
+                    'trash': $_GET['trash'],
+                    'scope': $('#scope').val(),
+                    'category': $('#category').val(),
+                    'booking_status': $('#booking_status').val(),
+                    'search_event': $('#search_event').val(),
+                    'search_person': $('#search_person').val(),
+                    'search_customfields': $('#search_customfields').val(),
+                    'search_unique': $('#search_unique').val(),
+                    'search_paymentid': $('#search_paymentid').val(),
+                    'search_pg_pid': $('#search_pg_pid').val(),
+                    'search_start_date': $('#search_start_date').val(),
+                    'search_end_date': $('#search_end_date').val(),
+                    'event_id': $('#event_id').val(),
+                    'person_id': $_GET['person_id']
+                }
+                return params;
             },
             fields: rsvpfields
         });
 
         // Only in the initial load we take a possible person id in the url into account
         // This person id can come from the eme_people page when clicking on "view all bookings"
-        $('#BookingsTableContainer').jtable('load', {
-            'scope': $('#scope').val(),
-            'category': $('#category').val(),
-            'booking_status': $('#booking_status').val(),
-            'search_event': $('#search_event').val(),
-            'search_person': $('#search_person').val(),
-            'search_customfields': $('#search_customfields').val(),
-            'search_unique': $('#search_unique').val(),
-            'search_paymentid': $('#search_paymentid').val(),
-            'search_pg_pid': $('#search_pg_pid').val(),
-            'search_start_date': $('#search_start_date').val(),
-            'search_end_date': $('#search_end_date').val(),
-            'event_id': $('#event_id').val(),
-            'person_id': $_GET['person_id']
-        });
+        $('#BookingsTableContainer').jtable('load');
+        $_GET['person_id']=0;
     }
 
     function updateShowHideStuff() {
@@ -415,7 +424,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#BookingsTableContainer').jtable('reload');
+                    $('#BookingsTableContainer').jtable('load');
                     $('#BookingsActionsButton').text(emersvp.translate_apply);
                     $('#BookingsActionsButton').prop('disabled', false);
                     $('div#bookings-message').html(data.htmlmessage);
@@ -431,20 +440,7 @@ jQuery(document).ready(function ($) {
     // Re-load records when user click 'load records' button.
     $('#BookingsLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#BookingsTableContainer').jtable('load', {
-            'scope': $('#scope').val(),
-            'category': $('#category').val(),
-            'event_id': $('#event_id').val(),
-            'booking_status': $('#booking_status').val(),
-            'search_event': $('#search_event').val(),
-            'search_person': $('#search_person').val(),
-            'search_customfields': $('#search_customfields').val(),
-            'search_unique': $('#search_unique').val(),
-            'search_paymentid': $('#search_paymentid').val(),
-            'search_pg_pid': $('#search_pg_pid').val(),
-            'search_start_date': $('#search_start_date').val(),
-            'search_end_date': $('#search_end_date').val()
-        });
+        $('#BookingsTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

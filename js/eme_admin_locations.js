@@ -1,68 +1,68 @@
 jQuery(document).ready(function ($) { 
-    let locationfields = {
-        location_id: {
-            key: true,
-            title: emelocations.translate_id,
-            visibility: 'hidden'
-        },
-        location_name: {
-            title: emelocations.translate_name
-        },
-        view: {
-            title: emelocations.translate_view,
-            sorting: false,
-            listClass: 'eme-jtable-center'
-        },
-        copy: {
-            title: emelocations.translate_copy,
-            sorting: false,
-            width: '2%',
-            listClass: 'eme-jtable-center'
-        },
-        location_address1: {
-            title: emelocations.translate_address1,
-            visibility: 'hidden'
-        },
-        location_address2: {
-            title: emelocations.translate_address2,
-            visibility: 'hidden'
-        },
-        location_zip: {
-            title: emelocations.translate_zip,
-            visibility: 'hidden'
-        },
-        location_city: {
-            title: emelocations.translate_city,
-            visibility: 'hidden'
-        },
-        location_state: {
-            title: emelocations.translate_state,
-            visibility: 'hidden'
-        },
-        location_country: {
-            title: emelocations.translate_country,
-            visibility: 'hidden'
-        },
-        location_longitude: {
-            title: emelocations.translate_longitude,
-            visibility: 'hidden'
-        },
-        location_latitude: {
-            title: emelocations.translate_latitude,
-            visibility: 'hidden'
-        },
-        external_url: {
-            title: emelocations.translate_external_url,
-            visibility: 'hidden'
-        },
-        online_only: {
-            sorting: false,
-            title: emelocations.translate_online_only,
-            visibility: 'hidden'
-        }
-    }
-
     if ($('#LocationsTableContainer').length) {
+        let locationfields = {
+            location_id: {
+                key: true,
+                title: emelocations.translate_id,
+                visibility: 'hidden'
+            },
+            location_name: {
+                title: emelocations.translate_name
+            },
+            view: {
+                title: emelocations.translate_view,
+                sorting: false,
+                listClass: 'eme-jtable-center'
+            },
+            copy: {
+                title: emelocations.translate_copy,
+                sorting: false,
+                width: '2%',
+                listClass: 'eme-jtable-center'
+            },
+            location_address1: {
+                title: emelocations.translate_address1,
+                visibility: 'hidden'
+            },
+            location_address2: {
+                title: emelocations.translate_address2,
+                visibility: 'hidden'
+            },
+            location_zip: {
+                title: emelocations.translate_zip,
+                visibility: 'hidden'
+            },
+            location_city: {
+                title: emelocations.translate_city,
+                visibility: 'hidden'
+            },
+            location_state: {
+                title: emelocations.translate_state,
+                visibility: 'hidden'
+            },
+            location_country: {
+                title: emelocations.translate_country,
+                visibility: 'hidden'
+            },
+            location_longitude: {
+                title: emelocations.translate_longitude,
+                visibility: 'hidden'
+            },
+            location_latitude: {
+                title: emelocations.translate_latitude,
+                visibility: 'hidden'
+            },
+            external_url: {
+                title: emelocations.translate_external_url,
+                visibility: 'hidden'
+            },
+            online_only: {
+                sorting: false,
+                title: emelocations.translate_online_only,
+                visibility: 'hidden'
+            }
+        }
+
         let extrafields=$('#LocationsTableContainer').data('extrafields').toString().split(',');
         let extrafieldnames=$('#LocationsTableContainer').data('extrafieldnames').toString().split(',');
         let extrafieldsearchable=$('#LocationsTableContainer').data('extrafieldsearchable').toString().split(',');
@@ -113,18 +113,20 @@ jQuery(document).ready(function ($) {
             actions: {
                 listAction: ajaxurl+'?action=eme_locations_list&eme_admin_nonce='+emelocations.translate_adminnonce
             },
+            listQueryParams: function () {
+                let params = {
+                    'action': "eme_locations_list",
+                    'eme_admin_nonce': emelocations.translate_adminnonce,
+                    'search_name': $('#search_name').val(),
+                    'search_customfields': $('#search_customfields').val(),
+                    'search_customfieldids': $('#search_customfieldids').val()
+                }
+                return params;
+            },
             fields: locationfields
         });
 
-        // Load list from server, but only if the container is there
-        // and only in the initial load we take a possible person id in the url into account
-        // This person id can come from the eme_people page when clicking on "view all bookings"
-        $('#LocationsTableContainer').jtable('load', {
-            'search_name': $('#search_name').val(),
-            'search_customfields': $('#search_customfields').val(),
-            'search_customfieldids': $('#search_customfieldids').val()
-
-        });
+        $('#LocationsTableContainer').jtable('load');
     }
 
     function updateShowHideStuff () {
@@ -248,7 +250,7 @@ jQuery(document).ready(function ($) {
                     'transferto_id': $('#transferto_id').val(),
                     'eme_admin_nonce': nonce },
                     function() {
-                        $('#LocationsTableContainer').jtable('reload');
+                        $('#LocationsTableContainer').jtable('load');
                         $('#LocationsActionsButton').text(emelocations.translate_apply);
                     });
             }

@@ -102,118 +102,118 @@ jQuery(document).ready(function ($) {
         }
     }
 
-    let personfields = {
-        'people.person_id': {
-            key: true,
-            title: emepeople.translate_personid,
-            visibility: 'hidden'
-        },
-        'people.lastname': {
-            title: emepeople.translate_lastname,
-            inputClass: 'validate[required]'
-        },
-        'people.firstname': {
-            title: emepeople.translate_firstname
-        },
-        'people.address1': {
-            title: emepeople.translate_address1,
-            visibility: 'hidden'
-        },
-        'people.address2': {
-            title: emepeople.translate_address2,
-            visibility: 'hidden'
-        },
-        'people.city': {
-            title: emepeople.translate_city,
-            visibility: 'hidden'
-        },
-        'people.zip': {
-            title: emepeople.translate_zip,
-            visibility: 'hidden'
-        },
-        'people.state': {
-            title: emepeople.translate_state,
-            visibility: 'hidden'
-        },
-        'people.country': {
-            title: emepeople.translate_country,
-            visibility: 'hidden'
-        },
-        'people.email': {
-            title: emepeople.translate_email,
-            inputClass: 'validate[required]'
-        },
-        'people.phone': {
-            title: emepeople.translate_phone,
-            visibility: 'hidden'
-        },
-        'people.birthdate': {
-            title: emepeople.translate_birthdate,
-            visibility: 'hidden'
-        },
-        'people.birthplace': {
-            title: emepeople.translate_birthplace,
-            visibility: 'hidden'
-        },
-        'people.lang': {
-            title: emepeople.translate_lang,
-            visibility: 'hidden',
-        },
-        'people.massmail': {
-            title: emepeople.translate_massmail,
-            visibility: 'hidden'
-        },
-        'people.bd_email': {
-            title: emepeople.translate_bd_email,
-            visibility: 'hidden'
-        },
-        'people.gdpr': {
-            title: emepeople.translate_gdpr,
-            visibility: 'hidden'
-        },
-        'people.gdpr_date': {
-            title: emepeople.translate_gdpr_date,
-            visibility: 'hidden'
-        },
-        'people.creation_date': {
-            title: emepeople.translate_created_on,
-            visibility: 'hidden'
-        },
-        'people.modif_date': {
-            title: emepeople.translate_modified_on,
-            visibility: 'hidden'
-        },
-        'people.related_to': {
-            title: emepeople.translate_related_to,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        'people.groups': {
-            title: emepeople.translate_persongroups,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        'people.memberships': {
-            title: emepeople.translate_personmemberships,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        'people.wp_user': {
-            title: emepeople.translate_wpuser,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        'bookingsmade': {
-            title: emepeople.translate_bookingsmade,
-            sorting: false,
-            visibility: 'hidden',
-            display: function (data) {
-                return '<a href="admin.php?page=eme-registration-seats&person_id='+ data.record['people.person_id']+'">' + emepeople.translate_showallbookings + '</a>';
-            }
-        }
-    }
 
     if ($('#PeopleTableContainer').length) {
+        let personfields = {
+            'people.person_id': {
+                key: true,
+                title: emepeople.translate_personid,
+                visibility: 'hidden'
+            },
+            'people.lastname': {
+                title: emepeople.translate_lastname,
+                inputClass: 'validate[required]'
+            },
+            'people.firstname': {
+                title: emepeople.translate_firstname
+            },
+            'people.address1': {
+                title: emepeople.translate_address1,
+                visibility: 'hidden'
+            },
+            'people.address2': {
+                title: emepeople.translate_address2,
+                visibility: 'hidden'
+            },
+            'people.city': {
+                title: emepeople.translate_city,
+                visibility: 'hidden'
+            },
+            'people.zip': {
+                title: emepeople.translate_zip,
+                visibility: 'hidden'
+            },
+            'people.state': {
+                title: emepeople.translate_state,
+                visibility: 'hidden'
+            },
+            'people.country': {
+                title: emepeople.translate_country,
+                visibility: 'hidden'
+            },
+            'people.email': {
+                title: emepeople.translate_email,
+                inputClass: 'validate[required]'
+            },
+            'people.phone': {
+                title: emepeople.translate_phone,
+                visibility: 'hidden'
+            },
+            'people.birthdate': {
+                title: emepeople.translate_birthdate,
+                visibility: 'hidden'
+            },
+            'people.birthplace': {
+                title: emepeople.translate_birthplace,
+                visibility: 'hidden'
+            },
+            'people.lang': {
+                title: emepeople.translate_lang,
+                visibility: 'hidden',
+            },
+            'people.massmail': {
+                title: emepeople.translate_massmail,
+                visibility: 'hidden'
+            },
+            'people.bd_email': {
+                title: emepeople.translate_bd_email,
+                visibility: 'hidden'
+            },
+            'people.gdpr': {
+                title: emepeople.translate_gdpr,
+                visibility: 'hidden'
+            },
+            'people.gdpr_date': {
+                title: emepeople.translate_gdpr_date,
+                visibility: 'hidden'
+            },
+            'people.creation_date': {
+                title: emepeople.translate_created_on,
+                visibility: 'hidden'
+            },
+            'people.modif_date': {
+                title: emepeople.translate_modified_on,
+                visibility: 'hidden'
+            },
+            'people.related_to': {
+                title: emepeople.translate_related_to,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            'people.groups': {
+                title: emepeople.translate_persongroups,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            'people.memberships': {
+                title: emepeople.translate_personmemberships,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            'people.wp_user': {
+                title: emepeople.translate_wpuser,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            'bookingsmade': {
+                title: emepeople.translate_bookingsmade,
+                sorting: false,
+                visibility: 'hidden',
+                display: function (data) {
+                    return '<a href="admin.php?page=eme-registration-seats&person_id='+ data.record['people.person_id']+'">' + emepeople.translate_showallbookings + '</a>';
+                }
+            }
+        }
         let extrafields=$('#PeopleTableContainer').data('extrafields').toString().split(',');
         let extrafieldnames=$('#PeopleTableContainer').data('extrafieldnames').toString().split(',');
         let extrafieldsearchable=$('#PeopleTableContainer').data('extrafieldsearchable').toString().split(',');
@@ -235,8 +235,14 @@ jQuery(document).ready(function ($) {
             }
         });
 
-        //Prepare jtable plugin
+        let exactmatch;
+        if ($('#search_exactmatch').is(":checked")) {
+            exactmatch = 1;
+        } else {
+            exactmatch = 0;
+        }
         let $_GET = getQueryParams(document.location.search);
+        //Prepare jtable plugin
         $('#PeopleTableContainer').jtable({
             title: emepeople.translate_people,
             paging: true,
@@ -264,111 +270,107 @@ jQuery(document).ready(function ($) {
                 ]
             },
             actions: {
-                listAction: ajaxurl+'?action=eme_people_list&eme_admin_nonce='+emepeople.translate_adminnonce+'&trash='+$_GET['trash']
+                listAction: ajaxurl
             },
+            listQueryParams: function () {
+                let params = {
+                    'action': "eme_people_list",
+                    'eme_admin_nonce': emepeople.translate_adminnonce,
+                    'trash': $_GET['trash'],
+                    'search_person': $('#search_person').val(),
+                    'search_groups': $('#search_groups').val(),
+                    'search_memberstatus': $('#search_memberstatus').val(),
+                    'search_membershipids': $('#search_membershipids').val(),
+                    'search_customfields': $('#search_customfields').val(),
+                    'search_customfieldids': $('#search_customfieldids').val(),
+                    'search_exactmatch': exactmatch
+                }
+                return params;
+            },
+
             fields: personfields
         });
+        $('#PeopleTableContainer').jtable('load');
     }
 
-    $('#GroupsTableContainer').jtable({
-        title: emepeople.translate_groups,
-        paging: true,
-        sorting: true,
-        jqueryuiTheme: true,
-        defaultSorting: 'name ASC',
-        selecting: true, //Enable selecting
-        multiselect: true, //Allow multiple selecting
-        selectingCheckboxes: true, //Show checkboxes on first column
-        selectOnRowClick: true,
-        actions: {
-            listAction: ajaxurl+'?action=eme_groups_list&eme_admin_nonce='+emepeople.translate_adminnonce,
-            deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&eme_admin_nonce='+emepeople.translate_adminnonce,
-        },
-        fields: {
-            'group_id': {
-                title: emepeople.translate_groupid,
-                key: true,
-                create: false,
-                edit: false,
-                visibility: 'hidden'
+    if ($('#GroupsTableContainer').length) {
+        $('#GroupsTableContainer').jtable({
+            title: emepeople.translate_groups,
+            paging: true,
+            sorting: true,
+            jqueryuiTheme: true,
+            defaultSorting: 'name ASC',
+            selecting: true, //Enable selecting
+            multiselect: true, //Allow multiple selecting
+            selectingCheckboxes: true, //Show checkboxes on first column
+            selectOnRowClick: true,
+            actions: {
+                listAction: ajaxurl+'?action=eme_groups_list&eme_admin_nonce='+emepeople.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&eme_admin_nonce='+emepeople.translate_adminnonce,
             },
-            'name': {
-                title: emepeople.translate_name,
-                inputClass: 'validate[required]'
-            },
-            'description': {
-                title: emepeople.translate_description
-            },
-            'public': {
-                title: emepeople.translate_publicgroup,
-                visibility: 'hidden'
-            },
-            'groupcount': {
-                title: emepeople.translate_groupcount,
-                sorting: false
+            fields: {
+                'group_id': {
+                    title: emepeople.translate_groupid,
+                    key: true,
+                    create: false,
+                    edit: false,
+                    visibility: 'hidden'
+                },
+                'name': {
+                    title: emepeople.translate_name,
+                    inputClass: 'validate[required]'
+                },
+                'description': {
+                    title: emepeople.translate_description
+                },
+                'public': {
+                    title: emepeople.translate_publicgroup,
+                    visibility: 'hidden'
+                },
+                'groupcount': {
+                    title: emepeople.translate_groupcount,
+                    sorting: false
+                }
             }
-        }
-    });
+        });
 
-    // Load list from server, but only if the container is there
-    // and only in the initial load we take a possible person id in the url into account
-    // This person id can come from the eme_people page when clicking on "view all bookings"
-    if ($('#PeopleTableContainer').length) {
-        let exactmatch;
-        if ($('#search_exactmatch').is(":checked")) {
-            exactmatch = 1;
-        } else {
-            exactmatch = 0;
-        }
+        $('#GroupsTableContainer').jtable('load');
 
-        $('#PeopleTableContainer').jtable('load', {
-            'search_person': $('#search_person').val(),
-            'search_groups': $('#search_groups').val(),
-            'search_memberstatus': $('#search_memberstatus').val(),
-            'search_membershipids': $('#search_membershipids').val(),
-            'search_customfields': $('#search_customfields').val(),
-            'search_customfieldids': $('#search_customfieldids').val(),
-            'search_exactmatch': exactmatch
+        // Actions button
+        $('#GroupsActionsButton').on("click",function (e) {
+            e.preventDefault();
+            let selectedRows = $('#GroupsTableContainer').jtable('selectedRows');
+            let do_action = $('#eme_admin_action').val();
+            let action_ok=1;
+            if (selectedRows.length > 0 && do_action != '') {
+                if ((do_action=='deleteGroups') && !confirm(emepeople.translate_areyousuretodeleteselected)) {
+                    action_ok=0;
+                }
+                if (action_ok==1) {
+                    $('#GroupsActionsButton').text(emepeople.translate_pleasewait);
+                    $('#GroupsActionsButton').prop('disabled', true);
+                    let ids = [];
+                    selectedRows.each(function () {
+                        ids.push($(this).data('record')['group_id']);
+                    });
+
+                    let idsjoined = ids.join(); //will be such a string '2,5,7'
+                    $.post(ajaxurl, {'group_id': idsjoined, 'action': 'eme_manage_groups', 'do_action': do_action, 'eme_admin_nonce': emepeople.translate_adminnonce }, function(data) {
+                        $('#GroupsTableContainer').jtable('reload');
+                        $('#GroupsActionsButton').text(emepeople.translate_apply);
+                        $('#GroupsActionsButton').prop('disabled', false);
+                        if (do_action=='deleteGroups') {
+                            $('div#groups-message').html(data.htmlmessage);
+                            $('div#groups-message').show();
+                            $('div#groups-message').delay(3000).fadeOut('slow');
+                        }
+                    }, 'json');
+                }
+            }
+            // return false to make sure the real form doesn't submit
+            return false;
         });
     }
-    if ($('#GroupsTableContainer').length) {
-        $('#GroupsTableContainer').jtable('load');
-    }
-
-    // Actions button
-    $('#GroupsActionsButton').on("click",function (e) {
-        e.preventDefault();
-        let selectedRows = $('#GroupsTableContainer').jtable('selectedRows');
-        let do_action = $('#eme_admin_action').val();
-        let action_ok=1;
-        if (selectedRows.length > 0 && do_action != '') {
-            if ((do_action=='deleteGroups') && !confirm(emepeople.translate_areyousuretodeleteselected)) {
-                action_ok=0;
-            }
-            if (action_ok==1) {
-                $('#GroupsActionsButton').text(emepeople.translate_pleasewait);
-                $('#GroupsActionsButton').prop('disabled', true);
-                let ids = [];
-                selectedRows.each(function () {
-                    ids.push($(this).data('record')['group_id']);
-                });
-
-                let idsjoined = ids.join(); //will be such a string '2,5,7'
-                $.post(ajaxurl, {'group_id': idsjoined, 'action': 'eme_manage_groups', 'do_action': do_action, 'eme_admin_nonce': emepeople.translate_adminnonce }, function(data) {
-                    $('#GroupsTableContainer').jtable('reload');
-                    $('#GroupsActionsButton').text(emepeople.translate_apply);
-                    $('#GroupsActionsButton').prop('disabled', false);
-                    if (do_action=='deleteGroups') {
-                        $('div#groups-message').html(data.htmlmessage);
-                        $('div#groups-message').show();
-                        $('div#groups-message').delay(3000).fadeOut('slow');
-                    }
-                }, 'json');
-            }
-        }
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
 
     // Actions button
     $('#PeopleActionsButton').on("click",function (e) {

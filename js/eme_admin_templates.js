@@ -1,50 +1,57 @@
 jQuery(document).ready( function($) {
-    $('#TemplatesTableContainer').jtable({
-        title: emetemplates.translate_templates,
-        paging: true,
-        sorting: true,
-        jqueryuiTheme: true,
-        defaultSorting: 'name ASC',
-        selecting: true, //Enable selecting
-        multiselect: true, //Allow multiple selecting
-        selectingCheckboxes: true, //Show checkboxes on first column
-        selectOnRowClick: true,
-        deleteConfirmation: function(data) {
-            data.deleteConfirmMessage = emetemplates.translate_pressdeletetoremove + ' "' + data.record.name + '"';
-        },
-        actions: {
-            listAction: ajaxurl+'?action=eme_templates_list&eme_admin_nonce='+emetemplates.translate_adminnonce,
-            deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&eme_admin_nonce='+emetemplates.translate_adminnonce
-        },
-        fields: {
-            id: {
-                key: true,
-                title: emetemplates.translate_id
-            },
-            name: {
-                visibility: 'fixed',
-                title: emetemplates.translate_name
-            },
-            description: {
-                title: emetemplates.translate_description
-            },
-            type: {
-                title: emetemplates.translate_type
-            },
-            copy: {
-                title: emetemplates.translate_copy,
-                sorting: false,
-                width: '2%',
-                listClass: 'eme-jtable-center'
-            }
-        }
-    });
-
     if ($('#TemplatesTableContainer').length) {
-        $('#TemplatesTableContainer').jtable('load', {
-            search_name: $('#search_name').val(),
-            search_type: $('#search_type').val()
+        $('#TemplatesTableContainer').jtable({
+            title: emetemplates.translate_templates,
+            paging: true,
+            sorting: true,
+            jqueryuiTheme: true,
+            defaultSorting: 'name ASC',
+            selecting: true, //Enable selecting
+            multiselect: true, //Allow multiple selecting
+            selectingCheckboxes: true, //Show checkboxes on first column
+            selectOnRowClick: true,
+            deleteConfirmation: function(data) {
+                data.deleteConfirmMessage = emetemplates.translate_pressdeletetoremove + ' "' + data.record.name + '"';
+            },
+            actions: {
+                listAction: ajaxurl+'?action=eme_templates_list&eme_admin_nonce='+emetemplates.translate_adminnonce,
+                deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&eme_admin_nonce='+emetemplates.translate_adminnonce
+            },
+            listQueryParams: function () {
+                let params = {
+                    'action': "eme_templates_list",
+                    'eme_admin_nonce': emetemplates.translate_adminnonce,
+                    'search_name': $('#search_name').val(),
+                    'search_type': $('#search_type').val(),
+                }
+                return params;
+            },
+
+            fields: {
+                id: {
+                    key: true,
+                    title: emetemplates.translate_id
+                },
+                name: {
+                    visibility: 'fixed',
+                    title: emetemplates.translate_name
+                },
+                description: {
+                    title: emetemplates.translate_description
+                },
+                type: {
+                    title: emetemplates.translate_type
+                },
+                copy: {
+                    title: emetemplates.translate_copy,
+                    sorting: false,
+                    width: '2%',
+                    listClass: 'eme-jtable-center'
+                }
+            }
         });
+
+        $('#TemplatesTableContainer').jtable('load');
     }
 
     // Actions button
@@ -66,7 +73,7 @@ jQuery(document).ready( function($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_templates', 'do_action': do_action, 'eme_admin_nonce': emetemplates.translate_adminnonce }, function() {
-                    $('#TemplatesTableContainer').jtable('reload');
+                    $('#TemplatesTableContainer').jtable('load');
                     $('#TemplatesActionsButton').text(emetemplates.translate_apply);
                     if (do_action=='deleteTemplates') {
                         $('div#templates-message').html(emetemplates.translate_deleted);
@@ -83,10 +90,7 @@ jQuery(document).ready( function($) {
     // Re-load records when user click 'load records' button.
     $('#TemplatesLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#TemplatesTableContainer').jtable('load', {
-            search_name: $('#search_name').val(),
-            search_type: $('#search_type').val()
-        });
+        $('#TemplatesTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

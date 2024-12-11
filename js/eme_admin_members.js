@@ -1,174 +1,148 @@
 jQuery(document).ready(function ($) { 
 
-    let memberfields = {
-        'members.member_id': {
-            key: true,
-            title: ememembers.translate_memberid,
-            visibility: 'hidden'
-        },
-        person_id: {
-            title: ememembers.translate_personid,
-            visibility: 'hidden'
-        },
-        lastname: {
-            title: ememembers.translate_lastname
-        },
-        firstname: {
-            title: ememembers.translate_firstname
-        },
-        email: {
-            title: ememembers.translate_email
-        },
-        related_member_id: {
-            title: ememembers.translate_related_to,
-            visibility: 'hidden'
-        },
-        address1: {
-            title: ememembers.translate_address1,
-            visibility: 'hidden'
-        },
-        address2: {
-            title: ememembers.translate_address2,
-            visibility: 'hidden'
-        },
-        city: {
-            title: ememembers.translate_city,
-            visibility: 'hidden'
-        },
-        zip: {
-            title: ememembers.translate_zip,
-            visibility: 'hidden'
-        },
-        state: {
-            title: ememembers.translate_state,
-            visibility: 'hidden'
-        },
-        country: {
-            title: ememembers.translate_country,
-            visibility: 'hidden'
-        },
-        birthdate: {
-            title: ememembers.translate_birthdate,
-            visibility: 'hidden'
-        },
-        birthplace: {
-            title: ememembers.translate_birthplace,
-            visibility: 'hidden'
-        },
-        membership_name: {
-            title: ememembers.translate_membership,
-            visibility: 'hidden'
-        },
-        membershipprice: {
-            title: ememembers.translate_membershipprice,
-            visibility: 'hidden',
-            sorting: false
-        },
-        discount: {
-            title: ememembers.translate_discount,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        dcodes_used: {
-            title: ememembers.translate_dcodes_used,
-            sorting: false,
-            visibility: 'hidden'
-        },
-        totalprice: {
-            title: ememembers.translate_totalprice,
-            visibility: 'hidden',
-            sorting: false
-        },
-        start_date: {
-            title: ememembers.translate_startdate,
-            visibility: 'hidden'
-        },
-        end_date: {
-            title: ememembers.translate_enddate,
-            visibility: 'hidden'
-        },
-        usage_count: {
-            title: ememembers.translate_usage_count,
-            visibility: 'hidden',
-            sorting: false
-        },
-        creation_date: {
-            title: ememembers.translate_registrationdate,
-            visibility: 'hidden'
-        },
-        last_seen: {
-            title: ememembers.translate_last_seen,
-            visibility: 'hidden'
-        },
-        paid: {
-            title: ememembers.translate_paid,
-            visibility: 'hidden'
-        },
-        unique_nbr: {
-            title: ememembers.translate_uniquenbr,
-            visibility: 'hidden'
-        },
-        payment_date: {
-            title: ememembers.translate_paymentdate,
-            visibility: 'hidden'
-        },
-        pg: {
-            title: ememembers.translate_pg,
-            visibility: 'hidden'
-        },
-        pg_pid: {
-            title: ememembers.translate_pg_pid,
-            visibility: 'hidden'
-        },
-        payment_id: {
-            title: ememembers.translate_paymentid,
-            visibility: 'hidden'
-        },
-        reminder_date: {
-            title: ememembers.translate_lastreminder,
-            visibility: 'hidden'
-        },
-        reminder: {
-            title: ememembers.translate_nbrreminder,
-            visibility: 'hidden'
-        },
-        status: {
-            title: ememembers.translate_status,
-            visibility: 'hidden'
-        },
-        wp_user: {
-            title: ememembers.translate_wpuser,
-            sorting: false,
-            visibility: 'hidden'
-        }
-    }
-    let membershipfields = {
-        membership_id: {
-            key: true,
-            title: ememembers.translate_id,
-            visibility: 'hidden'
-        },
-        name: {
-            title: ememembers.translate_name
-        },
-        status: {
-            title: ememembers.translate_status,
-            visibility: 'hidden',
-            sorting: false
-        },
-        description: {
-            title: ememembers.translate_description
-        },
-        membercount: {
-            title: ememembers.translate_membercount,
-            sorting: false
-        },
-        contact: {
-            title: ememembers.translate_contact,
-            sorting: false
-        }
-    }
     if ($('#MembersTableContainer').length) {
+        let memberfields = {
+            'members.member_id': {
+                key: true,
+                title: ememembers.translate_memberid,
+                visibility: 'hidden'
+            },
+            person_id: {
+                title: ememembers.translate_personid,
+                visibility: 'hidden'
+            },
+            lastname: {
+                title: ememembers.translate_lastname
+            },
+            firstname: {
+                title: ememembers.translate_firstname
+            },
+            email: {
+                title: ememembers.translate_email
+            },
+            related_member_id: {
+                title: ememembers.translate_related_to,
+                visibility: 'hidden'
+            },
+            address1: {
+                title: ememembers.translate_address1,
+                visibility: 'hidden'
+            },
+            address2: {
+                title: ememembers.translate_address2,
+                visibility: 'hidden'
+            },
+            city: {
+                title: ememembers.translate_city,
+                visibility: 'hidden'
+            },
+            zip: {
+                title: ememembers.translate_zip,
+                visibility: 'hidden'
+            },
+            state: {
+                title: ememembers.translate_state,
+                visibility: 'hidden'
+            },
+            country: {
+                title: ememembers.translate_country,
+                visibility: 'hidden'
+            },
+            birthdate: {
+                title: ememembers.translate_birthdate,
+                visibility: 'hidden'
+            },
+            birthplace: {
+                title: ememembers.translate_birthplace,
+                visibility: 'hidden'
+            },
+            membership_name: {
+                title: ememembers.translate_membership,
+                visibility: 'hidden'
+            },
+            membershipprice: {
+                title: ememembers.translate_membershipprice,
+                visibility: 'hidden',
+                sorting: false
+            },
+            discount: {
+                title: ememembers.translate_discount,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            dcodes_used: {
+                title: ememembers.translate_dcodes_used,
+                sorting: false,
+                visibility: 'hidden'
+            },
+            totalprice: {
+                title: ememembers.translate_totalprice,
+                visibility: 'hidden',
+                sorting: false
+            },
+            start_date: {
+                title: ememembers.translate_startdate,
+                visibility: 'hidden'
+            },
+            end_date: {
+                title: ememembers.translate_enddate,
+                visibility: 'hidden'
+            },
+            usage_count: {
+                title: ememembers.translate_usage_count,
+                visibility: 'hidden',
+                sorting: false
+            },
+            creation_date: {
+                title: ememembers.translate_registrationdate,
+                visibility: 'hidden'
+            },
+            last_seen: {
+                title: ememembers.translate_last_seen,
+                visibility: 'hidden'
+            },
+            paid: {
+                title: ememembers.translate_paid,
+                visibility: 'hidden'
+            },
+            unique_nbr: {
+                title: ememembers.translate_uniquenbr,
+                visibility: 'hidden'
+            },
+            payment_date: {
+                title: ememembers.translate_paymentdate,
+                visibility: 'hidden'
+            },
+            pg: {
+                title: ememembers.translate_pg,
+                visibility: 'hidden'
+            },
+            pg_pid: {
+                title: ememembers.translate_pg_pid,
+                visibility: 'hidden'
+            },
+            payment_id: {
+                title: ememembers.translate_paymentid,
+                visibility: 'hidden'
+            },
+            reminder_date: {
+                title: ememembers.translate_lastreminder,
+                visibility: 'hidden'
+            },
+            reminder: {
+                title: ememembers.translate_nbrreminder,
+                visibility: 'hidden'
+            },
+            status: {
+                title: ememembers.translate_status,
+                visibility: 'hidden'
+            },
+            wp_user: {
+                title: ememembers.translate_wpuser,
+                sorting: false,
+                visibility: 'hidden'
+            }
+        }
         let extrafields=$('#MembersTableContainer').data('extrafields').toString().split(',');
         let extrafieldnames=$('#MembersTableContainer').data('extrafieldnames').toString().split(',');
         let extrafieldsearchable=$('#MembersTableContainer').data('extrafieldsearchable').toString().split(',');
@@ -218,8 +192,25 @@ jQuery(document).ready(function ($) {
                 ]
             },
             actions: {
-                listAction: ajaxurl+'?action=eme_members_list&eme_admin_nonce='+ememembers.translate_adminnonce
+                listAction: ajaxurl
             },
+            listQueryParams: function () {
+                let params = {
+                    'action': "eme_members_list",
+                    'eme_admin_nonce': ememembers.translate_adminnonce,
+                    'search_person': $('#search_person').val(),
+                    'search_memberstatus': $('#search_memberstatus').val(),
+                    'search_membershipids': $('#search_membershipids').val(),
+                    'search_memberid': $('#search_memberid').val(),
+                    'search_paymentid': $('#search_paymentid').val(),
+                    'search_pg_pid': $('#search_pg_pid').val(),
+                    'search_customfields': $('#search_customfields').val(),
+                    'search_customfieldids': $('#search_customfieldids').val(),
+                    'search_exactmatch': exactmatch
+                }
+                return params;
+            },
+
             fields: memberfields
         });
         let exactmatch;
@@ -228,20 +219,36 @@ jQuery(document).ready(function ($) {
         } else {
             exactmatch = 0;
         }
-        $('#MembersTableContainer').jtable('load', {
-            'search_person': $('#search_person').val(),
-            'search_memberstatus': $('#search_memberstatus').val(),
-            'search_membershipids': $('#search_membershipids').val(),
-            'search_memberid': $('#search_memberid').val(),
-            'search_paymentid': $('#search_paymentid').val(),
-            'search_pg_pid': $('#search_pg_pid').val(),
-            'search_customfields': $('#search_customfields').val(),
-            'search_customfieldids': $('#search_customfieldids').val(),
-            'search_exactmatch': exactmatch
-        });
+        $('#MembersTableContainer').jtable('load');
     }
 
     if ($('#MembershipsTableContainer').length) {
+        let membershipfields = {
+            membership_id: {
+                key: true,
+                title: ememembers.translate_id,
+                visibility: 'hidden'
+            },
+            name: {
+                title: ememembers.translate_name
+            },
+            status: {
+                title: ememembers.translate_status,
+                visibility: 'hidden',
+                sorting: false
+            },
+            description: {
+                title: ememembers.translate_description
+            },
+            membercount: {
+                title: ememembers.translate_membercount,
+                sorting: false
+            },
+            contact: {
+                title: ememembers.translate_contact,
+                sorting: false
+            }
+        }
         let extrafields=$('#MembershipsTableContainer').data('extrafields').toString().split(',');
         let extrafieldnames=$('#MembershipsTableContainer').data('extrafieldnames').toString().split(',');
         let extrafieldsearchable=$('#MembershipsTableContainer').data('extrafieldsearchable').toString().split(',');
@@ -301,7 +308,7 @@ jQuery(document).ready(function ($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'membership_id': idsjoined, 'action': 'eme_manage_memberships', 'do_action': do_action, 'eme_admin_nonce': ememembers.translate_adminnonce }, function(data) {
-                    $('#MembershipsTableContainer').jtable('reload');
+                    $('#MembershipsTableContainer').jtable('load');
                     $('#MembershipsActionsButton').text(ememembers.translate_apply);
                     $('#MembershipsActionsButton').prop('disabled', false);
                     $('div#memberships-message').html(data.htmlmessage);
@@ -389,7 +396,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#MembersTableContainer').jtable('reload');
+                    $('#MembersTableContainer').jtable('load');
                     $('#MembersActionsButton').text(ememembers.translate_apply);
                     $('#MembersActionsButton').prop('disabled', false);
                     $('div#members-message').html(data.htmlmessage);
@@ -411,17 +418,7 @@ jQuery(document).ready(function ($) {
         } else {
             exactmatch = 0;
         }
-        $('#MembersTableContainer').jtable('load', {
-            'search_person': $('#search_person').val(),
-            'search_memberstatus': $('#search_memberstatus').val(),
-            'search_membershipids': $('#search_membershipids').val(),
-            'search_memberid': $('#search_memberid').val(),
-            'search_paymentid': $('#search_paymentid').val(),
-            'search_pg_pid': $('#search_pg_pid').val(),
-            'search_customfields': $('#search_customfields').val(),
-            'search_customfieldids': $('#search_customfieldids').val(),
-            'search_exactmatch': exactmatch
-        });
+        $('#MembersTableContainer').jtable('load');
         if ($('#search_person').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_memberid').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
             $('#StoreQueryButton').show();
         } else {

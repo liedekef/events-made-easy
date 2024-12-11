@@ -60,6 +60,7 @@ THE SOFTWARE.
             saveUserPreferences: true,
             jqueryuiTheme: false,
             unAuthorizedRequestRedirectUrl: null,
+            listQueryParams: function () { },
 
             ajaxSettings: {
                 type: 'POST',
@@ -391,8 +392,9 @@ THE SOFTWARE.
 
         /* Loads data using AJAX call, clears table and fills with new data.
         *************************************************************************/
-        load: function (postData, completeCallback) {
-            this._lastPostData = postData;
+        load: function (completeCallback) {
+            this._lastPostData = this.options.listQueryParams();
+	    console.log(this._lastPostData);
             this._reloadTable(completeCallback);
         },
 

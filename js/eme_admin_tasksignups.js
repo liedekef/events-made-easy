@@ -31,6 +31,22 @@ jQuery(document).ready( function($) {
             listAction: ajaxurl+'?action=eme_task_signups_list&eme_admin_nonce='+emetasks.translate_adminnonce,
             deleteAction: ajaxurl+'?action=eme_manage_task_signups&do_action=deleteTaskSignups&eme_admin_nonce='+emetasks.translate_adminnonce
         },
+        listQueryParams: function () {
+            let params = {
+                'action': "eme_task_signups_list",
+                'eme_admin_nonce': emetasks.translate_adminnonce,
+                'search_name': $('#search_name').val(),
+                'search_event': $('#search_event').val(),
+                'search_eventid': $('#search_eventid').val(),
+                'search_person': $('#search_person').val(),
+                'search_scope': $('#search_scope').val(),
+                'search_start_date': $('#search_start_date').val(),
+                'search_end_date': $('#search_end_date').val(),
+                'search_signup_status': $('#search_signup_status').val()
+            }
+            return params;
+        },
+
         fields: {
             id: {
                 key: true,
@@ -72,16 +88,7 @@ jQuery(document).ready( function($) {
     });
 
     if ($('#TaskSignupsTableContainer').length) {
-        $('#TaskSignupsTableContainer').jtable('load', {
-            'search_name': $('#search_name').val(),
-            'search_event': $('#search_event').val(),
-            'search_eventid': $('#search_eventid').val(),
-            'search_person': $('#search_person').val(),
-            'search_scope': $('#search_scope').val(),
-            'search_start_date': $('#search_start_date').val(),
-            'search_end_date': $('#search_end_date').val(),
-            'search_signup_status': $('#search_signup_status').val()
-        });
+        $('#TaskSignupsTableContainer').jtable('load');
     }
 
     function updateShowHideStuff () {
@@ -129,7 +136,7 @@ jQuery(document).ready( function($) {
                 }
 
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_task_signups', 'send_mail': send_mail, 'do_action': do_action, 'eme_admin_nonce': emetasks.translate_adminnonce }, function(data) {
-                    $('#TaskSignupsTableContainer').jtable('reload');
+                    $('#TaskSignupsTableContainer').jtable('load');
                     $('#TaskSignupsActionsButton').text(emetasks.translate_apply);
                     $('div#tasksignups-message').html(data.htmlmessage);
                     $('div#tasksignups-message').show();
@@ -144,16 +151,7 @@ jQuery(document).ready( function($) {
     // Re-load records when user click 'load records' button.
     $('#TaskSignupsLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#TaskSignupsTableContainer').jtable('load', {
-            'search_name': $('#search_name').val(),
-            'search_event': $('#search_event').val(),
-            'search_eventid': $('#search_eventid').val(),
-            'search_person': $('#search_person').val(),
-            'search_scope': $('#search_scope').val(),
-            'search_start_date': $('#search_start_date').val(),
-            'search_end_date': $('#search_end_date').val(),
-            'search_signup_status': $('#search_signup_status').val()
-        });
+        $('#TaskSignupsTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

@@ -14,7 +14,7 @@ jQuery(document).ready( function($) {
                 data.deleteConfirmMessage = emetemplates.translate_pressdeletetoremove + ' "' + data.record.name + '"';
             },
             actions: {
-                listAction: ajaxurl+'?action=eme_templates_list&eme_admin_nonce='+emetemplates.translate_adminnonce,
+                listAction: ajaxurl,
                 deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&eme_admin_nonce='+emetemplates.translate_adminnonce
             },
             listQueryParams: function () {

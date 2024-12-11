@@ -111,7 +111,7 @@ jQuery(document).ready(function ($) {
                 ]
             },
             actions: {
-                listAction: ajaxurl+'?action=eme_locations_list&eme_admin_nonce='+emelocations.translate_adminnonce
+                listAction: ajaxurl
             },
             listQueryParams: function () {
                 let params = {

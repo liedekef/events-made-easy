@@ -28,7 +28,7 @@ jQuery(document).ready( function($) {
             data.deleteConfirmMessage = emetasks.translate_pressdeletetoremove;
         },
         actions: {
-            listAction: ajaxurl+'?action=eme_task_signups_list&eme_admin_nonce='+emetasks.translate_adminnonce,
+            listAction: ajaxurl,
             deleteAction: ajaxurl+'?action=eme_manage_task_signups&do_action=deleteTaskSignups&eme_admin_nonce='+emetasks.translate_adminnonce
         },
         listQueryParams: function () {

@@ -6035,7 +6035,7 @@ function eme_events_table( $message = '' ) {
 	<?php
 	if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ) :
 		?>
-	<div>
+	<div id="bulkactions">
 	<form action="#" method="post">
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
@@ -6060,7 +6060,7 @@ function eme_events_table( $message = '' ) {
 		<?php echo eme_ui_select_key_value( '', 'addtocategory', $categories, 'category_id', 'category_name', __( 'Please select a category', 'events-made-easy' ), 1 ); ?>
 	</span>
 	<button id="EventsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>
@@ -6144,6 +6144,8 @@ function eme_recurrences_table( $message = '' ) {
 	<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
 	<button id="RecurrencesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter recurrences', 'events-made-easy' ); ?></button>
 	</form>
+    <br>
+    <div id="bulkactions">
 	<form action="#" method="post">
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
@@ -6160,10 +6162,11 @@ function eme_recurrences_table( $message = '' ) {
 	<input id="eme_localized_rec_new_end_date" type="text" name="eme_localized_rec_new_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='rec_new_end_date' class='eme_formfield_fdate'>
 	</span>
 	<button id="RecurrencesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>
+    </div>
 	<div id="RecurrencesTableContainer"></div>
 </div>
 </div>
@@ -9572,6 +9575,8 @@ function eme_admin_enqueue_js() {
 		wp_enqueue_style( 'eme-jquery-ui-css' );
 		wp_enqueue_style( 'eme-jquery-jtable-css' );
 		wp_enqueue_style( 'eme-jtables-css' );
+        // wp_enqueue_style( 'eme-tabulator-css' );
+        // wp_enqueue_style( 'eme-datatables-css' );
 		wp_enqueue_style( 'eme-jquery-select2-css' );
 		if ( wp_script_is( 'eme-jtable-locale', 'registered' ) ) {
 			wp_enqueue_script( 'eme-jtable-locale' );
@@ -10135,17 +10140,21 @@ function eme_ajax_events_list() {
     // the following code is to support both jtable and datatables
     // TODO: once switched to datatables part can be removed
     // we can't use the function eme_get_datatables_limit, since the "limit" and "offset" parts can be used separately
-    $StartIndex = 0;
-    if ( isset( $_REQUEST['jtStartIndex'] ) ) {
-        $StartIndex = intval( $_REQUEST['jtStartIndex'] );
-    } elseif ( isset( $_REQUEST['start'] ) ) {
-        $StartIndex = intval( $_REQUEST['start'] );
-    }
     $PageSize = 0;
     if ( isset( $_REQUEST['jtPageSize'] ) ) {
         $PageSize = intval( $_REQUEST['jtPageSize'] );
     } elseif ( isset( $_REQUEST['length'] ) ) {
         $PageSize = intval( $_REQUEST['length'] );
+    } elseif ( isset( $_REQUEST['size'] ) ) {
+        $PageSize = intval( $_REQUEST['size'] ); 
+    }
+    $StartIndex = 0;
+    if ( isset( $_REQUEST['jtStartIndex'] ) ) {
+        $StartIndex = intval( $_REQUEST['jtStartIndex'] );
+    } elseif ( isset( $_REQUEST['start'] ) ) {
+        $StartIndex = intval( $_REQUEST['start'] );
+    } elseif ( isset( $_REQUEST['page'] ) ) {
+        $StartIndex = (intval( $_REQUEST['page'] )-1)*$PageSize;
     }
 	$orderby           = eme_get_datatables_orderby() ?: 'ASC';
 	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'future';
@@ -10474,7 +10483,9 @@ function eme_ajax_events_list() {
 				$record['recinfo'] .= __( 'Edit Recurrence', 'events-made-easy' );
 				$record['recinfo'] .= '</a>';
 			}
-		}
+        } else {
+            $record['recinfo'] = '';
+        }
 
 		$event_cf_values = eme_get_event_answers( $event['event_id'] );
 		foreach ( $formfields as $formfield ) {
@@ -10510,6 +10521,14 @@ function eme_ajax_events_list() {
 	$ajaxResult['TotalRecordCount'] = $events_count;
     $ajaxResult['recordsTotal']     = $events_count;
     $ajaxResult['recordsFiltered']  = $events_count;
+    // for tabulator
+    /*
+        if ($PageSize>0) {
+                $ajaxResult['TotalPages'] = ceil($events_count/$PageSize);
+        } else {        
+                $ajaxResult['TotalPages'] = 1;
+        }
+     */
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }

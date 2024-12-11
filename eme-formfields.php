@@ -224,6 +224,7 @@ function eme_formfields_table_layout( $message = '' ) {
 	<button id="FormfieldsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter fields', 'events-made-easy' ); ?></button>
 	</form>
 
+    <div id="bulkactions">
 	<form id='formfields-form' action="#" method="post">
 	<?php echo $nonce_field; ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -231,10 +232,11 @@ function eme_formfields_table_layout( $message = '' ) {
 	<option value="deleteFormfields"><?php esc_html_e( 'Delete selected fields', 'events-made-easy' ); ?></option>
 	</select>
 	<button id="FormfieldsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>
+    </div>
 	<div id="FormfieldsTableContainer"></div>
 	</div>
 	</div>

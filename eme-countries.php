@@ -370,6 +370,7 @@ function eme_manage_countries_layout( $message = '' ) {
 	<br>
 	<?php } ?>
 	<br>
+    <div id="bulkactions">
 	<form id='countries-form' action="#" method="post">
 	<?php echo $nonce_field; ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -377,12 +378,13 @@ function eme_manage_countries_layout( $message = '' ) {
 	<option value="deleteCountries"><?php esc_html_e( 'Delete selected countries', 'events-made-easy' ); ?></option>
 	</select>
 	<button id="CountriesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
-	<div id="CountriesTableContainer"></div>
 	</form>
-		</div> 
+    </div>
+	<div id="CountriesTableContainer"></div>
+	</div> 
 	</div>
 	<?php
 }
@@ -441,6 +443,7 @@ function eme_manage_states_layout( $message = '' ) {
 	<br>
 	<?php } ?>
 	<br>
+    <div id="bulkactions">
 	<form id='states-form' action="#" method="post">
 	<?php echo $nonce_field; ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -448,11 +451,12 @@ function eme_manage_states_layout( $message = '' ) {
 	<option value="deleteStates"><?php esc_html_e( 'Delete selected states', 'events-made-easy' ); ?></option>
 	</select>
 	<button id="StatesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-	</span>
-	<div id="StatesTableContainer"></div>
+    </span>
 	</form>
+    </div>
+	<div id="StatesTableContainer"></div>
 	</div> 
 	</div>
 	<?php

@@ -137,9 +137,11 @@ function eme_attendances_table_layout( $message = '' ) {
 	<button id="AttendancesLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter attendances', 'events-made-easy' ); ?></button>
 	</form>
 
-	<span class="rightclickhint">
+    <div id="bulkactions">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
+    </div>
 	<div id="AttendancesTableContainer"></div>
 	</div>
 	</div>

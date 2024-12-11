@@ -5185,7 +5185,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	<button id="BookingsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter bookings', 'events-made-easy' ); ?></button>
 	</form>
 	</div>
-	<div>
+    <div id="bulkactions">
 	<form id="eme-admin-regform" name="eme-admin-regform" action="#" method="post">
 	<select name="eme_admin_action" id="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
@@ -5268,7 +5268,7 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	<?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
 	</span>
 	<button id="BookingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>

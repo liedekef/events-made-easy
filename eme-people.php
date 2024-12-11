@@ -1791,6 +1791,7 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
 	?>
 	</form>
 
+    <div id="bulkactions">
 	<form id='people-form' action="#" method="post">
 	<?php echo $nonce_field; ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -1845,10 +1846,11 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
 	<?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
 	</span>
 	<button id="PeopleActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>
+	</div>
 	<?php
 	$formfields               = eme_get_formfields( '', 'people' );
 	$extrafields_arr          = [];
@@ -2642,6 +2644,7 @@ function eme_manage_groups_layout( $message = '' ) {
 
 	<h1><?php esc_html_e( 'Manage groups', 'events-made-easy' ); ?></h1>
 
+    <div id="bulkactions">
 	<form id='groups-form' action="#" method="post">
 	<?php echo $nonce_field; ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -2651,11 +2654,12 @@ function eme_manage_groups_layout( $message = '' ) {
 <?php endif; ?>
 	</select>
 	<button id="GroupsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
-	<div id="GroupsTableContainer"></div>
 	</form>
+	</div>
+	<div id="GroupsTableContainer"></div>
 	</div>
 	</div>
 	<?php

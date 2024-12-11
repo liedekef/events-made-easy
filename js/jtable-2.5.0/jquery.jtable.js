@@ -4629,7 +4629,7 @@ THE SOFTWARE.
                 var $columnLi = $('<li></li>').appendTo($columnsUl);
 
                 //Create label for the checkbox
-                var $label = $('<label for="' + columnName + '"></label>')
+                var $label = $('<label></label>')
                     .append($('<span>' + (field.title || columnName) + '</span>'))
                     .appendTo($columnLi);
 

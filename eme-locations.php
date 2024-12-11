@@ -891,6 +891,7 @@ function eme_locations_table( $message = '' ) {
 ?>
     </form>
 
+    <div id="bulkactions">
     <form action="#" method="post">
     <?php echo $nonce_field; ?>
     <select id="eme_admin_action" name="eme_admin_action">
@@ -903,9 +904,11 @@ function eme_locations_table( $message = '' ) {
     <input type='text' id='chooselocation' name='chooselocation' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>">
     </span>
     <button id="LocationsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
+    <span class="rightclickhint" id="colvis">
         <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
     </span>
+    </form>
+    </div>
 <?php
     $formfields               = eme_get_formfields( '', 'locations' );
     $extrafields_arr          = [];
@@ -922,7 +925,6 @@ function eme_locations_table( $message = '' ) {
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
     <div id="LocationsTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>' ></div>
-    </form>
     </div>
     </div>
 

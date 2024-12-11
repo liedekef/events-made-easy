@@ -475,6 +475,7 @@ function eme_task_signups_table_layout( $message = '' ) {
 	<?php } ?>
 	</form>
 
+    <div id="bulkactions">
 	<form id='task-signups-form' action="#" method="post">
 	<?php echo $nonce_field; ?>
 	<select id="eme_admin_action" name="eme_admin_action">
@@ -491,10 +492,11 @@ function eme_task_signups_table_layout( $message = '' ) {
         ?>
         </span>
 	<button id="TaskSignupsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
+	<span class="rightclickhint" id="colvis">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>
+	</div>
 	<div id="TaskSignupsTableContainer"></div>
 	</div>
 	</div>

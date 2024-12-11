@@ -407,12 +407,6 @@ div.dt-length select.dt-input {
     background: #AAF5F3 !important;
 }
 
-/* jtable fix so the footer doesn't overlap with the table in some browsers */
-.jtable-main-container {
-	float: left;
-	width: 100%;
-}
-
 /* clear X */
 .clearable{
 	background: url(../images/x.gif) no-repeat right -10px center;
@@ -668,6 +662,10 @@ details.eme_accordion > div, details.eme_accordion > p {
 	background: #f0f0f0;
 }
 
+#bulkactions {
+    display: grid;
+    padding-top: 5px;
+}
 /* for some fields, only works in chrome for now
  * see https://developer.chrome.com/docs/css-ui/css-field-sizing
  * */
@@ -681,7 +679,17 @@ details.eme_accordion > div, details.eme_accordion > p {
     white-space: nowrap;
     display:inline;
 }
+
+/* jtable fix so the footer doesn't overlap with the table in some browsers */
+.jtable-main-container {
+	float: left;
+	width: 100%;
+}
 /* ui override */
 .jtable-data-row a {
     color: #0073aa !important;
+}
+table.jtable.ui-widget-content {
+    display: block;
+    overflow-x:auto;
 }

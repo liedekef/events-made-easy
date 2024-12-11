@@ -2874,6 +2874,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
 ?>
     </form>
 
+    <div id="bulkactions">
     <form id='members-form' action="#" method="post">
     <?php echo $nonce_field; ?>
     <select id="eme_admin_action" name="eme_admin_action">
@@ -2919,10 +2920,11 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     <?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
     </span>
     <button id="MembersActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
+    <span class="rightclickhint" id="colvis">
         <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
     </span>
     </form>
+    </div>
 <?php
     $extrafields_arr          = [];
     $extrafieldnames_arr      = [];
@@ -3306,6 +3308,7 @@ function eme_manage_memberships_layout( $message ) {
 
     <h1><?php esc_html_e( 'Manage memberships', 'events-made-easy' ); ?></h1>
 
+    <div id="bulkactions">
     <form id='memberships-form' action="#" method="post">
     <?php echo $nonce_field; ?>
     <select id="eme_admin_action" name="eme_admin_action">
@@ -3316,9 +3319,11 @@ function eme_manage_memberships_layout( $message ) {
     <?php endif; ?>
     </select>
     <button id="MembershipsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
+    <span class="rightclickhint" id="colvis">
     <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-    </span><br>
+    </span>
+    </form>
+    </div>
 <?php
     $formfields               = eme_get_formfields( '', 'memberships' );
     $extrafields_arr          = [];
@@ -3334,7 +3339,6 @@ function eme_manage_memberships_layout( $message ) {
     $extrafieldnames      = join( ',', $extrafieldnames_arr );
     $extrafieldsearchable = join( ',', $extrafieldsearchable_arr );
 ?>
-    </form>
     <div id="MembershipsTableContainer" data-extrafields='<?php echo $extrafields; ?>' data-extrafieldnames='<?php echo $extrafieldnames; ?>' data-extrafieldsearchable='<?php echo $extrafieldsearchable; ?>'></div>
     </div>
     </div>

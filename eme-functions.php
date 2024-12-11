@@ -4120,6 +4120,11 @@ function eme_get_datatables_limit() {
     } elseif (isset( $_REQUEST['start'] ) ) {
         // for datatables
         $limit = ' LIMIT ' . intval( $_REQUEST['start'] ?: 0 ) . ',' . intval( $_REQUEST['length'] ?: 10 );
+    } elseif (isset( $_REQUEST['page'] ) ) {
+        // for tabulator
+        $size = intval( $_REQUEST['size'] );
+        $start = (intval( $_REQUEST['page'] ) -1 ) * $size;
+        $limit = " LIMIT $start, $size ";
     }
     return $limit;
 }

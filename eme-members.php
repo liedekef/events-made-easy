@@ -2936,7 +2936,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     }
     foreach ( $formfields as $formfield ) {
         $extrafields_arr[]      = $formfield['field_id'];
-        $extrafieldnames_arr[]  = eme_trans_esc_html( $formfield['field_name'] );
+        $extrafieldnames_arr[]  = str_replace(',','&sbquo;',eme_trans_esc_html( $formfield['field_name'] ));
         $extrafieldsearchable_arr[] = $formfield['searchable'];
     }
     // these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns
@@ -3329,7 +3329,7 @@ function eme_manage_memberships_layout( $message ) {
     $extrafieldsearchable_arr = [];
     foreach ( $formfields as $formfield ) {
         $extrafields_arr[]          = $formfield['field_id'];
-        $extrafieldnames_arr[]      = eme_trans_esc_html( $formfield['field_name'] );
+        $extrafieldnames_arr[]      = str_replace(',','&sbquo;',eme_trans_esc_html( $formfield['field_name'] ));
         $extrafieldsearchable_arr[] = $formfield['searchable'];
     }
     // these 2 values are used as data-fields to the container-div, and are used by the js to create extra columns

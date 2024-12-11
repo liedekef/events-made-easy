@@ -273,18 +273,14 @@ jQuery(document).ready(function ($) {
                     'search_pg_pid': $('#search_pg_pid').val(),
                     'search_start_date': $('#search_start_date').val(),
                     'search_end_date': $('#search_end_date').val(),
-                    'event_id': $('#event_id').val(),
-                    'person_id': $_GET['person_id']
+                    'event_id': $('#event_id').val()
                 }
                 return params;
             },
             fields: rsvpfields
         });
 
-        // Only in the initial load we take a possible person id in the url into account
-        // This person id can come from the eme_people page when clicking on "view all bookings"
         $('#BookingsTableContainer').jtable('load');
-        $_GET['person_id']=0;
     }
 
     function updateShowHideStuff() {

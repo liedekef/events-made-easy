@@ -2168,9 +2168,7 @@ function eme_manage_people_layout( $message = '' ) {
 			<?php esc_html_e( 'If you want, use this to import people info into the database', 'events-made-easy' ); ?>
 		</form>
 		</div>
-		<br>
 		<?php } ?>
-		<br>
 	<?php } ?>
 
 	<?php 

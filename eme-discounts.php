@@ -430,12 +430,10 @@ function eme_manage_discounts_layout( $message = '' ) {
 	<input required="required" type="text" size=1 maxlength=1 name="enclosure" value='"'>
 	<input type="hidden" name="eme_admin_action" value="do_importdiscounts">
 	<input type="submit" value="<?php esc_html_e( 'Import', 'events-made-easy' ); ?>" name="doaction" id="doaction" class="button-primary action">
-		<?php esc_html_e( 'If you want, use this to import discounts into the database', 'events-made-easy' ); ?>
+	<?php esc_html_e( 'If you want, use this to import discounts into the database', 'events-made-easy' ); ?>
 	</form>
 	</div>
-	<br>
 	<?php } ?>
-	<br>
     <div id="bulkactions">
 	<form id='discounts-form' action="#" method="post">
 	<?php echo $nonce_field; ?>
@@ -520,9 +518,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 		<?php esc_html_e( 'If you want, use this to import discountgroups into the database', 'events-made-easy' ); ?>
 	</form>
 	</div>
-	<br>
 	<?php } ?>
-	<br>
     <div id="bulkactions">
 	<form id='discountgroups-form' action="#" method="post">
 	<?php echo $nonce_field; ?>

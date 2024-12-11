@@ -662,6 +662,10 @@ details.eme_accordion > div, details.eme_accordion > p {
 	background: #f0f0f0;
 }
 
+div#div_import {
+    padding-bottom: 5px;
+}
+
 #bulkactions {
     display: grid;
     padding-top: 5px;

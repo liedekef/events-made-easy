@@ -4920,13 +4920,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 		}
 	}
 
-	// now show the menu
-	if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) {
-		$trash = 1;
-	} else {
-		$trash = 0;
-	}
-	eme_registration_seats_form_table( $pending, $trash );
+	eme_registration_seats_form_table( $pending );
 }
 
 function eme_import_csv_payments() {
@@ -5049,7 +5043,7 @@ function eme_import_csv_payments() {
 	return $result;
 }
 
-function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
+function eme_registration_seats_form_table( $pending = 0 ) {
 	global $plugin_page;
 
 	$scope_names           = [];
@@ -5072,10 +5066,10 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 </div>
 <h1>
 	<?php
-	if ( isset( $_GET['person_id'] ) ) {
-		$person_id = intval( $_GET['person_id'] );
+	if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) {
+		$trash = 1;
 	} else {
-		$person_id = 0;
+		$trash = 0;
 	}
 	if ( isset( $_GET['event_id'] ) ) {
 		$event_id = intval( $_GET['event_id'] );
@@ -5140,8 +5134,8 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 	}
 
 	echo "<input type='hidden' name='event_id' id='event_id' value='$event_id'>";
-	if ( ! $event_id && ! $person_id ) {
-		// if eitherr event id or person id is passed via GET, we ignore the scope, so let's hide the selection too
+	if ( ! $event_id ) {
+		// if event id is passed via GET, we ignore the scope, so let's hide the selection too
 		?>
 		<select id='scope' name='scope'>
 		<?php
@@ -5169,14 +5163,16 @@ function eme_registration_seats_form_table( $pending = 0, $trash = 0 ) {
 		<input id="search_start_date" type="hidden" name="search_start_date" value="">
 		<input id="eme_localized_search_end_date" type="text" name="eme_localized_search_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Filter on end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='search_end_date' class='eme_formfield_fdate eme_searchfilter'>
 		<input id="search_end_date" type="hidden" name="search_end_date" value="">
+        <a onclick='return false;' href='#'  class="showhidebutton" alt="show/hide" data-showhide="extra_searchfields"><?php esc_html_e( 'Show/hide extra filters', 'events-made-easy' ); ?></a>
+	    <div id="extra_searchfields" style="display:none;">
 		<?php
-	}
+    } else {
+	    ?>
+	    <div id="extra_searchfields">
+		<?php
+    }
 	?>
-	<a onclick='return false;' href='#'  class="showhidebutton" alt="show/hide" data-showhide="extra_searchfields"><?php esc_html_e( 'Show/hide extra filters', 'events-made-easy' ); ?></a>
-	<div id="extra_searchfields" style="display:none;">
-	<?php if ( ! $person_id ) : ?>
 	<input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Filter on person', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
-<?php endif; ?>
 	<input type="search" name="search_customfields" id="search_customfields" placeholder="<?php esc_attr_e( 'Filter on custom field answer', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
 	<input type="search" name="search_unique" id="search_unique" placeholder="<?php esc_attr_e( 'Filter on unique nbr', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
 	<input type="search" name="search_paymentid" id="search_paymentid" placeholder="<?php esc_attr_e( 'Filter on payment id', 'events-made-easy' ); ?>" <?php if (isset($_GET['paymentid'])) esc_attr_e(intval($_GET['paymentid'])); else echo ''; ?> class='eme_searchfilter' size=15>
@@ -5520,7 +5516,6 @@ function eme_ajax_bookings_list() {
 	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_end_date']) ) : '';
 	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'future';
 	$category          = isset( $_REQUEST['category'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['category'] ) ) : '';
-	$person_id         = isset( $_REQUEST['person_id'] ) ? intval( $_REQUEST['person_id'] ) : 0;
 	$event_id          = isset( $_REQUEST['event_id'] ) ? intval( $_REQUEST['event_id'] ) : 0;
 	if ( isset( $_REQUEST['trash'] ) && $_REQUEST['trash'] == 1 ) {
 				$trash = 1;
@@ -5655,11 +5650,6 @@ function eme_ajax_bookings_list() {
 	}
 	if ( ! empty( $search_pg_pid ) ) {
 		$where_arr[] = "pg_pid like '%$search_pg_pid%'";
-		// for this search, don't limit the scope
-		$scope = 'all';
-	}
-	if ( ! empty( $person_id ) ) {
-		$where_arr[] = "bookings.person_id=$person_id";
 		// for this search, don't limit the scope
 		$scope = 'all';
 	}

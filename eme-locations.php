@@ -865,7 +865,6 @@ function eme_locations_table( $message = '' ) {
         </form>
         </div>
         <?php } ?>
-        <br>
 
     <form action="#" method="post">
     <input type="search" name="search_name" id="search_name" placeholder="<?php esc_attr_e( 'Location name', 'events-made-easy' ); ?>" class="eme_searchfilter" size=10>

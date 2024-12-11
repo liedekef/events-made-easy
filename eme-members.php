@@ -3264,9 +3264,7 @@ function eme_manage_members_layout( $message ) {
     <?php esc_html_e( 'Once you finished importing members, use this to import dynamic field answers into the database', 'events-made-easy' ); ?>
     </form>
     </div>
-    <br>
     <?php } ?>
-    <br>
 
 <?php
     eme_render_member_table_and_filters();

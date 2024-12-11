@@ -5963,7 +5963,6 @@ function eme_events_table( $message = '' ) {
 		</form>
 		</div>
 		<?php } ?>
-		<br>
 	<?php } ?>
 
 	<div>

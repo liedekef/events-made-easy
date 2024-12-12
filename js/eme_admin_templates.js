@@ -95,6 +95,7 @@ jQuery(document).ready( function($) {
         return false;
     });
 
+    let pdfsize_name = 'properties[pdf_size]';
     function updateShowHideStuff () {
         if ($('select#type').val() == 'pdf') {
             $('table#pdf_properties').show();
@@ -102,7 +103,6 @@ jQuery(document).ready( function($) {
             $('table#pdf_properties').hide();
         }
         // because the fieldname contains a '[' we do it a bit differently
-        let pdfsize_name = 'properties[pdf_size]';
         if ($('select[name="' + pdfsize_name + '"]').val() == 'custom') {
             $('tr.template-pdf-custom').show();
         } else {

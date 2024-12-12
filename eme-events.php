@@ -10136,24 +10136,24 @@ function eme_ajax_events_list() {
 	}
 	$wp_id = get_current_user_id();
 
-    // the following code is to support both jtable and datatables
-    // TODO: once switched to datatables part can be removed
     // we can't use the function eme_get_datatables_limit, since the "limit" and "offset" parts can be used separately
     $PageSize = 0;
-    if ( isset( $_REQUEST['jtPageSize'] ) ) {
-        $PageSize = intval( $_REQUEST['jtPageSize'] );
-    } elseif ( isset( $_REQUEST['length'] ) ) {
-        $PageSize = intval( $_REQUEST['length'] );
-    } elseif ( isset( $_REQUEST['size'] ) ) {
-        $PageSize = intval( $_REQUEST['size'] ); 
+    if ( isset( $_POST['jtPageSize'] ) ) {
+        // for jtable
+        $PageSize = intval( $_POST['jtPageSize'] );
+    //} elseif ( isset( $_REQUEST['length'] ) ) {
+        // for datatables
+    //    $PageSize = intval( $_REQUEST['length'] );
+    //} elseif ( isset( $_REQUEST['size'] ) ) {
+    //    $PageSize = intval( $_REQUEST['size'] ); 
     }
     $StartIndex = 0;
-    if ( isset( $_REQUEST['jtStartIndex'] ) ) {
-        $StartIndex = intval( $_REQUEST['jtStartIndex'] );
-    } elseif ( isset( $_REQUEST['start'] ) ) {
-        $StartIndex = intval( $_REQUEST['start'] );
-    } elseif ( isset( $_REQUEST['page'] ) ) {
-        $StartIndex = (intval( $_REQUEST['page'] )-1)*$PageSize;
+    if ( isset( $_POST['jtStartIndex'] ) ) {
+        $StartIndex = intval( $_POST['jtStartIndex'] );
+    //} elseif ( isset( $_REQUEST['start'] ) ) {
+    //    $StartIndex = intval( $_REQUEST['start'] );
+    //} elseif ( isset( $_REQUEST['page'] ) ) {
+    //    $StartIndex = (intval( $_REQUEST['page'] )-1)*$PageSize;
     }
 	$orderby           = eme_get_datatables_orderby() ?: 'ASC';
 	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'future';

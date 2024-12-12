@@ -4115,16 +4115,16 @@ function eme_get_selected_captcha($properties) {
 
 function eme_get_datatables_limit() {
     $limit = '';
-    if ( isset( $_REQUEST['jtStartIndex'] ) ) {
-        $limit = ' LIMIT ' . intval( $_REQUEST['jtStartIndex'] ?: 0 ) . ',' . intval( $_REQUEST['jtPageSize'] ?: 10 );
-    } elseif (isset( $_REQUEST['start'] ) ) {
+    if ( isset( $_POST['jtStartIndex'] ) ) {
+        $limit = ' LIMIT ' . intval( $_POST['jtStartIndex'] ?: 0 ) . ',' . intval( $_POST['jtPageSize'] ?: 10 );
+    //} elseif (isset( $_REQUEST['start'] ) ) {
         // for datatables
-        $limit = ' LIMIT ' . intval( $_REQUEST['start'] ?: 0 ) . ',' . intval( $_REQUEST['length'] ?: 10 );
-    } elseif (isset( $_REQUEST['page'] ) ) {
+    //    $limit = ' LIMIT ' . intval( $_REQUEST['start'] ?: 0 ) . ',' . intval( $_REQUEST['length'] ?: 10 );
+    //} elseif (isset( $_REQUEST['page'] ) ) {
         // for tabulator
-        $size = intval( $_REQUEST['size'] );
-        $start = (intval( $_REQUEST['page'] ) -1 ) * $size;
-        $limit = " LIMIT $start, $size ";
+    //    $size = intval( $_REQUEST['size'] );
+    //    $start = (intval( $_REQUEST['page'] ) -1 ) * $size;
+    //    $limit = " LIMIT $start, $size ";
     }
     return $limit;
 }
@@ -4140,6 +4140,7 @@ function eme_get_datatables_orderby($preferred_sorting='') {
             } 
         }
         return $orderby;
+/*
     } elseif ( isset( $_REQUEST['order'] ) ) {
         $request = eme_sanitize_request($_REQUEST);
         $order = '';
@@ -4172,6 +4173,7 @@ function eme_get_datatables_orderby($preferred_sorting='') {
             }
         }
         return $order;
+*/
     }
     return '';
 }

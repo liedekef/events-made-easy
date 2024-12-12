@@ -79,23 +79,23 @@ jQuery(document).ready( function($) {
         weekdays = (typeof weekdays == 'undefined')? '' : weekdays;
         language = (typeof language == 'undefined')? '' : language;
         $.post(emebasic.translate_ajax_url, {
-            eme_frontend_nonce: emebasic.translate_frontendnonce,
-            action: 'eme_calendar',
-            calmonth: parseInt(month,10),
-            calyear: parseInt(year,10),
-            full : fullcalendar,
-            long_events: showlong_events,
-            htmltable: htmltable,
-            htmldiv: htmldiv,
-            category: cat_chosen,
-            notcategory: not_cat_chosen,
-            author: author_chosen,
-            contact_person: contact_person_chosen,
-            location_id: location_chosen,
-            template_id: template_chosen,
-            holiday_id: holiday_chosen,
-            weekdays: weekdays,
-            lang: language
+            'eme_frontend_nonce': emebasic.translate_frontendnonce,
+            'action': 'eme_calendar',
+            'calmonth': parseInt(month,10),
+            'calyear': parseInt(year,10),
+            'full': fullcalendar,
+            'long_events': showlong_events,
+            'htmltable': htmltable,
+            'htmldiv': htmldiv,
+            'category': cat_chosen,
+            'notcategory': not_cat_chosen,
+            'author': author_chosen,
+            'contact_person': contact_person_chosen,
+            'location_id': location_chosen,
+            'template_id': template_chosen,
+            'holiday_id': holiday_chosen,
+            'weekdays': weekdays,
+            'lang': language
         }, function(data){
             $('#'+tableDiv).replaceWith(data);
             // replaceWith removes all event handlers, so we need to re-add them

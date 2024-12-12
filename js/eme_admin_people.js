@@ -356,7 +356,7 @@ jQuery(document).ready(function ($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     $.post(ajaxurl, {'group_id': idsjoined, 'action': 'eme_manage_groups', 'do_action': do_action, 'eme_admin_nonce': emepeople.translate_adminnonce }, function(data) {
-                        $('#GroupsTableContainer').jtable('reload');
+                        $('#GroupsTableContainer').jtable('load');
                         $('#GroupsActionsButton').text(emepeople.translate_apply);
                         $('#GroupsActionsButton').prop('disabled', false);
                         if (do_action=='deleteGroups') {
@@ -435,7 +435,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#PeopleTableContainer').jtable('reload');
+                    $('#PeopleTableContainer').jtable('load');
                     $('#PeopleActionsButton').text(emepeople.translate_apply);
                     $('#PeopleActionsButton').prop('disabled', false);
                     $('div#people-message').html(data.htmlmessage);
@@ -457,15 +457,7 @@ jQuery(document).ready(function ($) {
         } else {
             exactmatch = 0;
         }
-        $('#PeopleTableContainer').jtable('load', {
-            'search_person': $('#search_person').val(),
-            'search_groups': $('#search_groups').val(),
-            'search_memberstatus': $('#search_memberstatus').val(),
-            'search_membershipids': $('#search_membershipids').val(),
-            'search_customfields': $('#search_customfields').val(),
-            'search_customfieldids': $('#search_customfieldids').val(),
-            'search_exactmatch': exactmatch
-        });
+        $('#PeopleTableContainer').jtable('load');
         if ($('#search_person').val().length || $('#search_groups').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
             $('#StoreQueryButton').show();
         } else {

@@ -262,11 +262,7 @@ jQuery(document).ready(function ($) {
     // Re-load records when user click 'load records' button.
     $('#LocationsLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#LocationsTableContainer').jtable('load', {
-            'search_name': $('#search_name').val(),
-            'search_customfields': $('#search_customfields').val(),
-            'search_customfieldids': $('#search_customfieldids').val()
-        });
+        $('#LocationsTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

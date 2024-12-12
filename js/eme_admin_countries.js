@@ -109,7 +109,7 @@
 
                  let idsjoined = ids.join(); //will be such a string '2,5,7'
                  $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_countries', 'do_action': do_action, 'eme_admin_nonce': emecountries.translate_adminnonce }, function() {
-			 $('#CountriesTableContainer').jtable('reload');
+			 $('#CountriesTableContainer').jtable('load');
 			 $('#CountriesActionsButton').text(emecountries.translate_apply);
 			 if (do_action=='deleteCountries') {
 				 $('div#countries-message').html(emecountries.translate_deleted);
@@ -142,7 +142,7 @@
 
                  let idsjoined = ids.join(); //will be such a string '2,5,7'
                  $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_states', 'do_action': do_action, 'eme_admin_nonce': emecountries.translate_adminnonce }, function() {
-			 $('#StatesTableContainer').jtable('reload');
+			 $('#StatesTableContainer').jtable('load');
 			 $('#StatesActionsButton').text(emecountries.translate_apply);
 			 if (do_action=='deleteStates') {
 				 $('div#states-message').html(emecountries.translate_deleted);

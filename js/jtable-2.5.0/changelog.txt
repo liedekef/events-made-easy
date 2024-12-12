@@ -1,0 +1,23 @@
+By Franky:
+
+- added div around the internal table
+- added listQueryParams to jtable-call, to indicate parameters to be loaded on every load-call, needs to be a function
+  Example:
+            listQueryParams: function () {
+                let params = {
+                    'action': "eme_people_list",
+                    'eme_admin_nonce': emepeople.translate_adminnonce,
+                    'trash': $_GET['trash'],
+                    'search_person': $('#search_person').val(),
+                    'search_groups': $('#search_groups').val(),
+                    'search_memberstatus': $('#search_memberstatus').val(),
+                    'search_membershipids': $('#search_membershipids').val(),
+                    'search_customfields': $('#search_customfields').val(),
+                    'search_customfieldids': $('#search_customfieldids').val(),
+                    'search_exactmatch': exactmatch
+                }
+                return params;
+            },
+  The extra param to the load-call itself will add/override params defined in
+  listQueryParams. Example:
+  $('#PeopleTableContainer').jtable('load', {'test':"eee"});

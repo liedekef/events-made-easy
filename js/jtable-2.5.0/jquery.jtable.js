@@ -402,9 +402,13 @@ THE SOFTWARE.
 
         /* Loads data using AJAX call, clears table and fills with new data.
         *************************************************************************/
-        load: function (completeCallback) {
-            this._lastPostData = this.options.listQueryParams();
-	    console.log(this._lastPostData);
+        load: function (extraPostData, completeCallback) {
+            if (extraPostData) {
+                let data1 = this.options.listQueryParams();
+                this._lastPostData = {...data1, ...extraPostData};
+            } else {
+                this._lastPostData = this.options.listQueryParams();
+            }
             this._reloadTable(completeCallback);
         },
 

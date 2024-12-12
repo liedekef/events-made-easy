@@ -463,7 +463,16 @@ jQuery(document).ready( function($) {
         selectingCheckboxes: false, //Show checkboxes on first column
         selectOnRowClick: false, //Enable this to only select using checkboxes
         actions: {
-            listAction: ajaxurl+'?action=eme_mailingreport_list&eme_admin_nonce='+emeadmin.translate_adminnonce+'&mailing_id='+$_GET['id'],
+            listAction: ajaxurl,
+        },
+        listQueryParams: function () {
+                let params = {
+                    'action': "eme_mailingreport_list",
+                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                    'mailing_id': parseInt($_GET['id']),
+                    'search_name': $('#search_name').val()
+                }
+                return params;
         },
         fields: {
             receiveremail: {
@@ -508,9 +517,7 @@ jQuery(document).ready( function($) {
     // Re-load records when user click 'load records' button.
     $('#ReportLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#MailingReportTableContainer').jtable('load', {
-            search_name: $('#search_name').val()
-        });
+        $('#MailingReportTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

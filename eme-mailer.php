@@ -1990,6 +1990,15 @@ function eme_emails_page() {
 		foreach ( $mailing_ids as $mailing_id ) {
 			eme_archive_mailing( $mailing_id );
 		}
+        $data_forced_tab = 'data-showtab="tab-mailings"';
+	}
+	if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'deleteArchivedMailings' && isset( $_POST['mailing_ids'] ) ) {
+		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+		$mailing_ids = eme_sanitize_request( $_POST['mailing_ids'] );
+		foreach ( $mailing_ids as $mailing_id ) {
+			eme_delete_mailing( $mailing_id );
+		}
+        $data_forced_tab = 'data-showtab="tab-mailingsarchive"';
 	}
 	if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'deleteMailings' && isset( $_POST['mailing_ids'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -1997,6 +2006,7 @@ function eme_emails_page() {
 		foreach ( $mailing_ids as $mailing_id ) {
 			eme_delete_mailing( $mailing_id );
 		}
+        $data_forced_tab = 'data-showtab="tab-mailings"';
 	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'reuse_mail' && isset( $_GET['id'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -2048,6 +2058,7 @@ function eme_emails_page() {
 			eme_mailing_retry_failed( $id );
 			eme_mark_mailing_ongoing( $id );
 		}
+        $data_forced_tab = 'data-showtab="tab-mailings"';
 	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'reuse_mailing' && isset( $_GET['id'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
@@ -2814,7 +2825,7 @@ function eme_mailings_archive_div() {
         <?php if ($actions_allowed) { ?>
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
-	<option value="deleteMailings"><?php esc_html_e( 'Delete selected mailings', 'events-made-easy' ); ?></option>
+	<option value="deleteArchivedMailings"><?php esc_html_e( 'Delete selected mailings', 'events-made-easy' ); ?></option>
 	</select>
 	<button id="MailingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
         <?php } ?>

@@ -378,23 +378,38 @@ THE SOFTWARE.
         /* Creates and prepares error dialog div.
         *************************************************************************/
         _createErrorDialogDiv: function () {
-            let self = this;
+		let self = this;
 
-            self._$errorDialogDiv = $('<div></div>').appendTo(self._$mainContainer);
-            self._$errorDialogDiv.dialog({
-                autoOpen: false,
-                show: self.options.dialogShowEffect,
-                hide: self.options.dialogHideEffect,
-                modal: true,
-                title: self.options.messages.error,
-                buttons: [{
-                    text: self.options.messages.close,
-                    click: function () {
-                        self._$errorDialogDiv.dialog('close');
-                    }
-                }]
-            });
-        },
+		self._$errorDialogDiv = $('<div></div>').appendTo(self._$mainContainer);
+		self._$errorDialogDiv.css({
+			display: 'none',
+			position: 'fixed',
+			zIndex: 1000,
+			backgroundColor: '#fff',
+			border: '1px solid #ccc',
+			padding: '20px',
+			boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+			width: '300px',
+			left: '50%',
+			top: '50%',
+			transform: 'translate(-50%, -50%)'
+		});
+
+		$('<h2></h2>').css({padding: '0px'}).text(self.options.messages.error).appendTo(self._$errorDialogDiv);
+		$('<div></div><br>').appendTo(self._$errorDialogDiv);
+		$('<button></button>')
+			.text(self.options.messages.close)
+			.on('click', function () {
+				self._$errorDialogDiv.hide();
+			})
+			.appendTo(self._$errorDialogDiv);
+
+		$(document.body).on('click', function (event) {
+			if (!self._$errorDialogDiv.is(event.target) && self._$errorDialogDiv.has(event.target).length === 0) {
+				self._$errorDialogDiv.hide();
+			}
+		});
+	},
 
         /************************************************************************
         * PUBLIC METHODS                                                        *
@@ -1106,7 +1121,8 @@ THE SOFTWARE.
         /* Shows error message dialog with given message.
         *************************************************************************/
         _showError: function (message) {
-            this._$errorDialogDiv.html(message).dialog('open');
+		this._$errorDialogDiv.find("div").html(message);
+		this._$errorDialogDiv.show();
         },
 
         /* BUSY PANEL ***********************************************************/

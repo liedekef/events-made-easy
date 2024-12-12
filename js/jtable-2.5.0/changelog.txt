@@ -21,3 +21,5 @@ By Franky:
   The extra param to the load-call itself will add/override params defined in
   listQueryParams. Example:
   $('#PeopleTableContainer').jtable('load', {'test':"eee"});
+- the queryparams for paging and sorting are now also added to the GET/POST as
+regular params, no more to the url as GET params

@@ -699,3 +699,6 @@ div#div_import {
     display: block;
     overflow-x:auto;
 }
+.jtable-table-div > table {
+    overflow:hidden;
+}

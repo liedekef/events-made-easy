@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.20
+Stable tag: 2.5.21
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,11 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.21 (2024//) =
+= 2.5.21 (2024/12/12) =
 * Extra bulk action when managing bookings, to indicate attendance
 * Allow dynamic groups also as condition in the setting 'Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event.'
 * Added #_ATTENDANCEPROOF_URL placeholder, which generates a link that - when clicked - will generate a pdf if the booking attendance count was > 0. The pdf template can be set in the event attendance settings.
-* The url to check for attendance is now nonce-protected, meaning: old url's will no longer work!!
+* The url to check for attendance is now nonce-protected, but old url's are still supported
 
 = 2.5.20 (2024/11/24) =
 * Some HTML fixes

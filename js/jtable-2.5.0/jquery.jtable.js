@@ -108,6 +108,7 @@ THE SOFTWARE.
         _$titleDiv: null, //Reference to the title div (jQuery object)
         _$toolbarDiv: null, //Reference to the toolbar div (jQuery object)
 
+        _$tableDiv: null, //Reference to the table main div
         _$table: null, //Reference to the main <table> (jQuery object)
         _$tableBody: null, //Reference to <body> in the table (jQuery object)
         _$tableRows: null, //Array of all <tr> in the table (except "no data" row) (jQuery object array)
@@ -144,6 +145,7 @@ THE SOFTWARE.
             this._createMainContainer();
             this._createTableTitle();
             this._createToolBar();
+            this._createTableDiv();
             this._createTable();
             this._createBusyPanel();
             this._createErrorDialogDiv();
@@ -267,12 +269,20 @@ THE SOFTWARE.
             self._$titleDiv = $titleDiv;
         },
 
+        /* Creates the table surrounding div
+        *************************************************************************/
+        _createTableDiv: function () {
+            this._$tableDiv = $('<div></div>')
+                .addClass('jtable-table-div')
+                .appendTo(this._$mainContainer);
+        },
+
         /* Creates the table.
         *************************************************************************/
         _createTable: function () {
             this._$table = $('<table></table>')
                 .addClass('jtable')
-                .appendTo(this._$mainContainer);
+                .appendTo(this._$tableDiv);
 
             if (this.options.tableId) {
                 this._$table.attr('id', this.options.tableId);
@@ -3689,7 +3699,7 @@ THE SOFTWARE.
         _createBottomPanel: function() {
             this._$bottomPanel = $('<div />')
                 .addClass('jtable-bottom-panel')
-                .insertAfter(this._$table);
+                .insertAfter(this._$tableDiv);
 
             this._jqueryuiThemeAddClass(this._$bottomPanel, 'ui-state-default');
 

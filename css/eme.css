@@ -28,6 +28,7 @@
     min-height: unset;
     margin-bottom: 5px;
     field-sizing: content;
+    max-width: 100%;
     min-inline-size: 10ch;
 }
 
@@ -638,6 +639,7 @@ details.eme_accordion > div, details.eme_accordion > p {
     border-top: 0px;
     padding: 10px;
     display: none;
+    overflow: auto;
 }
 .eme-tab-content.active {
     display: block;
@@ -693,7 +695,7 @@ div#div_import {
 .jtable-data-row a {
     color: #0073aa !important;
 }
-table.jtable.ui-widget-content {
+.jtable-table-div {
     display: block;
     overflow-x:auto;
 }

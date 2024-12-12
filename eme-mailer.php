@@ -2624,7 +2624,7 @@ function eme_emails_page() {
 	<div id="genericmail-message" style="display:none;" ></div>
 	</div>
 
-	<div class="eme-tab-content" id="tab-sentmail" style="overflow: auto;">
+	<div class="eme-tab-content" id="tab-sentmail">
 	<h1><?php esc_html_e( 'Sent emails', 'events-made-easy' ); ?></h1>
 	<div class='eme-message-admin'><p>
 	<?php 

@@ -502,10 +502,8 @@ function eme_ajax_templates_list() {
         }
 
         $jTableResult['Result']           = 'OK';
-        $jTableResult['TotalRecordCount'] = $recordCount;
-        $jTableResult['recordsTotal']     = $recordCount;
-        $jTableResult['recordsFiltered']  = $recordCount;
         $jTableResult['Records']          = $rows;
+        $jTableResult['TotalRecordCount'] = $recordCount;
     } else {
         $jTableResult['Result']  = 'Error';
         $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );

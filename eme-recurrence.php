@@ -774,8 +774,6 @@ function eme_ajax_recurrences_list() {
 	$ajaxResult['Result']           = 'OK';
 	$ajaxResult['Records']          = $rows;
 	$ajaxResult['TotalRecordCount'] = $recurrences_count;
-    $ajaxResult['recordsTotal']     = $recurrences_count;
-    $ajaxResult['recordsFiltered']  = $recurrences_count;
 	print wp_json_encode( $ajaxResult );
 	wp_die();
 }

@@ -6482,8 +6482,6 @@ function eme_ajax_memberships_list() {
     $ajaxResult['Result']           = 'OK';
     $ajaxResult['Records']          = $records;
     $ajaxResult['TotalRecordCount'] = $recordCount;
-    $ajaxResult['recordsTotal']     = $recordCount;
-    $ajaxResult['recordsFiltered']  = $recordCount;
     print wp_json_encode( $ajaxResult );
     wp_die();
 }
@@ -6632,8 +6630,6 @@ function eme_ajax_members_list( ) {
     $ajaxResult['Result']           = 'OK';
     $ajaxResult['Records']          = $records;
     $ajaxResult['TotalRecordCount'] = $recordCount;
-    $ajaxResult['recordsTotal']     = $recordCount;
-    $ajaxResult['recordsFiltered']  = $recordCount;
     print wp_json_encode( $ajaxResult );
     wp_die();
 }

@@ -10518,8 +10518,6 @@ function eme_ajax_events_list() {
 	$ajaxResult['Result']           = 'OK';
 	$ajaxResult['Records']          = $rows;
 	$ajaxResult['TotalRecordCount'] = $events_count;
-    $ajaxResult['recordsTotal']     = $events_count;
-    $ajaxResult['recordsFiltered']  = $events_count;
     // for tabulator
     /*
         if ($PageSize>0) {

@@ -3288,8 +3288,6 @@ function eme_ajax_record_list( $tablename, $cap ) {
         } else {
             $jTableResult['Records']          = $rows;
             $jTableResult['TotalRecordCount'] = $recordCount;
-            $jTableResult['recordsTotal']     = $recordCount;
-            $jTableResult['recordsFiltered']  = $recordCount;
         }
     } else {
         $jTableResult['Result']  = 'Error';

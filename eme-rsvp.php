@@ -5545,8 +5545,6 @@ function eme_ajax_bookings_list() {
 				$jTableResult['Result']           = 'OK';
 				$jTableResult['Records']          = [];
 				$jTableResult['TotalRecordCount'] = 0;
-                $jTableResult['recordsTotal']     = $recordCount;
-                $jTableResult['recordsFiltered']  = $recordCount;
 				print wp_json_encode( $jTableResult );
 				wp_die();
 			} else {
@@ -5569,8 +5567,6 @@ function eme_ajax_bookings_list() {
 				$jTableResult['Result']           = 'OK';
 				$jTableResult['Records']          = [];
 				$jTableResult['TotalRecordCount'] = 0;
-                $jTableResult['recordsTotal']     = $recordCount;
-                $jTableResult['recordsFiltered']  = $recordCount;
 				print wp_json_encode( $jTableResult );
 				wp_die();
 			} else {
@@ -5963,8 +5959,6 @@ function eme_ajax_bookings_list() {
 	$jTableResult['Result']           = 'OK';
 	$jTableResult['Records']          = $rows;
 	$jTableResult['TotalRecordCount'] = $recordCount;
-    $jTableResult['recordsTotal']     = $recordCount;
-    $jTableResult['recordsFiltered']  = $recordCount;
 	print wp_json_encode( $jTableResult );
 	wp_die();
 }

@@ -234,8 +234,6 @@ function eme_ajax_attendances_list() {
 		$jTableResult['Result']           = 'OK';
 		$jTableResult['Records']          = $rows;
 		$jTableResult['TotalRecordCount'] = $recordCount;
-        $jTableResult['recordsTotal']     = $recordCount;
-        $jTableResult['recordsFiltered']  = $recordCount;
 	} else {
 		$jTableResult['Result']  = 'Error';
 		$jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );

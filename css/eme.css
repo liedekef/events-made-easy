@@ -686,19 +686,3 @@ div#div_import {
     display:inline;
 }
 
-/* jtable fix so the footer doesn't overlap with the table in some browsers */
-.jtable-main-container {
-	float: left;
-	width: 100%;
-}
-/* ui override */
-.jtable-data-row a {
-    color: #0073aa !important;
-}
-.jtable-table-div {
-    display: block;
-    overflow-x:auto;
-}
-.jtable-table-div > table {
-    overflow:hidden;
-}

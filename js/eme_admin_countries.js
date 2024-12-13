@@ -4,7 +4,6 @@
             title: emecountries.translate_countries,
             paging: true,
             sorting: true,
-            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -43,7 +42,6 @@
             title: emecountries.translate_states,
             paging: true,
             sorting: true,
-            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting

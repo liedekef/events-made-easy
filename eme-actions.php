@@ -266,7 +266,7 @@ function eme_admin_register_scripts() {
 	}
 	wp_register_script( 'eme-print', EME_PLUGIN_URL . 'js/jquery.printelement.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-jquery-validate', EME_PLUGIN_URL . 'js/jquery-validate/jquery.validate.min.js', [ 'jquery' ], EME_VERSION );
-	wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable-2.5.0/jquery.jtable.js', [ 'jquery-ui-core', 'jquery-ui-widget', 'jquery-ui-dialog' ], EME_VERSION );
+	wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable-2.5.0/jquery.jtable.js', [ 'jquery-ui-widget', 'jquery-ui-dialog' ], EME_VERSION );
 	wp_register_script( 'eme-jtable-storage', EME_PLUGIN_URL . 'js/jtable-2.5.0/extensions/jquery.jtable.localstorage.js', [ 'eme-jquery-jtable' ], EME_VERSION );
 	wp_register_script( 'eme-jtable-search', EME_PLUGIN_URL . 'js/jtable-2.5.0/extensions/jquery.jtable.toolbarsearch.js', [ 'eme-jquery-jtable', 'eme-jtable-storage' ], EME_VERSION );
     //wp_register_script( 'eme-tabulator', EME_PLUGIN_URL . 'js/tabulator/js/tabulator.js', [ 'jquery' ], EME_VERSION );
@@ -321,8 +321,9 @@ function eme_admin_register_scripts() {
 	if ( file_exists( $eme_css_name ) ) {
 		wp_register_style( 'eme_stylesheet_extra', get_stylesheet_directory_uri() . '/eme.css', [ 'eme_stylesheet' ], EME_VERSION );
 	}
-	wp_register_style( 'eme-jquery-ui-css', EME_PLUGIN_URL . 'css/jquery-ui-theme-smoothness-1.11.3/jquery-ui.min.css' );
-	wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-2.5.0/themes/jqueryui/jtable_jqueryui.css' );
+	//wp_register_style( 'eme-jquery-ui-css', EME_PLUGIN_URL . 'css/jquery-ui-theme-smoothness-1.11.3/jquery-ui.min.css' );
+    wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-2.5.0/themes/lightcolor/gray/jtable.min.css' );
+	//wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-2.5.0/themes/jqueryui/jtable_jqueryui.css' );
 	wp_register_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css' );
 	wp_register_style( 'eme-jtables-css', EME_PLUGIN_URL . 'css/jquery.jtables.css' );
     //wp_register_style( 'eme-tabulator-css', EME_PLUGIN_URL . 'js/tabulator/css/tabulator.min.css' );

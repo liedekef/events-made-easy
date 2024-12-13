@@ -207,16 +207,16 @@ function eme_formfields_table_layout( $message = '' ) {
 		<p><?php echo $message; ?></p>
 	</div>
 
-	<h1><?php esc_html_e( 'Form fields', 'events-made-easy' ); ?></h1>
+	<h1><?php esc_html_e( 'Add custom field', 'events-made-easy' ); ?></h1>
 
 	<div class="wrap">
 		<form id="formfields-new" method="post" action="<?php echo $destination; ?>">
 			<?php echo $nonce_field; ?>
 			<input type="hidden" name="eme_admin_action" value="add_formfield">
-			<input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add field', 'events-made-easy' ); ?>">
+			<input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add custom field', 'events-made-easy' ); ?>">
 		</form>
 	</div>
-	<br><br>
+    <h1><?php esc_html_e( 'Manage custom fields', 'events-made-easy' ); ?></h1>
 	<form action="#" method="post">
 	<?php echo eme_ui_select( '', 'search_type', $field_types, __( 'Any', 'events-made-easy' ) ); ?>
 	<?php echo eme_ui_select( '', 'search_purpose', $field_purposes, __( 'Any', 'events-made-easy' ) ); ?>

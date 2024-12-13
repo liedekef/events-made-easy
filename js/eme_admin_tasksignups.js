@@ -3,7 +3,6 @@ jQuery(document).ready( function($) {
         title: emetasks.translate_signups,
         paging: true,
         sorting: true,
-        jqueryuiTheme: true,
         defaultSorting: 'name ASC',
         selecting: true, //Enable selecting
         multiselect: true, //Allow multiple selecting

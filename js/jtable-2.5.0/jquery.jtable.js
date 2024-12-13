@@ -381,19 +381,7 @@ THE SOFTWARE.
             let self = this;
 
             self._$errorDialogDiv = $('<div></div>');
-            self._$errorDialogDiv.hide().addClass('modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').css({
-                display: 'none',
-                position: 'fixed',
-                zIndex: 1000,
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                padding: '20px',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                width: '300px',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)'
-            }).appendTo(self._$mainContainer);
+            self._$errorDialogDiv.addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').appendTo(self._$mainContainer);
 
             $('<h2 id="errorDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.error).appendTo(self._$errorDialogDiv);
             $('<div><p><span class="jtable-error-message"></span></p></div>').appendTo(self._$errorDialogDiv);
@@ -2883,20 +2871,7 @@ THE SOFTWARE.
 
             //Create div element for delete confirmation dialog
             self._$deleteDialogDiv = $('<div></div>');
-
-            self._$deleteDialogDiv.hide().addClass('modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').css({
-                display: 'none',
-                position: 'fixed',
-                zIndex: 1000,
-                backgroundColor: '#fff',
-                border: '1px solid #ccc',
-                padding: '20px',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-                width: '300px',
-                left: '50%',
-                top: '50%',
-                transform: 'translate(-50%, -50%)'
-            }).appendTo(self._$mainContainer);
+            self._$deleteDialogDiv.addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').appendTo(self._$mainContainer);
 
             $('<h2 id="deleteDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.areYouSure).appendTo(self._$deleteDialogDiv);
             $('<div><p><span class="alert-icon" style="float:left; margin:0 7px 20px 0;"></span><span class="jtable-delete-confirm-message"></span></p></div>').appendTo(self._$deleteDialogDiv);

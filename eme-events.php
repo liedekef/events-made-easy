@@ -9571,7 +9571,7 @@ function eme_admin_enqueue_js() {
 		wp_localize_script( 'eme-admin', 'emeadmin', $translation_array );
 		wp_enqueue_script( 'eme-admin' );
 		//wp_enqueue_style("wp-jquery-ui-dialog");
-		wp_enqueue_style( 'eme-jquery-ui-css' );
+		//wp_enqueue_style( 'eme-jquery-ui-css' );
 		wp_enqueue_style( 'eme-jquery-jtable-css' );
 		wp_enqueue_style( 'eme-jtables-css' );
         // wp_enqueue_style( 'eme-tabulator-css' );
@@ -9705,6 +9705,7 @@ function eme_admin_enqueue_js() {
 	}
 	if ( in_array( $plugin_page, [ 'eme-formfields' ] ) ) {
 		$translation_array = [
+			'translate_formfields'                 => __( 'Custom Fields', 'events-made-easy' ),
 			'translate_id'                         => __( 'ID', 'events-made-easy' ),
 			'translate_name'                       => __( 'Name', 'events-made-easy' ),
 			'translate_type'                       => __( 'Type', 'events-made-easy' ),

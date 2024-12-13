@@ -180,7 +180,6 @@ jQuery(document).ready(function ($) {
             paging: true,
             sorting: true,
             multiSorting: true,
-            jqueryuiTheme: true,
             defaultSorting: '',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting

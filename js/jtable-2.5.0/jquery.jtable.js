@@ -378,38 +378,39 @@ THE SOFTWARE.
         /* Creates and prepares error dialog div.
         *************************************************************************/
         _createErrorDialogDiv: function () {
-		let self = this;
+            let self = this;
 
-		self._$errorDialogDiv = $('<div></div>').appendTo(self._$mainContainer);
-		self._$errorDialogDiv.css({
-			display: 'none',
-			position: 'fixed',
-			zIndex: 1000,
-			backgroundColor: '#fff',
-			border: '1px solid #ccc',
-			padding: '20px',
-			boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
-			width: '300px',
-			left: '50%',
-			top: '50%',
-			transform: 'translate(-50%, -50%)'
-		});
+            self._$errorDialogDiv = $('<div></div>');
+            self._$errorDialogDiv.hide().addClass('modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').css({
+                display: 'none',
+                position: 'fixed',
+                zIndex: 1000,
+                backgroundColor: '#fff',
+                border: '1px solid #ccc',
+                padding: '20px',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                width: '300px',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)'
+            }).appendTo(self._$mainContainer);
 
-		$('<h2></h2>').css({padding: '0px'}).text(self.options.messages.error).appendTo(self._$errorDialogDiv);
-		$('<div></div><br>').appendTo(self._$errorDialogDiv);
-		$('<button></button>')
-			.text(self.options.messages.close)
-			.on('click', function () {
-				self._$errorDialogDiv.hide();
-			})
-			.appendTo(self._$errorDialogDiv);
+            $('<h2 id="errorDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.error).appendTo(self._$errorDialogDiv);
+            $('<div><p><span class="jtable-error-message"></span></p></div>').appendTo(self._$errorDialogDiv);
+            $('<button class="jtable-dialog-cancelbutton"></button>')
+                .text(self.options.messages.close)
+                .on('click', function () {
+                    self._$errorDialogDiv.hide();
+                })
+                .appendTo(self._$errorDialogDiv);
 
-		$(document.body).on('click', function (event) {
-			if (!self._$errorDialogDiv.is(event.target) && self._$errorDialogDiv.has(event.target).length === 0) {
-				self._$errorDialogDiv.hide();
-			}
-		});
-	},
+            // handle click outside popup
+            $(document.body).on('click', function (event) {
+                if (!self._$errorDialogDiv.is(event.target) && self._$errorDialogDiv.has(event.target).length === 0) {
+                    self._$errorDialogDiv.hide();
+                }
+            });
+        },
 
         /************************************************************************
         * PUBLIC METHODS                                                        *
@@ -1121,7 +1122,7 @@ THE SOFTWARE.
         /* Shows error message dialog with given message.
         *************************************************************************/
         _showError: function (message) {
-		this._$errorDialogDiv.find("div").html(message);
+		this._$errorDialogDiv.find(".jtable-error-message").html(message);
 		this._$errorDialogDiv.show();
         },
 
@@ -2856,7 +2857,7 @@ THE SOFTWARE.
         * PRIVATE FIELDS                                                        *
         *************************************************************************/
 
-        _$deleteRecordDiv: null, //Reference to the adding new record dialog div (jQuery object)
+        _$deleteDialogDiv: null, //Reference to the delete record dialog div (jQuery object)
         _$deletingRow: null, //Reference to currently deleting row (jQuery object)
 
         /************************************************************************
@@ -2881,50 +2882,56 @@ THE SOFTWARE.
             }
 
             //Create div element for delete confirmation dialog
-            self._$deleteRecordDiv = $('<div><p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span><span class="jtable-delete-confirm-message"></span></p></div>').appendTo(self._$mainContainer);
+            self._$deleteDialogDiv = $('<div></div>');
 
-            //Prepare dialog
-            self._$deleteRecordDiv.dialog({
-                autoOpen: false,
-                show: self.options.dialogShowEffect,
-                hide: self.options.dialogHideEffect,
-                modal: true,
-                title: self.options.messages.areYouSure,
-                buttons:
-                        [{  //cancel button
-                            text: self.options.messages.cancel,
-                            click: function () {
-                                self._$deleteRecordDiv.dialog("close");
-                            }
-                        }, {//delete button
-                            id: 'DeleteDialogButton',
-                            text: self.options.messages.deleteText,
-                            click: function () {
+            self._$deleteDialogDiv.hide().addClass('modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').css({
+                display: 'none',
+                position: 'fixed',
+                zIndex: 1000,
+                backgroundColor: '#fff',
+                border: '1px solid #ccc',
+                padding: '20px',
+                boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                width: '300px',
+                left: '50%',
+                top: '50%',
+                transform: 'translate(-50%, -50%)'
+            }).appendTo(self._$mainContainer);
 
-                                //row maybe removed by another source, if so, do nothing
-                                if (self._$deletingRow.hasClass('jtable-row-removed')) {
-                                    self._$deleteRecordDiv.dialog('close');
-                                    return;
-                                }
+            $('<h2 id="deleteDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.areYouSure).appendTo(self._$deleteDialogDiv);
+            $('<div><p><span class="alert-icon" style="float:left; margin:0 7px 20px 0;"></span><span class="jtable-delete-confirm-message"></span></p></div>').appendTo(self._$deleteDialogDiv);
 
-                                let $deleteButton = self._$deleteRecordDiv.parent().find('#DeleteDialogButton');
-                                self._setEnabledOfDialogButton($deleteButton, false, self.options.messages.deleting);
-                                self._deleteRecordFromServer(
-                                    self._$deletingRow,
-                                    function () {
-                                        self._removeRowsFromTableWithAnimation(self._$deletingRow);
-                                        self._$deleteRecordDiv.dialog('close');
-                                    },
-                                    function (message) { //error
-                                        self._showError(message);
-                                        self._setEnabledOfDialogButton($deleteButton, true, self.options.messages.deleteText);
-                                    }
-                                );
-                            }
-                        }],
-                close: function () {
-                    let $deleteButton = self._$deleteRecordDiv.parent().find('#DeleteDialogButton');
-                    self._setEnabledOfDialogButton($deleteButton, true, self.options.messages.deleteText);
+            const $cancelButton = $('<button class="jtable-dialog-cancelbutton">' + self.options.messages.cancel + '</button> ').on('click', function () {
+                self._$deleteDialogDiv.hide();
+            });
+
+            let $deleteButton = $('<button class="jtable-dialog-deletebutton"><span>' + self.options.messages.deleteText + '</span></button>').on('click', function () {
+                // row may be removed by another source, if so, do nothing
+                if (self._$deletingRow.hasClass('jtable-row-removed')) {
+                    self._$deleteDialogDiv.hide();
+                    return;
+                }
+
+                self._setEnabledOfDialogButton($deleteButton, false, self.options.messages.deleting);
+                self._deleteRecordFromServer(
+                    self._$deletingRow,
+                    function () {
+                        self._removeRowsFromTableWithAnimation(self._$deletingRow);
+                        self._setEnabledOfDialogButton($deleteButton, true, self.options.messages.deleteText);
+                        self._$deleteDialogDiv.hide();
+                    },
+                    function (message) { // error
+                        self._showError(message);
+                        self._setEnabledOfDialogButton($deleteButton, true, self.options.messages.deleteText);
+                    }
+                );
+            });
+
+            self._$deleteDialogDiv.append($cancelButton, $deleteButton);
+            // handle click outside popup
+            $(document.body).on('click', function (event) {
+                if (!self._$deleteDialogDiv.is(event.target) && self._$deleteDialogDiv.has(event.target).length === 0) {
+                    self._$deleteDialogDiv.hide();
                 }
             });
         },
@@ -3125,8 +3132,7 @@ THE SOFTWARE.
 
             if (deleteConfirm != false) {
                 //Confirmation
-                self._$deleteRecordDiv.find('.jtable-delete-confirm-message').html(deleteConfirmMessage);
-                self._showDeleteDialog($row);
+                self._showDeleteDialog($row, deleteConfirmMessage);
             } else {
                 //No confirmation
                 self._deleteRecordFromServer(
@@ -3143,9 +3149,10 @@ THE SOFTWARE.
 
         /* Shows delete comfirmation dialog.
         *************************************************************************/
-        _showDeleteDialog: function ($row) {
+        _showDeleteDialog: function ($row, deleteConfirmMessage) {
             this._$deletingRow = $row;
-            this._$deleteRecordDiv.dialog('open');
+            this._$deleteDialogDiv.find('.jtable-delete-confirm-message').html(deleteConfirmMessage);
+            this._$deleteDialogDiv.show();
         },
 
         /* Performs an ajax call to server to delete record

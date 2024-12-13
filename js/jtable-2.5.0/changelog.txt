@@ -23,3 +23,5 @@ By Franky:
   $('#PeopleTableContainer').jtable('load', {'test':"eee"});
 - the queryparams for paging and sorting are now also added to the GET/POST as
 regular params, no more to the url as GET params
+- removed some ui-dialogs so that for regular table usage, jquery-ui is no
+longer required (still is needed for add/edit record functionality)

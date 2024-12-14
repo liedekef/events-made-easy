@@ -60,7 +60,7 @@ THE SOFTWARE.
             saveUserPreferences: true,
             jqueryuiTheme: false,
             unAuthorizedRequestRedirectUrl: null,
-            listQueryParams: function () { },
+            listQueryParams: {},
 
             ajaxSettings: {
                 type: 'POST',
@@ -407,11 +407,17 @@ THE SOFTWARE.
         /* Loads data using AJAX call, clears table and fills with new data.
         *************************************************************************/
         load: function (extraPostData, completeCallback) {
-            if (extraPostData) {
-                let data1 = this.options.listQueryParams();
-                this._lastPostData = {...data1, ...extraPostData};
+            let listQueryParams = {}
+            if (typeof this.options.listQueryParams === "function") {
+                listQueryParams = this.options.listQueryParams();
             } else {
-                this._lastPostData = this.options.listQueryParams();
+                listQueryParams = this.options.listQueryParams;
+            }
+
+            if (extraPostData) {
+                this._lastPostData = {...listQueryParams, ...extraPostData};
+            } else {
+                this._lastPostData = listQueryParams;
             }
             this._reloadTable(completeCallback);
         },

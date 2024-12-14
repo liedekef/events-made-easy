@@ -2,7 +2,9 @@ div.jtable-main-container  {
     font-family: Verdana, Arial, sans-serif;
 }
 div.jtable-column-header-container {height: auto !important;}
-
+ul.jtable-column-select-list {
+    font-size: 1.1em;
+}
 div.jtable-main-container table.jtable thead th.jtable-column-header div.jtable-column-header-container {
     font-size: 0.9em;
     color: #555;
@@ -46,6 +48,8 @@ div.jtable-main-container div.jtable-title div.jtable-toolbar span.jtable-toolba
 }
 div.jtable-main-container div.jtable-bottom-panel {
     font-size: 1.1em;
+    background: #e6e6e6;
+    color: #555;
 }
 div.jtable-main-container table.jtable {
     border-collapse: collapse;

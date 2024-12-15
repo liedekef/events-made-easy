@@ -265,20 +265,17 @@ function eme_admin_register_scripts() {
 		}
 	}
 	wp_register_script( 'eme-print', EME_PLUGIN_URL . 'js/jquery.printelement.js', [ 'jquery' ], EME_VERSION );
+	wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-jquery-validate', EME_PLUGIN_URL . 'js/jquery-validate/jquery.validate.min.js', [ 'jquery' ], EME_VERSION );
-	wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable-2.5.0/jquery.jtable.js', [ 'jquery-ui-widget', 'jquery-ui-dialog' ], EME_VERSION );
+	wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable-2.5.0/jquery.jtable.js', [ ], EME_VERSION );
 	wp_register_script( 'eme-jtable-storage', EME_PLUGIN_URL . 'js/jtable-2.5.0/extensions/jquery.jtable.localstorage.js', [ 'eme-jquery-jtable' ], EME_VERSION );
 	wp_register_script( 'eme-jtable-search', EME_PLUGIN_URL . 'js/jtable-2.5.0/extensions/jquery.jtable.toolbarsearch.js', [ 'eme-jquery-jtable', 'eme-jtable-storage' ], EME_VERSION );
-    //wp_register_script( 'eme-tabulator', EME_PLUGIN_URL . 'js/tabulator/js/tabulator.js', [ 'jquery' ], EME_VERSION );
-    //wp_register_script( 'eme-datatables', EME_PLUGIN_URL . 'js/datatables/datatables.min.js', [ 'jquery' ], EME_VERSION );
 	if ( wp_script_is( 'eme-select2-locale', 'registered' ) ) {
 		wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery', 'eme-select2', 'eme-select2-locale' ], EME_VERSION );
 	} else {
 		wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery', 'eme-select2' ], EME_VERSION );
 	}
-	wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jtable-storage', 'jquery-ui-sortable', 'eme-jquery-validate', 'eme-print' ], EME_VERSION );
-    //wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jtable-storage', 'jquery-ui-sortable', 'eme-jquery-validate', 'eme-print', 'eme-tabulator' ], EME_VERSION );
-    //wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jtable-storage', 'jquery-ui-sortable', 'eme-jquery-validate', 'eme-print', 'eme-datatables' ], EME_VERSION );
+	wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jtable-storage', 'eme-jquery-validate', 'eme-sortable', 'eme-print' ], EME_VERSION );
 
 	wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
 	wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ 'jquery' ], EME_VERSION, true );
@@ -321,8 +318,7 @@ function eme_admin_register_scripts() {
 	if ( file_exists( $eme_css_name ) ) {
 		wp_register_style( 'eme_stylesheet_extra', get_stylesheet_directory_uri() . '/eme.css', [ 'eme_stylesheet' ], EME_VERSION );
 	}
-	//wp_register_style( 'eme-jquery-ui-css', EME_PLUGIN_URL . 'css/jquery-ui-theme-smoothness-1.11.3/jquery-ui.min.css' );
-    wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-2.5.0/themes/lightcolor/gray/jtable.min.css' );
+        wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-2.5.0/themes/lightcolor/gray/jtable.min.css' );
 	//wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-2.5.0/themes/jqueryui/jtable_jqueryui.css' );
 	wp_register_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css' );
 	wp_register_style( 'eme-jtables-css', EME_PLUGIN_URL . 'css/jquery.jtables.css' );
@@ -444,7 +440,6 @@ function eme_enqueue_frontend() {
 		}
 		// for english, no translation code is needed)
 		wp_enqueue_script( 'eme-basic' );
-		//wp_enqueue_style( 'eme-jquery-ui-css', EME_PLUGIN_URL . 'css/jquery-ui-theme-smoothness-1.11.3/jquery-ui.min.css', [], EME_VERSION );
 		wp_enqueue_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css', [], EME_VERSION );
 
 		wp_enqueue_style( 'eme_textsec', EME_PLUGIN_URL . 'css/text-security/text-security-disc.css', [], EME_VERSION );

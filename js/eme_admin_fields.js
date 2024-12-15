@@ -64,12 +64,12 @@ jQuery(document).ready( function($) {
             }
         });
 
-        $('#FormfieldsTableContainer').jtable('load');
+        $('#FormfieldsTableContainer').data('jTable').load();
 
         // Actions button
         $('#FormfieldsActionsButton').on("click",function (e) {
             e.preventDefault();
-            let selectedRows = $('#FormfieldsTableContainer').jtable('selectedRows');
+            let selectedRows = $('#FormfieldsTableContainer').data('jTable').selectedRows();
             let do_action = $('#eme_admin_action').val();
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
@@ -85,7 +85,7 @@ jQuery(document).ready( function($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     $.post(ajaxurl, {'field_id': idsjoined, 'action': 'eme_manage_formfields', 'do_action': do_action, 'eme_admin_nonce': emeformfields.translate_adminnonce }, function(data) {
-                        $('#FormfieldsTableContainer').jtable('load');
+                        $('#FormfieldsTableContainer').data('jTable').load();
                         $('#FormfieldsActionsButton').text(emeformfields.translate_apply);
                         $('div#formfields-message').html(data.htmlmessage);
                         $('div#formfields-message').show();
@@ -100,7 +100,7 @@ jQuery(document).ready( function($) {
         // Re-load records when user click 'load records' button.
         $('#FormfieldsLoadRecordsButton').on("click",function (e) {
             e.preventDefault();
-            $('#FormfieldsTableContainer').jtable('load');
+            $('#FormfieldsTableContainer').data('jTable').load();
             // return false to make sure the real form doesn't submit
             return false;
         });

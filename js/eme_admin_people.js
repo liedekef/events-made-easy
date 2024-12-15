@@ -289,7 +289,7 @@ jQuery(document).ready(function ($) {
 
             fields: personfields
         });
-        $('#PeopleTableContainer').jtable('load');
+        $('#PeopleTableContainer').data('jTable').load();
     }
 
     if ($('#GroupsTableContainer').length) {
@@ -332,12 +332,12 @@ jQuery(document).ready(function ($) {
             }
         });
 
-        $('#GroupsTableContainer').jtable('load');
+        $('#GroupsTableContainer').data('jTable').load();
 
         // Actions button
         $('#GroupsActionsButton').on("click",function (e) {
             e.preventDefault();
-            let selectedRows = $('#GroupsTableContainer').jtable('selectedRows');
+            let selectedRows = $('#GroupsTableContainer').data('jTable').selectedRows();
             let do_action = $('#eme_admin_action').val();
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
@@ -354,7 +354,7 @@ jQuery(document).ready(function ($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     $.post(ajaxurl, {'group_id': idsjoined, 'action': 'eme_manage_groups', 'do_action': do_action, 'eme_admin_nonce': emepeople.translate_adminnonce }, function(data) {
-                        $('#GroupsTableContainer').jtable('load');
+                        $('#GroupsTableContainer').data('jTable').load();
                         $('#GroupsActionsButton').text(emepeople.translate_apply);
                         $('#GroupsActionsButton').prop('disabled', false);
                         if (do_action=='deleteGroups') {
@@ -373,7 +373,7 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#PeopleActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#PeopleTableContainer').jtable('selectedRows');
+        let selectedRows = $('#PeopleTableContainer').data('jTable').selectedRows();
         let do_action = $('#eme_admin_action').val();
 
         let action_ok=1;
@@ -433,7 +433,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#PeopleTableContainer').jtable('load');
+                    $('#PeopleTableContainer').data('jTable').load();
                     $('#PeopleActionsButton').text(emepeople.translate_apply);
                     $('#PeopleActionsButton').prop('disabled', false);
                     $('div#people-message').html(data.htmlmessage);
@@ -455,7 +455,7 @@ jQuery(document).ready(function ($) {
         } else {
             exactmatch = 0;
         }
-        $('#PeopleTableContainer').jtable('load');
+        $('#PeopleTableContainer').data('jTable').load();
         if ($('#search_person').val().length || $('#search_groups').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
             $('#StoreQueryButton').show();
         } else {
@@ -626,7 +626,7 @@ jQuery(document).ready(function ($) {
                     let idsjoined = "";
                     // let's get the list if selected people, so we can exclude these
                     if ($('#PeopleTableContainer').length) {
-                        let selectedRows = $('#PeopleTableContainer').jtable('selectedRows');
+                        let selectedRows = $('#PeopleTableContainer').data('jTable').selectedRows();
                         if (selectedRows.length > 0) {
                             let ids = [];
                             selectedRows.each(function () {

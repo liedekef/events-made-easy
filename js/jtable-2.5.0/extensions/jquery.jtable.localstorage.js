@@ -8,7 +8,7 @@ http://www.jtable.org
 (function ($) {
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * COOKIE                                                                *

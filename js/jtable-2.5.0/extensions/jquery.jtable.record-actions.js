@@ -5,12 +5,12 @@
 
     //Reference to base object members
     var base = {
-        _initializeFields: $.hik.jtable.prototype._initializeFields,
-        _onRecordsLoaded: $.hik.jtable.prototype._onRecordsLoaded
+        _initializeFields: jTable.prototype._initializeFields,
+        _onRecordsLoaded: jTable.prototype._onRecordsLoaded
     };
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * OVERRIDED METHODS                                                     *

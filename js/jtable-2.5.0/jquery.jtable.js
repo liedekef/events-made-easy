@@ -41,13 +41,14 @@ THE SOFTWARE.
         unloadingPage = false;
     });
 
-    $.widget("hik.jtable", {
+    jTable = function (element, options) {
+        this.element = $(element);
+        this.options = $.extend(true, {}, this.options, options);
+        this._create();
+    }
 
-        /************************************************************************
-        * DEFAULT OPTIONS / EVENTS                                              *
-        *************************************************************************/
+    jTable.prototype = {
         options: {
-
             //Options
             actions: {},
             fields: {},
@@ -97,8 +98,7 @@ THE SOFTWARE.
                 close: 'Close',
                 cannotLoadOptionsFor: 'Can not load options for field {0}'
             }
-        },
-
+	},
         /************************************************************************
         * PRIVATE FIELDS                                                        *
         *************************************************************************/
@@ -1337,37 +1337,41 @@ THE SOFTWARE.
         *************************************************************************/
 
         _onLoadingRecords: function () {
-            this._trigger("loadingRecords", null, {});
+            this._$mainContainer.trigger("loadingRecords", {});
         },
 
         _onRecordsLoaded: function (data) {
-            this._trigger("recordsLoaded", null, { records: data.Records, serverResponse: data });
+            this._$mainContainer.trigger("recordsLoaded", { records: data.Records, serverResponse: data });
         },
 
         _onRowInserted: function ($row, isNewRow) {
-            this._trigger("rowInserted", null, { row: $row, record: $row.data('record'), isNewRow: isNewRow });
+            this._$mainContainer.trigger("rowInserted", { row: $row, record: $row.data('record'), isNewRow: isNewRow });
         },
 
         _onRowsRemoved: function ($rows, reason) {
-            this._trigger("rowsRemoved", null, { rows: $rows, reason: reason });
+            this._$mainContainer.trigger("rowsRemoved", { rows: $rows, reason: reason });
         },
 
         _onCloseRequested: function () {
-            this._trigger("closeRequested", null, {});
+            this._$mainContainer.trigger("closeRequested", {});
         }
 
-    });
+    };
+
+    $.fn.jtable = function (options) {
+        return this.each(function () {
+            if (!$.data(this, 'jTable')) {
+                $.data(this, 'jTable', new jTable(this, options));
+            }
+        });
+    };
 
 }(jQuery));
 
 
-/************************************************************************
-* Some UTULITY methods used by jTable                                   *
-*************************************************************************/
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype, {
-
+    $.extend(true, jTable.prototype, {
         /* Gets property value of an object recursively.
         *************************************************************************/
         _getPropertyOfObject: function (obj, propName) {
@@ -1527,7 +1531,7 @@ THE SOFTWARE.
 *************************************************************************/
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * PRIVATE METHODS                                                       *
@@ -2014,11 +2018,11 @@ THE SOFTWARE.
 
     //Reference to base object members
     let base = {
-        _create: $.hik.jtable.prototype._create
+        _create: jTable.prototype._create
     };
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * DEFAULT OPTIONS / EVENTS                                              *
@@ -2090,7 +2094,7 @@ THE SOFTWARE.
                 close: function () {
                     let $addRecordForm = self._$addRecordDiv.find('form').first();
                     let $saveButton = self._$addRecordDiv.parent().find('#AddRecordDialogSaveButton');
-                    self._trigger("formClosed", null, { form: $addRecordForm, formType: 'create' });
+                    self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
                     self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     $addRecordForm.remove();
                 }
@@ -2121,7 +2125,7 @@ THE SOFTWARE.
             let $saveButton = self._$addRecordDiv.parent().find('#AddRecordDialogSaveButton');
             let $addRecordForm = self._$addRecordDiv.find('form');
 
-            if (self._trigger("formSubmitting", null, { form: $addRecordForm, formType: 'create' }) != false) {
+            if (self._$mainContainer.trigger("formSubmitting", { form: $addRecordForm, formType: 'create' }) != false) {
                 self._setEnabledOfDialogButton($saveButton, false, self.options.messages.saving);
                 self._saveAddRecordForm($addRecordForm, $saveButton);
             }
@@ -2282,7 +2286,7 @@ THE SOFTWARE.
 
             //Open the form
             self._$addRecordDiv.append($addRecordForm).dialog('open');
-            self._trigger("formCreated", null, { form: $addRecordForm, formType: 'create' });
+            self._$mainContainer.trigger("formCreated", { form: $addRecordForm, formType: 'create' });
         },
 
         /* Saves new added record to the server and updates table.
@@ -2349,7 +2353,7 @@ THE SOFTWARE.
         },
 
         _onRecordAdded: function (data) {
-            this._trigger("recordAdded", null, { record: data.Record, serverResponse: data });
+            this._$mainContainer.trigger("recordAdded", { record: data.Record, serverResponse: data });
         }
 
     });
@@ -2364,13 +2368,13 @@ THE SOFTWARE.
 
     //Reference to base object members
     let base = {
-        _create: $.hik.jtable.prototype._create,
-        _addColumnsToHeaderRow: $.hik.jtable.prototype._addColumnsToHeaderRow,
-        _addCellsToRowUsingRecord: $.hik.jtable.prototype._addCellsToRowUsingRecord
+        _create: jTable.prototype._create,
+        _addColumnsToHeaderRow: jTable.prototype._addColumnsToHeaderRow,
+        _addCellsToRowUsingRecord: jTable.prototype._addCellsToRowUsingRecord
     };
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * DEFAULT OPTIONS / EVENTS                                              *
@@ -2444,7 +2448,7 @@ THE SOFTWARE.
                 close: function () {
                     let $editForm = self._$editDiv.find('form:first');
                     let $saveButton = self._$editDiv.parent().find('#EditDialogSaveButton');
-                    self._trigger("formClosed", null, { form: $editForm, formType: 'edit', row: self._$editingRow });
+                    self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
                     self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     $editForm.remove();
                 }
@@ -2464,7 +2468,7 @@ THE SOFTWARE.
 
             let $saveButton = self._$editDiv.parent().find('#EditDialogSaveButton');
             let $editForm = self._$editDiv.find('form');
-            if (self._trigger("formSubmitting", null, { form: $editForm, formType: 'edit', row: self._$editingRow }) != false) {
+            if (self._$mainContainer.trigger("formSubmitting", { form: $editForm, formType: 'edit', row: self._$editingRow }) != false) {
                 self._setEnabledOfDialogButton($saveButton, false, self.options.messages.saving);
                 self._saveEditForm($editForm, $saveButton);
             }
@@ -2675,7 +2679,7 @@ THE SOFTWARE.
             //Open dialog
             self._$editingRow = $tableRow;
             self._$editDiv.append($editForm).dialog('open');
-            self._trigger("formCreated", null, { form: $editForm, formType: 'edit', record: record, row: $tableRow });
+            self._$mainContainer.trigger("formCreated", { form: $editForm, formType: 'edit', record: record, row: $tableRow });
         },
 
         /* Saves editing form to the server and updates the record on the table.
@@ -2799,11 +2803,11 @@ THE SOFTWARE.
         *************************************************************************/
 
         _onRowUpdated: function ($row) {
-            this._trigger("rowUpdated", null, { row: $row, record: $row.data('record') });
+            this._$mainContainer.trigger("rowUpdated", { row: $row, record: $row.data('record') });
         },
 
         _onRecordUpdated: function ($row, data) {
-            this._trigger("recordUpdated", null, { record: $row.data('record'), row: $row, serverResponse: data });
+            this._$mainContainer.trigger("recordUpdated", { record: $row.data('record'), row: $row, serverResponse: data });
         }
 
     });
@@ -2818,13 +2822,13 @@ THE SOFTWARE.
 
     //Reference to base object members
     let base = {
-        _create: $.hik.jtable.prototype._create,
-        _addColumnsToHeaderRow: $.hik.jtable.prototype._addColumnsToHeaderRow,
-        _addCellsToRowUsingRecord: $.hik.jtable.prototype._addCellsToRowUsingRecord
+        _create: jTable.prototype._create,
+        _addColumnsToHeaderRow: jTable.prototype._addColumnsToHeaderRow,
+        _addCellsToRowUsingRecord: jTable.prototype._addCellsToRowUsingRecord
     };
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * DEFAULT OPTIONS / EVENTS                                              *
@@ -3152,7 +3156,7 @@ THE SOFTWARE.
                     return;
                 }
 
-                self._trigger("recordDeleted", null, { record: $row.data('record'), row: $row, serverResponse: data });
+                self._$mainContainer.trigger("recordDeleted", { record: $row.data('record'), row: $row, serverResponse: data });
 
                 if (success) {
                     success(data);
@@ -3245,16 +3249,16 @@ THE SOFTWARE.
 
     //Reference to base object members
     let base = {
-        _create: $.hik.jtable.prototype._create,
-        _addColumnsToHeaderRow: $.hik.jtable.prototype._addColumnsToHeaderRow,
-        _addCellsToRowUsingRecord: $.hik.jtable.prototype._addCellsToRowUsingRecord,
-        _onLoadingRecords: $.hik.jtable.prototype._onLoadingRecords,
-        _onRecordsLoaded: $.hik.jtable.prototype._onRecordsLoaded,
-        _onRowsRemoved: $.hik.jtable.prototype._onRowsRemoved
+        _create: jTable.prototype._create,
+        _addColumnsToHeaderRow: jTable.prototype._addColumnsToHeaderRow,
+        _addCellsToRowUsingRecord: jTable.prototype._addCellsToRowUsingRecord,
+        _onLoadingRecords: jTable.prototype._onLoadingRecords,
+        _onRecordsLoaded: jTable.prototype._onRecordsLoaded,
+        _onRowsRemoved: jTable.prototype._onRowsRemoved
     };
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * DEFAULT OPTIONS / EVENTS                                              *
@@ -3614,7 +3618,7 @@ THE SOFTWARE.
         *************************************************************************/
 
         _onSelectionChanged: function () {
-            this._trigger("selectionChanged", null, {});
+            this._$mainContainer.trigger("selectionChanged", {});
         }
 
     });
@@ -3629,19 +3633,19 @@ THE SOFTWARE.
 
     //Reference to base object members
     let base = {
-        load: $.hik.jtable.prototype.load,
-        _create: $.hik.jtable.prototype._create,
-        _setOption: $.hik.jtable.prototype._setOption,
-        //_createRecordLoadUrl: $.hik.jtable.prototype._createRecordLoadUrl,
-        _createJtParamsForLoading: $.hik.jtable.prototype._createJtParamsForLoading,
-        _addRowToTable: $.hik.jtable.prototype._addRowToTable,
-        _addRow: $.hik.jtable.prototype._addRow,
-        _removeRowsFromTable: $.hik.jtable.prototype._removeRowsFromTable,
-        _onRecordsLoaded: $.hik.jtable.prototype._onRecordsLoaded
+        load: jTable.prototype.load,
+        _create: jTable.prototype._create,
+        _setOption: jTable.prototype._setOption,
+        //_createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
+        _createJtParamsForLoading: jTable.prototype._createJtParamsForLoading,
+        _addRowToTable: jTable.prototype._addRowToTable,
+        _addRow: jTable.prototype._addRow,
+        _removeRowsFromTable: jTable.prototype._removeRowsFromTable,
+        _onRecordsLoaded: jTable.prototype._onRecordsLoaded
     };
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * DEFAULT OPTIONS / EVENTS                                              *
@@ -4228,15 +4232,15 @@ THE SOFTWARE.
 
     //Reference to base object members
     let base = {
-        _initializeFields: $.hik.jtable.prototype._initializeFields,
-        _normalizeFieldOptions: $.hik.jtable.prototype._normalizeFieldOptions,
-        _createHeaderCellForField: $.hik.jtable.prototype._createHeaderCellForField,
-        //_createRecordLoadUrl: $.hik.jtable.prototype._createRecordLoadUrl,
-        _createJtParamsForLoading: $.hik.jtable.prototype._createJtParamsForLoading
+        _initializeFields: jTable.prototype._initializeFields,
+        _normalizeFieldOptions: jTable.prototype._normalizeFieldOptions,
+        _createHeaderCellForField: jTable.prototype._createHeaderCellForField,
+        //_createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
+        _createJtParamsForLoading: jTable.prototype._createJtParamsForLoading
     };
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * DEFAULT OPTIONS / EVENTS                                              *
@@ -4437,14 +4441,14 @@ THE SOFTWARE.
 
     //Reference to base object members
     let base = {
-        _create: $.hik.jtable.prototype._create,
-        _normalizeFieldOptions: $.hik.jtable.prototype._normalizeFieldOptions,
-        _createHeaderCellForField: $.hik.jtable.prototype._createHeaderCellForField,
-        _createCellForRecordField: $.hik.jtable.prototype._createCellForRecordField
+        _create: jTable.prototype._create,
+        _normalizeFieldOptions: jTable.prototype._normalizeFieldOptions,
+        _createHeaderCellForField: jTable.prototype._createHeaderCellForField,
+        _createCellForRecordField: jTable.prototype._createCellForRecordField
     };
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * DEFAULT OPTIONS / EVENTS                                              *
@@ -4901,11 +4905,11 @@ THE SOFTWARE.
 
     //Reference to base object members
     let base = {
-        _removeRowsFromTable: $.hik.jtable.prototype._removeRowsFromTable
+        _removeRowsFromTable: jTable.prototype._removeRowsFromTable
     };
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /************************************************************************
         * DEFAULT OPTIONS / EVENTS                                              *

@@ -609,12 +609,12 @@ jQuery(document).ready( function($) {
         });
 
         // Load list from server
-        $('#EventsTableContainer').jtable('load');
+	$('#EventsTableContainer').data('jTable').load();
 
         // Actions button
         $('#EventsActionsButton').on("click",function (e) {
             e.preventDefault();
-            let selectedRows = $('#EventsTableContainer').jtable('selectedRows');
+            let selectedRows = $('#EventsTableContainer').data('jTable').selectedRows();
             let do_action = $('#eme_admin_action').val();
             let send_trashmails = $('#send_trashmails').val();
             let addtocategory = $('#addtocategory').val();
@@ -642,7 +642,7 @@ jQuery(document).ready( function($) {
                         'eme_admin_nonce': emeevents.translate_adminnonce };
 
                     $.post(ajaxurl, params, function(data) {
-                        $('#EventsTableContainer').jtable('load');
+			$('#EventsTableContainer').data('jTable').load();
                         $('#EventsActionsButton').text(emeevents.translate_apply);
                         $('#EventsActionsButton').prop('disabled', false);
                         $('div#events-message').html(data.Message);
@@ -658,7 +658,7 @@ jQuery(document).ready( function($) {
         // Re-load records when user click 'load records' button.
         $('#EventsLoadRecordsButton').on("click",function (e) {
             e.preventDefault();
-            $('#EventsTableContainer').jtable('load');
+	    $('#EventsTableContainer').data('jTable').load();
             // return false to make sure the real form doesn't submit
             return false;
         });
@@ -768,12 +768,12 @@ jQuery(document).ready( function($) {
         });
 
         // Load list from server
-        $('#RecurrencesTableContainer').jtable('load');
+        $('#RecurrencesTableContainer').data('jTable').load();
 
         // Actions button
         $('#RecurrencesActionsButton').on("click",function (e) {
             e.preventDefault();
-            let selectedRows = $('#RecurrencesTableContainer').jtable('selectedRows');
+            let selectedRows = $('#RecurrencesTableContainer').data('jTable').selectedRows();
             let do_action = $('#eme_admin_action').val();
             let rec_new_start_date = $('#rec_new_start_date').val();
             let rec_new_end_date = $('#rec_new_end_date').val();
@@ -801,7 +801,7 @@ jQuery(document).ready( function($) {
                         'eme_admin_nonce': emeevents.translate_adminnonce };
 
                     $.post(ajaxurl, params, function(data) {
-                        $('#RecurrencesTableContainer').jtable('load');
+                        $('#RecurrencesTableContainer').data('jTable').load();
                         $('#RecurrencesActionsButton').text(emeevents.translate_apply);
                         $('#RecurrencesActionsButton').prop('disabled', false);
                         $('div#events-message').html(data.Message);
@@ -817,7 +817,7 @@ jQuery(document).ready( function($) {
         // Re-load records when user click 'load records' button.
         $('#RecurrencesLoadRecordsButton').on("click",function (e) {
             e.preventDefault();
-            $('#RecurrencesTableContainer').jtable('load');
+            $('#RecurrencesTableContainer').data('jTable').load();
             // return false to make sure the real form doesn't submit
             return false;
         });

@@ -125,7 +125,7 @@ jQuery(document).ready(function ($) {
             fields: locationfields
         });
 
-        $('#LocationsTableContainer').jtable('load');
+        $('#LocationsTableContainer').data('jTable').load();
     }
 
     function updateShowHideStuff () {
@@ -226,7 +226,7 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#LocationsActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#LocationsTableContainer').jtable('selectedRows');
+        let selectedRows = $('#LocationsTableContainer').data('jTable').selectedRows();
         let do_action = $('#eme_admin_action').val();
         let nonce = $('#eme_admin_nonce').val();
         let action_ok=1;
@@ -249,7 +249,7 @@ jQuery(document).ready(function ($) {
                     'transferto_id': $('#transferto_id').val(),
                     'eme_admin_nonce': nonce },
                     function() {
-                        $('#LocationsTableContainer').jtable('load');
+                        $('#LocationsTableContainer').data('jTable').load();
                         $('#LocationsActionsButton').text(emelocations.translate_apply);
                     });
             }
@@ -261,7 +261,7 @@ jQuery(document).ready(function ($) {
     // Re-load records when user click 'load records' button.
     $('#LocationsLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#LocationsTableContainer').jtable('load');
+        $('#LocationsTableContainer').data('jTable').load();
         // return false to make sure the real form doesn't submit
         return false;
     });

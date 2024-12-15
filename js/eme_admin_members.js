@@ -218,7 +218,7 @@ jQuery(document).ready(function ($) {
         } else {
             exactmatch = 0;
         }
-        $('#MembersTableContainer').jtable('load');
+        $('#MembersTableContainer').data('jTable').load();
     }
 
     if ($('#MembershipsTableContainer').length) {
@@ -283,13 +283,13 @@ jQuery(document).ready(function ($) {
             },
             fields: membershipfields
         });
-        $('#MembershipsTableContainer').jtable('load');
+        $('#MembershipsTableContainer').data('jTable').load();
     }
 
     // Actions button
     $('#MembershipsActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#MembershipsTableContainer').jtable('selectedRows');
+        let selectedRows = $('#MembershipsTableContainer').data('jTable').selectedRows();
         let do_action = $('#eme_admin_action').val();
         let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
@@ -306,7 +306,7 @@ jQuery(document).ready(function ($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'membership_id': idsjoined, 'action': 'eme_manage_memberships', 'do_action': do_action, 'eme_admin_nonce': ememembers.translate_adminnonce }, function(data) {
-                    $('#MembershipsTableContainer').jtable('load');
+                    $('#MembershipsTableContainer').data('jTable').load();
                     $('#MembershipsActionsButton').text(ememembers.translate_apply);
                     $('#MembershipsActionsButton').prop('disabled', false);
                     $('div#memberships-message').html(data.htmlmessage);
@@ -324,7 +324,7 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#MembersActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#MembersTableContainer').jtable('selectedRows');
+        let selectedRows = $('#MembersTableContainer').data('jTable').selectedRows();
         let do_action = $('#eme_admin_action').val();
         let send_mail = $('#send_mail').val();
         let trash_person = $('#trash_person').val();
@@ -394,7 +394,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#MembersTableContainer').jtable('load');
+                    $('#MembersTableContainer').data('jTable').load();
                     $('#MembersActionsButton').text(ememembers.translate_apply);
                     $('#MembersActionsButton').prop('disabled', false);
                     $('div#members-message').html(data.htmlmessage);
@@ -416,7 +416,7 @@ jQuery(document).ready(function ($) {
         } else {
             exactmatch = 0;
         }
-        $('#MembersTableContainer').jtable('load');
+        $('#MembersTableContainer').data('jTable').load();
         if ($('#search_person').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_memberid').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
             $('#StoreQueryButton').show();
         } else {

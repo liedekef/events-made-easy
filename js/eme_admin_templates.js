@@ -50,13 +50,13 @@ jQuery(document).ready( function($) {
             }
         });
 
-        $('#TemplatesTableContainer').jtable('load');
+        $('#TemplatesTableContainer').data('jTable').load();
     }
 
     // Actions button
     $('#TemplatesActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#TemplatesTableContainer').jtable('selectedRows');
+        let selectedRows = $('#TemplatesTableContainer').data('jTable').selectedRows();
         let do_action = $('#eme_admin_action').val();
         let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
@@ -72,7 +72,7 @@ jQuery(document).ready( function($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_templates', 'do_action': do_action, 'eme_admin_nonce': emetemplates.translate_adminnonce }, function() {
-                    $('#TemplatesTableContainer').jtable('load');
+                    $('#TemplatesTableContainer').data('jTable').load();
                     $('#TemplatesActionsButton').text(emetemplates.translate_apply);
                     if (do_action=='deleteTemplates') {
                         $('div#templates-message').html(emetemplates.translate_deleted);
@@ -89,7 +89,7 @@ jQuery(document).ready( function($) {
     // Re-load records when user click 'load records' button.
     $('#TemplatesLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#TemplatesTableContainer').jtable('load');
+        $('#TemplatesTableContainer').data('jTable').load();
         // return false to make sure the real form doesn't submit
         return false;
     });

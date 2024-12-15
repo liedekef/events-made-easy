@@ -510,13 +510,13 @@ jQuery(document).ready( function($) {
         }
     });
     if ($('#MailingReportTableContainer').length) {
-        $('#MailingReportTableContainer').jtable('load');
+        $('#MailingReportTableContainer').data('jTable').load();
     }
 
     // Re-load records when user click 'load records' button.
     $('#ReportLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#MailingReportTableContainer').jtable('load');
+        $('#MailingReportTableContainer').data('jTable').load();
         // return false to make sure the real form doesn't submit
         return false;
     });

@@ -3,9 +3,9 @@
 **/
 (function ($) {
 	var base={
-		_addRowToTableHead:$.hik.jtable.prototype._addRowToTableHead
+		_addRowToTableHead: jTable.prototype._addRowToTableHead
 	}
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 		options: {
 			toolbarsearch:false,
 			toolbarreset:true

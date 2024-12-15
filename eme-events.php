@@ -9570,12 +9570,8 @@ function eme_admin_enqueue_js() {
 		];
 		wp_localize_script( 'eme-admin', 'emeadmin', $translation_array );
 		wp_enqueue_script( 'eme-admin' );
-		//wp_enqueue_style("wp-jquery-ui-dialog");
-		//wp_enqueue_style( 'eme-jquery-ui-css' );
 		wp_enqueue_style( 'eme-jquery-jtable-css' );
 		wp_enqueue_style( 'eme-jtables-css' );
-        // wp_enqueue_style( 'eme-tabulator-css' );
-        // wp_enqueue_style( 'eme-datatables-css' );
 		wp_enqueue_style( 'eme-jquery-select2-css' );
 		if ( wp_script_is( 'eme-jtable-locale', 'registered' ) ) {
 			wp_enqueue_script( 'eme-jtable-locale' );

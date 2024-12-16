@@ -1359,7 +1359,7 @@ THE SOFTWARE.
     };
 
     $.fn.jtable = function (methodOrOptions) {
-	    var options;
+	    let options;
 	    // Determine if the first argument is a method or options
 	    if (typeof methodOrOptions === 'string') {
 		    // no private functions
@@ -1373,22 +1373,26 @@ THE SOFTWARE.
 		    // If it's an object, set options to methodOrOptions
 		    options = methodOrOptions;
 	    }
-        return this.each(function () {
-            if (!$.data(this, 'jTable')) {
-                $.data(this, 'jTable', new jTable(this, methodOrOptions));
-            } else {
-		    var myinstance = $.data(this, 'jTable');
-		    // Check if the method exists on the instance
-		    if (myinstance && typeof methodOrOptions === 'string' && typeof myinstance[methodOrOptions] === 'function') {
-			    // Call the method with the provided options
-			    return myinstance[methodOrOptions].apply(myinstance, options);
+	    let res;
+	    this.each(function () {
+		    if (!$.data(this, 'jTable')) {
+			    res = $.data(this, 'jTable', new jTable(this, methodOrOptions));
 		    } else {
-			    // Handle the case where the method does not exist
-			    $.error('Method ' + methodOrOptions + ' does not exist on jTable');
-		    }
+			    var myinstance = $.data(this, 'jTable');
+			    // Check if the method exists on the instance
+			    if (myinstance && typeof methodOrOptions === 'string' && typeof myinstance[methodOrOptions] === 'function') {
+				    // Call the method with the provided options
+				    res = myinstance[methodOrOptions].apply(myinstance, options);
+			    } else {
+				    // Handle the case where the method does not exist
+				    res = $.error('Method ' + methodOrOptions + ' does not exist on jTable');
+			    }
 
-	    }
-        });
+		    }
+		    // we return after the first match in the each (we only do 1 element matching the selector)
+		    return;
+	    });
+	    return res;
     };
 
 }(jQuery));

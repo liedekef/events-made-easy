@@ -133,13 +133,17 @@ jQuery(document).ready( function($) {
 		}
 	});
 
-	$("#eme_dyndata_tbody").sortable({
-		distance: 5,
-		opacity: 0.6,
-		cursor: 'move',
-		handle: '.eme-sortable-handle',
-		axis: 'y'
-	});
+	if ($('#eme_dyndata_tbody').length) {
+		new Sortable(document.getElementById('eme_dyndata_tbody'), {
+			handle: '.eme-sortable-handle',
+			onStart: function (evt) {
+				evt.from.style.opacity = '0.6';
+			},
+			onEnd: function (evt) {
+				evt.from.style.opacity = '1';
+			}
+		});
+	}
 
 	$('.eme_dyndata_add_tag').on("click",function(event) {
 		event.preventDefault();
@@ -225,21 +229,28 @@ jQuery(document).ready( function($) {
 		}
 	});
 
-	$("#eme_tasks_tbody").sortable({
-		distance: 5,
-		opacity: 0.6,
-		cursor: 'move',
-		handle: '.eme-sortable-handle',
-		axis: 'y'
-	});
-
-	$("#eme_todos_tbody").sortable({
-		distance: 5,
-		opacity: 0.6,
-		cursor: 'move',
-		handle: '.eme-sortable-handle',
-		axis: 'y'
-	});
+	if ($('#eme_tasks_tbody').length) {
+		new Sortable(document.getElementById('eme_tasks_tbody'), {
+			handle: '.eme-sortable-handle',
+			onStart: function (evt) {
+				evt.from.style.opacity = '0.6';
+			},
+			onEnd: function (evt) {
+				evt.from.style.opacity = '1';
+			}
+		});
+	}
+	if ($('#eme_todos_tbody').length) {
+		new Sortable(document.getElementById('eme_todos_tbody'), {
+			handle: '.eme-sortable-handle',
+			onStart: function (evt) {
+				evt.from.style.opacity = '0.6';
+			},
+			onEnd: function (evt) {
+				evt.from.style.opacity = '1';
+			}
+		});
+	}
 
 	// since we don't clone the events when adding a row (because that causes trouble for cloned datepickers),
 	//   we need to re-add the events on the new row (like the datepickers and the add/remove)

@@ -89,6 +89,7 @@ jQuery(document).ready(function ($) {
             title: emelocations.translate_locations,
             paging: true,
             sorting: true,
+            jqueryuiTheme: true,
             defaultSorting: 'location_id ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -125,7 +126,7 @@ jQuery(document).ready(function ($) {
             fields: locationfields
         });
 
-        $('#LocationsTableContainer').data('jTable').load();
+        $('#LocationsTableContainer').jtable('load');
     }
 
     function updateShowHideStuff () {
@@ -226,7 +227,7 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#LocationsActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#LocationsTableContainer').data('jTable').selectedRows();
+        let selectedRows = $('#LocationsTableContainer').jtable('selectedRows');
         let do_action = $('#eme_admin_action').val();
         let nonce = $('#eme_admin_nonce').val();
         let action_ok=1;
@@ -249,7 +250,7 @@ jQuery(document).ready(function ($) {
                     'transferto_id': $('#transferto_id').val(),
                     'eme_admin_nonce': nonce },
                     function() {
-                        $('#LocationsTableContainer').data('jTable').load();
+                        $('#LocationsTableContainer').jtable('load');
                         $('#LocationsActionsButton').text(emelocations.translate_apply);
                     });
             }
@@ -261,7 +262,7 @@ jQuery(document).ready(function ($) {
     // Re-load records when user click 'load records' button.
     $('#LocationsLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#LocationsTableContainer').data('jTable').load();
+        $('#LocationsTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

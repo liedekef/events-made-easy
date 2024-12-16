@@ -180,6 +180,7 @@ jQuery(document).ready(function ($) {
             paging: true,
             sorting: true,
             multiSorting: true,
+            jqueryuiTheme: true,
             defaultSorting: '',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -191,7 +192,7 @@ jQuery(document).ready(function ($) {
                         text: emersvp.translate_markpaidandapprove,
                         cssClass: 'eme_jtable_button_for_pending_only',
                         click: function () {
-                            let selectedRows = $('#BookingsTableContainer').data('jTable').selectedRows();
+                            let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
                             let do_action = 'markpaidandapprove';
                             if (selectedRows.length > 0) {
                                 let ids = [];
@@ -207,7 +208,7 @@ jQuery(document).ready(function ($) {
                                         $('div#bookings-message').delay(3000).fadeOut('slow');
                                     }
 
-                                    $('#BookingsTableContainer').data('jTable').load();
+                                    $('#BookingsTableContainer').jtable('load');
                                     $('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_markpaidandapprove);
                                 }, 'json');
                             }
@@ -217,7 +218,7 @@ jQuery(document).ready(function ($) {
                         text: emersvp.translate_markpaid,
                         cssClass: 'eme_jtable_button_for_approved_only',
                         click: function () {
-                            let selectedRows = $('#BookingsTableContainer').data('jTable').selectedRows();
+                            let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
                             let do_action = 'markPaid';
                             if (selectedRows.length > 0) {
                                 let ids = [];
@@ -233,7 +234,7 @@ jQuery(document).ready(function ($) {
                                         $('div#bookings-message').delay(3000).fadeOut('slow');
                                     }
 
-                                    $('#BookingsTableContainer').data('jTable').load();
+                                    $('#BookingsTableContainer').jtable('load');
                                     $('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(emersvp.translate_markpaid);
                                 }, 'json');
                             }
@@ -279,7 +280,7 @@ jQuery(document).ready(function ($) {
             fields: rsvpfields
         });
 
-        $('#BookingsTableContainer').data('jTable').load();
+        $('#BookingsTableContainer').jtable('load');
     }
 
     function updateShowHideStuff() {
@@ -341,7 +342,7 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#BookingsActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#BookingsTableContainer').data('jTable').selectedRows();
+        let selectedRows = $('#BookingsTableContainer').jtable('selectedRows');
         let do_action = $('#eme_admin_action').val();
         let send_to_contact_too = $('#send_to_contact_too').val();
         let send_mail = $('#send_mail').val();
@@ -419,7 +420,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#BookingsTableContainer').data('jTable').load();
+                    $('#BookingsTableContainer').jtable('load');
                     $('#BookingsActionsButton').text(emersvp.translate_apply);
                     $('#BookingsActionsButton').prop('disabled', false);
                     $('div#bookings-message').html(data.htmlmessage);
@@ -435,7 +436,7 @@ jQuery(document).ready(function ($) {
     // Re-load records when user click 'load records' button.
     $('#BookingsLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#BookingsTableContainer').data('jTable').load();
+        $('#BookingsTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

@@ -133,14 +133,12 @@ jQuery(document).ready( function($) {
 		}
 	});
 
-	new Sortable(document.getElementById('eme_dyndata_tbody'), {
-	    handle: '.eme-sortable-handle',
-	    onStart: function (evt) {
-	        evt.from.style.opacity = '0.6';
-	    },
-	    onEnd: function (evt) {
-	        evt.from.style.opacity = '1';
-	    }
+	$("#eme_dyndata_tbody").sortable({
+		distance: 5,
+		opacity: 0.6,
+		cursor: 'move',
+		handle: '.eme-sortable-handle',
+		axis: 'y'
 	});
 
 	$('.eme_dyndata_add_tag').on("click",function(event) {
@@ -227,23 +225,20 @@ jQuery(document).ready( function($) {
 		}
 	});
 
-	new Sortable(document.getElementById('eme_tasks_tbody'), {
-	    handle: '.eme-sortable-handle',
-	    onStart: function (evt) {
-	        evt.from.style.opacity = '0.6';
-	    },
-	    onEnd: function (evt) {
-	        evt.from.style.opacity = '1';
-	    }
+	$("#eme_tasks_tbody").sortable({
+		distance: 5,
+		opacity: 0.6,
+		cursor: 'move',
+		handle: '.eme-sortable-handle',
+		axis: 'y'
 	});
-	new Sortable(document.getElementById('eme_todos_tbody'), {
-	    handle: '.eme-sortable-handle',
-	    onStart: function (evt) {
-	        evt.from.style.opacity = '0.6';
-	    },
-	    onEnd: function (evt) {
-	        evt.from.style.opacity = '1';
-	    }
+
+	$("#eme_todos_tbody").sortable({
+		distance: 5,
+		opacity: 0.6,
+		cursor: 'move',
+		handle: '.eme-sortable-handle',
+		axis: 'y'
 	});
 
 	// since we don't clone the events when adding a row (because that causes trouble for cloned datepickers),

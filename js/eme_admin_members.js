@@ -170,6 +170,7 @@ jQuery(document).ready(function ($) {
             paging: true,
             sorting: true,
             multiSorting: true,
+            jqueryuiTheme: true,
             defaultSorting: '',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -218,7 +219,7 @@ jQuery(document).ready(function ($) {
         } else {
             exactmatch = 0;
         }
-        $('#MembersTableContainer').data('jTable').load();
+        $('#MembersTableContainer').jtable('load');
     }
 
     if ($('#MembershipsTableContainer').length) {
@@ -273,6 +274,7 @@ jQuery(document).ready(function ($) {
             paging: true,
             sorting: true,
             multiSorting: true,
+            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -283,13 +285,13 @@ jQuery(document).ready(function ($) {
             },
             fields: membershipfields
         });
-        $('#MembershipsTableContainer').data('jTable').load();
+        $('#MembershipsTableContainer').jtable('load');
     }
 
     // Actions button
     $('#MembershipsActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#MembershipsTableContainer').data('jTable').selectedRows();
+        let selectedRows = $('#MembershipsTableContainer').jtable('selectedRows');
         let do_action = $('#eme_admin_action').val();
         let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
@@ -306,7 +308,7 @@ jQuery(document).ready(function ($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'membership_id': idsjoined, 'action': 'eme_manage_memberships', 'do_action': do_action, 'eme_admin_nonce': ememembers.translate_adminnonce }, function(data) {
-                    $('#MembershipsTableContainer').data('jTable').load();
+                    $('#MembershipsTableContainer').jtable('load');
                     $('#MembershipsActionsButton').text(ememembers.translate_apply);
                     $('#MembershipsActionsButton').prop('disabled', false);
                     $('div#memberships-message').html(data.htmlmessage);
@@ -324,7 +326,7 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#MembersActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#MembersTableContainer').data('jTable').selectedRows();
+        let selectedRows = $('#MembersTableContainer').jtable('selectedRows');
         let do_action = $('#eme_admin_action').val();
         let send_mail = $('#send_mail').val();
         let trash_person = $('#trash_person').val();
@@ -394,7 +396,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#MembersTableContainer').data('jTable').load();
+                    $('#MembersTableContainer').jtable('load');
                     $('#MembersActionsButton').text(ememembers.translate_apply);
                     $('#MembersActionsButton').prop('disabled', false);
                     $('div#members-message').html(data.htmlmessage);
@@ -416,7 +418,7 @@ jQuery(document).ready(function ($) {
         } else {
             exactmatch = 0;
         }
-        $('#MembersTableContainer').data('jTable').load();
+        $('#MembersTableContainer').jtable('load');
         if ($('#search_person').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_memberid').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
             $('#StoreQueryButton').show();
         } else {

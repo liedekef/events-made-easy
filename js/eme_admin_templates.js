@@ -4,6 +4,7 @@ jQuery(document).ready( function($) {
             title: emetemplates.translate_templates,
             paging: true,
             sorting: true,
+            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -50,13 +51,13 @@ jQuery(document).ready( function($) {
             }
         });
 
-        $('#TemplatesTableContainer').data('jTable').load();
+        $('#TemplatesTableContainer').jtable('load');
     }
 
     // Actions button
     $('#TemplatesActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#TemplatesTableContainer').data('jTable').selectedRows();
+        let selectedRows = $('#TemplatesTableContainer').jtable('selectedRows');
         let do_action = $('#eme_admin_action').val();
         let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
@@ -72,7 +73,7 @@ jQuery(document).ready( function($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_templates', 'do_action': do_action, 'eme_admin_nonce': emetemplates.translate_adminnonce }, function() {
-                    $('#TemplatesTableContainer').data('jTable').load();
+                    $('#TemplatesTableContainer').jtable('load');
                     $('#TemplatesActionsButton').text(emetemplates.translate_apply);
                     if (do_action=='deleteTemplates') {
                         $('div#templates-message').html(emetemplates.translate_deleted);
@@ -89,7 +90,7 @@ jQuery(document).ready( function($) {
     // Re-load records when user click 'load records' button.
     $('#TemplatesLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#TemplatesTableContainer').data('jTable').load();
+        $('#TemplatesTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

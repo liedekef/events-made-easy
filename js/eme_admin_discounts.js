@@ -6,6 +6,7 @@ jQuery(document).ready(function ($) {
         sorting: true,
         toolbarsearch: true,
         toolbarreset: false,
+        jqueryuiTheme: true,
         defaultSorting: 'name ASC',
         selecting: true, //Enable selecting
         multiselect: true, //Allow multiple selecting
@@ -71,6 +72,7 @@ jQuery(document).ready(function ($) {
         title: emediscounts.translate_discountgroups,
         paging: true,
         sorting: true,
+        jqueryuiTheme: true,
         defaultSorting: 'name ASC',
         toolbarsearch: true,
         toolbarreset: false,
@@ -107,16 +109,16 @@ jQuery(document).ready(function ($) {
 
     // Load list from server, but only if the container is there
     if ($('#DiscountsTableContainer').length) {
-        $('#DiscountsTableContainer').data('jTable').load();
+        $('#DiscountsTableContainer').jtable('load');
     }
     if ($('#DiscountGroupsTableContainer').length) {
-        $('#DiscountGroupsTableContainer').data('jTable').load();
+        $('#DiscountGroupsTableContainer').jtable('load');
     }
 
     // Actions button
     $('#DiscountsActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#DiscountsTableContainer').data('jTable').selectedRows();
+        let selectedRows = $('#DiscountsTableContainer').jtable('selectedRows');
         let do_action = $('#eme_admin_action').val();
         let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
@@ -144,7 +146,7 @@ jQuery(document).ready(function ($) {
                 };
 
                 $.post(ajaxurl, params, function(data) {
-                    $('#DiscountsTableContainer').data('jTable').load();
+                    $('#DiscountsTableContainer').jtable('load');
                     $('#DiscountsActionsButton').text(emediscounts.translate_apply);
                     $('#DiscountsActionsButton').prop('disabled', false);
                     $('div#discounts-message').html(data.htmlmessage);
@@ -160,7 +162,7 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#DiscountGroupsActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#DiscountGroupsTableContainer').data('jTable').selectedRows();
+        let selectedRows = $('#DiscountGroupsTableContainer').jtable('selectedRows');
         let do_action = $('#eme_admin_action').val();
         let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
@@ -177,7 +179,7 @@ jQuery(document).ready(function ($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_discountgroups', 'do_action': do_action, 'eme_admin_nonce': emediscounts.translate_adminnonce }, function(data) {
-                    $('#DiscountGroupsTableContainer').data('jTable').load();
+                    $('#DiscountGroupsTableContainer').jtable('load');
                     $('#DiscountGroupsActionsButton').text(emediscounts.translate_apply);
                     $('#DiscountGroupsActionsButton').prop('disabled', false);
                     $('div#discountgroups-message').html(data.htmlmessage);

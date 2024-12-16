@@ -5,6 +5,7 @@ jQuery(document).ready( function($) {
             title: emeformfields.translate_formfields,
             paging: true,
             sorting: true,
+            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -64,12 +65,12 @@ jQuery(document).ready( function($) {
             }
         });
 
-        $('#FormfieldsTableContainer').data('jTable').load();
+        $('#FormfieldsTableContainer').jtable('load');
 
         // Actions button
         $('#FormfieldsActionsButton').on("click",function (e) {
             e.preventDefault();
-            let selectedRows = $('#FormfieldsTableContainer').data('jTable').selectedRows();
+            let selectedRows = $('#FormfieldsTableContainer').jtable('selectedRows');
             let do_action = $('#eme_admin_action').val();
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
@@ -85,7 +86,7 @@ jQuery(document).ready( function($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     $.post(ajaxurl, {'field_id': idsjoined, 'action': 'eme_manage_formfields', 'do_action': do_action, 'eme_admin_nonce': emeformfields.translate_adminnonce }, function(data) {
-                        $('#FormfieldsTableContainer').data('jTable').load();
+                        $('#FormfieldsTableContainer').jtable('load');
                         $('#FormfieldsActionsButton').text(emeformfields.translate_apply);
                         $('div#formfields-message').html(data.htmlmessage);
                         $('div#formfields-message').show();
@@ -100,7 +101,7 @@ jQuery(document).ready( function($) {
         // Re-load records when user click 'load records' button.
         $('#FormfieldsLoadRecordsButton').on("click",function (e) {
             e.preventDefault();
-            $('#FormfieldsTableContainer').data('jTable').load();
+            $('#FormfieldsTableContainer').jtable('load');
             // return false to make sure the real form doesn't submit
             return false;
         });

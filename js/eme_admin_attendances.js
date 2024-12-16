@@ -5,6 +5,7 @@ jQuery(document).ready( function($) {
             title: emeattendances.translate_attendance_reports,
             paging: true,
             sorting: true,
+            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: false, //Enable selecting
             multiselect: false, //Allow multiple selecting

@@ -1358,11 +1358,36 @@ THE SOFTWARE.
 
     };
 
-    $.fn.jtable = function (options) {
+    $.fn.jtable = function (methodOrOptions) {
+	    var options;
+	    // Determine if the first argument is a method or options
+	    if (typeof methodOrOptions === 'string') {
+		    // no private functions
+		    if (methodOrOptions.startsWith('_')) {
+			    methodOrOptions = "load";
+		    } else {
+			    // If it's a method, set options to extra arguments if provided
+			    options = Array.prototype.slice.call(arguments, 1);
+		    }
+	    } else {
+		    // If it's an object, set options to methodOrOptions
+		    options = methodOrOptions;
+	    }
         return this.each(function () {
             if (!$.data(this, 'jTable')) {
-                $.data(this, 'jTable', new jTable(this, options));
-            }
+                $.data(this, 'jTable', new jTable(this, methodOrOptions));
+            } else {
+		    var myinstance = $.data(this, 'jTable');
+		    // Check if the method exists on the instance
+		    if (myinstance && typeof methodOrOptions === 'string' && typeof myinstance[methodOrOptions] === 'function') {
+			    // Call the method with the provided options
+			    return myinstance[methodOrOptions].apply(myinstance, options);
+		    } else {
+			    // Handle the case where the method does not exist
+			    $.error('Method ' + methodOrOptions + ' does not exist on jTable');
+		    }
+
+	    }
         });
     };
 
@@ -3883,7 +3908,6 @@ THE SOFTWARE.
         *************************************************************************/
         load: function() {
             this._currentPageNo = 1;
-
             base.load.apply(this, arguments);
         },
 

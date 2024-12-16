@@ -248,6 +248,7 @@ jQuery(document).ready(function ($) {
             paging: true,
             sorting: true,
             multiSorting: true,
+            jqueryuiTheme: true,
             defaultSorting: 'people.lastname ASC, people.firstname ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -289,7 +290,7 @@ jQuery(document).ready(function ($) {
 
             fields: personfields
         });
-        $('#PeopleTableContainer').data('jTable').load();
+        $('#PeopleTableContainer').jtable('load');
     }
 
     if ($('#GroupsTableContainer').length) {
@@ -297,6 +298,7 @@ jQuery(document).ready(function ($) {
             title: emepeople.translate_groups,
             paging: true,
             sorting: true,
+            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -332,12 +334,12 @@ jQuery(document).ready(function ($) {
             }
         });
 
-        $('#GroupsTableContainer').data('jTable').load();
+        $('#GroupsTableContainer').jtable('load');
 
         // Actions button
         $('#GroupsActionsButton').on("click",function (e) {
             e.preventDefault();
-            let selectedRows = $('#GroupsTableContainer').data('jTable').selectedRows();
+            let selectedRows = $('#GroupsTableContainer').jtable('selectedRows');
             let do_action = $('#eme_admin_action').val();
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
@@ -354,7 +356,7 @@ jQuery(document).ready(function ($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     $.post(ajaxurl, {'group_id': idsjoined, 'action': 'eme_manage_groups', 'do_action': do_action, 'eme_admin_nonce': emepeople.translate_adminnonce }, function(data) {
-                        $('#GroupsTableContainer').data('jTable').load();
+                        $('#GroupsTableContainer').jtable('load');
                         $('#GroupsActionsButton').text(emepeople.translate_apply);
                         $('#GroupsActionsButton').prop('disabled', false);
                         if (do_action=='deleteGroups') {
@@ -373,7 +375,7 @@ jQuery(document).ready(function ($) {
     // Actions button
     $('#PeopleActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#PeopleTableContainer').data('jTable').selectedRows();
+        let selectedRows = $('#PeopleTableContainer').jtable('selectedRows');
         let do_action = $('#eme_admin_action').val();
 
         let action_ok=1;
@@ -433,7 +435,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#PeopleTableContainer').data('jTable').load();
+                    $('#PeopleTableContainer').jtable('load');
                     $('#PeopleActionsButton').text(emepeople.translate_apply);
                     $('#PeopleActionsButton').prop('disabled', false);
                     $('div#people-message').html(data.htmlmessage);
@@ -455,7 +457,7 @@ jQuery(document).ready(function ($) {
         } else {
             exactmatch = 0;
         }
-        $('#PeopleTableContainer').data('jTable').load();
+        $('#PeopleTableContainer').jtable('load');
         if ($('#search_person').val().length || $('#search_groups').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
             $('#StoreQueryButton').show();
         } else {
@@ -626,7 +628,7 @@ jQuery(document).ready(function ($) {
                     let idsjoined = "";
                     // let's get the list if selected people, so we can exclude these
                     if ($('#PeopleTableContainer').length) {
-                        let selectedRows = $('#PeopleTableContainer').data('jTable').selectedRows();
+                        let selectedRows = $('#PeopleTableContainer').jtable('selectedRows');
                         if (selectedRows.length > 0) {
                             let ids = [];
                             selectedRows.each(function () {

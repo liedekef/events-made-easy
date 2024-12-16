@@ -456,6 +456,7 @@ jQuery(document).ready( function($) {
         title: ememails.translate_mailingreport,
         paging: true,
         sorting: true,
+        jqueryuiTheme: true,
         defaultSorting: '',
         selecting: false, //Enable selecting
         multiselect: false, //Allow multiple selecting
@@ -510,13 +511,13 @@ jQuery(document).ready( function($) {
         }
     });
     if ($('#MailingReportTableContainer').length) {
-        $('#MailingReportTableContainer').data('jTable').load();
+        $('#MailingReportTableContainer').jtable('load');
     }
 
     // Re-load records when user click 'load records' button.
     $('#ReportLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#MailingReportTableContainer').data('jTable').load();
+        $('#MailingReportTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

@@ -3,6 +3,7 @@ jQuery(document).ready( function($) {
         title: emetasks.translate_signups,
         paging: true,
         sorting: true,
+        jqueryuiTheme: true,
         defaultSorting: 'name ASC',
         selecting: true, //Enable selecting
         multiselect: true, //Allow multiple selecting
@@ -87,7 +88,7 @@ jQuery(document).ready( function($) {
     });
 
     if ($('#TaskSignupsTableContainer').length) {
-        $('#TaskSignupsTableContainer').data('jTable').load();
+        $('#TaskSignupsTableContainer').jtable('load');
     }
 
     function updateShowHideStuff () {
@@ -104,7 +105,7 @@ jQuery(document).ready( function($) {
     // Actions button
     $('#TaskSignupsActionsButton').on("click",function (e) {
         e.preventDefault();
-        let selectedRows = $('#TaskSignupsTableContainer').data('jTable').selectedRows();
+        let selectedRows = $('#TaskSignupsTableContainer').jtable('selectedRows');
         let do_action = $('#eme_admin_action').val();
         let send_mail = $('#send_mail').val();
         let action_ok=1;
@@ -135,7 +136,7 @@ jQuery(document).ready( function($) {
                 }
 
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_task_signups', 'send_mail': send_mail, 'do_action': do_action, 'eme_admin_nonce': emetasks.translate_adminnonce }, function(data) {
-                    $('#TaskSignupsTableContainer').data('jTable').load();
+                    $('#TaskSignupsTableContainer').jtable('load');
                     $('#TaskSignupsActionsButton').text(emetasks.translate_apply);
                     $('div#tasksignups-message').html(data.htmlmessage);
                     $('div#tasksignups-message').show();
@@ -150,7 +151,7 @@ jQuery(document).ready( function($) {
     // Re-load records when user click 'load records' button.
     $('#TaskSignupsLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        $('#TaskSignupsTableContainer').data('jTable').load();
+        $('#TaskSignupsTableContainer').jtable('load');
         // return false to make sure the real form doesn't submit
         return false;
     });

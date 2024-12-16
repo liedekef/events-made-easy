@@ -1359,10 +1359,11 @@ THE SOFTWARE.
     };
 
     $.fn.jtable = function (methodOrOptions) {
-	    let options;
-	    // Determine if the first argument is a method or options
-	    if (typeof methodOrOptions === 'string') {
-		    // no private functions
+	    let options = {};
+        let methodOrOptionsType = typeof methodOrOptions;
+	    // Determine if the first argument is a string (a function method) or an object (a list of options)
+	    if (methodOrOptionsType === 'string') {
+		    // no private functions allowed, we default to just "load" then
 		    if (methodOrOptions.startsWith('_')) {
 			    methodOrOptions = "load";
 		    } else {
@@ -1370,26 +1371,39 @@ THE SOFTWARE.
 			    options = Array.prototype.slice.call(arguments, 1);
 		    }
 	    } else {
-		    // If it's an object, set options to methodOrOptions
+		    // If it's an object (= a list of options), set options to methodOrOptions
 		    options = methodOrOptions;
 	    }
+
 	    let res;
 	    this.each(function () {
-		    if (!$.data(this, 'jTable')) {
+            // check the instance state
+            let myinstance = $.data(this, 'jTable');
+		    if (!myinstance) {
+                // no state yet, so call a new jTable with the options and save the instance state in jTable-data
+                if (methodOrOptionsType !== 'object') {
+                    methodOrOptions = {};
+                }
 			    res = $.data(this, 'jTable', new jTable(this, methodOrOptions));
 		    } else {
-			    var myinstance = $.data(this, 'jTable');
-			    // Check if the method exists on the instance
-			    if (myinstance && typeof methodOrOptions === 'string' && typeof myinstance[methodOrOptions] === 'function') {
-				    // Call the method with the provided options
-				    res = myinstance[methodOrOptions].apply(myinstance, options);
-			    } else {
-				    // Handle the case where the method does not exist
-				    res = $.error('Method ' + methodOrOptions + ' does not exist on jTable');
-			    }
-
+                // there is an instance, so here we only allow to continue if a method is called
+                if (methodOrOptionsType === 'string') {
+                    // Check if the method exists on the instance
+                    if (myinstance && typeof myinstance[methodOrOptions] === 'function') {
+                        // Call the method with the provided options
+                        res = myinstance[methodOrOptions].apply(myinstance, options);
+                    } else {
+                        // Handle the case where the method does not exist
+                        res = $.error('Method ' + methodOrOptions + ' does not exist on jtable');
+                    }
+                } else {
+                        res = $.error('Incorrect call to jtable');
+                }
 		    }
 		    // we return after the first match in the each (we only do 1 element matching the selector)
+            // we can't return res here, since that would return it to the function-call of this.each, 
+            // we need it to return res to the caller of jtable
+            // this return just stops the this.each loop
 		    return;
 	    });
 	    return res;

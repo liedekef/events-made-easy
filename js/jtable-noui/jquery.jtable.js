@@ -1401,7 +1401,7 @@ THE SOFTWARE.
                 }
 		    }
 		    // we return after the first match in the each (we only do 1 element matching the selector)
-            // we can't return res here, since that would return it to the function-call of this.each, 
+            // we can't return res here, since that would return it to the function-call of this.each,
             // we need it to return res to the caller of jtable
             // this return just stops the this.each loop
 		    return;

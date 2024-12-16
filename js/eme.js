@@ -1154,5 +1154,6 @@ jQuery(document).ready( function($) {
         $(document).scrollTop( $('div#eme-payment-form').offset().top - $(window).height()/2 + $('div#eme-payment-form').height()/2);
     }
 
-    $('.eme_select2').select2({width: 'fit-content'});
+    $('.eme_select2_filter').select2();
+    $('.eme_select2_fitcontent').select2({width: 'fit-content'});
 });

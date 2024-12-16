@@ -874,7 +874,7 @@ function eme_locations_table( $message = '' ) {
         echo '<input type="search" name="search_customfields" id="search_customfields" placeholder="' . esc_attr__( 'Custom field value to search', 'events-made-easy' ) . '" size=20>';
         $label = __( 'Custom fields to filter on', 'events-made-easy' );
         $extra_attributes = 'aria-label="' . eme_esc_html( $label ) . '" data-placeholder="' . eme_esc_html( $label ) . '"';
-        echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2', $extra_attributes, 1 );
+        echo eme_ui_multiselect_key_value( '', 'search_customfieldids', $formfields_searchable, 'field_id', 'field_name', 5, $label, 0, 'eme_select2_fitcontent', $extra_attributes, 1 );
     }
 ?>
     <button id="LocationsLoadRecordsButton" class="button-secondary action"><?php esc_html_e( 'Filter location', 'events-made-easy' ); ?></button>

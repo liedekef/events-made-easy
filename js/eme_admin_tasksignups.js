@@ -136,7 +136,7 @@ jQuery(document).ready( function($) {
                 }
 
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_task_signups', 'send_mail': send_mail, 'do_action': do_action, 'eme_admin_nonce': emetasks.translate_adminnonce }, function(data) {
-                    $('#TaskSignupsTableContainer').jtable('load');
+                    $('#TaskSignupsTableContainer').jtable('reload');
                     $('#TaskSignupsActionsButton').text(emetasks.translate_apply);
                     $('div#tasksignups-message').html(data.htmlmessage);
                     $('div#tasksignups-message').show();

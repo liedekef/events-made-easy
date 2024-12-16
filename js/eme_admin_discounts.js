@@ -146,7 +146,7 @@ jQuery(document).ready(function ($) {
                 };
 
                 $.post(ajaxurl, params, function(data) {
-                    $('#DiscountsTableContainer').jtable('load');
+                    $('#DiscountsTableContainer').jtable('reload');
                     $('#DiscountsActionsButton').text(emediscounts.translate_apply);
                     $('#DiscountsActionsButton').prop('disabled', false);
                     $('div#discounts-message').html(data.htmlmessage);
@@ -179,7 +179,7 @@ jQuery(document).ready(function ($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_discountgroups', 'do_action': do_action, 'eme_admin_nonce': emediscounts.translate_adminnonce }, function(data) {
-                    $('#DiscountGroupsTableContainer').jtable('load');
+                    $('#DiscountGroupsTableContainer').jtable('reload');
                     $('#DiscountGroupsActionsButton').text(emediscounts.translate_apply);
                     $('#DiscountGroupsActionsButton').prop('disabled', false);
                     $('div#discountgroups-message').html(data.htmlmessage);

@@ -208,7 +208,7 @@ jQuery(document).ready(function ($) {
                                         $('div#bookings-message').delay(3000).fadeOut('slow');
                                     }
 
-                                    $('#BookingsTableContainer').jtable('load');
+                                    $('#BookingsTableContainer').jtable('reload');
                                     $('.eme_jtable_button_for_pending_only .jtable-toolbar-item-text').text(emersvp.translate_markpaidandapprove);
                                 }, 'json');
                             }
@@ -234,7 +234,7 @@ jQuery(document).ready(function ($) {
                                         $('div#bookings-message').delay(3000).fadeOut('slow');
                                     }
 
-                                    $('#BookingsTableContainer').jtable('load');
+                                    $('#BookingsTableContainer').jtable('reload');
                                     $('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(emersvp.translate_markpaid);
                                 }, 'json');
                             }
@@ -420,7 +420,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#BookingsTableContainer').jtable('load');
+                    $('#BookingsTableContainer').jtable('reload');
                     $('#BookingsActionsButton').text(emersvp.translate_apply);
                     $('#BookingsActionsButton').prop('disabled', false);
                     $('div#bookings-message').html(data.htmlmessage);

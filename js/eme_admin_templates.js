@@ -73,7 +73,7 @@ jQuery(document).ready( function($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'id': idsjoined, 'action': 'eme_manage_templates', 'do_action': do_action, 'eme_admin_nonce': emetemplates.translate_adminnonce }, function() {
-                    $('#TemplatesTableContainer').jtable('load');
+                    $('#TemplatesTableContainer').jtable('reload');
                     $('#TemplatesActionsButton').text(emetemplates.translate_apply);
                     if (do_action=='deleteTemplates') {
                         $('div#templates-message').html(emetemplates.translate_deleted);

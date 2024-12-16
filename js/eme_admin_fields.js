@@ -86,7 +86,7 @@ jQuery(document).ready( function($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     $.post(ajaxurl, {'field_id': idsjoined, 'action': 'eme_manage_formfields', 'do_action': do_action, 'eme_admin_nonce': emeformfields.translate_adminnonce }, function(data) {
-                        $('#FormfieldsTableContainer').jtable('load');
+                        $('#FormfieldsTableContainer').jtable('reload');
                         $('#FormfieldsActionsButton').text(emeformfields.translate_apply);
                         $('div#formfields-message').html(data.htmlmessage);
                         $('div#formfields-message').show();

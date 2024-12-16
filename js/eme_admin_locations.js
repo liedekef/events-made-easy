@@ -250,7 +250,7 @@ jQuery(document).ready(function ($) {
                     'transferto_id': $('#transferto_id').val(),
                     'eme_admin_nonce': nonce },
                     function() {
-                        $('#LocationsTableContainer').jtable('load');
+                        $('#LocationsTableContainer').jtable('reload');
                         $('#LocationsActionsButton').text(emelocations.translate_apply);
                     });
             }

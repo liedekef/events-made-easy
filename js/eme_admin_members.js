@@ -308,7 +308,7 @@ jQuery(document).ready(function ($) {
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
                 $.post(ajaxurl, {'membership_id': idsjoined, 'action': 'eme_manage_memberships', 'do_action': do_action, 'eme_admin_nonce': ememembers.translate_adminnonce }, function(data) {
-                    $('#MembershipsTableContainer').jtable('load');
+                    $('#MembershipsTableContainer').jtable('reload');
                     $('#MembershipsActionsButton').text(ememembers.translate_apply);
                     $('#MembershipsActionsButton').prop('disabled', false);
                     $('div#memberships-message').html(data.htmlmessage);
@@ -396,7 +396,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#MembersTableContainer').jtable('load');
+                    $('#MembersTableContainer').jtable('reload');
                     $('#MembersActionsButton').text(ememembers.translate_apply);
                     $('#MembersActionsButton').prop('disabled', false);
                     $('div#members-message').html(data.htmlmessage);

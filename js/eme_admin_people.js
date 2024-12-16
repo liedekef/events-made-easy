@@ -356,7 +356,7 @@ jQuery(document).ready(function ($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     $.post(ajaxurl, {'group_id': idsjoined, 'action': 'eme_manage_groups', 'do_action': do_action, 'eme_admin_nonce': emepeople.translate_adminnonce }, function(data) {
-                        $('#GroupsTableContainer').jtable('load');
+                        $('#GroupsTableContainer').jtable('reload');
                         $('#GroupsActionsButton').text(emepeople.translate_apply);
                         $('#GroupsActionsButton').prop('disabled', false);
                         if (do_action=='deleteGroups') {
@@ -435,7 +435,7 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
                 $.post(ajaxurl, params, function(data) {
-                    $('#PeopleTableContainer').jtable('load');
+                    $('#PeopleTableContainer').jtable('reload');
                     $('#PeopleActionsButton').text(emepeople.translate_apply);
                     $('#PeopleActionsButton').prop('disabled', false);
                     $('div#people-message').html(data.htmlmessage);

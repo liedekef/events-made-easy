@@ -643,7 +643,7 @@ jQuery(document).ready( function($) {
                         'eme_admin_nonce': emeevents.translate_adminnonce };
 
                     $.post(ajaxurl, params, function(data) {
-                        $('#EventsTableContainer').jtable('load');
+                        $('#EventsTableContainer').jtable('reload');
                         $('#EventsActionsButton').text(emeevents.translate_apply);
                         $('#EventsActionsButton').prop('disabled', false);
                         $('div#events-message').html(data.Message);
@@ -803,7 +803,7 @@ jQuery(document).ready( function($) {
                         'eme_admin_nonce': emeevents.translate_adminnonce };
 
                     $.post(ajaxurl, params, function(data) {
-                        $('#RecurrencesTableContainer').jtable('load');
+                        $('#RecurrencesTableContainer').jtable('reload');
                         $('#RecurrencesActionsButton').text(emeevents.translate_apply);
                         $('#RecurrencesActionsButton').prop('disabled', false);
                         $('div#events-message').html(data.Message);

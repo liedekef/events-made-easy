@@ -8612,17 +8612,17 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 				</p>
 				<p id='span_payment_methods'>
 				<?php
-				echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', eme_configured_pgs_descriptions(), 5, '', 0, 'eme_select2_width50_class' );
-
         			$configured_pgs = eme_get_configured_pgs();
         			if ( empty( $configured_pgs ) ) {
-               				 esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
-        			}
+                        esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
+        			} else {
+                        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', eme_configured_pgs_descriptions(), 5, '', 0, 'eme_select2_width50_class' );
+                    }
 				?>
 				</p>
 				<p id='span_skippaymentoptions'>
-								<?php esc_html_e( 'Skip payment methods after booking', 'events-made-easy' ); ?><br>
-								<input id="eme_prop_skippaymentoptions" name='eme_prop_skippaymentoptions' value='1' type='checkbox' <?php echo $eme_prop_skippaymentoptions; ?>>
+                    <?php esc_html_e( 'Skip payment methods after booking', 'events-made-easy' ); ?><br>
+					<input id="eme_prop_skippaymentoptions" name='eme_prop_skippaymentoptions' value='1' type='checkbox' <?php echo $eme_prop_skippaymentoptions; ?>>
 					<span class="eme_smaller"><?php esc_html_e( 'If you want to skip the possibility to pay immediately after booking, select this option. This might be useful if you for example want to approve unpaid bookings and only then send them the payment link using #_PAYMENT_URL in the booked email message.', 'events-made-easy' ); ?></span>
 				</p>
 			</div>

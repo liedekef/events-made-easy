@@ -1146,7 +1146,7 @@ function eme_events_page_content() {
 		// and execute it if appropriate
 		$result         = get_query_var( 'eme_pmt_result' );
 		$configured_pgs = eme_get_configured_pgs();
-                if ( is_string($result) && in_array( $result, $configured_pgs ) ) {
+        if ( is_string($result) && in_array( $result, $configured_pgs ) ) {
 			$paid   = eme_get_payment_paid( $payment );
 			$result = eme_sanitize_request($result);
 			$func = 'eme_complete_transaction_' . $result ;
@@ -8612,11 +8612,11 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 				</p>
 				<p id='span_payment_methods'>
 				<?php
-        			$configured_pgs = eme_get_configured_pgs();
-        			if ( empty( $configured_pgs ) ) {
+        			$configured_pgs_descriptions = eme_configured_pgs_descriptions();
+        			if ( empty( $eme_configured_pgs_descriptions ) ) {
                         esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
         			} else {
-                        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', eme_configured_pgs_descriptions(), 5, '', 0, 'eme_select2_width50_class' );
+                        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_select2_width50_class' );
                     }
 				?>
 				</p>

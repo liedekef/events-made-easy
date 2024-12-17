@@ -96,28 +96,16 @@ div.jtable-main-container table.jtable tbody > tr > td {
     text-align: center;
 }
 div.success {
-    width: 40%;
     border: 1px solid #61B329;
     background: #BCED91;
-    font-weight: bold;
-    font-style: italic;
-    font: 12px sans-serif;
     color: #222;
     margin: 5px auto;
-    padding: 5px;
     text-align: center;
 }
-
 div.error {
-    width: 40%;
     border: 1px solid #CC0000;
     background: #CD5C5C;
-    font-weight: bold;
-    font-style: italic;
-    font: 12px sans-serif;
     color: #222;
     margin: 5px auto;
-    padding: 5px;
     text-align: center;
 }
-

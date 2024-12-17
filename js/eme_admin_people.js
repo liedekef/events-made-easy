@@ -248,7 +248,6 @@ jQuery(document).ready(function ($) {
             paging: true,
             sorting: true,
             multiSorting: true,
-            jqueryuiTheme: true,
             defaultSorting: 'people.lastname ASC, people.firstname ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -298,7 +297,6 @@ jQuery(document).ready(function ($) {
             title: emepeople.translate_groups,
             paging: true,
             sorting: true,
-            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting

@@ -6,7 +6,6 @@ jQuery(document).ready(function ($) {
         sorting: true,
         toolbarsearch: true,
         toolbarreset: false,
-        jqueryuiTheme: true,
         defaultSorting: 'name ASC',
         selecting: true, //Enable selecting
         multiselect: true, //Allow multiple selecting
@@ -72,7 +71,6 @@ jQuery(document).ready(function ($) {
         title: emediscounts.translate_discountgroups,
         paging: true,
         sorting: true,
-        jqueryuiTheme: true,
         defaultSorting: 'name ASC',
         toolbarsearch: true,
         toolbarreset: false,

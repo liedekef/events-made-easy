@@ -456,7 +456,6 @@ jQuery(document).ready( function($) {
         title: ememails.translate_mailingreport,
         paging: true,
         sorting: true,
-        jqueryuiTheme: true,
         defaultSorting: '',
         selecting: false, //Enable selecting
         multiselect: false, //Allow multiple selecting

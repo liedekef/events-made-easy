@@ -89,7 +89,6 @@ jQuery(document).ready(function ($) {
             title: emelocations.translate_locations,
             paging: true,
             sorting: true,
-            jqueryuiTheme: true,
             defaultSorting: 'location_id ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting

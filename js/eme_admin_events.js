@@ -560,7 +560,6 @@ jQuery(document).ready( function($) {
             paging: true,
             sorting: true,
             multiSorting: true,
-            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -581,13 +580,8 @@ jQuery(document).ready( function($) {
                     }
                 ]
             },
-            deleteConfirmation: function(data) {
-                data.deleteConfirmMessage = emeevents.translate_pressdeletetoremove + ' "' + data.record.event_name_simple + '"';
-            },
             actions: {
-                //listAction: ajaxurl+'?action=eme_events_list&eme_admin_nonce='+emeevents.translate_adminnonce+'&trash='+$_GET['trash']
                 listAction: ajaxurl
-                //deleteAction: ajaxurl+'?action=eme_manage_events&do_action=deleteEvents&eme_admin_nonce='+emeevents.translate_adminnonce
             },
             listQueryParams: function () {
                 let params = {
@@ -722,7 +716,6 @@ jQuery(document).ready( function($) {
             paging: true,
             sorting: true,
             multiSorting: true,
-            jqueryuiTheme: true,
             defaultSorting: 'name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
@@ -742,12 +735,8 @@ jQuery(document).ready( function($) {
                         }
                     }]
             },
-            deleteConfirmation: function(data) {
-                data.deleteConfirmMessage = emeevents.translate_pressdeletetoremove + ' "' + data.record.event_name_simple + '"';
-            },
             actions: {
                 listAction: ajaxurl
-                //deleteAction: ajaxurl+'?action=eme_manage_recurrences&do_action=deleteRecurrences&eme_admin_nonce='+emeevents.translate_adminnonce
             },
             listQueryParams: function () {
                 let params = {

@@ -2033,13 +2033,15 @@ THE SOFTWARE.
             }
 
             if (enabled != false) {
-                $button
-                    .removeAttr('disabled')
-                    .removeClass('ui-state-disabled');
+                $button.removeAttr('disabled');
+                if (this.options.jqueryuiTheme) {
+                    $button.removeClass('ui-state-disabled');
+                }
             } else {
-                $button
-                    .attr('disabled', 'disabled')
-                    .addClass('ui-state-disabled');
+                $button.attr('disabled', 'disabled');
+                if (this.options.jqueryuiTheme) {
+                    $button.addClass('ui-state-disabled');
+                }
             }
 
             if (buttonText) {

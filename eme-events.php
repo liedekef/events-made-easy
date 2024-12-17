@@ -8614,7 +8614,9 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 				<?php
         			$configured_pgs_descriptions = eme_configured_pgs_descriptions();
         			if ( empty( $eme_configured_pgs_descriptions ) ) {
+					echo "<b>";
                         esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
+					echo "</b>";
         			} else {
                         echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_select2_width50_class' );
                     }

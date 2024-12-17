@@ -1,4 +1,4 @@
-﻿/*
+/*
     jTable localization file for 'Vietnamese' language.
     Author: Lê Hoàng Hiếu
 */

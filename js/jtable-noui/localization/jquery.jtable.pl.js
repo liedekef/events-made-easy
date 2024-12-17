@@ -1,4 +1,4 @@
-﻿/*
+/*
     jTable localization file for 'Polish' language.
     Author: Grzegorz Zbucki
 */

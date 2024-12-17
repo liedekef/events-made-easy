@@ -1,4 +1,4 @@
-﻿/*
+/*
    jTable localization file for 'Russian' language.
    Author: Stanislav Reznikov
    Updated: Andrei Lukovenko

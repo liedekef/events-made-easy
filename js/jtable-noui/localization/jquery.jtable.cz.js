@@ -4,7 +4,7 @@ Author: Jakub Stajner
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'Chyba připojení k serveru.',
         loadingMessage: 'Načítám...',
         noDataAvailable: 'Žádné záznamy',

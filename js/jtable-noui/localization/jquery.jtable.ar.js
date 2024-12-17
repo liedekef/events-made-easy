@@ -5,7 +5,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'حدث خطأ عند محاولة الاتصال بالخادم(السيرفر(',
         loadingMessage: 'جاري التحميل ۔۔',
         noDataAvailable: 'لا يوجد بيانات !',

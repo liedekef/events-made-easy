@@ -4,7 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'সার্ভারে যোগাযোগ ত্রুটি',
         loadingMessage: 'বার্তা বোঝাই করা হচ্ছে',
         noDataAvailable: 'কোন তথ্য পাওযা যাচ্ছে না',

@@ -4,7 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: '服务器请求错误。',
         loadingMessage: '加载中...',
         noDataAvailable: '没有数据！',

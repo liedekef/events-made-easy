@@ -4,7 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'Ett fel uppstod i kommunikationen med servern.',
         loadingMessage: 'Laddar...',
         noDataAvailable: 'Data saknas',

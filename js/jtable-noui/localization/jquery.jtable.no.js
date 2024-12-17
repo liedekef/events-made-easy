@@ -4,7 +4,7 @@ Author: Tobias Flatin
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'En feil oppsto i kommunikasjonen med serveren.',
         loadingMessage: 'Laster...',
         noDataAvailable: 'Ingen data',

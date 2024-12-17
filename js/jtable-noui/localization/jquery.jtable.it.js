@@ -4,7 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'Si è verificato un errore di comunicazione con il server.',
         loadingMessage: 'Caricamento dei record...',
         noDataAvailable: 'Non ci sono dati disponibili!',

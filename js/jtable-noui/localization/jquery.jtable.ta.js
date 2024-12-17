@@ -4,7 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'வழங்கியுடன் தொடர்பை ஏற்படுத்துவதில் பிழை ',
         loadingMessage: 'தரவுகள் ஏற்கப்படுகின்றன',
         noDataAvailable: 'எந்தவொரு தகவலும் இல்லை',

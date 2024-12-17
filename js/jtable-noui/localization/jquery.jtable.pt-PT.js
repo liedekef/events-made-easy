@@ -3,7 +3,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'Erro na ligação ao servidor.',
         loadingMessage: 'A ler dados ...',
         noDataAvailable: 'Não existem dados!',

@@ -4,7 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'Sunucu ile iletişim kurulurken bir hata oluştu.',
         loadingMessage: 'Kayıtlar yükleniyor...',
         noDataAvailable: 'Hiç kayıt bulunmamaktadır!',

@@ -3,7 +3,7 @@
     Author: Lê Hoàng Hiếu
 */
 (function ($) {
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'Có lỗi khi giao tiếp với máy chủ.',
         loadingMessage: 'Đang tải dữ liệu...',
         noDataAvailable: 'Không có dữ liệu!',

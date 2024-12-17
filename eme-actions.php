@@ -253,11 +253,11 @@ add_action( 'wp_footer', 'eme_general_footer' );
 //}
 
 function eme_admin_register_scripts() {
+	$eme_plugin_dir  = eme_plugin_dir();
 	wp_register_script( 'eme-select2', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/js/select2.min.js', 'jquery', EME_VERSION );
 	// for english, no translation code is needed)
 	$language = eme_detect_lang();
 	if ( $language != 'en' ) {
-		$eme_plugin_dir  = eme_plugin_dir();
 		$locale_file     = $eme_plugin_dir . "js/jquery-select2/select2-4.1.0-rc.0/dist/js/i18n/$language.js";
 		$locale_file_url = EME_PLUGIN_URL . "js/jquery-select2/select2-4.1.0-rc.0/dist/js/i18n/$language.js";
 		if ( file_exists( $locale_file ) ) {
@@ -287,13 +287,13 @@ function eme_admin_register_scripts() {
 
 	$locale_code     = determine_locale();
 	$locale_code     = preg_replace( '/_/', '-', $locale_code );
-	$locale_file     = EME_PLUGIN_URL . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
+	$locale_file     = $eme_plugin_dir . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
 	$locale_file_url = EME_PLUGIN_URL . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
 	// for english, no translation code is needed)
 	if ( $locale_code != 'en-US' ) {
 		if ( ! file_exists( $locale_file ) ) {
 			$locale_code     = substr( $locale_code, 0, 2 );
-			$locale_file     = EME_PLUGIN_URL . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
+			$locale_file     = $eme_plugin_dir . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
 			$locale_file_url = EME_PLUGIN_URL . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
 		}
 		if ( file_exists( $locale_file ) ) {

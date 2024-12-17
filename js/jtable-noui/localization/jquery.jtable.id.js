@@ -5,7 +5,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'Gagal terhubung ke server.',
         loadingMessage: 'Proses membaca data...',
         noDataAvailable: 'Data tidak tersedia',

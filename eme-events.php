@@ -5941,7 +5941,7 @@ function eme_events_table( $message = '' ) {
 	</h1>
 
 	<?php if ( isset( $_GET['trash'] ) && $_GET['trash'] == 1 ) { ?>
-		<a href="<?php echo admin_url( "admin.php?page=$plugin_page&trash=0" ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
+		<a href="<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>"><?php esc_html_e( 'Show regular content', 'events-made-easy' ); ?></a><br>
 	<?php } else { ?>
 		<a href="<?php echo admin_url( "admin.php?page=$plugin_page&trash=1" ); ?>"><?php esc_html_e( 'Show trash content', 'events-made-easy' ); ?></a><br>
 		<?php if ( current_user_can( get_option( 'eme_cap_cleanup' ) ) ) { ?>

@@ -4,7 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: 'Adatbázis hiba',
         loadingMessage: 'Adatok betöltése...',
         noDataAvailable: 'Nincs elérhető adat!',

@@ -4,7 +4,7 @@
 */
 (function ($) {
 
-$.extend(true, $.hik.jtable.prototype.options.messages, {
+$.extend(true, jTable.prototype.options.messages, {
     serverCommunicationError: 'Παρουσιάστηκε σφάλμα στην προσπάθεια σύνδεσης στο διακομιστή.',
     loadingMessage: 'φορτώνονται οι εγγραφές...',
     noDataAvailable: 'Δεν υπάρχουν δεδομένα',

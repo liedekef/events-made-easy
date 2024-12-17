@@ -4,7 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, $.hik.jtable.prototype.options.messages, {
+    $.extend(true, jTable.prototype.options.messages, {
         serverCommunicationError: '서버와 통신 중에 오류가 발생했습니다.',
         loadingMessage: '데이터를 불러오는 중입니다...',
         noDataAvailable: '조회된 데이터가 없습니다.',

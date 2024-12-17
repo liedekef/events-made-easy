@@ -119,11 +119,11 @@ div.jtable-main-container table.jtable thead th.jtable-column-header div.jtable-
 div.jtable-main-container table.jtable thead th.jtable-command-column-header {
   text-align: center;
 }
-div.jtable-main-container table.jtable thead th.jtable-column-header-selecting {
+div.jtable-main-container table.jtable thead th.jtable-column-header-select {
   text-align: center;
   width: 1%;
 }
-div.jtable-main-container table.jtable thead th.jtable-column-header-selecting input {
+div.jtable-main-container table.jtable thead th.jtable-column-header-select input {
   cursor: pointer;
 }
 div.jtable-main-container table.jtable thead th.jtable-column-header-sortable {

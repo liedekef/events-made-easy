@@ -350,9 +350,9 @@ THE SOFTWARE.
 
         /* Creates an empty header cell that can be used as command column headers.
         *************************************************************************/
-        _createEmptyCommandHeader: function () {
+        _createEmptyCommandHeader: function (extraclass) {
             let $th = $('<th></th>')
-                .addClass('jtable-command-column-header')
+                .addClass('jtable-command-column-header' + ' ' + extraclass)
                 .css('width', '1%');
 
             this._jqueryuiThemeAddClass($th, 'ui-state-default');
@@ -2625,7 +2625,7 @@ THE SOFTWARE.
         _addColumnsToHeaderRow: function ($tr) {
             base._addColumnsToHeaderRow.apply(this, arguments);
             if (this.options.actions.updateAction != undefined) {
-                $tr.append(this._createEmptyCommandHeader());
+                $tr.append(this._createEmptyCommandHeader('jtable-column-header-edit'));
             }
         },
 
@@ -3097,7 +3097,7 @@ THE SOFTWARE.
         _addColumnsToHeaderRow: function ($tr) {
             base._addColumnsToHeaderRow.apply(this, arguments);
             if (this.options.actions.deleteAction != undefined) {
-                $tr.append(this._createEmptyCommandHeader());
+                $tr.append(this._createEmptyCommandHeader('jtable-column-header-delete'));
             }
         },
 
@@ -3449,7 +3449,7 @@ THE SOFTWARE.
             let self = this;
 
             let $columnHeader = $('<th class=""></th>')
-                .addClass('jtable-command-column-header jtable-column-header-selecting');
+                .addClass('jtable-command-column-header jtable-column-header-select');
             this._jqueryuiThemeAddClass($columnHeader, 'ui-state-default');
 
             let $headerContainer = $('<div />')

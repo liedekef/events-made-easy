@@ -4745,7 +4745,7 @@ THE SOFTWARE.
                 .hide();
         },
 
-        /* Makes a column sortable.
+        /* Makes a column resizable.
         *************************************************************************/
         _makeColumnResizable: function ($columnHeader) {
             let self = this;
@@ -4843,32 +4843,24 @@ THE SOFTWARE.
         *************************************************************************/
         _normalizeColumnWidths: function () {
 
-            //Set command column width
+            // First set command column width as small as possible
             let commandColumnHeaders = this._$table
                 .find('>thead th.jtable-command-column-header')
                 .data('width-in-percent', 1)
                 .css('width', '1%');
 
-            //Find data columns
-            let headerCells = this._$table.find('>thead th.jtable-column-header');
+            // Now we'll go through all columns
+            let headerCells = this._$table.find('>thead th');
 
-            //Calculate total width of data columns
-            let totalWidthInPixel = 0;
-            headerCells.each(function () {
-                let $cell = $(this);
-                if ($cell.is(':visible')) {
-                    totalWidthInPixel += $cell.outerWidth();
-                }
-            });
+	    let totalWidthInPixel = this._$table.outerWidth();
 
             //Calculate width of each column
             let columnWidhts = {};
-            let availableWidthInPercent = 100.0 - commandColumnHeaders.length;
             headerCells.each(function () {
                 let $cell = $(this);
                 if ($cell.is(':visible')) {
                     let fieldName = $cell.data('fieldName');
-                    let widthInPercent = $cell.outerWidth() * availableWidthInPercent / totalWidthInPixel;
+                    let widthInPercent = $cell.outerWidth() * 100 / totalWidthInPixel;
                     columnWidhts[fieldName] = widthInPercent;
                 }
             });

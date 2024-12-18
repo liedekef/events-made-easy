@@ -139,7 +139,8 @@ jQuery(document).ready(function ($) {
                 title: emersvp.translate_edit,
                 sorting: false,
                 visibility: 'fixed',
-                listClass: 'eme-jtable-center'
+                listClass: 'jtable-command-column-header eme-jtable-center',
+                width: '1%',
             }
         }
         let extrafields=$('#BookingsTableContainer').data('extrafields').toString().split(',');

@@ -3451,7 +3451,7 @@ THE SOFTWARE.
             let self = this;
 
             let $columnHeader = $('<th class=""></th>')
-                .addClass('jtable-command-column-header jtable-column-header-select');
+                .addClass('jtable-command-column jtable-command-column-header jtable-column-header-select');
             this._jqueryuiThemeAddClass($columnHeader, 'ui-state-default');
 
             let $headerContainer = $('<div />')
@@ -3541,7 +3541,7 @@ THE SOFTWARE.
 
             //'select/deselect' checkbox column
             if (self.options.selectingCheckboxes) {
-                let $cell = $('<td></td>').addClass('jtable-selecting-column');
+                let $cell = $('<td></td>').addClass('jtable-command-column jtable-selecting-column');
                 let $selectCheckbox = $('<input type="checkbox" />').appendTo($cell);
                 if (!self.options.selectOnRowClick) {
                     $selectCheckbox.click(function () {

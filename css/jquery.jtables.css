@@ -15,6 +15,31 @@ div.jtable-main-container table.jtable tbody>tr.jtable-row-even,
 div.jtable-main-container table.jtable tbody>tr {
     background-color: #fff;
 }
+
+/* the add/edit form */
+.jtable-input-field-container {
+    margin-bottom: 5px;
+    display: inline-block;
+    float: none;
+}
+.jtable-dialog-form {
+    display: block;
+    width: 680px;
+    -moz-column-gap:40px;
+    /* Firefox */
+    -webkit-column-gap:40px;
+    /* Safari and Chrome */
+    column-gap:40px;
+    -moz-column-count:2;
+    /* Firefox */
+    -webkit-column-count:2;
+    /* Safari and Chrome */
+    column-count:2;
+}
+form.jtable-dialog-form div {
+    width: 100%;
+}
+
 /* when selecting a row */
 div.jtable-main-container table.jtable tbody>tr.jtable-row-selected {
     background-color: #F2F5A9;

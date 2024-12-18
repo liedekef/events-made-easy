@@ -109,7 +109,7 @@
     }
 
     function _getElementHTMLIncludingFormElements(element) {
-        let $element = $(element);
+        let $element = $(element).clone();
         //Radiobuttons and checkboxes
         $(":checked", $element).each(function () {
             this.setAttribute('checked', 'checked');
@@ -137,7 +137,7 @@
             }
         });
         //http://dbj.org/dbj/?p=91
-        let elementHtml = $('<div></div>').append($element.clone()).html();
+        let elementHtml = $('<div></div>').append($element).html();
         return elementHtml;
     }
 

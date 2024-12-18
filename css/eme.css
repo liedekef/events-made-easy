@@ -18,6 +18,11 @@
 	.jtable-page-info {display:none !important;}
 }
 
+/* print: don't show table command columns */
+@media print {
+	.jtable-command-column {display:none;}
+}
+
 #eme_person_image_example {
 	max-height: 250px;
 	max-width: 300px;
@@ -684,4 +689,5 @@ div#div_import {
     white-space: nowrap;
     display:inline;
 }
+
 

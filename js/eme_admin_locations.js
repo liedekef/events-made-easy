@@ -104,7 +104,7 @@ jQuery(document).ready(function ($) {
                     {
                         text: emelocations.translate_print,
                         click: function () {
-                            $('#LocationsTableContainer').printElement();
+                            $('#LocationsTableContainer').find('table:first').printElement();
                         }
                     }
                 ]

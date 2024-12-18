@@ -14,7 +14,9 @@ jQuery(document).ready( function($) {
             },
             actions: {
                 listAction: ajaxurl,
-                deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&eme_admin_nonce='+emetemplates.translate_adminnonce
+                deleteAction: ajaxurl+'?action=eme_manage_templates&do_action=deleteTemplates&eme_admin_nonce='+emetemplates.translate_adminnonce,
+                updateAction: ajaxurl+'?action=eme_manage_templates&do_action=updateTemplates&eme_admin_nonce='+emetemplates.translate_adminnonce,
+                createAction: ajaxurl+'?action=eme_manage_templates&do_action=createTemplates&eme_admin_nonce='+emetemplates.translate_adminnonce
             },
             listQueryParams: function () {
                 let params = {

@@ -185,7 +185,7 @@ jQuery(document).ready(function ($) {
                     {
                         text: ememembers.translate_print,
                         click: function () {
-                            $('#MembersTableContainer').printElement();
+                            $('#MembersTableContainer').find('table:first').printElement();
                         }
                     }
                 ]

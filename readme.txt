@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.23 (2024/12/) =
+* Rewritten the jtable jquery plugin so it no longer requires jquery-ui. This allows for less jquery-stuff to be loaded and thus faster
+
 = 2.5.22 (2024/12/12) =
 * Fix a JS error in templates admin
 * Keep current tab after actions in mailer menu

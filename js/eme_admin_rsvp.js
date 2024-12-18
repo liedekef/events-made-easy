@@ -248,7 +248,7 @@ jQuery(document).ready(function ($) {
                     {
                         text: emersvp.translate_print,
                         click: function () {
-                            $('#BookingsTableContainer').printElement();
+                            $('#BookingsTableContainer').find('table:first').printElement();
                         }
                     }
                 ]

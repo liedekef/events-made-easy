@@ -58,7 +58,7 @@ jQuery(document).ready( function($) {
                     {
                         text: emeattendances.translate_print,
                         click: function () {
-                            $('#AttendancesTableContainer').printElement();
+                            $('#AttendancesTableContainer').find('table:first').printElement();
                         }
                     }
                 ]

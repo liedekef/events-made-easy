@@ -263,7 +263,7 @@ jQuery(document).ready(function ($) {
                     {
                         text: emepeople.translate_print,
                         click: function () {
-                            $('#PeopleTableContainer').printElement();
+                            $('#PeopleTableContainer').find('table:first').printElement();
                         }
                     }
                 ]

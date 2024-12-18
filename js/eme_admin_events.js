@@ -575,7 +575,7 @@ jQuery(document).ready( function($) {
                     {
                         text: emeevents.translate_print,
                         click: function () {
-                            $('#EventsTableContainer').printElement();
+                            $('#EventsTableContainer').find('table:first').printElement();
                         }
                     }
                 ]
@@ -731,7 +731,7 @@ jQuery(document).ready( function($) {
                     {
                         text: emeevents.translate_print,
                         click: function () {
-                            $('#RecurrencesTableContainer').printElement();
+                            $('#RecurrencesTableContainer').find('table:first').printElement();
                         }
                     }]
             },

@@ -380,24 +380,27 @@ THE SOFTWARE.
         _createErrorDialogDiv: function () {
             let self = this;
 
-            self._$errorDialogDiv = $('<div></div>');
-            self._$errorDialogDiv.addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').appendTo(self._$mainContainer);
+            self._$errorDialogDiv = $('<div></div>').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').appendTo(self._$mainContainer);
 
             $('<h2 id="errorDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.error).appendTo(self._$errorDialogDiv);
             $('<div><p><span class="jtable-error-message"></span></p></div>').appendTo(self._$errorDialogDiv);
             $('<button class="jtable-dialog-cancelbutton"></button>')
                 .text(self.options.messages.close)
                 .on('click', function () {
-                    self._$errorDialogDiv.hide();
+                    self._closeErrorDialogDiv();
                 })
                 .appendTo(self._$errorDialogDiv);
 
             // handle click outside popup
             $(document.body).on('click', function (event) {
-                if (!self._$errorDialogDiv.is(event.target) && self._$errorDialogDiv.has(event.target).length === 0) {
-                    self._$errorDialogDiv.hide();
+                if (self._$errorDialogDiv.is(':visible') && !self._$errorDialogDiv.is(event.target) && self._$errorDialogDiv.has(event.target).length === 0) {
+                    self._closeErrorDialogDiv();
                 }
             });
+        },
+
+	_closeErrorDialogDiv() {
+		this._$errorDialogDiv.hide();
         },
 
         /************************************************************************
@@ -1088,7 +1091,9 @@ THE SOFTWARE.
 
             //click event
             if (item.click) {
-                $toolBarItem.click(function () {
+                $toolBarItem.click(function (e) {
+                    e.preventDefault();
+		    e.stopPropagation();
                     item.click();
                 });
             }
@@ -2111,37 +2116,23 @@ THE SOFTWARE.
             let self = this;
 
             //Create a div for dialog and add to container element
-            self._$addRecordDiv = $('<div />')
-                .appendTo(self._$mainContainer);
+            self._$addRecordDiv = $('<div></div>').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'addDialogTitle').appendTo(self._$mainContainer);
 
-            //Prepare dialog
-            self._$addRecordDiv.dialog({
-                autoOpen: false,
-                show: self.options.dialogShowEffect,
-                hide: self.options.dialogHideEffect,
-                width: 'auto',
-                minWidth: '300',
-                modal: true,
-                title: self.options.messages.addNewRecord,
-                buttons:
-                        [{ //Cancel button
-                            text: self.options.messages.cancel,
-                            click: function () {
-                                self._$addRecordDiv.dialog('close');
-                            }
-                        }, { //Save button
-                            id: 'AddRecordDialogSaveButton',
-                            text: self.options.messages.save,
-                            click: function () {
-                                self._onSaveClickedOnCreateForm();
-                            }
-                        }],
-                close: function () {
-                    let $addRecordForm = self._$addRecordDiv.find('form').first();
-                    let $saveButton = self._$addRecordDiv.parent().find('#AddRecordDialogSaveButton');
-                    self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
-                    self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
-                    $addRecordForm.remove();
+            $('<h2 id="addDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.addRecord).appendTo(self._$addRecordDiv);
+            const $cancelButton = $('<button class="jtable-dialog-cancelbutton">' + self.options.messages.cancel + '</button> ').on('click', function () {
+		    self._closeCreateForm();
+            });
+
+            let $saveButton = $('<button class="jtable-dialog-savebutton"><span>' + self.options.messages.save + '</span></button>').on('click', function () {
+		    self._onSaveClickedOnCreateForm();
+		    self._closeCreateForm();
+            });
+
+            self._$addRecordDiv.append($cancelButton, $saveButton);
+	    // handle click outside popup
+            $(document.body).on('click', function (event) {
+                if (self._$addRecordDiv.is(':visible') && !self._$addRecordDiv.is(event.target) && self._$addRecordDiv.has(event.target).length === 0) {
+                    self._closeCreateForm();
                 }
             });
 
@@ -2174,6 +2165,16 @@ THE SOFTWARE.
                 self._setEnabledOfDialogButton($saveButton, false, self.options.messages.saving);
                 self._saveAddRecordForm($addRecordForm, $saveButton);
             }
+        },
+
+        _closeCreateForm: function () {
+		let self = this;
+		self._$addRecordDiv.hide();
+		let $addRecordForm = self._$addRecordDiv.find('form').first();
+		let $saveButton = self._$addRecordDiv.parent().find('#AddRecordDialogSaveButton');
+		self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
+		self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
+		$addRecordForm.remove();
         },
 
         /************************************************************************
@@ -2330,7 +2331,7 @@ THE SOFTWARE.
             });
 
             //Open the form
-            self._$addRecordDiv.append($addRecordForm).dialog('open');
+            self._$addRecordDiv.append($addRecordForm).show();
             self._$mainContainer.trigger("formCreated", { form: $addRecordForm, formType: 'create' });
         },
 
@@ -2357,7 +2358,7 @@ THE SOFTWARE.
                     self._createRowFromRecord(data.Record), {
                         isNewRow: true
                     });
-                self._$addRecordDiv.dialog("close");
+		self._closeCreateForm();
             };
 
             $addRecordForm.data('submitting', true); //TODO: Why it's used, can remove? Check it.
@@ -2465,37 +2466,23 @@ THE SOFTWARE.
             let self = this;
 
             //Create a div for dialog and add to container element
-            self._$editDiv = $('<div></div>')
-                .appendTo(self._$mainContainer);
+            self._$editDiv = $('<div></div>').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'editDialogTitle').appendTo(self._$mainContainer);
 
-            //Prepare dialog
-            self._$editDiv.dialog({
-                autoOpen: false,
-                show: self.options.dialogShowEffect,
-                hide: self.options.dialogHideEffect,
-                width: 'auto',
-                minWidth: '300',
-                modal: true,
-                title: self.options.messages.editRecord,
-                buttons:
-                        [{  //cancel button
-                            text: self.options.messages.cancel,
-                            click: function () {
-                                self._$editDiv.dialog('close');
-                            }
-                        }, { //save button
-                            id: 'EditDialogSaveButton',
-                            text: self.options.messages.save,
-                            click: function () {
-                                self._onSaveClickedOnEditForm();
-                            }
-                        }],
-                close: function () {
-                    let $editForm = self._$editDiv.find('form:first');
-                    let $saveButton = self._$editDiv.parent().find('#EditDialogSaveButton');
-                    self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
-                    self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
-                    $editForm.remove();
+            $('<h2 id="editDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.editRecord).appendTo(self._$editDiv);
+            const $cancelButton = $('<button class="jtable-dialog-cancelbutton">' + self.options.messages.cancel + '</button> ').on('click', function () {
+		    self._closeEditForm();
+            });
+
+            let $saveButton = $('<button class="jtable-dialog-savebutton"><span>' + self.options.messages.save + '</span></button>').on('click', function () {
+		    self._onSaveClickedOnEditForm();
+		    self._closeEditForm();
+            });
+
+            self._$editDiv.append($cancelButton, $saveButton);
+	    // handle click outside popup
+            $(document.body).on('click', function (event) {
+                if (self._$editDiv.is(':visible') && !self._$editDiv.is(event.target) && self._$editDiv.has(event.target).length === 0) {
+                    self._closeEditForm();
                 }
             });
         },
@@ -2507,7 +2494,7 @@ THE SOFTWARE.
             
             //row maybe removed by another source, if so, do nothing
             if (self._$editingRow.hasClass('jtable-row-removed')) {
-                self._$editDiv.dialog('close');
+                self._closeEditForm();
                 return;
             }
 
@@ -2518,6 +2505,16 @@ THE SOFTWARE.
                 self._saveEditForm($editForm, $saveButton);
             }
         },
+
+        _closeEditForm: function () {
+		let self = this;
+		self._$editDiv.hide();
+		let $editForm = self._$editDiv.find('form:first');
+		let $saveButton = self._$editDiv.parent().find('#EditDialogSaveButton');
+		self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
+		self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
+		$editForm.remove();
+	},
 
         /************************************************************************
         * PUBLIC METHODS                                                        *
@@ -2723,7 +2720,7 @@ THE SOFTWARE.
 
             //Open dialog
             self._$editingRow = $tableRow;
-            self._$editDiv.append($editForm).dialog('open');
+            self._$editDiv.append($editForm).show();
             self._$mainContainer.trigger("formCreated", { form: $editForm, formType: 'edit', record: record, row: $tableRow });
         },
 
@@ -2753,7 +2750,7 @@ THE SOFTWARE.
                     self._showUpdateAnimationForRow(self._$editingRow);
                 }
 
-                self._$editDiv.dialog("close");
+                self._closeEditForm();
             };
 
 
@@ -2925,20 +2922,19 @@ THE SOFTWARE.
             }
 
             //Create div element for delete confirmation dialog
-            self._$deleteDialogDiv = $('<div></div>');
-            self._$deleteDialogDiv.addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').appendTo(self._$mainContainer);
+            self._$deleteDialogDiv = $('<div></div>').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'deleteDialogTitle').appendTo(self._$mainContainer);
 
             $('<h2 id="deleteDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.areYouSure).appendTo(self._$deleteDialogDiv);
             $('<div><p><span class="alert-icon" style="float:left; margin:0 7px 20px 0;"></span><span class="jtable-delete-confirm-message"></span></p></div>').appendTo(self._$deleteDialogDiv);
 
             const $cancelButton = $('<button class="jtable-dialog-cancelbutton">' + self.options.messages.cancel + '</button> ').on('click', function () {
-                self._$deleteDialogDiv.hide();
+		self._closeDeleteDialogDiv();
             });
 
             let $deleteButton = $('<button class="jtable-dialog-deletebutton"><span>' + self.options.messages.deleteText + '</span></button>').on('click', function () {
                 // row may be removed by another source, if so, do nothing
                 if (self._$deletingRow.hasClass('jtable-row-removed')) {
-                    self._$deleteDialogDiv.hide();
+		    self._closeDeleteDialogDiv();
                     return;
                 }
 
@@ -2948,7 +2944,7 @@ THE SOFTWARE.
                     function () {
                         self._removeRowsFromTableWithAnimation(self._$deletingRow);
                         self._setEnabledOfDialogButton($deleteButton, true, self.options.messages.deleteText);
-                        self._$deleteDialogDiv.hide();
+			self._closeDeleteDialogDiv();
                     },
                     function (message) { // error
                         self._showError(message);
@@ -2960,11 +2956,15 @@ THE SOFTWARE.
             self._$deleteDialogDiv.append($cancelButton, $deleteButton);
             // handle click outside popup
             $(document.body).on('click', function (event) {
-                if (!self._$deleteDialogDiv.is(event.target) && self._$deleteDialogDiv.has(event.target).length === 0) {
-                    self._$deleteDialogDiv.hide();
+                if (self._$deleteDialogDiv.is(':visible') && !self._$deleteDialogDiv.is(event.target) && self._$deleteDialogDiv.has(event.target).length === 0) {
+                    self._closeDeleteDialogDiv();
                 }
             });
         },
+	    
+        _closeDeleteDialogDiv: function () {
+		this._$deleteDialogDiv.hide();
+	},
 
         /************************************************************************
         * PUBLIC METHODS                                                        *

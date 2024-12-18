@@ -18,7 +18,7 @@ jQuery(document).ready( function($) {
                 {
                     text: emetasks.translate_print,
                     click: function () {
-                        $('#TaskSignupsTableContainer').printElement();
+                        $('#TaskSignupsTableContainer').find('table:first').printElement();
                     }
                 }
             ]

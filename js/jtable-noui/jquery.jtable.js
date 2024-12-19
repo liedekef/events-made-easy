@@ -50,6 +50,7 @@ THE SOFTWARE.
     jTable.prototype = {
         options: {
             //Options
+            tableId: undefined,
             actions: {},
             fields: {},
             animationsEnabled: true,
@@ -272,7 +273,7 @@ THE SOFTWARE.
         /* Creates the table surrounding div
         *************************************************************************/
         _createTableDiv: function () {
-            this._$tableDiv = $('<div></div>')
+            this._$tableDiv = $('<div />')
                 .addClass('jtable-table-div')
                 .appendTo(this._$mainContainer);
         },
@@ -380,7 +381,7 @@ THE SOFTWARE.
         _createErrorDialogDiv: function () {
             let self = this;
 
-            self._$errorDialogDiv = $('<div></div>').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').appendTo(self._$mainContainer);
+            self._$errorDialogDiv = $('<div />').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'errorDialogTitle').appendTo(self._$mainContainer);
 
             $('<h2 id="errorDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.error).appendTo(self._$errorDialogDiv);
             $('<div><p><span class="jtable-error-message"></span></p></div>').appendTo(self._$errorDialogDiv);
@@ -514,7 +515,7 @@ THE SOFTWARE.
 
                 //Generate URL (with query string parameters) to load records
                 /* let loadUrl = self._createRecordLoadUrl(); */
-                let loadUrl = this.options.actions.listAction;
+                let loadUrl = self.options.actions.listAction;
                 let extraparams = self._createJtParamsForLoading();
 
                 //Load data from server using AJAX
@@ -1132,7 +1133,7 @@ THE SOFTWARE.
         *************************************************************************/
         _setBusyTimer: null,
         _showBusy: function (message, delay) {
-            let self = this;  //
+            let self = this;
 
             //Show a transparent overlay to prevent clicking to the table
             self._$busyDiv
@@ -2116,7 +2117,7 @@ THE SOFTWARE.
             let self = this;
 
             //Create a div for dialog and add to container element
-            self._$addRecordDiv = $('<div></div>').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'addDialogTitle').appendTo(self._$mainContainer);
+            self._$addRecordDiv = $('<div />').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'addDialogTitle').appendTo(self._$mainContainer);
 
             $('<h2 id="addDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.addRecord).appendTo(self._$addRecordDiv);
             const $cancelButton = $('<button class="jtable-dialog-cancelbutton">' + self.options.messages.cancel + '</button> ').on('click', function () {
@@ -2169,6 +2170,7 @@ THE SOFTWARE.
 
         _closeCreateForm: function () {
 		let self = this;
+
 		self._$addRecordDiv.hide();
 		let $addRecordForm = self._$addRecordDiv.find('form').first();
 		let $saveButton = self._$addRecordDiv.parent().find('#AddRecordDialogSaveButton');
@@ -2191,6 +2193,7 @@ THE SOFTWARE.
         *************************************************************************/
         addRecord: function (options) {
             let self = this;
+
             options = $.extend({
                 clientOnly: false,
                 animationsEnabled: self.options.animationsEnabled,
@@ -2466,7 +2469,7 @@ THE SOFTWARE.
             let self = this;
 
             //Create a div for dialog and add to container element
-            self._$editDiv = $('<div></div>').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'editDialogTitle').appendTo(self._$mainContainer);
+            self._$editDiv = $('<div />').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'editDialogTitle').appendTo(self._$mainContainer);
 
             $('<h2 id="editDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.editRecord).appendTo(self._$editDiv);
             const $cancelButton = $('<button class="jtable-dialog-cancelbutton">' + self.options.messages.cancel + '</button> ').on('click', function () {
@@ -2922,7 +2925,7 @@ THE SOFTWARE.
             }
 
             //Create div element for delete confirmation dialog
-            self._$deleteDialogDiv = $('<div></div>').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'deleteDialogTitle').appendTo(self._$mainContainer);
+            self._$deleteDialogDiv = $('<div />').addClass('jtable-modal-dialog').attr('role', 'dialog').attr('aria-labelledby', 'deleteDialogTitle').appendTo(self._$mainContainer);
 
             $('<h2 id="deleteDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.areYouSure).appendTo(self._$deleteDialogDiv);
             $('<div><p><span class="alert-icon" style="float:left; margin:0 7px 20px 0;"></span><span class="jtable-delete-confirm-message"></span></p></div>').appendTo(self._$deleteDialogDiv);
@@ -4499,7 +4502,6 @@ THE SOFTWARE.
         *************************************************************************/
 
         options: {
-            tableId: undefined,
             columnResizable: true,
             columnSelectable: true
         },
@@ -4694,9 +4696,9 @@ THE SOFTWARE.
 
             let $columnsUl = $('<ul></ul>')
                 .addClass('jtable-column-select-list');
-            for (let i = 0; i < this._columnList.length; i++) {
-                let columnName = this._columnList[i];
-                let field = this.options.fields[columnName];
+            for (let i = 0; i < self._columnList.length; i++) {
+                let columnName = self._columnList[i];
+                let field = self.options.fields[columnName];
 
                 //Crete li element
                 let $columnLi = $('<li></li>').appendTo($columnsUl);
@@ -4842,17 +4844,18 @@ THE SOFTWARE.
         /* Normalizes column widths as percent for current view.
         *************************************************************************/
         _normalizeColumnWidths: function () {
+            let self = this;
 
             // First set command column width as small as possible
-            let commandColumnHeaders = this._$table
+            let commandColumnHeaders = self._$table
                 .find('>thead th.jtable-command-column-header')
                 .data('width-in-percent', 1)
                 .css('width', '1%');
 
             // Now we'll go through all columns
-            let headerCells = this._$table.find('>thead th');
+            let headerCells = self._$table.find('>thead th');
 
-	    let totalWidthInPixel = this._$table.outerWidth();
+	    let totalWidthInPixel = self._$table.outerWidth();
 
             //Calculate width of each column
             let columnWidhts = {};
@@ -4881,8 +4884,9 @@ THE SOFTWARE.
         *************************************************************************/
         _saveColumnSettings: function () {
             let self = this;
+
             let fieldSettings = '';
-            this._$table.find('>thead >tr >th.jtable-column-header').each(function () {
+            self._$table.find('>thead >tr >th.jtable-column-header').each(function () {
                 let $cell = $(this);
                 let fieldName = $cell.data('fieldName');
                 let columnWidth = $cell.data('width-in-percent');
@@ -4898,7 +4902,8 @@ THE SOFTWARE.
         *************************************************************************/
         _loadColumnSettings: function () {
             let self = this;
-            let columnSettingsCookie = this._getCookie('column-settings');
+
+            let columnSettingsCookie = self._getCookie('column-settings');
             if (!columnSettingsCookie) {
                 return;
             }
@@ -4914,7 +4919,7 @@ THE SOFTWARE.
                 };
             });
 
-            let headerCells = this._$table.find('>thead >tr >th.jtable-column-header');
+            let headerCells = self._$table.find('>thead >tr >th.jtable-column-header');
             headerCells.each(function () {
                 let $cell = $(this);
                 let fieldName = $cell.data('fieldName');
@@ -5009,7 +5014,7 @@ THE SOFTWARE.
         closeChildTable: function ($row, closed) {
             let self = this;
             
-            let $childRowColumn = this.getChildRow($row).children('td');
+            let $childRowColumn = self.getChildRow($row).children('td');
             let $childTable = $childRowColumn.data('childTable');
             if (!$childTable) {
                 if (closed) {

@@ -2218,14 +2218,14 @@ msgstr "Filter evenementen"
 #: eme-members.php:2869
 #: eme-people.php:1786
 msgid "Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the \"Custom fields to filter on\" select-box shown."
-msgstr "Tip: wanneer u naar aangepaste veldwaarden zoekt, kunt u optioneel beperken welke aangepaste velden u wilt doorzoeken in het selectievakje \"Eigen aangemaakte velden om te filteren\"."
+msgstr "Tip: wanneer u naar eigen aangemaakte veldwaarden zoekt, kunt u optioneel beperken welke eigen aangemaakte velden u wilt doorzoeken in het selectievakje \"Eigen aangemaakte velden om te filteren\"."
 
 #: eme-events.php:6027
 #: eme-locations.php:886
 #: eme-members.php:2870
 #: eme-people.php:1787
 msgid "If you can't see your custom field in the \"Custom fields to filter on\" select-box, make sure you marked it as \"searchable\" in the field definition."
-msgstr "Als u uw aangepaste veld niet kunt zien in het selectieveld \"Eigen aangemaakte velden om te filteren\", moet u het in de velddefinitie als \"doorzoekbaar\" markeren."
+msgstr "Als u uw eigen aangemaakt veld niet kunt zien in het selectieveld \"Eigen aangemaakte velden om te filteren\", moet u het in de velddefinitie als \"doorzoekbaar\" markeren."
 
 #: eme-events.php:6042
 msgid "Restore selected events (to draft status)"

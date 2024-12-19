@@ -319,11 +319,8 @@ function eme_admin_register_scripts() {
 		wp_register_style( 'eme_stylesheet_extra', get_stylesheet_directory_uri() . '/eme.css', [ 'eme_stylesheet' ], EME_VERSION );
 	}
         wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-noui/themes/lightcolor/gray/jtable.min.css' );
-	//wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-noui/themes/jqueryui/jtable_jqueryui.css' );
 	wp_register_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css' );
-	wp_register_style( 'eme-jtables-css', EME_PLUGIN_URL . 'css/jquery.jtables.css' );
-    //wp_register_style( 'eme-tabulator-css', EME_PLUGIN_URL . 'js/tabulator/css/tabulator.min.css' );
-    //wp_register_style( 'eme-datatables-css', EME_PLUGIN_URL . 'js/datatables/css/datatables.min.css' );
+	wp_register_style( 'eme-jtables-css', EME_PLUGIN_URL . 'css/jquery.jtables.css', [], EME_VERSION );
 	eme_admin_enqueue_js();
 }
 add_action( 'admin_enqueue_scripts', 'eme_admin_register_scripts' );

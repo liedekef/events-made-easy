@@ -263,6 +263,14 @@ div.jtable-contextmenu-overlay {
   top: 50%;
   transform: translate(-50%, -50%);
 }
+.jtable-dialog-cancelbutton,
+.jtable-dialog-savebutton {
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  border: 1px solid #ccc;
+  padding: 5px;
+  margin: 5px;
+}
 div.jtable-main-container {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;

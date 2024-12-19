@@ -80,11 +80,12 @@ div.jtable-main-container table.jtable tbody > tr > td {
     padding: 1px;
 }
 /* jtable fix so the footer doesn't overlap with the table in some browsers */
+/*
 .jtable-main-container {
 	float: left;
 	width: 100%;
 }
-/* ui override */
+*/
 .jtable-data-row a {
     color: #0073aa !important;
 }

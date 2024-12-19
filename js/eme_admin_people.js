@@ -378,7 +378,7 @@ jQuery(document).ready(function ($) {
 
         let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
-            if ((do_action=='deletePeople') && !confirm(emepeople.translate_areyousuretodeleteselected)) {
+            if ((do_action=='trashPeople' || do_action=='deletePeople') && !confirm(emepeople.translate_areyousuretodeleteselected)) {
                 action_ok=0;
             }
             if (action_ok==1) {

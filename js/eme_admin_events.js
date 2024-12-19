@@ -616,7 +616,7 @@ jQuery(document).ready( function($) {
 
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
-                if ((do_action=='deleteEvents' || do_action=='deleteRecurrences') && !confirm(emeevents.translate_areyousuretodeleteselected)) {
+                if ((do_action=='trashEvents' || do_action=='deleteEvents' || do_action=='deleteRecurrences') && !confirm(emeevents.translate_areyousuretodeleteselected)) {
                     action_ok=0;
                 }
                 if (action_ok==1) {

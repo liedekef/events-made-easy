@@ -359,7 +359,7 @@ jQuery(document).ready(function ($) {
 
         let action_ok=1;
         if (selectedRows.length > 0 && do_action != '') {
-            if ((do_action=='deleteRegistration') && !confirm(emersvp.translate_areyousuretodeleteselected)) {
+            if ((do_action=='trashBooking' || do_action=='deleteBooking') && !confirm(emersvp.translate_areyousuretodeleteselected)) {
                 action_ok=0;
             }
             if ((do_action=='partialPayment') && selectedRows.length > 1) {

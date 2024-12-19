@@ -24,7 +24,6 @@ div.jtable-main-container table.jtable tbody>tr {
 }
 .jtable-dialog-form {
     display: block;
-    width: 680px;
     -moz-column-gap:40px;
     /* Firefox */
     -webkit-column-gap:40px;

@@ -2019,7 +2019,6 @@ THE SOFTWARE.
         /* Sets enabled/disabled state of a dialog button.
          *************************************************************************/
         _setEnabledOfDialogButton: function ($button, enabled, buttonText) {
-		console.log($button);
             if (!$button) {
                 return;
             }

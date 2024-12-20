@@ -219,21 +219,14 @@ form.jtable-dialog-form div.jtable-checkbox-input input,
 form.jtable-dialog-form span.jtable-option-text-clickable {
   cursor: pointer;
 }
-div.jtable-busy-panel-background {
-  opacity: 0.1;
-  filter: alpha(opacity=10);
-  z-index: 998;
-  position: absolute;
-  background-color: #000;
-}
-div.jtable-busy-panel-background.jtable-busy-panel-background-invisible {
-  background-color: transparent;
+.jtable-busy-modal-dialog {
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 0px;
 }
 div.jtable-busy-message {
   cursor: wait;
-  z-index: 999;
-  position: absolute;
-  margin: 5px;
+  margin: 0px;
 }
 div.jtable-contextmenu-overlay {
   position: fixed;

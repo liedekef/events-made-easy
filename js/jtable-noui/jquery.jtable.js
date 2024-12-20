@@ -112,9 +112,8 @@ THE SOFTWARE.
         _$tableBody: null, //Reference to <body> in the table (jQuery object)
         _$tableRows: null, //Array of all <tr> in the table (except "no data" row) (jQuery object array)
 
-        _$busyDiv: null, //Reference to the div that is used to block UI while busy (jQuery object)
-        _$busyMessageDiv: null, //Reference to the div that is used to show some message when UI is blocked (jQuery object)
-        _$errorDialogDiv: null, //Reference to the error dialog div (jQuery object)
+        _$busyDialog: null, //Reference to the div that is used to block UI while busy (jQuery object)
+        _$errorDialog: null, //Reference to the error dialog div (jQuery object)
 
         _columnList: null, //Name of all data columns in the table (select column and command columns are not included) (string array)
         _fieldList: null, //Name of all fields of a record (defined in fields option) (string array)
@@ -146,8 +145,8 @@ THE SOFTWARE.
             this._createToolBar();
             this._createTableDiv();
             this._createTable();
-            this._createBusyPanel();
-            this._createErrorDialogDiv();
+            this._createBusyDialog();
+            this._createErrorDialog();
             this._addNoDataRow();
 
             this._cookieKeyPrefix = this._generateCookieKeyPrefix();            
@@ -359,43 +358,44 @@ THE SOFTWARE.
             return $th;
         },
 
-        /* Creates tbody tag and adds to the table.
+        /* Creates tbody tag and adds to the table
          *************************************************************************/
         _createTableBody: function () {
             this._$tableBody = $('<tbody></tbody>').appendTo(this._$table);
         },
 
-        /* Creates a div to block UI while jTable is busy.
+        /* Creates a dialov to block UI while jTable is busy
          *************************************************************************/
-        _createBusyPanel: function () {
-            this._$busyMessageDiv = $('<div />').addClass('jtable-busy-message').prependTo(this._$mainContainer);
-            this._$busyDiv = $('<div />').addClass('jtable-busy-panel-background').prependTo(this._$mainContainer);
+        _createBusyDialog: function () {
+            this._$busyDialog = $('<dialog />').addClass('jtable-busy-modal-dialog').prependTo(this._$mainContainer);
+            this._$busyMessageDiv = $('<div />').addClass('jtable-busy-message').appendTo(this._$busyDialog);
             this._jqueryuiThemeAddClass(this._$busyMessageDiv, 'ui-widget-header');
-            this._hideBusy();
         },
 
-        /* Creates and prepares error dialog div.
+        /* Creates and prepares error dialog
          *************************************************************************/
-        _createErrorDialogDiv: function () {
+        _createErrorDialog: function () {
             let self = this;
 
-            self._$errorDialogDiv = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
-	    self._$errorDialogDiv.on('close', function () {
-                    self._closeErrorDialogDiv();
-	    });
+            // Create a div for dialog and add to container element
+            self._$errorDialog = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
 
-            $('<h2 id="errorDialogTitle"></h2>').css({padding: '0px'}).html(self.options.messages.error).appendTo(self._$errorDialogDiv);
-            $('<div><p><span class="jtable-error-message"></span></p></div>').appendTo(self._$errorDialogDiv);
+            // the close event is called upon close-call or pressing escape
+            // self._$errorDialog.on('close', function () {
+            // });
+ 
+            $('<h2 id="errorDialogTitle"></h2>').css({padding: '0px'}).html(self.options.messages.error).appendTo(self._$errorDialog);
+            $('<div><p><span class="jtable-error-message"></span></p></div>').appendTo(self._$errorDialog);
             $('<button class="jtable-dialog-cancelbutton"></button>')
                 .html('<span>' + self.options.messages.close + '</span>')
                 .on('click', function () {
-                    self._closeErrorDialogDiv();
+                    self._closeErrorDialog();
                 })
-                .appendTo(self._$errorDialogDiv);
+                .appendTo(self._$errorDialog);
         },
 
-        _closeErrorDialogDiv() {
-            this._$errorDialogDiv[0].close();
+        _closeErrorDialog() {
+            this._$errorDialog[0].close();
         },
 
         /************************************************************************
@@ -1116,8 +1116,8 @@ THE SOFTWARE.
         /* Shows error message dialog with given message.
          *************************************************************************/
         _showError: function (message) {
-            this._$errorDialogDiv.find(".jtable-error-message").html(message);
-            this._$errorDialogDiv[0].showModal();
+            this._$errorDialog.find(".jtable-error-message").html(message);
+            this._$errorDialog[0].showModal();
         },
 
         /* BUSY PANEL ***********************************************************/
@@ -1128,17 +1128,9 @@ THE SOFTWARE.
         _setBusyTimer: null,
         _showBusy: function (message, delay) {
             let self = this;
-
-            //Show a transparent overlay to prevent clicking to the table
-            self._$busyDiv
-                .width(self._$mainContainer.width())
-                .height(self._$mainContainer.height())
-                .addClass('jtable-busy-panel-background-invisible')
-                .show();
-
             let makeVisible = function () {
-                self._$busyDiv.removeClass('jtable-busy-panel-background-invisible');
-                self._$busyMessageDiv.html(message).show();
+                self._$busyDialog.find(".jtable-busy-message").html(message);
+                self._$busyDialog[0].showModal();
             };
 
             if (delay) {
@@ -1155,16 +1147,15 @@ THE SOFTWARE.
         /* Hides busy indicator and unblocks table UI.
          *************************************************************************/
         _hideBusy: function () {
-            clearTimeout(this._setBusyTimer);
+	    clearTimeout(this._setBusyTimer);
             this._setBusyTimer = null;
-            this._$busyDiv.hide();
-            this._$busyMessageDiv.html('').hide();
+            this._$busyDialog[0].close();
         },
 
         /* Returns true if jTable is busy.
          *************************************************************************/
         _isBusy: function () {
-            return this._$busyMessageDiv.is(':visible');
+            return this._$busyDialog.is(':visible');
         },
 
         /* Adds jQueryUI class to an item.
@@ -2087,7 +2078,7 @@ THE SOFTWARE.
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
 
-        _$addRecordDiv: null, //Reference to the adding new record dialog div (jQuery object)
+        _$addRecordDialog: null, //Reference to the adding new record dialog div (jQuery object)
 
         /************************************************************************
          * CONSTRUCTOR                                                           *
@@ -2102,21 +2093,27 @@ THE SOFTWARE.
                 return;
             }
 
-            this._createAddRecordDialogDiv();
+            this._createAddRecordDialog();
         },
 
         /* Creates and prepares add new record dialog div
          *************************************************************************/
-        _createAddRecordDialogDiv: function () {
+        _createAddRecordDialog: function () {
             let self = this;
 
-            //Create a div for dialog and add to container element
-            self._$addRecordDiv = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
-	    self._$addRecordDiv.on('close', function () {
-		    self._closeCreateForm();
-	    });
+            // Create a div for dialog and add to container element
+            self._$addRecordDialog = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
 
-            $('<h2 id="addDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.addNewRecord).appendTo(self._$addRecordDiv);
+            // the close event is called upon close-call or pressing escape
+            self._$addRecordDialog.on('close', function () {
+                let $addRecordForm = self._$addRecordDialog.find('form').first();
+                let $saveButton = self._$addRecordDialog.parent().find('#AddRecordDialogSaveButton');
+                self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
+                self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
+                $addRecordForm.remove();
+            });
+
+            $('<h2 id="addRecordDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.addNewRecord).appendTo(self._$addRecordDialog);
             const $cancelButton = $('<button class="jtable-dialog-cancelbutton"></button> ')
                 .html('<span>' + self.options.messages.cancel + '</span>')
                 .on('click', function () {
@@ -2130,7 +2127,7 @@ THE SOFTWARE.
                     self._closeCreateForm();
                 });
 
-            self._$addRecordDiv.append($cancelButton, $saveButton);
+            self._$addRecordDialog.append($cancelButton, $saveButton);
 
             if (self.options.addRecordButton) {
                 //If user supplied a button, bind the click event to show dialog form
@@ -2154,8 +2151,8 @@ THE SOFTWARE.
         _onSaveClickedOnCreateForm: function () {
             let self = this;
 
-            let $saveButton = self._$addRecordDiv.parent().find('#AddRecordDialogSaveButton');
-            let $addRecordForm = self._$addRecordDiv.find('form');
+            let $saveButton = self._$addRecordDialog.parent().find('#AddRecordDialogSaveButton');
+            let $addRecordForm = self._$addRecordDialog.find('form');
 
             if (self._$mainContainer.trigger("formSubmitting", { form: $addRecordForm, formType: 'create' }) != false) {
                 self._setEnabledOfDialogButton($saveButton, false, self.options.messages.saving);
@@ -2164,14 +2161,7 @@ THE SOFTWARE.
         },
 
         _closeCreateForm: function () {
-            let self = this;
-
-            self._$addRecordDiv[0].close();
-            let $addRecordForm = self._$addRecordDiv.find('form').first();
-            let $saveButton = self._$addRecordDiv.parent().find('#AddRecordDialogSaveButton');
-            self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
-            self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
-            $addRecordForm.remove();
+            this._$addRecordDialog[0].close();
         },
 
         /************************************************************************
@@ -2329,10 +2319,10 @@ THE SOFTWARE.
             });
 
             // Remove any existing form
-            self._$addRecordDiv.find('form:first').remove();
+            self._$addRecordDialog.find('form:first').remove();
             // Show the form
-            self._$addRecordDiv.find('#addDialogTitle:first').after($addRecordForm);
-            self._$addRecordDiv[0].showModal();
+            self._$addRecordDialog.find('#addRecordDialogTitle:first').after($addRecordForm);
+            self._$addRecordDialog[0].showModal();
             self._$mainContainer.trigger("formCreated", { form: $addRecordForm, formType: 'create' });
         },
 
@@ -2362,7 +2352,7 @@ THE SOFTWARE.
                 self._closeCreateForm();
             };
 
-            $addRecordForm.data('submitting', true); //TODO: Why it's used, can remove? Check it.
+            // $addRecordForm.data('submitting', true); //TODO: Why it's used, can remove? Check it.
 
             //createAction may be a function, check if it is
             if ($.isFunction(self.options.actions.createAction)) {
@@ -2442,7 +2432,7 @@ THE SOFTWARE.
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
 
-        _$editDiv: null, //Reference to the editing dialog div (jQuery object)
+        _$editRecordDialog: null, //Reference to the editing dialog div (jQuery object)
         _$editingRow: null, //Reference to currently editing row (jQuery object)
 
         /************************************************************************
@@ -2458,21 +2448,27 @@ THE SOFTWARE.
                 return;
             }
 
-            this._createEditDialogDiv();
+            this._createEditDialog();
         },
 
         /* Creates and prepares edit dialog div
          *************************************************************************/
-        _createEditDialogDiv: function () {
+        _createEditDialog: function () {
             let self = this;
 
             //Create a div for dialog and add to container element
-            self._$editDiv = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
-	    self._$editDiv.on('close', function () {
-                    self._closeEditForm();
-	    });
+            self._$editRecordDialog = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
 
-            $('<h2 id="editDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.editRecord).appendTo(self._$editDiv);
+            // the close event is called upon close-call or pressing escape
+            self._$editRecordDialog.on('close', function () {
+                let $editForm = self._$editRecordDialog.find('form:first');
+                let $saveButton = self._$editRecordDialog.parent().find('#EditDialogSaveButton');
+                self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
+                self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
+                $editForm.remove();
+            });
+
+            $('<h2 id="editDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.editRecord).appendTo(self._$editRecordDialog);
             const $cancelButton = $('<button class="jtable-dialog-cancelbutton"></button> ')
                 .html('<span>' + self.options.messages.cancel + '</span>')
                 .on('click', function () {
@@ -2486,7 +2482,7 @@ THE SOFTWARE.
                     self._closeEditForm();
                 });
 
-            self._$editDiv.append($cancelButton, $saveButton);
+            self._$editRecordDialog.append($cancelButton, $saveButton);
         },
 
         /* Saves editing form to server.
@@ -2500,8 +2496,8 @@ THE SOFTWARE.
                 return;
             }
 
-            let $saveButton = self._$editDiv.parent().find('#EditDialogSaveButton');
-            let $editForm = self._$editDiv.find('form');
+            let $saveButton = self._$editRecordDialog.parent().find('#EditDialogSaveButton');
+            let $editForm = self._$editRecordDialog.find('form');
             if (self._$mainContainer.trigger("formSubmitting", { form: $editForm, formType: 'edit', row: self._$editingRow }) != false) {
                 self._setEnabledOfDialogButton($saveButton, false, self.options.messages.saving);
                 self._saveEditForm($editForm, $saveButton);
@@ -2509,13 +2505,7 @@ THE SOFTWARE.
         },
 
         _closeEditForm: function () {
-            let self = this;
-            self._$editDiv[0].close();
-            let $editForm = self._$editDiv.find('form:first');
-            let $saveButton = self._$editDiv.parent().find('#EditDialogSaveButton');
-            self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
-            self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
-            $editForm.remove();
+            this._$editRecordDialog[0].close();
         },
 
         /************************************************************************
@@ -2723,10 +2713,10 @@ THE SOFTWARE.
             // Store the row being edited
             self._$editingRow = $tableRow;
             // Remove any existing form
-            self._$editDiv.find('form:first').remove();
+            self._$editRecordDialog.find('form:first').remove();
             // Show the form
-            self._$editDiv.find('#editDialogTitle:first').after($editForm);
-            self._$editDiv[0].showModal();
+            self._$editRecordDialog.find('#editDialogTitle:first').after($editForm);
+            self._$editRecordDialog[0].showModal();
             self._$mainContainer.trigger("formCreated", { form: $editForm, formType: 'edit', record: record, row: $tableRow });
         },
 
@@ -2903,7 +2893,7 @@ THE SOFTWARE.
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
 
-        _$deleteDialogDiv: null, //Reference to the delete record dialog div (jQuery object)
+        _$deleteDialog: null, //Reference to the delete record dialog div (jQuery object)
         _$deletingRow: null, //Reference to currently deleting row (jQuery object)
 
         /************************************************************************
@@ -2914,32 +2904,33 @@ THE SOFTWARE.
          *************************************************************************/
         _create: function () {
             base._create.apply(this, arguments);
-            this._createDeleteDialogDiv();
+            this._createDeleteDialog();
         },
 
         /* Creates and prepares delete record confirmation dialog div.
          *************************************************************************/
-        _createDeleteDialogDiv: function () {
+        _createDeleteDialog: function () {
             let self = this;
 
-            //Check if deleteAction is supplied
+            // Check if deleteAction is supplied
             if (!self.options.actions.deleteAction) {
                 return;
             }
 
-            //Create div element for delete confirmation dialog
-            self._$deleteDialogDiv = $('<dialog />').addClass('jtable-modal-dialog').attr('aria-hidden','true').appendTo(self._$mainContainer);
-	    self._$deleteDialogDiv.on('close', function () {
-                    self._closeDeleteDialogDiv();
-	    });
+            // Create a div for dialog and add to container element
+            self._$deleteDialog= $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
 
-            $('<h2 id="deleteDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.areYouSure).appendTo(self._$deleteDialogDiv);
-            $('<div><p><span class="alert-icon" style="float:left; margin:0 7px 20px 0;"></span><span class="jtable-delete-confirm-message"></span></p></div>').appendTo(self._$deleteDialogDiv);
+            // the close event is called upon close-call or pressing escape
+            // self._$deleteDialog.on('close', function () {
+            // });
+
+            $('<h2 id="deleteDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.areYouSure).appendTo(self._$deleteDialog);
+            $('<div><p><span class="alert-icon" style="float:left; margin:0 7px 20px 0;"></span><span class="jtable-delete-confirm-message"></span></p></div>').appendTo(self._$deleteDialog);
 
             const $cancelButton = $('<button class="jtable-dialog-cancelbutton"></button> ')
                 .html('<span>' + self.options.messages.cancel + '</span>')
                 .on('click', function () {
-                    self._closeDeleteDialogDiv();
+                    self._closeDeleteDialog();
                 });
 
             let $deleteButton = $('<button class="jtable-dialog-deletebutton"></button>')
@@ -2947,7 +2938,7 @@ THE SOFTWARE.
                 .on('click', function () {
                     // row may be removed by another source, if so, do nothing
                     if (self._$deletingRow.hasClass('jtable-row-removed')) {
-                        self._closeDeleteDialogDiv();
+                        self._closeDeleteDialog();
                         return;
                     }
 
@@ -2957,7 +2948,7 @@ THE SOFTWARE.
                         function () {
                             self._removeRowsFromTableWithAnimation(self._$deletingRow);
                             self._setEnabledOfDialogButton($deleteButton, true, self.options.messages.deleteText);
-                            self._closeDeleteDialogDiv();
+                            self._closeDeleteDialog();
                         },
                         function (message) { // error
                             self._showError(message);
@@ -2966,11 +2957,11 @@ THE SOFTWARE.
                     );
                 });
 
-            self._$deleteDialogDiv.append($cancelButton, $deleteButton);
+            self._$deleteDialog.append($cancelButton, $deleteButton);
         },
 
-        _closeDeleteDialogDiv: function () {
-            this._$deleteDialogDiv[0].close();
+        _closeDeleteDialog: function () {
+            this._$deleteDialog[0].close();
         },
 
         /************************************************************************
@@ -3188,8 +3179,8 @@ THE SOFTWARE.
          *************************************************************************/
         _showDeleteDialog: function ($row, deleteConfirmMessage) {
             this._$deletingRow = $row;
-            this._$deleteDialogDiv.find('.jtable-delete-confirm-message').html(deleteConfirmMessage);
-            this._$deleteDialogDiv[0].showModal();
+            this._$deleteDialog.find('.jtable-delete-confirm-message').html(deleteConfirmMessage);
+            this._$deleteDialog[0].showModal();
         },
 
         /* Performs an ajax call to server to delete record

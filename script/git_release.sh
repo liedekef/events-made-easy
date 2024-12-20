@@ -1,5 +1,6 @@
 #/bin/bash
 
+plugin="events-made-easy"
 old_release=$1
 release=$2
 if [ -z "$release" ]; then
@@ -14,8 +15,8 @@ cd $basedir
 
 # first create a minimal zip of the previous release
 cd $basedir/..
-#zip -r events-made-easy-minimal.zip events-made-easy -x '*.git*' 'events-made-easy/langs/*.po' 'events-made-easy/langs/pot_gen*' 'events-made-easy/langs/*.pot' 'events-made-easy/langs/gettextize.sh*' 'events-made-easy/screenshot*' -x 'events-made-easy/dist*' -x 'events-made-easy/changelog.txt' -x 'events-made-easy/script*' -x 'events-made-easy/dompdf*' -x 'events-made-easy/payment_gateways*'
-#mv events-made-easy-minimal.zip events-made-easy/dist
+#zip -r $plugin-minimal.zip $plugin -x '*.git*' "$plugin/langs/*.po" "$plugin/langs/pot_gen*" "$plugin/langs/*.pot" "$plugin/langs/gettextize.sh*" "$plugin/screenshot*" -x "$plugin/dist*" -x "$plugin/changelog.txt" -x "$plugin/script*" -x "$plugin/dompdf*" -x "$plugin/payment_gateways*"
+#mv $plugin-minimal.zip $plugin/dist
 
 
 # If wanted, automate language file updates
@@ -30,8 +31,8 @@ sed -i "s/Stable tag: $old_release/Stable tag: $release/" readme.txt
 # now create a zip of the new release
 cd $basedir/..
 # some payment gateways (sumup) look at composer.json for their version info, so don't exclude that
-zip -r events-made-easy.zip events-made-easy -x '*.git*' 'events-made-easy/langs/*.po' 'events-made-easy/langs/pot_gen*' 'events-made-easy/langs/*.pot' 'events-made-easy/langs/gettextize.sh*' 'events-made-easy/screenshot*' -x 'events-made-easy/dist*' -x 'events-made-easy/changelog.txt' -x 'events-made-easy/script*' -x 'events-made-easy/payment_gateways/*/composer.lock'
-mv events-made-easy.zip $basedir/dist
+zip -r $plugin.zip $plugin -x '*.git*' "$plugin/langs/*.po" "$plugin/langs/pot_gen*" "$plugin/langs/*.pot" "$plugin/langs/gettextize.sh*" "$plugin/screenshot*" -x "$plugin/dist*" -x "$plugin/changelog.txt" -x "$plugin/script*" -x "$plugin/payment_gateways/*/composer.lock"
+mv $plugin.zip $basedir/dist
 
 # move 
 cd $basedir

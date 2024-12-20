@@ -2019,6 +2019,7 @@ THE SOFTWARE.
         /* Sets enabled/disabled state of a dialog button.
          *************************************************************************/
         _setEnabledOfDialogButton: function ($button, enabled, buttonText) {
+		console.log($button);
             if (!$button) {
                 return;
             }
@@ -2107,7 +2108,7 @@ THE SOFTWARE.
             // the close event is called upon close-call or pressing escape
             self._$addRecordDialog.on('close', function () {
                 let $addRecordForm = self._$addRecordDialog.find('form').first();
-                let $saveButton = self._$addRecordDialog.parent().find('#AddRecordDialogSaveButton');
+                let $saveButton = self._$addRecordDialog.find('#AddRecordDialogSaveButton');
                 self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
                 self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                 $addRecordForm.remove();
@@ -2121,6 +2122,7 @@ THE SOFTWARE.
                 });
 
             let $saveButton = $('<button class="jtable-dialog-savebutton"></button>')
+		.attr('id', 'AddRecordDialogSaveButton')
                 .html('<span>' + self.options.messages.save + '</span>')
                 .on('click', function () {
                     self._onSaveClickedOnCreateForm();
@@ -2151,7 +2153,7 @@ THE SOFTWARE.
         _onSaveClickedOnCreateForm: function () {
             let self = this;
 
-            let $saveButton = self._$addRecordDialog.parent().find('#AddRecordDialogSaveButton');
+            let $saveButton = self._$addRecordDialog.find('#AddRecordDialogSaveButton');
             let $addRecordForm = self._$addRecordDialog.find('form');
 
             if (self._$mainContainer.trigger("formSubmitting", { form: $addRecordForm, formType: 'create' }) != false) {
@@ -2462,7 +2464,7 @@ THE SOFTWARE.
             // the close event is called upon close-call or pressing escape
             self._$editRecordDialog.on('close', function () {
                 let $editForm = self._$editRecordDialog.find('form:first');
-                let $saveButton = self._$editRecordDialog.parent().find('#EditDialogSaveButton');
+                let $saveButton = self._$editRecordDialog.find('#EditDialogSaveButton');
                 self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
                 self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                 $editForm.remove();
@@ -2476,6 +2478,7 @@ THE SOFTWARE.
                 });
 
             let $saveButton = $('<button class="jtable-dialog-savebutton"></button>')
+		.attr('id', 'EditDialogSaveButton')
                 .html('<span>' + self.options.messages.save + '</span>')
                 .on('click', function () {
                     self._onSaveClickedOnEditForm();
@@ -2496,7 +2499,7 @@ THE SOFTWARE.
                 return;
             }
 
-            let $saveButton = self._$editRecordDialog.parent().find('#EditDialogSaveButton');
+            let $saveButton = self._$editRecordDialog.find('#EditDialogSaveButton');
             let $editForm = self._$editRecordDialog.find('form');
             if (self._$mainContainer.trigger("formSubmitting", { form: $editForm, formType: 'edit', row: self._$editingRow }) != false) {
                 self._setEnabledOfDialogButton($saveButton, false, self.options.messages.saving);

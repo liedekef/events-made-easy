@@ -6,9 +6,7 @@ ul.jtable-column-select-list {
     font-size: 1.1em;
 }
 div.jtable-main-container table.jtable thead th.jtable-column-header div.jtable-column-header-container {
-    font-size: 0.9em;
     color: #555;
-    font-weight: normal;
 }
 
 div.jtable-main-container table.jtable tbody>tr.jtable-row-even,

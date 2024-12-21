@@ -7,7 +7,6 @@ jQuery(document).ready(function ($) {
         toolbarsearch: true,
         toolbarreset: false,
         defaultSorting: 'name ASC',
-        roomForSortableIcon: true,
         selecting: true, //Enable selecting
         multiselect: true, //Allow multiple selecting
         selectingCheckboxes: true, //Show checkboxes on first column
@@ -73,7 +72,6 @@ jQuery(document).ready(function ($) {
         paging: true,
         sorting: true,
         defaultSorting: 'name ASC',
-        roomForSortableIcon: true,
         toolbarsearch: true,
         toolbarreset: false,
         selecting: true, //Enable selecting

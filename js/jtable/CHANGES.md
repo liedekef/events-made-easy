@@ -1,8 +1,12 @@
 By Franky Van Liedekerke:
 
+Version 1.0.5 (2024/12/21)
+* roomForSortableIcon is true by default, set to false to regain old behavior
+* added some margin around the edit/delete/close icon
+* allow last column to be resized too
+
 Version 1.0.4 (2024/12/21)
 * Add option "roomForSortableIcon" (true/false) for sorting, so the icon has room to appear next to the next
-  default: false (current behavior)
 
 Version 1.0.2 (2024/12/20)
 * rewritten without jquery-ui

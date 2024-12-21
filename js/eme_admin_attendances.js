@@ -6,7 +6,6 @@ jQuery(document).ready( function($) {
             paging: true,
             sorting: true,
             defaultSorting: 'name ASC',
-            roomForSortableIcon: true,
             selecting: false, //Enable selecting
             multiselect: false, //Allow multiple selecting
             selectingCheckboxes: false, //Show checkboxes on first column

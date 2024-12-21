@@ -4293,7 +4293,7 @@ THE SOFTWARE.
         options: {
             sorting: false,
             multiSorting: false,
-	    roomForSortableIcon: false,
+	    roomForSortableIcon: true,
             defaultSorting: ''
         },
 
@@ -4562,7 +4562,7 @@ THE SOFTWARE.
             let $headerCell = base._createHeaderCellForField.apply(this, arguments);
 
             //Make data columns resizable except the last one
-            if (this.options.columnResizable && field.columnResizable && (fieldName != this._columnList[this._columnList.length - 1])) {
+            if (this.options.columnResizable && field.columnResizable) {
                 this._makeColumnResizable($headerCell);
             }
 
@@ -4769,16 +4769,18 @@ THE SOFTWARE.
 
                     //Get a reference to the next column
                     let $nextColumnHeader = $columnHeader.nextAll('th.jtable-column-header:visible:first');
-                    if (!$nextColumnHeader.length) {
-                        return;
-                    }
+                    if ($nextColumnHeader.length) {
+			nextColumnOuterWidth=$nextColumnHeader.outerWidth();
+                    } else {
+			nextColumnOuterWidth=0;
+		    }
 
                     //Store some information to be used on resizing
                     let minimumColumnWidth = 10; //A column's width can not be smaller than 10 pixel.
                     self._currentResizeArgs = {
                         currentColumnStartWidth: $columnHeader.outerWidth(),
                         minWidth: minimumColumnWidth,
-                        maxWidth: $columnHeader.outerWidth() + $nextColumnHeader.outerWidth() - minimumColumnWidth,
+                        maxWidth: $columnHeader.outerWidth() + nextColumnOuterWidth,
                         mouseStartX: downevent.pageX,
                         minResizeX: function () { return this.mouseStartX - (this.currentColumnStartWidth - this.minWidth); },
                         maxResizeX: function () { return this.mouseStartX + (this.maxWidth - this.currentColumnStartWidth); }
@@ -4808,16 +4810,20 @@ THE SOFTWARE.
                         //Calculate new widths in pixels
                         let mouseChangeX = upevent.pageX - self._currentResizeArgs.mouseStartX;
                         let currentColumnFinalWidth = self._normalizeNumber(self._currentResizeArgs.currentColumnStartWidth + mouseChangeX, self._currentResizeArgs.minWidth, self._currentResizeArgs.maxWidth);
-                        let nextColumnFinalWidth = $nextColumnHeader.outerWidth() + (self._currentResizeArgs.currentColumnStartWidth - currentColumnFinalWidth);
 
+			// Now resize the column by setting width
                         //Calculate widths as percent
                         let pixelToPercentRatio = $columnHeader.data('width-in-percent') / self._currentResizeArgs.currentColumnStartWidth;
                         $columnHeader.data('width-in-percent', currentColumnFinalWidth * pixelToPercentRatio);
-                        $nextColumnHeader.data('width-in-percent', nextColumnFinalWidth * pixelToPercentRatio);
-
                         //Set new widths to columns (resize!)
                         $columnHeader.css('width', $columnHeader.data('width-in-percent') + '%');
-                        $nextColumnHeader.css('width', $nextColumnHeader.data('width-in-percent') + '%');
+
+			// now do the same for the next column if present
+                        if ($nextColumnHeader.length) {
+				let nextColumnFinalWidth = nextColumnOuterWidth + (self._currentResizeArgs.currentColumnStartWidth - currentColumnFinalWidth);
+				$nextColumnHeader.data('width-in-percent', nextColumnFinalWidth * pixelToPercentRatio);
+				$nextColumnHeader.css('width', $nextColumnHeader.data('width-in-percent') + '%');
+			}
 
                         //Normalize all column widths
                         self._normalizeColumnWidths();

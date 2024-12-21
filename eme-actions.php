@@ -267,9 +267,9 @@ function eme_admin_register_scripts() {
 	wp_register_script( 'eme-print', EME_PLUGIN_URL . 'js/jquery.printelement.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-jquery-validate', EME_PLUGIN_URL . 'js/jquery-validate/jquery.validate.min.js', [ 'jquery' ], EME_VERSION );
-	wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable-noui/jquery.jtable.js', [ ], EME_VERSION );
-	wp_register_script( 'eme-jtable-storage', EME_PLUGIN_URL . 'js/jtable-noui/extensions/jquery.jtable.localstorage.js', [ 'eme-jquery-jtable' ], EME_VERSION );
-	wp_register_script( 'eme-jtable-search', EME_PLUGIN_URL . 'js/jtable-noui/extensions/jquery.jtable.toolbarsearch.js', [ 'eme-jquery-jtable', 'eme-jtable-storage' ], EME_VERSION );
+	wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable/jquery.jtable.js', [ ], EME_VERSION );
+	wp_register_script( 'eme-jtable-storage', EME_PLUGIN_URL . 'js/jtable/extensions/jquery.jtable.localstorage.js', [ 'eme-jquery-jtable' ], EME_VERSION );
+	wp_register_script( 'eme-jtable-search', EME_PLUGIN_URL . 'js/jtable/extensions/jquery.jtable.toolbarsearch.js', [ 'eme-jquery-jtable', 'eme-jtable-storage' ], EME_VERSION );
 	if ( wp_script_is( 'eme-select2-locale', 'registered' ) ) {
 		wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery', 'eme-select2', 'eme-select2-locale' ], EME_VERSION );
 	} else {
@@ -287,14 +287,14 @@ function eme_admin_register_scripts() {
 
 	$locale_code     = determine_locale();
 	$locale_code     = preg_replace( '/_/', '-', $locale_code );
-	$locale_file     = $eme_plugin_dir . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
-	$locale_file_url = EME_PLUGIN_URL . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
+	$locale_file     = $eme_plugin_dir . "js/jtable/localization/jquery.jtable.$locale_code.js";
+	$locale_file_url = EME_PLUGIN_URL . "js/jtable/localization/jquery.jtable.$locale_code.js";
 	// for english, no translation code is needed)
 	if ( $locale_code != 'en-US' ) {
 		if ( ! file_exists( $locale_file ) ) {
 			$locale_code     = substr( $locale_code, 0, 2 );
-			$locale_file     = $eme_plugin_dir . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
-			$locale_file_url = EME_PLUGIN_URL . "js/jtable-noui/localization/jquery.jtable.$locale_code.js";
+			$locale_file     = $eme_plugin_dir . "js/jtable/localization/jquery.jtable.$locale_code.js";
+			$locale_file_url = EME_PLUGIN_URL . "js/jtable/localization/jquery.jtable.$locale_code.js";
 		}
 		if ( file_exists( $locale_file ) ) {
 			wp_register_script( 'eme-jtable-locale', $locale_file_url, '', EME_VERSION );
@@ -318,7 +318,7 @@ function eme_admin_register_scripts() {
 	if ( file_exists( $eme_css_name ) ) {
 		wp_register_style( 'eme_stylesheet_extra', get_stylesheet_directory_uri() . '/eme.css', [ 'eme_stylesheet' ], EME_VERSION );
 	}
-        wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable-noui/themes/lightcolor/gray/jtable.min.css' );
+        wp_register_style( 'eme-jquery-jtable-css', EME_PLUGIN_URL . 'js/jtable/themes/lightcolor/gray/jtable.min.css' );
 	wp_register_style( 'eme-jquery-select2-css', EME_PLUGIN_URL . 'js/jquery-select2/select2-4.1.0-rc.0/dist/css/select2.min.css' );
 	wp_register_style( 'eme-jtables-css', EME_PLUGIN_URL . 'css/jquery.jtables.css', [], EME_VERSION );
 	eme_admin_enqueue_js();

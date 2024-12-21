@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable (edited by Franky Van Liedekerke)
+jTable 1.0.2 (edited by Franky Van Liedekerke)
 http://www.jtable.org
 
 ---------------------------------------------------------------------------
@@ -2019,6 +2019,7 @@ THE SOFTWARE.
         /* Sets enabled/disabled state of a dialog button.
          *************************************************************************/
         _setEnabledOfDialogButton: function ($button, enabled, buttonText) {
+		console.log($button);
             if (!$button) {
                 return;
             }

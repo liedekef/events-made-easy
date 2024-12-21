@@ -1,9 +1,13 @@
-By Franky:
+By Franky Van Liedekerke:
 
-- visibility can be "hidden", "visible" (the default), or "separator" (in
+Version 1.0.2 (2024/12/20)
+* rewritten without jquery-ui
+* fully use html5 modals
+* visibility can be "hidden", "visible" (the default), or "separator" (in
 which case the value will be bold, but not selectable nor a real column, just
 a bold-entry in the vibility selection)
-- added div around the internal table, using css this is now responsive:
+* added div around the internal table, using css this is now responsive (css included in all themes):
+```js
 .jtable-table-div {
     display: block;
     overflow-x:auto;
@@ -11,15 +15,18 @@ a bold-entry in the vibility selection)
 .jtable-table-div > table {
     overflow:hidden;
 }
-
-- added listQueryParams to jtable-call, to indicate parameters to be loaded on
+```
+* added listQueryParams to jtable-call, to indicate parameters to be loaded on
 every load-call, can be a function
   Examples:
+```
             listQueryParams: {
                     'action': "eme_people_list",
                     'eme_admin_nonce': emepeople.translate_adminnonce,
 			}
+```
   Or, if you want data evaluated live:
+```
             listQueryParams: function () {
                 let params = {
                     'action': "eme_people_list",
@@ -35,9 +42,11 @@ every load-call, can be a function
                 }
                 return params;
             },
+```
   The extra param to the load-call itself will add/override params defined in
   listQueryParams. Example:
+```
   $('#PeopleTableContainer').jtable('load', {'test':"eee"});
-- the queryparams for paging and sorting are now also added to the GET/POST as
+```
+* the queryparams for paging and sorting are now also added to the GET/POST as
 regular params, no more forced to the url as GET params
-- rewritten without jquery-ui

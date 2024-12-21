@@ -182,6 +182,7 @@ jQuery(document).ready(function ($) {
             sorting: true,
             multiSorting: true,
             defaultSorting: '',
+            roomForSortableIcon: true,
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
             selectingCheckboxes: true, //Show checkboxes on first column

@@ -1,5 +1,9 @@
 By Franky Van Liedekerke:
 
+Version 1.0.4 (2024/12/21)
+* Add option "roomForSortableIcon" (true/false) for sorting, so the icon has room to appear next to the next
+  default: false (current behavior)
+
 Version 1.0.2 (2024/12/20)
 * rewritten without jquery-ui
 * fully use html5 modals

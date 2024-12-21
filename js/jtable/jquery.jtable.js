@@ -4293,13 +4293,13 @@ THE SOFTWARE.
         options: {
             sorting: false,
             multiSorting: false,
+	    roomForSortableIcon: false,
             defaultSorting: ''
         },
 
         /************************************************************************
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
-
         _lastSorting: null, //Last sorting of the table
 
         /************************************************************************
@@ -4380,11 +4380,18 @@ THE SOFTWARE.
         _makeColumnSortable: function ($columnHeader, fieldName, initialSortingDirection) {
             let self = this;
 
+		// Add some empty spaces after the text so the background icon has room next to it
+		// one could play with css and ::after, but then the width calculation of columns borks
+		// TOOD: this should be configurable in number
+
+	    if (self.options.roomForSortableIcon) {
+		$columnHeader.find('.jtable-column-header-text').append('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+	    }
+
             $columnHeader
                 .addClass('jtable-column-header-sortable')
                 .click(function (e) {
                     e.preventDefault();
-
                     if (!self.options.multiSorting || !e.ctrlKey) {
                         self._lastSorting = []; //clear previous sorting
                     }
@@ -4567,7 +4574,7 @@ THE SOFTWARE.
             return $headerCell;
         },
 
-        /* Overrides _createHeaderCellForField to decide show or hide a column.
+        /* Overrides _createCellForRecordField to decide show or hide a column.
          *************************************************************************/
         _createCellForRecordField: function (record, fieldName) {
             let $column = base._createCellForRecordField.apply(this, arguments);

@@ -90,6 +90,7 @@ jQuery(document).ready(function ($) {
             paging: true,
             sorting: true,
             defaultSorting: 'location_id ASC',
+            roomForSortableIcon: true,
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
             selectingCheckboxes: true, //Show checkboxes on first column

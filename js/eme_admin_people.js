@@ -249,6 +249,7 @@ jQuery(document).ready(function ($) {
             sorting: true,
             multiSorting: true,
             defaultSorting: 'people.lastname ASC, people.firstname ASC',
+            roomForSortableIcon: true,
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
             selectingCheckboxes: true, //Show checkboxes on first column
@@ -298,6 +299,7 @@ jQuery(document).ready(function ($) {
             paging: true,
             sorting: true,
             defaultSorting: 'name ASC',
+            roomForSortableIcon: true,
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
             selectingCheckboxes: true, //Show checkboxes on first column

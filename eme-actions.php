@@ -267,7 +267,7 @@ function eme_admin_register_scripts() {
 	wp_register_script( 'eme-print', EME_PLUGIN_URL . 'js/jquery.printelement.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ 'jquery' ], EME_VERSION );
 	wp_register_script( 'eme-jquery-validate', EME_PLUGIN_URL . 'js/jquery-validate/jquery.validate.min.js', [ 'jquery' ], EME_VERSION );
-	wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable/jquery.jtable.js', [ ], EME_VERSION );
+	wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable/jquery.jtable.min.js', [ ], EME_VERSION );
 	wp_register_script( 'eme-jtable-storage', EME_PLUGIN_URL . 'js/jtable/extensions/jquery.jtable.localstorage.js', [ 'eme-jquery-jtable' ], EME_VERSION );
 	wp_register_script( 'eme-jtable-search', EME_PLUGIN_URL . 'js/jtable/extensions/jquery.jtable.toolbarsearch.js', [ 'eme-jquery-jtable', 'eme-jtable-storage' ], EME_VERSION );
 	if ( wp_script_is( 'eme-select2-locale', 'registered' ) ) {

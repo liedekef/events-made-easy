@@ -49,7 +49,7 @@ THE SOFTWARE.
 
     jTable.prototype = {
         options: {
-            //Options
+            // Options
             tableId: undefined,
             actions: {},
             fields: {},
@@ -74,7 +74,7 @@ THE SOFTWARE.
                 items: []
             },
 
-            //Events
+            // Events
             closeRequested: function (event, data) { },
             formCreated: function (event, data) { },
             formSubmitting: function (event, data) { },
@@ -84,7 +84,7 @@ THE SOFTWARE.
             rowInserted: function (event, data) { },
             rowsRemoved: function (event, data) { },
 
-            //Localization
+            // Localization
             messages: {
                 serverCommunicationError: 'An error occured while communicating to the server.',
                 loadingMessage: 'Loading records...',
@@ -101,28 +101,27 @@ THE SOFTWARE.
         /************************************************************************
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
+        _$mainContainer: null, // Reference to the main container of all elements that are created by this plug-in (jQuery object)
 
-        _$mainContainer: null, //Reference to the main container of all elements that are created by this plug-in (jQuery object)
+        _$titleDiv: null, // Reference to the title div (jQuery object)
+        _$toolbarDiv: null, // Reference to the toolbar div (jQuery object)
 
-        _$titleDiv: null, //Reference to the title div (jQuery object)
-        _$toolbarDiv: null, //Reference to the toolbar div (jQuery object)
+        _$tableDiv: null, // Reference to the table main div
+        _$table: null, // Reference to the main <table> (jQuery object)
+        _$tableBody: null, // Reference to <body> in the table (jQuery object)
+        _$tableRows: null, // Array of all <tr> in the table (except "no data" row) (jQuery object array)
 
-        _$tableDiv: null, //Reference to the table main div
-        _$table: null, //Reference to the main <table> (jQuery object)
-        _$tableBody: null, //Reference to <body> in the table (jQuery object)
-        _$tableRows: null, //Array of all <tr> in the table (except "no data" row) (jQuery object array)
+        _$busyDialog: null, // Reference to the div that is used to block UI while busy (jQuery object)
+        _$errorDialog: null, // Reference to the error dialog div (jQuery object)
 
-        _$busyDialog: null, //Reference to the div that is used to block UI while busy (jQuery object)
-        _$errorDialog: null, //Reference to the error dialog div (jQuery object)
+        _columnList: null, // Name of all data columns in the table (select column and command columns are not included) (string array)
+        _fieldList: null, // Name of all fields of a record (defined in fields option) (string array)
+        _keyField: null, // Name of the key field of a record (that is defined as 'key: true' in the fields option) (string)
 
-        _columnList: null, //Name of all data columns in the table (select column and command columns are not included) (string array)
-        _fieldList: null, //Name of all fields of a record (defined in fields option) (string array)
-        _keyField: null, //Name of the key field of a record (that is defined as 'key: true' in the fields option) (string)
+        _firstDataColumnOffset: 0, // Start index of first record field in table columns (some columns can be placed before first data column, such as select checkbox column) (integer)
+        _lastPostData: null, // Last posted data on load method (object)
 
-        _firstDataColumnOffset: 0, //Start index of first record field in table columns (some columns can be placed before first data column, such as select checkbox column) (integer)
-        _lastPostData: null, //Last posted data on load method (object)
-
-        _cache: null, //General purpose cache dictionary (object)
+        _cache: null, // General purpose cache dictionary (object)
 
         _extraFieldTypes:[],
 
@@ -134,12 +133,12 @@ THE SOFTWARE.
          *************************************************************************/
         _create: function () {
 
-            //Initialization
+            // Initialization
             this._normalizeFieldsOptions();
             this._initializeFields();
             this._createFieldAndColumnList();
 
-            //Creating DOM elements
+            // Creating DOM elements
             this._createMainContainer();
             this._createTableTitle();
             this._createToolBar();
@@ -174,7 +173,7 @@ THE SOFTWARE.
                 props.placeholder = '';
             }
 
-            //Convert dependsOn to array if it's a comma seperated lists
+            // Convert dependsOn to array if it's a comma seperated lists
             if (props.dependsOn && $.type(props.dependsOn) === 'string') {
                 let dependsOnArray = props.dependsOn.split(',');
                 props.dependsOn = [];
@@ -202,15 +201,15 @@ THE SOFTWARE.
 
             $.each(self.options.fields, function (name, props) {
 
-                //Add field to the field list
+                // Add field to the field list
                 self._fieldList.push(name);
 
-                //Check if this field is the key field
+                // Check if this field is the key field
                 if (props.key == true) {
                     self._keyField = name;
                 }
 
-                //Add field to column list if it is shown in the table
+                // Add field to column list if it is shown in the table
                 if (props.list != false && props.type != 'hidden') {
                     self._columnList.push(name);
                 }
@@ -386,7 +385,7 @@ THE SOFTWARE.
  
             $('<h2 id="errorDialogTitle"></h2>').css({padding: '0px'}).html(self.options.messages.error).appendTo(self._$errorDialog);
             $('<div><p><span class="jtable-error-message"></span></p></div>').appendTo(self._$errorDialog);
-            $('<button class="jtable-dialog-cancelbutton"></button>')
+            $('<button class="jtable-dialog-button jtable-dialog-cancelbutton"></button>')
                 .html('<span>' + self.options.messages.close + '</span>')
                 .on('click', function () {
                     self._closeErrorDialog();
@@ -471,13 +470,13 @@ THE SOFTWARE.
                     return;
                 }
 
-                //Re-generate table rows
+                // Re-generate table rows
                 self._removeAllRows('reloading');
                 self._addRecordsToTable(data.Records);
 
                 self._onRecordsLoaded(data);
 
-                //Call complete callback
+                // Call complete callback
                 if (completeCallback) {
                     completeCallback();
                 }
@@ -486,13 +485,12 @@ THE SOFTWARE.
             self._showBusy(self.options.messages.loadingMessage, self.options.loadingAnimationDelay); //Disable table since it's busy
             self._onLoadingRecords();
 
-            //listAction may be a function, check if it is
+            // listAction may be a function, check if it is
             if ($.isFunction(self.options.actions.listAction)) {
-
-                //Execute the function
+                // Execute the function
                 let funcResult = self.options.actions.listAction(self._lastPostData, self._createJtParamsForLoading());
 
-                //Check if result is a jQuery Deferred object
+                // Check if result is a jQuery Deferred object
                 if (self._isDeferredObject(funcResult)) {
                     funcResult.done(function(data) {
                         completeReload(data);
@@ -501,18 +499,18 @@ THE SOFTWARE.
                     }).always(function() {
                         self._hideBusy();
                     });
-                } else { //assume it's the data we're loading
+                } else { // assume it's the data we're loading
                     completeReload(funcResult);
                 }
 
-            } else { //assume listAction as URL string.
+            } else { // assume listAction as URL string.
 
-                //Generate URL (with query string parameters) to load records
+                // Generate URL (with query string parameters) to load records
                 /* let loadUrl = self._createRecordLoadUrl(); */
                 let loadUrl = self.options.actions.listAction;
                 let extraparams = self._createJtParamsForLoading();
 
-                //Load data from server using AJAX
+                // Load data from server using AJAX
                 self._ajax({
                     url: loadUrl,
                     data: { ...self._lastPostData, ...extraparams},
@@ -536,7 +534,7 @@ THE SOFTWARE.
 
         _createJtParamsForLoading: function() {
             return {
-                //Empty as default, paging, sorting or other extensions can override this method to add additional params to load request
+                // Empty as default, extensions can override this method to add additional params to load request
             };
         },
 
@@ -614,23 +612,23 @@ THE SOFTWARE.
                 animationsEnabled: true
             }, options);
 
-            //Remove 'no data' row if this is first row
+            // Remove 'no data' row if this is first row
             if (this._$tableRows.length <= 0) {
                 this._removeNoDataRow();
             }
 
-            //Add new row to the table according to it's index
+            // Add new row to the table according to it's index
             options.index = this._normalizeNumber(options.index, 0, this._$tableRows.length, this._$tableRows.length);
             if (options.index == this._$tableRows.length) {
-                //add as last row
+                // add as last row
                 this._$tableBody.append($row);
                 this._$tableRows.push($row);
             } else if (options.index == 0) {
-                //add as first row
+                // add as first row
                 this._$tableBody.prepend($row);
                 this._$tableRows.unshift($row);
             } else {
-                //insert to specified index
+                // insert to specified index
                 this._$tableRows[options.index - 1].after($row);
                 this._$tableRows.splice(options.index, 0, $row);
             }
@@ -665,15 +663,15 @@ THE SOFTWARE.
         _removeRowsFromTable: function ($rows, reason) {
             let self = this;
 
-            //Check if any row specified
+            // Check if any row specified
             if ($rows.length <= 0) {
                 return;
             }
 
-            //remove from DOM
+            // remove from DOM
             $rows.addClass('jtable-row-removed').remove();
 
-            //remove from _$tableRows array
+            // remove from _$tableRows array
             $rows.each(function () {
                 let index = self._findRowIndex($(this));
                 if (index >= 0) {
@@ -683,7 +681,7 @@ THE SOFTWARE.
 
             self._onRowsRemoved($rows, reason);
 
-            //Add 'no data' row if all rows removed from table
+            // Add 'no data' row if all rows removed from table
             if (self._$tableRows.length == 0) {
                 self._addNoDataRow();
             }
@@ -707,16 +705,16 @@ THE SOFTWARE.
                 return;
             }
 
-            //Select all rows (to pass it on raising _onRowsRemoved event)
+            // Select all rows (to pass it on raising _onRowsRemoved event)
             let $rows = this._$tableBody.find('tr.jtable-data-row');
 
-            //Remove all rows from DOM and the _$tableRows array
+            // Remove all rows from DOM and the _$tableRows array
             this._$tableBody.empty();
             this._$tableRows = [];
 
             this._onRowsRemoved($rows, reason);
 
-            //Add 'no data' row since we removed all rows
+            // Add 'no data' row since we removed all rows
             this._addNoDataRow();
         },
 
@@ -764,7 +762,7 @@ THE SOFTWARE.
             let field = this.options.fields[fieldName];
             let fieldValue = record[fieldName];
 
-            //if this is a custom field, call display function
+            // if this is a custom field, call display function
             if (field.display) {
                 return field.display({ record: record });
             }
@@ -777,7 +775,7 @@ THE SOFTWARE.
                 return this._getDisplayTextForDateRecordField(field, fieldValue);
             } else if (field.type == 'checkbox') {
                 return this._getCheckBoxTextForFieldByValue(fieldName, fieldValue);
-            } else if (field.options) { //combobox or radio button list since there are options.
+            } else if (field.options) { // combobox or radio button list since there are options.
                 let options = this._getOptionsForField(fieldName, {
                     record: record,
                     value: fieldValue,
@@ -785,7 +783,7 @@ THE SOFTWARE.
                     dependedValues: this._createDependedValuesUsingRecord(record, field.dependsOn)
                 });
                 return this._findOptionByValue(options, fieldValue).DisplayText;
-            } else { //other types
+            } else { // other types
                 return fieldValue;
             }
         },
@@ -820,7 +818,7 @@ THE SOFTWARE.
                 }
             }
 
-            return {}; //no item found
+            return {}; // no item found
         },
 
         /* Gets text for a date field.
@@ -842,7 +840,7 @@ THE SOFTWARE.
             let optionsSource = field.options;
 
             if ($.isFunction(optionsSource)) {
-                //prepare parameter to the function
+                // prepare parameter to the function
                 funcParams = $.extend(true, {
                     _cacheCleared: false,
                     dependedValues: {},
@@ -851,26 +849,26 @@ THE SOFTWARE.
                     }
                 }, funcParams);
 
-                //call function and get actual options source
+                // call function and get actual options source
                 optionsSource = optionsSource(funcParams);
             }
 
             let options;
 
-            //Build options according to it's source type
-            if (typeof optionsSource == 'string') { //It is an Url to download options
-                let cacheKey = 'options_' + fieldName + '_' + optionsSource; //create a unique cache key
+            // Build options according to it's source type
+            if (typeof optionsSource == 'string') { // It is an Url to download options
+                let cacheKey = 'options_' + fieldName + '_' + optionsSource; // create a unique cache key
                 if (funcParams._cacheCleared || (!this._cache[cacheKey])) {
-                    //if user calls clearCache() or options are not found in the cache, download options
+                    // if user calls clearCache() or options are not found in the cache, download options
                     this._cache[cacheKey] = this._buildOptionsFromArray(this._downloadOptions(fieldName, optionsSource));
                     this._sortFieldOptions(this._cache[cacheKey], field.optionsSorting);
                 } else {
-                    //found on cache..
-                    //if this method (_getOptionsForField) is called to get option for a specific value (on funcParams.source == 'list')
-                    //and this value is not in cached options, we need to re-download options to get the unfound (probably new) option.
+                    // found on cache..
+                    // if this method (_getOptionsForField) is called to get option for a specific value (on funcParams.source == 'list')
+                    // and this value is not in cached options, we need to re-download options to get the unfound (probably new) option.
                     if (funcParams.value != undefined) {
                         let optionForValue = this._findOptionByValue(this._cache[cacheKey], funcParams.value);
-                        if (optionForValue.DisplayText == undefined) { //this value is not in cached options...
+                        if (optionForValue.DisplayText == undefined) { // this value is not in cached options...
                             this._cache[cacheKey] = this._buildOptionsFromArray(this._downloadOptions(fieldName, optionsSource));
                             this._sortFieldOptions(this._cache[cacheKey], field.optionsSorting);
                         }
@@ -878,10 +876,10 @@ THE SOFTWARE.
                 }
 
                 options = this._cache[cacheKey];
-            } else if (jQuery.isArray(optionsSource)) { //It is an array of options
+            } else if (jQuery.isArray(optionsSource)) { // It is an array of options
                 options = this._buildOptionsFromArray(optionsSource);
                 this._sortFieldOptions(options, field.optionsSorting);
-            } else { //It is an object that it's properties are options
+            } else { // It is an object that it's properties are options
                 options = this._buildOptionsArrayFromObject(optionsSource);
                 this._sortFieldOptions(options, field.optionsSorting);
             }
@@ -924,13 +922,13 @@ THE SOFTWARE.
                 return;
             }
 
-            //Determine using value of text
+            // Determine using value of text
             let dataSelector;
             if (sorting.indexOf('value') == 0) {
                 dataSelector = function (option) {
                     return option.Value;
                 };
-            } else { //assume as text
+            } else { // assume as text
                 dataSelector = function (option) {
                     return option.DisplayText;
                 };
@@ -941,7 +939,7 @@ THE SOFTWARE.
                 compareFunc = function (option1, option2) {
                     return dataSelector(option1).localeCompare(dataSelector(option2));
                 };
-            } else { //asuume as numeric
+            } else { // assume as numeric
                 compareFunc = function (option1, option2) {
                     return dataSelector(option1) - dataSelector(option2);
                 };
@@ -951,7 +949,7 @@ THE SOFTWARE.
                 options.sort(function (a, b) {
                     return compareFunc(b, a);
                 });
-            } else { //assume as asc
+            } else { // assume as asc
                 options.sort(function (a, b) {
                     return compareFunc(a, b);
                 });
@@ -981,7 +979,7 @@ THE SOFTWARE.
             for (let i = 0; i < optionsArray.length; i++) {
                 if ($.isPlainObject(optionsArray[i])) {
                     list.push(optionsArray[i]);
-                } else { //assumed as primitive type (int, string...)
+                } else { // assumed as primitive type (int, string...)
                     list.push({
                         Value: optionsArray[i],
                         DisplayText: optionsArray[i]
@@ -999,17 +997,17 @@ THE SOFTWARE.
          *  2011-01-01 (YYYY-MM-DD)
          *************************************************************************/
         _parseDate: function (dateString) {
-            if (dateString.indexOf('Date') >= 0) { //Format: /Date(1320259705710)/
+            if (dateString.indexOf('Date') >= 0) { // Format: /Date(1320259705710)/
                 return new Date(
                     parseInt(dateString.substr(6), 10)
                 );
-            } else if (dateString.length == 10) { //Format: 2011-01-01
+            } else if (dateString.length == 10) { // Format: 2011-01-01
                 return new Date(
                     parseInt(dateString.substr(0, 4), 10),
                     parseInt(dateString.substr(5, 2), 10) - 1,
                     parseInt(dateString.substr(8, 2), 10)
                 );
-            } else if (dateString.length == 19) { //Format: 2011-01-01 20:32:42
+            } else if (dateString.length == 19) { // Format: 2011-01-01 20:32:42
                 return new Date(
                     parseInt(dateString.substr(0, 4), 10),
                     parseInt(dateString.substr(5, 2), 10) - 1,
@@ -1042,7 +1040,7 @@ THE SOFTWARE.
          *************************************************************************/
         _addToolBarItem: function (item) {
 
-            //Check if item is valid
+            // Check if item is valid
             if ((item == undefined) || (item.text == undefined && item.icon == undefined)) {
                 this._logWarn('Can not add tool bar item since it is not valid!');
                 this._logWarn(item);
@@ -1055,36 +1053,36 @@ THE SOFTWARE.
 
             this._jqueryuiThemeAddClass($toolBarItem, 'ui-widget ui-state-default ui-corner-all', 'ui-state-hover');
 
-            //cssClass property
+            // cssClass property
             if (item.cssClass) {
                 $toolBarItem
                     .addClass(item.cssClass);
             }
 
-            //tooltip property
+            // tooltip property
             if (item.tooltip) {
                 $toolBarItem
                     .attr('title', item.tooltip);
             }
 
-            //icon property
+            // icon property
             if (item.icon) {
                 let $icon = $('<span class="jtable-toolbar-item-icon"></span>').appendTo($toolBarItem);
                 if (item.icon === true) {
-                    //do nothing
+                    // do nothing
                 } else if ($.type(item.icon === 'string')) {
                     $icon.css('background', 'url("' + item.icon + '")');
                 }
             }
 
-            //text property
+            // text property
             if (item.text) {
                 $('<span class=""></span>')
                     .html(item.text)
                     .addClass('jtable-toolbar-item-text').appendTo($toolBarItem);
             }
 
-            //click event
+            // click event
             if (item.click) {
                 $toolBarItem.click(function (e) {
                     e.preventDefault();
@@ -1093,7 +1091,7 @@ THE SOFTWARE.
                 });
             }
 
-            //set hover animation parameters
+            // set hover animation parameters
             let hoverAnimationDuration = undefined;
             let hoverAnimationEasing = undefined;
             if (this.options.toolbar.hoverAnimation) {
@@ -1101,7 +1099,7 @@ THE SOFTWARE.
                 hoverAnimationEasing = this.options.toolbar.hoverAnimationEasing;
             }
 
-            //change class on hover
+            // change class on hover
             $toolBarItem.hover(function () {
                 $toolBarItem.addClass('jtable-toolbar-item-hover', hoverAnimationDuration, hoverAnimationEasing);
             }, function () {
@@ -1206,10 +1204,10 @@ THE SOFTWARE.
         _ajax: function (options) {
             let self = this;
 
-            //Handlers for HTTP status codes
+            // Handlers for HTTP status codes
             let opts = {
                 statusCode: {
-                    401: function () { //Unauthorized
+                    401: function () { // Unauthorized
                         self._unAuthorizedRequestHandler();
                     }
                 }
@@ -1217,9 +1215,9 @@ THE SOFTWARE.
 
             opts = $.extend(opts, this.options.ajaxSettings, options);
 
-            //Override success
+            // Override success
             opts.success = function (data) {
-                //Checking for Authorization error
+                // Checking for Authorization error
                 if (data && data.UnAuthorizedRequest == true) {
                     self._unAuthorizedRequestHandler();
                 }
@@ -1229,7 +1227,7 @@ THE SOFTWARE.
                 }
             };
 
-            //Override error
+            // Override error
             opts.error = function (jqXHR, textStatus, errorThrown) {
                 if (unloadingPage) {
                     jqXHR.abort();
@@ -1241,7 +1239,7 @@ THE SOFTWARE.
                 }
             };
 
-            //Override complete
+            // Override complete
             opts.complete = function () {
                 if (options.complete) {
                     options.complete();
@@ -1442,7 +1440,7 @@ THE SOFTWARE.
          *************************************************************************/
         _findIndexInArray: function (value, array, compareFunc) {
 
-            //If not defined, use default comparision
+            // If not defined, use default comparision
             if (!compareFunc) {
                 compareFunc = function (a, b) {
                     return a == b;
@@ -1501,7 +1499,7 @@ THE SOFTWARE.
             return obj.then && obj.done && obj.fail;
         },
 
-        //Logging methods ////////////////////////////////////////////////////////
+        // Logging methods
 
         _logDebug: function (text) {
             if (!window.console) {
@@ -1587,7 +1585,7 @@ THE SOFTWARE.
         /* Creates label for an input element.
          *************************************************************************/
         _createInputLabelForRecordField: function (fieldName) {
-            //TODO: May create label tag instead of a div.
+            // TODO: May create label tag instead of a div.
             return $('<div />')
                 .addClass('jtable-input-label')
                 .html(this.options.fields[fieldName].inputTitle || this.options.fields[fieldName].title);
@@ -1602,15 +1600,15 @@ THE SOFTWARE.
                 formType = funcParams.formType,
                 form = funcParams.form;
 
-            //Get the field
+            // Get the field
             let field = this.options.fields[fieldName];
 
-            //If value if not supplied, use defaultValue of the field
+            // If value if not supplied, use defaultValue of the field
             if (value == undefined || value == null) {
                 value = field.defaultValue;
             }
 
-            //Use custom function if supplied
+            // Use custom function if supplied
             if (field.input) {
                 let $input = $(field.input({
                     value: value,
@@ -1619,18 +1617,18 @@ THE SOFTWARE.
                     form: form
                 }));
 
-                //Add id attribute if does not exists
+                // Add id attribute if does not exists
                 if (!$input.attr('id')) {
                     $input.attr('id', 'Edit-' + fieldName);
                 }
 
-                //Wrap input element with div
+                // Wrap input element with div
                 return $('<div />')
                     .addClass('jtable-input jtable-custom-input')
                     .append($input);
             }
 
-            //Create input according to field type
+            // Create input according to field type
             if (field.type == 'date') {
                 return this._createDateInputForField(field, fieldName, value);
             } else if (field.type == 'textarea') {
@@ -1650,7 +1648,7 @@ THE SOFTWARE.
             }
         },
 
-        //Creates a hidden input element with given name and value.
+        // Creates a hidden input element with given name and value.
         _createInputForHidden: function (fieldName, value) {
             if (value == undefined) {
                 value = "";
@@ -1719,44 +1717,44 @@ THE SOFTWARE.
         _createCheckboxForField: function (field, fieldName, value) {
             let self = this;
 
-            //If value is undefined, get unchecked state's value
+            // If value is undefined, get unchecked state's value
             if (value == undefined) {
                 value = self._getCheckBoxPropertiesForFieldByState(fieldName, false).Value;
             }
 
-            //Create a container div
+            // Create a container div
             let $containerDiv = $('<div />')
                 .addClass('jtable-input jtable-checkbox-input');
 
-            //Create checkbox and check if needed
+            // Create checkbox and check if needed
             let $checkBox = $('<input class="' + field.inputClass + '" id="Edit-' + fieldName + '" type="checkbox" name="' + fieldName + '" />')
                 .appendTo($containerDiv);
             if (value != undefined) {
                 $checkBox.val(value);
             }
 
-            //Create display text of checkbox for current state
+            // Create display text of checkbox for current state
             let $textSpan = $('<span>' + (field.formText || self._getCheckBoxTextForFieldByValue(fieldName, value)) + '</span>')
                 .appendTo($containerDiv);
 
-            //Check the checkbox if it's value is checked-value
+            // Check the checkbox if it's value is checked-value
             if (self._getIsCheckBoxSelectedForFieldByValue(fieldName, value)) {
                 $checkBox.attr('checked', 'checked');
             }
 
-            //This method sets checkbox's value and text according to state of the checkbox
+            // This method sets checkbox's value and text according to state of the checkbox
             let refreshCheckBoxValueAndText = function () {
                 let checkboxProps = self._getCheckBoxPropertiesForFieldByState(fieldName, $checkBox.is(':checked'));
                 $checkBox.attr('value', checkboxProps.Value);
                 $textSpan.html(field.formText || checkboxProps.DisplayText);
             };
 
-            //Register to click event to change display text when state of checkbox is changed.
+            // Register to click event to change display text when state of checkbox is changed.
             $checkBox.click(function () {
                 refreshCheckBoxValueAndText();
             });
 
-            //Change checkbox state when clicked to text
+            // Change checkbox state when clicked to text
             if (field.setOnTextClick != false) {
                 $textSpan
                     .addClass('jtable-option-text-clickable')
@@ -1778,15 +1776,15 @@ THE SOFTWARE.
          *************************************************************************/
         _createDropDownListForField: function (field, fieldName, value, record, source, form) {
 
-            //Create a container div
+            // Create a container div
             let $containerDiv = $('<div />')
                 .addClass('jtable-input jtable-dropdown-input');
 
-            //Create select element
+            // Create select element
             let $select = $('<select class="' + field.inputClass + '" id="Edit-' + fieldName + '" name="' + fieldName + '"></select>')
                 .appendTo($containerDiv);
 
-            //add options
+            // add options
             let options = this._getOptionsForField(fieldName, {
                 record: record,
                 source: source,
@@ -1924,11 +1922,11 @@ THE SOFTWARE.
         _makeCascadeDropDowns: function ($form, record, source) {
             let self = this;
 
-            $form.find('select') //for each combobox
+            $form.find('select') //f or each combobox
                 .each(function () {
                     let $thisDropdown = $(this);
 
-                    //get field name
+                    // get field name
                     let fieldName = $thisDropdown.attr('name');
                     if (!fieldName) {
                         return;
@@ -1936,19 +1934,19 @@ THE SOFTWARE.
 
                     let field = self.options.fields[fieldName];
 
-                    //check if this combobox depends on others
+                    // check if this combobox depends on others
                     if (!field.dependsOn) {
                         return;
                     }
 
-                    //for each dependency
+                    // for each dependency
                     $.each(field.dependsOn, function (index, dependsOnField) {
-                        //find the depended combobox
+                        // find the depended combobox
                         let $dependsOnDropdown = $form.find('select[name=' + dependsOnField + ']');
-                        //when depended combobox changes
+                        // when depended combobox changes
                         $dependsOnDropdown.change(function () {
 
-                            //Refresh options
+                            // Refresh options
                             let funcParams = {
                                 record: record,
                                 source: source,
@@ -1958,10 +1956,10 @@ THE SOFTWARE.
                             funcParams.dependedValues = self._createDependedValuesUsingForm($form, field.dependsOn);
                             let options = self._getOptionsForField(fieldName, funcParams);
 
-                            //Fill combobox with new options
+                            // Fill combobox with new options
                             self._fillDropDownListWithOptions($thisDropdown, options, undefined);
 
-                            //Thigger change event to refresh multi cascade dropdowns.
+                            // Trigger change event to refresh multi cascade dropdowns.
                             $thisDropdown.change();
                         });
                     });
@@ -1975,18 +1973,18 @@ THE SOFTWARE.
                 let fieldName = this._fieldList[i];
                 let field = this.options.fields[fieldName];
 
-                //Do not update non-editable fields
+                // Do not update non-editable fields
                 if (field.edit == false) {
                     continue;
                 }
 
-                //Get field name and the input element of this field in the form
+                // Get field name and the input element of this field in the form
                 let $inputElement = $form.find('[name="' + fieldName + '"]');
                 if ($inputElement.length <= 0) {
                     continue;
                 }
 
-                //Update field in record according to it's type
+                // Update field in record according to it's type
                 if (field.type == 'date') {
                     let dateVal = $inputElement.val();
                     if (dateVal) {
@@ -1995,13 +1993,13 @@ THE SOFTWARE.
                             let date = $.datepicker.parseDate(displayFormat, dateVal);
                             record[fieldName] = '/Date(' + date.getTime() + ')/';
                         } catch (e) {
-                            //TODO: Handle incorrect/different date formats
+                            // TODO: Handle incorrect/different date formats
                             this._logWarn('Date format is incorrect for field ' + fieldName + ': ' + dateVal);
                             record[fieldName] = undefined;
                         }
                     } else {
                         this._logDebug('Date is empty for ' + fieldName);
-                        record[fieldName] = undefined; //TODO: undefined, null or empty string?
+                        record[fieldName] = undefined; // TODO: undefined, null or empty string?
                     }
                 } else if (field.options && field.type == 'radiobutton') {
                     let $checkedElement = $inputElement.filter(':checked');
@@ -2019,7 +2017,6 @@ THE SOFTWARE.
         /* Sets enabled/disabled state of a dialog button.
          *************************************************************************/
         _setEnabledOfDialogButton: function ($button, enabled, buttonText) {
-		console.log($button);
             if (!$button) {
                 return;
             }
@@ -2053,12 +2050,12 @@ THE SOFTWARE.
  *************************************************************************/
 (function ($) {
 
-    //Reference to base object members
+    // Reference to base object members
     let base = {
         _create: jTable.prototype._create
     };
 
-    //extension members
+    // extension members
     $.extend(true, jTable.prototype, {
 
         /************************************************************************
@@ -2066,10 +2063,10 @@ THE SOFTWARE.
          *************************************************************************/
         options: {
 
-            //Events
+            // Events
             recordAdded: function (event, data) { },
 
-            //Localization
+            // Localization
             messages: {
                 addNewRecord: 'Add new record'
             }
@@ -2078,8 +2075,7 @@ THE SOFTWARE.
         /************************************************************************
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
-
-        _$addRecordDialog: null, //Reference to the adding new record dialog div (jQuery object)
+        _$addRecordDialog: null, // Reference to the adding new record dialog div (jQuery object)
 
         /************************************************************************
          * CONSTRUCTOR                                                           *
@@ -2108,21 +2104,20 @@ THE SOFTWARE.
             // the close event is called upon close-call or pressing escape
             self._$addRecordDialog.on('close', function () {
                 let $addRecordForm = self._$addRecordDialog.find('form').first();
-                let $saveButton = self._$addRecordDialog.find('#AddRecordDialogSaveButton');
                 self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
-                self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                 $addRecordForm.remove();
             });
 
             $('<h2 id="addRecordDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.addNewRecord).appendTo(self._$addRecordDialog);
-            const $cancelButton = $('<button class="jtable-dialog-cancelbutton"></button> ')
+            const $cancelButton = $('<button class="jtable-dialog-button jtable-dialog-cancelbutton"></button> ')
+                .attr('id', 'AddRecordDialogCancelButton')
                 .html('<span>' + self.options.messages.cancel + '</span>')
                 .on('click', function () {
                     self._closeCreateForm();
                 });
 
-            let $saveButton = $('<button class="jtable-dialog-savebutton"></button>')
-		.attr('id', 'AddRecordDialogSaveButton')
+            let $saveButton = $('<button class="jtable-dialog-button jtable-dialog-savebutton"></button>')
+                .attr('id', 'AddRecordDialogSaveButton')
                 .html('<span>' + self.options.messages.save + '</span>')
                 .on('click', function () {
                     self._onSaveClickedOnCreateForm();
@@ -2132,13 +2127,13 @@ THE SOFTWARE.
             self._$addRecordDialog.append($cancelButton, $saveButton);
 
             if (self.options.addRecordButton) {
-                //If user supplied a button, bind the click event to show dialog form
+                // If user supplied a button, bind the click event to show dialog form
                 self.options.addRecordButton.click(function (e) {
                     e.preventDefault();
                     self._showAddRecordForm();
                 });
             } else {
-                //If user did not supplied a button, create a 'add record button' toolbar item.
+                // If user did not supplied a button, create a 'add record button' toolbar item.
                 self._addToolBarItem({
                     icon: true,
                     cssClass: 'jtable-toolbar-item-add-record',
@@ -2227,28 +2222,28 @@ THE SOFTWARE.
                 options.success(data);
             };
 
-            //createAction may be a function, check if it is
+            // createAction may be a function, check if it is
             if (!options.url && $.isFunction(self.options.actions.createAction)) {
 
-                //Execute the function
+                // Execute the function
                 let funcResult = self.options.actions.createAction($.param(options.record));
 
-                //Check if result is a jQuery Deferred object
+                // Check if result is a jQuery Deferred object
                 if (self._isDeferredObject(funcResult)) {
-                    //Wait promise
+                    // Wait promise
                     funcResult.done(function (data) {
                         completeAddRecord(data);
                     }).fail(function () {
                         self._showError(self.options.messages.serverCommunicationError);
                         options.error();
                     });
-                } else { //assume it returned the creation result
+                } else { // assume it returned the creation result
                     completeAddRecord(funcResult);
                 }
 
-            } else { //Assume it's a URL string
+            } else { // Assume it's a URL string
 
-                //Make an Ajax call to create record
+                // Make an Ajax call to create record
                 self._submitFormUsingAjax(
                     options.url || self.options.actions.createAction,
                     $.param(options.record),
@@ -2272,21 +2267,21 @@ THE SOFTWARE.
         _showAddRecordForm: function () {
             let self = this;
 
-            //Create add new record form
+            // Create add new record form
             let $addRecordForm = $('<form id="jtable-create-form" class="jtable-dialog-form jtable-create-form"></form>');
 
-            //Create input elements
+            // Create input elements
             for (let i = 0; i < self._fieldList.length; i++) {
 
                 let fieldName = self._fieldList[i];
                 let field = self.options.fields[fieldName];
 
-                //Do not create input for fields that is key and not specially marked as creatable
+                // Do not create input for fields that is key and not specially marked as creatable
                 if (field.key == true && field.create != true) {
                     continue;
                 }
 
-                //Do not create input for fields that are not creatable
+                // Do not create input for fields that are not creatable
                 if (field.create == false) {
                     continue;
                 }
@@ -2296,15 +2291,15 @@ THE SOFTWARE.
                     continue;
                 }
 
-                //Create a container div for this input field and add to form
+                // Create a container div for this input field and add to form
                 let $fieldContainer = $('<div />')
                     .addClass('jtable-input-field-container')
                     .appendTo($addRecordForm);
 
-                //Create a label for input
+                // Create a label for input
                 $fieldContainer.append(self._createInputLabelForRecordField(fieldName));
 
-                //Create input element
+                // Create input element
                 $fieldContainer.append(
                     self._createInputForRecordField({
                         fieldName: fieldName,
@@ -2322,6 +2317,11 @@ THE SOFTWARE.
 
             // Remove any existing form
             self._$addRecordDialog.find('form:first').remove();
+
+            // Make sure people can click on the save button
+            let $saveButton = self._$editRecordDialog.find('#EditDialogSaveButton');
+            self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
+
             // Show the form
             self._$addRecordDialog.find('#addRecordDialogTitle:first').after($addRecordForm);
             self._$addRecordDialog[0].showModal();
@@ -2336,13 +2336,11 @@ THE SOFTWARE.
             let completeAddRecord = function (data) {
                 if (data.Result != 'OK') {
                     self._showError(data.Message);
-                    self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     return;
                 }
 
                 if (!data.Record) {
                     self._logError('Server must return the created Record object.');
-                    self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     return;
                 }
 
@@ -2356,28 +2354,27 @@ THE SOFTWARE.
 
             // $addRecordForm.data('submitting', true); //TODO: Why it's used, can remove? Check it.
 
-            //createAction may be a function, check if it is
+            // createAction may be a function, check if it is
             if ($.isFunction(self.options.actions.createAction)) {
 
-                //Execute the function
+                // Execute the function
                 let funcResult = self.options.actions.createAction($addRecordForm.serialize());
 
-                //Check if result is a jQuery Deferred object
+                // Check if result is a jQuery Deferred object
                 if (self._isDeferredObject(funcResult)) {
-                    //Wait promise
+                    // Wait promise
                     funcResult.done(function (data) {
                         completeAddRecord(data);
                     }).fail(function () {
                         self._showError(self.options.messages.serverCommunicationError);
-                        self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     });
-                } else { //assume it returned the creation result
+                } else { // assume it returned the creation result
                     completeAddRecord(funcResult);
                 }
 
-            } else { //Assume it's a URL string
+            } else { // Assume it's a URL string
 
-                //Make an Ajax call to create record
+                // Make an Ajax call to create record
                 self._submitFormUsingAjax(
                     self.options.actions.createAction,
                     $addRecordForm.serialize(),
@@ -2386,7 +2383,6 @@ THE SOFTWARE.
                     },
                     function () {
                         self._showError(self.options.messages.serverCommunicationError);
-                        self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     });
             }
         },
@@ -2405,14 +2401,14 @@ THE SOFTWARE.
  *************************************************************************/
 (function ($) {
 
-    //Reference to base object members
+    // Reference to base object members
     let base = {
         _create: jTable.prototype._create,
         _addColumnsToHeaderRow: jTable.prototype._addColumnsToHeaderRow,
         _addCellsToRowUsingRecord: jTable.prototype._addCellsToRowUsingRecord
     };
 
-    //extension members
+    // extension members
     $.extend(true, jTable.prototype, {
 
         /************************************************************************
@@ -2420,11 +2416,11 @@ THE SOFTWARE.
          *************************************************************************/
         options: {
 
-            //Events
+            // Events
             recordUpdated: function (event, data) { },
             rowUpdated: function (event, data) { },
 
-            //Localization
+            // Localization
             messages: {
                 editRecord: 'Edit Record'
             }
@@ -2433,9 +2429,8 @@ THE SOFTWARE.
         /************************************************************************
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
-
-        _$editRecordDialog: null, //Reference to the editing dialog div (jQuery object)
-        _$editingRow: null, //Reference to currently editing row (jQuery object)
+        _$editRecordDialog: null, // Reference to the editing dialog div (jQuery object)
+        _$editingRow: null, // Reference to currently editing row (jQuery object)
 
         /************************************************************************
          * CONSTRUCTOR AND INITIALIZATION METHODS                                *
@@ -2458,27 +2453,26 @@ THE SOFTWARE.
         _createEditDialog: function () {
             let self = this;
 
-            //Create a div for dialog and add to container element
+            // Create a div for dialog and add to container element
             self._$editRecordDialog = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
 
             // the close event is called upon close-call or pressing escape
             self._$editRecordDialog.on('close', function () {
                 let $editForm = self._$editRecordDialog.find('form:first');
-                let $saveButton = self._$editRecordDialog.find('#EditDialogSaveButton');
                 self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
-                self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                 $editForm.remove();
             });
 
             $('<h2 id="editDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.editRecord).appendTo(self._$editRecordDialog);
-            const $cancelButton = $('<button class="jtable-dialog-cancelbutton"></button> ')
+            const $cancelButton = $('<button class="jtable-dialog-button jtable-dialog-cancelbutton"></button> ')
+                .attr('id', 'EditRecordDialogCancelButton')
                 .html('<span>' + self.options.messages.cancel + '</span>')
                 .on('click', function () {
                     self._closeEditForm();
                 });
 
-            let $saveButton = $('<button class="jtable-dialog-savebutton"></button>')
-		.attr('id', 'EditDialogSaveButton')
+            let $saveButton = $('<button class="jtable-dialog-button jtable-dialog-savebutton"></button>')
+                .attr('id', 'EditDialogSaveButton')
                 .html('<span>' + self.options.messages.save + '</span>')
                 .on('click', function () {
                     self._onSaveClickedOnEditForm();
@@ -2493,7 +2487,7 @@ THE SOFTWARE.
         _onSaveClickedOnEditForm: function () {
             let self = this;
 
-            //row maybe removed by another source, if so, do nothing
+            // row maybe removed by another source, if so, do nothing
             if (self._$editingRow.hasClass('jtable-row-removed')) {
                 self._closeEditForm();
                 return;
@@ -2574,28 +2568,28 @@ THE SOFTWARE.
                 options.success(data);
             };
 
-            //updateAction may be a function, check if it is
+            // updateAction may be a function, check if it is
             if (!options.url && $.isFunction(self.options.actions.updateAction)) {
 
-                //Execute the function
+                // Execute the function
                 let funcResult = self.options.actions.updateAction($.param(options.record));
 
-                //Check if result is a jQuery Deferred object
+                // Check if result is a jQuery Deferred object
                 if (self._isDeferredObject(funcResult)) {
-                    //Wait promise
+                    // Wait promise
                     funcResult.done(function (data) {
                         completeEdit(data);
                     }).fail(function () {
                         self._showError(self.options.messages.serverCommunicationError);
                         options.error();
                     });
-                } else { //assume it returned the creation result
+                } else { // assume it returned the creation result
                     completeEdit(funcResult);
                 }
 
-            } else { //Assume it's a URL string
+            } else { // Assume it's a URL string
 
-                //Make an Ajax call to create record
+                // Make an Ajax call to create record
                 self._submitFormUsingAjax(
                     options.url || self.options.actions.updateAction,
                     $.param(options.record),
@@ -2656,10 +2650,10 @@ THE SOFTWARE.
             let self = this;
             let record = $tableRow.data('record');
 
-            //Create edit form
+            // Create edit form
             let $editForm = $('<form id="jtable-edit-form" class="jtable-dialog-form jtable-edit-form"></form>');
 
-            //Create input fields
+            // Create input fields
             for (let i = 0; i < self._fieldList.length; i++) {
 
                 let fieldName = self._fieldList[i];
@@ -2668,33 +2662,33 @@ THE SOFTWARE.
 
                 if (field.key == true) {
                     if (field.edit != true) {
-                        //Create hidden field for key
+                        // Create hidden field for key
                         $editForm.append(self._createInputForHidden(fieldName, fieldValue));
                         continue;
                     } else {
-                        //Create a special hidden field for key (since key is be editable)
+                        // Create a special hidden field for key (since key is be editable)
                         $editForm.append(self._createInputForHidden('jtRecordKey', fieldValue));
                     }
                 }
 
-                //Do not create element for non-editable fields
+                // Do not create element for non-editable fields
                 if (field.edit == false) {
                     continue;
                 }
 
-                //Hidden field
+                // Hidden field
                 if (field.type == 'hidden') {
                     $editForm.append(self._createInputForHidden(fieldName, fieldValue));
                     continue;
                 }
 
-                //Create a container div for this input field and add to form
+                // Create a container div for this input field and add to form
                 let $fieldContainer = $('<div class="jtable-input-field-container"></div>').appendTo($editForm);
 
-                //Create a label for input
+                // Create a label for input
                 $fieldContainer.append(self._createInputLabelForRecordField(fieldName));
 
-                //Create input element with it's current value
+                // Create input element with it's current value
                 let currentValue = self._getValueForRecordField(record, fieldName);
                 $fieldContainer.append(
                     self._createInputForRecordField({
@@ -2717,6 +2711,11 @@ THE SOFTWARE.
             self._$editingRow = $tableRow;
             // Remove any existing form
             self._$editRecordDialog.find('form:first').remove();
+ 
+            // Make sure people can click on the save button
+            let $saveButton = self._$editRecordDialog.find('#EditDialogSaveButton');
+            self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
+
             // Show the form
             self._$editRecordDialog.find('#editDialogTitle:first').after($editForm);
             self._$editRecordDialog[0].showModal();
@@ -2731,7 +2730,6 @@ THE SOFTWARE.
             let completeEdit = function (data) {
                 if (data.Result != 'OK') {
                     self._showError(data.Message);
-                    self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     return;
                 }
 
@@ -2753,28 +2751,27 @@ THE SOFTWARE.
             };
 
 
-            //updateAction may be a function, check if it is
+            // updateAction may be a function, check if it is
             if ($.isFunction(self.options.actions.updateAction)) {
 
-                //Execute the function
+                // Execute the function
                 let funcResult = self.options.actions.updateAction($editForm.serialize());
 
-                //Check if result is a jQuery Deferred object
+                // Check if result is a jQuery Deferred object
                 if (self._isDeferredObject(funcResult)) {
-                    //Wait promise
+                    // Wait promise
                     funcResult.done(function (data) {
                         completeEdit(data);
                     }).fail(function () {
                         self._showError(self.options.messages.serverCommunicationError);
-                        self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     });
-                } else { //assume it returned the creation result
+                } else { // assume it returned the creation result
                     completeEdit(funcResult);
                 }
 
-            } else { //Assume it's a URL string
+            } else { // Assume it's a URL string
 
-                //Make an Ajax call to update record
+                // Make an Ajax call to update record
                 self._submitFormUsingAjax(
                     self.options.actions.updateAction,
                     $editForm.serialize(),
@@ -2783,7 +2780,6 @@ THE SOFTWARE.
                     },
                     function() {
                         self._showError(self.options.messages.serverCommunicationError);
-                        self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
                     });
             }
 
@@ -2861,14 +2857,14 @@ THE SOFTWARE.
  *************************************************************************/
 (function ($) {
 
-    //Reference to base object members
+    // Reference to base object members
     let base = {
         _create: jTable.prototype._create,
         _addColumnsToHeaderRow: jTable.prototype._addColumnsToHeaderRow,
         _addCellsToRowUsingRecord: jTable.prototype._addCellsToRowUsingRecord
     };
 
-    //extension members
+    // extension members
     $.extend(true, jTable.prototype, {
 
         /************************************************************************
@@ -2876,13 +2872,13 @@ THE SOFTWARE.
          *************************************************************************/
         options: {
 
-            //Options
+            // Options
             deleteConfirmation: true,
 
-            //Events
+            // Events
             recordDeleted: function (event, data) { },
 
-            //Localization
+            // Localization
             messages: {
                 deleteConfirmation: 'This record will be deleted. Are you sure?',
                 deleteText: 'Delete',
@@ -2895,9 +2891,8 @@ THE SOFTWARE.
         /************************************************************************
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
-
-        _$deleteDialog: null, //Reference to the delete record dialog div (jQuery object)
-        _$deletingRow: null, //Reference to currently deleting row (jQuery object)
+        _$deleteDialog: null, // Reference to the delete record dialog div (jQuery object)
+        _$deletingRow: null, // Reference to currently deleting row (jQuery object)
 
         /************************************************************************
          * CONSTRUCTOR                                                           *
@@ -2930,13 +2925,15 @@ THE SOFTWARE.
             $('<h2 id="deleteDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.areYouSure).appendTo(self._$deleteDialog);
             $('<div><p><span class="alert-icon" style="float:left; margin:0 7px 20px 0;"></span><span class="jtable-delete-confirm-message"></span></p></div>').appendTo(self._$deleteDialog);
 
-            const $cancelButton = $('<button class="jtable-dialog-cancelbutton"></button> ')
+            const $cancelButton = $('<button class="jtable-dialog-button jtable-dialog-cancelbutton"></button> ')
+                .attr('id', 'DeleteDialogCancelButton')
                 .html('<span>' + self.options.messages.cancel + '</span>')
                 .on('click', function () {
                     self._closeDeleteDialog();
                 });
 
-            let $deleteButton = $('<button class="jtable-dialog-deletebutton"></button>')
+            let $deleteButton = $('<button class="jtable-dialog-button jtable-dialog-deletebutton"></button>')
+                .attr('id', 'DeleteDialogDeleteButton')
                 .html('<span>' + self.options.messages.deleteText + '</span>')
                 .on('click', function () {
                     // row may be removed by another source, if so, do nothing
@@ -2950,12 +2947,10 @@ THE SOFTWARE.
                         self._$deletingRow,
                         function () {
                             self._removeRowsFromTableWithAnimation(self._$deletingRow);
-                            self._setEnabledOfDialogButton($deleteButton, true, self.options.messages.deleteText);
                             self._closeDeleteDialog();
                         },
                         function (message) { // error
                             self._showError(message);
-                            self._setEnabledOfDialogButton($deleteButton, true, self.options.messages.deleteText);
                         }
                     );
                 });
@@ -2986,14 +2981,14 @@ THE SOFTWARE.
                 return;
             }
 
-            //Deleting just one row
+            // Deleting just one row
             if ($rows.length == 1) {
                 self._deleteRecordFromServer(
                     $rows,
-                    function () { //success
+                    function () { // success
                         self._removeRowsFromTableWithAnimation($rows);
                     },
-                    function (message) { //error
+                    function (message) { // error
                         self._showError(message);
                     }
                 );
@@ -3001,16 +2996,16 @@ THE SOFTWARE.
                 return;
             }
 
-            //Deleting multiple rows
+            // Deleting multiple rows
             self._showBusy(self._formatString(self.options.messages.deleteProggress, 0, $rows.length));
 
-            //This method checks if deleting of all records is completed
+            // This method checks if deleting of all records is completed
             let completedCount = 0;
             let isCompleted = function () {
                 return (completedCount >= $rows.length);
             };
 
-            //This method is called when deleting of all records completed
+            // This method is called when deleting of all records completed
             let completed = function () {
                 let $deletedRows = $rows.filter('.jtable-row-ready-to-remove');
                 if ($deletedRows.length < $rows.length) {
@@ -3024,13 +3019,13 @@ THE SOFTWARE.
                 self._hideBusy();
             };
 
-            //Delete all rows
+            // Delete all rows
             let deletedCount = 0;
             $rows.each(function () {
                 let $row = $(this);
                 self._deleteRecordFromServer(
                     $row,
-                    function () { //success
+                    function () { // success
                         ++deletedCount; ++completedCount;
                         $row.addClass('jtable-row-ready-to-remove');
                         self._showBusy(self._formatString(self.options.messages.deleteProggress, deletedCount, $rows.length));
@@ -3038,7 +3033,7 @@ THE SOFTWARE.
                             completed();
                         }
                     },
-                    function () { //error
+                    function () { // error
                         ++completedCount;
                         if (isCompleted()) {
                             completed();
@@ -3079,11 +3074,11 @@ THE SOFTWARE.
 
             self._deleteRecordFromServer(
                 $deletingRow,
-                function (data) { //success
+                function (data) { // success
                     self._removeRowsFromTableWithAnimation($deletingRow, options.animationsEnabled);
                     options.success(data);
                 },
-                function (message) { //error
+                function (message) { // error
                     self._showError(message);
                     options.error(message);
                 },
@@ -3139,17 +3134,17 @@ THE SOFTWARE.
             let deleteConfirm;
             let deleteConfirmMessage = self.options.messages.deleteConfirmation;
 
-            //If options.deleteConfirmation is function then call it
+            // If options.deleteConfirmation is function then call it
             if ($.isFunction(self.options.deleteConfirmation)) {
                 let data = { row: $row, record: $row.data('record'), deleteConfirm: true, deleteConfirmMessage: deleteConfirmMessage, cancel: false, cancelMessage: null };
                 self.options.deleteConfirmation(data);
 
-                //If delete progress is cancelled
+                // If delete progress is cancelled
                 if (data.cancel) {
 
-                    //If a canlellation reason is specified
+                    // If a canlellation reason is specified
                     if (data.cancelMessage) {
-                        self._showError(data.cancelMessage); //TODO: show warning/stop message instead of error (also show warning/error ui icon)!
+                        self._showError(data.cancelMessage); // TODO: show warning/stop message instead of error (also show warning/error ui icon)!
                     }
 
                     return;
@@ -3162,16 +3157,16 @@ THE SOFTWARE.
             }
 
             if (deleteConfirm != false) {
-                //Confirmation
+                // Confirmation
                 self._showDeleteDialog($row, deleteConfirmMessage);
             } else {
-                //No confirmation
+                // No confirmation
                 self._deleteRecordFromServer(
                     $row,
-                    function () { //success
+                    function () { // success
                         self._removeRowsFromTableWithAnimation($row);
                     },
-                    function (message) { //error
+                    function (message) { // error
                         self._showError(message);
                     }
                 );
@@ -3183,6 +3178,8 @@ THE SOFTWARE.
         _showDeleteDialog: function ($row, deleteConfirmMessage) {
             this._$deletingRow = $row;
             this._$deleteDialog.find('.jtable-delete-confirm-message').html(deleteConfirmMessage);
+            let $deleteButton = this._$deleteDialog.find('#DeleteDialogDeleteButton');
+            this._setEnabledOfDialogButton($deleteButton, true, this.options.messages.deleteText);
             this._$deleteDialog[0].showModal();
         },
 
@@ -3209,7 +3206,7 @@ THE SOFTWARE.
                 }
             };
 
-            //Check if it is already being deleted right now
+            // Check if it is already being deleted right now
             if ($row.data('deleting') == true) {
                 return;
             }
@@ -3219,15 +3216,15 @@ THE SOFTWARE.
             let postData = {};
             postData[self._keyField] = self._getKeyValueOfRecord($row.data('record'));
 
-            //deleteAction may be a function, check if it is
+            // deleteAction may be a function, check if it is
             if (!url && $.isFunction(self.options.actions.deleteAction)) {
 
-                //Execute the function
+                // Execute the function
                 let funcResult = self.options.actions.deleteAction(postData);
 
-                //Check if result is a jQuery Deferred object
+                // Check if result is a jQuery Deferred object
                 if (self._isDeferredObject(funcResult)) {
-                    //Wait promise
+                    // Wait promise
                     funcResult.done(function (data) {
                         completeDelete(data);
                     }).fail(function () {
@@ -3236,12 +3233,12 @@ THE SOFTWARE.
                             error(self.options.messages.serverCommunicationError);
                         }
                     });
-                } else { //assume it returned the deletion result
+                } else { // assume it returned the deletion result
                     completeDelete(funcResult);
                 }
 
-            } else { //Assume it's a URL string
-                //Make ajax call to delete the record from server
+            } else { // Assume it's a URL string
+                // Make ajax call to delete the record from server
                 this._ajax({
                     url: (url || self.options.actions.deleteAction),
                     data: postData,
@@ -3274,7 +3271,7 @@ THE SOFTWARE.
                     className = className + ' ui-state-disabled';
                 }
 
-                //Stop current animation (if does exists) and begin 'deleting' animation.
+                // Stop current animation (if does exists) and begin 'deleting' animation.
                 $rows.stop(true, true).addClass(className, 'slow', '').promise().done(function () {
                     self._removeRowsFromTable($rows, 'deleted');
                 });
@@ -3293,7 +3290,7 @@ THE SOFTWARE.
  *************************************************************************/
 (function ($) {
 
-    //Reference to base object members
+    // Reference to base object members
     let base = {
         _create: jTable.prototype._create,
         _addColumnsToHeaderRow: jTable.prototype._addColumnsToHeaderRow,
@@ -3303,7 +3300,7 @@ THE SOFTWARE.
         _onRowsRemoved: jTable.prototype._onRowsRemoved
     };
 
-    //extension members
+    // extension members
     $.extend(true, jTable.prototype, {
 
         /************************************************************************
@@ -3311,23 +3308,22 @@ THE SOFTWARE.
          *************************************************************************/
         options: {
 
-            //Options
+            // Options
             selecting: false,
             multiselect: false,
             selectingCheckboxes: false,
             selectOnRowClick: true,
 
-            //Events
+            // Events
             selectionChanged: function (event, data) { }
         },
 
         /************************************************************************
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
-
-        _selectedRecordIdsBeforeLoad: null, //This array is used to store selected row Id's to restore them after a page refresh (string array).
-        _$selectAllCheckbox: null, //Reference to the 'select/deselect all' checkbox (jQuery object)
-        _shiftKeyDown: false, //True, if shift key is currently down.
+        _selectedRecordIdsBeforeLoad: null, // This array is used to store selected row Id's to restore them after a page refresh (string array).
+        _$selectAllCheckbox: null, // Reference to the 'select/deselect all' checkbox (jQuery object)
+        _shiftKeyDown: false, // True, if shift key is currently down.
 
         /************************************************************************
          * CONSTRUCTOR                                                           *
@@ -3341,7 +3337,7 @@ THE SOFTWARE.
                 this._bindKeyboardEvents();
             }
 
-            //Call base method
+            // Call base method
             base._create.apply(this, arguments);
         },
 
@@ -3349,7 +3345,7 @@ THE SOFTWARE.
          *************************************************************************/
         _bindKeyboardEvents: function () {
             let self = this;
-            //Register to events to set _shiftKeyDown value
+            // Register to events to set _shiftKeyDown value
             $(document)
                 .keydown(function (event) {
                     switch (event.which) {
@@ -3381,7 +3377,7 @@ THE SOFTWARE.
          *************************************************************************/
         selectRows: function ($rows) {
             this._selectRows($rows);
-            this._onSelectionChanged(); //TODO: trigger only if selected rows changes?
+            this._onSelectionChanged(); // TODO: trigger only if selected rows changes?
         },
 
         /************************************************************************
@@ -3533,14 +3529,14 @@ THE SOFTWARE.
         _makeRowSelectable: function ($row) {
             let self = this;
 
-            //Select/deselect on row click
+            // Select/deselect on row click
             if (self.options.selectOnRowClick) {
                 $row.click(function () {
                     self._invertRowSelection($row);
                 });
             }
 
-            //'select/deselect' checkbox column
+            // 'select/deselect' checkbox column
             if (self.options.selectingCheckboxes) {
                 let $cell = $('<td></td>').addClass('jtable-command-column jtable-selecting-column');
                 let $selectCheckbox = $('<input type="checkbox" />').appendTo($cell);
@@ -3560,20 +3556,20 @@ THE SOFTWARE.
             if ($row.hasClass('jtable-row-selected')) {
                 this._deselectRows($row);
             } else {
-                //Shift key?
+                // Shift key?
                 if (this._shiftKeyDown) {
                     let rowIndex = this._findRowIndex($row);
-                    //try to select row and above rows until first selected row
+                    // try to select row and above rows until first selected row
                     let beforeIndex = this._findFirstSelectedRowIndexBeforeIndex(rowIndex) + 1;
                     if (beforeIndex > 0 && beforeIndex < rowIndex) {
                         this._selectRows(this._$tableBody.find('tr').slice(beforeIndex, rowIndex + 1));
                     } else {
-                        //try to select row and below rows until first selected row
+                        // try to select row and below rows until first selected row
                         let afterIndex = this._findFirstSelectedRowIndexAfterIndex(rowIndex) - 1;
                         if (afterIndex > rowIndex) {
                             this._selectRows(this._$tableBody.find('tr').slice(rowIndex, afterIndex + 1));
                         } else {
-                            //just select this row
+                            // just select this row
                             this._selectRows($row);
                         }
                     }
@@ -3677,12 +3673,12 @@ THE SOFTWARE.
  *************************************************************************/
 (function ($) {
 
-    //Reference to base object members
+    // Reference to base object members
     let base = {
         load: jTable.prototype.load,
         _create: jTable.prototype._create,
         _setOption: jTable.prototype._setOption,
-        //_createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
+        // _createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
         _createJtParamsForLoading: jTable.prototype._createJtParamsForLoading,
         _addRowToTable: jTable.prototype._addRowToTable,
         _addRow: jTable.prototype._addRow,
@@ -3690,7 +3686,7 @@ THE SOFTWARE.
         _onRecordsLoaded: jTable.prototype._onRecordsLoaded
     };
 
-    //extension members
+    // extension members
     $.extend(true, jTable.prototype, {
 
         /************************************************************************
@@ -3698,11 +3694,11 @@ THE SOFTWARE.
          *************************************************************************/
         options: {
             paging: false,
-            pageList: 'normal', //possible values: 'minimal', 'normal'
+            pageList: 'normal', // possible values: 'minimal', 'normal'
             pageSize: 10,
             pageSizes: [10, 25, 50, 100, 250, 500],
             pageSizeChangeArea: true,
-            gotoPageArea: 'combobox', //possible values: 'textbox', 'combobox', 'none'
+            gotoPageArea: 'combobox', // possible values: 'textbox', 'combobox', 'none'
 
             messages: {
                 pagingInfo: 'Showing {0}-{1} of {2}',
@@ -3714,15 +3710,14 @@ THE SOFTWARE.
         /************************************************************************
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
-
-        _$bottomPanel: null, //Reference to the panel at the bottom of the table (jQuery object)
-        _$pagingListArea: null, //Reference to the page list area in to bottom panel (jQuery object)
-        _$pageSizeChangeArea: null, //Reference to the page size change area in to bottom panel (jQuery object)
-        _$pageInfoSpan: null, //Reference to the paging info area in to bottom panel (jQuery object)
-        _$gotoPageArea: null, //Reference to 'Go to page' input area in to bottom panel (jQuery object)
-        _$gotoPageInput: null, //Reference to 'Go to page' input in to bottom panel (jQuery object)
-        _totalRecordCount: 0, //Total count of records on all pages
-        _currentPageNo: 1, //Current page number
+        _$bottomPanel: null, // Reference to the panel at the bottom of the table (jQuery object)
+        _$pagingListArea: null, // Reference to the page list area in to bottom panel (jQuery object)
+        _$pageSizeChangeArea: null, // Reference to the page size change area in to bottom panel (jQuery object)
+        _$pageInfoSpan: null, // Reference to the paging info area in to bottom panel (jQuery object)
+        _$gotoPageArea: null, // Reference to 'Go to page' input area in to bottom panel (jQuery object)
+        _$gotoPageInput: null, // Reference to 'Go to page' input in to bottom panel (jQuery object)
+        _totalRecordCount: 0, // Total count of records on all pages
+        _currentPageNo: 1, // Current page number
 
         /************************************************************************
          * CONSTRUCTOR AND INITIALIZING METHODS                                  *
@@ -3788,32 +3783,32 @@ THE SOFTWARE.
                 return;
             }
 
-            //Add current page size to page sizes list if not contains it
+            // Add current page size to page sizes list if not contains it
             if (self._findIndexInArray(self.options.pageSize, self.options.pageSizes) < 0) {
                 self.options.pageSizes.push(parseInt(self.options.pageSize));
                 self.options.pageSizes.sort(function(a, b) { return a - b; });
             }
 
-            //Add a span to contain page size change items
+            // Add a span to contain page size change items
             self._$pageSizeChangeArea = $('<span></span>')
                 .addClass('jtable-page-size-change')
                 .appendTo(self._$bottomPanel.find('.jtable-left-area'));
 
-            //Page size label
+            // Page size label
             self._$pageSizeChangeArea.append('<span>' + self.options.messages.pageSizeChangeLabel + ': </span>');
 
-            //Page size change combobox
+            // Page size change combobox
             let $pageSizeChangeCombobox = $('<select></select>').appendTo(self._$pageSizeChangeArea);
 
-            //Add page sizes to the combobox
+            // Add page sizes to the combobox
             for (let i = 0; i < self.options.pageSizes.length; i++) {
                 $pageSizeChangeCombobox.append('<option value="' + self.options.pageSizes[i] + '">' + self.options.pageSizes[i] + '</option>');
             }
 
-            //Select current page size
+            // Select current page size
             $pageSizeChangeCombobox.val(self.options.pageSize);
 
-            //Change page size on combobox change
+            // Change page size on combobox change
             $pageSizeChangeCombobox.change(function() {
                 self._changePageSize(parseInt($(this).val()));
             });
@@ -3828,15 +3823,15 @@ THE SOFTWARE.
                 return;
             }
 
-            //Add a span to contain goto page items
+            // Add a span to contain goto page items
             this._$gotoPageArea = $('<span></span>')
                 .addClass('jtable-goto-page')
                 .appendTo(self._$bottomPanel.find('.jtable-left-area'));
 
-            //Goto page label
+            // Goto page label
             this._$gotoPageArea.append('<span>' + self.options.messages.gotoPageLabel + ': </span>');
 
-            //Goto page input
+            // Goto page input
             if (self.options.gotoPageArea == 'combobox') {
 
                 self._$gotoPageInput = $('<select></select>')
@@ -3847,12 +3842,12 @@ THE SOFTWARE.
                     });
                 self._$gotoPageInput.append('<option value="1">1</option>');
 
-            } else { //textbox
+            } else { // textbox
 
                 self._$gotoPageInput = $('<input type="text" maxlength="10" value="' + self._currentPageNo + '" />')
                     .appendTo(this._$gotoPageArea)
                     .keypress(function(event) {
-                        if (event.which == 13) { //enter
+                        if (event.which == 13) { // enter
                             event.preventDefault();
                             self._changePage(parseInt(self._$gotoPageInput.val()));
                         } else if (event.which == 43) { // +
@@ -3862,7 +3857,7 @@ THE SOFTWARE.
                             event.preventDefault();
                             self._changePage(parseInt(self._$gotoPageInput.val()) - 1);
                         } else {
-                            //Allow only digits
+                            // Allow only digits
                             let isValid = (
                                 (47 < event.keyCode && event.keyCode < 58 && event.shiftKey == false && event.altKey == false)
                                 || (event.keyCode == 8)
@@ -3897,7 +3892,7 @@ THE SOFTWARE.
                 if (oldPageCount != currentPageCount) {
                     this._$gotoPageInput.empty();
 
-                    //Skip some pages is there are too many pages
+                    // Skip some pages is there are too many pages
                     let pageStep = 1;
                     if (currentPageCount > 10000) {
                         pageStep = 100;
@@ -3917,7 +3912,7 @@ THE SOFTWARE.
                 }
             }
 
-            //same for 'textbox' and 'combobox'
+            // same for 'textbox' and 'combobox'
             this._$gotoPageInput.val(this._currentPageNo);
         },
 
@@ -3951,7 +3946,7 @@ THE SOFTWARE.
 
             this.options.pageSize = pageSize;
 
-            //Normalize current page
+            // Normalize current page
             let pageCount = this._calculatePageCount();
             if (this._currentPageNo > pageCount) {
                 this._currentPageNo = pageCount;
@@ -3960,7 +3955,7 @@ THE SOFTWARE.
                 this._currentPageNo = 1;
             }
 
-            //if user sets one of the options on the combobox, then select it.
+            // if user sets one of the options on the combobox, then select it.
             let $pageSizeChangeCombobox = this._$bottomPanel.find('.jtable-page-size-change select');
             if ($pageSizeChangeCombobox.length > 0) {
                 if (parseInt($pageSizeChangeCombobox.val()) != pageSize) {
@@ -4154,7 +4149,7 @@ THE SOFTWARE.
         _createPageNumberButtons: function (pageNumbers) {
             let previousNumber = 0;
             for (let i = 0; i < pageNumbers.length; i++) {
-                //Create "..." between page numbers if needed
+                // Create "..." between page numbers if needed
                 if ((pageNumbers[i] - previousNumber) > 1) {
                     $('<span></span>')
                         .addClass('jtable-page-number-space')
@@ -4199,7 +4194,7 @@ THE SOFTWARE.
          *************************************************************************/
         _calculatePageNumbers: function (pageCount) {
             if (pageCount <= 4) {
-                //Show all pages
+                // Show all pages
                 let pageNumbers = [];
                 for (let i = 1; i <= pageCount; ++i) {
                     pageNumbers.push(i);
@@ -4207,7 +4202,7 @@ THE SOFTWARE.
 
                 return pageNumbers;
             } else {
-                //show first three, last three, current, previous and next page numbers
+                // show first three, last three, current, previous and next page numbers
                 let shownPageNumbers = [1, 2, pageCount - 1, pageCount];
                 let previousPageNo = this._normalizeNumber(this._currentPageNo - 1, 1, pageCount, 1);
                 let nextPageNo = this._normalizeNumber(this._currentPageNo + 1, 1, pageCount, 1);
@@ -4275,16 +4270,16 @@ THE SOFTWARE.
  *************************************************************************/
 (function ($) {
 
-    //Reference to base object members
+    // Reference to base object members
     let base = {
         _initializeFields: jTable.prototype._initializeFields,
         _normalizeFieldOptions: jTable.prototype._normalizeFieldOptions,
         _createHeaderCellForField: jTable.prototype._createHeaderCellForField,
-        //_createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
+        // _createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
         _createJtParamsForLoading: jTable.prototype._createJtParamsForLoading
     };
 
-    //extension members
+    // extension members
     $.extend(true, jTable.prototype, {
 
         /************************************************************************
@@ -4300,7 +4295,7 @@ THE SOFTWARE.
         /************************************************************************
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
-        _lastSorting: null, //Last sorting of the table
+        _lastSorting: null, // Last sorting of the table
 
         /************************************************************************
          * OVERRIDED METHODS                                                     *
@@ -4393,7 +4388,7 @@ THE SOFTWARE.
                 .click(function (e) {
                     e.preventDefault();
                     if (!self.options.multiSorting || !e.ctrlKey) {
-                        self._lastSorting = []; //clear previous sorting
+                        self._lastSorting = []; // clear previous sorting
                     }
 
                     self._sortTableByColumn($columnHeader);
@@ -4403,7 +4398,7 @@ THE SOFTWARE.
                 $columnHeader.addClass('jtable-column-header-sorted-' + initialSortingDirection.toLowerCase());
             }        
 
-            //Set default sorting
+            // Set default sorting
             $.each(this._lastSorting, function (sortIndex, sortField) {
                 if (sortField.fieldName == fieldName) {
                     if (sortField.sortOrder == 'DESC') {
@@ -4418,19 +4413,19 @@ THE SOFTWARE.
         /* Sorts table according to a column header.
          *************************************************************************/
         _sortTableByColumn: function ($columnHeader) {
-            //Remove sorting styles from all columns except this one
+            // Remove sorting styles from all columns except this one
             if (this._lastSorting.length == 0) {
                 $columnHeader.siblings().removeClass('jtable-column-header-sorted-asc jtable-column-header-sorted-desc');
             }
 
-            //If current sorting list includes this column, remove it from the list
+            // If current sorting list includes this column, remove it from the list
             for (let i = 0; i < this._lastSorting.length; i++) {
                 if (this._lastSorting[i].fieldName == $columnHeader.data('fieldName')) {
                     this._lastSorting.splice(i--, 1);
                 }
             }
 
-            //Sort ASC or DESC according to current sorting state
+            // Sort ASC or DESC according to current sorting state
             if ($columnHeader.hasClass('jtable-column-header-sorted-asc')) {
                 $columnHeader.removeClass('jtable-column-header-sorted-asc').addClass('jtable-column-header-sorted-desc');
                 this._lastSorting.push({
@@ -4445,7 +4440,7 @@ THE SOFTWARE.
                 });
             }
 
-            //Load current page again
+            // Load current page again
             this._reloadTable();
         },
 
@@ -4491,7 +4486,7 @@ THE SOFTWARE.
  *************************************************************************/
 (function ($) {
 
-    //Reference to base object members
+    // Reference to base object members
     let base = {
         _create: jTable.prototype._create,
         _normalizeFieldOptions: jTable.prototype._normalizeFieldOptions,
@@ -4499,7 +4494,7 @@ THE SOFTWARE.
         _createCellForRecordField: jTable.prototype._createCellForRecordField
     };
 
-    //extension members
+    // extension members
     $.extend(true, jTable.prototype, {
 
         /************************************************************************
@@ -4514,7 +4509,6 @@ THE SOFTWARE.
         /************************************************************************
          * PRIVATE FIELDS                                                        *
          *************************************************************************/
-
         _$columnSelectionDiv: null,
         _$columnResizeBar: null,
         _cookieKeyPrefix: null,
@@ -4545,12 +4539,12 @@ THE SOFTWARE.
         _normalizeFieldOptions: function (fieldName, props) {
             base._normalizeFieldOptions.apply(this, arguments);
 
-            //columnResizable
+            // columnResizable
             if (this.options.columnResizable) {
                 props.columnResizable = (props.columnResizable != false);
             }
 
-            //visibility
+            // visibility
             if (!props.visibility) {
                 props.visibility = 'visible';
             }
@@ -4561,12 +4555,12 @@ THE SOFTWARE.
         _createHeaderCellForField: function (fieldName, field) {
             let $headerCell = base._createHeaderCellForField.apply(this, arguments);
 
-            //Make data columns resizable except the last one
+            // Make data columns resizable except the last one
             if (this.options.columnResizable && field.columnResizable) {
                 this._makeColumnResizable($headerCell);
             }
 
-            //Hide column if needed
+            // Hide column if needed
             if (field.visibility == 'hidden' || field.visibility == 'separator') {
                 $headerCell.hide();
             }
@@ -4608,26 +4602,26 @@ THE SOFTWARE.
         /* Changes visibility of a column.
          *************************************************************************/
         _changeColumnVisibilityInternal: function (columnName, visibility) {
-            //Check if there is a column with given name
+            // Check if there is a column with given name
             let columnIndex = this._columnList.indexOf(columnName);
             if (columnIndex < 0) {
                 this._logWarn('Column "' + columnName + '" does not exist in fields!');
                 return;
             }
 
-            //Check if visibility value is valid
+            // Check if visibility value is valid
             if (['visible', 'hidden', 'fixed','separator'].indexOf(visibility) < 0) {
                 this._logWarn('Visibility value is not valid: "' + visibility + '"! Options are: visible, hidden, fixed, separator.');
                 return;
             }
 
-            //Get the field
+            // Get the field
             let field = this.options.fields[columnName];
             if (field.visibility == visibility) {
-                return; //No action if new value is same as old one.
+                return; // No action if new value is same as old one.
             }
 
-            //Hide or show the column if needed
+            // Hide or show the column if needed
             let columnIndexInTable = this._firstDataColumnOffset + columnIndex + 1;
             if (field.visibility != 'hidden' && field.visibility != 'separator' && (visibility == 'hidden' || visibility == 'separator')) {
                 this._$table
@@ -4648,7 +4642,7 @@ THE SOFTWARE.
         _createColumnSelection: function () {
             let self = this;
 
-            //Create a div for dialog and add to container element
+            // Create a div for dialog and add to container element
             this._$columnSelectionDiv = $('<div />')
                 .addClass('jtable-column-selection-container')
                 .appendTo(self._$mainContainer);
@@ -4660,7 +4654,7 @@ THE SOFTWARE.
 
                 e.preventDefault();
 
-                //Make an overlay div to disable page clicks
+                // Make an overlay div to disable page clicks
                 $('<div />')
                     .addClass('jtable-contextmenu-overlay')
                     .click(function () {
@@ -4672,16 +4666,16 @@ THE SOFTWARE.
 
                 self._fillColumnSelection();
 
-                //Calculate position of column selection list and show it
+                // Calculate position of column selection list and show it
 
                 let containerOffset = self._$mainContainer.offset();
                 let selectionDivTop = e.pageY - containerOffset.top;
                 let selectionDivLeft = e.pageX - containerOffset.left;
 
-                let selectionDivMinWidth = 100; //in pixels
+                let selectionDivMinWidth = 100; // in pixels
                 let containerWidth = self._$mainContainer.width();
 
-                //If user clicks right area of header of the table, show list at a little left
+                // If user clicks right area of header of the table, show list at a little left
                 if ((containerWidth > selectionDivMinWidth) && (selectionDivLeft > (containerWidth - selectionDivMinWidth))) {
                     selectionDivLeft = containerWidth - selectionDivMinWidth;
                 }
@@ -4705,16 +4699,16 @@ THE SOFTWARE.
                 let columnName = self._columnList[i];
                 let field = self.options.fields[columnName];
 
-                //Crete li element
+                // Crete li element
                 let $columnLi = $('<li></li>').appendTo($columnsUl);
 
-                //Create label for the checkbox
+                // Create label for the checkbox
                 let $label = $('<label></label>')
                     .append($('<span>' + (field.title || columnName) + '</span>'))
                     .appendTo($columnLi);
 
                 if (field.visibility != 'separator') {
-                    //Create checkbox
+                    // Create checkbox
                     let $checkbox = $('<input type="checkbox" name="' + columnName + '">')
                         .prependTo($label)
                         .click(function () {
@@ -4728,12 +4722,12 @@ THE SOFTWARE.
                             self.changeColumnVisibility(clickedColumnName, $clickedCheckbox.is(':checked') ? 'visible' : 'hidden');
                         });
 
-                    //Check, if column if shown
+                    // Check, if column if shown
                     if (field.visibility != 'hidden') {
                         $checkbox.attr('checked', 'checked');
                     }
 
-                    //Disable, if column is fixed
+                    // Disable, if column is fixed
                     if (field.visibility == 'fixed') {
                         $checkbox.attr('disabled', 'disabled');
                     }
@@ -4757,26 +4751,26 @@ THE SOFTWARE.
         _makeColumnResizable: function ($columnHeader) {
             let self = this;
 
-            //Create a handler to handle mouse click event
+            // Create a handler to handle mouse click event
             $('<div />')
                 .addClass('jtable-column-resize-handler')
-                .appendTo($columnHeader.find('.jtable-column-header-container')) //Append the handler to the column
-                .mousedown(function (downevent) { //handle mousedown event for the handler
+                .appendTo($columnHeader.find('.jtable-column-header-container')) // Append the handler to the column
+                .mousedown(function (downevent) { // handle mousedown event for the handler
                     downevent.preventDefault();
                     downevent.stopPropagation();
 
                     let mainContainerOffset = self._$mainContainer.offset();
 
-                    //Get a reference to the next column
+                    // Get a reference to the next column
                     let $nextColumnHeader = $columnHeader.nextAll('th.jtable-column-header:visible:first');
                     if ($nextColumnHeader.length) {
-			nextColumnOuterWidth=$nextColumnHeader.outerWidth();
+                        nextColumnOuterWidth=$nextColumnHeader.outerWidth();
                     } else {
-			nextColumnOuterWidth=0;
-		    }
+                        nextColumnOuterWidth=0;
+                    }
 
-                    //Store some information to be used on resizing
-                    let minimumColumnWidth = 10; //A column's width can not be smaller than 10 pixel.
+                    // Store some information to be used on resizing
+                    let minimumColumnWidth = 10; // A column's width can not be smaller than 10 pixel.
                     self._currentResizeArgs = {
                         currentColumnStartWidth: $columnHeader.outerWidth(),
                         minWidth: minimumColumnWidth,
@@ -4786,7 +4780,7 @@ THE SOFTWARE.
                         maxResizeX: function () { return this.mouseStartX + (this.maxWidth - this.currentColumnStartWidth); }
                     };
 
-                    //Handle mouse move event to move resizing bar
+                    // Handle mouse move event to move resizing bar
                     let resizeonmousemove = function (moveevent) {
                         if (!self._currentResizeArgs) {
                             return;
@@ -4796,7 +4790,7 @@ THE SOFTWARE.
                         self._$columnResizeBar.css('left', (resizeBarX - mainContainerOffset.left) + 'px');
                     };
 
-                    //Handle mouse up event to finish resizing of the column
+                    // Handle mouse up event to finish resizing of the column
                     let resizeonmouseup = function (upevent) {
                         if (!self._currentResizeArgs) {
                             return;
@@ -4807,37 +4801,37 @@ THE SOFTWARE.
 
                         self._$columnResizeBar.hide();
 
-                        //Calculate new widths in pixels
+                        // Calculate new widths in pixels
                         let mouseChangeX = upevent.pageX - self._currentResizeArgs.mouseStartX;
                         let currentColumnFinalWidth = self._normalizeNumber(self._currentResizeArgs.currentColumnStartWidth + mouseChangeX, self._currentResizeArgs.minWidth, self._currentResizeArgs.maxWidth);
 
-			// Now resize the column by setting width
-                        //Calculate widths as percent
+                        // Now resize the column by setting width
+                        // Calculate widths as percent
                         let pixelToPercentRatio = $columnHeader.data('width-in-percent') / self._currentResizeArgs.currentColumnStartWidth;
                         $columnHeader.data('width-in-percent', currentColumnFinalWidth * pixelToPercentRatio);
-                        //Set new widths to columns (resize!)
+                        // Set new widths to columns (resize!)
                         $columnHeader.css('width', $columnHeader.data('width-in-percent') + '%');
 
-			// now do the same for the next column if present
+                        // now do the same for the next column if present
                         if ($nextColumnHeader.length) {
-				let nextColumnFinalWidth = nextColumnOuterWidth + (self._currentResizeArgs.currentColumnStartWidth - currentColumnFinalWidth);
-				$nextColumnHeader.data('width-in-percent', nextColumnFinalWidth * pixelToPercentRatio);
-				$nextColumnHeader.css('width', $nextColumnHeader.data('width-in-percent') + '%');
-			}
+                            let nextColumnFinalWidth = nextColumnOuterWidth + (self._currentResizeArgs.currentColumnStartWidth - currentColumnFinalWidth);
+                            $nextColumnHeader.data('width-in-percent', nextColumnFinalWidth * pixelToPercentRatio);
+                            $nextColumnHeader.css('width', $nextColumnHeader.data('width-in-percent') + '%');
+                        }
 
-                        //Normalize all column widths
+                        // Normalize all column widths
                         self._normalizeColumnWidths();
 
-                        //Finish resizing
+                        // Finish resizing
                         self._currentResizeArgs = null;
 
-                        //Save current preferences
+                        // Save current preferences
                         if (self.options.saveUserPreferences) {
                             self._saveColumnSettings();
                         }
                     };
 
-                    //Show vertical resize bar
+                    // Show vertical resize bar
                     self._$columnResizeBar
                         .show()
                         .css({
@@ -4846,7 +4840,7 @@ THE SOFTWARE.
                             height: (self._$table.outerHeight()) + 'px'
                         });
 
-                    //Bind events
+                    // Bind events
                     $(document).bind('mousemove', resizeonmousemove);
                     $(document).bind('mouseup', resizeonmouseup);
                 });
@@ -4868,23 +4862,23 @@ THE SOFTWARE.
 
             let totalWidthInPixel = self._$table.outerWidth();
 
-            //Calculate width of each column
-            let columnWidhts = {};
+            // Calculate width of each column
+            let columnWidths = {};
             headerCells.each(function () {
                 let $cell = $(this);
                 if ($cell.is(':visible')) {
                     let fieldName = $cell.data('fieldName');
                     let widthInPercent = $cell.outerWidth() * 100 / totalWidthInPixel;
-                    columnWidhts[fieldName] = widthInPercent;
+                    columnWidths[fieldName] = widthInPercent;
                 }
             });
 
-            //Set width of each column
+            // Set width of each column
             headerCells.each(function () {
                 let $cell = $(this);
                 if ($cell.is(':visible')) {
                     let fieldName = $cell.data('fieldName');
-                    $cell.data('width-in-percent', columnWidhts[fieldName]).css('width', columnWidhts[fieldName] + '%');
+                    $cell.data('width-in-percent', columnWidths[fieldName]).css('width', columnWidths[fieldName] + '%');
                 }
             });
         },
@@ -4955,12 +4949,12 @@ THE SOFTWARE.
  *************************************************************************/
 (function ($) {
 
-    //Reference to base object members
+    // Reference to base object members
     let base = {
         _removeRowsFromTable: jTable.prototype._removeRowsFromTable
     };
 
-    //extension members
+    // extension members
     $.extend(true, jTable.prototype, {
 
         /************************************************************************
@@ -4979,29 +4973,29 @@ THE SOFTWARE.
         openChildTable: function ($row, tableOptions, opened) {
             let self = this;
 
-            //Apply theming as same as parent table unless explicitily set
+            // Apply theming as same as parent table unless explicitily set
             if (tableOptions.jqueryuiTheme == undefined) {
                 tableOptions.jqueryuiTheme = self.options.jqueryuiTheme;
             }
 
-            //Show close button as default
+            // Show close button as default
             tableOptions.showCloseButton = (tableOptions.showCloseButton != false);
 
-            //Close child table when close button is clicked (default behavior)
+            // Close child table when close button is clicked (default behavior)
             if (tableOptions.showCloseButton && !tableOptions.closeRequested) {
                 tableOptions.closeRequested = function () {
                     self.closeChildTable($row);
                 };
             }
 
-            //If accordion style, close open child table (if it does exists)
+            // If accordion style, close open child table (if it does exists)
             if (self.options.openChildAsAccordion) {
                 $row.siblings('.jtable-data-row').each(function () {
                     self.closeChildTable($(this));
                 });
             }
 
-            //Close child table for this row and open new one for child table
+            // Close child table for this row and open new one for child table
             self.closeChildTable($row, function () {
                 let $childRowColumn = self.getChildRow($row).children('td').empty();
                 let $childTableContainer = $('<div />')

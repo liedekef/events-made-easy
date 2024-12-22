@@ -243,8 +243,7 @@ div.jtable-contextmenu-overlay {
   border: 1px solid #ccc;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
-.jtable-dialog-cancelbutton,
-.jtable-dialog-savebutton {
+.jtable-dialog-button {
   opacity: 0.8;
   filter: alpha(opacity=80);
   border: 1px solid #ccc;

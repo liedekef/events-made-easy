@@ -91,7 +91,7 @@ msgstr "Veranstaltung"
 msgid "Location"
 msgstr "Veranstaltungsort"
 
-#: eme-actions.php:359
+#: eme-actions.php:356
 #: eme-events.php:9534
 #: eme-events.php:9767
 #: eme-events.php:9800
@@ -106,7 +106,7 @@ msgstr "Veranstaltungsort"
 msgid "State"
 msgstr "Provinz"
 
-#: eme-actions.php:360
+#: eme-actions.php:357
 #: eme-countries.php:517
 #: eme-events.php:9535
 #: eme-events.php:9766
@@ -122,34 +122,34 @@ msgstr "Provinz"
 msgid "Country"
 msgstr "Land"
 
-#: eme-actions.php:362
+#: eme-actions.php:359
 #: eme-events.php:9537
 msgid "An error has occurred"
 msgstr "Es ist ein Fehler aufgetreten"
 
-#: eme-actions.php:363
+#: eme-actions.php:360
 msgid "Clear"
 msgstr "Leeren"
 
-#: eme-actions.php:364
+#: eme-actions.php:361
 #: eme-events.php:9538
 msgid "Mailing preferences"
 msgstr "Mailing Präferenzen"
 
-#: eme-actions.php:365
+#: eme-actions.php:362
 #: eme-events.php:9539
 msgid "Yes, I'm sure"
 msgstr "Ja, ich bin mir sicher"
 
-#: eme-actions.php:477
+#: eme-actions.php:474
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Diese Seite ist mit der Veranstaltungsseite von <strong>Events Made Easy</strong> verknüpft. Der Inhalt wird von <strong>Events Made Easy</strong> überschrieben. Wenn ihr Inhalt angezeigt werden soll, kannst Du für <strong>Events Made Easy</strong> eine andere Seite über die <a href='%s'>Einstellungen</a> zuordnen. "
 
-#: eme-actions.php:501
+#: eme-actions.php:498
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Hallo, <strong>%s</strong>, willkommen zu <strong>Events Made Easy</strong>! Wir hoffen, Dir gefällt es hier.</p><p>Es ist an der Zeit Veranstaltungslisten über <a href='%s' title='Widgets Seite'>Widgets</a>, <a href='%s' title='Template Tag Dokumentation'>template tags</a> oder <a href='%s' title='Shortcodes Dokumentation'>shortcodes</a> anzeigen zu lassen.</p><p>Übrigens, hast Du schon einen Blick auf die <a href='%s' title='Einstellungen ändern'>Einstellungsseite</a> geworfen? Dort hast Du die Möglichkeit, das Erscheinungsbild von Veranstaltungen und Veranstaltungsorten anzupassen.</p><p>Wie? Diese Ratschläge werden langsam langweilig? Verstanden, <a href='%6$s' title='Lass diesen Hinweis verschwinden!'>hier klicken</a> und Du wirst diese hier nicht wieder sehen!</p>"
 
-#: eme-actions.php:512
+#: eme-actions.php:509
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Wenn <strong>Events Made Easy</strong> nützlich für dich ist, erwäge bitte eine kleine Spende um die Zeit, die ich investiere zu würdigen und die Weiterentwicklung zu unterstützen. Danke für deine freundliche Unterstützung!"
 
@@ -4231,7 +4231,7 @@ msgstr "Regionen"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Kein Land mit dieser Region verknüpft, die Region wird nicht in Auswahllisten erscheinen. Bitte editiere diese Region und aktualisiere die Landesinformation."
 
-#: eme-actions.php:415
+#: eme-actions.php:412
 #: eme-events.php:9598
 #: eme-events.php:9788
 msgid "No matching location found"
@@ -6169,7 +6169,7 @@ msgstr "EME benutzt optional Cookies um das Besucher Datum und die Zeit zu speic
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:666
+#: eme-actions.php:663
 #: eme-gdpr.php:522
 #: events-manager.php:343
 msgid "Events Made Easy"
@@ -13712,15 +13712,15 @@ msgstr ""
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr ""
 
-#: eme-actions.php:509
+#: eme-actions.php:506
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: eme-actions.php:510
+#: eme-actions.php:507
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: eme-actions.php:520
+#: eme-actions.php:517
 msgid "Dismiss"
 msgstr ""
 
@@ -13748,7 +13748,7 @@ msgstr ""
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr ""
 
-#: eme-actions.php:672
+#: eme-actions.php:669
 msgid "List of next 10 events"
 msgstr ""
 

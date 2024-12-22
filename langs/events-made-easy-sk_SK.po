@@ -15,7 +15,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:666
+#: eme-actions.php:663
 #: eme-gdpr.php:522
 #: events-manager.php:343
 msgid "Events Made Easy"
@@ -119,7 +119,7 @@ msgstr "Podujatie"
 msgid "Location"
 msgstr "Miesto"
 
-#: eme-actions.php:359
+#: eme-actions.php:356
 #: eme-events.php:9534
 #: eme-events.php:9767
 #: eme-events.php:9800
@@ -134,7 +134,7 @@ msgstr "Miesto"
 msgid "State"
 msgstr "Štát"
 
-#: eme-actions.php:360
+#: eme-actions.php:357
 #: eme-countries.php:517
 #: eme-events.php:9535
 #: eme-events.php:9766
@@ -150,50 +150,50 @@ msgstr "Štát"
 msgid "Country"
 msgstr "Krajina"
 
-#: eme-actions.php:362
+#: eme-actions.php:359
 #: eme-events.php:9537
 msgid "An error has occurred"
 msgstr "Vyskytla sa chyba"
 
-#: eme-actions.php:363
+#: eme-actions.php:360
 msgid "Clear"
 msgstr "Vyčistiť"
 
-#: eme-actions.php:364
+#: eme-actions.php:361
 #: eme-events.php:9538
 msgid "Mailing preferences"
 msgstr "Nastavenia emailov"
 
-#: eme-actions.php:365
+#: eme-actions.php:362
 #: eme-events.php:9539
 msgid "Yes, I'm sure"
 msgstr "Áno, som si istý"
 
-#: eme-actions.php:477
+#: eme-actions.php:474
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Táto stránka zodpovedá stránke <strong>Events Made Easy</strong>. Jej obsah bude prepísaný pomocou <strong>Events Made Easy</strong>. Ak chcete zobraziť svoj obsah, môžete priradiť inú stránku pre <strong>Events Made Easy</strong> v časti <a href='%s'>Nastavenia</a>. "
 
-#: eme-actions.php:501
+#: eme-actions.php:498
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Ahojte, <strong>%s</strong>, vitajte v <strong>Events Made Easy</strong>! Dúfame, že sa vám tu bude páčiť.</p><p>Teraz je čas vložiť zoznamy podujatí prostredníctvom <a href='%s' title='Stránka widgetov'>widgetov</a>, <a href='%s' title='Dokumentácia značiek šablón'>značiek šablón</a> alebo <a href='%4$s' title='Dokumentácia skrátených kódov'>skrátených kódov </a>.</p><p>Mimochodom, prezreli ste si <a href='%5$s' title='Zmeniť nastavenia'>stránku nastavení</a>? Na tomto mieste si upravujete spôsob, akým sa podujatia a miesta zobrazujú.</p><p>Čo? Už vás nebaví vidieť túto radu? Chápem vás, <a href=\"%6$s\" title=\"Nezobrazovať túto radu znova\">kliknite sem</a> a toto sa už znova nezobrazí!</p>"
 
-#: eme-actions.php:509
+#: eme-actions.php:506
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy bol nainštalovaný alebo aktualizovaný"
 
-#: eme-actions.php:510
+#: eme-actions.php:507
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Prispejte prosím na vývoj pluginu Events Made Easy"
 
-#: eme-actions.php:512
+#: eme-actions.php:509
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Ak považujete <strong>Events Made Easy</strong> užitočné pre vás, zvážte poskytnutie malého daru, ktorý by prispel k môjmu investovanému času a ďalšiemu rozvoju. Ďakujeme za vašu láskavú podporu!"
 
-#: eme-actions.php:520
+#: eme-actions.php:517
 msgid "Dismiss"
 msgstr "Zamietnuť"
 
-#: eme-actions.php:672
+#: eme-actions.php:669
 msgid "List of next 10 events"
 msgstr "Zoznam nasledujúcich 10 podujatí"
 
@@ -4446,7 +4446,7 @@ msgstr "Štáty"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "K tomuto štátu nie je priradená žiadna krajina, nebude sa zobrazovať v rozbaľovacích zoznamoch. Upravte tento stav a opravte informácie o krajine."
 
-#: eme-actions.php:415
+#: eme-actions.php:412
 #: eme-events.php:9598
 #: eme-events.php:9788
 msgid "No matching location found"

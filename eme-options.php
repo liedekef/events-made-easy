@@ -1949,7 +1949,7 @@ function eme_options_page() {
 ?>
 		</select><br>
 <?php
-				esc_html_e( 'If you plan to use the registered REST API call to send your mails, set this to "Not scheduled".', 'events-made-easy' );
+				esc_html_e( 'If you plan to use the registered REST API call to send your queued mails, set the schedule to "Not scheduled".', 'events-made-easy' );
 ?>
 		</td>
 	</tr>

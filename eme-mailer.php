@@ -1691,7 +1691,7 @@ function eme_send_mails_ajax_actions( $action ) {
 		if ( ! $res['mail_problems'] ) {
 			if ( $queue ) {
 				if ( ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
-					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . sprintf( __( 'The mailing has been put on the queue, but you have not yet configured the queueing. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) ) . '</p></div>';
+					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . sprintf( __( 'The mailing has been put on the queue, but you have not yet configured the queueing. Go in the <a href="%s">Email settings</a> and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) ) . '</p></div>';
 				} else {
 					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>';
 				}
@@ -1892,7 +1892,7 @@ function eme_send_mails_ajax_actions( $action ) {
 		if ( ! $mail_problems ) {
 			if ( $queue ) {
 				if ( ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
-					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . sprintf( __( 'The mailing has been put on the queue, but you have not yet configured the queueing. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) ) . '</p></div>';
+					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . sprintf( __( 'The mailing has been put on the queue, but you have not yet configured the queueing. Go in the <a href="%s">Email settings</a> and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) ) . '</p></div>';
 				} else {
 					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>';
 				}
@@ -2456,7 +2456,7 @@ function eme_emails_page() {
 				?>
 			<div class='eme-message-admin'><p>
 				<?php
-				printf( __( 'Email queueing has been activated but not yet configured. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) );
+				printf( __( 'Email queueing has been activated but not yet configured. Go in the <a href="%s">Email settings</a> and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) );
 				?>
 				</p></div>
 				<?php
@@ -2635,7 +2635,7 @@ function eme_emails_page() {
 				?>
 			<div class='eme-message-admin'><p>
 				<?php
-				printf( __( 'Email queueing has been activated but not yet configured. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) );
+				printf( __( 'Email queueing has been activated but not yet configured. Go in the <a href="%s">Email settings</a> and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) );
 				?>
 				</p></div>
 				<?php

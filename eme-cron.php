@@ -43,21 +43,25 @@ function eme_plan_queue_mails() {
 	if ( get_option( 'eme_queue_mails' ) ) {
 		$schedules = wp_get_schedules();
 		// we stored the choosen schedule in the option with the same name eme_cron_send_queued
-		// and take hourly as sensible default if empty
+		// and take hourly as sensible default
 		$schedule = get_option( 'eme_cron_send_queued' );
-		if ( empty( $schedule ) || ! isset( $schedules[ $schedule ] ) ) {
-			$schedule = 'hourly';
-			update_option( 'eme_cron_send_queued', $schedule );
-		}
-		if ( ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
-			wp_schedule_event( time(), $schedule, 'eme_cron_send_queued' );
-		} else {
-			$current_schedule = wp_get_schedule( 'eme_cron_send_queued' );
-			if ( $current_schedule != $schedule ) {
-				wp_unschedule_hook( 'eme_cron_send_queued' );
-				wp_schedule_event( time(), $schedule, 'eme_cron_send_queued' );
-			}
-		}
+		if ( empty( $schedule ) ) {
+            wp_unschedule_hook( 'eme_cron_send_queued' );
+        } else {
+            if ( ! isset( $schedules[ $schedule ] ) ) {
+                $schedule = 'hourly';
+                update_option( 'eme_cron_send_queued', $schedule );
+            }
+            if ( ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
+                wp_schedule_event( time(), $schedule, 'eme_cron_send_queued' );
+            } else {
+                $current_schedule = wp_get_schedule( 'eme_cron_send_queued' );
+                if ( $current_schedule != $schedule ) {
+                    wp_unschedule_hook( 'eme_cron_send_queued' );
+                    wp_schedule_event( time(), $schedule, 'eme_cron_send_queued' );
+                }
+            }
+        }
 		if ( ! get_option( 'eme_cron_queue_count' ) ) {
 			update_option( 'eme_cron_queue_count', 50 );
 		}
@@ -280,8 +284,10 @@ function eme_cron_page() {
 							update_option( 'eme_cron_new_events_footer', $eme_cron_new_events_footer );
 							$eme_cron_queue_count     = intval(get_option( 'eme_cron_queue_count' ));
 							$eme_cron_queued_schedule = wp_get_schedule( 'eme_cron_send_queued' );
-							$mail_schedule            = $schedules[ $eme_cron_queued_schedule ];
-							$message                  = sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count, $mail_schedule['display'] );
+                            if (!empty($eme_cron_queued_schedule)) {
+                                $mail_schedule            = $schedules[ $eme_cron_queued_schedule ];
+                                $message                  = sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count, $mail_schedule['display'] );
+                            }
 						}
 					} else {
 						$message = __( 'New events will not be mailed to EME registered people.', 'events-made-easy' );
@@ -372,7 +378,7 @@ function eme_cron_form( $message = '' ) {
 
 	if ( $eme_queued_count && ( ! get_option( 'eme_queue_mails' ) || ! get_option( 'eme_cron_queue_count' ) || ! wp_next_scheduled( 'eme_cron_send_queued' ) ) ) {
 		echo '<br>';
-		esc_html_e( 'WARNING: messages found in the queue but the mail queue is not configured correctly, so they will not be sent out', 'events-made-easy' );
+		esc_html_e( 'WARNING: messages found in the queue but the mail queue is not configured correctly, so they will not be sent out via WP. Make sure to use the registered REST API call with appropriate options from system cron to process the queue.', 'events-made-easy' );
 	} else {
 		$eme_cron_send_queued_schedule = wp_get_schedule( 'eme_cron_send_queued' );
 		if ( isset( $schedules[ $eme_cron_send_queued_schedule ] ) ) {

@@ -99,6 +99,14 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.25 () =
+* Added a REST API call, in case you don't trust WP cron to process the queue. As an example, you can call:
+  curl --insecure --user "username:password" https://localhost/wordpress/wp-json/events-made-easy/v1/processqueue/60
+  ==> don't user --insecure for public sites, and change "https://localhost/wordpress" by your wordpress url
+  ==> change the "username" by your user and the "password" by an application password generated in your WP user settings
+  ==> "60" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course
+  ==> set the timing option for queue processing to "not scheduled" in EME, so the two don't interfere :-) But in fact: it doesn't really matter: EME is resilient enough to cope with both at the same time (but better be safe than sorry).
+
 = 2.5.24 (2024/12/22) =
 * Some more table fixes (more logical resizing)
 * Last release of 2024 :-)

@@ -1947,7 +1947,10 @@ function eme_options_page() {
 					print "<option $selected value='$key'>" . $schedule['display'] . '</option>';
 				}
 ?>
-		</select>
+		</select><br>
+<?php
+				esc_html_e( 'If you plan to use the registered REST API call to send your mails, set this to "Not scheduled".', 'events-made-easy' );
+?>
 		</td>
 	</tr>
 <?php

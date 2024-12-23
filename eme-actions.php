@@ -670,4 +670,23 @@ function eme_custom_dashboard_next_events() {
 	$format_footer = '</ul>';
 	echo eme_get_events_list(limit: 10, format: $format, format_header: $format_header, format_footer: $format_footer);
 }
+
+add_action( 'rest_api_init', function () {
+    register_rest_route( 'events-made-easy/v1', '/processqueue/(?P<interval>\d+)', array(
+        'methods' => 'GET',
+        'callback' => 'eme_send_queued',
+        'args' => array(
+            'interval' => array(
+                'validate_callback' => function($param, $request, $key) {
+                    return is_numeric( $param );
+                }
+    ),
+        ),
+        'permission_callback' => function () {
+            return current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||
+                current_user_can( get_option( 'eme_cap_send_mails' ) );
+        }
+    ) );
+} );
+
 ?>

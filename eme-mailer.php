@@ -541,17 +541,30 @@ function eme_get_queued( $now ) {
 	return $wpdb->get_results( $sql, ARRAY_A );
 }
 
-function eme_send_queued() {
+function eme_send_queued_rest( WP_REST_Request $request ) {
+    $force_interval = $request['interval'];
+    //if (defined('REST_REQUEST')) {
+    //	return new WP_REST_Response( $force_interval, 200 );
+    //}
+    if (is_numeric($force_interval))
+        eme_send_queued($force_interval);
+}
+
+function eme_send_queued($force_interval=0) {
 	// we'll build in a safety precaution to make sure to never surpass the schedule duration
 	$start_time   = time();
-	$scheduled    = wp_get_schedule( 'eme_cron_send_queued' );
-	if (!$scheduled) { // issue with wp cron? Then take 1 hour, to make sure this still runs ok
-		$scheduled = 3600;
-	}
-	$wp_schedules = wp_get_schedules();
-	$interval     = $wp_schedules[ $scheduled ]['interval'];
-	// let's keep 5 seconds to ourselves (see at the end of this function)
-	$interval -= 5;
+    if (!$force_interval || !is_numeric($force_interval)) {
+        $scheduled    = wp_get_schedule( 'eme_cron_send_queued' );
+        if (!$scheduled) { // issue with wp cron? Then take 1 hour, to make sure this still runs ok
+            $scheduled = 'hourly';
+        }
+        $wp_schedules = wp_get_schedules();
+        $interval     = $wp_schedules[ $scheduled ]['interval'];
+        // let's keep 5 seconds to ourselves (see at the end of this function)
+        $interval -= 5;
+    } else {
+        $interval = $force_interval-5;
+    }
 
 	$eme_mail_send_html = get_option( 'eme_mail_send_html' );
 	$eme_mail_sleep     = intval( get_option( 'eme_mail_sleep' ) );
@@ -1678,7 +1691,7 @@ function eme_send_mails_ajax_actions( $action ) {
 		if ( ! $res['mail_problems'] ) {
 			if ( $queue ) {
 				if ( ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
-					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . sprintf( __( 'The mailing has been put on the queue, but you have not yet configured the queueing. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) ) . '</p></div>';
+					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . sprintf( __( 'The mailing has been put on the queue, but you have not yet configured the queueing. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) ) . '</p></div>';
 				} else {
 					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>';
 				}
@@ -1879,7 +1892,7 @@ function eme_send_mails_ajax_actions( $action ) {
 		if ( ! $mail_problems ) {
 			if ( $queue ) {
 				if ( ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
-					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . sprintf( __( 'The mailing has been put on the queue, but you have not yet configured the queueing. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) ) . '</p></div>';
+					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . sprintf( __( 'The mailing has been put on the queue, but you have not yet configured the queueing. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) ) . '</p></div>';
 				} else {
 					$ajaxResult['htmlmessage'] = "<div id='message' class='updated eme-message-admin'><p>" . __( 'The mailing has been planned.', 'events-made-easy' ) . '</p></div>';
 				}
@@ -2443,7 +2456,7 @@ function eme_emails_page() {
 				?>
 			<div class='eme-message-admin'><p>
 				<?php
-				printf( __( 'Email queueing has been activated but not yet configured. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) );
+				printf( __( 'Email queueing has been activated but not yet configured. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) );
 				?>
 				</p></div>
 				<?php
@@ -2622,7 +2635,7 @@ function eme_emails_page() {
 				?>
 			<div class='eme-message-admin'><p>
 				<?php
-				printf( __( 'Email queueing has been activated but not yet configured. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) );
+				printf( __( 'Email queueing has been activated but not yet configured. Go in the <a href="%s">Scheduled actions</a> submenu and configure it now or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-cron' ) );
 				?>
 				</p></div>
 				<?php

@@ -236,9 +236,9 @@ function eme_sitemap() {
 	$events = eme_get_events( limit: 5000, scope: 'all', order: 'DESC' );
 	if ( ! empty( $events ) ) {
 		foreach ( $events as $event ) {
-				// Build Sitemap Elements
-				$locurl = eme_event_url( $event );
-				// Format the date - also in case some EME Events have 0000-00-00 date format, manually add 1st Jan 2012
+            // Build Sitemap Elements
+            $locurl = eme_event_url( $event );
+            // Format the date - also in case some EME Events have 0000-00-00 date format, manually add 1st Jan 2012
 			if ( strtotime( $event['modif_date'] ) > strtotime( '2010-01-01 00:00' ) ) {
 					$lastmod = date( 'Y-m-d', strtotime( $event['modif_date'] ) );
 			} else {
@@ -252,8 +252,8 @@ function eme_sitemap() {
 					$priority   = 0.3;
 					$changefreq = 'monthly';
 			}
-				// Concatenate List of URLs
-				echo "<url>\n<loc>$locurl</loc>\n<lastmod>$lastmod</lastmod>\n<changefreq>$changefreq</changefreq>\n<priority>$priority</priority>\n</url>\n";
+            // Concatenate List of URLs
+            echo "<url>\n<loc>$locurl</loc>\n<lastmod>$lastmod</lastmod>\n<changefreq>$changefreq</changefreq>\n<priority>$priority</priority>\n</url>\n";
 		}
 	}
 	echo '</urlset>';

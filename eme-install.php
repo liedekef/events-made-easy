@@ -134,25 +134,31 @@ function _eme_install() {
 	// we'll restore some planned actions too, if previously deactivated
 	$cron_actions = [ 'eme_cron_send_new_events', 'eme_cron_send_queued' ];
 	foreach ( $cron_actions as $cron_action ) {
-		$schedule = get_option( $cron_action );
-		// old schedule names are renamed to eme_*
-		if (preg_match( '/^(1min|5min|15min|30min|4weeks)$/', $schedule, $matches ) ) {
-			$res = $matches[0];
-			$schedule = "eme_".$res;
-			update_option($cron_action, $schedule);
-			wp_unschedule_hook( $cron_action );
+		$wanted_schedule = get_option( $cron_action );
+        // old schedule names are renamed to eme_*
+        if ( preg_match( '/^(1min|5min|15min|30min|4weeks)$/', $wanted_schedule, $matches ) ) {
+            $res = $matches[0];
+            $wanted_schedule = "eme_".$res;
+            update_option( $cron_action, $wanted_schedule );
+            wp_unschedule_hook( $cron_action );
+        }
+        $is_action_planned = wp_next_scheduled( $cron_action );
+		if ( ! empty( $wanted_schedule ) && ! $is_action_planned ) {
+            $schedules = wp_get_schedules();
+            if ( ! isset( $schedules[ $wanted_schedule ] ) ) {
+                $wanted_schedule = 'hourly';
+                update_option( $cron_action, $wanted_schedule );
+            }
+			wp_schedule_event( time(), $wanted_schedule, $cron_action );
 		}
 
-		// if the action is planned, keep the planning in an option (if we're not clearing all data) and then clear the planning
-		if ( ! empty( $schedule ) && ! wp_next_scheduled( $cron_action ) ) {
-			wp_schedule_event( time(), $schedule, $cron_action );
-		}
-	}
-
-	// make sure queue sending is configured properly
-	if ( wp_next_scheduled( 'eme_cron_send_queued' ) ) {
-		$schedule = wp_get_schedule( 'eme_cron_send_queued' );
-		update_option( 'eme_cron_send_queued', $schedule );
+        // make sure queue sending is configured properly
+        if ( $is_action_planned ) {
+            $planned_schedule = wp_get_schedule( $cron_action );
+            if ( $planned_schedule != $wanted_schedule ) {
+                update_option( $cron_action, $planned_schedule );
+            }
+        }
 	}
 	eme_plan_queue_mails();
 

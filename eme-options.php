@@ -547,6 +547,7 @@ function eme_add_options( $reset = 0 ) {
         'eme_autocomplete_sources'                        => 'none',
         'eme_cron_cleanup_unpaid_minutes'                 => 0,
         'eme_cron_cleanup_unconfirmed_minutes'            => 0,
+        'eme_cron_send_queued'                            => '',
         'eme_cron_queue_count'                            => 50,
         'eme_mail_sleep'                                  => 0,
         'eme_queue_mails'                                 => 1,

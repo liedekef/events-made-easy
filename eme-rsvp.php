@@ -5071,6 +5071,11 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 	} else {
 		$trash = 0;
 	}
+	if ( isset( $_GET['person_id'] ) ) {
+		$person_id = intval( $_GET['person_id'] );
+	} else {
+		$person_id = 0;
+	}
 	if ( isset( $_GET['event_id'] ) ) {
 		$event_id = intval( $_GET['event_id'] );
 		$event    = eme_get_event( $event_id );
@@ -5134,8 +5139,8 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 	}
 
 	echo "<input type='hidden' name='event_id' id='event_id' value='$event_id'>";
-	if ( ! $event_id ) {
-		// if event id is passed via GET, we ignore the scope, so let's hide the selection too
+	if ( ! $event_id && ! $person_id ) {
+		// if event id or person_id is passed via POST, we ignore the scope, so let's hide the selection too
 		?>
 		<select id='scope' name='scope'>
 		<?php
@@ -5172,7 +5177,9 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 		<?php
     }
 	?>
-	<input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Filter on person', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
+    	<?php if ( ! $person_id ) : ?>
+        <input type="search" name="search_person" id="search_person" placeholder="<?php esc_attr_e( 'Filter on person', 'events-made-easy' ); ?>" size=15>
+	<?php endif; ?>
 	<input type="search" name="search_customfields" id="search_customfields" placeholder="<?php esc_attr_e( 'Filter on custom field answer', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
 	<input type="search" name="search_unique" id="search_unique" placeholder="<?php esc_attr_e( 'Filter on unique nbr', 'events-made-easy' ); ?>" class='eme_searchfilter' size=15>
 	<input type="search" name="search_paymentid" id="search_paymentid" placeholder="<?php esc_attr_e( 'Filter on payment id', 'events-made-easy' ); ?>" <?php if (isset($_GET['paymentid'])) esc_attr_e(intval($_GET['paymentid'])); else echo ''; ?> class='eme_searchfilter' size=15>

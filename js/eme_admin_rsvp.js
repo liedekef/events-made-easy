@@ -273,7 +273,8 @@ jQuery(document).ready(function ($) {
                     'search_pg_pid': $('#search_pg_pid').val(),
                     'search_start_date': $('#search_start_date').val(),
                     'search_end_date': $('#search_end_date').val(),
-                    'event_id': $('#event_id').val()
+                    'event_id': $('#event_id').val(),
+                    'person_id': $_GET['person_id']
                 }
                 return params;
             },

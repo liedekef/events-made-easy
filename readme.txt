@@ -106,6 +106,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
   ==> change the "username" by your user and the "password" by an application password generated in your WP user settings
   ==> "60" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course
   ==> set the timing option for queue processing to "not scheduled" in EME, so the two don't interfere :-) But in fact: it doesn't really matter: EME is resilient enough to cope with both at the same time (but better be safe than sorry).
+* Make "Show all bookings" in people overview work again as expected
 
 = 2.5.24 (2024/12/22) =
 * Some more table fixes (more logical resizing)

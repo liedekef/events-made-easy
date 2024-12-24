@@ -5516,6 +5516,7 @@ function eme_ajax_bookings_list() {
 	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_end_date']) ) : '';
 	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'future';
 	$category          = isset( $_REQUEST['category'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['category'] ) ) : '';
+    $person_id         = isset( $_REQUEST['person_id'] ) ? intval( $_REQUEST['person_id'] ) : 0;
 	$event_id          = isset( $_REQUEST['event_id'] ) ? intval( $_REQUEST['event_id'] ) : 0;
 	if ( isset( $_REQUEST['trash'] ) && $_REQUEST['trash'] == 1 ) {
 				$trash = 1;
@@ -5650,6 +5651,11 @@ function eme_ajax_bookings_list() {
 		$scope = 'all';
 	}
 
+    if ( ! empty( $person_id ) ) {
+        $where_arr[] = "bookings.person_id=$person_id";
+        // for this search, don't limit the scope
+        $scope = 'all';
+    }
 	// the event_id overrides the search for event and the start/end dates
 	if ( ! empty( $event_id ) ) {
 		$where_arr[] = "bookings.event_id=$event_id";
@@ -5665,7 +5671,7 @@ function eme_ajax_bookings_list() {
 			$where_arr[] = "events.event_end LIKE '$search_end_date%'";
 			$scope       = 'all';
 		} elseif ( $scope == 'past' ) {
-				$where_arr[] = "events.event_end < '$today'";
+			$where_arr[] = "events.event_end < '$today'";
 		} elseif ( $scope == 'future' ) {
 			$where_arr[] = "events.event_end >= '$today'";
 		}

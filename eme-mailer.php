@@ -1911,7 +1911,7 @@ function eme_send_mails_ajax_actions( $action ) {
 
 function eme_emails_page() {
 	$eme_queue_mails = get_option( 'eme_queue_mails' );
-	if ( ! get_option( 'eme_cron_queue_count' ) || ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
+	if ( ! wp_next_scheduled( 'eme_cron_send_queued' ) ) {
 		$eme_queue_mails_configured = 0;
 	} else {
 		$eme_queue_mails_configured = 1;

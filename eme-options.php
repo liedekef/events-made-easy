@@ -1950,6 +1950,8 @@ function eme_options_page() {
 		</select><br>
 <?php
 				esc_html_e( 'If you plan to use the registered REST API call to send your queued mails, set the schedule to "Not scheduled".', 'events-made-easy' );
+                echo '<br>';
+				esc_html_e( 'Set the batch count to 0 if you want all queued mails to be send out every time the queue is processed (not recommended).', 'events-made-easy' );
 ?>
 		</td>
 	</tr>

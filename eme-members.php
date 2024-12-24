@@ -2051,7 +2051,7 @@ function eme_meta_box_div_membershipdetails( $membership, $is_new_membership ) {
     <tr id='tr_attendancerecord'>
     <td><label for="attendancerecord"><?php esc_html_e( 'Keep attendance records?', 'events-made-easy' ); ?></label></td>
     <td><input id="attendancerecord" name="properties[attendancerecord]" type="checkbox" value='1' <?php echo $attendancerecord; ?>>
-        <br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want an attendance record to be kept everytime the member QRCODE is scanned by an EME admin.', 'events-made-easy' ); ?>
+        <br><p class='eme_smaller'><?php esc_html_e( 'Select this option if you want an attendance record to be kept every time the member QRCODE is scanned by an EME admin.', 'events-made-easy' ); ?>
     </td>
     </tr>
     <tr id="tr_member_form_tpl">

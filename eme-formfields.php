@@ -5031,9 +5031,9 @@ function eme_ajax_formfields_list() {
 	$table              = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
 	$used_formfield_ids = eme_get_used_formfield_ids();
 	$jTableResult       = [];
-	$search_type        = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';
-	$search_purpose     = isset( $_REQUEST['search_purpose'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_purpose'] ) ) : '';
-	$search_name        = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
+	$search_type        = isset( $_POST['search_type'] ) ? esc_sql( eme_sanitize_request( $_POST['search_type'] ) ) : '';
+	$search_purpose     = isset( $_POST['search_purpose'] ) ? esc_sql( eme_sanitize_request( $_POST['search_purpose'] ) ) : '';
+	$search_name        = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
 	$where              = '';
 	$where_arr          = [];
 	if ( ! empty( $search_name ) ) {
@@ -5119,4 +5119,3 @@ function eme_ajax_manage_formfields() {
 	wp_die();
 }
 
-?>

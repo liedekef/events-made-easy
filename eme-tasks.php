@@ -1911,13 +1911,13 @@ function eme_ajax_task_signups_list() {
 		$search_status     = -1;
 	} else {
 		$search_eventid    = 0;
-		$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
-		$search_scope      = isset( $_REQUEST['search_scope'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_scope'] ) ) : 'future';
-		$search_event      = isset( $_REQUEST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_event'] ) ) ) : '';
-		$search_person     = isset( $_REQUEST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_person'] ) ) ) : '';
-		$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql( $_REQUEST['search_start_date'] ) : '';
-		$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( $_REQUEST['search_end_date'] ) : '';
-		$search_status     = isset( $_REQUEST['search_signup_status'] ) ? intval( $_REQUEST['search_signup_status'] ) : -1;
+		$search_name       = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
+		$search_scope      = isset( $_POST['search_scope'] ) ? esc_sql( eme_sanitize_request( $_POST['search_scope'] ) ) : 'future';
+		$search_event      = isset( $_POST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_event'] ) ) ) : '';
+		$search_person     = isset( $_POST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_person'] ) ) ) : '';
+		$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? esc_sql( $_POST['search_start_date'] ) : '';
+		$search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? esc_sql( $_POST['search_end_date'] ) : '';
+		$search_status     = isset( $_POST['search_signup_status'] ) ? intval( $_POST['search_signup_status'] ) : -1;
 	}
 
 	$where     = '';

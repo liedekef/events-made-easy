@@ -1575,8 +1575,8 @@ function eme_ajax_discounts_list() {
 	$table        = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
-	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
-	$opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
+	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
+	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
@@ -1650,8 +1650,8 @@ function eme_ajax_discountgroups_list() {
 	$table        = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
-	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
-	$opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
+	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
+	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
@@ -1838,4 +1838,3 @@ function eme_ajax_manage_discountgroups() {
 	wp_die();
 }
 
-?>

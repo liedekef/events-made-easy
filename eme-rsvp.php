@@ -5505,28 +5505,28 @@ function eme_ajax_bookings_list() {
 
     $limit          = eme_get_datatables_limit();
 	$orderby        = eme_get_datatables_orderby() ?: 'ORDER BY creation_date ASC';
-	$booking_status = ( isset( $_REQUEST['booking_status'] ) ) ? eme_sanitize_request( $_REQUEST['booking_status'] ) : 'APPROVED';
-	$search_event   = isset( $_REQUEST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_event']) ) ) : '';
-	$search_person  = isset( $_REQUEST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_REQUEST['search_person']) ) ) : '';
+	$booking_status = ( isset( $_POST['booking_status'] ) ) ? eme_sanitize_request( $_POST['booking_status'] ) : 'APPROVED';
+	$search_event   = isset( $_POST['search_event'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_POST['search_event']) ) ) : '';
+	$search_person  = isset( $_POST['search_person'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request($_POST['search_person']) ) ) : '';
 	// the unique number can contain text (+, /, ...), but we only need the numbers, so lets do that
-	$search_unique     = isset( $_REQUEST['search_unique'] ) ? esc_sql(eme_str_numbers_only( $_REQUEST['search_unique']) ) : '';
-	$search_paymentid  = isset( $_REQUEST['search_paymentid'] ) ? intval( $_REQUEST['search_paymentid'] ) : 0;
-	$search_pg_pid     = isset( $_REQUEST['search_pg_pid'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_pg_pid']) ) : '';
-	$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_start_date']) ) : '';
-	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_end_date']) ) : '';
-	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'future';
-	$category          = isset( $_REQUEST['category'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['category'] ) ) : '';
-    $person_id         = isset( $_REQUEST['person_id'] ) ? intval( $_REQUEST['person_id'] ) : 0;
-	$event_id          = isset( $_REQUEST['event_id'] ) ? intval( $_REQUEST['event_id'] ) : 0;
-	if ( isset( $_REQUEST['trash'] ) && $_REQUEST['trash'] == 1 ) {
-				$trash = 1;
+	$search_unique     = isset( $_POST['search_unique'] ) ? esc_sql(eme_str_numbers_only( $_POST['search_unique']) ) : '';
+	$search_paymentid  = isset( $_POST['search_paymentid'] ) ? intval( $_POST['search_paymentid'] ) : 0;
+	$search_pg_pid     = isset( $_POST['search_pg_pid'] ) ? esc_sql( eme_sanitize_request($_POST['search_pg_pid']) ) : '';
+	$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_start_date']) ) : '';
+	$search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_end_date']) ) : '';
+	$scope             = ( isset( $_POST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'future';
+	$category          = isset( $_POST['category'] ) ? esc_sql( eme_sanitize_request( $_POST['category'] ) ) : '';
+    $person_id         = isset( $_POST['person_id'] ) ? intval( $_POST['person_id'] ) : 0;
+	$event_id          = isset( $_POST['event_id'] ) ? intval( $_POST['event_id'] ) : 0;
+	if ( isset( $_POST['trash'] ) && $_POST['trash'] == 1 ) {
+        $trash = 1;
 	} else {
-			$trash = 0;
+        $trash = 0;
 	}
 
 	// The toolbar search input
-	$q         = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
-	$opt       = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
+	$q         = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
+	$opt       = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
 	$where     = '';
 	$where_arr = [];
 

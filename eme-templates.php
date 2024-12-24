@@ -464,8 +464,8 @@ function eme_ajax_templates_list() {
     $table          = EME_DB_PREFIX . EME_TEMPLATES_TBNAME;
     $template_types = eme_template_types();
     $jTableResult   = [];
-    $search_type    = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';
-    $search_name    = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
+    $search_type    = isset( $_POST['search_type'] ) ? esc_sql( eme_sanitize_request( $_POST['search_type'] ) ) : '';
+    $search_name    = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
 
     $where     = '';
     $where_arr = [];

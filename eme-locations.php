@@ -2869,7 +2869,7 @@ function eme_ajax_locations_list() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     header( 'Content-type: application/json; charset=utf-8' );
 
-    if ( ! current_user_can( get_option( 'eme_cap_list_locations' ) ) ) {
+    if ( ! current_user_can( get_option( 'eme_cap_list_locations' ) ) ){
             $ajaxResult['Result']  = 'Error';
             $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
             print wp_json_encode( $ajaxResult );
@@ -2878,7 +2878,7 @@ function eme_ajax_locations_list() {
 
     $table         = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $search_name   = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
+    $search_name   = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
     $where         = '';
     $where_arr     = [];
     if ( ! empty( $search_name ) ) {
@@ -2917,13 +2917,13 @@ function eme_ajax_locations_list() {
         foreach ( $formfields_searchable as $formfield ) {
             $field_ids_arr[] = $formfield['field_id'];
         }
-        if ( ! empty( $_REQUEST['search_customfieldids'] ) && eme_is_numeric_array( $_REQUEST['search_customfieldids'] ) ) {
-            $field_ids = join( ',', $_REQUEST['search_customfieldids'] );
+        if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_numeric_array( $_POST['search_customfieldids'] ) ) {
+            $field_ids = join( ',', $_POST['search_customfieldids'] );
         } else {
             $field_ids = join( ',', $field_ids_arr );
         }
-        if ( isset( $_REQUEST['search_customfields'] ) && $_REQUEST['search_customfields'] != '' ) {
-            $search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_customfields'] ) ) );
+        if ( isset( $_POST['search_customfields'] ) && $_POST['search_customfields'] != '' ) {
+            $search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_customfields'] ) ) );
             $sql_join        = "
                    INNER JOIN (SELECT related_id FROM $answers_table
                          WHERE answer LIKE '%$search_customfields%' AND field_id IN ($field_ids) AND type='location'

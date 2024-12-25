@@ -2448,7 +2448,7 @@ function eme_emails_page() {
 				?>
 			<div class='eme-message-admin'><p>
 				<?php
-				printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) );
+				printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) );
 				?>
 				</p></div>
 				<?php
@@ -2627,7 +2627,7 @@ function eme_emails_page() {
 				?>
 			<div class='eme-message-admin'><p>
 				<?php
-				printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) );
+				printf( __( 'Email queueing has been activated but not scheduled. Go in the <a href="%s">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue.', 'events-made-easy' ), admin_url( 'admin.php?page=eme-options&tab=mail' ) );
 				?>
 				</p></div>
 				<?php

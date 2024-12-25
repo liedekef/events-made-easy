@@ -370,9 +370,9 @@ function eme_cron_form( $message = '' ) {
     if ( $eme_queued_count && ( ! get_option( 'eme_queue_mails' ) || ! wp_next_scheduled( 'eme_cron_send_queued' ) ) ) {
         echo '<br>';
         if ( ! get_option( 'eme_queue_mails' ) ) {
-            esc_html_e( 'WARNING: messages found in the queue but the mail queue is not activated, so they will not be sent out via WP. Make sure to use the registered REST API call with appropriate options from system cron to process the queue.', 'events-made-easy' );
+            esc_html_e( 'WARNING: messages found in the queue but the mail queue is not activated, so they will not be sent out. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue.', 'events-made-easy' );
         } else {
-            esc_html_e( 'WARNING: messages found in the queue but the mail queue is not scheduled to be processed by WP, so they will not be sent out via WP. Make sure to use the registered REST API call with appropriate options from system cron to process the queue.', 'events-made-easy' );
+            esc_html_e( 'WARNING: messages found in the queue but the mail queue is not scheduled to be processed. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue.', 'events-made-easy' );
         }
     } else {
         $eme_cron_send_queued_schedule = wp_get_schedule( 'eme_cron_send_queued' );

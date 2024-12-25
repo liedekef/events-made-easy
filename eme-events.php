@@ -10137,7 +10137,7 @@ function eme_ajax_events_list() {
 
     // we can't use the function eme_get_datatables_limit, since the "limit" and "offset" parts can be used separately
 	$PageSize          = isset( $_POST['jtPageSize'] ) ? intval( $_POST['jtPageSize'] ) : 0;
-	$StartIndex        = isset( $_POST['StartIndex'] ) ? intval( $_POST['StartIndex'] ) : 0;
+	$StartIndex        = isset( $_POST['jtStartIndex'] ) ? intval( $_POST['jtStartIndex'] ) : 0;
 
 	$scope             = isset( $_POST['scope'] ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'future';
 	$orderby           = eme_get_datatables_orderby() ?: 'ASC';

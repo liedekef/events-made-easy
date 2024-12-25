@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.25
+Stable tag: 2.5.26
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.26 (2024/12/25) =
+* Paging fix due to typo
+
 = 2.5.25 (2024/12/25) =
 * The configured payment gateways were not showing as expected
 * Make "Show all bookings" in people overview work again as expected

@@ -517,8 +517,8 @@ function eme_ajax_manage_templates() {
     if ( !current_user_can( get_option( 'eme_cap_templates' ) ) ) {
         wp_die();
     }
-    if ( isset( $_REQUEST['do_action'] ) ) {
-        $do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+    if ( isset( $_POST['do_action'] ) ) {
+        $do_action = eme_sanitize_request( $_POST['do_action'] );
         switch ( $do_action ) {
         case 'deleteTemplates':
             eme_ajax_record_delete( EME_TEMPLATES_TBNAME, 'eme_cap_templates', 'id' );
@@ -551,8 +551,8 @@ function eme_ajax_get_template() {
     wp_die();
     }
     $return = [];
-    if ( isset( $_REQUEST['template_id'] ) && intval( $_REQUEST['template_id'] ) > 0 ) {
-        $return['htmlmessage'] = eme_get_template_format( $_REQUEST['template_id'] );
+    if ( isset( $_POST['template_id'] ) && intval( $_POST['template_id'] ) > 0 ) {
+        $return['htmlmessage'] = eme_get_template_format( $_POST['template_id'] );
     } else {
         $return['htmlmessage'] = '';
     }

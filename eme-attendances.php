@@ -155,9 +155,9 @@ function eme_ajax_attendances_list() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$table             = EME_DB_PREFIX . EME_ATTENDANCES_TBNAME;
 	$jTableResult      = [];
-	$search_type       = isset( $_REQUEST['search_type'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['search_type'] ) ) : '';
-	$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql( $_REQUEST['search_start_date'] ) : '';
-	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( $_REQUEST['search_end_date'] ) : '';
+	$search_type       = isset( $_POST['search_type'] ) ? esc_sql( eme_sanitize_request( $_POST['search_type'] ) ) : '';
+	$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? esc_sql( $_POST['search_start_date'] ) : '';
+	$search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? esc_sql( $_POST['search_end_date'] ) : '';
 
 	$att_types = eme_attendance_types();
 
@@ -247,8 +247,8 @@ function eme_ajax_manage_attendances() {
 	if ( ! current_user_can( get_option( 'eme_cap_list_attendances' ) ) ) {
 		wp_die();
 	}
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+	if ( isset( $_POST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_POST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteAttendances':
 				eme_ajax_record_delete( EME_ATTENDANCES_TBNAME, 'eme_cap_manage_attendances', 'id' );

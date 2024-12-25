@@ -862,8 +862,8 @@ function eme_ajax_countries_list() {
 	$table        = EME_DB_PREFIX . EME_COUNTRIES_TBNAME;
 	$jTableResult = [];
 	// The toolbar search input
-	$q           = isset( $_REQUEST['q'] ) ? eme_sanitize_request($_REQUEST['q']) : '';
-	$opt         = isset( $_REQUEST['opt'] ) ? eme_sanitize_request($_REQUEST['opt']) : '';
+	$q           = isset( $_POST['q'] ) ? eme_sanitize_request($_POST['q']) : '';
+	$opt         = isset( $_POST['opt'] ) ? eme_sanitize_request($_POST['opt']) : '';
 	$where       = '';
 	$where_array = [];
 	if ( $q ) {
@@ -930,8 +930,8 @@ function eme_ajax_manage_countries() {
 		print wp_json_encode( $jTableResult );
 		wp_die();
 	}
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+	if ( isset( $_POST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_POST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteCountries':
 				eme_ajax_country_delete();
@@ -945,8 +945,8 @@ function eme_ajax_manage_states() {
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		wp_die();
 	}
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+	if ( isset( $_POST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_POST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteStates':
 				eme_ajax_record_delete( EME_STATES_TBNAME, 'eme_cap_settings', 'id' );
@@ -1053,7 +1053,7 @@ add_action( 'wp_ajax_eme_select_state', 'eme_select_state_ajax' );
 add_action( 'wp_ajax_nopriv_eme_select_state', 'eme_select_state_ajax' );
 function eme_select_state_ajax() {
 	check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
-	$q            = isset( $_REQUEST['q'] ) ? eme_sanitize_request( $_REQUEST['q'] ) : '';
+	$q            = isset( $_POST['q'] ) ? eme_sanitize_request( $_POST['q'] ) : '';
 	$country_code = isset( $_POST['country_code'] ) ? eme_sanitize_request( $_POST['country_code'] ) : '';
 	// the country code can be empty, in which case eme_get_localized_states will return states if only 1 country exists
 	$records = [];
@@ -1078,7 +1078,7 @@ add_action( 'wp_ajax_eme_select_country', 'eme_select_country_ajax' );
 add_action( 'wp_ajax_nopriv_eme_select_country', 'eme_select_country_ajax' );
 function eme_select_country_ajax() {
 	check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
-	$q         = isset( $_REQUEST['q'] ) ? eme_sanitize_request( $_REQUEST['q'] ) : '';
+	$q         = isset( $_POST['q'] ) ? eme_sanitize_request( $_POST['q'] ) : '';
 	$records   = [];
 	$countries = eme_get_localized_countries();
 	foreach ( $countries as $country ) {

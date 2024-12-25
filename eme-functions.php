@@ -4115,63 +4115,21 @@ function eme_get_datatables_limit() {
     $limit = '';
     if ( isset( $_POST['jtStartIndex'] ) ) {
         $limit = ' LIMIT ' . intval( $_POST['jtStartIndex'] ?: 0 ) . ',' . intval( $_POST['jtPageSize'] ?: 10 );
-    //} elseif (isset( $_REQUEST['start'] ) ) {
-        // for datatables
-    //    $limit = ' LIMIT ' . intval( $_REQUEST['start'] ?: 0 ) . ',' . intval( $_REQUEST['length'] ?: 10 );
-    //} elseif (isset( $_REQUEST['page'] ) ) {
-        // for tabulator
-    //    $size = intval( $_REQUEST['size'] );
-    //    $start = (intval( $_REQUEST['page'] ) -1 ) * $size;
-    //    $limit = " LIMIT $start, $size ";
     }
     return $limit;
 }
 
 function eme_get_datatables_orderby($preferred_sorting='') {
-    if ( isset( $_REQUEST['jtSorting'] ) ) {
+    if ( isset( $_POST['jtSorting'] ) ) {
         $orderby = '';
-        if ( ! empty( $_REQUEST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_REQUEST['jtSorting'] ) ) ) {
+        if ( ! empty( $_POST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_POST['jtSorting'] ) ) ) {
             if ( ! empty( $preferred_sorting ) ) {
-                $orderby = "ORDER BY $preferred_sorting, " . esc_sql($_REQUEST['jtSorting']);
+                $orderby = "ORDER BY $preferred_sorting, " . esc_sql($_POST['jtSorting']);
             } else {
-                $orderby = "ORDER BY " . esc_sql($_REQUEST['jtSorting']);
+                $orderby = "ORDER BY " . esc_sql($_POST['jtSorting']);
             } 
         }
         return $orderby;
-/*
-    } elseif ( isset( $_REQUEST['order'] ) ) {
-        $request = eme_sanitize_request($_REQUEST);
-        $order = '';
-        if ( count($request['order']) ) {
-            $orderBy = [];
-            if (!empty($preferred_sorting)) {
-                $orderBy[] = $preferred_sorting;
-            }
-
-            $ien=count($request['order']);
-            for ( $i=0 ; $i<$ien ; $i++ ) {
-                // Convert the column index into the column data property
-                $columnIdx = intval($request['order'][$i]['column']);
-                $requestColumn = $request['columns'][$columnIdx];
-
-                if ( $requestColumn['orderable'] == 'true' ) {
-                    $dir = $request['order'][$i]['dir'] === 'asc' ?
-                        'ASC' :
-                        'DESC';
-
-                    $orderBy[] = '`'.$requestColumn['data'].'` '.$dir;
-                }
-            }
-
-            if ( count( $orderBy ) ) {
-                $orderByText = implode(', ', $orderBy);
-                if (!empty(eme_verify_sql_orderby($orderByText))) {
-                    $order = 'ORDER BY '.$orderByText;
-                }
-            }
-        }
-        return $order;
-*/
     }
     return '';
 }

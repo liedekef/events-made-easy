@@ -6255,24 +6255,24 @@ function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
     }
     $return = [];
     $q      = '';
-    if ( isset( $_REQUEST['lastname'] ) ) {
-        $q = strtolower( eme_sanitize_request( $_REQUEST['lastname'] ) );
-    } elseif ( isset( $_REQUEST['q'] ) ) {
-        $q = strtolower( eme_sanitize_request( $_REQUEST['q'] ) );
+    if ( isset( $_POST['lastname'] ) ) {
+        $q = strtolower( eme_sanitize_request( $_POST['lastname'] ) );
+    } elseif ( isset( $_POST['q'] ) ) {
+        $q = strtolower( eme_sanitize_request( $_POST['q'] ) );
     }
 
-    if ( isset( $_REQUEST['membership_id'] ) ) {
-        $membership_id = intval( $_REQUEST['membership_id'] );
+    if ( isset( $_POST['membership_id'] ) ) {
+        $membership_id = intval( $_POST['membership_id'] );
     } else {
         $membership_id = 0;
     }
-    if ( isset( $_REQUEST['exclude_personid'] ) ) {
-        $exclude_personid = intval( $_REQUEST['exclude_personid'] );
+    if ( isset( $_POST['exclude_personid'] ) ) {
+        $exclude_personid = intval( $_POST['exclude_personid'] );
     } else {
         $exclude_personid = 0;
     }
-    if ( isset( $_REQUEST['related_member_id'] ) ) {
-        $related_member_id = intval( $_REQUEST['related_member_id'] );
+    if ( isset( $_POST['related_member_id'] ) ) {
+        $related_member_id = intval( $_POST['related_member_id'] );
     } else {
         $related_member_id = 0;
     }
@@ -6329,14 +6329,14 @@ function eme_member_main_account_autocomplete_ajax() {
     $q             = '';
     $membership_id = 0;
     $member_id     = 0;
-    if ( ! empty( $_REQUEST['q'] ) ) {
-        $q = strtolower( eme_sanitize_request( $_REQUEST['q'] ) );
+    if ( ! empty( $_POST['q'] ) ) {
+        $q = strtolower( eme_sanitize_request( $_POST['q'] ) );
     }
-    if ( ! empty( $_REQUEST['member_id'] ) ) {
-        $member_id = intval( $_REQUEST['member_id'] );
+    if ( ! empty( $_POST['member_id'] ) ) {
+        $member_id = intval( $_POST['member_id'] );
     }
-    if ( ! empty( $_REQUEST['membership_id'] ) ) {
-        $membership_id = intval( $_REQUEST['membership_id'] );
+    if ( ! empty( $_POST['membership_id'] ) ) {
+        $membership_id = intval( $_POST['membership_id'] );
     }
 
     header( 'Content-type: application/json; charset=utf-8' );
@@ -6719,8 +6719,8 @@ function eme_ajax_store_members_query() {
 
 function eme_ajax_manage_members() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    if ( isset( $_REQUEST['do_action'] ) ) {
-        $do_action    = eme_sanitize_request( $_REQUEST['do_action'] );
+    if ( isset( $_POST['do_action'] ) ) {
+        $do_action    = eme_sanitize_request( $_POST['do_action'] );
         $send_mail    = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 1;
         $trash_person = ( isset( $_POST['trash_person'] ) ) ? intval( $_POST['trash_person'] ) : 0;
 
@@ -6792,8 +6792,8 @@ function eme_ajax_manage_members() {
 function eme_ajax_manage_memberships() {
     $ajaxResult = [];
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    if ( isset( $_REQUEST['do_action'] ) ) {
-        $do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+    if ( isset( $_POST['do_action'] ) ) {
+        $do_action = eme_sanitize_request( $_POST['do_action'] );
 
         $ids     = eme_sanitize_request($_POST['membership_id']);
         $ids_arr = explode( ',', $ids );

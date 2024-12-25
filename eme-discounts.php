@@ -1764,8 +1764,8 @@ function eme_ajax_manage_discounts() {
 	}
 	$ajaxResult           = [];
 	$ajaxResult['Result'] = 'OK';
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+	if ( isset( $_POST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_POST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteDiscounts':
 				eme_ajax_record_delete( EME_DISCOUNTS_TBNAME, 'eme_cap_discounts', 'id' );
@@ -1825,8 +1825,8 @@ function eme_ajax_manage_discountgroups() {
 	}
 	$ajaxResult           = [];
 	$ajaxResult['Result'] = 'OK';
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+	if ( isset( $_POST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_POST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteDiscountGroups':
 				eme_ajax_record_delete( EME_DISCOUNTGROUPS_TBNAME, 'eme_cap_discounts', 'id' );

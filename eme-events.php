@@ -10066,19 +10066,19 @@ function eme_ajax_events_search() {
 		wp_die();
 	}
 
-    $q = (!empty( $_REQUEST['q'] )) ? strtolower( eme_sanitize_request( $_REQUEST['q'] ) ) : '';
+    $q = (!empty( $_POST['q'] )) ? strtolower( eme_sanitize_request( $_POST['q'] ) ) : '';
 	if ( empty( $q ) ) {
 		echo wp_json_encode( $return );
 		return;
 	}
-	$search_all = isset( $_REQUEST['search_all'] ) ? intval( $_REQUEST['search_all'] ) : 0;
+	$search_all = isset( $_POST['search_all'] ) ? intval( $_POST['search_all'] ) : 0;
 	if ( $search_all ) {
 			$scope = 'all';
 	} else {
 			$scope = 'future';
 	}
-	$exclude_id = isset( $_REQUEST['exclude_id'] ) ? intval( $_REQUEST['exclude_id'] ) : 0;
-	$only_rsvp  = isset( $_REQUEST['only_rsvp'] ) ? intval( $_REQUEST['only_rsvp'] ) : 0;
+	$exclude_id = isset( $_POST['exclude_id'] ) ? intval( $_POST['exclude_id'] ) : 0;
+	$only_rsvp  = isset( $_POST['only_rsvp'] ) ? intval( $_POST['only_rsvp'] ) : 0;
 	$events     = eme_search_events( $q, $scope, 1, $exclude_id, $only_rsvp );
 	foreach ( $events as $event ) {
 		$record              = [];
@@ -10136,32 +10136,18 @@ function eme_ajax_events_list() {
 	$wp_id = get_current_user_id();
 
     // we can't use the function eme_get_datatables_limit, since the "limit" and "offset" parts can be used separately
-    $PageSize = 0;
-    if ( isset( $_POST['jtPageSize'] ) ) {
-        // for jtable
-        $PageSize = intval( $_POST['jtPageSize'] );
-    //} elseif ( isset( $_REQUEST['length'] ) ) {
-        // for datatables
-    //    $PageSize = intval( $_REQUEST['length'] );
-    //} elseif ( isset( $_REQUEST['size'] ) ) {
-    //    $PageSize = intval( $_REQUEST['size'] ); 
-    }
-    $StartIndex = 0;
-    if ( isset( $_POST['jtStartIndex'] ) ) {
-        $StartIndex = intval( $_POST['jtStartIndex'] );
-    //} elseif ( isset( $_REQUEST['start'] ) ) {
-    //    $StartIndex = intval( $_REQUEST['start'] );
-    //} elseif ( isset( $_REQUEST['page'] ) ) {
-    //    $StartIndex = (intval( $_REQUEST['page'] )-1)*$PageSize;
-    }
+	$PageSize          = isset( $_POST['jtPageSize'] ) ? intval( $_POST['jtPageSize'] ) : 0;
+	$StartIndex        = isset( $_POST['StartIndex'] ) ? intval( $_POST['StartIndex'] ) : 0;
+
+	$scope             = isset( $_POST['scope'] ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'future';
 	$orderby           = eme_get_datatables_orderby() ?: 'ASC';
-	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'future';
-	$category          = isset( $_REQUEST['category'] ) ? esc_sql( eme_sanitize_request( $_REQUEST['category'] ) ) : '';
-	$status            = isset( $_REQUEST['status'] ) ? intval( $_REQUEST['status'] ) : '';
-	$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
-	$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql(eme_sanitize_request( $_REQUEST['search_start_date']) ) : '';
-	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_end_date']) ) : '';
-	$search_location   = isset( $_REQUEST['search_location'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_location'] ) ) ) : '';
+	$scope             = isset( $_POST['scope'] ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'future';
+	$category          = isset( $_POST['category'] ) ? esc_sql( eme_sanitize_request( $_POST['category'] ) ) : '';
+	$status            = isset( $_POST['status'] ) ? intval( $_POST['status'] ) : '';
+	$search_name       = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
+	$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? esc_sql(eme_sanitize_request( $_POST['search_start_date']) ) : '';
+	$search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_end_date']) ) : '';
+	$search_location   = isset( $_POST['search_location'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_location'] ) ) ) : '';
 
 	$where             = '';
 	$where_arr         = [];
@@ -10191,7 +10177,7 @@ function eme_ajax_events_list() {
         }
 
 	// override in case of trash
-	if ( isset( $_REQUEST['trash'] ) && $_REQUEST['trash'] == 1 ) {
+	if ( isset( $_POST['trash'] ) && $_POST['trash'] == 1 ) {
 		$view_trash  = 1;
 		$where_arr[] = 'event_status = ' . EME_EVENT_STATUS_TRASH;
 	} else {
@@ -10224,13 +10210,13 @@ function eme_ajax_events_list() {
 		$field_id        = $formfield['field_id'];
 		$field_ids_arr[] = $field_id;
 	}
-	if ( ! empty( $_REQUEST['search_customfieldids'] ) && eme_is_numeric_array( $_REQUEST['search_customfieldids'] ) ) {
-		$field_ids = join( ',', $_REQUEST['search_customfieldids'] );
+	if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_numeric_array( $_POST['search_customfieldids'] ) ) {
+		$field_ids = join( ',', $_POST['search_customfieldids'] );
 	} else {
 		$field_ids = join( ',', $field_ids_arr );
 	}
-	if ( isset( $_REQUEST['search_customfields'] ) && $_REQUEST['search_customfields'] != '' ) {
-		$search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_customfields'] ) ) );
+	if ( isset( $_POST['search_customfields'] ) && $_POST['search_customfields'] != '' ) {
+		$search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_customfields'] ) ) );
 	} else {
 		$search_customfields = '';
 	}
@@ -10532,9 +10518,9 @@ function eme_ajax_events_list() {
 function eme_ajax_manage_events() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$ajaxResult = [];
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
-		$ids       = $_REQUEST['event_id'];
+	if ( isset( $_POST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_POST['do_action'] );
+		$ids       = $_POST['event_id'];
 		$ids_arr   = explode( ',', $ids );
 		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
 			$ajaxResult['Result']  = 'Error';
@@ -10564,7 +10550,7 @@ function eme_ajax_manage_events() {
 				eme_ajax_action_events_status( $ids_arr, EME_EVENT_STATUS_DRAFT );
 				break;
 			case 'addCategory':
-				$category_id = intval( $_REQUEST['addtocategory'] );
+				$category_id = intval( $_POST['addtocategory'] );
 				eme_ajax_action_events_addcat( $ids, $category_id );
 				break;
 		}

@@ -5088,8 +5088,8 @@ function eme_ajax_manage_formfields() {
 		$jTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
 		$jTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
 	}
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+	if ( isset( $_POST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_POST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteFormfield':
 				// validation happens in the eme_delete_formfields function

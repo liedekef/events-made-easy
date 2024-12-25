@@ -1288,11 +1288,11 @@ function eme_mailingreport_list() {
 	}
 
 	$table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-	if ( ! isset( $_REQUEST['mailing_id'] ) ) {
+	if ( ! isset( $_POST['mailing_id'] ) ) {
 		return;
 	}
-	$mailing_id  = intval( $_REQUEST['mailing_id'] );
-	$search_name = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
+	$mailing_id  = intval( $_POST['mailing_id'] );
+	$search_name = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
 	$where       = '';
 	$where_arr   = [];
 	$where_arr[] = '(mailing_id=' . $mailing_id . ')';

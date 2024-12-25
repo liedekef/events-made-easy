@@ -4971,14 +4971,14 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
     }
 	$return = [];
 	$lastname      = '';
-	if ( isset( $_REQUEST['lastname'] ) ) {
-		$lastname = strtolower( eme_sanitize_request( $_REQUEST['lastname'] ) );
-	} elseif ( isset( $_REQUEST['task_lastname'] ) ) {
-		$lastname = strtolower( eme_sanitize_request( $_REQUEST['task_lastname'] ) );
+	if ( isset( $_POST['lastname'] ) ) {
+		$lastname = strtolower( eme_sanitize_request( $_POST['lastname'] ) );
+	} elseif ( isset( $_POST['task_lastname'] ) ) {
+		$lastname = strtolower( eme_sanitize_request( $_POST['task_lastname'] ) );
 	}
 
-	if ( isset( $_REQUEST['exclude_personids'] ) ) {
-		$exclude_personids = eme_sanitize_request( $_REQUEST['exclude_personids'] );
+	if ( isset( $_POST['exclude_personids'] ) ) {
+		$exclude_personids = eme_sanitize_request( $_POST['exclude_personids'] );
 	} else {
 		$exclude_personids = '';
 	}
@@ -4998,7 +4998,7 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 	}
 
 	$search_tables = get_option( 'eme_autocomplete_sources' );
-	if ( isset( $_REQUEST['eme_searchlimit'] ) && $_REQUEST['eme_searchlimit'] == 'people' ) {
+	if ( isset( $_POST['eme_searchlimit'] ) && $_POST['eme_searchlimit'] == 'people' ) {
 		$search_tables = 'people';
 	}
 	if ( $wp_membership_required ) {
@@ -5415,8 +5415,8 @@ function eme_ajax_manage_people() {
 
 function eme_ajax_manage_groups() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+	if ( isset( $_POST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_POST['do_action'] );
 		$ids       = eme_sanitize_request( $_POST['group_id'] );
 		$ids_arr   = explode( ',', $ids );
 		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {

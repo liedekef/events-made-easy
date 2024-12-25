@@ -632,10 +632,10 @@ function eme_ajax_recurrences_list() {
 
     $limit             = eme_get_datatables_limit();
 	$orderby           = eme_get_datatables_orderby();
-	$scope             = ( isset( $_REQUEST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_REQUEST['scope'] ) ) : 'ongoing';
-	$search_name       = isset( $_REQUEST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_REQUEST['search_name'] ) ) ) : '';
-	$search_start_date = isset( $_REQUEST['search_start_date'] ) && eme_is_date( $_REQUEST['search_start_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_start_date']) ) : '';
-	$search_end_date   = isset( $_REQUEST['search_end_date'] ) && eme_is_date( $_REQUEST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_REQUEST['search_end_date'])) : '';
+	$scope             = ( isset( $_POST['scope'] ) ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'ongoing';
+	$search_name       = isset( $_POST['search_name'] ) ? esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_name'] ) ) ) : '';
+	$search_start_date = isset( $_POST['search_start_date'] ) && eme_is_date( $_POST['search_start_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_start_date']) ) : '';
+	$search_end_date   = isset( $_POST['search_end_date'] ) && eme_is_date( $_POST['search_end_date'] ) ? esc_sql( eme_sanitize_request($_POST['search_end_date'])) : '';
 
 	$where     = '';
 	$where_arr = [];
@@ -781,11 +781,11 @@ function eme_ajax_recurrences_list() {
 function eme_ajax_manage_recurrences() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$ajaxResult = [];
-	if ( isset( $_REQUEST['do_action'] ) ) {
-		$do_action          = eme_sanitize_request( $_REQUEST['do_action'] );
-		$rec_new_start_date = eme_sanitize_request( $_REQUEST['rec_new_start_date'] );
-		$rec_new_end_date   = eme_sanitize_request( $_REQUEST['rec_new_end_date'] );
-		$ids                = $_REQUEST['recurrence_id'];
+	if ( isset( $_POST['do_action'] ) ) {
+		$do_action          = eme_sanitize_request( $_POST['do_action'] );
+		$rec_new_start_date = eme_sanitize_request( $_POST['rec_new_start_date'] );
+		$rec_new_end_date   = eme_sanitize_request( $_POST['rec_new_end_date'] );
+		$ids                = $_POST['recurrence_id'];
 		$ids_arr            = explode( ',', $ids );
 		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_events' ) ) ) {
 			$ajaxResult['Result']  = 'Error';

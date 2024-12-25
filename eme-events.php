@@ -10164,17 +10164,17 @@ function eme_ajax_events_list() {
 	} elseif ( ! empty( $search_end_date ) ) {
 		$where_arr[] = "event_end LIKE '$search_end_date%'";
 		$scope       = 'all';
-	}
-	$location_ids = "";
-        if ( ! empty( $search_location ) ) {
-	        $location_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
-		$query = "SELECT location_id FROM $location_table WHERE location_name LIKE '%$search_location%'";
-		$location_ids_arr = $wpdb->get_col( $query );
-		$location_ids = -1;
-		if (!empty($location_ids_arr)) {
-			$location_ids = join(',',$location_ids_arr);
-		}
+    }
+    $location_ids = "";
+    if ( ! empty( $search_location ) ) {
+        $location_table = EME_DB_PREFIX . EME_LOCATIONS_TBNAME;
+        $query = "SELECT location_id FROM $location_table WHERE location_name LIKE '%$search_location%'";
+        $location_ids_arr = $wpdb->get_col( $query );
+        $location_ids = -1;
+        if (!empty($location_ids_arr)) {
+            $location_ids = join(',',$location_ids_arr);
         }
+    }
 
 	// override in case of trash
 	if ( isset( $_POST['trash'] ) && $_POST['trash'] == 1 ) {
@@ -10220,7 +10220,6 @@ function eme_ajax_events_list() {
 	} else {
 		$search_customfields = '';
 	}
-
 
 	$events_count = eme_get_events( scope: $scope, order: '', location_id: $location_ids, category: $category, extra_conditions: $where, count: $count_only, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
 

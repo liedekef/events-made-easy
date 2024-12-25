@@ -2818,19 +2818,19 @@ function eme_locations_search_ajax() {
 
 function eme_locations_autocomplete_ajax( $no_wp_die = 0 ) {
     if ( $no_wp_die == 0 ) {
-        if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
-            ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_POST['eme_admin_nonce'], 'eme_admin' ) ) ||
-            ( isset( $_POST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_POST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
+        if ( ( ! isset( $_REQUEST['eme_admin_nonce'] ) && ! isset( $_REQUEST['eme_frontend_nonce'] ) ) ||
+            ( isset( $_REQUEST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_admin_nonce'], 'eme_admin' ) ) ||
+            ( isset( $_REQUEST['eme_frontend_nonce'] ) && ! wp_verify_nonce( $_REQUEST['eme_frontend_nonce'], 'eme_frontend' ) ) ) {
             wp_die();
         }
     }
     $res = [];
-    if ( ! isset( $_POST['name'] ) ) {
+    if ( ! isset( $_REQUEST['name'] ) ) {
         echo wp_json_encode( $res );
         return;
     }
 
-    $locations = eme_search_locations( eme_sanitize_request($_POST['name']) );
+    $locations = eme_search_locations( eme_sanitize_request($_REQUEST['name']) );
     // change null to empty
     $locations = array_map(
         function( $v ) {

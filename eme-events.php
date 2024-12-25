@@ -8613,7 +8613,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 				<p id='span_payment_methods'>
 				<?php
         			$configured_pgs_descriptions = eme_configured_pgs_descriptions();
-        			if ( empty( $eme_configured_pgs_descriptions ) ) {
+        			if ( empty( $configured_pgs_descriptions ) ) {
 					echo "<b>";
                         esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
 					echo "</b>";

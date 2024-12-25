@@ -46,21 +46,38 @@ div.jtable-main-container table.jtable {
   width: 100%;
 }
 div.jtable-main-container table.jtable thead th {
+  padding: 0px 3px 0px 6px;
   vertical-align: middle;
   text-align: left;
 }
+div.jtable-main-container table.jtable thead th.jtable-column-header {
+  height: 1px;
+  /* this is so the heigth of the div inside can be set to 100% */
+}
 div.jtable-main-container table.jtable thead th.jtable-column-header div.jtable-column-header-container {
   position: relative;
+  display: table;
+  /* display table so the inside elements can be easily aligned vertically */
+  width: 100%;
+  /* width=100% is redundant for regular div, but for display table it is needed */
+  height: 100% !important;
+  /* height at 100% so the resize bar in it will have full height too */
 }
 div.jtable-main-container table.jtable thead th.jtable-column-header div.jtable-column-header-container span.jtable-column-header-text {
-  display: inline-block;
+  display: table-cell;
+  vertical-align: middle;
+  /* this works since we have display=table-cell */
+  padding-top: 4px;
+  padding-bottom: 3px;
 }
 div.jtable-main-container table.jtable thead th.jtable-column-header div.jtable-column-header-container div.jtable-column-resize-handler {
   position: absolute;
+  display: table-cell;
+  vertical-align: middle;
   height: 100%;
+  /* so the resize bar fills the whole height */
   width: 8px;
   right: -8px;
-  top: -2px;
   z-index: 2;
   cursor: col-resize;
 }
@@ -284,9 +301,6 @@ div.jtable-main-container div.jtable-title div.jtable-toolbar span.jtable-toolba
 div.jtable-main-container table.jtable {
   border-collapse: collapse;
   border-spacing: 0;
-}
-div.jtable-main-container table.jtable thead th {
-  padding: 4px 3px 4px 6px;
 }
 div.jtable-main-container table.jtable thead th.jtable-column-header div.jtable-column-header-container {
   height: 20px;

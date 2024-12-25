@@ -4879,6 +4879,10 @@ THE SOFTWARE.
                 if ($cell.is(':visible')) {
                     let fieldName = $cell.data('fieldName');
                     $cell.data('width-in-percent', columnWidths[fieldName]).css('width', columnWidths[fieldName] + '%');
+                } else {
+                    // invisible fields should be as small as possible (column header) when becoming visible
+                    // so we set the width to 1%, when becoming visible the browser table logic will make it fit
+                    $cell.data('width-in-percent', 1).css('width', '1%');
                 }
             });
         },

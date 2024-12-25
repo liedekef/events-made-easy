@@ -1,29 +1,11 @@
-By Franky Van Liedekerke:
+Short changes:
 
-Version 1.0.5 (2024/12/21)
-* roomForSortableIcon is true by default, set to false to regain old behavior
-* added some margin around the edit/delete/close icon
-* allow last column to be resized too
-
-Version 1.0.4 (2024/12/21)
-* Add option "roomForSortableIcon" (true/false) for sorting, so the icon has room to appear next to the next
-
-Version 1.0.2 (2024/12/20)
-* rewritten without jquery-ui
-* fully use html5 modals
-* visibility can be "hidden", "visible" (the default), or "separator" (in
-which case the value will be bold, but not selectable nor a real column, just
-a bold-entry in the vibility selection)
-* added div around the internal table, using css this is now responsive (css included in all themes):
-```js
-.jtable-table-div {
-    display: block;
-    overflow-x:auto;
-}
-.jtable-table-div > table {
-    overflow:hidden;
-}
-```
+* Rewritten to use plain jQuery, not jQuery-UI, with HTML5 modal dialogs
+* Removed options: dialogShowEffect, dialogHideEffect
+* Added option "roomForSortableIcon" (true/false) for sorting, so the sortable icon has room to appear next to the text
+  True by default
+* Added option "formDialogWidth", which takes a css-width as value, to change the auto-width of the create/edit dialog to something else
+* Made Date-field a HTML5 date-field. The old datepicker can be restored using DateJS as type
 * added listQueryParams to jtable-call, to indicate parameters to be loaded on
 every load-call, can be a function
   Examples:

@@ -14135,14 +14135,6 @@ msgstr ""
 msgid "Manage custom fields"
 msgstr ""
 
-#: eme-cron.php:373
-msgid "WARNING: messages found in the queue but the mail queue is not activated, so they will not be sent out via WP. Make sure to use the registered REST API call with appropriate options from system cron to process the queue."
-msgstr ""
-
-#: eme-cron.php:375
-msgid "WARNING: messages found in the queue but the mail queue is not scheduled to be processed by WP, so they will not be sent out via WP. Make sure to use the registered REST API call with appropriate options from system cron to process the queue."
-msgstr ""
-
 #: eme-cron.php:386
 msgid "All queued mails will be send out without limit %s."
 msgstr ""
@@ -14163,11 +14155,6 @@ msgstr ""
 msgid "Select this option if you want an attendance record to be kept every time the RSVP attendance QRCODE is scanned by an authorized user."
 msgstr ""
 
-#: eme-mailer.php:2451
-#: eme-mailer.php:2630
-msgid "Email queueing has been activated but not scheduled. Go in the <a href=\"%s\">Email settings</a> and select a schedule or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron."
-msgstr ""
-
 #: eme-members.php:2054
 msgid "Select this option if you want an attendance record to be kept every time the member QRCODE is scanned by an EME admin."
 msgstr ""
@@ -14178,4 +14165,17 @@ msgstr ""
 
 #: eme-options.php:1954
 msgid "Set the batch count to 0 if you want all queued mails to be send out every time the queue is processed (not recommended)."
+msgstr ""
+
+#: eme-cron.php:373
+msgid "WARNING: messages found in the queue but the mail queue is not activated, so they will not be sent out. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
+msgstr ""
+
+#: eme-cron.php:375
+msgid "WARNING: messages found in the queue but the mail queue is not scheduled to be processed. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
+msgstr ""
+
+#: eme-mailer.php:2451
+#: eme-mailer.php:2630
+msgid "Email queueing has been activated but not scheduled. Go in the <a href=\"%s\">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue."
 msgstr ""

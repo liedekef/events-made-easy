@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-03-24 13:25:27+00:00\n"
-"PO-Revision-Date: 2024-12-22 10:11+0100\n"
+"PO-Revision-Date: 2024-12-26 09:54+0100\n"
 "Language: nl_BE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 3.5\n"
@@ -14122,47 +14122,47 @@ msgstr "Voeg eigen aangemaakt veld toe"
 msgid "Manage custom fields"
 msgstr "Beheer eigen aangemaakte velden"
 
-#: eme-cron.php:373
-msgid "WARNING: messages found in the queue but the mail queue is not activated, so they will not be sent out via WP. Make sure to use the registered REST API call with appropriate options from system cron to process the queue."
-msgstr ""
-
-#: eme-cron.php:375
-msgid "WARNING: messages found in the queue but the mail queue is not scheduled to be processed by WP, so they will not be sent out via WP. Make sure to use the registered REST API call with appropriate options from system cron to process the queue."
-msgstr ""
-
 #: eme-cron.php:386
 msgid "All queued mails will be send out without limit %s."
-msgstr ""
+msgstr "Alle e-mails in de wachtrij worden zonder limiet verzonden %s."
 
 #: eme-cron.php:456
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
-msgstr ""
+msgstr "%s zal er gecontroleerd worden of nieuwe evenementen moeten worden gemaild naar EME-geregistreerde mensen (deze worden dan in de wachtrij geplaatst en allemaal in één keer verzonden %s)"
 
 #: eme-cron.php:460
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
-msgstr ""
+msgstr "%s zal er gecontroleerd worden of er nieuwe evenementen moeten worden gemaild naar EME-geregistreerde mensen (deze worden dan in de wachtrij geplaatst en verzonden in batches van %d elke keer dat de wachtrij wordt verwerkt via de REST API-aanroep)"
 
 #: eme-cron.php:462
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
-msgstr ""
+msgstr "%s zal er worden gecontroleerd of er nieuwe evenementen moeten worden gemaild naar EME-geregistreerde mensen (deze worden dan in de wachtrij geplaatst en in één keer verzonden telkens wanneer de wachtrij wordt verwerkt via de REST API-aanroep)"
 
 #: eme-events.php:8650
 msgid "Select this option if you want an attendance record to be kept every time the RSVP attendance QRCODE is scanned by an authorized user."
-msgstr ""
-
-#: eme-mailer.php:2451
-#: eme-mailer.php:2630
-msgid "Email queueing has been activated but not scheduled. Go in the <a href=\"%s\">Email settings</a> and select a schedule or make sure to run the registered REST API call with the appropriate arguments to process the queue via system cron."
-msgstr ""
+msgstr "Selecteer deze optie als u wilt dat er een aanwezigheidsregistratie wordt bijgehouden telkens wanneer de RSVP-aanwezigheids-QRCODE wordt gescand door een geautoriseerde gebruiker."
 
 #: eme-members.php:2054
 msgid "Select this option if you want an attendance record to be kept every time the member QRCODE is scanned by an EME admin."
-msgstr ""
+msgstr "Selecteer deze optie als u wilt dat er een aanwezigheidsregistratie wordt bijgehouden telkens wanneer de QRCODE van het lid wordt gescand door een EME-beheerder."
 
 #: eme-options.php:1952
 msgid "If you plan to use the registered REST API call to send your queued mails, set the schedule to \"Not scheduled\"."
-msgstr ""
+msgstr "Als u van plan bent de geregistreerde REST API-aanroep te gebruiken om uw in de wachtrij geplaatste e-mails te verzenden, stelt u het schema in op \"Niet gepland\"."
 
 #: eme-options.php:1954
 msgid "Set the batch count to 0 if you want all queued mails to be send out every time the queue is processed (not recommended)."
-msgstr ""
+msgstr "Stel het aantal batches in op 0 als u wilt dat alle e-mails in de wachtrij worden verzonden elke keer dat de wachtrij wordt verwerkt (niet aanbevolen)."
+
+#: eme-cron.php:373
+msgid "WARNING: messages found in the queue but the mail queue is not activated, so they will not be sent out. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
+msgstr "WAARSCHUWING: berichten gevonden in de wachtrij, maar de e-mailwachtrij is niet geactiveerd en worden dus niet verzonden. Zorg ervoor dat u de geregistreerde REST API-aanroep vanuit de systeemcron uitvoert met de juiste opties om de wachtrij te verwerken."
+
+#: eme-cron.php:375
+msgid "WARNING: messages found in the queue but the mail queue is not scheduled to be processed. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
+msgstr "WAARSCHUWING: berichten gevonden in de wachtrij, maar de e-mailwachtrij is niet gepland om te worden verwerkt. Zorg ervoor dat u de geregistreerde REST API-aanroep vanuit de systeemcron uitvoert met de juiste opties om de wachtrij te verwerken."
+
+#: eme-mailer.php:2451
+#: eme-mailer.php:2630
+msgid "Email queueing has been activated but not scheduled. Go in the <a href=\"%s\">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue."
+msgstr "E-mailwachtrij is geactiveerd maar niet gepland. Ga naar de <a href=\"%s\">E-mailinstellingen</a> en selecteer een schema of zorg ervoor dat u de geregistreerde REST API-aanroep uitvoert vanaf de systeemcron met de juiste opties om de wachtrij te verwerken."

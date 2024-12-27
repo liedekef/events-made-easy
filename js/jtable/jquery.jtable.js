@@ -259,7 +259,7 @@ THE SOFTWARE.
                     .attr('title', self.options.messages.close)
                     .append($textSpan)
                     .appendTo($titleDiv)
-                    .click(function (e) {
+                    .on("click", function (e) {
                         e.preventDefault();
                         e.stopPropagation();
                         self._onCloseRequested();
@@ -1093,10 +1093,10 @@ THE SOFTWARE.
 
             // click event
             if (item.click) {
-                $toolBarItem.click(function (e) {
+                $toolBarItem.on("click", function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    item.click();
+                    item.trigger("click");
                 });
             }
 
@@ -1750,7 +1750,7 @@ THE SOFTWARE.
             };
 
             // Register to click event to change display text when state of checkbox is changed.
-            $checkBox.click(function () {
+            $checkBox.on("click", function () {
                 refreshCheckBoxValueAndText();
             });
 
@@ -1758,7 +1758,7 @@ THE SOFTWARE.
             if (field.setOnTextClick != false) {
                 $textSpan
                     .addClass('jtable-option-text-clickable')
-                    .click(function () {
+                    .on("click", function () {
                         if ($checkBox.is(':checked')) {
                             $checkBox.attr('checked', false);
                         } else {
@@ -1859,7 +1859,7 @@ THE SOFTWARE.
                 if (field.setOnTextClick != false) {
                     $textSpan
                         .addClass('jtable-option-text-clickable')
-                        .click(function () {
+                        .on("click", function () {
                             if (!$radioButton.is(':checked')) {
                                 $radioButton.attr('checked', true);
                             }
@@ -2132,7 +2132,7 @@ THE SOFTWARE.
 
             if (self.options.addRecordButton) {
                 // If user supplied a button, bind the click event to show dialog form
-                self.options.addRecordButton.click(function (e) {
+                self.options.addRecordButton.on("click", function (e) {
                     e.preventDefault();
                     self._showAddRecordForm();
                 });
@@ -2632,7 +2632,7 @@ THE SOFTWARE.
                 let $button = $('<button title="' + self.options.messages.editRecord + '"></button>')
                     .addClass('jtable-command-button jtable-edit-command-button')
                     .append($span)
-                    .click(function (e) {
+                    .on("click", function (e) {
                         e.preventDefault();
                         e.stopPropagation();
                         self._showEditForm($row);
@@ -3114,7 +3114,7 @@ THE SOFTWARE.
                 let $button = $('<button title="' + self.options.messages.deleteText + '"></button>')
                     .addClass('jtable-command-button jtable-delete-command-button')
                     .append($span)
-                    .click(function (e) {
+                    .on("click", function (e) {
                         e.preventDefault();
                         e.stopPropagation();
                         self._deleteButtonClickedForRow($row);
@@ -3351,14 +3351,14 @@ THE SOFTWARE.
             let self = this;
             // Register to events to set _shiftKeyDown value
             $(document)
-                .keydown(function (event) {
+                .on("keydown", function (event) {
                     switch (event.which) {
                         case 16:
                             self._shiftKeyDown = true;
                             break;
                     }
                 })
-                .keyup(function (event) {
+                .on("keyup", function (event) {
                     switch (event.which) {
                         case 16:
                             self._shiftKeyDown = false;
@@ -3461,7 +3461,7 @@ THE SOFTWARE.
 
             self._$selectAllCheckbox = $('<input type="checkbox" />')
                 .appendTo($headerContainer)
-                .click(function () {
+                .on("click", function () {
                     if (self._$tableRows.length <= 0) {
                         self._$selectAllCheckbox.attr('checked', false);
                         return;
@@ -3535,7 +3535,7 @@ THE SOFTWARE.
 
             // Select/deselect on row click
             if (self.options.selectOnRowClick) {
-                $row.click(function () {
+                $row.on("click", function () {
                     self._invertRowSelection($row);
                 });
             }
@@ -3545,7 +3545,7 @@ THE SOFTWARE.
                 let $cell = $('<td></td>').addClass('jtable-command-column jtable-selecting-column');
                 let $selectCheckbox = $('<input type="checkbox" />').appendTo($cell);
                 if (!self.options.selectOnRowClick) {
-                    $selectCheckbox.click(function () {
+                    $selectCheckbox.on("click", function () {
                         self._invertRowSelection($row);
                     });
                 }
@@ -4245,7 +4245,7 @@ THE SOFTWARE.
             self._$pagingListArea
                 .find('.jtable-page-number,.jtable-page-number-previous,.jtable-page-number-next,.jtable-page-number-first,.jtable-page-number-last')
                 .not('.jtable-page-number-disabled')
-                .click(function (e) {
+                .on("click", function (e) {
                     e.preventDefault();
                     self._changePage($(this).data('pageNumber'));
                 });
@@ -4389,7 +4389,7 @@ THE SOFTWARE.
 
             $columnHeader
                 .addClass('jtable-column-header-sortable')
-                .click(function (e) {
+                .on("click", function (e) {
                     e.preventDefault();
                     if (!self.options.multiSorting || !e.ctrlKey) {
                         self._lastSorting = []; // clear previous sorting
@@ -4654,7 +4654,7 @@ THE SOFTWARE.
                 .addClass('jtable-column-selection-container')
                 .appendTo(self._$mainContainer);
 
-            this._$table.children('thead').bind('contextmenu', function (e) {
+            this._$table.children('thead').on('contextmenu', function (e) {
                 if (!self.options.columnSelectable) {
                     return;
                 }
@@ -4664,11 +4664,11 @@ THE SOFTWARE.
                 // Make an overlay div to disable page clicks
                 $('<div />')
                     .addClass('jtable-contextmenu-overlay')
-                    .click(function () {
+                    .on("click", function () {
                         $(this).remove();
                         self._$columnSelectionDiv.hide();
                     })
-                    .bind('contextmenu', function () { return false; })
+                    .on('contextmenu', function () { return false; })
                     .appendTo(document.body);
 
                 self._fillColumnSelection();
@@ -4718,7 +4718,7 @@ THE SOFTWARE.
                     // Create checkbox
                     let $checkbox = $('<input type="checkbox" name="' + columnName + '">')
                         .prependTo($label)
-                        .click(function () {
+                        .on("click", function () {
                             let $clickedCheckbox = $(this);
                             let clickedColumnName = $clickedCheckbox.attr('name');
                             let clickedField = self.options.fields[clickedColumnName];
@@ -4762,7 +4762,7 @@ THE SOFTWARE.
             $('<div />')
                 .addClass('jtable-column-resize-handler')
                 .appendTo($columnHeader.find('.jtable-column-header-container')) // Append the handler to the column
-                .click(function (e) { // reset/prevent click event from parent th, otherwise unwanted sorting can happen
+                .on("click", function (e) { // reset/prevent click event from parent th, otherwise unwanted sorting can happen
                     e.preventDefault();
                     e.stopPropagation();
                 })
@@ -4807,8 +4807,8 @@ THE SOFTWARE.
                             return;
                         }
 
-                        $(document).unbind('mousemove', resizeonmousemove);
-                        $(document).unbind('mouseup', resizeonmouseup);
+                        $(document).off('mousemove', resizeonmousemove);
+                        $(document).off('mouseup', resizeonmouseup);
 
                         self._$columnResizeBar.hide();
 
@@ -4854,8 +4854,8 @@ THE SOFTWARE.
                         });
 
                     // Bind events
-                    $(document).bind('mousemove', resizeonmousemove);
-                    $(document).bind('mouseup', resizeonmouseup);
+                    $(document).on('mousemove', resizeonmousemove);
+                    $(document).on('mouseup', resizeonmouseup);
                 });
         },
 

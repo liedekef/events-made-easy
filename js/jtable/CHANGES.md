@@ -44,3 +44,4 @@ every load-call, can be a function
 regular params, no more forced to the url as GET params
 
 * Fixed https://github.com/volosoft/jtable/issues/2277
+* Removed a lot of deprecated jquery calls

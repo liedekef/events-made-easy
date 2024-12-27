@@ -525,7 +525,15 @@ function eme_get_queued_count() {
 	$mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
 	// the queued count is to know how much mails are left unsent in the queue
 	$sql = "SELECT COUNT(*) FROM $mqueue_table WHERE status=0";
-	return $wpdb->get_var( $sql );
+	$count = $wpdb->get_var( $sql );
+
+    // now also include planned mailings
+    $planned_mailings = eme_get_planned_mailings();
+    foreach ($planned_mailings as $mailing) {
+        $stats  = eme_unserialize( $mailing['stats'] );
+        $count += $stats['planned'];
+    }
+    return $count;
 }
 
 function eme_get_queued( $now ) {
@@ -579,15 +587,15 @@ function eme_send_queued($force_interval=0) {
 		$eme_mail_sleep_useconds = 0;
 	}
 
-	// we use $now as an argument for eme_get_passed_planned_mailings and eme_get_queued
+	// we use $now as an argument for eme_get_passed_planned_mailingids and eme_get_queued
 	// Reason: since eme_check_mailing_receivers can take some time, we want to make sure that
-	// both eme_get_passed_planned_mailings and eme_get_queued are talking about the same 'past'
+	// both eme_get_passed_planned_mailingids and eme_get_queued are talking about the same 'past'
 	$eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$now              = $eme_date_obj_now->getDateTime();
 	// for all planned mailings in the passed: re-evaluate the receivers
 	// since we mark the mailing as ongoing afterwards, this re-evalution only happens once
 	// and as such doesn't get in the way of eme_get_queued doing it's work
-	$passed_planned_mailings = eme_get_passed_planned_mailings( $now );
+	$passed_planned_mailings = eme_get_passed_planned_mailingids( $now );
 	foreach ( $passed_planned_mailings as $mailing_id ) {
 		// the next function call can take a while
 		eme_check_mailing_receivers( $mailing_id );
@@ -651,22 +659,22 @@ function eme_send_queued($force_interval=0) {
 
 	// and for the mailings that were marked ongoing, mark them as finished if appropriate
 	// thanks to the fact we substraced 5 seconds from the $interval, we always have time to finish this
-	$ongoing_mailings = eme_get_ongoing_mailings();
-	foreach ( $ongoing_mailings as $mailing_id ) {
+	$ongoing_mailingids = eme_get_ongoing_mailingids();
+	foreach ( $ongoing_mailingids as $mailing_id ) {
 		if ( eme_count_mails_to_send( $mailing_id ) == 0 ) {
 			eme_mark_mailing_completed( $mailing_id );
 		}
 	}
 }
 
-function eme_get_passed_planned_mailings( $now ) {
+function eme_get_passed_planned_mailingids( $now ) {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 	$sql            = "SELECT id FROM $mailings_table WHERE status='planned' AND planned_on<'$now'";
 	return $wpdb->get_col( $sql );
 }
 
-function eme_get_ongoing_mailings() {
+function eme_get_ongoing_mailingids() {
 	global $wpdb;
 	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 	$sql            = "SELECT id FROM $mailings_table WHERE status='ongoing'";
@@ -823,6 +831,14 @@ function eme_get_mailings( $archive = 0 ) {
 	} else {
 		$where = " WHERE status<>'archived' ";
 	}
+	$sql = "SELECT * FROM $mailings_table $where ORDER BY planned_on,name";
+	return $wpdb->get_results( $sql, ARRAY_A );
+}
+
+function eme_get_planned_mailings( ) {
+	global $wpdb;
+	$mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
+    $where = " WHERE status='planned' OR status='ongoing' ";
 	$sql = "SELECT * FROM $mailings_table $where ORDER BY planned_on,name";
 	return $wpdb->get_results( $sql, ARRAY_A );
 }

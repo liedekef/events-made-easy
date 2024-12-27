@@ -305,19 +305,34 @@ function eme_cron_form( $message = '' ) {
     <p><?php echo $message; ?></p>
     </div>
 <?php
-    } elseif ( ! defined( 'DISABLE_WP_CRON' ) || ( defined( 'DISABLE_WP_CRON' ) && ! DISABLE_WP_CRON ) ) {
-        echo "<div id='message' class='updated eme-message-admin'><p>";
-        esc_html_e( 'Cron tip for more accurate scheduled actions:', 'events-made-easy' );
-        echo '<br>';
-        esc_html_e( 'Put something like this in the crontab of your server:', 'events-made-easy' );
-        echo '<code>*/5 * * * * wget -q -O - ' . site_url( '/wp-cron.php' ) . ' >/dev/null 2>&1 </code><br>';
-        esc_html_e( 'And add the following to your wp-config.php:', 'events-made-easy' );
-        echo " define('DISABLE_WP_CRON', true);";
-        echo '</p></div>';
+    } else {
+        if ( ! defined( 'DISABLE_WP_CRON' ) || ( defined( 'DISABLE_WP_CRON' ) && ! DISABLE_WP_CRON ) ) {
+            echo "<div id='message' class='updated eme-message-admin'><p>";
+            esc_html_e( 'Cron tip for more accurate scheduled actions:', 'events-made-easy' );
+            echo '<br>';
+            esc_html_e( 'Put something like this in the crontab of your server:', 'events-made-easy' );
+            echo '<br>';
+            echo '<code>*/5 * * * * wget -q -O - ' . site_url( '/wp-cron.php' ) . ' >/dev/null 2>&1 </code><br>';
+            esc_html_e( 'And add the following to your wp-config.php:', 'events-made-easy' );
+            echo '<br>';
+            echo "<code>define('DISABLE_WP_CRON', true);</code>";
+            echo '</p></div>';
+        }
+
+        if (get_option( 'eme_queue_mails' ) && ! wp_next_scheduled( 'eme_cron_send_queued' )) {
+            echo "<div id='message' class='updated eme-message-admin'><p>";
+            esc_html_e("Mail queueing is active but the mail queue is not scheduled to be processed. Make sure to either configure a schedule or run the registered REST API call from system cron with the appropriate options in order to process the queue.", 'events-made-easy' );
+            echo '<br>';
+            esc_html_e( 'Put something like this in the crontab of your server:', 'events-made-easy' );
+            echo '<br>';
+            echo '<code>*/5 * * * * curl --user "username:password" ' . site_url( '/wp-json/events-made-easy/v1/processqueue/60' ) . ' >/dev/null 2>&1 </code><br>';
+            esc_html_e( 'Change the "username" by your user and the "password" by an application password generated in your WP user settings.', 'events-made-easy' );
+            echo '<br>';
+            esc_html_e( '"60" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course', 'events-made-easy' );
+            echo '</p></div>';
+        }
     }
 ?>
-
-<br>
 <?php
     // if not data master, then don't do this
     if ( ! eme_is_datamaster() ) {

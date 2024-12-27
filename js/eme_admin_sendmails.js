@@ -263,6 +263,32 @@ jQuery(document).ready( function($) {
         return false;
     });
 
+    $('#searchmailingsButton').on("click",function (e) {
+        e.preventDefault();
+        let form_id = $(this.form).attr('id');
+        let alldata = new FormData($('#'+form_id)[0]);
+        alldata.append('action', 'eme_searchmailings');
+        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
+            .done(function(data){
+                $('div#searchmailings-message').html(data.htmlmessage);
+                $('div#searchmailings-message').show();
+            });
+        return false;
+    });
+    $('#searchmailingsarchiveButton').on("click",function (e) {
+        e.preventDefault();
+        let form_id = $(this.form).attr('id');
+        let alldata = new FormData($('#'+form_id)[0]);
+        alldata.append('action', 'eme_searchmailingsarchive');
+        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
+            .done(function(data){
+                $('div#searchmailingsarchive-message').html(data.htmlmessage);
+                $('div#searchmailingsarchive-message').show();
+            });
+        return false;
+    });
     $('#searchmailButton').on("click",function (e) {
         e.preventDefault();
         let form_id = $(this.form).attr('id');

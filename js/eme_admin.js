@@ -12,20 +12,39 @@ function activateTab(target) {
 
 	jQuery(`.eme-tab[data-tab="${target}"]`).addClass('active');
 	jQuery(`#${target}`).addClass('active');
-}
 
-jQuery(document).ready( function($) {
-	$('.eme-tab').on('click', function() {
-		activateTab($(this).data('tab'));
-		if ($(this).data('tab') == "tab-locationdetails" && emeadmin.translate_map_is_active === 'true') {
+		if (target == "tab-locationdetails" && emeadmin.translate_map_is_active === 'true') {
 			// do this only when the tab is active, so leaflet knows the visible width and height of the map
 			eme_SelectdisplayAddress();
 			eme_displayAddress(0);
 		}
-		if ($(this).data('tab') == "tab-sentmail" ) {
+		if (target == "tab-mailings" ) {
 			// do this only when the tab is active, to avoid doing mail lookups if not needed
-			$('#searchmailButton').trigger('click');
+            // Delay the trigger to ensure the tab content is fully rendered
+            setTimeout(function() {
+                jQuery('#searchmailingsButton').trigger('click');
+            }, 100); // Adjust the delay as necessary
 		}
+		if (target == "tab-mailingsarchive" ) {
+			// do this only when the tab is active, to avoid doing mail lookups if not needed
+            // Delay the trigger to ensure the tab content is fully rendered
+            setTimeout(function() {
+                jQuery('#searchmailingsarchiveButton').trigger('click');
+            }, 100); // Adjust the delay as necessary
+		}
+		if (target == "tab-sentmail" ) {
+			// do this only when the tab is active, to avoid doing mail lookups if not needed
+            // Delay the trigger to ensure the tab content is fully rendered
+            setTimeout(function() {
+                jQuery('#searchmailButton').trigger('click');
+            }, 100); // Adjust the delay as necessary
+		}
+}
+
+jQuery(document).ready( function($) {
+	$('.eme-tab').on('click', function(e) {
+        let target = $(this).data('tab');
+		activateTab(target);
 	});
 
 	if ($('.eme-tabs').length) {

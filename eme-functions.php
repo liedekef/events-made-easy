@@ -632,8 +632,8 @@ function eme_for_shortcode( $atts, $content ) {
         ],
         $atts
     );
-    $min         = intval( $min );
-    $max         = intval( $max );
+    $min         = intval( $atts['min'] );
+    $max         = intval( $atts['max'] );
     $result      = '';
     $loopcounter = 1;
     if ( ! empty( $atts['list'] ) ) {

@@ -513,11 +513,23 @@ function eme_mark_mail_fail( $id, $error_msg = '' ) {
 	}
 }
 
-function eme_remove_all_queued() {
+function eme_cancel_all_queued() {
 	global $wpdb;
+ 
+    // cancel all ongoing and planned mailings
+	$ongoing_mailingids = eme_get_ongoing_mailingids();
+	foreach ( $ongoing_mailingids as $mailing_id ) {
+        eme_cancel_mailing( $mailing_id );
+	}
+    $planned_mailings = eme_get_planned_mailings();
+	foreach ( $planned_mailings as $mailing) {
+        eme_cancel_mailing( $mailing['id'] );
+	}
+
+    // cancel individual mails
 	$mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-	$sql          = "DELETE FROM $mqueue_table WHERE status=0";
-	return $wpdb->query( $sql );
+	$sql          = "UPDATE $mqueue_table WHERE status=3 WHERE status=0";
+    $wpdb->query( $sql );
 }
 
 function eme_get_queued_count() {

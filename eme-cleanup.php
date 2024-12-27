@@ -253,7 +253,7 @@ function eme_cleanup_page() {
 				$count   = eme_cleanup_people();
 				$message = sprintf( __( 'Cleanup done: %d people who are no longer referenced in bookings, memberships or groups are now trashed.', 'events-made-easy' ), $count );
 			} elseif ( $_POST['eme_admin_action'] == 'eme_empty_queue' ) {
-				eme_remove_all_queued();
+				eme_cancel_all_queued();
 				$message = __( 'The mail queue has been cleared.', 'events-made-easy' );
 			} elseif ( $_POST['eme_admin_action'] == 'eme_cleanup_all_event_related_data' ) {
 				$other_data = 0;

@@ -2249,13 +2249,19 @@ function eme_emails_page() {
 		$id = intval( $_GET['id'] );
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		eme_archive_mailing( $id );
-        $data_forced_tab    = 'data-showtab="tab-mailingsarchive"';
+        $data_forced_tab    = 'data-showtab="tab-mailings"';
 	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'delete_mailing' && isset( $_GET['id'] ) ) {
 		$id = intval( $_GET['id'] );
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		eme_delete_mailing( $id );
         $data_forced_tab    = 'data-showtab="tab-mailings"';
+	}
+	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'delete_archivedmailing' && isset( $_GET['id'] ) ) {
+		$id = intval( $_GET['id'] );
+		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+		eme_delete_mailing( $id );
+        $data_forced_tab    = 'data-showtab="tab-mailingsarchive"';
 	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'cancel_mailing' && isset( $_GET['id'] ) ) {
 		$id = intval( $_GET['id'] );
@@ -2940,7 +2946,7 @@ function eme_mailingsarchive_ajax_table( $search_text = "" ) {
 		$id     = $mailing['id'];
 		$stats  = eme_unserialize( $mailing['stats'] );
 		$extra  = sprintf( __( '%d mails sent, %d mails failed, %d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
-		$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . '</a>';
+		$action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_archivedmailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . '</a>';
 		if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
 			$action .= "<br><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a>';
 		}

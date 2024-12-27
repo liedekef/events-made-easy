@@ -42,3 +42,5 @@ every load-call, can be a function
 ```
 * the queryparams for paging and sorting are now also added to the GET/POST as
 regular params, no more forced to the url as GET params
+
+* Fixed https://github.com/volosoft/jtable/issues/2277

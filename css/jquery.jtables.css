@@ -66,8 +66,6 @@ div.jtable-main-container div.jtable-bottom-panel {
     color: #555;
 }
 div.jtable-main-container table.jtable {
-    border-collapse: collapse;
-    border-spacing: 0;
     font-size: small;
 }
 div.jtable-main-container a {
@@ -75,7 +73,7 @@ div.jtable-main-container a {
 }
 div.jtable-main-container table.jtable tbody > tr > td {
     border: 1px solid #ddd;
-    padding: 1px;
+    padding: 1px 3px 1px 6px;
 }
 /* jtable fix so the footer doesn't overlap with the table in some browsers */
 /*
@@ -87,6 +85,10 @@ div.jtable-main-container table.jtable tbody > tr > td {
 .jtable-data-row a {
     color: #0073aa !important;
 }
+.jtable input[type="checkbox"] {
+    margin: 0px !important;
+}
+
 .eme-jtable-center {
     text-align: center;
 }

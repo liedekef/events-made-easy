@@ -5,7 +5,9 @@ Short changes:
 * Added option "roomForSortableIcon" (true/false) for sorting, so the sortable icon has room to appear next to the text
   True by default
 * Added option "formDialogWidth", which takes a css-width as value, to change the auto-width of the create/edit dialog to something else
-* Made Date-field a HTML5 date-field. The old datepicker can be restored using DateJS as type
+* If datepicker is not available, the date-type will be considered as a HTML5-date field
+* All HTML5 input types are supported as long as they follow the same syntax as type=text for input (so color, range, datetime-local, email, tel, week, month).
+* Better logic for resize of columns (resize bar is now full height of header column) and sorting (now sorting goes from nothing => ASC => DESC => nothing)
 * added listQueryParams to jtable-call, to indicate parameters to be loaded on
 every load-call, can be a function
   Examples:

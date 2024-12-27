@@ -2214,21 +2214,25 @@ function eme_emails_page() {
 		$id = intval( $_GET['id'] );
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		eme_archive_mailing( $id );
+        $data_forced_tab    = 'data-showtab="tab-mailingsarchive"';
 	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'delete_mailing' && isset( $_GET['id'] ) ) {
 		$id = intval( $_GET['id'] );
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		eme_delete_mailing( $id );
+        $data_forced_tab    = 'data-showtab="tab-mailings"';
 	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'cancel_mailing' && isset( $_GET['id'] ) ) {
 		$id = intval( $_GET['id'] );
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		eme_cancel_mailing( $id );
+        $data_forced_tab    = 'data-showtab="tab-mailings"';
 	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'cancel_mail' && isset( $_GET['id'] ) ) {
 		$id = intval( $_GET['id'] );
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		eme_cancel_mail( $id );
+        $data_forced_tab    = 'data-showtab="tab-sentmail"';
 	}
 	if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'report_mailing' && isset( $_GET['id'] ) ) {
 		// the id param will be captured by js to fill out the report table via jtable

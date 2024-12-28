@@ -5,7 +5,7 @@ jQuery(document).ready( function($) {
             title: emeattendances.translate_attendance_reports,
             paging: true,
             sorting: true,
-            defaultSorting: 'name ASC',
+            defaultSorting: 'creation_date ASC',
             selecting: false, //Enable selecting
             multiselect: false, //Allow multiple selecting
             selectingCheckboxes: false, //Show checkboxes on first column

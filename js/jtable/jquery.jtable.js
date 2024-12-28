@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable 1.0.2 (edited by Franky Van Liedekerke)
+jTable 1.0.16 (edited by Franky Van Liedekerke)
 http://www.jtable.org
 
 ---------------------------------------------------------------------------
@@ -134,9 +134,19 @@ THE SOFTWARE.
         _create: function () {
 
             // Initialization
-            this._normalizeFieldsOptions();
-            this._initializeFields();
+            this._initializeSettings();
             this._createFieldAndColumnList();
+
+            // Needs to be before _loadExtraSettings, so _loadExtraSettings can load the cookie
+            // But needs to come after _createFieldAndColumnList
+            this._cookieKeyPrefix = this._generateCookieKeyPrefix();            
+
+            // Load optional extra settings for fields
+            // This is done before _normalizeFieldsOptions, so that runs all regular code and checks
+            this._loadExtraSettings();
+
+            // Normalize field options
+            this._normalizeFieldsOptions();
 
             // Creating DOM elements
             this._createMainContainer();
@@ -147,8 +157,6 @@ THE SOFTWARE.
             this._createBusyDialog();
             this._createErrorDialog();
             this._addNoDataRow();
-
-            this._cookieKeyPrefix = this._generateCookieKeyPrefix();            
         },
 
         /* Normalizes some options for all fields (sets default values).
@@ -187,8 +195,8 @@ THE SOFTWARE.
         },
 
         /* Intializes some private variables.
-         *************************************************************************/
-        _initializeFields: function () {
+         ************************************************************************/
+        _initializeSettings: function () {
             this._lastPostData = {};
             this._$tableRows = [];
             this._columnList = [];
@@ -286,6 +294,8 @@ THE SOFTWARE.
 
             if (this.options.tableId) {
                 this._$table.attr('id', this.options.tableId);
+            } else if (this._$tableDiv.attr('id')) {
+                this._$table.attr('id', 'jtable-' + this._$mainContainer.attr('id'));
             }
 
             this._jqueryuiThemeAddClass(this._$table, 'ui-widget-content');
@@ -455,6 +465,12 @@ THE SOFTWARE.
          *************************************************************************/
         _setOption: function (key, value) {
 
+        },
+
+        _loadExtraSettings: function() {
+            return {
+                // Empty as default, extensions can override this method to load additional settings from cookies or so
+            };
         },
 
         /* LOADING RECORDS  *****************************************************/
@@ -1323,10 +1339,11 @@ THE SOFTWARE.
 
             let strToHash = '';
             if (this.options.tableId) {
-                strToHash = strToHash + this.options.tableId + '#';
+                strToHash = this.options.tableId + '#';
             }
 
-            strToHash = strToHash + this._columnList.join('$') + '#c' + this._$table.find('thead th').length;
+            //strToHash = strToHash + this._columnList.join('$') + '#c' + this._$table.find('thead th').length;
+            strToHash = strToHash + this._columnList.join('$') + '#c' + this.options.fields.length;
             return 'jtable#' + simpleHash(strToHash);
         },
 
@@ -4276,8 +4293,9 @@ THE SOFTWARE.
 
     // Reference to base object members
     let base = {
-        _initializeFields: jTable.prototype._initializeFields,
+        _initializeSettings: jTable.prototype._initializeSettings,
         _normalizeFieldOptions: jTable.prototype._normalizeFieldOptions,
+        _loadExtraSettings: jTable.prototype._loadExtraSettings,
         _createHeaderCellForField: jTable.prototype._createHeaderCellForField,
         // _createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
         _createJtParamsForLoading: jTable.prototype._createJtParamsForLoading
@@ -4307,9 +4325,8 @@ THE SOFTWARE.
 
         /* Overrides base method to create sorting array.
          *************************************************************************/
-        _initializeFields: function () {
-            base._initializeFields.apply(this, arguments);
-
+        _initializeSettings: function () {
+            base._initializeSettings.apply(this, arguments);
             this._lastSorting = [];
             if (this.options.sorting) {
                 this._buildDefaultSortingArray();
@@ -4321,6 +4338,16 @@ THE SOFTWARE.
         _normalizeFieldOptions: function (fieldName, props) {
             base._normalizeFieldOptions.apply(this, arguments);
             props.sorting = (props.sorting != false);
+        },
+
+        /* Overrides _loadExtraSettings method for sorting
+         *************************************************************************/
+        _loadExtraSettings: function () {
+            base._loadExtraSettings.apply(this, arguments);
+
+            if (this.options.saveUserPreferences && this.options.sorting) {
+                this._loadColumnSortSettings();
+            }
         },
 
         /* Overrides _createHeaderCellForField to make columns sortable.
@@ -4447,7 +4474,9 @@ THE SOFTWARE.
                 });
             }
 
-            // Load current page again
+            if (this.options.saveUserPreferences) {
+		    this._saveColumnSortSettings();
+	    }
             this._reloadTable();
         },
 
@@ -4481,8 +4510,44 @@ THE SOFTWARE.
             }
 
             return jtParams;
-        }
+        },
 
+        /* Saves field setting to cookie.
+         *  Saved setting will be a string like that:
+         * fieldName1=ASC|fieldName2=DESC|...
+         *************************************************************************/
+        _saveColumnSortSettings: function () {
+            let fieldSettings = '';
+            $.each(this._lastSorting, function (idx, value) {
+                let fieldSetting = value.fieldName + "=" + value.sortOrder;
+                fieldSettings = fieldSettings + fieldSetting + '|';
+            });
+            this._setCookie('column-sortsettings', fieldSettings.substr(0, fieldSettings.length - 1));
+        },
+
+        /* Loads field settings from cookie that is saved by _saveColumnSortSettings method.
+         *************************************************************************/
+        _loadColumnSortSettings: function () {
+            let self = this;
+
+            let columnSortSettingsCookie = self._getCookie('column-sortsettings');
+            if (!columnSortSettingsCookie) {
+                return;
+            }
+            if (!columnSortSettingsCookie.length) {
+                return;
+            }
+            self._lastSorting = [];
+            $.each(columnSortSettingsCookie.split('|'), function (inx, fieldSetting) {
+                let splitted = fieldSetting.split('=');
+                let fieldName = splitted[0];
+                let sortOrder = splitted[1];
+                self._lastSorting.push({
+                    'fieldName': fieldName,
+                    'sortOrder': sortOrder
+                });
+            });
+        },
     });
 
 })(jQuery);
@@ -4496,6 +4561,7 @@ THE SOFTWARE.
     // Reference to base object members
     let base = {
         _create: jTable.prototype._create,
+        _loadExtraSettings: jTable.prototype._loadExtraSettings,
         _normalizeFieldOptions: jTable.prototype._normalizeFieldOptions,
         _createHeaderCellForField: jTable.prototype._createHeaderCellForField,
         _createCellForRecordField: jTable.prototype._createCellForRecordField
@@ -4525,7 +4591,7 @@ THE SOFTWARE.
          * OVERRIDED METHODS                                                     *
          *************************************************************************/
 
-        /* Overrides _addRowToTableHead method.
+        /* Overrides _create method.
          *************************************************************************/
 
         _create: function () {
@@ -4534,11 +4600,17 @@ THE SOFTWARE.
             this._createColumnResizeBar();
             this._createColumnSelection();
 
+            this._normalizeColumnWidths();
+        },
+
+        /* Overrides _loadExtraSettings method for width and visibility
+         *************************************************************************/
+        _loadExtraSettings: function () {
+            base._loadExtraSettings.apply(this, arguments);
+
             if (this.options.saveUserPreferences) {
                 this._loadColumnSettings();
             }
-
-            this._normalizeColumnWidths();
         },
 
         /* Normalizes some options for a field (sets default values).
@@ -4549,7 +4621,9 @@ THE SOFTWARE.
             // columnResizable
             if (this.options.columnResizable) {
                 props.columnResizable = (props.columnResizable != false);
-            }
+            } else {
+                props.columnResizable = false;
+	    }
 
             // visibility
             if (!props.visibility) {
@@ -4563,7 +4637,7 @@ THE SOFTWARE.
             let $headerCell = base._createHeaderCellForField.apply(this, arguments);
 
             // Make data columns resizable except the last one
-            if (this.options.columnResizable && field.columnResizable) {
+            if (field.columnResizable) {
                 this._makeColumnResizable($headerCell);
             }
 
@@ -4920,7 +4994,7 @@ THE SOFTWARE.
             this._setCookie('column-settings', fieldSettings.substr(0, fieldSettings.length - 1));
         },
 
-        /* Loads field settings from cookie that is saved by _saveFieldSettings method.
+        /* Loads field settings from cookie that is saved by _saveColumnSettings method.
          *************************************************************************/
         _loadColumnSettings: function () {
             let self = this;
@@ -4935,23 +5009,18 @@ THE SOFTWARE.
                 let splitted = fieldSetting.split('=');
                 let fieldName = splitted[0];
                 let settings = splitted[1].split(';');
-                columnSettings[fieldName] = {
-                    columnVisibility: settings[0],
-                    columnWidth: settings[1]
-                };
-            });
-
-            let headerCells = self._$table.find('>thead >tr >th.jtable-column-header');
-            headerCells.each(function () {
-                let $cell = $(this);
-                let fieldName = $cell.data('fieldName');
-                let field = self.options.fields[fieldName];
-                if (columnSettings[fieldName]) {
-                    if (field.visibility != 'fixed') {
-                        self._changeColumnVisibilityInternal(fieldName, columnSettings[fieldName].columnVisibility);
+                let columnVisibility = settings[0];
+                let columnWidth = settings[1];
+                if ($.inArray(fieldName,self.options.fields)) {
+                    if ( self.options.fields[fieldName].visibility != 'fixed') {
+                        self.options.fields[fieldName].visibility = columnVisibility;
                     }
-
-                    $cell.data('width-in-percent', columnSettings[fieldName].columnWidth).css('width', columnSettings[fieldName].columnWidth + '%');
+                    if (self.options.columnResizable) {
+                        let allow_resize = (self.options.fields[fieldName].columnResizable != false);
+                        if ( allow_resize ) {
+                            self.options.fields[fieldName].width = columnWidth + "%";
+                        }
+                    }
                 }
             });
         }

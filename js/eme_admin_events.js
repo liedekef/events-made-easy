@@ -560,7 +560,7 @@ jQuery(document).ready( function($) {
             paging: true,
             sorting: true,
             multiSorting: true,
-            defaultSorting: '',
+            defaultSorting: 'datetime ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
             selectingCheckboxes: true, //Show checkboxes on first column

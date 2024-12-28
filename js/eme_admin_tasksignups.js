@@ -3,7 +3,7 @@ jQuery(document).ready( function($) {
         title: emetasks.translate_signups,
         paging: true,
         sorting: true,
-        defaultSorting: 'name ASC',
+        defaultSorting: 'task_start ASC',
         selecting: true, //Enable selecting
         multiselect: true, //Allow multiple selecting
         selectingCheckboxes: true, //Show checkboxes on first column

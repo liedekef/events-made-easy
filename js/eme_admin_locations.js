@@ -89,7 +89,7 @@ jQuery(document).ready(function ($) {
             title: emelocations.translate_locations,
             paging: true,
             sorting: true,
-            defaultSorting: 'location_id ASC',
+            defaultSorting: 'location_name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
             selectingCheckboxes: true, //Show checkboxes on first column

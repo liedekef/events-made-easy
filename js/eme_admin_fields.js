@@ -5,7 +5,7 @@ jQuery(document).ready( function($) {
             title: emeformfields.translate_formfields,
             paging: true,
             sorting: true,
-            defaultSorting: 'name ASC',
+            defaultSorting: 'field_name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
             selectingCheckboxes: true, //Show checkboxes on first column

@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable 1.0.18 (edited by Franky Van Liedekerke)
+jTable 1.0.19 (edited by Franky Van Liedekerke)
 http://www.jtable.org
 
 ---------------------------------------------------------------------------
@@ -3474,7 +3474,7 @@ THE SOFTWARE.
                 .addClass('jtable-column-header-container')
                 .appendTo($columnHeader);
 
-            self._$selectAllCheckbox = $('<input type="checkbox" />')
+            self._$selectAllCheckbox = $('<input id="jtable-column-header-checkbox" type="checkbox" />')
                 .appendTo($headerContainer)
                 .on("click", function () {
                     if (self._$tableRows.length <= 0) {
@@ -3559,6 +3559,9 @@ THE SOFTWARE.
             if (self.options.selectingCheckboxes) {
                 let $cell = $('<td></td>').addClass('jtable-command-column jtable-selecting-column');
                 let $selectCheckbox = $('<input type="checkbox" />').appendTo($cell);
+		if (typeof $row.data('recordKey') !== 'undefined' ) {
+			$selectCheckbox.attr('id', "jtable-column-checkbox-" + $row.data('recordKey'));
+		}
                 if (!self.options.selectOnRowClick) {
                     $selectCheckbox.on("click", function () {
                         self._invertRowSelection($row);
@@ -3824,7 +3827,7 @@ THE SOFTWARE.
             self._$pageSizeChangeArea.append('<span>' + self.options.messages.pageSizeChangeLabel + ': </span>');
 
             // Page size change combobox
-            let $pageSizeChangeCombobox = $('<select></select>').appendTo(self._$pageSizeChangeArea);
+            let $pageSizeChangeCombobox = $('<select id="jtable-page-size-select"></select>').appendTo(self._$pageSizeChangeArea);
 
             // Add page sizes to the combobox
             for (let i = 0; i < self.options.pageSizes.length; i++) {
@@ -3860,7 +3863,7 @@ THE SOFTWARE.
             // Goto page input
             if (self.options.gotoPageArea == 'combobox') {
 
-                self._$gotoPageInput = $('<select></select>')
+                self._$gotoPageInput = $('<select id="jtable-page-goto-select"></select>')
                     .appendTo(this._$gotoPageArea)
                     .data('pageCount', 1)
                     .change(function() {
@@ -4803,17 +4806,16 @@ THE SOFTWARE.
 
                 if (field.visibility != 'separator') {
                     // Create checkbox
-                    let $checkbox = $('<input type="checkbox" name="' + columnName + '">')
+                    let $checkbox = $('<input type="checkbox" id="' + columnName + '">')
                         .prependTo($label)
                         .on("click", function () {
-                            let $clickedCheckbox = $(this);
-                            let clickedColumnName = $clickedCheckbox.attr('name');
+                            let clickedColumnName = $(this).attr('id');
                             let clickedField = self.options.fields[clickedColumnName];
                             if (clickedField.visibility == 'fixed') {
                                 return;
                             }
 
-                            self.changeColumnVisibility(clickedColumnName, $clickedCheckbox.is(':checked') ? 'visible' : 'hidden');
+                            self.changeColumnVisibility(clickedColumnName, $(this).is(':checked') ? 'visible' : 'hidden');
                         });
 
                     // Check, if column if shown
@@ -5017,7 +5019,7 @@ THE SOFTWARE.
                 return;
             }
             if (!columnSettingsCookie) { // empty cookie? Remove it
-		self._removeCookie('column-settings');
+                self._removeCookie('column-settings');
                 return;
             }
 
@@ -5028,7 +5030,7 @@ THE SOFTWARE.
                 let settings = splitted[1].split(';');
                 let columnVisibility = settings[0];
                 let columnWidth = settings[1];
-                if ($.inArray(fieldName,self.options.fields)) {
+                if ($.inArray(fieldName,self.options.fields) > -1) {
                     if ( self.options.fields[fieldName].visibility != 'fixed') {
                         self.options.fields[fieldName].visibility = columnVisibility;
                     }

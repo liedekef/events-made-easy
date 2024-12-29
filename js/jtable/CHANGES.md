@@ -8,6 +8,7 @@ Short changes:
 * If datepicker is not available, the date-type will be considered as a HTML5-date field
 * All HTML5 input types are supported as long as they follow the same syntax as type=text for input (so color, range, datetime-local, email, tel, week, month).
 * Better logic for resize of columns (resize bar is now full height of header column) and sorting (now sorting goes from nothing => ASC => DESC => nothing)
+* Selected sorting order is now also stored (cookie/localstorage) if wanted
 * added listQueryParams to jtable-call, to indicate parameters to be loaded on
 every load-call, can be a function
   Examples:
@@ -42,6 +43,5 @@ every load-call, can be a function
 ```
 * the queryparams for paging and sorting are now also added to the GET/POST as
 regular params, no more forced to the url as GET params
-
 * Fixed https://github.com/volosoft/jtable/issues/2277
 * Removed a lot of deprecated jquery calls

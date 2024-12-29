@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable 1.0.17 (edited by Franky Van Liedekerke)
+jTable 1.0.18 (edited by Franky Van Liedekerke)
 http://www.jtable.org
 
 ---------------------------------------------------------------------------
@@ -3763,6 +3763,13 @@ THE SOFTWARE.
             }
 
             let pageSize = this._getCookie('page-size');
+            if (pageSize == null) {
+                return;
+            }
+            if (!pageSize) { // empty cookie? Remove it
+		self._removeCookie('page-size');
+                return;
+            }
             if (pageSize) {
                 this.options.pageSize = this._normalizeNumber(pageSize, 1, 1000000, this.options.pageSize);
             }
@@ -4536,10 +4543,10 @@ THE SOFTWARE.
             let self = this;
 
             let columnSortSettingsCookie = self._getCookie('column-sortsettings');
-            if (!columnSortSettingsCookie) {
+            if (columnSortSettingsCookie == null) {
                 return;
             }
-            if (!columnSortSettingsCookie.length) {
+            if (!columnSortSettingsCookie) { // empty cookie? Remove it
 		self._removeCookie('column-sortsettings');
                 return;
             }
@@ -5006,7 +5013,11 @@ THE SOFTWARE.
             let self = this;
 
             let columnSettingsCookie = self._getCookie('column-settings');
-            if (!columnSettingsCookie) {
+            if (columnSettingsCookie == null) {
+                return;
+            }
+            if (!columnSettingsCookie) { // empty cookie? Remove it
+		self._removeCookie('column-settings');
                 return;
             }
 

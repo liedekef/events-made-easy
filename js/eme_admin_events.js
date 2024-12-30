@@ -482,7 +482,7 @@ jQuery(document).ready( function($) {
     if ($('#EventsTableContainer').length) {
         let eventfields = {
             event_id: {
-                key: true,
+		key: true,
                 title: emeevents.translate_id,
                 visibility: 'hidden'
             },
@@ -513,8 +513,8 @@ jQuery(document).ready( function($) {
             location_name: {
                 title: emeevents.translate_location
             },
-            datetime: {
-                title: emeevents.translate_datetime,
+            event_start: {
+                title: emeevents.translate_eventstart,
                 width: '5%'
             },
             creation_date: {
@@ -560,7 +560,7 @@ jQuery(document).ready( function($) {
             paging: true,
             sorting: true,
             multiSorting: true,
-            defaultSorting: 'datetime ASC',
+            defaultSorting: 'event_start ASC, event_name ASC',
             selecting: true, //Enable selecting
             multiselect: true, //Allow multiple selecting
             selectingCheckboxes: true, //Show checkboxes on first column

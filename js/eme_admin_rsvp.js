@@ -43,8 +43,8 @@ jQuery(document).ready(function ($) {
                 width: '2%',
                 listClass: 'eme-jtable-center'
             },
-            datetime: {
-                title: emersvp.translate_datetime,
+            event_start: {
+                title: emersvp.translate_eventstart,
                 sorting: true
             },
             booker: {
@@ -286,7 +286,7 @@ jQuery(document).ready(function ($) {
 
     function updateShowHideStuff() {
         let action=$('select#eme_admin_action').val();
-        if (action == 'resendApprovedBooking') {
+        if ($.inArray(action,['resendApprovedBooking']) >= 0) {
             $('span#span_sendtocontact').show();
         } else {
             $('span_sendtocontact').hide();
@@ -301,7 +301,7 @@ jQuery(document).ready(function ($) {
         } else {
             $('span#span_refund').hide();
         }
-        if (action == 'partialPayment') {
+        if ($.inArray(action,['partialPayment']) >= 0) {
             $('span#span_partialpayment').show();
         } else {
             $('span#span_partialpayment').hide();

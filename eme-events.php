@@ -2199,28 +2199,29 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 			} else {
 				$t_person = '';
 			}
-            if (!empty($t_person) && !empty($t_person['person_id']))
-                $replacement = join( ', ', eme_get_persongroup_names( $t_person['person_id'] ) );
-            if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
-                $replacement = apply_filters( 'eme_general', $replacement );
-            } else {
-                $replacement = apply_filters( 'eme_text', $replacement );
-            }
-        } elseif ( preg_match( '/#_USER_MEMBERSHIPS/', $result ) ) {
-            if ( $wp_id ) {
-                $t_person = eme_get_person_by_wp_id( $wp_id );
-            } else {
+                        if (!empty($t_person) && !empty($t_person['person_id']))
+                                $replacement = join( ', ', eme_get_persongroup_names( $t_person['person_id'] ) );
+                        if ( $target == 'html' ) {
+                                $replacement = eme_esc_html( $replacement );
+                                $replacement = apply_filters( 'eme_general', $replacement );
+                        } else {
+                                $replacement = apply_filters( 'eme_text', $replacement );
+                        }
+                } elseif ( preg_match( '/#_USER_MEMBERSHIPS/', $result ) ) {
+			if ( $wp_id ) {
+				$t_person = eme_get_person_by_wp_id( $wp_id );
+			} else {
 				$t_person = '';
 			}
-            if (!empty($t_person) && !empty($t_person['person_id']))
-                $replacement = eme_get_activemembership_names_by_personid( $t_person['person_id'] );
-            if ( $target == 'html' ) {
-                $replacement = eme_esc_html( $replacement );
-                $replacement = apply_filters( 'eme_general', $replacement );
-            } else {
-                $replacement = apply_filters( 'eme_text', $replacement );
-            }
+                        if (!empty($t_person) && !empty($t_person['person_id']))
+                                $replacement = eme_get_activemembership_names_by_personid( $t_person['person_id'] );
+                        if ( $target == 'html' ) {
+                                $replacement = eme_esc_html( $replacement );
+                                $replacement = apply_filters( 'eme_general', $replacement );
+                        } else {
+                                $replacement = apply_filters( 'eme_text', $replacement );
+                        }
+
 		} elseif ( preg_match( '/#_INCLUDE_TEMPLATE\{(.+?)\}$/', $result, $matches ) ) {
 			$template_id = $matches[1];
 			if ( preg_match( '/#_/', $template_id ) ) {
@@ -9600,6 +9601,7 @@ function eme_admin_enqueue_js() {
 			'translate_recurrences'                => __( 'Recurrences', 'events-made-easy' ),
 			'translate_rsvp'                       => __( 'RSVP', 'events-made-easy' ),
 			'translate_eventprice'                 => __( 'Event price', 'events-made-easy' ),
+			'translate_eventstart'                 => __( 'Date and time', 'events-made-easy' ),
 			'translate_id'                         => __( 'ID', 'events-made-easy' ),
 			'translate_name'                       => __( 'Name', 'events-made-easy' ),
 			'translate_insertnewevent'             => __( 'Insert New Event', 'events-made-easy' ),
@@ -9612,7 +9614,6 @@ function eme_admin_enqueue_js() {
 			'translate_recinfo'                    => __( 'Recurrence info', 'events-made-easy' ),
 			'translate_rec_singledur'              => __( 'Single event duration', 'events-made-easy' ),
 			'translate_date'                       => __( 'Date', 'events-made-easy' ),
-			'translate_datetime'                   => __( 'Date and time', 'events-made-easy' ),
 			'translate_fdateformat'                => EME_WP_DATE_FORMAT,
 			'translate_selecteddates'              => __( 'Selected dates:', 'events-made-easy' ),
 			'translate_created_on'                 => __( 'Created on', 'events-made-easy' ),
@@ -9942,7 +9943,7 @@ function eme_admin_enqueue_js() {
 			'translate_person_id'                  => __( 'Person ID', 'events-made-easy' ),
 			'translate_rsvp'                       => __( 'RSVP', 'events-made-easy' ),
 			'translate_eventinfo'                  => __( 'Event info', 'events-made-easy' ),
-			'translate_datetime'                   => __( 'Date and time', 'events-made-easy' ),
+			'translate_eventstart'                 => __( 'Date and time', 'events-made-easy' ),
 			'translate_booker'                     => __( 'Booker', 'events-made-easy' ),
 			'translate_wpuser'                     => __( 'Linked WP user', 'events-made-easy' ),
 			'translate_bookingdate'                => __( 'Booking date', 'events-made-easy' ),
@@ -10139,7 +10140,7 @@ function eme_ajax_events_list() {
 	$StartIndex        = isset( $_POST['jtStartIndex'] ) ? intval( $_POST['jtStartIndex'] ) : 0;
 
 	$scope             = isset( $_POST['scope'] ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'future';
-	$orderby           = eme_get_datatables_orderby() ?: 'ASC';
+	$orderby           = eme_get_datatables_orderby() ?: '';
 	$scope             = isset( $_POST['scope'] ) ? esc_sql( eme_sanitize_request( $_POST['scope'] ) ) : 'future';
 	$category          = isset( $_POST['category'] ) ? esc_sql( eme_sanitize_request( $_POST['category'] ) ) : '';
 	$status            = isset( $_POST['status'] ) ? intval( $_POST['status'] ) : '';
@@ -10222,10 +10223,6 @@ function eme_ajax_events_list() {
 
 	$events_count = eme_get_events( scope: $scope, order: '', location_id: $location_ids, category: $category, extra_conditions: $where, count: $count_only, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
 
-	// datetime is a column in the javascript definition of the events jtable, but of course the db doesn't know this
-	// so we need to change this into something known, but since eme_get_events can work with "ASC/DESC" only and
-	// then sorts on date/time, we just remove the word here
-	$orderby = str_replace( 'datetime ', '', $orderby );
 	$events  = eme_get_events( limit: $PageSize, scope: $scope, order: $orderby, offset: $StartIndex, location_id: $location_ids, category: $category, extra_conditions: $where, include_customformfields: 1, search_customfieldids: $field_ids, search_customfields: $search_customfields );
 	$event_status_array = eme_status_array();
 	$eme_date_obj_now   = new ExpressiveDate( 'now', EME_TIMEZONE );
@@ -10437,23 +10434,23 @@ function eme_ajax_events_list() {
 		$localized_end_date   = eme_localized_date( $event['event_end'], EME_TIMEZONE, 1 );
 		if ( $event['event_properties']['all_day'] == 1 ) {
 			if ( $localized_end_date != '' && $localized_end_date != $localized_start_date ) {
-				$record['datetime'] = $localized_start_date . ' - ' . $localized_end_date;
+				$record['event_start'] = $localized_start_date . ' - ' . $localized_end_date;
 			} else {
-				$record['datetime'] = $localized_start_date;
+				$record['event_start'] = $localized_start_date;
 			}
-			$record['datetime'] .= '<br>';
-			$record['datetime'] .= __( 'All day', 'events-made-easy' );
+			$record['event_start'] .= '<br>';
+			$record['event_start'] .= __( 'All day', 'events-made-easy' );
 		} elseif ( $localized_end_date != '' && $localized_end_date != $localized_start_date ) {
-				$record['datetime'] = eme_localized_datetime( $event['event_start'], EME_TIMEZONE, 1 ) . ' - <br>' . eme_localized_datetime( $event['event_end'], EME_TIMEZONE, 1 );
+				$record['event_start'] = eme_localized_datetime( $event['event_start'], EME_TIMEZONE, 1 ) . ' - <br>' . eme_localized_datetime( $event['event_end'], EME_TIMEZONE, 1 );
 		} else {
-			$record['datetime']  = $localized_start_date;
-			$record['datetime'] .= '<br>';
-			$record['datetime'] .= eme_localized_time( $event['event_start'], EME_TIMEZONE, 1 ) . ' - ' . eme_localized_time( $event['event_end'], EME_TIMEZONE, 1 );
+			$record['event_start']  = $localized_start_date;
+			$record['event_start'] .= '<br>';
+			$record['event_start'] .= eme_localized_time( $event['event_start'], EME_TIMEZONE, 1 ) . ' - ' . eme_localized_time( $event['event_end'], EME_TIMEZONE, 1 );
 		}
 
 		// if in the past, show it
 		if ( $date_obj < $eme_date_obj_now ) {
-			$record['datetime'] = "<span style='text-decoration: line-through;'>" . $record['datetime'] . '</span>';
+			$record['event_start'] = "<span style='text-decoration: line-through;'>" . $record['event_start'] . '</span>';
 		}
 
 		if ( $event['recurrence_id'] > 0 ) {

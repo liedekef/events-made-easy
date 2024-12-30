@@ -28,8 +28,8 @@ msgstr ""
 #: eme-discounts.php:1640
 #: eme-discounts.php:1680
 #: eme-events.php:10132
-#: eme-events.php:10526
-#: eme-events.php:10776
+#: eme-events.php:10523
+#: eme-events.php:10773
 #: eme-formfields.php:5026
 #: eme-formfields.php:5077
 #: eme-formfields.php:5088
@@ -60,7 +60,7 @@ msgstr ""
 #: eme-people.php:5343
 #: eme-people.php:5425
 #: eme-recurrence.php:624
-#: eme-recurrence.php:792
+#: eme-recurrence.php:793
 #: eme-rsvp.php:1232
 #: eme-rsvp.php:4644
 #: eme-rsvp.php:4651
@@ -72,7 +72,7 @@ msgstr ""
 #: eme-tasks.php:1893
 #: eme-tasks.php:1997
 #: eme-tasks.php:2008
-#: eme-templates.php:509
+#: eme-templates.php:510
 msgid "Access denied!"
 msgstr "拒绝访问!"
 
@@ -86,7 +86,7 @@ msgstr "活动"
 #: eme-actions.php:232
 #: eme-events.php:6305
 #: eme-events.php:8393
-#: eme-events.php:9612
+#: eme-events.php:9613
 #: eme-locations.php:390
 msgid "Location"
 msgstr "地点"
@@ -286,8 +286,8 @@ msgid "Edit person"
 msgstr "编辑人员"
 
 #: eme-attendances.php:218
-#: eme-events.php:10446
-#: eme-rsvp.php:5885
+#: eme-events.php:10443
+#: eme-rsvp.php:5883
 msgid "All day"
 msgstr "全天"
 
@@ -297,7 +297,7 @@ msgid "Manual entry"
 msgstr "手动"
 
 #: eme-attendances.php:265
-#: eme-events.php:10568
+#: eme-events.php:10565
 msgid "Events deleted"
 msgstr "活动已删除"
 
@@ -377,7 +377,7 @@ msgstr "添加分类"
 
 #: eme-categories.php:129
 #: eme-categories.php:153
-#: eme-events.php:9604
+#: eme-events.php:9605
 #: eme-events.php:9643
 #: eme-events.php:9660
 #: eme-events.php:9685
@@ -401,7 +401,7 @@ msgstr "ID"
 
 #: eme-categories.php:130
 #: eme-categories.php:154
-#: eme-events.php:9605
+#: eme-events.php:9606
 #: eme-events.php:9687
 #: eme-events.php:9708
 #: eme-events.php:9728
@@ -424,7 +424,7 @@ msgid "Name"
 msgstr "名字"
 
 #: eme-categories.php:136
-#: eme-events.php:10246
+#: eme-events.php:10242
 #: eme-formfields.php:5062
 #: eme-holidays.php:136
 #: eme-locations.php:2950
@@ -1557,7 +1557,7 @@ msgstr "每个座位固定"
 #: eme-people.php:5146
 #: eme-people.php:5220
 #: eme-rsvp.php:3819
-#: eme-rsvp.php:5922
+#: eme-rsvp.php:5920
 #: eme-ui-helpers.php:134
 #: eme-ui-helpers.php:231
 msgid "Yes"
@@ -1598,7 +1598,7 @@ msgstr "是的"
 #: eme-people.php:5146
 #: eme-people.php:5220
 #: eme-rsvp.php:3819
-#: eme-rsvp.php:5922
+#: eme-rsvp.php:5920
 #: eme-ui-helpers.php:135
 #: eme-ui-helpers.php:230
 msgid "No"
@@ -1679,7 +1679,7 @@ msgstr "新插入的循环包含 %d 活动"
 #: eme-events.php:716
 #: eme-events.php:859
 #: eme-events.php:6288
-#: eme-events.php:10466
+#: eme-events.php:10463
 msgid "Edit Recurrence"
 msgstr "编辑循环"
 
@@ -1695,7 +1695,7 @@ msgstr "新活动已成功插入!"
 #: eme-events.php:668
 #: eme-events.php:738
 #: eme-events.php:797
-#: eme-events.php:9607
+#: eme-events.php:9608
 msgid "Edit Event '%s'"
 msgstr "编辑活动 “%s”"
 
@@ -1731,7 +1731,7 @@ msgid "Failed to update '%s'"
 msgstr "更新 “%s” 失败"
 
 #: eme-events.php:768
-#: eme-events.php:9606
+#: eme-events.php:9607
 msgid "Insert New Event"
 msgstr "插入新活动"
 
@@ -1966,7 +1966,7 @@ msgstr "Events Made Easy 的插件页面"
 #: eme-events.php:9909
 #: eme-events.php:9964
 #: eme-locations.php:2401
-#: eme-rsvp.php:5766
+#: eme-rsvp.php:5764
 msgid "Edit"
 msgstr "编辑"
 
@@ -2343,9 +2343,9 @@ msgstr "如果您改变这个活动，它将成为一个独立的活动，并从
 #: eme-events.php:6307
 #: eme-events.php:9602
 #: eme-events.php:9944
-#: eme-events.php:10416
+#: eme-events.php:10413
 #: eme-options.php:1279
-#: eme-rsvp.php:5844
+#: eme-rsvp.php:5842
 msgid "RSVP"
 msgstr "RSVP"
 
@@ -2527,7 +2527,7 @@ msgid "Delete Recurrence"
 msgstr "删除循环"
 
 #: eme-events.php:6546
-#: eme-events.php:9608
+#: eme-events.php:9609
 #: eme-events.php:9677
 #: eme-events.php:9911
 #: eme-events.php:9925
@@ -2566,10 +2566,10 @@ msgstr "由于该活动的作者未被定义，任何对联系人的引用（比
 
 #: eme-events.php:6716
 #: eme-events.php:9952
-#: eme-events.php:10257
+#: eme-events.php:10253
 #: eme-locations.php:449
 #: eme-locations.php:2960
-#: eme-recurrence.php:731
+#: eme-recurrence.php:732
 #: eme-widgets.php:179
 #: eme-widgets.php:343
 msgid "Category"
@@ -3948,13 +3948,13 @@ msgstr "循环"
 msgid "Event price"
 msgstr "活动价格"
 
-#: eme-events.php:9609
+#: eme-events.php:9610
 #: eme-events.php:9698
 #: eme-events.php:9794
 msgid "Copy"
 msgstr "复制"
 
-#: eme-events.php:9610
+#: eme-events.php:9611
 #: eme-events.php:9649
 #: eme-events.php:9668
 #: eme-events.php:9693
@@ -3965,7 +3965,7 @@ msgstr "复制"
 msgid "CSV"
 msgstr "CSV"
 
-#: eme-events.php:9611
+#: eme-events.php:9612
 #: eme-events.php:9650
 #: eme-events.php:9669
 #: eme-events.php:9694
@@ -3976,19 +3976,19 @@ msgstr "CSV"
 msgid "Print"
 msgstr "打印"
 
-#: eme-events.php:9613
+#: eme-events.php:9614
 msgid "Recurrence info"
 msgstr "循环的信息"
 
-#: eme-events.php:9614
+#: eme-events.php:9615
 msgid "Single event duration"
 msgstr "单一活动的持续时间"
 
-#: eme-events.php:9615
+#: eme-events.php:9616
 msgid "Date"
 msgstr "日期"
 
-#: eme-events.php:9616
+#: eme-events.php:9604
 #: eme-events.php:9946
 msgid "Date and time"
 msgstr "日期和时间"
@@ -4737,145 +4737,145 @@ msgstr "邮寄报告"
 msgid "Select one or more events"
 msgstr "选择一个或多个活动"
 
-#: eme-events.php:10253
-#: eme-rsvp.php:5775
+#: eme-events.php:10249
+#: eme-rsvp.php:5773
 #: eme-tasks.php:1978
 msgid "Edit event"
 msgstr "编辑活动"
 
 #: eme-events.php:6579
-#: eme-events.php:10269
-#: eme-rsvp.php:5779
+#: eme-events.php:10265
+#: eme-rsvp.php:5777
 msgid "RSVP Info: "
 msgstr "RSVP 的信息："
 
 #: eme-events.php:6607
-#: eme-events.php:10297
-#: eme-rsvp.php:5808
+#: eme-events.php:10293
+#: eme-rsvp.php:5806
 msgid "Free: "
 msgstr "免费："
 
 #: eme-events.php:6608
 #: eme-events.php:6611
 #: eme-events.php:6657
-#: eme-events.php:10299
-#: eme-events.php:10301
-#: eme-events.php:10306
-#: eme-events.php:10308
-#: eme-events.php:10365
-#: eme-events.php:10367
-#: eme-rsvp.php:5782
-#: eme-rsvp.php:5871
+#: eme-events.php:10295
+#: eme-events.php:10297
+#: eme-events.php:10302
+#: eme-events.php:10304
+#: eme-events.php:10361
+#: eme-events.php:10363
+#: eme-rsvp.php:5780
+#: eme-rsvp.php:5869
 msgid "Approved:"
 msgstr "已批准："
 
 #: eme-events.php:6615
 #: eme-events.php:6655
-#: eme-events.php:10314
-#: eme-events.php:10316
-#: eme-events.php:10359
-#: eme-events.php:10361
-#: eme-rsvp.php:5869
+#: eme-events.php:10310
+#: eme-events.php:10312
+#: eme-events.php:10355
+#: eme-events.php:10357
+#: eme-rsvp.php:5867
 msgid "Pending:"
 msgstr "待订："
 
 #: eme-events.php:6620
-#: eme-events.php:10323
-#: eme-events.php:10325
-#: eme-rsvp.php:5821
+#: eme-events.php:10319
+#: eme-events.php:10321
+#: eme-rsvp.php:5819
 msgid "Absent:"
 msgstr "缺席："
 
 #: eme-events.php:6623
-#: eme-events.php:10329
+#: eme-events.php:10325
 #: eme-members.php:6566
-#: eme-recurrence.php:719
-#: eme-rsvp.php:5824
+#: eme-recurrence.php:720
+#: eme-rsvp.php:5822
 msgid "Max: "
 msgstr "最大："
 
 #: eme-events.php:6626
-#: eme-events.php:10332
-#: eme-rsvp.php:5827
+#: eme-events.php:10328
+#: eme-rsvp.php:5825
 msgid "(%d waiting list seats included)"
 msgstr "(包括 %d 个等待名单的席位)"
 
 #: eme-events.php:6631
-#: eme-events.php:10337
-#: eme-rsvp.php:5833
+#: eme-events.php:10333
+#: eme-rsvp.php:5831
 msgid "Printable view"
 msgstr "可打印的视图"
 
 #: eme-events.php:6632
-#: eme-events.php:10338
-#: eme-rsvp.php:5834
+#: eme-events.php:10334
+#: eme-rsvp.php:5832
 msgid "CSV export"
 msgstr "CSV 导出"
 
 #: eme-events.php:6653
-#: eme-events.php:10356
-#: eme-rsvp.php:5867
+#: eme-events.php:10352
+#: eme-rsvp.php:5865
 msgid "Task Info: %d tasks"
 msgstr ""
 
-#: eme-events.php:10375
+#: eme-events.php:10371
 #: eme-locations.php:534
 #: eme-locations.php:2954
-#: eme-recurrence.php:749
+#: eme-recurrence.php:750
 msgid "Edit location"
 msgstr "编辑地点"
 
-#: eme-events.php:10377
+#: eme-events.php:10373
 #: eme-locations.php:2956
-#: eme-recurrence.php:751
+#: eme-recurrence.php:752
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "地点地图坐标为空! 请编辑位置以纠正这一点，否则它将无法在您的网站上正确显示。"
 
-#: eme-events.php:10396
+#: eme-events.php:10392
 msgid "Preview event"
 msgstr "预览活动"
 
-#: eme-events.php:10398
+#: eme-events.php:10394
 msgid "View event"
 msgstr "查看活动"
 
-#: eme-events.php:10404
+#: eme-events.php:10401
 msgid "Duplicate this event"
 msgstr "复制此活动"
 
-#: eme-events.php:10416
-#: eme-rsvp.php:5844
+#: eme-events.php:10413
+#: eme-rsvp.php:5842
 msgid "Add booking for this event"
 msgstr "为该活动添加预订"
 
-#: eme-events.php:10418
-#: eme-rsvp.php:5846
+#: eme-events.php:10415
+#: eme-rsvp.php:5844
 msgid "Password protected"
 msgstr "被密码保护"
 
-#: eme-events.php:10426
-#: eme-recurrence.php:721
+#: eme-events.php:10423
+#: eme-recurrence.php:722
 msgid "Free"
 msgstr "免费"
 
-#: eme-events.php:10558
-#: eme-recurrence.php:816
+#: eme-events.php:10555
+#: eme-recurrence.php:817
 msgid "No action defined!"
 msgstr "没有定义行动!"
 
-#: eme-events.php:10576
+#: eme-events.php:10573
 msgid "Events moved to trash"
 msgstr "活动移至回收站"
 
-#: eme-events.php:10584
+#: eme-events.php:10581
 msgid "Restored selected events to draft status"
 msgstr "将选定的活动恢复到草稿状态"
 
-#: eme-events.php:10592
+#: eme-events.php:10589
 msgid "Events status updated"
 msgstr "活动状态已更新"
 
-#: eme-events.php:10605
+#: eme-events.php:10602
 msgid "Events added to category"
 msgstr "活动已添加到分类"
 
@@ -6475,7 +6475,7 @@ msgstr "获取路线"
 msgid "View location"
 msgstr "查看地点"
 
-#: eme-locations.php:2989
+#: eme-locations.php:2990
 msgid "Duplicate this location"
 msgstr "复制这个地点"
 
@@ -6490,8 +6490,8 @@ msgstr "复制这个地点"
 #: eme-members.php:7058
 #: eme-rsvp.php:1202
 #: eme-rsvp.php:4908
-#: eme-rsvp.php:6503
-#: eme-rsvp.php:6523
+#: eme-rsvp.php:6501
+#: eme-rsvp.php:6521
 msgid "There were some problems while sending mail."
 msgstr "在发送邮件时出现了一些问题。"
 
@@ -6590,8 +6590,8 @@ msgstr "请输入有效的电子邮件地址"
 #: eme-mailer.php:1861
 #: eme-mailer.php:1955
 #: eme-members.php:6857
-#: eme-rsvp.php:6500
-#: eme-rsvp.php:6520
+#: eme-rsvp.php:6498
+#: eme-rsvp.php:6518
 msgid "The mail has been sent."
 msgstr "邮件已经发送。"
 
@@ -8167,7 +8167,7 @@ msgid "You did not enter a valid discount code"
 msgstr "您没有输入有效的折扣代码"
 
 #: eme-members.php:5276
-#: eme-rsvp.php:5914
+#: eme-rsvp.php:5912
 msgid "Never"
 msgstr "从未"
 
@@ -8283,17 +8283,17 @@ msgstr "已删除会员。"
 #: eme-members.php:7030
 #: eme-members.php:7055
 #: eme-members.php:7072
-#: eme-rsvp.php:6136
-#: eme-rsvp.php:6170
-#: eme-rsvp.php:6214
-#: eme-rsvp.php:6254
-#: eme-rsvp.php:6276
-#: eme-rsvp.php:6318
-#: eme-rsvp.php:6379
-#: eme-rsvp.php:6421
-#: eme-rsvp.php:6470
-#: eme-rsvp.php:6532
-#: eme-rsvp.php:6583
+#: eme-rsvp.php:6134
+#: eme-rsvp.php:6168
+#: eme-rsvp.php:6212
+#: eme-rsvp.php:6252
+#: eme-rsvp.php:6274
+#: eme-rsvp.php:6316
+#: eme-rsvp.php:6377
+#: eme-rsvp.php:6419
+#: eme-rsvp.php:6468
+#: eme-rsvp.php:6530
+#: eme-rsvp.php:6581
 #: eme-tasks.php:2042
 #: eme-tasks.php:2068
 #: eme-tasks.php:2092
@@ -8302,30 +8302,30 @@ msgstr "该行动已成功执行。"
 
 #: eme-members.php:6913
 #: eme-members.php:7033
-#: eme-rsvp.php:6139
-#: eme-rsvp.php:6173
-#: eme-rsvp.php:6217
-#: eme-rsvp.php:6257
-#: eme-rsvp.php:6321
-#: eme-rsvp.php:6382
-#: eme-rsvp.php:6424
-#: eme-rsvp.php:6467
-#: eme-rsvp.php:6586
+#: eme-rsvp.php:6137
+#: eme-rsvp.php:6171
+#: eme-rsvp.php:6215
+#: eme-rsvp.php:6255
+#: eme-rsvp.php:6319
+#: eme-rsvp.php:6380
+#: eme-rsvp.php:6422
+#: eme-rsvp.php:6465
+#: eme-rsvp.php:6584
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "该行动已成功执行，但在发送邮件时出现了一些问题。"
 
 #: eme-members.php:6916
 #: eme-members.php:7036
-#: eme-rsvp.php:6142
-#: eme-rsvp.php:6176
-#: eme-rsvp.php:6211
-#: eme-rsvp.php:6260
-#: eme-rsvp.php:6279
-#: eme-rsvp.php:6315
-#: eme-rsvp.php:6385
-#: eme-rsvp.php:6427
-#: eme-rsvp.php:6463
-#: eme-rsvp.php:6580
+#: eme-rsvp.php:6140
+#: eme-rsvp.php:6174
+#: eme-rsvp.php:6209
+#: eme-rsvp.php:6258
+#: eme-rsvp.php:6277
+#: eme-rsvp.php:6313
+#: eme-rsvp.php:6383
+#: eme-rsvp.php:6425
+#: eme-rsvp.php:6461
+#: eme-rsvp.php:6578
 #: eme-tasks.php:2045
 #: eme-tasks.php:2071
 #: eme-tasks.php:2095
@@ -12767,19 +12767,19 @@ msgstr "每个月"
 msgid "Edit recurrence"
 msgstr "编辑循环"
 
-#: eme-recurrence.php:711
+#: eme-recurrence.php:712
 msgid "Duplicate this recurrence"
 msgstr "复制此循环"
 
-#: eme-recurrence.php:828
+#: eme-recurrence.php:829
 msgid "Recurrences deleted and events moved to trash"
 msgstr "循环被删除，活动被移至回收站"
 
-#: eme-recurrence.php:839
+#: eme-recurrence.php:840
 msgid "Recurrences status updated"
 msgstr "循环情况更新"
 
-#: eme-recurrence.php:872
+#: eme-recurrence.php:873
 msgid "Start and end date adjusted for the selected recurrences"
 msgstr ""
 
@@ -13079,52 +13079,52 @@ msgstr "部分付款金额"
 msgid "Event fields"
 msgstr "活动字段"
 
-#: eme-rsvp.php:5734
+#: eme-rsvp.php:5732
 msgid "Click the name of the booker in order to see and/or edit the details of the booker."
 msgstr "点击预订者的名字，以查看和/或编辑预订者的详细信息。"
 
-#: eme-rsvp.php:5737
+#: eme-rsvp.php:5735
 msgid "Anonymous"
 msgstr "匿名"
 
-#: eme-rsvp.php:5766
+#: eme-rsvp.php:5764
 msgid "Click here to see and/or edit the details of the booking."
 msgstr "点击这里查看和/或编辑预订的细节。"
 
-#: eme-rsvp.php:5816
+#: eme-rsvp.php:5814
 msgid "Pending: "
 msgstr "待定："
 
-#: eme-rsvp.php:5906
+#: eme-rsvp.php:5904
 msgid "(On waitinglist)"
 msgstr "(在等待名单上)"
 
-#: eme-rsvp.php:5909
+#: eme-rsvp.php:5907
 msgid "(Awaiting user confirmation)"
 msgstr "(等待用户的确认中)"
 
-#: eme-rsvp.php:5921
+#: eme-rsvp.php:5919
 msgid "This is based on the payment ID of the booking: %d"
 msgstr "这是基于预订的付款 ID：%d"
 
-#: eme-rsvp.php:6142
-#: eme-rsvp.php:6260
+#: eme-rsvp.php:6140
+#: eme-rsvp.php:6258
 msgid "Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list."
 msgstr "提示：对于等待名单上的预订，唯一允许的行动是将其移出等待名单。"
 
-#: eme-rsvp.php:6220
-#: eme-rsvp.php:6324
-#: eme-rsvp.php:6589
+#: eme-rsvp.php:6218
+#: eme-rsvp.php:6322
+#: eme-rsvp.php:6587
 msgid "The action has been executed successfully but there were some problems refunding the payment."
 msgstr "该行动已成功执行，但在退还款项时出现了一些问题。"
 
-#: eme-rsvp.php:6223
-#: eme-rsvp.php:6327
-#: eme-rsvp.php:6592
+#: eme-rsvp.php:6221
+#: eme-rsvp.php:6325
+#: eme-rsvp.php:6590
 msgid "The action has been executed successfully but there were some problems sending mail and refunding the payment."
 msgstr "该行动已成功执行，但在发送邮件和退还款项方面出现了一些问题。"
 
-#: eme-rsvp.php:6461
+#: eme-rsvp.php:6459
 msgid "There was a problem refunding the payment, please check your logs."
 msgstr "退款时出现了问题，请检查您的日志。"
 
@@ -13441,7 +13441,7 @@ msgstr "PDF 文件的高度（单位：pt）"
 msgid "No templates defined yet!"
 msgstr "还没有定义模板!"
 
-#: eme-templates.php:500
+#: eme-templates.php:501
 msgid "Duplicate this template"
 msgstr "复制此模板"
 
@@ -14192,7 +14192,7 @@ msgstr ""
 msgid "Mark person as present (attendance record)"
 msgstr ""
 
-#: eme-rsvp.php:6547
+#: eme-rsvp.php:6545
 msgid "Attendance noted."
 msgstr ""
 

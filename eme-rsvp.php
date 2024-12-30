@@ -5633,8 +5633,6 @@ function eme_ajax_bookings_list() {
 	// match some non-existing column names in the ajax for sorting to good ones
 	$orderby = str_replace( 'booker ASC', 'lastname ASC, firstname ASC', $orderby );
 	$orderby = str_replace( 'booker DESC', 'lastname DESC, firstname DESC', $orderby );
-	$orderby = str_replace( 'datetime ASC', 'event_start ASC', $orderby );
-	$orderby = str_replace( 'datetime DESC', 'event_start DESC', $orderby );
 
 	$eme_date_obj_reminder = new ExpressiveDate( 'now', EME_TIMEZONE );
 	$eme_date_obj_now      = new ExpressiveDate( 'now', EME_TIMEZONE );
@@ -5876,18 +5874,18 @@ function eme_ajax_bookings_list() {
 		$line['event_id']   = $event_id;
 		$line['event_cats'] = join( '<br>', eme_get_event_category_names( $event_id ) );
 
-		$line['datetime'] = $localized_start_date;
+		$line['event_start'] = $localized_start_date;
 		if ( $localized_end_date != '' && $localized_end_date != $localized_start_date ) {
-			$line['datetime'] .= ' - ' . $localized_end_date;
+			$line['event_start'] .= ' - ' . $localized_end_date;
 		}
-		$line['datetime'] .= '<br>';
+		$line['event_start'] .= '<br>';
 		if ( $event['event_properties']['all_day'] == 1 ) {
-			$line['datetime'] .= esc_html__( 'All day', 'events-made-easy' );
+			$line['event_start'] .= esc_html__( 'All day', 'events-made-easy' );
 		} else {
-			$line['datetime'] .= esc_html("$localized_start_time - $localized_end_time");
+			$line['event_start'] .= esc_html("$localized_start_time - $localized_end_time");
 		}
 		if ( $date_obj < $eme_date_obj_now ) {
-			$line['datetime'] = "<span style='text-decoration: line-through;'>" . $line['datetime'] . '</span>';
+			$line['event_start'] = "<span style='text-decoration: line-through;'>" . $line['event_start'] . '</span>';
 		}
 
 		$line['creation_date'] = esc_html($localized_booking_datetime);

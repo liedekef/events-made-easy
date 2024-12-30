@@ -10397,7 +10397,8 @@ function eme_ajax_events_list() {
 		}
 
 		if (current_user_can(get_option('eme_cap_add_event'))) {
-			$record['copy'] = "<a href='" . admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_event&amp;event_id=' . $event['event_id'] ) . "' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_24.png'></a>";
+            $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=duplicate_event&amp;event_id=' . $event['event_id'] ).'";';
+            $record[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this event', 'events-made-easy' ) . "' class='jtable-command-button eme-copy-button'><span>copy</span></a>";
 		} else {
 			$record['copy'] = "";
 		}

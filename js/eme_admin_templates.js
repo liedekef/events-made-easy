@@ -44,8 +44,9 @@ jQuery(document).ready( function($) {
                 copy: {
                     title: emetemplates.translate_copy,
                     sorting: false,
-                    width: '2%',
-                    listClass: 'eme-jtable-center'
+                    width: '1%',
+                    listClass: 'eme-jtable-center',
+                    columnResizable: false
                 }
             }
         });

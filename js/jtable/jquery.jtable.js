@@ -4309,7 +4309,6 @@ THE SOFTWARE.
     let base = {
         _initializeSettings: jTable.prototype._initializeSettings,
         _normalizeFieldOptions: jTable.prototype._normalizeFieldOptions,
-        _loadExtraSettings: jTable.prototype._loadExtraSettings,
         _doExtraActions: jTable.prototype._doExtraActions,
         _createHeaderCellForField: jTable.prototype._createHeaderCellForField,
         // _createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
@@ -4352,22 +4351,15 @@ THE SOFTWARE.
             props.sorting = (props.sorting != false);
         },
 
-        /* Overrides _loadExtraSettings method for sorting
-         *************************************************************************/
-        _loadExtraSettings: function () {
-            base._loadExtraSettings.apply(this, arguments);
-
-            if (this.options.saveUserPreferences && this.options.sorting) {
-                this._loadColumnSortSettings();
-            }
-        },
-
-        /* Overrides _loadExtraSettings method for sorting
+        /* Overrides _doExtraActions method for sorting
          *************************************************************************/
         _doExtraActions: function () {
             base._doExtraActions.apply(this, arguments);
             if (this.options.sorting) {
                 this._buildDefaultSortingArray();
+            }
+            if (this.options.saveUserPreferences && this.options.sorting) {
+                this._loadColumnSortSettings();
             }
         },
 
@@ -4870,6 +4862,12 @@ THE SOFTWARE.
                     // Get a reference to the next column
                     let $nextColumnHeader = $columnHeader.nextAll('th.jtable-column-header:visible:first');
                     if ($nextColumnHeader.length) {
+			    let nextfieldname =  $nextColumnHeader.data('fieldName');
+			if (!self.options.fields[nextfieldname].columnResizable) {
+				$nextColumnHeader = undefined;
+			}
+		    }
+                    if ($nextColumnHeader) {
                         nextColumnOuterWidth=$nextColumnHeader.outerWidth();
                     } else {
                         nextColumnOuterWidth=0;
@@ -4920,7 +4918,7 @@ THE SOFTWARE.
                             $columnHeader.css('width', $columnHeader.data('width-in-percent') + '%');
 
                             // now do the same for the next column if present
-                            if ($nextColumnHeader.length) {
+                            if ($nextColumnHeader) {
                                 let nextColumnFinalWidth = nextColumnOuterWidth + (self._currentResizeArgs.currentColumnStartWidth - currentColumnFinalWidth);
                                 $nextColumnHeader.data('width-in-percent', nextColumnFinalWidth * pixelToPercentRatio);
                                 $nextColumnHeader.css('width', $nextColumnHeader.data('width-in-percent') + '%');
@@ -5005,13 +5003,11 @@ THE SOFTWARE.
             let fieldSettings = '';
             self._$table.find('>thead >tr >th.jtable-column-header').each(function () {
                 let $cell = $(this);
-                if ($cell.is(':visible')) {
                     let fieldName = $cell.data('fieldName');
                     let columnWidth = $cell.data('width-in-percent');
                     let fieldVisibility = self.options.fields[fieldName].visibility;
                     let fieldSetting = fieldName + "=" + fieldVisibility + ';' + columnWidth;
                     fieldSettings = fieldSettings + fieldSetting + '|';
-                }
             });
 
             this._setCookie('column-settings', fieldSettings.substr(0, fieldSettings.length - 1));
@@ -5038,7 +5034,7 @@ THE SOFTWARE.
                 let settings = splitted[1].split(';');
                 let columnVisibility = settings[0];
                 let columnWidth = settings[1];
-                if ($.inArray(fieldName,self.options.fields) > -1) {
+                if ($.inArray(fieldName,self._fieldList) > -1) {
                     if ( self.options.fields[fieldName].visibility != 'fixed') {
                         self.options.fields[fieldName].visibility = columnVisibility;
                     }

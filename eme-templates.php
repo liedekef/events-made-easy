@@ -497,7 +497,8 @@ function eme_ajax_templates_list() {
             $row['description'] = $val['description'];
             $row[ 'type'] = $template_types[ $val['type'] ];
             $row[ 'name'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=edit_template&amp;id=' . $val['id'] ) . "'>" . $val['name'] . '</a>';
-            $row[ 'copy'] = "<a href='" . admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=copy_template&amp;id=' . $val['id'] ) . "' title='" . __( 'Duplicate this template', 'events-made-easy' ) . "'><img src='" . esc_url(EME_PLUGIN_URL) . "images/copy_16.png'></a>";
+            $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-templates&amp;eme_admin_action=copy_template&amp;id=' . $val['id'] ).'";';
+            $row[ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Duplicate this template', 'events-made-easy' ) . "' class='jtable-command-button eme-copy-button'><span>copy</span></a>";
             $rows[] = $row;
         }
 

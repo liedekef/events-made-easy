@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.28 (2024//) =
+* Fix sorting multiple columns in the events overview if you selected 'date and time' as a column too
+
 = 2.5.27 (2024/12/29) =
 * More jtable styling fixes
 * The action to clear the complete queue now cancels all ongoing and planned mailings and all individual mails too

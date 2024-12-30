@@ -4496,8 +4496,8 @@ THE SOFTWARE.
             }
 
             if (this.options.saveUserPreferences) {
-		    this._saveColumnSortSettings();
-	    }
+                this._saveColumnSortSettings();
+            }
             this._reloadTable();
         },
 
@@ -4556,7 +4556,7 @@ THE SOFTWARE.
                 return;
             }
             if (!columnSortSettingsCookie) { // empty cookie? Remove it
-		self._removeCookie('column-sortsettings');
+                self._removeCookie('column-sortsettings');
                 return;
             }
             self._lastSorting = [];
@@ -5005,11 +5005,13 @@ THE SOFTWARE.
             let fieldSettings = '';
             self._$table.find('>thead >tr >th.jtable-column-header').each(function () {
                 let $cell = $(this);
-                let fieldName = $cell.data('fieldName');
-                let columnWidth = $cell.data('width-in-percent');
-                let fieldVisibility = self.options.fields[fieldName].visibility;
-                let fieldSetting = fieldName + "=" + fieldVisibility + ';' + columnWidth;
-                fieldSettings = fieldSettings + fieldSetting + '|';
+                if ($cell.is(':visible')) {
+                    let fieldName = $cell.data('fieldName');
+                    let columnWidth = $cell.data('width-in-percent');
+                    let fieldVisibility = self.options.fields[fieldName].visibility;
+                    let fieldSetting = fieldName + "=" + fieldVisibility + ';' + columnWidth;
+                    fieldSettings = fieldSettings + fieldSetting + '|';
+                }
             });
 
             this._setCookie('column-settings', fieldSettings.substr(0, fieldSettings.length - 1));

@@ -286,7 +286,7 @@ jQuery(document).ready(function ($) {
 
     function updateShowHideStuff() {
         let action=$('select#eme_admin_action').val();
-        if ($.inArray(action,['resendApprovedBooking']) >= 0) {
+        if (action == 'resendApprovedBooking') {
             $('span#span_sendtocontact').show();
         } else {
             $('span_sendtocontact').hide();
@@ -301,7 +301,7 @@ jQuery(document).ready(function ($) {
         } else {
             $('span#span_refund').hide();
         }
-        if ($.inArray(action,['partialPayment']) >= 0) {
+        if (action == 'partialPayment') {
             $('span#span_partialpayment').show();
         } else {
             $('span#span_partialpayment').hide();

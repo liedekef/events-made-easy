@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'தெரிவுகளை ஏற்பதில் பிழை',
         pagingInfo: 'பக்க விபரம்',
         canNotDeletedRecords: 'விபரங்களை அழிக்க முடியவில்லை',
-        deleteProggress: 'விபரங்கள் அழிக்கப்படுகிறது',
+        deleteProgress: 'விபரங்கள் அழிக்கப்படுகிறது',
         pageSizeChangeLabel: 'பக்க எண்ணிக்கை',
         gotoPageLabel: 'இப்பக்கம் செல்'
     });

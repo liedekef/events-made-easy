@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Impossible de charger les données du champ {0}',
         pagingInfo: 'Afficher {0} à {1} de {2}',
         canNotDeletedRecords: 'Impossible de supprimer {0} sur {1} enregistrement(s)!',
-        deleteProggress: 'Supression {0} sur {1} enregistrement(s), en cours d\'exécution...',
+        deleteProgress: 'Supression {0} sur {1} enregistrement(s), en cours d\'exécution...',
         pageSizeChangeLabel: 'Nombre d\'enregistrement',
         gotoPageLabel: 'Aller à la page'
     });

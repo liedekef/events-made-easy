@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Die Einstellungen für {0} konnten nicht geladen werden',
         pagingInfo: '{0} - {1} von {2} wird angezeigt',
         canNotDeletedRecords: '{0} von {1} Einträge konnten nicht gelöscht werden!',
-        deleteProggress: '{0} von {1} wird gelöscht...',
+        deleteProgress: '{0} von {1} wird gelöscht...',
         pageSizeChangeLabel: 'Anzahl der Einträge',
         gotoPageLabel: 'Auf der Seite'
     });

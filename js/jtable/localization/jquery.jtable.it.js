@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Opzioni non disponibili per il campo {0}',
         pagingInfo: 'Visualizzazione record da {0} a {1} su {2}',
         canNotDeletedRecords: 'Impossibile eliminare il record {0} di {1}!',
-        deleteProggress: 'Eliminazione di {0} di {1} record in corso...',
+        deleteProgress: 'Eliminazione di {0} di {1} record in corso...',
         pageSizeChangeLabel: 'Righe per pagina',
         gotoPageLabel: 'Vai alla pagina'
     });

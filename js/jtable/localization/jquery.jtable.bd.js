@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'বিকল্প বোঝাই করা যাবে না',
         pagingInfo: 'পত্রাঙ্ক তথ্য',
         canNotDeletedRecords: 'তথ্য মুছে ফেলা যাবে না',
-        deleteProggress: 'অগ্রগতি মুছে ফেলা',
+        deleteProgress: 'অগ্রগতি মুছে ফেলা',
         pageSizeChangeLabel: 'পাতার আয়তন পরিবর্তন মোড়ক',
         gotoPageLabel: 'পাতা মোড়কে যান'
     });

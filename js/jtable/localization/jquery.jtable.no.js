@@ -22,7 +22,7 @@ Author: Tobias Flatin
         cannotLoadOptionsFor: 'Kan ikke laste alternativ for felt {0}',
         pagingInfo: 'Viser {0} - {1} av {2}',
         canNotDeletedRecords: 'Kan ikke slette {0} av {1} poster!',
-        deleteProggress: 'Slettet {0} av {1} poster, bearbeider...',
+        deleteProgress: 'Slettet {0} av {1} poster, bearbeider...',
         pageSizeChangeLabel: 'Antall poster per side',
         gotoPageLabel: 'Gå til side'
     });

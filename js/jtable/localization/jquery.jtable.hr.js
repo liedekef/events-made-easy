@@ -24,7 +24,7 @@
     	pageSizeChangeLabel: 'Broj zapisa',
     	gotoPageLabel: 'Idi na stranicu',
     	canNotDeletedRecords: 'Nije bilo moguće obrisati {0} od {1} zapisa!',
-    	deleteProggress: 'Obrisano {0} od {1} zapisa, u tijeku...'
+    	deleteProgress: 'Obrisano {0} od {1} zapisa, u tijeku...'
     });
 
 })(jQuery);

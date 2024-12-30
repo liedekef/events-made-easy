@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'امکان بارگذاری   انتخابها نیست برای فیلد {0}',
         pagingInfo: 'نمایش  {0}-{1} از {2}',
         canNotDeletedRecords: 'نمیتوان {0} از {1} رکورد را حذف کرد!',
-        deleteProggress: 'حذف {0} از {1} رکورد,در حال پردازش ...',
+        deleteProgress: 'حذف {0} از {1} رکورد,در حال پردازش ...',
         pageSizeChangeLabel: 'تعداد خطوط',
         gotoPageLabel: 'برو به صفحه',
     });

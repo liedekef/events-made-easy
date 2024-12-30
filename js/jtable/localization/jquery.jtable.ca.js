@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'No es poden carregar les opcions per al camp {0}',
         pagingInfo: 'Visualitzant registres {0} a {1} de {2}',
         canNotDeletedRecords: 'No es pot(den) eliminar registre(s) {0} de {1}',
-        deleteProggress: 'Eliminant {0} de {1} registres...',
+        deleteProgress: 'Eliminant {0} de {1} registres...',
         pageSizeChangeLabel: 'Registres per pàgina',
         gotoPageLabel: 'Ves a la pàgina'
     });

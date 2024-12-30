@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'No se pueden cargar las opciones para el campo {0}',
         pagingInfo: 'Mostrando registros {0} a {1} de {2}',
         canNotDeletedRecords: 'No se puede borrar registro(s) {0} de {1}!',
-        deleteProggress: 'Eliminando {0} de {1} registros, procesando...',
+        deleteProgress: 'Eliminando {0} de {1} registros, procesando...',
         pageSizeChangeLabel: 'Registros por página',
         gotoPageLabel: 'Ir a página'
     });

@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Nepavyko užkrauti "{0}" pasirinkimo!',
         pagingInfo: '{0}-{1} iš {2}',
         canNotDeletedRecords: 'Nepavyko pašalinti {0} iš {1} įrašų!',
-        deleteProggress: 'Šalinamas {0} iš {1} įrašų, prašome palaukti...',
+        deleteProgress: 'Šalinamas {0} iš {1} įrašų, prašome palaukti...',
         pageSizeChangeLabel: 'Eilutės',
         gotoPageLabel: 'Į puslapį'
     });

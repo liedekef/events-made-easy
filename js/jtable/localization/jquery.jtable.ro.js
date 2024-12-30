@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Imposibil de &icirc;nc&atilde;rcat datele c&acirc;mpului {0}',
         pagingInfo: '&Icirc;nregistrarile {0} - {1} din {2}',
         canNotDeletedRecords: 'Imposibil de &#351;ters {0} din {1} &icirc;nregistr&atilde;ri!',
-        deleteProggress: '&#350;tergere: {0} din {1} &icirc;nregistr&atilde;ri, &icirc;n curs de execu&#355;ie...',
+        deleteProgress: '&#350;tergere: {0} din {1} &icirc;nregistr&atilde;ri, &icirc;n curs de execu&#355;ie...',
         pageSizeChangeLabel: 'Num&atilde;r de &icirc;nregistr&atilde;ri',
         gotoPageLabel: 'Mergi la pagina'
     });

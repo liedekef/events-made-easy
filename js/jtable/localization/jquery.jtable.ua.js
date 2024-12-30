@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Неможливо завантажити варіанти для поля {0}',
         pagingInfo: 'Записи від {0} по {1} з {2}',
         canNotDeletedRecords: 'Неможливо видалити записи: {0} з {1}!',
-        deleteProggress: 'Видалення {0} з {1} записів...',
+        deleteProgress: 'Видалення {0} з {1} записів...',
         pageSizeChangeLabel: 'Рядків',
         gotoPageLabel: 'На сторінку'
     });

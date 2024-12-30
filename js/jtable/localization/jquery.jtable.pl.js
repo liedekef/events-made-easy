@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Nie można wczytać opcji dla pola {0}!',
         pagingInfo: 'Wyświetlanie od {0} do {1} z {2} rekordów',
         canNotDeletedRecords: 'Nie można usunąć {0} z {1} rekordów!',
-        deleteProggress: 'Usunięto {0} z {1} rekordów, Trwa usuwanie...',
+        deleteProgress: 'Usunięto {0} z {1} rekordów, Trwa usuwanie...',
         pageSizeChangeLabel: 'Liczba rekordów',
         gotoPageLabel: 'Idź do strony'
     });

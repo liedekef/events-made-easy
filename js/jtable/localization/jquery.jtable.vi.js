@@ -21,7 +21,7 @@
         cannotLoadOptionsFor: 'Không thể tải các tùy chọn cho trường {0}!',
         pagingInfo: 'Hiện từ {0} đến {1} của {2} bản ghi',
         canNotDeletedRecords: 'Không thể xóa {0} bản ghi của {1} bản ghi!',
-        deleteProggress: 'Đã xóa được {0} của {1} bản ghi. Đang xử lý...',
+        deleteProgress: 'Đã xóa được {0} của {1} bản ghi. Đang xử lý...',
         pageSizeChangeLabel: 'Số bản ghi', //New. Must be localized.
         gotoPageLabel: 'Tới trang' //New. Must be localized.
     });

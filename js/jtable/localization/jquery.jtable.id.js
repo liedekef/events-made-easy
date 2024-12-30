@@ -23,7 +23,7 @@
         cannotLoadOptionsFor: 'Tidak dapat membaca opsi untuk kolom {0}',
         pagingInfo: 'Menampilkan {0}-{1} dari {2}',
         canNotDeletedRecords: 'Gagal menghapus {0} dari {1} data!',
-        deleteProggress: 'Menghapus {0} dari {1} data, memproses...',
+        deleteProgress: 'Menghapus {0} dari {1} data, memproses...',
         pageSizeChangeLabel: 'Jumlah data',
         gotoPageLabel: 'Ke halaman'
     });

@@ -953,7 +953,7 @@ THE SOFTWARE.
 
             // Determine using value or text
             let dataSelector;
-            if (sorting.indexOf('value') == 0) {
+            if (sorting.startsWith('value')) {
                 dataSelector = function (option) {
                     return option.Value;
                 };
@@ -976,7 +976,7 @@ THE SOFTWARE.
                 };
             }
 
-            if (sorting.indexOf('desc') > 0) {
+            if (sorting.includes('desc')) {
                 options.sort(function (a, b) {
                     return compareFunc(b, a);
                 });
@@ -1028,7 +1028,7 @@ THE SOFTWARE.
          *  2011-01-01 (YYYY-MM-DD)
          *************************************************************************/
         _parseDate: function (dateString) {
-            if (dateString.indexOf('Date') >= 0) { // Format: /Date(1320259705710)/
+            if (dateString.includes('Date')) { // Format: /Date(1320259705710)/
                 return new Date(
                     parseInt(dateString.substr(6), 10)
                 );
@@ -1424,14 +1424,13 @@ THE SOFTWARE.
 
 }(jQuery));
 
-
 (function ($) {
 
     $.extend(true, jTable.prototype, {
         /* Gets property value of an object recursively.
          *************************************************************************/
         _getPropertyOfObject: function (obj, propName) {
-            if (propName.indexOf('.') < 0) {
+            if (propName.includes('.')) {
                 return obj[propName];
             } else {
                 let preDot = propName.substring(0, propName.indexOf('.'));
@@ -1443,7 +1442,7 @@ THE SOFTWARE.
         /* Sets property value of an object recursively.
          *************************************************************************/
         _setPropertyOfObject: function (obj, propName, value) {
-            if (propName.indexOf('.') < 0) {
+            if (propName.includes('.')) {
                 obj[propName] = value;
             } else {
                 let preDot = propName.substring(0, propName.indexOf('.'));
@@ -1558,26 +1557,6 @@ THE SOFTWARE.
         }
 
     });
-
-    /* Fix for array.indexOf method in IE7.
-     * This code is taken from http://www.tutorialspoint.com/javascript/array_indexof.htm */
-    if (!Array.prototype.indexOf) {
-        Array.prototype.indexOf = function (elt) {
-            let len = this.length;
-            let from = Number(arguments[1]) || 0;
-            from = (from < 0)
-                ? Math.ceil(from)
-                : Math.floor(from);
-            if (from < 0)
-                from += len;
-            for (; from < len; from++) {
-                if (from in this &&
-                    this[from] === elt)
-                    return from;
-            }
-            return -1;
-        };
-    }
 
 })(jQuery);
 
@@ -2460,6 +2439,7 @@ THE SOFTWARE.
         _create: function () {
             base._create.apply(this, arguments);
 
+            // Check if updateAction is supplied
             if (!this.options.actions.updateAction) {
                 return;
             }
@@ -2879,6 +2859,7 @@ THE SOFTWARE.
     // Reference to base object members
     let base = {
         _create: jTable.prototype._create,
+        _loadExtraSettings: jTable.prototype._loadExtraSettings,
         _addColumnsToHeaderRow: jTable.prototype._addColumnsToHeaderRow,
         _addCellsToRowUsingRecord: jTable.prototype._addCellsToRowUsingRecord
     };
@@ -2921,7 +2902,19 @@ THE SOFTWARE.
          *************************************************************************/
         _create: function () {
             base._create.apply(this, arguments);
+
             this._createDeleteDialog();
+        },
+
+        /* Overrides _loadExtraSettings method
+         *************************************************************************/
+        _loadExtraSettings: function () {
+            base._loadExtraSettings.apply(this, arguments);
+
+            if (!this._keyField && this.options.actions.deleteAction != undefined) {
+                this.options.actions.deleteAction = undefined;
+                this._logWarn('No key field defined, setting deleteAction to undefined.');
+            }
         },
 
         /* Creates and prepares delete record confirmation dialog div.
@@ -3312,6 +3305,7 @@ THE SOFTWARE.
     // Reference to base object members
     let base = {
         _create: jTable.prototype._create,
+        _loadExtraSettings: jTable.prototype._loadExtraSettings,
         _addColumnsToHeaderRow: jTable.prototype._addColumnsToHeaderRow,
         _addCellsToRowUsingRecord: jTable.prototype._addCellsToRowUsingRecord,
         _onLoadingRecords: jTable.prototype._onLoadingRecords,
@@ -3359,6 +3353,18 @@ THE SOFTWARE.
             // Call base method
             base._create.apply(this, arguments);
         },
+
+        /* Overrides _loadExtraSettings method
+         *************************************************************************/
+        _loadExtraSettings: function () {
+            base._loadExtraSettings.apply(this, arguments);
+
+            if (!this._keyField) {
+                this.options.selecting = false;
+                this._logWarn('No key field defined, selecting is not possible.');
+            }
+        },
+
 
         /* Registers to keyboard events those are needed for selection
          *************************************************************************/
@@ -3559,9 +3565,9 @@ THE SOFTWARE.
             if (self.options.selectingCheckboxes) {
                 let $cell = $('<td></td>').addClass('jtable-command-column jtable-selecting-column');
                 let $selectCheckbox = $('<input type="checkbox" />').appendTo($cell);
-		if (typeof $row.data('recordKey') !== 'undefined' ) {
-			$selectCheckbox.attr('id', "jtable-column-checkbox-" + $row.data('recordKey'));
-		}
+                if (typeof $row.data('recordKey') !== 'undefined' ) {
+                    $selectCheckbox.attr('id', "jtable-column-checkbox-" + $row.data('recordKey'));
+                }
                 if (!self.options.selectOnRowClick) {
                     $selectCheckbox.on("click", function () {
                         self._invertRowSelection($row);
@@ -4097,7 +4103,7 @@ THE SOFTWARE.
             let jtStartIndex = (pageNumber - 1) * this.options.pageSize;
             let jtPageSize = this.options.pageSize;
 
-            return (url + (url.indexOf('?') < 0 ? '?' : '&') + 'jtStartIndex=' + jtStartIndex + '&jtPageSize=' + jtPageSize);
+            return (url + (url.includes('?') ? '?' : '&') + 'jtStartIndex=' + jtStartIndex + '&jtPageSize=' + jtPageSize);
         },
 
         /* Creates and shows the page list.
@@ -4399,7 +4405,7 @@ THE SOFTWARE.
                     if (fieldProps.sorting) {
                         let colOffset = orderValue.indexOf(fieldName);
                         if (colOffset > -1) {
-                            if (orderValue.toUpperCase().indexOf(' DESC', colOffset) > -1) {
+                            if (orderValue.toUpperCase().includes(' DESC', colOffset)) {
                                 self._lastSorting.push({
                                     fieldName: fieldName,
                                     sortOrder: 'DESC'
@@ -4507,7 +4513,7 @@ THE SOFTWARE.
                 sorting.push(value.fieldName + ' ' + value.sortOrder);
             });
 
-            return (url + (url.indexOf('?') < 0 ? '?' : '&') + 'jtSorting=' + sorting.join(","));
+            return (url + (url.includes('?') ? '?' : '&') + 'jtSorting=' + sorting.join(","));
         },
 
         /* Overrides _createJtParamsForLoading method to add sorging parameters to jtParams object.
@@ -4707,9 +4713,9 @@ THE SOFTWARE.
             }
 
             // Check if visibility value is valid
-            if (['visible', 'hidden', 'fixed','separator'].indexOf(visibility) < 0) {
-                this._logWarn('Visibility value is not valid: "' + visibility + '"! Options are: visible, hidden, fixed, separator.');
-                return;
+            if ($.inArray(visibility,['visible', 'hidden', 'fixed','separator']) < 0) {
+                this._logWarn('Visibility value is not valid: "' + visibility + '"! Setting to visible.');
+		visibility = 'visible';
             }
 
             // Get the field

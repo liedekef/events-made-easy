@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: '{0} alanı için seçenekler yüklenemedi!',
         pagingInfo: 'Gösterilen: {0}-{1}, Toplam: {2}',
         canNotDeletedRecords: '{1} kayıttan {0} adedi silinemedi!',
-        deleteProggress: '{1} kayıttan {0} adedi silindi, devam ediliyor...',
+        deleteProgress: '{1} kayıttan {0} adedi silindi, devam ediliyor...',
         pageSizeChangeLabel: 'Satır sayısı',
         gotoPageLabel: 'Sayfaya git'
     });

@@ -22,7 +22,7 @@ Author: Jakub Stajner
         cannotLoadOptionsFor: 'Nastavení pro {0} nelze načíst',
         pagingInfo: 'Zobrazeno {0} - {1} z {2}',
         canNotDeletedRecords: '{0} z {1} záznamů nemohlo být odstraněno!',
-        deleteProggress: 'Odstraňuje se {0} z {1} ...',
+        deleteProgress: 'Odstraňuje se {0} z {1} ...',
         pageSizeChangeLabel: 'Záznamů na stránku',
         gotoPageLabel: 'Jdi na stránku'
     });

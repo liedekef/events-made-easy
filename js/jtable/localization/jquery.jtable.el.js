@@ -22,7 +22,7 @@ $.extend(true, jTable.prototype.options.messages, {
     cannotLoadOptionsFor: 'Δεν είναι δυνατή η φόρτωση επιλογών για το πεδίο {0}',
     pagingInfo: 'Εμφανίζονται {0} - {1} από {2}',
     canNotDeletedRecords: 'Δεν είναι δυνατή η διαγραφή {0} από {1}',
-    deleteProggress: 'Διαγράφεται {0} από {1}...',
+    deleteProgress: 'Διαγράφεται {0} από {1}...',
     pageSizeChangeLabel: 'Εγγραφές ανά σελίδα',
     gotoPageLabel: 'Πήγαινε στη σελίδα'
 });

@@ -2,6 +2,7 @@ Short changes:
 
 * Rewritten to use plain jQuery, not jQuery-UI, with HTML5 modal dialogs
 * Removed options: dialogShowEffect, dialogHideEffect
+* deleteAction, updateAction and selecting is now only possible if a key-field is defined (makes no sense otherwise)
 * Added option "roomForSortableIcon" (true/false) for sorting, so the sortable icon has room to appear next to the text
   True by default
 * Added option "formDialogWidth", which takes a css-width as value, to change the auto-width of the create/edit dialog to something else

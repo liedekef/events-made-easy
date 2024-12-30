@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Kan de instellingen voor {0} niet laden',
         pagingInfo: 'Rij {0} tot {1} van {2}',
         canNotDeletedRecords: 'Kan gegevens {0} van {1} niet wissen!',
-        deleteProggress: 'Gegevens {0} van {1} wissen...',
+        deleteProgress: 'Gegevens {0} van {1} wissen...',
         pageSizeChangeLabel: 'Aantal rijen',
         gotoPageLabel: 'Ga naar pagina'
 });

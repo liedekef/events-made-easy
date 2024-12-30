@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: '{0} 필드의 설정을 불러올 수 없습니다.',
         pagingInfo: '전체 자료 {2}건 중 현재 {0}-{1} 조회 중',
         canNotDeletedRecords: '{1}건의 자료 중 {0}건을 삭제할 수 없습니다.',
-        deleteProggress: '삭제중 {1}건 중 {0}번째 자료, 진행 중...',
+        deleteProgress: '삭제중 {1}건 중 {0}번째 자료, 진행 중...',
         pageSizeChangeLabel: '페이지당 조회수',
         gotoPageLabel: '페이지 이동'
     });

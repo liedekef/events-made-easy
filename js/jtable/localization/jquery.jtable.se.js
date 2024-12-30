@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Kan inte ladda alternativ för fält {0}',
         pagingInfo: 'Visar {0} - {1} av {2}',
         canNotDeletedRecords: 'Kan inte radera {0} av {1} poster!',
-        deleteProggress: 'Raderat {0} av {1} poster, bearbetar...',
+        deleteProgress: 'Raderat {0} av {1} poster, bearbetar...',
         pageSizeChangeLabel: 'Antal poster per sida',
         gotoPageLabel: 'Gå till sida'
     });

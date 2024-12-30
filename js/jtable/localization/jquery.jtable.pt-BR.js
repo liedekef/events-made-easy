@@ -22,7 +22,7 @@
         cannotLoadOptionsFor: 'Não foi possível carregar opções para o campo {0}!',
         pagingInfo: 'Exibindo {0}-{1} de {2}',
         canNotDeletedRecords: 'Não foi possível excluir registro(s) {0} de {1}!',
-        deleteProggress: 'Excluindo {0} de {1} registros, processando...',
+        deleteProgress: 'Excluindo {0} de {1} registros, processando...',
         pageSizeChangeLabel: 'Linhas',
         gotoPageLabel: 'Ir para página'
     });

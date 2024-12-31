@@ -391,7 +391,7 @@ function eme_cron_form( $message = '' ) {
         }
     } else {
         $eme_cron_send_queued_schedule = wp_get_schedule( 'eme_cron_send_queued' );
-        if ( isset( $schedules[ $eme_cron_send_queued_schedule ] ) ) {
+        if ( $eme_cron_send_queued_schedule && isset( $schedules[ $eme_cron_send_queued_schedule ] ) ) {
             $eme_cron_queue_count = intval(get_option( 'eme_cron_queue_count' ) );
             $schedule = $schedules[ $eme_cron_send_queued_schedule ];
             echo '<br>';
@@ -450,7 +450,12 @@ function eme_cron_form( $message = '' ) {
     <option value=""><?php esc_html_e( 'Not scheduled', 'events-made-easy' ); ?></option>
 <?php
         $scheduled = wp_get_schedule( 'eme_cron_send_new_events' );
-	$new_events_schedule = $schedules[ $scheduled ];
+        if ( $scheduled && isset( $schedules[ $scheduled ] ) ) {
+            $new_events_schedule = $schedules[ $scheduled ];
+        } else {
+            $new_events_schedule = false;
+            $scheduled = false;
+        }
         foreach ( $schedules as $key => $schedule ) {
             $selected = ( $key == $scheduled ) ? 'selected="selected"' : '';
             print "<option $selected value='$key'>" . $schedule['display'] . '</option>';
@@ -463,18 +468,20 @@ function eme_cron_form( $message = '' ) {
 <?php
         $eme_cron_queue_count     = intval(get_option( 'eme_cron_queue_count' ));
         $eme_cron_queued_schedule = wp_get_schedule( 'eme_cron_send_queued' );
-        if (!empty($eme_cron_queued_schedule)) {
-            $mail_schedule = $schedules[ $eme_cron_queued_schedule ];
-            if ( $eme_cron_queue_count> 0 ) {
-                echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count, $mail_schedule['display'] );
+        if ($scheduled) {
+            if (!empty($eme_cron_queued_schedule)) {
+                $mail_schedule = $schedules[ $eme_cron_queued_schedule ];
+                if ( $eme_cron_queue_count> 0 ) {
+                    echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count, $mail_schedule['display'] );
+                } else {
+                    echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)', 'events-made-easy' ), $new_events_schedule['display'], $mail_schedule['display'] );
+                }
             } else {
-                echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)', 'events-made-easy' ), $new_events_schedule['display'], $mail_schedule['display'] );
-            }
-        } else {
-            if ( $eme_cron_queue_count> 0 ) {
-                echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count );
-            } else {
-                echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)', 'events-made-easy' ), $new_events_schedule['display'], $mail_schedule['display'] );
+                if ( $eme_cron_queue_count> 0 ) {
+                    echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)', 'events-made-easy' ), $new_events_schedule['display'], $eme_cron_queue_count );
+                } else {
+                    echo sprintf( __( '%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)', 'events-made-easy' ), $new_events_schedule['display'], $mail_schedule['display'] );
+                }
             }
         }
     } else {
@@ -484,7 +491,6 @@ function eme_cron_form( $message = '' ) {
         esc_html_e( 'Because mail queueing is not activated, the newsletter functionality is not available.', 'events-made-easy' );
     }
 ?>
-
 
 </div>
 <?php

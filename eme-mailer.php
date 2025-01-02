@@ -2471,8 +2471,8 @@ function eme_emails_page() {
 		<b><?php esc_html_e( 'Optionally add attachments to your mailing', 'events-made-easy' ); ?></b><br>
 		<span id="eventmail_attach_links"><?php echo $event_mail_attach_url_string; ?></span>
 		<input type="hidden" name="eme_eventmail_attach_ids" id="eme_eventmail_attach_ids" value="<?php echo $event_mail_attachment_ids; ?>">
-		<input type="button" name="eventmail_attach_button" id="eventmail_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
-		<input type="button" name="eventmail_remove_attach_button" id="eventmail_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
+		<input type="button" name="eventmail_attach_button" id="eventmail_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
+		<input type="button" name="eventmail_remove_attach_button" id="eventmail_remove_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
 		</p>
 		</div>
 		<?php
@@ -2650,8 +2650,8 @@ function eme_emails_page() {
 		<b><?php esc_html_e( 'Optionally add attachments to your mailing', 'events-made-easy' ); ?></b><br>
 			<span id="generic_attach_links"><?php echo $generic_mail_attach_url_string; ?></span>
 			<input type="hidden" name="eme_generic_attach_ids" id="eme_generic_attach_ids" value="<?php echo $generic_mail_attachment_ids; ?>">
-			<input type="button" name="generic_attach_button" id="generic_attach_button" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
-			<input type="button" name="generic_remove_attach_button" id="generic_remove_attach_button" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
+			<input type="button" name="generic_attach_button" id="generic_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Add attachments', 'events-made-easy' ); ?>">
+			<input type="button" name="generic_remove_attach_button" id="generic_remove_attach_button" class="button-secondary action" value="<?php esc_html_e( 'Remove attachments', 'events-made-easy' ); ?>">
 			</p>
 		</div>
 		<?php

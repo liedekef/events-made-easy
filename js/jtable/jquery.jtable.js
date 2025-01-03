@@ -1113,12 +1113,12 @@ THE SOFTWARE.
                     .addClass('jtable-toolbar-item-text').appendTo($toolBarItem);
             }
 
-            // click event
+            // click event ("click" is a function defined for the item in the options list, not a triggered jquery event)
             if (item.click) {
                 $toolBarItem.on("click", function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    item.trigger("click");
+                    item.click(); // call the defined function
                 });
             }
 

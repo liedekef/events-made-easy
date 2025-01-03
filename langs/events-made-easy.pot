@@ -1,15 +1,15 @@
-# Copyright (C) 2024 Franky Van Liedekerke
+# Copyright (C) 2025 Franky Van Liedekerke
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.5.27\n"
+"Project-Id-Version: Events Made Easy 2.5.28\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-12-30T19:33:38+00:00\n"
+"POT-Creation-Date: 2025-01-03T09:56:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -624,7 +624,7 @@ msgstr ""
 #: eme-countries.php:449
 #: eme-cron.php:357
 #: eme-cron.php:370
-#: eme-cron.php:460
+#: eme-cron.php:465
 #: eme-discounts.php:462
 #: eme-discounts.php:529
 #: eme-events.php:6061
@@ -1245,27 +1245,27 @@ msgstr ""
 msgid "Not scheduled"
 msgstr ""
 
-#: eme-cron.php:469
+#: eme-cron.php:475
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)"
 msgstr ""
 
-#: eme-cron.php:471
+#: eme-cron.php:477
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
 msgstr ""
 
-#: eme-cron.php:475
+#: eme-cron.php:481
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
 msgstr ""
 
-#: eme-cron.php:477
+#: eme-cron.php:483
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
 msgstr ""
 
-#: eme-cron.php:482
+#: eme-cron.php:489
 msgid "Email queueing is not activated."
 msgstr ""
 
-#: eme-cron.php:484
+#: eme-cron.php:491
 msgid "Because mail queueing is not activated, the newsletter functionality is not available."
 msgstr ""
 

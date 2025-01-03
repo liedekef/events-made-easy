@@ -573,7 +573,7 @@ msgstr "Maand(en)"
 #: eme-countries.php:449
 #: eme-cron.php:357
 #: eme-cron.php:370
-#: eme-cron.php:460
+#: eme-cron.php:465
 #: eme-discounts.php:462
 #: eme-discounts.php:529
 #: eme-events.php:6061
@@ -1072,7 +1072,7 @@ msgstr "Het opschonen van niet-bevestigde boekingen ouder dan %d minuten is inge
 msgid "No automatic cleanup of unconfirmed bookings will be done."
 msgstr "Er zal geen automatische verwijdering gebeuren van niet-bevestigde boekingen."
 
-#: eme-cron.php:469
+#: eme-cron.php:475
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)"
 msgstr "%s zal worden gecontroleerd of nieuwe evenementen naar EME-geregistreerde mensen moeten worden gemaild (deze worden dan in de wachtrij geplaatst en in batches van %d %s verzonden)"
 
@@ -1170,11 +1170,11 @@ msgstr "E-mail body footer"
 msgid "Not scheduled"
 msgstr "Niet ingepland"
 
-#: eme-cron.php:482
+#: eme-cron.php:489
 msgid "Email queueing is not activated."
 msgstr "E-mail queueing is niet geactiveerd."
 
-#: eme-cron.php:484
+#: eme-cron.php:491
 msgid "Because mail queueing is not activated, the newsletter functionality is not available."
 msgstr "Omdat mail-queueing niet is geactiveerd, is de nieuwsbrief-functionaliteit niet beschikbaar."
 
@@ -14129,15 +14129,15 @@ msgstr "Beheer eigen aangemaakte velden"
 msgid "All queued mails will be send out without limit %s."
 msgstr "Alle e-mails in de wachtrij worden zonder limiet verzonden %s."
 
-#: eme-cron.php:471
+#: eme-cron.php:477
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
 msgstr "%s zal er gecontroleerd worden of nieuwe evenementen moeten worden gemaild naar EME-geregistreerde mensen (deze worden dan in de wachtrij geplaatst en allemaal in één keer verzonden %s)"
 
-#: eme-cron.php:475
+#: eme-cron.php:481
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
 msgstr "%s zal er gecontroleerd worden of er nieuwe evenementen moeten worden gemaild naar EME-geregistreerde mensen (deze worden dan in de wachtrij geplaatst en verzonden in batches van %d elke keer dat de wachtrij wordt verwerkt via de REST API-aanroep)"
 
-#: eme-cron.php:477
+#: eme-cron.php:483
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
 msgstr "%s zal er worden gecontroleerd of er nieuwe evenementen moeten worden gemaild naar EME-geregistreerde mensen (deze worden dan in de wachtrij geplaatst en in één keer verzonden telkens wanneer de wachtrij wordt verwerkt via de REST API-aanroep)"
 

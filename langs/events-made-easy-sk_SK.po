@@ -617,7 +617,7 @@ msgstr "Mesiacov"
 #: eme-countries.php:449
 #: eme-cron.php:357
 #: eme-cron.php:370
-#: eme-cron.php:460
+#: eme-cron.php:465
 #: eme-discounts.php:462
 #: eme-discounts.php:529
 #: eme-events.php:6061
@@ -1120,7 +1120,7 @@ msgstr "Plánované prečistenie nepotvrdených rezervácií starších ako %d m
 msgid "No automatic cleanup of unconfirmed bookings will be done."
 msgstr "Žiadne automatické čistenie nepotvrdených rezervácií nebude vykonané."
 
-#: eme-cron.php:469
+#: eme-cron.php:475
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)"
 msgstr "%s sa skontroluje, či by sa nové podujatia mali zasielať ľuďom zaregistrovaným v EME (tie sa potom zaradia do poradia a odošlú v dávkach po %d %s)"
 
@@ -1218,11 +1218,11 @@ msgstr "Pätička tela emailu"
 msgid "Not scheduled"
 msgstr "Nenaplánované"
 
-#: eme-cron.php:482
+#: eme-cron.php:489
 msgid "Email queueing is not activated."
 msgstr "Poradovník emailov nie je aktivovaný."
 
-#: eme-cron.php:484
+#: eme-cron.php:491
 msgid "Because mail queueing is not activated, the newsletter functionality is not available."
 msgstr "Pretože poradovník emailov nie je aktivovaný, funkcia noviniek nie je k dispozícii."
 
@@ -14142,15 +14142,15 @@ msgstr ""
 msgid "All queued mails will be send out without limit %s."
 msgstr ""
 
-#: eme-cron.php:471
+#: eme-cron.php:477
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
 msgstr ""
 
-#: eme-cron.php:475
+#: eme-cron.php:481
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
 msgstr ""
 
-#: eme-cron.php:477
+#: eme-cron.php:483
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
 msgstr ""
 

@@ -573,7 +573,7 @@ msgstr "Mois"
 #: eme-countries.php:449
 #: eme-cron.php:357
 #: eme-cron.php:370
-#: eme-cron.php:460
+#: eme-cron.php:465
 #: eme-discounts.php:462
 #: eme-discounts.php:529
 #: eme-events.php:6061
@@ -1072,7 +1072,7 @@ msgstr "Planifier le nettoyage des réservations non confirmées datant de plus 
 msgid "No automatic cleanup of unconfirmed bookings will be done."
 msgstr "Aucun nettoyage automatique des réservations non confirmées ne sera effectué."
 
-#: eme-cron.php:469
+#: eme-cron.php:475
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)"
 msgstr "%s il sera vérifié si de nouveaux évènements doivent être envoyés par e-mail aux personnes EME inscrites (ceux-ci seront alors mis en file d’attente et envoyés par lots de %d %s)"
 
@@ -1170,11 +1170,11 @@ msgstr "Pied de page du corps de l’e-mail"
 msgid "Not scheduled"
 msgstr "Non prévu"
 
-#: eme-cron.php:482
+#: eme-cron.php:489
 msgid "Email queueing is not activated."
 msgstr "La file d’attente des e-mails n’est pas activée."
 
-#: eme-cron.php:484
+#: eme-cron.php:491
 msgid "Because mail queueing is not activated, the newsletter functionality is not available."
 msgstr "La mise en file d’attente des messages n’étant pas activée, la fonctionnalité de newsletter n’est pas disponible."
 
@@ -14131,15 +14131,15 @@ msgstr "Gérer les champs personnalisés"
 msgid "All queued mails will be send out without limit %s."
 msgstr "Tous les messages en file d'attente seront envoyés sans limite %s."
 
-#: eme-cron.php:471
+#: eme-cron.php:477
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
 msgstr "%s une vérification sera effectuée pour savoir si les nouveaux événements doivent être envoyés aux personnes inscrites EME (ils seront alors mis en file d'attente et envoyés en une seule fois %s)"
 
-#: eme-cron.php:475
+#: eme-cron.php:481
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
 msgstr "%s une vérification sera effectuée pour savoir si de nouveaux événements doivent être envoyés aux personnes enregistrées EME (ces événements seront alors mis en file d’attente et envoyés par paquet de %d à chaque fois que la file d’attente est traitée via l’appel à l’API REST)"
 
-#: eme-cron.php:477
+#: eme-cron.php:483
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
 msgstr "%s une vérification sera effectuée pour savoir si de nouveaux événements doivent être envoyés aux personnes enregistrées EME (ces événements seront alors mis en file d'attente et envoyés en une seule fois à chaque fois que la file d'attente est traitée via l'appel à l'API REST)"
 

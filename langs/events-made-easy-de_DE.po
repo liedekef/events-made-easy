@@ -573,7 +573,7 @@ msgstr "Monat(e)"
 #: eme-countries.php:449
 #: eme-cron.php:357
 #: eme-cron.php:370
-#: eme-cron.php:460
+#: eme-cron.php:465
 #: eme-discounts.php:462
 #: eme-discounts.php:529
 #: eme-events.php:6061
@@ -1073,7 +1073,7 @@ msgstr "Geplante Bereinigung von unbestätigten Buchungen, die älter als %d Min
 msgid "No automatic cleanup of unconfirmed bookings will be done."
 msgstr "Es erfolgt keine automatische Bereinigung unbestätigter Buchungen."
 
-#: eme-cron.php:469
+#: eme-cron.php:475
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d %s)"
 msgstr "%1$s es wird geprüft, ob neue Veranstaltungen an EME-registrierte Personen geschickt werden sollen (diese werden dann in eine Warteschlange gestellt und in Stapeln von %d %s verschickt)"
 
@@ -1171,11 +1171,11 @@ msgstr "Nachrichtentext"
 msgid "Not scheduled"
 msgstr "Nicht geplant"
 
-#: eme-cron.php:482
+#: eme-cron.php:489
 msgid "Email queueing is not activated."
 msgstr "E-Mail Warteschlange nicht aktiv."
 
-#: eme-cron.php:484
+#: eme-cron.php:491
 msgid "Because mail queueing is not activated, the newsletter functionality is not available."
 msgstr "Da die E-Mail Warteschlange nicht aktiviert ist, ist die Newsletter Funktionalität nicht verfügbar."
 
@@ -14160,15 +14160,15 @@ msgstr ""
 msgid "All queued mails will be send out without limit %s."
 msgstr ""
 
-#: eme-cron.php:471
+#: eme-cron.php:477
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
 msgstr ""
 
-#: eme-cron.php:475
+#: eme-cron.php:481
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
 msgstr ""
 
-#: eme-cron.php:477
+#: eme-cron.php:483
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
 msgstr ""
 

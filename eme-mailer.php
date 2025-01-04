@@ -2326,7 +2326,7 @@ function eme_emails_page() {
 		<table>
 		<tr>
 		<td><?php
-		$label      = eme_esc_html( 'Select the event(s)', 'events-made-easy' );
+		$label      = esc_html__( 'Select the event(s)', 'events-made-easy' );
 		$aria_label = 'aria-label="' . $label . '"';
 		echo $label;
 		?>

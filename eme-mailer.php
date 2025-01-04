@@ -542,7 +542,13 @@ function eme_get_queued_count() {
     // now also include planned mailings
     $planned_mailings = eme_get_planned_mailings();
     foreach ($planned_mailings as $mailing) {
-        $stats  = eme_unserialize( $mailing['stats'] );
+        // older mailings inserted the mails directly and not update the stats
+        // newer mailings only set the planned stats and update the receivers the moment the mailing starts
+        if (empty($mailing['stats'])) {
+            $stats  = eme_get_mailing_stats( $mailing['id'] );
+        } else {
+            $stats  = eme_unserialize( $mailing['stats'] );
+        }
         $count += $stats['planned'];
     }
     return $count;

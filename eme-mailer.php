@@ -517,11 +517,11 @@ function eme_cancel_all_queued() {
     global $wpdb;
 
     // cancel all ongoing and planned mailings
-    $ongoing_mailingids = eme_get_ongoing_mailingids();
-    foreach ( $ongoing_mailingids as $mailing_id ) {
-        eme_cancel_mailing( $mailing_id );
+    $ongoing_mailings = eme_get_mailings(status: 'ongoing');
+    foreach ( $ongoing_mailings as $mailing) {
+        eme_cancel_mailing( $mailing['id'] );
     }
-    $planned_mailings = eme_get_planned_mailings();
+    $planned_mailings = eme_get_mailings(status: 'planned');
     foreach ( $planned_mailings as $mailing) {
         eme_cancel_mailing( $mailing['id'] );
     }
@@ -540,7 +540,7 @@ function eme_get_queued_count() {
     $count = $wpdb->get_var( $sql );
 
     // now also include planned mailings
-    $planned_mailings = eme_get_planned_mailings();
+    $planned_mailings = eme_get_mailings(status: 'planned');
     foreach ($planned_mailings as $mailing) {
         // older mailings inserted the mails directly and not update the stats
         // newer mailings only set the planned stats and update the receivers the moment the mailing starts
@@ -677,10 +677,10 @@ function eme_send_queued($force_interval=0) {
 
     // and for the mailings that were marked ongoing, mark them as finished if appropriate
     // thanks to the fact we substraced 5 seconds from the $interval, we always have time to finish this
-    $ongoing_mailingids = eme_get_ongoing_mailingids();
-    foreach ( $ongoing_mailingids as $mailing_id ) {
-        if ( eme_count_mails_to_send( $mailing_id ) == 0 ) {
-            eme_mark_mailing_completed( $mailing_id );
+    $ongoing_mailings = eme_get_mailings(status: 'ongoing');
+    foreach ( $ongoing_mailings as $mailing) {
+        if ( eme_count_mails_to_send( $mailing['id'] ) == 0 ) {
+            eme_mark_mailing_completed( $mailing['id'] );
         }
     }
 }
@@ -689,13 +689,6 @@ function eme_get_passed_planned_mailingids( $now ) {
     global $wpdb;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     $sql            = "SELECT id FROM $mailings_table WHERE status='planned' AND planned_on<'$now'";
-    return $wpdb->get_col( $sql );
-}
-
-function eme_get_ongoing_mailingids() {
-    global $wpdb;
-    $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $sql            = "SELECT id FROM $mailings_table WHERE status='ongoing'";
     return $wpdb->get_col( $sql );
 }
 
@@ -841,11 +834,12 @@ function eme_get_mailing( $id ) {
     return $wpdb->get_row( $sql, ARRAY_A );
 }
 
-function eme_get_mailings( $archive = 0, $search_text = '' ) {
+function eme_get_mailings( $status = '', $search_text = '' ) {
     global $wpdb;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    if ( $archive ) {
-        $where = " WHERE status='archived' ";
+    $mailing_states = eme_mailing_localizedstates();
+    if ( !empty( $status ) && array_key_exists( $status, $mailing_states ) ) {
+        $where = " WHERE status='$status' ";
     } else {
         $where = " WHERE status<>'archived' ";
     }
@@ -855,13 +849,6 @@ function eme_get_mailings( $archive = 0, $search_text = '' ) {
     } else {
         $sql = "SELECT * FROM $mailings_table $where ORDER BY planned_on,name";
     }
-    return $wpdb->get_results( $sql, ARRAY_A );
-}
-
-function eme_get_planned_mailings( ) {
-    global $wpdb;
-    $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $sql = "SELECT * FROM $mailings_table WHERE status='planned' ORDER BY planned_on,name";
     return $wpdb->get_results( $sql, ARRAY_A );
 }
 
@@ -882,7 +869,19 @@ function eme_mail_localizedstates() {
         1 => __( 'Sent', 'events-made-easy' ),
         2 => __( 'Failed', 'events-made-easy' ),
         3 => __( 'Cancelled', 'events-made-easy' ),
-        4 => __( 'Ignored', 'events-made-easy' ),
+        4 => __( 'Ignored', 'events-made-easy' )
+    ];
+    return $states;
+}
+
+function eme_mailing_localizedstates() {
+    $states = [
+        'archived'  => __( 'Archived', 'events-made-easy' ),
+        'planned'   => __( 'Planned', 'events-made-easy' ),
+        'ongoing'   => __( 'Ongoing', 'events-made-easy' ),
+        'completed' => __( 'Completed', 'events-made-easy' ),
+        'cancelled' => __( 'Cancelled', 'events-made-easy' ),
+        'initial'   => __( 'Initializing ...', 'events-made-easy' )
     ];
     return $states;
 }
@@ -2796,8 +2795,7 @@ function eme_mailings_div() {
 }
 
 function eme_mailings_ajax_table( $search_text = "" ) {
-    $archive    = 0;
-    $mailings   = eme_get_mailings( $archive, $search_text );
+    $mailings   = eme_get_mailings( search_text: $search_text );
     $areyousure = esc_html__( 'Are you sure you want to do this?', 'events-made-easy' );
     if (current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
         $actions_allowed = 1;
@@ -2829,20 +2827,25 @@ function eme_mailings_ajax_table( $search_text = "" ) {
     if ($actions_allowed)
         $res .= '<th>' . __( 'Action', 'events-made-easy' ) . '</th>';
     $res .= '</tr></thead><tbody>';
+    $mailing_states = eme_mailing_localizedstates();
     foreach ( $mailings as $mailing ) {
         $id = $mailing['id'];
+        if ( $mailing['status'] == '') { // old empty status = completed
+            $mailing['status'] = 'completed';
+        }
+        $status = 'UNKNOWN';
+        if ( array_key_exists( $mailing['status'], $mailing_states ) ) {
+            $status = $mailing_states[ $mailing['status'] ];
+        }
         if ( $mailing['status'] == 'cancelled' ) {
-            $status = __( 'Cancelled', 'events-made-easy' );
             $stats  = eme_unserialize( $mailing['stats'] );
             $extra  = sprintf( __( '%d mails sent, %d mails failed, %d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
             $action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a> <a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=archive_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Archive', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'initial' ) {
-            $status = __( 'Initializing ...', 'events-made-easy' );
             $stats  = '';
             $extra  = '';
             $action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'planned' ) {
-            $status = __( 'Planned', 'events-made-easy' );
             // older mailings inserted the mails directly and not update the stats
             // newer mailings only set the planned stats and update the receivers the moment the mailing starts
             if (empty($mailing['stats'])) {
@@ -2853,12 +2856,10 @@ function eme_mailings_ajax_table( $search_text = "" ) {
             $extra  = sprintf( __( '%d mails left', 'events-made-easy' ), $stats['planned'] );
             $action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a> <a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'ongoing' ) {
-            $status = __( 'Ongoing', 'events-made-easy' );
             $stats  = eme_get_mailing_stats( $id );
             $extra  = sprintf( __( '%d mails sent, %d mails failed, %d mails left', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['planned'] );
             $action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'completed' || $mailing['status'] == '' ) {
-            $status = __( 'Completed', 'events-made-easy' );
             $stats  = eme_unserialize( $mailing['stats'] );
             $extra  = sprintf( __( '%d mails sent, %d mails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
             $action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=archive_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Archive', 'events-made-easy' ) . '</a>';
@@ -2919,8 +2920,7 @@ function eme_mailings_archive_div() {
 }
 
 function eme_mailingsarchive_ajax_table( $search_text = "" ) {
-    $archive    = 1;
-    $mailings   = eme_get_mailings( $archive, $search_text );
+    $mailings   = eme_get_mailings( status: 'archived', search_text: $search_text );
     $areyousure = esc_html__( 'Are you sure you want to do this?', 'events-made-easy' );
     if (current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
         $actions_allowed = 1;

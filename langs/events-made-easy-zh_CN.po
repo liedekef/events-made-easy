@@ -41,10 +41,10 @@ msgstr ""
 #: eme-functions.php:3316
 #: eme-functions.php:3359
 #: eme-locations.php:2874
-#: eme-mailer.php:1318
-#: eme-mailer.php:1461
-#: eme-mailer.php:2754
-#: eme-mailer.php:2897
+#: eme-mailer.php:1323
+#: eme-mailer.php:1466
+#: eme-mailer.php:2759
+#: eme-mailer.php:2902
 #: eme-members.php:6378
 #: eme-members.php:6499
 #: eme-members.php:6644
@@ -199,8 +199,8 @@ msgstr "手动添加出席记录"
 
 #: eme-attendances.php:108
 #: eme-locations.php:903
-#: eme-mailer.php:2507
-#: eme-mailer.php:2686
+#: eme-mailer.php:2512
+#: eme-mailer.php:2691
 #: eme-members.php:1557
 #: eme-members.php:1579
 #: eme-members.php:1627
@@ -412,9 +412,9 @@ msgstr "ID"
 #: eme-events.php:9996
 #: eme-holidays.php:123
 #: eme-holidays.php:130
-#: eme-mailer.php:1516
-#: eme-mailer.php:2816
-#: eme-mailer.php:2938
+#: eme-mailer.php:1521
+#: eme-mailer.php:2821
+#: eme-mailer.php:2943
 #: eme-members.php:1910
 #: eme-people.php:2557
 #: eme-tasks.php:747
@@ -440,10 +440,10 @@ msgstr "您确定要删除这些分类吗？"
 
 #: eme-categories.php:147
 #: eme-holidays.php:147
-#: eme-mailer.php:2833
-#: eme-mailer.php:2849
-#: eme-mailer.php:2859
-#: eme-mailer.php:2951
+#: eme-mailer.php:2838
+#: eme-mailer.php:2854
+#: eme-mailer.php:2864
+#: eme-mailer.php:2956
 msgid "Delete"
 msgstr "删除"
 
@@ -528,8 +528,8 @@ msgid "Cleanup done: all data concerning events, locations and bookings have bee
 msgstr "清理完毕：所有关于活动、地点和预订的数据都已删除。"
 
 #: eme-cleanup.php:273
-#: eme-mailer.php:2796
-#: eme-mailer.php:2919
+#: eme-mailer.php:2801
+#: eme-mailer.php:2924
 msgid "Are you sure you want to do this?"
 msgstr "您确定您要这样做吗？"
 
@@ -593,8 +593,8 @@ msgstr "月"
 #: eme-events.php:9972
 #: eme-formfields.php:234
 #: eme-locations.php:905
-#: eme-mailer.php:2810
-#: eme-mailer.php:2932
+#: eme-mailer.php:2815
+#: eme-mailer.php:2937
 #: eme-members.php:2922
 #: eme-members.php:3319
 #: eme-people.php:1848
@@ -878,8 +878,8 @@ msgstr ""
 #: eme-events.php:6150
 #: eme-formfields.php:231
 #: eme-locations.php:897
-#: eme-mailer.php:2806
-#: eme-mailer.php:2929
+#: eme-mailer.php:2811
+#: eme-mailer.php:2934
 #: eme-members.php:2881
 #: eme-members.php:3313
 #: eme-people.php:1798
@@ -1638,7 +1638,7 @@ msgstr "按浏览器的后退按钮，返回到前一个屏幕并纠正您的错
 #: eme-events.php:1019
 #: eme-events.php:1231
 #: eme-events.php:4721
-#: eme-mailer.php:1868
+#: eme-mailer.php:1873
 #: eme-payments.php:152
 #: eme-payments.php:1988
 #: eme-rsvp.php:5083
@@ -2532,8 +2532,8 @@ msgstr "删除循环"
 #: eme-events.php:9911
 #: eme-events.php:9925
 #: eme-events.php:9998
-#: eme-mailer.php:1519
-#: eme-mailer.php:2819
+#: eme-mailer.php:1524
+#: eme-mailer.php:2824
 #: eme-members.php:1780
 #: eme-members.php:1922
 #: eme-people.php:1057
@@ -2885,9 +2885,9 @@ msgstr "只有在您想推翻默认设置时才填写。"
 #: eme-events.php:8319
 #: eme-events.php:8665
 #: eme-events.php:8680
-#: eme-mailer.php:2427
-#: eme-mailer.php:2437
-#: eme-mailer.php:2619
+#: eme-mailer.php:2432
+#: eme-mailer.php:2442
+#: eme-mailer.php:2624
 #: eme-widgets.php:225
 msgid "Either choose from a template: "
 msgstr "要么从模板中选择："
@@ -2966,8 +2966,8 @@ msgstr "这定义了您的活动布局（活动描述的位置、RSVP 表格、�
 #: eme-events.php:8522
 #: eme-locations.php:666
 #: eme-locations.php:765
-#: eme-mailer.php:2451
-#: eme-mailer.php:2633
+#: eme-mailer.php:2456
+#: eme-mailer.php:2638
 #: eme-members.php:2791
 #: eme-templates.php:288
 msgid "Your account has the ability to post unrestricted HTML content here, except javascript."
@@ -3094,8 +3094,8 @@ msgstr "预订的邮件附件"
 #: eme-events.php:9561
 #: eme-events.php:9928
 #: eme-events.php:10003
-#: eme-mailer.php:2476
-#: eme-mailer.php:2655
+#: eme-mailer.php:2481
+#: eme-mailer.php:2660
 #: eme-members.php:2313
 #: eme-members.php:2457
 #: eme-members.php:2536
@@ -3110,8 +3110,8 @@ msgstr "添加附件"
 #: eme-events.php:7618
 #: eme-events.php:7819
 #: eme-events.php:8205
-#: eme-mailer.php:2477
-#: eme-mailer.php:2656
+#: eme-mailer.php:2482
+#: eme-mailer.php:2661
 #: eme-members.php:2314
 #: eme-members.php:2458
 #: eme-members.php:2537
@@ -4404,7 +4404,7 @@ msgstr "名字"
 #: eme-gdpr.php:318
 #: eme-gdpr.php:430
 #: eme-gdpr.php:560
-#: eme-mailer.php:1517
+#: eme-mailer.php:1522
 #: eme-members.php:1796
 #: eme-members.php:3443
 #: eme-options.php:36
@@ -4685,8 +4685,8 @@ msgid "Please select only one record in order to do partial payments"
 msgstr "请只选择一条记录，以便进行部分支付"
 
 #: eme-events.php:9988
-#: eme-mailer.php:2511
-#: eme-mailer.php:2690
+#: eme-mailer.php:2516
+#: eme-mailer.php:2695
 msgid "Send email"
 msgstr "发送电子邮件"
 
@@ -4695,41 +4695,41 @@ msgid "Queue email"
 msgstr "队列电子邮件"
 
 #: eme-events.php:9990
-#: eme-mailer.php:1521
+#: eme-mailer.php:1526
 msgid "Sent on"
 msgstr "发送日期"
 
 #: eme-events.php:9991
-#: eme-mailer.php:1522
+#: eme-mailer.php:1527
 msgid "First read on"
 msgstr "初次阅读是在"
 
 #: eme-events.php:9992
-#: eme-mailer.php:1523
+#: eme-mailer.php:1528
 msgid "Last read on"
 msgstr "最后一次阅读是在"
 
 #: eme-events.php:9993
-#: eme-mailer.php:1524
-#: eme-mailer.php:2821
-#: eme-mailer.php:2942
+#: eme-mailer.php:1529
+#: eme-mailer.php:2826
+#: eme-mailer.php:2947
 msgid "Read count"
 msgstr "阅读次数"
 
 #: eme-events.php:9994
-#: eme-mailer.php:1525
+#: eme-mailer.php:1530
 msgid "Error message"
 msgstr "错误信息"
 
 #: eme-events.php:9999
-#: eme-mailer.php:1527
-#: eme-mailer.php:2825
-#: eme-mailer.php:2945
+#: eme-mailer.php:1532
+#: eme-mailer.php:2830
+#: eme-mailer.php:2950
 msgid "Action"
 msgstr "行动"
 
 #: eme-events.php:10000
-#: eme-mailer.php:2286
+#: eme-mailer.php:2291
 msgid "Mailing report"
 msgstr "邮寄报告"
 
@@ -5965,8 +5965,8 @@ msgid "South African Rand"
 msgstr "南非兰特"
 
 #: eme-functions.php:2190
-#: eme-mailer.php:2822
-#: eme-mailer.php:2943
+#: eme-mailer.php:2827
+#: eme-mailer.php:2948
 msgid "Extra info"
 msgstr "额外信息"
 
@@ -6480,11 +6480,11 @@ msgid "Duplicate this location"
 msgstr "复制这个地点"
 
 #: eme-mailer.php:159
-#: eme-mailer.php:1613
-#: eme-mailer.php:1698
-#: eme-mailer.php:1767
-#: eme-mailer.php:1864
-#: eme-mailer.php:1962
+#: eme-mailer.php:1618
+#: eme-mailer.php:1703
+#: eme-mailer.php:1772
+#: eme-mailer.php:1869
+#: eme-mailer.php:1967
 #: eme-members.php:6860
 #: eme-members.php:6939
 #: eme-members.php:7058
@@ -6500,78 +6500,78 @@ msgstr "在发送邮件时出现了一些问题。"
 msgid "Empty email"
 msgstr "空的电子邮件"
 
-#: eme-mailer.php:726
+#: eme-mailer.php:732
 msgid "Mailing completed with errors"
 msgstr "完成的邮寄有错误"
 
-#: eme-mailer.php:727
+#: eme-mailer.php:733
 msgid "Mailing \"%s\" completed with %d errors, please check the mailing report"
 msgstr ""
 
-#: eme-mailer.php:876
-#: eme-mailer.php:2840
+#: eme-mailer.php:881
+#: eme-mailer.php:2845
 msgid "Planned"
 msgstr "已计划"
 
-#: eme-mailer.php:877
+#: eme-mailer.php:882
 msgid "Sent"
 msgstr "已发送"
 
-#: eme-mailer.php:878
+#: eme-mailer.php:883
 msgid "Failed"
 msgstr "失败"
 
-#: eme-mailer.php:879
-#: eme-mailer.php:2830
+#: eme-mailer.php:884
+#: eme-mailer.php:2835
 msgid "Cancelled"
 msgstr "已取消"
 
-#: eme-mailer.php:880
+#: eme-mailer.php:885
 msgid "Ignored"
 msgstr "被忽视"
 
-#: eme-mailer.php:1378
-#: eme-mailer.php:1562
-#: eme-mailer.php:1574
-#: eme-mailer.php:2862
-#: eme-mailer.php:2953
+#: eme-mailer.php:1383
+#: eme-mailer.php:1567
+#: eme-mailer.php:1579
+#: eme-mailer.php:2867
+#: eme-mailer.php:2958
 msgid "Reuse"
 msgstr "重用"
 
-#: eme-mailer.php:1509
+#: eme-mailer.php:1514
 msgid "No results found"
 msgstr "没有找到结果"
 
-#: eme-mailer.php:1514
-#: eme-mailer.php:2599
+#: eme-mailer.php:1519
+#: eme-mailer.php:2604
 msgid "Sender name"
 msgstr ""
 
-#: eme-mailer.php:1515
-#: eme-mailer.php:2603
+#: eme-mailer.php:1520
+#: eme-mailer.php:2608
 msgid "Sender email"
 msgstr ""
 
-#: eme-mailer.php:1518
-#: eme-mailer.php:2425
-#: eme-mailer.php:2610
-#: eme-mailer.php:2817
-#: eme-mailer.php:2939
+#: eme-mailer.php:1523
+#: eme-mailer.php:2430
+#: eme-mailer.php:2615
+#: eme-mailer.php:2822
+#: eme-mailer.php:2944
 msgid "Subject"
 msgstr "主题"
 
-#: eme-mailer.php:1520
+#: eme-mailer.php:1525
 msgid "Queued on"
 msgstr "排列的时间是"
 
-#: eme-mailer.php:1574
-#: eme-mailer.php:2838
-#: eme-mailer.php:2849
+#: eme-mailer.php:1579
+#: eme-mailer.php:2843
 #: eme-mailer.php:2854
+#: eme-mailer.php:2859
 msgid "Cancel"
 msgstr "取消"
 
-#: eme-mailer.php:1590
+#: eme-mailer.php:1595
 #: eme-members.php:1126
 #: eme-members.php:1129
 #: eme-people.php:3857
@@ -6584,427 +6584,427 @@ msgstr "取消"
 msgid "Please enter a valid email address"
 msgstr "请输入有效的电子邮件地址"
 
-#: eme-mailer.php:1610
-#: eme-mailer.php:1695
-#: eme-mailer.php:1757
-#: eme-mailer.php:1861
-#: eme-mailer.php:1955
+#: eme-mailer.php:1615
+#: eme-mailer.php:1700
+#: eme-mailer.php:1762
+#: eme-mailer.php:1866
+#: eme-mailer.php:1960
 #: eme-members.php:6857
 #: eme-rsvp.php:6498
 #: eme-rsvp.php:6518
 msgid "The mail has been sent."
 msgstr "邮件已经发送。"
 
-#: eme-mailer.php:1651
-#: eme-mailer.php:1806
+#: eme-mailer.php:1656
+#: eme-mailer.php:1811
 msgid "Please enter both subject and message for the mail to be sent."
 msgstr "请同时输入要发送的邮件的主题和信息。"
 
-#: eme-mailer.php:1666
+#: eme-mailer.php:1671
 msgid "No default sender defined and no event contact email found, bailing out"
 msgstr "没有定义默认发件人，也没有找到事件联系人的电子邮件，因此放弃。"
 
-#: eme-mailer.php:1683
-#: eme-mailer.php:1842
+#: eme-mailer.php:1688
+#: eme-mailer.php:1847
 msgid "Please select a person to send the preview mail to."
 msgstr "请选择一个人，将预览邮件发送给他。"
 
-#: eme-mailer.php:1755
-#: eme-mailer.php:1953
+#: eme-mailer.php:1760
+#: eme-mailer.php:1958
 msgid "The mailing has been planned."
 msgstr "邮寄已经计划好了。"
 
-#: eme-mailer.php:1762
+#: eme-mailer.php:1767
 msgid "The mailing has been put on the queue, but not all persons will receive it."
 msgstr "该邮寄已被列入队列，但不是所有的人都会收到。"
 
-#: eme-mailer.php:1764
+#: eme-mailer.php:1769
 msgid "The following persons will not receive the mail:"
 msgstr "以下人员将不会收到邮件："
 
-#: eme-mailer.php:1769
-#: eme-mailer.php:1964
+#: eme-mailer.php:1774
+#: eme-mailer.php:1969
 msgid "Email to the following persons has not been sent:"
 msgstr ""
 
-#: eme-mailer.php:1814
+#: eme-mailer.php:1819
 #: eme-rsvp.php:831
 #: eme-rsvp.php:846
 msgid "Please select at least one event."
 msgstr "请选择至少一项活动。"
 
-#: eme-mailer.php:1892
+#: eme-mailer.php:1897
 msgid "Please select the type of mail to be sent."
 msgstr "请选择要发送的邮件类型。"
 
-#: eme-mailer.php:1960
+#: eme-mailer.php:1965
 msgid "Only mails for events you have the right to send mails for have been sent."
 msgstr "只有您有权发送邮件的活动邮件才会被发送。"
 
-#: eme-mailer.php:2288
+#: eme-mailer.php:2293
 #: eme-tasks.php:442
 msgid "Person name"
 msgstr "人名"
 
-#: eme-mailer.php:2289
+#: eme-mailer.php:2294
 msgid "Filter"
 msgstr "过滤"
 
-#: eme-mailer.php:2292
+#: eme-mailer.php:2297
 msgid "Remark: the list of recipients below is just an indication based on the moment the mailing was created. Just before the mailing will actually start, this list will be refreshed based on the conditions the mailing was created with."
 msgstr "备注：下面的收件人名单只是基于邮寄创建时的一个指示。在邮寄真正开始之前，该列表将根据邮寄创建的条件进行刷新。"
 
-#: eme-mailer.php:2309
+#: eme-mailer.php:2314
 msgid "Event related email"
 msgstr "活动相关的电子邮件"
 
-#: eme-mailer.php:2310
+#: eme-mailer.php:2315
 msgid "Generic email"
 msgstr "通用的电子邮件"
 
-#: eme-mailer.php:2311
+#: eme-mailer.php:2316
 msgid "Mailings"
 msgstr "邮寄"
 
-#: eme-mailer.php:2312
+#: eme-mailer.php:2317
 msgid "Mailings archive"
 msgstr "邮件存档"
 
-#: eme-mailer.php:2313
-#: eme-mailer.php:2715
+#: eme-mailer.php:2318
+#: eme-mailer.php:2720
 msgid "Sent emails"
 msgstr "已发送的电子邮件"
 
-#: eme-mailer.php:2314
+#: eme-mailer.php:2319
 msgid "Test email"
 msgstr "测试电子邮件"
 
-#: eme-mailer.php:2323
+#: eme-mailer.php:2328
 msgid "Send event related emails"
 msgstr "发送与活动相关的电子邮件"
 
-#: eme-mailer.php:2335
+#: eme-mailer.php:2340
 #: eme-rsvp.php:4710
 msgid "Check this box to search through all events and not just future ones."
 msgstr "勾选此框可搜索所有活动，而不仅仅是未来的活动。"
 
-#: eme-mailer.php:2336
+#: eme-mailer.php:2341
 msgid "Remark: if you select multiple events, a mailing will be created for each selected event"
 msgstr "备注：如果您选择多个活动，将为每个选定的事件创建一个邮寄。"
 
-#: eme-mailer.php:2340
+#: eme-mailer.php:2345
 msgid "Select the type of mail"
 msgstr "选择邮件的类型"
 
-#: eme-mailer.php:2344
-#: eme-mailer.php:2464
+#: eme-mailer.php:2349
+#: eme-mailer.php:2469
 msgid "Attendee mails"
 msgstr "出席者邮件"
 
-#: eme-mailer.php:2345
-#: eme-mailer.php:2465
+#: eme-mailer.php:2350
+#: eme-mailer.php:2470
 msgid "Booking mails"
 msgstr "预订邮件"
 
-#: eme-mailer.php:2346
+#: eme-mailer.php:2351
 msgid "Email to all people registered in EME"
 msgstr ""
 
-#: eme-mailer.php:2347
+#: eme-mailer.php:2352
 msgid "Email to people and/or groups registered in EME"
 msgstr ""
 
-#: eme-mailer.php:2348
+#: eme-mailer.php:2353
 msgid "Email to all WP users"
 msgstr ""
 
-#: eme-mailer.php:2355
+#: eme-mailer.php:2360
 msgid "Select your target audience"
 msgstr "选择您的目标观众"
 
-#: eme-mailer.php:2358
+#: eme-mailer.php:2363
 msgid "All registered persons"
 msgstr "所有已注册的人员"
 
-#: eme-mailer.php:2359
+#: eme-mailer.php:2364
 msgid "Only approved bookings"
 msgstr "只有经批准的预订"
 
-#: eme-mailer.php:2360
+#: eme-mailer.php:2365
 msgid "Only pending bookings"
 msgstr "只有待订"
 
-#: eme-mailer.php:2365
+#: eme-mailer.php:2370
 msgid "Exclude people already registered for the selected event(s)"
 msgstr "排除已经注册所选活动的人员"
 
-#: eme-mailer.php:2371
+#: eme-mailer.php:2376
 msgid "Only send mails to attendees who did not pay yet"
 msgstr "只给尚未付款的出席者发送邮件"
 
-#: eme-mailer.php:2431
-#: eme-mailer.php:2442
-#: eme-mailer.php:2624
+#: eme-mailer.php:2436
+#: eme-mailer.php:2447
+#: eme-mailer.php:2629
 msgid "Or enter your own: "
 msgstr "或者输入你自己的："
 
-#: eme-mailer.php:2435
-#: eme-mailer.php:2616
+#: eme-mailer.php:2440
+#: eme-mailer.php:2621
 msgid "Message"
 msgstr "信息"
 
-#: eme-mailer.php:2461
-#: eme-mailer.php:2643
+#: eme-mailer.php:2466
+#: eme-mailer.php:2648
 msgid "You can use any placeholders mentioned here:"
 msgstr "您可以使用这里提到的任何占位符。"
 
-#: eme-mailer.php:2462
+#: eme-mailer.php:2467
 msgid "Event placeholders"
 msgstr "活动占位符"
 
-#: eme-mailer.php:2463
-#: eme-mailer.php:2644
+#: eme-mailer.php:2468
+#: eme-mailer.php:2649
 msgid "People placeholders"
 msgstr "人员占位符"
 
-#: eme-mailer.php:2464
+#: eme-mailer.php:2469
 msgid "Attendees placeholders"
 msgstr "出席者占位符"
 
-#: eme-mailer.php:2464
-#: eme-mailer.php:2465
-#: eme-mailer.php:2644
-#: eme-mailer.php:2645
+#: eme-mailer.php:2469
+#: eme-mailer.php:2470
+#: eme-mailer.php:2649
+#: eme-mailer.php:2650
 msgid "for "
 msgstr "为"
 
-#: eme-mailer.php:2465
+#: eme-mailer.php:2470
 msgid "Booking placeholders"
 msgstr "预订占位符"
 
-#: eme-mailer.php:2466
-#: eme-mailer.php:2645
+#: eme-mailer.php:2471
+#: eme-mailer.php:2650
 msgid "Member placeholders"
 msgstr "会员占位符"
 
-#: eme-mailer.php:2466
+#: eme-mailer.php:2471
 msgid "if you selected members, memberships or member groups"
 msgstr "如果您选择了会员、会籍或会员群组"
 
-#: eme-mailer.php:2467
-#: eme-mailer.php:2646
+#: eme-mailer.php:2472
+#: eme-mailer.php:2651
 msgid "You can also use any shortcode you want."
 msgstr "您也可以使用任何您想要的简码。"
 
-#: eme-mailer.php:2473
-#: eme-mailer.php:2652
+#: eme-mailer.php:2478
+#: eme-mailer.php:2657
 msgid "Optionally add attachments to your mailing"
 msgstr "可选择在您的邮寄中添加附件"
 
-#: eme-mailer.php:2486
-#: eme-mailer.php:2665
+#: eme-mailer.php:2491
+#: eme-mailer.php:2670
 msgid "Set mailing name and start date and time"
 msgstr "设置邮寄名称以及开始的日期和时间"
 
-#: eme-mailer.php:2487
-#: eme-mailer.php:2666
+#: eme-mailer.php:2492
+#: eme-mailer.php:2671
 msgid "Mailing name: "
 msgstr "邮寄名称："
 
-#: eme-mailer.php:2488
-#: eme-mailer.php:2667
+#: eme-mailer.php:2493
+#: eme-mailer.php:2672
 msgid "Start date and time: "
 msgstr "开始日期和时间："
 
-#: eme-mailer.php:2490
-#: eme-mailer.php:2669
+#: eme-mailer.php:2495
+#: eme-mailer.php:2674
 msgid "Leave empty to send the mail immediately"
 msgstr "留空以便立即发送邮件"
 
-#: eme-mailer.php:2492
-#: eme-mailer.php:2671
+#: eme-mailer.php:2497
+#: eme-mailer.php:2676
 msgid "(multiple dates can be selected, in which case the mailing will be planned on each selected date and time)"
 msgstr "(可以选择多个日期，在这种情况下，邮寄将在每个选定的日期和时间被计划。）"
 
-#: eme-mailer.php:2499
-#: eme-mailer.php:2678
+#: eme-mailer.php:2504
+#: eme-mailer.php:2683
 msgid "Ignore massmail setting:"
 msgstr "忽视群发邮件设置："
 
-#: eme-mailer.php:2501
-#: eme-mailer.php:2680
+#: eme-mailer.php:2506
+#: eme-mailer.php:2685
 msgid "When sending a mail to all EME people or certain groups, it is by default only sent to the people who have indicated they want to receive mass mailings. If you need to send the mail to all the persons regardless their massmail setting, check this option."
 msgstr "当向所有 EME 的人或某些群组发送邮件时，默认情况下，它只发送给已表示要接收群发邮件的人。如果您需要将邮件发送给所有的人，而不管他们的群发邮件设置如何，请勾选这个选项。"
 
-#: eme-mailer.php:2505
-#: eme-mailer.php:2684
+#: eme-mailer.php:2510
+#: eme-mailer.php:2689
 msgid "Enter a test recipient"
 msgstr "输入一个测试收件人"
 
-#: eme-mailer.php:2508
-#: eme-mailer.php:2687
+#: eme-mailer.php:2513
+#: eme-mailer.php:2692
 msgid "Send Preview Email"
 msgstr ""
 
-#: eme-mailer.php:2517
-#: eme-mailer.php:2696
+#: eme-mailer.php:2522
+#: eme-mailer.php:2701
 msgid "Warning: using this functionality to send mails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing."
 msgstr "警告：使用这个功能向参与者发送邮件可能会导致 php 超时，所以不是每个人都会收到邮件。这取决于与会者的数量、服务器的负载 ...。如果发生这种情况，请激活并配置邮件队列。"
 
-#: eme-mailer.php:2537
+#: eme-mailer.php:2542
 #: eme-options.php:1617
 msgid "Send generic emails"
 msgstr "发送通用的电子邮件"
 
-#: eme-mailer.php:2538
+#: eme-mailer.php:2543
 msgid "Use the below form to send a generic mail. Don't forget to use the #_UNSUB_URL for unsubscribe possibility."
 msgstr "使用下面的表格来发送普通邮件。不要忘记使用 #_UNSUB_URL 来取消订阅的可能性。"
 
-#: eme-mailer.php:2541
+#: eme-mailer.php:2546
 msgid "Target audience:"
 msgstr "目标观众："
 
-#: eme-mailer.php:2542
+#: eme-mailer.php:2547
 msgid "Send to all EME people"
 msgstr "发送给所有 EME 的人们"
 
-#: eme-mailer.php:2546
+#: eme-mailer.php:2551
 msgid "Deselect this to select specific groups and/or memberships for your mailing"
 msgstr "取消这个选择，再为您的邮寄选择特定群组和/或会籍。"
 
-#: eme-mailer.php:2644
+#: eme-mailer.php:2649
 msgid "People or groups"
 msgstr "人们或群组"
 
-#: eme-mailer.php:2645
+#: eme-mailer.php:2650
 msgid "members"
 msgstr "会员"
 
-#: eme-mailer.php:2720
-#: eme-mailer.php:2769
+#: eme-mailer.php:2725
+#: eme-mailer.php:2774
 msgid "If you want to archive old mailings and clean up old mails automatically, check the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME"
 msgstr "如果您想对旧邮件进行归档并自动清理旧邮件，请在 EME 的 GDPR 设置中勾选 \"自动归档旧邮件并删除旧邮件\" 的选项。"
 
-#: eme-mailer.php:2722
-#: eme-mailer.php:2771
+#: eme-mailer.php:2727
+#: eme-mailer.php:2776
 #, fuzzy
 msgid "Every %d days, old mailings will be archived and old mails will be cleaned up (see the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME)"
 msgstr "如果您想对旧邮件进行归档并自动清理旧邮件，请在 EME 的 GDPR 设置中勾选 \"自动归档旧邮件并删除旧邮件\" 的选项。"
 
-#: eme-mailer.php:2727
+#: eme-mailer.php:2732
 msgid "Enter the search text (leave empty to show the last 100 emails sent)"
 msgstr "输入搜索文本（留空以显示最近发送的 100 封邮件）。"
 
-#: eme-mailer.php:2729
+#: eme-mailer.php:2734
 msgid "Only show failed emails"
 msgstr "只显示失败的电子邮件"
 
-#: eme-mailer.php:2730
-#: eme-mailer.php:2786
-#: eme-mailer.php:2909
+#: eme-mailer.php:2735
+#: eme-mailer.php:2791
+#: eme-mailer.php:2914
 msgid "Search"
 msgstr "搜索"
 
-#: eme-mailer.php:2737
+#: eme-mailer.php:2742
 msgid "Test mail settings"
 msgstr "测试邮件设置"
 
-#: eme-mailer.php:2739
+#: eme-mailer.php:2744
 msgid "Use the below form to send a test mail"
 msgstr "使用下面的表格来发送测试邮件"
 
-#: eme-mailer.php:2741
+#: eme-mailer.php:2746
 msgid "Enter the recipient"
 msgstr "输入收件人"
 
-#: eme-mailer.php:2743
+#: eme-mailer.php:2748
 msgid "Send Email"
 msgstr ""
 
-#: eme-mailer.php:2759
+#: eme-mailer.php:2764
 msgid "Mailings overview"
 msgstr "邮寄概览"
 
-#: eme-mailer.php:2762
+#: eme-mailer.php:2767
 msgid "Here you can find an overview of all planned, ongoing or completed mailings. For an overview of all emails, check the \"Sent emails\" tab."
 msgstr "在这里，您可以找到所有计划中的、正在进行中的或已经完成的邮件的概述。要了解所有邮件的概况，请查看 \"已发送的电子邮件\" 标签。"
 
-#: eme-mailer.php:2778
+#: eme-mailer.php:2783
 msgid "Email queueing is not activated, so sent mails will only be visible in the \"Sent emails\" tab"
 msgstr ""
 
-#: eme-mailer.php:2807
-#: eme-mailer.php:2930
+#: eme-mailer.php:2812
+#: eme-mailer.php:2935
 msgid "Delete selected mailings"
 msgstr "删除选定的邮寄"
 
-#: eme-mailer.php:2808
+#: eme-mailer.php:2813
 msgid "Archive selected mailings"
 msgstr "对选定的邮寄进行存档"
 
-#: eme-mailer.php:2818
-#: eme-mailer.php:2940
+#: eme-mailer.php:2823
+#: eme-mailer.php:2945
 msgid "Planned execution time"
 msgstr "计划的执行时间"
 
-#: eme-mailer.php:2820
-#: eme-mailer.php:2941
+#: eme-mailer.php:2825
+#: eme-mailer.php:2946
 msgid "Unique read count"
 msgstr "独特的读取次数"
 
-#: eme-mailer.php:2823
-#: eme-mailer.php:2884
+#: eme-mailer.php:2828
+#: eme-mailer.php:2889
 msgid "Report"
 msgstr "报告"
 
-#: eme-mailer.php:2832
-#: eme-mailer.php:2950
+#: eme-mailer.php:2837
+#: eme-mailer.php:2955
 msgid "%d mails sent, %d mails failed, %d mails cancelled"
 msgstr ""
 
-#: eme-mailer.php:2833
-#: eme-mailer.php:2859
+#: eme-mailer.php:2838
+#: eme-mailer.php:2864
 msgid "Archive"
 msgstr "档案"
 
-#: eme-mailer.php:2835
+#: eme-mailer.php:2840
 msgid "Initializing ..."
 msgstr "初始化 ..."
 
-#: eme-mailer.php:2848
+#: eme-mailer.php:2853
 msgid "%d mails left"
 msgstr "还剩 %d 邮件"
 
-#: eme-mailer.php:2851
+#: eme-mailer.php:2856
 msgid "Ongoing"
 msgstr "正在进行中"
 
-#: eme-mailer.php:2853
+#: eme-mailer.php:2858
 msgid "%d mails sent, %d mails failed, %d mails left"
 msgstr ""
 
-#: eme-mailer.php:2856
+#: eme-mailer.php:2861
 msgid "Completed"
 msgstr "已完成"
 
-#: eme-mailer.php:2858
+#: eme-mailer.php:2863
 msgid "%d mails sent, %d mails failed"
 msgstr ""
 
-#: eme-mailer.php:2865
+#: eme-mailer.php:2870
 #, fuzzy
 msgid "Retry failed mails"
 msgstr "只显示失败的电子邮件"
 
-#: eme-mailer.php:2876
+#: eme-mailer.php:2881
 msgid "The number of emails to be sent is an estimation and will be reevaluated at send time"
 msgstr ""
 
-#: eme-mailer.php:2901
+#: eme-mailer.php:2906
 msgid "Email archive"
 msgstr ""
 
-#: eme-mailer.php:2903
+#: eme-mailer.php:2908
 msgid "Here you can find an overview of all archived mailings"
 msgstr "在这里您可以找到所有存档邮寄的概览"
 
@@ -13592,7 +13592,7 @@ msgstr "Franky Van Liedekerke"
 msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
 
-#: eme-mailer.php:2372
+#: eme-mailer.php:2377
 msgid "Only take unpaid bookings into account"
 msgstr ""
 
@@ -13880,7 +13880,7 @@ msgstr ""
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 
-#: eme-mailer.php:1572
+#: eme-mailer.php:1577
 msgid "This mail is part of a mailing"
 msgstr ""
 
@@ -14245,8 +14245,8 @@ msgstr ""
 msgid "WARNING: messages found in the queue but the mail queue is not scheduled to be processed. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
 msgstr ""
 
-#: eme-mailer.php:2525
-#: eme-mailer.php:2704
+#: eme-mailer.php:2530
+#: eme-mailer.php:2709
 msgid "Email queueing has been activated but not scheduled. Go in the <a href=\"%s\">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue."
 msgstr ""
 
@@ -14262,12 +14262,12 @@ msgstr ""
 msgid "\"60\" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course"
 msgstr ""
 
-#: eme-mailer.php:2784
-#: eme-mailer.php:2907
+#: eme-mailer.php:2789
+#: eme-mailer.php:2912
 msgid "Enter the search text (leave empty to show all)"
 msgstr ""
 
-#: eme-mailer.php:2329
+#: eme-mailer.php:2334
 msgid "Select the event(s)"
 msgstr ""
 

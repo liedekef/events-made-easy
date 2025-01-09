@@ -411,7 +411,17 @@ function eme_booking_list_shortcode( $atts ) {
 	if ( empty( $atts['id'] ) && eme_is_single_event_page() ) {
 		$atts['id'] = eme_sanitize_request( get_query_var( 'event_id' ) );
 	}
-	if ( !empty( $atts['id'] ) ) {
+    if ( eme_is_list_of_int( $atts['id'] ) ) {
+        $id_arr = explode( ',', $atts['id'] );
+		$res = '';
+        foreach ($id_arr as $event_id) {
+            $event = eme_get_event( $event_id );
+            if ( ! empty( $event ) ) {
+                $res .= eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status, 0, $atts['order'], $always_header_footer );
+            }
+        }
+        return $res;
+    } elseif ( !empty( $atts['id'] ) ) {
 		$event = eme_get_event( $atts['id'] );
 		if ( ! empty( $event ) ) {
 			return eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status, 0, $atts['order'], $always_header_footer );
@@ -461,17 +471,25 @@ function eme_mybooking_list_shortcode( $atts ) {
 
 	if ( is_user_logged_in() ) {
 		$wp_id = get_current_user_id();
-		if ( $atts['id'] && $wp_id ) {
+        if ( eme_is_list_of_int( $atts['id'] ) ) {
+            $id_arr = explode( ',', $atts['id'] );
+            $res = '';
+            foreach ($id_arr as $event_id) {
+                $event = eme_get_event( $event_id );
+                if ( ! empty( $event ) ) {
+                    $res .=  eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], 0, 0, $wp_id, $order );
+                }
+            }
+            return $res;
+        } elseif ( !empty($atts['id']) ) {
 			$event = eme_get_event( $atts['id'] );
 			if ( ! empty( $event ) ) {
 				return eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], 0, 0, $wp_id, $order );
 			} else {
 				return '';
 			}
-		} elseif ( $wp_id ) {
-			return eme_get_bookings_list_for_wp_id( $wp_id, $atts['scope'], '', $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status );
 		} else {
-			return '';
+			return eme_get_bookings_list_for_wp_id( $wp_id, $atts['scope'], '', $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], $rsvp_status, $paid_status );
 		}
 	}
 	return '';

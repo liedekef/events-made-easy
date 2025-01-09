@@ -82,7 +82,7 @@ jQuery(document).ready(function($) {
             // if a popup contains an image, the size might be wrong, try to rectify with a popup update
             // based on https://stackoverflow.com/questions/38170366/leaflet-adjust-popup-to-picture-size
             div_arr_map[i].on("popupopen", function(e) {
-                $(".leaflet-popup-content img:last").one("load", function() {
+                $(".leaflet-popup-content img").last().on("load", function() {
                     e.popup.update();
                 });
             });
@@ -182,7 +182,7 @@ jQuery(document).ready(function($) {
             // if a popup contains an image, the size might be wrong, try to rectify with a popup update
             // based on https://stackoverflow.com/questions/38170366/leaflet-adjust-popup-to-picture-size
             div_arr_map[i].on("popupopen", function(e) {
-                $(".leaflet-popup-content img:last").one("load", function() {
+                $(".leaflet-popup-content img").last().on("load", function() {
                     e.popup.update();
                 });
             });

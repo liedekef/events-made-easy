@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.31 (2025//) =
+* Both the shortcodes eme_mybookings and eme_bookings now accept multiple id's in the id-param, to indicate multiple events:
+  [eme_bookings id="1,3,5" template_id=3 template_id_header=7 template_id_footer=9]
+
 = 2.5.30 (2025/01/05) =
 * Avoid a php error triggered when planning a mailing to be sent immediately and then going in the "Scheduled actions" submenu before the first cron-period had passed
 * The selecting of events was accidentally removed from code for sending event-related emails

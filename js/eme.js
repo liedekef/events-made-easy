@@ -818,8 +818,8 @@ jQuery(document).ready( function($) {
         $('[name=eme-rsvp-form]').on('input', function(event) {
             let form_id=$(this).attr('id');
             // for fields with no dynamic updates, we only consider a possible price change
-            if ($(event.target).is('.nodynamicupdates')) {
-                if ($(event.target).is('.dynamicprice')) {
+            if ($(event.target).hasClass('nodynamicupdates')) {
+                if ($(event.target).hasClass('dynamicprice')) {
                     window.clearTimeout(timer);
                     $('#'+form_id).find(':submit').hide();
                     timer = window.setTimeout(function(){
@@ -844,8 +844,8 @@ jQuery(document).ready( function($) {
         $('#eme-rsvp-adminform').on('input', function(event) {
             let form_id=$(this).attr('id');
             // for fields with no dynamic updates, we only consider a possible price change
-            if ($(event.target).is('.nodynamicupdates')) {
-                if ($(event.target).is('.dynamicprice')) {
+            if ($(event.target).hasClass('nodynamicupdates')) {
+                if ($(event.target).hasClass('dynamicprice')) {
                     window.clearTimeout(timer);
                     $('#'+form_id).find(':submit').hide();
                     timer = window.setTimeout(function(){
@@ -873,8 +873,8 @@ jQuery(document).ready( function($) {
                 eme_dynamic_familymemberdata_json(form_id);
             }
             // for fields with no dynamic updates, we only consider a possible price change
-            if ($(event.target).is('.nodynamicupdates')) {
-                if ($(event.target).is('.dynamicprice')) {
+            if ($(event.target).hasClass('nodynamicupdates')) {
+                if ($(event.target).hasClass('dynamicprice')) {
                     window.clearTimeout(timer);
                     $('#'+form_id).find(':submit').hide();
                     timer = window.setTimeout(function(){
@@ -900,8 +900,8 @@ jQuery(document).ready( function($) {
         $('#eme-member-adminform').on('input', function(event) {
             let form_id=$(this).attr('id');
             // for fields with no dynamic updates, we only consider a possible price change
-            if ($(event.target).is('.nodynamicupdates')) {
-                if ($(event.target).is('.dynamicprice')) {
+            if ($(event.target).hasClass('nodynamicupdates')) {
+                if ($(event.target).hasClass('dynamicprice')) {
                     $('#'+form_id).find(':submit').hide();
                     window.clearTimeout(timer);
                     timer = window.setTimeout(function(){

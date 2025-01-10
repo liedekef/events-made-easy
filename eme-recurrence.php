@@ -16,6 +16,7 @@ function eme_new_recurrence() {
 		'specific_days'            => '',
 		'event_duration'           => 1,
 		'holidays_id'              => 0,
+		'exclude_days'             => '',
 	];
 	return $recurrence;
 }
@@ -66,10 +67,16 @@ function eme_get_recurrence_days( $recurrence ) {
 		$only_the_next_10 = 0;
 	}
 
-	$holidays = [];
+	$excluded_days = [];
 	if ( isset( $recurrence['holidays_id'] ) && $recurrence['holidays_id'] > 0 ) {
-		$holidays = eme_get_holiday_listinfo( $recurrence['holidays_id'] );
+		$excluded_days = eme_get_holiday_listinfo( $recurrence['holidays_id'] );
 	}
+	if (!empty($recurrence['exclude_days'])) {
+		$extra_excluded_days = explode( ',', $recurrence['exclude_days'] );
+		foreach ($extra_excluded_days as $excluded_day) {
+			$excluded_days[$excluded_day] = 1;
+		}	
+	}	
 
 	$last_week_start  = [ 25, 22, 25, 24, 25, 24, 25, 25, 24, 25, 24, 25 ];
 	if (empty($recurrence['recurrence_byday'])) {
@@ -93,8 +100,8 @@ function eme_get_recurrence_days( $recurrence ) {
 	while ( $cycle_date_obj <= $end_date_obj && $occurence_counter<10 ) {
 		$ymd = $cycle_date_obj->getDate();
 
-		// skip holidays
-		if ( ! empty( $holidays ) && isset( $holidays[ $ymd ] ) ) {
+		// skip excluded_days
+		if ( ! empty( $excluded_days ) && isset( $excluded_days[ $ymd ] ) ) {
 			$cycle_date_obj->addOneDay();
 			++$daycounter;
 			if ( $daycounter % 7 == 0 ) {

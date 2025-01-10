@@ -46,7 +46,6 @@ function eme_new_event() {
 		'event_url'                               => '',
 		'recurrence_id'                           => 0,
 	];
-	// while in EME itself event_image_url can't be set when defining an event, it can be set in the frontend submit or a sync plugin
 	$event['event_properties'] = eme_init_event_props( );
 	return $event;
 }
@@ -486,6 +485,7 @@ function eme_events_page() {
 		$event['event_start']          = "$event_start_date $event_start_time";
 		$event['event_end']            = "$event_end_date $event_end_time";
 		$recurrence['recurrence_freq'] = isset( $_POST['recurrence_freq'] ) ? eme_sanitize_request( $_POST['recurrence_freq'] ) : '';
+		$recurrence['exclude_days'] = isset( $_POST['recurrence_exclude_days'] ) ? eme_sanitize_request( $_POST['recurrence_exclude_days'] ) : '';
 		if ( $recurrence['recurrence_freq'] == 'specific' ) {
 			$recurrence['specific_days'] = isset( $_POST['recurrence_start_date'] ) ? eme_sanitize_request( $_POST['recurrence_start_date'] ) : $event_start_date;
 			$recurrence['recurrence_start_date']    = '';
@@ -505,6 +505,9 @@ function eme_events_page() {
 		}
 		if ( ! eme_are_dates_valid( $recurrence['specific_days'] ) ) {
 			$recurrence['specific_days'] = '';
+		}
+		if ( ! eme_are_dates_valid( $recurrence['exclude_days'] ) ) {
+			$recurrence['exclude_days'] = '';
 		}
 		if ( $recurrence['recurrence_freq'] == 'weekly' ) {
 			if ( isset( $_POST['recurrence_bydays'] ) ) {
@@ -7308,8 +7311,18 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 			</span>
 			</p>
 		</div>
+        <br>
+    <?php esc_html_e( 'Exclude days: ', 'events-made-easy' ); ?>
+    <input id="rec-excludedays-to-submit" type="hidden" name="recurrence_exclude_days" value="">
+	<input id="localized-rec-excludedays" type="text" name="localized_recurrence_excludedays" value="" style="background: #FCFFAA;" readonly="readonly" data-multiple-dates='true' data-date='<?php echo eme_js_datetime( $recurrence['exclude_days'] ); ?>' data-alt-field='rec-excludedays-to-submit' class='eme_formfield_fdate'>
+			<p class="eme_smaller">
+			<?php
+			esc_html_e( 'No events will be created on excluded days.', 'events-made-easy' );
+			?>
+			</p>
 		<?php
 		if ( ! empty( $holidays_array_by_id ) ) {
+            echo "<br>";
 			esc_html_e( 'Holidays: ', 'events-made-easy' );
 			echo eme_ui_select( $recurrence['holidays_id'], 'holidays_id', $holidays_array_by_id );
 		?>

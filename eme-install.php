@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 401 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 402 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -555,6 +555,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 			specific_days text,
 			specific_months varchar(256),
 			holidays_id mediumint(9) DEFAULT 0,
+			exclude_days text,
 			UNIQUE KEY (recurrence_id)
 	 	) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
@@ -564,6 +565,7 @@ function eme_create_recurrence_table( $charset, $collate, $db_version, $db_prefi
 		eme_maybe_drop_column( $table_name, 'modif_date' );
 		eme_maybe_drop_column( $table_name, 'creation_date' );
 		maybe_add_column( $table_name, 'specific_months', "ALTER TABLE $table_name ADD specific_months varchar(256);" );
+		maybe_add_column( $table_name, 'exclude_days', "ALTER TABLE $table_name ADD exclude_days text;" );
 		maybe_add_column( $table_name, 'holidays_id', "ALTER TABLE $table_name ADD holidays_id mediumint(9) DEFAULT 0;" );
 		if ( $db_version < 3 ) {
 			$wpdb->query( "ALTER TABLE $table_name MODIFY recurrence_byday tinytext NOT NULL ;" );

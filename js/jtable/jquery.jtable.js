@@ -393,7 +393,7 @@ THE SOFTWARE.
             let self = this;
 
             // Create a div for dialog and add to container element
-            self._$errorDialog = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
+            self._$errorDialog = $('<dialog />').addClass('jtable-modal-dialog jtable-error-modal-dialog').appendTo(self._$mainContainer);
 
             // the close event is called upon close-call or pressing escape
             // self._$errorDialog.on('close', function () {
@@ -420,18 +420,13 @@ THE SOFTWARE.
         /* Loads data using AJAX call, clears table and fills with new data.
          *************************************************************************/
         load: function (extraPostData, completeCallback) {
-            let listQueryParams = {}
-            if (typeof this.options.listQueryParams === "function") {
-                listQueryParams = this.options.listQueryParams();
-            } else {
-                listQueryParams = this.options.listQueryParams;
-            }
+            let listQueryParams = typeof this.options.listQueryParams === "function"
+                ? this.options.listQueryParams()
+                : this.options.listQueryParams;
 
-            if (extraPostData) {
-                this._lastPostData = {...listQueryParams, ...extraPostData};
-            } else {
-                this._lastPostData = listQueryParams;
-            }
+            // use spread operator to merge
+            this._lastPostData = { ...listQueryParams, ...(extraPostData || {}) };
+
             this._reloadTable(completeCallback);
         },
 
@@ -511,7 +506,7 @@ THE SOFTWARE.
             self._onLoadingRecords();
 
             // listAction may be a function, check if it is
-            if ($.isFunction(self.options.actions.listAction)) {
+            if (typeof self.options.actions.listAction === "function") {
                 // Execute the function
                 let funcResult = self.options.actions.listAction(self._lastPostData, self._createJtParamsForLoading());
 
@@ -601,35 +596,15 @@ THE SOFTWARE.
             let self = this;
 
             $.each(records, function (index, record) {
-                self._addRow(self._createRowFromRecord(record));
+                self._addRowToTable(self._createRowFromRecord(record));
             });
 
             self._refreshRowStyles();
         },
 
         /* Adds a single row to the table.
-         * NOTE: THIS METHOD IS DEPRECATED AND WILL BE REMOVED FROM FEATURE RELEASES.
-         * USE _addRow METHOD.
          *************************************************************************/
-        _addRowToTable: function ($tableRow, index, isNewRow, animationsEnabled) {
-            let options = {
-                index: this._normalizeNumber(index, 0, this._$tableRows.length, this._$tableRows.length)
-            };
-
-            if (isNewRow == true) {
-                options.isNewRow = true;
-            }
-
-            if (animationsEnabled == false) {
-                options.animationsEnabled = false;
-            }
-
-            this._addRow($tableRow, options);
-        },
-
-        /* Adds a single row to the table.
-         *************************************************************************/
-        _addRow: function ($row, options) {
+        _addRowToTable: function ($row, options) {
             //Set defaults
             options = $.extend({
                 index: this._$tableRows.length,
@@ -868,7 +843,7 @@ THE SOFTWARE.
             let field = this.options.fields[fieldName];
             let optionsSource = field.options;
 
-            if ($.isFunction(optionsSource)) {
+            if (typeof optionsSource === "function") {
                 // prepare parameter to the function
                 funcParams = $.extend(true, {
                     _cacheCleared: false,
@@ -905,7 +880,7 @@ THE SOFTWARE.
                 }
 
                 options = this._cache[cacheKey];
-            } else if (jQuery.isArray(optionsSource)) { // It is an array of options
+            } else if (Array.isArray(optionsSource)) { // It is an array of options
                 options = this._buildOptionsFromArray(optionsSource);
                 this._sortFieldOptions(options, field.optionsSorting);
             } else { // It is an object that it's properties are options
@@ -963,8 +938,12 @@ THE SOFTWARE.
                 };
             }
 
+            // simple isNumeric function
+            let isNumeric = function (value) {
+                return !isNaN(value) && !isNaN(parseFloat(value));
+            };
             let compareFunc;
-            if ($.isNumeric(dataSelector(options[0]))) {
+            if (isNumeric(dataSelector(options[0]))) {
                 // assume the option values are numeric
                 compareFunc = function (option1, option2) {
                     return dataSelector(option1) - dataSelector(option2);
@@ -1160,6 +1139,14 @@ THE SOFTWARE.
             let makeVisible = function () {
                 self._$busyDialog.find(".jtable-busy-message").html(message);
                 self._$busyDialog[0].showModal();
+                // prevent event popup window from getting closes by escape
+                // add "eme" namespace, so we can remove this particular listener too
+                $(document).on("keydown.eme", function (event) {
+                    // ESCAPE key pressed
+                    if (event.keyCode == 27) {
+                        return false;
+                    }
+                });
             };
 
             if (delay) {
@@ -1179,6 +1166,7 @@ THE SOFTWARE.
 	    clearTimeout(this._setBusyTimer);
             this._setBusyTimer = null;
             this._$busyDialog[0].close();
+            $(document).off("keydown.eme");
         },
 
         /* Returns true if jTable is busy.
@@ -1206,20 +1194,6 @@ THE SOFTWARE.
         },
 
         /* COMMON METHODS *******************************************************/
-
-        /* Performs an AJAX call to specified URL.
-         * THIS METHOD IS DEPRECATED AND WILL BE REMOVED FROM FEATURE RELEASES.
-         * USE _ajax METHOD.
-         *************************************************************************/
-        _performAjaxCall: function (url, postData, async, success, error) {
-            this._ajax({
-                url: url,
-                data: postData,
-                async: async,
-                success: success,
-                error: error
-            });
-        },
 
         _unAuthorizedRequestHandler: function() {
             if (this.options.unAuthorizedRequestRedirectUrl) {
@@ -1310,11 +1284,11 @@ THE SOFTWARE.
 
         /* Remove a cookie with given key.
          *************************************************************************/
-	_removeCookie: function (key) {
+        _removeCookie: function (key) {
             key = this._cookieKeyPrefix + key;
-	    $.removeCookie(key, { path: '/' });
+            $.removeCookie(key, { path: '/' });
             return null;
-	},
+        },
 
         /* Generates a hash key to be prefix for all cookies for this jtable instance.
          *************************************************************************/
@@ -2097,7 +2071,7 @@ THE SOFTWARE.
             let self = this;
 
             // Create a div for dialog and add to container element
-            self._$addRecordDialog = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
+            self._$addRecordDialog = $('<dialog />').addClass('jtable-modal-dialog jtable-add-modal-dialog').appendTo(self._$mainContainer);
 
             // the close event is called upon close-call or pressing escape
             self._$addRecordDialog.on('close', function () {
@@ -2131,7 +2105,7 @@ THE SOFTWARE.
                     self._showAddRecordForm();
                 });
             } else {
-                // If user did not supplied a button, create a 'add record button' toolbar item.
+                // If user did not supply a button, create a 'add record button' toolbar item.
                 self._addToolBarItem({
                     icon: true,
                     cssClass: 'jtable-toolbar-item-add-record',
@@ -2187,7 +2161,7 @@ THE SOFTWARE.
             }
 
             if (options.clientOnly) {
-                self._addRow(
+                self._addRowToTable(
                     self._createRowFromRecord(options.record), {
                         isNewRow: true,
                         animationsEnabled: options.animationsEnabled
@@ -2211,7 +2185,7 @@ THE SOFTWARE.
                 }
 
                 self._onRecordAdded(data);
-                self._addRow(
+                self._addRowToTable(
                     self._createRowFromRecord(data.Record), {
                         isNewRow: true,
                         animationsEnabled: options.animationsEnabled
@@ -2221,7 +2195,7 @@ THE SOFTWARE.
             };
 
             // createAction may be a function, check if it is
-            if (!options.url && $.isFunction(self.options.actions.createAction)) {
+            if (!options.url && typeof self.options.actions.createAction === "function") {
 
                 // Execute the function
                 let funcResult = self.options.actions.createAction($.param(options.record));
@@ -2343,7 +2317,7 @@ THE SOFTWARE.
                 }
 
                 self._onRecordAdded(data);
-                self._addRow(
+                self._addRowToTable(
                     self._createRowFromRecord(data.Record), {
                         isNewRow: true
                     });
@@ -2353,7 +2327,7 @@ THE SOFTWARE.
             // $addRecordForm.data('submitting', true); //TODO: Why it's used, can remove? Check it.
 
             // createAction may be a function, check if it is
-            if ($.isFunction(self.options.actions.createAction)) {
+            if (typeof self.options.actions.createAction === "function") {
 
                 // Execute the function
                 let funcResult = self.options.actions.createAction($addRecordForm.serialize());
@@ -2453,7 +2427,7 @@ THE SOFTWARE.
             let self = this;
 
             // Create a div for dialog and add to container element
-            self._$editRecordDialog = $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
+            self._$editRecordDialog = $('<dialog />').addClass('jtable-modal-dialog jtable-edit-modal-dialog').appendTo(self._$mainContainer);
 
             // the close event is called upon close-call or pressing escape
             self._$editRecordDialog.on('close', function () {
@@ -2568,7 +2542,7 @@ THE SOFTWARE.
             };
 
             // updateAction may be a function, check if it is
-            if (!options.url && $.isFunction(self.options.actions.updateAction)) {
+            if (!options.url && typeof self.options.actions.updateAction === "function") {
 
                 // Execute the function
                 let funcResult = self.options.actions.updateAction($.param(options.record));
@@ -2751,7 +2725,7 @@ THE SOFTWARE.
 
 
             // updateAction may be a function, check if it is
-            if ($.isFunction(self.options.actions.updateAction)) {
+            if (typeof self.options.actions.updateAction === "function") {
 
                 // Execute the function
                 let funcResult = self.options.actions.updateAction($editForm.serialize());
@@ -2928,7 +2902,7 @@ THE SOFTWARE.
             }
 
             // Create a div for dialog and add to container element
-            self._$deleteDialog= $('<dialog />').addClass('jtable-modal-dialog').appendTo(self._$mainContainer);
+            self._$deleteDialog= $('<dialog />').addClass('jtable-modal-dialog jtable-delete-modal-dialog').appendTo(self._$mainContainer);
 
             // the close event is called upon close-call or pressing escape
             // self._$deleteDialog.on('close', function () {
@@ -3138,7 +3112,7 @@ THE SOFTWARE.
          * PRIVATE METHODS                                                       *
          *************************************************************************/
 
-        /* This method is called when user clicks delete button on a row.
+        /* This method is called when a user clicks the delete button on a row.
          *************************************************************************/
         _deleteButtonClickedForRow: function ($row) {
             let self = this;
@@ -3147,14 +3121,14 @@ THE SOFTWARE.
             let deleteConfirmMessage = self.options.messages.deleteConfirmation;
 
             // If options.deleteConfirmation is function then call it
-            if ($.isFunction(self.options.deleteConfirmation)) {
+            if (typeof self.options.deleteConfirmation === "function") {
                 let data = { row: $row, record: $row.data('record'), deleteConfirm: true, deleteConfirmMessage: deleteConfirmMessage, cancel: false, cancelMessage: null };
                 self.options.deleteConfirmation(data);
 
                 // If delete progress is cancelled
                 if (data.cancel) {
 
-                    // If a canlellation reason is specified
+                    // If a cancel reason is specified
                     if (data.cancelMessage) {
                         self._showError(data.cancelMessage); // TODO: show warning/stop message instead of error (also show warning/error ui icon)!
                     }
@@ -3229,7 +3203,7 @@ THE SOFTWARE.
             postData[self._keyField] = self._getKeyValueOfRecord($row.data('record'));
 
             // deleteAction may be a function, check if it is
-            if (!url && $.isFunction(self.options.actions.deleteAction)) {
+            if (!url && typeof self.options.actions.deleteAction === "function") {
 
                 // Execute the function
                 let funcResult = self.options.actions.deleteAction(postData);
@@ -3709,7 +3683,6 @@ THE SOFTWARE.
         // _createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
         _createJtParamsForLoading: jTable.prototype._createJtParamsForLoading,
         _addRowToTable: jTable.prototype._addRowToTable,
-        _addRow: jTable.prototype._addRow,
         _removeRowsFromTable: jTable.prototype._removeRowsFromTable,
         _onRecordsLoaded: jTable.prototype._onRecordsLoaded
     };
@@ -4039,27 +4012,14 @@ THE SOFTWARE.
         },
 
         /* Overrides _addRowToTable method to re-load table when a new row is created.
-         * NOTE: THIS METHOD IS DEPRECATED AND WILL BE REMOVED FROM FEATURE RELEASES.
-         * USE _addRow METHOD.
          *************************************************************************/
-        _addRowToTable: function ($tableRow, index, isNewRow) {
-            if (isNewRow && this.options.paging) {
-                this._reloadTable();
-                return;
-            }
-
-            base._addRowToTable.apply(this, arguments);
-        },
-
-        /* Overrides _addRow method to re-load table when a new row is created.
-         *************************************************************************/
-        _addRow: function ($row, options) {
+        _addRowToTable: function ($row, options) {
             if (options && options.isNewRow && this.options.paging) {
                 this._reloadTable();
                 return;
             }
 
-            base._addRow.apply(this, arguments);
+            base._addRowToTable.apply(this, arguments);
         },
 
         /* Overrides _removeRowsFromTable method to re-load table when a row is removed from table.

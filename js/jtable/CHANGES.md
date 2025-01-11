@@ -2,6 +2,7 @@ Short changes:
 
 * Rewritten to use plain jQuery, not jQuery-UI, with HTML5 modal dialogs
 * Removed options: dialogShowEffect, dialogHideEffect
+* Removed deprecated private method "_addRowToTable" and rename "_addRow" to "_addRowToTable"
 * deleteAction, updateAction and selecting is now only possible if a key-field is defined (makes no sense otherwise)
 * Added option "roomForSortableIcon" (true/false) for sorting, so the sortable icon has room to appear next to the text
   True by default

@@ -385,7 +385,11 @@ THE SOFTWARE.
             let self = this;
             self._$busyDialog = $('<dialog />')
                 .addClass('jtable-busy-modal-dialog')
-                .prependTo(self._$mainContainer);
+                .prependTo(self._$mainContainer)
+                .on('close', function () {
+                    // the close event is called upon close-call or pressing escape
+                    $(document).off("keydown.jtable_escape");
+                });
             self._$busyMessageDiv = $('<div />').addClass('jtable-busy-message').appendTo(self._$busyDialog);
             self._jqueryuiThemeAddClass(self._$busyMessageDiv, 'ui-widget-header');
         },
@@ -1168,9 +1172,10 @@ THE SOFTWARE.
         /* Hides busy indicator and unblocks table UI.
          *************************************************************************/
         _hideBusy: function () {
+            // the timer needs to be cleared before the close happens
+            // otherwise the close event won't fire
             clearTimeout(this._setBusyTimer);
             this._setBusyTimer = null;
-            $(document).off("keydown.jtable_escape");
             this._$busyDialog[0].close();
         },
 
@@ -2078,7 +2083,13 @@ THE SOFTWARE.
             // Create a div for dialog and add to container element
             self._$addRecordDialog = $('<dialog />')
                 .addClass('jtable-modal-dialog jtable-add-modal-dialog')
-                .appendTo(self._$mainContainer);
+                .appendTo(self._$mainContainer)
+                .on('close', function () {
+                    // the close event is called upon close-call or pressing escape
+                    let $addRecordForm = self._$addRecordDialog.find('form').first();
+                    self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
+                    $addRecordForm.remove();
+                });
 
             $('<h2 id="addRecordDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.addNewRecord).appendTo(self._$addRecordDialog);
             const $cancelButton = $('<button class="jtable-dialog-button jtable-dialog-cancelbutton"></button> ')
@@ -2130,9 +2141,6 @@ THE SOFTWARE.
         },
 
         _closeCreateForm: function () {
-            let $addRecordForm = this._$addRecordDialog.find('form').first();
-            this._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
-            $addRecordForm.remove();
             this._$addRecordDialog[0].close();
         },
 
@@ -2432,7 +2440,13 @@ THE SOFTWARE.
             // Create a div for dialog and add to container element
             self._$editRecordDialog = $('<dialog />')
                 .addClass('jtable-modal-dialog jtable-edit-modal-dialog')
-                .appendTo(self._$mainContainer);
+                .appendTo(self._$mainContainer)
+                .on('close', function () {
+                    // the close event is called upon close-call or pressing escape
+                    let $editForm = self._$editRecordDialog.find('form:first');
+                    self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
+                    $editForm.remove();
+                });
 
             $('<h2 id="editDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.editRecord).appendTo(self._$editRecordDialog);
             const $cancelButton = $('<button class="jtable-dialog-button jtable-dialog-cancelbutton"></button> ')
@@ -2473,9 +2487,6 @@ THE SOFTWARE.
         },
 
         _closeEditForm: function () {
-            let $editForm = this._$editRecordDialog.find('form:first');
-            this._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: this._$editingRow });
-            $editForm.remove();
             this._$editRecordDialog[0].close();
         },
 
@@ -3008,7 +3019,7 @@ THE SOFTWARE.
                 self._hideBusy();
             };
 
-            // Delete all rows
+            // Delete all selected rows
             let deletedCount = 0;
             $rows.each(function () {
                 let $row = $(this);

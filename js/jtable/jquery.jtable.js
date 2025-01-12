@@ -382,9 +382,18 @@ THE SOFTWARE.
         /* Creates a dialov to block UI while jTable is busy
          *************************************************************************/
         _createBusyDialog: function () {
-            this._$busyDialog = $('<dialog />').addClass('jtable-busy-modal-dialog').prependTo(this._$mainContainer);
-            this._$busyMessageDiv = $('<div />').addClass('jtable-busy-message').appendTo(this._$busyDialog);
-            this._jqueryuiThemeAddClass(this._$busyMessageDiv, 'ui-widget-header');
+            let self = this;
+            self._$busyDialog = $('<dialog />')
+                .addClass('jtable-busy-modal-dialog')
+                .prependTo(self._$mainContainer)
+                .on('close', function () {
+                    // the close event is called upon close-call or pressing escape
+                    clearTimeout(self._setBusyTimer);
+                    self._setBusyTimer = null;
+                    $(document).off("keydown.jtable_escape");
+                });
+            self._$busyMessageDiv = $('<div />').addClass('jtable-busy-message').appendTo(self._$busyDialog);
+            self._jqueryuiThemeAddClass(self._$busyMessageDiv, 'ui-widget-header');
         },
 
         /* Creates and prepares error dialog
@@ -393,7 +402,9 @@ THE SOFTWARE.
             let self = this;
 
             // Create a div for dialog and add to container element
-            self._$errorDialog = $('<dialog />').addClass('jtable-modal-dialog jtable-error-modal-dialog').appendTo(self._$mainContainer);
+            self._$errorDialog = $('<dialog />')
+                .addClass('jtable-modal-dialog jtable-error-modal-dialog')
+                .appendTo(self._$mainContainer);
 
             // the close event is called upon close-call or pressing escape
             // self._$errorDialog.on('close', function () {
@@ -1140,8 +1151,8 @@ THE SOFTWARE.
                 self._$busyDialog.find(".jtable-busy-message").html(message);
                 self._$busyDialog[0].showModal();
                 // prevent event popup window from getting closes by escape
-                // add "eme" namespace, so we can remove this particular listener too
-                $(document).on("keydown.eme", function (event) {
+                // add "jtable" namespace, so we can remove this particular listener too
+                $(document).on("keydown.jtable_escape", function (event) {
                     // ESCAPE key pressed
                     if (event.keyCode == 27) {
                         return false;
@@ -1163,10 +1174,7 @@ THE SOFTWARE.
         /* Hides busy indicator and unblocks table UI.
          *************************************************************************/
         _hideBusy: function () {
-	    clearTimeout(this._setBusyTimer);
-            this._setBusyTimer = null;
             this._$busyDialog[0].close();
-            $(document).off("keydown.eme");
         },
 
         /* Returns true if jTable is busy.
@@ -2071,14 +2079,15 @@ THE SOFTWARE.
             let self = this;
 
             // Create a div for dialog and add to container element
-            self._$addRecordDialog = $('<dialog />').addClass('jtable-modal-dialog jtable-add-modal-dialog').appendTo(self._$mainContainer);
-
-            // the close event is called upon close-call or pressing escape
-            self._$addRecordDialog.on('close', function () {
-                let $addRecordForm = self._$addRecordDialog.find('form').first();
-                self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
-                $addRecordForm.remove();
-            });
+            self._$addRecordDialog = $('<dialog />')
+                .addClass('jtable-modal-dialog jtable-add-modal-dialog')
+                .appendTo(self._$mainContainer)
+                .on('close', function () {
+                    // the close event is called upon close-call or pressing escape
+                    let $addRecordForm = self._$addRecordDialog.find('form').first();
+                    self._$mainContainer.trigger("formClosed", { form: $addRecordForm, formType: 'create' });
+                    $addRecordForm.remove();
+                });
 
             $('<h2 id="addRecordDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.addNewRecord).appendTo(self._$addRecordDialog);
             const $cancelButton = $('<button class="jtable-dialog-button jtable-dialog-cancelbutton"></button> ')
@@ -2427,14 +2436,15 @@ THE SOFTWARE.
             let self = this;
 
             // Create a div for dialog and add to container element
-            self._$editRecordDialog = $('<dialog />').addClass('jtable-modal-dialog jtable-edit-modal-dialog').appendTo(self._$mainContainer);
-
-            // the close event is called upon close-call or pressing escape
-            self._$editRecordDialog.on('close', function () {
-                let $editForm = self._$editRecordDialog.find('form:first');
-                self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
-                $editForm.remove();
-            });
+            self._$editRecordDialog = $('<dialog />')
+                .addClass('jtable-modal-dialog jtable-edit-modal-dialog')
+                .appendTo(self._$mainContainer)
+                .on('close', function () {
+                    // the close event is called upon close-call or pressing escape
+                    let $editForm = self._$editRecordDialog.find('form:first');
+                    self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
+                    $editForm.remove();
+                });
 
             $('<h2 id="editDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.editRecord).appendTo(self._$editRecordDialog);
             const $cancelButton = $('<button class="jtable-dialog-button jtable-dialog-cancelbutton"></button> ')
@@ -2902,8 +2912,10 @@ THE SOFTWARE.
             }
 
             // Create a div for dialog and add to container element
-            self._$deleteDialog= $('<dialog />').addClass('jtable-modal-dialog jtable-delete-modal-dialog').appendTo(self._$mainContainer);
-
+            self._$deleteDialog= $('<dialog />')
+                .addClass('jtable-modal-dialog jtable-delete-modal-dialog')
+                .appendTo(self._$mainContainer);
+ 
             // the close event is called upon close-call or pressing escape
             // self._$deleteDialog.on('close', function () {
             // });

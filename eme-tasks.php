@@ -887,7 +887,7 @@ function eme_mytasks_signups_shortcode( $atts ) {
 		$format = eme_get_template_format( $template_id );
 	}
 	if ( empty( $format ) ) {
-		$format = eme_translate_string_nowptrans( get_option( 'eme_task_signup_format' ) );
+		$format = eme_translate_string( get_option( 'eme_task_signup_format' ) );
 	}
 
 	if ( ! empty( $template_id_header ) ) {

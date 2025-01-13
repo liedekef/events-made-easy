@@ -273,7 +273,7 @@ function eme_people_shortcode( $atts ) {
 
 function eme_replace_email_event_placeholders( $format, $email, $lastname, $firstname, $event, $lang = '' ) {
 	// EME language tags are already replaced
-        //$format = eme_translate_string_nowptrans( $format );
+        //$format = eme_translate_string( $format );
 
 	$needle_offset = 0;
 	preg_match_all( '/#(ESC|URL)?@?_?[A-Za-z0-9_]+(\{(?>[^{}]+|(?2))*\})*+/', $format, $placeholders, PREG_OFFSET_CAPTURE );

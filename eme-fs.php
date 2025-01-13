@@ -364,7 +364,7 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
                         } else {
                                 $label = __( 'Create event', 'events-made-easy' );
                         }
-                        $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_nowptrans_esc_html( $label ) . "'>";
+                        $replacement = "<img id='loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
                 } else {
                         $found = 0;
                 }

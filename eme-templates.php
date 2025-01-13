@@ -430,7 +430,7 @@ function eme_get_template_format( $template_id, $nl2br_wanted = 1 ) {
         }
     }
     // interpret EME language tags already, so if the format contains placeholders (that - once expanded - might contain other language tags), don't get confused (nested tags not supported yet).
-    $format = eme_translate_string_nowptrans( $format );
+    $format = eme_translate_string( $format );
     // if we don't want nl2br, return the format as is
     if ( $nl2br_wanted == 0 || empty( $format ) ) {
         return $format;

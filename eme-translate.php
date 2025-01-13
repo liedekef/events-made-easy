@@ -95,16 +95,8 @@ function eme_trans_sanitize_html( $value, $lang = '' ) {
 	return eme_trans_esc_html( $value, $lang );
 }
 
-function eme_trans_nowptrans_esc_html( $value, $lang = '' ) {
-	return eme_trans_esc_html( $value, $lang, 0 );
-}
-
-function eme_trans_esc_html( $value, $lang = '', $use_wp_trans = 1 ) {
-	return eme_esc_html( eme_translate( $value, $lang, $use_wp_trans ) );
-}
-
-function eme_translate_nowptrans( $value, $lang = '' ) {
-	return eme_translate( $value, $lang, 0 );
+function eme_trans_esc_html( $value, $lang = '' ) {
+	return eme_esc_html( eme_translate( $value, $lang ) );
 }
 
 function eme_translate( $value, $lang = '', $use_wp_trans = 1 ) {
@@ -129,7 +121,7 @@ function eme_translate( $value, $lang = '', $use_wp_trans = 1 ) {
 		}
 	} elseif ( function_exists( 'pll_translate_string' ) && function_exists( 'pll__' ) ) {
 		// pll language notation is different from what qtrans (and eme) support, so lets also translate the eme language tags
-		$value = eme_translate_string( $value, $lang, $use_wp_trans );
+		$value = eme_translate_string( $value, $lang );
 		if ( empty( $lang ) ) {
 			$translated = pll__( $value );
 		} else {
@@ -139,15 +131,11 @@ function eme_translate( $value, $lang = '', $use_wp_trans = 1 ) {
 	if ( $translated != $value ) {
 		return $translated;
 	} else { 
-		return eme_translate_string( $value, $lang, $use_wp_trans );
+		return eme_translate_string( $value, $lang );
 	}
 }
 
-function eme_translate_string_nowptrans( $value, $lang = '' ) {
-	return eme_translate_string( $value, $lang, 0 );
-}
-
-function eme_translate_string( $text, $lang = '', $use_wp_trans = 1 ) {
+function eme_translate_string( $text, $lang = '' ) {
 	if ( empty( $text ) ) {
 		return $text;
 	}
@@ -156,12 +144,7 @@ function eme_translate_string( $text, $lang = '', $use_wp_trans = 1 ) {
 	}
 	$languages = eme_detect_used_languages( $text );
 	if ( empty( $languages ) ) {
-		if ( $use_wp_trans ) {
-			// no language is encoded in the $text (most frequent case), then run it through wp trans and be done with it
-			return __( $text, 'events-made-easy' );
-		} else {
-			return $text;
-		}
+        return $text;
 	}
 	$content   = eme_split_language_blocks( $text, $languages );
 	$languages = array_keys( $content );

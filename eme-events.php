@@ -668,7 +668,7 @@ function eme_events_page() {
 					}
 					$feedback_message = __( 'New event successfully inserted!', 'events-made-easy' );
 					if ( $stay_on_edit_page ) {
-						$info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate_nowptrans( $event['event_name'] ) ) ];
+						$info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
 						$info['feedback'] = $feedback_message;
 						$event            = eme_get_event( $event_id );
 						if ( ! empty( $event ) ) {
@@ -701,7 +701,7 @@ function eme_events_page() {
 						$feedback_message = __( 'Recurrence no longer contains events, so it has been removed', 'events-made-easy' );
 					}
 				} else {
-					$feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate_nowptrans( $orig_event['event_name'] ) );
+					$feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $orig_event['event_name'] ) );
 				}
 			} elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
 				( current_user_can( get_option( 'eme_cap_author_event' ) ) && $orig_event['event_author'] == $current_userid ) ) {
@@ -736,9 +736,9 @@ function eme_events_page() {
 							$event = eme_get_event( $event_ID );
 							do_action( 'eme_update_event_action', $event );
 						}
-						$feedback_message = sprintf( __( "Updated '%s'", 'events-made-easy' ), eme_translate_nowptrans( $event['event_name'] ) );
+						$feedback_message = sprintf( __( "Updated '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
 						if ( $stay_on_edit_page ) {
-							$info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate_nowptrans( $event['event_name'] ) ) ];
+							$info             = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
 							$info['feedback'] = $feedback_message;
 							$event            = eme_get_event( $event_ID );
 							if ( ! empty( $event ) ) {
@@ -747,11 +747,11 @@ function eme_events_page() {
 							return;
 						}
 					} else {
-						$feedback_message = sprintf( __( "Failed to update '%s'", 'events-made-easy' ), eme_translate_nowptrans( $event['event_name'] ) );
+						$feedback_message = sprintf( __( "Failed to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
 					}
 				}
 			} else {
-				$feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate_nowptrans( $orig_event['event_name'] ) );
+				$feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $orig_event['event_name'] ) );
 			}
 		}
 
@@ -797,10 +797,10 @@ function eme_events_page() {
 		} elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
 			// UPDATE event
-			$info = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate_nowptrans( $event['event_name'] ) ) ];
+			$info = [ 'title' => sprintf( __( "Edit Event '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) ) ];
 			eme_event_form( $event, $info );
 		} else {
-			$feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate_nowptrans( $event['event_name'] ) );
+			$feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
 			eme_events_table( $feedback_message );
 		}
 		return;
@@ -823,7 +823,7 @@ function eme_events_page() {
 			$info = [ 'title' => sprintf( __( "Edit event copy '%s'", 'events-made-easy' ), $event['event_name'] ) ];
 			eme_event_form( $event, $info );
 		} else {
-			$feedback_message = sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate_nowptrans( $event['event_name'] ) );
+			$feedback_message = sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
 			eme_events_table( $feedback_message );
 		}
 		return;
@@ -844,7 +844,7 @@ function eme_events_page() {
 			$info = [ 'title' => sprintf( __( "Edit recurrence copy '%s'", 'events-made-easy' ), $event['event_name'] ) ];
 			eme_event_form( $event, $info, 1 );
 		} else {
-			$feedback_message = sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate_nowptrans( $event['event_name'] ) );
+			$feedback_message = sprintf( __( "You have no right to copy '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
 			eme_events_table( $feedback_message );
 		}
 		return;
@@ -859,10 +859,10 @@ function eme_events_page() {
 		}
 		if ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && $event['event_author'] == $current_userid ) ) {
-			$info = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) . " '" . eme_translate_nowptrans( $event['event_name'] ) . "'" ];
+			$info = [ 'title' => __( 'Edit Recurrence', 'events-made-easy' ) . " '" . eme_translate( $event['event_name'] ) . "'" ];
 			eme_event_form( $event, $info, 1 );
 		} else {
-			$feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate_nowptrans( $event['event_name'] ) );
+			$feedback_message = sprintf( __( "You have no right to update '%s'", 'events-made-easy' ), eme_translate( $event['event_name'] ) );
 			eme_recurrences_table( $feedback_message );
 		}
 		return;
@@ -1899,7 +1899,7 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
 		return $format;
 	}
 	// replace EME language tags as early as possible
-        $format = eme_translate_nowptrans( $format );
+        $format = eme_translate( $format );
 
         if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
                 $target = 'html';
@@ -4063,7 +4063,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
 
 function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' ) {
 	// replace EME language tags as early as possible
-        $format = eme_translate_string_nowptrans( $format );
+        $format = eme_translate_string( $format );
 
 	$orig_target  = $target;
         if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
@@ -10803,7 +10803,7 @@ function eme_ajax_events_select2() {
 				( current_user_can( get_option( 'eme_cap_send_mails' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) {
 			$records[] = [
 				'id'   => $event['event_id'],
-				'text' => trim( eme_translate_nowptrans( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ),
+				'text' => trim( eme_translate( $event['event_name'] ) . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ),
 			];
 			++$recordCount;
 		}

@@ -863,6 +863,9 @@ function eme_mytasks_signups_shortcode( $atts ) {
 	if ( empty( $person ) ) {
 		return;
 	}
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		    [
 				'scope'              => 'future',
@@ -911,6 +914,9 @@ function eme_mytasks_signups_shortcode( $atts ) {
 
 function eme_tasks_signups_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'scope'                      => 'future',
@@ -1126,6 +1132,9 @@ function eme_tasks_signups_shortcode( $atts ) {
 
 function eme_tasks_signupform_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		    [
 				'scope'                      => 'future',

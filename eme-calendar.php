@@ -7,6 +7,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 function eme_get_calendar_shortcode( $atts ) {
 	eme_enqueue_frontend();
 
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'category'       => 0,

@@ -4552,6 +4552,9 @@ function eme_email_member_action( $member, $action ) {
 
 function eme_add_member_form_shortcode( $atts ) {
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'id'   => 0,
@@ -4605,6 +4608,9 @@ function eme_edit_member_form_shortcode( ) {
 
 function eme_mymemberships_list_shortcode( $atts ) {
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'template_id'        => 0,
@@ -4644,6 +4650,9 @@ function eme_mymemberships_list_shortcode( $atts ) {
 function eme_members_report_link_shortcode( $atts ) {
     global $post;
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'group_id'           => 0,
@@ -4682,6 +4691,9 @@ function eme_members_report_link_shortcode( $atts ) {
 
 function eme_members_shortcode( $atts ) {
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'group_id'           => 0,
@@ -4734,6 +4746,9 @@ function eme_members_shortcode( $atts ) {
 
 function eme_person_memberinfo_shortcode( $atts ) {
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'person_id'   => 0,
@@ -4763,6 +4778,9 @@ function eme_person_memberinfo_shortcode( $atts ) {
 
 function eme_mymemberinfo_shortcode( $atts ) {
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'membership_id' => 0,

@@ -161,6 +161,9 @@ function eme_ical_link( $justurl = 0, $echo = 0, $text = 'ICAL', $category = '',
 }
 
 function eme_ical_link_shortcode( $atts ) {
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		    [
 				'justurl'        => 0,

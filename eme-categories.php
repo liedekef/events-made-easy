@@ -467,6 +467,9 @@ function eme_get_category_id_by_name_slug ($cat_name ) {
 function eme_get_categories_shortcode( $atts ) {
 	eme_enqueue_frontend();
 
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'event_id'           => 0,

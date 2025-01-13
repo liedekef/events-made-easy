@@ -4539,6 +4539,9 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
 function eme_get_events_list_shortcode( $atts ) {
     eme_enqueue_frontend();
     
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'limit'                      => -1,
@@ -4741,6 +4744,9 @@ function eme_display_single_event( $event_id, $template_id = 0, $ignore_url = 0 
 
 function eme_display_single_event_shortcode( $atts ) {
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'id'          => '',
@@ -4754,6 +4760,9 @@ function eme_display_single_event_shortcode( $atts ) {
 
 function eme_get_events_page_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'justurl' => 0,
@@ -8950,6 +8959,9 @@ function eme_rss_link( $justurl = 0, $echo = 0, $text = 'RSS', $scope = 'future'
 }
 
 function eme_rss_link_shortcode( $atts ) {
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'justurl'        => 0,
@@ -10035,6 +10047,9 @@ function eme_admin_enqueue_js() {
 
 # return number of days until next event or until the specified event
 function eme_countdown_shortcode( $atts ) {
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'id'            => '',

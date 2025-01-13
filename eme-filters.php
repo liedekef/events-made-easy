@@ -6,6 +6,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function eme_filter_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		    [
 				'multiple'    => 0,

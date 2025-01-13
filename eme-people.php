@@ -200,6 +200,9 @@ function eme_groups_page() {
 
 function eme_person_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 	    [
 		'person_id'   => 0,
@@ -232,6 +235,9 @@ function eme_person_shortcode( $atts ) {
 
 function eme_people_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 	    [
 				'group_id'           => 0,
@@ -4617,6 +4623,9 @@ function eme_subscribe_ajax() {
 
 function eme_subform_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts( [ 'template_id' => 0 ], $atts );
 	if ( !empty($atts['template_id']) ) {
 		$format = eme_get_template_format( intval($atts['template_id']) );
@@ -4701,6 +4710,9 @@ function eme_unsubscribe_ajax() {
 
 function eme_unsubform_shortcode( $atts = [] ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts( [ 'template_id' => 0 ], $atts );
 	if ( !empty($atts['template_id']) ) {
 		$format = eme_get_template_format( intval($atts['template_id']) );

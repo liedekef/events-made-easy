@@ -1515,8 +1515,14 @@ function eme_global_map_shortcode( $atts ) {
     global $post;
     eme_enqueue_frontend();
 
-    if ( get_option( 'eme_map_is_active' ) ) {
-        $defaults = [
+    if ( !get_option( 'eme_map_is_active' ) ) {
+        return '';
+    }
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
+    $atts = shortcode_atts(
+        [
             'show_locations'    => true,
             'letter_icons'      => true,
             'show_events'       => false,
@@ -1531,128 +1537,130 @@ function eme_global_map_shortcode( $atts ) {
             'contact_person'    => '',
             'width'             => 450,
             'height'            => 300,
-            'list_location'     => 'after',
-        ];
-        $atts = shortcode_atts( $defaults, $atts );
+            'list_location'     => 'after'
+        ],
+        $atts
+    );
 
-        $eventful          = filter_var( $atts['eventful'], FILTER_VALIDATE_BOOLEAN );
-        $show_events       = filter_var( $atts['show_events'], FILTER_VALIDATE_BOOLEAN );
-        $show_locations    = filter_var( $atts['show_locations'], FILTER_VALIDATE_BOOLEAN );
-        $marker_clustering = filter_var( $atts['marker_clustering'], FILTER_VALIDATE_BOOLEAN );
-        $ignore_filter     = filter_var( $atts['ignore_filter'], FILTER_VALIDATE_BOOLEAN );
-        $letter_icons      = filter_var( $atts['letter_icons'], FILTER_VALIDATE_BOOLEAN );
-        $scope             = eme_sanitize_request( $atts['scope'] );
-        $width             = eme_sanitize_request( $atts['width'] );
-        $height            = eme_sanitize_request( $atts['height'] );
+    $eventful          = filter_var( $atts['eventful'], FILTER_VALIDATE_BOOLEAN );
+    $show_events       = filter_var( $atts['show_events'], FILTER_VALIDATE_BOOLEAN );
+    $show_locations    = filter_var( $atts['show_locations'], FILTER_VALIDATE_BOOLEAN );
+    $marker_clustering = filter_var( $atts['marker_clustering'], FILTER_VALIDATE_BOOLEAN );
+    $ignore_filter     = filter_var( $atts['ignore_filter'], FILTER_VALIDATE_BOOLEAN );
+    $letter_icons      = filter_var( $atts['letter_icons'], FILTER_VALIDATE_BOOLEAN );
+    $scope             = eme_sanitize_request( $atts['scope'] );
+    $width             = eme_sanitize_request( $atts['width'] );
+    $height            = eme_sanitize_request( $atts['height'] );
 
-        wp_enqueue_style( 'eme-leaflet-css' );
-        if ( $marker_clustering ) {
-            wp_enqueue_script( 'eme-leaflet-markercluster' );
-            wp_enqueue_style( 'eme-markercluster-css1' );
-            wp_enqueue_style( 'eme-markercluster-css2' );
+    wp_enqueue_style( 'eme-leaflet-css' );
+    if ( $marker_clustering ) {
+        wp_enqueue_script( 'eme-leaflet-markercluster' );
+        wp_enqueue_style( 'eme-markercluster-css1' );
+        wp_enqueue_style( 'eme-markercluster-css2' );
+    }
+    if ( get_option( 'eme_map_gesture_handling' ) ) {
+        wp_enqueue_script( 'eme-leaflet-gestures' );
+        wp_enqueue_style( 'eme-gestures-css' );
+    }
+    wp_enqueue_script( 'eme-show-maps' );
+
+    $result           = '';
+    $prev_text        = '';
+    $next_text        = '';
+    $scope_offset     = 0;
+
+    if ( $eventful && $atts['paging'] == 1 ) {
+        $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+
+        if ( isset( $_GET['eme_offset'] ) ) {
+            $scope_offset = intval( $_GET['eme_offset'] );
         }
-        if ( get_option( 'eme_map_gesture_handling' ) ) {
-            wp_enqueue_script( 'eme-leaflet-gestures' );
-            wp_enqueue_style( 'eme-gestures-css' );
-        }
-        wp_enqueue_script( 'eme-show-maps' );
+        $prev_offset = $scope_offset - 1;
+        $next_offset = $scope_offset + 1;
 
-        $result           = '';
-        $prev_text        = '';
-        $next_text        = '';
-        $scope_offset     = 0;
+        if ( $scope == 'this_week' ) {
+            $start_of_week = get_option( 'start_of_week' );
+            $eme_date_obj->setWeekStartDay( $start_of_week );
+            $eme_date_obj->modifyWeeks( $scope_offset );
+            $limit_start = $eme_date_obj->startOfWeek()->format( 'Y-m-d' );
+            $limit_end   = $eme_date_obj->endOfWeek()->format( 'Y-m-d' );
+            $scope       = "$limit_start--$limit_end";
+            $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE ) . ' -- ' . eme_localized_date( $limit_end, EME_TIMEZONE );
+            $prev_text   = __( 'Previous week', 'events-made-easy' );
+            $next_text   = __( 'Next week', 'events-made-easy' );
 
-        if ( $eventful && $atts['paging'] == 1 ) {
-            $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
+        } elseif ( $scope == 'this_year' ) {
+            $eme_date_obj->modifyYears( $scope_offset );
+            $year        = $eme_date_obj->getYear();
+            $limit_start = "$year-01-01";
+            $limit_end   = "$year-12-31";
+            $scope       = "$limit_start--$limit_end";
+            $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE, get_option( 'eme_show_period_yearly_dateformat' ) );
+            $prev_text   = __( 'Previous year', 'events-made-easy' );
+            $next_text   = __( 'Next year', 'events-made-easy' );
 
-            if ( isset( $_GET['eme_offset'] ) ) {
-                $scope_offset = intval( $_GET['eme_offset'] );
-            }
-            $prev_offset = $scope_offset - 1;
-            $next_offset = $scope_offset + 1;
+        } elseif ( $scope == 'today' ) {
+            $scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
+            $limit_start = $scope;
+            $limit_end   = $scope;
+            $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE );
+            $prev_text   = __( 'Previous day', 'events-made-easy' );
+            $next_text   = __( 'Next day', 'events-made-easy' );
 
-            if ( $scope == 'this_week' ) {
-                $start_of_week = get_option( 'start_of_week' );
-                $eme_date_obj->setWeekStartDay( $start_of_week );
-                $eme_date_obj->modifyWeeks( $scope_offset );
-                $limit_start = $eme_date_obj->startOfWeek()->format( 'Y-m-d' );
-                $limit_end   = $eme_date_obj->endOfWeek()->format( 'Y-m-d' );
-                $scope       = "$limit_start--$limit_end";
-                $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE ) . ' -- ' . eme_localized_date( $limit_end, EME_TIMEZONE );
-                $prev_text   = __( 'Previous week', 'events-made-easy' );
-                $next_text   = __( 'Next week', 'events-made-easy' );
+        } elseif ( $scope == 'tomorrow' ) {
+            ++$scope_offset;
+            $scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
+            $limit_start = $scope;
+            $limit_end   = $scope;
+            $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE );
+            $prev_text   = __( 'Previous day', 'events-made-easy' );
+            $next_text   = __( 'Next day', 'events-made-easy' );
 
-            } elseif ( $scope == 'this_year' ) {
-                $eme_date_obj->modifyYears( $scope_offset );
-                $year        = $eme_date_obj->getYear();
-                $limit_start = "$year-01-01";
-                $limit_end   = "$year-12-31";
-                $scope       = "$limit_start--$limit_end";
-                $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE, get_option( 'eme_show_period_yearly_dateformat' ) );
-                $prev_text   = __( 'Previous year', 'events-made-easy' );
-                $next_text   = __( 'Next year', 'events-made-easy' );
-
-            } elseif ( $scope == 'today' ) {
-                $scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
-                $limit_start = $scope;
-                $limit_end   = $scope;
-                $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE );
-                $prev_text   = __( 'Previous day', 'events-made-easy' );
-                $next_text   = __( 'Next day', 'events-made-easy' );
-
-            } elseif ( $scope == 'tomorrow' ) {
-                ++$scope_offset;
-                $scope       = $eme_date_obj->modifyDays( $scope_offset )->format( 'Y-m-d' );
-                $limit_start = $scope;
-                $limit_end   = $scope;
-                $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE );
-                $prev_text   = __( 'Previous day', 'events-made-easy' );
-                $next_text   = __( 'Next day', 'events-made-easy' );
-
-            } else {
-                $eme_date_obj->modifyMonths( $scope_offset );
-                $limit_start = $eme_date_obj->startOfMonth()->format( 'Y-m-d' );
-                $limit_end   = $eme_date_obj->endOfMonth()->format( 'Y-m-d' );
-                $scope       = "$limit_start--$limit_end";
-                $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE, get_option( 'eme_show_period_monthly_dateformat' ) );
-                $prev_text   = __( 'Previous month', 'events-made-easy' );
-                $next_text   = __( 'Next month', 'events-made-easy' );
-
-            }
-
-            $older_events = eme_get_events( limit: 1, scope: '--' . $limit_start, category: $atts['category'], show_ongoing: 1, notcategory: $atts['notcategory'] );
-            $newer_events = eme_get_events( limit: 1, scope: '++' . $limit_end, category: $atts['category'], show_ongoing: 1, notcategory: $atts['notcategory'] );
-            if ( count( $older_events ) == 0 ) {
-                $prev_text = '';
-            }
-            if ( count( $newer_events ) == 0 ) {
-                $next_text = '';
-            }
-        }
-
-        $limit         = 0;
-        $ignore_filter = false;
-        $random_order  = false;
-        $locations     = eme_get_locations( eventful: $eventful, scope: $scope, category: $atts['category'], notcategory: $atts['notcategory'], limit: $limit, ignore_filter: $ignore_filter, random_order: $random_order, author: $atts['author'], contact_person: $atts['contact_person'] );
-        $id_base       = preg_replace( '/\D/', '_', microtime( 1 ) );
-        $id_base       = rand() . '_' . $id_base;
-        if ( ! empty( $width ) && ! empty( $height ) ) {
-            if ( ! preg_match( '/\%$|px$|fr$|em$/', $width ) ) {
-                $width = $width . 'px';
-            }
-            if ( ! preg_match( '/\%$|px$|fr$|em$/', $height ) ) {
-                $height = $height . 'px';
-            }
-            $style = "style='width: $width; height: $height'";
         } else {
-            $style = '';
+            $eme_date_obj->modifyMonths( $scope_offset );
+            $limit_start = $eme_date_obj->startOfMonth()->format( 'Y-m-d' );
+            $limit_end   = $eme_date_obj->endOfMonth()->format( 'Y-m-d' );
+            $scope       = "$limit_start--$limit_end";
+            $scope_text  = eme_localized_date( $limit_start, EME_TIMEZONE, get_option( 'eme_show_period_monthly_dateformat' ) );
+            $prev_text   = __( 'Previous month', 'events-made-easy' );
+            $next_text   = __( 'Next month', 'events-made-easy' );
+
         }
-        if ( ! empty( $locations ) ) {
-            $result           = "<div id='eme_global_map_$id_base' class='eme_global_map' $style>map</div>";
-            $locations_string = 'global_map_info_' . $id_base;
-            $locations_val    = eme_global_map_json( $locations, $marker_clustering, $letter_icons );
-            $result          .= "<script type='text/javascript'>
-                $locations_string = $locations_val;
+
+        $older_events = eme_get_events( limit: 1, scope: '--' . $limit_start, category: $atts['category'], show_ongoing: 1, notcategory: $atts['notcategory'] );
+        $newer_events = eme_get_events( limit: 1, scope: '++' . $limit_end, category: $atts['category'], show_ongoing: 1, notcategory: $atts['notcategory'] );
+        if ( count( $older_events ) == 0 ) {
+            $prev_text = '';
+        }
+        if ( count( $newer_events ) == 0 ) {
+            $next_text = '';
+        }
+    }
+
+    $limit         = 0;
+    $ignore_filter = false;
+    $random_order  = false;
+    $locations     = eme_get_locations( eventful: $eventful, scope: $scope, category: $atts['category'], notcategory: $atts['notcategory'], limit: $limit, ignore_filter: $ignore_filter, random_order: $random_order, author: $atts['author'], contact_person: $atts['contact_person'] );
+    $id_base       = preg_replace( '/\D/', '_', microtime( 1 ) );
+    $id_base       = rand() . '_' . $id_base;
+    $style = '';
+    if ( ! empty( $width ) && ! empty( $height ) ) {
+        if ( ! preg_match( '/\%$|px$|fr$|em$/', $width ) ) {
+            $width = $width . 'px';
+        }
+        if ( ! preg_match( '/\%$|px$|fr$|em$/', $height ) ) {
+            $height = $height . 'px';
+        }
+        $style = "style='width: $width; height: $height'";
+    }
+
+    $result = '';
+    if ( ! empty( $locations ) ) {
+        $result           = "<div id='eme_global_map_$id_base' class='eme_global_map' $style>map</div>";
+        $locations_string = 'global_map_info_' . $id_base;
+        $locations_val    = eme_global_map_json( $locations, $marker_clustering, $letter_icons );
+        $result          .= "<script type='text/javascript'>
+            $locations_string = $locations_val;
          </script>";
         }
 
@@ -1711,14 +1719,15 @@ function eme_global_map_shortcode( $atts ) {
         } elseif ( $atts['list_location'] == 'after' ) {
             $result .= $loc_list;
         }
-    } else {
-        $result = '';
     }
     return $result;
 }
 
 function eme_single_location_map_shortcode( $atts ) {
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
             [
                 'id'     => '',
@@ -1764,6 +1773,9 @@ function eme_display_single_location( $location_id, $template_id = 0, $ignore_ur
 
 function eme_get_location_shortcode( $atts ) {
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
             [
                 'id'          => '',
@@ -1780,6 +1792,9 @@ function eme_get_location_shortcode( $atts ) {
 
 function eme_get_locations_shortcode( $atts ) {
     eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'eventful'           => false,

@@ -279,6 +279,9 @@ function eme_get_holidays_array_by_id() {
 # return number of days until next event or until the specified event
 function eme_holidays_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		    [
 				'id'    => 0,

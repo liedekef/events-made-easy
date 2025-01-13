@@ -284,6 +284,9 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 
 function eme_add_booking_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts( [ 'id' => 0 ], $atts );
 	if ( !empty($atts['id']) ) {
 		return eme_add_booking_form( intval($atts['id']) );
@@ -293,6 +296,9 @@ function eme_add_booking_form_shortcode( $atts ) {
 
 function eme_add_simple_multibooking_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'id'                     => 0,
@@ -336,6 +342,9 @@ function eme_add_simple_multibooking_form_shortcode( $atts ) {
 
 function eme_add_multibooking_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'id'                     => '',
@@ -382,6 +391,9 @@ function eme_add_multibooking_form_shortcode( $atts ) {
 
 function eme_booking_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'id'                 => 0,
@@ -440,6 +452,9 @@ function eme_booking_list_shortcode( $atts ) {
 
 function eme_mybooking_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'id'                 => 0,
@@ -497,6 +512,9 @@ function eme_mybooking_list_shortcode( $atts ) {
 
 function eme_attendee_list_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		[
 			'id'                 => 0,
@@ -546,6 +564,9 @@ function eme_attendee_list_shortcode( $atts ) {
 function eme_attendees_report_link_shortcode( $atts ) {
 	global $post;
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		    [
 				'title'              => __( 'Attendees CSV', 'events-made-easy' ),
@@ -582,6 +603,9 @@ function eme_attendees_report_link_shortcode( $atts ) {
 function eme_bookings_report_link_shortcode( $atts ) {
 	global $post;
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts(
 		    [
 				'title'              => __( 'Bookings CSV', 'events-made-easy' ),
@@ -813,6 +837,9 @@ function eme_cancel_bookings_form( $event_id ) {
 }
 
 function eme_cancel_bookings_form_shortcode( $atts ) {
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts( [ 'id' => 0 ], $atts );
 	if ( !empty($atts['id']) ) {
 		return eme_cancel_bookings_form( intval($atts['id']) );

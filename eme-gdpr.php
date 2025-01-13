@@ -104,6 +104,9 @@ function eme_rpi_shortcode( $atts ) {
 		$email = '';
 	}
 
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$atts = shortcode_atts( [ 'show_info_if_logged_in' => 0 ], $atts );
 	$show_info_if_logged_in = filter_var( $atts['show_info_if_logged_in'], FILTER_VALIDATE_BOOLEAN );
 
@@ -292,6 +295,9 @@ function eme_cpi_shortcode( $atts ) {
 	} else {
 		$email = '';
 	}
+
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
 
 	$atts = shortcode_atts( [ 'show_form_if_logged_in' => 0 ], $atts );
 	$show_form_if_logged_in = filter_var( $atts['show_form_if_logged_in'], FILTER_VALIDATE_BOOLEAN );

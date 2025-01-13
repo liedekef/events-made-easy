@@ -488,6 +488,9 @@ function eme_captcha_remove( $captcha_file ) {
 }
 
 function eme_if_shortcode($atts, $content) {
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'tag'         => '',
@@ -623,6 +626,9 @@ function eme_if_shortcode($atts, $content) {
 }
 
 function eme_for_shortcode( $atts, $content ) {
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
     $atts = shortcode_atts(
         [
             'min'  => 1,

@@ -172,6 +172,9 @@ $extra_html_header
  
 function eme_add_event_form_shortcode( $atts ) {
 	eme_enqueue_frontend();
+    // normalize attribute keys, lowercase
+    $atts = array_change_key_case( (array) $atts, CASE_LOWER );
+
 	$eme_fs_options = get_option('eme_fs');
 	$is_user_logged_in=is_user_logged_in();
 

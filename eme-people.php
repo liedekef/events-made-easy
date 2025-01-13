@@ -1998,7 +1998,7 @@ function eme_get_sql_people_searchfields( $search_terms, $count = 0, $ids_only =
 	}
 
 	// lets get the trash info from the url if present
-	$status      = isset( $_GET['trash'] ) && $_GET['trash'] == 1 ? 0 : 1;
+	$status      = isset( $search_terms['trash'] ) && $search_terms['trash'] == 1 ? 0 : 1;
 	$where_arr[] = "people.status=$status";
 
 	if ( ! empty( $search_person ) ) {

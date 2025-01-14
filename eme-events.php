@@ -6228,6 +6228,8 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	// some checks and eme_unserialize if needed
 	$event = eme_get_extra_event_data( $event );
 
+    $pdf_templates_array = eme_get_templates_array_by_id( 'pdf', 1 );
+
 	$form_destination = 'admin.php?page=eme-manager';
 	$recurrence_id    = $event['recurrence_id'];
 	if ( $edit_recurrence && $recurrence_id ) {
@@ -6352,7 +6354,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		<?php
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Generic RSVP info', 'events-made-easy' ) . '</summary><div>';
-		eme_meta_box_div_event_rsvp( $event );
+		eme_meta_box_div_event_rsvp( $event, $pdf_templates_array );
 		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Payment methods', 'events-made-easy' ) . '</summary><div>';
@@ -6378,7 +6380,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Attendance settings', 'events-made-easy' ) . '</summary><div>';
-		eme_meta_box_div_attendance_info( $event, $templates_array );
+		eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templates_array );
 		echo '</div></details>';
 		?>
 		<h3><?php esc_html_e( 'RSVP Email format settings', 'events-made-easy' ); ?></h3>
@@ -6386,7 +6388,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		$templates_array = eme_get_templates_array_by_id( 'rsvpmail' );
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Booking Made or Approved Email', 'events-made-easy' ) . '</summary><div>';
-		eme_meta_box_div_event_registration_approved_email( $event, $templates_array );
+		eme_meta_box_div_event_registration_approved_email( $event, $templates_array, $pdf_templates_array );
 		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Booking Awaiting User Confirmation Email', 'events-made-easy' ) . '</summary><div>';
@@ -6394,7 +6396,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Booking Pending Email', 'events-made-easy' ) . '</summary><div>';
-		eme_meta_box_div_event_registration_pending_email( $event, $templates_array );
+		eme_meta_box_div_event_registration_pending_email( $event, $templates_array, $pdf_templates_array );
 		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Booking Updated Email', 'events-made-easy' ) . '</summary><div>';
@@ -6414,7 +6416,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Booking Paid Email', 'events-made-easy' ) . '</summary><div>';
-		eme_meta_box_div_event_registration_paid_email( $event, $templates_array );
+		eme_meta_box_div_event_registration_paid_email( $event, $templates_array, $pdf_templates_array );
 		echo '</div></details>';
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Booking Payment Gateway Notification Email', 'events-made-easy' ) . '</summary><div>';
@@ -7511,7 +7513,7 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
 	<?php
 }
 
-function eme_meta_box_div_event_registration_approved_email( $event, $templates_array ) {
+function eme_meta_box_div_event_registration_approved_email( $event, $templates_array, $pdf_templates_array ) {
 	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_respondent_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7641,9 +7643,8 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 <br><?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 	<?php
-	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
-	if (!empty($pdftemplates)) {
-		echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdftemplates, 3, '', 0, 'eme_select2_width50_class' );
+	if (!empty($pdf_templates_array)) {
+		echo eme_ui_multiselect( $event['event_properties']['booking_attach_tmpl_ids'], 'eme_prop_booking_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2_width50_class' );
 		echo '<br>';
 		esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
 		echo '<br>';
@@ -7713,7 +7714,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
 	<?php
 }
 
-function eme_meta_box_div_event_registration_pending_email( $event, $templates_array ) {
+function eme_meta_box_div_event_registration_pending_email( $event, $templates_array, $pdf_templates_array ) {
 	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_pending_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -7842,9 +7843,8 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 <br><?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 	<?php
-	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
-	if (!empty($pdftemplates)) {
-		echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdftemplates, 3, '', 0, 'eme_select2_width50_class' );
+	if (!empty($pdf_templates_array)) {
+		echo eme_ui_multiselect( $event['event_properties']['pending_attach_tmpl_ids'], 'eme_prop_pending_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2_width50_class' );
 		echo '<br>';
 		esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
 		echo '<br>';
@@ -8099,7 +8099,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 	<?php
 }
 
-function eme_meta_box_div_event_registration_paid_email( $event, $templates_array ) {
+function eme_meta_box_div_event_registration_paid_email( $event, $templates_array, $pdf_templates_array ) {
 	$use_html_editor = get_option( 'eme_mail_send_html' );
 	if ( eme_is_empty_string( $event['event_properties']['event_registration_paid_email_subject'] ) ) {
 		$showhide_style = 'style="display:none; width:100%;"';
@@ -8228,9 +8228,8 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 <br><?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
 <br><br><?php esc_html_e( 'PDF templates as attachments', 'events-made-easy' ); ?>
 	<?php
-	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
-	if (!empty($pdftemplates)) {
-		echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdftemplates, 3, '', 0, 'eme_select2_width50_class' );
+	if (!empty($pdf_templates_array)) {
+		echo eme_ui_multiselect( $event['event_properties']['paid_attach_tmpl_ids'], 'eme_prop_paid_attach_tmpl_ids', $pdf_templates_array, 3, '', 0, 'eme_select2_width50_class' );
 		echo '<br>';
 		esc_html_e( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
 		echo '<br>';
@@ -8652,7 +8651,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
 	<?php
 }
 
-function eme_meta_box_div_attendance_info( $event, $templates_array ) {
+function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templates_array ) {
 	$eme_prop_attendancerecord = ( $event['event_properties']['attendancerecord'] ) ? "checked='checked'" : '';
 	if ( eme_is_empty_string( $event['event_properties']['attendance_unauth_scan_tpl'] ) ) {
 		$showhide_style_unauth = 'style="display:none; width:100%;"';
@@ -8714,16 +8713,15 @@ function eme_meta_box_div_attendance_info( $event, $templates_array ) {
 				<b><?php esc_html_e( 'Attendance PDF proof', 'events-made-easy' ); ?></b>
 				<br><span class="eme_smaller"><?php esc_html_e( 'When the URL generated by #_ATTENDANCEPROOF_URL is visited, the selected PDF template will be used to generate a PDF for the user that can serve as proof of attendance. All event and RSVP placeholders are allowed.', 'events-made-easy' ); ?></span><br>
 				<?php
-                $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
 				esc_html_e( 'Choose from a template: ', 'events-made-easy' );
-				echo eme_ui_select( $event['event_properties']['attendance_proof_tpl'], 'eme_prop_attendance_proof_tpl', $pdftemplates );
+				echo eme_ui_select( $event['event_properties']['attendance_proof_tpl'], 'eme_prop_attendance_proof_tpl', $pdf_templates_array );
 				?>
 				</div>
 			</div>
 	<?php
 }
 
-function eme_meta_box_div_event_rsvp( $event ) {
+function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
 	$currency_array                 = eme_currency_array();
 	$event_number_seats             = $event['event_seats'];
 	$registration_requires_approval = ( $event['registration_requires_approval'] ) ? "checked='checked'" : '';
@@ -8742,7 +8740,6 @@ function eme_meta_box_div_event_rsvp( $event ) {
 		$dgroup_arr = [ $eme_prop_rsvp_discountgroup => eme_get_dgroup_name( $eme_prop_rsvp_discountgroup ) ];
 	}
 
-	$pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
 	?>
 <div id="div_event_rsvp">
 	<p id='p_approval_required'>
@@ -8890,7 +8887,7 @@ function eme_meta_box_div_event_rsvp( $event ) {
 	<tr><td colspan="2">&nbsp;</td></tr>
 	<tr id='row_ticket'>
 		<td><label for='eme_prop_ticket_template_id'><?php esc_html_e( 'Ticket PDF template', 'events-made-easy' ); ?></label></td>
-		<td><?php echo eme_ui_select( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdftemplates, '&nbsp;' ); ?>
+		<td><?php echo eme_ui_select( $event['event_properties']['ticket_template_id'], 'eme_prop_ticket_template_id', $pdf_templates_array, '&nbsp;' ); ?>
 			<p class="eme_smaller"><?php esc_html_e( 'This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included).', 'events-made-easy' ); ?><br>
 			<?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a PDF template.', 'events-made-easy' ); ?></p>
 		</td>

@@ -328,7 +328,7 @@ function eme_cron_form( $message = '' ) {
             echo '<code>*/5 * * * * curl --user "username:password" ' . site_url( '/wp-json/events-made-easy/v1/processqueue/60' ) . ' >/dev/null 2>&1 </code><br>';
             esc_html_e( 'Change the "username" by your user and the "password" by an application password generated in your WP user settings.', 'events-made-easy' );
             echo '<br>';
-            esc_html_e( '"60" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course', 'events-made-easy' );
+            esc_html_e( '"60" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course.', 'events-made-easy' );
             echo '</p></div>';
         }
     }

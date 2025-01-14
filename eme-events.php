@@ -7320,7 +7320,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 			</p>
 		</div>
         <br>
-    <?php esc_html_e( 'Exclude days: ', 'events-made-easy' ); ?>
+    <?php esc_html_e( 'Excluded days:', 'events-made-easy' ); ?> 
     <input id="rec-excludedays-to-submit" type="hidden" name="recurrence_exclude_days" value="">
 	<input id="localized-rec-excludedays" type="text" name="localized_recurrence_excludedays" value="" style="background: #FCFFAA;" readonly="readonly" data-multiple-dates='true' data-date='<?php echo eme_js_datetime( $recurrence['exclude_days'] ); ?>' data-alt-field='rec-excludedays-to-submit' class='eme_formfield_fdate'>
 			<p class="eme_smaller">

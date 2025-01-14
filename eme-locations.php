@@ -1644,14 +1644,22 @@ function eme_global_map_shortcode( $atts ) {
     $id_base       = preg_replace( '/\D/', '_', microtime( 1 ) );
     $id_base       = rand() . '_' . $id_base;
     $style = '';
-    if ( ! empty( $width ) && ! empty( $height ) ) {
-        if ( ! preg_match( '/\%$|px$|fr$|em$/', $width ) ) {
-            $width = $width . 'px';
+    if ( ! empty( $width ) || ! empty( $height ) ) {
+        $width_style = '';
+        if (! empty( $width ) ) {
+            if ( ! preg_match( '/\%$|px$|fr$|em$/', $width ) ) {
+                $width = $width . 'px';
+            }
+            $width_style = "width: $width;";
         }
-        if ( ! preg_match( '/\%$|px$|fr$|em$/', $height ) ) {
-            $height = $height . 'px';
+        $height_style = '';
+        if (! empty( $height ) ) {
+            if ( ! preg_match( '/\%$|px$|fr$|em$/', $height ) ) {
+                $height = $height . 'px';
+            }
+            $height_style = "height: $height;";
         }
-        $style = "style='width: $width; height: $height'";
+        $style = "style='$width_style $height_style'";
     }
 
     $result = '';
@@ -1662,63 +1670,62 @@ function eme_global_map_shortcode( $atts ) {
         $result          .= "<script type='text/javascript'>
             $locations_string = $locations_val;
          </script>";
-        }
+    }
 
-        if ( $atts['paging'] == 1 ) {
-            $pagination_top = "<div id='div_locations-pagination-top_$id_base' class='locations-pagination-top'> ";
-            $this_page_url = get_permalink($post->ID);
-            if ( $prev_text != '' ) {
-                $pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
-            }
-            if ( $next_text != '' ) {
-                $pagination_top .= "<a class='eme_nav_right' href='" . add_query_arg( [ 'eme_offset' => $next_offset ], $this_page_url ) . "'>$next_text &gt;&gt;</a>";
-            }
-            $pagination_top   .= "<span class='eme_nav_center'>$scope_text</span>";
-            $pagination_top   .= '</div>';
-            $pagination_bottom = str_replace( 'locations-pagination-top', 'locations-pagination-bottom', $pagination_top );
-            $result            = $pagination_top . $result . $pagination_bottom;
+    if ( $atts['paging'] == 1 ) {
+        $pagination_top = "<div id='div_locations-pagination-top_$id_base' class='locations-pagination-top'> ";
+        $this_page_url = get_permalink($post->ID);
+        if ( $prev_text != '' ) {
+            $pagination_top .= "<a class='eme_nav_left' href='" . add_query_arg( [ 'eme_offset' => $prev_offset ], $this_page_url ) . "'>&lt;&lt; $prev_text</a>";
         }
+        if ( $next_text != '' ) {
+            $pagination_top .= "<a class='eme_nav_right' href='" . add_query_arg( [ 'eme_offset' => $next_offset ], $this_page_url ) . "'>$next_text &gt;&gt;</a>";
+        }
+        $pagination_top   .= "<span class='eme_nav_center'>$scope_text</span>";
+        $pagination_top   .= '</div>';
+        $pagination_bottom = str_replace( 'locations-pagination-top', 'locations-pagination-bottom', $pagination_top );
+        $result            = $pagination_top . $result . $pagination_bottom;
+    }
 
-        $loc_list = "<div id='eme_div_locations_list_$id_base' class='eme_div_locations_list'><ol id='eme_locations_list_$id_base' class='eme_locations_list'>";
-        if ( $letter_icons ) {
-            $letter_style = "style='list-style-type: upper-alpha'";
-            $firstletter  = 'A';
-        } else {
-            $letter_style = '';
-            $firstletter  = '';
-        }
-        foreach ( $locations as $location ) {
-            if ( $show_locations ) {
-                $loc_list .= "<li id='location-" . $location['location_id'] . "_$id_base" .
+    $loc_list = "<div id='eme_div_locations_list_$id_base' class='eme_div_locations_list'><ol id='eme_locations_list_$id_base' class='eme_locations_list'>";
+    if ( $letter_icons ) {
+        $letter_style = "style='list-style-type: upper-alpha'";
+        $firstletter  = 'A';
+    } else {
+        $letter_style = '';
+        $firstletter  = '';
+    }
+    foreach ( $locations as $location ) {
+        if ( $show_locations ) {
+            $loc_list .= "<li id='location-" . $location['location_id'] . "_$id_base" .
                 "' $letter_style><a>" .
                 eme_trans_esc_html( $location['location_name'] ) . '</a></li>';
-            }
-            if ( $show_events ) {
-                $events    = eme_get_events( scope: $scope, offset: $scope_offset, location_id: $location['location_id'], category: $atts['category'] );
-                $loc_list .= "<ol id='eme_events_list'>";
-                foreach ( $events as $event ) {
-                    if ( $show_locations ) {
-                        $loc_list .= "<li id='location-" . $location['location_id'] . "_$id_base" .
-                            "' style='list-style-type: none'>- <a>" .
-                            eme_trans_esc_html( $event['event_name'] ) . '</a></li>';
-                    } else {
-                        $loc_list .= "<li id='location-" . $location['location_id'] . "_$id_base" .
-                            "' style='list-style-type: none'>$firstletter. <a>" .
-                            eme_trans_esc_html( $event['event_name'] ) . '</a></li>';
-                    }
+        }
+        if ( $show_events ) {
+            $events    = eme_get_events( scope: $scope, offset: $scope_offset, location_id: $location['location_id'], category: $atts['category'] );
+            $loc_list .= "<ol id='eme_events_list'>";
+            foreach ( $events as $event ) {
+                if ( $show_locations ) {
+                    $loc_list .= "<li id='location-" . $location['location_id'] . "_$id_base" .
+                        "' style='list-style-type: none'>- <a>" .
+                        eme_trans_esc_html( $event['event_name'] ) . '</a></li>';
+                } else {
+                    $loc_list .= "<li id='location-" . $location['location_id'] . "_$id_base" .
+                        "' style='list-style-type: none'>$firstletter. <a>" .
+                        eme_trans_esc_html( $event['event_name'] ) . '</a></li>';
                 }
-                $loc_list .= '</ol>';
             }
-            if ( $letter_icons ) {
-                    ++$firstletter;
-            }
+            $loc_list .= '</ol>';
         }
-        $loc_list .= '</ol></div>';
-        if ( $atts['list_location'] == 'before' ) {
-            $result = $loc_list . $result;
-        } elseif ( $atts['list_location'] == 'after' ) {
-            $result .= $loc_list;
+        if ( $letter_icons ) {
+            ++$firstletter;
         }
+    }
+    $loc_list .= '</ol></div>';
+    if ( $atts['list_location'] == 'before' ) {
+        $result = $loc_list . $result;
+    } elseif ( $atts['list_location'] == 'after' ) {
+        $result .= $loc_list;
     }
     return $result;
 }
@@ -2762,16 +2769,23 @@ function eme_single_location_map( $location, $width = 0, $height = 0, $zoom_fact
             $zoom_factor = 14;
         }
         //$map_div = "<div id='$id' style=' background: green; width: 400px; height: 300px'></div>" ;
-        if ( ! empty( $width ) && ! empty( $height ) ) {
-            if ( ! preg_match( '/\%$|px$|fr$|em$/', $width ) ) {
-                $width = $width . 'px';
+        $style = '';
+        if ( ! empty( $width ) || ! empty( $height ) ) {
+            $width_style = '';
+            if (! empty( $width ) ) {
+                if ( ! preg_match( '/\%$|px$|fr$|em$/', $width ) ) {
+                    $width = $width . 'px';
+                }
+                $width_style = "width: $width;";
             }
-            if ( ! preg_match( '/\%$|px$|fr$|em$/', $height ) ) {
-                $height = $height . 'px';
+            $height_style = '';
+            if (! empty( $height ) ) {
+                if ( ! preg_match( '/\%$|px$|fr$|em$/', $height ) ) {
+                    $height = $height . 'px';
+                }
+                $height_style = "height: $height;";
             }
-            $style = "style='width: $width; height: $height'";
-        } else {
-            $style = '';
+            $style = "style='$width_style $height_style'";
         }
         $data    = "data-lat='" . $location['location_latitude'] . "'";
         $data   .= " data-lon='" . $location['location_longitude'] . "'";

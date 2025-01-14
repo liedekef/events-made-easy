@@ -446,6 +446,10 @@ div.dt-length select.dt-input {
 .leaflet-container a.leaflet-popup-close-button {
 	box-shadow: none;
 }
+/* leaflet prevent a-link underline for zoom in/out */
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    text-decoration: none !important;
+}
 
 .eme_required {
 	border: 2px solid red !important;

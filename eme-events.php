@@ -6515,39 +6515,38 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 	?>
 	</div>
 
-				<p class="submit">
-					<?php if ( $is_new_event ) { ?>
-					<input type="submit" class="button-primary" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Save', 'events-made-easy' ); ?> &raquo;">
-			<br><?php esc_html_e( 'If pressing save or update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
+	<p class="submit">
+		<?php if ( $is_new_event ) { ?>
+                  <input type="submit" class="button-primary" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Save', 'events-made-easy' ); ?> &raquo;">
+                  <br><?php esc_html_e( 'If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
+		<?php
+              } else {
+                  $delete_button_text           = esc_html__( 'Are you sure you want to delete this event?', 'events-made-easy' );
+                  $deleteRecurrence_button_text = esc_html__( 'Are you sure you want to delete this recurrence?', 'events-made-easy' );
+		?>
+                  <input type="submit" class="button-primary" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Update', 'events-made-easy' ); ?> &raquo;">
+				<?php if ( ! $edit_recurrence ) { ?>
+				    	<input type="submit" class="button-primary" id="event_delete_button" name="event_delete_button" value="<?php esc_attr_e( 'Delete Event', 'events-made-easy' ); ?> &raquo;" onclick="return areyousure('<?php echo $delete_button_text; ?>');">
 						<?php
-					} else {
-						$delete_button_text           = esc_html__( 'Are you sure you want to delete this event?', 'events-made-easy' );
-						$deleteRecurrence_button_text = esc_html__( 'Are you sure you want to delete this recurrence?', 'events-made-easy' );
+						$view_button_text = __( 'View', 'events-made-easy' );
+						$view_button      = sprintf(
+						    '%s<span class="screen-reader-text"> %s</span> &raquo;',
+						    $view_button_text,
+							/* translators: Accessibility text. */
+								__( '(opens in a new tab)', 'events-made-easy' )
+						);
 						?>
-					<input type="submit" class="button-primary" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Update', 'events-made-easy' ); ?> &raquo;">
-						<?php if ( ! $edit_recurrence ) { ?>
-					<input type="submit" class="button-primary" id="event_delete_button" name="event_delete_button" value="<?php esc_attr_e( 'Delete Event', 'events-made-easy' ); ?> &raquo;" onclick="return areyousure('<?php echo $delete_button_text; ?>');">
-							<?php
-								$view_button_text = __( 'View', 'events-made-easy' );
-								$view_button      = sprintf(
-								    '%s<span class="screen-reader-text"> %s</span> &raquo;',
-								    $view_button_text,
-									/* translators: Accessibility text. */
-										__( '(opens in a new tab)', 'events-made-easy' )
-								);
-							?>
-					<a class="button-primary" href="<?php echo eme_event_url( $event ); ?>" target="wp-view-<?php echo intval($event['event_id']); ?>" id="event-view"><?php echo $view_button; ?></a>
-
-			<br><?php esc_html_e( 'If pressing save or update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
+					    <a class="button-primary" href="<?php echo eme_event_url( $event ); ?>" target="wp-view-<?php echo intval($event['event_id']); ?>" id="event-view"><?php echo $view_button; ?></a>
+			            <br><?php esc_html_e( 'If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
 					<?php } ?> 
-							<?php if ( $edit_recurrence && $recurrence_id > 0 ) { ?>
-					<input type="submit" class="button-primary" id="event_deleteRecurrence_button" name="event_deleteRecurrence_button" value="<?php esc_attr_e( 'Delete Recurrence', 'events-made-easy' ); ?> &raquo;" onclick="return areyousure('<?php echo $deleteRecurrence_button_text; ?>');">
+					<?php if ( $edit_recurrence && $recurrence_id > 0 ) { ?>
+					        <input type="submit" class="button-primary" id="event_deleteRecurrence_button" name="event_deleteRecurrence_button" value="<?php esc_attr_e( 'Delete Recurrence', 'events-made-easy' ); ?> &raquo;" onclick="return areyousure('<?php echo $deleteRecurrence_button_text; ?>');">
 					<?php } ?> 
-						<?php } ?>
-				</p>
-			</div>
-			<!-- END OF MAIN -->
-			<!-- SIDEBAR -->
+			<?php } ?>
+	</p>
+	</div>
+	<!-- END OF MAIN -->
+	<!-- SIDEBAR -->
 			<div id="postbox-container-1" class="postbox-container">
 				<div id='side-sortables' class="meta-box-sortables ui-sortable">
 					<?php if ( current_user_can( get_option( 'eme_cap_author_event' ) ) || current_user_can( get_option( 'eme_cap_edit_events' ) ) ) { ?>
@@ -8640,7 +8639,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
                         esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
 					echo "</b>";
         			} else {
-                        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_select2_width50_class' );
+                        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_select2_width50_class', 'data-placeholder="'.__('Select a payment method','events-made-easy') .'"' );
                     }
 				?>
 				</p>

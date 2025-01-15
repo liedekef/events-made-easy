@@ -801,6 +801,10 @@
             if (!this.opts.fieldSizing) {
                 return;
             }
+            // make sure the empty field has a minimum inline size
+            if (!(input.val() || input.attr('placeholder')) && input.css('min-inline-size') == "0px") {
+                input.css({'min-inline-size': '10ch'});
+            }
 
             // Create a temporary span to measure the text width
             const tempSpan = $('<span>').css({

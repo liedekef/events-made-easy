@@ -629,11 +629,13 @@ jQuery(document).ready( function($) {
         $('#eventmail_startdate').fdatepicker({
             todayButton: new Date(),
             clearButton: true,
+            fieldSizing: true,
             timepicker: true,
             minutesStep: parseInt(ememails.translate_minutesStep),
             language: ememails.translate_flanguage,
             firstDay: parseInt(ememails.translate_firstDayOfWeek),
             altFieldDateFormat: 'Y-m-d H:i:00',
+            multipleDatesSeparator: ', ',
             dateFormat: ememails.translate_fdateformat,
             timeFormat: ememails.translate_ftimeformat,
             onSelect: function(formattedDate,date,inst) {
@@ -655,11 +657,13 @@ jQuery(document).ready( function($) {
         $('#genericmail_startdate').fdatepicker({
             todayButton: new Date(),
             clearButton: true,
+            fieldSizing: true,
             timepicker: true,
             minutesStep: parseInt(ememails.translate_minutesStep),
             language: ememails.translate_flanguage,
             firstDay: parseInt(ememails.translate_firstDayOfWeek),
             altFieldDateFormat: 'Y-m-d H:i:00',
+            multipleDatesSeparator: ', ',
             dateFormat: ememails.translate_fdateformat,
             timeFormat: ememails.translate_ftimeformat,
             onSelect: function(formattedDate,date,inst) {

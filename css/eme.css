@@ -683,7 +683,7 @@ div#div_import {
 /* for some fields, only works in chrome for now
  * see https://developer.chrome.com/docs/css-ui/css-field-sizing
  * */
-.eme_formfield_fdatetime, .eme_formfield_fdate, #chooseperson, #eventmail_chooseperson, #chooseevent, .eme_searchfilter {
+.eme_formfield_fdatetime, .eme_formfield_fdate, #chooseperson, #eventmail_chooseperson, #chooseevent, .eme_searchfilter, #genericmail_startdate, #eventmail_startdate {
     field-sizing: content;
     min-inline-size: 10ch;
 }

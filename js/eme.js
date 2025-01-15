@@ -930,6 +930,7 @@ jQuery(document).ready( function($) {
             language: emebasic.translate_flanguage,
             firstDay: parseInt(emebasic.translate_firstDayOfWeek),
             altFieldDateFormat: 'Y-m-d H:i:00',
+            multipleDatesSeparator: ", ",
             dateFormat: emebasic.translate_fdateformat,
             timeFormat: emebasic.translate_ftimeformat
         });
@@ -964,6 +965,7 @@ jQuery(document).ready( function($) {
             language: emebasic.translate_flanguage,
             firstDay: parseInt(emebasic.translate_firstDayOfWeek),
             altFieldDateFormat: 'Y-m-d',
+            multipleDatesSeparator: ", ",
             dateFormat: emebasic.translate_fdateformat
         });
         $.each($('.eme_formfield_fdate'), function() {

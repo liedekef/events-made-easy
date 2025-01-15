@@ -377,7 +377,7 @@ jQuery(document).ready( function($) {
                             dateFormat: emebasic.translate_fdateformat,
                             timeFormat: emebasic.translate_ftimeformat
                         });
-                        $.each($('.eme_formfield_fdatetime'), function() {
+                        $.each($('.eme_formfield_fdatetime.dynamicfield'), function() {
                             if ($(this).data('date') && $(this).data('date') != '0000-00-00 00:00:00' ) {
                                 $(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
                                 // to avoid it being done multiple times
@@ -924,6 +924,7 @@ jQuery(document).ready( function($) {
             todayButton: new Date(),
             clearButton: true,
             closeButton: true,
+            fieldSizing: true,
             timepicker: true,
             minutesStep: parseInt(emebasic.translate_minutesStep),
             language: emebasic.translate_flanguage,
@@ -959,6 +960,7 @@ jQuery(document).ready( function($) {
             clearButton: true,
             closeButton: true,
             autoClose: true,
+            fieldSizing: true,
             language: emebasic.translate_flanguage,
             firstDay: parseInt(emebasic.translate_firstDayOfWeek),
             altFieldDateFormat: 'Y-m-d',

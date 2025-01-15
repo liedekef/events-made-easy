@@ -44,6 +44,7 @@
         defaults = {
             classes: '',
             inline: false,
+            fieldSizing: false,
             language: 'en',
             startDate: new Date(),
             firstDay: '',
@@ -228,6 +229,7 @@
             this.$fdatepicker.on('mouseenter', '.fdatepicker--cell', this._onMouseEnterCell.bind(this));
             this.$fdatepicker.on('mouseleave', '.fdatepicker--cell', this._onMouseLeaveCell.bind(this));
 
+            this._resizeInput(this.$el);
             this.inited = true;
         },
 
@@ -787,7 +789,37 @@
 
             value = value.join(this.opts.multipleDatesSeparator);
 
-            this.$el.val(value)
+            this.$el.val(value);
+            this._resizeInput(this.$el);
+        },
+
+        _resizeInput: function (input) {
+            // if the browser supports field-sizing and the field sizing is set to content; we don't need to do anything
+            if (CSS.supports('field-sizing', 'content') && input.css('field-sizing') === 'content') {
+                return;
+            }
+            if (!this.opts.fieldSizing) {
+                return;
+            }
+
+            // Create a temporary span to measure the text width
+            const tempSpan = $('<span>').css({
+                'font-family': input.css('font-family'),
+                'font-size': input.css('font-size'),
+                'font-weight': input.css('font-weight'),
+                'visibility': 'hidden',
+                'white-space': 'pre'
+            }).appendTo('body');
+
+            // Set the text of the span to the input's value
+            tempSpan.text(input.val() || input.attr('placeholder'));
+
+            // Calculate the width and set it to the input
+            const newWidth = tempSpan.width(); // Adding some padding
+            input.width(newWidth);
+
+            // Remove the temporary span
+            tempSpan.remove();
         },
 
         /**

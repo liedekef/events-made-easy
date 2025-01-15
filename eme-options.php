@@ -40,7 +40,7 @@ function eme_add_options( $reset = 0 ) {
 		</table>
 		#_SUBMIT
 ';
-	$cancel_form_format_localizable                          = "<table class='eme-rsvp-form'>
+	$cancel_form_format_localizable                          = "<table class='eme-rsvp-form eme-cancel-form'>
 		<tr><th scope='row'>" . __( 'Last name', 'events-made-easy' ) . "*:</th><td>#_LASTNAME</td></tr>
 		<tr><th scope='row'>" . __( 'First name', 'events-made-easy' ) . "*:</th><td>#REQ_FIRSTNAME</td></tr>
 		<tr><th scope='row'>" . __( 'Email', 'events-made-easy' ) . '*:</th><td>#_EMAIL</td></tr>
@@ -79,7 +79,7 @@ function eme_add_options( $reset = 0 ) {
 	$eme_membership_attendance_msg_localizeable        = __( 'OK, member #_MEMBERID (#_PERSONFULLNAME) is active.', 'events-made-easy' );
 	$task_signup_recorded_ok_html_localizable          = __( 'You have successfully signed up for this task', 'events-made-easy' );
 	$task_signup_cancelled_ok_html_localizable         = __( 'You have successfully cancelled your signup for this task', 'events-made-easy' );
-	$task_form_format_localizable                      = "<table class='eme-rsvp-form'>
+	$task_form_format_localizable                      = "<table class='eme-rsvp-form eme-tasks-form'>
 		<tr><th scope='row'>" . __( 'Last name', 'events-made-easy' ) . "*:</th><td>#_LASTNAME</td></tr>
 		<tr><th scope='row'>" . __( 'First name', 'events-made-easy' ) . "*:</th><td>#REQ_FIRSTNAME</td></tr>
 		<tr><th scope='row'>" . __( 'Email', 'events-made-easy' ) . '*:</th><td>#_EMAIL</td></tr>

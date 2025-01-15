@@ -597,10 +597,6 @@ function eme_frontend_nocache_headers() {
 	}
 }
 
-function eme_enqueue_fdatepicker() {
-	return eme_enqueue_datetimepicker();
-}
-
 function eme_enqueue_datetimepicker() {
 	if ( get_option( 'eme_load_js_in_header' ) ) {
 		$load_js_in_footer = false;

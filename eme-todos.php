@@ -37,7 +37,7 @@ function eme_handle_todos_post_adminform( $event_id ) {
 		if ( eme_is_empty_string( $eme_todo['name'] ) ) {
 			continue;
 		}
-		$eme_todo['description'] = eme_sanitize_textarea( $eme_todo['description'] );
+		$eme_todo['description'] = eme_sanitize_request( $eme_todo['description'] );
 		// we check for todo nbr to know if we need an update or insert
 		if ( empty( $eme_todo['todo_nbr'] ) ) {
 			$eme_todo['todo_nbr'] = $next_todo_nbr;

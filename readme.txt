@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.31
+Stable tag: 2.5.32
 Requires PHP: 8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.32 (2025/01/16) =
+* Remove use of old deprecated function in todos, it caused a php error if todos were defined for an event
+
 = 2.5.31 (2025/01/14) =
 * Both the shortcodes eme_mybookings and eme_bookings now accept multiple id's in the id-param, to indicate multiple events:
   [eme_bookings id="1,3,5" template_id=3 template_id_header=7 template_id_footer=9]

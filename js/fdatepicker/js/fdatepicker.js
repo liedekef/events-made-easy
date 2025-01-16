@@ -794,18 +794,22 @@
         },
 
         _resizeInput: function (input) {
-            // if the browser supports field-sizing and the field sizing is set to content; we don't need to do anything
-            if (CSS.supports('field-sizing', 'content') && input.css('field-sizing') === 'content') {
-                return;
-            }
             if (!this.opts.fieldSizing) {
                 return;
             }
+ 
             // make sure the empty field has a minimum inline size
             if (!(input.val() || input.attr('placeholder')) && input.css('min-inline-size') == "0px") {
                 input.css({'min-inline-size': '10ch'});
             }
 
+            // if the browser supports field-sizing, use that
+            if (CSS.supports('field-sizing', 'content')) {
+                input.css({'field-sizing': 'content'});
+                return;
+            }
+
+            // For browsers that don't support field-sizing: fake it
             // Create a temporary span to measure the text width
             const tempSpan = $('<span>').css({
                 'font-family': input.css('font-family'),
@@ -819,7 +823,7 @@
             tempSpan.text(input.val() || input.attr('placeholder'));
 
             // Calculate the width and set it to the input
-            const newWidth = tempSpan.width(); // Adding some padding
+            const newWidth = tempSpan.width();
             input.width(newWidth);
 
             // Remove the temporary span

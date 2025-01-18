@@ -8757,6 +8757,8 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
 		?>
 	</p>
 	<p id='p_approve_settings' style="background-color: lightgrey; padding: 5px;">
+	<b><?php esc_html_e('Extra approval settings (also check out the mail templates)','events-made-easy'); ?></b>
+		<br />
 		<?php echo eme_ui_checkbox_binary( $event['event_properties']['auto_approve'], 'eme_prop_auto_approve', __( 'Auto-approve booking upon payment', 'events-made-easy' ) ); ?>
 		<br />
 		<?php echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending'], 'eme_prop_ignore_pending', __( 'Consider pending bookings as available seats for new bookings', 'events-made-easy' ) . '<br>' . __( 'In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments.', 'events-made-easy' ) ); ?>

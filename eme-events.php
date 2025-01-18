@@ -599,9 +599,9 @@ function eme_events_page() {
 		}
 
 		// validation successful
-		if ( isset( $_POST['location-select-id'] ) && $_POST['location-select-id'] != '' ) {
+		if ( !empty( $_POST['location-select-id'] ) ) {
 			$event['location_id'] = intval( $_POST['location-select-id'] );
-		} elseif ( isset( $_POST['location_id'] ) && intval( $_POST['location_id'] ) > 0 ) {
+		} elseif ( !empty( $_POST['location_id'] ) ) {
 			$event['location_id'] = intval( $_POST['location_id'] );
 		} elseif ( empty( $location['location_name'] ) && empty( $location['location_address1'] ) && empty( $location['location_city'] ) ) {
 			$event['location_id'] = 0;
@@ -706,7 +706,7 @@ function eme_events_page() {
 			} elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
 				( current_user_can( get_option( 'eme_cap_author_event' ) ) && $orig_event['event_author'] == $current_userid ) ) {
 
-				if ( isset( $_POST['repeated_event'] ) && $_POST['repeated_event'] ) {
+                if ( ! empty( $_POST['repeated_event'] ) ) {
 					// we go from single event to recurrence: create the recurrence and delete the single event
 					$recurrence_id = eme_db_insert_recurrence( $recurrence, $event );
 					if ( ! $recurrence_id ) {
@@ -1309,7 +1309,6 @@ function eme_events_page_content() {
 		return $page_body;
 	}
 
-	//if (isset ( $_REQUEST['event_id'] ) && $_REQUEST['event_id'] != '') {
 	if ( eme_is_single_event_page() ) {
 		// single event page
 		$event_id = eme_sanitize_request( get_query_var( 'event_id' ) );
@@ -6386,6 +6385,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		<h3><?php esc_html_e( 'RSVP Email format settings', 'events-made-easy' ); ?></h3>
 		<?php
 		$templates_array = eme_get_templates_array_by_id( 'rsvpmail' );
+		# use the same name for all details, so only one is open at the same time
 		echo '<details name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Booking Made or Approved Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_approved_email( $event, $templates_array, $pdf_templates_array );
@@ -6394,7 +6394,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
 		echo '<summary>' . esc_html__( 'Booking Awaiting User Confirmation Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_userpending_email( $event, $templates_array );
 		echo '</div></details>';
-		echo '<details name="eme_details_rsvp" class="eme_accordion">';
+		echo '<details id="details_pending" name="eme_details_rsvp" class="eme_accordion">';
 		echo '<summary>' . esc_html__( 'Booking Pending Email', 'events-made-easy' ) . '</summary><div>';
 		eme_meta_box_div_event_registration_pending_email( $event, $templates_array, $pdf_templates_array );
 		echo '</div></details>';
@@ -7955,8 +7955,8 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 	<div id="event_registration_pending_reminder_email_body_div" <?php echo $showhide_style; ?>>
 	<?php eme_wysiwyg_textarea( 'event_registration_pending_reminder_email_body', $event['event_properties']['event_registration_pending_reminder_email_body'], $use_html_editor, 0 ); ?> 
 	</div>
-</div>
 	<br>
+</div>
 <div id="div_event_registration_reminder_email">
 	<b><?php esc_html_e( 'Accepted Booking Reminder Email Subject', 'events-made-easy' ); ?></b>
 	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent as a reminder of an approved booking.', 'events-made-easy' ); ?>
@@ -8742,27 +8742,25 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
 
 	?>
 <div id="div_event_rsvp">
-	<p id='p_approval_required'>
-		<input id="approval_required-checkbox" name='registration_requires_approval' value='1' type='checkbox' <?php echo $registration_requires_approval; ?>>
-		<label for="approval_required-checkbox"><?php esc_html_e( 'Require booking approval', 'events-made-easy' ); ?></label>
-		<br>
-	<?php
-	if ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
-        print "<span id='span_approval_required_mail_warning'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</span>';
-	}
-	?>
-	</p>
 	<p id='p_user_confirmation_required'>
 		<?php echo eme_ui_checkbox_binary( $event['event_properties']['require_user_confirmation'], 'eme_prop_require_user_confirmation', __( 'Require user confirmation after booking', 'events-made-easy' ) ); ?>
 		<span class="eme_smaller"><br><?php esc_html_e( "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent to a booker.", 'events-made-easy' ); ?></span>
 	</p>
-	<p id='p_auto_approve'>
+	<p id='p_approval_required'>
+		<input id="approval_required-checkbox" name='registration_requires_approval' value='1' type='checkbox' <?php echo $registration_requires_approval; ?>>
+		<label for="approval_required-checkbox"><?php esc_html_e( 'Require booking approval', 'events-made-easy' ); ?></label>
+		<br>
+		<?php
+		if ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
+        		print "<span id='span_approval_required_mail_warning'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</span>';
+		}
+		?>
+	</p>
+	<p id='p_approve_settings' style="background-color: lightgrey; padding: 5px;">
 		<?php echo eme_ui_checkbox_binary( $event['event_properties']['auto_approve'], 'eme_prop_auto_approve', __( 'Auto-approve booking upon payment', 'events-made-easy' ) ); ?>
-	</p>
-	<p id='p_ignore_pending'>
+		<br />
 		<?php echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending'], 'eme_prop_ignore_pending', __( 'Consider pending bookings as available seats for new bookings', 'events-made-easy' ) . '<br>' . __( 'In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments.', 'events-made-easy' ) ); ?>
-	</p>
-		<p id='p_rsvp_pending_reminder_days'>
+		<br />
 		<input id="eme_prop_rsvp_pending_reminder_days" name='eme_prop_rsvp_pending_reminder_days' type='text' value="<?php echo eme_esc_html( $eme_prop_rsvp_pending_reminder_days ); ?>">
 		<label for="eme_prop_rsvp_pending_reminder_days"><?php esc_html_e( 'Set the number of days before reminder emails will be sent for pending bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
 	</p>

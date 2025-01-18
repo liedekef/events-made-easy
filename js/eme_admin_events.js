@@ -108,15 +108,14 @@ jQuery(document).ready( function($) {
     function updateShowHideRsvpAutoApprove() {
         if ($('input#approval_required-checkbox').prop('checked')) {
             $('span#span_approval_required_mail_warning').fadeIn();
-            $('p#p_auto_approve').fadeIn();
-            $('p#p_auto_approve').fadeIn();
-            $('p#p_ignore_pending').fadeIn();
-            $('p#p_rsvp_pending_reminder_days').fadeIn();
+            $('#p_approve_settings').fadeIn();
+            $('#details_pending').show();
+            $('#div_event_registration_pending_reminder_email').show();
         } else {
             $('span#span_approval_required_mail_warning').hide();
-            $('p#p_auto_approve').fadeOut();
-            $('p#p_ignore_pending').fadeOut();
-            $('p#p_rsvp_pending_reminder_days').fadeOut();
+            $('#p_approve_settings').fadeOut();
+            $('#details_pending').hide();
+            $('#div_event_registration_pending_reminder_email').hide();
         }
     }
 
@@ -464,9 +463,7 @@ jQuery(document).ready( function($) {
 
     function validateEventForm() {
         // users cannot submit the event form unless some fields are filled
-        let recurring = $('input[name=repeated_event]:checked').val();
-
-        if (recurring && $('input#localized-rec-start-date').val() == $('input#localized-rec-end-date').val()) {
+        if ($('input#event-recurrence').prop('checked') && $('input#localized-rec-start-date').val() == $('input#localized-rec-end-date').val()) {
             alert (emeevents.translate_startenddate_identical); 
             $('input#localized-rec-end-date').css('border','2px solid red');
             return false;

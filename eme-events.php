@@ -7189,9 +7189,9 @@ function eme_meta_box_div_event_datetime( $event, $recurrence, $edit_recurrence 
 		<?php esc_html_e( 'The time of the event beginning and end', 'events-made-easy' ); ?>
 		</p>
 		</div>
-		<br>
+		<p>
 		<?php echo eme_ui_checkbox_binary( $event['event_properties']['all_day'], 'eme_prop_all_day', __( 'This event lasts all day', 'events-made-easy' ) ); ?>
-		<br>
+		</p>
 		<?php
 		if ( $show_recurrent_form == 1 ) {
 			?>

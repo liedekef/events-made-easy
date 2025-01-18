@@ -1225,7 +1225,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 				$label = __('Remember me?','events-made-easy');
 			}
 			if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-				$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field' );
+				$replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field' );
 			}
 		} elseif ( preg_match( '/#_BIRTHDATE(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -1337,7 +1337,7 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			}
 			$fieldname = 'task_gdpr';
 			if ( ! $eme_is_admin_request ) {
-				$replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field' );
+				$replacement = eme_nobreak_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field' );
 			}
                 } elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) {
                         if ( !empty($selected_captcha) && ! $captcha_set ) {
@@ -1938,7 +1938,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 				$label = '';
 			}
 			if ( ! $eme_is_admin_request ) {
-				$replacement = eme_ui_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field nodynamicupdates' );
+				$replacement = eme_nobreak_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field nodynamicupdates' );
 			}
 		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
@@ -1948,7 +1948,7 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 				$label = __('Remember me?','events-made-easy');
 			}
 			if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-				$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+				$replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
 			}
 		} elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
 			if ( is_numeric( $matches[1] ) ) {
@@ -3054,7 +3054,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 				}
 				$fieldname = 'gdpr';
 				if ( ! $eme_is_admin_request ) {
-					$replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field nodynamicupdates', $disabled );
+					$replacement = eme_nobreak_checkbox_binary( $gdpr, $fieldname, $label, 1, 'eme-gdpr-field nodynamicupdates', $disabled );
 				}
 			}
 		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
@@ -3066,7 +3066,7 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 					$label = __('Remember me?','events-made-easy');
 				}
 				if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-					$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+					$replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
 				}
 			}
 		} elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
@@ -3977,7 +3977,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
             }
             $fieldname = 'gdpr';
             if ( ! $eme_is_admin_request ) {
-                $replacement = eme_ui_checkbox_binary( $gdpr, $fieldname, $label, 1, "eme-gdpr-field nodynamicupdates $personal_info_class", $disabled );
+                $replacement = eme_nobreak_checkbox_binary( $gdpr, $fieldname, $label, 1, "eme-gdpr-field nodynamicupdates $personal_info_class", $disabled );
             }
         } elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
             if ( isset( $matches[1] ) ) {
@@ -3987,7 +3987,7 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
                 $label = __('Remember me?','events-made-easy');
             }
             if ( ! $eme_is_admin_request && ! is_user_logged_in()) {
-                $replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+                $replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
             }
         } elseif ( preg_match( '/#_SUBSCRIBE_TO_GROUP\{(.+?)\}(\{.+?\})?/', $result, $matches ) ) {
             if ( is_numeric( $matches[1] ) ) {
@@ -4332,7 +4332,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 			} else {
 				$label = '';
 			}
-			$replacement = eme_ui_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field' );
+			$replacement = eme_nobreak_checkbox_binary( $gdpr, 'gdpr', $label, 1, 'eme-gdpr-field' );
 		} elseif ( preg_match( '/#_REMEMBERME(\{.+?\})?/', $result, $matches ) ) {
 			if ( isset( $matches[1] ) ) {
 				// remove { and } (first and last char of second match)
@@ -4341,7 +4341,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
 				$label = __('Remember me?','events-made-easy');
 			}
 			if ( ! is_user_logged_in()) {
-				$replacement = eme_ui_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
+				$replacement = eme_nobreak_checkbox_binary( 0, 'eme_rememberme', $label, 0, 'eme-rememberme-field nodynamicupdates' );
 			}
 		} elseif ( preg_match( '/#_CFCAPTCHA|#_HCAPTCHA|#_RECAPTCHA|#_CAPTCHA$/', $result ) ) { 
 			if ( !empty($selected_captcha) && ! $captcha_set ) { 

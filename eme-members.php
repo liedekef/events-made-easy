@@ -3047,7 +3047,7 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
             $label = __( 'Exact?', 'events-made-easy' );
         }
         $title = esc_attr(__( 'Exact custom field search match', 'events-made-easy' ));
-        echo eme_ui_checkbox_binary( $value, 'search_exactmatch', $label, 0, '', "title='$title'");
+        echo eme_nobreak_checkbox_binary( $value, 'search_exactmatch', $label, 0, '', "title='$title'");
     }
 }
 

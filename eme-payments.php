@@ -1878,7 +1878,7 @@ function eme_notification_legacypaypal() {
 	$ipn->currencies = false;
 
 	// date format on log headers (default: dd/mm/YYYY HH:mm:ss)
-	// see http://php.net/date
+	// see https://php.net/date
 	$ipn->date_format = 'd/m/Y H:i:s';
 
 	// Prefix for file and mail logs

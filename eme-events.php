@@ -9073,7 +9073,7 @@ function eme_rss() {
 ?>
 </description>
 <docs>
-http://blogs.law.harvard.edu/tech/rss
+https://www.rssboard.org/rss-specification
 </docs>
 <generator>
 Weblog Editor 2.0

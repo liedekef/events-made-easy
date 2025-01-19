@@ -788,7 +788,7 @@ function eme_update_user_phone( $user_id, $phone ) {
     update_user_meta( $user_id, 'eme_phone', $phone );
 }
 
-// got from http://davidwalsh.name/php-email-encode-prevent-spam
+// got from https://davidwalsh.name/php-email-encode-prevent-spam
 function eme_ascii_encode( $e, $target = 'html' ) {
     return eme_email_obfuscate( $e, $target );
 }
@@ -2826,7 +2826,7 @@ function eme_sanitize_attach_filename( $filename, $use_simple_sanitize=0 ) {
         $filename = preg_replace(
             '~
             [<>:"/\\\|?*]|           # file system reserved https://en.wikipedia.org/wiki/Filename#Reserved_characters_and_words
-            [\x00-\x1F]|             # control characters http://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx
+            [\x00-\x1F]|             # control characters https://msdn.microsoft.com/en-us/library/windows/desktop/aa365247%28v=vs.85%29.aspx
             [\x7F\xA0\xAD]|          # non-printing characters DEL, NO-BREAK SPACE, SOFT HYPHEN
             [#\[\]@!$&\'()+,;=]|     # URI reserved https://www.rfc-editor.org/rfc/rfc3986#section-2.2
                 [{}^\~`]                 # URL unsafe characters https://www.ietf.org/rfc/rfc1738.txt

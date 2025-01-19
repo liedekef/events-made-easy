@@ -163,7 +163,7 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
             $message = __( 'Empty email', 'events-made-easy' );
         }
 
-        // Reset content-type to avoid conflicts -- http://core.trac.wordpress.org/ticket/23578
+        // Reset content-type to avoid conflicts
         //if ( $mailoptions['send_html'] ) {
         //	remove_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
         //}

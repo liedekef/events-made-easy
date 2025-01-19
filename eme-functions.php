@@ -1882,6 +1882,9 @@ function eme_is_integer_array( $only_integers ) {
 }
 
 function eme_is_list_of_int( $text ) {
+    if (empty($text)) {
+        return false;
+    }
     $id_arr = explode( ',', $text );
     return eme_is_integer_array( $id_arr );
 }

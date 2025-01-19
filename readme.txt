@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.33 (2025/01/19) =
+* Small bugfix due to the eme_mybookings and eme_bookings change
+
 = 2.5.32 (2025/01/16) =
 * Remove use of old deprecated function in todos, it caused a php error if todos were defined for an event
 

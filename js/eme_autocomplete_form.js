@@ -79,7 +79,7 @@ jQuery(document).ready( function($) {
             let inputField = $(this);
             let inputValue = inputField.val();
             $(".eme-autocomplete-suggestions").remove();
-            if (inputField.length >= 2) {
+            if (inputValue.length >= 2) {
                 let requestData = inputField.parents('form:first').serializeArray();
                 requestData.push({name: 'eme_ajax_action', value: 'task_autocomplete_people'});
                 frontend_tasklastname_timeout = setTimeout(function() {

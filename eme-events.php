@@ -589,7 +589,7 @@ function eme_events_page() {
 		$event             = eme_sanitize_event( $event );
 		$location          = eme_sanitize_location( $location );
 		$validation_result = eme_validate_event( $event );
-		if ( $validation_result != 'OK' ) {
+		if ( !empty($validation_result) ) {
 			// validation unsuccessful
 			echo "<div id='message' class='error '>
                   <p>$validation_result</p>
@@ -6882,7 +6882,7 @@ function eme_validate_event( $event ) {
 	}
 
 	if ( empty( $troubles ) ) {
-		return 'OK';
+		return '';
 	} else {
 		$message = __( 'Ach, some problems here:', 'events-made-easy' ) . "<ul>$troubles</ul>";
 		return $message;

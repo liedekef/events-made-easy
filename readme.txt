@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.34 (2025//) =
+* Add filter eme_fs_validate_event_filter, which should return empty if all FS event data validation is ok
+  Parameter: $event_data (array containing all data entered via the frontend submit form)
+
 = 2.5.33 (2025/01/19) =
 * Small bugfix due to the eme_mybookings and eme_bookings change
 

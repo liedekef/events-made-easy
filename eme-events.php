@@ -7277,7 +7277,7 @@ function eme_meta_box_div_recurrence_info( $recurrence, $edit_recurrence = 0 ) {
 		<div id="recurrence-intervals">
 			<p>
 			<?php esc_html_e( 'Every', 'events-made-easy' ); ?>
-			<input id="recurrence-interval" name='recurrence_interval' size='2' value='<?php if ( isset( $recurrence['recurrence_interval'] ) ) { echo $recurrence['recurrence_interval'];} ?>'>
+			<input id='recurrence-interval' name='recurrence_interval' type='number' min='1' max='99' step='1' value='<?php if ( isset( $recurrence['recurrence_interval'] ) ) { echo $recurrence['recurrence_interval'];} ?>'>
 			<span id="specific_months_span">
 			<?php eme_checkbox_items( 'specific_months[]', $month_names, $choosen_months ); ?>
 			</span>

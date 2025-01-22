@@ -1071,7 +1071,7 @@ function eme_replace_eventtaskformfields_placeholders( $format, $task, $event ) 
 	return $format;
 }
 
-function eme_replace_task_signupformfields_placeholders( $format ) {
+function eme_replace_task_signupformfields_placeholders( $form_id, $format ) {
 	$eme_is_admin_request = eme_is_admin_request();
 
 	if ( is_user_logged_in() ) {
@@ -1290,20 +1290,30 @@ function eme_replace_task_signupformfields_placeholders( $format ) {
 			$replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerZip' placeholder='$placeholder_text' $readonly >";
 		} elseif ( preg_match( '/#_STATE$/', $result ) ) {
 			$fieldname = 'task_state_code';
+            if (!empty($form_id)) {
+                $fieldid = $form_id.'-'.$fieldname;
+            } else {
+                $fieldid = $fieldname;
+            }
 			if ( ! empty( $bookerState_code ) ) {
 				$state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
 			} else {
 				$state_arr = [];
 			}
-			$replacement = eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, "eme_select2_state_class" );
+			$replacement = eme_form_select( $bookerState_code, $fieldname, $fieldid, $state_arr, '', $required, "eme_select2_state_class" );
 		} elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
 			$fieldname = 'task_country_code';
+            if (!empty($form_id)) {
+                $fieldid = $form_id.'-'.$fieldname;
+            } else {
+                $fieldid = $fieldname;
+            }
 			if ( ! empty( $bookerCountry_code ) ) {
 				$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
 			} else {
 				$country_arr = [];
 			}
-			$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, "eme_select2_country_class" );
+			$replacement = eme_form_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, "eme_select2_country_class" );
 		} elseif ( preg_match( '/#_BIRTHDAY_EMAIL$/', $result ) ) {
 			$replacement = eme_ui_select_binary( $bd_email, 'task_bd_email' );
 		} elseif ( preg_match( '/#_OPT_OUT$/', $result ) ) {
@@ -1683,7 +1693,7 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
 
 // the event param in eme_replace_extra_multibooking_formfields_placeholders
 // is only there for generic replacements, like e.g. currency
-function eme_replace_extra_multibooking_formfields_placeholders( $format, $event ) {
+function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $format, $event ) {
 	$bookerLastName     = '';
 	$bookerFirstName    = '';
 	$bookerBirthdate    = '';
@@ -1866,12 +1876,18 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			}
 			$replacement = "<input $required_att type='text' name='city' id='city' value='$bookerCity' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_STATE$/', $result ) ) {
+			$fieldname = 'state_code';
+            if (!empty($form_id)) {
+                $fieldid = $form_id.'-'.$fieldname;
+            } else {
+                $fieldid = $fieldname;
+            }
 			if ( ! empty( $bookerState_code ) ) {
 				$state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
 			} else {
 				$state_arr = [];
 			}
-			$replacement = eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, 'eme_select2_state_class' );
+			$replacement = eme_form_select( $bookerState_code, $fieldname, $fieldid, $state_arr, '', $required, 'eme_select2_state_class' );
 		} elseif ( preg_match( '/#_(ZIP|POSTAL)(\{.+?\})?$/', $result, $matches ) ) {
 			if ( isset( $matches[2] ) ) {
 				// remove { and } (first and last char of second match)
@@ -1882,24 +1898,36 @@ function eme_replace_extra_multibooking_formfields_placeholders( $format, $event
 			}
 			$replacement = "<input $required_att type='text' name='zip' id='zip' value='$bookerZip' placeholder='$placeholder_text'>";
 		} elseif ( preg_match( '/#_COUNTRY\{(.+)\}$/', $result, $matches ) ) {
+			$fieldname = 'country_code';
+            if (!empty($form_id)) {
+                $fieldid = $form_id.'-'.$fieldname;
+            } else {
+                $fieldid = $fieldname;
+            }
 			if ( ! empty( $bookerCountry_code ) ) {
 				$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
-				$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
+				$replacement = eme_ui_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, 'eme_select2_country_class' );
 			} else {
 				$country_code = $matches[1];
 				$country_name = eme_get_country_name( $country_code );
 				if ( ! empty( $country_name ) ) {
 					$country_arr = [ $country_code => $country_name ];
-					$replacement = eme_ui_select( $country_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
+					$replacement = eme_ui_select( $country_code, $fieldname, $fieldid, $country_arr, '', $required, 'eme_select2_country_class' );
 				}
 			}
 		} elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
+			$fieldname = 'country_code';
+            if (!empty($form_id)) {
+                $fieldid = $form_id.'-'.$fieldname;
+            } else {
+                $fieldid = $fieldname;
+            }
 			if ( ! empty( $bookerCountry_code ) ) {
 				$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
 			} else {
 				$country_arr = [];
 			}
-			$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, 'eme_select2_country_class' );
+			$replacement = eme_ui_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, 'eme_select2_country_class' );
 		} elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
 			$this_readonly = '';
 			if ( is_user_logged_in() ) {
@@ -2322,7 +2350,7 @@ function eme_replace_dynamic_membership_formfields_placeholders( $membership, $m
 	return $format;
 }
 
-function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '', $is_multibooking = 0 ) {
+function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $format = '', $is_multibooking = 0 ) {
 	$eme_is_admin_request = eme_is_admin_request();
 	// the next can happen if we would be editing a booking where the event has been deleted but somehow the booking remains
 	if ( isset( $event['event_id'] ) ) {
@@ -2947,22 +2975,32 @@ function eme_replace_rsvp_formfields_placeholders( $event, $booking, $format = '
 		} elseif ( preg_match( '/#_STATE$/', $result ) ) {
 			if ( ! $is_multibooking ) {
 				$fieldname = 'state_code';
+                if (!empty($form_id)) {
+                    $fieldid = $form_id.'-'.$fieldname;
+                } else {
+                    $fieldid = $fieldname;
+                }
 				if ( ! empty( $bookerState_code ) ) {
 					$state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
 				} else {
 					$state_arr = [];
 				}
-				$replacement = eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, "eme_select2_state_class $dynamic_field_class_basic", $disabled );
+				$replacement = eme_form_select( $bookerState_code, $fieldname, $fieldid, $state_arr, '', $required, "eme_select2_state_class $dynamic_field_class_basic", $disabled );
 			}
 		} elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
 			if ( ! $is_multibooking ) {
 				$fieldname = 'country_code';
+                if (!empty($form_id)) {
+                    $fieldid = $form_id.'-'.$fieldname;
+                } else {
+                    $fieldid = $fieldname;
+                }
 				if ( ! empty( $bookerCountry_code ) ) {
 						$country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
 				} else {
 					$country_arr = [];
 				}
-				$replacement = eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, "eme_select2_country_class $dynamic_field_class_basic", $disabled );
+				$replacement = eme_form_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, "eme_select2_country_class $dynamic_field_class_basic", $disabled );
 			}
 		} elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
 			if ( ! $is_multibooking ) {
@@ -3587,7 +3625,7 @@ function eme_replace_membership_familyformfields_placeholders( $format, $counter
 	}
 }
 
-function eme_replace_membership_formfields_placeholders( $membership, $member, $format ) {
+function eme_replace_membership_formfields_placeholders( $form_id, $membership, $member, $format ) {
     $eme_is_admin_request = eme_is_admin_request();
     $membership_id        = $membership['membership_id'];
 
@@ -3897,20 +3935,30 @@ function eme_replace_membership_formfields_placeholders( $membership, $member, $
             $replacement = "<input $required_att type='text' name='$fieldname' id='$fieldname' value='$bookerZip' $readonly $dynamic_field_personal_info_class placeholder='$placeholder_text'>";
         } elseif ( preg_match( '/#_STATE$/', $result ) ) {
             $fieldname = 'state_code';
+            if (!empty($form_id)) {
+                $fieldid = $form_id.'-'.$fieldname;
+            } else {
+                $fieldid = $fieldname;
+            }
             if ( ! empty( $bookerState_code ) ) {
                 $state_arr = [ $bookerState_code => eme_get_state_name( $bookerState_code, $bookerCountry_code ) ];
             } else {
                 $state_arr = [];
             }
-            $replacement = "<div class=$personal_info_class>" . eme_ui_select( $bookerState_code, 'state_code', $state_arr, '', $required, "eme_select2_state_class $dynamic_field_class_basic", $disabled ) . '</div>';
+            $replacement = "<div class=$personal_info_class>" . eme_form_select( $bookerState_code, $fieldname, $fieldid, $state_arr, '', $required, "eme_select2_state_class $dynamic_field_class_basic", $disabled ) . '</div>';
         } elseif ( preg_match( '/#_COUNTRY$/', $result ) ) {
             $fieldname = 'country_code';
+            if (!empty($form_id)) {
+                $fieldid = $form_id.'-'.$fieldname;
+            } else {
+                $fieldid = $fieldname;
+            }
             if ( ! empty( $bookerCountry_code ) ) {
                 $country_arr = [ $bookerCountry_code => eme_get_country_name( $bookerCountry_code ) ];
             } else {
                 $country_arr = [];
             }
-            $replacement = "<div class=$personal_info_class>" . eme_ui_select( $bookerCountry_code, 'country_code', $country_arr, '', $required, "eme_select2_country_class $dynamic_field_class_basic", $disabled ) . '</div>';
+            $replacement = "<div class=$personal_info_class>" . eme_form_select( $bookerCountry_code, $fieldname, $fieldid, $country_arr, '', $required, "eme_select2_country_class $dynamic_field_class_basic", $disabled ) . '</div>';
         } elseif ( preg_match( '/#_(EMAIL|HTML5_EMAIL)(\{.+?\})?$/', $result, $matches ) ) {
             $fieldname = 'email';
             if ( is_user_logged_in() && ! $eme_is_admin_request ) {

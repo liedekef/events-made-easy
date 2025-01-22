@@ -184,7 +184,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 	$form_html .= "<input type='hidden' name='person_id' value=''>";
 
 	if ( $is_multibooking ) {
-		$form_html .= eme_replace_extra_multibooking_formfields_placeholders( $format_header, $event );
+		$form_html .= eme_replace_extra_multibooking_formfields_placeholders( $form_id, $format_header, $event );
 	}
 
 	if ( $is_multibooking && $only_one_event && ! $simple ) {
@@ -252,12 +252,12 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 			// regular formfield replacement here, but indicate that it is for multibooking
 			if ( $is_multibooking ) {
 				if ( $simple ) {
-					$form_html .= eme_replace_rsvp_formfields_placeholders( $tmp_event, $new_booking, '#_SEATS <br>', $is_multibooking );
+					$form_html .= eme_replace_rsvp_formfields_placeholders( $form_id, $tmp_event, $new_booking, '#_SEATS <br>', $is_multibooking );
 				} else {
-					$form_html .= eme_replace_rsvp_formfields_placeholders( $tmp_event, $new_booking, $event_booking_format_entry, $is_multibooking );
+					$form_html .= eme_replace_rsvp_formfields_placeholders( $form_id, $tmp_event, $new_booking, $event_booking_format_entry, $is_multibooking );
 				}
 			} else {
-				$form_html .= eme_replace_rsvp_formfields_placeholders( $tmp_event, $new_booking );
+				$form_html .= eme_replace_rsvp_formfields_placeholders( $form_id, $tmp_event, $new_booking );
 			}
 		}
 	}
@@ -272,7 +272,7 @@ function eme_add_multibooking_form( $events, $template_id_header = 0, $template_
 				$form_html  .= "<input type='hidden' name='$fieldname' value='1'>";
 			}
 		}
-		$form_html .= eme_replace_extra_multibooking_formfields_placeholders( $format_footer, $event );
+		$form_html .= eme_replace_extra_multibooking_formfields_placeholders( $form_id, $format_footer, $event );
 	}
 	$form_html .= '</form></div>';
 	if ( has_filter( 'eme_add_booking_form_filter' ) ) {
@@ -4696,7 +4696,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 		$ret_string .= __( 'Send mails for new booking?', 'events-made-easy' ) . eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' );
 		$ret_string .= '<br>';
 		$new_booking = eme_new_booking();
-		$ret_string .= eme_replace_rsvp_formfields_placeholders( $event, $new_booking );
+		$ret_string .= eme_replace_rsvp_formfields_placeholders( '', $event, $new_booking );
 		$ret_string .= "
 	    <input type='hidden' name='eme_admin_action' value='addBooking'>
 	    <input type='hidden' name='event_id' value='$event_id'>
@@ -4748,7 +4748,7 @@ function eme_registration_seats_page( $pending = 0 ) {
 		} elseif ( $booking['event_price'] != $event['price'] ) {
 			$ret_string .= "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . __( 'Warning: the price of the event has changed compared to this booking, the new price will be taken into account for changes!', 'events-made-easy' ) . '<br>';
 		}
-		$ret_string .= eme_replace_rsvp_formfields_placeholders( $event, $booking );
+		$ret_string .= eme_replace_rsvp_formfields_placeholders( '', $event, $booking );
 		if ( ! empty( $event['event_id'] ) ) {
 			$ret_string .= "
 	 <input type='hidden' name='eme_admin_action' value='updateBooking'>

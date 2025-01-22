@@ -1799,7 +1799,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
 ";
     }
 
-    $form_html .= eme_replace_membership_formfields_placeholders( $membership, $member, $format_prefix.$format );
+    $form_html .= eme_replace_membership_formfields_placeholders( $form_id, $membership, $member, $format_prefix.$format );
 
     if ( ! $from_backend ) {
         if (!empty($member['member_id'])) {

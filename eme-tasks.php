@@ -1413,7 +1413,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 		if (empty($signupform_format)) {
 			$signupform_format = get_option( 'eme_task_form_format' );
 		}
-		$result .= eme_replace_task_signupformfields_placeholders( $signupform_format );
+		$result .= eme_replace_task_signupformfields_placeholders( $form_id, $signupform_format );
 	} else {
 		$result = "<div id='eme-tasks-message' class='eme-message-info eme-tasks-message eme-no-tasks'>" . __( 'There are no tasks to sign up for right now', 'events-made-easy' ) . '</div>';
 	}

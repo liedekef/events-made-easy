@@ -233,6 +233,49 @@ function eme_ui_select_binary( $option_value, $name, $required = 0, $class = '',
 	return $val;
 }
 
+function eme_form_select( $option_value, $name, $id, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
+	// make sure it is an array, otherwise just go back
+	if ( ! is_array( $list ) ) {
+		return;
+	}
+
+	if ( $required ) {
+		$required_att = "required='required'";
+	} else {
+		$required_att = '';
+	}
+	if ( $class ) {
+		$class_att = "class='$class'";
+	} else {
+		$class_att = '';
+	}
+
+	$name = wp_strip_all_tags( $name );
+	if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+		$extra_attributes .= ' aria-label="' . $name . '"';
+	}
+
+	$val = "<select $class_att $required_att id='$id' name='$name' $extra_attributes >";
+	if ( $add_empty_first != '' ) {
+		$val .= "<option value=''>$add_empty_first</option>";
+	}
+	foreach ( $list as $key => $value ) {
+		if ( is_array( $value ) ) {
+			$t_key   = $value[0];
+			$t_value = eme_esc_html( $value[1] );
+		} else {
+			$t_key   = $key;
+			$t_value = eme_esc_html( $value );
+		}
+		if ( empty( $t_value ) && $t_value !== '0' ) {
+			$t_value = '&nbsp;';
+		}
+		"$t_key" === "$option_value" ? $selected = "selected='selected' " : $selected = '';
+		$val                                    .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+	}
+	$val .= ' </select>';
+	return $val;
+}
 function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
 	// make sure it is an array, otherwise just go back
 	if ( ! is_array( $list ) ) {

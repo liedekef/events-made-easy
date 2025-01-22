@@ -1025,8 +1025,8 @@ jQuery(document).ready( function($) {
     if ($('.eme_select2_width50_class').length) {
         $('.eme_select2_width50_class').select2({width: '50%'});
     }
-    if ($('#country_code.eme_select2_country_class').length) {
-        $('#country_code.eme_select2_country_class').select2({
+    if ($('.eme_select2_country_class').length) {
+        $('.eme_select2_country_class').select2({
             // ajax based results mess up the width, so we need to set it
             width: '100%',
             ajax: {
@@ -1064,13 +1064,14 @@ jQuery(document).ready( function($) {
         // if the country_code changes, clear the state_code if present
         $('#country_code.eme_select2_country_class').on('change', function (e) {
             // Do something
-            if ($('#state_code.eme_select2_state_class').length) {
-                $('#state_code.eme_select2_state_class').val(null).trigger('change');
+	    let statefield = $(this).closest("form").find('[name=state_code]');
+            if (statefield.length) {
+                statefield.val(null).trigger('change');
             }
         });
     }
-    if ($('#state_code.eme_select2_state_class').length) {
-        $('#state_code.eme_select2_state_class').select2({
+    if ($('.eme_select2_state_class').length) {
+        $('.eme_select2_state_class').select2({
             // ajax based results mess up the width, so we need to set it
             width: '100%',
             ajax: {
@@ -1083,7 +1084,7 @@ jQuery(document).ready( function($) {
                         q: params.term, // search term
                         page: params.page || 1,
                         pagesize: 30,
-                        country_code: $('#country_code').val(),
+                        country_code: $(this).closest("form").find('[name=country_code]').val(),
                         action: 'eme_select_state',
                         eme_frontend_nonce: emebasic.translate_frontendnonce
                     };

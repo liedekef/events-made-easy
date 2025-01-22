@@ -1062,9 +1062,9 @@ jQuery(document).ready( function($) {
             placeholder: emebasic.translate_selectcountry
         });
         // if the country_code changes, clear the state_code if present
-        $('#country_code.eme_select2_country_class').on('change', function (e) {
+        $('.eme_select2_country_class').on('change', function (e) {
             // Do something
-	    let statefield = $(this).closest("form").find('[name=state_code]');
+            let statefield = $(this).closest("form").find('[name=state_code]');
             if (statefield.length) {
                 statefield.val(null).trigger('change');
             }

@@ -247,8 +247,8 @@ function eme_ajax_manage_attendances() {
 	if ( ! current_user_can( get_option( 'eme_cap_list_attendances' ) ) ) {
 		wp_die();
 	}
-	if ( isset( $_POST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_POST['do_action'] );
+	if ( isset( $_REQUEST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteAttendances':
 				eme_ajax_record_delete( EME_ATTENDANCES_TBNAME, 'eme_cap_manage_attendances', 'id' );

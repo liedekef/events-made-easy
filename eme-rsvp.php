@@ -1342,6 +1342,8 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
 				// a booking from the backend? Then we take the wp id from the post, not the current logged in user
 				$booker_wp_id = eme_get_wpid_by_post();
 			} elseif ( ! $eme_is_admin_request && ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
+                // a booking from the frontend from the event author or contactperson with correct rights?
+                // Then we also take the wp id from the post, not the current logged in user
 				( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) ) {
 				$booker_wp_id = eme_get_wpid_by_post();
 			} else {

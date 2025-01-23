@@ -2019,10 +2019,10 @@ function eme_ajax_manage_task_signups() {
 		wp_die();
 	}
 
-	if ( isset( $_POST['do_action'] ) ) {
-		$ids_arr   = ( isset( $_POST['id'] ) ) ? explode( ',', eme_sanitize_request($_POST['id']) ) : [];
-		$do_action = eme_sanitize_request( $_POST['do_action'] );
-		$send_mail = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 1;
+	if ( isset( $_REQUEST['do_action'] ) ) {
+		$ids_arr   = ( isset( $_REQUEST['id'] ) ) ? explode( ',', eme_sanitize_request($_POST['id']) ) : [];
+		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+		$send_mail = ( isset( $_REQUEST['send_mail'] ) ) ? intval( $_REQUEST['send_mail'] ) : 1;
 		switch ( $do_action ) {
 			case 'sendReminders':
 				eme_ajax_action_send_reminders( $ids_arr );

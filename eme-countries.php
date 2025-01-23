@@ -930,8 +930,8 @@ function eme_ajax_manage_countries() {
 		print wp_json_encode( $jTableResult );
 		wp_die();
 	}
-	if ( isset( $_POST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_POST['do_action'] );
+	if ( isset( $_REQUEST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteCountries':
 				eme_ajax_country_delete();
@@ -945,8 +945,8 @@ function eme_ajax_manage_states() {
 	if ( ! current_user_can( get_option( 'eme_cap_settings' ) ) ) {
 		wp_die();
 	}
-	if ( isset( $_POST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_POST['do_action'] );
+	if ( isset( $_REQUEST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteStates':
 				eme_ajax_record_delete( EME_STATES_TBNAME, 'eme_cap_settings', 'id' );

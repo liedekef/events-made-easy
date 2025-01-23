@@ -5427,9 +5427,9 @@ function eme_ajax_manage_people() {
 
 function eme_ajax_manage_groups() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-	if ( isset( $_POST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_POST['do_action'] );
-		$ids       = eme_sanitize_request( $_POST['group_id'] );
+	if ( isset( $_REQUEST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
+		$ids       = eme_sanitize_request( $_REQUEST['group_id'] );
 		$ids_arr   = explode( ',', $ids );
 		if ( ! eme_is_numeric_array( $ids_arr ) || ! current_user_can( get_option( 'eme_cap_edit_people' ) ) ) {
 			$ajaxResult            = [];

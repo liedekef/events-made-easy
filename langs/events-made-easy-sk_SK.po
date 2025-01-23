@@ -58,12 +58,12 @@ msgstr "v mene %s"
 #: eme-events.php:10156
 #: eme-events.php:10547
 #: eme-events.php:10797
-#: eme-formfields.php:5026
-#: eme-formfields.php:5077
-#: eme-formfields.php:5088
-#: eme-formfields.php:5089
-#: eme-formfields.php:5111
-#: eme-formfields.php:5112
+#: eme-formfields.php:5074
+#: eme-formfields.php:5125
+#: eme-formfields.php:5136
+#: eme-formfields.php:5137
+#: eme-formfields.php:5159
+#: eme-formfields.php:5160
 #: eme-functions.php:3295
 #: eme-functions.php:3316
 #: eme-functions.php:3317
@@ -90,13 +90,13 @@ msgstr "v mene %s"
 #: eme-recurrence.php:631
 #: eme-recurrence.php:800
 #: eme-rsvp.php:1265
-#: eme-rsvp.php:4677
-#: eme-rsvp.php:4684
-#: eme-rsvp.php:4715
-#: eme-rsvp.php:4722
-#: eme-rsvp.php:4770
-#: eme-rsvp.php:5577
-#: eme-rsvp.php:5599
+#: eme-rsvp.php:4679
+#: eme-rsvp.php:4686
+#: eme-rsvp.php:4717
+#: eme-rsvp.php:4724
+#: eme-rsvp.php:4772
+#: eme-rsvp.php:5579
+#: eme-rsvp.php:5601
 #: eme-tasks.php:1902
 #: eme-tasks.php:2006
 #: eme-tasks.php:2017
@@ -130,7 +130,7 @@ msgstr "Miesto"
 #: eme-locations.php:572
 #: eme-people.php:1035
 #: eme-people.php:2373
-#: eme-rsvp.php:1472
+#: eme-rsvp.php:1474
 msgid "State"
 msgstr "Štát"
 
@@ -146,7 +146,7 @@ msgstr "Štát"
 #: eme-locations.php:580
 #: eme-people.php:1036
 #: eme-people.php:2377
-#: eme-rsvp.php:1477
+#: eme-rsvp.php:1479
 msgid "Country"
 msgstr "Krajina"
 
@@ -272,7 +272,7 @@ msgstr "Ak naskenuje rezerváciu alebo QR kód člena niekto s dostatočnými pr
 #: eme-attendances.php:134
 #: eme-events.php:6003
 #: eme-events.php:6152
-#: eme-rsvp.php:5200
+#: eme-rsvp.php:5202
 #: eme-tasks.php:471
 msgid "Filter on start date"
 msgstr "Filtrovať podľa dátumu začiatku"
@@ -280,7 +280,7 @@ msgstr "Filtrovať podľa dátumu začiatku"
 #: eme-attendances.php:136
 #: eme-events.php:6005
 #: eme-events.php:6154
-#: eme-rsvp.php:5202
+#: eme-rsvp.php:5204
 #: eme-tasks.php:473
 msgid "Filter on end date"
 msgstr "Filtrovať podľa dátumu ukončenia"
@@ -302,7 +302,7 @@ msgstr "Filtrovať podľa účasti"
 #: eme-members.php:3321
 #: eme-people.php:1856
 #: eme-people.php:2662
-#: eme-rsvp.php:5308
+#: eme-rsvp.php:5310
 #: eme-tasks.php:496
 #: eme-templates.php:208
 msgid "Hint: rightclick on the column headers to show/hide columns"
@@ -331,7 +331,7 @@ msgstr "Upraviť osobu"
 
 #: eme-attendances.php:218
 #: eme-events.php:10467
-#: eme-rsvp.php:5916
+#: eme-rsvp.php:5918
 msgid "All day"
 msgstr "Celý deň"
 
@@ -363,7 +363,7 @@ msgstr "Nie je definované v šablónach"
 
 #: eme-attributes.php:121
 #: eme-attributes.php:141
-#: eme-formfields.php:4930
+#: eme-formfields.php:4978
 #: eme-tasks.php:795
 #: eme-todos.php:221
 msgid "Remove"
@@ -468,7 +468,7 @@ msgstr "Názov"
 
 #: eme-categories.php:136
 #: eme-events.php:10266
-#: eme-formfields.php:5062
+#: eme-formfields.php:5110
 #: eme-holidays.php:136
 #: eme-locations.php:2979
 #: eme-members.php:6432
@@ -640,7 +640,7 @@ msgstr "Mesiacov"
 #: eme-members.php:3319
 #: eme-people.php:1854
 #: eme-people.php:2660
-#: eme-rsvp.php:5306
+#: eme-rsvp.php:5308
 #: eme-tasks.php:494
 #: eme-templates.php:206
 msgid "Apply"
@@ -716,7 +716,7 @@ msgstr "Nemáte oprávnenie spravovať zľavy!"
 #: eme-members.php:5946
 #: eme-members.php:6132
 #: eme-people.php:857
-#: eme-rsvp.php:4980
+#: eme-rsvp.php:4982
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
 msgstr "Problém s prístupom k nahranému súboru, možno nejaký problém so zabezpečením?"
 
@@ -729,7 +729,7 @@ msgstr "Problém s prístupom k nahranému súboru, možno nejaký problém so z
 #: eme-members.php:5972
 #: eme-members.php:6158
 #: eme-people.php:884
-#: eme-rsvp.php:5007
+#: eme-rsvp.php:5009
 msgid "Not all required fields present."
 msgstr "Nie sú uvedené všetky povinné polia."
 
@@ -757,7 +757,7 @@ msgstr "Import dokončený: %d vložených, %d chýb"
 #: eme-members.php:5938
 #: eme-members.php:6125
 #: eme-people.php:849
-#: eme-rsvp.php:4971
+#: eme-rsvp.php:4973
 msgid "Problem detected while uploading the file"
 msgstr "Pri nahrávaní súboru sa vyskytol problém"
 
@@ -770,7 +770,7 @@ msgstr "Pri nahrávaní súboru sa vyskytol problém"
 #: eme-members.php:5935
 #: eme-members.php:6122
 #: eme-people.php:846
-#: eme-rsvp.php:4968
+#: eme-rsvp.php:4970
 msgid "No CSV file detected: %s"
 msgstr "Nezistil sa žiadny súbor CSV: %s"
 
@@ -872,7 +872,7 @@ msgstr "Kliknutím na ikonu zobrazíte formulár na import"
 #: eme-members.php:3247
 #: eme-members.php:3258
 #: eme-people.php:2168
-#: eme-rsvp.php:5152
+#: eme-rsvp.php:5154
 msgid "Delimiter:"
 msgstr "Oddelovač:"
 
@@ -885,7 +885,7 @@ msgstr "Oddelovač:"
 #: eme-members.php:3249
 #: eme-members.php:3260
 #: eme-people.php:2170
-#: eme-rsvp.php:5154
+#: eme-rsvp.php:5156
 msgid "Enclosure:"
 msgstr "Oddelovač reťazcov:"
 
@@ -896,7 +896,7 @@ msgstr "Oddelovač reťazcov:"
 #: eme-events.php:5972
 #: eme-locations.php:863
 #: eme-people.php:2173
-#: eme-rsvp.php:5157
+#: eme-rsvp.php:5159
 msgid "Import"
 msgstr "Importovať"
 
@@ -928,7 +928,7 @@ msgstr "Jazyk by mal zodpovedať jednému z jazykov WordPress, ktoré chcete pod
 #: eme-members.php:3313
 #: eme-people.php:1804
 #: eme-people.php:2655
-#: eme-rsvp.php:5227
+#: eme-rsvp.php:5229
 #: eme-tasks.php:482
 #: eme-templates.php:203
 msgid "Bulk Actions"
@@ -1564,19 +1564,19 @@ msgstr "Pevná na miesto"
 
 #: eme-discounts.php:1631
 #: eme-discounts.php:1632
-#: eme-formfields.php:1315
-#: eme-formfields.php:1326
-#: eme-formfields.php:3028
-#: eme-formfields.php:3041
-#: eme-formfields.php:3955
-#: eme-formfields.php:3966
-#: eme-formfields.php:4588
-#: eme-formfields.php:4598
-#: eme-formfields.php:4608
-#: eme-formfields.php:5065
-#: eme-formfields.php:5067
-#: eme-formfields.php:5068
-#: eme-formfields.php:5069
+#: eme-formfields.php:1325
+#: eme-formfields.php:1336
+#: eme-formfields.php:3066
+#: eme-formfields.php:3079
+#: eme-formfields.php:4003
+#: eme-formfields.php:4014
+#: eme-formfields.php:4636
+#: eme-formfields.php:4646
+#: eme-formfields.php:4656
+#: eme-formfields.php:5113
+#: eme-formfields.php:5115
+#: eme-formfields.php:5116
+#: eme-formfields.php:5117
 #: eme-fs.php:601
 #: eme-gdpr.php:430
 #: eme-gdpr.php:431
@@ -1596,8 +1596,8 @@ msgstr "Pevná na miesto"
 #: eme-people.php:5157
 #: eme-people.php:5158
 #: eme-people.php:5232
-#: eme-rsvp.php:3852
-#: eme-rsvp.php:5953
+#: eme-rsvp.php:3854
+#: eme-rsvp.php:5955
 #: eme-ui-helpers.php:134
 #: eme-ui-helpers.php:231
 msgid "Yes"
@@ -1605,19 +1605,19 @@ msgstr "Áno"
 
 #: eme-discounts.php:1631
 #: eme-discounts.php:1632
-#: eme-formfields.php:1316
-#: eme-formfields.php:1327
-#: eme-formfields.php:3029
-#: eme-formfields.php:3042
-#: eme-formfields.php:3956
-#: eme-formfields.php:3967
-#: eme-formfields.php:4589
-#: eme-formfields.php:4599
-#: eme-formfields.php:4609
-#: eme-formfields.php:5065
-#: eme-formfields.php:5067
-#: eme-formfields.php:5068
-#: eme-formfields.php:5069
+#: eme-formfields.php:1326
+#: eme-formfields.php:1337
+#: eme-formfields.php:3067
+#: eme-formfields.php:3080
+#: eme-formfields.php:4004
+#: eme-formfields.php:4015
+#: eme-formfields.php:4637
+#: eme-formfields.php:4647
+#: eme-formfields.php:4657
+#: eme-formfields.php:5113
+#: eme-formfields.php:5115
+#: eme-formfields.php:5116
+#: eme-formfields.php:5117
 #: eme-fs.php:600
 #: eme-gdpr.php:430
 #: eme-gdpr.php:431
@@ -1637,8 +1637,8 @@ msgstr "Áno"
 #: eme-people.php:5157
 #: eme-people.php:5158
 #: eme-people.php:5232
-#: eme-rsvp.php:3852
-#: eme-rsvp.php:5953
+#: eme-rsvp.php:3854
+#: eme-rsvp.php:5955
 #: eme-ui-helpers.php:135
 #: eme-ui-helpers.php:230
 msgid "No"
@@ -1681,7 +1681,7 @@ msgstr "Stlačením tlačidla Späť v prehliadači sa vráťte na predchádzaj�
 #: eme-mailer.php:1872
 #: eme-payments.php:152
 #: eme-payments.php:1988
-#: eme-rsvp.php:5116
+#: eme-rsvp.php:5118
 msgid "No such event"
 msgstr "Žiadne takéto podujatie"
 
@@ -1724,7 +1724,7 @@ msgid "Edit Recurrence"
 msgstr "Upraviť opakovanie"
 
 #: eme-events.php:660
-#: eme-fs.php:739
+#: eme-fs.php:743
 msgid "Database insert failed!"
 msgstr "Zlyhalo pridanie do databázy!"
 
@@ -1972,8 +1972,8 @@ msgstr "Odhlásiť z odberu emailov"
 
 #: eme-events.php:1510
 #: eme-events.php:1604
-#: eme-rsvp.php:3797
-#: eme-rsvp.php:3811
+#: eme-rsvp.php:3799
+#: eme-rsvp.php:3813
 msgid "Cancel booking"
 msgstr "Zrušiť rezerváciu"
 
@@ -2017,7 +2017,7 @@ msgstr "Stránka pluginu Events Made Easy"
 #: eme-events.php:9930
 #: eme-events.php:9985
 #: eme-locations.php:2423
-#: eme-rsvp.php:5797
+#: eme-rsvp.php:5799
 msgid "Edit"
 msgstr "(Upraviť)"
 
@@ -2172,20 +2172,20 @@ msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr "Import dokončený: %d vložení, %d aktualizácií, %d chýb"
 
 #: eme-events.php:5922
-#: eme-rsvp.php:5083
+#: eme-rsvp.php:5085
 #: eme-tasks.php:446
 msgid "Past events"
 msgstr "Minulé podujatia"
 
 #: eme-events.php:5923
-#: eme-rsvp.php:5084
+#: eme-rsvp.php:5086
 #: eme-tasks.php:447
 #: events-manager.php:346
 msgid "All events"
 msgstr "Všetky podujatia"
 
 #: eme-events.php:5924
-#: eme-rsvp.php:5085
+#: eme-rsvp.php:5087
 #: eme-tasks.php:448
 msgid "Future events"
 msgstr "Budúce podujatia"
@@ -2211,13 +2211,13 @@ msgstr "Spravovať opakovania"
 
 #: eme-events.php:5955
 #: eme-people.php:2156
-#: eme-rsvp.php:5140
+#: eme-rsvp.php:5142
 msgid "Show regular content"
 msgstr "Zobraziť zoznam rezervácií"
 
 #: eme-events.php:5957
 #: eme-people.php:2158
-#: eme-rsvp.php:5142
+#: eme-rsvp.php:5144
 msgid "Show trash content"
 msgstr "Zobraziť obsah koša"
 
@@ -2226,12 +2226,12 @@ msgid "If you want, use this to import events into the database"
 msgstr "Ak chcete, pomocou tohto môžete importovať podujatia do databázy"
 
 #: eme-events.php:5993
-#: eme-rsvp.php:5190
+#: eme-rsvp.php:5192
 msgid "All categories"
 msgstr "Všetky kategórie"
 
 #: eme-events.php:5994
-#: eme-rsvp.php:5191
+#: eme-rsvp.php:5193
 msgid "Events without category"
 msgstr "Podujatia bez kategórie"
 
@@ -2243,7 +2243,7 @@ msgid "Event name"
 msgstr "Názov podujatia"
 
 #: eme-events.php:6006
-#: eme-rsvp.php:5204
+#: eme-rsvp.php:5206
 msgid "Show/hide extra filters"
 msgstr "Zobraziť/skryť extra filtre"
 
@@ -2406,7 +2406,7 @@ msgstr "Ak toto podujatie zmeníte, stane sa nezávislým podujatím a bude odst
 #: eme-events.php:9965
 #: eme-events.php:10437
 #: eme-options.php:1279
-#: eme-rsvp.php:5875
+#: eme-rsvp.php:5877
 msgid "RSVP"
 msgstr "Rezervácie"
 
@@ -2620,13 +2620,13 @@ msgstr "Rezervácie a úlohy"
 
 #: eme-events.php:6592
 #: eme-events.php:10289
-#: eme-rsvp.php:5810
+#: eme-rsvp.php:5812
 msgid "RSVP Info: "
 msgstr "Rezervácie: "
 
 #: eme-events.php:6620
 #: eme-events.php:10317
-#: eme-rsvp.php:5839
+#: eme-rsvp.php:5841
 msgid "Free: "
 msgstr "Voľné: "
 
@@ -2639,8 +2639,8 @@ msgstr "Voľné: "
 #: eme-events.php:10328
 #: eme-events.php:10385
 #: eme-events.php:10387
-#: eme-rsvp.php:5813
-#: eme-rsvp.php:5902
+#: eme-rsvp.php:5815
+#: eme-rsvp.php:5904
 msgid "Approved:"
 msgstr "Schválené:"
 
@@ -2650,14 +2650,14 @@ msgstr "Schválené:"
 #: eme-events.php:10336
 #: eme-events.php:10379
 #: eme-events.php:10381
-#: eme-rsvp.php:5900
+#: eme-rsvp.php:5902
 msgid "Pending:"
 msgstr "Čakajúce:"
 
 #: eme-events.php:6633
 #: eme-events.php:10343
 #: eme-events.php:10345
-#: eme-rsvp.php:5852
+#: eme-rsvp.php:5854
 msgid "Absent:"
 msgstr "Neprítomní:"
 
@@ -2665,31 +2665,31 @@ msgstr "Neprítomní:"
 #: eme-events.php:10349
 #: eme-members.php:6584
 #: eme-recurrence.php:727
-#: eme-rsvp.php:5855
+#: eme-rsvp.php:5857
 msgid "Max: "
 msgstr "Max: "
 
 #: eme-events.php:6639
 #: eme-events.php:10352
-#: eme-rsvp.php:5858
+#: eme-rsvp.php:5860
 msgid "(%d waiting list seats included)"
 msgstr "(%d vrátanie miest na čakacej listine)"
 
 #: eme-events.php:6644
 #: eme-events.php:10357
-#: eme-rsvp.php:5864
+#: eme-rsvp.php:5866
 msgid "Printable view"
 msgstr "Tlačiteľné zobrazenie"
 
 #: eme-events.php:6645
 #: eme-events.php:10358
-#: eme-rsvp.php:5865
+#: eme-rsvp.php:5867
 msgid "CSV export"
 msgstr "CSV export"
 
 #: eme-events.php:6666
 #: eme-events.php:10376
-#: eme-rsvp.php:5898
+#: eme-rsvp.php:5900
 msgid "Task Info: %d tasks"
 msgstr "Informácie o úlohe: %d úloh"
 
@@ -4299,12 +4299,12 @@ msgstr "Dátum ukončenia úlohy"
 #: eme-events.php:9686
 #: eme-events.php:9988
 #: eme-formfields.php:1217
-#: eme-formfields.php:2015
-#: eme-formfields.php:3192
+#: eme-formfields.php:2043
+#: eme-formfields.php:3230
 #: eme-options.php:39
 #: eme-people.php:1072
 #: eme-people.php:1399
-#: eme-rsvp.php:1481
+#: eme-rsvp.php:1483
 msgid "Comment"
 msgstr "Komentár"
 
@@ -4335,7 +4335,7 @@ msgid "Signup date"
 msgstr "Dátum prihlásenia"
 
 #: eme-events.php:9707
-#: eme-formfields.php:4871
+#: eme-formfields.php:4919
 #: eme-options.php:1548
 #: events-manager.php:353
 msgid "Templates"
@@ -4466,16 +4466,16 @@ msgstr "Zobraziť"
 #: eme-events.php:9854
 #: eme-events.php:9920
 #: eme-formfields.php:1278
-#: eme-formfields.php:1865
-#: eme-formfields.php:2931
-#: eme-formfields.php:3885
-#: eme-formfields.php:4517
+#: eme-formfields.php:1875
+#: eme-formfields.php:2959
+#: eme-formfields.php:3923
+#: eme-formfields.php:4565
 #: eme-gdpr.php:439
 #: eme-gdpr.php:578
 #: eme-locations.php:568
 #: eme-people.php:1033
 #: eme-people.php:2363
-#: eme-rsvp.php:1458
+#: eme-rsvp.php:1460
 msgid "City"
 msgstr "Mesto"
 
@@ -4483,16 +4483,16 @@ msgstr "Mesto"
 #: eme-events.php:9855
 #: eme-events.php:9921
 #: eme-formfields.php:1288
-#: eme-formfields.php:1881
-#: eme-formfields.php:2943
-#: eme-formfields.php:3895
-#: eme-formfields.php:4533
+#: eme-formfields.php:1897
+#: eme-formfields.php:2971
+#: eme-formfields.php:3933
+#: eme-formfields.php:4581
 #: eme-gdpr.php:440
 #: eme-gdpr.php:582
 #: eme-locations.php:576
 #: eme-people.php:1034
 #: eme-people.php:2368
-#: eme-rsvp.php:1461
+#: eme-rsvp.php:1463
 msgid "Postal code"
 msgstr "PSČ"
 
@@ -4538,13 +4538,13 @@ msgstr "Skupiny"
 #: eme-events.php:9850
 #: eme-events.php:9912
 #: eme-formfields.php:1170
-#: eme-formfields.php:1487
-#: eme-formfields.php:1803
-#: eme-formfields.php:2843
-#: eme-formfields.php:3423
-#: eme-formfields.php:3809
-#: eme-formfields.php:4271
-#: eme-formfields.php:4451
+#: eme-formfields.php:1497
+#: eme-formfields.php:1813
+#: eme-formfields.php:2871
+#: eme-formfields.php:3461
+#: eme-formfields.php:3847
+#: eme-formfields.php:4319
+#: eme-formfields.php:4499
 #: eme-gdpr.php:253
 #: eme-gdpr.php:434
 #: eme-gdpr.php:558
@@ -4566,14 +4566,14 @@ msgstr "Priezvisko"
 #: eme-events.php:9851
 #: eme-events.php:9913
 #: eme-formfields.php:1186
-#: eme-formfields.php:1499
-#: eme-formfields.php:1819
-#: eme-formfields.php:2870
-#: eme-formfields.php:3107
-#: eme-formfields.php:3439
-#: eme-formfields.php:3833
-#: eme-formfields.php:4285
-#: eme-formfields.php:4466
+#: eme-formfields.php:1509
+#: eme-formfields.php:1829
+#: eme-formfields.php:2898
+#: eme-formfields.php:3145
+#: eme-formfields.php:3477
+#: eme-formfields.php:3871
+#: eme-formfields.php:4333
+#: eme-formfields.php:4514
 #: eme-gdpr.php:253
 #: eme-gdpr.php:435
 #: eme-gdpr.php:562
@@ -4589,7 +4589,7 @@ msgstr "Priezvisko"
 #: eme-people.php:1730
 #: eme-people.php:2299
 #: eme-rsvp.php:71
-#: eme-rsvp.php:1444
+#: eme-rsvp.php:1446
 msgid "First name"
 msgstr "Krstné meno"
 
@@ -4597,13 +4597,13 @@ msgstr "Krstné meno"
 #: eme-events.php:9914
 #: eme-events.php:10018
 #: eme-formfields.php:1195
-#: eme-formfields.php:1508
-#: eme-formfields.php:1914
-#: eme-formfields.php:2984
-#: eme-formfields.php:3470
-#: eme-formfields.php:3933
-#: eme-formfields.php:4298
-#: eme-formfields.php:4562
+#: eme-formfields.php:1518
+#: eme-formfields.php:1942
+#: eme-formfields.php:3022
+#: eme-formfields.php:3508
+#: eme-formfields.php:3981
+#: eme-formfields.php:4346
+#: eme-formfields.php:4610
 #: eme-gdpr.php:130
 #: eme-gdpr.php:206
 #: eme-gdpr.php:324
@@ -4628,20 +4628,20 @@ msgstr "Email"
 
 #: eme-events.php:9859
 #: eme-formfields.php:1208
-#: eme-formfields.php:1997
-#: eme-formfields.php:2006
-#: eme-formfields.php:3003
-#: eme-formfields.php:3015
-#: eme-formfields.php:3455
-#: eme-formfields.php:3944
-#: eme-formfields.php:4576
+#: eme-formfields.php:2025
+#: eme-formfields.php:2034
+#: eme-formfields.php:3041
+#: eme-formfields.php:3053
+#: eme-formfields.php:3493
+#: eme-formfields.php:3992
+#: eme-formfields.php:4624
 #: eme-gdpr.php:443
 #: eme-gdpr.php:594
 #: eme-options.php:37
 #: eme-people.php:1038
 #: eme-people.php:1346
 #: eme-people.php:4358
-#: eme-rsvp.php:1437
+#: eme-rsvp.php:1439
 msgid "Phone number"
 msgstr "Telefón"
 
@@ -4873,8 +4873,8 @@ msgid "Mark paid and approve"
 msgstr "Označiť ako zaplatené a schválené"
 
 #: eme-events.php:9984
-#: eme-rsvp.php:5239
-#: eme-rsvp.php:5254
+#: eme-rsvp.php:5241
+#: eme-rsvp.php:5256
 msgid "Mark paid"
 msgstr "Označiť ako zaplatené"
 
@@ -4941,7 +4941,7 @@ msgid "Select one or more events"
 msgstr "Vybrať jedno alebo viac podujatí"
 
 #: eme-events.php:10273
-#: eme-rsvp.php:5806
+#: eme-rsvp.php:5808
 #: eme-tasks.php:1987
 msgid "Edit event"
 msgstr "Upraviť podujatie"
@@ -4972,12 +4972,12 @@ msgid "Duplicate this event"
 msgstr "Duplikovať toto podujatie"
 
 #: eme-events.php:10437
-#: eme-rsvp.php:5875
+#: eme-rsvp.php:5877
 msgid "Add booking for this event"
 msgstr "Pridať rezerváciu pre toto podujatie"
 
 #: eme-events.php:10439
-#: eme-rsvp.php:5877
+#: eme-rsvp.php:5879
 msgid "Password protected"
 msgstr "Chránené heslom"
 
@@ -5178,7 +5178,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Zahrnúť toto pole do CSV exportu rezervácií."
 
 #: eme-formfields.php:347
-#: eme-formfields.php:4870
+#: eme-formfields.php:4918
 msgid "Field condition"
 msgstr "Podmienka poľa"
 
@@ -5515,8 +5515,8 @@ msgid "Checkbox (vertical)"
 msgstr "Prepínač (zvislý)"
 
 #: eme-formfields.php:603
-#: eme-formfields.php:1985
-#: eme-formfields.php:3109
+#: eme-formfields.php:2013
+#: eme-formfields.php:3147
 msgid "Password"
 msgstr "Heslo"
 
@@ -5597,275 +5597,275 @@ msgid "This is a hidden field, but in the backend it is shown as text so an admi
 msgstr "Toto pole je skryté, ale v administrácii sa zobrazuje ako text, takže administrátor môže vidieť jeho hodnotu a prípadne ju zmeniť"
 
 #: eme-formfields.php:1174
-#: eme-formfields.php:2847
+#: eme-formfields.php:2875
 msgid "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Upozornenie: Keďže ste prihlásený ako osoba s právom upravovať alebo autorizovať toto podujatie, pole „Priezvisko“ je tiež poľom automatického dopĺňania, takže podľa potreby môžete vybrať existujúcich ľudí. Alebo len vymažte pole a začnite písať."
 
 #: eme-formfields.php:1225
-#: eme-formfields.php:1948
-#: eme-formfields.php:3066
-#: eme-formfields.php:3987
-#: eme-formfields.php:4341
+#: eme-formfields.php:1976
+#: eme-formfields.php:3104
+#: eme-formfields.php:4035
+#: eme-formfields.php:4389
 msgid "Remember me?"
 msgstr "Zapamätať si ma?"
 
 #: eme-formfields.php:1236
-#: eme-formfields.php:1828
-#: eme-formfields.php:2881
-#: eme-formfields.php:3527
-#: eme-formfields.php:3844
-#: eme-formfields.php:4480
+#: eme-formfields.php:1838
+#: eme-formfields.php:2909
+#: eme-formfields.php:3565
+#: eme-formfields.php:3882
+#: eme-formfields.php:4528
 #: eme-people.php:1039
 #: eme-people.php:2381
-#: eme-rsvp.php:1464
+#: eme-rsvp.php:1466
 msgid "Date of birth"
 msgstr "Deň narodenia"
 
 #: eme-formfields.php:1248
-#: eme-formfields.php:1838
-#: eme-formfields.php:2895
-#: eme-formfields.php:3511
-#: eme-formfields.php:3855
-#: eme-formfields.php:4491
+#: eme-formfields.php:1848
+#: eme-formfields.php:2923
+#: eme-formfields.php:3549
+#: eme-formfields.php:3893
+#: eme-formfields.php:4539
 #: eme-people.php:1040
 #: eme-people.php:2395
-#: eme-rsvp.php:1467
+#: eme-rsvp.php:1469
 msgid "Place of birth"
 msgstr "Miesto narodenia"
 
-#: eme-formfields.php:1353
-#: eme-formfields.php:4359
+#: eme-formfields.php:1363
+#: eme-formfields.php:4407
 msgid "Subscribe"
 msgstr "Prihlásenie"
 
-#: eme-formfields.php:1386
-#: eme-formfields.php:1570
+#: eme-formfields.php:1396
+#: eme-formfields.php:1580
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme minimálne zástupné výrazy #_LASTNAME a #_EMAIL."
 
-#: eme-formfields.php:1520
+#: eme-formfields.php:1530
 msgid "Cancel reason"
 msgstr "Dôvod zrušenia"
 
-#: eme-formfields.php:1679
+#: eme-formfields.php:1689
 msgid "Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_CANCEL_PAYMENT_LINE a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: eme-formfields.php:1961
-#: eme-formfields.php:3081
-#: eme-formfields.php:4000
+#: eme-formfields.php:1989
+#: eme-formfields.php:3119
+#: eme-formfields.php:4048
 msgid "Group is not public"
 msgstr "Skupina nie je verejná"
 
-#: eme-formfields.php:1976
-#: eme-formfields.php:3096
-#: eme-formfields.php:4015
+#: eme-formfields.php:2004
+#: eme-formfields.php:3134
+#: eme-formfields.php:4063
 msgid "Group does not exist"
 msgstr "Skupina neexistuje"
 
-#: eme-formfields.php:3167
+#: eme-formfields.php:3205
 msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings."
 msgstr "Použitím #_SEATS{xx} používate vo svojej rezervačnej šablóne viacero kategórií miest, ale nastaveniach rezervácie podujatia ste nedefinovali cenu pre každú kategóriu. Prosím opravte nastavenia rezervácie podujatia."
 
-#: eme-formfields.php:3293
-#: eme-formfields.php:4031
+#: eme-formfields.php:3331
+#: eme-formfields.php:4079
 msgid "Discount code"
 msgstr "Zľavový kód"
 
-#: eme-formfields.php:3299
-#: eme-formfields.php:4037
+#: eme-formfields.php:3337
+#: eme-formfields.php:4085
 msgid "Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:"
 msgstr "Ak chcete, zadajte novú pevnú hodnotu zľavy alebo ponechajte vypočítanú hodnotu %s na základe nasledujúcich uplatnených zliav:"
 
-#: eme-formfields.php:3301
-#: eme-formfields.php:4039
+#: eme-formfields.php:3339
+#: eme-formfields.php:4087
 msgid "Enter a fixed discount value if wanted"
 msgstr "Ak chcete, zadajte pevnú hodnotu zľavy"
 
-#: eme-formfields.php:3306
-#: eme-formfields.php:4044
+#: eme-formfields.php:3344
+#: eme-formfields.php:4092
 #: eme-people.php:1169
 #: eme-people.php:1469
 msgid "Discountgroup %s"
 msgstr "Skupina zľavy %s"
 
-#: eme-formfields.php:3308
-#: eme-formfields.php:4046
+#: eme-formfields.php:3346
+#: eme-formfields.php:4094
 #: eme-people.php:1171
 #: eme-people.php:1471
 msgid "Applied discount group %d no longer exists"
 msgstr "Použitá skupina zliav %d už neexistuje"
 
-#: eme-formfields.php:3318
-#: eme-formfields.php:4056
+#: eme-formfields.php:3356
+#: eme-formfields.php:4104
 #: eme-members.php:5222
 #: eme-people.php:1181
 #: eme-people.php:1481
-#: eme-rsvp.php:3604
+#: eme-rsvp.php:3606
 msgid "Applied discount %d no longer exists"
 msgstr "Použitá zľava %d už neexistuje"
 
-#: eme-formfields.php:3322
-#: eme-formfields.php:4060
+#: eme-formfields.php:3360
+#: eme-formfields.php:4108
 msgid "Only one discount field can be used in the admin backend, the others are not rendered"
 msgstr "V backende administrátora je možné použiť iba jedno pole zľavy, ostatné nie sú zobrazené"
 
-#: eme-formfields.php:3328
+#: eme-formfields.php:3366
 msgid "Update booking"
 msgstr "Aktualizovať rezerváciu"
 
-#: eme-formfields.php:3376
+#: eme-formfields.php:3414
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_LASTNAME, #_EMAIL, #_SEATS a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: eme-formfields.php:3379
+#: eme-formfields.php:3417
 msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
 msgstr "Keďže ide o podujatie s rôznymi cenami, nezabudnite zmeniť nastavenie „Rezervačný formulár“ pre podujatie tak, aby zahŕňalo zástupné výrazy #_SEAT{xx} pre každú cenu."
 
-#: eme-formfields.php:3382
+#: eme-formfields.php:3420
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr "Skontrolujte, či je vo formulári prítomný zástupný výraz #_PASSWORD."
 
-#: eme-formfields.php:3584
+#: eme-formfields.php:3622
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders."
 msgstr "Vo formulári sa nenachádzajú všetky povinné polia. Potrebujeme aspoň #_LASTNAME a #_FIRSTNAME zástupné výrazy."
 
-#: eme-formfields.php:3813
+#: eme-formfields.php:3851
 msgid "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Upozornenie: Keďže ste prihlásený ako osoba s právom spravovať členov a členstvá, pole „Priezvisko“ je tiež poľom automatického dopĺňania, takže podľa potreby môžete vybrať existujúcich ľudí. Alebo len vymažte pole a začnite písať."
 
-#: eme-formfields.php:4089
+#: eme-formfields.php:4137
 msgid "In the backend you can't add or edit family member info, use the frontend form for that."
 msgstr "V administrátorskej časti nemôžete pridávať ani upravovať informácie o členoch rodiny, na to použite formulár vo frontende."
 
-#: eme-formfields.php:4154
+#: eme-formfields.php:4202
 msgid "Update member"
 msgstr "Aktualizovať člena"
 
-#: eme-formfields.php:4159
+#: eme-formfields.php:4207
 msgid "Become member"
 msgstr "Stať sa členom"
 
-#: eme-formfields.php:4191
-#: eme-formfields.php:4706
+#: eme-formfields.php:4239
+#: eme-formfields.php:4754
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_LASTNAME, #_FIRSTNAME, #_EMAIL a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: eme-formfields.php:4212
+#: eme-formfields.php:4260
 #: eme-tasks.php:460
 #: eme-templates.php:43
 msgid "All"
 msgstr "Všetky"
 
-#: eme-formfields.php:4217
+#: eme-formfields.php:4265
 msgid "Newsletter concerning new events"
 msgstr "Informačné novinky o nových podujatiach"
 
-#: eme-formfields.php:4275
-#: eme-formfields.php:4455
+#: eme-formfields.php:4323
+#: eme-formfields.php:4503
 msgid "You can change your last name in your WP profile."
 msgstr "Svoje priezvisko si môžete zmeniť vo svojom WP profile."
 
-#: eme-formfields.php:4289
-#: eme-formfields.php:4470
+#: eme-formfields.php:4337
+#: eme-formfields.php:4518
 msgid "You can change your first name in your WP profile."
 msgstr "Svoje meno si môžete zmeniť vo svojom WP profile."
 
-#: eme-formfields.php:4302
-#: eme-formfields.php:4566
+#: eme-formfields.php:4350
+#: eme-formfields.php:4614
 msgid "You can change your email in your WP profile."
 msgstr "Svoj e-mail môžete zmeniť vo svojom WP profile."
 
-#: eme-formfields.php:4357
+#: eme-formfields.php:4405
 msgid "Unsubscribe"
 msgstr "Odhlásenie"
 
-#: eme-formfields.php:4382
+#: eme-formfields.php:4430
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_EMAIL a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: eme-formfields.php:4677
+#: eme-formfields.php:4725
 msgid "Save personal info"
 msgstr "Uložiť osobné údaje"
 
-#: eme-formfields.php:4864
+#: eme-formfields.php:4912
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Dynamicky zobrazovať polia na základe viacerých podmienok"
 
-#: eme-formfields.php:4869
+#: eme-formfields.php:4917
 msgid "Index"
 msgstr "Index"
 
-#: eme-formfields.php:4915
+#: eme-formfields.php:4963
 msgid "Field"
 msgstr "Pole"
 
-#: eme-formfields.php:4916
+#: eme-formfields.php:4964
 msgid "Condition"
 msgstr "Podmienka"
 
-#: eme-formfields.php:4917
+#: eme-formfields.php:4965
 msgid "Condition value"
 msgstr "Hodnota podmienky"
 
-#: eme-formfields.php:4872
+#: eme-formfields.php:4920
 msgid "Repeat"
 msgstr "Opakovať"
 
-#: eme-formfields.php:4902
+#: eme-formfields.php:4950
 #: eme-tasks.php:769
 #: eme-todos.php:203
 msgid "Reorder"
 msgstr "Zmeniť poradie"
 
-#: eme-formfields.php:4921
+#: eme-formfields.php:4969
 msgid "Header template"
 msgstr "Šablóna hlavičky"
 
-#: eme-formfields.php:4922
+#: eme-formfields.php:4970
 msgid "Template"
 msgstr "Šablóna"
 
-#: eme-formfields.php:4923
+#: eme-formfields.php:4971
 msgid "Footer template"
 msgstr "Šablóna pätičky"
 
-#: eme-formfields.php:4930
+#: eme-formfields.php:4978
 msgid "Add new condition"
 msgstr "Pridať novú podmienku"
 
-#: eme-formfields.php:4933
+#: eme-formfields.php:4981
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Varovanie: Na základe tejto podmienky sú už zadané odpovede, zmena alebo odstránenie tejto podmienky by mohli viesť k nežiaducim vedľajším účinkom."
 
-#: eme-formfields.php:4944
+#: eme-formfields.php:4992
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Ak je splnená podmienka, vo formulári sa navyše zobrazí vybratá šablóna."
 
-#: eme-formfields.php:4946
+#: eme-formfields.php:4994
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "Parameter „Pole“ sa vyplní akýmkoľvek platným zástupným výrazom povoleným vo formulári."
 
-#: eme-formfields.php:4948
+#: eme-formfields.php:4996
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "Vybraná šablóna sa zobrazí niekoľkokrát, ak sa použije možnosť opakovania (na základe toho, koľkokrát sa pole líši od hodnoty podmienky. Toto sa nepoužije pri výbere podmienky „rovnaké ako“)."
 
-#: eme-formfields.php:4950
+#: eme-formfields.php:4998
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "Vybraná šablóna môže obsahovať html a tiež mať zástupné výrazy pre vlastné polia formulárov (nie sú povolené žiadne iné zástupné výrazy)."
 
-#: eme-formfields.php:4951
+#: eme-formfields.php:4999
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Použite zástupný výraz #_DYNAMICDATA na zobrazenie dynamických formulárov vo vašom formulári."
 
-#: eme-formfields.php:5098
-#: eme-formfields.php:5108
+#: eme-formfields.php:5146
+#: eme-formfields.php:5156
 #: eme-functions.php:3313
 msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
 
 #: eme-fs.php:193
-#: eme-fs.php:824
+#: eme-fs.php:828
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Je nám ľúto, ale nie je povolené pridávať nové podujatia."
 
@@ -5912,7 +5912,7 @@ msgstr "Zadajte dátum začiatku podujatia"
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase začiatku"
 
-#: eme-fs.php:800
+#: eme-fs.php:804
 #: eme-gdpr.php:53
 #: eme-gdpr.php:144
 #: eme-gdpr.php:220
@@ -5927,7 +5927,7 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte vlastníka stránok."
 
-#: eme-fs.php:811
+#: eme-fs.php:815
 #: eme-gdpr.php:64
 #: eme-gdpr.php:155
 #: eme-gdpr.php:231
@@ -6657,9 +6657,9 @@ msgstr "Duplikovať toto miesto"
 #: eme-members.php:6957
 #: eme-members.php:7076
 #: eme-rsvp.php:1235
-#: eme-rsvp.php:4941
-#: eme-rsvp.php:6534
-#: eme-rsvp.php:6554
+#: eme-rsvp.php:4943
+#: eme-rsvp.php:6536
+#: eme-rsvp.php:6556
 msgid "There were some problems while sending mail."
 msgstr "Pri odosielaní pošty sa vyskytli problémy."
 
@@ -6752,7 +6752,7 @@ msgstr "Zrušiť"
 #: eme-people.php:4317
 #: eme-people.php:4613
 #: eme-people.php:4700
-#: eme-rsvp.php:1388
+#: eme-rsvp.php:1390
 msgid "Please enter a valid email address"
 msgstr "Vložte prosím platnú e-mailovú adresu"
 
@@ -6762,8 +6762,8 @@ msgstr "Vložte prosím platnú e-mailovú adresu"
 #: eme-mailer.php:1865
 #: eme-mailer.php:1959
 #: eme-members.php:6875
-#: eme-rsvp.php:6531
-#: eme-rsvp.php:6551
+#: eme-rsvp.php:6533
+#: eme-rsvp.php:6553
 msgid "The mail has been sent."
 msgstr "Email bol odoslaný."
 
@@ -6856,7 +6856,7 @@ msgid "Send event related emails"
 msgstr "Poslať e-maily súvisiace s podujatím"
 
 #: eme-mailer.php:2339
-#: eme-rsvp.php:4743
+#: eme-rsvp.php:4745
 msgid "Check this box to search through all events and not just future ones."
 msgstr "Označte toto políčko, ak chcete prehľadávať všetky podujatia, nielen budúce."
 
@@ -7409,7 +7409,7 @@ msgid "Add member"
 msgstr "Pridať člena"
 
 #: eme-members.php:1520
-#: eme-rsvp.php:4730
+#: eme-rsvp.php:4732
 msgid "Click on this link to edit the corresponding person info"
 msgstr "Kliknite na tento odkaz pre úpravu informácií o zodpovedajúcej osobe"
 
@@ -7663,8 +7663,8 @@ msgstr "Formulár člena:"
 #: eme-members.php:2919
 #: eme-people.php:1846
 #: eme-people.php:1851
-#: eme-rsvp.php:5298
-#: eme-rsvp.php:5303
+#: eme-rsvp.php:5300
+#: eme-rsvp.php:5305
 msgid "Please select a template"
 msgstr "Prosím vyberte šablónu"
 
@@ -8212,8 +8212,8 @@ msgstr "Opätovné odoslanie e-mailu s pripomienkou o vypršaní platnosti"
 
 #: eme-members.php:2890
 #: eme-people.php:1809
-#: eme-rsvp.php:5244
-#: eme-rsvp.php:5259
+#: eme-rsvp.php:5246
+#: eme-rsvp.php:5261
 #: eme-tasks.php:483
 msgid "Send generic email to selected persons"
 msgstr "Poslať vybraným členom všeobecný email"
@@ -8224,15 +8224,15 @@ msgstr "Poslať vybraným členom e-mail súvisiaci s členstvom"
 
 #: eme-members.php:2893
 #: eme-people.php:1825
-#: eme-rsvp.php:5246
-#: eme-rsvp.php:5261
+#: eme-rsvp.php:5248
+#: eme-rsvp.php:5263
 msgid "PDF output"
 msgstr "PDF výstup"
 
 #: eme-members.php:2894
 #: eme-people.php:1826
-#: eme-rsvp.php:5247
-#: eme-rsvp.php:5262
+#: eme-rsvp.php:5249
+#: eme-rsvp.php:5264
 msgid "HTML output"
 msgstr "HTML výstup"
 
@@ -8245,12 +8245,12 @@ msgid "Move corresponding persons to the trash bin?"
 msgstr "Presunúť zodpovedajúce osoby do koša?"
 
 #: eme-members.php:2909
-#: eme-rsvp.php:5293
+#: eme-rsvp.php:5295
 msgid "Select a subject template"
 msgstr "Prosím vyberte šablónu predmetu emailu"
 
 #: eme-members.php:2910
-#: eme-rsvp.php:5294
+#: eme-rsvp.php:5296
 msgid "Please select a body template"
 msgstr "Prosím vyberte šablónu tela emailu"
 
@@ -8258,8 +8258,8 @@ msgstr "Prosím vyberte šablónu tela emailu"
 #: eme-members.php:2918
 #: eme-people.php:1845
 #: eme-people.php:1850
-#: eme-rsvp.php:5297
-#: eme-rsvp.php:5302
+#: eme-rsvp.php:5299
+#: eme-rsvp.php:5304
 msgid "Select an optional header template"
 msgstr "Vyberte voliteľnú šablónu hlavičky"
 
@@ -8267,8 +8267,8 @@ msgstr "Vyberte voliteľnú šablónu hlavičky"
 #: eme-members.php:2920
 #: eme-people.php:1847
 #: eme-people.php:1852
-#: eme-rsvp.php:5299
-#: eme-rsvp.php:5304
+#: eme-rsvp.php:5301
+#: eme-rsvp.php:5306
 msgid "Select an optional footer template"
 msgstr "Vyberte voliteľnú šablónu pätičky"
 
@@ -8286,7 +8286,7 @@ msgstr "Vybrať stav člena"
 #: eme-members.php:3000
 #: eme-people.php:1902
 #: eme-people.php:1909
-#: eme-rsvp.php:5214
+#: eme-rsvp.php:5216
 msgid "Filter on person"
 msgstr "Filtrovať na osobu"
 
@@ -8296,12 +8296,12 @@ msgid "Filter on member ID"
 msgstr "Filtrovať ID člena"
 
 #: eme-members.php:3011
-#: eme-rsvp.php:5218
+#: eme-rsvp.php:5220
 msgid "Filter on payment id"
 msgstr "Filtrovať na ID platby"
 
 #: eme-members.php:3012
-#: eme-rsvp.php:5219
+#: eme-rsvp.php:5221
 msgid "Filter on payment GW id"
 msgstr "Filtrovať na platbu GW id"
 
@@ -8391,12 +8391,12 @@ msgid "No membership selected"
 msgstr "Žiadne členstvo nebolo vybraté"
 
 #: eme-members.php:5028
-#: eme-rsvp.php:1526
+#: eme-rsvp.php:1528
 msgid "You did not enter a valid discount code"
 msgstr "Nezadali ste platný zľavový kód"
 
 #: eme-members.php:5294
-#: eme-rsvp.php:5945
+#: eme-rsvp.php:5947
 msgid "Never"
 msgstr "Nikdy"
 
@@ -8520,17 +8520,17 @@ msgstr "Členovia vymazaní."
 #: eme-members.php:7048
 #: eme-members.php:7073
 #: eme-members.php:7090
-#: eme-rsvp.php:6167
-#: eme-rsvp.php:6201
-#: eme-rsvp.php:6245
-#: eme-rsvp.php:6285
-#: eme-rsvp.php:6307
-#: eme-rsvp.php:6349
-#: eme-rsvp.php:6410
-#: eme-rsvp.php:6452
-#: eme-rsvp.php:6501
-#: eme-rsvp.php:6563
-#: eme-rsvp.php:6614
+#: eme-rsvp.php:6169
+#: eme-rsvp.php:6203
+#: eme-rsvp.php:6247
+#: eme-rsvp.php:6287
+#: eme-rsvp.php:6309
+#: eme-rsvp.php:6351
+#: eme-rsvp.php:6412
+#: eme-rsvp.php:6454
+#: eme-rsvp.php:6503
+#: eme-rsvp.php:6565
+#: eme-rsvp.php:6616
 #: eme-tasks.php:2051
 #: eme-tasks.php:2077
 #: eme-tasks.php:2101
@@ -8539,30 +8539,30 @@ msgstr "Akcia bola úspešne vykonaná."
 
 #: eme-members.php:6931
 #: eme-members.php:7051
-#: eme-rsvp.php:6170
-#: eme-rsvp.php:6204
-#: eme-rsvp.php:6248
-#: eme-rsvp.php:6288
-#: eme-rsvp.php:6352
-#: eme-rsvp.php:6413
-#: eme-rsvp.php:6455
-#: eme-rsvp.php:6498
-#: eme-rsvp.php:6617
+#: eme-rsvp.php:6172
+#: eme-rsvp.php:6206
+#: eme-rsvp.php:6250
+#: eme-rsvp.php:6290
+#: eme-rsvp.php:6354
+#: eme-rsvp.php:6415
+#: eme-rsvp.php:6457
+#: eme-rsvp.php:6500
+#: eme-rsvp.php:6619
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "Akcia bola úspešne vykonaná, ale pri odosielaní pošty sa vyskytli problémy."
 
 #: eme-members.php:6934
 #: eme-members.php:7054
-#: eme-rsvp.php:6173
-#: eme-rsvp.php:6207
-#: eme-rsvp.php:6242
-#: eme-rsvp.php:6291
-#: eme-rsvp.php:6310
-#: eme-rsvp.php:6346
-#: eme-rsvp.php:6416
-#: eme-rsvp.php:6458
-#: eme-rsvp.php:6494
-#: eme-rsvp.php:6611
+#: eme-rsvp.php:6175
+#: eme-rsvp.php:6209
+#: eme-rsvp.php:6244
+#: eme-rsvp.php:6293
+#: eme-rsvp.php:6312
+#: eme-rsvp.php:6348
+#: eme-rsvp.php:6418
+#: eme-rsvp.php:6460
+#: eme-rsvp.php:6496
+#: eme-rsvp.php:6613
 #: eme-tasks.php:2054
 #: eme-tasks.php:2080
 #: eme-tasks.php:2104
@@ -13312,304 +13312,304 @@ msgstr "Zadané nesprávne heslo"
 msgid "Please select at least one seat."
 msgstr "Prosím vyberte aspoň jedno miesto."
 
-#: eme-rsvp.php:1352
-#: eme-rsvp.php:1360
+#: eme-rsvp.php:1354
+#: eme-rsvp.php:1362
 msgid "WP membership required to continue"
 msgstr "WP členstvo je potrebné pre pokračovanie"
 
-#: eme-rsvp.php:1364
+#: eme-rsvp.php:1366
 msgid "Please select a WP member from the lastname autocomplete selection"
 msgstr "Vyberte člena WP z výberu automatického dopĺňania priezviska"
 
-#: eme-rsvp.php:1378
+#: eme-rsvp.php:1380
 msgid "Please fill out your last name"
 msgstr "Prosím, vyplňte vaše priezvisko"
 
-#: eme-rsvp.php:1486
+#: eme-rsvp.php:1488
 msgid "Massmail"
 msgstr "Hromadný email"
 
-#: eme-rsvp.php:1516
+#: eme-rsvp.php:1518
 msgid "Please make sure all of the following required fields are filled out: %s"
 msgstr "Skontrolujte prosím, či sú vyplnené všetky nasledujúce povinné polia: %s"
 
-#: eme-rsvp.php:1542
 #: eme-rsvp.php:1544
-#: eme-rsvp.php:1547
-#: eme-rsvp.php:1551
+#: eme-rsvp.php:1546
+#: eme-rsvp.php:1549
+#: eme-rsvp.php:1553
 msgid "Please enter a correct number of seats to reserve"
 msgstr "Prosím vložte správny počet miest pre rezerváciu"
 
-#: eme-rsvp.php:1566
+#: eme-rsvp.php:1568
 msgid "Booking cannot be made: not enough seats available!"
 msgstr "Rezervácia už nie je možná: všetky miesta sú obsadené!"
 
-#: eme-rsvp.php:1608
+#: eme-rsvp.php:1610
 msgid "The location does not allow this many people to be present at the same time."
 msgstr "Miesto neumožňuje súčasnú prítomnosť toľkých ľudí."
 
-#: eme-rsvp.php:1692
-#: eme-rsvp.php:1719
+#: eme-rsvp.php:1694
+#: eme-rsvp.php:1721
 msgid "Warning: there was a problem sending you the booking mail, please contact the site administrator to sort this out."
 msgstr "Varovanie: pri odosielaní rezervačného e-mailu sa vyskytol problém. Pre vyriešenie problému, kontaktujte prosím správcu webu."
 
-#: eme-rsvp.php:3293
-#: eme-rsvp.php:3344
+#: eme-rsvp.php:3295
+#: eme-rsvp.php:3346
 msgid "No responses yet!"
 msgstr "Zatiaľ žiadna odpoveď!"
 
-#: eme-rsvp.php:3391
+#: eme-rsvp.php:3393
 msgid "No bookings found."
 msgstr "Žiadne rezervácie nenájdené."
 
-#: eme-rsvp.php:4690
+#: eme-rsvp.php:4692
 msgid "Add booking"
 msgstr "Pridať rezerváciu"
 
-#: eme-rsvp.php:4692
+#: eme-rsvp.php:4694
 msgid "Be aware: the overbooking option is set."
 msgstr "Uvedomte si, že je nastavená možnosť nadpočetnej rezervácie."
 
-#: eme-rsvp.php:4696
+#: eme-rsvp.php:4698
 msgid "Send mails for new booking?"
 msgstr "Poslať email novej rezervácii?"
 
-#: eme-rsvp.php:4729
+#: eme-rsvp.php:4731
 msgid "Edit booking"
 msgstr "Upraviť rezerváciu"
 
-#: eme-rsvp.php:4738
+#: eme-rsvp.php:4740
 msgid "Send mails for changed booking?"
 msgstr "Odoslať maily na zmenu rezervácie?"
 
-#: eme-rsvp.php:4739
+#: eme-rsvp.php:4741
 msgid "Move booking to event"
 msgstr "Presunúť rezerváciu na podujatie"
 
-#: eme-rsvp.php:4742
+#: eme-rsvp.php:4744
 msgid "Start typing an event name"
 msgstr "Začnite písať názov podujatia"
 
-#: eme-rsvp.php:4744
+#: eme-rsvp.php:4746
 msgid "Has the booking been paid?"
 msgstr "Bola už rezervácia zaplatená?"
 
-#: eme-rsvp.php:4747
+#: eme-rsvp.php:4749
 msgid "Warning: the event related to this booking has been removed, editing is no longer allowed!"
 msgstr "Varovanie: podujatie súvisiace s touto rezerváciou bolo odstránené, úpravy už nie sú povolené!"
 
-#: eme-rsvp.php:4749
+#: eme-rsvp.php:4751
 msgid "Warning: the price of the event has changed compared to this booking, the new price will be taken into account for changes!"
 msgstr "Upozornenie: cena podujatia sa v porovnaní s touto rezerváciou zmenila, pri zmenách sa uplatní nová cena!"
 
-#: eme-rsvp.php:4926
+#: eme-rsvp.php:4928
 msgid "Booking updated"
 msgstr "Rezervácia aktualizovaná"
 
-#: eme-rsvp.php:4945
+#: eme-rsvp.php:4947
 msgid "During the time of your change, some free seats were taken leaving not enough free seats available anymore"
 msgstr "V čase vašej zmeny sa využili niektoré voľné miesta, takže už nie je k dispozícii dostatok voľných miest"
 
-#: eme-rsvp.php:5046
+#: eme-rsvp.php:5048
 msgid "No linked payment found: %s"
 msgstr "Nenašla sa žiadna prepojená platba: %s"
 
-#: eme-rsvp.php:5049
-#: eme-rsvp.php:5052
+#: eme-rsvp.php:5051
+#: eme-rsvp.php:5054
 msgid "Field %s not valid: %s"
 msgstr "Pole %s nie je platné: %s"
 
-#: eme-rsvp.php:5057
+#: eme-rsvp.php:5059
 msgid "Already paid in full: %s"
 msgstr "Už zaplatené v plnej výške: %s"
 
-#: eme-rsvp.php:5063
+#: eme-rsvp.php:5065
 msgid "Amount paid (%s) is not equal to the expected amount (%s): %s"
 msgstr "Zaplatená suma (%s) sa nerovná očakávanej sume (%s): %s"
 
-#: eme-rsvp.php:5067
+#: eme-rsvp.php:5069
 msgid "Import finished: %d entries marked as paid, %d ignored, %d errors"
 msgstr "Import dokončený: %d záznamov označených ako zaplatené, %d ignorovaných, %d chýb"
 
-#: eme-rsvp.php:5069
+#: eme-rsvp.php:5071
 msgid "Ignored entries"
 msgstr "Ignorované záznamy"
 
-#: eme-rsvp.php:5072
+#: eme-rsvp.php:5074
 msgid "Erronous entries"
 msgstr "Chybné záznamy"
 
-#: eme-rsvp.php:5121
+#: eme-rsvp.php:5123
 msgid "Manage pending bookings for %s"
 msgstr "Spravovať čakajúce rezervácie pre %s"
 
-#: eme-rsvp.php:5123
+#: eme-rsvp.php:5125
 msgid "Manage approved bookings for %s"
 msgstr "Spravovať schválené rezervácie pre %s"
 
-#: eme-rsvp.php:5130
+#: eme-rsvp.php:5132
 msgid "Manage trashed bookings"
 msgstr "Spravovať vyhodené rezervácie"
 
-#: eme-rsvp.php:5132
+#: eme-rsvp.php:5134
 msgid "Manage pending bookings"
 msgstr "Spravovať nevybavené rezervácie"
 
-#: eme-rsvp.php:5134
+#: eme-rsvp.php:5136
 msgid "Manage approved bookings"
 msgstr "Spravovať schválené rezervácie"
 
-#: eme-rsvp.php:5145
+#: eme-rsvp.php:5147
 msgid "Click on the icon to show the import form to import payments"
 msgstr "Kliknutím na ikonu zobrazíte importovací formulár na import platieb"
 
-#: eme-rsvp.php:5158
+#: eme-rsvp.php:5160
 msgid "If you want, use this to import booking payments"
 msgstr "Ak chcete, použite túto možnosť na importovanie rezervačných platieb"
 
-#: eme-rsvp.php:5199
+#: eme-rsvp.php:5201
 msgid "Filter on event"
 msgstr "Filtrovať na podujatie"
 
-#: eme-rsvp.php:5216
+#: eme-rsvp.php:5218
 msgid "Filter on custom field answer"
 msgstr "Filter podľa odpovede na vlastné pole"
 
-#: eme-rsvp.php:5217
+#: eme-rsvp.php:5219
 msgid "Filter on unique nbr"
 msgstr "Filtrovať na unikátne číslo"
 
-#: eme-rsvp.php:5221
+#: eme-rsvp.php:5223
 msgid "Filter bookings"
 msgstr "Filtrovať rezervácie"
 
-#: eme-rsvp.php:5229
+#: eme-rsvp.php:5231
 msgid "Permanently delete booking"
 msgstr "Vymazať rezerváciu navždy"
 
-#: eme-rsvp.php:5230
+#: eme-rsvp.php:5232
 msgid "Restore booking and mark pending and awaiting user confirmation"
 msgstr "Obnoviť rezerváciu a označiť ju ako čakajúcu na potvrdenie používateľom"
 
-#: eme-rsvp.php:5231
+#: eme-rsvp.php:5233
 msgid "Restore booking and mark pending"
 msgstr "Obnoviť rezerváciu a označiť ako nevybavené"
 
-#: eme-rsvp.php:5232
+#: eme-rsvp.php:5234
 msgid "Restore booking and mark approved"
 msgstr "Obnoviť rezerváciu a označiť ako schválené"
 
-#: eme-rsvp.php:5234
+#: eme-rsvp.php:5236
 msgid "Approve booking"
 msgstr "Schváliť rezerváciu"
 
-#: eme-rsvp.php:5235
-#: eme-rsvp.php:5250
+#: eme-rsvp.php:5237
+#: eme-rsvp.php:5252
 msgid "Delete booking (move to trash)"
 msgstr "Vymazať rezerváciu (presunúť do koša)"
 
-#: eme-rsvp.php:5237
+#: eme-rsvp.php:5239
 msgid "Resend the mail for pending booking"
 msgstr "Znovu odoslať email o čakajúcej rezervácii"
 
-#: eme-rsvp.php:5240
-#: eme-rsvp.php:5255
+#: eme-rsvp.php:5242
+#: eme-rsvp.php:5257
 msgid "Mark unpaid"
 msgstr "Označiť ako nezaplatené"
 
-#: eme-rsvp.php:5241
-#: eme-rsvp.php:5256
+#: eme-rsvp.php:5243
+#: eme-rsvp.php:5258
 msgid "Partial payment"
 msgstr "Čiastočná platba"
 
-#: eme-rsvp.php:5242
+#: eme-rsvp.php:5244
 msgid "Move booking off the waitinglist"
 msgstr "Presunúť rezerváciu z čakacieho zoznamu"
 
-#: eme-rsvp.php:5243
-#: eme-rsvp.php:5258
+#: eme-rsvp.php:5245
+#: eme-rsvp.php:5260
 msgid "Put booking on the waitinglist"
 msgstr "Presunúť rezerváciu na čakací zoznam"
 
-#: eme-rsvp.php:5245
-#: eme-rsvp.php:5260
+#: eme-rsvp.php:5247
+#: eme-rsvp.php:5262
 msgid "Send booking related email to selected bookings"
 msgstr "Poslať vybraným rezerváciám e-mail súvisiaci s rezerváciou"
 
-#: eme-rsvp.php:5249
+#: eme-rsvp.php:5251
 msgid "Make booking pending"
 msgstr "Označiť rezerváciu za čakajúcu na vybavenie"
 
-#: eme-rsvp.php:5252
+#: eme-rsvp.php:5254
 msgid "Resend the mail for approved booking"
 msgstr "Znovu odoslať email o schválenej rezervácii"
 
-#: eme-rsvp.php:5267
+#: eme-rsvp.php:5269
 msgid "Send mails to contact person too?"
 msgstr "Odoslať e-maily aj kontaktnej osobe?"
 
-#: eme-rsvp.php:5273
+#: eme-rsvp.php:5275
 msgid "Send mails to attendees upon changes being made?"
 msgstr "Posielať účastníkom email po vykonaní zmien?"
 
-#: eme-rsvp.php:5280
+#: eme-rsvp.php:5282
 msgid "Refund if possible?"
 msgstr "Vrátiť platbu, ak je to možné?"
 
-#: eme-rsvp.php:5287
+#: eme-rsvp.php:5289
 msgid "Partial payment amount"
 msgstr "Suma čiastočnej platby"
 
-#: eme-rsvp.php:5327
+#: eme-rsvp.php:5329
 msgid "Event fields"
 msgstr "Polia podujatí"
 
-#: eme-rsvp.php:5765
+#: eme-rsvp.php:5767
 msgid "Click the name of the booker in order to see and/or edit the details of the booker."
 msgstr "Kliknutím na meno účastníka zobrazíte a/alebo upravíte jeho podrobnosti."
 
-#: eme-rsvp.php:5768
+#: eme-rsvp.php:5770
 msgid "Anonymous"
 msgstr "Anonymné"
 
-#: eme-rsvp.php:5797
+#: eme-rsvp.php:5799
 msgid "Click here to see and/or edit the details of the booking."
 msgstr "Kliknutím sem zobrazíte alebo upravíte podrobnosti o rezervácii."
 
-#: eme-rsvp.php:5847
+#: eme-rsvp.php:5849
 msgid "Pending: "
 msgstr "Nevybavené: "
 
-#: eme-rsvp.php:5937
+#: eme-rsvp.php:5939
 msgid "(On waitinglist)"
 msgstr "(Čakajúce)"
 
-#: eme-rsvp.php:5940
+#: eme-rsvp.php:5942
 msgid "(Awaiting user confirmation)"
 msgstr "(Čaká sa na potvrdenie používateľa)"
 
-#: eme-rsvp.php:5952
+#: eme-rsvp.php:5954
 msgid "This is based on the payment ID of the booking: %d"
 msgstr "Toto je založené na platobnom ID rezervácie: %d"
 
-#: eme-rsvp.php:6173
-#: eme-rsvp.php:6291
+#: eme-rsvp.php:6175
+#: eme-rsvp.php:6293
 msgid "Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list."
 msgstr "Pomôcka: pre rezerváciu v čakacej listine je jedinou povolenou akciou jej presunutie z čakacej listiny."
 
-#: eme-rsvp.php:6251
-#: eme-rsvp.php:6355
-#: eme-rsvp.php:6620
+#: eme-rsvp.php:6253
+#: eme-rsvp.php:6357
+#: eme-rsvp.php:6622
 msgid "The action has been executed successfully but there were some problems refunding the payment."
 msgstr "Akcia bola úspešne vykonaná, ale vyskytli sa nejaké problémy s vrátením platby."
 
-#: eme-rsvp.php:6254
-#: eme-rsvp.php:6358
-#: eme-rsvp.php:6623
+#: eme-rsvp.php:6256
+#: eme-rsvp.php:6360
+#: eme-rsvp.php:6625
 msgid "The action has been executed successfully but there were some problems sending mail and refunding the payment."
 msgstr "Akcia bola úspešne vykonaná, vyskytli sa však nejaké problémy s odosielaním pošty a vrátením platby."
 
-#: eme-rsvp.php:6492
+#: eme-rsvp.php:6494
 msgid "There was a problem refunding the payment, please check your logs."
 msgstr "Pri vrátení platby sa vyskytol problém. Skontrolujte si prosím svoje záznamy."
 
@@ -14116,11 +14116,11 @@ msgstr ""
 msgid "Choose from a template: "
 msgstr ""
 
-#: eme-rsvp.php:5257
+#: eme-rsvp.php:5259
 msgid "Mark person as present (attendance record)"
 msgstr ""
 
-#: eme-rsvp.php:6578
+#: eme-rsvp.php:6580
 msgid "Attendance noted."
 msgstr ""
 
@@ -14195,7 +14195,7 @@ msgstr ""
 msgid "Select the event(s)"
 msgstr ""
 
-#: eme-rsvp.php:5967
+#: eme-rsvp.php:5969
 msgid "Get IBAN"
 msgstr ""
 

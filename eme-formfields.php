@@ -26,7 +26,7 @@ function eme_new_formfield() {
 function eme_formfields_page() {
 	global $wpdb;
 
-	if ( ! current_user_can( get_option( 'eme_cap_forms' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
+	if ( ! current_user_can( get_option( 'eme_cap_forms' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
 		$message = __( 'You have no right to update form fields!', 'events-made-easy' );
 		eme_formfields_table_layout( $message );
 		return;
@@ -5131,24 +5131,24 @@ function eme_ajax_formfields_list() {
 function eme_ajax_manage_formfields() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	$jTableResult=[];
-	if (! current_user_can( get_option( 'eme_cap_forms' ) ) || !isset( $_POST['field_id'] ) ) {
+	if (! current_user_can( get_option( 'eme_cap_forms' ) ) || !isset( $_REQUEST['field_id'] ) ) {
 		$jTableResult['Result']      = 'Error';
 		$jTableResult['Message']     = __( 'Access denied!', 'events-made-easy' );
 		$jTableResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
 	}
-	if ( isset( $_POST['do_action'] ) ) {
-		$do_action = eme_sanitize_request( $_POST['do_action'] );
+	if ( isset( $_REQUEST['do_action'] ) ) {
+		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		switch ( $do_action ) {
 			case 'deleteFormfield':
 				// validation happens in the eme_delete_formfields function
-				eme_delete_formfields( [ intval($_POST['field_id']) ] );
+				eme_delete_formfields( [ intval($_REQUEST['field_id']) ] );
 				$jTableResult['Result']      = 'OK';
 				$jTableResult['htmlmessage'] = __( 'Records deleted!', 'events-made-easy' );
 				print wp_json_encode( $jTableResult );
 				wp_die();
 				break;
 			case 'deleteFormfields':
-				$field_ids = explode( ',', eme_sanitize_request($_POST['field_id']) );
+				$field_ids = explode( ',', eme_sanitize_request($_REQUEST['field_id']) );
 				if (eme_is_numeric_array( $field_ids)) {
 					// validation happens in the eme_delete_formfields function
 					eme_delete_formfields( $field_ids );

@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.33
+Stable tag: 2.5.34
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.34 (2025//) =
+= 2.5.34 (2025/01/23) =
 * Add filter eme_fs_validate_event_filter, which should return empty if all FS event data validation is ok
   Parameter: $event_data (array containing all data entered via the frontend submit form)
 * Fix multiple occurences of state and country input fields on one page

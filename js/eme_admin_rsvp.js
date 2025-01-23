@@ -289,7 +289,7 @@ jQuery(document).ready(function ($) {
         if ($.inArray(action,['resendApprovedBooking']) >= 0) {
             $('span#span_sendtocontact').show();
         } else {
-            $('span_sendtocontact').hide();
+            $('span#span_sendtocontact').hide();
         }
         if ($.inArray(action,['trashBooking','approveBooking','pendingBooking','unsetwaitinglistBooking','setwaitinglistBooking','markPaid','markUnpaid']) >= 0) {
             $('span#span_sendmails').show();

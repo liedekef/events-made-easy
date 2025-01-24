@@ -672,7 +672,6 @@ function eme_bookings_frontend_csv_report( $event_id, $template_id, $template_id
 			$format_arr = explode( ',', $format );
 			$line_count = 1;
 			foreach ( $format_arr as $single_format ) {
-				#$line[]=eme_replace_member_placeholders($single_format, $membership, $member, "text");
 				$el       = eme_replace_booking_placeholders( $single_format, $event, $booking, 0, 'text' );
 				$el_arr   = preg_split( '/\R/', $el );
 				$el_count = count( $el_arr );
@@ -3498,19 +3497,16 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 		} elseif ( preg_match( '/#_(RESP)?DYNAMICFIELD\{(.*?)\}$/', $result, $matches ) ) {
 			$field_key = $matches[2];
 			$formfield = eme_get_formfield( $field_key );
-			if ( ! empty( $dyn_answers ) ) {
+			if ( ! empty( $formfield ) && ! empty( $dyn_answers ) ) {
 				foreach ( $dyn_answers as $answer ) {
 					if ( $answer['field_id'] != $formfield['field_id'] ) {
 						continue;
 					}
-					$tmp_formfield = eme_get_formfield( $answer['field_id'] );
-					if ( ! empty( $tmp_formfield ) ) {
-						if ( $target == 'html' ) {
-							$replacement .= eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '<br>', $target );
-						} else {
-							$replacement .= eme_answer2readable( $answer['answer'], $tmp_formfield, 1, '||', $target ) . "\n";
-						}
-					}
+                    if ( $target == 'html' ) {
+                        $replacement .= eme_answer2readable( $answer['answer'], $formfield, 1, '<br>', $target );
+                    } else {
+                        $replacement .= eme_answer2readable( $answer['answer'], $formfield, 1, '||', $target ) . "\n";
+                    }
 				}
 				$replacement = eme_translate( $replacement, $lang );
 				if ( $target == 'html' ) {
@@ -3892,33 +3888,58 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
 				// remove { and } (first and last char of second match)
 				$sep = substr( $matches[3], 1, -1 );
 			} else {
-				$sep = '||';
+                $sep = '||';
+                if ( $target == 'html' ) {
+                    $eol_sep = '<br>';
+                } else {
+                    $eol_sep = "\n";
+                }
 			}
 			$formfield = eme_get_formfield( $field_key );
 			if ( ! empty( $formfield ) && in_array( $formfield['field_purpose'], [ 'generic', 'rsvp' ] ) ) {
-				$field_id      = $formfield['field_id'];
-				$field_replace = '';
+                $matched_answers = []; 
 				foreach ( $answers as $answer ) {
-					if ( $answer['field_id'] == $field_id ) {
+					if ( $answer['field_id'] == $formfield['field_id'] ) {
 						if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
-							$field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
+							$matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
 						} else {
-							$field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+							$matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
 						}
-						continue;
-					}
-				}
-				foreach ( $files as $file ) {
-					if ( $file['field_id'] == $field_id ) {
-						if ( $target == 'html' ) {
-							$field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';
-						} else {
-							$field_replace .= $file['name'] . ' [' . $file['url'] . ']' . "\n";
-						}
+						break; // only one is allowed
 					}
 				}
 
-				$replacement = eme_translate( $field_replace, $lang );
+                foreach ( $files as $file ) {
+					if ( $file['field_id'] == $formfield['field_id'] ) {
+                        if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
+                            // for file, we can show the url. For multifile this would not make any sense
+                            $matched_answers[] = $file['url'] ;
+                        } else {
+                            if ( $target == 'html' ) {
+                                $matched_answers[] = eme_get_uploaded_file_html( $file ) . '<br>';
+                            } else {
+                                $matched_answers[] = $file['name'] . ' [' . $file['url'] . ']' . "\n";
+                            }
+                        }
+					}
+				}
+ 
+                // nothing found, then also check the dynamic answers
+                if ( empty( $matched_answers ) && ! empty( $dyn_answers ) ) {
+                    foreach ( $dyn_answers as $answer ) {
+                        if ( $answer['field_id'] != $formfield['field_id'] ) {
+                            continue;
+                        }
+						if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
+							$matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
+						} else {
+							$matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+						}
+                    }
+                }
+                $replacement = join($eol_sep, $matched_answers);
+
+				$replacement = eme_translate( $replacement, $lang );
 				if ( $target == 'html' ) {
 					$replacement = apply_filters( 'eme_general', $replacement );
 				} else {

@@ -2109,10 +2109,12 @@ function eme_emails_page() {
     if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'deleteMails' && isset( $_POST['mail_ids'] ) ) {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $mail_ids = eme_sanitize_request( $_POST['mail_ids'] );
-        foreach ( $maili_ids as $mailing_id ) {
-            eme_delete_mail( $mailing_id );
+        if (eme_is_integer_array($mail_ids)) {
+            foreach ( $mail_ids as $mail_id ) {
+                eme_delete_mail( $mail_id );
+            }
         }
-        $data_forced_tab = 'data-showtab="tab-sentmails"';
+        $data_forced_tab = 'data-showtab="tab-sentmail"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'reuse_mail' && isset( $_GET['id'] ) ) {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );

@@ -805,6 +805,13 @@ function eme_cancel_mailing( $mailing_id ) {
     $wpdb->query( $sql );
 }
 
+function eme_delete_mail( $id ) {
+    global $wpdb;
+    $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+    $sql         = $wpdb->prepare( "DELETE FROM $queue_table WHERE id=%d", $id );
+    $wpdb->query( $sql );
+}
+
 function eme_delete_mailing_mails( $id ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
@@ -1514,7 +1521,19 @@ function eme_send_mails_ajax_actions( $action ) {
             echo wp_json_encode( $ajaxResult );
             wp_die();
         }
-        $res = '<table class="eme_mailings_table"><thead><tr>' .
+
+        $res = '<form action="#" method="post">';
+        $res .= wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
+        if ( $actions_allowed ) {
+            $res .= '<select id="eme_admin_action" name="eme_admin_action">';
+            $res .= '<option value="" selected="selected">' . esc_html__( 'Bulk Actions', 'events-made-easy' ) . '</option>';
+            $res .= '<option value="deleteMails">' .  esc_html__( 'Delete selected mails', 'events-made-easy' ) .'</option>';
+            $res .= '</select>';
+            $res .= '<button id="MailsActionsButton" class="button-secondary action">' . esc_html__( 'Apply', 'events-made-easy' ) . '</button>';
+        }
+
+        $res .= '<table class="eme_mailings_table"><thead><tr>' .
+            '<th class="manage-column column-cb check-column" scope="col"><input type="checkbox" class="select-all" value="1"></th>'.
             '<th>' . __( 'Sender name', 'events-made-easy' ) . '</th>' .
             '<th>' . __( 'Sender email', 'events-made-easy' ) . '</th>' .
             '<th>' . __( 'Name', 'events-made-easy' ) . '</th>' .
@@ -1534,6 +1553,7 @@ function eme_send_mails_ajax_actions( $action ) {
         $states = eme_mail_localizedstates();
         foreach ( $rows as $item ) {
             $row  = '<tr>';
+            $row .= "<td><input type='checkbox' class='row-selector' value='".$item['id']."' name='mail_ids[]'></td>";
             $row .= '<td>' . eme_esc_html( $item['fromname'] ) . '</td>';
             $row .= '<td>' . eme_esc_html( $item['fromemail'] ) . '</td>';
             $row .= '<td>' . eme_esc_html( $item['receivername'] ) . '</td>';
@@ -1581,7 +1601,7 @@ function eme_send_mails_ajax_actions( $action ) {
             $row .= '</tr>';
             $res .= $row;
         }
-        $res .= '</tbody></table>';
+        $res .= '</tbody></table></form>';
         $ajaxResult['htmlmessage'] = $res;
         $ajaxResult['Result']      = 'OK';
         echo wp_json_encode( $ajaxResult );
@@ -2059,26 +2079,40 @@ function eme_emails_page() {
     if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'archiveMailings' && isset( $_POST['mailing_ids'] ) ) {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $mailing_ids = eme_sanitize_request( $_POST['mailing_ids'] );
-        foreach ( $mailing_ids as $mailing_id ) {
-            eme_archive_mailing( $mailing_id );
+        if (eme_is_integer_array($mailing_ids)) {
+            foreach ( $mailing_ids as $mailing_id ) {
+                eme_archive_mailing( $mailing_id );
+            }
         }
         $data_forced_tab = 'data-showtab="tab-mailings"';
     }
     if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'deleteArchivedMailings' && isset( $_POST['mailing_ids'] ) ) {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $mailing_ids = eme_sanitize_request( $_POST['mailing_ids'] );
-        foreach ( $mailing_ids as $mailing_id ) {
-            eme_delete_mailing( $mailing_id );
+        if (eme_is_integer_array($mailing_ids)) {
+            foreach ( $mailing_ids as $mailing_id ) {
+                eme_delete_mailing( $mailing_id );
+            }
         }
         $data_forced_tab = 'data-showtab="tab-mailingsarchive"';
     }
     if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'deleteMailings' && isset( $_POST['mailing_ids'] ) ) {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         $mailing_ids = eme_sanitize_request( $_POST['mailing_ids'] );
-        foreach ( $mailing_ids as $mailing_id ) {
-            eme_delete_mailing( $mailing_id );
+        if (eme_is_integer_array($mailing_ids)) {
+            foreach ( $mailing_ids as $mailing_id ) {
+                eme_delete_mailing( $mailing_id );
+            }
         }
         $data_forced_tab = 'data-showtab="tab-mailings"';
+    }
+    if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'deleteMails' && isset( $_POST['mail_ids'] ) ) {
+        check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
+        $mail_ids = eme_sanitize_request( $_POST['mail_ids'] );
+        foreach ( $maili_ids as $mailing_id ) {
+            eme_delete_mail( $mailing_id );
+        }
+        $data_forced_tab = 'data-showtab="tab-sentmails"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'reuse_mail' && isset( $_GET['id'] ) ) {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );

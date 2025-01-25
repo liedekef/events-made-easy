@@ -68,7 +68,19 @@ jQuery(document).ready( function($) {
     $(document).on('click', 'input.select-all', function() {
         $('input.row-selector').prop('checked', this.checked)
     });
-    $(document).on('click', 'input.row-selector', function() {
+    let lastChecked = null;
+    $(document).on('click', 'input.row-selector', function(e) {
+        if(!lastChecked) {
+            lastChecked = this;
+        } else {
+            if (e.shiftKey) {
+                var start = $("input.row-selector").index(this);
+                var end = $("input.row-selector").index(lastChecked);
+                $("input.row-selector").slice(Math.min(start,end), Math.max(start,end)+ 1).prop('checked', lastChecked.checked);
+            }
+            lastChecked = this;
+        }
+        // to be nice: check if the "select-all" should be checked too
         if($("input.row-selector").length==$(".row-selector:checked").length) {
             $("input.select-all").prop("checked",true);
         } else {

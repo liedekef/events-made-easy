@@ -5641,12 +5641,12 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                     if ( $file['field_id'] == $formfield['field_id'] ) {
                         if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
                             // for file, we can show the url. For multifile this would not make any sense
-                            $matched_answers[] = $file['url'] ;
+                            $matched_answers[] = $file['url'];
                         } else {
                             if ( $target == 'html' ) {
-                                $matched_answers[] = eme_get_uploaded_file_html( $file ) . '<br>';
+                                $matched_answers[] = eme_get_uploaded_file_html( $file );
                             } else {
-                                $matched_answers[] = $file['name'] . ' [' . $file['url'] . ']' . "\n";
+                                $matched_answers[] = $file['name'] . ' [' . $file['url'] . ']';
                             }
                         }
                     }

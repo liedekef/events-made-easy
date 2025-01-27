@@ -2890,33 +2890,16 @@ function eme_sanitize_upload_filename( $fName, $field_id, $extra_id = '' ) {
 }
 
 function eme_upload_file_err( $code ) {
-    switch ( $code ) {
-    case UPLOAD_ERR_INI_SIZE:
-        $message = __( 'The uploaded file exceeds the upload_max_filesize directive in php.ini', 'events-made-easy' );
-        break;
-    case UPLOAD_ERR_FORM_SIZE:
-        $message = __( 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form', 'events-made-easy' );
-        break;
-    case UPLOAD_ERR_PARTIAL:
-        $message = __( 'The uploaded file was only partially uploaded', 'events-made-easy' );
-        break;
-    case UPLOAD_ERR_NO_FILE:
-        $message = __( 'No file was uploaded', 'events-made-easy' );
-        break;
-    case UPLOAD_ERR_NO_TMP_DIR:
-        $message = __( 'Missing a temporary folder', 'events-made-easy' );
-        break;
-    case UPLOAD_ERR_CANT_WRITE:
-        $message = __( 'Failed to write file to disk', 'events-made-easy' );
-        break;
-    case UPLOAD_ERR_EXTENSION:
-        $message = __( 'File upload stopped by extension', 'events-made-easy' );
-        break;
-
-    default:
-        $message = __( 'Unknown upload error', 'events-made-easy' );
-        break;
-    }
+    $message = match( $code ) {
+        UPLOAD_ERR_INI_SIZE => __( 'The uploaded file exceeds the upload_max_filesize directive in php.ini', 'events-made-easy' ),
+        UPLOAD_ERR_FORM_SIZE => __( 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form', 'events-made-easy' ),
+        UPLOAD_ERR_PARTIAL => __( 'The uploaded file was only partially uploaded', 'events-made-easy' ),
+        UPLOAD_ERR_NO_FILE => __( 'No file was uploaded', 'events-made-easy' ),
+        UPLOAD_ERR_NO_TMP_DIR => __( 'Missing a temporary folder', 'events-made-easy' ),
+        UPLOAD_ERR_CANT_WRITE => __( 'Failed to write file to disk', 'events-made-easy' ),
+        UPLOAD_ERR_EXTENSION => __( 'File upload stopped by extension', 'events-made-easy' ),
+        default => __( 'Unknown upload error', 'events-made-easy' ),
+    };
     return $message;
 }
 

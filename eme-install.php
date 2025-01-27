@@ -172,16 +172,16 @@ function _eme_install() {
 function eme_uninstall( $networkwide ) {
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		// check if it is a network activation - if so, run the activation function for each blog id
-		if ( $networkwide ) {
-			// Get all blog ids
-			$blog_ids = get_sites( [ 'fields' => 'ids' ] );
-                        foreach ( $blog_ids as $site_id ) {
-                                switch_to_blog( $site_id );
-                                _eme_uninstall();
-				restore_current_blog();
-                        }
-			return;
-		}
+        if ( $networkwide ) {
+            // Get all blog ids
+            $blog_ids = get_sites( [ 'fields' => 'ids' ] );
+            foreach ( $blog_ids as $site_id ) {
+                switch_to_blog( $site_id );
+                _eme_uninstall();
+                restore_current_blog();
+            }
+            return;
+        }
 	}
 	// executed if no network activation
 	_eme_uninstall();

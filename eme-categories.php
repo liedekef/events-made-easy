@@ -214,23 +214,12 @@ function eme_categories_edit_layout( $message = '' ) {
 		<?php echo $nonce_field; ?>
 		<table class='form-table'>
 			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='category_name'><?php esc_html_e( 'Category name', 'events-made-easy' ); ?></label></th>
-		<td><input name='category_name' id='category_name' type='text' required='required' value='<?php echo esc_html( $category['category_name'] ); ?>' size='40'><br>
+		        <th scope='row' style='vertical-align:top'><label for='category_name'><?php esc_html_e( 'Category name', 'events-made-easy' ); ?></label></th>
+		        <td><input name='category_name' id='category_name' type='text' required='required' value='<?php echo esc_html( $category['category_name'] ); ?>' size='40'><br>
 		<?php esc_html_e( 'The name of the category', 'events-made-easy' ); ?></td>
 			</tr>
-			<tr class='form-field'>
-		<th scope='row' style='vertical-align:top'><label for='description'><?php esc_html_e( 'Category description', 'events-made-easy' ); ?></label></th>
-			<td><div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
-				<!-- we need description for qtranslate as ID -->
-				<?php
-				eme_wysiwyg_textarea( 'description', $category['description'], 1, 1 );
-				?>
-				<br><?php esc_html_e( 'The description of the category', 'events-made-easy' ); ?>
-				</div>
-			</td>
-			</tr>
 			<tr>
-			<th scope='row' style='vertical-align:top'><label for='slug'><?php echo $permalink_string; ?></label></th>
+			    <th scope='row' style='vertical-align:top'><label for='slug'><?php echo $permalink_string; ?></label></th>
 				<td>
 				<?php
 				echo trailingslashit( home_url() );
@@ -262,7 +251,18 @@ function eme_categories_edit_layout( $message = '' ) {
 				}
 				?>
 				</td>
-				</tr>
+			</tr>
+			<tr class='form-field'>
+                <th scope='row' style='vertical-align:top'><label for='description'><?php esc_html_e( 'Category description', 'events-made-easy' ); ?></label></th>
+			    <td><div id="<?php echo user_can_richedit() ? 'postdivrich' : 'postdiv'; ?>" class="postarea">
+				<!-- we need description for qtranslate as ID -->
+				<?php
+				eme_wysiwyg_textarea( 'description', $category['description'], 1, 1 );
+				?>
+				<br><?php esc_html_e( 'The description of the category', 'events-made-easy' ); ?>
+				</div>
+			    </td>
+			</tr>
 		</table>
 		<p class='submit'><input type='submit' class='button-primary' name='submit' value='<?php echo $action_string; ?>'></p>
 		</form>

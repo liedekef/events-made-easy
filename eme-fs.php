@@ -700,7 +700,10 @@ function eme_fs_process_newevent() {
             $event_data['event_status'] = EME_EVENT_STATUS_FS_DRAFT;
         }
         $event_data = eme_sanitize_event($event_data);
-        $validation_result = apply_filters( 'eme_fs_validate_event_filter', $event_data );
+	$validation_result = '';
+	if (has_filter('eme_fs_validate_event_filter')) {
+		$validation_result = apply_filters( 'eme_fs_validate_event_filter', $event_data );
+	}
         if (empty($validation_result)) {
             $validation_result = eme_validate_event ( $event_data );
         }

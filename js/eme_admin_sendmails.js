@@ -511,15 +511,12 @@ jQuery(document).ready( function($) {
             },
             sent_datetime: {
                 title: ememails.translate_sentdatetime,
-                sorting: true
             },
             first_read_on: {
                 title: ememails.translate_first_read_on,
-                sorting: true
             },
             last_read_on: {
                 title: ememails.translate_last_read_on,
-                sorting: true
             },
             read_count: {
                 title: ememails.translate_readcount,

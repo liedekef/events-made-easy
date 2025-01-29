@@ -45,7 +45,6 @@ jQuery(document).ready(function ($) {
             },
             event_start: {
                 title: emersvp.translate_eventstart,
-                sorting: true
             },
             booker: {
                 title: emersvp.translate_booker

@@ -1,31 +1,31 @@
 @media only screen and (min-width: 900px) {
-	#div_person {position: relative;}
-	#div_person_image_relative {position: relative;}
-	#div_person_image {position:absolute; left:50%; top:0; z-index: 100;}
+    #div_person {position: relative;}
+    #div_person_image_relative {position: relative;}
+    #div_person_image {position:absolute; left:50%; top:0; z-index: 100;}
 }
 @media only screen and (min-width: 600px) {
-	.rightclickhint {
-		float: right;
-		margin: 0;
-	}
+    .rightclickhint {
+        float: right;
+        margin: 0;
+    }
 }
 
 /* don't show the right-click hint for small screens */
 @media only screen and (max-width: 600px) {
-	.rightclickhint {display:none;}
-	.eme_import_form_img {display:none;}
-	.jtable-page-list {display:none !important;}
-	.jtable-page-info {display:none !important;}
+    .rightclickhint {display:none;}
+    .eme_import_form_img {display:none;}
+    .jtable-page-list {display:none !important;}
+    .jtable-page-info {display:none !important;}
 }
 
 /* print: don't show table command columns */
 @media print {
-	.jtable-command-column {display:none;}
+    .jtable-command-column {display:none;}
 }
 
 #eme_person_image_example {
-	max-height: 250px;
-	max-width: 300px;
+    max-height: 250px;
+    max-width: 300px;
 }
 
 /* select2 class */
@@ -38,368 +38,368 @@
 }
 
 .select2-selection--multiple ul li {
-   line-height: initial !important;
+    line-height: initial !important;
 }
 
 .eme_admin_button_middle {
-	vertical-align: middle !important;
+    vertical-align: middle !important;
 }
 
 .eme_smaller {
-	font-size: smaller;
-	margin-bottom: 0em; margin-top: 0em;
+    font-size: smaller;
+    margin-bottom: 0em; margin-top: 0em;
 }
 .eme_small {
-	font-size:.7em;
+    font-size:.7em;
 }
 
 .eme_todos {
-	width: 100%;
+    width: 100%;
 }
 
 textarea.eme_fullresizable {
-	resize: both; 
-	width: 100%;
+    resize: both; 
+    width: 100%;
     -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 table.eme_event_admin_table td {
-	vertical-align: top;
+    vertical-align: top;
 }
 
 table.eme_membership_admin_table td {
-	vertical-align: top;
+    vertical-align: top;
 }
 
 table#eme-bookings-table tfoot td.booking-result {
-	font-weight: bold;
-	background:#6D6D6D url("../images/menu-bits.gif") repeat-x scroll left top;
-	color: #eee;
+    font-weight: bold;
+    background:#6D6D6D url("../images/menu-bits.gif") repeat-x scroll left top;
+    color: #eee;
 }
 
 div#eme_printable_container {
-	width: 100%;
-	text-align: center;
+    width: 100%;
+    text-align: center;
 }
 
 table#eme_printable_table {
-	width: 100%;
-	border-collapse:collapse;
+    width: 100%;
+    border-collapse:collapse;
 }
 
 tr#eme_printable_booked-seats td {
-	border-top: 2px solid grey;
+    border-top: 2px solid grey;
 }
 
 table#eme-bookings-table tfoot th {
-	text-align: right;
-	padding-right: 1em;
+    text-align: right;
+    padding-right: 1em;
 }
 
 table#event_attributes tr {
-	vertical-align: top;
+    vertical-align: top;
 }
 
 table.eme-rsvp-form, table.eme-member-form {
-	width: 80%;
+    width: 80%;
 }
 table.eme-rsvp-form th, table.eme-member-form th {
-	text-align: right;
-	width: 35%;
+    text-align: right;
+    width: 35%;
 }
 
 table.eme-rsvp-form td, table.eme-member-form td {
-	padding-left: 1em;
-	text-align: left;
+    padding-left: 1em;
+    text-align: left;
 }
 
 div.eme-noscriptmsg,
 div.eme-message-info,
 div.eme-message-success,
 div.eme-message-error {
-	margin-bottom: 1em;
-	background-color: #FDDD73;
-	padding: 5px;
-	border: 2px solid #FF9100;
+    margin-bottom: 1em;
+    background-color: #FDDD73;
+    padding: 5px;
+    border: 2px solid #FF9100;
 }
 
 .eme-message-admin {
-	background-color: rgb(255, 251, 204);
+    background-color: rgb(255, 251, 204);
 }
 
 .eme-hidden {
-	display: none; /* by default hidden, we'll show it via ajax when needed */
+    display: none; /* by default hidden, we'll show it via ajax when needed */
 }
 
 /* Printable stuff */
 body#printable {
-	font-family: Geneva, Helvetica, Arial, sans-serif;
-	text-align: center;
+    font-family: Geneva, Helvetica, Arial, sans-serif;
+    text-align: center;
 }
 body#printable #container {
-	margin: 0 auto;
-	width: 780px;
-	text-align: left;
+    margin: 0 auto;
+    width: 780px;
+    text-align: left;
 }
 table#bookings-table {
-	width: 600px;
-	border-spacing: 0px;
+    width: 600px;
+    border-spacing: 0px;
 
 }
 table#bookings-table td {
-	padding: 5px 0;
+    padding: 5px 0;
 }
 table#bookings-table td.seats-number {
-	text-align: right;
-	padding-right: 20px;
+    text-align: right;
+    padding-right: 20px;
 }
 table#bookings-table th {
-	text-align: left;
-	margin-left: 5px;
+    text-align: left;
+    margin-left: 5px;
 }
 table#bookings-table tr#booked-seats td{
-	border-top: 2px solid #999;
+    border-top: 2px solid #999;
 }
 
 table#bookings-table td.total-label {
-	text-align: right;
+    text-align: right;
 }
 
 table#bookings-table tr#booked-seats td.seats-number, table#bookings-table tr#available-seats td.seats-number {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 p#recurrence_warning {
-	border: 2px solid #FD0000;
-	background: #FF7146;
-	color: #fff;
-	font-weight: bold;
-	padding: 5px;
+    border: 2px solid #FD0000;
+    background: #FF7146;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px;
 }
 input#event_url {
-	width: 100%
+    width: 100%
 }
 div#icon-events{
-	background:url('../images/calendar-32.png') no-repeat center;
+    background:url('../images/calendar-32.png') no-repeat center;
 }
 
 table#eme-location-data th {
-	text-align: right;
-	width: 50px;
+    text-align: right;
+    width: 50px;
 }
 #eme_global_map {
-	line-height: 100%;
+    line-height: 100%;
 }
 .eme-location-map {
-	width: 100%;
-	height: 300px;
-	line-height: 100%;
+    width: 100%;
+    height: 300px;
+    line-height: 100%;
 }
 .eme-location-balloon {
-	font-size: 95%;
-	line-height: 100%;
-	margin-bottom: 1em;
+    font-size: 95%;
+    line-height: 100%;
+    margin-bottom: 1em;
 }
 /* this one influences the map appearance when editing/adding events/locations */
 div.eme-adminedit-location-map {
-	width: 400px;
-	height: 300px;
-	display: none;
-	margin-right: 8px;
+    width: 400px;
+    height: 300px;
+    display: none;
+    margin-right: 8px;
 }
 /* for google maps to work ok in IE, we need at least 690px as max-width for the images */
 .eme_global_map img,
 .eme-location-map img {
-	max-width: none !important;
-	background: none !important;
+    max-width: none !important;
+    background: none !important;
 }
 .eme_events_list, .eme_locations_list {
-	clear:both;
+    clear:both;
 }
 .eme_locations_list li {
-	cursor:default;
+    cursor:default;
 }
 
 table.eme-calendar-table td {
-	padding: 2px 4px;
-	text-align: center;
+    padding: 2px 4px;
+    text-align: center;
 }
 table.eme-calendar-table tr.days-names {
-	font-weight: bold;
+    font-weight: bold;
 }
 table.eme-calendar-table td.eventless-pre, table.eme-calendar-table td.eventless-post {
-	color: #ccc;
+    color: #ccc;
 }
 table.eme-calendar-table td.eventful a, table.eme-calendar-table td.eventful-today a, div.eventful-today a, div.eventful a {
-	font-weight: bold;
-	color: #FD7E29;
+    font-weight: bold;
+    color: #FD7E29;
 }
 table.eme-calendar-table td span.eme-cal-holidays {
-	color: #FD7E29;
+    color: #FD7E29;
 }
 
 table.eme-calendar-table td.eventless-today {
-	background-color: #CFCFCF;
+    background-color: #CFCFCF;
 }
 table.eme-calendar-table thead {
-	font-size: 120%;
-	font-weight: bold;
+    font-size: 120%;
+    font-weight: bold;
 }
 table.eme-calendar-table th.month_name, div.month_name {
-	text-align: center;
-	vertical-align: middle;
+    text-align: center;
+    vertical-align: middle;
 }
 
 /*
 .eme-calendar-table {
-	background-color:#fff;
+background-color:#fff;
 }
-*/
+ */
 table.fullcalendar {
-	table-layout: fixed;
-	border-collapse: collapse;
-	width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    width: 100%;
 }
 #content table.fullcalendar td {
-	border:1px solid #000;
+    border:1px solid #000;
 }
 table.fullcalendar td {
-	padding:0 !important;
-	border:1px solid #000;
-	text-align:left;
-	vertical-align:top;
+    padding:0 !important;
+    border:1px solid #000;
+    text-align:left;
+    vertical-align:top;
 }
 table.fullcalendar a.prev-month, table.smallcalendar a.prev-month, div.emeDivTableHead a.prev-month {
-	float:left;
-	padding-left:.7em;
-	text-decoration:none;
+    float:left;
+    padding-left:.7em;
+    text-decoration:none;
 }
 table.fullcalendar a.prev-month img, table.smallcalendar a.prev-month img {
-	display: inline;
+    display: inline;
 }
 table.fullcalendar a.next-month, table.smallcalendar a.next-month, div.emeDivTableHead a.next-month {
-	float:right;
-	padding-right:.7em;
-	text-decoration:none;
+    float:right;
+    padding-right:.7em;
+    text-decoration:none;
 }
 table.fullcalendar a.next-month img, table.smallcalendar a.next-month img {
-	display: inline;
+    display: inline;
 }
 table.fullcalendar tr.days-names td, div.days-names {
-	height: 1.4em;
-	text-align: center;
-	vertical-align: middle;
+    height: 1.4em;
+    text-align: center;
+    vertical-align: middle;
 }
 table.fullcalendar tbody td {
-	height:4em;
-	text-align:left;
-	overflow:hidden;
+    height:4em;
+    text-align:left;
+    overflow:hidden;
 }
 table.fullcalendar ul {
-	padding-left: 10px;
+    padding-left: 10px;
 }
 table.fullcalendar ul li {
-	margin:7px 0 0 0;
-	font-size:.7em;
-	line-height:normal;
+    margin:7px 0 0 0;
+    font-size:.7em;
+    line-height:normal;
 }
 table.fullcalendar td.eventless-today, table.fullcalendar td.eventful-today, div.eventless-today, div.eventful-today {
-	background-color:#eee;
+    background-color:#eee;
 }
 
 table.eme_mailings_table {
-	border-collapse: collapse;
-	width: 100%;
+    border-collapse: collapse;
+    width: 100%;
 }
 table.eme_mailings_table table, table.eme_mailings_table th, table.eme_mailings_table td {
-	border: 1px solid black;
-	padding-left: 5px;
+    border: 1px solid black;
+    padding-left: 5px;
 }
 table.eme_admin_table {
-	border-collapse: collapse;
+    border-collapse: collapse;
 }
 table.eme_admin_table , table.eme_admin_table th , table.eme_admin_table td {
-	border: 1px solid black;
-	padding-left: 5px;
-	padding-right: 5px;
+    border: 1px solid black;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .emeDivTable {
-	display: table;
-	border-collapse: collapse;
-	width: 100%;
+    display: table;
+    border-collapse: collapse;
+    width: 100%;
 }
 .emeDivTableHead {
-	font-weight: bold;
+    font-weight: bold;
 }
 .emeDivTableRow {
-	display: table-row;
+    display: table-row;
 }
 .emeDivTableHeading {
-	display: table-header-group;
-	font-weight: bold;
+    display: table-header-group;
+    font-weight: bold;
 }
 .emeDivTableCell {
-	height: 4em;
+    height: 4em;
 }
 .emeDivTableCell, .emeDivTableHead {
-	display: table-cell;
-	padding: 3px 0px;
-	border: 1px solid #999999;
-	width: 12%;
+    display: table-cell;
+    padding: 3px 0px;
+    border: 1px solid #999999;
+    width: 12%;
 }
 .emeDivTableCell ul {
-	list-style-position: inside;
-	padding-left: 3px;
-	font-size: 0.7em;
-	line-height: normal;
+    list-style-position: inside;
+    padding-left: 3px;
+    font-size: 0.7em;
+    line-height: normal;
 }
 .emeDivTableFoot {
-	display: table-footer-group;
-	font-weight: bold;
+    display: table-footer-group;
+    font-weight: bold;
 }
 .emeDivTableBody {
-	display: table-row-group;
+    display: table-row-group;
 }
 
 .events-pagination-top {
-	margin-bottom:1em;
+    margin-bottom:1em;
 }
 .locations-pagination-top,.locations-pagination-bottom,.events-pagination-top,.events-pagination-bottom {
-	text-align: center;
+    text-align: center;
 }
 .locations-pagination-top a,.locations-pagination-bottom a,.events-pagination-top a,.events-pagination-bottom a {
-	margin: 0 20px 0 20px;
-	text-decoration: none;
-	padding: 3px 0;
+    margin: 0 20px 0 20px;
+    text-decoration: none;
+    padding: 3px 0;
 }
 .eme_nav_left {
-	float: left;
+    float: left;
 }
 .eme_nav_right {
-	float: right;
+    float: right;
 }
 /* eliminate the vertical space between the "Your Street Address" text entry box and the "Get Directions" submit button in cases where the button wraps below the text box in the map location balloon */
 #saddr {
-	margin-bottom:0;
+    margin-bottom:0;
 }
 /* for the honeypot, render it invisible */
 #honeypot_check { display: none; }
 /* for the datepicker at the bottom of the edit/new event page, render it invisible */
 #ui-datepicker-div { display: none; }
 .eme_formfield_date {
-	background-image: url("../images/calendar-16.png");
-	background-position: right center;
-	background-repeat: no-repeat;
-	padding-right: 18px;
+    background-image: url("../images/calendar-16.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    padding-right: 18px;
 }
 
 /* datatable */
 div.dt-length select.dt-input {
-	-webkit-appearance: auto;
-	background: none;
+    -webkit-appearance: auto;
+    background: none;
 }
 /* to disable WP checkbox styles */
 .dt-select-checkbox:checked::before {
@@ -415,11 +415,11 @@ div.dt-length select.dt-input {
 
 /* clear X */
 .clearable{
-	background: url(../images/x.gif) no-repeat right -10px center;
-	border: 1px solid #999;
-	padding: 3px 18px 3px 4px;     /* Use the same right padding (18) in jQ! */
-	border-radius: 3px;
-	transition: background 0.4s;
+    background: url(../images/x.gif) no-repeat right -10px center;
+    border: 1px solid #999;
+    padding: 3px 18px 3px 4px;     /* Use the same right padding (18) in jQ! */
+    border-radius: 3px;
+    transition: background 0.4s;
 }
 .clearable.x  { background: url(../images/x.gif) no-repeat right 5px center !important; } /* (jQ) Show icon */
 .clearable.onX{ cursor: pointer; }              /* (jQ) hover cursor style */
@@ -427,24 +427,24 @@ div.dt-length select.dt-input {
 
 /* for the map marker on the global map */
 .eme-map-marker{
-	text-align: center;
-	position: absolute;
-	overflow: hidden;
-	background-color: red;
-	background-repeat: no-repeat;
-	background-position: center;
-	color: #fff;
-	width: 28px;
-	height: 28px;
-	border-radius: 10%;
-	line-height: 22pt;
-	font-size: 20px;
-	filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+    text-align: center;
+    position: absolute;
+    overflow: hidden;
+    background-color: red;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    border-radius: 10%;
+    line-height: 22pt;
+    font-size: 20px;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
 }
 
 /* for the leaflet popup close x, to prevent underlining due to theme boxing */
 .leaflet-container a.leaflet-popup-close-button {
-	box-shadow: none;
+    box-shadow: none;
 }
 /* leaflet prevent a-link underline for zoom in/out */
 .leaflet-control-zoom-in, .leaflet-control-zoom-out {
@@ -452,16 +452,16 @@ div.dt-length select.dt-input {
 }
 
 .eme_required {
-	border: 2px solid red !important;
+    border: 2px solid red !important;
 }
 
 /* for the dyndata table in the admin backend */
 .eme_dyndata {
-        border-collapse: collapse;
-	width: 100%;
+    border-collapse: collapse;
+    width: 100%;
 }
 .eme_dyndata_tbody tr {
-        border: solid thin;
+    border: solid thin;
 }
 
 div.eme_notice_unfiltered_html {
@@ -478,13 +478,13 @@ div.eme_notice_unfiltered_html {
 
 /* fix a wp bug causing disappearing checkboxes
 input[type="checkbox"] {
-    -webkit-appearance: checkbox;
+-webkit-appearance: checkbox;
 } */
 
 /* own passwords disable autocomplete via css */
 .eme_passwordfield {
-	font-family: text-security-disc !important;
-	-webkit-text-security: disc;
+    font-family: text-security-disc !important;
+    -webkit-text-security: disc;
 }
 
 /* for leaflet dark mode */
@@ -495,30 +495,30 @@ input[type="checkbox"] {
 @media (prefers-color-scheme: dark) {
     .eme-map-tiles {
         filter:var(--eme-map-tiles-filter, none);
-	}
+    }
 }
 
 /* some plugins set readonly pointer-events to none, but for our datetime fields this is not ok */
 .eme_formfield_fdatetime, .eme_formfield_fdate {
-	pointer-events: auto !important;
-	opacity: 1 !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
 }
 
 /* for task section header */
 .eme_task_section_header {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 /* frontend submit css */
 form[name=eme-fs-form] {
-	display: block;
-	overflow: hidden;
-	width: 100%;
+    display: block;
+    overflow: hidden;
+    width: 100%;
 }
 
 form[name=eme-fs-form] > div,
 form[name=eme-fs-form] > fieldset {
-	margin-bottom: 1.5em;
+    margin-bottom: 1.5em;
 } 
 
 form[name=eme-fs-form] #event_name, 
@@ -533,92 +533,92 @@ form[name=eme-fs-form] #location_state,
 form[name=eme-fs-form] #location_zip,
 form[name=eme-fs-form] #location_country,
 form[name=eme-fs-form] #location_town {
-	width: 96%;
+    width: 96%;
 }
 
 form[name=eme-fs-form] .eme_fs_notes_textarea,
 form[name=eme-fs-form] #wp-event_notes-wrap,
 form[name=eme-fs-form] #wp-location_description-wrap {
-	width: 96%;
+    width: 96%;
 }
 
 form[name=eme-fs-form] #event_notes {
-	height: 120px;
+    height: 120px;
 }
 
 form[name=eme-fs-form] #submit{
-	width: 200px;
-	text-align: center;
+    width: 200px;
+    text-align: center;
 }
 
 form[name=eme-fs-form] label {
-	font-weight: normal;
-	font-size: small;
-	padding: 0;
+    font-weight: normal;
+    font-size: small;
+    padding: 0;
 }
 
 form[name=eme-fs-form] label small,
 form[name=eme-fs-form] legend small{
-	font-size: smaller;
-	color: gray;
+    font-size: smaller;
+    color: gray;
 }
 
 form[name=eme-fs-form] fieldset {
-	border: 1px solid #F1F1F1;
-	width: 96%;
-	padding: 2px;
+    border: 1px solid #F1F1F1;
+    width: 96%;
+    padding: 2px;
 }
 
 form[name=eme-fs-form] fieldset fieldset{
-	width: 47%;
-	float: left;
-	margin: 1%;
+    width: 47%;
+    float: left;
+    margin: 1%;
 }
 
 form[name=eme-fs-form] span.error {
-	font-size: smaller;
-	font-weight: bold;
-	color: #C00;
+    font-size: smaller;
+    font-weight: bold;
+    color: #C00;
 }
 
 form[name=eme-fs-form] div.eme-frontendedit-location-map {
-	width: 96%;
-	height: 400px;
-	display: none;
+    width: 96%;
+    height: 400px;
+    display: none;
 }
 
 /* accordeon */
 details.eme_accordion {
-  overflow: auto;
+    overflow: auto;
 }
 details.eme_accordion > summary {
-  background-color: #e6e6e6;
-  color: #555555;
-  box-shadow: 1px 1px 2px #bbbbbb;
-  cursor: pointer;
-  margin: 2px !important;
-  padding: 7.5px 7.5px 7.5px 15px !important;
+    background-color: #e6e6e6;
+    color: #555555;
+    box-shadow: 1px 1px 2px #bbbbbb;
+    cursor: pointer;
+    margin: 2px !important;
+    padding: 7.5px 7.5px 7.5px 15px !important;
 }
 details.eme_accordion > summary:hover {
-  background-color: #ccc;
+    background-color: #ccc;
 }
 details.eme_accordion[open] {
-  background-color: white;
-  border: 1px solid #aaa;
-  border-radius: 3px;
-  margin-top: 2px;
+    background-color: white;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    margin-top: 2px;
 }
 details.eme_accordion[open] > summary:hover {
-  background-color: #e6e6e6;
+    background-color: #e6e6e6;
 }
 details.eme_accordion > table {
-  width: 99%;
-  margin: 1px auto 5px auto;
-  padding: 5px;
+    width: 99%;
+    margin: 1px auto 5px auto;
+    padding: 5px;
 }
 details.eme_accordion > div, details.eme_accordion > p {
-  padding: 5px;
-  background-color: white;
+    padding: 5px;
+    background-color: white;
 }
 
 /* tabs */
@@ -656,20 +656,23 @@ details.eme_accordion > div, details.eme_accordion > p {
 
 /* autocomplete */
 .eme-autocomplete-suggestions {
-	border: 1px solid #ccc;
+    border: 1px solid #ccc;
     width: fit-content;
-	max-height: 200px;
-	overflow-y: auto;
-	position: relative;
-	z-index: 1000;
-	background: #fff;
+    max-height: 200px;
+    overflow-y: auto;
+    position: relative;
+    z-index: 1000;
+    background: #fff;
 }
 .eme-autocomplete-suggestion {
-	padding: 2px;
-	cursor: pointer;
+    padding: 2px;
+    cursor: pointer;
+}
+.eme-autocomplete-suggestion:nth-child(even) {
+    background: #f0f0f0;
 }
 .eme-autocomplete-suggestion:hover {
-	background: #f0f0f0;
+    background: #ddd;
 }
 
 div#div_import {

@@ -178,7 +178,7 @@ function eme_cleanup_events( $eme_number, $eme_period ) {
 	$wpdb->query( "DELETE FROM $events_cf_table where event_id in (SELECT event_id from $events_table where event_end<'$end_datetime')" );
 	$wpdb->query( "DELETE FROM $attendances_table where type='event' AND related_id in (SELECT event_id from $events_table where event_end<'$end_datetime')" );
 	$wpdb->query( "DELETE FROM $events_table where event_end<'$end_datetime'" );
-	$wpdb->query( "DELETE FROM $recurrence_table where recurence_freq <> 'specific' AND recurrence_end_date<'$end_date'" );
+	$wpdb->query( "DELETE FROM $recurrence_table where recurrence_freq <> 'specific' AND recurrence_end_date<'$end_date'" );
 }
 
 function eme_cleanup_all_event_related_data( $other_data ) {

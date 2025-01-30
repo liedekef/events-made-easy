@@ -139,20 +139,6 @@ function eme_templates_page() {
                 eme_templates_edit_layout( $template_id, $message, $template );
                 return;
             }
-        } elseif ( $_POST['eme_admin_action'] == 'do_deletetemplate' && isset( $_POST['templates'] ) ) {
-            // Delete template or multiple
-            $templates = eme_sanitize_request( $_POST['templates'] );
-            if ( ! empty( $templates ) && eme_is_numeric_array( $templates ) ) {
-                $ids_list = implode(',', $templates);
-                $validation_result = $wpdb->query( "DELETE FROM $templates_table WHERE id IN ( $ids_list )"); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-                if ( $validation_result !== false ) {
-                    $message = __( 'Successfully deleted the selected template(s).', 'events-made-easy' );
-                } else {
-                    $message = __( 'There was a problem deleting the selected template(s), please try again.', 'events-made-easy' );
-                }
-            } else {
-                $message = __( "Couldn't delete the templates. Incorrect template IDs supplied. Please try again.", 'events-made-easy' );
-            }
         }
     }
     eme_templates_table_layout( $message );

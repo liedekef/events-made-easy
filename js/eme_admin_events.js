@@ -558,10 +558,9 @@ jQuery(document).ready( function($) {
             sorting: true,
             multiSorting: true,
             defaultSorting: 'event_start ASC, event_name ASC',
-            selecting: true, //Enable selecting
-            multiselect: true, //Allow multiple selecting
-            selectingCheckboxes: true, //Show checkboxes on first column
-            selectOnRowClick: true, //Enable this to only select using checkboxes
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             toolbar: {
                 items: [{
                     text: emeevents.translate_csv,
@@ -714,10 +713,9 @@ jQuery(document).ready( function($) {
             sorting: true,
             multiSorting: true,
             defaultSorting: '',
-            selecting: true, //Enable selecting
-            multiselect: true, //Allow multiple selecting
-            selectingCheckboxes: true, //Show checkboxes on first column
-            selectOnRowClick: true, //Enable this to only select using checkboxes
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             toolbar: {
                 items: [{
                     text: emeevents.translate_csv,

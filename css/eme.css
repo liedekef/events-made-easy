@@ -665,7 +665,7 @@ details.eme_accordion > div, details.eme_accordion > p {
 	background: #fff;
 }
 .eme-autocomplete-suggestion {
-	padding: 10px;
+	padding: 2px;
 	cursor: pointer;
 }
 .eme-autocomplete-suggestion:hover {

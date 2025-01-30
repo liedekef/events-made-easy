@@ -171,10 +171,9 @@ jQuery(document).ready(function ($) {
             sorting: true,
             multiSorting: true,
             defaultSorting: 'lastname ASC, firstname ASC',
-            selecting: true, //Enable selecting
-            multiselect: true, //Allow multiple selecting
-            selectingCheckboxes: true, //Show checkboxes on first column
-            selectOnRowClick: true,
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             toolbar: {
                 items: [{
                     text: ememembers.translate_csv,
@@ -274,10 +273,9 @@ jQuery(document).ready(function ($) {
             sorting: true,
             multiSorting: true,
             defaultSorting: 'name ASC',
-            selecting: true, //Enable selecting
-            multiselect: true, //Allow multiple selecting
-            selectingCheckboxes: true, //Show checkboxes on first column
-            selectOnRowClick: true,
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             actions: {
                 listAction: ajaxurl+'?action=eme_memberships_list&eme_admin_nonce='+ememembers.translate_adminnonce
             },

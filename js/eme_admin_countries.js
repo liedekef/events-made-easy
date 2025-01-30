@@ -5,10 +5,9 @@ jQuery(document).ready(function ($) {
         paging: true,
         sorting: true,
         defaultSorting: 'name ASC',
-        selecting: true, //Enable selecting
-        multiselect: true, //Allow multiple selecting
-        selectingCheckboxes: true, //Show checkboxes on first column
-        selectOnRowClick: true, //Enable this to only select using checkboxes
+        selecting: true, // Enable selecting
+        multiselect: true, // Allow multiple selecting
+        selectingCheckboxes: true, // Show checkboxes on first column
         actions: {
             listAction: ajaxurl+'?action=eme_countries_list&eme_admin_nonce='+emecountries.translate_adminnonce,
             deleteAction: ajaxurl+'?action=eme_manage_countries&do_action=deleteCountries&eme_admin_nonce='+emecountries.translate_adminnonce
@@ -43,10 +42,9 @@ jQuery(document).ready(function ($) {
         paging: true,
         sorting: true,
         defaultSorting: 'name ASC',
-        selecting: true, //Enable selecting
-        multiselect: true, //Allow multiple selecting
-        selectingCheckboxes: true, //Show checkboxes on first column
-        selectOnRowClick: true, //Enable this to only select using checkboxes
+        selecting: true, // Enable selecting
+        multiselect: true, // Allow multiple selecting
+        selectingCheckboxes: true, // Show checkboxes on first column
         actions: {
             listAction: ajaxurl+'?action=eme_states_list&eme_admin_nonce='+emecountries.translate_adminnonce,
             deleteAction: ajaxurl+'?action=eme_manage_states&do_action=deleteStates&eme_admin_nonce='+emecountries.translate_adminnonce

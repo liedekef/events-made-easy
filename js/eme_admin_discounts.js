@@ -7,10 +7,9 @@ jQuery(document).ready(function ($) {
         toolbarsearch: true,
         toolbarreset: false,
         defaultSorting: 'name ASC',
-        selecting: true, //Enable selecting
-        multiselect: true, //Allow multiple selecting
-        selectingCheckboxes: true, //Show checkboxes on first column
-        selectOnRowClick: true, //Enable this to only select using checkboxes
+        selecting: true, // Enable selecting
+        multiselect: true, // Allow multiple selecting
+        selectingCheckboxes: true, // Show checkboxes on first column
         deleteConfirmation: function(data) {
             data.deleteConfirmMessage = emediscounts.translate_pressdeletetoremove + ' "' + data.record.name + '"';
         },
@@ -74,10 +73,10 @@ jQuery(document).ready(function ($) {
         defaultSorting: 'name ASC',
         toolbarsearch: true,
         toolbarreset: false,
-        selecting: true, //Enable selecting
-        multiselect: true, //Allow multiple selecting
-        selectingCheckboxes: true, //Show checkboxes on first column
-        selectOnRowClick: false, //Enable this to only select using checkboxes
+        selecting: true, // Enable selecting
+        multiselect: true, // Allow multiple selecting
+        selectingCheckboxes: true, // Show checkboxes on first column
+        selectOnRowClick: false, // set to false to only select using checkboxes
         deleteConfirmation: function(data) {
             data.deleteConfirmMessage = emediscounts.translate_pressdeletetoremove + ' "' + data.record.name + '"';
         },

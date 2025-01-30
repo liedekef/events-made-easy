@@ -6,10 +6,6 @@ jQuery(document).ready( function($) {
             paging: true,
             sorting: true,
             defaultSorting: 'creation_date ASC',
-            selecting: false, //Enable selecting
-            multiselect: false, //Allow multiple selecting
-            selectingCheckboxes: false, //Show checkboxes on first column
-            selectOnRowClick: true,
             deleteConfirmation: function(data) {
                 data.deleteConfirmMessage = emeattendances.translate_areyousuretodeletethis;
             },

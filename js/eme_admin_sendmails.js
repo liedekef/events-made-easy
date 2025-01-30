@@ -483,10 +483,6 @@ jQuery(document).ready( function($) {
         paging: true,
         sorting: true,
         defaultSorting: '',
-        selecting: false, //Enable selecting
-        multiselect: false, //Allow multiple selecting
-        selectingCheckboxes: false, //Show checkboxes on first column
-        selectOnRowClick: false, //Enable this to only select using checkboxes
         actions: {
             listAction: ajaxurl,
         },

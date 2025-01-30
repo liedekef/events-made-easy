@@ -249,10 +249,9 @@ jQuery(document).ready(function ($) {
             sorting: true,
             multiSorting: true,
             defaultSorting: 'people.lastname ASC, people.firstname ASC',
-            selecting: true, //Enable selecting
-            multiselect: true, //Allow multiple selecting
-            selectingCheckboxes: true, //Show checkboxes on first column
-            selectOnRowClick: true,
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             toolbar: {
                 items: [{
                     text: emepeople.translate_csv,
@@ -298,10 +297,9 @@ jQuery(document).ready(function ($) {
             paging: true,
             sorting: true,
             defaultSorting: 'name ASC',
-            selecting: true, //Enable selecting
-            multiselect: true, //Allow multiple selecting
-            selectingCheckboxes: true, //Show checkboxes on first column
-            selectOnRowClick: true,
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             actions: {
                 listAction: ajaxurl+'?action=eme_groups_list&eme_admin_nonce='+emepeople.translate_adminnonce,
                 deleteAction: ajaxurl+'?action=eme_manage_groups&do_action=deleteGroups&eme_admin_nonce='+emepeople.translate_adminnonce,

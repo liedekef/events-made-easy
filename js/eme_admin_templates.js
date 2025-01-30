@@ -5,10 +5,9 @@ jQuery(document).ready( function($) {
             paging: true,
             sorting: true,
             defaultSorting: 'name ASC',
-            selecting: true, //Enable selecting
-            multiselect: true, //Allow multiple selecting
-            selectingCheckboxes: true, //Show checkboxes on first column
-            selectOnRowClick: true,
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             deleteConfirmation: function(data) {
                 data.deleteConfirmMessage = emetemplates.translate_pressdeletetoremove + ' "' + data.record.name + '"';
             },

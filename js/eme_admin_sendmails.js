@@ -28,7 +28,7 @@ jQuery(document).ready( function($) {
                     $.post(ajaxurl,
                         { 
                             'lastname': inputValue,
-                            'eme_admin_nonce': emeadmin.translate_adminnonce,
+                            'eme_admin_nonce': ememails.translate_adminnonce,
                             'action': 'eme_autocomplete_people',
                             'eme_searchlimit': 'people'
                         },
@@ -87,7 +87,7 @@ jQuery(document).ready( function($) {
                     $.post(ajaxurl,
                         { 
                             'lastname': inputValue,
-                            'eme_admin_nonce': emeadmin.translate_adminnonce,
+                            'eme_admin_nonce': ememails.translate_adminnonce,
                             'action': 'eme_autocomplete_people',
                             'eme_searchlimit': 'people'
                         },
@@ -145,7 +145,7 @@ jQuery(document).ready( function($) {
         let form_id = $(this.form).attr('id');
         let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_eventmail');
-        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
         $('#eventmailButton').text(ememails.translate_pleasewait);
         $('#eventmailButton').prop('disabled', true);
         $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
@@ -183,7 +183,7 @@ jQuery(document).ready( function($) {
         let form_id = $(this.form).attr('id');
         let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_genericmail');
-        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
         $('#genericmailButton').text(ememails.translate_pleasewait);
         $('#genericmailButton').prop('disabled', true);
         $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
@@ -222,7 +222,7 @@ jQuery(document).ready( function($) {
         let form_id = $(this.form).attr('id');
         let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_previeweventmail');
-        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
         $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
             .done(function(data){
                 $('div#previeweventmail-message').html(data.htmlmessage);
@@ -248,7 +248,7 @@ jQuery(document).ready( function($) {
         let form_id = $(this.form).attr('id');
         let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_previewmail');
-        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
         $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
             .done(function(data){
                 $('div#previewmail-message').html(data.htmlmessage);
@@ -263,52 +263,12 @@ jQuery(document).ready( function($) {
         return false;
     });
 
-    $('#searchmailingsButton').on("click",function (e) {
-        e.preventDefault();
-        let form_id = $(this.form).attr('id');
-        let alldata = new FormData($('#'+form_id)[0]);
-        alldata.append('action', 'eme_searchmailings');
-        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
-            .done(function(data){
-                $('div#searchmailings-message').html(data.htmlmessage);
-                $('div#searchmailings-message').show();
-            });
-        return false;
-    });
-    $('#searchmailingsarchiveButton').on("click",function (e) {
-        e.preventDefault();
-        let form_id = $(this.form).attr('id');
-        let alldata = new FormData($('#'+form_id)[0]);
-        alldata.append('action', 'eme_searchmailingsarchive');
-        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
-            .done(function(data){
-                $('div#searchmailingsarchive-message').html(data.htmlmessage);
-                $('div#searchmailingsarchive-message').show();
-            });
-        return false;
-    });
-    $('#searchmailButton').on("click",function (e) {
-        e.preventDefault();
-        let form_id = $(this.form).attr('id');
-        let alldata = new FormData($('#'+form_id)[0]);
-        alldata.append('action', 'eme_searchmail');
-        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
-        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
-            .done(function(data){
-                $('div#searchmail-message').html(data.htmlmessage);
-                $('div#searchmail-message').show();
-            });
-        return false;
-    });
-
     $('#testmailButton').on("click",function (e) {
         e.preventDefault();
         let form_id = $(this.form).attr('id');
         let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_testmail');
-        alldata.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
         $('#testmailButton').text(ememails.translate_pleasewait);
         $('#testmailButton').prop('disabled', true);
         $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
@@ -329,7 +289,7 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         $.post(ajaxurl,
             { action: 'eme_get_template',
-                'eme_admin_nonce': emeadmin.translate_adminnonce,
+                'eme_admin_nonce': ememails.translate_adminnonce,
                 template_id: $('select#event_subject_template').val(),
             },
             function(data){
@@ -343,7 +303,7 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         $.post(ajaxurl,
             { action: 'eme_get_template',
-                'eme_admin_nonce': emeadmin.translate_adminnonce,
+                'eme_admin_nonce': ememails.translate_adminnonce,
                 template_id: $('select#event_message_template').val(),
             },
             function(data){
@@ -364,7 +324,7 @@ jQuery(document).ready( function($) {
     //       e.preventDefault();
     //	  $.post(ajaxurl,
     //		  { action: 'eme_get_template',
-    //		   'eme_admin_nonce': emeadmin.translate_adminnonce,
+    //		   'eme_admin_nonce': ememails.translate_adminnonce,
     //		    template_id: $('select#generic_subject_template').val(),
     //		  },
     //		  function(data){
@@ -377,7 +337,7 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         $.post(ajaxurl,
             { action: 'eme_get_template',
-                'eme_admin_nonce': emeadmin.translate_adminnonce,
+                'eme_admin_nonce': ememails.translate_adminnonce,
                 template_id: $('select#generic_message_template').val(),
             },
             function(data){
@@ -458,7 +418,7 @@ jQuery(document).ready( function($) {
                 return {
                     q: params.term, // search term
                     search_all: search_all,
-                    eme_admin_nonce: emeadmin.translate_adminnonce
+                    eme_admin_nonce: ememails.translate_adminnonce
                 };
             },
             processResults: function (data, params) {
@@ -479,7 +439,7 @@ jQuery(document).ready( function($) {
     //Prepare jtable plugin
     let $_GET = getQueryParams(document.location.search);
     if ($('#MailingReportTableContainer').length) {
-        jQuery('#MailingReportTableContainer').jtable({
+        $('#MailingReportTableContainer').jtable({
             title: ememails.translate_mailingreport,
             paging: true,
             sorting: true,
@@ -490,7 +450,7 @@ jQuery(document).ready( function($) {
             listQueryParams: function () {
                 let params = {
                     'action': "eme_mailingreport_list",
-                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                    'eme_admin_nonce': ememails.translate_adminnonce,
                     'mailing_id': parseInt($_GET['id']),
                     'search_name': $('#search_name').val()
                 }
@@ -541,18 +501,27 @@ jQuery(document).ready( function($) {
     }
 
     if ($('#MailsTableContainer').length) {
-        jQuery('#MailsTableContainer').jtable({
+        $('#MailsTableContainer').jtable({
             title: ememails.translate_mails,
             paging: true,
             sorting: true,
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             defaultSorting: '',
             actions: {
                 listAction: ajaxurl,
             },
             listQueryParams: function () {
+                let search_failed=0;
+                if ($('#search_failed').is(":checked")) {
+                    search_failed = 1;
+                }
                 let params = {
                     'action': "eme_mails_list",
-                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                    'search_text': $('#search_text').val(),
+                    'search_failed': search_failed,
+                    'eme_admin_nonce': ememails.translate_adminnonce,
                 }
                 return params;
             },
@@ -561,10 +530,10 @@ jQuery(document).ready( function($) {
                     title: ememails.translate_id,
                     key: true,
                 },
-                senderemail: {
+                fromemail: {
                     title: ememails.translate_senderemail,
                 },
-                sendername: {
+                fromname: {
                     title: ememails.translate_sendername,
                 },
                 receiveremail: {
@@ -579,7 +548,7 @@ jQuery(document).ready( function($) {
                 status: {
                     title: ememails.translate_status,
                 },
-                queued_datetime: {
+                creation_date: {
                     title: ememails.translate_queueddatetime,
                 },
                 sent_datetime: {
@@ -605,7 +574,7 @@ jQuery(document).ready( function($) {
                 }
             }
         });
-        $('#MailsTableContainer').jtable('load');
+        //$('#MailsTableContainer').jtable('load');
 
         // Actions button
         $('#MailsActionsButton').on("click",function (e) {
@@ -656,10 +625,13 @@ jQuery(document).ready( function($) {
     }
 
     if ($('#MailingsTableContainer').length) {
-        jQuery('#MailingsTableContainer').jtable({
+        $('#MailingsTableContainer').jtable({
             title: ememails.translate_mailings,
             paging: true,
             sorting: true,
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             defaultSorting: '',
             actions: {
                 listAction: ajaxurl,
@@ -667,7 +639,7 @@ jQuery(document).ready( function($) {
             listQueryParams: function () {
                 let params = {
                     'action': "eme_mailings_list",
-                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                    'eme_admin_nonce': ememails.translate_adminnonce,
                 }
                 return params;
             },
@@ -701,7 +673,7 @@ jQuery(document).ready( function($) {
                 }
             }
         });
-        $('#MailingsTableContainer').jtable('load');
+        //$('#MailingsTableContainer').jtable('load');
 
         // Actions button
         $('#MailingsActionsButton').on("click",function (e) {
@@ -752,10 +724,13 @@ jQuery(document).ready( function($) {
     }
 
     if ($('#ArchivedMailingsTableContainer').length) {
-        jQuery('#ArchivedMailingsTableContainer').jtable({
+        $('#ArchivedMailingsTableContainer').jtable({
             title: ememails.translate_archivedmailings,
             paging: true,
             sorting: true,
+            selecting: true, // Enable selecting
+            multiselect: true, // Allow multiple selecting
+            selectingCheckboxes: true, // Show checkboxes on first column
             defaultSorting: '',
             actions: {
                 listAction: ajaxurl,
@@ -763,7 +738,7 @@ jQuery(document).ready( function($) {
             listQueryParams: function () {
                 let params = {
                     'action': "eme_archivedmailings_list",
-                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                    'eme_admin_nonce': ememails.translate_adminnonce,
                 }
                 return params;
             },
@@ -797,7 +772,7 @@ jQuery(document).ready( function($) {
                 }
             }
         });
-        $('#ArchivedMailingsTableContainer').jtable('load');
+        //$('#ArchivedMailingsTableContainer').jtable('load');
 
         // Actions button
         $('#ArchivedMailingsActionsButton').on("click",function (e) {

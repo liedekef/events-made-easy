@@ -10038,6 +10038,7 @@ function eme_admin_enqueue_js() {
 			'translate_fdateformat'     => EME_WP_DATE_FORMAT,
 			'translate_ftimeformat'     => EME_WP_TIME_FORMAT,
 			'translate_fdatetimeformat' => EME_WP_DATE_FORMAT . ' ' . EME_WP_TIME_FORMAT,
+			'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
 		];
 		wp_localize_script( 'eme-sendmails', 'ememails', $translation_array );
 		wp_enqueue_script( 'eme-sendmails' );

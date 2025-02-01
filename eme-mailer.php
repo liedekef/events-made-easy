@@ -1323,11 +1323,12 @@ function eme_mailingreport_list() {
     global $wpdb;
 
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    $jTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
-        $ajaxResult            = [];
-        $ajaxResult['Result']  = 'Error';
-        $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
-        print wp_json_encode( $ajaxResult );
+        $jTableResult            = [];
+        $jTableResult['Result']  = 'Error';
+        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        print wp_json_encode( $jTableResult );
         wp_die();
     }
 
@@ -1348,7 +1349,6 @@ function eme_mailingreport_list() {
         $where = ' WHERE ' . implode( ' AND ', $where_arr );
     }
 
-    $jTableResult = [];
     $sql          = "SELECT COUNT(*) FROM $table $where";
     $recordCount  = $wpdb->get_var( $sql );
     $limit        = eme_get_datatables_limit();
@@ -1408,28 +1408,224 @@ add_action( 'wp_ajax_eme_eventmail', 'eme_send_mails_ajax_action_eventmail' );
 add_action( 'wp_ajax_eme_genericmail', 'eme_send_mails_ajax_action_genericmail' );
 add_action( 'wp_ajax_eme_testmail', 'eme_send_mails_ajax_action_testmail' );
 
-add_action( 'wp_ajax_eme_searchmail', 'eme_send_mails_ajax_action_searchmail' );
-add_action( 'wp_ajax_eme_searchmailings', 'eme_send_mails_ajax_action_searchmailings' );
-add_action( 'wp_ajax_eme_searchmailingsarchive', 'eme_send_mails_ajax_action_searchmailingsarchive' );
+add_action( 'wp_ajax_eme_mails_list', 'eme_ajax_action_mails_list' );
+add_action( 'wp_ajax_eme_mailings_list', 'eme_ajax_action_mailings_list' );
+add_action( 'wp_ajax_eme_archivedmailings_list', 'eme_ajax_action_archivedmailings_list' );
+add_action( 'wp_ajax_eme_manage_mails', 'eme_ajax_action_manage_mails' );
+add_action( 'wp_ajax_eme_manage_mailings', 'eme_ajax_action_manage_mailings' );
+add_action( 'wp_ajax_eme_manage_archivedmailings', 'eme_ajax_action_manage_archivedmailings' );
 
-function eme_send_mails_ajax_action_searchmailings() {
-    if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+function eme_ajax_action_mailings_list() {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
+
+    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ){
+        $ajaxResult['Result']  = 'Error';
+        $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        print wp_json_encode( $ajaxResult );
         wp_die();
     }
-    eme_send_mails_ajax_actions( 'searchmailings' );
+    $jTableResult = [];
+        $res = eme_mailings_ajax_table( eme_sanitize_request( $_POST['search_mailingstext'] ));
+        $ajaxResult['htmlmessage'] = $res;
+        $ajaxResult['Result']      = 'OK';
+        echo wp_json_encode( $ajaxResult );
+        wp_die();
+    $jTableResult['Result']           = 'OK';
+    $jTableResult['Records']          = $records;
+    $jTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $jTableResult );
+    wp_die();
 }
-function eme_send_mails_ajax_action_searchmailingsarchive() {
-    if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+
+function eme_ajax_action_manage_mailings() {
+    $current_userid = get_current_user_id();
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    $jTableResult = [];
+    if ( isset( $_POST['do_action'] ) ) {
+        $do_action = eme_sanitize_request( $_POST['do_action'] );
+        switch ( $do_action ) {
+            case 'deleteLocations':
+                $ids_arr = explode( ',', eme_sanitize_request($_POST['location_id']) );
+                $to_id   = intval( $_POST['transferto_id'] );
+                foreach ( $ids_arr as $location_id ) {
+                    $location = eme_get_location( intval( $location_id ) );
+                    if ( ! empty( $location ) && ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
+                        ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) ) {
+                        eme_delete_location( intval( $location_id ), $to_id );
+                    }
+                }
+                $jTableResult['Result'] = 'OK';
+                break;
+        }
+    }
+    print wp_json_encode( $jTableResult );
+    wp_die();
+}
+
+function eme_ajax_action_archivedmailings_list() {
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
+
+    if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+        $ajaxResult['Result']  = 'Error';
+        $ajaxResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        print wp_json_encode( $ajaxResult );
         wp_die();
     }
-    eme_send_mails_ajax_actions( 'searchmailingsarchive' );
+    $jTableResult = [];
+        $res = eme_mailingsarchive_ajax_table( eme_sanitize_request( $_POST['search_mailingsarchivetext'] ));
+        $ajaxResult['htmlmessage'] = $res;
+        $ajaxResult['Result']      = 'OK';
+        echo wp_json_encode( $ajaxResult );
+        wp_die();
+    $jTableResult['Result']           = 'OK';
+    $jTableResult['Records']          = $records;
+    $jTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $jTableResult );
+    wp_die();
 }
-function eme_send_mails_ajax_action_searchmail() {
+
+function eme_ajax_action_manage_archivedmailings() {
+    $current_userid = get_current_user_id();
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    $jTableResult = [];
+    if ( isset( $_POST['do_action'] ) ) {
+        $do_action = eme_sanitize_request( $_POST['do_action'] );
+        switch ( $do_action ) {
+            case 'deleteLocations':
+                $ids_arr = explode( ',', eme_sanitize_request($_POST['location_id']) );
+                $to_id   = intval( $_POST['transferto_id'] );
+                foreach ( $ids_arr as $location_id ) {
+                    $location = eme_get_location( intval( $location_id ) );
+                    if ( ! empty( $location ) && ( current_user_can( get_option( 'eme_cap_edit_locations' ) ) ||
+                        ( current_user_can( get_option( 'eme_cap_author_locations' ) ) && ( $location['location_author'] == $current_userid ) ) ) ) {
+                        eme_delete_location( intval( $location_id ), $to_id );
+                    }
+                }
+                $jTableResult['Result'] = 'OK';
+                break;
+        }
+    }
+    print wp_json_encode( $jTableResult );
+    wp_die();
+}
+
+function eme_ajax_action_mails_list() {
+    global $wpdb;
+
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
+
+    $jTableResult = [];
     if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+        $jTableResult['Result']  = 'Error';
+        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        print wp_json_encode( $jTableResult );
         wp_die();
     }
-    eme_send_mails_ajax_actions( 'searchmail' );
+
+    $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+    $where = '';
+
+    $limit    = eme_get_datatables_limit();
+    $orderby  = eme_get_datatables_orderby();
+
+    if ( !isset($_POST['search_text'] ) || eme_is_empty_string( $_POST['search_text'] ) ) {
+        if ( ! empty( $_POST['search_failed'] ) ) {
+            $where = 'WHERE status=2';
+        }
+        $count_sql = "SELECT COUNT(*) FROM $table";
+        $recordCount = $wpdb->get_var( $count_sql );
+        if (empty($orderby)) {
+            // subselect to first get the last 100, and then the outer select to reverse sort them (newer last)
+            $sql  = "SELECT * FROM (SELECT * FROM $table $where ORDER BY id DESC $limit) as q ORDER BY q.id";
+        } else {
+            $sql  = "SELECT * FROM $table $where $orderby $limit";
+        }
+        $rows = $wpdb->get_results( $sql, ARRAY_A );
+    } else {
+        $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
+        if ( ! empty( $_POST['search_failed'] ) ) {
+            $where = 'AND status=2';
+        }
+        $count_sql  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where", $search_text, $search_text, $search_text );
+        $recordCount = $wpdb->get_var( $count_sql );
+        if (empty($orderby)) {
+            // "order by status=0, id" will show the planned mails (status=0) last
+            $orderby = "ORDER BY status=0,id";
+        }
+        $sql  = $wpdb->prepare( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where $orderby $limit", $search_text, $search_text, $search_text );
+        $rows = $wpdb->get_results( $sql, ARRAY_A );
+    }
+
+    $states = eme_mail_localizedstates();
+    $records = [];
+    foreach ( $rows as $row ) {
+        $record  = [];
+        $record['id'] = $row['id'];
+        $record['fromname'] = eme_esc_html( $row['fromname'] );
+        $record['fromemail'] = eme_esc_html( $row['fromemail'] );
+        $record['receivername'] = eme_esc_html( $row['receivername'] );
+        $record['receiveremail'] = eme_esc_html( $row['receiveremail'] );
+        $record['subject'] = eme_esc_html( $row['subject'] );
+        $record['status'] = $states[ $row['status'] ];
+        $record['creation_date'] = eme_localized_datetime( $row['creation_date'] );
+        // if status >0, then the mail is already treated
+        if ( $row['status'] > 0 ) {
+            if ( ! eme_is_empty_datetime( $row['sent_datetime'] ) ) {
+                $record['sent_datetime'] = eme_localized_datetime( $row['sent_datetime'] );
+            }
+            if ( ! eme_is_empty_datetime( $row['first_read_on'] ) ) {
+                $record['first_read_on'] = eme_localized_datetime( $row['first_read_on'] );
+                // to account for older setups that didn't have the last_read_on column
+                if ( eme_is_empty_datetime( $row['last_read_on'] ) ) {
+                    $row['last_read_on'] = $row['first_read_on'];
+                }
+                $record['last_read_on'] = eme_localized_datetime( $row['last_read_on'] );
+                $record['read_count'] = $row['read_count'];
+            }
+            $record['error_msg'] = eme_esc_html( $row['error_msg'] );
+            $record['action'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a>';
+        } else {
+            $record['action'] = "";
+            if ( $row['mailing_id'] > 0 ) {
+                $record['action'] .= __('This mail is part of a mailing','events-made-easy') . "<br>";
+            }
+            $record['action'] .= "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mail&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . "</a><br><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $row['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a>';
+        }
+        $records[] = $record;
+    }
+    $jTableResult['Result']           = 'OK';
+    $jTableResult['Records']          = $records;
+    $jTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $jTableResult );
+    wp_die();
 }
+
+function eme_ajax_action_manage_mails() {
+    $current_userid = get_current_user_id();
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    $jTableResult = [];
+    if ( isset( $_POST['do_action'] ) ) {
+        $do_action = eme_sanitize_request( $_POST['do_action'] );
+        switch ( $do_action ) {
+            case 'deleteMails':
+                $mail_ids = explode( ',', eme_sanitize_request($_POST['mail_id']) );
+                if (eme_is_integer_array($mail_ids)) {
+                    foreach ( $mail_ids as $mail_id ) {
+                        eme_delete_mail( $mail_id );
+                    }
+                }
+                $jTableResult['Message'] = __('Mails deleted','events-made-easy');
+                $jTableResult['Result'] = 'OK';
+                break;
+        }
+    }
+    print wp_json_encode( $jTableResult );
+    wp_die();
+}
+
 function eme_send_mails_ajax_action_testmail() {
     if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
         wp_die();
@@ -1481,133 +1677,6 @@ function eme_send_mails_ajax_actions( $action ) {
     $ajaxResult       = [];
     $conditions       = [];
     $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
-
-    if ( $action == 'searchmailings' ) {
-        $res = eme_mailings_ajax_table( eme_sanitize_request( $_POST['search_mailingstext'] ));
-        $ajaxResult['htmlmessage'] = $res;
-        $ajaxResult['Result']      = 'OK';
-        echo wp_json_encode( $ajaxResult );
-        wp_die();
-    }
-
-    if ( $action == 'searchmailingsarchive' ) {
-        $res = eme_mailingsarchive_ajax_table( eme_sanitize_request( $_POST['search_mailingsarchivetext'] ));
-        $ajaxResult['htmlmessage'] = $res;
-        $ajaxResult['Result']      = 'OK';
-        echo wp_json_encode( $ajaxResult );
-        wp_die();
-    }
-
-    if ( $action == 'searchmail' ) {
-        $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-        $where = '';
-        if ( eme_is_empty_string( $_POST['search_text'] ) ) {
-            if ( ! empty( $_POST['search_failed'] ) ) {
-                $where = 'WHERE status=2';
-            }
-            // subselect to first get the last 100, and then the outer select to reverse sort them (newer last)
-            $sql  = "SELECT * FROM (SELECT * FROM $table $where ORDER BY id DESC LIMIT 100) as q ORDER BY q.id";
-            $rows = $wpdb->get_results( $sql, ARRAY_A );
-        } else {
-            $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
-            if ( ! empty( $_POST['search_failed'] ) ) {
-                $where = 'AND status=2';
-            }
-            //"order by status=0, id" will show the planned mails (status=0) last
-            $sql  = $wpdb->prepare( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where ORDER BY status=0,id", $search_text, $search_text, $search_text );
-            $rows = $wpdb->get_results( $sql, ARRAY_A );
-        }
-        if ( empty( $rows ) ) {
-            $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'No results found', 'events-made-easy' ) . '</p></div>';
-            echo wp_json_encode( $ajaxResult );
-            wp_die();
-        }
-
-        $res = '<form action="#" method="post">';
-        $res .= wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
-        if ( $actions_allowed ) {
-            $res .= '<select id="eme_admin_action" name="eme_admin_action">';
-            $res .= '<option value="" selected="selected">' . esc_html__( 'Bulk Actions', 'events-made-easy' ) . '</option>';
-            $res .= '<option value="deleteMails">' .  esc_html__( 'Delete selected mails', 'events-made-easy' ) .'</option>';
-            $res .= '</select>';
-            $res .= '<button id="MailsActionsButton" class="button-secondary action">' . esc_html__( 'Apply', 'events-made-easy' ) . '</button>';
-        }
-
-        $res .= '<table class="eme_mailings_table"><thead><tr>' .
-            '<th class="manage-column column-cb check-column" scope="col"><input type="checkbox" class="select-all" value="1"></th>'.
-            '<th>' . __( 'Sender name', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Sender email', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Name', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Email', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Subject', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Status', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Queued on', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Sent on', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'First read on', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Last read on', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Read count', 'events-made-easy' ) . '</th>' .
-            '<th>' . __( 'Error message', 'events-made-easy' ) . '</th>' ;
-        if ($actions_allowed)
-            $res .= '<th>' . __( 'Action', 'events-made-easy' ) . '</th>' ;
-        $res .= '</tr></thead><tbody>';
-
-        $states = eme_mail_localizedstates();
-        foreach ( $rows as $item ) {
-            $row  = '<tr>';
-            $row .= "<td><input type='checkbox' class='row-selector' value='".$item['id']."' name='mail_ids[]'></td>";
-            $row .= '<td>' . eme_esc_html( $item['fromname'] ) . '</td>';
-            $row .= '<td>' . eme_esc_html( $item['fromemail'] ) . '</td>';
-            $row .= '<td>' . eme_esc_html( $item['receivername'] ) . '</td>';
-            $row .= '<td>' . eme_esc_html( $item['receiveremail'] ) . '</td>';
-            $row .= '<td>' . eme_esc_html( $item['subject'] ) . '</td>';
-            $row .= '<td>' . $states[ $item['status'] ] . '</td>';
-            $row .= '<td>' . eme_localized_datetime( $item['creation_date'] ) . '</td>';
-            // if status >0, then the mail is already treated
-            if ( $item['status'] > 0 ) {
-                if ( ! eme_is_empty_datetime( $item['sent_datetime'] ) ) {
-                    $row .= '<td>' . eme_localized_datetime( $item['sent_datetime'] ) . '</td>';
-                } else {
-                    $row .= '<td>&nbsp;</td>';
-                }
-                if ( ! eme_is_empty_datetime( $item['first_read_on'] ) ) {
-                    $row .= '<td>' . eme_localized_datetime( $item['first_read_on'] ) . '</td>';
-                    // to account for older setups that didn't have the last_read_on column
-                    if ( eme_is_empty_datetime( $item['last_read_on'] ) ) {
-                        $item['last_read_on'] = $item['first_read_on'];
-                    }
-                    $row .= '<td>' . eme_localized_datetime( $item['last_read_on'] ) . '</td>';
-                    $row .= '<td>' . $item['read_count'] . '</td>';
-                } else {
-                    $row .= '<td>&nbsp;</td>';
-                    $row .= '<td>&nbsp;</td>';
-                    $row .= '<td>&nbsp;</td>';
-                }
-                $row .= '<td>' . eme_esc_html( $item['error_msg'] ) . '</td>';
-                if ($actions_allowed)
-                    $row .= "<td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a></td>';
-            } else {
-                $row .= '<td>&nbsp;</td>';
-                $row .= '<td>&nbsp;</td>';
-                $row .= '<td>&nbsp;</td>';
-                $row .= '<td>&nbsp;</td>';
-                $row .= '<td>&nbsp;</td>';
-                if ( $actions_allowed ) {
-                    $row .= "<td>";
-                    if ( $item['mailing_id'] > 0 ) {
-                        $row .= __('This mail is part of a mailing','events-made-easy') . "<br>";
-                    }
-                    $row .= "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . "</a><br><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $item['id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a></td>';
-                }
-            }
-            $row .= '</tr>';
-            $res .= $row;
-        }
-        $res .= '</tbody></table></form>';
-        $ajaxResult['htmlmessage'] = $res;
-        $ajaxResult['Result']      = 'OK';
-        echo wp_json_encode( $ajaxResult );
-        wp_die();
-    }
 
     if ( $action == 'testmail' ) {
         $testmail_to = eme_sanitize_email( $_POST['testmail_to'] );
@@ -2547,7 +2616,7 @@ function eme_emails_page() {
         <input type="hidden" name="send_previeweventmailto_id" id="send_previeweventmailto_id" value="">
         <input type='search' id='eventmail_chooseperson' name='eventmail_chooseperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>">
         <button id='previeweventmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
-        <div id="previeweventmail-message" style="display:none;" ></div>
+        <div id="previeweventmail-message" class="eme-hidden" ></div>
         <hr>
         <button id='eventmailButton' class="button-primary action"> <?php esc_html_e( 'Send email', 'events-made-easy' ); ?></button>
 <?php
@@ -2571,7 +2640,7 @@ function eme_emails_page() {
 ?>
     </div>
     </form>
-    <div id="eventmail-message" style="display:none;" ></div>
+    <div id="eventmail-message" class="eme-hidden" ></div>
     </div>
 
     <div class="eme-tab-content" id="tab-genericmails">
@@ -2726,7 +2795,7 @@ function eme_emails_page() {
         <input type="hidden" name="send_previewmailto_id" id="send_previewmailto_id" value="">
         <input type='search' id='chooseperson' name='chooseperson' placeholder="<?php esc_html_e( 'Start typing a name', 'events-made-easy' ); ?>">
         <button id='previewmailButton' class="button-primary action"> <?php esc_html_e( 'Send Preview Email', 'events-made-easy' ); ?></button>
-        <div id="previewmail-message" style="display:none;" ></div>
+        <div id="previewmail-message" class="eme-hidden" ></div>
         <hr>
         <button id='genericmailButton' class="button-primary action"> <?php esc_html_e( 'Send email', 'events-made-easy' ); ?></button>
 <?php
@@ -2749,10 +2818,36 @@ function eme_emails_page() {
             }
 ?>
     </form>
-    <div id="genericmail-message" style="display:none;" ></div>
+    <div id="genericmail-message" class="eme-hidden" ></div>
     </div>
 
     <div class="eme-tab-content" id="tab-sentmail">
+        <?php eme_mails_div(); ?>
+    </div>
+
+    <div class="eme-tab-content" id="tab-testmail">
+    <h1><?php esc_html_e( 'Test mail settings', 'events-made-easy' ); ?></h1>
+    <div id="testmail-message" class="eme-hidden" ></div>
+    <?php esc_html_e( 'Use the below form to send a test mail', 'events-made-easy' ); ?>
+    <form id='send_testmail' name='send_testmail' action="#" method="post" onsubmit="return false;">
+    <label for='testmail_to'><?php esc_html_e( 'Enter the recipient', 'events-made-easy' ); ?></label>
+    <input type="text" name="testmail_to" id="testmail_to" value="">
+    <button id='testmailButton' class="button-primary action"> <?php esc_html_e( 'Send Email', 'events-made-easy' ); ?></button>
+    </form>
+    </div>
+
+</div> <!-- wrap -->
+<?php
+}
+
+function eme_mails_div() {
+    if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
+        print "<div class='eme-message-admin'><p>";
+        esc_html_e( 'Access denied!', 'events-made-easy' );
+        wp_die();
+    }
+
+?>
     <h1><?php esc_html_e( 'Sent emails', 'events-made-easy' ); ?></h1>
     <div class='eme-message-admin'><p>
 <?php
@@ -2768,24 +2863,22 @@ function eme_emails_page() {
     <label for='search_text'><?php esc_html_e( 'Enter the search text (leave empty to show the last 100 emails sent)', 'events-made-easy' ); ?></label>
     <input type="search" name="search_text" id="search_text" value="">
     <input id="search_failed" name='search_failed' value='1' type='checkbox' ><label for='search_failed'><?php esc_html_e( 'Only show failed emails', 'events-made-easy' ); ?></label>
-    <button id='searchmailButton' class="button-primary action"> <?php esc_html_e( 'Search', 'events-made-easy' ); ?></button>
+    <button id='MailsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Search', 'events-made-easy' ); ?></button>
     </form>
     <br>
-    <div id="searchmail-message" style="display:none;" ></div>
-    </div>
-
-    <div class="eme-tab-content" id="tab-testmail">
-    <h1><?php esc_html_e( 'Test mail settings', 'events-made-easy' ); ?></h1>
-    <div id="testmail-message" style="display:none;" ></div>
-    <?php esc_html_e( 'Use the below form to send a test mail', 'events-made-easy' ); ?>
-    <form id='send_testmail' name='send_testmail' action="#" method="post" onsubmit="return false;">
-    <label for='testmail_to'><?php esc_html_e( 'Enter the recipient', 'events-made-easy' ); ?></label>
-    <input type="text" name="testmail_to" id="testmail_to" value="">
-    <button id='testmailButton' class="button-primary action"> <?php esc_html_e( 'Send Email', 'events-made-easy' ); ?></button>
+    <div id="mails-message" class="eme-hidden" ></div>
+    <div id="bulkactions">
+    <form action="#" method="post">
+    <select id="eme_admin_action" name="eme_admin_action">
+    <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
+    <option value="deleteMails"><?php esc_html_e( 'Delete selected mails', 'events-made-easy' ); ?></option>
+    </select>
+    <span class="rightclickhint" id="colvis">
+        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
+    </span>
     </form>
     </div>
-
-</div> <!-- wrap -->
+	<div id="MailsTableContainer"></div>
 <?php
 }
 
@@ -2824,10 +2917,11 @@ function eme_mailings_div() {
     <form id='search_mailings' name='search_mailings' action="#" method="post" onsubmit="return false;">
     <label for='search_mailingstext'><?php esc_html_e( 'Enter the search text (leave empty to show all)', 'events-made-easy' ); ?></label>
     <input type="search" name="search_mailingstext" id="search_mailingstext" value="">
-    <button id='searchmailingsButton' class="button-primary action"> <?php esc_html_e( 'Search', 'events-made-easy' ); ?></button>
+    <button id='MailingsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Search', 'events-made-easy' ); ?></button>
     </form>
     <br>
-    <div id="searchmailings-message" style="display:none;" ></div>
+    <div id="mailings-message" class="eme-hidden" ></div>
+	<div id="MailingsTableContainer"></div>
 <?php 
 }
 
@@ -2949,10 +3043,10 @@ function eme_mailings_archive_div() {
     <form id='search_mailingsarchive' name='search_mailingsarchive' action="#" method="post" onsubmit="return false;">
     <label for='search_mailingsarchivetext'><?php esc_html_e( 'Enter the search text (leave empty to show all)', 'events-made-easy' ); ?></label>
     <input type="search" name="search_mailingsarchivetext" id="search_mailingsarchivetext" value="">
-    <button id='searchmailingsarchiveButton' class="button-primary action"> <?php esc_html_e( 'Search', 'events-made-easy' ); ?></button>
+    <button id='ArchivedMailingsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Search', 'events-made-easy' ); ?></button>
     </form>
-    <br>
-    <div id="searchmailingsarchive-message" style="display:none;" ></div>
+    <div id="archivedmailings-message" class="eme-hidden" ></div>
+	<div id="ArchivedMailingsTableContainer"></div>
 <?php
 }
 

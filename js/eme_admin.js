@@ -22,21 +22,21 @@ function activateTab(target) {
         // do this only when the tab is active, to avoid doing mail lookups if not needed
         // Delay the trigger to ensure the tab content is fully rendered
         setTimeout(function() {
-            jQuery('#searchmailingsButton').trigger('click');
+            jQuery('#MailingsLoadRecordsButton').trigger('click');
         }, 100); // Adjust the delay as necessary
     }
     if (target == "tab-mailingsarchive" ) {
         // do this only when the tab is active, to avoid doing mail lookups if not needed
         // Delay the trigger to ensure the tab content is fully rendered
         setTimeout(function() {
-            jQuery('#searchmailingsarchiveButton').trigger('click');
+            jQuery('#ArchivedMailingsLoadRecordsButton').trigger('click');
         }, 100); // Adjust the delay as necessary
     }
     if (target == "tab-sentmail" ) {
         // do this only when the tab is active, to avoid doing mail lookups if not needed
         // Delay the trigger to ensure the tab content is fully rendered
         setTimeout(function() {
-            jQuery('#searchmailButton').trigger('click');
+            jQuery('#MailsLoadRecordsButton').trigger('click');
         }, 100); // Adjust the delay as necessary
     }
 }

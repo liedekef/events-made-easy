@@ -235,12 +235,6 @@ jQuery(document).ready(function ($) {
             }
         });
 
-        let exactmatch;
-        if ($('#search_exactmatch').is(":checked")) {
-            exactmatch = 1;
-        } else {
-            exactmatch = 0;
-        }
         let $_GET = getQueryParams(document.location.search);
         //Prepare jtable plugin
         $('#PeopleTableContainer').jtable({
@@ -271,6 +265,10 @@ jQuery(document).ready(function ($) {
                 listAction: ajaxurl
             },
             listQueryParams: function () {
+                let exactmatch=0;
+                if ($('#search_exactmatch').is(":checked")) {
+                    exactmatch = 1;
+                }
                 let params = {
                     'action': "eme_people_list",
                     'eme_admin_nonce': emepeople.translate_adminnonce,
@@ -447,12 +445,6 @@ jQuery(document).ready(function ($) {
     // Re-load records when user click 'load records' button.
     $('#PeopleLoadRecordsButton').on("click",function (e) {
         e.preventDefault();
-        let exactmatch;
-        if ($('#search_exactmatch').is(":checked")) {
-            exactmatch = 1;
-        } else {
-            exactmatch = 0;
-        }
         $('#PeopleTableContainer').jtable('load');
         if ($('#search_person').val().length || $('#search_groups').val().length || $('#search_memberstatus').val().length || $('#search_membershipids').val().length || $('#search_customfields').val().length || $('#search_customfieldids').val().length) {
             $('#StoreQueryButton').show();
@@ -472,11 +464,9 @@ jQuery(document).ready(function ($) {
     });
     $('#StoreQuerySubmitButton').on("click",function (e) {
         e.preventDefault();
-        let exactmatch;
+        let exactmatch=0;
         if ($('#search_exactmatch').is(":checked")) {
             exactmatch = 1;
-        } else {
-            exactmatch = 0;
         }
         let params = {
             'search_person': $('#search_person').val(),

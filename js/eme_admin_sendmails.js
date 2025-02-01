@@ -478,15 +478,16 @@ jQuery(document).ready( function($) {
 
     //Prepare jtable plugin
     let $_GET = getQueryParams(document.location.search);
-    jQuery('#MailingReportTableContainer').jtable({
-        title: ememails.translate_mailingreport,
-        paging: true,
-        sorting: true,
-        defaultSorting: '',
-        actions: {
-            listAction: ajaxurl,
-        },
-        listQueryParams: function () {
+    if ($('#MailingReportTableContainer').length) {
+        jQuery('#MailingReportTableContainer').jtable({
+            title: ememails.translate_mailingreport,
+            paging: true,
+            sorting: true,
+            defaultSorting: '',
+            actions: {
+                listAction: ajaxurl,
+            },
+            listQueryParams: function () {
                 let params = {
                     'action': "eme_mailingreport_list",
                     'eme_admin_nonce': emeadmin.translate_adminnonce,
@@ -494,51 +495,347 @@ jQuery(document).ready( function($) {
                     'search_name': $('#search_name').val()
                 }
                 return params;
-        },
-        fields: {
-            receiveremail: {
-                title: ememails.translate_email,
             },
-            receivername: {
-                title: ememails.translate_name,
-            },
-            status: {
-                title: ememails.translate_status,
-            },
-            sent_datetime: {
-                title: ememails.translate_sentdatetime,
-            },
-            first_read_on: {
-                title: ememails.translate_first_read_on,
-            },
-            last_read_on: {
-                title: ememails.translate_last_read_on,
-            },
-            read_count: {
-                title: ememails.translate_readcount,
-            },
-            error_msg: {
-                title: ememails.translate_errormessage,
-                visibility: 'hidden',
-                sorting: false
-            },
-            action: {
-                title: ememails.translate_action,
-                sorting: false
+            fields: {
+                receiveremail: {
+                    title: ememails.translate_email,
+                },
+                receivername: {
+                    title: ememails.translate_name,
+                },
+                status: {
+                    title: ememails.translate_status,
+                },
+                sent_datetime: {
+                    title: ememails.translate_sentdatetime,
+                },
+                first_read_on: {
+                    title: ememails.translate_first_read_on,
+                },
+                last_read_on: {
+                    title: ememails.translate_last_read_on,
+                },
+                read_count: {
+                    title: ememails.translate_readcount,
+                },
+                error_msg: {
+                    title: ememails.translate_errormessage,
+                    visibility: 'hidden',
+                    sorting: false
+                },
+                action: {
+                    title: ememails.translate_action,
+                    sorting: false
+                }
             }
-        }
-    });
-    if ($('#MailingReportTableContainer').length) {
+        });
         $('#MailingReportTableContainer').jtable('load');
+
+        // Re-load records when user click 'load records' button.
+        $('#ReportLoadRecordsButton').on("click",function (e) {
+            e.preventDefault();
+            $('#MailingReportTableContainer').jtable('load');
+            // return false to make sure the real form doesn't submit
+            return false;
+        });
     }
 
-    // Re-load records when user click 'load records' button.
-    $('#ReportLoadRecordsButton').on("click",function (e) {
-        e.preventDefault();
-        $('#MailingReportTableContainer').jtable('load');
-        // return false to make sure the real form doesn't submit
-        return false;
-    });
+    if ($('#MailsTableContainer').length) {
+        jQuery('#MailsTableContainer').jtable({
+            title: ememails.translate_mails,
+            paging: true,
+            sorting: true,
+            defaultSorting: '',
+            actions: {
+                listAction: ajaxurl,
+            },
+            listQueryParams: function () {
+                let params = {
+                    'action': "eme_mails_list",
+                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                }
+                return params;
+            },
+            fields: {
+                receiveremail: {
+                    title: ememails.translate_email,
+                },
+                receivername: {
+                    title: ememails.translate_name,
+                },
+                status: {
+                    title: ememails.translate_status,
+                },
+                sent_datetime: {
+                    title: ememails.translate_sentdatetime,
+                },
+                first_read_on: {
+                    title: ememails.translate_first_read_on,
+                },
+                last_read_on: {
+                    title: ememails.translate_last_read_on,
+                },
+                read_count: {
+                    title: ememails.translate_readcount,
+                },
+                error_msg: {
+                    title: ememails.translate_errormessage,
+                    visibility: 'hidden',
+                    sorting: false
+                },
+                action: {
+                    title: ememails.translate_action,
+                    sorting: false
+                }
+            }
+        });
+        $('#MailsTableContainer').jtable('load');
+
+        // Actions button
+        $('#MailsActionsButton').on("click",function (e) {
+            e.preventDefault();
+            let selectedRows = $('#MailsTableContainer').jtable('selectedRows');
+            let do_action = $('#eme_admin_action').val();
+            let action_ok=1;
+            if (selectedRows.length > 0 && do_action != '') {
+                if ((do_action=='deleteMails') && !confirm(ememails.translate_areyousuretodeleteselected)) {
+                    action_ok=0;
+                }
+                if (action_ok==1) {
+                    $('#MailsActionsButton').text(ememails.translate_pleasewait);
+                    $('#MailsActionsButton').prop('disabled', true);
+                    let ids = [];
+                    selectedRows.each(function () {
+                        ids.push($(this).data('record')['id']);
+                    });
+
+                    let idsjoined = ids.join(); //will be such a string '2,5,7'
+                    let params = {
+                        'mail_id': idsjoined,
+                        'action': 'eme_manage_mails',
+                        'do_action': do_action,
+                        'eme_admin_nonce': ememails.translate_adminnonce };
+
+                    $.post(ajaxurl, params, function(data) {
+                        $('#MailsTableContainer').jtable('reload');
+                        $('#MailsActionsButton').text(ememails.translate_apply);
+                        $('#MailsActionsButton').prop('disabled', false);
+                        $('div#mails-message').html(data.Message);
+                        $('div#mails-message').show();
+                        $('div#mails-message').delay(3000).fadeOut('slow');
+                    }, 'json');
+                }
+            }
+            // return false to make sure the real form doesn't submit
+            return false;
+        });
+
+        // Re-load records when user click 'load records' button.
+        $('#MailsLoadRecordsButton').on("click",function (e) {
+            e.preventDefault();
+            $('#MailsTableContainer').jtable('load');
+            // return false to make sure the real form doesn't submit
+            return false;
+        });
+    }
+
+    if ($('#MailingsTableContainer').length) {
+        jQuery('#MailingsTableContainer').jtable({
+            title: ememails.translate_mailings,
+            paging: true,
+            sorting: true,
+            defaultSorting: '',
+            actions: {
+                listAction: ajaxurl,
+            },
+            listQueryParams: function () {
+                let params = {
+                    'action': "eme_mailings_list",
+                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                }
+                return params;
+            },
+            fields: {
+                receiveremail: {
+                    title: ememails.translate_email,
+                },
+                receivername: {
+                    title: ememails.translate_name,
+                },
+                status: {
+                    title: ememails.translate_status,
+                },
+                sent_datetime: {
+                    title: ememails.translate_sentdatetime,
+                },
+                first_read_on: {
+                    title: ememails.translate_first_read_on,
+                },
+                last_read_on: {
+                    title: ememails.translate_last_read_on,
+                },
+                read_count: {
+                    title: ememails.translate_readcount,
+                },
+                error_msg: {
+                    title: ememails.translate_errormessage,
+                    visibility: 'hidden',
+                    sorting: false
+                },
+                action: {
+                    title: ememails.translate_action,
+                    sorting: false
+                }
+            }
+        });
+        $('#MailingsTableContainer').jtable('load');
+
+        // Actions button
+        $('#MailingsActionsButton').on("click",function (e) {
+            e.preventDefault();
+            let selectedRows = $('#MailingsTableContainer').jtable('selectedRows');
+            let do_action = $('#eme_admin_action').val();
+            let action_ok=1;
+            if (selectedRows.length > 0 && do_action != '') {
+                if ((do_action=='deleteMailings') && !confirm(ememails.translate_areyousuretodeleteselected)) {
+                    action_ok=0;
+                }
+                if (action_ok==1) {
+                    $('#MailingsActionsButton').text(ememails.translate_pleasewait);
+                    $('#MailingsActionsButton').prop('disabled', true);
+                    let ids = [];
+                    selectedRows.each(function () {
+                        ids.push($(this).data('record')['id']);
+                    });
+
+                    let idsjoined = ids.join(); //will be such a string '2,5,7'
+                    let params = {
+                        'mailing_id': idsjoined,
+                        'action': 'eme_manage_mailings',
+                        'do_action': do_action,
+                        'eme_admin_nonce': ememails.translate_adminnonce };
+
+                    $.post(ajaxurl, params, function(data) {
+                        $('#MailingsTableContainer').jtable('reload');
+                        $('#MailingsActionsButton').text(ememails.translate_apply);
+                        $('#MailingsActionsButton').prop('disabled', false);
+                        $('div#mailings-message').html(data.Message);
+                        $('div#mailings-message').show();
+                        $('div#mailings-message').delay(3000).fadeOut('slow');
+                    }, 'json');
+                }
+            }
+            // return false to make sure the real form doesn't submit
+            return false;
+        });
+
+        // Re-load records when user click 'load records' button.
+        $('#MailingsLoadRecordsButton').on("click",function (e) {
+            e.preventDefault();
+            $('#MailingsTableContainer').jtable('load');
+            // return false to make sure the real form doesn't submit
+            return false;
+        });
+    }
+
+    if ($('#ArchivedMailingsTableContainer').length) {
+        jQuery('#ArchivedMailingsTableContainer').jtable({
+            title: ememails.translate_archivedmailings,
+            paging: true,
+            sorting: true,
+            defaultSorting: '',
+            actions: {
+                listAction: ajaxurl,
+            },
+            listQueryParams: function () {
+                let params = {
+                    'action': "eme_archivedmailings_list",
+                    'eme_admin_nonce': emeadmin.translate_adminnonce,
+                }
+                return params;
+            },
+            fields: {
+                receiveremail: {
+                    title: ememails.translate_email,
+                },
+                receivername: {
+                    title: ememails.translate_name,
+                },
+                status: {
+                    title: ememails.translate_status,
+                },
+                sent_datetime: {
+                    title: ememails.translate_sentdatetime,
+                },
+                first_read_on: {
+                    title: ememails.translate_first_read_on,
+                },
+                last_read_on: {
+                    title: ememails.translate_last_read_on,
+                },
+                read_count: {
+                    title: ememails.translate_readcount,
+                },
+                error_msg: {
+                    title: ememails.translate_errormessage,
+                    visibility: 'hidden',
+                    sorting: false
+                },
+                action: {
+                    title: ememails.translate_action,
+                    sorting: false
+                }
+            }
+        });
+        $('#ArchivedMailingsTableContainer').jtable('load');
+
+        // Actions button
+        $('#ArchivedMailingsActionsButton').on("click",function (e) {
+            e.preventDefault();
+            let selectedRows = $('#ArchivedMailingsTableContainer').jtable('selectedRows');
+            let do_action = $('#eme_admin_action').val();
+            let action_ok=1;
+            if (selectedRows.length > 0 && do_action != '') {
+                if ((do_action=='deleteArchivedMailings') && !confirm(ememails.translate_areyousuretodeleteselected)) {
+                    action_ok=0;
+                }
+                if (action_ok==1) {
+                    $('#ArchivedMailingsActionsButton').text(ememails.translate_pleasewait);
+                    $('#ArchivedMailingsActionsButton').prop('disabled', true);
+                    let ids = [];
+                    selectedRows.each(function () {
+                        ids.push($(this).data('record')['id']);
+                    });
+
+                    let idsjoined = ids.join(); //will be such a string '2,5,7'
+                    let params = {
+                        'mailing_id': idsjoined,
+                        'action': 'eme_manage_archivedmailings',
+                        'do_action': do_action,
+                        'eme_admin_nonce': ememails.translate_adminnonce };
+
+                    $.post(ajaxurl, params, function(data) {
+                        $('#ArchivedMailingsTableContainer').jtable('reload');
+                        $('#ArchivedMailingsActionsButton').text(ememails.translate_apply);
+                        $('#ArchivedMailingsActionsButton').prop('disabled', false);
+                        $('div#archivedmailings-message').html(data.Message);
+                        $('div#archivedmailings-message').show();
+                        $('div#archivedmailings-message').delay(3000).fadeOut('slow');
+                    }, 'json');
+                }
+            }
+            // return false to make sure the real form doesn't submit
+            return false;
+        });
+
+        // Re-load records when user click 'load records' button.
+        $('#ArchivedMailingsLoadRecordsButton').on("click",function (e) {
+            e.preventDefault();
+            $('#ArchivedMailingsTableContainer').jtable('load');
+            // return false to make sure the real form doesn't submit
+            return false;
+        });
+    }
 
     $('#eventmail_attach_button').on("click",function(e) {
         e.preventDefault();

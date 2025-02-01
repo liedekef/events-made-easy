@@ -1404,12 +1404,13 @@ function eme_mailingreport_list() {
 
 add_action( 'wp_ajax_eme_previeweventmail', 'eme_send_mails_ajax_action_previeweventmail' );
 add_action( 'wp_ajax_eme_previewmail', 'eme_send_mails_ajax_action_previewmail' );
+add_action( 'wp_ajax_eme_eventmail', 'eme_send_mails_ajax_action_eventmail' );
 add_action( 'wp_ajax_eme_genericmail', 'eme_send_mails_ajax_action_genericmail' );
 add_action( 'wp_ajax_eme_testmail', 'eme_send_mails_ajax_action_testmail' );
+
 add_action( 'wp_ajax_eme_searchmail', 'eme_send_mails_ajax_action_searchmail' );
 add_action( 'wp_ajax_eme_searchmailings', 'eme_send_mails_ajax_action_searchmailings' );
 add_action( 'wp_ajax_eme_searchmailingsarchive', 'eme_send_mails_ajax_action_searchmailingsarchive' );
-add_action( 'wp_ajax_eme_eventmail', 'eme_send_mails_ajax_action_eventmail' );
 
 function eme_send_mails_ajax_action_searchmailings() {
     if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {

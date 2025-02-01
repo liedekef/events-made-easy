@@ -557,14 +557,30 @@ jQuery(document).ready( function($) {
                 return params;
             },
             fields: {
+                id: {
+                    title: ememails.translate_id,
+                    key: true,
+                },
+                senderemail: {
+                    title: ememails.translate_senderemail,
+                },
+                sendername: {
+                    title: ememails.translate_sendername,
+                },
                 receiveremail: {
                     title: ememails.translate_email,
                 },
                 receivername: {
                     title: ememails.translate_name,
                 },
+                subject: {
+                    title: ememails.translate_subject,
+                },
                 status: {
                     title: ememails.translate_status,
+                },
+                queued_datetime: {
+                    title: ememails.translate_queueddatetime,
                 },
                 sent_datetime: {
                     title: ememails.translate_sentdatetime,
@@ -656,34 +672,31 @@ jQuery(document).ready( function($) {
                 return params;
             },
             fields: {
-                receiveremail: {
-                    title: ememails.translate_email,
+                id: {
+                    title: ememails.translate_id,
+                    key: true,
                 },
-                receivername: {
-                    title: ememails.translate_name,
+                name: {
+                    title: ememails.translate_mailingname,
                 },
                 status: {
                     title: ememails.translate_status,
                 },
-                sent_datetime: {
-                    title: ememails.translate_sentdatetime,
+                planned_datetime: {
+                    title: ememails.translate_planneddatetime,
                 },
-                first_read_on: {
-                    title: ememails.translate_first_read_on,
-                },
-                last_read_on: {
-                    title: ememails.translate_last_read_on,
+                unique_readcount: {
+                    title: ememails.translate_unique_readcount,
                 },
                 read_count: {
                     title: ememails.translate_readcount,
                 },
-                error_msg: {
-                    title: ememails.translate_errormessage,
-                    visibility: 'hidden',
+                extra_info: {
+                    title: ememails.translate_extrainfo,
                     sorting: false
                 },
-                action: {
-                    title: ememails.translate_action,
+                report: {
+                    title: ememails.translate_report,
                     sorting: false
                 }
             }
@@ -755,34 +768,31 @@ jQuery(document).ready( function($) {
                 return params;
             },
             fields: {
-                receiveremail: {
-                    title: ememails.translate_email,
+                id: {
+                    title: ememails.translate_id,
+                    key: true,
                 },
-                receivername: {
-                    title: ememails.translate_name,
+                name: {
+                    title: ememails.translate_mailingname,
                 },
                 status: {
                     title: ememails.translate_status,
                 },
-                sent_datetime: {
-                    title: ememails.translate_sentdatetime,
+                planned_datetime: {
+                    title: ememails.translate_planneddatetime,
                 },
-                first_read_on: {
-                    title: ememails.translate_first_read_on,
-                },
-                last_read_on: {
-                    title: ememails.translate_last_read_on,
+                unique_readcount: {
+                    title: ememails.translate_unique_readcount,
                 },
                 read_count: {
                     title: ememails.translate_readcount,
                 },
-                error_msg: {
-                    title: ememails.translate_errormessage,
-                    visibility: 'hidden',
+                extra_info: {
+                    title: ememails.translate_extrainfo,
                     sorting: false
                 },
-                action: {
-                    title: ememails.translate_action,
+                report: {
+                    title: ememails.translate_report,
                     sorting: false
                 }
             }

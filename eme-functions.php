@@ -2756,7 +2756,7 @@ function eme_sanitize_email( $email ) {
 
 // same as wp sanitize_sql_orderby function, but also allow the "." for table names
 function eme_verify_sql_orderby( $orderby ) {
-    if ( preg_match( '/^\s*(([a-z0-9_\.]+|`[a-z0-9_\.]+`)(\s+(ASC|DESC))?\s*(,\s*(?=[a-z0-9_\.`])|$))+$/i', $orderby ) || preg_match( '/^\s*RAND\(\s*\)\s*$/i', $orderby ) ) {
+    if ( preg_match( '/^\s*(([a-z0-9_\.\=]+|`[a-z0-9_\.\=]+`)(\s+(ASC|DESC))?\s*(,\s*(?=[a-z0-9_\.\=`])|$))+$/i', $orderby ) || preg_match( '/^\s*RAND\(\s*\)\s*$/i', $orderby ) ) {
         return $orderby;
     }
     return false;
@@ -4097,20 +4097,21 @@ function eme_get_selected_captcha($properties) {
 
 function eme_get_datatables_limit() {
     $limit = '';
-    if ( isset( $_POST['jtStartIndex'] ) ) {
-        $limit = ' LIMIT ' . intval( $_POST['jtStartIndex'] ?: 0 ) . ',' . intval( $_POST['jtPageSize'] ?: 10 );
+    if ( ! empty( $_POST['jtStartIndex'] ) && ! empty( $_POST['jtPageSize'] ) ) {
+        $limit = ' LIMIT ' . intval( $_POST['jtStartIndex'] ) . ',' . intval( $_POST['jtPageSize'] );
     }
     return $limit;
 }
 
 function eme_get_datatables_orderby($preferred_sorting='') {
-    if ( isset( $_POST['jtSorting'] ) ) {
+    if ( ! empty( $_POST['jtSorting'] ) ) {
         $orderby = '';
-        if ( ! empty( $_POST['jtSorting'] ) && ! empty( eme_verify_sql_orderby( $_POST['jtSorting'] ) ) ) {
+        $sanitized_sorting = eme_verify_sql_orderby( $_POST['jtSorting'] );
+        if ( ! empty( $sanitized_sorting ) ) {
             if ( ! empty( $preferred_sorting ) ) {
-                $orderby = "ORDER BY $preferred_sorting, " . esc_sql($_POST['jtSorting']);
+                $orderby = "ORDER BY $preferred_sorting, " . esc_sql($sanitized_sorting);
             } else {
-                $orderby = "ORDER BY " . esc_sql($_POST['jtSorting']);
+                $orderby = "ORDER BY " . esc_sql($sanitized_sorting);
             } 
         }
         return $orderby;

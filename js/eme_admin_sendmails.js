@@ -528,6 +528,7 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     title: ememails.translate_id,
+                    visibility: 'hidden',
                     key: true,
                 },
                 fromemail: {
@@ -580,7 +581,7 @@ jQuery(document).ready( function($) {
         $('#MailsActionsButton').on("click",function (e) {
             e.preventDefault();
             let selectedRows = $('#MailsTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action').val();
+            let do_action = $('#eme_admin_action_mails').val();
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
                 if ((do_action=='deleteMails') && !confirm(ememails.translate_areyousuretodeleteselected)) {
@@ -596,7 +597,7 @@ jQuery(document).ready( function($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     let params = {
-                        'mail_id': idsjoined,
+                        'mail_ids': idsjoined,
                         'action': 'eme_manage_mails',
                         'do_action': do_action,
                         'eme_admin_nonce': ememails.translate_adminnonce };
@@ -639,6 +640,7 @@ jQuery(document).ready( function($) {
             listQueryParams: function () {
                 let params = {
                     'action': "eme_mailings_list",
+                    'search_text': $('#search_mailingstext').val(),
                     'eme_admin_nonce': ememails.translate_adminnonce,
                 }
                 return params;
@@ -646,22 +648,26 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     title: ememails.translate_id,
+                    visibility: 'hidden',
                     key: true,
                 },
                 name: {
                     title: ememails.translate_mailingname,
                 },
+                subject: {
+                    title: ememails.translate_subject,
+                },
+                planned_on: {
+                    title: ememails.translate_planneddatetime,
+                },
                 status: {
                     title: ememails.translate_status,
                 },
-                planned_datetime: {
-                    title: ememails.translate_planneddatetime,
-                },
-                unique_readcount: {
+                read_count: {
                     title: ememails.translate_unique_readcount,
                 },
-                read_count: {
-                    title: ememails.translate_readcount,
+                total_read_count: {
+                    title: ememails.translate_total_readcount,
                 },
                 extra_info: {
                     title: ememails.translate_extrainfo,
@@ -669,6 +675,10 @@ jQuery(document).ready( function($) {
                 },
                 report: {
                     title: ememails.translate_report,
+                    sorting: false
+                },
+                action: {
+                    title: ememails.translate_action,
                     sorting: false
                 }
             }
@@ -679,7 +689,7 @@ jQuery(document).ready( function($) {
         $('#MailingsActionsButton').on("click",function (e) {
             e.preventDefault();
             let selectedRows = $('#MailingsTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action').val();
+            let do_action = $('#eme_admin_action_mailings').val();
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
                 if ((do_action=='deleteMailings') && !confirm(ememails.translate_areyousuretodeleteselected)) {
@@ -695,7 +705,7 @@ jQuery(document).ready( function($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     let params = {
-                        'mailing_id': idsjoined,
+                        'mailing_ids': idsjoined,
                         'action': 'eme_manage_mailings',
                         'do_action': do_action,
                         'eme_admin_nonce': ememails.translate_adminnonce };
@@ -738,6 +748,7 @@ jQuery(document).ready( function($) {
             listQueryParams: function () {
                 let params = {
                     'action': "eme_archivedmailings_list",
+                    'search_text': $('#search_archivedmailingstext').val(),
                     'eme_admin_nonce': ememails.translate_adminnonce,
                 }
                 return params;
@@ -745,22 +756,23 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     title: ememails.translate_id,
+                    visibility: 'hidden',
                     key: true,
                 },
                 name: {
                     title: ememails.translate_mailingname,
                 },
-                status: {
-                    title: ememails.translate_status,
+                subject: {
+                    title: ememails.translate_subject,
                 },
-                planned_datetime: {
+                planned_on: {
                     title: ememails.translate_planneddatetime,
                 },
-                unique_readcount: {
+                read_count: {
                     title: ememails.translate_unique_readcount,
                 },
-                read_count: {
-                    title: ememails.translate_readcount,
+                total_read_count: {
+                    title: ememails.translate_total_readcount,
                 },
                 extra_info: {
                     title: ememails.translate_extrainfo,
@@ -768,6 +780,10 @@ jQuery(document).ready( function($) {
                 },
                 report: {
                     title: ememails.translate_report,
+                    sorting: false
+                },
+                action: {
+                    title: ememails.translate_action,
                     sorting: false
                 }
             }
@@ -778,7 +794,7 @@ jQuery(document).ready( function($) {
         $('#ArchivedMailingsActionsButton').on("click",function (e) {
             e.preventDefault();
             let selectedRows = $('#ArchivedMailingsTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action').val();
+            let do_action = $('#eme_admin_action_archivedmailings').val();
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
                 if ((do_action=='deleteArchivedMailings') && !confirm(ememails.translate_areyousuretodeleteselected)) {
@@ -794,7 +810,7 @@ jQuery(document).ready( function($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     let params = {
-                        'mailing_id': idsjoined,
+                        'mailing_ids': idsjoined,
                         'action': 'eme_manage_archivedmailings',
                         'do_action': do_action,
                         'eme_admin_nonce': ememails.translate_adminnonce };

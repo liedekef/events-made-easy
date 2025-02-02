@@ -10005,7 +10005,10 @@ function eme_admin_enqueue_js() {
 		// if html mails are disabled, this is needed
 		wp_enqueue_media();
 		$translation_array = [
+			'translate_id'              => __( 'ID', 'events-made-easy' ),
 			'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
+			'translate_apply'           => __( 'Apply', 'events-made-easy' ),
+			'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
 			'translate_sendmail'        => __( 'Send email', 'events-made-easy' ),
 			'translate_planmail'        => __( 'Queue email', 'events-made-easy' ),
 			'translate_planneddatetime' => __( 'Planned execution time', 'events-made-easy' ),
@@ -10014,7 +10017,7 @@ function eme_admin_enqueue_js() {
 			'translate_first_read_on'   => __( 'First read on', 'events-made-easy' ),
 			'translate_last_read_on'    => __( 'Last read on', 'events-made-easy' ),
 			'translate_unique_readcount'=> __( 'Unique read count', 'events-made-easy' ),
-			'translate_readcount'       => __( 'Read count', 'events-made-easy' ),
+			'translate_total_readcount' => __( 'Read count', 'events-made-easy' ),
 			'translate_errormessage'    => __( 'Error message', 'events-made-easy' ),
 			'translate_nomatchperson'   => __( 'No matching person found', 'events-made-easy' ),
 			'translate_sendername'      => __( 'Sender name', 'events-made-easy' ),
@@ -10096,6 +10099,7 @@ function eme_countdown_shortcode( $atts ) {
 function eme_ajax_events_search() {
 	$return = [];
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
 		wp_die();
 	}
@@ -10120,7 +10124,6 @@ function eme_ajax_events_search() {
 		$record['eventinfo'] = eme_esc_html( $event['event_name'] . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' );
 		$return[]            = $record;
 	}
-	header( 'Content-type: application/json; charset=utf-8' );
 	echo wp_json_encode( $return );
 	wp_die();
 }
@@ -10128,6 +10131,7 @@ function eme_ajax_events_search() {
 add_action( 'wp_ajax_eme_wpuser_select2', 'eme_ajax_wpuser_select2' );
 function eme_ajax_wpuser_select2() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	header( 'Content-type: application/json; charset=utf-8' );
 
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
 		wp_die();

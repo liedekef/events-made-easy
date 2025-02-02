@@ -492,7 +492,7 @@ function eme_task_signups_table_layout( $message = '' ) {
         ?>
         </span>
 	<button id="TaskSignupsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint" id="colvis">
+	<span class="rightclickhint">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>

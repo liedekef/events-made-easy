@@ -138,7 +138,7 @@ function eme_attendances_table_layout( $message = '' ) {
 	</form>
 
     <div id="bulkactions">
-	<span class="rightclickhint" id="colvis">
+	<span class="rightclickhint">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
     </div>

@@ -587,12 +587,15 @@ jQuery(document).ready( function($) {
                 if ((do_action=='deleteMails') && !confirm(ememails.translate_areyousuretodeleteselected)) {
                     action_ok=0;
                 }
+
                 if (action_ok==1) {
                     $('#MailsActionsButton').text(ememails.translate_pleasewait);
                     $('#MailsActionsButton').prop('disabled', true);
                     let ids = [];
+                    let personids = [];
                     selectedRows.each(function () {
                         ids.push($(this).data('record')['id']);
+                        personids.push($(this).data('record')['person_id']);
                     });
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
@@ -602,11 +605,26 @@ jQuery(document).ready( function($) {
                         'do_action': do_action,
                         'eme_admin_nonce': ememails.translate_adminnonce };
 
+                    if (do_action=='sendMails') {
+                        let personidsjoined = personids.join();
+                        form = $('<form method="POST" action="'+ememails.translate_admin_sendmails_url+'">');
+                        params = {
+                            'person_ids': personidsjoined,
+                            'eme_admin_action': 'new_mailing'
+                        };
+                        $.each(params, function(k, v) {
+                            form.append($('<input type="hidden" name="' + k + '" value="' + v + '">'));
+                        });
+                        $('body').append(form);
+                        form.trigger("submit");
+                        return false;
+                    }
+
                     $.post(ajaxurl, params, function(data) {
                         $('#MailsTableContainer').jtable('reload');
                         $('#MailsActionsButton').text(ememails.translate_apply);
                         $('#MailsActionsButton').prop('disabled', false);
-                        $('div#mails-message').html(data.Message);
+                        $('div#mails-message').html(data.htmlmessage);
                         $('div#mails-message').show();
                         $('div#mails-message').delay(3000).fadeOut('slow');
                     }, 'json');
@@ -714,7 +732,7 @@ jQuery(document).ready( function($) {
                         $('#MailingsTableContainer').jtable('reload');
                         $('#MailingsActionsButton').text(ememails.translate_apply);
                         $('#MailingsActionsButton').prop('disabled', false);
-                        $('div#mailings-message').html(data.Message);
+                        $('div#mailings-message').html(data.htmlmessage);
                         $('div#mailings-message').show();
                         $('div#mailings-message').delay(3000).fadeOut('slow');
                     }, 'json');
@@ -819,7 +837,7 @@ jQuery(document).ready( function($) {
                         $('#ArchivedMailingsTableContainer').jtable('reload');
                         $('#ArchivedMailingsActionsButton').text(ememails.translate_apply);
                         $('#ArchivedMailingsActionsButton').prop('disabled', false);
-                        $('div#archivedmailings-message').html(data.Message);
+                        $('div#archivedmailings-message').html(data.htmlmessage);
                         $('div#archivedmailings-message').show();
                         $('div#archivedmailings-message').delay(3000).fadeOut('slow');
                     }, 'json');

@@ -5327,7 +5327,7 @@ function eme_registration_seats_form_table( $pending = 0 ) {
 	<?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
 	</span>
 	<button id="BookingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint" id="colvis">
+	<span class="rightclickhint">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>

@@ -2920,7 +2920,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     <?php echo eme_ui_select_key_value( '', 'html_template_footer', $htmltemplates, 'id', 'name', __( 'Select an optional footer template', 'events-made-easy' ), 1 ); ?>
     </span>
     <button id="MembersActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint" id="colvis">
+    <span class="rightclickhint">
         <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
     </span>
     </form>
@@ -3317,7 +3317,7 @@ function eme_manage_memberships_layout( $message ) {
     <?php endif; ?>
     </select>
     <button id="MembershipsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint" id="colvis">
+    <span class="rightclickhint">
     <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
     </span>
     </form>

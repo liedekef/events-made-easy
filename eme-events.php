@@ -6070,7 +6070,7 @@ function eme_events_table( $message = '' ) {
 		<?php echo eme_ui_select_key_value( '', 'addtocategory', $categories, 'category_id', 'category_name', __( 'Please select a category', 'events-made-easy' ), 1 ); ?>
 	</span>
 	<button id="EventsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint" id="colvis">
+	<span class="rightclickhint">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>
@@ -6172,7 +6172,7 @@ function eme_recurrences_table( $message = '' ) {
 	<input id="eme_localized_rec_new_end_date" type="text" name="eme_localized_rec_new_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='rec_new_end_date' class='eme_formfield_fdate'>
 	</span>
 	<button id="RecurrencesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint" id="colvis">
+	<span class="rightclickhint">
 		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
 	</span>
 	</form>
@@ -10042,6 +10042,7 @@ function eme_admin_enqueue_js() {
 			'translate_ftimeformat'     => EME_WP_TIME_FORMAT,
 			'translate_fdatetimeformat' => EME_WP_DATE_FORMAT . ' ' . EME_WP_TIME_FORMAT,
 			'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
+			'translate_admin_sendmails_url'        => admin_url( 'admin.php?page=eme-emails' ),
 		];
 		wp_localize_script( 'eme-sendmails', 'ememails', $translation_array );
 		wp_enqueue_script( 'eme-sendmails' );

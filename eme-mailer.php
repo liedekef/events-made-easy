@@ -1328,7 +1328,7 @@ function eme_mailingreport_list() {
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ) {
         $jTableResult            = [];
         $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
         print wp_json_encode( $jTableResult );
         wp_die();
     }
@@ -1426,7 +1426,7 @@ function eme_ajax_action_mailings_list() {
     $jTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) ) ){
         $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
         print wp_json_encode( $jTableResult );
         wp_die();
     }
@@ -1530,7 +1530,7 @@ function eme_ajax_action_manage_mailings() {
     $jTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
         $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
         print wp_json_encode( $jTableResult );
         wp_die();
     }
@@ -1544,6 +1544,7 @@ function eme_ajax_action_manage_mailings() {
                         eme_archive_mailing( $mailing_id );
                     }
                 }
+                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mailings archived','events-made-easy')."</div>";
                 $jTableResult['Result'] = 'OK';
                 break;
             case 'deleteMailings':
@@ -1553,6 +1554,7 @@ function eme_ajax_action_manage_mailings() {
                         eme_delete_mailing( $mailing_id );
                     }
                 }
+                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mailings deleted','events-made-easy')."</div>";
                 $jTableResult['Result'] = 'OK';
                 break;
         }
@@ -1571,7 +1573,7 @@ function eme_ajax_action_archivedmailings_list() {
     $jTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
         $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
         print wp_json_encode( $jTableResult );
         wp_die();
     }
@@ -1632,7 +1634,7 @@ function eme_ajax_action_manage_archivedmailings() {
     $jTableResult = [];
     if ( ! current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
         $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
         print wp_json_encode( $jTableResult );
         wp_die();
     }
@@ -1646,6 +1648,7 @@ function eme_ajax_action_manage_archivedmailings() {
                         eme_delete_mailing( $mailing_id );
                     }
                 }
+                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mailings deleted','events-made-easy')."</div>";
                 $jTableResult['Result'] = 'OK';
                 break;
         }
@@ -1663,7 +1666,7 @@ function eme_ajax_action_mails_list() {
     $jTableResult = [];
     if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
         $jTableResult['Result']  = 'Error';
-        $jTableResult['Message'] = __( 'Access denied!', 'events-made-easy' );
+        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
         print wp_json_encode( $jTableResult );
         wp_die();
     }
@@ -1705,6 +1708,7 @@ function eme_ajax_action_mails_list() {
     foreach ( $rows as $row ) {
         $record  = [];
         $record['id'] = $row['id'];
+        $record['person_id'] = $row['person_id'];
         $record['fromname'] = eme_esc_html( $row['fromname'] );
         $record['fromemail'] = eme_esc_html( $row['fromemail'] );
         $record['receivername'] = eme_esc_html( $row['receivername'] );
@@ -1759,7 +1763,7 @@ function eme_ajax_action_manage_mails() {
                         eme_delete_mail( $mail_id );
                     }
                 }
-                $jTableResult['Message'] = __('Mails deleted','events-made-easy');
+                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mails deleted','events-made-easy')."</div>";
                 $jTableResult['Result'] = 'OK';
                 break;
         }
@@ -1808,8 +1812,9 @@ function eme_send_mails_ajax_actions( $action ) {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
-        print "<div class='eme-message-admin'><p>";
+        print "<div class='error eme-message-admin'>";
         esc_html_e( 'Access denied!', 'events-made-easy' );
+        print "</div>";
         wp_die();
     }
     if (current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
@@ -2526,13 +2531,16 @@ function eme_emails_page() {
     <div class="eme-tab" data-tab="tab-sentmail"><?php esc_html_e( 'Sent emails', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-testmail"><?php esc_html_e( 'Test email', 'events-made-easy' ); ?></div>
 </div>
-    <div class="eme-tab-content" id="tab-mailings">
+<div class="eme-tab-content" id="tab-mailings">
         <?php eme_mailings_div(); ?>
-    </div>
-    <div class="eme-tab-content" id="tab-mailingsarchive">
+</div>
+<div class="eme-tab-content" id="tab-mailingsarchive">
         <?php eme_mailings_archive_div(); ?>
-    </div>
-    <div class="eme-tab-content" id="tab-eventmails">
+</div>
+<div class="eme-tab-content" id="tab-sentmail">
+        <?php eme_mails_div(); ?>
+</div>
+<div class="eme-tab-content" id="tab-eventmails">
     <h1><?php esc_html_e( 'Send event related emails', 'events-made-easy' ); ?></h1>
     <form id='send_mail' name='send_mail' action="#" method="post" onsubmit="return false;">
     <div id='send_event_mail_div'>
@@ -2744,9 +2752,9 @@ function eme_emails_page() {
     </div>
     </form>
     <div id="eventmail-message" class="eme-hidden" ></div>
-    </div>
+</div>
 
-    <div class="eme-tab-content" id="tab-genericmails">
+<div class="eme-tab-content" id="tab-genericmails">
     <h1><?php esc_html_e( 'Send generic emails', 'events-made-easy' ); ?></h1>
     <?php esc_html_e( "Use the below form to send a generic mail. Don't forget to use the #_UNSUB_URL for unsubscribe possibility.", 'events-made-easy' ); ?>
     <form id='send_generic_mail' name='send_generic_mail' action="#" method="post" onsubmit="return false;">
@@ -2922,13 +2930,9 @@ function eme_emails_page() {
 ?>
     </form>
     <div id="genericmail-message" class="eme-hidden" ></div>
-    </div>
+</div>
 
-    <div class="eme-tab-content" id="tab-sentmail">
-        <?php eme_mails_div(); ?>
-    </div>
-
-    <div class="eme-tab-content" id="tab-testmail">
+<div class="eme-tab-content" id="tab-testmail">
     <h1><?php esc_html_e( 'Test mail settings', 'events-made-easy' ); ?></h1>
     <div id="testmail-message" class="eme-hidden" ></div>
     <?php esc_html_e( 'Use the below form to send a test mail', 'events-made-easy' ); ?>
@@ -2937,7 +2941,7 @@ function eme_emails_page() {
     <input type="text" name="testmail_to" id="testmail_to" value="">
     <button id='testmailButton' class="button-primary action"> <?php esc_html_e( 'Send Email', 'events-made-easy' ); ?></button>
     </form>
-    </div>
+</div>
 
 </div> <!-- wrap -->
 <?php
@@ -2945,8 +2949,9 @@ function eme_emails_page() {
 
 function eme_mails_div() {
     if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
-        print "<div class='eme-message-admin'><p>";
+        print "<div class='eme-message-admin'>";
         esc_html_e( 'Access denied!', 'events-made-easy' );
+        print "</div>";
         wp_die();
     }
 
@@ -2969,15 +2974,16 @@ function eme_mails_div() {
     <button id='MailsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Filter mails', 'events-made-easy' ); ?></button>
     </form>
     <br>
-    <div id="mails-message" class="updated notice notice-success is-dismissible eme-hidden" ></div>
+    <div id="mails-message" class="eme-hidden" ></div>
     <div>
     <form action="#" method="post">
     <select id="eme_admin_action_mails" name="eme_admin_action_mails">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
+    <option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
     <option value="deleteMails"><?php esc_html_e( 'Delete selected mails', 'events-made-easy' ); ?></option>
     </select>
     <button id="MailsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint" id="colvis">
+    <span class="rightclickhint">
         <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
     </span>
     </form>
@@ -2988,8 +2994,9 @@ function eme_mails_div() {
 
 function eme_mailings_div() {
     if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
-        print "<div class='eme-message-admin'><p>";
+        print "<div class='eme-message-admin'>";
         esc_html_e( 'Access denied!', 'events-made-easy' );
+        print "</div>";
         wp_die();
     }
 
@@ -3024,7 +3031,7 @@ function eme_mailings_div() {
     <button id='MailingsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Filter', 'events-made-easy' ); ?></button>
     </form>
     <br>
-    <div id="mailings-message" class="updated notice notice-success is-dismissible eme-hidden" ></div>
+    <div id="mailings-message" class="eme-hidden" ></div>
     <div>
     <form action="#" method="post">
     <select id="eme_admin_action_mailings" name="eme_admin_action_mailings">
@@ -3033,7 +3040,7 @@ function eme_mailings_div() {
     <option value="deleteMailings"><?php esc_html_e( 'Delete selected mailings', 'events-made-easy' ); ?></option>
     </select>
     <button id="MailingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint" id="colvis">
+    <span class="rightclickhint">
         <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
     </span>
     </form>
@@ -3044,8 +3051,9 @@ function eme_mailings_div() {
 
 function eme_mailings_archive_div() {
     if ( ! (current_user_can( get_option( 'eme_cap_manage_mails' ) ) || current_user_can( get_option( 'eme_cap_view_mails' ) ) ) ) {
-        print "<div class='eme-message-admin'><p>";
+        print "<div class='eme-message-admin'>";
         esc_html_e( 'Access denied!', 'events-made-easy' );
+        print "</div>";
         wp_die();
     }
 ?>
@@ -3055,19 +3063,19 @@ function eme_mailings_archive_div() {
 ?>
 
     <form id='search_mailingsarchive' name='search_mailingsarchive' action="#" method="post" onsubmit="return false;">
-    <label for='search_mailingsarchivetext'><?php esc_html_e( 'Enter the search text (leave empty to show all)', 'events-made-easy' ); ?></label>
+    <label for='search_archivedmailingstext'><?php esc_html_e( 'Enter the search text (leave empty to show all)', 'events-made-easy' ); ?></label>
     <input type="search" name="search_archivedmailingstext" id="search_archivedmailingstext" value="">
     <button id='ArchivedMailingsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Filter', 'events-made-easy' ); ?></button>
     </form>
-    <div id="archivedmailings-message" class="updated notice notice-success is-dismissible eme-hidden" ></div>
+    <div id="archivedmailings-message" class="eme-hidden" ></div>
     <div>
     <form action="#" method="post">
     <select id="eme_admin_action_archivedmailings" name="eme_admin_action_archivedmailings">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
-    <option value="deleteMailings"><?php esc_html_e( 'Delete selected mailings', 'events-made-easy' ); ?></option>
+    <option value="deleteArchivedMailings"><?php esc_html_e( 'Delete selected mailings', 'events-made-easy' ); ?></option>
     </select>
     <button id="ArchivedMailingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint" id="colvis">
+    <span class="rightclickhint">
         <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
     </span>
     </form>

@@ -4723,12 +4723,17 @@ THE SOFTWARE.
 
                 e.preventDefault();
 
+                let main_resized = false;
                 // Make an overlay div to disable page clicks
                 $('<div />')
                     .addClass('jtable-contextmenu-overlay')
                     .on("click", function () {
                         $(this).remove();
                         self._$columnSelectionDiv.hide();
+                        // the next line resizes the main container again
+                        if (main_resized) {
+                            self._$mainContainer.height("auto");
+                        }
                     })
                     .on('contextmenu', function () { return false; })
                     .appendTo(document.body);
@@ -4747,6 +4752,14 @@ THE SOFTWARE.
                 // If user clicks right area of header of the table, show list at a little left
                 if ((containerWidth > selectionDivMinWidth) && (selectionDivLeft > (containerWidth - selectionDivMinWidth))) {
                     selectionDivLeft = containerWidth - selectionDivMinWidth;
+                }
+
+                // the next lines of code adapt the main container height so the selection div fits in it without scrollbars
+                let selectionDivBottomY = e.pageY + self._$columnSelectionDiv.height();
+                let mainContainerBottomY = self._$mainContainer.position().top + self._$mainContainer.outerHeight(true);
+                if (mainContainerBottomY<selectionDivBottomY) {
+                    self._$mainContainer.height(self._$mainContainer.outerHeight(true)+selectionDivBottomY-mainContainerBottomY);
+                    main_resized = true;
                 }
 
                 self._$columnSelectionDiv.css({

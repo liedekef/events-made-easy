@@ -476,7 +476,7 @@ jQuery(document).ready( function($) {
                     title: ememails.translate_last_read_on,
                 },
                 read_count: {
-                    title: ememails.translate_readcount,
+                    title: ememails.translate_total_readcount,
                 },
                 error_msg: {
                     title: ememails.translate_errormessage,
@@ -562,7 +562,7 @@ jQuery(document).ready( function($) {
                     title: ememails.translate_last_read_on,
                 },
                 read_count: {
-                    title: ememails.translate_readcount,
+                    title: ememails.translate_total_readcount,
                 },
                 error_msg: {
                     title: ememails.translate_errormessage,

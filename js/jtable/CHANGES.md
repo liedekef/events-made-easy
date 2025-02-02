@@ -45,5 +45,7 @@ every load-call, can be a function
 ```
 * the queryparams for paging and sorting are now also added to the GET/POST as
 regular params, no more forced to the url as GET params
+* When the column selection for show/hide columns shows, the main div is resized if not large enough so the selection div fits in it
+  The old behaviour can be brought back by setting the option columnSelectableResizeMain to false
 * Fixed https://github.com/volosoft/jtable/issues/2277
 * Removed a lot of deprecated jquery calls

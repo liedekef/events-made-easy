@@ -4564,7 +4564,8 @@ THE SOFTWARE.
 
         options: {
             columnResizable: true,
-            columnSelectable: true
+            columnSelectable: true,
+            columnSelectableResizeMain: true,
         },
 
         /************************************************************************
@@ -4681,7 +4682,7 @@ THE SOFTWARE.
             // Check if visibility value is valid
             if ($.inArray(visibility,['visible', 'hidden', 'fixed','separator']) < 0) {
                 this._logWarn('Visibility value is not valid: "' + visibility + '"! Setting to visible.');
-		visibility = 'visible';
+                visibility = 'visible';
             }
 
             // Get the field
@@ -4754,12 +4755,14 @@ THE SOFTWARE.
                     selectionDivLeft = containerWidth - selectionDivMinWidth;
                 }
 
-                // the next lines of code adapt the main container height so the selection div fits in it without scrollbars
-                let selectionDivBottomY = e.pageY + self._$columnSelectionDiv.height();
-                let mainContainerBottomY = self._$mainContainer.position().top + self._$mainContainer.outerHeight(true);
-                if (mainContainerBottomY<selectionDivBottomY) {
-                    self._$mainContainer.height(self._$mainContainer.outerHeight(true)+selectionDivBottomY-mainContainerBottomY);
-                    main_resized = true;
+                if (self.options.columnSelectableResizeMain) {
+                    // the next lines of code adapt the main container height so the selection div fits in it without scrollbars
+                    let selectionDivBottomY = e.pageY + self._$columnSelectionDiv.height();
+                    let mainContainerBottomY = self._$mainContainer.position().top + self._$mainContainer.outerHeight(true);
+                    if (mainContainerBottomY<selectionDivBottomY) {
+                        self._$mainContainer.height(self._$mainContainer.outerHeight(true)+selectionDivBottomY-mainContainerBottomY);
+                        main_resized = true;
+                    }
                 }
 
                 self._$columnSelectionDiv.css({

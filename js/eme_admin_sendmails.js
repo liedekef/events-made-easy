@@ -471,9 +471,11 @@ jQuery(document).ready( function($) {
                 },
                 first_read_on: {
                     title: ememails.translate_first_read_on,
+                    visibility: 'hidden',
                 },
                 last_read_on: {
                     title: ememails.translate_last_read_on,
+                    visibility: 'hidden',
                 },
                 read_count: {
                     title: ememails.translate_total_readcount,
@@ -536,6 +538,7 @@ jQuery(document).ready( function($) {
                 },
                 fromemail: {
                     title: ememails.translate_senderemail,
+                    visibility: 'hidden',
                 },
                 fromname: {
                     title: ememails.translate_sendername,
@@ -561,9 +564,11 @@ jQuery(document).ready( function($) {
                 },
                 first_read_on: {
                     title: ememails.translate_first_read_on,
+                    visibility: 'hidden',
                 },
                 last_read_on: {
                     title: ememails.translate_last_read_on,
+                    visibility: 'hidden',
                 },
                 read_count: {
                     title: ememails.translate_total_readcount,

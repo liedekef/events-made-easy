@@ -4631,7 +4631,7 @@ THE SOFTWARE.
             }
 
             // Hide column if needed
-            if (field.visibility == 'hidden' || field.visibility == 'separator') {
+            if (field.visibility == 'hidden' || field.visibility == 'fixed-hidden' || field.visibility == 'separator') {
                 $headerCell.hide();
             }
 
@@ -4644,7 +4644,7 @@ THE SOFTWARE.
             let $column = base._createCellForRecordField.apply(this, arguments);
 
             let field = this.options.fields[fieldName];
-            if (field.visibility == 'hidden' || field.visibility == 'separator') {
+            if (field.visibility == 'hidden' || field.visibility == 'fixed-hidden' || field.visibility == 'separator') {
                 $column.hide();
             }
 
@@ -4670,6 +4670,8 @@ THE SOFTWARE.
          *************************************************************************/
 
         /* Changes visibility of a column.
+         * This function is only called to change visibility to 'visible' or 'hidden'
+         * so other values are ignored
          *************************************************************************/
         _changeColumnVisibilityInternal: function (columnName, visibility) {
             // Check if there is a column with given name
@@ -4680,7 +4682,7 @@ THE SOFTWARE.
             }
 
             // Check if visibility value is valid
-            if ($.inArray(visibility,['visible', 'hidden', 'fixed','separator']) < 0) {
+            if ($.inArray(visibility,['visible', 'hidden']) < 0) {
                 this._logWarn('Visibility value is not valid: "' + visibility + '"! Setting to visible.');
                 visibility = 'visible';
             }
@@ -4693,11 +4695,11 @@ THE SOFTWARE.
 
             // Hide or show the column if needed
             let columnIndexInTable = this._firstDataColumnOffset + columnIndex + 1;
-            if (field.visibility != 'hidden' && field.visibility != 'separator' && (visibility == 'hidden' || visibility == 'separator')) {
+            if (field.visibility != 'hidden' && visibility == 'hidden') {
                 this._$table
                     .find('>thead >tr >th:nth-child(' + columnIndexInTable + '),>tbody >tr >td:nth-child(' + columnIndexInTable + ')')
                     .hide();
-            } else if (field.visibility == 'hidden' && visibility != 'hidden' && visibility != 'separator') {
+            } else if (field.visibility == 'hidden' && visibility != 'hidden') {
                 this._$table
                     .find('>thead >tr >th:nth-child(' + columnIndexInTable + '),>tbody >tr >td:nth-child(' + columnIndexInTable + ')')
                     .show()
@@ -4784,7 +4786,11 @@ THE SOFTWARE.
                 let columnName = self._columnList[i];
                 let field = self.options.fields[columnName];
 
-                // Crete li element
+                if (field.visibility == 'fixed-hidden') {
+                    continue;
+                }
+
+                // Create li element
                 let $columnLi = $('<li></li>').appendTo($columnsUl);
 
                 // Create label for the checkbox
@@ -5025,7 +5031,7 @@ THE SOFTWARE.
                 let columnVisibility = settings[0];
                 let columnWidth = settings[1];
                 if ($.inArray(fieldName,self._fieldList) > -1) {
-                    if ( self.options.fields[fieldName].visibility != 'fixed') {
+                    if ( self.options.fields[fieldName].visibility != 'fixed' && self.options.fields[fieldName].visibility != 'fixed-hidden' && self.options.fields[fieldName].visibility != 'separator') {
                         self.options.fields[fieldName].visibility = columnVisibility;
                     }
                     if (self.options.columnResizable) {

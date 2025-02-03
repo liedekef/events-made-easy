@@ -485,6 +485,8 @@ jQuery(document).ready( function($) {
                 },
                 action: {
                     title: ememails.translate_action,
+                    listClass: 'eme-wsnobreak',
+                    visibility: 'fixed',
                     sorting: false
                 }
             }
@@ -571,6 +573,8 @@ jQuery(document).ready( function($) {
                 },
                 action: {
                     title: ememails.translate_action,
+                    listClass: 'eme-wsnobreak',
+                    visibility: 'fixed',
                     sorting: false
                 }
             }
@@ -697,6 +701,8 @@ jQuery(document).ready( function($) {
                 },
                 action: {
                     title: ememails.translate_action,
+                    listClass: 'eme-wsnobreak',
+                    visibility: 'fixed',
                     sorting: false
                 }
             }
@@ -802,6 +808,8 @@ jQuery(document).ready( function($) {
                 },
                 action: {
                     title: ememails.translate_action,
+                    listClass: 'eme-wsnobreak',
+                    visibility: 'fixed',
                     sorting: false
                 }
             }

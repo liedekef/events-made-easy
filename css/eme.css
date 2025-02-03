@@ -698,6 +698,10 @@ div#div_import {
     display:inline;
 }
 
+.eme-wsnobreak {
+    white-space: nowrap;
+}
+
 .eme-copy-button {
     background: url('../images/copy_16.png') no-repeat;
     width: 16px;

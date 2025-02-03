@@ -477,6 +477,7 @@ jQuery(document).ready( function($) {
                 },
                 read_count: {
                     title: ememails.translate_total_readcount,
+                    visibility: 'hidden',
                 },
                 error_msg: {
                     title: ememails.translate_errormessage,
@@ -553,6 +554,7 @@ jQuery(document).ready( function($) {
                 },
                 creation_date: {
                     title: ememails.translate_queueddatetime,
+                    visibility: 'hidden',
                 },
                 sent_datetime: {
                     title: ememails.translate_sentdatetime,
@@ -565,6 +567,7 @@ jQuery(document).ready( function($) {
                 },
                 read_count: {
                     title: ememails.translate_total_readcount,
+                    visibility: 'hidden',
                 },
                 error_msg: {
                     title: ememails.translate_errormessage,
@@ -687,6 +690,7 @@ jQuery(document).ready( function($) {
                 },
                 read_count: {
                     title: ememails.translate_unique_readcount,
+                    visibility: 'hidden',
                 },
                 total_read_count: {
                     title: ememails.translate_total_readcount,
@@ -794,6 +798,7 @@ jQuery(document).ready( function($) {
                 },
                 read_count: {
                     title: ememails.translate_unique_readcount,
+                    visibility: 'hidden',
                 },
                 total_read_count: {
                     title: ememails.translate_total_readcount,

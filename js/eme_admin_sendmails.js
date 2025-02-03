@@ -530,7 +530,7 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     title: ememails.translate_id,
-                    visibility: 'hidden',
+                    visibility: 'fixed-hidden',
                     key: true,
                 },
                 fromemail: {
@@ -670,7 +670,7 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     title: ememails.translate_id,
-                    visibility: 'hidden',
+                    visibility: 'fixed-hidden',
                     key: true,
                 },
                 name: {
@@ -780,7 +780,7 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     title: ememails.translate_id,
-                    visibility: 'hidden',
+                    visibility: 'fixed-hidden',
                     key: true,
                 },
                 name: {

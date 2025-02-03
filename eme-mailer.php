@@ -3057,7 +3057,7 @@ function eme_mailings_archive_div() {
         wp_die();
     }
 ?>
-    <h1><?php esc_html_e( 'Email archive', 'events-made-easy' ); ?></h1>
+    <h1><?php esc_html_e( 'Archived mailings', 'events-made-easy' ); ?></h1>
 <?php
     esc_html_e( 'Here you can find an overview of all archived mailings', 'events-made-easy' );
 ?>

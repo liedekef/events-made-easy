@@ -1434,9 +1434,6 @@ function eme_ajax_action_mailings_list() {
     $limit    = eme_get_datatables_limit();
     $orderby  = eme_get_datatables_orderby();
     $where = " WHERE status<>'archived' ";
-    if (empty($orderby)) {
-        $orderby = "ORDER BY planned_on,name";
-    }
     if ( !isset($_POST['search_text'] ) || eme_is_empty_string( $_POST['search_text'] ) ) {
         $count_sql = "SELECT COUNT(*) FROM $mailings_table $where";
         $sql = "SELECT * FROM $mailings_table $where $orderby $limit";
@@ -1581,9 +1578,6 @@ function eme_ajax_action_archivedmailings_list() {
     $limit    = eme_get_datatables_limit();
     $orderby  = eme_get_datatables_orderby();
     $where = " WHERE status='archived' ";
-    if (empty($orderby)) {
-        $orderby = "ORDER BY planned_on,name";
-    }
     if ( !isset($_POST['search_text'] ) || eme_is_empty_string( $_POST['search_text'] ) ) {
         $count_sql = "SELECT COUNT(*) FROM $mailings_table $where";
         $sql = "SELECT * FROM $mailings_table $where $orderby $limit";

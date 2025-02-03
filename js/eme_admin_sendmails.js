@@ -511,7 +511,7 @@ jQuery(document).ready( function($) {
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-            defaultSorting: '',
+            defaultSorting: 'sent_datetime DESC',
             actions: {
                 listAction: ajaxurl,
             },
@@ -658,7 +658,7 @@ jQuery(document).ready( function($) {
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-            defaultSorting: '',
+            defaultSorting: 'planned_on DESC, name',
             actions: {
                 listAction: ajaxurl,
             },
@@ -769,7 +769,7 @@ jQuery(document).ready( function($) {
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-            defaultSorting: '',
+            defaultSorting: 'planned_on DESC, name',
             actions: {
                 listAction: ajaxurl,
             },

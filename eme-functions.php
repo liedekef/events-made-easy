@@ -4097,7 +4097,7 @@ function eme_get_selected_captcha($properties) {
 
 function eme_get_datatables_limit() {
     $limit = '';
-    if ( ! empty( $_POST['jtStartIndex'] ) && ! empty( $_POST['jtPageSize'] ) ) {
+    if ( isset( $_POST['jtStartIndex'] ) && ! empty( $_POST['jtPageSize'] ) ) {
         $limit = ' LIMIT ' . intval( $_POST['jtStartIndex'] ) . ',' . intval( $_POST['jtPageSize'] );
     }
     return $limit;

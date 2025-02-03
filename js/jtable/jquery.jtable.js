@@ -4759,8 +4759,8 @@ THE SOFTWARE.
 
                 if (self.options.columnSelectableResizeMain) {
                     // the next lines of code adapt the main container height so the selection div fits in it without scrollbars
-                    let selectionDivBottomY = e.pageY + self._$columnSelectionDiv.height();
-                    let mainContainerBottomY = self._$mainContainer.position().top + self._$mainContainer.outerHeight(true);
+                    let selectionDivBottomY = e.pageY + self._$columnSelectionDiv.outerHeight(true);
+                    let mainContainerBottomY = containerOffset.top + self._$mainContainer.outerHeight(true);
                     if (mainContainerBottomY<selectionDivBottomY) {
                         self._$mainContainer.height(self._$mainContainer.outerHeight(true)+selectionDivBottomY-mainContainerBottomY);
                         main_resized = true;

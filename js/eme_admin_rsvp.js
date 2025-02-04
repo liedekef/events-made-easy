@@ -20,9 +20,7 @@ jQuery(document).ready(function ($) {
             booking_id: {
                 title: emersvp.translate_id,
                 key: true,
-                list: true,
-                width: '2%',
-                listClass: 'eme-jtable-center'
+                list: false,
             },
             event_name: {
                 title: emersvp.translate_eventinfo

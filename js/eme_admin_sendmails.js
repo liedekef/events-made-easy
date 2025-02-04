@@ -443,7 +443,7 @@ jQuery(document).ready( function($) {
             title: ememails.translate_mailingreport,
             paging: true,
             sorting: true,
-            defaultSorting: '',
+            defaultSorting: 'sent_datetime ASC',
             actions: {
                 listAction: ajaxurl,
             },
@@ -459,6 +459,7 @@ jQuery(document).ready( function($) {
             fields: {
                 receiveremail: {
                     title: ememails.translate_email,
+                    visibility: 'hidden',
                 },
                 receivername: {
                     title: ememails.translate_name,
@@ -479,7 +480,6 @@ jQuery(document).ready( function($) {
                 },
                 read_count: {
                     title: ememails.translate_total_readcount,
-                    visibility: 'hidden',
                 },
                 error_msg: {
                     title: ememails.translate_errormessage,
@@ -533,7 +533,7 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     title: ememails.translate_id,
-                    visibility: 'fixed-hidden',
+                    list: false,
                     key: true,
                 },
                 fromemail: {
@@ -678,8 +678,8 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     title: ememails.translate_id,
-                    visibility: 'fixed-hidden',
                     key: true,
+                    list: false,
                 },
                 name: {
                     title: ememails.translate_mailingname,
@@ -789,7 +789,7 @@ jQuery(document).ready( function($) {
             fields: {
                 id: {
                     title: ememails.translate_id,
-                    visibility: 'fixed-hidden',
+                    list: false,
                     key: true,
                 },
                 name: {

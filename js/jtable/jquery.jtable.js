@@ -4631,7 +4631,7 @@ THE SOFTWARE.
             }
 
             // Hide column if needed
-            if (field.visibility == 'hidden' || field.visibility == 'fixed-hidden' || field.visibility == 'separator') {
+            if (field.visibility == 'hidden' || field.visibility == 'separator') {
                 $headerCell.hide();
             }
 
@@ -4644,7 +4644,7 @@ THE SOFTWARE.
             let $column = base._createCellForRecordField.apply(this, arguments);
 
             let field = this.options.fields[fieldName];
-            if (field.visibility == 'hidden' || field.visibility == 'fixed-hidden' || field.visibility == 'separator') {
+            if (field.visibility == 'hidden' || field.visibility == 'separator') {
                 $column.hide();
             }
 
@@ -4785,10 +4785,6 @@ THE SOFTWARE.
             for (let i = 0; i < self._columnList.length; i++) {
                 let columnName = self._columnList[i];
                 let field = self.options.fields[columnName];
-
-                if (field.visibility == 'fixed-hidden') {
-                    continue;
-                }
 
                 // Create li element
                 let $columnLi = $('<li></li>').appendTo($columnsUl);
@@ -5031,7 +5027,7 @@ THE SOFTWARE.
                 let columnVisibility = settings[0];
                 let columnWidth = settings[1];
                 if ($.inArray(fieldName,self._fieldList) > -1) {
-                    if ( self.options.fields[fieldName].visibility != 'fixed' && self.options.fields[fieldName].visibility != 'fixed-hidden' && self.options.fields[fieldName].visibility != 'separator') {
+                    if ( self.options.fields[fieldName].visibility != 'fixed' && self.options.fields[fieldName].visibility != 'separator') {
                         self.options.fields[fieldName].visibility = columnVisibility;
                     }
                     if (self.options.columnResizable) {

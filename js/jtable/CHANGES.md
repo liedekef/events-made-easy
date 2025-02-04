@@ -3,8 +3,6 @@ Short changes:
 * Rewritten to use plain jQuery, not jQuery-UI, with HTML5 modal dialogs
 * Removed options: dialogShowEffect, dialogHideEffect
 * Removed deprecated private method `_addRowToTable` and rename `_addRow` to `_addRowToTable`
-* Added "fixed-hidden" as field visibility option, meaning a field can be forced to stay hidden
-  Regular "hidden" fields can be made visible, "fixed" are always visibile. This new option removes the field from the visibiity-selection list too. Ideal for ID-fields that also need to be key and people don't need to see/know this.
 * deleteAction, updateAction and selecting is now only possible if a key-field is defined (makes no sense otherwise)
 * Added option "roomForSortableIcon" (true/false) for sorting, so the sortable icon has room to appear next to the text
   True by default

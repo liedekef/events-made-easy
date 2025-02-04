@@ -1521,7 +1521,6 @@ function eme_ajax_action_mailings_list() {
 }
 
 function eme_ajax_action_manage_mailings() {
-    $current_userid = get_current_user_id();
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     $jTableResult = [];
@@ -1621,7 +1620,6 @@ function eme_ajax_action_archivedmailings_list() {
 }
 
 function eme_ajax_action_manage_archivedmailings() {
-    $current_userid = get_current_user_id();
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
@@ -1743,10 +1741,15 @@ function eme_ajax_action_mails_list() {
 }
 
 function eme_ajax_action_manage_mails() {
-    $current_userid = get_current_user_id();
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     $jTableResult = [];
+    if ( !current_user_can( get_option( 'eme_cap_manage_mails' ) )) {
+        $jTableResult['Result']  = 'Error';
+        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $jTableResult );
+        wp_die();
+    }
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
         switch ( $do_action ) {

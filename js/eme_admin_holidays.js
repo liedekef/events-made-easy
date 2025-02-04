@@ -1,7 +1,7 @@
 jQuery(document).ready( function($) {
     if ($('#HolidaysTableContainer').length) {
         $('#HolidaysTableContainer').jtable({
-            title: emeholidays.translate_holidays,
+            title: emeholidays.translate_holidaylists,
             paging: true,
             sorting: true,
             selecting: true, // Enable selecting
@@ -35,7 +35,7 @@ jQuery(document).ready( function($) {
         $('#HolidaysActionsButton').on("click",function (e) {
             e.preventDefault();
             let selectedRows = $('#HolidaysTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action_holidays').val();
+            let do_action = $('#eme_admin_action').val();
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
                 if ((do_action=='deleteHolidays') && !confirm(emeholidays.translate_areyousuretodeleteselected)) {
@@ -51,7 +51,7 @@ jQuery(document).ready( function($) {
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
                     let params = {
-                        'holiday_ids': idsjoined,
+                        'holidays_ids': idsjoined,
                         'action': 'eme_manage_holidays',
                         'do_action': do_action,
                         'eme_admin_nonce': emeholidays.translate_adminnonce };

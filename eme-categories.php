@@ -70,111 +70,59 @@ function eme_categories_page() {
 					$message = __( 'There was a problem adding your category, please try again.', 'events-made-easy' );
 				}
 			}
-		} elseif ( $_POST['eme_admin_action'] == 'do_deletecategory' && isset( $_POST['categories'] ) ) {
-			// Delete category or multiple
-			$categories = eme_sanitize_request( $_POST['categories']);
-			if ( ! empty( $categories ) && eme_is_numeric_array( $categories ) ) {
-				$ids_list = implode(',', $categories);
-				$validation_result = $wpdb->query( "DELETE FROM $categories_table WHERE category_id IN ( $ids_list )"); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-				if ( $validation_result !== false ) {
-					$message = __( 'Successfully deleted the selected categories.', 'events-made-easy' );
-				} else {
-					$message = __( 'There was a problem deleting the selected categories, please try again.', 'events-made-easy' );
-				}
-			} else {
-				$message = __( "Couldn't delete the categories. Incorrect category IDs supplied. Please try again.", 'events-made-easy' );
-			}
 		}
 	}
 	eme_categories_table_layout( $message );
 }
 
 function eme_categories_table_layout( $message = '' ) {
-	global $plugin_page;
-	$categories  = eme_get_categories();
-	$destination = admin_url( "admin.php?page=$plugin_page" );
-	$nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
-	$table       = "
-      <div class='wrap nosubsub'>
-      <div id='poststuff'>
-         <div id='icon-edit' class='icon32'>
-         </div>
-         <h1>" . __( 'Manage categories', 'events-made-easy' ) . "</h1>\n ";
+    $nonce_field = wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false );
 
-	if ( $message != '' ) {
-		$table .= "
-            <div id='message' class='updated notice notice-success is-dismissible'>
-               <p>$message</p>
-            </div>";
-	}
+?>
+    <div class="wrap nosubsub">
+    <div id="poststuff">
+    <div id="icon-edit" class="icon32">
+    </div>
 
-	$table                 .= "
-   <div class='wrap'>
-         <form id='categories-new' method='post' action='$destination'>
-            $nonce_field
-            <input type='hidden' name='eme_admin_action' value='add_category'>
-            <input type='submit' class='button-primary' name='submit' value='" . __( 'Add category', 'events-made-easy' ) . "'>
-         </form>
-   </div>
-<br><br>
-         
-                <form id='categories-form' method='post' action='$destination'>
-                  <input type='hidden' name='eme_admin_action' value='do_deletecategory'>";
-	$table .= $nonce_field;
-	if ( count( $categories ) > 0 ) {
-		$table .= "<table class='widefat'>
-                        <thead>
-                           <tr>
-                              <th class='manage-column column-cb check-column' scope='col'><input type='checkbox' class='select-all' value='1'></th>
-                              <th>" . __( 'ID', 'events-made-easy' ) . '</th>
-                              <th>' . __( 'Name', 'events-made-easy' ) . "</th>
-                           </tr>
-                        </thead>
-                        <tbody>";
-		foreach ( $categories as $this_category ) {
-			if ( empty( $this_category['category_name'] ) ) {
-				$this_category['category_name'] = __( 'No name', 'events-made-easy' );
-			}
-			$table .= "    
-                           <tr>
-                           <td><input type='checkbox' class ='row-selector' value='" . $this_category['category_id'] . "' name='categories[]'></td>
-                           <td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-categories&amp;eme_admin_action=edit_category&amp;category_id=' . $this_category['category_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $this_category['category_id'] . "</a></td>
-                           <td><a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-categories&amp;eme_admin_action=edit_category&amp;category_id=' . $this_category['category_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . eme_trans_esc_html( $this_category['category_name'] ) . '</a></td>
-                           </tr>
-                        ';
-		}
-		$delete_text        = esc_html__( 'Are you sure you want to delete these categories?', 'events-made-easy' );
-		$delete_button_text = esc_html__( 'Delete', 'events-made-easy' );
-		$table             .= "
-                        </tbody>
-                        <tfoot>
-                           <tr>
-                              <td class='manage-column column-cb check-column' scope='col'><input type='checkbox' class='select-all' value='1'></td>
-                              <td>" . __( 'ID', 'events-made-easy' ) . '</td>
-                              <td>' . __( 'Name', 'events-made-easy' ) . "</td>
-                           </tr>
-                        </tfoot>
-                     </table>
-   
-                     <div class='tablenav'>
-                        <div class='alignleft actions'>
-                        <input class='button-primary action' type='submit' name='doaction' value='$delete_button_text' onclick=\"return areyousure('$delete_text');\">
-                        <br class='clear'>
-                        </div>
-                        <br class='clear'>
-                     </div>
-		";
-	} else {
-		$table .= '<p>' . __( 'No categories defined.', 'events-made-easy' );
-	}
-	$table .= '
-                  </form>
-         </div>
-   </div>';
-	echo $table;
+    <?php if ( current_user_can( get_option( 'eme_cap_categories' ) ) ) : ?>
+        <h1><?php esc_html_e( 'Add a new category', 'events-made-easy' ); ?></h1>
+        <div class="wrap">
+        <form method="post" action="<?php echo admin_url( 'admin.php?page=eme-categories' ); ?>">
+            <?php echo $nonce_field; ?>
+            <input type="hidden" name="eme_admin_action" value="add_category">
+            <input type="submit" class="button-primary" name="submit" value="<?php esc_html_e( 'Add category', 'events-made-easy' ); ?>">
+        </form>
+        </div>
+    <?php endif; ?>
+
+    <h1><?php esc_html_e( 'Manage categories', 'events-made-easy' ); ?></h1>
+    <?php if ( $message != '' ) { ?>
+    <div id="message" class="updated notice notice-success is-dismissible">
+         <p><?php echo $message; ?></p>
+    </div>
+    <?php } ?>
+
+    <div id="categories-message" class="eme-hidden" ></div>
+    <div id="bulkactions">
+    <form action="#" method="post">
+    <?php echo $nonce_field; ?>
+    <select id="eme_admin_action" name="eme_admin_action">
+    <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
+    <option value="deleteCategories"><?php esc_html_e( 'Delete selected categories', 'events-made-easy' ); ?></option>
+    </select>
+    <button id="CategoriesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
+    <span class="rightclickhint">
+        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
+    </span>
+    </form>
+    </div>
+    <div id="CategoriesTableContainer"></div>
+    </div>
+    </div>
+<?php
 }
 
-function eme_categories_edit_layout( $message = '' ) {
+function eme_categories_edit_layout() {
 	global $plugin_page;
 
 	if ( ! empty( $_GET['category_id'] ) ) {
@@ -201,12 +149,6 @@ function eme_categories_edit_layout( $message = '' ) {
 		 
 		<h1><?php echo $h1_string; ?></h1>   
 	  
-		<?php if ( $message != '' ) { ?>
-		<div id='message' class='updated notice notice-success is-dismissible'>
-		<p><?php echo $message; ?></p>
-		</div>
-		<?php } ?>
-	
 		<div id='ajax-response'></div>
 		<form name='edit_category' id='edit_category' method='post' action='<?php echo admin_url( "admin.php?page=$plugin_page" ); ?>'>
 		<input type='hidden' name='eme_admin_action' value='do_editcategory'>
@@ -599,4 +541,77 @@ function eme_replace_categories_placeholders( $format, $cat = '', $target = 'htm
 		return $format;
 	}
 }
-?>
+
+add_action( 'wp_ajax_eme_categories_list', 'eme_ajax_action_categories_list' );
+add_action( 'wp_ajax_eme_manage_categories', 'eme_ajax_action_manage_categories' );
+
+function eme_ajax_action_categories_list() {
+    global $wpdb;
+
+    header( 'Content-type: application/json; charset=utf-8' );
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+
+    $jTableResult = [];
+    if ( !current_user_can( get_option( 'eme_cap_categories' ) )) {
+        $jTableResult['Result']  = 'Error';
+        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $jTableResult );
+        wp_die();
+    }
+
+    $table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
+    $limit    = eme_get_datatables_limit();
+    $orderby  = eme_get_datatables_orderby();
+
+    $count_sql  = "SELECT COUNT(*) FROM $table";
+    $sql  = "SELECT * FROM $table $orderby $limit";
+    $recordCount = $wpdb->get_var( $count_sql );
+    $rows = $wpdb->get_results( $sql, ARRAY_A );
+
+    $records = [];
+    foreach ( $rows as $row ) {
+        $record  = [];
+        if ( empty( $row['category_name'] ) ) {
+            $row['category_name'] = __( 'No name', 'events-made-easy' );
+        }
+        $record['category_id'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-categories&amp;eme_admin_action=edit_category&amp;category_id=' . $row['category_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . $row['category_id'] . '</a>';
+        $record['category_name'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-categories&amp;eme_admin_action=edit_category&amp;category_id=' . $row['category_id'] ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . eme_trans_esc_html( $row['category_name'] ) . '</a>';
+        $records[] = $record;
+    }
+    $jTableResult['Result']           = 'OK';
+    $jTableResult['Records']          = $records;
+    $jTableResult['TotalRecordCount'] = $recordCount;
+    print wp_json_encode( $jTableResult );
+    wp_die();
+}
+
+function eme_ajax_action_manage_categories() {
+    global $wpdb;
+    header( 'Content-type: application/json; charset=utf-8' );
+    check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+
+    $jTableResult = [];
+    if ( !current_user_can( get_option( 'eme_cap_categories' ) )) {
+        $jTableResult['Result']  = 'Error';
+        $jTableResult['htmlmessage'] = "<div class='error eme-message-admin'>".__( 'Access denied!', 'events-made-easy' )."</div>";
+        print wp_json_encode( $jTableResult );
+        wp_die();
+    }
+
+    $table = EME_DB_PREFIX . EME_CATEGORIES_TBNAME;
+    if ( isset( $_POST['do_action'] ) ) {
+        $do_action = eme_sanitize_request( $_POST['do_action'] );
+        switch ( $do_action ) {
+        case 'deleteCategories':
+            $category_ids_list = eme_sanitize_request($_POST['category_ids']);
+            if (eme_is_list_of_int($category_ids_list)) {
+                $wpdb->query( "DELETE FROM $table WHERE category_id IN ( $category_ids_list )");
+            }
+            $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Categories deleted','events-made-easy')."</div>";
+            $jTableResult['Result'] = 'OK';
+            break;
+        }
+    }
+    print wp_json_encode( $jTableResult );
+    wp_die();
+}

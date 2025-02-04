@@ -10006,10 +10006,12 @@ function eme_admin_enqueue_js() {
 		wp_enqueue_media();
 		$translation_array = [
 			'translate_id'              => __( 'ID', 'events-made-easy' ),
+			'translate_categories'      => __( 'Categories', 'events-made-easy' ),
 			'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
 			'translate_apply'           => __( 'Apply', 'events-made-easy' ),
 			'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
 			'translate_name'            => __( 'Name', 'events-made-easy' ),
+			'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
 		];
 		wp_localize_script( 'eme-categories', 'emecategories', $translation_array );
 		wp_enqueue_script( 'eme-categories' );
@@ -10019,10 +10021,12 @@ function eme_admin_enqueue_js() {
 		wp_enqueue_media();
 		$translation_array = [
 			'translate_id'              => __( 'ID', 'events-made-easy' ),
+			'translate_holidaylists'    => __( 'Holiday lists', 'events-made-easy' ),
 			'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
 			'translate_apply'           => __( 'Apply', 'events-made-easy' ),
 			'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
 			'translate_name'            => __( 'Name', 'events-made-easy' ),
+			'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
 		];
 		wp_localize_script( 'eme-holidays', 'emeholidays', $translation_array );
 		wp_enqueue_script( 'eme-holidays' );

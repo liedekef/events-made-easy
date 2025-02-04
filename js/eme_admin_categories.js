@@ -19,12 +19,12 @@ jQuery(document).ready( function($) {
                 return params;
             },
             fields: {
-                id: {
+                category_id: {
                     title: emecategories.translate_id,
                     list: true,
                     key: true,
                 },
-                name: {
+                category_name: {
                     title: emecategories.translate_name,
                 },
             }
@@ -35,7 +35,7 @@ jQuery(document).ready( function($) {
         $('#CategoriesActionsButton').on("click",function (e) {
             e.preventDefault();
             let selectedRows = $('#CategoriesTableContainer').jtable('selectedRows');
-            let do_action = $('#eme_admin_action_categories').val();
+            let do_action = $('#eme_admin_action').val();
             let action_ok=1;
             if (selectedRows.length > 0 && do_action != '') {
                 if ((do_action=='deleteCategories') && !confirm(emecategories.translate_areyousuretodeleteselected)) {
@@ -46,7 +46,7 @@ jQuery(document).ready( function($) {
                     $('#CategoriesActionsButton').prop('disabled', true);
                     let ids = [];
                     selectedRows.each(function () {
-                        ids.push($(this).data('record')['id']);
+                        ids.push($(this).data('record')['category_id']);
                     });
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'

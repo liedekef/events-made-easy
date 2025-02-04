@@ -17,7 +17,7 @@ function eme_new_category() {
 function eme_categories_page() {
 	global $wpdb;
 
-	if ( ! current_user_can( get_option( 'eme_cap_categories' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
+	if ( ! current_user_can( get_option( 'eme_cap_categories' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
 		$message = __( 'You have no right to update categories!', 'events-made-easy' );
 		eme_categories_table_layout( $message );
 		return;
@@ -31,7 +31,7 @@ function eme_categories_page() {
 	}
 
 	if ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'add_category' ) {
-		// edit template
+		// add category
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		eme_categories_edit_layout();
 		return;

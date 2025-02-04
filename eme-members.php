@@ -887,7 +887,7 @@ function eme_members_page() {
 
 function eme_memberships_page() {
     $message = '';
-    if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) && ( isset( $_POST['eme_admin_action'] ) || isset( $_GET['eme_admin_action'] ) ) ) {
+    if ( ! current_user_can( get_option( 'eme_cap_edit_members' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
         $message = __( 'You have no right to manage memberships!', 'events-made-easy' );
     } elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_addmembership' ) {
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );

@@ -15,7 +15,7 @@ function eme_new_holidays() {
 function eme_holidays_page() {
 	global $wpdb;
 
-	if ( ! current_user_can( get_option( 'eme_cap_holidays' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
+	if ( ! current_user_can( get_option( 'eme_cap_holidays' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
 		$message = __( 'You have no right to update holidays!', 'events-made-easy' );
 		eme_holidays_table_layout( $message );
 		return;
@@ -52,31 +52,12 @@ function eme_holidays_page() {
 					$message = __( 'There was a problem editing the list of holidays, please try again.', 'events-made-easy' );
 				}
 			} else {
-					$validation_result = $wpdb->insert( $holidays_table, $holidays );
+                $validation_result = $wpdb->insert( $holidays_table, $holidays );
 				if ( $validation_result !== false ) {
 					$message = __( 'Successfully added the list of holidays', 'events-made-easy' );
 				} else {
 					$message = __( 'There was a problem adding the list of holidays, please try again.', 'events-made-easy' );
 				}
-			}
-		} elseif ( $_POST['eme_admin_action'] == 'do_deleteholidays' && isset( $_POST['holidays'] ) ) {
-			// Delete holidays
-			$holidays = eme_sanitize_request($_POST['holidays']);
-			if ( is_array( $holidays ) && eme_is_numeric_array( $holidays ) ) {
-				//Run the query if we have an array of holidays ids
-				if ( count( $holidays) > 0 ) {
-					$ids_list = implode(',', $holidays);
-					$validation_result = $wpdb->query( "DELETE FROM $holidays_table WHERE id IN ( $ids_list )"); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-					if ( $validation_result !== false ) {
-						$message = __( 'Successfully deleted the selected holiday lists.', 'events-made-easy' );
-					} else {
-						$message = __( 'There was a problem deleting the selected holiday lists, please try again.', 'events-made-easy' );
-					}
-				} else {
-					$message = __( "Couldn't delete the holiday lists. Incorrect IDs supplied. Please try again.", 'events-made-easy' );
-				}
-			} else {
-				$message = __( "Couldn't delete the holiday lists. Incorrect IDs supplied. Please try again.", 'events-made-easy' );
 			}
 		}
 	}

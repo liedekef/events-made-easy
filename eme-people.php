@@ -135,7 +135,7 @@ function eme_people_page() {
 
 function eme_groups_page() {
 	$message = '';
-	if ( ! current_user_can( get_option( 'eme_cap_edit_people' ) ) && ( isset( $_POST['eme_admin_action'] ) || isset( $_GET['eme_admin_action'] ) ) ) {
+	if ( ! current_user_can( get_option( 'eme_cap_edit_people' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
 		$message = esc_html__( 'You have no right to manage groups!', 'events-made-easy' );
 	} elseif ( isset( $_POST['eme_admin_action'] ) && $_POST['eme_admin_action'] == 'do_addgroup' ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );

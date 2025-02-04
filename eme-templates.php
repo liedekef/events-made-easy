@@ -57,7 +57,7 @@ function eme_template_types() {
 function eme_templates_page() {
     global $wpdb;
 
-    if ( ! current_user_can( get_option( 'eme_cap_templates' ) ) && ( isset( $_GET['eme_admin_action'] ) || isset( $_POST['eme_admin_action'] ) ) ) {
+    if ( ! current_user_can( get_option( 'eme_cap_templates' ) ) && isset( $_REQUEST['eme_admin_action'] ) ) {
         $message = __( 'You have no right to update templates!', 'events-made-easy' );
         eme_templates_table_layout( $message );
         return;

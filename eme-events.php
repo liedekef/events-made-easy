@@ -10001,6 +10001,32 @@ function eme_admin_enqueue_js() {
 		wp_localize_script( 'eme-rsvp', 'emersvp', $translation_array );
 		wp_enqueue_script( 'eme-rsvp' );
 	}
+	if ( in_array( $plugin_page, [ 'eme-categories' ] ) ) {
+		// if html mails are disabled, this is needed
+		wp_enqueue_media();
+		$translation_array = [
+			'translate_id'              => __( 'ID', 'events-made-easy' ),
+			'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
+			'translate_apply'           => __( 'Apply', 'events-made-easy' ),
+			'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
+			'translate_name'            => __( 'Name', 'events-made-easy' ),
+		];
+		wp_localize_script( 'eme-categories', 'emecategories', $translation_array );
+		wp_enqueue_script( 'eme-categories' );
+	}
+	if ( in_array( $plugin_page, [ 'eme-holidays' ] ) ) {
+		// if html mails are disabled, this is needed
+		wp_enqueue_media();
+		$translation_array = [
+			'translate_id'              => __( 'ID', 'events-made-easy' ),
+			'translate_pleasewait'      => __( 'Please wait', 'events-made-easy' ),
+			'translate_apply'           => __( 'Apply', 'events-made-easy' ),
+			'translate_areyousuretodeleteselected' => __( 'Are you sure to delete the selected records?', 'events-made-easy' ),
+			'translate_name'            => __( 'Name', 'events-made-easy' ),
+		];
+		wp_localize_script( 'eme-holidays', 'emeholidays', $translation_array );
+		wp_enqueue_script( 'eme-holidays' );
+	}
 	if ( in_array( $plugin_page, [ 'eme-emails' ] ) ) {
 		// if html mails are disabled, this is needed
 		wp_enqueue_media();

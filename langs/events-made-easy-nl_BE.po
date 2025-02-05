@@ -20,6 +20,8 @@ msgstr "in naam van %s"
 
 #: eme-actions.php:78
 #: eme-attendances.php:239
+#: eme-categories.php:557
+#: eme-categories.php:596
 #: eme-countries.php:891
 #: eme-countries.php:920
 #: eme-countries.php:929
@@ -27,9 +29,9 @@ msgstr "in naam van %s"
 #: eme-countries.php:985
 #: eme-discounts.php:1640
 #: eme-discounts.php:1680
-#: eme-events.php:10156
-#: eme-events.php:10547
-#: eme-events.php:10797
+#: eme-events.php:10204
+#: eme-events.php:10597
+#: eme-events.php:10848
 #: eme-formfields.php:5074
 #: eme-formfields.php:5125
 #: eme-formfields.php:5136
@@ -40,25 +42,34 @@ msgstr "in naam van %s"
 #: eme-functions.php:3299
 #: eme-functions.php:3300
 #: eme-functions.php:3343
-#: eme-locations.php:2903
-#: eme-mailer.php:1329
-#: eme-mailer.php:1472
-#: eme-mailer.php:2794
-#: eme-mailer.php:2939
+#: eme-holidays.php:277
+#: eme-holidays.php:316
+#: eme-locations.php:2904
+#: eme-mailer.php:1331
+#: eme-mailer.php:1429
+#: eme-mailer.php:1529
+#: eme-mailer.php:1572
+#: eme-mailer.php:1629
+#: eme-mailer.php:1661
+#: eme-mailer.php:1749
+#: eme-mailer.php:1813
+#: eme-mailer.php:2950
+#: eme-mailer.php:2995
+#: eme-mailer.php:3052
 #: eme-members.php:6412
 #: eme-members.php:6533
-#: eme-members.php:6678
-#: eme-members.php:6765
-#: eme-members.php:6836
+#: eme-members.php:6679
+#: eme-members.php:6768
+#: eme-members.php:6840
 #: eme-options.php:138
 #: eme-payments.php:3993
 #: eme-people.php:3995
 #: eme-people.php:5096
 #: eme-people.php:5206
-#: eme-people.php:5277
-#: eme-people.php:5316
-#: eme-people.php:5355
-#: eme-people.php:5437
+#: eme-people.php:5278
+#: eme-people.php:5318
+#: eme-people.php:5358
+#: eme-people.php:5441
 #: eme-recurrence.php:631
 #: eme-recurrence.php:800
 #: eme-rsvp.php:1264
@@ -72,7 +83,7 @@ msgstr "in naam van %s"
 #: eme-tasks.php:1902
 #: eme-tasks.php:2006
 #: eme-tasks.php:2017
-#: eme-templates.php:510
+#: eme-templates.php:496
 msgid "Access denied!"
 msgstr "Toegang geweigerd!"
 
@@ -91,7 +102,7 @@ msgstr "Evenement"
 msgid "Location"
 msgstr "Locatie"
 
-#: eme-actions.php:356
+#: eme-actions.php:358
 #: eme-events.php:9555
 #: eme-events.php:9788
 #: eme-events.php:9821
@@ -106,7 +117,7 @@ msgstr "Locatie"
 msgid "State"
 msgstr "Staat/Provincie"
 
-#: eme-actions.php:357
+#: eme-actions.php:359
 #: eme-countries.php:517
 #: eme-events.php:9556
 #: eme-events.php:9787
@@ -122,34 +133,34 @@ msgstr "Staat/Provincie"
 msgid "Country"
 msgstr "Land"
 
-#: eme-actions.php:359
+#: eme-actions.php:361
 #: eme-events.php:9558
 msgid "An error has occurred"
 msgstr "Een fout is opgetreden"
 
-#: eme-actions.php:360
+#: eme-actions.php:362
 msgid "Clear"
 msgstr "Leegmaken"
 
-#: eme-actions.php:361
+#: eme-actions.php:363
 #: eme-events.php:9559
 msgid "Mailing preferences"
 msgstr "Mailing voorkeuren"
 
-#: eme-actions.php:362
+#: eme-actions.php:364
 #: eme-events.php:9560
 msgid "Yes, I'm sure"
 msgstr "Ja, ik ben zeker"
 
-#: eme-actions.php:474
+#: eme-actions.php:476
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Deze pagina komt overeen met de <strong>Events Made Easy</strong> evenementen pagina. De inhoud wordt overschreven door <strong>Events Made Easy</strong>. Wilt je aangepaste content gebruiken, dan kun je een andere pagina toewijzen aan <strong>Events Manager Easy</strong> via <a href='%s'>Instellingen</a>. "
 
-#: eme-actions.php:498
+#: eme-actions.php:500
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Hallo, <strong>%s</strong>, welkom bij <strong>Events Made Easy</strong>. We hopen dat je het hier naar je zin hebt.</p><p>Je kunt nu evenementlijsten invoegen met behulp van <a href='%2$s' title='Widgets pagina'>widgets</a>, <a href='%3$s' title='Template tags documentatien'>template tags</a> of <a href='%4$s' title='Shortcodes documentatie'>shortcodes</a>.</p><p>Heb je al bij de <a href='%5$s' title='Wijzig instellingen'>Instellingen</a> gekeken? Daar kun je de manier waarop evenementen en locaties worden weergegeven aanpassen.</p><p>Wat? Genoeg van deze aankondiging? Ik snap het, <a href=\"%6$s\" title=\"Toon dit advies niet meer\">klik hier</a> en je ziet dit nooit meer</p>"
 
-#: eme-actions.php:509
+#: eme-actions.php:511
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Indien je <strong>Events Made Easy</strong> nuttig vindt, overweeg aub even om een kleine donatie te doen om bij te dragen aan de tijd die ik erin geïnvesteerd heb en voor verdere ontwikkeling. Alvast bedankt hiervoor!"
 
@@ -199,8 +210,8 @@ msgstr "Voeg manueel een aanwezigheidsrecord toe"
 
 #: eme-attendances.php:108
 #: eme-locations.php:903
-#: eme-mailer.php:2547
-#: eme-mailer.php:2726
+#: eme-mailer.php:2725
+#: eme-mailer.php:2904
 #: eme-members.php:1557
 #: eme-members.php:1579
 #: eme-members.php:1627
@@ -246,6 +257,7 @@ msgid "Filter attendances"
 msgstr "Filter aanwezigen"
 
 #: eme-attendances.php:142
+#: eme-categories.php:115
 #: eme-countries.php:380
 #: eme-countries.php:451
 #: eme-discounts.php:464
@@ -253,14 +265,18 @@ msgstr "Filter aanwezigen"
 #: eme-events.php:6074
 #: eme-events.php:6176
 #: eme-formfields.php:236
+#: eme-holidays.php:103
 #: eme-locations.php:907
+#: eme-mailer.php:2984
+#: eme-mailer.php:3041
+#: eme-mailer.php:3076
 #: eme-members.php:2924
 #: eme-members.php:3321
 #: eme-people.php:1856
 #: eme-people.php:2662
 #: eme-rsvp.php:5331
 #: eme-tasks.php:496
-#: eme-templates.php:208
+#: eme-templates.php:194
 msgid "Hint: rightclick on the column headers to show/hide columns"
 msgstr "Hint: klik rechts op de kolom hoofdings om kolommen te tonen/verbergen"
 
@@ -286,7 +302,7 @@ msgid "Edit person"
 msgstr "Pas persoon aan"
 
 #: eme-attendances.php:218
-#: eme-events.php:10467
+#: eme-events.php:10515
 #: eme-rsvp.php:5939
 msgid "All day"
 msgstr "Hele dag"
@@ -296,7 +312,7 @@ msgid "Manual entry"
 msgstr "Handmatige invoer"
 
 #: eme-attendances.php:265
-#: eme-events.php:10589
+#: eme-events.php:10639
 msgid "Events deleted"
 msgstr "Evenementen verwijderd"
 
@@ -353,29 +369,15 @@ msgstr "De categorie is toegevoegd"
 msgid "There was a problem adding your category, please try again."
 msgstr "Er was een probleem bij het toevoegen van de categorie, probeer opnieuw."
 
-#: eme-categories.php:80
-msgid "Successfully deleted the selected categories."
-msgstr "Gekozen categorieën zijn succesvol verwijderd."
-
-#: eme-categories.php:82
-msgid "There was a problem deleting the selected categories, please try again."
-msgstr "Er was een probleem bij het verwijderen van de geselecteerde cateogorieën, probeer opnieuw."
-
-#: eme-categories.php:85
-msgid "Couldn't delete the categories. Incorrect category IDs supplied. Please try again."
-msgstr "Kon de categorieën niet verwijderen. Ongeldige categorie ID opgegeven. Probeer het nogmaals."
-
-#: eme-categories.php:102
+#: eme-categories.php:98
 msgid "Manage categories"
 msgstr "Beheer categorieën"
 
-#: eme-categories.php:116
-#: eme-categories.php:191
+#: eme-categories.php:93
+#: eme-categories.php:139
 msgid "Add category"
 msgstr "Voeg categorie toe"
 
-#: eme-categories.php:129
-#: eme-categories.php:153
 #: eme-events.php:9626
 #: eme-events.php:9664
 #: eme-events.php:9681
@@ -386,10 +388,11 @@ msgstr "Voeg categorie toe"
 #: eme-events.php:9811
 #: eme-events.php:9906
 #: eme-events.php:9962
+#: eme-events.php:10008
+#: eme-events.php:10023
+#: eme-events.php:10038
 #: eme-gdpr.php:433
 #: eme-gdpr.php:473
-#: eme-holidays.php:122
-#: eme-holidays.php:129
 #: eme-people.php:1027
 #: eme-people.php:1322
 #: eme-people.php:1636
@@ -398,8 +401,6 @@ msgstr "Voeg categorie toe"
 msgid "ID"
 msgstr "ID"
 
-#: eme-categories.php:130
-#: eme-categories.php:154
 #: eme-events.php:9627
 #: eme-events.php:9708
 #: eme-events.php:9729
@@ -408,87 +409,78 @@ msgstr "ID"
 #: eme-events.php:9812
 #: eme-events.php:9849
 #: eme-events.php:9911
-#: eme-events.php:10017
-#: eme-holidays.php:123
-#: eme-holidays.php:130
-#: eme-mailer.php:1539
-#: eme-mailer.php:2855
-#: eme-mailer.php:2979
+#: eme-events.php:10013
+#: eme-events.php:10028
+#: eme-events.php:10055
+#: eme-events.php:10056
 #: eme-members.php:1910
 #: eme-people.php:2563
 #: eme-tasks.php:747
-#: eme-templates.php:275
+#: eme-templates.php:261
 #: eme-todos.php:183
 msgid "Name"
 msgstr "Naam"
 
-#: eme-categories.php:136
-#: eme-events.php:10266
+#: eme-categories.php:575
+#: eme-events.php:10314
 #: eme-formfields.php:5110
-#: eme-holidays.php:136
-#: eme-locations.php:2979
+#: eme-holidays.php:295
+#: eme-locations.php:2980
 #: eme-members.php:6448
 #: eme-people.php:5229
-#: eme-templates.php:492
+#: eme-templates.php:478
 msgid "No name"
 msgstr "Geen naam"
 
-#: eme-categories.php:146
-msgid "Are you sure you want to delete these categories?"
-msgstr "Weet je zeker dat je deze categoerieën wilt verwijderen?"
-
-#: eme-categories.php:147
-#: eme-holidays.php:147
-#: eme-mailer.php:2879
-#: eme-mailer.php:2893
-#: eme-mailer.php:2901
-#: eme-mailer.php:2992
+#: eme-mailer.php:1462
+#: eme-mailer.php:1476
+#: eme-mailer.php:1484
+#: eme-mailer.php:1598
 msgid "Delete"
 msgstr "Verwijder"
 
-#: eme-categories.php:168
 #: eme-events.php:6735
 #: eme-locations.php:455
 msgid "No categories defined."
 msgstr "Geen categorieën gedefinieerd."
 
-#: eme-categories.php:183
+#: eme-categories.php:131
 msgid "Edit category"
 msgstr "Wijzig categorie"
 
-#: eme-categories.php:184
+#: eme-categories.php:132
 msgid "Update category"
 msgstr "Werk categorie bij"
 
-#: eme-categories.php:185
+#: eme-categories.php:133
 #: eme-events.php:7101
 #: eme-locations.php:500
 msgid "Permalink: "
 msgstr "Permalink: "
 
-#: eme-categories.php:190
+#: eme-categories.php:138
 msgid "Create category"
 msgstr "Maak categorie aan"
 
-#: eme-categories.php:192
+#: eme-categories.php:140
 #: eme-events.php:7103
 #: eme-locations.php:502
 msgid "Permalink prefix: "
 msgstr "Permalink voorvoegsel: "
 
-#: eme-categories.php:217
+#: eme-categories.php:159
 msgid "Category name"
 msgstr "Categorie naam"
 
-#: eme-categories.php:219
+#: eme-categories.php:161
 msgid "The name of the category"
 msgstr "De naam van de categorie"
 
-#: eme-categories.php:222
+#: eme-categories.php:198
 msgid "Category description"
 msgstr "Categorie omschrijving"
 
-#: eme-categories.php:228
+#: eme-categories.php:204
 msgid "The description of the category"
 msgstr "De beschrijving van de categorie"
 
@@ -525,8 +517,8 @@ msgid "Cleanup done: all data concerning events, locations and bookings have bee
 msgstr "Opschonen uitgevoerd: alle data mbt evenementen, locaties en boekingen is verwijderd."
 
 #: eme-cleanup.php:273
-#: eme-mailer.php:2835
-#: eme-mailer.php:2960
+#: eme-mailer.php:1448
+#: eme-mailer.php:1591
 msgid "Are you sure you want to do this?"
 msgstr "Bent u zeker dat u dit wil doen?"
 
@@ -561,6 +553,7 @@ msgstr "Weken"
 msgid "Month(s)"
 msgstr "Maand(en)"
 
+#: eme-categories.php:113
 #: eme-cleanup.php:295
 #: eme-cleanup.php:306
 #: eme-cleanup.php:317
@@ -588,18 +581,22 @@ msgstr "Maand(en)"
 #: eme-events.php:9865
 #: eme-events.php:9925
 #: eme-events.php:9993
+#: eme-events.php:10011
+#: eme-events.php:10026
+#: eme-events.php:10040
 #: eme-formfields.php:234
+#: eme-holidays.php:101
 #: eme-locations.php:905
-#: eme-mailer.php:1532
-#: eme-mailer.php:2849
-#: eme-mailer.php:2973
+#: eme-mailer.php:2982
+#: eme-mailer.php:3039
+#: eme-mailer.php:3074
 #: eme-members.php:2922
 #: eme-members.php:3319
 #: eme-people.php:1854
 #: eme-people.php:2660
 #: eme-rsvp.php:5329
 #: eme-tasks.php:494
-#: eme-templates.php:206
+#: eme-templates.php:192
 msgid "Apply"
 msgstr "Toepassen"
 
@@ -867,6 +864,7 @@ msgstr "Zie <a href=\"%s\">hier</a> voor meer info over landcodes"
 msgid "The language should correspond to one of the WordPress languages you want to support, or leave it empty as a default or fallback. Some examples are: nl, fr, en, de"
 msgstr "De taal zou moeten overeenkomen met één van de WordPress talen die je wil ondersteunen, of laat het leeg als een standaard of fallback. Enkele voorbeelden zijn: nl, fr, en, de"
 
+#: eme-categories.php:110
 #: eme-countries.php:375
 #: eme-countries.php:446
 #: eme-discounts.php:441
@@ -874,17 +872,18 @@ msgstr "De taal zou moeten overeenkomen met één van de WordPress talen die je 
 #: eme-events.php:6051
 #: eme-events.php:6161
 #: eme-formfields.php:231
+#: eme-holidays.php:98
 #: eme-locations.php:897
-#: eme-mailer.php:1529
-#: eme-mailer.php:2845
-#: eme-mailer.php:2970
+#: eme-mailer.php:2978
+#: eme-mailer.php:3035
+#: eme-mailer.php:3071
 #: eme-members.php:2881
 #: eme-members.php:3313
 #: eme-people.php:1804
 #: eme-people.php:2655
 #: eme-rsvp.php:5250
 #: eme-tasks.php:482
-#: eme-templates.php:203
+#: eme-templates.php:189
 msgid "Bulk Actions"
 msgstr "Bulk Acties"
 
@@ -1327,7 +1326,7 @@ msgstr "De naam van de korting"
 #: eme-members.php:1914
 #: eme-people.php:2567
 #: eme-tasks.php:751
-#: eme-templates.php:279
+#: eme-templates.php:265
 #: eme-todos.php:185
 msgid "Description"
 msgstr "Beschrijving"
@@ -1338,7 +1337,7 @@ msgstr "Beschrijving"
 #: eme-events.php:9730
 #: eme-events.php:9757
 #: eme-members.php:1918
-#: eme-templates.php:296
+#: eme-templates.php:282
 msgid "Type"
 msgstr "Type"
 
@@ -1536,7 +1535,7 @@ msgstr "Vast per plaats"
 #: eme-gdpr.php:431
 #: eme-gdpr.php:550
 #: eme-gdpr.php:551
-#: eme-locations.php:3015
+#: eme-locations.php:3016
 #: eme-members.php:6612
 #: eme-people.php:506
 #: eme-people.php:514
@@ -1577,7 +1576,7 @@ msgstr "Ja"
 #: eme-gdpr.php:431
 #: eme-gdpr.php:550
 #: eme-gdpr.php:551
-#: eme-locations.php:3015
+#: eme-locations.php:3016
 #: eme-members.php:6612
 #: eme-people.php:506
 #: eme-people.php:514
@@ -1632,7 +1631,7 @@ msgstr "Druk op de Back-knop in je browser om naar het vorige scherm terug te ke
 #: eme-events.php:1022
 #: eme-events.php:1234
 #: eme-events.php:4726
-#: eme-mailer.php:1892
+#: eme-mailer.php:2107
 #: eme-payments.php:152
 #: eme-payments.php:1988
 #: eme-rsvp.php:5139
@@ -1673,7 +1672,7 @@ msgstr "Nieuwe herhaling aangemaakt die %d evenementen bevat"
 #: eme-events.php:719
 #: eme-events.php:862
 #: eme-events.php:6301
-#: eme-events.php:10487
+#: eme-events.php:10535
 msgid "Edit Recurrence"
 msgstr "Bewerk terugkerend item"
 
@@ -2339,7 +2338,7 @@ msgstr "Als u dit evenement wijzigt, wordt deze een onafhankelijk evenement en w
 #: eme-events.php:6320
 #: eme-events.php:9623
 #: eme-events.php:9965
-#: eme-events.php:10437
+#: eme-events.php:10485
 #: eme-options.php:1245
 #: eme-rsvp.php:5898
 msgid "RSVP"
@@ -2520,9 +2519,7 @@ msgstr "Verwijder herhaling"
 #: eme-events.php:9698
 #: eme-events.php:9932
 #: eme-events.php:9946
-#: eme-events.php:10019
-#: eme-mailer.php:1542
-#: eme-mailer.php:2858
+#: eme-events.php:10059
 #: eme-members.php:1780
 #: eme-members.php:1922
 #: eme-people.php:1063
@@ -2555,9 +2552,9 @@ msgstr "Omdat er geen auteur is aangegeven voor dit evenement, zal elke verwijzi
 
 #: eme-events.php:6729
 #: eme-events.php:9973
-#: eme-events.php:10277
+#: eme-events.php:10325
 #: eme-locations.php:449
-#: eme-locations.php:2989
+#: eme-locations.php:2990
 #: eme-recurrence.php:739
 #: eme-widgets.php:179
 #: eme-widgets.php:343
@@ -2873,9 +2870,9 @@ msgstr "Vul dit alleen in als je standaard-instellingen wilt overschrijven."
 #: eme-events.php:8339
 #: eme-events.php:8685
 #: eme-events.php:8700
-#: eme-mailer.php:2467
-#: eme-mailer.php:2477
-#: eme-mailer.php:2659
+#: eme-mailer.php:2645
+#: eme-mailer.php:2655
+#: eme-mailer.php:2837
 #: eme-widgets.php:225
 msgid "Either choose from a template: "
 msgstr "Ofwel kies uit een template: "
@@ -2954,10 +2951,10 @@ msgstr "Dit bepaalt de lay-out van uw evenement (waar de evenementbeschrijving k
 #: eme-events.php:8542
 #: eme-locations.php:666
 #: eme-locations.php:765
-#: eme-mailer.php:2491
-#: eme-mailer.php:2673
+#: eme-mailer.php:2669
+#: eme-mailer.php:2851
 #: eme-members.php:2791
-#: eme-templates.php:288
+#: eme-templates.php:274
 msgid "Your account has the ability to post unrestricted HTML content here, except javascript."
 msgstr "Je account heeft de mogelijkheid om hier onbeperkte HTML inhoud te plaatsen, behalve javascript."
 
@@ -3081,9 +3078,9 @@ msgstr "Boeking gemaakt e-mail bijlagen"
 #: eme-events.php:8225
 #: eme-events.php:9582
 #: eme-events.php:9949
-#: eme-events.php:10024
-#: eme-mailer.php:2516
-#: eme-mailer.php:2695
+#: eme-events.php:10069
+#: eme-mailer.php:2694
+#: eme-mailer.php:2873
 #: eme-members.php:2313
 #: eme-members.php:2457
 #: eme-members.php:2536
@@ -3098,8 +3095,8 @@ msgstr "Voeg bijlagen toe"
 #: eme-events.php:7641
 #: eme-events.php:7841
 #: eme-events.php:8226
-#: eme-mailer.php:2517
-#: eme-mailer.php:2696
+#: eme-mailer.php:2695
+#: eme-mailer.php:2874
 #: eme-members.php:2314
 #: eme-members.php:2458
 #: eme-members.php:2537
@@ -3976,7 +3973,7 @@ msgid "Date and time"
 msgstr "Datum en tijd"
 
 #: eme-events.php:9639
-#: eme-events.php:10025
+#: eme-events.php:10070
 msgid "Selected dates:"
 msgstr "Geselecteerde datums:"
 
@@ -4000,7 +3997,9 @@ msgstr "Gewijzigd op"
 #: eme-events.php:9864
 #: eme-events.php:9924
 #: eme-events.php:9992
-#: eme-events.php:10008
+#: eme-events.php:10010
+#: eme-events.php:10025
+#: eme-events.php:10039
 msgid "Please wait"
 msgstr "Wacht aub"
 
@@ -4059,7 +4058,7 @@ msgstr "Weet u zeker dat u dit record wilt verwijderen?"
 #: eme-events.php:9673
 #: eme-events.php:9842
 #: eme-events.php:9899
-#: eme-events.php:10016
+#: eme-events.php:10052
 msgid "No matching person found"
 msgstr "Geen overeenkomende persoon gevonden."
 
@@ -4101,6 +4100,9 @@ msgstr "Reactie"
 #: eme-events.php:9866
 #: eme-events.php:9926
 #: eme-events.php:9994
+#: eme-events.php:10012
+#: eme-events.php:10027
+#: eme-events.php:10041
 msgid "Are you sure to delete the selected records?"
 msgstr "Bent u zeker dat u de geselecteerde records wil verwijderen?"
 
@@ -4215,7 +4217,7 @@ msgstr "Provincies/staten"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Geen land geassocieerd met deze provincie, deze zal niet getoond worden in dropdown lijsten. Pas deze provincie aan met de correcte land info."
 
-#: eme-actions.php:412
+#: eme-actions.php:414
 #: eme-events.php:9619
 #: eme-events.php:9809
 msgid "No matching location found"
@@ -4371,7 +4373,7 @@ msgstr "Voornaam"
 
 #: eme-events.php:9858
 #: eme-events.php:9914
-#: eme-events.php:10018
+#: eme-events.php:10057
 #: eme-formfields.php:1195
 #: eme-formfields.php:1518
 #: eme-formfields.php:1942
@@ -4385,7 +4387,6 @@ msgstr "Voornaam"
 #: eme-gdpr.php:324
 #: eme-gdpr.php:436
 #: eme-gdpr.php:566
-#: eme-mailer.php:1540
 #: eme-members.php:1796
 #: eme-members.php:3443
 #: eme-options.php:36
@@ -4663,73 +4664,63 @@ msgstr "Aantal aanwezigen"
 msgid "Please select only one record in order to do partial payments"
 msgstr "Selecteer slechts één record om gedeeltelijke betalingen te doen"
 
-#: eme-events.php:10009
-#: eme-mailer.php:2551
-#: eme-mailer.php:2730
+#: eme-events.php:10042
+#: eme-mailer.php:2729
+#: eme-mailer.php:2908
 msgid "Send email"
 msgstr "Verstuur e-mail"
 
-#: eme-events.php:10010
+#: eme-events.php:10043
 msgid "Queue email"
 msgstr "Zet email in de wachtrij"
 
-#: eme-events.php:10011
-#: eme-mailer.php:1544
+#: eme-events.php:10046
 msgid "Sent on"
 msgstr "Verzonden op"
 
-#: eme-events.php:10012
-#: eme-mailer.php:1545
+#: eme-events.php:10047
 msgid "First read on"
 msgstr "Voor het eerst gelezen op"
 
-#: eme-events.php:10013
-#: eme-mailer.php:1546
+#: eme-events.php:10048
 msgid "Last read on"
 msgstr "Voor het laatst gelezen op"
 
-#: eme-events.php:10014
-#: eme-mailer.php:1547
-#: eme-mailer.php:2860
-#: eme-mailer.php:2983
+#: eme-events.php:10050
 msgid "Read count"
 msgstr "Aantal keer gelezen"
 
-#: eme-events.php:10015
-#: eme-mailer.php:1548
+#: eme-events.php:10051
 msgid "Error message"
 msgstr "Foutmelding"
 
-#: eme-events.php:10020
-#: eme-mailer.php:1550
-#: eme-mailer.php:2864
-#: eme-mailer.php:2986
+#: eme-events.php:10060
 msgid "Action"
 msgstr "Actie"
 
-#: eme-events.php:10021
-#: eme-mailer.php:2326
+#: eme-events.php:10063
+#: eme-mailer.php:2501
 msgid "Mailing report"
 msgstr "Mailing rapport"
 
-#: eme-events.php:10022
+#: eme-events.php:10067
 msgid "Select one or more events"
 msgstr "Selecteer één of meerdere evenementen"
 
-#: eme-events.php:10273
+#: eme-events.php:10321
 #: eme-rsvp.php:5829
 #: eme-tasks.php:1987
 msgid "Edit event"
 msgstr "Wijzig activiteit"
 
 #: eme-events.php:6592
-#: eme-events.php:10289
+#: eme-events.php:10337
 #: eme-rsvp.php:5833
 msgid "RSVP Info: "
 msgstr "RSVP info: "
 
 #: eme-events.php:6620
-#: eme-events.php:10317
+#: eme-events.php:10365
 #: eme-rsvp.php:5862
 msgid "Free: "
 msgstr "Vrij: "
@@ -4737,12 +4728,12 @@ msgstr "Vrij: "
 #: eme-events.php:6621
 #: eme-events.php:6624
 #: eme-events.php:6670
-#: eme-events.php:10319
-#: eme-events.php:10321
-#: eme-events.php:10326
-#: eme-events.php:10328
-#: eme-events.php:10385
-#: eme-events.php:10387
+#: eme-events.php:10367
+#: eme-events.php:10369
+#: eme-events.php:10374
+#: eme-events.php:10376
+#: eme-events.php:10433
+#: eme-events.php:10435
 #: eme-rsvp.php:5836
 #: eme-rsvp.php:5925
 msgid "Approved:"
@@ -4750,23 +4741,23 @@ msgstr "Goedgekeurd:"
 
 #: eme-events.php:6628
 #: eme-events.php:6668
-#: eme-events.php:10334
-#: eme-events.php:10336
-#: eme-events.php:10379
-#: eme-events.php:10381
+#: eme-events.php:10382
+#: eme-events.php:10384
+#: eme-events.php:10427
+#: eme-events.php:10429
 #: eme-rsvp.php:5923
 msgid "Pending:"
 msgstr "Goed te keuren:"
 
 #: eme-events.php:6633
-#: eme-events.php:10343
-#: eme-events.php:10345
+#: eme-events.php:10391
+#: eme-events.php:10393
 #: eme-rsvp.php:5875
 msgid "Absent:"
 msgstr "Afwezig:"
 
 #: eme-events.php:6636
-#: eme-events.php:10349
+#: eme-events.php:10397
 #: eme-members.php:6600
 #: eme-recurrence.php:727
 #: eme-rsvp.php:5878
@@ -4774,87 +4765,87 @@ msgid "Max: "
 msgstr "Max: "
 
 #: eme-events.php:6639
-#: eme-events.php:10352
+#: eme-events.php:10400
 #: eme-rsvp.php:5881
 msgid "(%d waiting list seats included)"
 msgstr "(%d plaatsen op de wachtlijst inbegrepen)"
 
 #: eme-events.php:6644
-#: eme-events.php:10357
+#: eme-events.php:10405
 #: eme-rsvp.php:5887
 msgid "Printable view"
 msgstr "Afdrukvoorbeeld"
 
 #: eme-events.php:6645
-#: eme-events.php:10358
+#: eme-events.php:10406
 #: eme-rsvp.php:5888
 msgid "CSV export"
 msgstr "CSV export"
 
 #: eme-events.php:6666
-#: eme-events.php:10376
+#: eme-events.php:10424
 #: eme-rsvp.php:5921
 msgid "Task Info: %d tasks"
 msgstr "Taak Info: %d taken"
 
-#: eme-events.php:10395
+#: eme-events.php:10443
 #: eme-locations.php:534
-#: eme-locations.php:2983
+#: eme-locations.php:2984
 #: eme-recurrence.php:757
 msgid "Edit location"
 msgstr "Wijzig locatie"
 
-#: eme-events.php:10397
-#: eme-locations.php:2985
+#: eme-events.php:10445
+#: eme-locations.php:2986
 #: eme-recurrence.php:759
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "Geen geo-coördinaten aanwezig! Corrigeer dit voor deze locatie, anders is de data op je site incorrect."
 
-#: eme-events.php:10416
+#: eme-events.php:10464
 msgid "Preview event"
 msgstr "Evenement bekijken"
 
-#: eme-events.php:10418
+#: eme-events.php:10466
 msgid "View event"
 msgstr "Bekijk evenement"
 
-#: eme-events.php:10425
+#: eme-events.php:10473
 msgid "Duplicate this event"
 msgstr "Dupliceer dit evenement"
 
-#: eme-events.php:10437
+#: eme-events.php:10485
 #: eme-rsvp.php:5898
 msgid "Add booking for this event"
 msgstr "Voeg boeking toe voor dit evenement"
 
-#: eme-events.php:10439
+#: eme-events.php:10487
 #: eme-rsvp.php:5900
 msgid "Password protected"
 msgstr "Beschermd met wachtwoord"
 
-#: eme-events.php:10447
+#: eme-events.php:10495
 #: eme-recurrence.php:729
 msgid "Free"
 msgstr "Gratis"
 
-#: eme-events.php:10579
+#: eme-events.php:10629
 #: eme-recurrence.php:824
 msgid "No action defined!"
 msgstr "Geen actie gedefineerd!"
 
-#: eme-events.php:10597
+#: eme-events.php:10647
 msgid "Events moved to trash"
 msgstr "Evenementen verplaatst naar prullenbak"
 
-#: eme-events.php:10605
+#: eme-events.php:10655
 msgid "Restored selected events to draft status"
 msgstr "Geselecteerde evenementen hersteld naar conceptstatus"
 
-#: eme-events.php:10613
+#: eme-events.php:10663
 msgid "Events status updated"
 msgstr "Status van evenementen ge-updated"
 
-#: eme-events.php:10626
+#: eme-events.php:10676
 msgid "Events added to category"
 msgstr "Evenementen toegevoegd aan categorie"
 
@@ -5156,7 +5147,7 @@ msgid "For more information about form fields, see "
 msgstr "Voor meer informatie over formulier velden, zie "
 
 #: eme-formfields.php:443
-#: eme-holidays.php:215
+#: eme-holidays.php:152
 #: eme-members.php:2111
 #: eme-members.php:2129
 #: eme-members.php:2147
@@ -5939,9 +5930,8 @@ msgstr "CFP Frank (Franc Pacifique)"
 msgid "South African Rand"
 msgstr "South African Rand"
 
+#: eme-events.php:10061
 #: eme-functions.php:2191
-#: eme-mailer.php:2861
-#: eme-mailer.php:2984
 msgid "Extra info"
 msgstr "Extra info"
 
@@ -6153,7 +6143,7 @@ msgstr "Indien zo ingesteld, gebruikt EME een cookie voor het opslaan van de cli
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:659
+#: eme-actions.php:661
 #: eme-gdpr.php:528
 #: events-manager.php:343
 msgid "Events Made Easy"
@@ -6183,65 +6173,39 @@ msgstr "Vakantielijst is toegevoegd"
 msgid "There was a problem adding the list of holidays, please try again."
 msgstr "Probleem bij toevoegen van de vakantielijst, probeer nogmaals."
 
-#: eme-holidays.php:71
-msgid "Successfully deleted the selected holiday lists."
-msgstr "De geselecteerde vakantielijsten zijn succesvol verwijderd."
-
-#: eme-holidays.php:73
-msgid "There was a problem deleting the selected holiday lists, please try again."
-msgstr "Probleem bij verwijderen van de geselecteerde vakantielijsten, probeer nogmaals."
-
-#: eme-holidays.php:76
-#: eme-holidays.php:79
-msgid "Couldn't delete the holiday lists. Incorrect IDs supplied. Please try again."
-msgstr "Vakantielijsten niet verwijderd. Incorrecte ID's doorgegeven. Probeer nogmaals."
-
-#: eme-holidays.php:95
-msgid "Manage holidays"
-msgstr "Beheer vakanties"
-
-#: eme-holidays.php:109
-#: eme-holidays.php:182
+#: eme-holidays.php:125
 msgid "Add list of holidays"
 msgstr "Voeg lijst van vakanties toe"
 
-#: eme-holidays.php:146
-msgid "Are you sure you want to delete these holiday lists?"
-msgstr "Weet je zeker dat je deze vakantielijsten wil verwijderen?"
-
-#: eme-holidays.php:161
-msgid "No holiday lists have been inserted yet!"
-msgstr "Nog geen vakantielijsten aangemaakt!"
-
-#: eme-holidays.php:176
+#: eme-holidays.php:119
 msgid "Edit holidays list"
 msgstr "Pas lijst van vakanties aan"
 
-#: eme-holidays.php:177
+#: eme-holidays.php:120
 msgid "Update list of holidays"
 msgstr "Pas lijst van vakanties aan"
 
-#: eme-holidays.php:181
+#: eme-holidays.php:124
 msgid "Create holidays list"
 msgstr "Maak lijst van vakantiedagen aan"
 
-#: eme-holidays.php:208
+#: eme-holidays.php:145
 msgid "Holidays listname"
 msgstr "Naam vakantielijst"
 
-#: eme-holidays.php:210
+#: eme-holidays.php:147
 msgid "The name of the holidays list"
 msgstr "De naam van de vakantielijst"
 
-#: eme-holidays.php:213
+#: eme-holidays.php:150
 msgid "Holidays list"
 msgstr "Vakanties lijst"
 
-#: eme-holidays.php:215
+#: eme-holidays.php:152
 msgid "Basic format: YYYY-MM-DD, one per line"
 msgstr "Standaard opmaak: YYYY-MM-DD, één per regel"
 
-#: eme-holidays.php:215
+#: eme-holidays.php:152
 msgid "For more information about holidays, see "
 msgstr "Voor meer informative over vakanties, zie "
 
@@ -6357,8 +6321,8 @@ msgid "Location maximum capacity"
 msgstr "Locatie maximum capaciteit"
 
 #: eme-locations.php:644
-#: eme-locations.php:3001
 #: eme-locations.php:3002
+#: eme-locations.php:3003
 msgid "Max capacity"
 msgstr "Max capaciteit"
 
@@ -6444,23 +6408,23 @@ msgstr "Je adres (straat)"
 msgid "Get Directions"
 msgstr "Geef route-aanwijzingen"
 
-#: eme-locations.php:3017
+#: eme-locations.php:3018
 msgid "View location"
 msgstr "Bekijk locatie"
 
-#: eme-locations.php:3019
+#: eme-locations.php:3020
 msgid "Duplicate this location"
 msgstr "Dupliceer deze locatie"
 
 #: eme-mailer.php:159
-#: eme-mailer.php:1637
-#: eme-mailer.php:1722
-#: eme-mailer.php:1791
-#: eme-mailer.php:1888
-#: eme-mailer.php:1986
-#: eme-members.php:6894
-#: eme-members.php:6973
-#: eme-members.php:7092
+#: eme-mailer.php:1852
+#: eme-mailer.php:1937
+#: eme-mailer.php:2006
+#: eme-mailer.php:2103
+#: eme-mailer.php:2201
+#: eme-members.php:6898
+#: eme-members.php:6977
+#: eme-members.php:7096
 #: eme-rsvp.php:1234
 #: eme-rsvp.php:4964
 #: eme-rsvp.php:6557
@@ -6503,48 +6467,42 @@ msgstr "Geannuleerd"
 msgid "Ignored"
 msgstr "Genegeerd"
 
-#: eme-mailer.php:1389
-#: eme-mailer.php:1586
-#: eme-mailer.php:1598
-#: eme-mailer.php:2904
-#: eme-mailer.php:2994
+#: eme-mailer.php:1390
+#: eme-mailer.php:1487
+#: eme-mailer.php:1600
+#: eme-mailer.php:1726
+#: eme-mailer.php:1732
 msgid "Reuse"
 msgstr "Herbruik"
 
-#: eme-mailer.php:1520
-msgid "No results found"
-msgstr "Geen resultaten gevonden"
-
-#: eme-mailer.php:1537
-#: eme-mailer.php:2639
+#: eme-events.php:10053
+#: eme-mailer.php:2817
 msgid "Sender name"
 msgstr "Afzender naam"
 
-#: eme-mailer.php:1538
-#: eme-mailer.php:2643
+#: eme-events.php:10054
+#: eme-mailer.php:2821
 msgid "Sender email"
 msgstr "Afzender e-mail"
 
-#: eme-mailer.php:1541
-#: eme-mailer.php:2465
-#: eme-mailer.php:2650
-#: eme-mailer.php:2856
-#: eme-mailer.php:2980
+#: eme-events.php:10058
+#: eme-mailer.php:2643
+#: eme-mailer.php:2828
 msgid "Subject"
 msgstr "Onderwerp"
 
-#: eme-mailer.php:1543
+#: eme-events.php:10045
 msgid "Queued on"
 msgstr "In de wachtrij gezet op"
 
-#: eme-mailer.php:1598
-#: eme-mailer.php:2883
-#: eme-mailer.php:2893
-#: eme-mailer.php:2897
+#: eme-mailer.php:1466
+#: eme-mailer.php:1476
+#: eme-mailer.php:1480
+#: eme-mailer.php:1732
 msgid "Cancel"
 msgstr "Annuleer"
 
-#: eme-mailer.php:1614
+#: eme-mailer.php:1829
 #: eme-members.php:1126
 #: eme-members.php:1129
 #: eme-people.php:3863
@@ -6557,385 +6515,376 @@ msgstr "Annuleer"
 msgid "Please enter a valid email address"
 msgstr "Voer een geldig e-mailadres in"
 
-#: eme-mailer.php:1634
-#: eme-mailer.php:1719
-#: eme-mailer.php:1781
-#: eme-mailer.php:1885
-#: eme-mailer.php:1979
-#: eme-members.php:6891
+#: eme-mailer.php:1849
+#: eme-mailer.php:1934
+#: eme-mailer.php:1996
+#: eme-mailer.php:2100
+#: eme-mailer.php:2194
+#: eme-members.php:6895
 #: eme-rsvp.php:6554
 #: eme-rsvp.php:6574
 msgid "The mail has been sent."
 msgstr "De mail is verstuurd."
 
-#: eme-mailer.php:1675
-#: eme-mailer.php:1830
+#: eme-mailer.php:1890
+#: eme-mailer.php:2045
 msgid "Please enter both subject and message for the mail to be sent."
 msgstr "Voer zowel onderwerp als bericht in voor de te verzenden e-mail."
 
-#: eme-mailer.php:1690
+#: eme-mailer.php:1905
 msgid "No default sender defined and no event contact email found, bailing out"
 msgstr "Geen standaard afzender gedefinieerd en geen evenement contact e-mail gevonden"
 
-#: eme-mailer.php:1707
-#: eme-mailer.php:1866
+#: eme-mailer.php:1922
+#: eme-mailer.php:2081
 msgid "Please select a person to send the preview mail to."
 msgstr "Selecteer een persoon om de preview e-mail naar toe te sturen."
 
-#: eme-mailer.php:1779
-#: eme-mailer.php:1977
+#: eme-mailer.php:1994
+#: eme-mailer.php:2192
 msgid "The mailing has been planned."
 msgstr "De mailing is ingepland."
 
-#: eme-mailer.php:1786
+#: eme-mailer.php:2001
 msgid "The mailing has been put on the queue, but not all persons will receive it."
 msgstr "De mailing is in de queue gezet, maar niet iedereen zal deze ontvangen."
 
-#: eme-mailer.php:1788
+#: eme-mailer.php:2003
 msgid "The following persons will not receive the mail:"
 msgstr "De volgende personen zullen de e-mail niet ontvangen:"
 
-#: eme-mailer.php:1793
-#: eme-mailer.php:1988
+#: eme-mailer.php:2008
+#: eme-mailer.php:2203
 msgid "Email to the following persons has not been sent:"
 msgstr "De mail is niet verstuurd naar de volgende personen:"
 
-#: eme-mailer.php:1838
+#: eme-mailer.php:2053
 #: eme-rsvp.php:863
 #: eme-rsvp.php:878
 msgid "Please select at least one event."
 msgstr "Selecteer ten minste één evenement."
 
-#: eme-mailer.php:1916
+#: eme-mailer.php:2131
 msgid "Please select the type of mail to be sent."
 msgstr "Selecteer het type e-email dat je wil zenden."
 
-#: eme-mailer.php:1984
+#: eme-mailer.php:2199
 msgid "Only mails for events you have the right to send mails for have been sent."
 msgstr "Er zijn enkel e-mails verzonden voor de evenementen waarvoor je het recht hebt om e-mails te verzenden."
 
-#: eme-mailer.php:2328
+#: eme-mailer.php:2503
 #: eme-tasks.php:442
 msgid "Person name"
 msgstr "Persoonsnaam"
 
-#: eme-mailer.php:2329
+#: eme-mailer.php:2504
+#: eme-mailer.php:3028
+#: eme-mailer.php:3065
 msgid "Filter"
 msgstr "Filter"
 
-#: eme-mailer.php:2332
+#: eme-mailer.php:2507
 msgid "Remark: the list of recipients below is just an indication based on the moment the mailing was created. Just before the mailing will actually start, this list will be refreshed based on the conditions the mailing was created with."
 msgstr "Opmerking: de lijst van ontvangers hieronder is enkel een indicatie gebaseerd op het moment dat de mailing aangemaakt werd. Juist vooraleer de mailing effectief begint zal deze lijst ge-updated worden gebaseerd op de voorwaarden waarmee de mailing aangemaakt was."
 
-#: eme-mailer.php:2349
+#: eme-mailer.php:2524
 msgid "Event related email"
 msgstr "Evenement gerelateerde e-mail"
 
-#: eme-mailer.php:2350
+#: eme-mailer.php:2525
 msgid "Generic email"
 msgstr "Generieke e-mail"
 
-#: eme-mailer.php:2351
+#: eme-events.php:10065
+#: eme-mailer.php:2526
 msgid "Mailings"
 msgstr "Mailings"
 
-#: eme-mailer.php:2352
+#: eme-mailer.php:2527
 msgid "Mailings archive"
 msgstr "Mailing archief"
 
-#: eme-mailer.php:2353
-#: eme-mailer.php:2755
+#: eme-mailer.php:2528
+#: eme-mailer.php:2956
 msgid "Sent emails"
 msgstr "Verzonden e-mails"
 
-#: eme-mailer.php:2354
+#: eme-mailer.php:2529
 msgid "Test email"
 msgstr "Test e-mail"
 
-#: eme-mailer.php:2363
+#: eme-mailer.php:2541
 msgid "Send event related emails"
 msgstr "Verzend evenement gerelateerde e-mails"
 
-#: eme-mailer.php:2375
+#: eme-mailer.php:2553
 #: eme-rsvp.php:4766
 msgid "Check this box to search through all events and not just future ones."
 msgstr "Vink dit vakje aan om alle evenementen te doorzoeken en niet alleen toekomstige."
 
-#: eme-mailer.php:2376
+#: eme-mailer.php:2554
 msgid "Remark: if you select multiple events, a mailing will be created for each selected event"
 msgstr "Opmerking: als je meerdere evenementen selecteert, zal een mailing aangemaakt worden per event"
 
-#: eme-mailer.php:2380
+#: eme-mailer.php:2558
 msgid "Select the type of mail"
 msgstr "Selecteer type mail"
 
-#: eme-mailer.php:2384
-#: eme-mailer.php:2504
+#: eme-mailer.php:2562
+#: eme-mailer.php:2682
 msgid "Attendee mails"
 msgstr "Deelnemer mails"
 
-#: eme-mailer.php:2385
-#: eme-mailer.php:2505
+#: eme-mailer.php:2563
+#: eme-mailer.php:2683
 msgid "Booking mails"
 msgstr "Boeking mails"
 
-#: eme-mailer.php:2386
+#: eme-mailer.php:2564
 msgid "Email to all people registered in EME"
 msgstr "E-mail naar alle personen geregistreerd in EME"
 
-#: eme-mailer.php:2387
+#: eme-mailer.php:2565
 msgid "Email to people and/or groups registered in EME"
 msgstr "E-mail personen en/of groepen geregistreerd in EME"
 
-#: eme-mailer.php:2388
+#: eme-mailer.php:2566
 msgid "Email to all WP users"
 msgstr "Stuur een e-mail naar alle WP-gebruikers"
 
-#: eme-mailer.php:2395
+#: eme-mailer.php:2573
 msgid "Select your target audience"
 msgstr "Selecteer je doelgroep"
 
-#: eme-mailer.php:2398
+#: eme-mailer.php:2576
 msgid "All registered persons"
 msgstr "Alle geregistreerde personen"
 
-#: eme-mailer.php:2399
+#: eme-mailer.php:2577
 msgid "Only approved bookings"
 msgstr "Alleen goedgekeurde boekingen"
 
-#: eme-mailer.php:2400
+#: eme-mailer.php:2578
 msgid "Only pending bookings"
 msgstr "Enkel goed te keuren boekingen"
 
-#: eme-mailer.php:2405
+#: eme-mailer.php:2583
 msgid "Exclude people already registered for the selected event(s)"
 msgstr "Mensen uitsluiten die al zijn geregistreerd voor de geselecteerde evenement(en)"
 
-#: eme-mailer.php:2411
+#: eme-mailer.php:2589
 msgid "Only send mails to attendees who did not pay yet"
 msgstr "Stuur alleen mails naar deelnemers die nog niet betaald hebben"
 
-#: eme-mailer.php:2471
-#: eme-mailer.php:2482
-#: eme-mailer.php:2664
+#: eme-mailer.php:2649
+#: eme-mailer.php:2660
+#: eme-mailer.php:2842
 msgid "Or enter your own: "
 msgstr "Of vul je eigen in: "
 
-#: eme-mailer.php:2475
-#: eme-mailer.php:2656
+#: eme-mailer.php:2653
+#: eme-mailer.php:2834
 msgid "Message"
 msgstr "Bericht"
 
-#: eme-mailer.php:2501
-#: eme-mailer.php:2683
+#: eme-mailer.php:2679
+#: eme-mailer.php:2861
 msgid "You can use any placeholders mentioned here:"
 msgstr "Je kunt alle hier genoemde placeholders gebruiken:"
 
-#: eme-mailer.php:2502
+#: eme-mailer.php:2680
 msgid "Event placeholders"
 msgstr "Evenement-placeholders"
 
-#: eme-mailer.php:2503
-#: eme-mailer.php:2684
+#: eme-mailer.php:2681
+#: eme-mailer.php:2862
 msgid "People placeholders"
 msgstr "Personen placeholders"
 
-#: eme-mailer.php:2504
+#: eme-mailer.php:2682
 msgid "Attendees placeholders"
 msgstr "Aanwezigen-placeholders"
 
-#: eme-mailer.php:2504
-#: eme-mailer.php:2505
-#: eme-mailer.php:2684
-#: eme-mailer.php:2685
+#: eme-mailer.php:2682
+#: eme-mailer.php:2683
+#: eme-mailer.php:2862
+#: eme-mailer.php:2863
 msgid "for "
 msgstr "voor "
 
-#: eme-mailer.php:2505
+#: eme-mailer.php:2683
 msgid "Booking placeholders"
 msgstr "Boeking placeholders"
 
-#: eme-mailer.php:2506
-#: eme-mailer.php:2685
+#: eme-mailer.php:2684
+#: eme-mailer.php:2863
 msgid "Member placeholders"
 msgstr "Leden-placeholders"
 
-#: eme-mailer.php:2506
+#: eme-mailer.php:2684
 msgid "if you selected members, memberships or member groups"
 msgstr "als je leden, lidmaatschappen of leden groepen geselecteerd hebt"
 
-#: eme-mailer.php:2507
-#: eme-mailer.php:2686
+#: eme-mailer.php:2685
+#: eme-mailer.php:2864
 msgid "You can also use any shortcode you want."
 msgstr "Je kan ook elke shortcode gebruiken die je wil."
 
-#: eme-mailer.php:2513
-#: eme-mailer.php:2692
+#: eme-mailer.php:2691
+#: eme-mailer.php:2870
 msgid "Optionally add attachments to your mailing"
 msgstr "Voeg optioneel bijlagen toe aan de mailing"
 
-#: eme-mailer.php:2526
-#: eme-mailer.php:2705
+#: eme-mailer.php:2704
+#: eme-mailer.php:2883
 msgid "Set mailing name and start date and time"
 msgstr "Mailingnaam en startdatum en starttijd"
 
-#: eme-mailer.php:2527
-#: eme-mailer.php:2706
+#: eme-mailer.php:2705
+#: eme-mailer.php:2884
 msgid "Mailing name: "
 msgstr "Mailing naam: "
 
-#: eme-mailer.php:2528
-#: eme-mailer.php:2707
+#: eme-mailer.php:2706
+#: eme-mailer.php:2885
 msgid "Start date and time: "
 msgstr "Start datum en tijd: "
 
-#: eme-mailer.php:2530
-#: eme-mailer.php:2709
+#: eme-mailer.php:2708
+#: eme-mailer.php:2887
 msgid "Leave empty to send the mail immediately"
 msgstr "Laat leeg om de mail onmiddellijk te versturen"
 
-#: eme-mailer.php:2532
-#: eme-mailer.php:2711
+#: eme-mailer.php:2710
+#: eme-mailer.php:2889
 msgid "(multiple dates can be selected, in which case the mailing will be planned on each selected date and time)"
 msgstr "(meerdere datums kunnen worden geselecteerd, in welk geval de mailing op elke geselecteerde datum en tijd wordt gepland)"
 
-#: eme-mailer.php:2539
-#: eme-mailer.php:2718
+#: eme-mailer.php:2717
+#: eme-mailer.php:2896
 msgid "Ignore massmail setting:"
 msgstr "Negeer massmail instelling:"
 
-#: eme-mailer.php:2541
-#: eme-mailer.php:2720
+#: eme-mailer.php:2719
+#: eme-mailer.php:2898
 msgid "When sending a mail to all EME people or certain groups, it is by default only sent to the people who have indicated they want to receive mass mailings. If you need to send the mail to all the persons regardless their massmail setting, check this option."
 msgstr "Als je een een e-mail stuurt naar alle EME personen of bepaalde groepen, dan wordt deze standaard enkel verstuurd naar personen die hebben aangeduid massmailings te willen ontvangen. Als je een mail moet sturen naar alle personen in EME of in de groep ongeacht deze instelling, vink dan deze optie aan."
 
-#: eme-mailer.php:2545
-#: eme-mailer.php:2724
+#: eme-mailer.php:2723
+#: eme-mailer.php:2902
 msgid "Enter a test recipient"
 msgstr "Vul een test ontvanger in"
 
-#: eme-mailer.php:2548
-#: eme-mailer.php:2727
+#: eme-mailer.php:2726
+#: eme-mailer.php:2905
 msgid "Send Preview Email"
 msgstr "Verstuur een preview e-mail"
 
-#: eme-mailer.php:2557
-#: eme-mailer.php:2736
+#: eme-mailer.php:2735
+#: eme-mailer.php:2914
 msgid "Warning: using this functionality to send mails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing."
 msgstr "Waarschuwing: gebruik van deze functionaliteit om mails te versturen naar deelnemers kan resulteren in een php-timeout, waardoor niet iedereen de mail ontvangt. Dit hangt af van het aantal deelnemers, de belasting van de server.... Overkomt je dit, activeer en configureer dan de mail queueing."
 
-#: eme-mailer.php:2577
+#: eme-mailer.php:2755
 #: eme-options.php:1583
 msgid "Send generic emails"
 msgstr "Verzend generieke e-mails"
 
-#: eme-mailer.php:2578
+#: eme-mailer.php:2756
 msgid "Use the below form to send a generic mail. Don't forget to use the #_UNSUB_URL for unsubscribe possibility."
 msgstr "Gebruik het formulier hieronder om een algemene e-mail te versturen. Vergeet niet om #_UNSUB_URL te gebruiken zodat mensen kunnen uitschrijven."
 
-#: eme-mailer.php:2581
+#: eme-mailer.php:2759
 msgid "Target audience:"
 msgstr "Doelpubliek:"
 
-#: eme-mailer.php:2582
+#: eme-mailer.php:2760
 msgid "Send to all EME people"
 msgstr "Verzend naar alle mensen in EME"
 
-#: eme-mailer.php:2586
+#: eme-mailer.php:2764
 msgid "Deselect this to select specific groups and/or memberships for your mailing"
 msgstr "Vink deze optie af om specifieke groepen en/of leden te selecteren voor je mailing"
 
-#: eme-mailer.php:2684
+#: eme-mailer.php:2862
 msgid "People or groups"
 msgstr "Personen of groepen"
 
-#: eme-mailer.php:2685
+#: eme-mailer.php:2863
 msgid "members"
 msgstr "leden"
 
-#: eme-mailer.php:2760
-#: eme-mailer.php:2809
+#: eme-mailer.php:2961
+#: eme-mailer.php:3011
 msgid "If you want to archive old mailings and clean up old mails automatically, check the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME"
 msgstr "Als je oude mailings wilt archiveren en automatisch oude mails wilt opschonen, vink dan de optie \"Automatisch oude mailings archiveren en oude mails verwijderen\" aan in de AVG Instellingen van EME"
 
-#: eme-mailer.php:2762
-#: eme-mailer.php:2811
+#: eme-mailer.php:2963
+#: eme-mailer.php:3013
 msgid "Every %d days, old mailings will be archived and old mails will be cleaned up (see the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME)"
 msgstr "Elke %d dagen worden oude mailings gearchiveerd en worden oude mails opgeschoond (zie de optie \"Oude mailings automatisch archiveren en oude mails verwijderen\" in de AVG-instellingen van EME)"
 
-#: eme-mailer.php:2767
-msgid "Enter the search text (leave empty to show the last 100 emails sent)"
-msgstr "Geef de zoektekst in (laat leeg om de laatste 100 verzonden e-mails te tonen)"
-
-#: eme-mailer.php:2769
+#: eme-mailer.php:2970
 msgid "Only show failed emails"
 msgstr "Toon alleen mislukte e-mails"
 
-#: eme-mailer.php:2770
-#: eme-mailer.php:2826
-#: eme-mailer.php:2951
-msgid "Search"
-msgstr "Zoeken"
-
-#: eme-mailer.php:2777
+#: eme-mailer.php:2933
 msgid "Test mail settings"
 msgstr "Test e-mail instellingen"
 
-#: eme-mailer.php:2779
+#: eme-mailer.php:2935
 msgid "Use the below form to send a test mail"
 msgstr "Gebruik het formulier hieronder om een testmail te versturen"
 
-#: eme-mailer.php:2781
+#: eme-mailer.php:2937
 msgid "Enter the recipient"
 msgstr "Vul de ontvanger in"
 
-#: eme-mailer.php:2783
+#: eme-mailer.php:2939
 msgid "Send Email"
 msgstr "Stuur een e-mail"
 
-#: eme-mailer.php:2799
+#: eme-mailer.php:3001
 msgid "Mailings overview"
 msgstr "Overzicht mailings"
 
-#: eme-mailer.php:2802
+#: eme-mailer.php:3004
 msgid "Here you can find an overview of all planned, ongoing or completed mailings. For an overview of all emails, check the \"Sent emails\" tab."
 msgstr "Hier vindt je een overzicht van alle geplande, lopende of voltooide mailings. Voor een overzicht van alle e-mails, kijk op de tab \"Verzonden e-mails\"."
 
-#: eme-mailer.php:2818
+#: eme-mailer.php:3020
 msgid "Email queueing is not activated, so sent mails will only be visible in the \"Sent emails\" tab"
 msgstr "Mail queueing is niet geactiveerd, dus verzonden mails zullen alleen zichtbaar zijn in de \"Verzonden mails\" tab"
 
-#: eme-mailer.php:2846
-#: eme-mailer.php:2971
+#: eme-mailer.php:3037
+#: eme-mailer.php:3072
 msgid "Delete selected mailings"
 msgstr "Verwijder geselecteerde mailings"
 
-#: eme-mailer.php:2847
+#: eme-mailer.php:3036
 msgid "Archive selected mailings"
 msgstr "Archiveer geselecteerde mailings"
 
-#: eme-mailer.php:2857
-#: eme-mailer.php:2981
+#: eme-events.php:10044
 msgid "Planned execution time"
 msgstr "Geplande uitvoeringstijd"
 
-#: eme-mailer.php:2859
-#: eme-mailer.php:2982
+#: eme-events.php:10049
 msgid "Unique read count"
 msgstr "Uniek aantal keer gelezen"
 
-#: eme-mailer.php:2862
-#: eme-mailer.php:2926
+#: eme-events.php:10062
+#: eme-mailer.php:1510
 msgid "Report"
 msgstr "Rapport"
 
-#: eme-mailer.php:2878
-#: eme-mailer.php:2991
+#: eme-mailer.php:1461
+#: eme-mailer.php:1597
 msgid "%d mails sent, %d mails failed, %d mails cancelled"
 msgstr "%d e-mails verstuurd, %d e-mails gefaald, %d e-mails geannuleerd"
 
-#: eme-mailer.php:2879
-#: eme-mailer.php:2901
+#: eme-mailer.php:1462
+#: eme-mailer.php:1484
 msgid "Archive"
 msgstr "Archiveer"
 
@@ -6943,7 +6892,7 @@ msgstr "Archiveer"
 msgid "Initializing ..."
 msgstr "Initialiseren..."
 
-#: eme-mailer.php:2892
+#: eme-mailer.php:1475
 msgid "%d mails left"
 msgstr "%d e-mails nog te doen"
 
@@ -6951,7 +6900,7 @@ msgstr "%d e-mails nog te doen"
 msgid "Ongoing"
 msgstr "Bezig"
 
-#: eme-mailer.php:2896
+#: eme-mailer.php:1479
 msgid "%d mails sent, %d mails failed, %d mails left"
 msgstr "%d e-mails verzonden, %d e-mails gefaald, %d e-mails nog te doen"
 
@@ -6959,23 +6908,19 @@ msgstr "%d e-mails verzonden, %d e-mails gefaald, %d e-mails nog te doen"
 msgid "Completed"
 msgstr "Afgerond"
 
-#: eme-mailer.php:2900
+#: eme-mailer.php:1483
 msgid "%d mails sent, %d mails failed"
 msgstr "%d mails verzonden, %d mails gefaald"
 
-#: eme-mailer.php:2907
+#: eme-mailer.php:1490
 msgid "Retry failed mails"
 msgstr "Probeer mislukte e-mails opnieuw"
 
-#: eme-mailer.php:2918
+#: eme-mailer.php:1502
 msgid "The number of emails to be sent is an estimation and will be reevaluated at send time"
 msgstr "Het aantal te verzenden e-mails is een schatting en wordt op het moment van verzending opnieuw geëvalueerd"
 
-#: eme-mailer.php:2943
-msgid "Email archive"
-msgstr "E-mail archief"
-
-#: eme-mailer.php:2945
+#: eme-mailer.php:3059
 msgid "Here you can find an overview of all archived mailings"
 msgstr "Hier kan je een overzicht vinden van alle gearchiveerde mailings"
 
@@ -7954,6 +7899,7 @@ msgstr "Verstuur nogmaals de e-mail voor betaalde leden"
 msgid "Resend the expiration reminder mail"
 msgstr "Verstuur de herinneringsmail opnieuw"
 
+#: eme-mailer.php:2979
 #: eme-members.php:2890
 #: eme-people.php:1809
 #: eme-rsvp.php:5267
@@ -8199,49 +8145,49 @@ msgstr "(gezinshoofd)"
 msgid "This is based on the payment ID of the member: %d"
 msgstr "Dit is gebaseerd op het betalings-ID van het lid: %d"
 
-#: eme-members.php:6731
-#: eme-people.php:5323
+#: eme-members.php:6733
+#: eme-people.php:5325
 msgid "(Dynamic)"
 msgstr "(Dynamisch)"
 
-#: eme-members.php:6743
-#: eme-people.php:5335
+#: eme-members.php:6745
+#: eme-people.php:5337
 msgid "Dynamic group added"
 msgstr "Dynamische groep toegevoegd"
 
-#: eme-members.php:6745
-#: eme-people.php:5337
+#: eme-members.php:6747
+#: eme-people.php:5339
 msgid "There was a problem adding the group"
 msgstr "Er was een probleem bij het toevoegen van de groep"
 
-#: eme-members.php:6748
-#: eme-people.php:5340
+#: eme-members.php:6750
+#: eme-people.php:5342
 msgid "Please enter a name for the group"
 msgstr "Vul aub een naam voor de groep in"
 
-#: eme-members.php:6799
-#: eme-members.php:6867
+#: eme-members.php:6802
+#: eme-members.php:6871
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr "Inhoud van onderwerp of tekst was leeg, er is geen mail verzonden."
 
-#: eme-members.php:6852
+#: eme-members.php:6856
 msgid "Memberships deleted."
 msgstr "Lidmaatschappen verwijderd."
 
-#: eme-members.php:6908
+#: eme-members.php:6912
 msgid "No corresponding persons found."
 msgstr "Geen overeenkomstige personen gevonden."
 
-#: eme-members.php:6918
+#: eme-members.php:6922
 msgid "Members deleted."
 msgstr "Leden verwijderd."
 
-#: eme-members.php:6944
-#: eme-members.php:6970
-#: eme-members.php:7033
-#: eme-members.php:7064
-#: eme-members.php:7089
-#: eme-members.php:7106
+#: eme-members.php:6948
+#: eme-members.php:6974
+#: eme-members.php:7037
+#: eme-members.php:7068
+#: eme-members.php:7093
+#: eme-members.php:7110
 #: eme-rsvp.php:6190
 #: eme-rsvp.php:6224
 #: eme-rsvp.php:6268
@@ -8259,8 +8205,8 @@ msgstr "Leden verwijderd."
 msgid "The action has been executed successfully."
 msgstr "De actie is successvol uitgevoerd."
 
-#: eme-members.php:6947
-#: eme-members.php:7067
+#: eme-members.php:6951
+#: eme-members.php:7071
 #: eme-rsvp.php:6193
 #: eme-rsvp.php:6227
 #: eme-rsvp.php:6271
@@ -8273,8 +8219,8 @@ msgstr "De actie is successvol uitgevoerd."
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "De actie is uitgevoerd maar er waren problemen bij het versturen van de e-mail."
 
-#: eme-members.php:6950
-#: eme-members.php:7070
+#: eme-members.php:6954
+#: eme-members.php:7074
 #: eme-rsvp.php:6196
 #: eme-rsvp.php:6230
 #: eme-rsvp.php:6265
@@ -9055,6 +9001,7 @@ msgstr "Bewerk locaties"
 msgid "Permission needed to edit all locations. Default: %s"
 msgstr "Rechten benodigd om alle locaties te bewerken. Standaard: %s"
 
+#: eme-events.php:10009
 #: eme-options.php:1494
 #: events-manager.php:349
 msgid "Categories"
@@ -12577,59 +12524,59 @@ msgid_plural "(%d members)"
 msgstr[0] "(1 lid)"
 msgstr[1] "(%d leden)"
 
-#: eme-people.php:5454
+#: eme-people.php:5458
 msgid "People recovered from trash bin."
 msgstr "Personen hersteld vanuit de prullenbak."
 
-#: eme-people.php:5466
+#: eme-people.php:5470
 msgid "People moved to trash bin."
 msgstr "Verplaatst naar de prullenbak."
 
-#: eme-people.php:5474
+#: eme-people.php:5478
 msgid "Personal data removed and moved to trash bin."
 msgstr "Persoonlijke gegevens verwijderd en verplaatst naar de prullenbak."
 
-#: eme-people.php:5482
+#: eme-people.php:5486
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "GDPR toestemming is op \"Ja\" gezet (wees er zeker van dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5490
+#: eme-people.php:5494
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "GDPR goedkeuring ingesteld op \"Nee\" (zorg ervoor dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5498
+#: eme-people.php:5502
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "Massmail ingesteld op \"Ja\" (zorg ervoor dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5506
+#: eme-people.php:5510
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "Massmail ingesteld op \"Nee\" (zorg ervoor dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5514
+#: eme-people.php:5518
 msgid "Birthday email set to \"Yes\"."
 msgstr "Verjaardagsmail ingesteld op \"Ja\"."
 
-#: eme-people.php:5522
+#: eme-people.php:5526
 msgid "Birthday email set to \"No\"."
 msgstr "Verjaardagsmail ingesteld op \"Nee\"."
 
-#: eme-people.php:5531
+#: eme-people.php:5535
 msgid "Language updated."
 msgstr "Taal geüpdatet."
 
-#: eme-people.php:5544
+#: eme-people.php:5548
 msgid "People deleted."
 msgstr "Personen verwijderd."
 
-#: eme-people.php:5554
+#: eme-people.php:5558
 msgid "People added to group."
 msgstr "Personen toegevoegd aan groep."
 
-#: eme-people.php:5565
+#: eme-people.php:5569
 msgid "People removed from group."
 msgstr "Personen verwijderd uit groep."
 
-#: eme-people.php:5574
+#: eme-people.php:5578
 msgid "Groups deleted."
 msgstr "Groepen verwijderd."
 
@@ -13241,128 +13188,116 @@ msgstr "De template is toegevoegd."
 msgid "There was a problem adding your template, please try again."
 msgstr "Probleem bij toevoegen van je template. Probeer het nogmaals."
 
-#: eme-templates.php:149
-msgid "Successfully deleted the selected template(s)."
-msgstr "Geselecteerde template(s) verwijderd."
-
-#: eme-templates.php:151
-msgid "There was a problem deleting the selected template(s), please try again."
-msgstr "Er is een probleem opgetreden bij het verwijderen van de geselecteerde template(s). Probeer het nog eens."
-
-#: eme-templates.php:154
-msgid "Couldn't delete the templates. Incorrect template IDs supplied. Please try again."
-msgstr "Kon de templates niet verwijderen. Ongeldige template ID opgegeven. Probeer het nogmaals."
-
-#: eme-templates.php:178
+#: eme-templates.php:164
 msgid "Manage templates"
 msgstr "Beheer templates"
 
-#: eme-templates.php:189
-#: eme-templates.php:237
+#: eme-templates.php:175
+#: eme-templates.php:223
 msgid "Add template"
 msgstr "Voeg template toe"
 
-#: eme-templates.php:195
+#: eme-templates.php:181
 msgid "Template name"
 msgstr "Template naam"
 
-#: eme-templates.php:196
+#: eme-templates.php:182
 msgid "Filter templates"
 msgstr "Filter templates"
 
-#: eme-templates.php:204
+#: eme-templates.php:190
 msgid "Delete selected templates"
 msgstr "Verwijder geselecteerde templates"
 
-#: eme-templates.php:230
+#: eme-templates.php:216
 msgid "Edit template"
 msgstr "Wijzig template"
 
-#: eme-templates.php:231
+#: eme-templates.php:217
 msgid "Update template"
 msgstr "Werk template bij"
 
-#: eme-templates.php:236
+#: eme-templates.php:222
 msgid "Create template"
 msgstr "Maak template aan"
 
-#: eme-templates.php:242
+#: eme-templates.php:228
 msgid "Portrait"
 msgstr "Portrait"
 
-#: eme-templates.php:243
+#: eme-templates.php:229
 msgid "Landscape"
 msgstr "Landscape"
 
-#: eme-templates.php:246
+#: eme-templates.php:232
 msgid "Custom"
 msgstr "Aangepast"
 
-#: eme-templates.php:283
+#: eme-templates.php:269
 msgid "Format"
 msgstr "Opmaak"
 
-#: eme-templates.php:291
+#: eme-templates.php:277
 msgid "Newlines will get translated to HTML br-tags when/where/if appropriate but for templates that will get used in HTML output: be sure to not include newlines (certainly not empty lines) unless wanted."
 msgstr "Nieuwe lijnen worden vertaald naar HTML br-tags wanneer/waar/indien van toepassing, maar voor sjablonen die in HTML-uitvoer worden gebruikt: zorg ervoor dat u geen nieuwe lijnen opneemt (zeker geen lege lijnen), tenzij u dat wilt."
 
-#: eme-templates.php:298
+#: eme-templates.php:284
 msgid "The type allows you to indicate where you want to use this template. This helps to limit the dropdown list of templates to chose from in other parts of EME."
 msgstr "Het type staat je toe om aan te duiden waar je deze template wil gebruiken. Dit helpt om de dropdown-lijst van templates te beperken in andere secties van EME."
 
-#: eme-templates.php:299
+#: eme-templates.php:285
 msgid "The type 'All' means it can be selected anywhere where template selections are possible."
 msgstr "Het type 'All' betekent dat het overal waar template selecties zijn geselecteerd kan worden."
 
-#: eme-templates.php:300
+#: eme-templates.php:286
 msgid "The type 'PDF' is used for PDF templating and allows more settings concerning page size, orientation, ..."
 msgstr "Het type 'PDF' wordt gebruikt voor PDF templating en laat meer opties toe omtrent pagina grootte, orientatie, ..."
 
-#: eme-templates.php:301
+#: eme-templates.php:287
 msgid "If you know the template is only used in/for shortcodes, use the type 'Shortcode'."
 msgstr "Als je weet dat de template enkel gebruikt wordt in/voor shortcodes, kies het type 'Shortcode'."
 
-#: eme-templates.php:308
+#: eme-templates.php:294
 msgid "PDF size"
 msgstr "PDF grootte"
 
-#: eme-templates.php:310
+#: eme-templates.php:296
 msgid "If you select 'Custom', you can enter your own widht/height below."
 msgstr "Als u 'Aangepast' selecteert, kunt u hieronder uw eigen breedte / hoogte invoeren."
 
-#: eme-templates.php:313
+#: eme-templates.php:299
 msgid "PDF orientation"
 msgstr "PDF orientatie"
 
-#: eme-templates.php:317
+#: eme-templates.php:303
 msgid "PDF margins"
 msgstr "PDF randen"
 
-#: eme-templates.php:319
+#: eme-templates.php:305
 msgid "See <a href='https://www.w3schools.com/cssref/pr_margin.asp'>this page</a> for info on what you can enter here."
 msgstr "Zie <a href='https://www.w3schools.com/cssref/pr_margin.asp'>deze pagina</a> voor info over wat je hier kunt invoegen."
 
-#: eme-templates.php:322
+#: eme-templates.php:308
 msgid "PDF width"
 msgstr "PDF breedte"
 
-#: eme-templates.php:324
+#: eme-templates.php:310
 msgid "The width of the PDF document (in pt)"
 msgstr "De breedte van het PDF document (in pt)"
 
-#: eme-templates.php:327
+#: eme-templates.php:313
 msgid "PDF height"
 msgstr "PDF hoogte"
 
-#: eme-templates.php:329
+#: eme-templates.php:315
 msgid "The heigth of the PDF document (in pt)"
 msgstr "De hoogte van het PDF document (in pt)"
 
-#: eme-templates.php:380
+#: eme-templates.php:366
 msgid "No templates defined yet!"
 msgstr "Nog geen templates aangemaakt!"
 
-#: eme-templates.php:501
+#: eme-templates.php:487
 msgid "Duplicate this template"
 msgstr "Dupliceer deze template"
 
@@ -13513,7 +13448,7 @@ msgstr "Franky Van Liedekerke"
 msgid "https://www.e-dynamics.be/"
 msgstr "https://www.e-dynamics.be/"
 
-#: eme-mailer.php:2412
+#: eme-mailer.php:2590
 msgid "Only take unpaid bookings into account"
 msgstr "Houd alleen rekening met onbetaalde boekingen"
 
@@ -13663,15 +13598,15 @@ msgstr "Vanaf %s (automatisch verlengd)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Als het aantal plaatsen voor een taak 0 is, wordt de taakbeschrijving behandeld als sectiehoofd voor de volgende reeks taken."
 
-#: eme-actions.php:506
+#: eme-actions.php:508
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy is geïnstalleerd of geüpgraded"
 
-#: eme-actions.php:507
+#: eme-actions.php:509
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Doneer alstublieft aan de ontwikkeling van Events Made Easy"
 
-#: eme-actions.php:517
+#: eme-actions.php:519
 msgid "Dismiss"
 msgstr "Negeren"
 
@@ -13699,7 +13634,7 @@ msgstr "Concactpersoon lid verwijderd e-mail inhoud"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "De inhoud van de e-mail die naar de contactpersoon is verzonden vlak voordat een lid wordt verwijderd."
 
-#: eme-actions.php:665
+#: eme-actions.php:667
 msgid "List of next 10 events"
 msgstr "Lijst met de volgende 10 evenementen"
 
@@ -13800,10 +13735,6 @@ msgstr "Geef een startdatum in voor het evenement"
 #: eme-fs.php:672
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "De einddatum/-tijd moet <strong>na</strong> de begindatum/-tijd vallen"
-
-#: eme-mailer.php:1596
-msgid "This mail is part of a mailing"
-msgstr "Deze mail is onderdeel van een mailing"
 
 #: eme-options.php:1252
 msgid "Frontend Submit"
@@ -14068,11 +13999,11 @@ msgstr "Voeg een nieuwe todo toe"
 msgid "Send reminders for task signups"
 msgstr "Stuur herinneringen voor taakaanmeldingen"
 
-#: eme-templates.php:332
+#: eme-templates.php:318
 msgid "PDF mail attach format"
 msgstr "PDF e-mail attachment opmaak"
 
-#: eme-templates.php:334
+#: eme-templates.php:320
 msgid "When the template is being used as an attacment in a mail, the attachment has a default name. If you don't like the name given to the attachment in the mail, you can change it here. Relevant placeholders are allowed in their context (event/membership/booking/member/...). The '.pdf' extension will get added automatically, so no need to mention it."
 msgstr "Wanneer de template wordt gebruikt als een bijlage in een mail, heeft de bijlage een standaardnaam. Als de naam die aan de bijlage in de e-mail is gegeven u niet bevalt, kunt u deze hier wijzigen. Relevante tijdelijke aanduidingen zijn toegestaan ​​in hun context (evenement/lidmaatschap/boeking/lid/...). De extensie '.pdf' wordt automatisch toegevoegd, dus u hoeft deze niet te vermelden."
 
@@ -14162,8 +14093,8 @@ msgstr "WAARSCHUWING: berichten gevonden in de wachtrij, maar de e-mailwachtrij 
 msgid "WARNING: messages found in the queue but the mail queue is not scheduled to be processed. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
 msgstr "WAARSCHUWING: berichten gevonden in de wachtrij, maar de e-mailwachtrij is niet gepland om te worden verwerkt. Zorg ervoor dat u de geregistreerde REST API-aanroep vanuit de systeemcron uitvoert met de juiste opties om de wachtrij te verwerken."
 
-#: eme-mailer.php:2565
-#: eme-mailer.php:2744
+#: eme-mailer.php:2743
+#: eme-mailer.php:2922
 msgid "Email queueing has been activated but not scheduled. Go in the <a href=\"%s\">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue."
 msgstr "E-mailwachtrij is geactiveerd maar niet gepland. Ga naar de <a href=\"%s\">E-mailinstellingen</a> en selecteer een schema of zorg ervoor dat u de geregistreerde REST API-aanroep uitvoert vanaf de systeemcron met de juiste opties om de wachtrij te verwerken."
 
@@ -14175,12 +14106,12 @@ msgstr "De e-mailwachtrij is actief, maar de e-mailwachtrij is niet gepland voor
 msgid "Change the \"username\" by your user and the \"password\" by an application password generated in your WP user settings."
 msgstr "Wijzig de \"gebruikersnaam\" met uw gebruiker en het \"wachtwoord\" met een applicatiewachtwoord dat is gegenereerd in uw WP-gebruikersinstellingen."
 
-#: eme-mailer.php:2824
-#: eme-mailer.php:2949
+#: eme-mailer.php:3026
+#: eme-mailer.php:3063
 msgid "Enter the search text (leave empty to show all)"
 msgstr "Voer de zoektekst in (laat leeg om alles te tonen)"
 
-#: eme-mailer.php:2369
+#: eme-mailer.php:2547
 msgid "Select the event(s)"
 msgstr "Selecteer evenement(en)"
 
@@ -14220,6 +14151,72 @@ msgstr "Uitgesloten dagen:"
 msgid "Extra approval settings (also check out the mail templates)"
 msgstr "Extra goedkeuringsinstellingen (bekijk ook de e-mail templates)"
 
-#: eme-mailer.php:1530
+#: eme-mailer.php:2980
 msgid "Delete selected mails"
+msgstr ""
+
+#: eme-categories.php:88
+msgid "Add a new category"
+msgstr ""
+
+#: eme-categories.php:111
+msgid "Delete selected categories"
+msgstr ""
+
+#: eme-categories.php:610
+msgid "Categories deleted"
+msgstr ""
+
+#: eme-events.php:10024
+msgid "Holiday lists"
+msgstr ""
+
+#: eme-events.php:10064
+msgid "Mails"
+msgstr ""
+
+#: eme-events.php:10066
+#: eme-mailer.php:3057
+msgid "Archived mailings"
+msgstr ""
+
+#: eme-holidays.php:76
+msgid "Add a new list of holidays"
+msgstr ""
+
+#: eme-holidays.php:81
+msgid "Add holidays list"
+msgstr ""
+
+#: eme-holidays.php:86
+msgid "Manage list of holidays"
+msgstr ""
+
+#: eme-holidays.php:99
+msgid "Delete selected lists of holidays"
+msgstr ""
+
+#: eme-holidays.php:330
+msgid "Holiday lists deleted"
+msgstr ""
+
+#: eme-mailer.php:1543
+msgid "Mailings archived"
+msgstr ""
+
+#: eme-mailer.php:1553
+#: eme-mailer.php:1643
+msgid "Mailings deleted"
+msgstr ""
+
+#: eme-mailer.php:1763
+msgid "Mails deleted"
+msgstr ""
+
+#: eme-mailer.php:2968
+msgid "Enter an optional search text"
+msgstr ""
+
+#: eme-mailer.php:2971
+msgid "Filter mails"
 msgstr ""

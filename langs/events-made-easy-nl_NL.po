@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-03-24 13:25:27+00:00\n"
-"PO-Revision-Date: 2025-01-23 00:04+0100\n"
+"PO-Revision-Date: 2025-02-05 17:30+0100\n"
 "Language: nl_NL\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 3.5\n"
@@ -14153,70 +14153,70 @@ msgstr "Extra goedkeuringsinstellingen (bekijk ook de e-mail templates)"
 
 #: eme-mailer.php:2980
 msgid "Delete selected mails"
-msgstr ""
+msgstr "Verwijder geselecteerde e-mails"
 
 #: eme-categories.php:88
 msgid "Add a new category"
-msgstr ""
+msgstr "Voeg een nieuwe categorie toe"
 
 #: eme-categories.php:111
 msgid "Delete selected categories"
-msgstr ""
+msgstr "Verwijder geselecteerde categorieën"
 
 #: eme-categories.php:610
 msgid "Categories deleted"
-msgstr ""
+msgstr "Categorieën verwijderd"
 
 #: eme-events.php:10024
 msgid "Holiday lists"
-msgstr ""
+msgstr "Vakantielijsten"
 
 #: eme-events.php:10064
 msgid "Mails"
-msgstr ""
+msgstr "E-mails"
 
 #: eme-events.php:10066
 #: eme-mailer.php:3057
 msgid "Archived mailings"
-msgstr ""
+msgstr "Gearchiveerde mailings"
 
 #: eme-holidays.php:76
 msgid "Add a new list of holidays"
-msgstr ""
+msgstr "Voeg een nieuwe lijst met vakanties toe"
 
 #: eme-holidays.php:81
 msgid "Add holidays list"
-msgstr ""
+msgstr "Vakantielijst toevoegen"
 
 #: eme-holidays.php:86
 msgid "Manage list of holidays"
-msgstr ""
+msgstr "Lijst met vakanties beheren"
 
 #: eme-holidays.php:99
 msgid "Delete selected lists of holidays"
-msgstr ""
+msgstr "Verwijder geselecteerde lijsten met vakanties"
 
 #: eme-holidays.php:330
 msgid "Holiday lists deleted"
-msgstr ""
+msgstr "Vakantielijsten verwijderd"
 
 #: eme-mailer.php:1543
 msgid "Mailings archived"
-msgstr ""
+msgstr "Mailings gearchiveerd"
 
 #: eme-mailer.php:1553
 #: eme-mailer.php:1643
 msgid "Mailings deleted"
-msgstr ""
+msgstr "Mailings verwijderd"
 
 #: eme-mailer.php:1763
 msgid "Mails deleted"
-msgstr ""
+msgstr "E-mails verwijderd"
 
 #: eme-mailer.php:2968
 msgid "Enter an optional search text"
-msgstr ""
+msgstr "Voer een optionele zoektekst in"
 
 #: eme-mailer.php:2971
 msgid "Filter mails"
-msgstr ""
+msgstr "Filter e-mails"

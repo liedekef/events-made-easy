@@ -10585,6 +10585,8 @@ function eme_ajax_events_list() {
 
 function eme_ajax_manage_events() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+	header( 'Content-type: application/json; charset=utf-8' );
+
 	$ajaxResult = [];
 	if ( isset( $_POST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_POST['do_action'] );
@@ -10839,6 +10841,7 @@ function eme_get_cf_event_ids( $val, $field_id, $is_multi = 0 ) {
 
 add_action( 'wp_ajax_eme_events_select2', 'eme_ajax_events_select2' );
 function eme_ajax_events_select2() {
+	header( 'Content-type: application/json; charset=utf-8' );
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
 		$jTableResult['Result']  = 'Error';

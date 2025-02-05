@@ -1409,14 +1409,14 @@ add_action( 'wp_ajax_eme_eventmail', 'eme_send_mails_ajax_action_eventmail' );
 add_action( 'wp_ajax_eme_genericmail', 'eme_send_mails_ajax_action_genericmail' );
 add_action( 'wp_ajax_eme_testmail', 'eme_send_mails_ajax_action_testmail' );
 
-add_action( 'wp_ajax_eme_mails_list', 'eme_ajax_action_mails_list' );
-add_action( 'wp_ajax_eme_mailings_list', 'eme_ajax_action_mailings_list' );
-add_action( 'wp_ajax_eme_archivedmailings_list', 'eme_ajax_action_archivedmailings_list' );
-add_action( 'wp_ajax_eme_manage_mails', 'eme_ajax_action_manage_mails' );
-add_action( 'wp_ajax_eme_manage_mailings', 'eme_ajax_action_manage_mailings' );
-add_action( 'wp_ajax_eme_manage_archivedmailings', 'eme_ajax_action_manage_archivedmailings' );
+add_action( 'wp_ajax_eme_mails_list', 'eme_ajax_mails_list' );
+add_action( 'wp_ajax_eme_mailings_list', 'eme_ajax_mailings_list' );
+add_action( 'wp_ajax_eme_archivedmailings_list', 'eme_ajax_archivedmailings_list' );
+add_action( 'wp_ajax_eme_manage_mails', 'eme_ajax_manage_mails' );
+add_action( 'wp_ajax_eme_manage_mailings', 'eme_ajax_manage_mailings' );
+add_action( 'wp_ajax_eme_manage_archivedmailings', 'eme_ajax_manage_archivedmailings' );
 
-function eme_ajax_action_mailings_list() {
+function eme_ajax_mailings_list() {
     global $wpdb;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 
@@ -1520,7 +1520,7 @@ function eme_ajax_action_mailings_list() {
     wp_die();
 }
 
-function eme_ajax_action_manage_mailings() {
+function eme_ajax_manage_mailings() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     $jTableResult = [];
@@ -1559,7 +1559,7 @@ function eme_ajax_action_manage_mailings() {
     wp_die();
 }
 
-function eme_ajax_action_archivedmailings_list() {
+function eme_ajax_archivedmailings_list() {
     global $wpdb;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
 
@@ -1619,7 +1619,7 @@ function eme_ajax_action_archivedmailings_list() {
     wp_die();
 }
 
-function eme_ajax_action_manage_archivedmailings() {
+function eme_ajax_manage_archivedmailings() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
 
@@ -1649,7 +1649,7 @@ function eme_ajax_action_manage_archivedmailings() {
     wp_die();
 }
 
-function eme_ajax_action_mails_list() {
+function eme_ajax_mails_list() {
     global $wpdb;
 
     header( 'Content-type: application/json; charset=utf-8' );
@@ -1740,7 +1740,7 @@ function eme_ajax_action_mails_list() {
     wp_die();
 }
 
-function eme_ajax_action_manage_mails() {
+function eme_ajax_manage_mails() {
     header( 'Content-type: application/json; charset=utf-8' );
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     $jTableResult = [];

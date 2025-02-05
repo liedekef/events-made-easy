@@ -6278,7 +6278,7 @@ function eme_import_csv_member_dynamic_answers() {
 }
 
 
-function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
+function eme_ajax_member_person_autocomplete( $no_wp_die = 0 ) {
     global $wpdb;
     $people_table  = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
@@ -6353,9 +6353,10 @@ function eme_member_person_autocomplete_ajax( $no_wp_die = 0 ) {
     }
 }
 
-function eme_member_main_account_autocomplete_ajax() {
+function eme_ajax_member_main_account_autocomplete() {
     global $wpdb;
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
         wp_die();
     }
@@ -6373,7 +6374,6 @@ function eme_member_main_account_autocomplete_ajax() {
         $membership_id = intval( $_POST['membership_id'] );
     }
 
-    header( 'Content-type: application/json; charset=utf-8' );
     if ( empty( $q ) ) {
         echo wp_json_encode( $return );
         wp_die();
@@ -6394,8 +6394,8 @@ function eme_member_main_account_autocomplete_ajax() {
     wp_die();
 }
 
-add_action( 'wp_ajax_eme_autocomplete_memberperson', 'eme_member_person_autocomplete_ajax' );
-add_action( 'wp_ajax_eme_autocomplete_membermainaccount', 'eme_member_main_account_autocomplete_ajax' );
+add_action( 'wp_ajax_eme_autocomplete_memberperson', 'eme_ajax_member_person_autocomplete' );
+add_action( 'wp_ajax_eme_autocomplete_membermainaccount', 'eme_ajax_member_main_account_autocomplete' );
 add_action( 'wp_ajax_eme_members_list', 'eme_ajax_members_list' );
 add_action( 'wp_ajax_eme_members_select2', 'eme_ajax_members_select2' );
 add_action( 'wp_ajax_eme_memberships_list', 'eme_ajax_memberships_list' );
@@ -6672,6 +6672,7 @@ function eme_ajax_members_select2() {
     global $wpdb;
 
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
         $ajaxResult 		   = [];
         $ajaxResult['Result']      = 'Error';
@@ -6722,6 +6723,7 @@ function eme_ajax_members_select2() {
 
 function eme_ajax_store_members_query() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
     if ( ! current_user_can( get_option( 'eme_cap_list_members' ) ) ) {
         wp_die();
     }
@@ -6753,6 +6755,7 @@ function eme_ajax_store_members_query() {
 
 function eme_ajax_manage_members() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
     if ( isset( $_POST['do_action'] ) ) {
         $do_action    = eme_sanitize_request( $_POST['do_action'] );
         $send_mail    = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 1;
@@ -6826,6 +6829,7 @@ function eme_ajax_manage_members() {
 function eme_ajax_manage_memberships() {
     $ajaxResult = [];
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
 

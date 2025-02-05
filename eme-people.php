@@ -4971,7 +4971,7 @@ function eme_store_family_answers( $person_id, $familymember ) {
 	}
 }
 
-function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required = 0 ) {
+function eme_ajax_people_autocomplete( $no_wp_die = 0, $wp_membership_required = 0 ) {
 	global $wpdb;
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
 		wp_die();
@@ -5079,7 +5079,7 @@ function eme_people_autocomplete_ajax( $no_wp_die = 0, $wp_membership_required =
 	}
 }
 
-add_action( 'wp_ajax_eme_autocomplete_people', 'eme_people_autocomplete_ajax' );
+add_action( 'wp_ajax_eme_autocomplete_people', 'eme_ajax_people_autocomplete' );
 add_action( 'wp_ajax_eme_people_select2', 'eme_ajax_people_select2' );
 add_action( 'wp_ajax_eme_people_list', 'eme_ajax_people_list' );
 add_action( 'wp_ajax_eme_groups_list', 'eme_ajax_groups_list' );
@@ -5272,6 +5272,7 @@ function eme_ajax_people_select2() {
 	global $wpdb;
 
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
 		$ajaxResult['Result']  = 'Error';
 		$ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
@@ -5311,6 +5312,7 @@ function eme_ajax_people_select2() {
 
 function eme_ajax_store_people_query() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( ! current_user_can( get_option( 'eme_cap_list_people' ) ) ) {
 		$ajaxResult['Result']  = 'Error';
 		$ajaxResult['Message'] = esc_html__( 'Access denied!', 'events-made-easy' );
@@ -5345,6 +5347,7 @@ function eme_ajax_store_people_query() {
 
 function eme_ajax_manage_people() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	$ajaxResult = [];
 	if ( isset( $_POST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_POST['do_action'] );
@@ -5427,6 +5430,7 @@ function eme_ajax_manage_people() {
 
 function eme_ajax_manage_groups() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
+    header( 'Content-type: application/json; charset=utf-8' );
 	if ( isset( $_REQUEST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_REQUEST['do_action'] );
 		$ids       = eme_sanitize_request( $_REQUEST['group_id'] );

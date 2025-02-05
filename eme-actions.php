@@ -47,7 +47,7 @@ function eme_actions_early_init() {
             $current_userid = get_current_user_id();
             if ( ! empty( $event ) && ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) ) {
-                eme_people_autocomplete_ajax( $no_wp_die );
+                eme_ajax_people_autocomplete( $no_wp_die );
             }
         }
         exit;
@@ -62,14 +62,14 @@ function eme_actions_early_init() {
             $event_id = intval( $_POST['event_id'] );
             $event    = eme_get_event( $event_id );
             if ( !empty( $event )) 
-                eme_people_autocomplete_ajax( $no_wp_die, $event['registration_wp_users_only'] );
+                eme_ajax_people_autocomplete( $no_wp_die, $event['registration_wp_users_only'] );
         } elseif ( isset( $_POST['booking_id'] ) && $eme_is_admin_request ) {
             check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
             // this is the case for updating a registration in the backend
             $booking_id = intval( $_POST['booking_id'] );
             $event      = eme_get_event_by_booking_id( $booking_id );
             if ( !empty( $event )) 
-                eme_people_autocomplete_ajax( $no_wp_die, $event['registration_wp_users_only'] );
+                eme_ajax_people_autocomplete( $no_wp_die, $event['registration_wp_users_only'] );
         } elseif ( isset( $_POST['membership_id'] ) && is_user_logged_in() ) {
             if ( ( ! isset( $_POST['eme_admin_nonce'] ) && ! isset( $_POST['eme_frontend_nonce'] ) ) ||
                 ( isset( $_POST['eme_admin_nonce'] ) && ! wp_verify_nonce( $_POST['eme_admin_nonce'], 'eme_admin' ) ) ||
@@ -84,7 +84,7 @@ function eme_actions_early_init() {
             }
             if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
                 $membership = eme_get_membership( intval( $_POST['membership_id'] ) );
-                eme_people_autocomplete_ajax( $no_wp_die, $membership['properties']['registration_wp_users_only'] );
+                eme_ajax_people_autocomplete( $no_wp_die, $membership['properties']['registration_wp_users_only'] );
             }
         } elseif ( is_user_logged_in() && isset( $_POST['eme_event_ids'] ) ) {
             check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
@@ -92,7 +92,7 @@ function eme_actions_early_init() {
             $current_userid = get_current_user_id();
             if ( ! empty( $event ) && ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
                 ( current_user_can( get_option( 'eme_cap_author_event' ) ) && ( $event['event_author'] == $current_userid || $event['event_contactperson_id'] == $current_userid ) ) ) ) {
-                eme_people_autocomplete_ajax( $no_wp_die, $event['registration_wp_users_only'] );
+                eme_ajax_people_autocomplete( $no_wp_die, $event['registration_wp_users_only'] );
             }
         } else {
             header( 'Content-type: application/json; charset=utf-8' );

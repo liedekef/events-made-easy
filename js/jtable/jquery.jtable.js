@@ -1717,7 +1717,7 @@ THE SOFTWARE.
 
             // Check the checkbox if it's value is checked-value
             if (self._getIsCheckBoxSelectedForFieldByValue(fieldName, value)) {
-                $checkBox.attr('checked', 'checked');
+                $checkBox.prop('checked', true);
             }
 
             // This method sets checkbox's value and text according to state of the checkbox
@@ -1738,9 +1738,9 @@ THE SOFTWARE.
                     .addClass('jtable-option-text-clickable')
                     .on("click", function () {
                         if ($checkBox.is(':checked')) {
-                            $checkBox.attr('checked', false);
+                            $checkBox.prop('checked', false);
                         } else {
-                            $checkBox.attr('checked', true);
+                            $checkBox.prop('checked', true);
                         }
 
                         refreshCheckBoxValueAndText();
@@ -1839,7 +1839,7 @@ THE SOFTWARE.
                         .addClass('jtable-option-text-clickable')
                         .on("click", function () {
                             if (!$radioButton.is(':checked')) {
-                                $radioButton.attr('checked', true);
+                                $radioButton.prop('checked', true);
                             }
                         });
                 }
@@ -3472,7 +3472,7 @@ THE SOFTWARE.
                 .appendTo($headerContainer)
                 .on("click", function () {
                     if (self._$tableRows.length <= 0) {
-                        self._$selectAllCheckbox.attr('checked', false);
+                        self._$selectAllCheckbox.prop('checked', false);
                         return;
                     }
 
@@ -3661,12 +3661,12 @@ THE SOFTWARE.
 
             if (selectedRowCount == 0) {
                 this._$selectAllCheckbox.prop('indeterminate', false);
-                this._$selectAllCheckbox.attr('checked', false);
+                this._$selectAllCheckbox.prop('checked', false);
             } else if (selectedRowCount == totalRowCount) {
                 this._$selectAllCheckbox.prop('indeterminate', false);
-                this._$selectAllCheckbox.attr('checked', true);
+                this._$selectAllCheckbox.prop('checked', true);
             } else {
-                this._$selectAllCheckbox.attr('checked', false);
+                this._$selectAllCheckbox.prop('checked', false);
                 this._$selectAllCheckbox.prop('indeterminate', true);
             }
         },
@@ -4058,6 +4058,12 @@ THE SOFTWARE.
                 this._createPagingList();
                 this._createPagingInfo();
                 this._refreshGotoPageInput();
+
+                // if all rows from the current page were deleted serverwise (not via the delete method), go one page back
+                if (this._$tableRows.length <= 0 && this._currentPageNo > 1) {
+                    --this._currentPageNo;
+                    this._reloadTable();
+                }
             }
 
             base._onRecordsLoaded.apply(this, arguments);
@@ -4810,7 +4816,7 @@ THE SOFTWARE.
 
                     // Check, if column if shown
                     if (field.visibility != 'hidden') {
-                        $checkbox.attr('checked', 'checked');
+                        $checkbox.prop('checked', true);
                     }
 
                     // Disable, if column is fixed

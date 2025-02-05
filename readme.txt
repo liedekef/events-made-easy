@@ -99,6 +99,12 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.37 (2025/02/) =
+* Small jtable update to fix certain small bugs
+
+= 2.5.36 (2025/02/05) =
+* Use jtable everywhere, more uniform coding (better in mailing-overview)
+
 = 2.5.35 (2025/01/29) =
 * Fix Frontend submit if no own validation filter is defined
 

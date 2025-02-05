@@ -1504,7 +1504,7 @@ function eme_ajax_mailings_list() {
         } else {
             $record['extra_info'] = eme_esc_html( $extra );
         }
-        if ( $mailing['status'] == 'archived' || $mailing['status'] == 'planned' ) {
+        if ( $mailing['status'] == 'planned' ) {
             $record['report'] = '';
         } else {
             $record['report'] = "<a href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=report_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Report', 'events-made-easy' ) . '</a>';

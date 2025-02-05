@@ -812,10 +812,6 @@ jQuery(document).ready( function($) {
                     title: ememails.translate_extrainfo,
                     sorting: false
                 },
-                report: {
-                    title: ememails.translate_report,
-                    sorting: false
-                },
                 action: {
                     title: ememails.translate_action,
                     listClass: 'eme-wsnobreak',

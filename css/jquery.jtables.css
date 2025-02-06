@@ -1,7 +1,6 @@
 div.jtable-main-container  {
-    font-family: Verdana, Arial, sans-serif;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif
 }
-div.jtable-column-header-container {height: auto !important;}
 ul.jtable-column-select-list {
     font-size: 1.1em;
 }
@@ -66,7 +65,7 @@ div.jtable-main-container div.jtable-bottom-panel {
     color: #555;
 }
 div.jtable-main-container table.jtable {
-    font-size: small;
+    font-size: 1em;
 }
 div.jtable-main-container a {
    text-decoration: none;

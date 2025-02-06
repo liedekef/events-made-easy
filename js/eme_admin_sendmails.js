@@ -532,9 +532,8 @@ jQuery(document).ready( function($) {
             },
             fields: {
                 id: {
-                    title: ememails.translate_id,
-                    list: false,
                     key: true,
+                    list: false,
                 },
                 fromemail: {
                     title: ememails.translate_senderemail,
@@ -677,7 +676,6 @@ jQuery(document).ready( function($) {
             },
             fields: {
                 id: {
-                    title: ememails.translate_id,
                     key: true,
                     list: false,
                 },
@@ -788,9 +786,8 @@ jQuery(document).ready( function($) {
             },
             fields: {
                 id: {
-                    title: ememails.translate_id,
-                    list: false,
                     key: true,
+                    list: false,
                 },
                 name: {
                     title: ememails.translate_mailingname,

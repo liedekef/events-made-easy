@@ -48,8 +48,7 @@ jQuery(document).ready( function($) {
         fields: {
             id: {
                 key: true,
-                visibility: 'hidden',
-                title: emetasks.translate_id
+                list: false,
             },
             event_name: {
                 visibility: 'fixed',

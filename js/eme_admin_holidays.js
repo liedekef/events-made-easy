@@ -20,9 +20,8 @@ jQuery(document).ready( function($) {
             },
             fields: {
                 id: {
-                    title: emeholidays.translate_id,
-                    list: true,
                     key: true,
+                    title: emeholidays.translate_id,
                 },
                 name: {
                     title: emeholidays.translate_name,

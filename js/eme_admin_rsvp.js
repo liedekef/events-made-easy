@@ -18,7 +18,6 @@ jQuery(document).ready(function ($) {
     if ($('#BookingsTableContainer').length) {
         let rsvpfields = {
             booking_id: {
-                title: emersvp.translate_id,
                 key: true,
                 list: false,
             },

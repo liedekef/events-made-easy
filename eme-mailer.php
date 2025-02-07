@@ -2935,7 +2935,7 @@ function eme_emails_page() {
     <?php esc_html_e( 'Use the below form to send a test mail', 'events-made-easy' ); ?>
     <form id='send_testmail' name='send_testmail' action="#" method="post" onsubmit="return false;">
     <label for='testmail_to'><?php esc_html_e( 'Enter the recipient', 'events-made-easy' ); ?></label>
-    <input type="text" name="testmail_to" id="testmail_to" value="">
+    <input type="email" name="testmail_to" id="testmail_to" value="" placeholder="<?php esc_html_e( 'Enter any valid mail address', 'events-made-easy' ); ?>">
     <button id='testmailButton' class="button-primary action"> <?php esc_html_e( 'Send Email', 'events-made-easy' ); ?></button>
     </form>
 </div>

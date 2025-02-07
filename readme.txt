@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.37 (2025/02/) =
 * Small jtable update to fix certain small bugs
+* Add eme_trash_event_action, works like eme_delete_event_action but fires just before the status of the event is set to trash
 
 = 2.5.36 (2025/02/05) =
 * Use jtable everywhere, more uniform coding (better in mailing-overview)

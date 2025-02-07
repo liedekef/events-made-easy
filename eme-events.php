@@ -337,8 +337,8 @@ function eme_events_page() {
 		eme_events_table( $message );
 	}
 
-	// DELETE action (when the delete button is pushed while editing an event)
-	if ( isset( $_POST['event_delete_button'] ) ) {
+	// TRASH action (when the trash button is pushed while editing an event)
+	if ( isset( $_POST['event_trash_button'] ) ) {
 		check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
 		$tmp_event = eme_get_event( $event_ID );
 		if ( empty( $tmp_event ) ) {
@@ -6523,12 +6523,12 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                   <br><?php esc_html_e( 'If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
 		<?php
               } else {
-                  $delete_button_text           = esc_html__( 'Are you sure you want to delete this event?', 'events-made-easy' );
+                  $trash_button_text           = esc_html__( 'Are you sure you want to move this event to trash?', 'events-made-easy' );
                   $deleteRecurrence_button_text = esc_html__( 'Are you sure you want to delete this recurrence?', 'events-made-easy' );
 		?>
                   <input type="submit" class="button-primary" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Update', 'events-made-easy' ); ?> &raquo;">
 				<?php if ( ! $edit_recurrence ) { ?>
-				    	<input type="submit" class="button-primary" id="event_delete_button" name="event_delete_button" value="<?php esc_attr_e( 'Delete Event', 'events-made-easy' ); ?> &raquo;" onclick="return areyousure('<?php echo $delete_button_text; ?>');">
+				    	<input type="submit" class="button-primary" id="event_trash_button" name="event_trash_button" value="<?php esc_attr_e( 'Trash Event', 'events-made-easy' ); ?> &raquo;" onclick="return areyousure('<?php echo $trash_button_text; ?>');">
 						<?php
 						$view_button_text = __( 'View', 'events-made-easy' );
 						$view_button      = sprintf(
@@ -10667,11 +10667,11 @@ function eme_ajax_action_events_status( $ids_arr, $status ) {
 function eme_ajax_action_events_addcat( $ids, $category_id ) {
 	global $wpdb;
 	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-        if (eme_is_list_of_int( $ids ) ) {
+    if (eme_is_list_of_int( $ids ) ) {
 		$sql = $wpdb->prepare("UPDATE $table_name SET event_category_ids = CONCAT_WS(',',event_category_ids,%d)
 		   WHERE event_id IN ($ids) AND (NOT FIND_IN_SET(%d,event_category_ids) OR event_category_ids IS NULL)", $category_id, $category_id);
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-        }
+    }
 	$ajaxResult['Result']  = 'OK';
 	$ajaxResult['Message'] = __( 'Events added to category', 'events-made-easy' );
 	print wp_json_encode( $ajaxResult );
@@ -10680,9 +10680,18 @@ function eme_ajax_action_events_addcat( $ids, $category_id ) {
 function eme_trash_events( $ids, $send_trashmails = 0 ) {
 	global $wpdb;
 	$table_name     = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-        if (!eme_is_list_of_int( $ids ) ) {
+    if (!eme_is_list_of_int( $ids ) ) {
 		return;
 	}
+
+	if ( has_action( 'eme_trash_event_action' ) ) {
+		$event_ids = explode( ',', $ids );
+		foreach ( $event_ids as $event_id ) {
+            $event = eme_get_event( $event_id );
+            do_action( 'eme_trash_event_action', $event );
+        }
+	}
+
 	$sql = $wpdb->prepare("UPDATE $table_name SET recurrence_id = 0, event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_TRASH); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 
@@ -10712,7 +10721,7 @@ function eme_trash_events( $ids, $send_trashmails = 0 ) {
 function eme_untrash_events( $ids ) {
 	global $wpdb;
 	$table_name = EME_DB_PREFIX . EME_EVENTS_TBNAME;
-        if (eme_is_list_of_int( $ids ) ) {
+    if (eme_is_list_of_int( $ids ) ) {
 		$sql = $wpdb->prepare("UPDATE $table_name SET event_status = %d WHERE event_id IN ($ids)", EME_EVENT_STATUS_DRAFT); // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 		$wpdb->query( $sql ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 	}
@@ -10728,7 +10737,7 @@ function eme_delete_events( $ids_arr ) {
 				eme_db_delete_recurrence( $tmp_event['recurrence_id'] );
 			}
 		}
-			eme_db_delete_event( $event_id );
+        eme_db_delete_event( $event_id );
 	}
 }
 

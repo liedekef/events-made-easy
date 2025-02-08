@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.37 (2025/02/) =
+= 2.5.37 (2025/02/08) =
 * Small jtable update to fix certain small bugs
 * Add eme_trash_event_action, works like eme_delete_event_action but fires just before the status of the event is set to trash
 

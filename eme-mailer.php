@@ -1499,7 +1499,7 @@ function eme_ajax_mailings_list() {
         $record['read_count'] = intval( $mailing['read_count'] );
         $record['total_read_count'] = intval( $mailing['total_read_count'] );
         if ( $mailing['status'] == 'planned' ) {
-            $planned_estimation_title = eme_esc_html( __('The number of emails to be sent is an estimation and will be reevaluated at send time','events-made-easy') ) ;
+            $planned_estimation_title = eme_esc_html( sprintf(__('The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time.','events-made-easy'), $record['planned_on']) ) ;
             $record['extra_info'] = eme_esc_html( $extra ) . "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='$planned_estimation_title'>";
         } else {
             $record['extra_info'] = eme_esc_html( $extra );

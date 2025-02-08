@@ -346,7 +346,7 @@ function eme_events_page() {
 		} elseif ( current_user_can( get_option( 'eme_cap_edit_events' ) ) ||
 			( current_user_can( get_option( 'eme_cap_author_event' ) ) && $tmp_event['event_author'] == $current_userid ) ) {
 			$res              = eme_trash_events( $event_ID );
-			$feedback_message = __( 'Event moved to trash', 'events-made-easy' );
+			$feedback_message = __( 'Event moved to the trash bin', 'events-made-easy' );
 		} else {
 			$feedback_message = __( 'You have no right to delete events!', 'events-made-easy' );
 		}
@@ -6053,7 +6053,7 @@ function eme_events_table( $message = '' ) {
 	<option value="untrashEvents"><?php esc_html_e( 'Restore selected events (to draft status)', 'events-made-easy' ); ?></option>
 	<option value="deleteEvents"><?php esc_html_e( 'Permanently delete selected events', 'events-made-easy' ); ?></option>
 	<?php } else { ?>
-	<option value="trashEvents"><?php esc_html_e( 'Delete selected events (move to trash)', 'events-made-easy' ); ?></option>
+	<option value="trashEvents"><?php esc_html_e( 'Delete selected events (move to trash bin)', 'events-made-easy' ); ?></option>
 	<option value="publicEvents"><?php esc_html_e( 'Publish selected events', 'events-made-easy' ); ?></option>
 	<option value="privateEvents"><?php esc_html_e( 'Make selected events private', 'events-made-easy' ); ?></option>
 	<option value="draftEvents"><?php esc_html_e( 'Make selected events draft', 'events-made-easy' ); ?></option>
@@ -6159,7 +6159,7 @@ function eme_recurrences_table( $message = '' ) {
 	<form action="#" method="post">
 	<select id="eme_admin_action" name="eme_admin_action">
 	<option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
-	<option value="deleteRecurrences"><?php esc_html_e( 'Delete selected recurrences (and move events to trash)', 'events-made-easy' ); ?></option>
+	<option value="deleteRecurrences"><?php esc_html_e( 'Delete selected recurrences (and move events to trash bin)', 'events-made-easy' ); ?></option>
 	<option value="publicRecurrences"><?php esc_html_e( 'Publish selected recurrences', 'events-made-easy' ); ?></option>
 	<option value="privateRecurrences"><?php esc_html_e( 'Make selected recurrences private', 'events-made-easy' ); ?></option>
 	<option value="draftRecurrences"><?php esc_html_e( 'Make selected recurrences draft', 'events-made-easy' ); ?></option>
@@ -6523,12 +6523,12 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                   <br><?php esc_html_e( 'If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out.', 'events-made-easy' ); ?>
 		<?php
               } else {
-                  $trash_button_text           = esc_html__( 'Are you sure you want to move this event to trash?', 'events-made-easy' );
+                  $trash_button_text           = esc_html__( 'Are you sure you want to move this event to the trash bin?', 'events-made-easy' );
                   $deleteRecurrence_button_text = esc_html__( 'Are you sure you want to delete this recurrence?', 'events-made-easy' );
 		?>
                   <input type="submit" class="button-primary" id="event_update_button" name="event_update_button" value="<?php esc_attr_e( 'Update', 'events-made-easy' ); ?> &raquo;">
 				<?php if ( ! $edit_recurrence ) { ?>
-				    	<input type="submit" class="button-primary" id="event_trash_button" name="event_trash_button" value="<?php esc_attr_e( 'Trash Event', 'events-made-easy' ); ?> &raquo;" onclick="return areyousure('<?php echo $trash_button_text; ?>');">
+				    	<input type="submit" class="button-primary" id="event_trash_button" name="event_trash_button" value="<?php esc_attr_e( 'Move event to trash bin', 'events-made-easy' ); ?> &raquo;" onclick="return areyousure('<?php echo $trash_button_text; ?>');">
 						<?php
 						$view_button_text = __( 'View', 'events-made-easy' );
 						$view_button      = sprintf(
@@ -10644,7 +10644,7 @@ function eme_ajax_action_events_trash( $ids, $send_trashmails ) {
 	eme_trash_events( $ids, $send_trashmails );
 	$ajaxResult            = [];
 	$ajaxResult['Result']  = 'OK';
-	$ajaxResult['Message'] = __( 'Events moved to trash', 'events-made-easy' );
+	$ajaxResult['Message'] = __( 'Events moved to the trash bin', 'events-made-easy' );
 	print wp_json_encode( $ajaxResult );
 }
 

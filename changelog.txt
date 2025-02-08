@@ -2535,7 +2535,7 @@ Older changes can be found in changelog.txt
 * Fix for the case where only 1 country is defined and #_COUNTRY is not used in the rsvp form (in which case #_STATE should return the states for that 1 country)
 
 = 2.0.25 (2018/03/26) =
-* Planned mailings now get their conditions reevaluated before the mailing starts (groups and such) so the result of the mailing will be as close to reality as possible on that moment
+* Planned mailings now get their conditions re-evaluated before the mailing starts (groups and such) so the result of the mailing will be as close to reality as possible on that moment
   This change is kindly sponsored by Alex Floris
 * Cancelled mailings had wrong statistics (reported 0 cancelled), this has been fixed
 * Added event placeholders #_STARTDATE{xx}, #_ENDDATE{xx}, #_EVENTCREATIONDATE{xx}, #_EVENTMODIFDATE{xx} with 'xx' being the date format of your liking (php date format compatible)

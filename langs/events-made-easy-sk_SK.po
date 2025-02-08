@@ -59,7 +59,7 @@ msgstr "v mene %s"
 #: eme-discounts.php:1680
 #: eme-events.php:10204
 #: eme-events.php:10597
-#: eme-events.php:10848
+#: eme-events.php:10857
 #: eme-formfields.php:5074
 #: eme-formfields.php:5125
 #: eme-formfields.php:5136
@@ -1686,10 +1686,6 @@ msgstr "Stlačením tlačidla Späť v prehliadači sa vráťte na predchádzaj�
 msgid "No such event"
 msgstr "Žiadne takéto podujatie"
 
-#: eme-events.php:349
-msgid "Event moved to trash"
-msgstr "Podujatie presunuté do koša"
-
 #: eme-events.php:351
 #: eme-events.php:372
 msgid "You have no right to delete events!"
@@ -2300,10 +2296,6 @@ msgstr "Obnoviť vybrané podujatia (na stav konceptu)"
 msgid "Permanently delete selected events"
 msgstr "Natrvalo vymazať vybrané podujatia"
 
-#: eme-events.php:6056
-msgid "Delete selected events (move to trash)"
-msgstr "Vymazať vybrané podujatia (presunúť do koša)"
-
 #: eme-events.php:6057
 msgid "Publish selected events"
 msgstr "Zverejniť vybrané podujatia"
@@ -2351,10 +2343,6 @@ msgstr "Pridať opakovanie"
 #: eme-events.php:6155
 msgid "Filter recurrences"
 msgstr "Filtrovať opakovania"
-
-#: eme-events.php:6162
-msgid "Delete selected recurrences (and move events to trash)"
-msgstr "Vymazať vybrané opakovania (a presunúť podujatia do koša)"
 
 #: eme-events.php:6163
 msgid "Publish selected recurrences"
@@ -2576,10 +2564,6 @@ msgstr "Zoznam úloh"
 msgid "Save"
 msgstr "Uložiť"
 
-#: eme-events.php:6526
-msgid "Are you sure you want to delete this event?"
-msgstr "Určite chcete vymazať toto podujatie?"
-
 #: eme-events.php:6527
 msgid "Are you sure you want to delete this recurrence?"
 msgstr "Určite chcete vymazať toto opakovanie?"
@@ -2587,10 +2571,6 @@ msgstr "Určite chcete vymazať toto opakovanie?"
 #: eme-events.php:6529
 msgid "Update"
 msgstr "Aktualizovať"
-
-#: eme-events.php:6531
-msgid "Delete Event"
-msgstr "Vymazať podujatie"
 
 #: eme-events.php:6545
 msgid "Delete Recurrence"
@@ -4984,10 +4964,6 @@ msgstr "Zadarmo"
 msgid "No action defined!"
 msgstr "Žiadna akcia nebola definovaná!"
 
-#: eme-events.php:10647
-msgid "Events moved to trash"
-msgstr "Podujatia presunuté do koša"
-
 #: eme-events.php:10655
 msgid "Restored selected events to draft status"
 msgstr "Obnoviť vybrané podujatia na stav konceptu"
@@ -7116,10 +7092,6 @@ msgstr "%d odoslaných emailov, %d emailov zlyhalo"
 #: eme-mailer.php:1490
 msgid "Retry failed mails"
 msgstr "Opakovať neúspešné e-maily"
-
-#: eme-mailer.php:1502
-msgid "The number of emails to be sent is an estimation and will be reevaluated at send time"
-msgstr "Počet e-mailov, ktoré sa majú odoslať, je len odhad a bude prehodnotený v čase odoslania"
 
 #: eme-mailer.php:3059
 msgid "Here you can find an overview of all archived mailings"
@@ -14232,4 +14204,74 @@ msgstr ""
 
 #: eme-mailer.php:2971
 msgid "Filter mails"
+msgstr ""
+
+#: eme-mailer.php:1390
+#: eme-mailer.php:1726
+#: eme-mailer.php:1732
+msgid "Reuse this mail"
+msgstr ""
+
+#: eme-mailer.php:1476
+#: eme-mailer.php:1484
+#: eme-mailer.php:1598
+msgid "Delete this mailing"
+msgstr ""
+
+#: eme-mailer.php:1476
+#: eme-mailer.php:1480
+msgid "Cancel the sending of this mailing"
+msgstr ""
+
+#: eme-mailer.php:1484
+msgid "Archive this mailing"
+msgstr ""
+
+#: eme-mailer.php:1487
+#: eme-mailer.php:1600
+msgid "Reuse this mailing"
+msgstr ""
+
+#: eme-mailer.php:1490
+msgid "Retry failed messages from this mailing"
+msgstr ""
+
+#: eme-mailer.php:1502
+msgid "The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time."
+msgstr ""
+
+#: eme-mailer.php:1510
+msgid "Show mailing report"
+msgstr ""
+
+#: eme-mailer.php:1732
+msgid "Cancel the sending of this mail"
+msgstr ""
+
+#: eme-mailer.php:2938
+msgid "Enter any valid mail address"
+msgstr ""
+
+#: eme-events.php:349
+msgid "Event moved to the trash bin"
+msgstr ""
+
+#: eme-events.php:6056
+msgid "Delete selected events (move to trash bin)"
+msgstr ""
+
+#: eme-events.php:6162
+msgid "Delete selected recurrences (and move events to trash bin)"
+msgstr ""
+
+#: eme-events.php:6526
+msgid "Are you sure you want to move this event to the trash bin?"
+msgstr ""
+
+#: eme-events.php:6531
+msgid "Move event to trash bin"
+msgstr ""
+
+#: eme-events.php:10647
+msgid "Events moved to the trash bin"
 msgstr ""

@@ -31,7 +31,7 @@ msgstr ""
 #: eme-discounts.php:1680
 #: eme-events.php:10204
 #: eme-events.php:10597
-#: eme-events.php:10848
+#: eme-events.php:10857
 #: eme-formfields.php:5074
 #: eme-formfields.php:5125
 #: eme-formfields.php:5136
@@ -1646,10 +1646,6 @@ msgstr "按浏览器的后退按钮，返回到前一个屏幕并纠正您的错
 msgid "No such event"
 msgstr "没有此活动"
 
-#: eme-events.php:349
-msgid "Event moved to trash"
-msgstr "事件被转移到回收站"
-
 #: eme-events.php:351
 #: eme-events.php:372
 msgid "You have no right to delete events!"
@@ -2239,10 +2235,6 @@ msgstr "恢复选定的活动（到草稿状态）"
 msgid "Permanently delete selected events"
 msgstr "永久性地删除选定的活动"
 
-#: eme-events.php:6056
-msgid "Delete selected events (move to trash)"
-msgstr "删除选定的活动（移至回收站）"
-
 #: eme-events.php:6057
 msgid "Publish selected events"
 msgstr "发布选定的活动"
@@ -2290,10 +2282,6 @@ msgstr "添加循环"
 #: eme-events.php:6155
 msgid "Filter recurrences"
 msgstr "筛选循环"
-
-#: eme-events.php:6162
-msgid "Delete selected recurrences (and move events to trash)"
-msgstr "删除选定的循环（并将活动移至回收站）。"
 
 #: eme-events.php:6163
 msgid "Publish selected recurrences"
@@ -2497,10 +2485,6 @@ msgstr "任务报名被删除的电子邮件"
 msgid "Save"
 msgstr "保存"
 
-#: eme-events.php:6526
-msgid "Are you sure you want to delete this event?"
-msgstr "您确定要删除这个活动吗？"
-
 #: eme-events.php:6527
 msgid "Are you sure you want to delete this recurrence?"
 msgstr "您确定要删除这个循环吗？"
@@ -2508,10 +2492,6 @@ msgstr "您确定要删除这个循环吗？"
 #: eme-events.php:6529
 msgid "Update"
 msgstr "更新"
-
-#: eme-events.php:6531
-msgid "Delete Event"
-msgstr "删除活动"
 
 #: eme-events.php:6533
 #: eme-events.php:9816
@@ -4851,10 +4831,6 @@ msgstr "免费"
 msgid "No action defined!"
 msgstr "没有定义行动!"
 
-#: eme-events.php:10647
-msgid "Events moved to trash"
-msgstr "活动移至回收站"
-
 #: eme-events.php:10655
 msgid "Restored selected events to draft status"
 msgstr "将选定的活动恢复到草稿状态"
@@ -6941,10 +6917,6 @@ msgstr ""
 #, fuzzy
 msgid "Retry failed mails"
 msgstr "只显示失败的电子邮件"
-
-#: eme-mailer.php:1502
-msgid "The number of emails to be sent is an estimation and will be reevaluated at send time"
-msgstr ""
 
 #: eme-mailer.php:3059
 msgid "Here you can find an overview of all archived mailings"
@@ -14299,4 +14271,74 @@ msgstr ""
 
 #: eme-mailer.php:2971
 msgid "Filter mails"
+msgstr ""
+
+#: eme-mailer.php:1390
+#: eme-mailer.php:1726
+#: eme-mailer.php:1732
+msgid "Reuse this mail"
+msgstr ""
+
+#: eme-mailer.php:1476
+#: eme-mailer.php:1484
+#: eme-mailer.php:1598
+msgid "Delete this mailing"
+msgstr ""
+
+#: eme-mailer.php:1476
+#: eme-mailer.php:1480
+msgid "Cancel the sending of this mailing"
+msgstr ""
+
+#: eme-mailer.php:1484
+msgid "Archive this mailing"
+msgstr ""
+
+#: eme-mailer.php:1487
+#: eme-mailer.php:1600
+msgid "Reuse this mailing"
+msgstr ""
+
+#: eme-mailer.php:1490
+msgid "Retry failed messages from this mailing"
+msgstr ""
+
+#: eme-mailer.php:1502
+msgid "The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time."
+msgstr ""
+
+#: eme-mailer.php:1510
+msgid "Show mailing report"
+msgstr ""
+
+#: eme-mailer.php:1732
+msgid "Cancel the sending of this mail"
+msgstr ""
+
+#: eme-mailer.php:2938
+msgid "Enter any valid mail address"
+msgstr ""
+
+#: eme-events.php:349
+msgid "Event moved to the trash bin"
+msgstr ""
+
+#: eme-events.php:6056
+msgid "Delete selected events (move to trash bin)"
+msgstr ""
+
+#: eme-events.php:6162
+msgid "Delete selected recurrences (and move events to trash bin)"
+msgstr ""
+
+#: eme-events.php:6526
+msgid "Are you sure you want to move this event to the trash bin?"
+msgstr ""
+
+#: eme-events.php:6531
+msgid "Move event to trash bin"
+msgstr ""
+
+#: eme-events.php:10647
+msgid "Events moved to the trash bin"
 msgstr ""

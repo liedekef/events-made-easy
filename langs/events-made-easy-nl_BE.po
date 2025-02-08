@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2024-03-24 13:25:27+00:00\n"
-"PO-Revision-Date: 2025-02-05 17:30+0100\n"
+"PO-Revision-Date: 2025-02-08 10:22+0100\n"
 "Language: nl_BE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Poedit 3.5\n"
@@ -31,7 +31,7 @@ msgstr "in naam van %s"
 #: eme-discounts.php:1680
 #: eme-events.php:10204
 #: eme-events.php:10597
-#: eme-events.php:10848
+#: eme-events.php:10857
 #: eme-formfields.php:5074
 #: eme-formfields.php:5125
 #: eme-formfields.php:5136
@@ -1638,10 +1638,6 @@ msgstr "Druk op de Back-knop in je browser om naar het vorige scherm terug te ke
 msgid "No such event"
 msgstr "Geen dergelijk evenement"
 
-#: eme-events.php:349
-msgid "Event moved to trash"
-msgstr "Evenement verplaatst naar prullenbak"
-
 #: eme-events.php:351
 #: eme-events.php:372
 msgid "You have no right to delete events!"
@@ -2233,10 +2229,6 @@ msgstr "Herstel geselecteerde evenementen (naar conceptstatus)"
 msgid "Permanently delete selected events"
 msgstr "Verwijder geselecteerde evenementen permanent"
 
-#: eme-events.php:6056
-msgid "Delete selected events (move to trash)"
-msgstr "Verwijder geselecteerde evenementen (verplaats naar prullenbak)"
-
 #: eme-events.php:6057
 msgid "Publish selected events"
 msgstr "Publiceer geselecteerde evenementen"
@@ -2284,10 +2276,6 @@ msgstr "Voeg herhaling toe"
 #: eme-events.php:6155
 msgid "Filter recurrences"
 msgstr "Filter herhalingen"
-
-#: eme-events.php:6162
-msgid "Delete selected recurrences (and move events to trash)"
-msgstr "Verwijder geselecteerde herhalingen (en verplaats evenementen naar prullenbak)"
 
 #: eme-events.php:6163
 msgid "Publish selected recurrences"
@@ -2489,10 +2477,6 @@ msgstr "Taak Inschrijving Verwijderd e-mail inhoud"
 msgid "Save"
 msgstr "Opslaan"
 
-#: eme-events.php:6526
-msgid "Are you sure you want to delete this event?"
-msgstr "Weet je zeker dat je dit evenement wilt verwijderen?"
-
 #: eme-events.php:6527
 msgid "Are you sure you want to delete this recurrence?"
 msgstr "Weet je zeker dat je deze herhaling wilt verwijderen?"
@@ -2500,10 +2484,6 @@ msgstr "Weet je zeker dat je deze herhaling wilt verwijderen?"
 #: eme-events.php:6529
 msgid "Update"
 msgstr "Update"
-
-#: eme-events.php:6531
-msgid "Delete Event"
-msgstr "Verwijder evenement"
 
 #: eme-events.php:6533
 #: eme-events.php:9816
@@ -4833,10 +4813,6 @@ msgstr "Gratis"
 msgid "No action defined!"
 msgstr "Geen actie gedefineerd!"
 
-#: eme-events.php:10647
-msgid "Events moved to trash"
-msgstr "Evenementen verplaatst naar prullenbak"
-
 #: eme-events.php:10655
 msgid "Restored selected events to draft status"
 msgstr "Geselecteerde evenementen hersteld naar conceptstatus"
@@ -6915,10 +6891,6 @@ msgstr "%d mails verzonden, %d mails gefaald"
 #: eme-mailer.php:1490
 msgid "Retry failed mails"
 msgstr "Probeer mislukte e-mails opnieuw"
-
-#: eme-mailer.php:1502
-msgid "The number of emails to be sent is an estimation and will be reevaluated at send time"
-msgstr "Het aantal te verzenden e-mails is een schatting en wordt op het moment van verzending opnieuw geëvalueerd"
 
 #: eme-mailer.php:3059
 msgid "Here you can find an overview of all archived mailings"
@@ -14220,3 +14192,73 @@ msgstr "Voer een optionele zoektekst in"
 #: eme-mailer.php:2971
 msgid "Filter mails"
 msgstr "Filter e-mails"
+
+#: eme-mailer.php:1390
+#: eme-mailer.php:1726
+#: eme-mailer.php:1732
+msgid "Reuse this mail"
+msgstr "Hergebruik deze e-mail"
+
+#: eme-mailer.php:1476
+#: eme-mailer.php:1484
+#: eme-mailer.php:1598
+msgid "Delete this mailing"
+msgstr "Verwijder deze mailing"
+
+#: eme-mailer.php:1476
+#: eme-mailer.php:1480
+msgid "Cancel the sending of this mailing"
+msgstr "Annuleer het verzenden van deze mailing"
+
+#: eme-mailer.php:1484
+msgid "Archive this mailing"
+msgstr "Archiveer deze mailing"
+
+#: eme-mailer.php:1487
+#: eme-mailer.php:1600
+msgid "Reuse this mailing"
+msgstr "Hergebruik deze mailing"
+
+#: eme-mailer.php:1490
+msgid "Retry failed messages from this mailing"
+msgstr "Probeer mislukte berichten van deze mailing opnieuw"
+
+#: eme-mailer.php:1502
+msgid "The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time."
+msgstr "Het aantal te verzenden e-mails werd geschat op het moment dat de mailing werd aangemaakt (%s). Dit wordt opnieuw geëvalueerd op het moment van verzenden."
+
+#: eme-mailer.php:1510
+msgid "Show mailing report"
+msgstr "Toon mailingrapport"
+
+#: eme-mailer.php:1732
+msgid "Cancel the sending of this mail"
+msgstr "Annuleer het verzenden van deze e-mail"
+
+#: eme-mailer.php:2938
+msgid "Enter any valid mail address"
+msgstr "Voer een geldig e-mailadres in"
+
+#: eme-events.php:349
+msgid "Event moved to the trash bin"
+msgstr "Evenement naar de prullenbak verplaatst"
+
+#: eme-events.php:6056
+msgid "Delete selected events (move to trash bin)"
+msgstr "Verwijder geselecteerde evenementen (verplaats naar prullenbak)"
+
+#: eme-events.php:6162
+msgid "Delete selected recurrences (and move events to trash bin)"
+msgstr "Verwijder geselecteerde herhalingen (en verplaats evenementen naar de prullenbak)"
+
+#: eme-events.php:6526
+msgid "Are you sure you want to move this event to the trash bin?"
+msgstr "Weet u zeker dat u dit evenement naar de prullenbak wilt verplaatsen?"
+
+#: eme-events.php:6531
+msgid "Move event to trash bin"
+msgstr "Verplaats evenement naar de prullenbak"
+
+#: eme-events.php:10647
+msgid "Events moved to the trash bin"
+msgstr "Evenementen naar de prullenbak verplaatst"

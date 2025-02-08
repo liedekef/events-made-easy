@@ -2284,8 +2284,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		<div class="inside">
 		<table>
 		<tr>
-		<td style="vertical-align:top"><label for="lastname"><?php esc_html_e( 'Last name', 'events-made-easy' ); ?></label></td>
-		<td><input id="lastname" name="lastname" type="text" value="<?php echo eme_esc_html( $person['lastname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
+		<td style="vertical-align:top"><label for="firstname"><?php esc_html_e( 'First name', 'events-made-easy' ); ?></label></td>
+		<td><input id="firstname" name="firstname" type="text" value="<?php echo eme_esc_html( $person['firstname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
 				<?php
 				if ( ! empty( $wp_readonly ) ) {
 					esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );}
@@ -2296,8 +2296,8 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		</td>
 		</tr>
 		<tr>
-		<td style="vertical-align:top"><label for="firstname"><?php esc_html_e( 'First name', 'events-made-easy' ); ?></label></td>
-		<td><input id="firstname" name="firstname" type="text" value="<?php echo eme_esc_html( $person['firstname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
+		<td style="vertical-align:top"><label for="lastname"><?php esc_html_e( 'Last name', 'events-made-easy' ); ?></label></td>
+		<td><input id="lastname" name="lastname" type="text" value="<?php echo eme_esc_html( $person['lastname'] ); ?>" size="40" <?php echo $wp_readonly; ?>><br>
 				<?php
 				if ( ! empty( $wp_readonly ) ) {
 					esc_html_e( 'Since this person is linked to a WP user, this field is read-only', 'events-made-easy' );}
@@ -2360,13 +2360,13 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
 		<td></td>
 		</tr>
 		<tr>
-		<td><label for="city"><?php esc_html_e( 'City', 'events-made-easy' ); ?></label></td>
-		<td><input name="city" id="city" type="text" value="<?php echo eme_esc_html( $person['city'] ); ?>" size="40"></td>
+		<td><label for="zip"><?php esc_html_e( 'Postal code', 'events-made-easy' ); ?></label></td>
+		<td><input name="zip" id="zip" type="text" value="<?php echo eme_esc_html( $person['zip'] ); ?>" size="40"></td>
 		<td></td>
 		</tr>
 		<tr>
-		<td><label for="zip"><?php esc_html_e( 'Postal code', 'events-made-easy' ); ?></label></td>
-		<td><input name="zip" id="zip" type="text" value="<?php echo eme_esc_html( $person['zip'] ); ?>" size="40"></td>
+		<td><label for="city"><?php esc_html_e( 'City', 'events-made-easy' ); ?></label></td>
+		<td><input name="city" id="city" type="text" value="<?php echo eme_esc_html( $person['city'] ); ?>" size="40"></td>
 		<td></td>
 		</tr>
 		<tr>

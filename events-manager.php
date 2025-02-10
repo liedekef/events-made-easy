@@ -72,6 +72,7 @@ require_once 'class-expressivedate.php';
 
 // Setting constants
 define( 'EME_VERSION', '2.5.37' );
+define( 'EME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'DEFAULT_CAP_ADD_EVENT', 'edit_posts' );
 define( 'DEFAULT_CAP_AUTHOR_EVENT', 'publish_posts' );
 define( 'DEFAULT_CAP_PUBLISH_EVENT', 'publish_posts' );
@@ -183,7 +184,7 @@ function eme_add_action_links( $links ) {
 	$mylinks = [ '<a href="admin.php?page=eme-options">Settings</a>' ];
 	return array_merge( $links, $mylinks );
 }
-add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'eme_add_action_links' );
+add_filter( 'plugin_action_links_' . EME_PLUGIN_BASENAME, 'eme_add_action_links' );
 
 // To enable activation through the activate function
 register_activation_hook( __FILE__, 'eme_install' );

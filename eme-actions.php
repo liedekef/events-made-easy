@@ -646,7 +646,7 @@ function eme_update_completed( $upgrader_object, $options ) {
     if ( $options['action'] == 'update' && $options['type'] == 'plugin' && isset( $options['plugins'] ) ) {
         foreach( $options['plugins'] as $plugin ) {
             // Check to ensure it's my plugin
-            if( $plugin == plugin_basename( __FILE__ ) ) {
+            if( $plugin == EME_PLUGIN_BASENAME ) {
                 $current_userid = get_current_user_id();
                 delete_user_meta( $current_userid, 'eme_donate_notice_ignore' );
             }

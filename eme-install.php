@@ -244,7 +244,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 
 function eme_new_blog( WP_Site $new_site, $args ) {
 	// we don't use $args here
-	if ( is_plugin_active_for_network( plugin_basename( __FILE__ ) ) ) {
+	if ( is_plugin_active_for_network( EME_PLUGIN_BASENAME ) ) {
 		switch_to_blog( $new_site->blog_id );
 		_eme_install();
 		restore_current_blog();

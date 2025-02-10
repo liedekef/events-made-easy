@@ -67,15 +67,19 @@ function _eme_install() {
 	}
 
 	// some folders that need to be created (fsevents is for pdf creation when needed, includes is not for upload either)
-	eme_mkdir_with_index( EME_UPLOAD_DIR );
+    // during blog install, this changes per blog, so get it here again
+    $upload_info = wp_upload_dir();
+    $eme_upload_dir = $upload_info['basedir'] . '/events-made-easy' ;
+
+	eme_mkdir_with_index( $eme_upload_dir );
 	$upload_folders = [ 'events', 'locations', 'memberships', 'bookings', 'people', 'members', 'fsevents', 'includes' ];
 	foreach ($upload_folders as $upload_folder) {
-		eme_mkdir_with_index( EME_UPLOAD_DIR . '/' . $upload_folder );
+		eme_mkdir_with_index( $eme_upload_dir . '/' . $upload_folder );
 	}
 	// let's restrict includes folder even more
-	if ( is_writable( EME_UPLOAD_DIR . '/includes' ) && ! is_file( EME_UPLOAD_DIR . '/includes/.htaccess' ) ) {
+	if ( is_writable( $eme_upload_dir . '/includes' ) && ! is_file( $eme_upload_dir . '/includes/.htaccess' ) ) {
 		$content = "Deny from all";
-		file_put_contents(EME_UPLOAD_DIR . '/includes/.htaccess', $content);
+		file_put_contents($eme_upload_dir . '/includes/.htaccess', $content);
 	}
 
 	// Create events page if necessary

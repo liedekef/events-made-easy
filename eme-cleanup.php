@@ -184,9 +184,9 @@ function eme_cleanup_events( $eme_number, $eme_period ) {
 function eme_cleanup_all_event_related_data( $other_data ) {
 	global $wpdb;
 
-	$tables = [ EME_EVENTS_TBNAME, EME_EVENTS_CF_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_LOCATIONS_CF_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_CF_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_ATTENDANCES_TBNAME ];
+	$tables = [ EME_EVENTS_TBNAME, EME_EVENTS_CF_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_LOCATIONS_CF_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_CF_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_ATTENDANCES_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME ];
 	if ( $other_data ) {
-		$tables2 = [ EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME ];
+		$tables2 = [ EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME, EME_DISCOUNTS_TBNAME, EME_DISCOUNTGROUPS_TBNAME, EME_MQUEUE_TBNAME, EME_MAILINGS_TBNAME ];
 		$tables  = array_merge( $tables, $tables2 );
 	}
 	foreach ( $tables as $table ) {
@@ -363,7 +363,7 @@ function eme_cleanup_form( $message = '' ) {
 	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_all_event_related_data'>
-	<input id="other_data" type="checkbox" value="1" name="other_data"> <?php esc_html_e( 'Also delete defined categories, templates, holidays and form fields', 'events-made-easy' ); ?><br>
+	<input id="other_data" type="checkbox" value="1" name="other_data"> <?php esc_html_e( 'Also delete defined categories, templates, holidays, discounts, states, countries and form fields', 'events-made-easy' ); ?><br>
 	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
 	</form>
 <br><br>

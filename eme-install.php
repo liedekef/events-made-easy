@@ -214,32 +214,11 @@ function _eme_uninstall( $force_drop = 0 ) {
 	if ( $drop_data || $force_drop ) {
 		// during uninstall, we only take the prefix per blog (not based on the settings "is_multisite() && get_option( 'eme_multisite_active' )" in the function  eme_get_db_prefix)
 		$db_prefix = $wpdb->prefix;
-		eme_drop_table( $db_prefix . EME_EVENTS_TBNAME );
-		eme_drop_table( $db_prefix . EME_RECURRENCE_TBNAME );
-		eme_drop_table( $db_prefix . EME_LOCATIONS_TBNAME );
-		eme_drop_table( $db_prefix . EME_BOOKINGS_TBNAME );
-		eme_drop_table( $db_prefix . EME_PEOPLE_TBNAME );
-		eme_drop_table( $db_prefix . EME_GROUPS_TBNAME );
-		eme_drop_table( $db_prefix . EME_USERGROUPS_TBNAME );
-		eme_drop_table( $db_prefix . EME_CATEGORIES_TBNAME );
-		eme_drop_table( $db_prefix . EME_HOLIDAYS_TBNAME );
-		eme_drop_table( $db_prefix . EME_TEMPLATES_TBNAME );
-		eme_drop_table( $db_prefix . EME_FORMFIELDS_TBNAME );
-		eme_drop_table( $db_prefix . EME_FIELDTYPES_TBNAME );
-		eme_drop_table( $db_prefix . EME_ANSWERS_TBNAME );
-		eme_drop_table( $db_prefix . EME_PAYMENTS_TBNAME );
-		eme_drop_table( $db_prefix . EME_DISCOUNTS_TBNAME );
-		eme_drop_table( $db_prefix . EME_DISCOUNTGROUPS_TBNAME );
-		eme_drop_table( $db_prefix . EME_MQUEUE_TBNAME );
-		eme_drop_table( $db_prefix . EME_MAILINGS_TBNAME );
-		eme_drop_table( $db_prefix . EME_MEMBERS_TBNAME );
-		eme_drop_table( $db_prefix . EME_MEMBERSHIPS_TBNAME );
-		eme_drop_table( $db_prefix . EME_COUNTRIES_TBNAME );
-		eme_drop_table( $db_prefix . EME_STATES_TBNAME );
-		eme_drop_table( $db_prefix . EME_ATTENDANCES_TBNAME );
-		eme_drop_table( $db_prefix . EME_TODOS_TBNAME );
-		eme_drop_table( $db_prefix . EME_TASKS_TBNAME );
-		eme_drop_table( $db_prefix . EME_TASK_SIGNUPS_TBNAME );
+        $tables = [ EME_EVENTS_TBNAME, EME_EVENTS_CF_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_LOCATIONS_CF_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME, EME_USERGROUPS_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_CF_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_ATTENDANCES_TBNAME, EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME, EME_FIELDTYPES_TBNAME, EME_DISCOUNTS_TBNAME, EME_DISCOUNTGROUPS_TBNAME, EME_MQUEUE_TBNAME, EME_MAILINGS_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME ];
+
+        foreach ( $tables as $table ) {
+            eme_drop_table( $db_prefix . $table );
+        }
 	}
 	if ( $drop_settings || $force_drop ) {
 		eme_delete_events_page();

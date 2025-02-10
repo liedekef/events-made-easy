@@ -154,12 +154,7 @@ page-break-before: always;
     $dompdf->loadHtml( $html, get_bloginfo( 'charset' ) );
     $dompdf->render();
     // now we know where to store it, so create the dir
-    if ( ! is_dir( $targetPath ) ) {
-        wp_mkdir_p( $targetPath );
-    }
-    if ( ! is_file( $targetPath . '/index.html' ) ) {
-        touch( $targetPath . '/index.html' );
-    }
+    eme_mkdir_with_index( $targetPath );
     // unlink old pdf
     array_map( 'wp_delete_file', glob( "$targetPath/fsevent-$template_id-*.pdf" ) );
     // now put new one

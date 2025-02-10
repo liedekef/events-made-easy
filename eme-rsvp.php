@@ -6746,12 +6746,7 @@ $extra_html_header
         $dompdf->stream();
     } else {
         // now we know where to store it, so create the dir
-        if ( ! is_dir( $targetPath ) ) {
-            wp_mkdir_p( $targetPath );
-        }
-        if ( ! is_file( $targetPath . '/index.html' ) ) {
-            touch( $targetPath . '/index.html' );
-        }
+        eme_mkdir_with_index( $targetPath );
         // unlink old pdf
         array_map( 'wp_delete_file', glob( "$targetPath/booking-$template_id-*.pdf" ) );
         // now put new one

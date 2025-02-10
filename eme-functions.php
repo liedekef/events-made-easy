@@ -12,6 +12,7 @@ function eme_plugin_url() {
     }
     return $url;
 }
+
 function eme_plugin_dir() {
     $dir = wp_cache_get( 'eme_plugin_dir' );
     if ( $dir === false ) {

@@ -567,7 +567,7 @@ function eme_get_queued( $now ) {
     return $wpdb->get_results( $sql, ARRAY_A );
 }
 
-function eme_send_queued_rest( WP_REST_Request $request ) {
+function eme_rest_send_queued( WP_REST_Request $request ) {
     $force_interval = $request['interval'];
     //if (defined('REST_REQUEST')) {
     //	return new WP_REST_Response( $force_interval, 200 );

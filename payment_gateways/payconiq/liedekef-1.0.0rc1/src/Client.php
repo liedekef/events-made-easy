@@ -94,7 +94,7 @@ class Client
                 ];
 		if (!empty($returnUrl))
 			$data_arr['returnUrl'] = $returnUrl;
-		$response = $this->curl('POST', $this->getEndpoint('/payments'), $this->constructHeaders(), $data_arr);
+		$response = $this->makeRequest('POST', $this->getEndpoint('/payments'), $this->constructHeaders(), $data_arr);
 
 		if (empty($response->paymentId))
 			throw new CreatePaymentFailedException($response->message);
@@ -111,7 +111,7 @@ class Client
 	 */
 	public function retrievePayment($paymentId)
 	{
-		$response = $this->curl('GET', $this->getEndpoint('/payments/' . $paymentId), $this->constructHeaders());
+		$response = $this->makeRequest('GET', $this->getEndpoint('/payments/' . $paymentId), $this->constructHeaders());
 
 		if (empty($response->paymentId))
 			throw new RetrievePaymentFailedException($response->message);
@@ -128,7 +128,7 @@ class Client
 	 */
 	public function getPaymentsListByReference($reference)
 	{
-		$response = $this->curl('POST', $this->getEndpoint('/payments/search'), $this->constructHeaders(), [
+		$response = $this->makeRequest('POST', $this->getEndpoint('/payments/search'), $this->constructHeaders(), [
 			'reference' => $reference
 		]);
 
@@ -163,7 +163,7 @@ class Client
 			$param_arr['to'] = $toDate;
 		}
 		$page = 0;
-		$response = $this->curl('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $this->constructHeaders(), $param_arr);
+		$response = $this->makeRequest('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $this->constructHeaders(), $param_arr);
 
 		if (empty($response->size))
 			throw new GetPaymentsListFailedException($response->message);
@@ -172,7 +172,7 @@ class Client
 		if (!empty($response->totalPages) && $response->totalPages>1) {
 			while ($page < $response->totalPages-1) {
 				$page=$response->number+1;
-				$response = $this->curl('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $this->constructHeaders(), $param_arr);
+				$response = $this->makeRequest('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $this->constructHeaders(), $param_arr);
 				$details = array_merge($details,$response->details);
 			}
 		}
@@ -199,7 +199,7 @@ class Client
 		if (!empty($description)) {
 			$data_arr['description'] = $description;
 		}
-		$response = $this->curl('POST', $this->getEndpoint('/payments/' . $paymentId), $this->constructHeaders(), $data_arr);
+		$response = $this->makeRequest('POST', $this->getEndpoint('/payments/' . $paymentId), $this->constructHeaders(), $data_arr);
 
 		if (empty($response->paymentId))
 			throw new RefundFailedException($response->message);
@@ -216,7 +216,7 @@ class Client
 	 */
 	public function getRefundIban($paymentId )
 	{
-		$response = $this->curl('GET', $this->getEndpoint('/payments/' . $paymentId . '/debtor/refundIban'), $this->constructHeaders());
+		$response = $this->makeRequest('GET', $this->getEndpoint('/payments/' . $paymentId . '/debtor/refundIban'), $this->constructHeaders());
 
 		if (empty($response->iban))
 			throw new GetRefundIbanFailedException($response->message);
@@ -258,7 +258,7 @@ class Client
 	 *
 	 * @return response
 	 */
-	private static function cURL($method, $url, $headers = [], $parameters = [])
+	private function makeRequest($method, $url, $headers = [], $parameters = [])
 	{
 		$curl = curl_init();
 

@@ -363,7 +363,7 @@ function eme_cleanup_form( $message = '' ) {
 	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_all_event_related_data'>
-	<input id="other_data" type="checkbox" value="1" name="other_data"> <?php esc_html_e( 'Also delete defined categories, templates, holidays, discounts, states, countries and form fields', 'events-made-easy' ); ?><br>
+	<input id="other_data" type="checkbox" value="1" name="other_data"> <?php esc_html_e( 'Also delete defined categories, templates, holidays, discounts, states, countries and custom form fields', 'events-made-easy' ); ?><br>
 	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
 	</form>
 <br><br>

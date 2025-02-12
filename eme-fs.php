@@ -220,6 +220,9 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
         $format = $eme_fs_options['form_format'];
     }
 
+    // replace EME language tags as early as possible
+    $format = eme_translate_string( $format );
+
     // the generic placeholders
     $format = eme_replace_generic_placeholders( $format );
 
@@ -368,7 +371,7 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
         }
 
         if ( $required ) {
-            $eme_form_required_field_string = eme_translate( get_option( 'eme_form_required_field_string' ) );
+            $eme_form_required_field_string = get_option( 'eme_form_required_field_string' );
             if ( ! empty( $eme_form_required_field_string ) ) {
                 $replacement .= "<div class='eme-required-field'>$eme_form_required_field_string</div>";
             }
@@ -383,6 +386,7 @@ function eme_event_fs_form( $template_id, $startdatetime ) {
             $needle_offset += $orig_result_length - strlen( $replacement );
         }
     }
+    $format = eme_translate( $format );
     return do_shortcode( $format );
 }
 

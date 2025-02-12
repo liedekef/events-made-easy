@@ -688,6 +688,10 @@ jQuery(document).ready( function($) {
                 planned_on: {
                     title: ememails.translate_planneddatetime,
                 },
+                creation_date: {
+                    title: ememails.translate_queueddatetime,
+                    visibility: 'hidden',
+                },
                 status: {
                     title: ememails.translate_status,
                 },

@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.38 (2025/02/) =
 * Some old multisite fixes
+* Allow translation tags in EME FS format
 
 = 2.5.37 (2025/02/08) =
 * Small jtable update to fix certain small bugs

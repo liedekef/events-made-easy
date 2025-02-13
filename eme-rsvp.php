@@ -6703,6 +6703,9 @@ function eme_generate_booking_pdf( $booking, $event, $template_id, $stream_direc
 	$options = new Dompdf\Options();
 	$options->set( 'isRemoteEnabled', true );
 	$options->set( 'isHtml5ParserEnabled', true );
+    // the next 2 lines is to allow curl in dompdf to follow redirects
+    $context = $options->getHttpContext();
+    stream_context_set_option($context, 'http', 'follow_location', true);
 	$dompdf      = new Dompdf\Dompdf( $options );
 	$margin_info = 'margin: ' . $template['properties']['pdf_margins'];
 	$font_info       = 'font-family: ' . get_option( 'eme_pdf_font' );
@@ -6769,6 +6772,9 @@ function eme_ajax_generate_booking_pdf( $ids_arr, $template_id, $template_id_hea
 	$options = new Dompdf\Options();
 	$options->set( 'isRemoteEnabled', true );
 	$options->set( 'isHtml5ParserEnabled', true );
+    // the next 2 lines is to allow curl in dompdf to follow redirects
+    $context = $options->getHttpContext();
+    stream_context_set_option($context, 'http', 'follow_location', true);
 	$dompdf      = new Dompdf\Dompdf( $options );
 	$margin_info = 'margin: ' . $template['properties']['pdf_margins'];
 	$font_info       = 'font-family: ' . get_option( 'eme_pdf_font' );

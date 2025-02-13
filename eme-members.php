@@ -127,7 +127,7 @@ function eme_init_membership_props( $props = [], $new_membership = 0 ) {
     if ( ! isset( $props['selected_captcha'] ) ) {
         if ($new_membership) {
             $configured_captchas = eme_get_configured_captchas();
-            if (!empty($configured_captchas) )
+            if ( ! empty( $configured_captchas ) )
                 $props['selected_captcha'] = array_key_first($configured_captchas);
             else
                 $props['selected_captcha'] = '';
@@ -504,7 +504,7 @@ function eme_get_membership_stats( $ids ) {
     $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
     $eme_date_obj = new ExpressiveDate( 'now', EME_TIMEZONE );
     $remove_expired_days = get_option( 'eme_gdpr_remove_expired_member_days' );
-    if (!empty( $remove_expired_days ) ) {
+    if ( ! empty( $remove_expired_days ) ) {
         $eme_date_obj->minusDays( $remove_expired_days )->startOfMonth()->addOneMonth();
         $difference = $eme_date_obj->getDifferenceInMonths($eme_date_obj_now);
     } else {
@@ -715,7 +715,7 @@ function eme_get_member_by_personid_membershipid( $person_id, $membership_id ) {
 }
 
 function eme_get_extra_member_data( $member ) {
-    if (!empty($member)) {
+    if ( ! empty( $member ) ) {
         if ( eme_is_serialized( $member['dcodes_used'] ) ) {
             $member['dcodes_used'] = eme_unserialize( $member['dcodes_used'] );
         } else {
@@ -762,7 +762,7 @@ function eme_delete_member( $member_id, $send_mail=0 ) {
         eme_delete_uploaded_files( $member_id, 'members' );
         // remove the linked payment too, but only for the head of the family, not related members
         // this is just for a bit of efficiency
-        if (!empty($member['payment_id']) && empty($member['related_member_id'])) {
+        if ( ! empty($member['payment_id'] ) && empty( $member['related_member_id'] ) ) {
             $member_ids = eme_get_payment_member_ids( $member['payment_id'] );
             if ( empty( $member_ids ) ) {
                 eme_delete_payment( $member['payment_id'] );
@@ -1773,7 +1773,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
     $form_html .= "<input type='hidden' name='wp_id' value='$wp_id'>";
 
     // in the backend start/end/status is already mentioned, so no need to that again
-    if (! $from_backend && !empty($member['member_id'])) {
+    if ( ! $from_backend && ! empty( $member['member_id'] ) ) {
         $format_prefix = "<table class='eme-rsvp-form'>
             <tr><th scope='row'>" . esc_html__( 'Start date', 'events-made-easy' ) . ":</th><td>#_STARTDATE</td></tr>
             <tr><th scope='row'>" . esc_html__( 'End date', 'events-made-easy' ) . ":</th><td>#_ENDDATE</td></tr>
@@ -1802,7 +1802,7 @@ function eme_member_form( $member, $membership_id, $from_backend = 0 ) {
     $form_html .= eme_replace_membership_formfields_placeholders( $form_id, $membership, $member, $format_prefix.$format );
 
     if ( ! $from_backend ) {
-        if (!empty($member['member_id'])) {
+        if ( ! empty( $member['member_id'] ) ) {
             $form_html .= "<input type='hidden' name='member_id' value='".$member['member_id']."' >";
         }
         $form_html .= '</form></div>';
@@ -2320,7 +2320,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td>
 <?php
     $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
-    if (!empty($pdftemplates)) {
+    if ( ! empty( $pdftemplates ) ) {
         $name  = 'properties[newmember_attach_tmpl_ids]';
         $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo eme_ui_multiselect( $membership['properties']['newmember_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2_width50_class' );
@@ -2464,7 +2464,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td>
 <?php
     $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
-    if (!empty($pdftemplates)) {
+    if ( ! empty( $pdftemplates ) ) {
         $name  = 'properties[extended_attach_tmpl_ids]';
         $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo eme_ui_multiselect( $membership['properties']['extended_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2_width50_class' );
@@ -2543,7 +2543,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <td>
 <?php
     $pdftemplates = eme_get_templates_array_by_id( 'pdf', 1 );
-    if (!empty($pdftemplates)) {
+    if ( ! empty( $pdftemplates ) ) {
         $name  = 'properties[paid_attach_tmpl_ids]';
         $description = __( 'Optionally add PDF templates as attachments to the mail.', 'events-made-easy' );
         echo eme_ui_multiselect( $membership['properties']['paid_attach_tmpl_ids'],$name, $pdftemplates, 3,'', 0, 'eme_select2_width50_class' );
@@ -2786,7 +2786,7 @@ function eme_meta_box_div_membershipcustomfields( $membership ) {
     </b>
     <p><?php echo esc_html__( "Here custom fields of type 'Membership' are shown.", 'events-made-easy' ); ?></p>
 <?php
-    if ( current_user_can( 'unfiltered_html' ) && !empty($formfields) ) {
+    if ( current_user_can( 'unfiltered_html' ) && ! empty( $formfields ) ) {
         echo "<div class='eme_notice_unfiltered_html'>";
         esc_html_e( 'Your account has the ability to post unrestricted HTML content here, except javascript.', 'events-made-easy' );
         echo '</div>';
@@ -3077,7 +3077,7 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
         $tmp_group = eme_get_group($search_terms['search_groups'] );
         if ( $tmp_group['type'] == "dynamic_members" ) {
             $person_ids_arr = eme_get_groups_person_ids($search_terms['search_groups'] );
-            if (!empty($person_ids_arr)) {
+            if ( ! empty( $person_ids_arr ) ) {
                 $where_arr[]    = "people.person_id IN ( ".join(',',$person_ids_arr) .")";
             }
         }
@@ -3162,7 +3162,7 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
             }
         }
     }
-    if (!empty($search_formfield_sql)) {
+    if ( ! empty( $search_formfield_sql ) ) {
         $sql_join = "
            INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
              WHERE related_id>0 AND type='member' $search_formfield_sql
@@ -3286,7 +3286,7 @@ function eme_manage_memberships_layout( $message ) {
     </div>
 
 <?php
-    if ( !empty( $message ) ) {
+    if ( ! empty( $message ) ) {
         print '<div class="notice is-dismissible eme-message-admin"><p>'.$message.'</p></div>';
     }
 ?>
@@ -3609,6 +3609,19 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1, $origin
                             // for multivalue fields like checkbox, the value is in fact an array
                             // to store it, we make it a simple "multi" string using eme_convert_array2multi, so later on when we need to parse the values
                             // (when editing a member), we can re-convert it to an array with eme_convert_multi2array (see eme_formfields.php)
+                            // for extra_charge fields that return an array, verify the values
+                            if ( $formfield['extra_charge'] && eme_is_multifield( $formfield['field_type'] ) ) {
+                                if (!is_array($value)) {
+                                    $values  = [ $value ];
+                                } else {
+                                    $values  = $value;
+                                }
+                                if ( ! empty( array_diff( $values, eme_convert_multi2array( $formfield['field_values'] ) ) ) ) {
+                                    // values found that are not defined: use the max!
+                                    $value = max( eme_convert_multi2array( $formfield['field_values'] ) );
+                                }
+                            }
+
                             if ( is_array( $value ) ) {
                                 $value = eme_convert_array2multi( $value );
                             }
@@ -3652,7 +3665,7 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1, $origin
 
     $fields_seen = [];
     // for family members, we check the entry per family member too
-    if (!empty($member['related_member_id'])) {
+    if ( ! empty( $member['related_member_id'] ) ) {
         foreach ( $original_post_memberdata as $key => $value ) {
             if ( preg_match( '/^FIELD(\d+)$/', $key, $matches ) ) {
                 $field_id = intval( $matches[1] );
@@ -3663,6 +3676,18 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1, $origin
                     // for multivalue fields like checkbox, the value is in fact an array
                     // to store it, we make it a simple "multi" string using eme_convert_array2multi, so later on when we need to parse the values
                     // (when editing a booking), we can re-convert it to an array with eme_convert_multi2array (see eme_formfields.php)
+                    // for extra_charge fields that return an array, verify the values
+                    if ( $formfield['extra_charge'] && eme_is_multifield( $formfield['field_type'] ) ) {
+                        if (!is_array($value)) {
+                            $values  = [ $value ];
+                        } else {
+                            $values  = $value;
+                        }
+                        if ( ! empty( array_diff( $values, eme_convert_multi2array( $formfield['field_values'] ) ) ) ) {
+                            // values found that are not defined: use the max!
+                            $value = max( eme_convert_multi2array( $formfield['field_values'] ) );
+                        }
+                    }
                     if ( is_array( $value ) ) {
                         $value = eme_convert_array2multi( $value );
                     }
@@ -3708,6 +3733,18 @@ function eme_get_member_post_answers( $member, $include_dynamicdata = 1, $origin
                 // for multivalue fields like checkbox, the value is in fact an array
                 // to store it, we make it a simple "multi" string using eme_convert_array2multi, so later on when we need to parse the values
                 // (when editing a booking), we can re-convert it to an array with eme_convert_multi2array (see eme_formfields.php)
+                // for extra_charge fields that return an array, verify the values
+                if ( $formfield['extra_charge'] && eme_is_multifield( $formfield['field_type'] ) ) {
+                    if (!is_array($value)) {
+                        $values  = [ $value ];
+                    } else {
+                        $values  = $value;
+                    }
+                    if ( ! empty( array_diff( $values, eme_convert_multi2array( $formfield['field_values'] ) ) ) ) {
+                        // values found that are not defined: use the max!
+                        $value = max( eme_convert_multi2array( $formfield['field_values'] ) );
+                    }
+                }
                 if ( is_array( $value ) ) {
                     $value = eme_convert_array2multi( $value );
                 }
@@ -3864,7 +3901,7 @@ function eme_get_start_date( $membership, $member, $renew_expired = 0 ) {
         if ( $renew_expired ) {
             // expired members that want a renewal? Base it on today
             return $eme_date_obj_now->getDate();
-            //} elseif ((empty($member['start_date']) || $member['start_date']=="0000-00-00") && !empty($member['creation_date'])) {
+            //} elseif ((empty($member['start_date']) || $member['start_date']=="0000-00-00") && ! empty($member['creation_date'])) {
         } else {
             // new members have an empty start date, so base it on the creation date if set (start date is never set for new members)
             if ( empty( $member['creation_date'] ) ) {
@@ -4019,7 +4056,7 @@ function eme_member_remove_expired() {
     if ( empty( $remove_expired_days ) ) {
         return;
     }
-    if (!empty( $anonymize_expired_days )) {
+    if ( ! empty( $anonymize_expired_days ) ) {
         if ($remove_expired_days<=$anonymize_expired_days)
             $remove_expired_days = $anonymize_expired_days+1;
     }
@@ -4139,9 +4176,9 @@ function eme_member_set_paid( $member, $pg = '', $pg_pid = '' ) {
     $fields['paid']          = 1;
     $fields['reminder']      = 0;
     $fields['reminder_date'] = '0000-00-00 00:00:00';
-    if (!empty($pg))
+    if ( ! empty( $pg ) )
         $fields['pg']            = $pg;
-    if (!empty($pg_pid))
+    if ( ! empty( $pg_pid ) )
         $fields['pg_pid']        = $pg_pid;
     $fields['payment_date']  = current_time( 'mysql', false );
 
@@ -4525,7 +4562,7 @@ function eme_email_member_action( $member, $action ) {
     }
 
     // create and add the needed pdf attachments too
-    if ( !empty( $attachment_tmpl_ids_arr ) ) {
+    if ( ! empty( $attachment_tmpl_ids_arr ) ) {
         foreach ($attachment_tmpl_ids_arr as $attachment_tmpl_id) {
             $atts[] = eme_generate_member_pdf( $member, $membership, $attachment_tmpl_id );
         }
@@ -6014,7 +6051,7 @@ function eme_import_csv_members() {
                 $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (not all required fields are present): %s', 'events-made-easy' ), print_r( $line, true ) ) );
                 continue;
             }
-            if ( !empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
+            if ( ! empty( $line['email'] ) && ! eme_is_email( $line['email'] ) ) {
                 ++$errors;
                 $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (field %s not valid): %s', 'events-made-easy' ), 'email', implode( ',', $row ) ) );
                 continue;
@@ -6620,13 +6657,13 @@ function eme_ajax_members_list( ) {
             $record['wp_user'] = '';
         }
 
-        if ( !empty( $item['pg'] ) ) {
+        if ( ! empty( $item['pg'] ) ) {
             if ( isset( $pgs[ $item['pg'] ] ) ) {
                 $record['pg'] = eme_esc_html( $pgs[ $item['pg'] ] );
             } else {
                 $record['pg'] = 'UNKNOWN';
             }
-            if ($item['pg'] == 'payconiq' && !empty($item['pg_pid'])) {
+            if ( $item['pg'] == 'payconiq' && ! empty( $item['pg_pid'] ) ) {
                 $record['pg'] .= "<br><button id='button_".$item['payment_id']."' class='button action eme_iban_button' data-pg_pid='".$item['pg_pid']."'>".esc_html__('Get IBAN')."</button><span id='payconiq_".$item['payment_id']."'></span>";
             }
         } else {
@@ -7140,7 +7177,7 @@ function eme_generate_member_pdf( $member, $membership, $template_id ) {
     }
 
     // we found a generated pdf, let's check the pdf creation time against the modif time of the event/booking/template
-    if ( !empty( $pdf_path ) ) {
+    if ( ! empty( $pdf_path ) ) {
         $pdf_mtime      = filemtime( $pdf_path );
         $pdf_mtime_obj  = new ExpressiveDate( 'now', EME_TIMEZONE );
         $pdf_mtime_obj->setTimestamp($pdf_mtime);

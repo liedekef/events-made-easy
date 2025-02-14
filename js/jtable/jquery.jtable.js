@@ -4335,11 +4335,14 @@ THE SOFTWARE.
          *************************************************************************/
         _doExtraActions: function () {
             base._doExtraActions.apply(this, arguments);
-            if (this.options.sorting) {
-                this._buildDefaultSortingArray();
+            if (!this.options.sorting) {
+                return;
             }
-            if (this.options.saveUserPreferences && this.options.sorting) {
+            if (this.options.saveUserPreferences) {
                 this._loadColumnSortSettings();
+            }
+            if (this._lastSorting.length == 0) {
+                this._buildDefaultSortingArray();
             }
         },
 
@@ -4411,7 +4414,9 @@ THE SOFTWARE.
                 .addClass('jtable-column-header-sortable')
                 .on("click", function (e) {
                     e.preventDefault();
-                    if (!self.options.multiSorting || !e.ctrlKey) {
+                    // no need to hold down ctrl key for multisorting
+                    //if (!self.options.multiSorting || !e.ctrlKey) {
+                    if (!self.options.multiSorting) {
                         self._lastSorting = []; // clear previous sorting
                     }
 
@@ -4437,15 +4442,16 @@ THE SOFTWARE.
         /* Sorts table according to a column header.
          *************************************************************************/
         _sortTableByColumn: function ($columnHeader) {
+            let self = this;
             // Remove sorting styles from all columns except this one
-            if (this._lastSorting.length == 0) {
+            if (self._lastSorting.length == 0) {
                 $columnHeader.siblings().removeClass('jtable-column-header-sorted-asc jtable-column-header-sorted-desc');
             }
 
             // If current sorting list includes this column, remove it from the list
-            for (let i = 0; i < this._lastSorting.length; i++) {
-                if (this._lastSorting[i].fieldName == $columnHeader.data('fieldName')) {
-                    this._lastSorting.splice(i--, 1);
+            for (let i = 0; i < self._lastSorting.length; i++) {
+                if (self._lastSorting[i].fieldName == $columnHeader.data('fieldName')) {
+                    self._lastSorting.splice(i--, 1);
                 }
             }
 
@@ -4453,24 +4459,43 @@ THE SOFTWARE.
             // From ASC => DESC, from DESC => nothing, from nothing => ASC
             if ($columnHeader.hasClass('jtable-column-header-sorted-asc')) {
                 $columnHeader.removeClass('jtable-column-header-sorted-asc').addClass('jtable-column-header-sorted-desc');
-                this._lastSorting.push({
+                self._lastSorting.push({
                     'fieldName': $columnHeader.data('fieldName'),
                     sortOrder: 'DESC'
                 });
             } else if ($columnHeader.hasClass('jtable-column-header-sorted-desc')) {
                 $columnHeader.removeClass('jtable-column-header-sorted-desc');
+                // sorting done and nothing sorted anymore, then use defaultSorting if not empty
+                if (self._lastSorting.length == 0 && self.options.defaultSorting.length) {
+                    self._buildDefaultSortingArray();
+                    // default sorting used, so add the classes too
+                    $.each(self._lastSorting, function (idx, value) {
+                        let headerCells = self._$table.find('>thead th');
+                        headerCells.each(function () {
+                            let $cell = $(this);
+                            let headerFieldName = $cell.data('fieldName');
+                            if (headerFieldName == value.fieldName) {
+                                if (value.sortOrder == 'DESC') {
+                                    $cell.addClass('jtable-column-header-sorted-desc');
+                                } else {
+                                    $cell.addClass('jtable-column-header-sorted-asc');
+                                }
+                            }
+                        });
+                    });
+                }
             } else {
                 $columnHeader.addClass('jtable-column-header-sorted-asc');
-                this._lastSorting.push({
+                self._lastSorting.push({
                     'fieldName': $columnHeader.data('fieldName'),
                     sortOrder: 'ASC'
                 });
             }
 
-            if (this.options.saveUserPreferences) {
-                this._saveColumnSortSettings();
+            if (self.options.saveUserPreferences) {
+                self._saveColumnSortSettings();
             }
-            this._reloadTable();
+            self._reloadTable();
         },
 
         /* Adds jtSorting parameter to a URL as query string.

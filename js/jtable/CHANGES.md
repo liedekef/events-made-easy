@@ -1,6 +1,7 @@
 Short changes:
 
 * Rewritten to use plain jQuery, not jQuery-UI, with HTML5 modal dialogs
+* No need to hold CTRL-key for multisorting if it is active
 * Removed options: dialogShowEffect, dialogHideEffect
 * Removed deprecated private method `_addRowToTable` and rename `_addRow` to `_addRowToTable`
 * deleteAction, updateAction and selecting is now only possible if a key-field is defined (makes no sense otherwise)

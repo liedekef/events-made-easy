@@ -4,9 +4,10 @@ jQuery(document).ready(function ($) {
         title: emediscounts.translate_discounts,
         paging: true,
         sorting: true,
+        multiSorting: true,
+        defaultSorting: 'name ASC',
         toolbarsearch: true,
         toolbarreset: false,
-        defaultSorting: 'name ASC',
         selecting: true, // Enable selecting
         multiselect: true, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
@@ -70,6 +71,7 @@ jQuery(document).ready(function ($) {
         title: emediscounts.translate_discountgroups,
         paging: true,
         sorting: true,
+        multiSorting: true,
         defaultSorting: 'name ASC',
         toolbarsearch: true,
         toolbarreset: false,

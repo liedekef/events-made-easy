@@ -4,6 +4,7 @@ jQuery(document).ready( function($) {
             title: emetemplates.translate_templates,
             paging: true,
             sorting: true,
+            multiSorting: true,
             defaultSorting: 'name ASC',
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting

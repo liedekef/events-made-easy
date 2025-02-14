@@ -5,6 +5,7 @@ jQuery(document).ready( function($) {
             title: emeattendances.translate_attendance_reports,
             paging: true,
             sorting: true,
+            multiSorting: true,
             defaultSorting: 'creation_date ASC',
             deleteConfirmation: function(data) {
                 data.deleteConfirmMessage = emeattendances.translate_areyousuretodeletethis;

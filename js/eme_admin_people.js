@@ -294,6 +294,7 @@ jQuery(document).ready(function ($) {
             title: emepeople.translate_groups,
             paging: true,
             sorting: true,
+            multiSorting: true,
             defaultSorting: 'name ASC',
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting

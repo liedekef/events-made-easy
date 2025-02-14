@@ -4,6 +4,7 @@ jQuery(document).ready( function($) {
             title: emecategories.translate_categories,
             paging: true,
             sorting: true,
+            multiSorting: true,
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column

@@ -443,6 +443,7 @@ jQuery(document).ready( function($) {
             title: ememails.translate_mailingreport,
             paging: true,
             sorting: true,
+            multiSorting: true,
             defaultSorting: 'sent_datetime ASC',
             actions: {
                 listAction: ajaxurl,
@@ -510,11 +511,11 @@ jQuery(document).ready( function($) {
             title: ememails.translate_mails,
             paging: true,
             sorting: true,
+            multiSorting: true,
+            defaultSorting: 'sent_datetime DESC',
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-		multiSorting: true,
-            defaultSorting: 'sent_datetime DESC',
             actions: {
                 listAction: ajaxurl,
             },
@@ -660,11 +661,11 @@ jQuery(document).ready( function($) {
             title: ememails.translate_mailings,
             paging: true,
             sorting: true,
+            multiSorting: true,
+            defaultSorting: 'planned_on DESC, name',
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-		multiSorting: true,
-            defaultSorting: 'planned_on DESC, name',
             actions: {
                 listAction: ajaxurl,
             },
@@ -775,11 +776,11 @@ jQuery(document).ready( function($) {
             title: ememails.translate_archivedmailings,
             paging: true,
             sorting: true,
+            multiSorting: true,
+            defaultSorting: 'planned_on DESC, name',
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-		multiSorting: true,
-            defaultSorting: 'planned_on DESC, name',
             actions: {
                 listAction: ajaxurl,
             },

@@ -5,6 +5,7 @@ jQuery(document).ready( function($) {
             title: emeformfields.translate_formfields,
             paging: true,
             sorting: true,
+            multiSorting: true,
             defaultSorting: 'field_name ASC',
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting

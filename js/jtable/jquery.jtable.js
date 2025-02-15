@@ -4843,10 +4843,12 @@ THE SOFTWARE.
                         .on("click", function () {
                             let clickedColumnName = $(this).attr('id');
                             let clickedField = self.options.fields[clickedColumnName];
-                            if (clickedField.visibility == 'fixed' || isSortedField) {
+                            if (clickedField.visibility == 'fixed') {
+                                return;
+                            } else if (clickedField.visibility != 'hidden' && isSortedField) {
+                                // you can't hide a field on which a sort is done, but you can show it if it was hidden
                                 return;
                             }
-
                             self.changeColumnVisibility(clickedColumnName, $(this).is(':checked') ? 'visible' : 'hidden');
                         });
 
@@ -4856,7 +4858,9 @@ THE SOFTWARE.
                     }
 
                     // Disable, if column is fixed
-                    if (field.visibility == 'fixed' || isSortedField) {
+                    if (field.visibility == 'fixed') {
+                        $checkbox.attr('disabled', 'disabled');
+                    } else if (field.visibility != 'hidden' && isSortedField) {
                         $checkbox.attr('disabled', 'disabled');
                     }
                 }

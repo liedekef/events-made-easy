@@ -100,6 +100,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 
 == Changelog ==
 = 2.5.39 (2025//) =
+* Jtable updates
+* Make sure multisorting is active everywhere where table sorting is possible
 
 = 2.5.38 (2025/02/13) =
 * Some old multisite fixes (whnn adding a blog and EME is network-activated)

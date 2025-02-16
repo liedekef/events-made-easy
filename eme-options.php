@@ -1950,7 +1950,7 @@ function eme_options_page() {
 				__( 'Select how you want to send out emails.', 'events-made-easy' )
 			);
 			eme_options_input_text( __( 'SMTP host', 'events-made-easy' ), 'eme_smtp_host', __( "The SMTP host. Usually it corresponds to 'localhost'.", 'events-made-easy' ) );
-			eme_options_input_text( __( 'SMTP port', 'events-made-easy' ), 'eme_smtp_port', __( "The port through which you email notifications will be sent. Make sure the firewall doesn't block this port", 'events-made-easy' ) );
+			eme_options_input_list( __( 'SMTP port', 'events-made-easy' ), 'eme_smtp_port', [25, 465, 587], __( "The port through which you email notifications will be sent. Make sure the firewall doesn't block this port", 'events-made-easy' ) );
 			eme_options_select(
 				__( 'SMTP encryption method', 'events-made-easy' ),
 				'eme_smtp_encryption',

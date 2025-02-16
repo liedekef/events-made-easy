@@ -66,7 +66,7 @@ function eme_options_input_text( $title, $name, $description, $type = 'text', $o
 	<?php
 }
 
-function eme_options_input_int( $title, $name, $description, $type = 'text', $option_value = false ) {
+function eme_options_input_int( $title, $name, $description, $option_value = false ) {
 	$name = wp_strip_all_tags( $name );
 	if ( ! $option_value ) {
 		$option_value = intval( get_option( $name ) );
@@ -75,7 +75,7 @@ function eme_options_input_int( $title, $name, $description, $type = 'text', $op
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
 		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 		<td>
-		<input name="<?php echo $name; ?>" type="<?php echo $type; ?>" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
+		<input name="<?php echo $name; ?>" type="int" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
 		<?php
 			if ( ! empty( $description ) ) {
 				echo '<br>' . $description;
@@ -140,6 +140,31 @@ function eme_options_radio_binary( $title, $name, $description, $option_value = 
 			?>
 		</td>
 		</tr>
+	<?php
+}
+
+function eme_options_input_list( $title, $name, $list, $description, $option_value = false ) {
+	// make sure it is an array, otherwise just go back
+	if ( ! is_array( $list ) ) {
+		return;
+	}
+
+	$name = wp_strip_all_tags( $name );
+	if ( ! $option_value ) {
+		$option_value = get_option( $name );
+	}
+	?>
+	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
+	<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
+	<td>
+	<?php
+	echo eme_ui_list( $option_value, $name, $list );
+	if ( ! empty( $description ) ) {
+		echo '<br>' . $description;
+	}
+	?>
+	</td>
+	</tr>
 	<?php
 }
 
@@ -276,6 +301,40 @@ function eme_form_select( $option_value, $name, $id, $list, $add_empty_first = '
 	$val .= ' </select>';
 	return $val;
 }
+
+function eme_ui_list( $option_value, $name, $list, $required = 0, $class = '', $extra_attributes = '') {
+	// make sure it is an array, otherwise just go back
+	if ( ! is_array( $list ) ) {
+		return;
+	}
+
+	if ( $required ) {
+		$required_att = "required='required'";
+	} else {
+		$required_att = '';
+	}
+	if ( $class ) {
+		$class_att = "class='$class'";
+	} else {
+		$class_att = '';
+	}
+
+	$name = wp_strip_all_tags( $name );
+	if ( ! strstr( $extra_attributes, 'aria-label' ) ) {
+		$extra_attributes .= ' aria-label="' . $name . '"';
+	}
+
+    $random_id = eme_random_id();
+    $datalist_id = $name."_".$random_id;
+	$val = "<input list='$datalist_id' $class_att $required_att id='$name' name='$name' value='$option_value' $extra_attributes >";
+    $val .= "<datalist id='$datalist_id'>";
+	foreach ( $list as $key => $value ) {
+			$val .= "<option value='".eme_esc_html( $value )."'>";
+    }
+    $val .= "</datalist>";
+	return $val;
+}
+
 function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $required = 0, $class = '', $extra_attributes = '' ) {
 	// make sure it is an array, otherwise just go back
 	if ( ! is_array( $list ) ) {

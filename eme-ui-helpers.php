@@ -75,7 +75,7 @@ function eme_options_input_int( $title, $name, $description, $option_value = fal
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
 		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 		<td>
-		<input name="<?php echo $name; ?>" type="int" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
+		<input name="<?php echo $name; ?>" type="number" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
 		<?php
 			if ( ! empty( $description ) ) {
 				echo '<br>' . $description;

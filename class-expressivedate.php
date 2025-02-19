@@ -333,7 +333,7 @@ class ExpressiveDate extends DateTime {
 			$amount = abs( $amount );
 			$invert = true;
 		}
-		if ( $this->isFloat( $amount ) ) {
+		if ( $this->_isFloat( $amount ) ) {
 			return $this->modifyHours( $amount * 24, $invert );
 		}
 
@@ -406,7 +406,7 @@ class ExpressiveDate extends DateTime {
 			$amount = abs( $amount );
 			$invert = true;
 		}
-		if ( $this->isFloat( $amount ) ) {
+		if ( $this->_isFloat( $amount ) ) {
 			return $this->modifyWeeks( $amount * 4, $invert );
 		}
 
@@ -479,7 +479,7 @@ class ExpressiveDate extends DateTime {
 			$amount = abs( $amount );
 			$invert = true;
 		}
-		if ( $this->isFloat( $amount ) ) {
+		if ( $this->_isFloat( $amount ) ) {
 			return $this->modifyMonths( $amount * 12, $invert );
 		}
 
@@ -552,7 +552,7 @@ class ExpressiveDate extends DateTime {
 			$amount = abs( $amount );
 			$invert = true;
 		}
-		if ( $this->isFloat( $amount ) ) {
+		if ( $this->_isFloat( $amount ) ) {
 			return $this->modifyMinutes( $amount * 60, $invert );
 		}
 
@@ -625,7 +625,7 @@ class ExpressiveDate extends DateTime {
 			$amount = abs( $amount );
 			$invert = true;
 		}
-		if ( $this->isFloat( $amount ) ) {
+		if ( $this->_isFloat( $amount ) ) {
 			return $this->modifySeconds( $amount * 60, $invert );
 		}
 
@@ -767,7 +767,7 @@ class ExpressiveDate extends DateTime {
 			$amount = abs( $amount );
 			$invert = true;
 		}
-		if ( $this->isFloat( $amount ) ) {
+		if ( $this->_isFloat( $amount ) ) {
 			return $this->modifyDays( $amount * 7, $invert );
 		}
 
@@ -1301,7 +1301,7 @@ class ExpressiveDate extends DateTime {
 	 * @param  int|float  $amount
 	 * @return bool
 	 */
-	protected function isFloat( $amount ): bool {
+    private function _isFloat( $amount ): bool {
 		return is_float( $amount ) && intval( $amount ) != $amount;
 	}
 

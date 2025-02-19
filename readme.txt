@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.38
+Stable tag: 2.5.39
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,8 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.39 (2025//) =
+= 2.5.39 (2025/02/19) =
 * Jtable updates
+* Mollie API update
 * Make sure multisorting is active everywhere where table sorting is possible
 
 = 2.5.38 (2025/02/13) =

@@ -2,6 +2,13 @@
 
 namespace Payconiq;
 
+// Require the exception classes
+require_once __DIR__ . '/Support/Exceptions/CreatePaymentFailedException.php';
+require_once __DIR__ . '/Support/Exceptions/RetrievePaymentFailedException.php';
+require_once __DIR__ . '/Support/Exceptions/GetPaymentsListFailedException.php';
+require_once __DIR__ . '/Support/Exceptions/RefundFailedException.php';
+require_once __DIR__ . '/Support/Exceptions/GetRefundIbanFailedException.php';
+
 use Payconiq\Support\Exceptions\CreatePaymentFailedException;
 use Payconiq\Support\Exceptions\RetrievePaymentFailedException;
 use Payconiq\Support\Exceptions\GetPaymentsListFailedException;

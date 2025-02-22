@@ -47,23 +47,31 @@ function eme_checkbox_items( $name, $arr, $saved_values, $horizontal = true ) {
 	echo $output;
 }
 
-function eme_options_input_text( $title, $name, $description, $type = 'text', $option_value = false ) {
+function eme_options_input_type( $title, $name, $description, $type = 'text', $option_value = false ) {
 	$name = wp_strip_all_tags( $name );
-	if ( ! $option_value ) {
+	if ( $option_value === false ) {
 		$option_value = eme_nl2br( get_option( $name ) );
 	}
+    $autocomplete = '';
+	if ( $type == "password" ) {
+        $autocomplete = 'autocomplete="new-password"';
+    }
 	?>
 	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
 		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
 		<td>
-		<input name="<?php echo $name; ?>" type="<?php echo $type; ?>" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
-					<?php
-					if ( ! empty( $description ) ) {
-						echo '<br>' . $description;}
-					?>
+        <?php echo "<input $autocomplete name='$name' type='$type' id='$name' style='width: 95%;' value='" . eme_esc_html( $option_value ) . "' size='45'>";
+			if ( ! empty( $description ) ) {
+                echo '<br>' . $description;
+            }
+		?>
 		</td>
 	</tr>
 	<?php
+}
+
+function eme_options_input_text( $title, $name, $description, $option_value = false ) {
+    eme_options_input_type( $title, $name, $description, "text", $option_value);
 }
 
 function eme_options_input_int( $title, $name, $description, $option_value = false ) {
@@ -71,35 +79,13 @@ function eme_options_input_int( $title, $name, $description, $option_value = fal
 	if ( ! $option_value ) {
 		$option_value = intval( get_option( $name ) );
 	}
-	?>
-	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
-		<td>
-		<input name="<?php echo $name; ?>" type="number" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( $option_value ); ?>" size="45">
-		<?php
-			if ( ! empty( $description ) ) {
-				echo '<br>' . $description;
-			}
-		?>
-		</td>
-	</tr>
-	<?php
+    eme_options_input_type( $title, $name, $description, "number", $option_value);
 }
 
 function eme_options_input_password( $title, $name, $description ) {
-	?>
-	<tr style='vertical-align:top' id='<?php echo $name; ?>_row'>
-		<th scope="row"><label for='<?php echo $name; ?>'><?php echo eme_esc_html_keep_br( $title ); ?></label></th>
-		<td>
-		<input autocomplete="new-password" name="<?php echo $name; ?>" type="password" id="<?php echo $name; ?>" style="width: 95%" value="<?php echo eme_esc_html( get_option( $name ) ); ?>" size="45">
-		<?php
-			if ( ! empty( $description ) ) {
-				echo '<br>' . $description;
-			}
-		?>
-		</td>
-		</tr>
-	<?php
+	$name = wp_strip_all_tags( $name );
+    $option_value = get_option( $name );
+    eme_options_input_type( $title, $name, $description, "password", $option_value);
 }
 
 function eme_options_textarea( $title, $name, $description, $show_wp_editor = 0, $show_full = 0, $option_value = false ) {
@@ -691,4 +677,3 @@ function eme_get_field_id ( $field_name, $number = 1) {
 	$field_name = trim( $field_name, '-' );
 	return 'emefield-' . $number . '-' . $field_name;
 }
-?>

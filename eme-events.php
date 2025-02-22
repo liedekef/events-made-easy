@@ -9004,6 +9004,7 @@ function eme_rss_link_shortcode( $atts ) {
 }
 
 function eme_rss() {
+    $rss_options = get_option('eme_rss');
 	if ( isset( $_GET['limit'] ) ) {
 		$limit = intval( $_GET['limit'] );
 	} else {
@@ -9047,7 +9048,7 @@ function eme_rss() {
 	if ( isset( $_GET['title'] ) ) {
 		$main_title = eme_sanitize_request( $_GET['title'] );
 	} else {
-		$main_title = eme_sanitize_request( get_option( 'eme_rss_main_title' ) );
+		$main_title = eme_sanitize_request( $rss_options['main_title'] );
 	}
 
 	header( 'Content-type: text/xml' );
@@ -9069,7 +9070,7 @@ function eme_rss() {
 </link>
 <description>
 <?php
-	echo eme_rss_cdata( eme_sanitize_request( get_option( 'eme_rss_main_description' ) ) );
+	echo eme_rss_cdata( eme_sanitize_request( $rss_options['main_description'] ) );
 ?>
 </description>
 <docs>
@@ -9079,8 +9080,6 @@ https://www.rssboard.org/rss-specification
 Weblog Editor 2.0
 </generator>
 <?php
-	$title_format       = get_option( 'eme_rss_title_format' );
-	$description_format = get_option( 'eme_rss_description_format' );
 	$events             = eme_get_events( $limit, $scope, $order, 0, $location_id, $category, $author, $contact_person, $show_ongoing );
 
 	# some RSS readers don't like it when an empty feed without items is returned, so we add a dummy item then
@@ -9090,9 +9089,10 @@ Weblog Editor 2.0
 		echo "<link></link>\n";
 		echo "</item>\n";
 	} else {
+        $eme_categories_enabled = get_option( 'eme_categories_enabled' );
 		foreach ( $events as $event ) {
-			$title       = eme_rss_cdata( eme_replace_event_placeholders( $title_format, $event, 'rss' ) );
-			$description = eme_rss_cdata( eme_replace_event_placeholders( $description_format, $event, 'rss' ) );
+			$title       = eme_rss_cdata( eme_replace_event_placeholders( $rss_options['title_format'], $event, 'rss' ) );
+			$description = eme_rss_cdata( eme_replace_event_placeholders( $rss_options['description_format'], $event, 'rss' ) );
 			$event_link  = eme_rss_cdata( eme_event_url( $event ) );
 			if ( ! empty( $event['event_image_id'] ) ) {
 				$image_url = esc_url( wp_get_attachment_image_url( $event['event_image_id'], 'full' ) );
@@ -9104,15 +9104,15 @@ Weblog Editor 2.0
 			echo "<item>\n";
 			echo "<title>$title</title>\n";
 			echo "<link>$event_link</link>\n";
-			if ( get_option( 'eme_rss_show_pubdate' ) ) {
-				if ( get_option( 'eme_rss_pubdate_startdate' ) ) {
+			if ( $rss_options['eme_rss_show_pubdate'] ) {
+				if ( $rss_options['eme_rss_pubdate_startdate'] ) {
 					echo '<pubDate>' . eme_rfc822_date( $event['event_start'], EME_TIMEZONE ) . "</pubDate>\n";
 				} else {
 					echo '<pubDate>' . eme_rfc822_date( $event['modif_date'], 'GMT' ) . "</pubDate>\n";
 				}
 			}
 			echo "<description>$description</description>\n";
-			if ( get_option( 'eme_categories_enabled' ) ) {
+			if ( $eme_categories_enabled ) {
 				$categories = eme_rss_cdata( eme_replace_event_placeholders( '#_CATEGORIES', $event, 'rss' ) );
 				echo "<category>$categories</category>\n";
 			}

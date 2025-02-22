@@ -12,15 +12,17 @@ function eme_attributes_form( $eme_array ) {
 		$eme_data = $eme_array['location_attributes'];
 	}
 	//We also get a list of attribute names and create a ddm list (since placeholders are fixed)
+    $ical_options = get_option( 'eme_ical' );
+    $rss_options = get_option( 'eme_rss' );
 	$formats =
 		get_option( 'eme_event_list_item_format' ) .
 		get_option( 'eme_event_page_title_format' ) .
 		get_option( 'eme_full_calendar_event_format' ) .
 		get_option( 'eme_location_event_list_item_format' ) .
-		get_option( 'eme_ical_title_format' ) .
-		get_option( 'eme_ical_description_format' ) .
-		get_option( 'eme_rss_description_format' ) .
-		get_option( 'eme_rss_title_format' ) .
+		$ical_options['title_format'] .
+		$ical_options['eme_ical_description_format'] .
+		$rss_options['eme_rss_description_format'] .
+		$rss_options['eme_rss_title_format'] .
 		get_option( 'eme_single_event_format' ) .
 		get_option( 'eme_small_calendar_event_title_format' ) .
 		get_option( 'eme_single_location_format' ) .

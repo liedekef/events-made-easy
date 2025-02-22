@@ -27,10 +27,11 @@ function eme_esc_ical( $prefix, $value = '', $keep_html = 0 ) {
 	}
 }
 
-function eme_ical_single_event( $event, $title_format, $description_format, $location_format ) {
-	$title            = eme_replace_event_placeholders( $title_format, $event, 'text' );
-	$description      = eme_replace_event_placeholders( $description_format, $event, 'text' );
-	$html_description = eme_replace_event_placeholders( $description_format, $event, 'html' );
+function eme_ical_single_event( $event ) {
+    $ical_options     = get_option( 'eme_ical' );
+	$title            = eme_replace_event_placeholders( $ical_options['title_format'], $event, 'text' );
+	$description      = eme_replace_event_placeholders( $ical_options['description_format'], $event, 'text' );
+	$html_description = eme_replace_event_placeholders( $ical_options['description_format'], $event, 'html' );
 
 	$event_link    = eme_event_url( $event );
 	$contact       = eme_get_event_contact( $event );
@@ -44,9 +45,7 @@ function eme_ical_single_event( $event, $title_format, $description_format, $loc
 	$startstring->setTimezone( 'GMT' );
 	$dtstartdate = $startstring->format( 'Ymd' );
 	$dtstarthour = $startstring->format( 'His' );
-	$dtstart     = $dtstartdate . 'T' . $dtstarthour . 'Z';
-	// we'll use localtime, so no "Z"
-	//$dtstart=$dtstartdate."T".$dtstarthour;
+	$dtstart     = $dtstartdate . 'T' . $dtstarthour . 'Z'; // GMT, so end on "Z"
 	if ( eme_is_empty_datetime( $event['event_end'] ) ) {
 		$event['event_end'] = $event['event_start'];
 	}
@@ -60,13 +59,7 @@ function eme_ical_single_event( $event, $title_format, $description_format, $loc
 	$endstring->setTimezone( 'GMT' );
 	$dtenddate = $endstring->format( 'Ymd' );
 	$dtendhour = $endstring->format( 'His' );
-	$dtend     = $dtenddate . 'T' . $dtendhour . 'Z';
-	// we'll use localtime, so no "Z"
-	//$dtend=$dtenddate."T".$dtendhour;
-	$tzstring = get_option( 'timezone_string' );
-	if ( get_option( 'eme_ical_quote_tzid' ) ) {
-		$tzstring = "'" . $tzstring . "'";
-	}
+	$dtend     = $dtenddate . 'T' . $dtendhour . 'Z'; // GMT, so end on "Z"
 
 	$res = eme_esc_ical( 'BEGIN:VEVENT' );
 	//DTSTAMP must be in UTC format, so adding "Z" as well
@@ -79,8 +72,6 @@ function eme_ical_single_event( $event, $title_format, $description_format, $loc
 		$res .= eme_esc_ical( "DTSTART;VALUE=DATE:$allday_dtstartdate" );
 		$res .= eme_esc_ical( "DTEND;VALUE=DATE:$allday_dtenddate" );
 	} else {
-		// $res .= eme_esc_ical("DTSTART;TZID=$tzstring:$dtstart");
-		// $res .= eme_esc_ical("DTEND;TZID=$tzstring:$dtend");
 		// GMT now
 		$res .= eme_esc_ical( "DTSTART:$dtstart" );
 		$res .= eme_esc_ical( "DTEND:$dtend" );
@@ -101,7 +92,7 @@ function eme_ical_single_event( $event, $title_format, $description_format, $loc
 	if ( isset( $event['location_id'] ) && $event['location_id'] ) {
 		$location = eme_get_location( $event['location_id'] );
 		if ( ! empty( $location ) ) {
-			$location_txt = eme_replace_locations_placeholders( $location_format, $location, 'text' );
+			$location_txt = eme_replace_locations_placeholders( $ical_options['location_format'], $location, 'text' );
 			$res         .= eme_esc_ical( 'LOCATION:', $location_txt );
 		}
 	}
@@ -194,10 +185,7 @@ function eme_ical_single() {
 	echo "PRODID:-//hacksw/handcal//NONSGML v1.0//EN\r\n";
 	$event = eme_get_event( eme_sanitize_request( $_GET['event_id'] ) );
 	if ( ! empty( $event ) ) {
-		$title_format       = get_option( 'eme_ical_title_format' );
-		$description_format = get_option( 'eme_ical_description_format' );
-		$location_format    = get_option( 'eme_ical_location_format' );
-		echo eme_ical_single_event( $event, $title_format, $description_format, $location_format );
+		echo eme_ical_single_event( $event );
 	}
 	echo "END:VCALENDAR\r\n";
 }
@@ -215,9 +203,7 @@ function eme_ical() {
 		// allows to add any custom header of choice
 		do_action( 'eme_ical_header_action' );
 	}
-	$title_format       = get_option( 'eme_ical_title_format' );
-	$description_format = get_option( 'eme_ical_description_format' );
-	$location_format    = get_option( 'eme_ical_location_format' );
+
 	$location_id        = isset( $_GET['location_id'] ) ? eme_sanitize_request( urldecode( $_GET['location_id'] ) ) : '';
 	$category           = isset( $_GET['category'] ) ? eme_sanitize_request( urldecode( $_GET['category'] ) ) : '';
 	$notcategory        = isset( $_GET['notcategory'] ) ? eme_sanitize_request( urldecode( $_GET['notcategory'] ) ) : '';
@@ -226,7 +212,7 @@ function eme_ical() {
 	$contact_person     = isset( $_GET['contact_person'] ) ? eme_sanitize_request( urldecode( $_GET['contact_person'] ) ) : '';
 	$events             = eme_get_events( scope: $scope, location_id: $location_id, category: $category, author: $author, contact_person: $contact_person, show_ongoing: 1, notcategory: $notcategory );
 	foreach ( $events as $event ) {
-		echo eme_ical_single_event( $event, $title_format, $description_format, $location_format );
+		echo eme_ical_single_event( $event );
 	}
 	echo "END:VCALENDAR\r\n";
 }

@@ -140,15 +140,19 @@ function eme_add_options( $reset = 0 ) {
 		'eme_membership_unauth_attendance_msg'            => $eme_membership_unauth_attendance_msg_localizeable,
 		'eme_membership_attendance_msg'                   => $eme_membership_attendance_msg_localizeable,
 		'eme_members_show_people_info'                    => 0,
-		'eme_ical_title_format'                           => '#_EVENTNAME',
-		'eme_ical_description_format'                     => '#_NOTES',
-		'eme_ical_location_format'                        => '#_LOCATIONNAME, #_ADDRESS, #_TOWN',
-		'eme_rss_main_title'                              => get_bloginfo( 'title' ) . ' - ' . __( 'Events', 'events-made-easy' ),
-		'eme_rss_main_description'                        => get_bloginfo( 'description' ) . ' - ' . __( 'Events', 'events-made-easy' ),
-		'eme_rss_description_format'                      => '#_STARTDATE - #_STARTTIME <br> #_NOTES <br>#_LOCATIONNAME <br>#_ADDRESS <br>#_TOWN',
-		'eme_rss_title_format'                            => '#_EVENTNAME',
-		'eme_rss_show_pubdate'                            => 1,
-		'eme_rss_pubdate_startdate'                       => 0,
+        'eme_ical' => [
+            'title_format'       => '#_EVENTNAME',
+            'description_format' => '#_NOTES',
+            'location_format'    => '#_LOCATIONNAME, #_ADDRESS, #_TOWN'
+        ],
+        'eme_rss' => [
+            'main_title'         => get_bloginfo( 'title' ) . ' - ' . __( 'Events', 'events-made-easy' ),
+            'main_description'   => get_bloginfo( 'description' ) . ' - ' . __( 'Events', 'events-made-easy' ),
+            'description_format' => '#_STARTDATE - #_STARTTIME <br> #_NOTES <br>#_LOCATIONNAME <br>#_ADDRESS <br>#_TOWN',
+            'title_format'       => '#_EVENTNAME',
+            'show_pubdate'       => 1,
+            'pubdate_startdate'  => 0
+        ],
 		'eme_map_is_active'                               => true,
 		'eme_map_zooming'                                 => true,
 		'eme_indiv_zoom_factor'                           => 14,
@@ -680,10 +684,10 @@ function eme_add_options( $reset = 0 ) {
 
 function eme_update_options( $db_version ) {
 	if ( $db_version ) {
-		if ( $db_version > 0 && $db_version < 49 ) {
+		if ( $db_version < 49 ) {
 			delete_option( 'eme_events_admin_limit' );
 		}
-		if ( $db_version > 0 && $db_version < 55 ) {
+		if ( $db_version < 55 ) {
 			$smtp_port = get_option( 'eme_rsvp_mail_port' );
 			delete_option( 'eme_rsvp_mail_port' );
 			update_option( 'eme_smtp_port', $smtp_port );
@@ -996,6 +1000,23 @@ function eme_update_options( $db_version ) {
 				}
 			}
 		}
+		if ( $db_version < 404 ) {
+            $ical_options = [
+                'title_format'       => get_option('eme_ical_title_format'),
+                'description_format' => get_option('eme_ical_description_format'),
+                'location_format'    => get_option('eme_ical_location_format')
+            ];
+			update_option( 'eme_ical', $ical_options);
+            $rss_options = [
+                'main_title'         => get_option('eme_rss_main_title'),
+                'main_description'   => get_option('eme_rss_main_description'),
+                'description_format' => get_option('eme_rss_description_format'),
+                'title_format'       => get_option('eme_rss_title_format'),
+                'show_pubdate'       => get_option('eme_rss_show_pubdate'),
+                'pubdate_startdate'  => get_option('eme_rss_pubdate_startdate')
+            ];
+			update_option( 'eme_rss', $rss_options);
+        }
 	}
 
 	// always reset the drop data option
@@ -1122,7 +1143,7 @@ function eme_options_register() {
 		'calendar' => [ 'eme_small_calendar_event_title_format', 'eme_small_calendar_event_title_separator', 'eme_full_calendar_event_format', 'eme_cal_hide_past_events', 'eme_cal_show_single' ],
 		'locations' => [ 'eme_location_list_format_header', 'eme_location_list_format_item', 'eme_location_list_format_footer', 'eme_location_page_title_format', 'eme_location_html_title_format', 'eme_single_location_format', 'eme_location_event_list_item_format', 'eme_location_no_events_message' ],
 		'members' => [ 'eme_page_access_denied', 'eme_membership_login_required_string', 'eme_redir_protected_pages_url', 'eme_membership_attendance_msg', 'eme_membership_unauth_attendance_msg', 'eme_members_show_people_info' ],
-		'rss' => [ 'eme_rss_main_title', 'eme_rss_main_description', 'eme_rss_title_format', 'eme_rss_description_format', 'eme_rss_show_pubdate', 'eme_rss_pubdate_startdate', 'eme_ical_description_format', 'eme_ical_location_format', 'eme_ical_title_format', 'eme_ical_quote_tzid' ],
+		'rss' => [ 'eme_rss', 'eme_ical' ],
 		'rsvp' => [ 'eme_default_contact_person', 'eme_rsvp_registered_users_only', 'eme_rsvp_reg_for_new_events', 'eme_rsvp_require_approval', 'eme_rsvp_require_user_confirmation', 'eme_rsvp_default_number_spaces', 'eme_rsvp_addbooking_min_spaces', 'eme_rsvp_addbooking_max_spaces', 'eme_rsvp_hide_full_events', 'eme_rsvp_hide_rsvp_ended_events', 'eme_rsvp_show_form_after_booking', 'eme_rsvp_addbooking_submit_string', 'eme_rsvp_delbooking_submit_string', 'eme_rsvp_not_yet_allowed_string', 'eme_rsvp_no_longer_allowed_string', 'eme_rsvp_full_string', 'eme_rsvp_on_waiting_list_string', 'eme_rsvp_cancel_no_longer_allowed_string', 'eme_attendees_list_format', 'eme_attendees_list_ignore_pending', 'eme_bookings_list_ignore_pending', 'eme_bookings_list_header_format', 'eme_bookings_list_format', 'eme_bookings_list_footer_format', 'eme_registration_recorded_ok_html', 'eme_registration_form_format', 'eme_cancel_form_format', 'eme_cancel_payment_form_format', 'eme_cancel_payment_line_format', 'eme_cancelled_payment_format', 'eme_rsvp_start_number_days', 'eme_rsvp_start_number_hours', 'eme_rsvp_start_target', 'eme_rsvp_end_number_days', 'eme_rsvp_end_number_hours', 'eme_rsvp_end_target', 'eme_rsvp_check_required_fields', 'eme_cancel_rsvp_days', 'eme_cancel_rsvp_age', 'eme_rsvp_check_without_accents', 'eme_rsvp_admin_allow_overbooking', 'eme_rsvp_login_required_string', 'eme_rsvp_invitation_required_string', 'eme_rsvp_email_already_registered_string', 'eme_rsvp_person_already_registered_string', 'eme_check_free_waiting', 'eme_rsvp_pending_reminder_days', 'eme_rsvp_approved_reminder_days' ],
 		'tasks' => [ 'eme_task_registered_users_only', 'eme_task_only_one_signup_pp', 'eme_task_requires_approval', 'eme_task_allow_overlap', 'eme_task_form_taskentry_format', 'eme_task_form_format', 'eme_task_signup_format', 'eme_task_signup_recorded_ok_html', 'eme_task_reminder_days' ],
 		'mail' => [ 'eme_rsvp_mail_notify_is_active', 'eme_rsvp_mail_notify_pending', 'eme_rsvp_mail_notify_paid', 'eme_rsvp_mail_notify_approved', 'eme_mail_sender_name', 'eme_mail_sender_address', 'eme_mail_force_from', 'eme_mail_send_method', 'eme_smtp_host', 'eme_smtp_port', 'eme_smtp_encryption', 'eme_smtp_auth', 'eme_smtp_username', 'eme_smtp_password', 'eme_smtp_debug', 'eme_mail_send_html', 'eme_mail_bcc_address', 'eme_smtp_verify_cert', 'eme_queue_mails', 'eme_cron_send_queued', 'eme_cron_queue_count', 'eme_people_newsletter', 'eme_people_massmail', 'eme_massmail_popup_text', 'eme_massmail_popup', 'eme_mail_tracking', 'eme_mail_sleep', 'eme_mail_blacklist' ],
@@ -1741,15 +1762,15 @@ function eme_options_page() {
 <h3><?php esc_html_e( 'RSS and ICAL feed format', 'events-made-easy' ); ?></h3>
 <table class="form-table">
 <?php
-			eme_options_input_text( __( 'RSS main title', 'events-made-easy' ), 'eme_rss_main_title', __( 'The main title of your RSS events feed.', 'events-made-easy' ) );
-			eme_options_input_text( __( 'RSS main description', 'events-made-easy' ), 'eme_rss_main_description', __( 'The main description of your RSS events feed.', 'events-made-easy' ) );
-			eme_options_input_text( __( 'RSS title format', 'events-made-easy' ), 'eme_rss_title_format', __( 'The format of the title of each item in the events RSS feed.', 'events-made-easy' ) );
-			eme_options_textarea( __( 'RSS description format', 'events-made-easy' ), 'eme_rss_description_format', __( 'The format of the description of each item in the events RSS feed. Follow the previous formatting instructions.', 'events-made-easy' ) );
-			eme_options_radio_binary( __( 'RSS Pubdate usage', 'events-made-easy' ), 'eme_rss_show_pubdate', __( 'Show the event creation/modification date as PubDate info in the in the events RSS feed.', 'events-made-easy' ) );
-			eme_options_radio_binary( __( 'RSS Pubdate is start date', 'events-made-easy' ), 'eme_rss_pubdate_startdate', __( 'If you select this, the pubDate field in RSS will be the event start date, not the modification date.', 'events-made-easy' ) );
-			eme_options_input_text( __( 'ICAL title format', 'events-made-easy' ), 'eme_ical_title_format', __( 'The format of the title of each item in the events ICAL feed.', 'events-made-easy' ) );
-			eme_options_input_text( __( 'ICAL description format', 'events-made-easy' ), 'eme_ical_description_format', __( 'The format of the description of each item in the events ICAL feed. Follow the previous formatting instructions.', 'events-made-easy' ) );
-			eme_options_input_text( __( 'ICAL location format', 'events-made-easy' ), 'eme_ical_location_format', __( 'The format of the location of each item in the events ICAL feed (if a location is defined for that event). Use any regular location placeholders.', 'events-made-easy' ) );
+			eme_options_input_text( __( 'RSS main title', 'events-made-easy' ), eme_get_field_name('eme_rss','main_title'), __( 'The main title of your RSS events feed.', 'events-made-easy' ) );
+			eme_options_input_text( __( 'RSS main description', 'events-made-easy' ), eme_get_field_name('eme_rss','main_description'), __( 'The main description of your RSS events feed.', 'events-made-easy' ) );
+			eme_options_input_text( __( 'RSS title format', 'events-made-easy' ), eme_get_field_name('eme_rss','title_format'), __( 'The format of the title of each item in the events RSS feed.', 'events-made-easy' ) );
+			eme_options_textarea( __( 'RSS description format', 'events-made-easy' ), eme_get_field_name('eme_rss','description_format'), __( 'The format of the description of each item in the events RSS feed. Follow the previous formatting instructions.', 'events-made-easy' ) );
+			eme_options_radio_binary( __( 'RSS Pubdate usage', 'events-made-easy' ), eme_get_field_name('eme_rss','show_pubdate'), __( 'Show the event creation/modification date as PubDate info in the in the events RSS feed.', 'events-made-easy' ) );
+			eme_options_radio_binary( __( 'RSS Pubdate is start date', 'events-made-easy' ), eme_get_field_name('eme_rss','pubdate_startdate'), __( 'If you select this, the pubDate field in RSS will be the event start date, not the modification date.', 'events-made-easy' ) );
+			eme_options_input_text( __( 'ICAL title format', 'events-made-easy' ), eme_get_field_name('eme_ical','title_format'), __( 'The format of the title of each item in the events ICAL feed.', 'events-made-easy' ) );
+			eme_options_input_text( __( 'ICAL description format', 'events-made-easy' ), eme_get_field_name('eme_ical','description_format'), __( 'The format of the description of each item in the events ICAL feed. Follow the previous formatting instructions.', 'events-made-easy' ) );
+			eme_options_input_text( __( 'ICAL location format', 'events-made-easy' ), eme_get_field_name('eme_ical','location_format'), __( 'The format of the location of each item in the events ICAL feed (if a location is defined for that event). Use any regular location placeholders.', 'events-made-easy' ) );
 ?>
 </table>
 

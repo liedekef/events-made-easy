@@ -1001,20 +1001,36 @@ function eme_update_options( $db_version ) {
 			}
 		}
 		if ( $db_version < 404 ) {
-            $ical_options = [
-                'title_format'       => get_option('eme_ical_title_format'),
-                'description_format' => get_option('eme_ical_description_format'),
-                'location_format'    => get_option('eme_ical_location_format')
-            ];
+            $ical_options = get_option('eme_ical');
+			$convert_options = [
+				'eme_ical_title_format' => 'title_format',
+				'eme_ical_description_format' => 'description_format',
+				'eme_ical_location_format' => 'location_format',
+			];
+			foreach ( $convert_options as $old_option => $new_option ) {
+                $orig_value = get_option( $old_option, 'non_existing' );
+				if ( $orig_value !== 'non_existing' ) {
+                    $ical_options[$new_option] = $orig_value;
+					delete_option( $old_option );
+				}
+			}
 			update_option( 'eme_ical', $ical_options);
-            $rss_options = [
-                'main_title'         => get_option('eme_rss_main_title'),
-                'main_description'   => get_option('eme_rss_main_description'),
-                'description_format' => get_option('eme_rss_description_format'),
-                'title_format'       => get_option('eme_rss_title_format'),
-                'show_pubdate'       => get_option('eme_rss_show_pubdate'),
-                'pubdate_startdate'  => get_option('eme_rss_pubdate_startdate')
+            $rss_options = get_option('eme_rss');
+            $convert_options = [
+                'eme_rss_main_title' => 'main_title',
+                'eme_rss_main_description' => 'main_description',
+                'eme_rss_description_format' => 'description_format',
+                'eme_rss_title_format' => 'title_format',
+                'eme_rss_show_pubdate' => 'show_pubdate',
+                'eme_rss_pubdate_startdate' => 'pubdate_startdate'
             ];
+			foreach ( $convert_options as $old_option => $new_option ) {
+                $orig_value = get_option( $old_option, 'non_existing' );
+				if ( $orig_value !== 'non_existing' ) {
+                    $rss_options[$new_option] = $orig_value;
+					delete_option( $old_option );
+				}
+			}
 			update_option( 'eme_rss', $rss_options);
         }
 	}

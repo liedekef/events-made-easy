@@ -33,6 +33,17 @@ jQuery(document).ready( function($) {
 			$('#eme_hcaptcha_site_key').prop('required',false);
 			$('#eme_hcaptcha_secret_key').prop('required',false);
 		}
+		if ($('input[name=eme_friendlycaptcha_for_forms]').prop('checked')) {
+			$('tr#eme_friendlycaptcha_site_key_row').show();
+			$('tr#eme_friendlycaptcha_secret_key_row').show(); 
+			$('#eme_friendlycaptcha_site_key').prop('required',true);
+			$('#eme_friendlycaptcha_secret_key').prop('required',true);
+		} else {
+			$('tr#eme_friendlycaptcha_site_key_row').hide();
+			$('tr#eme_friendlycaptcha_secret_key_row').hide(); 
+			$('#eme_friendlycaptcha_site_key').prop('required',false);
+			$('#eme_friendlycaptcha_secret_key').prop('required',false);
+		}
 	}
 	function updateShowHideMailQueueOptions () {
 		if ($('input[name=eme_queue_mails]').prop('checked')) {
@@ -101,6 +112,7 @@ jQuery(document).ready( function($) {
 	$('input[name=eme_recaptcha_for_forms]').on("change",updateShowHideCaptcha);
 	$('input[name=eme_hcaptcha_for_forms]').on("change",updateShowHideCaptcha);
 	$('input[name=eme_cfcaptcha_for_forms]').on("change",updateShowHideCaptcha);
+	$('input[name=eme_friendlycaptcha_for_forms]').on("change",updateShowHideCaptcha);
 	$('input[name=eme_rsvp_mail_notify_is_active]').on("change",updateShowHideRsvpMailNotify);
 	$('select[name=eme_mail_send_method]').on("change",updateShowHideMailSendMethod);
 	$('input[name=eme_smtp_auth]').on("change",updateShowHideSMTPAuth);

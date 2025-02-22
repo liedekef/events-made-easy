@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.40 (2025/02/) =
+* Task option typo fix
+* Added captcha support for Friendly Captcha
+
 = 2.5.39 (2025/02/19) =
 * Jtable updates
 * Mollie API update

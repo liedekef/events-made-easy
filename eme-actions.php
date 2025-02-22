@@ -427,6 +427,10 @@ function eme_register_scripts() {
     if ( get_option( 'eme_cfcaptcha_for_forms' ) ) {
         wp_register_script( 'eme-cfcaptcha', 'https://challenges.cloudflare.com/turnstile/v0/api.js', [ 'eme-basic' ], '', true );
     }
+    if ( get_option( 'eme_friendlycaptcha_for_forms' ) ) {
+        wp_register_script( 'eme-friendlycaptcha-1', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.min.js', [ 'eme-basic' ], '', true );
+        wp_register_script( 'eme-friendlycaptcha-2', 'https://cdn.jsdelivr.net/npm/@friendlycaptcha/sdk@0.1.16/site.compat.min.js', [ 'eme-basic' ], '', true );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'eme_register_scripts' );
 
@@ -451,12 +455,17 @@ function eme_enqueue_frontend() {
 }
 
 function eme_add_defer_attribute( $tag, $handle ) {
-    if ( 'eme-basic' === $handle ) {
-        return str_replace( ' src', ' defer="defer" src', $tag );
-    }
-
-    if ( 'eme-recaptcha' === $handle || 'eme-hcaptcha' === $handle || 'eme-cfcaptcha' === $handle ) {
-        return str_replace( ' src', ' defer="defer" async src', $tag );
+    switch ($handle) {
+    case 'eme-basic':
+        $tag = str_replace( ' src', ' defer="defer" src', $tag );
+        break;
+    case 'eme-recaptcha':
+    case 'eme-hcaptcha':
+    case 'eme-cfcaptcha':
+    case 'eme-friendlycaptcha-1':
+    case 'eme-friendlycaptcha-2':
+        $tag = str_replace( ' src', ' defer="defer" async src', $tag );
+        break;
     }
     return $tag;
 }

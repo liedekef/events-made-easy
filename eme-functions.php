@@ -251,6 +251,16 @@ function eme_load_cfcaptcha_html() {
         <div class="cf-turnstile" data-sitekey="' . $eme_cfcaptcha_sitekey . '"></div>';
 }
 
+function eme_load_friendlycaptcha_html() {
+    if ( ! wp_script_is( 'eme-friendlycaptcha', 'enqueued' ) ) {
+        wp_enqueue_script( 'eme-friendlycaptcha' );
+    }
+
+    $eme_friendlycaptcha_sitekey = get_option( 'eme_friendlycaptcha_site_key' );
+    return '<!-- Friendly Captcha widget -->
+        <div class="frc-captcha" data-sitekey="' . $eme_friendlycaptcha_sitekey . '"></div>';
+}
+
 function eme_check_recaptcha() {
     $eme_recaptcha     = get_option( 'eme_recaptcha_for_forms' );
     $eme_recaptcha_key = get_option( 'eme_recaptcha_secret_key' );
@@ -309,6 +319,36 @@ function eme_check_cfcaptcha() {
             'response' => eme_sanitize_request( $_POST['cf-turnstile-response'] ),
         ];
         $response = wp_remote_post( $url, [ 'body' => $data ] );
+        if ( is_wp_error( $response ) ) {
+            return false;
+        } else {
+            $body = wp_remote_retrieve_body( $response );
+            $responseCaptchaData = json_decode( $body );
+            if ( $responseCaptchaData->success ) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    } else {
+        return false;
+    }
+}
+
+function eme_check_friendlycaptcha() {
+    $eme_friendlycaptcha           = get_option( 'eme_friendlycaptcha_for_forms' );
+    $eme_friendlycaptcha_sitekey   = get_option( 'eme_friendlycaptcha_site_key' );
+    $eme_friendlycaptcha_secretkey = get_option( 'eme_friendlycaptcha_secret_key' );
+    if ( isset( $_POST['frc-captcha-response'] ) && ! empty( $eme_friendlycaptcha_key ) && $eme_cfcaptcha ) {
+        $url      = 'https://global.frcapi.com/api/v2/captcha/siteverify';
+        $data     = [
+            'sitekey'  => $eme_friendlycaptcha_sitekey,
+            'response' => eme_sanitize_request( $_POST['frc-captcha-response'] ),
+        ];
+        $headers  = [
+            'X-API-Key' => $eme_friendlycaptcha_secretkey
+        ];
+        $response = wp_remote_post( $url, [ 'body' => $data, 'headers' => $headers ] );
         if ( is_wp_error( $response ) ) {
             return false;
         } else {
@@ -405,6 +445,19 @@ function eme_check_captcha( $properties = [], $remove_captcha_if_ok = 0 ) {
         $captcha_res = eme_check_cfcaptcha();
         if ( ! $captcha_res ) {
             $message = esc_html__( 'Please check the Cloudflare Turnstile box', 'events-made-easy' );
+            echo wp_json_encode(
+                [
+                    'Result'      => 'NOK',
+                    'htmlmessage' => $message,
+                ]
+            );
+            wp_die();
+        }
+    }
+    if ( ( ! empty( $properties ) && $selected_captcha == 'friendlycaptcha' ) || ( empty( $properties ) && isset( $configured_captchas['friendlycaptcha'] ) ) ) {
+        $captcha_res = eme_check_friendlycaptcha();
+        if ( ! $captcha_res ) {
+            $message = esc_html__( 'Please check the Friendly Captcha box', 'events-made-easy' );
             echo wp_json_encode(
                 [
                     'Result'      => 'NOK',
@@ -4069,6 +4122,8 @@ function eme_get_configured_captchas() {
             $captchas['hcaptcha'] = __('hCaptcha','events-made-easy');
         if ( ! empty( get_option( 'eme_cfcaptcha_for_forms' ) ) && ! empty( get_option( 'eme_cfcaptcha_site_key' ) ) )
             $captchas['cfcaptcha'] = __('Cloudflare Turnstile','events-made-easy');
+        if ( ! empty( get_option( 'eme_friendlycaptcha_for_forms' ) ) && ! empty( get_option( 'eme_friendlycaptcha_site_key' ) ) )
+            $captchas['cfcaptcha'] = __('Friendly Captcha','events-made-easy');
         if ( ! empty( get_option( 'eme_captcha_for_forms' ) ) && function_exists( 'imagecreatetruecolor' ) )
             $captchas['captcha'] = __('Basic EME Captcha','events-made-easy');
         wp_cache_set( 'eme_configured_captchas', $captchas, '', 60 );
@@ -4077,6 +4132,7 @@ function eme_get_configured_captchas() {
 }
 
 // easy function that allows transition from old use_* properties for captcha to newer
+// So no need to change for newer captchas!!
 function eme_get_selected_captcha($properties) {
     $selected_captcha = '';
     if (isset($properties['selected_captcha']))

@@ -936,7 +936,7 @@ function eme_update_options( $db_version ) {
                 'eme_2co_secret',
                 'eme_2co_business',
                 'eme_2co_cost',
-                'eme_2co_cost',
+                'eme_2co_cost2',
                 'eme_2co_button_label',
                 'eme_2co_button_img_url',
                 'eme_2co_button_above',
@@ -1001,6 +1001,10 @@ function eme_update_options( $db_version ) {
             }
         }
         if ( $db_version < 404 ) {
+            // delete an old option
+            delete_option('eme_2co_cost2');
+
+            // convert ical and rss options to array
             $ical_options = get_option('eme_ical');
             $convert_options = [
                 'eme_ical_title_format' => 'title_format',
@@ -1008,8 +1012,8 @@ function eme_update_options( $db_version ) {
                 'eme_ical_location_format' => 'location_format',
             ];
             foreach ( $convert_options as $old_option => $new_option ) {
-                $orig_value = get_option( $old_option, 'non_existing' );
-                if ( $orig_value !== 'non_existing' ) {
+                $orig_value = get_option( $old_option );
+                if ( $orig_value !== false ) {
                     $ical_options[$new_option] = $orig_value;
                     delete_option( $old_option );
                 }
@@ -1025,8 +1029,8 @@ function eme_update_options( $db_version ) {
                 'eme_rss_pubdate_startdate' => 'pubdate_startdate'
             ];
             foreach ( $convert_options as $old_option => $new_option ) {
-                $orig_value = get_option( $old_option, 'non_existing' );
-                if ( $orig_value !== 'non_existing' ) {
+                $orig_value = get_option( $old_option );
+                if ( $orig_value !== false ) {
                     $rss_options[$new_option] = $orig_value;
                     delete_option( $old_option );
                 }
@@ -1041,11 +1045,11 @@ function eme_update_options( $db_version ) {
 }
 
 function eme_add_option( $key, $value, $reset ) {
-    $existing_value = get_option( $key, 'non_existing' );
+    $existing_value = get_option( $key );
     if ($reset) {
         // in case of forced reset: take the new value
         update_option( $key, $value );
-    } elseif ( !is_array($existing_value) && $existing_value == 'non_existing' ) {
+    } elseif ( $existing_value === false ) {
         // in case the option didn't exist: take the new value
         update_option( $key, $value );
     } elseif (is_array($existing_value) ) {
@@ -1055,9 +1059,6 @@ function eme_add_option( $key, $value, $reset ) {
         if ( ! (array_is_list($value) && array_is_list($existing_value) ) )
             update_option( $key, array_merge($value,$existing_value));
     }
-    #if ( $existing_value == 'non_existing' || $reset ) {
-    #	update_option( $key, $value );
-    #}
 }
 
 ////////////////////////////////////

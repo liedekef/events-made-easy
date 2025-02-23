@@ -1148,8 +1148,8 @@ THE SOFTWARE.
             let makeVisible = function () {
                 self._$busyDialog.find(".jtable-busy-message").html(message);
                 self._$busyDialog[0].showModal();
-                // prevent event popup window from getting closes by escape
-                // add "jtable" namespace, so we can remove this particular listener too
+                // prevent event popup window from getting closed by escape
+                // add "jtable" namespace, so we can remove this particular listener too (see "off", search for "jtable_escape")
                 $(document).on("keydown.jtable_escape", function (event) {
                     // ESCAPE key pressed
                     if (event.keyCode == 27) {
@@ -4465,25 +4465,6 @@ THE SOFTWARE.
                 });
             } else if ($columnHeader.hasClass('jtable-column-header-sorted-desc')) {
                 $columnHeader.removeClass('jtable-column-header-sorted-desc');
-                // sorting done and nothing sorted anymore, then use defaultSorting if not empty
-                if (self._lastSorting.length == 0 && self.options.defaultSorting.length) {
-                    self._buildDefaultSortingArray();
-                    // default sorting used, so add the classes too
-                    $.each(self._lastSorting, function (idx, value) {
-                        let headerCells = self._$table.find('>thead th');
-                        headerCells.each(function () {
-                            let $cell = $(this);
-                            let headerFieldName = $cell.data('fieldName');
-                            if (headerFieldName == value.fieldName) {
-                                if (value.sortOrder == 'DESC') {
-                                    $cell.addClass('jtable-column-header-sorted-desc');
-                                } else {
-                                    $cell.addClass('jtable-column-header-sorted-asc');
-                                }
-                            }
-                        });
-                    });
-                }
             } else {
                 $columnHeader.addClass('jtable-column-header-sorted-asc');
                 self._lastSorting.push({
@@ -4518,15 +4499,33 @@ THE SOFTWARE.
         /* Overrides _createJtParamsForLoading method to add sorging parameters to jtParams object.
          *************************************************************************/
         _createJtParamsForLoading: function () {
+            let self = this;
             let jtParams = base._createJtParamsForLoading.apply(this, arguments);
 
-            if (this.options.sorting && this._lastSorting.length) {
+            if (self.options.sorting && (self._lastSorting.length || self.options.defaultSorting.length)) {
                 let sorting = [];
-                $.each(this._lastSorting, function (idx, value) {
+                $.each(self._lastSorting, function (idx, value) {
                     sorting.push(value.fieldName + ' ' + value.sortOrder);
                 });
-
-                jtParams.jtSorting = sorting.join(",");
+                // no sorted columns, but default sort is configured, use that as a base
+                // see also _buildDefaultSortingArray
+                if (sorting.length==0 && self.options.defaultSorting.length) {
+                    $.each(self.options.defaultSorting.split(","), function (orderIndex, orderValue) {
+                        $.each(self.options.fields, function (fieldName, fieldProps) {
+                            if (fieldProps.sorting) {
+                                let colOffset = orderValue.indexOf(fieldName);
+                                if (colOffset > -1) {
+                                    if (orderValue.toUpperCase().includes(' DESC', colOffset)) {
+                                        sorting.push(fieldName + ' DESC' );
+                                    } else {
+                                        sorting.push(fieldName + ' ASC' );
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+                jtParams.jtSorting = sorting.join(", ");
             }
 
             return jtParams;

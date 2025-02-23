@@ -101,7 +101,7 @@ class Client
         ];
         if (!empty($returnUrl))
             $data_arr['returnUrl'] = $returnUrl;
-        $response = $this->makeRequest('POST', $this->getEndpoint('/payments'), $this->constructHeaders(), $data_arr);
+        $response = $this->makeRequest('POST', $this->getEndpoint('/payments'), $data_arr);
 
         if (empty($response->paymentId))
             throw new CreatePaymentFailedException($response->message);
@@ -118,7 +118,7 @@ class Client
      */
     public function retrievePayment($paymentId)
     {
-        $response = $this->makeRequest('GET', $this->getEndpoint('/payments/' . $paymentId), $this->constructHeaders());
+        $response = $this->makeRequest('GET', $this->getEndpoint('/payments/' . $paymentId));
 
         if (empty($response->paymentId))
             throw new RetrievePaymentFailedException($response->message);
@@ -135,7 +135,7 @@ class Client
      */
     public function getPaymentsListByReference($reference)
     {
-        $response = $this->makeRequest('POST', $this->getEndpoint('/payments/search'), $this->constructHeaders(), [
+        $response = $this->makeRequest('POST', $this->getEndpoint('/payments/search'), [
             'reference' => $reference
         ]);
 
@@ -170,7 +170,7 @@ class Client
             $param_arr['to'] = $toDate;
         }
         $page = 0;
-        $response = $this->makeRequest('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $this->constructHeaders(), $param_arr);
+        $response = $this->makeRequest('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $param_arr);
 
         if (empty($response->size))
             throw new GetPaymentsListFailedException($response->message);
@@ -179,7 +179,7 @@ class Client
         if (!empty($response->totalPages) && $response->totalPages>1) {
             while ($page < $response->totalPages-1) {
                 $page=$response->number+1;
-                $response = $this->makeRequest('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $this->constructHeaders(), $param_arr);
+                $response = $this->makeRequest('POST', $this->getEndpoint('/payments/search?page='.intval($page).'&size='.intval($size)), $param_arr);
                 $details = array_merge($details,$response->details);
             }
         }
@@ -206,7 +206,7 @@ class Client
         if (!empty($description)) {
             $data_arr['description'] = $description;
         }
-        $response = $this->makeRequest('POST', $this->getEndpoint('/payments/' . $paymentId), $this->constructHeaders(), $data_arr);
+        $response = $this->makeRequest('POST', $this->getEndpoint('/payments/' . $paymentId), $data_arr);
 
         if (empty($response->paymentId))
             throw new RefundFailedException($response->message);
@@ -223,7 +223,7 @@ class Client
      */
     public function getRefundIban($paymentId )
     {
-        $response = $this->makeRequest('GET', $this->getEndpoint('/payments/' . $paymentId . '/debtor/refundIban'), $this->constructHeaders());
+        $response = $this->makeRequest('GET', $this->getEndpoint('/payments/' . $paymentId . '/debtor/refundIban') );
 
         if (empty($response->iban))
             throw new GetRefundIbanFailedException($response->message);
@@ -265,19 +265,19 @@ class Client
      *
      * @return response
      */
-    private function makeRequest($method, $url, $headers = [], $parameters = [])
+    private function makeRequest($method, $url, $parameters = [])
     {
         $curl = curl_init();
 
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_VERBOSE, false);
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 20);
         curl_setopt($curl, CURLOPT_TIMEOUT, 20);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $this->constructHeaders());
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_BINARYTRANSFER, true);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($parameters));
+        if ($method == 'POST') {
+            curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($parameters));
+        }
 
         $response = curl_exec($curl);
         curl_close($curl);

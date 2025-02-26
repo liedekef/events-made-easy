@@ -607,7 +607,7 @@ jQuery(document).ready( function($) {
                     let ids = [];
                     let personids = [];
                     selectedRows.each(function () {
-                        ids.push($(this).data('record')['id']);
+                        ids.push($(this).attr('data-record-key'));
                         personids.push($(this).data('record')['person_id']);
                     });
 
@@ -738,7 +738,7 @@ jQuery(document).ready( function($) {
                     $('#MailingsActionsButton').prop('disabled', true);
                     let ids = [];
                     selectedRows.each(function () {
-                        ids.push($(this).data('record')['id']);
+                        ids.push($(this).attr('data-record-key'));
                     });
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
@@ -842,7 +842,7 @@ jQuery(document).ready( function($) {
                     $('#ArchivedMailingsActionsButton').prop('disabled', true);
                     let ids = [];
                     selectedRows.each(function () {
-                        ids.push($(this).data('record')['id']);
+                        ids.push($(this).attr('data-record-key'));
                     });
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'

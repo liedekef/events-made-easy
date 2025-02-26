@@ -346,7 +346,7 @@ jQuery(document).ready(function ($) {
                     $('#GroupsActionsButton').prop('disabled', true);
                     let ids = [];
                     selectedRows.each(function () {
-                        ids.push($(this).data('record')['group_id']);
+                        ids.push($(this).attr('data-record-key'));
                     });
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
@@ -383,7 +383,7 @@ jQuery(document).ready(function ($) {
                 $('#PeopleActionsButton').prop('disabled', true);
                 let ids = [];
                 selectedRows.each(function () {
-                    ids.push($(this).data('record')['people.person_id']);
+                    ids.push($(this).attr('data-record-key'));
                 });
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'

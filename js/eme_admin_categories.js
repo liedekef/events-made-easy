@@ -46,7 +46,7 @@ jQuery(document).ready( function($) {
                     $('#CategoriesActionsButton').prop('disabled', true);
                     let ids = [];
                     selectedRows.each(function () {
-                        ids.push($(this).data('record')['category_id']);
+                        ids.push($(this).attr('data-record-key'));
                     });
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'

@@ -80,7 +80,7 @@ jQuery(document).ready( function($) {
                     $('#FormfieldsActionsButton').text(emeformfields.translate_pleasewait);
                     let ids = [];
                     selectedRows.each(function () {
-                        ids.push($(this).data('record')['field_id']);
+                        ids.push($(this).attr('data-record-key'));
                     });
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'

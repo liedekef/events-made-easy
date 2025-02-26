@@ -3390,7 +3390,21 @@ THE SOFTWARE.
          *************************************************************************/
         selectRows: function ($rows) {
             this._selectRows($rows);
-            this._onSelectionChanged(); // TODO: trigger only if selected rows changes?
+            this._onSelectionChanged();
+        },
+
+        /* Makes row/rows 'deselected'.
+         *************************************************************************/
+        deselectRows: function ($rows) {
+            this._deselectRows($rows);
+            this._onSelectionChanged();
+        },
+
+        /* Inverts selection state of a single row.
+         *************************************************************************/
+        invertRowSelection: function ($row) {
+            this._invertRowSelection($row);
+            this._onSelectionChanged();
         },
 
         /************************************************************************

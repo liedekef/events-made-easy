@@ -102,7 +102,7 @@ jQuery(document).ready(function ($) {
                 $('#CountriesActionsButton').text(emecountries.translate_pleasewait);
                 let ids = [];
                 selectedRows.each(function () {
-                    ids.push($(this).data('record')['id']);
+                    ids.push($(this).attr('data-record-key'));
                 });
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'
@@ -135,7 +135,7 @@ jQuery(document).ready(function ($) {
                 $('#StatesActionsButton').text(emecountries.translate_pleasewait);
                 let ids = [];
                 selectedRows.each(function () {
-                    ids.push($(this).data('record')['id']);
+                    ids.push($(this).attr('data-record-key'));
                 });
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'

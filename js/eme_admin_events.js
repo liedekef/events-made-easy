@@ -620,7 +620,7 @@ jQuery(document).ready( function($) {
                     $('#EventsActionsButton').prop('disabled', true);
                     let ids = [];
                     selectedRows.each(function () {
-                        ids.push($(this).data('record')['event_id']);
+                        ids.push($(this).attr('data-record-key'));
                     });
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'
@@ -774,7 +774,7 @@ jQuery(document).ready( function($) {
                     $('#RecurrencesActionsButton').prop('disabled', true);
                     let ids = [];
                     selectedRows.each(function () {
-                        ids.push($(this).data('record')['recurrence_id']);
+                        ids.push($(this).attr('data-record-key'));
                     });
 
                     let idsjoined = ids.join(); //will be such a string '2,5,7'

@@ -238,7 +238,7 @@ jQuery(document).ready(function ($) {
                 $('#LocationsActionsButton').text(emelocations.translate_pleasewait);
                 let ids = [];
                 selectedRows.each(function () {
-                    ids.push($(this).data('record')['location_id']);
+                    ids.push($(this).attr('data-record-key'));
                 });
 
                 let idsjoined = ids.join(); //will be such a string '2,5,7'

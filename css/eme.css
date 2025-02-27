@@ -687,7 +687,7 @@ div#div_import {
  * see https://developer.chrome.com/docs/css-ui/css-field-sizing
  * fdatepicker fields do this on their own
  * */
-#chooseperson, #eventmail_chooseperson, #chooseevent, .eme_searchfilter {
+#chooseperson, #eventmail_chooseperson, #chooseevent, #testmail_to, .eme_searchfilter {
     field-sizing: content;
     min-inline-size: 10ch;
 }

@@ -356,6 +356,10 @@ THE SOFTWARE.
                 .data('fieldName', fieldName)
                 .append($headerContainerDiv);
 
+            if (field.tooltip) {
+                $th.prop('title', field.tooltip);
+            }
+
             this._jqueryuiThemeAddClass($th, 'ui-state-default');
 
             return $th;
@@ -4304,6 +4308,7 @@ THE SOFTWARE.
         _initializeSettings: jTable.prototype._initializeSettings,
         _normalizeFieldOptions: jTable.prototype._normalizeFieldOptions,
         _doExtraActions: jTable.prototype._doExtraActions,
+        _onRecordsLoaded: jTable.prototype._onRecordsLoaded,
         _createHeaderCellForField: jTable.prototype._createHeaderCellForField,
         // _createRecordLoadUrl: jTable.prototype._createRecordLoadUrl,
         _createJtParamsForLoading: jTable.prototype._createJtParamsForLoading
@@ -4319,7 +4324,16 @@ THE SOFTWARE.
             sorting: false,
             multiSorting: false,
             roomForSortableIcon: true,
-            defaultSorting: ''
+            defaultSorting: '',
+            sortingInfoSelector: '',
+            // Localization
+            messages: {
+                sortingInfoStart: 'Sorting: ',
+                ascending: 'Ascending',
+                descending: 'Descending',
+                sortingInfoNone: 'none',
+            }
+
         },
 
         /************************************************************************
@@ -4358,6 +4372,26 @@ THE SOFTWARE.
             if (this._lastSorting.length == 0) {
                 this._buildDefaultSortingArray();
             }
+        },
+
+        /* Overrides _onRecordsLoaded method to to do sorting specific tasks.
+         *************************************************************************/
+        _onRecordsLoaded: function (data) {
+            let self = this;
+            if (self.options.sortingInfoSelector) {
+                let sortingInfoString = self.options.messages.sortingInfoStart;
+                let sortingInfo = self.getSortingInfo();
+                if (sortingInfo && sortingInfo.length > 0) {
+                    $.each(sortingInfo, function (idx, sortingVal) {
+                        if (idx > 0) sortingInfoString += ', ';
+                        sortingInfoString += sortingVal.fieldTitle + ' (' + (sortingVal.sortOrder === 'ASC' ? self.options.messages.ascending : self.options.messages.descending) + ')';
+                    });
+                } else {
+                    sortingInfoString += self.options.messages.sortingInfoNone;
+                }
+                $(self.options.sortingInfoSelector).text(sortingInfoString);
+            }
+            base._onRecordsLoaded.apply(self, arguments);
         },
 
         /* Overrides _createHeaderCellForField to make columns sortable.
@@ -4576,12 +4610,34 @@ THE SOFTWARE.
                 let splitted = fieldSetting.split('=');
                 let fieldName = splitted[0];
                 let sortOrder = splitted[1];
-                self._lastSorting.push({
-                    'fieldName': fieldName,
-                    'sortOrder': sortOrder
-                });
+                // make sure the cookie contains expected valid values
+                if (sortOrder == "ASC" || sortOrder == "DESC") {
+                    if ($.inArray(fieldName,self._fieldList) > -1) {
+                        self._lastSorting.push({
+                            'fieldName': fieldName,
+                            'sortOrder': sortOrder
+                        });
+                    }
+                }
             });
         },
+
+        /* return an arry with column title (if any, or fieldname otherwise) and sortorder
+         *********************************************************************************/
+        getSortingInfo: function() {
+            let self = this;
+
+            let SortingInfo = [];
+            $.each(self._lastSorting, function (sortIndex, sortField) {
+                let field = self.options.fields[sortField.fieldName];
+                SortingInfo.push({
+                    'fieldTitle': field.title || sortField.fieldName,
+                    'sortOrder': sortField.sortOrder
+                });
+            });
+            return SortingInfo;
+        }
+
     });
 
 })(jQuery);
@@ -4658,7 +4714,7 @@ THE SOFTWARE.
                 props.columnResizable = (props.columnResizable != false);
             } else {
                 props.columnResizable = false;
-	    }
+            }
 
             // visibility
             if (!props.visibility) {

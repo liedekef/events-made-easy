@@ -273,10 +273,13 @@ jQuery(document).ready(function ($) {
                 }
                 return params;
             },
-            fields: rsvpfields
+            fields: rsvpfields,
+            sortingInfoSelector: '#bookingstablesortingInfo'
         });
 
         $('#BookingsTableContainer').jtable('load');
+        $('<div id="bookingstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertAfter('#BookingsTableContainer');
+
     }
 
     function updateShowHideStuff() {

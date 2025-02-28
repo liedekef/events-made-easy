@@ -6792,7 +6792,6 @@ function eme_ajax_store_members_query() {
 
 function eme_ajax_manage_members() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    header( 'Content-type: application/json; charset=utf-8' );
     if ( isset( $_POST['do_action'] ) ) {
         $do_action    = eme_sanitize_request( $_POST['do_action'] );
         $send_mail    = ( isset( $_POST['send_mail'] ) ) ? intval( $_POST['send_mail'] ) : 1;
@@ -6809,27 +6808,35 @@ function eme_ajax_manage_members() {
 
         switch ( $do_action ) {
         case 'deleteMembers':
+            header( 'Content-type: application/json; charset=utf-8' );
             eme_ajax_action_delete_members( $ids_arr, $trash_person );
             break;
         case 'acceptPayment':
+            header( 'Content-type: application/json; charset=utf-8' );
             eme_ajax_action_payment_membership( $ids_arr, $send_mail );
             break;
         case 'markUnpaid':
+            header( 'Content-type: application/json; charset=utf-8' );
             eme_ajax_action_set_member_unpaid( $ids_arr, 'updateMember', $send_mail );
             break;
         case 'stopMembership':
+            header( 'Content-type: application/json; charset=utf-8' );
             eme_ajax_action_stop_membership( $ids_arr, 'stopMember', $send_mail );
             break;
         case 'resendPendingMember':
+            header( 'Content-type: application/json; charset=utf-8' );
             eme_ajax_action_resend_pending_member( $ids_arr, $do_action );
             break;
         case 'resendPaidMember':
+            header( 'Content-type: application/json; charset=utf-8' );
             eme_ajax_action_resend_paid_member( $ids_arr, $do_action );
             break;
         case 'resendExpirationReminders':
+            header( 'Content-type: application/json; charset=utf-8' );
             eme_ajax_action_resend_member_reminders( $ids_arr );
             break;
         case 'memberMails':
+            header( 'Content-type: application/json; charset=utf-8' );
             $template_id_subject = ( isset( $_POST['membermail_template_subject'] ) ) ? intval( $_POST['membermail_template_subject'] ) : 0;
             $template_id         = ( isset( $_POST['membermail_template'] ) ) ? intval( $_POST['membermail_template'] ) : 0;
             if ( $template_id_subject && $template_id ) {

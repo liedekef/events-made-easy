@@ -6098,18 +6098,23 @@ function eme_ajax_manage_bookings() {
             switch ( $do_action ) {
             case 'markpaidandapprove':
                 // shortcut button to do 2 things at once, mail will always be sent
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_rsvp_markpaidandapprove( $ids_arr );
                 break;
             case 'approveBooking':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_rsvp_aprove( $ids_arr, $do_action, $send_mail );
                 break;
             case 'deleteBooking':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_rsvp_delete( $ids_arr );
                 break;
             case 'trashBooking':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_rsvp_trash( $ids_arr, $do_action, $send_mail, $refund );
                 break;
             case 'partialPayment':
+                header( 'Content-type: application/json; charset=utf-8' );
                 $amount = ( isset( $_POST['partial_amount'] ) ) ? eme_sanitize_request($_POST['partial_amount']) : 0;
                 if ( count( $ids_arr ) == 1 && is_numeric( $amount ) ) {
                     $booking_id = $ids_arr[0];
@@ -6117,12 +6122,15 @@ function eme_ajax_manage_bookings() {
                 }
                 break;
             case 'markPaid':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_mark_booking_paid( $ids_arr, 'paidBooking', $send_mail );
                 break;
             case 'markUnpaid':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_mark_booking_unpaid( $ids_arr, 'updateBooking', $send_mail, $refund );
                 break;
             case 'resendApprovedBooking':
+                header( 'Content-type: application/json; charset=utf-8' );
                 $send_to_contact_too = ( isset( $_POST['send_to_contact_too'] ) ) ? intval( $_POST['send_to_contact_too'] ) : 0;
                 if ($send_to_contact_too) {
                     eme_ajax_action_resend_booking_mail( $ids_arr, 'approvedBooking' );
@@ -6131,24 +6139,31 @@ function eme_ajax_manage_bookings() {
                 }
                 break;
             case 'resendPendingBooking':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_resend_booking_mail( $ids_arr, 'pendingBooking' );
                 break;
             case 'userConfirmBooking':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_mark_userconfirm( $booking_ids, $do_action );
                 break;
             case 'pendingBooking':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_mark_pending( $ids_arr, $do_action, $send_mail, $refund );
                 break;
             case 'noteAttendance':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_mark_attendance( $ids_arr, $do_action );
                 break;
             case 'unsetwaitinglistBooking':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_remove_waitinglist( $ids_arr, $do_action, $send_mail );
                 break;
             case 'setwaitinglistBooking':
+                header( 'Content-type: application/json; charset=utf-8' );
                 eme_ajax_action_move_waitinglist( $ids_arr, $do_action, $send_mail, $refund );
                 break;
             case 'rsvpMails':
+                header( 'Content-type: application/json; charset=utf-8' );
                 $template_id_subject = ( isset( $_POST['rsvpmail_template_subject'] ) ) ? intval( $_POST['rsvpmail_template_subject'] ) : 0;
                 $template_id         = ( isset( $_POST['rsvpmail_template'] ) ) ? intval( $_POST['rsvpmail_template'] ) : 0;
                 if ( $template_id_subject && $template_id ) {

@@ -5347,7 +5347,6 @@ function eme_ajax_store_people_query() {
 
 function eme_ajax_manage_people() {
 	check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    header( 'Content-type: application/json; charset=utf-8' );
 	$ajaxResult = [];
 	if ( isset( $_POST['do_action'] ) ) {
 		$do_action = eme_sanitize_request( $_POST['do_action'] );
@@ -5362,9 +5361,11 @@ function eme_ajax_manage_people() {
 
 		switch ( $do_action ) {
 			case 'untrashPeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_untrash_people( $ids );
 				break;
 			case 'trashPeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				if (!empty( $_POST['transferto_id'] ) ) {
 					$to_person_id = intval( $_POST['transferto_id'] );
 				} else {
@@ -5373,38 +5374,49 @@ function eme_ajax_manage_people() {
 				eme_ajax_action_trash_people( $ids, $to_person_id );
 				break;
 			case 'gdprPeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_gdpr_trash_people( $ids );
 				break;
 			case 'gdprApprovePeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_gdpr_approve_people( $ids );
 				break;
 			case 'gdprUnapprovePeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_gdpr_unapprove_people( $ids );
 				break;
 			case 'massmailPeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_set_massmail_people( $ids );
 				break;
 			case 'noMassmailPeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_set_nomassmail_people( $ids );
 				break;
 			case 'bdemailPeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_set_bdemail_people( $ids );
 				break;
 			case 'noBdemailPeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_set_nobdemail_people( $ids );
 				break;
 			case 'deletePeople':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_delete_people( $ids );
 				break;
 			case 'addToGroup':
+                header( 'Content-type: application/json; charset=utf-8' );
 				$group_id = ( isset( $_POST['addtogroup'] ) ) ? intval( $_POST['addtogroup'] ) : 0;
 				eme_ajax_action_add_people_to_group( $ids_arr, $group_id );
 				break;
 			case 'removeFromGroup':
+                header( 'Content-type: application/json; charset=utf-8' );
 				$group_id = ( isset( $_POST['removefromgroup'] ) ) ? intval( $_POST['removefromgroup'] ) : 0;
 				eme_ajax_action_delete_people_from_group( $ids_arr, $group_id );
 				break;
 			case 'changeLanguage':
+                header( 'Content-type: application/json; charset=utf-8' );
 				eme_ajax_action_set_people_language( $ids );
 				break;
 			case 'pdf':

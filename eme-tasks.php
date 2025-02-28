@@ -1438,7 +1438,7 @@ function eme_email_tasksignup_action( $signup, $action ) {
 		$subject = eme_get_template_format_plain( $event['event_properties']['task_signup_pending_email_subject_tpl'] ) ?: get_option( 'eme_task_signup_pending_email_subject' );
 		$body = eme_get_template_format_plain( $event['event_properties']['task_signup_pending_email_body_tpl'] ) ?: get_option( 'eme_task_signup_pending_email_body' );
 		$cp_subject = eme_get_template_format_plain( $event['event_properties']['cp_task_signup_pending_email_subject_tpl'] ) ?: get_option( 'eme_cp_task_signup_pending_email_subject' );
-		$cp_body = eme_get_template_format_plain( $event['event_properties']['cp_task_signup_pending_email_body_tpl'] ) get_option( 'eme_cp_task_signup_pending_email_body' );
+		$cp_body = eme_get_template_format_plain( $event['event_properties']['cp_task_signup_pending_email_body_tpl'] ) ?: get_option( 'eme_cp_task_signup_pending_email_body' );
 	} elseif ( $action == 'new' ) {
 		$subject = eme_get_template_format_plain( $event['event_properties']['task_signup_email_subject_tpl'] ) ?: get_option( 'eme_task_signup_email_subject' );
 		$body = eme_get_template_format_plain( $event['event_properties']['task_signup_email_body_tpl'] ) ?: get_option( 'eme_task_signup_email_body' );

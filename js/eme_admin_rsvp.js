@@ -274,7 +274,10 @@ jQuery(document).ready(function ($) {
                 return params;
             },
             fields: rsvpfields,
-            sortingInfoSelector: '#bookingstablesortingInfo'
+            sortingInfoSelector: '#bookingstablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
+            }
         });
 
         $('#BookingsTableContainer').jtable('load');

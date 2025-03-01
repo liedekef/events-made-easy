@@ -212,10 +212,14 @@ jQuery(document).ready(function ($) {
                 }
                 return params;
             },
-
-            fields: memberfields
+            fields: memberfields,
+            sortingInfoSelector: '#memberstablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
+            }
         });
         $('#MembersTableContainer').jtable('load');
+        $('<div id="memberstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MembersTableContainer');
     }
 
     if ($('#MembershipsTableContainer').length) {

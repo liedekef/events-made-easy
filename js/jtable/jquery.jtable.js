@@ -4328,10 +4328,10 @@ THE SOFTWARE.
             sortingInfoSelector: '',
             // Localization
             messages: {
-                sortingInfoStart: 'Sorting: ',
+                sortingInfoPrefix: 'Applied table sorting: ',
                 ascending: 'Ascending',
                 descending: 'Descending',
-                sortingInfoNone: 'none',
+                sortingInfoNone: 'No table sorting applied',
             }
 
         },
@@ -4379,15 +4379,16 @@ THE SOFTWARE.
         _onRecordsLoaded: function (data) {
             let self = this;
             if (self.options.sortingInfoSelector) {
-                let sortingInfoString = self.options.messages.sortingInfoStart;
                 let sortingInfo = self.getSortingInfo();
+                let sortingInfoString = '';
                 if (sortingInfo && sortingInfo.length > 0) {
+                    sortingInfoString = self.options.messages.sortingInfoPrefix;
                     $.each(sortingInfo, function (idx, sortingVal) {
                         if (idx > 0) sortingInfoString += ', ';
                         sortingInfoString += sortingVal.fieldTitle + ' (' + (sortingVal.sortOrder === 'ASC' ? self.options.messages.ascending : self.options.messages.descending) + ')';
                     });
                 } else {
-                    sortingInfoString += self.options.messages.sortingInfoNone;
+                    sortingInfoString = self.options.messages.sortingInfoNone;
                 }
                 $(self.options.sortingInfoSelector).text(sortingInfoString);
             }

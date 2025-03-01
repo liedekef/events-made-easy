@@ -60,10 +60,15 @@ jQuery(document).ready( function($) {
                     }
                 ]
             },
-
+            sortingInfoSelector: '#attendancestablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
+            }
         });
 
         $('#AttendancesTableContainer').jtable('load');
+        $('<div id="attendancestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#AttendancesTableContainer');
+
     }
 
     // Re-load records when user click 'load records' button.

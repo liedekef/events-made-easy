@@ -284,9 +284,14 @@ jQuery(document).ready(function ($) {
                 return params;
             },
 
-            fields: personfields
+            fields: personfields,
+            sortingInfoSelector: '#peopletablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
+            }
         });
         $('#PeopleTableContainer').jtable('load');
+        $('<div id="peopletablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#PeopleTableContainer');
     }
 
     if ($('#GroupsTableContainer').length) {

@@ -4,18 +4,20 @@ Short changes:
 * No need to hold CTRL-key for multisorting if it is active
 * Removed options: dialogShowEffect, dialogHideEffect
 * Removed deprecated private method `_addRowToTable` and rename `_addRow` to `_addRowToTable`
+* deleteAction, updateAction and selecting is now only possible if a key-field is defined (makes no sense otherwise)
+
 * Added per-field option "tooltip", which will set the html-title property of that column
 * Added public methods deselectRows (Makes row/rows 'deselected') and invertRowSelection (Inverts selection state of a single row)
-* deleteAction, updateAction and selecting is now only possible if a key-field is defined (makes no sense otherwise)
 * Added option "roomForSortableIcon" (true/false) for sorting, so the sortable icon has room to appear next to the text
   True by default
 * Added option "formDialogWidth", which takes a css-width as value, to change the auto-width of the create/edit dialog to something else
 * Added option "sortingInfoSelector", which is a jquery selector where the current sorting info will be displayed
   Localized too, message strings and their defaults are:
-                sortingInfoStart: 'Sorting: '
+                sortingInfoPrefix: 'Applied table sorting: '
                 ascending: 'Ascending'
                 descending: 'Descending'
-                sortingInfoNone: 'none'
+                sortingInfoNone: 'No table sorting applied'
+
 * If datepicker is not available, the date-type will be considered as a HTML5-date field
 * All HTML5 input types are supported as long as they follow the same syntax as type=text for input (so color, range, datetime-local, email, tel, week, month).
 * Better logic for resize of columns (resize bar is now full height of header column) and sorting (now sorting goes from nothing => ASC => DESC => nothing)

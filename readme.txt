@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.41 (2025//) =
+* Fix html-output in mass-actions dropdown
+* Show sorting info for some tables, to indicate exactly how the data is sorted
+
 = 2.5.40 (2025/02/24) =
 * Task option typo fix
 * Added captcha support for Friendly Captcha

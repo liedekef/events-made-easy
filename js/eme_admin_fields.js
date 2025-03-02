@@ -61,10 +61,15 @@ jQuery(document).ready( function($) {
                     sorting: false,
                     width: '2%'
                 }
+            },
+            sortingInfoSelector: '#formfieldstablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
             }
         });
 
         $('#FormfieldsTableContainer').jtable('load');
+        $('<div id="formfieldstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#FormfieldsTableContainer');
 
         // Actions button
         $('#FormfieldsActionsButton').on("click",function (e) {

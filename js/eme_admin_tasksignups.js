@@ -82,11 +82,16 @@ jQuery(document).ready( function($) {
                 sorting: false,
                 title: emetasks.translate_person
             },
+        },
+        sortingInfoSelector: '#tasksignupstablesortingInfo',
+        messages: {
+            'sortingInfoNone': ''
         }
     });
 
     if ($('#TaskSignupsTableContainer').length) {
         $('#TaskSignupsTableContainer').jtable('load');
+        $('<div id="tasksignupstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#TaskSignupsTableContainer');
     }
 
     function updateShowHideStuff () {

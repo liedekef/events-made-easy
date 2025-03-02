@@ -27,9 +27,14 @@ jQuery(document).ready( function($) {
                 category_name: {
                     title: emecategories.translate_name,
                 },
+            },
+            sortingInfoSelector: '#categoriestablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
             }
         });
         $('#CategoriesTableContainer').jtable('load');
+        $('<div id="categoriestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#CategoriesTableContainer');
 
         // Actions button
         $('#CategoriesActionsButton').on("click",function (e) {

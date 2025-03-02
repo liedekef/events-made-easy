@@ -281,9 +281,14 @@ jQuery(document).ready(function ($) {
             actions: {
                 listAction: ajaxurl+'?action=eme_memberships_list&eme_admin_nonce='+ememembers.translate_adminnonce
             },
-            fields: membershipfields
+            fields: membershipfields,
+            sortingInfoSelector: '#membershipstablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
+            }
         });
         $('#MembershipsTableContainer').jtable('load');
+        $('<div id="membershipstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MembershipsTableContainer');
     }
 
     // Actions button

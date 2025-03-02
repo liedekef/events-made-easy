@@ -122,10 +122,15 @@ jQuery(document).ready(function ($) {
                 }
                 return params;
             },
-            fields: locationfields
+            fields: locationfields,
+            sortingInfoSelector: '#locationstablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
+            }
         });
 
         $('#LocationsTableContainer').jtable('load');
+        $('<div id="locationstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#LocationsTableContainer');
     }
 
     function updateShowHideStuff () {

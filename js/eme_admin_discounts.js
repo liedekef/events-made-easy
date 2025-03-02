@@ -21,8 +21,6 @@ jQuery(document).ready(function ($) {
         fields: {
             id: {
                 key: true,
-                create: false,
-                edit: false,
                 list: false
             },
             name: {
@@ -64,6 +62,10 @@ jQuery(document).ready(function ($) {
             valid_to: {
                 title: emediscounts.translate_validto
             }
+        },
+        sortingInfoSelector: '#discountstablesortingInfo',
+        messages: {
+            'sortingInfoNone': ''
         }
     });
 
@@ -90,9 +92,7 @@ jQuery(document).ready(function ($) {
             id: {
                 title: emediscounts.translate_id,
                 key: true,
-                create: false,
-                edit: false,
-                visibility: 'hidden'
+                list: false
             },
             name: {
                 title: emediscounts.translate_name,
@@ -103,15 +103,22 @@ jQuery(document).ready(function ($) {
             maxdiscounts: {
                 title: emediscounts.translate_maxdiscounts
             }
+        },
+        sortingInfoSelector: '#discountgroupstablesortingInfo',
+        messages: {
+            'sortingInfoNone': ''
         }
     });
 
     // Load list from server, but only if the container is there
     if ($('#DiscountsTableContainer').length) {
         $('#DiscountsTableContainer').jtable('load');
+        $('<div id="discountstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#DiscountsTableContainer');
+
     }
     if ($('#DiscountGroupsTableContainer').length) {
         $('#DiscountGroupsTableContainer').jtable('load');
+        $('<div id="discountgroupstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#DiscountGroupsTableContainer');
     }
 
     // Actions button

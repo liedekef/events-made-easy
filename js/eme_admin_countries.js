@@ -17,8 +17,7 @@ jQuery(document).ready(function ($) {
             id: {
                 title: emecountries.translate_id,
                 key: true,
-                create: false,
-                edit: false
+                list: false,
             },
             name: {
                 title: emecountries.translate_name
@@ -35,6 +34,10 @@ jQuery(document).ready(function ($) {
             lang: {
                 title: emecountries.translate_lang
             }
+        },
+        sortingInfoSelector: '#countriestablesortingInfo',
+        messages: {
+            'sortingInfoNone': ''
         }
     });
 
@@ -55,8 +58,7 @@ jQuery(document).ready(function ($) {
             id: {
                 title: emecountries.translate_id,
                 key: true,
-                create: false,
-                edit: false
+                list: false,
             },
             name: {
                 title: emecountries.translate_name,
@@ -77,15 +79,22 @@ jQuery(document).ready(function ($) {
             locale: {
                 title: emecountries.translate_locale
             }
+        },
+        sortingInfoSelector: '#statestablesortingInfo',
+        messages: {
+            'sortingInfoNone': ''
         }
     });
 
     // Load list from server, but only if the container is there
     if ($('#CountriesTableContainer').length) {
         $('#CountriesTableContainer').jtable('load');
+        $('<div id="countriestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#CountriesTableContainer');
+
     }
     if ($('#StatesTableContainer').length) {
         $('#StatesTableContainer').jtable('load');
+        $('<div id="statestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#StatesTableContainer');
     }
 
     // Actions button

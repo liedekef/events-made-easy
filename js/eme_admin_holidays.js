@@ -27,9 +27,14 @@ jQuery(document).ready( function($) {
                 name: {
                     title: emeholidays.translate_name,
                 },
+            },
+            sortingInfoSelector: '#holidaystablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
             }
         });
         $('#HolidaysTableContainer').jtable('load');
+        $('<div id="holidaystablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#HolidaysTableContainer');
 
         // Actions button
         $('#HolidaysActionsButton').on("click",function (e) {

@@ -493,9 +493,14 @@ jQuery(document).ready( function($) {
                     visibility: 'fixed',
                     sorting: false
                 }
+            },
+            sortingInfoSelector: '#mailingreporttablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
             }
         });
         $('#MailingReportTableContainer').jtable('load');
+        $('<div id="mailingreporttablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MailingReportTableContainer');
 
         // Re-load records when user click 'load records' button.
         $('#ReportLoadRecordsButton').on("click",function (e) {
@@ -586,9 +591,14 @@ jQuery(document).ready( function($) {
                     visibility: 'fixed',
                     sorting: false
                 }
+            },
+            sortingInfoSelector: '#mailstablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
             }
         });
         //$('#MailsTableContainer').jtable('load');
+        $('<div id="mailstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MailsTableContainer');
 
         // Actions button
         $('#MailsActionsButton').on("click",function (e) {
@@ -719,9 +729,14 @@ jQuery(document).ready( function($) {
                     visibility: 'fixed',
                     sorting: false
                 }
+            },
+            sortingInfoSelector: '#mailingstablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
             }
         });
         //$('#MailingsTableContainer').jtable('load');
+        $('<div id="mailingstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MailingsTableContainer');
 
         // Actions button
         $('#MailingsActionsButton').on("click",function (e) {
@@ -823,9 +838,14 @@ jQuery(document).ready( function($) {
                     visibility: 'fixed',
                     sorting: false
                 }
+            },
+            sortingInfoSelector: '#archivedmailingstablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
             }
         });
         //$('#ArchivedMailingsTableContainer').jtable('load');
+        $('<div id="archivedmailingstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#ArchivedMailingsTableContainer');
 
         // Actions button
         $('#ArchivedMailingsActionsButton').on("click",function (e) {

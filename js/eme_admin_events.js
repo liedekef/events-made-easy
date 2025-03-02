@@ -596,11 +596,16 @@ jQuery(document).ready( function($) {
                 }
                 return params;
             },
-            fields: eventfields
+            fields: eventfields,
+            sortingInfoSelector: '#eventstablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
+            }
         });
 
         // Load list from server
         $('#EventsTableContainer').jtable('load');
+        $('<div id="eventstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#EventsTableContainer');
 
         // Actions button
         $('#EventsActionsButton').on("click",function (e) {

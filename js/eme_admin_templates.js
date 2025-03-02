@@ -48,10 +48,15 @@ jQuery(document).ready( function($) {
                     listClass: 'eme-jtable-center',
                     columnResizable: false
                 }
+            },
+            sortingInfoSelector: '#templatestablesortingInfo',
+            messages: {
+                'sortingInfoNone': ''
             }
         });
 
         $('#TemplatesTableContainer').jtable('load');
+        $('<div id="templatestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#TemplatesTableContainer');
     }
 
     // Actions button

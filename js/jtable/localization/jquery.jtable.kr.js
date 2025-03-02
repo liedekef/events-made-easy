@@ -24,7 +24,11 @@
         canNotDeletedRecords: '{1}건의 자료 중 {0}건을 삭제할 수 없습니다.',
         deleteProgress: '삭제중 {1}건 중 {0}번째 자료, 진행 중...',
         pageSizeChangeLabel: '페이지당 조회수',
-        gotoPageLabel: '페이지 이동'
+        gotoPageLabel: '페이지 이동',
+        sortingInfoPrefix: '정렬 적용: ',
+        ascending: '오름차순',
+        descending: '내림차순',
+        sortingInfoNone: '정렬이 적용되지 않음'
     });
 
 })(jQuery);

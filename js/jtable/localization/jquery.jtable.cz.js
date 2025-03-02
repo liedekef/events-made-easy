@@ -24,7 +24,11 @@ Author: Jakub Stajner
         canNotDeletedRecords: '{0} z {1} záznamů nemohlo být odstraněno!',
         deleteProgress: 'Odstraňuje se {0} z {1} ...',
         pageSizeChangeLabel: 'Záznamů na stránku',
-        gotoPageLabel: 'Jdi na stránku'
+        gotoPageLabel: 'Jdi na stránku',
+        sortingInfoPrefix: 'Řazení použito: ',
+        ascending: 'Vzestupně',
+        descending: 'Sestupně',
+        sortingInfoNone: 'Žádné řazení použito'
     });
 
 })(jQuery);

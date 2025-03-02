@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'விபரங்களை அழிக்க முடியவில்லை',
         deleteProgress: 'விபரங்கள் அழிக்கப்படுகிறது',
         pageSizeChangeLabel: 'பக்க எண்ணிக்கை',
-        gotoPageLabel: 'இப்பக்கம் செல்'
+        gotoPageLabel: 'இப்பக்கம் செல்',
+        sortingInfoPrefix: 'வரிசைப்படுத்தல் பயன்படுத்தப்பட்டது: ',
+        ascending: 'ஏறுவரிசை',
+        descending: 'இறங்குவரிசை',
+        sortingInfoNone: 'வரிசைப்படுத்தல் பயன்படுத்தப்படவில்லை'
     });
 
 })(jQuery);

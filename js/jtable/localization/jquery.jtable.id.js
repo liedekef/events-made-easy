@@ -25,7 +25,11 @@
         canNotDeletedRecords: 'Gagal menghapus {0} dari {1} data!',
         deleteProgress: 'Menghapus {0} dari {1} data, memproses...',
         pageSizeChangeLabel: 'Jumlah data',
-        gotoPageLabel: 'Ke halaman'
+        gotoPageLabel: 'Ke halaman',
+        sortingInfoPrefix: 'Pengurutan diterapkan: ',
+        ascending: 'Naik',
+        descending: 'Turun',
+        sortingInfoNone: 'Tidak ada pengurutan yang diterapkan'
     });
 
 })(jQuery);

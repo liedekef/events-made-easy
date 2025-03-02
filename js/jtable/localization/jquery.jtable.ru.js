@@ -25,7 +25,11 @@
         canNotDeletedRecords: 'Невозможно удалить записи: {0} из {1}!',
         deleteProgress: 'Удаление {0} из {1} записей...',
         pageSizeChangeLabel: 'Строк',
-        gotoPageLabel: 'На страницу'
+        gotoPageLabel: 'На страницу',
+        sortingInfoPrefix: 'Сортировка применена: ',
+        ascending: 'По возрастанию',
+        descending: 'По убыванию',
+        sortingInfoNone: 'Сортировка не применена'
     });
 
 })(jQuery);

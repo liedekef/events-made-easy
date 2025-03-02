@@ -22,7 +22,11 @@
         pagingInfo: 'Hiện từ {0} đến {1} của {2} bản ghi',
         canNotDeletedRecords: 'Không thể xóa {0} bản ghi của {1} bản ghi!',
         deleteProgress: 'Đã xóa được {0} của {1} bản ghi. Đang xử lý...',
-        pageSizeChangeLabel: 'Số bản ghi', //New. Must be localized.
-        gotoPageLabel: 'Tới trang' //New. Must be localized.
+        pageSizeChangeLabel: 'Số bản ghi',
+        gotoPageLabel: 'Tới trang',
+        sortingInfoPrefix: 'Sắp xếp được áp dụng: ',
+        ascending: 'Tăng dần',
+        descending: 'Giảm dần',
+        sortingInfoNone: 'Không có sắp xếp nào được áp dụng'
     });
 })(jQuery);

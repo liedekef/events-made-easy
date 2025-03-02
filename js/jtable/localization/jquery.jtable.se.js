@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'Kan inte radera {0} av {1} poster!',
         deleteProgress: 'Raderat {0} av {1} poster, bearbetar...',
         pageSizeChangeLabel: 'Antal poster per sida',
-        gotoPageLabel: 'Gå till sida'
+        gotoPageLabel: 'Gå till sida',
+        sortingInfoPrefix: 'Sortering tillämpad: ',
+        ascending: 'Stigande',
+        descending: 'Fallande',
+        sortingInfoNone: 'Ingen sortering tillämpad'
     });
 
 })(jQuery);

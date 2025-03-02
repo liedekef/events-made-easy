@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'Impossibile eliminare il record {0} di {1}!',
         deleteProgress: 'Eliminazione di {0} di {1} record in corso...',
         pageSizeChangeLabel: 'Righe per pagina',
-        gotoPageLabel: 'Vai alla pagina'
+        gotoPageLabel: 'Vai alla pagina',
+        sortingInfoPrefix: 'Ordinamento applicato: ',
+        ascending: 'Ascendente',
+        descending: 'Discendente',
+        sortingInfoNone: 'Nessun ordinamento applicato'
     });
 
 })(jQuery);

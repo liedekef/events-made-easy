@@ -24,7 +24,11 @@
         canNotDeletedRecords: '{1} kayıttan {0} adedi silinemedi!',
         deleteProgress: '{1} kayıttan {0} adedi silindi, devam ediliyor...',
         pageSizeChangeLabel: 'Satır sayısı',
-        gotoPageLabel: 'Sayfaya git'
+        gotoPageLabel: 'Sayfaya git',
+        sortingInfoPrefix: 'Sıralama uygulandı: ',
+        ascending: 'Artan',
+        descending: 'Azalan',
+        sortingInfoNone: 'Sıralama uygulanmadı'
     });
 
 })(jQuery);

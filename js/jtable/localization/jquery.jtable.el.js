@@ -24,6 +24,10 @@ $.extend(true, jTable.prototype.options.messages, {
     canNotDeletedRecords: 'Δεν είναι δυνατή η διαγραφή {0} από {1}',
     deleteProgress: 'Διαγράφεται {0} από {1}...',
     pageSizeChangeLabel: 'Εγγραφές ανά σελίδα',
-    gotoPageLabel: 'Πήγαινε στη σελίδα'
+    gotoPageLabel: 'Πήγαινε στη σελίδα',
+    sortingInfoPrefix: 'Εφαρμόστηκε ταξινόμηση: ',
+    ascending: 'Αύξουσα',
+    descending: 'Φθίνουσα',
+    sortingInfoNone: 'Δεν εφαρμόστηκε ταξινόμηση'
 });
 })(jQuery);

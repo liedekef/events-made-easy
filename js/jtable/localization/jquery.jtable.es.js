@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'No se puede borrar registro(s) {0} de {1}!',
         deleteProgress: 'Eliminando {0} de {1} registros, procesando...',
         pageSizeChangeLabel: 'Registros por página',
-        gotoPageLabel: 'Ir a página'
+        gotoPageLabel: 'Ir a página',
+        sortingInfoPrefix: 'Orden aplicado: ',
+        ascending: 'Ascendente',
+        descending: 'Descendente',
+        sortingInfoNone: 'No se aplicó ningún orden'
     });
 
 })(jQuery);

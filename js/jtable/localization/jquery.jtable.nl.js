@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'Kan gegevens {0} van {1} niet wissen!',
         deleteProgress: 'Gegevens {0} van {1} wissen...',
         pageSizeChangeLabel: 'Aantal rijen',
-        gotoPageLabel: 'Ga naar pagina'
+        gotoPageLabel: 'Ga naar pagina',
+        sortingInfoPrefix: 'Sortering toegepast: ',
+        ascending: 'Oplopend',
+        descending: 'Aflopend',
+        sortingInfoNone: 'Geen sortering toegepast',
 });
 
 })(jQuery);

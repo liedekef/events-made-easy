@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'তথ্য মুছে ফেলা যাবে না',
         deleteProgress: 'অগ্রগতি মুছে ফেলা',
         pageSizeChangeLabel: 'পাতার আয়তন পরিবর্তন মোড়ক',
-        gotoPageLabel: 'পাতা মোড়কে যান'
+        gotoPageLabel: 'পাতা মোড়কে যান',
+        sortingInfoPrefix: 'সর্ট প্রয়োগ করা হয়েছে: ',
+        ascending: 'আরোহী',
+        descending: 'অবরোহী',
+        sortingInfoNone: 'কোনো সর্ট প্রয়োগ করা হয়নি',
     });
 
 })(jQuery);

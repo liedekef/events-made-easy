@@ -24,7 +24,11 @@
     	pageSizeChangeLabel: 'Broj zapisa',
     	gotoPageLabel: 'Idi na stranicu',
     	canNotDeletedRecords: 'Nije bilo moguće obrisati {0} od {1} zapisa!',
-    	deleteProgress: 'Obrisano {0} od {1} zapisa, u tijeku...'
+    	deleteProgress: 'Obrisano {0} od {1} zapisa, u tijeku...',
+        sortingInfoPrefix: 'Sortiranje primijenjeno: ',
+        ascending: 'Uzlazno',
+        descending: 'Silazno',
+        sortingInfoNone: 'Nema sortiranja'
     });
 
 })(jQuery);

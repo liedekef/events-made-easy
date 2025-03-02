@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'Nepavyko pašalinti {0} iš {1} įrašų!',
         deleteProgress: 'Šalinamas {0} iš {1} įrašų, prašome palaukti...',
         pageSizeChangeLabel: 'Eilutės',
-        gotoPageLabel: 'Į puslapį'
+        gotoPageLabel: 'Į puslapį',
+        sortingInfoPrefix: 'Rūšiavimas taikomas: ',
+        ascending: 'Didėjimo tvarka',
+        descending: 'Mažėjimo tvarka',
+        sortingInfoNone: 'Rūšiavimas nėra taikomas'
     });
 
 })(jQuery);

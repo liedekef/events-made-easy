@@ -26,7 +26,11 @@
         pageSizeChangeLabel: 'عدد السجلات في الصفحة',
         gotoPageLabel: 'الانتقال إلى صفحة',
         canNotDeletedRecords: 'لا يمكن حذف {0} من {1} السجلات!',
-        deleteProgress: 'حذف {0} من {1} السجلات , جاري الحذف'
+        deleteProgress: 'حذف {0} من {1} السجلات , جاري الحذف',
+        sortingInfoPrefix: 'ﺖﻣ ﺖﻄﺒﻴﻗ ﺎﻠﻓﺭﺯ: ',
+        ascending: 'ﺖﺻﺎﻋﺪﻳ',
+        descending: 'ﺖﻧﺍﺰﻠﻳ',
+        sortingInfoNone: 'ﻞﻣ ﻲﺘﻣ ﺖﻄﺒﻴﻗ ﺄﻳ ﻑﺭﺯ'
     });
 
 })(jQuery);

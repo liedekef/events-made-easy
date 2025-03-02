@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'Impossible de supprimer {0} sur {1} enregistrement(s)!',
         deleteProgress: 'Supression {0} sur {1} enregistrement(s), en cours d\'exécution...',
         pageSizeChangeLabel: 'Nombre d\'enregistrement',
-        gotoPageLabel: 'Aller à la page'
+        gotoPageLabel: 'Aller à la page',
+        sortingInfoPrefix: 'Tri appliqué : ',
+        ascending: 'Ascendant',
+        descending: 'Descendant',
+        sortingInfoNone: 'Aucun tri appliqué'
     });
 
 })(jQuery);

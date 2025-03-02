@@ -24,7 +24,11 @@ Author: Tobias Flatin
         canNotDeletedRecords: 'Kan ikke slette {0} av {1} poster!',
         deleteProgress: 'Slettet {0} av {1} poster, bearbeider...',
         pageSizeChangeLabel: 'Antall poster per side',
-        gotoPageLabel: 'Gå til side'
+        gotoPageLabel: 'Gå til side',
+        sortingInfoPrefix: 'Sortering anvendt: ',
+        ascending: 'Stigende',
+        descending: 'Synkende',
+        sortingInfoNone: 'Ingen sortering anvendt'
     });
 
 })(jQuery);

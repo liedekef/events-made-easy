@@ -23,7 +23,11 @@
         canNotDeletedRecords: 'Não foi possível eliminar o(s) registo(s) {0} de {1}!',
         deleteProgress: 'A eliminar {0} de {1} registos ...',
         pageSizeChangeLabel: 'Linhas',
-        gotoPageLabel: 'Ir para a página'
+        gotoPageLabel: 'Ir para a página',
+        sortingInfoPrefix: 'Ordenação aplicada: ',
+        ascending: 'Ascendente',
+        descending: 'Descendente',
+        sortingInfoNone: 'Nenhuma ordenação aplicada'
     });
 
 })(jQuery);

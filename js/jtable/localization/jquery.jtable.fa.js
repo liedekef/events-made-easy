@@ -25,6 +25,10 @@
         deleteProgress: 'حذف {0} از {1} رکورد,در حال پردازش ...',
         pageSizeChangeLabel: 'تعداد خطوط',
         gotoPageLabel: 'برو به صفحه',
+        sortingInfoPrefix: 'ﻡﺮﺘﺑ<200c>ﺳﺍﺰﯾ ﺎﻌﻣﺎﻟ ﺵﺩ: ',
+        ascending: 'ﺺﻋﻭﺪﯾ',
+        descending: 'ﻥﺯﻮﻠﯾ',
+        sortingInfoNone: 'ﻪﯿﭼ ﻡﺮﺘﺑ<200c>ﺳﺍﺰﯾ ﺎﻌﻣﺎﻟ ﻦﺷﺪﻫ ﺎﺴﺗ'
     });
 
 })(jQuery);

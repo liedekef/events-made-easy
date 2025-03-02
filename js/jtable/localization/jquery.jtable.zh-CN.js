@@ -24,7 +24,11 @@
         canNotDeletedRecords: '删除失败 {0} 至 {1}!',
         deleteProgress: '正在删除 {0} 至 {1} 记录, 进行中...',
         pageSizeChangeLabel: '每页显示',
-        gotoPageLabel: '跳转到'
+        gotoPageLabel: '跳转到',
+        sortingInfoPrefix: '排序已应用: ',
+        ascending: '升序',
+        descending: '降序',
+        sortingInfoNone: '未应用排序',
     });
 
 })(jQuery);

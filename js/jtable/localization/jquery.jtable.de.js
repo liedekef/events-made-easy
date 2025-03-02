@@ -24,7 +24,11 @@
         canNotDeletedRecords: '{0} von {1} Einträge konnten nicht gelöscht werden!',
         deleteProgress: '{0} von {1} wird gelöscht...',
         pageSizeChangeLabel: 'Anzahl der Einträge',
-        gotoPageLabel: 'Auf der Seite'
+        gotoPageLabel: 'Auf der Seite',
+        sortingInfoPrefix: 'Sortierung angewendet: ',
+        ascending: 'Aufsteigend',
+        descending: 'Absteigend',
+        sortingInfoNone: 'Keine Sortierung angewendet'
     });
 
 })(jQuery);

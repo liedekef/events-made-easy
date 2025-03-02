@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'Não foi possível excluir registro(s) {0} de {1}!',
         deleteProgress: 'Excluindo {0} de {1} registros, processando...',
         pageSizeChangeLabel: 'Linhas',
-        gotoPageLabel: 'Ir para página'
+        gotoPageLabel: 'Ir para página',
+        sortingInfoPrefix: 'Ordenação aplicada: ',
+        ascending: 'Ascendente',
+        descending: 'Descendente',
+        sortingInfoNone: 'Nenhuma ordenação aplicada'
     });
 
 })(jQuery);

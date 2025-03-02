@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'Nie można usunąć {0} z {1} rekordów!',
         deleteProgress: 'Usunięto {0} z {1} rekordów, Trwa usuwanie...',
         pageSizeChangeLabel: 'Liczba rekordów',
-        gotoPageLabel: 'Idź do strony'
+        gotoPageLabel: 'Idź do strony',
+        sortingInfoPrefix: 'Sortowanie zastosowane: ',
+        ascending: 'Rosnąco',
+        descending: 'Malejąco',
+        sortingInfoNone: 'Brak sortowania'
     });
 
 })(jQuery);

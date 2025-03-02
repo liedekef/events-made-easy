@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'Imposibil de &#351;ters {0} din {1} &icirc;nregistr&atilde;ri!',
         deleteProgress: '&#350;tergere: {0} din {1} &icirc;nregistr&atilde;ri, &icirc;n curs de execu&#355;ie...',
         pageSizeChangeLabel: 'Num&atilde;r de &icirc;nregistr&atilde;ri',
-        gotoPageLabel: 'Mergi la pagina'
+        gotoPageLabel: 'Mergi la pagina',
+        sortingInfoPrefix: 'Sortare aplicată: ',
+        ascending: 'Crescător',
+        descending: 'Descrescător',
+        sortingInfoNone: 'Nicio sortare aplicată',
     });
 
 })(jQuery);

@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'Неможливо видалити записи: {0} з {1}!',
         deleteProgress: 'Видалення {0} з {1} записів...',
         pageSizeChangeLabel: 'Рядків',
-        gotoPageLabel: 'На сторінку'
+        gotoPageLabel: 'На сторінку',
+        sortingInfoPrefix: 'Сортування застосовано: ',
+        ascending: 'За зростанням',
+        descending: 'За спаданням',
+        sortingInfoNone: 'Сортування не застосовано'
     });
 
 })(jQuery);

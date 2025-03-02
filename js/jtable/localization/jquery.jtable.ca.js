@@ -24,7 +24,11 @@
         canNotDeletedRecords: 'No es pot(den) eliminar registre(s) {0} de {1}',
         deleteProgress: 'Eliminant {0} de {1} registres...',
         pageSizeChangeLabel: 'Registres per pàgina',
-        gotoPageLabel: 'Ves a la pàgina'
+        gotoPageLabel: 'Ves a la pàgina',
+        sortingInfoPrefix: 'S\'ha aplicat l\'ordenació: ',
+        ascending: 'Ascendent',
+        descending: 'Descendent',
+        sortingInfoNone: 'No s\'ha aplicat cap ordenació'
     });
 
 })(jQuery);

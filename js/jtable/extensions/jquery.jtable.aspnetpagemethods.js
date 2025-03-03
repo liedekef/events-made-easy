@@ -1,7 +1,6 @@
 ﻿/* 
 
 ASP.NET WEB FORMS PAGE METHODS EXTENSION FOR JTABLE
-http://www.jtable.org
 
 ---------------------------------------------------------------------------
 
@@ -29,7 +28,7 @@ THE SOFTWARE.
 (function ($) {
 
     //extension members
-    $.extend(true, $.hik.jtable.prototype, {
+    $.extend(true, jTable.prototype, {
 
         /* OVERRIDES BASE METHOD.
         * THIS METHOD IS DEPRECATED AND WILL BE REMOVED FROM FEATURE RELEASES.

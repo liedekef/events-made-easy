@@ -1,11 +1,12 @@
 ﻿/* 
 
 jTable 1.0.19 (edited by Franky Van Liedekerke)
-http://www.jtable.org
+https://www.e-dynamics.be
 
 ---------------------------------------------------------------------------
 
 Copyright (C) 2011-2014 by Halil İbrahim Kalkan (http://www.halilibrahimkalkan.com)
+Copyright (C) 2025-no by Franky Van Liedekerke (https://www.e-dynamics.be)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -4328,10 +4329,10 @@ THE SOFTWARE.
             sortingInfoSelector: '',
             // Localization
             messages: {
-                sortingInfoPrefix: 'Applied table sorting: ',
+                sortingInfoPrefix: 'Sorting applied: ',
                 ascending: 'Ascending',
                 descending: 'Descending',
-                sortingInfoNone: 'No table sorting applied',
+                sortingInfoNone: 'No sorting applied',
             }
 
         },

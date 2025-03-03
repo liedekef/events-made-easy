@@ -2,7 +2,6 @@
 
 COOKIES METHODS EXTENSION FOR JTABLE
 REPLACE COOKIES WITH LOCAL STORAGE
-http://www.jtable.org
 
 */
 (function ($) {

@@ -2,7 +2,6 @@
  * theme for jTable. jtable_theme_base.less (or css) file is needed
  * for functionality of jTable. This file does not add any color or shape
  * modifications. It just shows how to set icons. You can change them too.
- * Halil ibrahim Kalkan / http://www.jtable.org
  */
 div.jtable-main-container {
   position: relative;

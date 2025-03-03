@@ -5901,7 +5901,7 @@ function eme_ajax_bookings_list() {
                     } else {
                         $available_seats_string = $available_seats;
                     }
-                    $event_name_info[ $event_id ] .= esc_html__( 'Free: ', 'events-made-easy' ) . $available_seats_string;
+                    $event_name_info[ $event_id ] .= esc_html__( 'Free:', 'events-made-easy' ) .' '. $available_seats_string;
                     $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>$booked_string $booked_seats_string</a>";
                 } else {
                     $total_seats_string                    = '&infin;';
@@ -5909,7 +5909,7 @@ function eme_ajax_bookings_list() {
                 }
 
                 if ( $pending_seats > 0 ) {
-                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending: ', 'events-made-easy' ) . "$pending_seats_string</a>";
+                    $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
                 }
                 if ( $event['event_properties']['take_attendance'] ) {
                     $absent_bookings = eme_get_absent_bookings( $event['event_id'] );
@@ -5917,7 +5917,7 @@ function eme_ajax_bookings_list() {
                         $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                     }
                 }
-                $event_name_info[ $event_id ] .= ', ' . __( 'Max: ', 'events-made-easy' ) . $total_seats_string;
+                $event_name_info[ $event_id ] .= ', ' . __( 'Max:', 'events-made-easy' ) .' '. $total_seats_string;
                 $waitinglist_seats            = $event['event_properties']['waitinglist_seats'];
                 if ( $waitinglist_seats > 0 ) {
                     $event_name_info[ $event_id ] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );

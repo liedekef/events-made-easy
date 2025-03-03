@@ -6617,7 +6617,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                 } else {
                     $available_seats_string = $available_seats;
                 }
-                $info_line .= __( 'Free: ', 'events-made-easy' ) . ' ' . $available_seats_string;
+                $info_line .= __( 'Free:', 'events-made-easy' ) . ' ' . $available_seats_string;
                 $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string</a>";
             } else {
                 $total_seats_string    = '&infin;';
@@ -6625,7 +6625,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             }
 
             if ( $pending_seats > 0 ) {
-                $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . "$pending_seats_string</a>";
+                $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-approval&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Pending:', 'events-made-easy' ) . " $pending_seats_string</a>";
             }
             if ( $event['event_properties']['take_attendance'] ) {
                 $absent_bookings = eme_get_absent_bookings( $event['event_id'] );
@@ -6633,7 +6633,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                 }
             }
-            $info_line .= ', ' . __( 'Max: ', 'events-made-easy' ) . $total_seats_string;
+            $info_line .= ', ' . __( 'Max:', 'events-made-easy' ) .' '. $total_seats_string;
             $waitinglist_seats     = $event['event_properties']['waitinglist_seats'];
             if ( $waitinglist_seats > 0 ) {
                 $info_line .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
@@ -10389,7 +10389,7 @@ function eme_ajax_events_list() {
                 } else {
                     $available_seats_string = $available_seats;
                 }
-                $record['event_name'] .= __( 'Free: ', 'events-made-easy' ) . ' ' . $available_seats_string;
+                $record['event_name'] .= __( 'Free:', 'events-made-easy' ) . ' ' . $available_seats_string;
                 if ($no_edit_links==1) {
                     $record['event_name'] .= ', ' . __( 'Approved:', 'events-made-easy' ) . " $booked_seats_string";
                 } else {
@@ -10421,7 +10421,7 @@ function eme_ajax_events_list() {
                     }
                 }
             }
-            $record['event_name'] .= ', ' . __( 'Max: ', 'events-made-easy' ) . $total_seats_string;
+            $record['event_name'] .= ', ' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string;
             $waitinglist_seats     = $event['event_properties']['waitinglist_seats'];
             if ( $waitinglist_seats > 0 ) {
                 $record['event_name'] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );

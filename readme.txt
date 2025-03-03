@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.42 (2025/03/) =
+* jtable translation updates included
+* Braintree API update to version 6.24.0
+
 = 2.5.41 (2025/03/02) =
 * Fix html-output in mass-actions dropdown
 * Show sorting info for some tables, to indicate exactly how the data is sorted

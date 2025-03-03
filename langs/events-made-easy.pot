@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.5.40\n"
+"Project-Id-Version: Events Made Easy 2.5.41\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-02T08:45:13+00:00\n"
+"POT-Creation-Date: 2025-03-03T21:10:50+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -2642,7 +2642,7 @@ msgstr ""
 #: eme-events.php:6620
 #: eme-events.php:10392
 #: eme-rsvp.php:5904
-msgid "Free: "
+msgid "Free:"
 msgstr ""
 
 #: eme-events.php:6621
@@ -2665,6 +2665,7 @@ msgstr ""
 #: eme-events.php:10411
 #: eme-events.php:10454
 #: eme-events.php:10456
+#: eme-rsvp.php:5912
 #: eme-rsvp.php:5965
 msgid "Pending:"
 msgstr ""
@@ -2681,7 +2682,7 @@ msgstr ""
 #: eme-members.php:6637
 #: eme-recurrence.php:727
 #: eme-rsvp.php:5920
-msgid "Max: "
+msgid "Max:"
 msgstr ""
 
 #: eme-events.php:6639
@@ -13800,10 +13801,6 @@ msgstr ""
 
 #: eme-rsvp.php:5862
 msgid "Click here to see and/or edit the details of the booking."
-msgstr ""
-
-#: eme-rsvp.php:5912
-msgid "Pending: "
 msgstr ""
 
 #: eme-rsvp.php:6002

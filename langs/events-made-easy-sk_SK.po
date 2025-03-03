@@ -2599,12 +2599,6 @@ msgstr "Rezervácie a úlohy"
 msgid "RSVP Info: "
 msgstr "Rezervácie: "
 
-#: eme-events.php:6620
-#: eme-events.php:10392
-#: eme-rsvp.php:5904
-msgid "Free: "
-msgstr "Voľné: "
-
 #: eme-events.php:6621
 #: eme-events.php:6624
 #: eme-events.php:6670
@@ -2625,6 +2619,7 @@ msgstr "Schválené:"
 #: eme-events.php:10411
 #: eme-events.php:10454
 #: eme-events.php:10456
+#: eme-rsvp.php:5912
 #: eme-rsvp.php:5965
 msgid "Pending:"
 msgstr "Čakajúce:"
@@ -2635,14 +2630,6 @@ msgstr "Čakajúce:"
 #: eme-rsvp.php:5917
 msgid "Absent:"
 msgstr "Neprítomní:"
-
-#: eme-events.php:6636
-#: eme-events.php:10424
-#: eme-members.php:6637
-#: eme-recurrence.php:727
-#: eme-rsvp.php:5920
-msgid "Max: "
-msgstr "Max: "
 
 #: eme-events.php:6639
 #: eme-events.php:10427
@@ -13491,10 +13478,6 @@ msgstr "Anonymné"
 msgid "Click here to see and/or edit the details of the booking."
 msgstr "Kliknutím sem zobrazíte alebo upravíte podrobnosti o rezervácii."
 
-#: eme-rsvp.php:5912
-msgid "Pending: "
-msgstr "Nevybavené: "
-
 #: eme-rsvp.php:6002
 msgid "(On waitinglist)"
 msgstr "(Čakajúce)"
@@ -14312,4 +14295,18 @@ msgstr ""
 
 #: eme-events.php:6868
 msgid "Please correct the RSVP form format to use #_SEATS{xx} for all price categories."
+msgstr ""
+
+#: eme-events.php:6620
+#: eme-events.php:10392
+#: eme-rsvp.php:5904
+msgid "Free:"
+msgstr ""
+
+#: eme-events.php:6636
+#: eme-events.php:10424
+#: eme-members.php:6637
+#: eme-recurrence.php:727
+#: eme-rsvp.php:5920
+msgid "Max:"
 msgstr ""

@@ -4698,8 +4698,8 @@ msgstr "RSVP info: "
 #: eme-events.php:6620
 #: eme-events.php:10392
 #: eme-rsvp.php:5904
-msgid "Free: "
-msgstr "Vrij: "
+msgid "Free:"
+msgstr "Vrij:"
 
 #: eme-events.php:6621
 #: eme-events.php:6624
@@ -4721,6 +4721,7 @@ msgstr "Goedgekeurd:"
 #: eme-events.php:10411
 #: eme-events.php:10454
 #: eme-events.php:10456
+#: eme-rsvp.php:5912
 #: eme-rsvp.php:5965
 msgid "Pending:"
 msgstr "Goed te keuren:"
@@ -4737,8 +4738,8 @@ msgstr "Afwezig:"
 #: eme-members.php:6637
 #: eme-recurrence.php:727
 #: eme-rsvp.php:5920
-msgid "Max: "
-msgstr "Max: "
+msgid "Max:"
+msgstr "Max:"
 
 #: eme-events.php:6639
 #: eme-events.php:10427
@@ -12932,10 +12933,6 @@ msgstr "Anoniem"
 #: eme-rsvp.php:5862
 msgid "Click here to see and/or edit the details of the booking."
 msgstr "Klik hier voor tonen en/of veranderen van boekingsdetails."
-
-#: eme-rsvp.php:5912
-msgid "Pending: "
-msgstr "Goed te keuren: "
 
 #: eme-rsvp.php:6002
 msgid "(On waitinglist)"

@@ -4701,12 +4701,6 @@ msgstr "Veranstaltung bearbeiten"
 msgid "RSVP Info: "
 msgstr "Buchungsinformation: "
 
-#: eme-events.php:6620
-#: eme-events.php:10392
-#: eme-rsvp.php:5904
-msgid "Free: "
-msgstr "Frei: "
-
 #: eme-events.php:6621
 #: eme-events.php:6624
 #: eme-events.php:6670
@@ -4727,6 +4721,7 @@ msgstr "Genehmigt:"
 #: eme-events.php:10411
 #: eme-events.php:10454
 #: eme-events.php:10456
+#: eme-rsvp.php:5912
 #: eme-rsvp.php:5965
 msgid "Pending:"
 msgstr "Ausstehend:"
@@ -4737,14 +4732,6 @@ msgstr "Ausstehend:"
 #: eme-rsvp.php:5917
 msgid "Absent:"
 msgstr "Abwesend:"
-
-#: eme-events.php:6636
-#: eme-events.php:10424
-#: eme-members.php:6637
-#: eme-recurrence.php:727
-#: eme-rsvp.php:5920
-msgid "Max: "
-msgstr "Maximal: "
 
 #: eme-events.php:6639
 #: eme-events.php:10427
@@ -12959,10 +12946,6 @@ msgstr "Anonym"
 msgid "Click here to see and/or edit the details of the booking."
 msgstr "Klicke hier, um die Details der Buchung zu sehen und/oder zu bearbeiten."
 
-#: eme-rsvp.php:5912
-msgid "Pending: "
-msgstr "Ausstehend: "
-
 #: eme-rsvp.php:6002
 msgid "(On waitinglist)"
 msgstr "(Auf Warteliste)"
@@ -14330,4 +14313,18 @@ msgstr ""
 
 #: eme-events.php:6868
 msgid "Please correct the RSVP form format to use #_SEATS{xx} for all price categories."
+msgstr ""
+
+#: eme-events.php:6620
+#: eme-events.php:10392
+#: eme-rsvp.php:5904
+msgid "Free:"
+msgstr ""
+
+#: eme-events.php:6636
+#: eme-events.php:10424
+#: eme-members.php:6637
+#: eme-recurrence.php:727
+#: eme-rsvp.php:5920
+msgid "Max:"
 msgstr ""

@@ -724,7 +724,7 @@ function eme_ajax_recurrences_list() {
 			} else {
 				$total_seats_string = $total_seats;
 			}
-			$record['event_name'] .= '<br>' . __( 'Max: ', 'events-made-easy' ) . $total_seats_string;
+			$record['event_name'] .= '<br>' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string;
 			if ( empty( $event['price'] ) ) {
 					$record['eventprice'] = __( 'Free', 'events-made-easy' );
 			} else {

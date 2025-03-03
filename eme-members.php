@@ -6634,7 +6634,7 @@ function eme_ajax_members_list( ) {
         }
         $record['start_date']      = eme_localized_date( $item['start_date'], EME_TIMEZONE, 1 );
         $record['end_date']        = eme_localized_date( $item['end_date'], EME_TIMEZONE, 1 );
-        $record['usage_count']     = $item['properties']['usage_count'] .' ('. __( 'Max: ', 'events-made-easy' ) .$membership['properties']['max_usage_count']. ')';
+        $record['usage_count']     = $item['properties']['usage_count'] .' ('. __( 'Max:', 'events-made-easy' ) .' '.$membership['properties']['max_usage_count']. ')';
         $record['creation_date']   = eme_localized_datetime( $item['creation_date'], EME_TIMEZONE, 1 );
         $record['last_seen']       = eme_localized_datetime( $item['last_seen'], EME_TIMEZONE, 1 );
         $record['payment_date']    = eme_localized_datetime( $item['payment_date'], EME_TIMEZONE, 1 );

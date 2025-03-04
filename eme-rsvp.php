@@ -5812,6 +5812,7 @@ function eme_ajax_bookings_list() {
         $event_id = $booking['event_id'];
         $person_id = $booking['person_id'];
         $event    = eme_get_event( $event_id );
+	$location = eme_get_location( $event['location_id'] );
         $answers  = eme_get_event_answers( $event_id );
         $answers  = array_merge($answers,eme_get_booking_answers( $booking['booking_id'] ));
         if ( ! empty( $booking['person_id'] ) ) {
@@ -5917,7 +5918,13 @@ function eme_ajax_bookings_list() {
                         $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                     }
                 }
-                $event_name_info[ $event_id ] .= ', ' . __( 'Max:', 'events-made-easy' ) .' '. $total_seats_string;
+		if ($location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
+			$event_name_info[ $event_id ] .= ', <s>' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string ."</s>";
+			$event_name_info[ $event_id ] .= __( 'Max (from location):', 'events-made-easy' ) . ' '. $location['location_properties']['max_capacity'];
+		} else {
+			$event_name_info[ $event_id ] .= ', ' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string;
+		}
+
                 $waitinglist_seats            = $event['event_properties']['waitinglist_seats'];
                 if ( $waitinglist_seats > 0 ) {
                     $event_name_info[ $event_id ] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );

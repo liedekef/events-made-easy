@@ -6633,7 +6633,13 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                     $info_line .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                 }
             }
-            $info_line .= ', ' . __( 'Max:', 'events-made-easy' ) .' '. $total_seats_string;
+	    $location = eme_get_location( $event['location_id'] );
+	    if ($location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
+                $info_line .= '<br><s>' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string ."</s>";
+                $info_line .= __( 'Max (from location):', 'events-made-easy' ) . ' '. $location['location_properties']['max_capacity'];
+            } else {
+                $info_line .= '<br>'. __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string;
+            }
             $waitinglist_seats     = $event['event_properties']['waitinglist_seats'];
             if ( $waitinglist_seats > 0 ) {
                 $info_line .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
@@ -6641,7 +6647,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
                 $printable_address     = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_printable&amp;event_id=' . $event['event_id'] );
                 $csv_address           = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_csv&amp;event_id=' . $event['event_id'] );
-                $info_line .= " <br>(<a id='booking_printable_" . $event['event_id'] . "' href='$printable_address'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
+                $info_line .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='$printable_address'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
                 $info_line .= " (<a id='booking_csv_" . $event['event_id'] . "' href='$csv_address'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
             }
         }
@@ -8812,6 +8818,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <td><label for='seats-input'><?php esc_html_e( 'Seats', 'events-made-easy' ); ?> :</label></td>
         <td><input id="seats-input" type="text" name="event_seats" size='8' title="<?php echo esc_html__( 'Enter 0 for no limit', 'events-made-easy' ) . "\n" . esc_html( 'For multiseat events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event_number_seats ); ?>">
             <span class="eme_smaller"><br><?php esc_html_e( 'The max available seats for this event. Enter 0 for no limit. For multiseat events, separate the values by \'||\'', 'events-made-easy' ); ?></span>
+            <span class="eme-hidden" id="loc_max_cap_warning"><br><img style='vertical-align: middle;' src='<?php echo esc_url(EME_PLUGIN_URL);?>images/warning.png' alt='warning'><b><?php esc_html_e( 'A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence.', 'events-made-easy' ); ?></b></span>
         </td>
     </tr>
     <tr id='row_price'>
@@ -10421,7 +10428,12 @@ function eme_ajax_events_list() {
                     }
                 }
             }
-            $record['event_name'] .= ', ' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string;
+            if ($event['location_properties']['max_capacity'] && $event['location_properties']['max_capacity']<$total_seats) {
+                $record['event_name'] .= ', <s>' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string ."</s>";
+                $record['event_name'] .= __( 'Max (from location):', 'events-made-easy' ) . ' '. $event['location_properties']['max_capacity'];
+            } else {
+                $record['event_name'] .= ', ' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string;
+            }
             $waitinglist_seats     = $event['event_properties']['waitinglist_seats'];
             if ( $waitinglist_seats > 0 ) {
                 $record['event_name'] .= ' ' . sprintf( __( '(%d waiting list seats included)', 'events-made-easy' ), $waitinglist_seats );
@@ -10429,7 +10441,7 @@ function eme_ajax_events_list() {
             if ( $booked_seats > 0 || $pending_seats > 0 ) {
                 $printable_address     = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_printable&amp;event_id=' . $event['event_id'] );
                 $csv_address           = admin_url( 'admin.php?page=eme-manager&amp;eme_admin_action=booking_csv&amp;event_id=' . $event['event_id'] );
-                $record['event_name'] .= " <br>(<a id='booking_printable_" . $event['event_id'] . "' href='$printable_address'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
+                $record['event_name'] .= "<br>(<a id='booking_printable_" . $event['event_id'] . "' href='$printable_address'>" . __( 'Printable view', 'events-made-easy' ) . '</a>)';
                 $record['event_name'] .= " (<a id='booking_csv_" . $event['event_id'] . "' href='$csv_address'>" . __( 'CSV export', 'events-made-easy' ) . '</a>)';
             }
         }

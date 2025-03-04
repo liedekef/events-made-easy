@@ -6493,7 +6493,7 @@ function eme_ajax_memberships_list() {
         $record['membership_id'] = $item['membership_id'];
         $record['name'] = "";
         if ($item['status']==0) {
-            $record['name'] = "<span style='text-decoration: line-through;'>";
+            $record['name'] = "<s>";
         }
         if ( current_user_can( get_option( 'eme_cap_edit_members' ) ) ) {
             $record['name'] .= "<a href='" . admin_url( 'admin.php?page=eme-memberships&amp;eme_admin_action=edit_membership&amp;membership_id=' . $item['membership_id'] ) . "' title='" . esc_html__( 'Edit membership', 'events-made-easy' ) . "'>" . eme_esc_html( $item['name'] ) . '</a>';
@@ -6501,7 +6501,7 @@ function eme_ajax_memberships_list() {
             $record['name'] .= eme_esc_html( $item['name'] );
         }
         if ($item['status']==0) {
-            $record['name'] .= "</span>";
+            $record['name'] .= "</s>";
         }
 
         if ( eme_is_empty_string( $item['properties']['member_form_text'] ) && empty( $item['properties']['member_form_tpl'] ) ) {

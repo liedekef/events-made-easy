@@ -139,6 +139,14 @@ jQuery(document).ready( function($) {
         }
     }
 
+    function updateShowHideLocMaxCapWarning() {
+        if (parseInt($('input#eme_loc_prop_max_capacity').val()) >0 ) {
+            $('#loc_max_cap_warning').show();
+        } else {
+            $('#loc_max_cap_warning').hide();
+        }
+    }
+
     function eme_event_location_autocomplete() {
         // for autocomplete to work, the element needs to exist, otherwise JS errors occur
         // we check for that using length
@@ -448,12 +456,14 @@ jQuery(document).ready( function($) {
     }
     updateShowHideTime();
     updateShowHideMultiPriceDescription();
+    updateShowHideLocMaxCapWarning();
     $('input#event-recurrence').on("change",updateShowHideRecurrence);
     $('input#event_tasks').on("change",updateShowHideTasks);
     $('input#event_todos').on("change",updateShowHideTodos);
     $('input#event_rsvp').on("change",updateShowHideRsvp);
     $('input#eme_prop_all_day').on("change",updateShowHideTime);
     $('input#price').on("change",updateShowHideMultiPriceDescription);
+    $('input#eme_loc_prop_max_capacity').on("change",updateShowHideLocMaxCapWarning);
     $('input#approval_required-checkbox').on("change",updateShowHideRsvpAutoApprove);
     // recurrency elements
     $('input#recurrence-interval').on("keyup",updateIntervalDescriptor);

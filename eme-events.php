@@ -6634,7 +6634,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                 }
             }
 	    $location = eme_get_location( $event['location_id'] );
-	    if ($location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
+	    if (!empty($location) && $location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
                 $info_line .= '<br><s>' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string ."</s>";
                 $info_line .= __( 'Max (from location):', 'events-made-easy' ) . ' '. $location['location_properties']['max_capacity'];
             } else {

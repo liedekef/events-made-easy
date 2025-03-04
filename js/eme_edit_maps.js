@@ -167,7 +167,7 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
 
 jQuery(document).ready(function($) {
     function updateOnlineOnly() {
-        if ($('input#eme_loc_prop_online_only').prop('checked')) {
+        if ($('input#eme_loc_prop_online_only').is(':checked')) {
             $('input#location_address1').val('').attr('readonly', true);
             $('input#location_address2').val('').attr('readonly', true);
             $('input#location_city').val('').attr('readonly', true);
@@ -239,7 +239,7 @@ jQuery(document).ready(function($) {
         eme_displayAddress(0);
     });
     $('input#eme_loc_prop_online_only').on("change",updateOnlineOnly);
-    updateOnlineOnly();
+    //updateOnlineOnly(); we don't do this by default, otherwise it will interfere with eme_admin_locations
     $('input#eme_loc_prop_override_loc').on("change",updateOverrideLoc);
-    updateOverrideLoc();
+    //updateOverrideLoc();
 }); 

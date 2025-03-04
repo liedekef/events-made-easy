@@ -141,6 +141,7 @@ jQuery(document).ready(function ($) {
             $('span#span_transferto').hide();
         }
         // online locations don't need an address or map icon
+	// other stuff for online_only is done in updateOnlineOnly function in eme_edit_maps.js
         if ($('input#eme_loc_prop_online_only').is(':checked')) {
             $('div#loc_address').hide();
             $('div#loc_map_icon').hide();

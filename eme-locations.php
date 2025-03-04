@@ -2870,6 +2870,7 @@ function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
     );
 
     foreach ( $locations as $item ) {
+	$properties = eme_init_location_props(eme_unserialize($item['location_properties']));
         $record                = [];
         $record['location_id'] = $item['location_id'];
         $record['name']        = eme_trans_esc_html( $item['location_name'] );
@@ -2881,6 +2882,9 @@ function eme_ajax_locations_autocomplete( $no_wp_die = 0 ) {
         $record['country']     = eme_trans_esc_html( $item['location_country'] );
         $record['latitude']    = eme_trans_esc_html( $item['location_latitude'] );
         $record['longitude']   = eme_trans_esc_html( $item['location_longitude'] );
+	foreach ($properties as $key=>$val) {
+		$record[$key]    = eme_trans_esc_html( $val );
+	}
         $res[]                 = $record;
     }
     echo wp_json_encode( $res );

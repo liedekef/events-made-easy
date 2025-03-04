@@ -5918,7 +5918,7 @@ function eme_ajax_bookings_list() {
                         $event_name_info[ $event_id ] .= ', ' . "<a href='" . admin_url( 'admin.php?page=eme-registration-seats&amp;event_id=' . $event['event_id'] ) . "'>" . __( 'Absent:', 'events-made-easy' ) . " $absent_bookings</a>";
                     }
                 }
-		if ($location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
+		if (!empty($location) && $location['location_properties']['max_capacity'] && $location['location_properties']['max_capacity']<$total_seats) {
 			$event_name_info[ $event_id ] .= ', <s>' . __( 'Max:', 'events-made-easy' ) . ' '. $total_seats_string ."</s>";
 			$event_name_info[ $event_id ] .= __( 'Max (from location):', 'events-made-easy' ) . ' '. $location['location_properties']['max_capacity'];
 		} else {

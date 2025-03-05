@@ -8939,10 +8939,11 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <input id="eme_prop_rsvp_start_number_days" type="text" name="eme_prop_rsvp_start_number_days" size='4' value="<?php echo $event['event_properties']['rsvp_start_number_days']; ?>">
         <?php esc_html_e( 'days', 'events-made-easy' ); ?>
         <input id="eme_prop_rsvp_start_number_hours" type="text" name="eme_prop_rsvp_start_number_hours" size='4' value="<?php echo $event['event_properties']['rsvp_start_number_hours']; ?>">
-        <?php esc_html_e( 'hours', 'events-made-easy' ); ?>
-<?php esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_start_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
-echo eme_ui_select( $event['event_properties']['rsvp_start_target'], 'eme_prop_rsvp_start_target', $eme_rsvp_start_target_list );
-?>
+        <?php esc_html_e( 'hours', 'events-made-easy' );
+              echo " ";
+              esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_start_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
+              echo eme_ui_select( $event['event_properties']['rsvp_start_target'], 'eme_prop_rsvp_start_target', $eme_rsvp_start_target_list );
+        ?>
         &nbsp;<?php esc_html_e( '(Leave empty or 0 to disable this limit)', 'events-made-easy' ); ?>
     </p>
     <p id='span_rsvp_allowed_until'>
@@ -8950,10 +8951,11 @@ echo eme_ui_select( $event['event_properties']['rsvp_start_target'], 'eme_prop_r
         <input id="eme_prop_rsvp_end_number_days" type="text" name="eme_prop_rsvp_end_number_days" size='4' value="<?php echo $event['event_properties']['rsvp_end_number_days']; ?>">
         <?php esc_html_e( 'days', 'events-made-easy' ); ?>
         <input id="eme_prop_rsvp_end_number_hours" type="text" name="eme_prop_rsvp_end_number_hours" size='4' value="<?php echo $event['event_properties']['rsvp_end_number_hours']; ?>">
-        <?php esc_html_e( 'hours', 'events-made-easy' ); ?>
-<?php esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_end_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
-echo eme_ui_select( $event['event_properties']['rsvp_end_target'], 'eme_prop_rsvp_end_target', $eme_rsvp_end_target_list );
-?>
+        <?php esc_html_e( 'hours', 'events-made-easy' );
+              echo " ";
+              esc_html_e( 'before the event ', 'events-made-easy' ); $eme_rsvp_end_target_list = [ 'start' => __( 'starts', 'events-made-easy' ), 'end'   => __( 'ends', 'events-made-easy' ), ];
+              echo eme_ui_select( $event['event_properties']['rsvp_end_target'], 'eme_prop_rsvp_end_target', $eme_rsvp_end_target_list );
+        ?>
     </p>
     <p id='span_rsvp_cutoff'>
         <?php esc_html_e( 'RSVP cancel cutoff before event starts', 'events-made-easy' ); ?>

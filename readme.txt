@@ -102,6 +102,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.5.42 (2025/03/) =
 * jtable translation updates included
 * Braintree API update to version 6.24.0
+* Small JS fixes
+* More visual feedback when creating or listing events to indicate possible location max cap limit
 
 = 2.5.41 (2025/03/02) =
 * Fix html-output in mass-actions dropdown

@@ -6607,7 +6607,6 @@ function eme_ajax_members_list( ) {
             $familytext = '';
         }
 
-        $record['person_id']  = $item['person_id'];
         $record['lastname']   = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['lastname'] ) . '</a> ' . $familytext;
         $record['firstname']  = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['firstname'] ) . '</a> ' . $familytext;
         $record['email']      = "<a href='" . admin_url( 'admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=' . $item['member_id'] ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( $item['email'] ) . '</a> ' . $familytext;

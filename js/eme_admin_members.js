@@ -7,10 +7,6 @@ jQuery(document).ready(function ($) {
                 title: ememembers.translate_memberid,
                 visibility: 'hidden'
             },
-            person_id: {
-                title: ememembers.translate_personid,
-                visibility: 'hidden'
-            },
             lastname: {
                 title: ememembers.translate_lastname
             },

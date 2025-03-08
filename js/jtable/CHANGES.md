@@ -1,5 +1,9 @@
-Short changes:
+= 1.0.42 (2025/03/08) =
+* Added public method resetSorting
+* Added option sortingInfoReset (true/false), which will show a button to reset the sorting to its default next to the sorting info
+  Only works if sortingInfoSelector is set. Default: true
 
+= older
 * Rewritten to use plain jQuery, not jQuery-UI, with HTML5 modal dialogs
 * No need to hold CTRL-key for multisorting if it is active
 * Removed options: dialogShowEffect, dialogHideEffect
@@ -8,6 +12,7 @@ Short changes:
 
 * Added per-field option "tooltip", which will set the html-title property of that column
 * Added public methods deselectRows (Makes row/rows 'deselected') and invertRowSelection (Inverts selection state of a single row)
+* Added public method getSortingInfo
 * Added option "roomForSortableIcon" (true/false) for sorting, so the sortable icon has room to appear next to the text
   True by default
 * Added option "formDialogWidth", which takes a css-width as value, to change the auto-width of the create/edit dialog to something else

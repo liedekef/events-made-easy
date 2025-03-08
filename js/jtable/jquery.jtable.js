@@ -4327,12 +4327,14 @@ THE SOFTWARE.
             roomForSortableIcon: true,
             defaultSorting: '',
             sortingInfoSelector: '',
+            sortingInfoReset: true,
             // Localization
             messages: {
                 sortingInfoPrefix: 'Sorting applied: ',
                 ascending: 'Ascending',
                 descending: 'Descending',
                 sortingInfoNone: 'No sorting applied',
+                resetSorting: 'Reset sorting',
             }
 
         },
@@ -4392,6 +4394,14 @@ THE SOFTWARE.
                     sortingInfoString = self.options.messages.sortingInfoNone;
                 }
                 $(self.options.sortingInfoSelector).text(sortingInfoString);
+                if (self.options.sortingInfoReset) {
+                    $('<button class="jtable-dialog-button jtable-resetsorting-button"></button>')
+                        .html('<span>' + self.options.messages.resetSorting + '</span>')
+                        .on('click', function () {
+                            self.resetSorting();
+                        })
+                        .appendTo(self.options.sortingInfoSelector);
+                }
             }
             base._onRecordsLoaded.apply(self, arguments);
         },
@@ -4638,7 +4648,36 @@ THE SOFTWARE.
                 });
             });
             return SortingInfo;
-        }
+        },
+
+        /* reset sorting order to default
+         *********************************************************************************/
+        resetSorting: function() {
+	    let self = this;
+	    self._lastSorting = []; // clear previous sorting
+            self._buildDefaultSortingArray();
+            if (self.options.saveUserPreferences) {
+                self._saveColumnSortSettings();
+            }
+	    let headerCells = self._$table.find('>thead th');
+            headerCells.each(function () {
+                let $columnHeader = $(this);
+                let fieldName = $columnHeader.data('fieldName');
+		$columnHeader.removeClass('jtable-column-header-sorted-asc jtable-column-header-sorted-desc');
+
+		    // Set default sorting
+		    $.each(self._lastSorting, function (sortIndex, sortField) {
+			    if (sortField.fieldName == fieldName) {
+				    if (sortField.sortOrder == 'DESC') {
+					    $columnHeader.addClass('jtable-column-header-sorted-desc');
+				    } else {
+					    $columnHeader.addClass('jtable-column-header-sorted-asc');
+				    }
+			    }
+		    });
+	    });
+            this._reloadTable();
+        },
 
     });
 

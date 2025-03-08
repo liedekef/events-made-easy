@@ -9941,7 +9941,6 @@ function eme_admin_enqueue_js() {
             'translate_description'                => __( 'Description', 'events-made-easy' ),
             'translate_id'                         => __( 'ID', 'events-made-easy' ),
             'translate_memberid'                   => __( 'Member ID', 'events-made-easy' ),
-            'translate_personid'                   => __( 'Person ID', 'events-made-easy' ),
             'translate_wpuser'                     => __( 'Linked WP user', 'events-made-easy' ),
             'translate_contact'                    => __( 'Contact', 'events-made-easy' ),
             'translate_name'                       => __( 'Name', 'events-made-easy' ),

@@ -4478,6 +4478,8 @@ THE SOFTWARE.
                     if (!self.options.multiSorting || 
                         (self.options.multiSortingCtrlKey && !e.ctrlKey)) {
                         self._lastSorting = []; // clear previous sorting
+                        // also remove column styling from other columns
+                        $columnHeader.siblings().removeClass('jtable-column-header-sorted-asc jtable-column-header-sorted-desc');
                     }
                     self._sortTableByColumn($columnHeader);
                 });
@@ -4502,11 +4504,6 @@ THE SOFTWARE.
          *************************************************************************/
         _sortTableByColumn: function ($columnHeader) {
             let self = this;
-            // Remove sorting styles from all columns except this one
-            // TODO This should not be needed??
-            //if (self._lastSorting.length == 0) {
-             //   $columnHeader.siblings().removeClass('jtable-column-header-sorted-asc jtable-column-header-sorted-desc');
-            //}
 
             // If current sorting list includes this column, remove it from the list
             // We'll then re-add it with the correct class

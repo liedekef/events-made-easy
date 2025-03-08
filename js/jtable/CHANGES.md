@@ -1,3 +1,6 @@
+= 1.0.43 (2025/03/08) =
+* Added option multiSortingCtrlKey (true/false) to restore old behavior of needing to hold down the Ctrl-key for multi-column sorting
+
 = 1.0.42 (2025/03/08) =
 * Added public method resetSorting
 * Added option sortingInfoReset (true/false), which will show a button to reset the sorting to its default next to the sorting info

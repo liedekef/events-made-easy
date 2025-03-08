@@ -4324,6 +4324,7 @@ THE SOFTWARE.
         options: {
             sorting: false,
             multiSorting: false,
+            multiSortingCtrlKey: false,
             roomForSortableIcon: true,
             defaultSorting: '',
             sortingInfoSelector: '',
@@ -4473,9 +4474,9 @@ THE SOFTWARE.
                 .addClass('jtable-column-header-sortable')
                 .on("click", function (e) {
                     e.preventDefault();
-                    // no need to hold down ctrl key for multisorting
                     //if (!self.options.multiSorting || !e.ctrlKey) {
-                    if (!self.options.multiSorting) {
+                    if (!self.options.multiSorting || 
+                        (self.options.multiSortingCtrlKey && !e.ctrlKey)) {
                         self._lastSorting = []; // clear previous sorting
                     }
                     self._sortTableByColumn($columnHeader);

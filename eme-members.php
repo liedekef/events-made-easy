@@ -7432,7 +7432,7 @@ function eme_get_membership_cf_answers_groupingids( $membership_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-    $sql       = $wpdb->prepare( "select distinct a.eme_grouping from $answers_table a left join $members_table m on m.member_id=a.related_id where m.membership_id=%d AND a.type='member'", $membership_id );
+    $sql       = $wpdb->prepare( "SELECT DISTINCT a.eme_grouping FROM $answers_table a LEFT JOIN $members_table m ON m.member_id=a.related_id WHERE m.membership_id=%d AND a.type='member'", $membership_id );
     return $wpdb->get_col( $sql );
 }
 

@@ -1706,7 +1706,7 @@ function eme_ajax_discounts_select2() {
 	$search      = "$where ORDER BY name LIMIT $start,$pagesize";
 
 	$records   = [];
-	$discounts = eme_get_discounts( '', $search );
+	$discounts = eme_get_discounts( $search );
 	foreach ( $discounts as $discount ) {
 		$record       = [];
 		$record['id'] = $discount['id'];
@@ -1743,7 +1743,7 @@ function eme_ajax_dgroups_select2() {
 	$search      = "$where ORDER BY name LIMIT $start,$pagesize";
 
 	$records = [];
-	$dgroups = eme_get_dgroups( '', $search );
+	$dgroups = eme_get_dgroups( $search );
 	foreach ( $dgroups as $dgroup ) {
 		$record       = [];
 		$record['id'] = $dgroup['id'];

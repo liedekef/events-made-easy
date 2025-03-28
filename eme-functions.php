@@ -2840,7 +2840,7 @@ function eme_esc_html_keep_br( $value ) {
     }
 }
 
-function eme_esc_html( $value, $keep_br=0 ) {
+function eme_esc_html( $value ) {
     if ( is_null( $value ) || $value === '' ) {
         return $value;
     }
@@ -2848,18 +2848,6 @@ function eme_esc_html( $value, $keep_br=0 ) {
         return array_map( 'eme_esc_html', $value );
     }
     return esc_html( $value );
-}
-
-// unused function
-function eme_strip_tags( $value ) {
-    if ( is_null( $value ) ) {
-        return $value;
-    }
-    if ( is_array( $value ) ) {
-        return array_map( 'eme_strip_tags', $value );
-    }
-    $value = preg_replace( '/^\s*$/', '', wp_strip_all_tags( $value ) );
-    return eme_sanitize_request( eme_strip_weird( $value ) );
 }
 
 function eme_sanitize_filenamechars( $filepart ) {

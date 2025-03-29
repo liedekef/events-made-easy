@@ -56,10 +56,10 @@ function eme_lang_url_mode() {
 		$url_mode = 2;
 	}
 	if ( empty( $url_mode ) ) {
-		$lang_code = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
-		$url       = eme_current_page_url();
-		$home_url  = preg_quote( preg_replace( "/\/$lang_code\/?$/", '', home_url() ), '/' );
-		if ( preg_match( "/$home_url\/($lang_code)\//", $url ) ) {
+		$lang_regex = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
+		$url        = eme_current_page_url();
+		$home_url   = preg_quote( preg_replace( "/\/$lang_regex\/?$/", '', home_url() ), '/' );
+		if ( preg_match( "/$home_url\/($lang_regex)\//", $url ) ) {
 			$url_mode = 2;
 		}
 	}
@@ -73,9 +73,9 @@ function eme_uri_add_lang( $name, $lang ) {
 	if ( ! empty( $lang ) ) {
 		$url_mode = eme_lang_url_mode();
 		if ( $url_mode == 2 ) {
-			$lang_code = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
-			$the_link  = preg_replace( "/\/$lang_code\/?$/", '', $the_link );
-			$the_link  = trailingslashit( $the_link ) . "$lang/" . user_trailingslashit( $name );
+			$lang_regex = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
+			$the_link   = preg_replace( "/\/$lang_regex\/?$/", '', $the_link );
+			$the_link   = trailingslashit( $the_link ) . "$lang/" . user_trailingslashit( $name );
 		} elseif ( $url_mode == 1 ) {
 			$the_link = trailingslashit( remove_query_arg( 'lang', $the_link ) );
 			$the_link = $the_link . user_trailingslashit( $name );
@@ -160,33 +160,33 @@ function eme_translate_string( $text, $lang = '' ) {
 }
 
 function eme_detect_used_languages( $text ) {
-	$lang_code = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
+	$lang_regex = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
 
 	$languages = [];
-	if ( preg_match_all( "/\[:($lang_code?)\]/", $text, $matches ) ) {
+	if ( preg_match_all( "/\[:($lang_regex?)\]/", $text, $matches ) ) {
 		$languages = array_unique( $matches[1] );
-	} elseif ( preg_match_all( "/\{:($lang_code?)\}/", $text, $matches ) ) {
+	} elseif ( preg_match_all( "/\{:($lang_regex?)\}/", $text, $matches ) ) {
 		$languages = array_unique( $matches[1] );
 	}
 	return $languages;
 }
 
 function eme_split_language_blocks( $text, $languages ) {
-	$lang_code = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
+	$lang_regex = apply_filters( 'eme_language_regex', EME_LANGUAGE_REGEX );
 
 	$result = [];
 	foreach ( $languages as $language ) {
 		$result[ $language ] = '';
 	}
 	$current_language = false;
-	$split_regex      = "#(\[:$lang_code\]|\[:\]|\{:$lang_code\}|\{:\})#ism";
+	$split_regex      = "#(\[:$lang_regex\]|\[:\]|\{:$lang_regex\}|\{:\})#ism";
 	$blocks           = preg_split( $split_regex, $text, - 1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE );
 	foreach ( $blocks as $block ) {
 		// detect tags
-		if ( preg_match( "#^\[:($lang_code)]$#ism", $block, $matches ) ) {
+		if ( preg_match( "#^\[:($lang_regex)]$#ism", $block, $matches ) ) {
 			$current_language = $matches[1];
 			continue;
-		} elseif ( preg_match( "#^{:($lang_code)}$#ism", $block, $matches ) ) {
+		} elseif ( preg_match( "#^{:($lang_regex)}$#ism", $block, $matches ) ) {
 			$current_language = $matches[1];
 			continue;
 		}

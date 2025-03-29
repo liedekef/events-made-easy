@@ -2490,6 +2490,11 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                                 $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                             }
                         }
+                        if ( $target == 'html' ) {
+                            $field_replace = apply_filters( 'eme_general', $field_replace );
+                        } else {
+                            $field_replace = apply_filters( 'eme_text', $field_replace );
+                        }
                     }
                     foreach ( $files as $file ) {
                         if ( $file['field_id'] == $field_id ) {
@@ -2505,13 +2510,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                             }
                         }
                     }
-
                     $replacement = eme_translate( $field_replace, $lang );
-                    if ( $target == 'html' ) {
-                        $replacement = apply_filters( 'eme_general', $replacement );
-                    } else {
-                        $replacement = apply_filters( 'eme_text', $replacement );
-                    }
                 } else {
                     // no location custom field? Then leave it alone
                     $found = 0;

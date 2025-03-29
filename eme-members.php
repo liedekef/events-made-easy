@@ -5667,9 +5667,14 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                 foreach ( $answers as $answer ) {
                     if ( $answer['field_id'] == $formfield['field_id'] ) {
                         if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
-                            $matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
                         } else {
-                            $matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                        }
+                        if ( $target == 'html' ) {
+                            $matched_answers[] = apply_filters( 'eme_general', $field_replace );
+                        } else {
+                            $matched_answers[] = apply_filters( 'eme_text', $field_replace );
                         }
                         break;
                     }
@@ -5695,20 +5700,20 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                             continue;
                         }
                         if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
-                            $matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
                         } else {
-                            $matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                        }
+                        if ( $target == 'html' ) {
+                            $matched_answers[] = apply_filters( 'eme_general', $field_replace );
+                        } else {
+                            $matched_answers[] = apply_filters( 'eme_text', $field_replace );
                         }
                     }
                 }
 
                 $replacement = join($eol_sep, $matched_answers);
                 $replacement = eme_translate( $replacement, $lang );
-                if ( $target == 'html' ) {
-                    $replacement = apply_filters( 'eme_general', $replacement );
-                } else {
-                    $replacement = apply_filters( 'eme_text', $replacement );
-                }
             } else {
                 // no members custom field? Then leave it alone
                 $found = 0;
@@ -5917,6 +5922,11 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
                         } else {
                             $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                         }
+                        if ( $target == 'html' ) {
+                            $field_replace = apply_filters( 'eme_general', $field_replace );
+                        } else {
+                            $field_replace = apply_filters( 'eme_text', $field_replace );
+                        }
                     }
                 }
                 foreach ( $files as $file ) {
@@ -5934,11 +5944,6 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
                     }
                 }
                 $replacement = eme_translate( $field_replace, $lang );
-                if ( $target == 'html' ) {
-                    $replacement = apply_filters( 'eme_general', $replacement );
-                } else {
-                    $replacement = apply_filters( 'eme_text', $replacement );
-                }
             } else {
                 // no memberships custom field? Then leave it alone
                 $found = 0;

@@ -3091,6 +3091,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                             } else {
                                 $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
                             }
+                            if ( $target == 'html' ) {
+                                $field_replace = apply_filters( 'eme_general', $field_replace );
+                            } else {
+                                $field_replace = apply_filters( 'eme_text', $field_replace );
+                            }
                         }
                     }
                     foreach ( $files as $file ) {
@@ -3107,13 +3112,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                             }
                         }
                     }
-
                     $replacement = eme_translate( $field_replace, $lang );
-                    if ( $target == 'html' ) {
-                        $replacement = apply_filters( 'eme_general', $replacement );
-                    } else {
-                        $replacement = apply_filters( 'eme_text', $replacement );
-                    }
                 } else {
                     // no event custom field? Then leave it alone
                     $found = 0;

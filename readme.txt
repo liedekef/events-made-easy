@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.43 (2025//) =
+* Fix the use of #_FIELDVALUE for uploaded files
+
 = 2.5.42 (2025/03/09) =
 * jtable translation updates included
 * Braintree API update to version 6.24.0

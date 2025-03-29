@@ -3943,9 +3943,14 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                 foreach ( $answers as $answer ) {
                     if ( $answer['field_id'] == $formfield['field_id'] ) {
                         if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
-                            $matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
                         } else {
-                            $matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                        }
+                        if ( $target == 'html' ) {
+                            $matched_answers[] = apply_filters( 'eme_general', $field_replace );
+                        } else {
+                            $matched_answers[] = apply_filters( 'eme_text', $field_replace );
                         }
                         break; // only one is allowed
                     }
@@ -3973,20 +3978,19 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                             continue;
                         }
                         if ( $matches[1] == 'VALUE' || $take_answers_from_post ) {
-                            $matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 0, $sep, $target );
                         } else {
-                            $matched_answers[] = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                            $field_replace = eme_answer2readable( $answer['answer'], $formfield, 1, $sep, $target );
+                        }
+                        if ( $target == 'html' ) {
+                            $matched_answers[] = apply_filters( 'eme_general', $field_replace );
+                        } else {
+                            $matched_answers[] = apply_filters( 'eme_text', $field_replace );
                         }
                     }
                 }
                 $replacement = join($eol_sep, $matched_answers);
-
                 $replacement = eme_translate( $replacement, $lang );
-                if ( $target == 'html' ) {
-                    $replacement = apply_filters( 'eme_general', $replacement );
-                } else {
-                    $replacement = apply_filters( 'eme_text', $replacement );
-                }
             } else {
                 $found = 0;
             }

@@ -3961,6 +3961,11 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                         if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
                             // for file, we can show the url. For multifile this would not make any sense
                             $matched_answers[] = $file['url'];
+                            if ( $target == 'html' ) {
+                                $matched_answers[] = esc_url($file['url']) ;
+                            } else {
+                                $matched_answers[] = $file['url'] ;
+                            }
                         } else {
                             if ( $target == 'html' ) {
                                 $matched_answers[] = eme_get_uploaded_file_html( $file );

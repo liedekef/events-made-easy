@@ -3102,7 +3102,11 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                         if ( $file['field_id'] == $field_id ) {
                             if ( $matches[1] == 'VALUE' && $formfield['field_type'] == 'file' ) {
                                 // for file, we can show the url. For multifile this would not make any sense
-                                $field_replace = $file['url'] ;
+                                if ( $target == 'html' ) {
+                                    $field_replace .= esc_url($file['url']) ;
+                                } else {
+                                    $field_replace .= $file['url'] ;
+                                }
                             } else {
                                 if ( $target == 'html' ) {
                                     $field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';

@@ -2573,11 +2573,8 @@ function eme_get_editor_settings( $name, $tinymce = true, $quicktags = true, $me
 }
 
 function eme_nl2br_save_html( $string ) {
-    if ( empty($string) ) {
-        return $string;
-    }
-    // no \n found: do nothing (this also allow this function to be called multiple times on the same string without doing anything on subsequent calls
-    if ( ! strstr( $string, "\n" ) ) {
+    // empty or no \n found: do nothing (this also allow this function to be called multiple times on the same string without doing anything on subsequent calls
+    if (empty($string) || !str_contains($string, "\n")) {
         return $string;
     }
     // avoid looping if no tags in the string.
@@ -2612,6 +2609,9 @@ function eme_nl2br_save_html( $string ) {
                     if ( ! preg_match( '#^\s*</?|^\s*\[\/?(eme|events)_if#', $lines[ $i + 1 ] ) ) {
                         $lines[ $i ] .= '<br>';
                     }
+                } elseif ( preg_match( '#</a>\s*$#', $line ) && preg_match( '#^\s*$#', $lines[ $i + 1 ] ) ) {
+                    # add a br if one line ends on closing a and the next line is empty
+                    $lines[ $i ] .= '<br>';
                 } elseif ( preg_match( '#</span>\s*$#', $line ) && preg_match( '#^\s*<span#', $lines[ $i + 1 ] ) ) {
                     # add a br if one line ends on closing span and the next starts with opening span too
                     $lines[ $i ] .= '<br>';
@@ -2620,7 +2620,7 @@ function eme_nl2br_save_html( $string ) {
         }
     }
     // now that we added the needed br-tags, join back together and return the modified string
-    $res = join( "\n", $lines );
+    $res = implode( "\n", $lines );
     return str_replace( 'BREAK', "<br>\n", $res );
 }
 

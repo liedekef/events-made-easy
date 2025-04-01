@@ -1007,7 +1007,7 @@ function eme_get_discounts( $extra_search = '' ) {
 	$table = EME_DB_PREFIX . EME_DISCOUNTS_TBNAME;
 	$sql   = "SELECT * FROM $table";
 	if ( ! empty( $extra_search ) ) {
-		$sql .= " AND $extra_search";
+		$sql .= " WHERE $extra_search";
 	}
 	$rows = $wpdb->get_results( $sql, ARRAY_A );
 	foreach ( $rows as $key => $discount ) {
@@ -1022,7 +1022,7 @@ function eme_get_dgroups( $extra_search = '' ) {
 	$table = EME_DB_PREFIX . EME_DISCOUNTGROUPS_TBNAME;
 	$sql   = "SELECT * FROM $table";
 	if ( ! empty( $extra_search ) ) {
-		$sql .= " AND $extra_search";
+		$sql .= " WHERE $extra_search";
 	}
 	return $wpdb->get_results( $sql, ARRAY_A );
 }

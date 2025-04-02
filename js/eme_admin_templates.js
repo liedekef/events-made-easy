@@ -83,7 +83,7 @@ jQuery(document).ready( function($) {
                     if (do_action=='deleteTemplates') {
                         $('div#templates-message').html(emetemplates.translate_deleted);
                         $('div#templates-message').show();
-                        $('div#templates-message').delay(3000).fadeOut('slow');
+                        $('div#templates-message').delay(5000).fadeOut('slow');
                     }
                 });
             }

@@ -539,7 +539,7 @@ jQuery(document).ready( function($) {
         ajax: {
             url: ajaxurl,
             dataType: 'json',
-            delay: 1000,
+            delay: 500,
             data: function (params) {
                 return {
                     q: params.term, // search term
@@ -571,7 +571,7 @@ jQuery(document).ready( function($) {
         ajax: {
             url: ajaxurl,
             dataType: 'json',
-            delay: 1000,
+            delay: 500,
             data: function (params) {
                 return {
                     q: params.term, // search term
@@ -622,7 +622,7 @@ jQuery(document).ready( function($) {
         ajax: {
             url: ajaxurl,
             dataType: 'json',
-            delay: 1000,
+            delay: 500,
             data: function (params) {
                 return {
                     q: params.term, // search term
@@ -657,7 +657,7 @@ jQuery(document).ready( function($) {
         ajax: {
             url: ajaxurl,
             dataType: 'json',
-            delay: 1000,
+            delay: 500,
             data: function (params) {
                 return {
                     q: params.term, // search term

@@ -200,7 +200,7 @@ jQuery(document).ready(function ($) {
                                     if (data.Result!='OK') {
                                         $('div#bookings-message').html(data.htmlmessage);
                                         $('div#bookings-message').show();
-                                        $('div#bookings-message').delay(3000).fadeOut('slow');
+                                        $('div#bookings-message').delay(5000).fadeOut('slow');
                                     }
 
                                     $('#BookingsTableContainer').jtable('reload');
@@ -226,7 +226,7 @@ jQuery(document).ready(function ($) {
                                     if (data.Result!='OK') {
                                         $('div#bookings-message').html(data.htmlmessage);
                                         $('div#bookings-message').show();
-                                        $('div#bookings-message').delay(3000).fadeOut('slow');
+                                        $('div#bookings-message').delay(5000).fadeOut('slow');
                                     }
 
                                     $('#BookingsTableContainer').jtable('reload');
@@ -427,7 +427,7 @@ jQuery(document).ready(function ($) {
                     $('#BookingsActionsButton').prop('disabled', false);
                     $('div#bookings-message').html(data.htmlmessage);
                     $('div#bookings-message').show();
-                    $('div#bookings-message').delay(3000).fadeOut('slow');
+                    $('div#bookings-message').delay(5000).fadeOut('slow');
                 }, 'json');
             }
         }

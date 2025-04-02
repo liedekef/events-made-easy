@@ -812,7 +812,7 @@ jQuery(document).ready( function($) {
     });
     // when doing form changes, we set a small delay to avoid calling the json function too many times
     let timer;
-    let delay = 1000; // 1 seconds delay after last input
+    let delay = 500; // .5 seconds delay after last input
     if ($('[name=eme-rsvp-form]').length) {
         // the on-syntax helps to propagate the event handler to dynamic created fields too
         $('[name=eme-rsvp-form]').on('input', function(event) {

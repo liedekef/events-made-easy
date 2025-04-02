@@ -362,7 +362,7 @@ jQuery(document).ready(function ($) {
                         if (do_action=='deleteGroups') {
                             $('div#groups-message').html(data.htmlmessage);
                             $('div#groups-message').show();
-                            $('div#groups-message').delay(3000).fadeOut('slow');
+                            $('div#groups-message').delay(5000).fadeOut('slow');
                         }
                     }, 'json');
                 }
@@ -440,7 +440,7 @@ jQuery(document).ready(function ($) {
                     $('#PeopleActionsButton').prop('disabled', false);
                     $('div#people-message').html(data.htmlmessage);
                     $('div#people-message').show();
-                    $('div#people-message').delay(3000).fadeOut('slow');
+                    $('div#people-message').delay(5000).fadeOut('slow');
                 }, 'json');
             }
         }
@@ -491,7 +491,7 @@ jQuery(document).ready(function ($) {
             $('#StoreQueryDiv').hide();
             $('div#people-message').html(data.htmlmessage);
             $('div#people-message').show();
-            $('div#people-message').delay(3000).fadeOut('slow');
+            $('div#people-message').delay(5000).fadeOut('slow');
         }, 'json');
         // return false to make sure the real form doesn't submit
         return false;

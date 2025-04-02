@@ -143,7 +143,7 @@ jQuery(document).ready( function($) {
                     $('#TaskSignupsActionsButton').text(emetasks.translate_apply);
                     $('div#tasksignups-message').html(data.htmlmessage);
                     $('div#tasksignups-message').show();
-                    $('div#tasksignups-message').delay(3000).fadeOut('slow');
+                    $('div#tasksignups-message').delay(5000).fadeOut('slow');
                 }, 'json');
             }
         }

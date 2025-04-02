@@ -163,7 +163,7 @@ jQuery(document).ready( function($) {
                     $("#eme_eventmail_send_membergroups").val(null).trigger("change");
                     $("#eme_eventmail_send_memberships").val(null).trigger("change");
                     $("#eme_mail_type").val(null).trigger("change");
-                    $('div#eventmail-message').delay(10000).fadeOut('slow');
+                    $('div#eventmail-message').delay(5000).fadeOut('slow');
                 }
                 $('#eventmailButton').text(ememails.translate_sendmail);
                 $('#eventmailButton').prop('disabled', false);
@@ -409,7 +409,7 @@ jQuery(document).ready( function($) {
         ajax: {
             url: ajaxurl+'?action=eme_events_select2',
             dataType: 'json',
-            delay: 1000,
+            delay: 500,
             data: function (params) {
                 let search_all=0;
                 if ($('#eventsearch_all').is(':checked')) {
@@ -769,7 +769,7 @@ jQuery(document).ready( function($) {
                         $('#MailingsActionsButton').prop('disabled', false);
                         $('div#mailings-message').html(data.htmlmessage);
                         $('div#mailings-message').show();
-                        $('div#mailings-message').delay(3000).fadeOut('slow');
+                        $('div#mailings-message').delay(5000).fadeOut('slow');
                     }, 'json');
                 }
             }
@@ -878,7 +878,7 @@ jQuery(document).ready( function($) {
                         $('#ArchivedMailingsActionsButton').prop('disabled', false);
                         $('div#archivedmailings-message').html(data.htmlmessage);
                         $('div#archivedmailings-message').show();
-                        $('div#archivedmailings-message').delay(3000).fadeOut('slow');
+                        $('div#archivedmailings-message').delay(5000).fadeOut('slow');
                     }, 'json');
                 }
             }

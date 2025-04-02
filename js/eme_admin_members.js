@@ -313,7 +313,7 @@ jQuery(document).ready(function ($) {
                     $('div#memberships-message').html(data.htmlmessage);
                     $('div#memberships-message').show();
                     if (do_action!='showMembershipStats') {
-                        $('div#memberships-message').delay(3000).fadeOut('slow');
+                        $('div#memberships-message').delay(5000).fadeOut('slow');
                     }
                 }, 'json');
             }
@@ -400,7 +400,7 @@ jQuery(document).ready(function ($) {
                     $('#MembersActionsButton').prop('disabled', false);
                     $('div#members-message').html(data.htmlmessage);
                     $('div#members-message').show();
-                    $('div#members-message').delay(3000).fadeOut('slow');
+                    $('div#members-message').delay(5000).fadeOut('slow');
                 }, 'json');
             }
         }
@@ -451,7 +451,7 @@ jQuery(document).ready(function ($) {
             $('#StoreQueryDiv').hide();
             $('div#members-message').html(data.htmlmessage);
             $('div#members-message').show();
-            $('div#members-message').delay(3000).fadeOut('slow');
+            $('div#members-message').delay(5000).fadeOut('slow');
         }, 'json');
         // return false to make sure the real form doesn't submit
         return false;

@@ -883,7 +883,6 @@ function eme_locations_table( $message = '' ) {
 ?>
     <div id="hint">
         <?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
-        <?php esc_html_e( 'If you can\'t see your custom field in the "Custom fields to filter on" select-box, make sure you marked it as "searchable" in the field definition.', 'events-made-easy' ); ?>
     </div>
 <?php
     }
@@ -2951,9 +2950,15 @@ function eme_ajax_locations_list() {
         $sql       = "SELECT locations.* FROM $table AS locations $where $orderby $limit";
     } else {
         $field_ids_arr = [];
+        $group_concat_sql = '';
         foreach ( $formfields_searchable as $formfield ) {
             $field_ids_arr[] = $formfield['field_id'];
+            $field_id        = $formfield['field_id'];
+            // we need this GROUP_CONCAT so we can sort on those fields too (otherwise the columns FIELD_* don't exist in the returning sql
+            // but we'll do the GROUP_CONCAT only when needed of course
+            $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
         }
+
         if ( ! empty( $_POST['search_customfieldids'] ) && eme_is_numeric_array( $_POST['search_customfieldids'] ) ) {
             $field_ids = join( ',', $_POST['search_customfieldids'] );
         } else {
@@ -2962,14 +2967,14 @@ function eme_ajax_locations_list() {
         if ( isset( $_POST['search_customfields'] ) && $_POST['search_customfields'] != '' ) {
             $search_customfields = esc_sql( $wpdb->esc_like( eme_sanitize_request( $_POST['search_customfields'] ) ) );
             $sql_join        = "
-                   INNER JOIN (SELECT related_id FROM $answers_table
+                   INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
                          WHERE answer LIKE '%$search_customfields%' AND field_id IN ($field_ids) AND type='location'
                          GROUP BY related_id
                         ) ans
                    ON locations.location_id=ans.related_id";
         } else {
             $sql_join = "
-                   LEFT JOIN (SELECT related_id FROM $answers_table WHERE type='location'
+                   LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table WHERE type='location'
                          GROUP BY related_id
                         ) ans
                    ON locations.location_id=ans.related_id";

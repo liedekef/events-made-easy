@@ -5493,17 +5493,28 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
         }
     } elseif ( $include_customformfields ) {
         $answers_table         = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
+
+        $formfields_searchable = eme_get_searchable_formfields( 'events', 1 );
+
+        // we need this GROUP_CONCAT so we can sort on those fields too (otherwise the columns FIELD_* don't exist in the returning sql
+        // but we'll do the GROUP_CONCAT only when needed of course
+        $group_concat_sql = '';
+        foreach ( $formfields_searchable as $formfield ) {
+            $field_id        = $formfield['field_id'];
+            $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
+        }
+
         if ( $search_customfields != '' ) {
             $search_customfields = esc_sql( $wpdb->esc_like($search_customfields) );
             $sql_join            = "
-           INNER JOIN (SELECT related_id FROM $answers_table
+           INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table
              WHERE answer LIKE '%$search_customfields%' AND field_id IN ($search_customfieldids) AND type='event'
              GROUP BY related_id
             ) ans
            ON $events_table.event_id=ans.related_id";
         } else {
             $sql_join = "
-           LEFT JOIN (SELECT related_id FROM $answers_table WHERE type='event'
+           LEFT JOIN (SELECT $group_concat_sql related_id FROM $answers_table WHERE type='event'
              GROUP BY related_id
             ) ans
            ON $events_table.event_id=ans.related_id";
@@ -6038,7 +6049,6 @@ function eme_events_table( $message = '' ) {
 ?>
     <div id="hint">
         <?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
-        <?php esc_html_e( 'If you can\'t see your custom field in the "Custom fields to filter on" select-box, make sure you marked it as "searchable" in the field definition.', 'events-made-easy' ); ?>
     </div>
 <?php
     }

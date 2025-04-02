@@ -1794,7 +1794,6 @@ function eme_render_people_table_and_filters( $limit_to_group = 0) {
 ?>
         <div id="hint">
         <?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
-        <?php esc_html_e( 'If you can\'t see your custom field in the "Custom fields to filter on" select-box, make sure you marked it as "searchable" in the field definition.', 'events-made-easy' ); ?>
         </div>
 <?php
     }

@@ -2867,7 +2867,6 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
 ?>
     <div id="hint">
         <?php esc_html_e( 'Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the "Custom fields to filter on" select-box shown.', 'events-made-easy' ); ?><br>
-        <?php esc_html_e( 'If you can\'t see your custom field in the "Custom fields to filter on" select-box, make sure you marked it as "searchable" in the field definition.', 'events-made-easy' ); ?>
     </div>
 <?php
     }
@@ -3130,7 +3129,7 @@ function eme_get_sql_members_searchfields( $search_terms, $count = 0, $memberids
     foreach ( $formfields_searchable as $formfield ) {
         $field_id        = $formfield['field_id'];
         $field_ids_arr[] = $field_id;
-        if ( ! ( $memberids_only || $peopleids_only || $emails_only ) && ! strstr( $where, 'FIELD' ) ) {
+        if ( ! ( $memberids_only || $peopleids_only || $emails_only ) ) {
             $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
         }
     }

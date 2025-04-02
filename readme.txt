@@ -103,6 +103,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Fix discount filtering in events
 * Allow/fix sorting on custom fields for events and locations
 * Slightly smaller delay to show dynamic price or fields when a user stops typing (from 1 second to 0.5 seconds)
+* Added customfield_ids and customfield_value options to the eme_events shortcode:
+  customfield_ids should be a comma-separated list of custom field ids you want to search through
+  customfield_value is the value you want to search for in the list of custom field ids
+  This allows the events to be filtered on custom field values as well.
 
 = 2.5.43 (2025/03/28) =
 * Fix the use of #_FIELDVALUE for uploaded files

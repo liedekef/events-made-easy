@@ -4167,7 +4167,7 @@ function eme_replace_notes_placeholders( $format, $event = '', $target = 'html' 
 }
 
 // TEMPLATE TAGS
-function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $format = '', $format_header = '', $format_footer = '', $echo = 0, $category = '', $showperiod = '', $long_events = 0, $author = '', $contact_person = '', $paging = 0, $event_ids = '', $location_ids = '', $user_registered_only = 0, $show_ongoing = 1, $link_showperiod = 0, $notcategory = '', $show_recurrent_events_once = 0, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $no_events_message = '', $template_id_no_events = 0, $limit_offset = 0 ) {
+function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $format = '', $format_header = '', $format_footer = '', $echo = 0, $category = '', $showperiod = '', $long_events = 0, $author = '', $contact_person = '', $paging = 0, $event_ids = '', $location_ids = '', $user_registered_only = 0, $show_ongoing = 1, $link_showperiod = 0, $notcategory = '', $show_recurrent_events_once = 0, $template_id = 0, $template_id_header = 0, $template_id_footer = 0, $no_events_message = '', $template_id_no_events = 0, $limit_offset = 0, $customfield_ids = '', $customfield_value = '' ) {
     global $post;
     if ( $limit == -1 || $limit === '' ) {
         $limit = get_option( 'eme_event_list_number_items' );
@@ -4334,9 +4334,9 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
     }
     // We request $limit+1 events, so we know if we need to show the pagination link or not.
     if ( $limit == 0 ) {
-        $events = eme_get_events( scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
+        $events = eme_get_events( scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, search_customfieldids: $customfield_ids, search_customfields: $customfield_value );
     } else {
-        $events = eme_get_events( limit: $limit + 1, scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions );
+        $events = eme_get_events( limit: $limit + 1, scope: $scope, order: $order, offset: $limit_offset, location_id: $location_ids, category: $category, author: $author, contact_person: $contact_person, show_ongoing: $show_ongoing, notcategory: $notcategory, show_recurrent_events_once: $show_recurrent_events_once, extra_conditions: $extra_conditions, search_customfieldids: $customfield_ids, search_customfields: $customfield_value );
     }
     $events_count = count( $events );
 
@@ -4570,6 +4570,8 @@ function eme_get_events_list_shortcode( $atts ) {
             'ignore_filter'              => 0,
             'offset'                     => 0,
             'distance'                   => 0,
+            'customfield_ids'            => '',
+            'customfield_value'          => '',
         ],
         $atts
     );
@@ -4686,6 +4688,14 @@ function eme_get_events_list_shortcode( $atts ) {
 
     $atts['format'] = preg_replace( '/#OTHER/', '#', $atts['format'] );
 
+    if (!eme_is_list_of_int($atts['customfield_ids'])) {
+        $atts['customfield_ids'] = '';
+    }
+    if (empty($atts['customfield_ids']) && !empty($atts['customfield_value'])) {
+        $formfields_searchable = eme_get_searchable_formfields( 'events' );
+        $atts['customfield_ids'] = join( ',', $formfields_searchable);
+    }
+
     $result = eme_get_events_list( 
         $atts['limit'], 
         $atts['scope'], 
@@ -4712,7 +4722,9 @@ function eme_get_events_list_shortcode( $atts ) {
         $atts['template_id_footer'], 
         $atts['no_events_message'], 
         $atts['template_id_no_events'], 
-        $atts['offset'] 
+        $atts['offset'],
+        $atts['customfield_ids'],
+        $atts['customfield_value'],
     );
     return $result;
 }
@@ -5504,7 +5516,7 @@ function eme_get_events( $limit = 0, $scope = 'future', $order = 'ASC', $offset 
             $group_concat_sql .= "GROUP_CONCAT(CASE WHEN field_id = $field_id THEN answer END) AS 'FIELD_$field_id',";
         }
 
-        if ( $search_customfields != '' ) {
+        if ( $search_customfields != '' && eme_is_list_of_int( $search_customfieldids ) ) {
             $search_customfields = esc_sql( $wpdb->esc_like($search_customfields) );
             $sql_join            = "
            INNER JOIN (SELECT $group_concat_sql related_id FROM $answers_table

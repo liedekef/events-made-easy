@@ -603,7 +603,7 @@ jQuery(document).ready( function($) {
         width: 'style'
     });
     $('.eme_select2_people_groups_class').select2({
-        width: 'style',
+        dropdownAutoWidth: true,
         placeholder: emeadmin.translate_anygroup
     });
     $('.eme_select2_memberstatus_class').select2({

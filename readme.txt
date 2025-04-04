@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.43
+Stable tag: 2.5.44
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.44 (2025/04/02) =
+= 2.5.44 (2025/04/04) =
 * Fix discount filtering in events
 * Allow/fix sorting on custom fields for events and locations
 * Slightly smaller delay to show dynamic price or fields when a user stops typing (from 1 second to 0.5 seconds)

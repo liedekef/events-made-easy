@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.5.42\n"
+"Project-Id-Version: Events Made Easy 2.5.43\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-28T09:28:11+00:00\n"
+"POT-Creation-Date: 2025-04-04T08:25:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -58,22 +58,22 @@ msgstr ""
 #: eme-countries.php:985
 #: eme-discounts.php:1640
 #: eme-discounts.php:1680
-#: eme-events.php:10239
-#: eme-events.php:10637
-#: eme-events.php:10897
+#: eme-events.php:10264
+#: eme-events.php:10662
+#: eme-events.php:10922
 #: eme-formfields.php:5074
 #: eme-formfields.php:5125
 #: eme-formfields.php:5136
 #: eme-formfields.php:5137
 #: eme-formfields.php:5159
 #: eme-formfields.php:5160
-#: eme-functions.php:3332
-#: eme-functions.php:3353
-#: eme-functions.php:3354
-#: eme-functions.php:3397
+#: eme-functions.php:3320
+#: eme-functions.php:3341
+#: eme-functions.php:3342
+#: eme-functions.php:3385
 #: eme-holidays.php:277
 #: eme-holidays.php:316
-#: eme-locations.php:2908
+#: eme-locations.php:2910
 #: eme-mailer.php:1331
 #: eme-mailer.php:1429
 #: eme-mailer.php:1530
@@ -85,30 +85,30 @@ msgstr ""
 #: eme-mailer.php:2951
 #: eme-mailer.php:2996
 #: eme-mailer.php:3053
-#: eme-members.php:6449
-#: eme-members.php:6570
-#: eme-members.php:6715
-#: eme-members.php:6803
-#: eme-members.php:6883
+#: eme-members.php:6461
+#: eme-members.php:6582
+#: eme-members.php:6727
+#: eme-members.php:6815
+#: eme-members.php:6895
 #: eme-options.php:138
 #: eme-payments.php:3988
-#: eme-people.php:3995
-#: eme-people.php:5096
-#: eme-people.php:5206
-#: eme-people.php:5278
-#: eme-people.php:5318
-#: eme-people.php:5357
-#: eme-people.php:5453
+#: eme-people.php:3998
+#: eme-people.php:5099
+#: eme-people.php:5209
+#: eme-people.php:5281
+#: eme-people.php:5321
+#: eme-people.php:5360
+#: eme-people.php:5456
 #: eme-recurrence.php:631
 #: eme-recurrence.php:800
 #: eme-rsvp.php:1264
-#: eme-rsvp.php:4742
-#: eme-rsvp.php:4749
-#: eme-rsvp.php:4780
-#: eme-rsvp.php:4787
-#: eme-rsvp.php:4835
-#: eme-rsvp.php:5642
-#: eme-rsvp.php:5664
+#: eme-rsvp.php:4751
+#: eme-rsvp.php:4758
+#: eme-rsvp.php:4789
+#: eme-rsvp.php:4796
+#: eme-rsvp.php:4844
+#: eme-rsvp.php:5651
+#: eme-rsvp.php:5673
 #: eme-tasks.php:1854
 #: eme-tasks.php:1958
 #: eme-tasks.php:1969
@@ -117,53 +117,53 @@ msgid "Access denied!"
 msgstr ""
 
 #: eme-actions.php:223
-#: eme-events.php:6317
-#: eme-events.php:9723
+#: eme-events.php:6342
+#: eme-events.php:9748
 #: eme-templates.php:44
 msgid "Event"
 msgstr ""
 
 #: eme-actions.php:232
-#: eme-events.php:6318
-#: eme-events.php:8446
-#: eme-events.php:9670
+#: eme-events.php:6343
+#: eme-events.php:8471
+#: eme-events.php:9695
 #: eme-locations.php:390
 msgid "Location"
 msgstr ""
 
 #: eme-actions.php:358
-#: eme-events.php:9591
-#: eme-events.php:9824
-#: eme-events.php:9857
-#: eme-events.php:9892
-#: eme-events.php:9957
+#: eme-events.php:9616
+#: eme-events.php:9849
+#: eme-events.php:9882
+#: eme-events.php:9917
+#: eme-events.php:9982
 #: eme-gdpr.php:441
 #: eme-gdpr.php:586
 #: eme-locations.php:572
-#: eme-people.php:1035
-#: eme-people.php:2373
+#: eme-people.php:1039
+#: eme-people.php:2376
 #: eme-rsvp.php:1473
 msgid "State"
 msgstr ""
 
 #: eme-actions.php:359
 #: eme-countries.php:517
-#: eme-events.php:9592
-#: eme-events.php:9823
-#: eme-events.php:9858
-#: eme-events.php:9893
-#: eme-events.php:9958
+#: eme-events.php:9617
+#: eme-events.php:9848
+#: eme-events.php:9883
+#: eme-events.php:9918
+#: eme-events.php:9983
 #: eme-gdpr.php:442
 #: eme-gdpr.php:590
 #: eme-locations.php:580
-#: eme-people.php:1036
-#: eme-people.php:2377
+#: eme-people.php:1040
+#: eme-people.php:2380
 #: eme-rsvp.php:1478
 msgid "Country"
 msgstr ""
 
 #: eme-actions.php:361
-#: eme-events.php:9594
+#: eme-events.php:9619
 msgid "An error has occurred"
 msgstr ""
 
@@ -172,18 +172,18 @@ msgid "Clear"
 msgstr ""
 
 #: eme-actions.php:363
-#: eme-events.php:9595
+#: eme-events.php:9620
 msgid "Mailing preferences"
 msgstr ""
 
 #: eme-actions.php:364
-#: eme-events.php:9596
+#: eme-events.php:9621
 msgid "Yes, I'm sure"
 msgstr ""
 
 #: eme-actions.php:414
-#: eme-events.php:9655
-#: eme-events.php:9845
+#: eme-events.php:9680
+#: eme-events.php:9870
 msgid "No matching location found"
 msgstr ""
 
@@ -222,7 +222,7 @@ msgid "Any"
 msgstr ""
 
 #: eme-attendances.php:80
-#: eme-events.php:9657
+#: eme-events.php:9682
 #: eme-install.php:1699
 #: eme-options.php:149
 #: eme-options.php:150
@@ -234,7 +234,7 @@ msgid "Events"
 msgstr ""
 
 #: eme-attendances.php:81
-#: eme-events.php:9939
+#: eme-events.php:9964
 #: eme-gdpr.php:468
 #: eme-options.php:1591
 #: events-manager.php:366
@@ -260,14 +260,14 @@ msgid "Manually add an attendance record"
 msgstr ""
 
 #: eme-attendances.php:108
-#: eme-locations.php:903
+#: eme-locations.php:902
 #: eme-mailer.php:2726
 #: eme-mailer.php:2905
 #: eme-members.php:1557
 #: eme-members.php:1579
 #: eme-members.php:1627
-#: eme-people.php:1836
-#: eme-people.php:2321
+#: eme-people.php:1839
+#: eme-people.php:2324
 msgid "Start typing a name"
 msgstr ""
 
@@ -288,17 +288,17 @@ msgid "If a RSVP or member QRCODE is scanned by someone with sufficent rights, a
 msgstr ""
 
 #: eme-attendances.php:134
-#: eme-events.php:6003
-#: eme-events.php:6152
-#: eme-rsvp.php:5265
+#: eme-events.php:6029
+#: eme-events.php:6177
+#: eme-rsvp.php:5274
 #: eme-tasks.php:471
 msgid "Filter on start date"
 msgstr ""
 
 #: eme-attendances.php:136
-#: eme-events.php:6005
-#: eme-events.php:6154
-#: eme-rsvp.php:5267
+#: eme-events.php:6031
+#: eme-events.php:6179
+#: eme-rsvp.php:5276
 #: eme-tasks.php:473
 msgid "Filter on end date"
 msgstr ""
@@ -313,48 +313,48 @@ msgstr ""
 #: eme-countries.php:451
 #: eme-discounts.php:464
 #: eme-discounts.php:531
-#: eme-events.php:6074
-#: eme-events.php:6176
+#: eme-events.php:6099
+#: eme-events.php:6201
 #: eme-formfields.php:236
 #: eme-holidays.php:103
-#: eme-locations.php:907
+#: eme-locations.php:906
 #: eme-mailer.php:2985
 #: eme-mailer.php:3042
 #: eme-mailer.php:3077
-#: eme-members.php:2924
-#: eme-members.php:3321
-#: eme-people.php:1856
-#: eme-people.php:2662
-#: eme-rsvp.php:5373
+#: eme-members.php:2923
+#: eme-members.php:3320
+#: eme-people.php:1859
+#: eme-people.php:2665
+#: eme-rsvp.php:5382
 #: eme-tasks.php:496
 #: eme-templates.php:194
 msgid "Hint: rightclick on the column headers to show/hide columns"
 msgstr ""
 
 #: eme-attendances.php:203
-#: eme-people.php:1649
-#: eme-people.php:1650
-#: eme-people.php:1651
-#: eme-people.php:1697
-#: eme-people.php:1698
-#: eme-people.php:1699
-#: eme-people.php:1740
-#: eme-people.php:1741
-#: eme-people.php:1742
-#: eme-people.php:2259
-#: eme-people.php:2324
-#: eme-people.php:2339
-#: eme-people.php:5121
-#: eme-people.php:5135
-#: eme-people.php:5136
-#: eme-people.php:5137
+#: eme-people.php:1653
+#: eme-people.php:1654
+#: eme-people.php:1655
+#: eme-people.php:1701
+#: eme-people.php:1702
+#: eme-people.php:1703
+#: eme-people.php:1744
+#: eme-people.php:1745
+#: eme-people.php:1746
+#: eme-people.php:2262
+#: eme-people.php:2327
+#: eme-people.php:2342
+#: eme-people.php:5124
+#: eme-people.php:5138
+#: eme-people.php:5139
+#: eme-people.php:5140
 #: eme-tasks.php:1950
 msgid "Edit person"
 msgstr ""
 
 #: eme-attendances.php:218
-#: eme-events.php:10555
-#: eme-rsvp.php:5988
+#: eme-events.php:10580
+#: eme-rsvp.php:5997
 msgid "All day"
 msgstr ""
 
@@ -363,7 +363,7 @@ msgid "Manual entry"
 msgstr ""
 
 #: eme-attendances.php:265
-#: eme-events.php:10679
+#: eme-events.php:10704
 msgid "Events deleted"
 msgstr ""
 
@@ -376,7 +376,7 @@ msgid "Attribute Name"
 msgstr ""
 
 #: eme-attributes.php:98
-#: eme-events.php:9792
+#: eme-events.php:9817
 msgid "Value"
 msgstr ""
 
@@ -438,19 +438,19 @@ msgstr ""
 #: eme-countries.php:446
 #: eme-discounts.php:441
 #: eme-discounts.php:526
-#: eme-events.php:6051
-#: eme-events.php:6161
+#: eme-events.php:6076
+#: eme-events.php:6186
 #: eme-formfields.php:231
 #: eme-holidays.php:98
-#: eme-locations.php:897
+#: eme-locations.php:896
 #: eme-mailer.php:2979
 #: eme-mailer.php:3036
 #: eme-mailer.php:3072
-#: eme-members.php:2881
-#: eme-members.php:3313
-#: eme-people.php:1804
-#: eme-people.php:2655
-#: eme-rsvp.php:5292
+#: eme-members.php:2880
+#: eme-members.php:3312
+#: eme-people.php:1807
+#: eme-people.php:2658
+#: eme-rsvp.php:5301
 #: eme-tasks.php:482
 #: eme-templates.php:189
 msgid "Bulk Actions"
@@ -476,32 +476,32 @@ msgstr ""
 #: eme-cron.php:465
 #: eme-discounts.php:462
 #: eme-discounts.php:529
-#: eme-events.php:6072
-#: eme-events.php:6174
-#: eme-events.php:9679
-#: eme-events.php:9728
-#: eme-events.php:9749
+#: eme-events.php:6097
+#: eme-events.php:6199
+#: eme-events.php:9704
+#: eme-events.php:9753
 #: eme-events.php:9774
-#: eme-events.php:9808
-#: eme-events.php:9836
-#: eme-events.php:9864
-#: eme-events.php:9901
-#: eme-events.php:9960
-#: eme-events.php:10028
-#: eme-events.php:10046
-#: eme-events.php:10061
-#: eme-events.php:10075
+#: eme-events.php:9799
+#: eme-events.php:9833
+#: eme-events.php:9861
+#: eme-events.php:9889
+#: eme-events.php:9926
+#: eme-events.php:9985
+#: eme-events.php:10053
+#: eme-events.php:10071
+#: eme-events.php:10086
+#: eme-events.php:10100
 #: eme-formfields.php:234
 #: eme-holidays.php:101
-#: eme-locations.php:905
+#: eme-locations.php:904
 #: eme-mailer.php:2983
 #: eme-mailer.php:3040
 #: eme-mailer.php:3075
-#: eme-members.php:2922
-#: eme-members.php:3319
-#: eme-people.php:1854
-#: eme-people.php:2660
-#: eme-rsvp.php:5371
+#: eme-members.php:2921
+#: eme-members.php:3318
+#: eme-people.php:1857
+#: eme-people.php:2663
+#: eme-rsvp.php:5380
 #: eme-tasks.php:494
 #: eme-templates.php:192
 msgid "Apply"
@@ -516,7 +516,7 @@ msgid "Update category"
 msgstr ""
 
 #: eme-categories.php:133
-#: eme-events.php:7134
+#: eme-events.php:7159
 #: eme-locations.php:500
 msgid "Permalink: "
 msgstr ""
@@ -526,7 +526,7 @@ msgid "Create category"
 msgstr ""
 
 #: eme-categories.php:140
-#: eme-events.php:7136
+#: eme-events.php:7161
 #: eme-locations.php:502
 msgid "Permalink prefix: "
 msgstr ""
@@ -548,12 +548,12 @@ msgid "The description of the category"
 msgstr ""
 
 #: eme-categories.php:575
-#: eme-events.php:10349
+#: eme-events.php:10374
 #: eme-formfields.php:5110
 #: eme-holidays.php:295
-#: eme-locations.php:2984
-#: eme-members.php:6485
-#: eme-people.php:5229
+#: eme-locations.php:2992
+#: eme-members.php:6497
+#: eme-people.php:5232
 #: eme-templates.php:478
 msgid "No name"
 msgstr ""
@@ -696,12 +696,12 @@ msgstr ""
 #: eme-countries.php:107
 #: eme-discounts.php:79
 #: eme-discounts.php:172
-#: eme-events.php:5740
+#: eme-events.php:5766
 #: eme-locations.php:229
-#: eme-members.php:5999
-#: eme-members.php:6185
-#: eme-people.php:857
-#: eme-rsvp.php:5045
+#: eme-members.php:6011
+#: eme-members.php:6197
+#: eme-people.php:861
+#: eme-rsvp.php:5054
 msgid "Problem accessing the uploaded the file, maybe some security issue?"
 msgstr ""
 
@@ -709,12 +709,12 @@ msgstr ""
 #: eme-countries.php:132
 #: eme-discounts.php:104
 #: eme-discounts.php:197
-#: eme-events.php:5767
+#: eme-events.php:5793
 #: eme-locations.php:256
-#: eme-members.php:6025
-#: eme-members.php:6211
-#: eme-people.php:884
-#: eme-rsvp.php:5072
+#: eme-members.php:6037
+#: eme-members.php:6223
+#: eme-people.php:888
+#: eme-rsvp.php:5081
 msgid "Not all required fields present."
 msgstr ""
 
@@ -729,7 +729,7 @@ msgstr ""
 #: eme-countries.php:144
 #: eme-discounts.php:150
 #: eme-discounts.php:209
-#: eme-members.php:6310
+#: eme-members.php:6322
 msgid "Import finished: %d inserts, %d errors"
 msgstr ""
 
@@ -737,12 +737,12 @@ msgstr ""
 #: eme-countries.php:152
 #: eme-discounts.php:158
 #: eme-discounts.php:217
-#: eme-events.php:5732
+#: eme-events.php:5758
 #: eme-locations.php:221
-#: eme-members.php:5991
-#: eme-members.php:6178
-#: eme-people.php:849
-#: eme-rsvp.php:5036
+#: eme-members.php:6003
+#: eme-members.php:6190
+#: eme-people.php:853
+#: eme-rsvp.php:5045
 msgid "Problem detected while uploading the file"
 msgstr ""
 
@@ -750,12 +750,12 @@ msgstr ""
 #: eme-countries.php:155
 #: eme-discounts.php:161
 #: eme-discounts.php:220
-#: eme-events.php:5729
+#: eme-events.php:5755
 #: eme-locations.php:218
-#: eme-members.php:5988
-#: eme-members.php:6175
-#: eme-people.php:846
-#: eme-rsvp.php:5033
+#: eme-members.php:6000
+#: eme-members.php:6187
+#: eme-people.php:850
+#: eme-rsvp.php:5042
 msgid "No CSV file detected: %s"
 msgstr ""
 
@@ -841,10 +841,10 @@ msgstr ""
 #: eme-countries.php:421
 #: eme-discounts.php:420
 #: eme-discounts.php:505
-#: eme-events.php:5960
+#: eme-events.php:5986
 #: eme-locations.php:851
-#: eme-members.php:3240
-#: eme-people.php:2161
+#: eme-members.php:3239
+#: eme-people.php:2164
 msgid "Click on the icon to show the import form"
 msgstr ""
 
@@ -852,12 +852,12 @@ msgstr ""
 #: eme-countries.php:428
 #: eme-discounts.php:427
 #: eme-discounts.php:512
-#: eme-events.php:5967
+#: eme-events.php:5993
 #: eme-locations.php:858
-#: eme-members.php:3247
-#: eme-members.php:3258
-#: eme-people.php:2168
-#: eme-rsvp.php:5217
+#: eme-members.php:3246
+#: eme-members.php:3257
+#: eme-people.php:2171
+#: eme-rsvp.php:5226
 msgid "Delimiter:"
 msgstr ""
 
@@ -865,12 +865,12 @@ msgstr ""
 #: eme-countries.php:430
 #: eme-discounts.php:429
 #: eme-discounts.php:514
-#: eme-events.php:5969
+#: eme-events.php:5995
 #: eme-locations.php:860
-#: eme-members.php:3249
-#: eme-members.php:3260
-#: eme-people.php:2170
-#: eme-rsvp.php:5219
+#: eme-members.php:3248
+#: eme-members.php:3259
+#: eme-people.php:2173
+#: eme-rsvp.php:5228
 msgid "Enclosure:"
 msgstr ""
 
@@ -878,10 +878,10 @@ msgstr ""
 #: eme-countries.php:433
 #: eme-discounts.php:432
 #: eme-discounts.php:517
-#: eme-events.php:5972
+#: eme-events.php:5998
 #: eme-locations.php:863
-#: eme-people.php:2173
-#: eme-rsvp.php:5222
+#: eme-people.php:2176
+#: eme-rsvp.php:5231
 msgid "Import"
 msgstr ""
 
@@ -954,8 +954,8 @@ msgstr ""
 
 #: eme-countries.php:510
 #: eme-discounts.php:1551
-#: eme-events.php:9806
 #: eme-events.php:9831
+#: eme-events.php:9856
 msgid "Code"
 msgstr ""
 
@@ -982,24 +982,24 @@ msgid "The name of the country"
 msgstr ""
 
 #: eme-countries.php:576
-#: eme-events.php:9832
+#: eme-events.php:9857
 msgid "Alpha-2"
 msgstr ""
 
 #: eme-countries.php:580
-#: eme-events.php:9833
+#: eme-events.php:9858
 msgid "Alpha-3"
 msgstr ""
 
 #: eme-countries.php:584
-#: eme-events.php:9834
+#: eme-events.php:9859
 msgid "Num-3"
 msgstr ""
 
 #: eme-countries.php:588
-#: eme-events.php:9825
-#: eme-events.php:9898
-#: eme-people.php:2399
+#: eme-events.php:9850
+#: eme-events.php:9923
+#: eme-people.php:2402
 msgid "Language"
 msgstr ""
 
@@ -1040,12 +1040,12 @@ msgid "Incorrect country selection"
 msgstr ""
 
 #: eme-countries.php:1032
-#: eme-functions.php:3379
+#: eme-functions.php:3367
 msgid "Update failed: "
 msgstr ""
 
 #: eme-countries.php:1034
-#: eme-functions.php:3381
+#: eme-functions.php:3369
 msgid "Insert failed: "
 msgstr ""
 
@@ -1163,8 +1163,8 @@ msgstr ""
 
 #: eme-cron.php:414
 #: eme-options.php:1981
-#: eme-people.php:1042
-#: eme-people.php:2408
+#: eme-people.php:1046
+#: eme-people.php:2411
 msgid "Newsletter"
 msgstr ""
 
@@ -1173,9 +1173,9 @@ msgid "Send a mail to all EME registered people for upcoming events that will ha
 msgstr ""
 
 #: eme-cron.php:425
-#: eme-events.php:7318
-#: eme-events.php:8940
-#: eme-events.php:8952
+#: eme-events.php:7343
+#: eme-events.php:8965
+#: eme-events.php:8977
 #: eme-options.php:1827
 #: eme-options.php:1843
 #: eme-recurrence.php:705
@@ -1292,12 +1292,12 @@ msgid "Delete selected discounts"
 msgstr ""
 
 #: eme-discounts.php:443
-#: eme-people.php:1811
+#: eme-people.php:1814
 msgid "Add to group"
 msgstr ""
 
 #: eme-discounts.php:444
-#: eme-people.php:1812
+#: eme-people.php:1815
 msgid "Remove from group"
 msgstr ""
 
@@ -1311,8 +1311,8 @@ msgstr ""
 
 #: eme-discounts.php:449
 #: eme-discounts.php:452
-#: eme-people.php:1839
 #: eme-people.php:1842
+#: eme-people.php:1845
 msgid "Select a group"
 msgstr ""
 
@@ -1367,12 +1367,12 @@ msgstr ""
 
 #: eme-discounts.php:839
 #: eme-discounts.php:989
-#: eme-events.php:9745
-#: eme-events.php:9787
-#: eme-events.php:9884
-#: eme-events.php:9941
+#: eme-events.php:9770
+#: eme-events.php:9812
+#: eme-events.php:9909
+#: eme-events.php:9966
 #: eme-members.php:1914
-#: eme-people.php:2567
+#: eme-people.php:2570
 #: eme-tasks.php:751
 #: eme-templates.php:265
 #: eme-todos.php:185
@@ -1380,10 +1380,10 @@ msgid "Description"
 msgstr ""
 
 #: eme-discounts.php:843
-#: eme-events.php:9701
-#: eme-events.php:9746
-#: eme-events.php:9766
-#: eme-events.php:9793
+#: eme-events.php:9726
+#: eme-events.php:9771
+#: eme-events.php:9791
+#: eme-events.php:9818
 #: eme-members.php:1918
 #: eme-templates.php:282
 msgid "Type"
@@ -1418,7 +1418,7 @@ msgid "If you leave the coupon code empty but set a discount expiration date, yo
 msgstr ""
 
 #: eme-discounts.php:862
-#: eme-events.php:9788
+#: eme-events.php:9813
 msgid "Discount groups"
 msgstr ""
 
@@ -1427,7 +1427,7 @@ msgid "If wanted, you can make this discount a part of one or more discount grou
 msgstr ""
 
 #: eme-discounts.php:868
-#: eme-events.php:9796
+#: eme-events.php:9821
 msgid "Valid from"
 msgstr ""
 
@@ -1436,7 +1436,7 @@ msgid "An optional coupon start date and time, if entered the coupon is not vali
 msgstr ""
 
 #: eme-discounts.php:875
-#: eme-events.php:9797
+#: eme-events.php:9822
 msgid "Valid until"
 msgstr ""
 
@@ -1462,7 +1462,7 @@ msgid "Require users to be logged-in for this discount to apply."
 msgstr ""
 
 #: eme-discounts.php:894
-#: eme-events.php:8898
+#: eme-events.php:8923
 msgid "Require EME groups"
 msgstr ""
 
@@ -1471,12 +1471,12 @@ msgid "Require logged-in user to be in of one of the selected EME groups for thi
 msgstr ""
 
 #: eme-discounts.php:900
-#: eme-events.php:8903
+#: eme-events.php:8928
 msgid "Require EME membership"
 msgstr ""
 
 #: eme-discounts.php:906
-#: eme-members.php:3231
+#: eme-members.php:3230
 msgid "No memberships defined yet!"
 msgstr ""
 
@@ -1549,17 +1549,17 @@ msgid "A discount group exists of several discounts, and you can ask for several
 msgstr ""
 
 #: eme-discounts.php:1549
-#: eme-events.php:9803
+#: eme-events.php:9828
 msgid "Fixed"
 msgstr ""
 
 #: eme-discounts.php:1550
-#: eme-events.php:9805
+#: eme-events.php:9830
 msgid "Percentage"
 msgstr ""
 
 #: eme-discounts.php:1552
-#: eme-events.php:9804
+#: eme-events.php:9829
 msgid "Fixed per seat"
 msgstr ""
 
@@ -1583,22 +1583,22 @@ msgstr ""
 #: eme-gdpr.php:431
 #: eme-gdpr.php:550
 #: eme-gdpr.php:551
-#: eme-locations.php:3020
-#: eme-members.php:6648
+#: eme-locations.php:3028
+#: eme-members.php:6660
 #: eme-people.php:506
 #: eme-people.php:514
 #: eme-people.php:522
-#: eme-people.php:1119
-#: eme-people.php:1120
-#: eme-people.php:1121
-#: eme-people.php:1156
-#: eme-people.php:1456
-#: eme-people.php:5140
-#: eme-people.php:5157
-#: eme-people.php:5158
-#: eme-people.php:5232
+#: eme-people.php:1123
+#: eme-people.php:1124
+#: eme-people.php:1125
+#: eme-people.php:1160
+#: eme-people.php:1460
+#: eme-people.php:5143
+#: eme-people.php:5160
+#: eme-people.php:5161
+#: eme-people.php:5235
 #: eme-rsvp.php:3892
-#: eme-rsvp.php:6025
+#: eme-rsvp.php:6034
 #: eme-ui-helpers.php:120
 #: eme-ui-helpers.php:242
 msgid "Yes"
@@ -1624,22 +1624,22 @@ msgstr ""
 #: eme-gdpr.php:431
 #: eme-gdpr.php:550
 #: eme-gdpr.php:551
-#: eme-locations.php:3020
-#: eme-members.php:6648
+#: eme-locations.php:3028
+#: eme-members.php:6660
 #: eme-people.php:506
 #: eme-people.php:514
 #: eme-people.php:522
-#: eme-people.php:1119
-#: eme-people.php:1120
-#: eme-people.php:1121
-#: eme-people.php:1156
-#: eme-people.php:1458
-#: eme-people.php:5140
-#: eme-people.php:5157
-#: eme-people.php:5158
-#: eme-people.php:5232
+#: eme-people.php:1123
+#: eme-people.php:1124
+#: eme-people.php:1125
+#: eme-people.php:1160
+#: eme-people.php:1462
+#: eme-people.php:5143
+#: eme-people.php:5160
+#: eme-people.php:5161
+#: eme-people.php:5235
 #: eme-rsvp.php:3892
-#: eme-rsvp.php:6025
+#: eme-rsvp.php:6034
 #: eme-ui-helpers.php:121
 #: eme-ui-helpers.php:241
 msgid "No"
@@ -1678,11 +1678,11 @@ msgstr ""
 #: eme-events.php:856
 #: eme-events.php:1022
 #: eme-events.php:1234
-#: eme-events.php:4726
+#: eme-events.php:4741
 #: eme-mailer.php:2108
 #: eme-payments.php:152
 #: eme-payments.php:1983
-#: eme-rsvp.php:5181
+#: eme-rsvp.php:5190
 msgid "No such event"
 msgstr ""
 
@@ -1723,8 +1723,8 @@ msgstr ""
 #: eme-events.php:692
 #: eme-events.php:719
 #: eme-events.php:862
-#: eme-events.php:6301
-#: eme-events.php:10575
+#: eme-events.php:6326
+#: eme-events.php:10600
 msgid "Edit Recurrence"
 msgstr ""
 
@@ -1740,7 +1740,7 @@ msgstr ""
 #: eme-events.php:671
 #: eme-events.php:741
 #: eme-events.php:800
-#: eme-events.php:9665
+#: eme-events.php:9690
 msgid "Edit Event '%s'"
 msgstr ""
 
@@ -1776,7 +1776,7 @@ msgid "Failed to update '%s'"
 msgstr ""
 
 #: eme-events.php:771
-#: eme-events.php:9664
+#: eme-events.php:9689
 msgid "Insert New Event"
 msgstr ""
 
@@ -1997,12 +1997,12 @@ msgstr ""
 #: eme-gdpr.php:445
 #: eme-gdpr.php:602
 #: eme-options.php:59
-#: eme-people.php:2412
+#: eme-people.php:2415
 msgid "GDPR approval"
 msgstr ""
 
 #: eme-events.php:1600
-#: eme-events.php:9912
+#: eme-events.php:9937
 msgid "GDPR"
 msgstr ""
 
@@ -2015,14 +2015,14 @@ msgid "Events Made Easy plugin page"
 msgstr ""
 
 #: eme-events.php:2457
-#: eme-events.php:9747
 #: eme-events.php:9772
-#: eme-events.php:9799
-#: eme-events.php:9826
-#: eme-events.php:9965
-#: eme-events.php:10020
-#: eme-locations.php:2423
-#: eme-rsvp.php:5863
+#: eme-events.php:9797
+#: eme-events.php:9824
+#: eme-events.php:9851
+#: eme-events.php:9990
+#: eme-events.php:10045
+#: eme-locations.php:2422
+#: eme-rsvp.php:5872
 msgid "Edit"
 msgstr ""
 
@@ -2040,393 +2040,386 @@ msgstr ""
 msgid "No limit"
 msgstr ""
 
-#: eme-events.php:3173
+#: eme-events.php:3176
 msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-events.php:3175
+#: eme-events.php:3178
 msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-events.php:3178
+#: eme-events.php:3181
 msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-events.php:3181
+#: eme-events.php:3184
 msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-events.php:3184
+#: eme-events.php:3187
 msgid "%d month"
 msgid_plural "%d months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-events.php:3187
+#: eme-events.php:3190
 msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-events.php:4269
+#: eme-events.php:4272
 msgid "Previous page"
 msgstr ""
 
-#: eme-events.php:4270
+#: eme-events.php:4273
 msgid "Next page"
 msgstr ""
 
-#: eme-events.php:4290
-#: eme-locations.php:1589
+#: eme-events.php:4293
+#: eme-locations.php:1588
 msgid "Previous week"
 msgstr ""
 
-#: eme-events.php:4291
-#: eme-locations.php:1590
+#: eme-events.php:4294
+#: eme-locations.php:1589
 msgid "Next week"
 msgstr ""
 
-#: eme-events.php:4301
-#: eme-locations.php:1625
+#: eme-events.php:4304
+#: eme-locations.php:1624
 msgid "Previous month"
 msgstr ""
 
-#: eme-events.php:4302
-#: eme-locations.php:1626
+#: eme-events.php:4305
+#: eme-locations.php:1625
 msgid "Next month"
 msgstr ""
 
-#: eme-events.php:4311
-#: eme-locations.php:1599
+#: eme-events.php:4314
+#: eme-locations.php:1598
 msgid "Previous year"
 msgstr ""
 
-#: eme-events.php:4312
-#: eme-locations.php:1600
+#: eme-events.php:4315
+#: eme-locations.php:1599
 msgid "Next year"
 msgstr ""
 
-#: eme-events.php:4319
-#: eme-events.php:4328
-#: eme-locations.php:1607
-#: eme-locations.php:1616
+#: eme-events.php:4322
+#: eme-events.php:4331
+#: eme-locations.php:1606
+#: eme-locations.php:1615
 msgid "Previous day"
 msgstr ""
 
-#: eme-events.php:4320
-#: eme-events.php:4329
-#: eme-locations.php:1608
-#: eme-locations.php:1617
+#: eme-events.php:4323
+#: eme-events.php:4332
+#: eme-locations.php:1607
+#: eme-locations.php:1616
 msgid "Next day"
 msgstr ""
 
-#: eme-events.php:4366
-#: eme-events.php:4377
+#: eme-events.php:4369
+#: eme-events.php:4380
 msgid "Page %d"
 msgstr ""
 
-#: eme-events.php:5795
-#: eme-events.php:5801
+#: eme-events.php:5821
+#: eme-events.php:5827
 msgid "Location not imported: %s"
 msgstr ""
 
-#: eme-events.php:5825
-#: eme-events.php:5828
-#: eme-members.php:6056
-#: eme-members.php:6061
-#: eme-members.php:6066
-#: eme-members.php:6071
-#: eme-people.php:913
+#: eme-events.php:5851
+#: eme-events.php:5854
+#: eme-members.php:6068
+#: eme-members.php:6073
+#: eme-members.php:6078
+#: eme-members.php:6083
+#: eme-people.php:917
 msgid "Not imported (field %s not valid): %s"
 msgstr ""
 
-#: eme-events.php:5870
+#: eme-events.php:5896
 msgid "Not imported (problem updating the event in the db): %s"
 msgstr ""
 
-#: eme-events.php:5878
+#: eme-events.php:5904
 msgid "Not imported (problem inserting the event in the db): %s"
 msgstr ""
 
-#: eme-events.php:5900
+#: eme-events.php:5926
 #: eme-locations.php:337
-#: eme-members.php:6051
-#: eme-members.php:6239
+#: eme-members.php:6063
+#: eme-members.php:6251
 msgid "Not imported (not all required fields are present): %s"
 msgstr ""
 
-#: eme-events.php:5903
+#: eme-events.php:5929
 #: eme-locations.php:340
-#: eme-members.php:6156
-#: eme-people.php:976
+#: eme-members.php:6168
+#: eme-people.php:980
 msgid "Import finished: %d inserts, %d updates, %d errors"
 msgstr ""
 
-#: eme-events.php:5922
-#: eme-rsvp.php:5148
+#: eme-events.php:5948
+#: eme-rsvp.php:5157
 #: eme-tasks.php:446
 msgid "Past events"
 msgstr ""
 
-#: eme-events.php:5923
-#: eme-rsvp.php:5149
+#: eme-events.php:5949
+#: eme-rsvp.php:5158
 #: eme-tasks.php:447
 #: events-manager.php:347
 msgid "All events"
 msgstr ""
 
-#: eme-events.php:5924
-#: eme-rsvp.php:5150
+#: eme-events.php:5950
+#: eme-rsvp.php:5159
 #: eme-tasks.php:448
 msgid "Future events"
 msgstr ""
 
-#: eme-events.php:5941
+#: eme-events.php:5967
 msgid "Add a new event"
 msgstr ""
 
-#: eme-events.php:5945
+#: eme-events.php:5971
 #: eme-options.php:1515
 msgid "Add event"
 msgstr ""
 
-#: eme-events.php:5950
-#: eme-events.php:6135
+#: eme-events.php:5976
+#: eme-events.php:6160
 msgid "Manage events"
 msgstr ""
 
-#: eme-events.php:5951
-#: eme-events.php:6134
+#: eme-events.php:5977
+#: eme-events.php:6159
 msgid "Manage recurrences"
 msgstr ""
 
-#: eme-events.php:5955
-#: eme-people.php:2156
-#: eme-rsvp.php:5205
+#: eme-events.php:5981
+#: eme-people.php:2159
+#: eme-rsvp.php:5214
 msgid "Show regular content"
 msgstr ""
 
-#: eme-events.php:5957
-#: eme-people.php:2158
-#: eme-rsvp.php:5207
+#: eme-events.php:5983
+#: eme-people.php:2161
+#: eme-rsvp.php:5216
 msgid "Show trash content"
 msgstr ""
 
-#: eme-events.php:5973
+#: eme-events.php:5999
 msgid "If you want, use this to import events into the database"
 msgstr ""
 
-#: eme-events.php:5993
-#: eme-rsvp.php:5255
+#: eme-events.php:6019
+#: eme-rsvp.php:5264
 msgid "All categories"
 msgstr ""
 
-#: eme-events.php:5994
-#: eme-rsvp.php:5256
+#: eme-events.php:6020
+#: eme-rsvp.php:5265
 msgid "Events without category"
 msgstr ""
 
-#: eme-events.php:6001
-#: eme-events.php:6150
-#: eme-events.php:7129
+#: eme-events.php:6027
+#: eme-events.php:6175
+#: eme-events.php:7154
 #: eme-tasks.php:441
 msgid "Event name"
 msgstr ""
 
-#: eme-events.php:6006
-#: eme-rsvp.php:5269
+#: eme-events.php:6032
+#: eme-rsvp.php:5278
 msgid "Show/hide extra filters"
 msgstr ""
 
-#: eme-events.php:6009
-#: eme-events.php:6557
+#: eme-events.php:6035
+#: eme-events.php:6582
 #: eme-fs.php:583
 msgid "Event Status"
 msgstr ""
 
-#: eme-events.php:6021
+#: eme-events.php:6047
 msgid "Filter on location"
 msgstr ""
 
-#: eme-events.php:6025
+#: eme-events.php:6051
 #: eme-locations.php:874
-#: eme-members.php:3017
-#: eme-members.php:3024
-#: eme-people.php:1948
-#: eme-people.php:1955
+#: eme-members.php:3016
+#: eme-members.php:3023
+#: eme-people.php:1951
+#: eme-people.php:1958
 msgid "Custom field value to search"
 msgstr ""
 
-#: eme-events.php:6026
+#: eme-events.php:6052
 #: eme-locations.php:875
-#: eme-members.php:3033
-#: eme-people.php:1965
+#: eme-members.php:3032
+#: eme-people.php:1968
 msgid "Custom fields to filter on"
 msgstr ""
 
-#: eme-events.php:6032
+#: eme-events.php:6058
 msgid "Filter events"
 msgstr ""
 
-#: eme-events.php:6037
+#: eme-events.php:6063
 #: eme-locations.php:885
 #: eme-members.php:2869
-#: eme-people.php:1792
+#: eme-people.php:1796
 msgid "Hint: when searching for custom field values, you can optionally limit which custom fields you want to search in the \"Custom fields to filter on\" select-box shown."
 msgstr ""
 
-#: eme-events.php:6038
-#: eme-locations.php:886
-#: eme-members.php:2870
-#: eme-people.php:1793
-msgid "If you can't see your custom field in the \"Custom fields to filter on\" select-box, make sure you marked it as \"searchable\" in the field definition."
-msgstr ""
-
-#: eme-events.php:6053
+#: eme-events.php:6078
 msgid "Restore selected events (to draft status)"
 msgstr ""
 
-#: eme-events.php:6054
+#: eme-events.php:6079
 msgid "Permanently delete selected events"
 msgstr ""
 
-#: eme-events.php:6056
+#: eme-events.php:6081
 msgid "Delete selected events (move to trash bin)"
 msgstr ""
 
-#: eme-events.php:6057
+#: eme-events.php:6082
 msgid "Publish selected events"
 msgstr ""
 
-#: eme-events.php:6058
+#: eme-events.php:6083
 msgid "Make selected events private"
 msgstr ""
 
-#: eme-events.php:6059
+#: eme-events.php:6084
 msgid "Make selected events draft"
 msgstr ""
 
-#: eme-events.php:6060
+#: eme-events.php:6085
 msgid "Add selected events to category"
 msgstr ""
 
-#: eme-events.php:6065
+#: eme-events.php:6090
 msgid "Send mails for cancelled bookings too?"
 msgstr ""
 
-#: eme-events.php:6070
+#: eme-events.php:6095
 msgid "Please select a category"
 msgstr ""
 
-#: eme-events.php:6110
+#: eme-events.php:6135
 msgid "Past recurrences"
 msgstr ""
 
-#: eme-events.php:6111
+#: eme-events.php:6136
 msgid "All recurrences"
 msgstr ""
 
-#: eme-events.php:6112
+#: eme-events.php:6137
 msgid "Ongoing recurrences"
 msgstr ""
 
-#: eme-events.php:6125
+#: eme-events.php:6150
 msgid "Add a new recurrence"
 msgstr ""
 
-#: eme-events.php:6129
+#: eme-events.php:6154
 msgid "Add recurrence"
 msgstr ""
 
-#: eme-events.php:6155
+#: eme-events.php:6180
 msgid "Filter recurrences"
 msgstr ""
 
-#: eme-events.php:6162
+#: eme-events.php:6187
 msgid "Delete selected recurrences (and move events to trash bin)"
 msgstr ""
 
-#: eme-events.php:6163
+#: eme-events.php:6188
 msgid "Publish selected recurrences"
 msgstr ""
 
-#: eme-events.php:6164
+#: eme-events.php:6189
 msgid "Make selected recurrences private"
 msgstr ""
 
-#: eme-events.php:6165
+#: eme-events.php:6190
 msgid "Make selected recurrences draft"
 msgstr ""
 
-#: eme-events.php:6166
+#: eme-events.php:6191
 msgid "Set new start/end date for selected recurrences"
 msgstr ""
 
-#: eme-events.php:6170
+#: eme-events.php:6195
 msgid "Select new start date"
 msgstr ""
 
-#: eme-events.php:6172
+#: eme-events.php:6197
 msgid "Select new end date"
 msgstr ""
 
-#: eme-events.php:6204
+#: eme-events.php:6229
 #: eme-locations.php:86
 #: eme-templates.php:82
 msgid " (Copy)"
 msgstr ""
 
-#: eme-events.php:6292
+#: eme-events.php:6317
 msgid "WARNING: This is a recurrence."
 msgstr ""
 
-#: eme-events.php:6294
+#: eme-events.php:6319
 msgid "If you change this recurrence, events with a start day no longer matching the defined days will be removed while missing events will get added. Existing events with a start day that still match the defined days will get updated but you will not lose bookings."
 msgstr ""
 
-#: eme-events.php:6297
+#: eme-events.php:6322
 msgid "WARNING: This event is part of a recurrence."
 msgstr ""
 
-#: eme-events.php:6299
+#: eme-events.php:6324
 msgid "If you change this event, it will become an independent event and be removed from the recurrence."
 msgstr ""
 
-#: eme-events.php:6320
-#: eme-events.php:9659
-#: eme-events.php:10000
-#: eme-events.php:10525
+#: eme-events.php:6345
+#: eme-events.php:9684
+#: eme-events.php:10025
+#: eme-events.php:10550
 #: eme-options.php:1286
-#: eme-rsvp.php:5947
+#: eme-rsvp.php:5956
 msgid "RSVP"
 msgstr ""
 
-#: eme-events.php:6323
-#: eme-events.php:6443
+#: eme-events.php:6348
+#: eme-events.php:6468
 msgid "Tasks"
 msgstr ""
 
-#: eme-events.php:6325
+#: eme-events.php:6350
 msgid "Todos"
 msgstr ""
 
-#: eme-events.php:6327
-#: eme-events.php:8553
+#: eme-events.php:6352
+#: eme-events.php:8578
 #: eme-locations.php:392
 #: eme-locations.php:744
 msgid "Attributes"
 msgstr ""
 
-#: eme-events.php:6329
-#: eme-events.php:8567
+#: eme-events.php:6354
+#: eme-events.php:8592
 #: eme-locations.php:394
 #: eme-locations.php:758
 #: eme-members.php:1861
@@ -2435,661 +2428,661 @@ msgstr ""
 msgid "Custom fields"
 msgstr ""
 
-#: eme-events.php:6355
+#: eme-events.php:6380
 msgid "Generic RSVP info"
 msgstr ""
 
-#: eme-events.php:6359
+#: eme-events.php:6384
 #: eme-members.php:2191
 #: eme-options.php:3072
 msgid "Payment methods"
 msgstr ""
 
-#: eme-events.php:6363
+#: eme-events.php:6388
 msgid "Dynamic data"
 msgstr ""
 
-#: eme-events.php:6374
+#: eme-events.php:6399
 msgid "RSVP form format"
 msgstr ""
 
-#: eme-events.php:6381
+#: eme-events.php:6406
 msgid "Attendance settings"
 msgstr ""
 
-#: eme-events.php:6385
+#: eme-events.php:6410
 msgid "RSVP Email format settings"
 msgstr ""
 
-#: eme-events.php:6390
+#: eme-events.php:6415
 #: eme-options.php:2047
 msgid "Booking Made or Approved Email"
 msgstr ""
 
-#: eme-events.php:6394
+#: eme-events.php:6419
 msgid "Booking Awaiting User Confirmation Email"
 msgstr ""
 
-#: eme-events.php:6398
+#: eme-events.php:6423
 #: eme-options.php:2105
 msgid "Booking Pending Email"
 msgstr ""
 
-#: eme-events.php:6402
+#: eme-events.php:6427
 #: eme-options.php:2164
 msgid "Booking Updated Email"
 msgstr ""
 
-#: eme-events.php:6406
+#: eme-events.php:6431
 #: eme-options.php:2179
 msgid "Booking Reminder Email"
 msgstr ""
 
-#: eme-events.php:6410
+#: eme-events.php:6435
 #: eme-options.php:2196
 msgid "Booking Cancelled Email"
 msgstr ""
 
-#: eme-events.php:6414
+#: eme-events.php:6439
 #: eme-options.php:2213
 msgid "Booking Deleted Email"
 msgstr ""
 
-#: eme-events.php:6418
+#: eme-events.php:6443
 #: eme-options.php:2228
 msgid "Booking Paid Email"
 msgstr ""
 
-#: eme-events.php:6422
+#: eme-events.php:6447
 #: eme-options.php:2284
 msgid "Booking Payment Gateway Notification Email"
 msgstr ""
 
-#: eme-events.php:6436
+#: eme-events.php:6461
 msgid "Enable tasks for this event"
 msgstr ""
 
-#: eme-events.php:6439
+#: eme-events.php:6464
 msgid "Tasks can be used to rally volunteers to help with an event (e.g. 5 people behind the bar per shift, cleanup duty, ...) or to allow people to subscribe for a certain timeframe for an event (appointment-like). While you can impose limits and ask for confirmation for tasks, there is no price per task so no payment is possible upon subscribing for a task."
 msgstr ""
 
-#: eme-events.php:6445
+#: eme-events.php:6470
 msgid "List of tasks"
 msgstr ""
 
-#: eme-events.php:6449
+#: eme-events.php:6474
 msgid "Tasks settings"
 msgstr ""
 
-#: eme-events.php:6451
+#: eme-events.php:6476
 msgid "Tasks generic settings"
 msgstr ""
 
-#: eme-events.php:6455
+#: eme-events.php:6480
 msgid "Tasks form format"
 msgstr ""
 
-#: eme-events.php:6461
+#: eme-events.php:6486
 msgid "Tasks Email format settings"
 msgstr ""
 
-#: eme-events.php:6465
+#: eme-events.php:6490
 #: eme-options.php:2390
 msgid "Task Signup Pending Email"
 msgstr ""
 
-#: eme-events.php:6469
+#: eme-events.php:6494
 #: eme-options.php:2405
 msgid "Task Signup Made Email"
 msgstr ""
 
-#: eme-events.php:6473
+#: eme-events.php:6498
 #: eme-options.php:2420
 msgid "Task Signup Reminder Email"
 msgstr ""
 
-#: eme-events.php:6477
+#: eme-events.php:6502
 #: eme-options.php:2432
 msgid "Task Signup Cancelled Email"
 msgstr ""
 
-#: eme-events.php:6481
+#: eme-events.php:6506
 #: eme-options.php:2446
 msgid "Task Signup Deleted Email"
 msgstr ""
 
-#: eme-events.php:6492
+#: eme-events.php:6517
 msgid "Enable todos for this event"
 msgstr ""
 
-#: eme-events.php:6495
+#: eme-events.php:6520
 msgid "Each todo with a date in the past will send a mail to the contact person so you can use this to plan your event and not forget things. The date of the todo is based on the event start date and the todo offset parameter in days: an offset of 5 means 5 days before the event starts, an offset of -2 means 2 days after the event started."
 msgstr ""
 
-#: eme-events.php:6499
+#: eme-events.php:6524
 msgid "List of todos"
 msgstr ""
 
-#: eme-events.php:6522
+#: eme-events.php:6547
 msgid "Save"
 msgstr ""
 
-#: eme-events.php:6523
+#: eme-events.php:6548
 msgid "If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
 msgstr ""
 
-#: eme-events.php:6526
+#: eme-events.php:6551
 msgid "Are you sure you want to move this event to the trash bin?"
 msgstr ""
 
-#: eme-events.php:6527
+#: eme-events.php:6552
 msgid "Are you sure you want to delete this recurrence?"
 msgstr ""
 
-#: eme-events.php:6529
+#: eme-events.php:6554
 msgid "Update"
 msgstr ""
 
-#: eme-events.php:6531
+#: eme-events.php:6556
 msgid "Move event to trash bin"
 msgstr ""
 
-#: eme-events.php:6533
-#: eme-events.php:9852
+#: eme-events.php:6558
+#: eme-events.php:9877
 msgid "View"
 msgstr ""
 
 #. translators: Accessibility text.
-#: eme-events.php:6538
+#: eme-events.php:6563
 msgid "(opens in a new tab)"
 msgstr ""
 
-#: eme-events.php:6542
+#: eme-events.php:6567
 msgid "If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
 msgstr ""
 
-#: eme-events.php:6545
+#: eme-events.php:6570
 msgid "Delete Recurrence"
 msgstr ""
 
-#: eme-events.php:6559
-#: eme-events.php:9666
-#: eme-events.php:9734
-#: eme-events.php:9967
-#: eme-events.php:9981
-#: eme-events.php:10094
+#: eme-events.php:6584
+#: eme-events.php:9691
+#: eme-events.php:9759
+#: eme-events.php:9992
+#: eme-events.php:10006
+#: eme-events.php:10119
 #: eme-members.php:1780
 #: eme-members.php:1922
-#: eme-people.php:1063
-#: eme-people.php:1369
+#: eme-people.php:1067
+#: eme-people.php:1373
 msgid "Status"
 msgstr ""
 
-#: eme-events.php:6573
+#: eme-events.php:6598
 msgid "Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the state for events submitted via the frontend submit form."
 msgstr ""
 
-#: eme-events.php:6587
+#: eme-events.php:6612
 msgid "Bookings and tasks"
 msgstr ""
 
-#: eme-events.php:6592
-#: eme-events.php:10372
-#: eme-rsvp.php:5876
+#: eme-events.php:6617
+#: eme-events.php:10397
+#: eme-rsvp.php:5885
 msgid "RSVP Info: "
 msgstr ""
 
-#: eme-events.php:6620
-#: eme-events.php:10400
-#: eme-rsvp.php:5905
+#: eme-events.php:6645
+#: eme-events.php:10425
+#: eme-rsvp.php:5914
 msgid "Free:"
 msgstr ""
 
-#: eme-events.php:6621
-#: eme-events.php:6624
-#: eme-events.php:6676
-#: eme-events.php:10402
-#: eme-events.php:10404
-#: eme-events.php:10409
-#: eme-events.php:10411
-#: eme-events.php:10473
-#: eme-events.php:10475
-#: eme-rsvp.php:5879
-#: eme-rsvp.php:5974
+#: eme-events.php:6646
+#: eme-events.php:6649
+#: eme-events.php:6701
+#: eme-events.php:10427
+#: eme-events.php:10429
+#: eme-events.php:10434
+#: eme-events.php:10436
+#: eme-events.php:10498
+#: eme-events.php:10500
+#: eme-rsvp.php:5888
+#: eme-rsvp.php:5983
 msgid "Approved:"
 msgstr ""
 
-#: eme-events.php:6628
-#: eme-events.php:6674
-#: eme-events.php:10417
-#: eme-events.php:10419
-#: eme-events.php:10467
-#: eme-events.php:10469
-#: eme-rsvp.php:5913
-#: eme-rsvp.php:5972
+#: eme-events.php:6653
+#: eme-events.php:6699
+#: eme-events.php:10442
+#: eme-events.php:10444
+#: eme-events.php:10492
+#: eme-events.php:10494
+#: eme-rsvp.php:5922
+#: eme-rsvp.php:5981
 msgid "Pending:"
 msgstr ""
 
-#: eme-events.php:6633
-#: eme-events.php:10426
-#: eme-events.php:10428
-#: eme-rsvp.php:5918
+#: eme-events.php:6658
+#: eme-events.php:10451
+#: eme-events.php:10453
+#: eme-rsvp.php:5927
 msgid "Absent:"
 msgstr ""
 
-#: eme-events.php:6638
-#: eme-events.php:6641
-#: eme-events.php:10433
-#: eme-events.php:10436
-#: eme-members.php:6636
+#: eme-events.php:6663
+#: eme-events.php:6666
+#: eme-events.php:10458
+#: eme-events.php:10461
+#: eme-members.php:6648
 #: eme-recurrence.php:727
-#: eme-rsvp.php:5922
-#: eme-rsvp.php:5925
+#: eme-rsvp.php:5931
+#: eme-rsvp.php:5934
 msgid "Max:"
 msgstr ""
 
-#: eme-events.php:6639
-#: eme-events.php:10434
-#: eme-rsvp.php:5923
+#: eme-events.php:6664
+#: eme-events.php:10459
+#: eme-rsvp.php:5932
 msgid "Max (from location):"
 msgstr ""
 
-#: eme-events.php:6645
-#: eme-events.php:10440
-#: eme-rsvp.php:5930
+#: eme-events.php:6670
+#: eme-events.php:10465
+#: eme-rsvp.php:5939
 msgid "(%d waiting list seats included)"
 msgstr ""
 
-#: eme-events.php:6650
-#: eme-events.php:10445
-#: eme-rsvp.php:5936
+#: eme-events.php:6675
+#: eme-events.php:10470
+#: eme-rsvp.php:5945
 msgid "Printable view"
 msgstr ""
 
-#: eme-events.php:6651
-#: eme-events.php:10446
-#: eme-rsvp.php:5937
+#: eme-events.php:6676
+#: eme-events.php:10471
+#: eme-rsvp.php:5946
 msgid "CSV export"
 msgstr ""
 
-#: eme-events.php:6672
-#: eme-events.php:10464
-#: eme-rsvp.php:5970
+#: eme-events.php:6697
+#: eme-events.php:10489
+#: eme-rsvp.php:5979
 msgid "Task Info: %d tasks"
 msgstr ""
 
-#: eme-events.php:6694
+#: eme-events.php:6719
 #: eme-locations.php:433
 #: eme-widgets.php:206
 #: eme-widgets.php:370
 msgid "Author"
 msgstr ""
 
-#: eme-events.php:6696
+#: eme-events.php:6721
 msgid "Author of this event: "
 msgstr ""
 
-#: eme-events.php:6712
+#: eme-events.php:6737
 msgid "Contact Person"
 msgstr ""
 
-#: eme-events.php:6714
+#: eme-events.php:6739
 msgid "If you leave this empty, the author will be used as contact person."
 msgstr ""
 
-#: eme-events.php:6727
+#: eme-events.php:6752
 msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending mails), will use the admin user info."
 msgstr ""
 
-#: eme-events.php:6735
-#: eme-events.php:10008
-#: eme-events.php:10360
+#: eme-events.php:6760
+#: eme-events.php:10033
+#: eme-events.php:10385
 #: eme-locations.php:449
-#: eme-locations.php:2994
+#: eme-locations.php:3002
 #: eme-recurrence.php:739
 #: eme-widgets.php:179
 #: eme-widgets.php:343
 msgid "Category"
 msgstr ""
 
-#: eme-events.php:6741
+#: eme-events.php:6766
 #: eme-locations.php:455
 msgid "No categories defined."
 msgstr ""
 
-#: eme-events.php:6760
+#: eme-events.php:6785
 msgid "WP Page template"
 msgstr ""
 
-#: eme-events.php:6765
+#: eme-events.php:6790
 msgid "By default the event uses the same WP page template as the defined special events page. If your theme provides several different page templates, chose another one if wanted."
 msgstr ""
 
-#: eme-events.php:6783
+#: eme-events.php:6808
 msgid "The event name"
 msgstr ""
 
-#: eme-events.php:6784
+#: eme-events.php:6809
 msgid "The start date"
 msgstr ""
 
-#: eme-events.php:6788
-#: eme-events.php:6791
-#: eme-locations.php:1350
-#: eme-locations.php:1354
-#: eme-locations.php:1357
+#: eme-events.php:6813
+#: eme-events.php:6816
+#: eme-locations.php:1349
+#: eme-locations.php:1353
+#: eme-locations.php:1356
 msgid "%s is missing!"
 msgstr ""
 
-#: eme-events.php:6796
+#: eme-events.php:6821
 msgid "Since the event contains multiple seat categories (multiseat), you must specify the price per category (multiprice) as well."
 msgstr ""
 
-#: eme-events.php:6802
+#: eme-events.php:6827
 msgid "Since the event contains multiple seat categories (multiseat), you must specify the exact same amount of prices (multiprice) as well."
 msgstr ""
 
-#: eme-events.php:6838
+#: eme-events.php:6863
 msgid "Your event seems to have multiple price categories, so you can't use #_SEATS (or #_SPACES) in your event RSVP form format. Please correct the RSVP form format to use the #_SEATS{xx} notation."
 msgstr ""
 
-#: eme-events.php:6847
+#: eme-events.php:6872
 msgid "Your event seems to have only one price, so you can't use #_SEATS{xx} in your event RSVP form format. Please correct the RSVP form format to use #_SEATS (or #_SPACES)."
 msgstr ""
 
-#: eme-events.php:6865
+#: eme-events.php:6890
 msgid "Please correct the RSVP form format to use #_EMAIL."
 msgstr ""
 
-#: eme-events.php:6868
+#: eme-events.php:6893
 msgid "Please correct the RSVP form format to use #_LASTNAME."
 msgstr ""
 
-#: eme-events.php:6872
+#: eme-events.php:6897
 msgid "Please correct the RSVP form format to use #_SEATS."
 msgstr ""
 
-#: eme-events.php:6874
+#: eme-events.php:6899
 msgid "Please correct the RSVP form format to use #_SEATS{xx} for all price categories."
 msgstr ""
 
-#: eme-events.php:6878
+#: eme-events.php:6903
 msgid "You have indicated you want to use a password but your event RSVP form format doesn't contain #_PASSWORD. Please correct the RSVP form format to use #_PASSWORD."
 msgstr ""
 
-#: eme-events.php:6882
+#: eme-events.php:6907
 msgid "The min amount of seats to book should not be bigger than the max amount of seats to book."
 msgstr ""
 
-#: eme-events.php:6889
+#: eme-events.php:6914
 msgid "If specified, the max amount of seats to book should consist of integers only."
 msgstr ""
 
-#: eme-events.php:6892
+#: eme-events.php:6917
 msgid "Since this is a multiprice event and you decided to limit the max amount of seats to book (for one booking) per price category, you must specify the exact same amount of \"max seats to book\" as you did for the prices."
 msgstr ""
 
-#: eme-events.php:6895
+#: eme-events.php:6920
 msgid "If specified, the max amount of seats to book should be an integer."
 msgstr ""
 
-#: eme-events.php:6902
+#: eme-events.php:6927
 msgid "If specified, the min amount of seats to book should consist of integers only."
 msgstr ""
 
-#: eme-events.php:6905
+#: eme-events.php:6930
 msgid "Since this is a multiprice event and you decided to limit the min amount of seats to book (for one booking) per price category, you must specify the exact same amount of \"min seats to book\" as you did for the prices."
 msgstr ""
 
-#: eme-events.php:6908
+#: eme-events.php:6933
 msgid "If specified, the min amount of seats to book should be an integer."
 msgstr ""
 
-#: eme-events.php:6920
-#: eme-locations.php:1364
+#: eme-events.php:6945
+#: eme-locations.php:1363
 msgid "Ach, some problems here:"
 msgstr ""
 
-#: eme-events.php:7201
+#: eme-events.php:7226
 msgid "Event date"
 msgstr ""
 
-#: eme-events.php:7207
+#: eme-events.php:7232
 msgid "The event beginning and end date."
 msgstr ""
 
-#: eme-events.php:7211
+#: eme-events.php:7236
 msgid "Event duration (in days)"
 msgstr ""
 
-#: eme-events.php:7212
+#: eme-events.php:7237
 msgid "day(s)"
 msgstr ""
 
-#: eme-events.php:7216
+#: eme-events.php:7241
 msgid "Event time"
 msgstr ""
 
-#: eme-events.php:7222
+#: eme-events.php:7247
 msgid "The time of the event beginning and end"
 msgstr ""
 
-#: eme-events.php:7226
+#: eme-events.php:7251
 msgid "This event lasts all day"
 msgstr ""
 
-#: eme-events.php:7232
+#: eme-events.php:7257
 msgid "Check if your event happens more than once."
 msgstr ""
 
-#: eme-events.php:7236
+#: eme-events.php:7261
 msgid "Bookings found for this event, so not possible to convert to a recurring event."
 msgstr ""
 
-#: eme-events.php:7246
+#: eme-events.php:7271
 #: eme-widgets.php:163
 msgid "Daily"
 msgstr ""
 
-#: eme-events.php:7247
+#: eme-events.php:7272
 msgid "Weekly"
 msgstr ""
 
-#: eme-events.php:7248
+#: eme-events.php:7273
 #: eme-widgets.php:164
 msgid "Monthly"
 msgstr ""
 
-#: eme-events.php:7249
+#: eme-events.php:7274
 msgid "Specific days"
 msgstr ""
 
-#: eme-events.php:7250
+#: eme-events.php:7275
 msgid "Specific months"
 msgstr ""
 
-#: eme-events.php:7276
+#: eme-events.php:7301
 msgid "first"
 msgstr ""
 
-#: eme-events.php:7277
+#: eme-events.php:7302
 msgid "second"
 msgstr ""
 
-#: eme-events.php:7278
+#: eme-events.php:7303
 msgid "third"
 msgstr ""
 
-#: eme-events.php:7279
+#: eme-events.php:7304
 msgid "fourth"
 msgstr ""
 
-#: eme-events.php:7280
+#: eme-events.php:7305
 msgid "fifth"
 msgstr ""
 
-#: eme-events.php:7281
+#: eme-events.php:7306
 msgid "last"
 msgstr ""
 
-#: eme-events.php:7282
+#: eme-events.php:7307
 msgid "Start day"
 msgstr ""
 
-#: eme-events.php:7292
+#: eme-events.php:7317
 msgid "Recurrence dates"
 msgstr ""
 
-#: eme-events.php:7298
+#: eme-events.php:7323
 msgid "The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one."
 msgstr ""
 
-#: eme-events.php:7301
+#: eme-events.php:7326
 msgid "Select all the dates you want the event to begin on."
 msgstr ""
 
-#: eme-events.php:7306
+#: eme-events.php:7331
 msgid "Frequency:"
 msgstr ""
 
-#: eme-events.php:7312
-#: eme-events.php:7330
-#: eme-events.php:7343
+#: eme-events.php:7337
+#: eme-events.php:7355
+#: eme-events.php:7368
 msgid "Every"
 msgstr ""
 
-#: eme-events.php:7317
+#: eme-events.php:7342
 #: eme-recurrence.php:707
 msgid "day"
 msgstr ""
 
-#: eme-events.php:7319
+#: eme-events.php:7344
 msgid "week"
 msgstr ""
 
-#: eme-events.php:7320
+#: eme-events.php:7345
 msgid "weeks"
 msgstr ""
 
-#: eme-events.php:7321
+#: eme-events.php:7346
 msgid "month"
 msgstr ""
 
-#: eme-events.php:7322
+#: eme-events.php:7347
 msgid "months"
 msgstr ""
 
-#: eme-events.php:7327
+#: eme-events.php:7352
 msgid "If you leave this empty, the recurrence start date will be used as a reference."
 msgstr ""
 
-#: eme-events.php:7337
-#: eme-events.php:7350
+#: eme-events.php:7362
+#: eme-events.php:7375
 msgid "Day of month"
 msgstr ""
 
-#: eme-events.php:7339
-#: eme-events.php:7352
+#: eme-events.php:7364
+#: eme-events.php:7377
 msgid "If you use \"Start day\" as day of the month, the recurrence start date will be used as a reference."
 msgstr ""
 
-#: eme-events.php:7358
+#: eme-events.php:7383
 msgid "Excluded days:"
 msgstr ""
 
-#: eme-events.php:7363
+#: eme-events.php:7388
 msgid "No events will be created on excluded days."
 msgstr ""
 
-#: eme-events.php:7369
+#: eme-events.php:7394
 msgid "Holidays: "
 msgstr ""
 
-#: eme-events.php:7374
+#: eme-events.php:7399
 msgid "No events will be created on days matching an entry in the holidays list"
 msgstr ""
 
-#: eme-events.php:7394
+#: eme-events.php:7419
 msgid "Single Event Title"
 msgstr ""
 
-#: eme-events.php:7396
-#: eme-events.php:7428
-#: eme-events.php:7466
-#: eme-events.php:7488
-#: eme-events.php:7532
-#: eme-events.php:7568
-#: eme-events.php:7590
-#: eme-events.php:7616
-#: eme-events.php:7638
-#: eme-events.php:7676
-#: eme-events.php:7684
-#: eme-events.php:7711
-#: eme-events.php:7733
-#: eme-events.php:7768
-#: eme-events.php:7790
-#: eme-events.php:7816
-#: eme-events.php:7838
-#: eme-events.php:7876
-#: eme-events.php:7884
-#: eme-events.php:7905
-#: eme-events.php:7927
-#: eme-events.php:7956
-#: eme-events.php:7978
-#: eme-events.php:7997
-#: eme-events.php:8019
-#: eme-events.php:8048
-#: eme-events.php:8070
-#: eme-events.php:8096
-#: eme-events.php:8118
-#: eme-events.php:8153
-#: eme-events.php:8175
-#: eme-events.php:8201
-#: eme-events.php:8223
-#: eme-events.php:8261
-#: eme-events.php:8269
-#: eme-events.php:8290
-#: eme-events.php:8312
-#: eme-events.php:8340
-#: eme-events.php:8369
+#: eme-events.php:7421
+#: eme-events.php:7453
+#: eme-events.php:7491
+#: eme-events.php:7513
+#: eme-events.php:7557
+#: eme-events.php:7593
+#: eme-events.php:7615
+#: eme-events.php:7641
+#: eme-events.php:7663
+#: eme-events.php:7701
+#: eme-events.php:7709
+#: eme-events.php:7736
+#: eme-events.php:7758
+#: eme-events.php:7793
+#: eme-events.php:7815
+#: eme-events.php:7841
+#: eme-events.php:7863
+#: eme-events.php:7901
+#: eme-events.php:7909
+#: eme-events.php:7930
+#: eme-events.php:7952
+#: eme-events.php:7981
+#: eme-events.php:8003
+#: eme-events.php:8022
+#: eme-events.php:8044
+#: eme-events.php:8073
+#: eme-events.php:8095
+#: eme-events.php:8121
+#: eme-events.php:8143
+#: eme-events.php:8178
+#: eme-events.php:8200
+#: eme-events.php:8226
+#: eme-events.php:8248
+#: eme-events.php:8286
+#: eme-events.php:8294
+#: eme-events.php:8315
+#: eme-events.php:8337
+#: eme-events.php:8365
+#: eme-events.php:8394
 msgid "Only fill this in if you want to override the default settings."
 msgstr ""
 
-#: eme-events.php:7399
-#: eme-events.php:7433
-#: eme-events.php:7469
-#: eme-events.php:7491
-#: eme-events.php:7535
-#: eme-events.php:7571
-#: eme-events.php:7593
-#: eme-events.php:7619
-#: eme-events.php:7641
-#: eme-events.php:7714
-#: eme-events.php:7736
-#: eme-events.php:7771
-#: eme-events.php:7793
-#: eme-events.php:7819
-#: eme-events.php:7841
-#: eme-events.php:7908
-#: eme-events.php:7930
-#: eme-events.php:7959
-#: eme-events.php:7981
-#: eme-events.php:8000
-#: eme-events.php:8022
-#: eme-events.php:8051
-#: eme-events.php:8073
-#: eme-events.php:8099
-#: eme-events.php:8121
-#: eme-events.php:8156
-#: eme-events.php:8178
-#: eme-events.php:8204
-#: eme-events.php:8226
-#: eme-events.php:8293
-#: eme-events.php:8315
-#: eme-events.php:8343
-#: eme-events.php:8372
-#: eme-events.php:8718
-#: eme-events.php:8733
+#: eme-events.php:7424
+#: eme-events.php:7458
+#: eme-events.php:7494
+#: eme-events.php:7516
+#: eme-events.php:7560
+#: eme-events.php:7596
+#: eme-events.php:7618
+#: eme-events.php:7644
+#: eme-events.php:7666
+#: eme-events.php:7739
+#: eme-events.php:7761
+#: eme-events.php:7796
+#: eme-events.php:7818
+#: eme-events.php:7844
+#: eme-events.php:7866
+#: eme-events.php:7933
+#: eme-events.php:7955
+#: eme-events.php:7984
+#: eme-events.php:8006
+#: eme-events.php:8025
+#: eme-events.php:8047
+#: eme-events.php:8076
+#: eme-events.php:8098
+#: eme-events.php:8124
+#: eme-events.php:8146
+#: eme-events.php:8181
+#: eme-events.php:8203
+#: eme-events.php:8229
+#: eme-events.php:8251
+#: eme-events.php:8318
+#: eme-events.php:8340
+#: eme-events.php:8368
+#: eme-events.php:8397
+#: eme-events.php:8743
+#: eme-events.php:8758
 #: eme-mailer.php:2646
 #: eme-mailer.php:2656
 #: eme-mailer.php:2838
@@ -3097,41 +3090,41 @@ msgstr ""
 msgid "Either choose from a template: "
 msgstr ""
 
-#: eme-events.php:7403
-#: eme-events.php:7437
-#: eme-events.php:7473
-#: eme-events.php:7495
-#: eme-events.php:7539
-#: eme-events.php:7575
-#: eme-events.php:7597
-#: eme-events.php:7623
-#: eme-events.php:7645
-#: eme-events.php:7718
-#: eme-events.php:7740
-#: eme-events.php:7775
-#: eme-events.php:7797
-#: eme-events.php:7823
-#: eme-events.php:7845
-#: eme-events.php:7912
-#: eme-events.php:7934
-#: eme-events.php:7963
-#: eme-events.php:7985
-#: eme-events.php:8004
-#: eme-events.php:8026
-#: eme-events.php:8055
-#: eme-events.php:8077
-#: eme-events.php:8103
-#: eme-events.php:8125
-#: eme-events.php:8160
-#: eme-events.php:8182
-#: eme-events.php:8208
-#: eme-events.php:8230
-#: eme-events.php:8297
-#: eme-events.php:8319
-#: eme-events.php:8347
-#: eme-events.php:8376
-#: eme-events.php:8722
-#: eme-events.php:8737
+#: eme-events.php:7428
+#: eme-events.php:7462
+#: eme-events.php:7498
+#: eme-events.php:7520
+#: eme-events.php:7564
+#: eme-events.php:7600
+#: eme-events.php:7622
+#: eme-events.php:7648
+#: eme-events.php:7670
+#: eme-events.php:7743
+#: eme-events.php:7765
+#: eme-events.php:7800
+#: eme-events.php:7822
+#: eme-events.php:7848
+#: eme-events.php:7870
+#: eme-events.php:7937
+#: eme-events.php:7959
+#: eme-events.php:7988
+#: eme-events.php:8010
+#: eme-events.php:8029
+#: eme-events.php:8051
+#: eme-events.php:8080
+#: eme-events.php:8102
+#: eme-events.php:8128
+#: eme-events.php:8150
+#: eme-events.php:8185
+#: eme-events.php:8207
+#: eme-events.php:8233
+#: eme-events.php:8255
+#: eme-events.php:8322
+#: eme-events.php:8344
+#: eme-events.php:8372
+#: eme-events.php:8401
+#: eme-events.php:8747
+#: eme-events.php:8762
 #: eme-members.php:2062
 #: eme-members.php:2094
 #: eme-members.php:2112
@@ -3154,21 +3147,21 @@ msgstr ""
 msgid "Or enter your own (if anything is entered here, it takes precedence over the selected template): "
 msgstr ""
 
-#: eme-events.php:7423
+#: eme-events.php:7448
 msgid "Single Event"
 msgstr ""
 
-#: eme-events.php:7426
+#: eme-events.php:7451
 msgid "The format of the single event page."
 msgstr ""
 
-#: eme-events.php:7430
+#: eme-events.php:7455
 msgid "This defines the layout of your event (where the event description goes, the RSVP form, the map, ... ."
 msgstr ""
 
-#: eme-events.php:7445
-#: eme-events.php:8507
-#: eme-events.php:8575
+#: eme-events.php:7470
+#: eme-events.php:8532
+#: eme-events.php:8600
 #: eme-locations.php:666
 #: eme-locations.php:765
 #: eme-mailer.php:2670
@@ -3178,60 +3171,60 @@ msgstr ""
 msgid "Your account has the ability to post unrestricted HTML content here, except javascript."
 msgstr ""
 
-#: eme-events.php:7463
+#: eme-events.php:7488
 msgid "Contact Person Payment Gateway Notification Email Subject"
 msgstr ""
 
-#: eme-events.php:7464
+#: eme-events.php:7489
 #: eme-members.php:2745
 #: eme-options.php:2291
 #: eme-options.php:2307
 msgid "The subject of the email which will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr ""
 
-#: eme-events.php:7484
+#: eme-events.php:7509
 msgid "Contact Person Payment Gateway Notification Email Body"
 msgstr ""
 
-#: eme-events.php:7486
+#: eme-events.php:7511
 #: eme-members.php:2752
 #: eme-options.php:2292
 #: eme-options.php:2308
 msgid "The body of the email which will be sent to the contact person when a payment notification is received via a payment gateway."
 msgstr ""
 
-#: eme-events.php:7510
+#: eme-events.php:7535
 #: eme-members.php:2247
 msgid "Dynamic data check on every field"
 msgstr ""
 
-#: eme-events.php:7512
+#: eme-events.php:7537
 msgid "By default the dynamic data check only happens for the fields mentioned in your dynamic data condition if those are present in your RSVP form definition. Using this option, you can use all booking placeholders, even if not defined in your RSVP form. The small disadvantage is that more requests will be made to the backend, so use only when absolutely needed."
 msgstr ""
 
-#: eme-events.php:7513
+#: eme-events.php:7538
 msgid "If your event uses a discount of type code and you want the dynamic price (using #_DYNAMICPRICE) to be updated taking that discount into account too, then also check this option."
 msgstr ""
 
-#: eme-events.php:7528
+#: eme-events.php:7553
 #: eme-options.php:1881
 msgid "Booking recorded message"
 msgstr ""
 
-#: eme-events.php:7530
+#: eme-events.php:7555
 #: eme-options.php:1881
 msgid "The text (html allowed) shown to the user when the booking has been made successfully."
 msgstr ""
 
-#: eme-events.php:7557
+#: eme-events.php:7582
 #: eme-options.php:2055
 msgid "When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid."
 msgstr ""
 
-#: eme-events.php:7559
-#: eme-events.php:7701
-#: eme-events.php:7758
-#: eme-events.php:8143
+#: eme-events.php:7584
+#: eme-events.php:7726
+#: eme-events.php:7783
+#: eme-events.php:8168
 #: eme-options.php:2051
 #: eme-options.php:2109
 #: eme-options.php:2169
@@ -3243,62 +3236,62 @@ msgstr ""
 msgid "RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
-#: eme-events.php:7561
+#: eme-events.php:7586
 #: eme-options.php:2053
 msgid "RSVP notifications are not activated for bookings made or approved, so these mails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
-#: eme-events.php:7565
+#: eme-events.php:7590
 #: eme-options.php:2059
 msgid "Booking Made Email Subject"
 msgstr ""
 
-#: eme-events.php:7566
+#: eme-events.php:7591
 #: eme-options.php:2059
 msgid "The subject of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr ""
 
-#: eme-events.php:7587
+#: eme-events.php:7612
 #: eme-options.php:2060
 msgid "Booking Made Email Body"
 msgstr ""
 
-#: eme-events.php:7588
+#: eme-events.php:7613
 #: eme-options.php:2060
 msgid "The body of the email sent to the respondent when a booking is made (not pending) or approved."
 msgstr ""
 
-#: eme-events.php:7613
+#: eme-events.php:7638
 #: eme-options.php:2061
 msgid "Contact Person Booking Made Email Subject"
 msgstr ""
 
-#: eme-events.php:7614
+#: eme-events.php:7639
 #: eme-options.php:2061
 msgid "The subject of the email which will be sent to the contact person when a booking is made."
 msgstr ""
 
-#: eme-events.php:7635
+#: eme-events.php:7660
 #: eme-options.php:2062
 msgid "Contact Person Booking Made Email Body"
 msgstr ""
 
-#: eme-events.php:7636
+#: eme-events.php:7661
 #: eme-options.php:2062
 msgid "The body of the email which will be sent to the contact person when a booking is made."
 msgstr ""
 
-#: eme-events.php:7654
+#: eme-events.php:7679
 #: eme-options.php:2065
 msgid "Booking made mail attachments"
 msgstr ""
 
-#: eme-events.php:7673
-#: eme-events.php:7873
-#: eme-events.php:8258
-#: eme-events.php:9618
-#: eme-events.php:9984
-#: eme-events.php:10104
+#: eme-events.php:7698
+#: eme-events.php:7898
+#: eme-events.php:8283
+#: eme-events.php:9643
+#: eme-events.php:10009
+#: eme-events.php:10129
 #: eme-mailer.php:2695
 #: eme-mailer.php:2874
 #: eme-members.php:2313
@@ -3312,9 +3305,9 @@ msgstr ""
 msgid "Add attachments"
 msgstr ""
 
-#: eme-events.php:7674
-#: eme-events.php:7874
-#: eme-events.php:8259
+#: eme-events.php:7699
+#: eme-events.php:7899
+#: eme-events.php:8284
 #: eme-mailer.php:2696
 #: eme-mailer.php:2875
 #: eme-members.php:2314
@@ -3328,14 +3321,14 @@ msgstr ""
 msgid "Remove attachments"
 msgstr ""
 
-#: eme-events.php:7675
+#: eme-events.php:7700
 #: eme-options.php:2087
 msgid "Optionally add attachments to the mail when a new booking is made."
 msgstr ""
 
-#: eme-events.php:7677
-#: eme-events.php:7877
-#: eme-events.php:8262
+#: eme-events.php:7702
+#: eme-events.php:7902
+#: eme-events.php:8287
 #: eme-members.php:2319
 #: eme-members.php:2463
 #: eme-members.php:2542
@@ -3346,9 +3339,9 @@ msgstr ""
 msgid "PDF templates as attachments"
 msgstr ""
 
-#: eme-events.php:7682
-#: eme-events.php:7882
-#: eme-events.php:8267
+#: eme-events.php:7707
+#: eme-events.php:7907
+#: eme-events.php:8292
 #: eme-members.php:2325
 #: eme-members.php:2328
 #: eme-members.php:2469
@@ -3362,9 +3355,9 @@ msgstr ""
 msgid "Optionally add PDF templates as attachments to the mail."
 msgstr ""
 
-#: eme-events.php:7686
-#: eme-events.php:7886
-#: eme-events.php:8271
+#: eme-events.php:7711
+#: eme-events.php:7911
+#: eme-events.php:8296
 #: eme-members.php:2330
 #: eme-members.php:2474
 #: eme-members.php:2553
@@ -3375,277 +3368,277 @@ msgstr ""
 msgid "No PDF templates defined yet."
 msgstr ""
 
-#: eme-events.php:7703
-#: eme-events.php:7760
-#: eme-events.php:8788
+#: eme-events.php:7728
+#: eme-events.php:7785
+#: eme-events.php:8813
 #: eme-options.php:2111
 msgid "RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
-#: eme-events.php:7708
+#: eme-events.php:7733
 #: eme-options.php:2116
 msgid "Booking Awaiting User Confirmation Email Subject"
 msgstr ""
 
-#: eme-events.php:7709
+#: eme-events.php:7734
 #: eme-options.php:2116
 msgid "The subject of the email which will be sent to the respondent if the booking requires user confirmation."
 msgstr ""
 
-#: eme-events.php:7729
+#: eme-events.php:7754
 #: eme-options.php:2117
 msgid "Booking Awaiting User Confirmation Email Body"
 msgstr ""
 
-#: eme-events.php:7731
+#: eme-events.php:7756
 #: eme-options.php:2117
 msgid "The body of the email which will be sent to the respondent if the booking requires user confirmation."
 msgstr ""
 
-#: eme-events.php:7765
+#: eme-events.php:7790
 #: eme-options.php:2118
 msgid "Booking Pending Email Subject"
 msgstr ""
 
-#: eme-events.php:7766
+#: eme-events.php:7791
 #: eme-options.php:2118
 msgid "The subject of the email which will be sent to the respondent if the booking requires approval."
 msgstr ""
 
-#: eme-events.php:7786
+#: eme-events.php:7811
 #: eme-options.php:2119
 msgid "Booking Pending Email Body"
 msgstr ""
 
-#: eme-events.php:7788
+#: eme-events.php:7813
 #: eme-options.php:2119
 msgid "The body of the email which will be sent to the respondent if the booking requires approval."
 msgstr ""
 
-#: eme-events.php:7813
+#: eme-events.php:7838
 #: eme-options.php:2120
 msgid "Contact Person Pending Booking Email Subject"
 msgstr ""
 
-#: eme-events.php:7814
+#: eme-events.php:7839
 #: eme-options.php:2120
 msgid "The subject of the email which will be sent to the contact person if a booking requires approval."
 msgstr ""
 
-#: eme-events.php:7835
+#: eme-events.php:7860
 #: eme-options.php:2121
 msgid "Contact Person Pending Booking Email Body"
 msgstr ""
 
-#: eme-events.php:7836
+#: eme-events.php:7861
 #: eme-options.php:2121
 msgid "The body of the email which will be sent to the contact person if a booking requires approval."
 msgstr ""
 
-#: eme-events.php:7854
+#: eme-events.php:7879
 #: eme-options.php:2124
 msgid "Pending mail attachments"
 msgstr ""
 
-#: eme-events.php:7875
+#: eme-events.php:7900
 #: eme-options.php:2146
 msgid "Optionally add attachments to the mail when a booking is pending."
 msgstr ""
 
-#: eme-events.php:7902
+#: eme-events.php:7927
 #: eme-options.php:2171
 msgid "Booking Updated Email Subject"
 msgstr ""
 
-#: eme-events.php:7903
+#: eme-events.php:7928
 #: eme-options.php:2171
 msgid "The subject of the email which will be sent to the respondent if the booking has been updated by an admin."
 msgstr ""
 
-#: eme-events.php:7924
+#: eme-events.php:7949
 #: eme-options.php:2172
 msgid "Booking Updated Email Body"
 msgstr ""
 
-#: eme-events.php:7925
+#: eme-events.php:7950
 #: eme-options.php:2172
 msgid "The body of the email which will be sent to the respondent if the booking has been updated by an admin."
 msgstr ""
 
-#: eme-events.php:7953
+#: eme-events.php:7978
 #: eme-options.php:2186
 msgid "Pending Booking Reminder Email Subject"
 msgstr ""
 
-#: eme-events.php:7954
+#: eme-events.php:7979
 #: eme-options.php:2186
 msgid "The subject of the email which will be sent to the respondent as a reminder of a pending booking."
 msgstr ""
 
-#: eme-events.php:7975
+#: eme-events.php:8000
 #: eme-options.php:2187
 msgid "Pending Booking Reminder Email Body"
 msgstr ""
 
-#: eme-events.php:7976
+#: eme-events.php:8001
 #: eme-options.php:2187
 msgid "The body of the email which will be sent to the respondent as a reminder of a pending booking."
 msgstr ""
 
-#: eme-events.php:7994
+#: eme-events.php:8019
 #: eme-options.php:2188
 msgid "Accepted Booking Reminder Email Subject"
 msgstr ""
 
-#: eme-events.php:7995
+#: eme-events.php:8020
 #: eme-options.php:2188
 msgid "The subject of the email which will be sent to the respondent as a reminder of an approved booking."
 msgstr ""
 
-#: eme-events.php:8016
+#: eme-events.php:8041
 #: eme-options.php:2189
 msgid "Accepted Booking Reminder Email Body"
 msgstr ""
 
-#: eme-events.php:8017
+#: eme-events.php:8042
 #: eme-options.php:2189
 msgid "The body of the email which will be sent to the respondent as a reminder of an approved booking."
 msgstr ""
 
-#: eme-events.php:8045
+#: eme-events.php:8070
 #: eme-options.php:2203
 msgid "Booking Cancelled Email Subject"
 msgstr ""
 
-#: eme-events.php:8046
+#: eme-events.php:8071
 #: eme-options.php:2203
 msgid "The subject of the email which will be sent to the respondent when he cancels all his bookings for an event."
 msgstr ""
 
-#: eme-events.php:8067
+#: eme-events.php:8092
 #: eme-options.php:2204
 msgid "Booking Cancelled Email Body"
 msgstr ""
 
-#: eme-events.php:8068
+#: eme-events.php:8093
 #: eme-options.php:2204
 msgid "The body of the email which will be sent to the respondent when he cancels all his bookings for an event."
 msgstr ""
 
-#: eme-events.php:8093
+#: eme-events.php:8118
 #: eme-options.php:2205
 msgid "Contact Person Cancelled Booking Email Subject"
 msgstr ""
 
-#: eme-events.php:8094
+#: eme-events.php:8119
 #: eme-options.php:2205
 msgid "The subject of the email which will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr ""
 
-#: eme-events.php:8115
+#: eme-events.php:8140
 #: eme-options.php:2206
 msgid "Contact Person Cancelled Booking Email Body"
 msgstr ""
 
-#: eme-events.php:8116
+#: eme-events.php:8141
 #: eme-options.php:2206
 msgid "The body of the email which will be sent to the contact person when a respondent cancels all his bookings for an event."
 msgstr ""
 
-#: eme-events.php:8145
+#: eme-events.php:8170
 #: eme-options.php:2234
 msgid "RSVP notifications are not activated for paid bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
-#: eme-events.php:8150
+#: eme-events.php:8175
 #: eme-options.php:2239
 msgid "Booking Paid Email Subject"
 msgstr ""
 
-#: eme-events.php:8151
+#: eme-events.php:8176
 #: eme-options.php:2239
 msgid "The subject of the email which will be sent to the respondent when a booking is marked as paid."
 msgstr ""
 
-#: eme-events.php:8172
+#: eme-events.php:8197
 #: eme-options.php:2240
 msgid "Booking Paid Email Body"
 msgstr ""
 
-#: eme-events.php:8173
+#: eme-events.php:8198
 #: eme-options.php:2240
 msgid "The body of the email which will be sent to the respondent when a booking is marked as paid."
 msgstr ""
 
-#: eme-events.php:8198
+#: eme-events.php:8223
 msgid "Contact Person Booking Paid Email Subject"
 msgstr ""
 
-#: eme-events.php:8199
+#: eme-events.php:8224
 #: eme-options.php:2241
 msgid "The subject of the email which will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr ""
 
-#: eme-events.php:8219
+#: eme-events.php:8244
 msgid "Contact Person Booking Paid Email Body"
 msgstr ""
 
-#: eme-events.php:8221
+#: eme-events.php:8246
 #: eme-options.php:2242
 msgid "The body of the email which will be sent to the contact person when a booking is marked as paid (not via a payment gateway)."
 msgstr ""
 
-#: eme-events.php:8239
+#: eme-events.php:8264
 #: eme-options.php:2244
 msgid "Booking paid mail attachments"
 msgstr ""
 
-#: eme-events.php:8260
+#: eme-events.php:8285
 #: eme-options.php:2266
 msgid "Optionally add attachments to the mail when a booking is paid."
 msgstr ""
 
-#: eme-events.php:8287
+#: eme-events.php:8312
 #: eme-options.php:2220
 msgid "Booking Deleted Email Subject"
 msgstr ""
 
-#: eme-events.php:8288
+#: eme-events.php:8313
 #: eme-options.php:2220
 msgid "The subject of the email which will be sent to the respondent if the booking is deleted by an admin."
 msgstr ""
 
-#: eme-events.php:8309
+#: eme-events.php:8334
 #: eme-options.php:2221
 msgid "Booking Deleted Email Body"
 msgstr ""
 
-#: eme-events.php:8310
+#: eme-events.php:8335
 #: eme-options.php:2221
 msgid "The body of the email which will be sent to the respondent if the booking is deleted by an admin."
 msgstr ""
 
-#: eme-events.php:8337
+#: eme-events.php:8362
 msgid "Booking Form"
 msgstr ""
 
-#: eme-events.php:8338
+#: eme-events.php:8363
 msgid "The booking form format."
 msgstr ""
 
-#: eme-events.php:8366
+#: eme-events.php:8391
 msgid "Cancel Booking Form"
 msgstr ""
 
-#: eme-events.php:8367
+#: eme-events.php:8392
 msgid "The cancel booking form format."
 msgstr ""
 
-#: eme-events.php:8393
+#: eme-events.php:8418
 msgid "Captcha settings"
 msgstr ""
 
-#: eme-events.php:8397
+#: eme-events.php:8422
 #: eme-members.php:1987
 #: eme-options.php:1464
 #: eme-options.php:2004
@@ -3653,236 +3646,236 @@ msgstr ""
 msgid "None"
 msgstr ""
 
-#: eme-events.php:8399
+#: eme-events.php:8424
 #: eme-members.php:1987
 #: eme-options.php:3089
 msgid "Select a captcha to use"
 msgstr ""
 
-#: eme-events.php:8403
+#: eme-events.php:8428
 #: eme-members.php:1990
 #: eme-options.php:1458
 msgid "Only use captcha for logged out users?"
 msgstr ""
 
-#: eme-events.php:8404
+#: eme-events.php:8429
 #: eme-members.php:1992
 #: eme-options.php:1458
 msgid "If this option is checked, the captcha will only be used for logged out users."
 msgstr ""
 
-#: eme-events.php:8498
+#: eme-events.php:8523
 msgid "Event description"
 msgstr ""
 
-#: eme-events.php:8500
+#: eme-events.php:8525
 msgid "The event description. This is also used in html meta tags and google tags to show the event info."
 msgstr ""
 
-#: eme-events.php:8523
-#: eme-events.php:8527
-#: eme-events.php:8531
+#: eme-events.php:8548
+#: eme-events.php:8552
+#: eme-events.php:8556
 msgid "Event image"
 msgstr ""
 
-#: eme-events.php:8541
+#: eme-events.php:8566
 #: eme-locations.php:704
 msgid "Set a featured image"
 msgstr ""
 
-#: eme-events.php:8542
+#: eme-events.php:8567
 #: eme-locations.php:705
 msgid "Unset featured image"
 msgstr ""
 
-#: eme-events.php:8568
+#: eme-events.php:8593
 msgid "Here custom fields of type 'events' are shown."
 msgstr ""
 
-#: eme-events.php:8569
+#: eme-events.php:8594
 msgid "The difference with event attributes is that attributes need to be defined in your format first and can only be text, here you can first create custom fields of any kind which allows more freedom."
 msgstr ""
 
-#: eme-events.php:8570
+#: eme-events.php:8595
 msgid "If a custom field with name 'performer' exists, it's value here will be used for the google 'performer' header when showing the event in google search results."
 msgstr ""
 
-#: eme-events.php:8622
+#: eme-events.php:8647
 #: eme-locations.php:809
 #: eme-members.php:2829
 msgid "Custom fields of type 'hidden' are useless here and of course won't be shown."
 msgstr ""
 
-#: eme-events.php:8638
-#: eme-events.php:9861
+#: eme-events.php:8663
+#: eme-events.php:9886
 #: eme-locations.php:723
 msgid "External URL"
 msgstr ""
 
-#: eme-events.php:8642
+#: eme-events.php:8667
 msgid "If this is filled in, the single event URL will point to this url instead of the standard event page."
 msgstr ""
 
-#: eme-events.php:8651
+#: eme-events.php:8676
 msgid "Enable bookings for this event"
 msgstr ""
 
-#: eme-events.php:8663
+#: eme-events.php:8688
 msgid "If no payment method is selected, the \"Booking Recorded Message\" (defined in the RSVP Form format settings) will be shown. Otherwise the \"Booking Recorded Message\" will be shown and after some seconds the user gets redirected to the payment page (see the generic EME settings on the redirection timeout and more payment settings)."
 msgstr ""
 
-#: eme-events.php:8671
+#: eme-events.php:8696
 #: eme-members.php:2200
 msgid "No payment methods configured yet. Go in the EME payment settings and configure some."
 msgstr ""
 
-#: eme-events.php:8674
+#: eme-events.php:8699
 msgid "Select a payment method"
 msgstr ""
 
-#: eme-events.php:8679
+#: eme-events.php:8704
 msgid "Skip payment methods after booking"
 msgstr ""
 
-#: eme-events.php:8681
+#: eme-events.php:8706
 msgid "If you want to skip the possibility to pay immediately after booking, select this option. This might be useful if you for example want to approve unpaid bookings and only then send them the payment link using #_PAYMENT_URL in the booked email message."
 msgstr ""
 
-#: eme-events.php:8703
+#: eme-events.php:8728
 msgid "Select this option if you want an attendance record to be kept every time the RSVP attendance QRCODE is scanned by an authorized user."
 msgstr ""
 
-#: eme-events.php:8706
+#: eme-events.php:8731
 msgid "Attendance URL (generated by #_ATTENDANCE_URL) is valid from "
 msgstr ""
 
-#: eme-events.php:8708
+#: eme-events.php:8733
 msgid "hours before the event starts until "
 msgstr ""
 
-#: eme-events.php:8710
+#: eme-events.php:8735
 msgid "hours after the event ends."
 msgstr ""
 
-#: eme-events.php:8711
+#: eme-events.php:8736
 msgid "When scanning the URL generated by #_QRCODE or #_ATTENDANCE_URL, you can also decide to use this as entry ticket. This option then allows to define from which point people are allowed to enter. EME will then also count the number of times the code is scanned by an authorized user and issue a warning is this count is greater than the number of booked seats."
 msgstr ""
 
-#: eme-events.php:8715
+#: eme-events.php:8740
 msgid "Extra attendance info for not authorized users"
 msgstr ""
 
-#: eme-events.php:8716
+#: eme-events.php:8741
 msgid "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a not authorized user, only info concerning the payment status is shown. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed."
 msgstr ""
 
-#: eme-events.php:8730
+#: eme-events.php:8755
 msgid "Extra attendance info for authorized users"
 msgstr ""
 
-#: eme-events.php:8731
+#: eme-events.php:8756
 msgid "When the URL generated by #_QRCODE or #_ATTENDANCE_URL is scanned by a authorized user, only info concerning the payment status is shown, next to attendance count info if configured to do so. If you want to show extra info (like the event name or some booking info), you can define that in this template. All event and RSVP placeholders are allowed."
 msgstr ""
 
-#: eme-events.php:8746
+#: eme-events.php:8771
 msgid "Attendance PDF proof"
 msgstr ""
 
-#: eme-events.php:8747
+#: eme-events.php:8772
 msgid "When the URL generated by #_ATTENDANCEPROOF_URL is visited, the selected PDF template will be used to generate a PDF for the user that can serve as proof of attendance. All event and RSVP placeholders are allowed."
 msgstr ""
 
-#: eme-events.php:8749
+#: eme-events.php:8774
 msgid "Choose from a template: "
 msgstr ""
 
-#: eme-events.php:8779
+#: eme-events.php:8804
 msgid "Require user confirmation after booking"
 msgstr ""
 
-#: eme-events.php:8780
+#: eme-events.php:8805
 msgid "If active, don't forget to use #_BOOKING_CONFIRM_URL in the mail being sent to a booker."
 msgstr ""
 
-#: eme-events.php:8784
+#: eme-events.php:8809
 msgid "Require booking approval"
 msgstr ""
 
-#: eme-events.php:8793
+#: eme-events.php:8818
 msgid "Extra approval settings (also check out the mail templates)"
 msgstr ""
 
-#: eme-events.php:8795
+#: eme-events.php:8820
 msgid "Auto-approve booking upon payment"
 msgstr ""
 
-#: eme-events.php:8797
+#: eme-events.php:8822
 msgid "Consider pending bookings as available seats for new bookings"
 msgstr ""
 
-#: eme-events.php:8797
+#: eme-events.php:8822
 msgid "In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments."
 msgstr ""
 
-#: eme-events.php:8800
+#: eme-events.php:8825
 #: eme-options.php:1810
 msgid "Set the number of days before reminder emails will be sent for pending bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr ""
 
-#: eme-events.php:8804
+#: eme-events.php:8829
 #: eme-options.php:1811
 msgid "Set the number of days before reminder emails will be sent for approved bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr ""
 
-#: eme-events.php:8807
+#: eme-events.php:8832
 msgid "Create WP user after succesful booking"
 msgstr ""
 
-#: eme-events.php:8808
+#: eme-events.php:8833
 msgid "This will create a WP user after the booking is completed, as if the person registered in WP itself. This will only create a user if the booker was not logged in and the email is not yet taken by another WP user."
 msgstr ""
 
-#: eme-events.php:8811
+#: eme-events.php:8836
 msgid "Allow only 1 booking per unique email address"
 msgstr ""
 
-#: eme-events.php:8814
+#: eme-events.php:8839
 msgid "Allow only 1 booking per person (combo email/last name/first name)"
 msgstr ""
 
-#: eme-events.php:8818
-#: eme-events.php:10006
+#: eme-events.php:8843
+#: eme-events.php:10031
 #: eme-options.php:38
-#: eme-people.php:1061
-#: eme-people.php:1354
-#: eme-people.php:1362
+#: eme-people.php:1065
+#: eme-people.php:1358
+#: eme-people.php:1366
 msgid "Seats"
 msgstr ""
 
-#: eme-events.php:8819
+#: eme-events.php:8844
 #: eme-options.php:1814
 msgid "Enter 0 for no limit"
 msgstr ""
 
-#: eme-events.php:8820
+#: eme-events.php:8845
 msgid "The max available seats for this event. Enter 0 for no limit. For multiseat events, separate the values by '||'"
 msgstr ""
 
-#: eme-events.php:8821
+#: eme-events.php:8846
 msgid "A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence."
 msgstr ""
 
-#: eme-events.php:8825
-#: eme-people.php:1300
+#: eme-events.php:8850
+#: eme-people.php:1304
 msgid "Price: "
 msgstr ""
 
-#: eme-events.php:8826
-#: eme-events.php:8841
+#: eme-events.php:8851
+#: eme-events.php:8866
 msgid "For multiprice events, separate the values by '||'"
 msgstr ""
 
-#: eme-events.php:8842
+#: eme-events.php:8867
 #: eme-members.php:2004
 #: eme-members.php:2010
 #: eme-options.php:2535
@@ -3890,582 +3883,582 @@ msgstr ""
 msgid "Use the point as decimal separator"
 msgstr ""
 
-#: eme-events.php:8846
+#: eme-events.php:8871
 msgid "Price description"
 msgstr ""
 
-#: eme-events.php:8847
+#: eme-events.php:8872
 msgid "Add an optional description for the price (which can be used in templates)."
 msgstr ""
 
-#: eme-events.php:8850
+#: eme-events.php:8875
 msgid "Price Categories descriptions"
 msgstr ""
 
-#: eme-events.php:8851
+#: eme-events.php:8876
 msgid "Add an optional description for each price category (one price description per line)."
 msgstr ""
 
-#: eme-events.php:8854
+#: eme-events.php:8879
 msgid "VAT percentage: "
 msgstr ""
 
-#: eme-events.php:8855
+#: eme-events.php:8880
 #: eme-members.php:2018
 msgid "VAT percentage"
 msgstr ""
 
-#: eme-events.php:8856
+#: eme-events.php:8881
 msgid "The price you indicate for events is VAT included, special placeholders are foreseen to indicate the price without VAT."
 msgstr ""
 
-#: eme-events.php:8860
+#: eme-events.php:8885
 #: eme-members.php:2024
 msgid "Discount to apply"
 msgstr ""
 
-#: eme-events.php:8861
+#: eme-events.php:8886
 #: eme-members.php:2025
 msgid "The discount name you want to apply (is overridden by discount group if used)."
 msgstr ""
 
-#: eme-events.php:8864
+#: eme-events.php:8889
 #: eme-members.php:2028
 msgid "Discount group to apply"
 msgstr ""
 
-#: eme-events.php:8865
+#: eme-events.php:8890
 #: eme-members.php:2029
 msgid "The discount group name you want applied (overrides the discount)."
 msgstr ""
 
-#: eme-events.php:8868
+#: eme-events.php:8893
 msgid "Waitinglist seats"
 msgstr ""
 
-#: eme-events.php:8869
+#: eme-events.php:8894
 msgid "The number of seats considered to be a waiting list."
 msgstr ""
 
-#: eme-events.php:8872
+#: eme-events.php:8897
 #: eme-options.php:1879
 msgid "Check waitinglist when seats become available"
 msgstr ""
 
-#: eme-events.php:8874
+#: eme-events.php:8899
 #: eme-options.php:1879
 msgid "Automatically take a booking from the waiting list when seats become available again"
 msgstr ""
 
-#: eme-events.php:8877
+#: eme-events.php:8902
 #: eme-options.php:1816
 msgid "Max number of seats to book"
 msgstr ""
 
-#: eme-events.php:8878
+#: eme-events.php:8903
 #: eme-options.php:1816
 msgid "The maximum number of seats a person can book in one go."
 msgstr ""
 
-#: eme-events.php:8878
-#: eme-events.php:8882
+#: eme-events.php:8903
+#: eme-events.php:8907
 msgid "(is multi-compatible)"
 msgstr ""
 
-#: eme-events.php:8878
-#: eme-events.php:8882
+#: eme-events.php:8903
+#: eme-events.php:8907
 msgid "If the min and max number of seats to book are identical, then the field to choose the number of seats to book will be hidden."
 msgstr ""
 
-#: eme-events.php:8881
+#: eme-events.php:8906
 #: eme-options.php:1815
 msgid "Min number of seats to book"
 msgstr ""
 
-#: eme-events.php:8882
+#: eme-events.php:8907
 #: eme-options.php:1815
 msgid "The minimum number of seats a person can book in one go (it can be 0, for e.g. just an attendee list)."
 msgstr ""
 
-#: eme-events.php:8885
+#: eme-events.php:8910
 msgid "Attendance-only event?"
 msgstr ""
 
-#: eme-events.php:8886
+#: eme-events.php:8911
 msgid "Only take attendance (0 or 1 seat) for this event"
 msgstr ""
 
-#: eme-events.php:8887
+#: eme-events.php:8912
 msgid "If this option is set and the setting \"Min number of seats to book\" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox."
 msgstr ""
 
-#: eme-events.php:8888
+#: eme-events.php:8913
 msgid "If this option is set and the setting \"Min number of seats to book\" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1."
 msgstr ""
 
-#: eme-events.php:8892
+#: eme-events.php:8917
 msgid "Require WP membership for booking"
 msgstr ""
 
-#: eme-events.php:8894
+#: eme-events.php:8919
 msgid "This will only show the booking form for logged in users and prefill the form with the personal data from their WordPress profile. That data can't be changed in the form then, so if you don't want this, you can deactivate this option and use #_ADDBOOKINGFORM_IF_LOGGED_IN to show the form to logged in users only."
 msgstr ""
 
-#: eme-events.php:8899
+#: eme-events.php:8924
 msgid "Require logged-in user to be in of one of the selected EME groups in order to be able to book for this event."
 msgstr ""
 
-#: eme-events.php:8904
+#: eme-events.php:8929
 msgid "Require logged-in user to be a member of one of the selected EME memberships in order to be able to book for this event."
 msgstr ""
 
-#: eme-events.php:8908
+#: eme-events.php:8933
 #: eme-members.php:2181
 #: eme-tasks.php:833
 msgid "Group to add people to"
 msgstr ""
 
-#: eme-events.php:8909
+#: eme-events.php:8934
 #: eme-members.php:2182
 #: eme-tasks.php:834
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr ""
 
-#: eme-events.php:8912
+#: eme-events.php:8937
 msgid "RSVP Password"
 msgstr ""
 
-#: eme-events.php:8913
+#: eme-events.php:8938
 msgid "A password required for RSVP submit to succeed. If used, #_PASSWORD is required in the RSVP form too."
 msgstr ""
 
-#: eme-events.php:8916
+#: eme-events.php:8941
 msgid "Invite-only event?"
 msgstr ""
 
-#: eme-events.php:8917
+#: eme-events.php:8942
 msgid "Require an invitation"
 msgstr ""
 
-#: eme-events.php:8918
+#: eme-events.php:8943
 msgid "Allow only bookings done if someone visits the event via the invite url generated by #_INVITEURL."
 msgstr ""
 
-#: eme-events.php:8923
+#: eme-events.php:8948
 msgid "Ticket PDF template"
 msgstr ""
 
-#: eme-events.php:8925
+#: eme-events.php:8950
 msgid "This optional template is used to send a PDF attachment in the mail when the booking is approved or paid (see the next seting to configure when the attachment should be included)."
 msgstr ""
 
-#: eme-events.php:8926
+#: eme-events.php:8951
 msgid "No template shown in the list? Then go in the section Templates and create a PDF template."
 msgstr ""
 
-#: eme-events.php:8930
+#: eme-events.php:8955
 msgid "Ticket mail preference"
 msgstr ""
 
-#: eme-events.php:8931
+#: eme-events.php:8956
 msgid "At booking time"
 msgstr ""
 
-#: eme-events.php:8931
+#: eme-events.php:8956
 msgid "Upon approval"
 msgstr ""
 
-#: eme-events.php:8931
+#: eme-events.php:8956
 msgid "Upon payment"
 msgstr ""
 
-#: eme-events.php:8931
+#: eme-events.php:8956
 msgid "All of the above"
 msgstr ""
 
-#: eme-events.php:8932
+#: eme-events.php:8957
 msgid "Configure in which mail you want the optional PDF attachment to be included: when the booking is made, when it is approved or when the booking is paid for."
 msgstr ""
 
-#: eme-events.php:8938
+#: eme-events.php:8963
 msgid "Allow RSVP from "
 msgstr ""
 
-#: eme-events.php:8942
-#: eme-events.php:8954
+#: eme-events.php:8967
+#: eme-events.php:8979
 #: eme-options.php:1828
 #: eme-options.php:1844
 msgid "hours"
 msgstr ""
 
-#: eme-events.php:8944
-#: eme-events.php:8956
+#: eme-events.php:8969
+#: eme-events.php:8981
 #: eme-options.php:1834
 #: eme-options.php:1850
 msgid "before the event "
 msgstr ""
 
-#: eme-events.php:8944
-#: eme-events.php:8956
+#: eme-events.php:8969
+#: eme-events.php:8981
 #: eme-options.php:1831
 #: eme-options.php:1847
 msgid "starts"
 msgstr ""
 
-#: eme-events.php:8944
-#: eme-events.php:8956
+#: eme-events.php:8969
+#: eme-events.php:8981
 #: eme-options.php:1832
 #: eme-options.php:1848
 msgid "ends"
 msgstr ""
 
-#: eme-events.php:8947
+#: eme-events.php:8972
 msgid "(Leave empty or 0 to disable this limit)"
 msgstr ""
 
-#: eme-events.php:8950
+#: eme-events.php:8975
 msgid "Allow RSVP until "
 msgstr ""
 
-#: eme-events.php:8961
+#: eme-events.php:8986
 #: eme-options.php:1857
 msgid "RSVP cancel cutoff before event starts"
 msgstr ""
 
-#: eme-events.php:8963
+#: eme-events.php:8988
 #: eme-options.php:1857
 msgid "Allow RSVP cancellation until this many days before the event starts."
 msgstr ""
 
-#: eme-events.php:8965
+#: eme-events.php:8990
 #: eme-options.php:1858
 msgid "RSVP cancel cutoff booking age"
 msgstr ""
 
-#: eme-events.php:8967
+#: eme-events.php:8992
 #: eme-options.php:1858
 msgid "Allow RSVP cancellation until this many days after the booking has been made."
 msgstr ""
 
-#: eme-events.php:9602
+#: eme-events.php:9627
 msgid "Select the image to be used as person image"
 msgstr ""
 
-#: eme-events.php:9603
+#: eme-events.php:9628
 msgid "Set image"
 msgstr ""
 
-#: eme-events.php:9604
-#: eme-people.php:2681
-#: eme-people.php:2721
+#: eme-events.php:9629
+#: eme-people.php:2684
+#: eme-people.php:2724
 msgid "Choose image"
 msgstr ""
 
-#: eme-events.php:9605
+#: eme-events.php:9630
 msgid "Replace image"
 msgstr ""
 
-#: eme-events.php:9610
-#: eme-events.php:9683
-#: eme-events.php:9865
+#: eme-events.php:9635
+#: eme-events.php:9708
+#: eme-events.php:9890
 msgid "Are you sure you want to delete the selected records?"
 msgstr ""
 
-#: eme-events.php:9611
+#: eme-events.php:9636
 msgid "Are you sure you want to delete this file?"
 msgstr ""
 
-#: eme-events.php:9612
+#: eme-events.php:9637
 msgid "Select one or more persons"
 msgstr ""
 
-#: eme-events.php:9613
+#: eme-events.php:9638
 msgid "Select one or more members"
 msgstr ""
 
-#: eme-events.php:9614
+#: eme-events.php:9639
 msgid "Select one or more groups"
 msgstr ""
 
-#: eme-events.php:9615
+#: eme-events.php:9640
 msgid "Any group"
 msgstr ""
 
-#: eme-events.php:9616
+#: eme-events.php:9641
 msgid "Filter on membership"
 msgstr ""
 
-#: eme-events.php:9617
+#: eme-events.php:9642
 msgid "Filter on member status"
 msgstr ""
 
-#: eme-events.php:9619
+#: eme-events.php:9644
 msgid "Select a discount"
 msgstr ""
 
-#: eme-events.php:9620
+#: eme-events.php:9645
 msgid "Select a discountgroup"
 msgstr ""
 
-#: eme-events.php:9658
+#: eme-events.php:9683
 msgid "Recurrences"
 msgstr ""
 
-#: eme-events.php:9660
-#: eme-events.php:10007
+#: eme-events.php:9685
+#: eme-events.php:10032
 msgid "Event price"
 msgstr ""
 
-#: eme-events.php:9661
-#: eme-events.php:10002
+#: eme-events.php:9686
+#: eme-events.php:10027
 msgid "Date and time"
 msgstr ""
 
-#: eme-events.php:9662
-#: eme-events.php:9700
-#: eme-events.php:9717
+#: eme-events.php:9687
+#: eme-events.php:9725
 #: eme-events.php:9742
-#: eme-events.php:9764
-#: eme-events.php:9786
-#: eme-events.php:9819
-#: eme-events.php:9847
-#: eme-events.php:9942
-#: eme-events.php:9997
-#: eme-events.php:10043
-#: eme-events.php:10058
-#: eme-events.php:10073
+#: eme-events.php:9767
+#: eme-events.php:9789
+#: eme-events.php:9811
+#: eme-events.php:9844
+#: eme-events.php:9872
+#: eme-events.php:9967
+#: eme-events.php:10022
+#: eme-events.php:10068
+#: eme-events.php:10083
+#: eme-events.php:10098
 #: eme-gdpr.php:433
 #: eme-gdpr.php:473
-#: eme-people.php:1027
-#: eme-people.php:1322
-#: eme-people.php:1636
-#: eme-people.php:1685
-#: eme-people.php:1728
+#: eme-people.php:1031
+#: eme-people.php:1326
+#: eme-people.php:1640
+#: eme-people.php:1689
+#: eme-people.php:1732
 msgid "ID"
 msgstr ""
 
-#: eme-events.php:9663
-#: eme-events.php:9744
-#: eme-events.php:9765
-#: eme-events.php:9785
-#: eme-events.php:9820
-#: eme-events.php:9848
-#: eme-events.php:9885
-#: eme-events.php:9946
-#: eme-events.php:10048
-#: eme-events.php:10063
-#: eme-events.php:10090
-#: eme-events.php:10091
+#: eme-events.php:9688
+#: eme-events.php:9769
+#: eme-events.php:9790
+#: eme-events.php:9810
+#: eme-events.php:9845
+#: eme-events.php:9873
+#: eme-events.php:9910
+#: eme-events.php:9971
+#: eme-events.php:10073
+#: eme-events.php:10088
+#: eme-events.php:10115
+#: eme-events.php:10116
 #: eme-members.php:1910
-#: eme-people.php:2563
+#: eme-people.php:2566
 #: eme-tasks.php:747
 #: eme-templates.php:261
 #: eme-todos.php:183
 msgid "Name"
 msgstr ""
 
-#: eme-events.php:9667
-#: eme-events.php:9755
-#: eme-events.php:9851
+#: eme-events.php:9692
+#: eme-events.php:9780
+#: eme-events.php:9876
 msgid "Copy"
 msgstr ""
 
-#: eme-events.php:9668
-#: eme-events.php:9706
-#: eme-events.php:9725
+#: eme-events.php:9693
+#: eme-events.php:9731
 #: eme-events.php:9750
-#: eme-events.php:9866
-#: eme-events.php:9907
-#: eme-events.php:9962
-#: eme-events.php:10021
+#: eme-events.php:9775
+#: eme-events.php:9891
+#: eme-events.php:9932
+#: eme-events.php:9987
+#: eme-events.php:10046
 msgid "CSV"
 msgstr ""
 
-#: eme-events.php:9669
-#: eme-events.php:9707
-#: eme-events.php:9726
+#: eme-events.php:9694
+#: eme-events.php:9732
 #: eme-events.php:9751
-#: eme-events.php:9867
-#: eme-events.php:9908
-#: eme-events.php:9963
-#: eme-events.php:10022
+#: eme-events.php:9776
+#: eme-events.php:9892
+#: eme-events.php:9933
+#: eme-events.php:9988
+#: eme-events.php:10047
 msgid "Print"
 msgstr ""
 
-#: eme-events.php:9671
+#: eme-events.php:9696
 msgid "Recurrence info"
 msgstr ""
 
-#: eme-events.php:9672
+#: eme-events.php:9697
 msgid "Single event duration"
 msgstr ""
 
-#: eme-events.php:9673
+#: eme-events.php:9698
 msgid "Date"
 msgstr ""
 
-#: eme-events.php:9675
-#: eme-events.php:10105
+#: eme-events.php:9700
+#: eme-events.php:10130
 msgid "Selected dates:"
 msgstr ""
 
-#: eme-events.php:9676
-#: eme-events.php:9914
+#: eme-events.php:9701
+#: eme-events.php:9939
 msgid "Created on"
 msgstr ""
 
-#: eme-events.php:9677
-#: eme-events.php:9915
+#: eme-events.php:9702
+#: eme-events.php:9940
 msgid "Modified on"
 msgstr ""
 
-#: eme-events.php:9678
-#: eme-events.php:9727
-#: eme-events.php:9748
+#: eme-events.php:9703
+#: eme-events.php:9752
 #: eme-events.php:9773
-#: eme-events.php:9807
-#: eme-events.php:9835
-#: eme-events.php:9863
-#: eme-events.php:9900
-#: eme-events.php:9959
-#: eme-events.php:10027
-#: eme-events.php:10045
-#: eme-events.php:10060
-#: eme-events.php:10074
+#: eme-events.php:9798
+#: eme-events.php:9832
+#: eme-events.php:9860
+#: eme-events.php:9888
+#: eme-events.php:9925
+#: eme-events.php:9984
+#: eme-events.php:10052
+#: eme-events.php:10070
+#: eme-events.php:10085
+#: eme-events.php:10099
 msgid "Please wait"
 msgstr ""
 
-#: eme-events.php:9680
-#: eme-events.php:9868
+#: eme-events.php:9705
+#: eme-events.php:9893
 msgid "Select the image to be used as featured image"
 msgstr ""
 
-#: eme-events.php:9681
-#: eme-events.php:9869
+#: eme-events.php:9706
+#: eme-events.php:9894
 msgid "Set featured image"
 msgstr ""
 
-#: eme-events.php:9682
-#: eme-events.php:9753
-#: eme-events.php:9776
-#: eme-events.php:9810
+#: eme-events.php:9707
+#: eme-events.php:9778
+#: eme-events.php:9801
+#: eme-events.php:9835
 msgid "Press the delete button to remove"
 msgstr ""
 
-#: eme-events.php:9684
+#: eme-events.php:9709
 msgid "Since the event is repeated, you must specify an end date"
 msgstr ""
 
-#: eme-events.php:9685
+#: eme-events.php:9710
 msgid "In a recurrence, start and end date can't be identical"
 msgstr ""
 
-#: eme-events.php:9687
+#: eme-events.php:9712
 #: eme-filters.php:451
 #: eme-options.php:1804
 msgid "Event author"
 msgstr ""
 
-#: eme-events.php:9702
+#: eme-events.php:9727
 msgid "Recorded on"
 msgstr ""
 
-#: eme-events.php:9703
-#: eme-events.php:9724
+#: eme-events.php:9728
+#: eme-events.php:9749
 msgid "Person"
 msgstr ""
 
-#: eme-events.php:9704
+#: eme-events.php:9729
 msgid "Event/Membership name"
 msgstr ""
 
-#: eme-events.php:9705
+#: eme-events.php:9730
 msgid "Attendance reports"
 msgstr ""
 
-#: eme-events.php:9708
+#: eme-events.php:9733
 msgid "Are you sure to delete this record?"
 msgstr ""
 
-#: eme-events.php:9709
-#: eme-events.php:9878
-#: eme-events.php:9935
-#: eme-events.php:10087
+#: eme-events.php:9734
+#: eme-events.php:9903
+#: eme-events.php:9960
+#: eme-events.php:10112
 msgid "No matching person found"
 msgstr ""
 
-#: eme-events.php:9718
+#: eme-events.php:9743
 #: events-manager.php:361
 msgid "Task signups"
 msgstr ""
 
-#: eme-events.php:9719
+#: eme-events.php:9744
 #: eme-tasks.php:440
 msgid "Task name"
 msgstr ""
 
-#: eme-events.php:9720
+#: eme-events.php:9745
 msgid "Task start date"
 msgstr ""
 
-#: eme-events.php:9721
+#: eme-events.php:9746
 msgid "Task end date"
 msgstr ""
 
-#: eme-events.php:9722
-#: eme-events.php:10023
+#: eme-events.php:9747
+#: eme-events.php:10048
 #: eme-formfields.php:1217
 #: eme-formfields.php:2043
 #: eme-formfields.php:3230
 #: eme-options.php:39
-#: eme-people.php:1072
-#: eme-people.php:1399
+#: eme-people.php:1076
+#: eme-people.php:1403
 #: eme-rsvp.php:1482
 msgid "Comment"
 msgstr ""
 
-#: eme-events.php:9729
-#: eme-events.php:9752
-#: eme-events.php:9775
-#: eme-events.php:9809
-#: eme-events.php:9837
-#: eme-events.php:9902
-#: eme-events.php:9961
-#: eme-events.php:10029
-#: eme-events.php:10047
-#: eme-events.php:10062
-#: eme-events.php:10076
+#: eme-events.php:9754
+#: eme-events.php:9777
+#: eme-events.php:9800
+#: eme-events.php:9834
+#: eme-events.php:9862
+#: eme-events.php:9927
+#: eme-events.php:9986
+#: eme-events.php:10054
+#: eme-events.php:10072
+#: eme-events.php:10087
+#: eme-events.php:10101
 msgid "Are you sure to delete the selected records?"
 msgstr ""
 
-#: eme-events.php:9730
+#: eme-events.php:9755
 msgid "Press the delete button to remove this record"
 msgstr ""
 
-#: eme-events.php:9731
-#: eme-events.php:9754
-#: eme-events.php:9802
-#: eme-events.php:9830
+#: eme-events.php:9756
+#: eme-events.php:9779
+#: eme-events.php:9827
+#: eme-events.php:9855
 msgid "Records deleted"
 msgstr ""
 
-#: eme-events.php:9735
+#: eme-events.php:9760
 msgid "Signup date"
 msgstr ""
 
-#: eme-events.php:9743
+#: eme-events.php:9768
 #: eme-formfields.php:4919
 #: eme-options.php:1558
 #: events-manager.php:354
 msgid "Templates"
 msgstr ""
 
-#: eme-events.php:9763
+#: eme-events.php:9788
 #: events-manager.php:353
 msgid "Custom Fields"
 msgstr ""
 
-#: eme-events.php:9767
+#: eme-events.php:9792
 #: eme-formfields.php:366
 #: eme-options.php:2591
 #: eme-options.php:2624
@@ -4484,100 +4477,100 @@ msgstr ""
 msgid "Extra charge"
 msgstr ""
 
-#: eme-events.php:9768
+#: eme-events.php:9793
 msgid "Searchable"
 msgstr ""
 
-#: eme-events.php:9769
+#: eme-events.php:9794
 msgid "Purpose"
 msgstr ""
 
-#: eme-events.php:9770
+#: eme-events.php:9795
 msgid "Used in replies"
 msgstr ""
 
-#: eme-events.php:9771
+#: eme-events.php:9796
 msgid "Required"
 msgstr ""
 
-#: eme-events.php:9784
+#: eme-events.php:9809
 #: eme-options.php:1568
 #: events-manager.php:356
 msgid "Discounts"
 msgstr ""
 
-#: eme-events.php:9789
+#: eme-events.php:9814
 msgid "Coupon"
 msgstr ""
 
-#: eme-events.php:9790
+#: eme-events.php:9815
 msgid "Case sensitive"
 msgstr ""
 
-#: eme-events.php:9791
+#: eme-events.php:9816
 msgid "Track discount usage per booked seat"
 msgstr ""
 
-#: eme-events.php:9794
+#: eme-events.php:9819
 msgid "Max Usage"
 msgstr ""
 
-#: eme-events.php:9795
+#: eme-events.php:9820
 msgid "Usage"
 msgstr ""
 
-#: eme-events.php:9798
+#: eme-events.php:9823
 msgid "Max Discounts"
 msgstr ""
 
-#: eme-events.php:9800
-#: eme-events.php:9828
-#: eme-events.php:9910
+#: eme-events.php:9825
+#: eme-events.php:9853
+#: eme-events.php:9935
 msgid "Record added"
 msgstr ""
 
-#: eme-events.php:9801
-#: eme-events.php:9829
-#: eme-events.php:9911
+#: eme-events.php:9826
+#: eme-events.php:9854
+#: eme-events.php:9936
 msgid "Record updated"
 msgstr ""
 
-#: eme-events.php:9818
+#: eme-events.php:9843
 msgid "Countries"
 msgstr ""
 
-#: eme-events.php:9821
+#: eme-events.php:9846
 msgid "Country ID"
 msgstr ""
 
-#: eme-events.php:9822
+#: eme-events.php:9847
 msgid "States"
 msgstr ""
 
-#: eme-events.php:9827
+#: eme-events.php:9852
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr ""
 
-#: eme-events.php:9846
+#: eme-events.php:9871
 #: eme-options.php:1282
 #: eme-options.php:1525
 #: events-manager.php:348
 msgid "Locations"
 msgstr ""
 
-#: eme-events.php:9849
+#: eme-events.php:9874
 #: eme-locations.php:379
 msgid "Insert New Location"
 msgstr ""
 
-#: eme-events.php:9850
+#: eme-events.php:9875
 #: eme-locations.php:381
 msgid "Edit Location '%s'"
 msgstr ""
 
-#: eme-events.php:9855
-#: eme-events.php:9890
-#: eme-events.php:9955
+#: eme-events.php:9880
+#: eme-events.php:9915
+#: eme-events.php:9980
 #: eme-formfields.php:1278
 #: eme-formfields.php:1875
 #: eme-formfields.php:2959
@@ -4586,15 +4579,15 @@ msgstr ""
 #: eme-gdpr.php:439
 #: eme-gdpr.php:578
 #: eme-locations.php:568
-#: eme-people.php:1033
-#: eme-people.php:2368
+#: eme-people.php:1037
+#: eme-people.php:2371
 #: eme-rsvp.php:1459
 msgid "City"
 msgstr ""
 
-#: eme-events.php:9856
-#: eme-events.php:9891
-#: eme-events.php:9956
+#: eme-events.php:9881
+#: eme-events.php:9916
+#: eme-events.php:9981
 #: eme-formfields.php:1288
 #: eme-formfields.php:1897
 #: eme-formfields.php:2971
@@ -4603,52 +4596,52 @@ msgstr ""
 #: eme-gdpr.php:440
 #: eme-gdpr.php:582
 #: eme-locations.php:576
-#: eme-people.php:1034
-#: eme-people.php:2363
+#: eme-people.php:1038
+#: eme-people.php:2366
 #: eme-rsvp.php:1462
 msgid "Postal code"
 msgstr ""
 
-#: eme-events.php:9859
+#: eme-events.php:9884
 #: eme-locations.php:593
 msgid "Latitude"
 msgstr ""
 
-#: eme-events.php:9860
+#: eme-events.php:9885
 #: eme-locations.php:597
 msgid "Longitude"
 msgstr ""
 
-#: eme-events.php:9862
+#: eme-events.php:9887
 msgid "Online only"
 msgstr ""
 
-#: eme-events.php:9880
-#: eme-events.php:9999
+#: eme-events.php:9905
+#: eme-events.php:10024
 #: eme-gdpr.php:554
-#: eme-people.php:1028
+#: eme-people.php:1032
 msgid "Person ID"
 msgstr ""
 
-#: eme-events.php:9881
+#: eme-events.php:9906
 msgid "Group ID"
 msgstr ""
 
-#: eme-events.php:9882
-#: eme-people.php:2584
+#: eme-events.php:9907
+#: eme-people.php:2587
 #: events-manager.php:363
 msgid "People"
 msgstr ""
 
-#: eme-events.php:9883
-#: eme-events.php:9905
-#: eme-people.php:2416
+#: eme-events.php:9908
+#: eme-events.php:9930
+#: eme-people.php:2419
 #: events-manager.php:364
 msgid "Groups"
 msgstr ""
 
-#: eme-events.php:9886
-#: eme-events.php:9947
+#: eme-events.php:9911
+#: eme-events.php:9972
 #: eme-formfields.php:1170
 #: eme-formfields.php:1497
 #: eme-formfields.php:1813
@@ -4661,22 +4654,22 @@ msgstr ""
 #: eme-gdpr.php:434
 #: eme-gdpr.php:558
 #: eme-members.php:1794
-#: eme-members.php:3441
+#: eme-members.php:3440
 #: eme-options.php:34
 #: eme-options.php:44
 #: eme-options.php:83
-#: eme-people.php:1029
-#: eme-people.php:1328
-#: eme-people.php:1637
-#: eme-people.php:1686
-#: eme-people.php:1729
-#: eme-people.php:2299
+#: eme-people.php:1033
+#: eme-people.php:1332
+#: eme-people.php:1641
+#: eme-people.php:1690
+#: eme-people.php:1733
+#: eme-people.php:2302
 #: eme-rsvp.php:71
 msgid "Last name"
 msgstr ""
 
-#: eme-events.php:9887
-#: eme-events.php:9948
+#: eme-events.php:9912
+#: eme-events.php:9973
 #: eme-formfields.php:1186
 #: eme-formfields.php:1509
 #: eme-formfields.php:1829
@@ -4690,24 +4683,24 @@ msgstr ""
 #: eme-gdpr.php:435
 #: eme-gdpr.php:562
 #: eme-members.php:1795
-#: eme-members.php:3442
+#: eme-members.php:3441
 #: eme-options.php:35
 #: eme-options.php:45
 #: eme-options.php:84
-#: eme-people.php:1030
-#: eme-people.php:1334
-#: eme-people.php:1638
-#: eme-people.php:1687
-#: eme-people.php:1730
-#: eme-people.php:2287
+#: eme-people.php:1034
+#: eme-people.php:1338
+#: eme-people.php:1642
+#: eme-people.php:1691
+#: eme-people.php:1734
+#: eme-people.php:2290
 #: eme-rsvp.php:71
 #: eme-rsvp.php:1445
 msgid "First name"
 msgstr ""
 
-#: eme-events.php:9894
-#: eme-events.php:9949
-#: eme-events.php:10092
+#: eme-events.php:9919
+#: eme-events.php:9974
+#: eme-events.php:10117
 #: eme-formfields.php:1195
 #: eme-formfields.php:1518
 #: eme-formfields.php:1942
@@ -4722,22 +4715,22 @@ msgstr ""
 #: eme-gdpr.php:436
 #: eme-gdpr.php:566
 #: eme-members.php:1796
-#: eme-members.php:3443
+#: eme-members.php:3442
 #: eme-options.php:36
 #: eme-options.php:46
 #: eme-options.php:85
 #: eme-options.php:1288
-#: eme-people.php:1037
-#: eme-people.php:1340
-#: eme-people.php:1639
-#: eme-people.php:1688
-#: eme-people.php:1731
-#: eme-people.php:2309
+#: eme-people.php:1041
+#: eme-people.php:1344
+#: eme-people.php:1643
+#: eme-people.php:1692
+#: eme-people.php:1735
+#: eme-people.php:2312
 #: eme-rsvp.php:71
 msgid "Email"
 msgstr ""
 
-#: eme-events.php:9895
+#: eme-events.php:9920
 #: eme-formfields.php:1208
 #: eme-formfields.php:2025
 #: eme-formfields.php:2034
@@ -4749,428 +4742,428 @@ msgstr ""
 #: eme-gdpr.php:443
 #: eme-gdpr.php:594
 #: eme-options.php:37
-#: eme-people.php:1038
-#: eme-people.php:1346
-#: eme-people.php:4358
+#: eme-people.php:1042
+#: eme-people.php:1350
+#: eme-people.php:4361
 #: eme-rsvp.php:1438
 msgid "Phone number"
 msgstr ""
 
-#: eme-events.php:9896
-#: eme-events.php:9953
+#: eme-events.php:9921
+#: eme-events.php:9978
 msgid "Birth date"
 msgstr ""
 
-#: eme-events.php:9897
-#: eme-events.php:9954
+#: eme-events.php:9922
+#: eme-events.php:9979
 msgid "Birth place"
 msgstr ""
 
-#: eme-events.php:9899
-#: eme-events.php:9944
-#: eme-events.php:10004
-#: eme-people.php:1640
-#: eme-people.php:2438
+#: eme-events.php:9924
+#: eme-events.php:9969
+#: eme-events.php:10029
+#: eme-people.php:1644
+#: eme-people.php:2441
 msgid "Linked WP user"
 msgstr ""
 
-#: eme-events.php:9903
+#: eme-events.php:9928
 msgid "Show all bookings"
 msgstr ""
 
-#: eme-events.php:9904
+#: eme-events.php:9929
 msgid "Member of"
 msgstr ""
 
-#: eme-events.php:9906
+#: eme-events.php:9931
 msgid "Bookings made"
 msgstr ""
 
-#: eme-events.php:9909
-#: eme-events.php:9964
+#: eme-events.php:9934
+#: eme-events.php:9989
 msgid "Answers"
 msgstr ""
 
-#: eme-events.php:9913
+#: eme-events.php:9938
 msgid "GDPR modification date"
 msgstr ""
 
-#: eme-events.php:9916
-#: eme-events.php:9950
+#: eme-events.php:9941
+#: eme-events.php:9975
 msgid "Related to"
 msgstr ""
 
-#: eme-events.php:9917
+#: eme-events.php:9942
 #: eme-gdpr.php:444
 #: eme-gdpr.php:598
 #: eme-options.php:1978
-#: eme-people.php:1041
-#: eme-people.php:2404
+#: eme-people.php:1045
+#: eme-people.php:2407
 msgid "MassMail"
 msgstr ""
 
-#: eme-events.php:9918
+#: eme-events.php:9943
 #: eme-options.php:2458
 msgid "Birthday Email"
 msgstr ""
 
-#: eme-events.php:9919
+#: eme-events.php:9944
 msgid "Public group"
 msgstr ""
 
-#: eme-events.php:9920
+#: eme-events.php:9945
 msgid "Nbr People"
 msgstr ""
 
-#: eme-events.php:9936
+#: eme-events.php:9961
 msgid "No matching member found"
 msgstr ""
 
-#: eme-events.php:9938
+#: eme-events.php:9963
 #: eme-options.php:1283
 #: events-manager.php:365
 msgid "Members"
 msgstr ""
 
-#: eme-events.php:9940
+#: eme-events.php:9965
 #: eme-gdpr.php:474
 #: eme-gdpr.php:658
 #: eme-members.php:1597
 msgid "Membership"
 msgstr ""
 
-#: eme-events.php:9943
+#: eme-events.php:9968
 #: eme-gdpr.php:654
 msgid "Member ID"
 msgstr ""
 
-#: eme-events.php:9945
+#: eme-events.php:9970
 msgid "Contact"
 msgstr ""
 
-#: eme-events.php:9966
+#: eme-events.php:9991
 msgid "Nbr Active Members"
 msgstr ""
 
-#: eme-events.php:9968
+#: eme-events.php:9993
 #: eme-gdpr.php:475
 #: eme-gdpr.php:662
 msgid "Start"
 msgstr ""
 
-#: eme-events.php:9969
+#: eme-events.php:9994
 #: eme-gdpr.php:476
 #: eme-gdpr.php:666
 #: eme-tasks.php:749
 msgid "End"
 msgstr ""
 
-#: eme-events.php:9970
+#: eme-events.php:9995
 #: eme-members.php:1663
 msgid "Usage count"
 msgstr ""
 
-#: eme-events.php:9971
+#: eme-events.php:9996
 msgid "Registered on"
 msgstr ""
 
-#: eme-events.php:9972
+#: eme-events.php:9997
 msgid "Last seen on"
 msgstr ""
 
-#: eme-events.php:9973
+#: eme-events.php:9998
 msgid "Paid on"
 msgstr ""
 
-#: eme-events.php:9974
-#: eme-events.php:10010
-#: eme-people.php:1070
+#: eme-events.php:9999
+#: eme-events.php:10035
+#: eme-people.php:1074
 msgid "Unique nbr"
 msgstr ""
 
-#: eme-events.php:9975
-#: eme-events.php:10011
+#: eme-events.php:10000
+#: eme-events.php:10036
 msgid "Payment ID"
 msgstr ""
 
-#: eme-events.php:9976
-#: eme-events.php:10012
-#: eme-people.php:1064
-#: eme-people.php:1375
+#: eme-events.php:10001
+#: eme-events.php:10037
+#: eme-people.php:1068
+#: eme-people.php:1379
 msgid "Paid"
 msgstr ""
 
-#: eme-events.php:9977
-#: eme-events.php:10015
+#: eme-events.php:10002
+#: eme-events.php:10040
 msgid "Payment GW"
 msgstr ""
 
-#: eme-events.php:9978
-#: eme-events.php:10016
+#: eme-events.php:10003
+#: eme-events.php:10041
 msgid "Payment GW ID"
 msgstr ""
 
-#: eme-events.php:9979
-#: eme-events.php:10024
+#: eme-events.php:10004
+#: eme-events.php:10049
 msgid "Last reminder"
 msgstr ""
 
-#: eme-events.php:9980
+#: eme-events.php:10005
 msgid "Reminders sent"
 msgstr ""
 
-#: eme-events.php:9985
-#: eme-events.php:10025
-#: eme-people.php:1068
-#: eme-people.php:1387
+#: eme-events.php:10010
+#: eme-events.php:10050
+#: eme-people.php:1072
+#: eme-people.php:1391
 msgid "Discount"
 msgstr ""
 
-#: eme-events.php:9986
-#: eme-events.php:10026
+#: eme-events.php:10011
+#: eme-events.php:10051
 msgid "Used discount codes"
 msgstr ""
 
-#: eme-events.php:9987
-#: eme-events.php:10009
-#: eme-people.php:1069
-#: eme-people.php:1393
+#: eme-events.php:10012
+#: eme-events.php:10034
+#: eme-people.php:1073
+#: eme-people.php:1397
 msgid "Total price"
 msgstr ""
 
-#: eme-events.php:9988
+#: eme-events.php:10013
 msgid "Membership price"
 msgstr ""
 
-#: eme-events.php:9995
+#: eme-events.php:10020
 msgid "No matching event found"
 msgstr ""
 
-#: eme-events.php:9996
+#: eme-events.php:10021
 #: eme-options.php:1605
 msgid "Bookings"
 msgstr ""
 
-#: eme-events.php:9998
+#: eme-events.php:10023
 msgid "Event ID"
 msgstr ""
 
-#: eme-events.php:10001
+#: eme-events.php:10026
 msgid "Event info"
 msgstr ""
 
-#: eme-events.php:10003
+#: eme-events.php:10028
 msgid "Booker"
 msgstr ""
 
-#: eme-events.php:10005
-#: eme-people.php:1067
-#: eme-people.php:1381
+#: eme-events.php:10030
+#: eme-people.php:1071
+#: eme-people.php:1385
 msgid "Booking date"
 msgstr ""
 
-#: eme-events.php:10013
-#: eme-people.php:1066
+#: eme-events.php:10038
+#: eme-people.php:1070
 msgid "Remaining"
 msgstr ""
 
-#: eme-events.php:10014
-#: eme-people.php:1065
+#: eme-events.php:10039
+#: eme-people.php:1069
 msgid "Received"
 msgstr ""
 
-#: eme-events.php:10017
+#: eme-events.php:10042
 msgid "Payment date"
 msgstr ""
 
-#: eme-events.php:10018
+#: eme-events.php:10043
 msgid "Mark paid and approve"
 msgstr ""
 
-#: eme-events.php:10019
-#: eme-rsvp.php:5304
-#: eme-rsvp.php:5319
+#: eme-events.php:10044
+#: eme-rsvp.php:5313
+#: eme-rsvp.php:5328
 msgid "Mark paid"
 msgstr ""
 
-#: eme-events.php:10033
-#: eme-people.php:1071
+#: eme-events.php:10058
+#: eme-people.php:1075
 msgid "Attendance count"
 msgstr ""
 
-#: eme-events.php:10034
+#: eme-events.php:10059
 msgid "Please select only one record in order to do partial payments"
 msgstr ""
 
-#: eme-events.php:10044
+#: eme-events.php:10069
 #: eme-options.php:1538
 #: events-manager.php:350
 msgid "Categories"
 msgstr ""
 
-#: eme-events.php:10059
+#: eme-events.php:10084
 msgid "Holiday lists"
 msgstr ""
 
-#: eme-events.php:10077
+#: eme-events.php:10102
 #: eme-mailer.php:2730
 #: eme-mailer.php:2909
 msgid "Send email"
 msgstr ""
 
-#: eme-events.php:10078
+#: eme-events.php:10103
 msgid "Queue email"
 msgstr ""
 
-#: eme-events.php:10079
+#: eme-events.php:10104
 msgid "Planned execution time"
 msgstr ""
 
-#: eme-events.php:10080
+#: eme-events.php:10105
 msgid "Queued on"
 msgstr ""
 
-#: eme-events.php:10081
+#: eme-events.php:10106
 msgid "Sent on"
 msgstr ""
 
-#: eme-events.php:10082
+#: eme-events.php:10107
 msgid "First read on"
 msgstr ""
 
-#: eme-events.php:10083
+#: eme-events.php:10108
 msgid "Last read on"
 msgstr ""
 
-#: eme-events.php:10084
+#: eme-events.php:10109
 msgid "Unique read count"
 msgstr ""
 
-#: eme-events.php:10085
+#: eme-events.php:10110
 msgid "Read count"
 msgstr ""
 
-#: eme-events.php:10086
+#: eme-events.php:10111
 msgid "Error message"
 msgstr ""
 
-#: eme-events.php:10088
+#: eme-events.php:10113
 #: eme-mailer.php:2818
 msgid "Sender name"
 msgstr ""
 
-#: eme-events.php:10089
+#: eme-events.php:10114
 #: eme-mailer.php:2822
 msgid "Sender email"
 msgstr ""
 
-#: eme-events.php:10093
+#: eme-events.php:10118
 #: eme-mailer.php:2644
 #: eme-mailer.php:2829
 msgid "Subject"
 msgstr ""
 
-#: eme-events.php:10095
+#: eme-events.php:10120
 msgid "Action"
 msgstr ""
 
-#: eme-events.php:10096
+#: eme-events.php:10121
 #: eme-functions.php:2245
 msgid "Extra info"
 msgstr ""
 
-#: eme-events.php:10097
+#: eme-events.php:10122
 #: eme-mailer.php:1511
 msgid "Report"
 msgstr ""
 
-#: eme-events.php:10098
+#: eme-events.php:10123
 #: eme-mailer.php:2502
 msgid "Mailing report"
 msgstr ""
 
-#: eme-events.php:10099
+#: eme-events.php:10124
 msgid "Mails"
 msgstr ""
 
-#: eme-events.php:10100
+#: eme-events.php:10125
 #: eme-mailer.php:2527
 msgid "Mailings"
 msgstr ""
 
-#: eme-events.php:10101
+#: eme-events.php:10126
 #: eme-mailer.php:3058
 msgid "Archived mailings"
 msgstr ""
 
-#: eme-events.php:10102
+#: eme-events.php:10127
 msgid "Select one or more events"
 msgstr ""
 
-#: eme-events.php:10356
-#: eme-rsvp.php:5872
+#: eme-events.php:10381
+#: eme-rsvp.php:5881
 #: eme-tasks.php:1939
 msgid "Edit event"
 msgstr ""
 
-#: eme-events.php:10483
+#: eme-events.php:10508
 #: eme-locations.php:534
-#: eme-locations.php:2988
+#: eme-locations.php:2996
 #: eme-recurrence.php:757
 msgid "Edit location"
 msgstr ""
 
-#: eme-events.php:10485
-#: eme-locations.php:2990
+#: eme-events.php:10510
+#: eme-locations.php:2998
 #: eme-recurrence.php:759
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr ""
 
-#: eme-events.php:10504
+#: eme-events.php:10529
 msgid "Preview event"
 msgstr ""
 
-#: eme-events.php:10506
+#: eme-events.php:10531
 msgid "View event"
 msgstr ""
 
-#: eme-events.php:10513
+#: eme-events.php:10538
 msgid "Duplicate this event"
 msgstr ""
 
-#: eme-events.php:10525
-#: eme-rsvp.php:5947
+#: eme-events.php:10550
+#: eme-rsvp.php:5956
 msgid "Add booking for this event"
 msgstr ""
 
-#: eme-events.php:10527
-#: eme-rsvp.php:5949
+#: eme-events.php:10552
+#: eme-rsvp.php:5958
 msgid "Password protected"
 msgstr ""
 
-#: eme-events.php:10535
+#: eme-events.php:10560
 #: eme-recurrence.php:729
 msgid "Free"
 msgstr ""
 
-#: eme-events.php:10669
+#: eme-events.php:10694
 #: eme-recurrence.php:824
 msgid "No action defined!"
 msgstr ""
 
-#: eme-events.php:10687
+#: eme-events.php:10712
 msgid "Events moved to the trash bin"
 msgstr ""
 
-#: eme-events.php:10695
+#: eme-events.php:10720
 msgid "Restored selected events to draft status"
 msgstr ""
 
-#: eme-events.php:10703
+#: eme-events.php:10728
 msgid "Events status updated"
 msgstr ""
 
-#: eme-events.php:10716
+#: eme-events.php:10741
 msgid "Events added to category"
 msgstr ""
 
@@ -5791,8 +5784,8 @@ msgstr ""
 #: eme-formfields.php:3565
 #: eme-formfields.php:3882
 #: eme-formfields.php:4528
-#: eme-people.php:1039
-#: eme-people.php:2381
+#: eme-people.php:1043
+#: eme-people.php:2384
 #: eme-rsvp.php:1465
 msgid "Date of birth"
 msgstr ""
@@ -5803,8 +5796,8 @@ msgstr ""
 #: eme-formfields.php:3549
 #: eme-formfields.php:3893
 #: eme-formfields.php:4539
-#: eme-people.php:1040
-#: eme-people.php:2395
+#: eme-people.php:1044
+#: eme-people.php:2398
 #: eme-rsvp.php:1468
 msgid "Place of birth"
 msgstr ""
@@ -5860,23 +5853,23 @@ msgstr ""
 
 #: eme-formfields.php:3344
 #: eme-formfields.php:4092
-#: eme-people.php:1169
-#: eme-people.php:1469
+#: eme-people.php:1173
+#: eme-people.php:1473
 msgid "Discountgroup %s"
 msgstr ""
 
 #: eme-formfields.php:3346
 #: eme-formfields.php:4094
-#: eme-people.php:1171
-#: eme-people.php:1471
+#: eme-people.php:1175
+#: eme-people.php:1475
 msgid "Applied discount group %d no longer exists"
 msgstr ""
 
 #: eme-formfields.php:3356
 #: eme-formfields.php:4104
-#: eme-members.php:5259
-#: eme-people.php:1181
-#: eme-people.php:1481
+#: eme-members.php:5258
+#: eme-people.php:1185
+#: eme-people.php:1485
 #: eme-rsvp.php:3644
 msgid "Applied discount %d no longer exists"
 msgstr ""
@@ -6036,7 +6029,7 @@ msgstr ""
 
 #: eme-formfields.php:5146
 #: eme-formfields.php:5156
-#: eme-functions.php:3350
+#: eme-functions.php:3338
 msgid "Records deleted!"
 msgstr ""
 
@@ -6051,8 +6044,8 @@ msgstr ""
 #: eme-gdpr.php:320
 #: eme-gdpr.php:403
 #: eme-members.php:1767
-#: eme-people.php:4642
-#: eme-people.php:4729
+#: eme-people.php:4645
+#: eme-people.php:4732
 #: eme-rsvp.php:158
 #: eme-rsvp.php:808
 #: eme-tasks.php:1347
@@ -6093,10 +6086,10 @@ msgstr ""
 #: eme-gdpr.php:144
 #: eme-gdpr.php:220
 #: eme-gdpr.php:338
-#: eme-members.php:5021
+#: eme-members.php:5020
 #: eme-payments.php:3877
-#: eme-people.php:4568
-#: eme-people.php:4656
+#: eme-people.php:4571
+#: eme-people.php:4659
 #: eme-rsvp.php:841
 #: eme-rsvp.php:1141
 #: eme-tasks.php:1645
@@ -6110,11 +6103,11 @@ msgstr ""
 #: eme-gdpr.php:349
 #: eme-gdpr.php:360
 #: eme-members.php:1057
-#: eme-members.php:4635
-#: eme-members.php:5034
+#: eme-members.php:4634
+#: eme-members.php:5033
 #: eme-payments.php:3888
-#: eme-people.php:4579
-#: eme-people.php:4668
+#: eme-people.php:4582
+#: eme-people.php:4671
 #: eme-rsvp.php:853
 #: eme-rsvp.php:1153
 #: eme-tasks.php:1656
@@ -6170,9 +6163,9 @@ msgid "Frontend Draft (unpaid)"
 msgstr ""
 
 #: eme-functions.php:1472
-#: eme-people.php:1098
-#: eme-people.php:1426
-#: eme-people.php:1565
+#: eme-people.php:1102
+#: eme-people.php:1430
+#: eme-people.php:1569
 #: eme-tasks.php:461
 #: eme-tasks.php:1948
 msgid "Pending"
@@ -6357,97 +6350,97 @@ msgstr ""
 msgid "Group"
 msgstr ""
 
-#: eme-functions.php:2948
+#: eme-functions.php:2936
 msgid "The uploaded file exceeds the upload_max_filesize directive in php.ini"
 msgstr ""
 
-#: eme-functions.php:2949
+#: eme-functions.php:2937
 msgid "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form"
 msgstr ""
 
-#: eme-functions.php:2950
+#: eme-functions.php:2938
 msgid "The uploaded file was only partially uploaded"
 msgstr ""
 
-#: eme-functions.php:2951
+#: eme-functions.php:2939
 msgid "No file was uploaded"
 msgstr ""
 
-#: eme-functions.php:2952
+#: eme-functions.php:2940
 msgid "Missing a temporary folder"
 msgstr ""
 
-#: eme-functions.php:2953
+#: eme-functions.php:2941
 msgid "Failed to write file to disk"
 msgstr ""
 
-#: eme-functions.php:2954
+#: eme-functions.php:2942
 msgid "File upload stopped by extension"
 msgstr ""
 
-#: eme-functions.php:2955
+#: eme-functions.php:2943
 msgid "Unknown upload error"
 msgstr ""
 
-#: eme-functions.php:2995
+#: eme-functions.php:2983
 msgid "Failure creating upload dir, please check your permissions."
 msgstr ""
 
-#: eme-functions.php:3030
-#: eme-functions.php:3091
+#: eme-functions.php:3018
+#: eme-functions.php:3079
 msgid "File upload is required."
+msgstr ""
+
+#: eme-functions.php:3026
+#: eme-functions.php:3087
+msgid "Illegal filename."
+msgstr ""
+
+#: eme-functions.php:3032
+#: eme-functions.php:3093
+msgid "File already exists."
 msgstr ""
 
 #: eme-functions.php:3038
 #: eme-functions.php:3099
-msgid "Illegal filename."
-msgstr ""
-
-#: eme-functions.php:3044
-#: eme-functions.php:3105
-msgid "File already exists."
-msgstr ""
-
-#: eme-functions.php:3050
-#: eme-functions.php:3111
 msgid "File too large."
 msgstr ""
 
-#: eme-functions.php:3066
-#: eme-functions.php:3127
+#: eme-functions.php:3054
+#: eme-functions.php:3115
 msgid "Incorrect file type."
 msgstr ""
 
-#: eme-functions.php:3071
-#: eme-functions.php:3132
+#: eme-functions.php:3059
+#: eme-functions.php:3120
 msgid "Upload failed."
 msgstr ""
 
-#: eme-functions.php:3139
+#: eme-functions.php:3127
 msgid "Errors encountered while uploading files"
 msgstr ""
 
-#: eme-functions.php:3366
+#: eme-functions.php:3354
 msgid "No such record"
 msgstr ""
 
-#: eme-functions.php:4120
+#: eme-functions.php:4108
 msgid "Google reCAPTCHA"
 msgstr ""
 
-#: eme-functions.php:4122
+#: eme-functions.php:4110
 msgid "hCaptcha"
 msgstr ""
 
-#: eme-functions.php:4124
+#: eme-functions.php:4112
 msgid "Cloudflare Turnstile"
 msgstr ""
 
-#: eme-functions.php:4126
+#: eme-functions.php:4114
 msgid "Friendly Captcha"
 msgstr ""
 
-#: eme-functions.php:4128
+#: eme-functions.php:4116
 msgid "Basic EME Captcha"
 msgstr ""
 
@@ -6724,8 +6717,8 @@ msgid "Location maximum capacity"
 msgstr ""
 
 #: eme-locations.php:644
-#: eme-locations.php:3006
-#: eme-locations.php:3007
+#: eme-locations.php:3014
+#: eme-locations.php:3015
 msgid "Max capacity"
 msgstr ""
 
@@ -6783,39 +6776,39 @@ msgstr ""
 msgid "Filter location"
 msgstr ""
 
-#: eme-locations.php:898
+#: eme-locations.php:897
 msgid "Delete selected locations"
 msgstr ""
 
-#: eme-locations.php:901
+#: eme-locations.php:900
 msgid "Transfer associated events to (leave empty to delete the location info for those events):"
 msgstr ""
 
-#: eme-locations.php:1344
+#: eme-locations.php:1343
 msgid "The location name"
 msgstr ""
 
-#: eme-locations.php:1345
+#: eme-locations.php:1344
 msgid "The location address"
 msgstr ""
 
-#: eme-locations.php:1346
+#: eme-locations.php:1345
 msgid "The location city"
 msgstr ""
 
-#: eme-locations.php:2671
+#: eme-locations.php:2673
 msgid "Your Street Address"
 msgstr ""
 
-#: eme-locations.php:2675
+#: eme-locations.php:2677
 msgid "Get Directions"
 msgstr ""
 
-#: eme-locations.php:3022
+#: eme-locations.php:3030
 msgid "View location"
 msgstr ""
 
-#: eme-locations.php:3024
+#: eme-locations.php:3032
 msgid "Duplicate this location"
 msgstr ""
 
@@ -6825,13 +6818,13 @@ msgstr ""
 #: eme-mailer.php:2007
 #: eme-mailer.php:2104
 #: eme-mailer.php:2202
-#: eme-members.php:6941
-#: eme-members.php:7020
-#: eme-members.php:7139
+#: eme-members.php:6953
+#: eme-members.php:7032
+#: eme-members.php:7151
 #: eme-rsvp.php:1234
-#: eme-rsvp.php:5006
-#: eme-rsvp.php:6621
-#: eme-rsvp.php:6641
+#: eme-rsvp.php:5015
+#: eme-rsvp.php:6630
+#: eme-rsvp.php:6650
 msgid "There were some problems while sending mail."
 msgstr ""
 
@@ -6992,12 +6985,12 @@ msgstr ""
 #: eme-mailer.php:1830
 #: eme-members.php:1126
 #: eme-members.php:1129
-#: eme-people.php:3863
-#: eme-people.php:4014
-#: eme-people.php:4117
-#: eme-people.php:4317
-#: eme-people.php:4613
-#: eme-people.php:4700
+#: eme-people.php:3866
+#: eme-people.php:4017
+#: eme-people.php:4120
+#: eme-people.php:4320
+#: eme-people.php:4616
+#: eme-people.php:4703
 #: eme-rsvp.php:1389
 msgid "Please enter a valid email address"
 msgstr ""
@@ -7007,9 +7000,9 @@ msgstr ""
 #: eme-mailer.php:1997
 #: eme-mailer.php:2101
 #: eme-mailer.php:2195
-#: eme-members.php:6938
-#: eme-rsvp.php:6618
-#: eme-rsvp.php:6638
+#: eme-members.php:6950
+#: eme-rsvp.php:6627
+#: eme-rsvp.php:6647
 msgid "The mail has been sent."
 msgstr ""
 
@@ -7104,7 +7097,7 @@ msgid "Select the event(s)"
 msgstr ""
 
 #: eme-mailer.php:2554
-#: eme-rsvp.php:4808
+#: eme-rsvp.php:4817
 msgid "Check this box to search through all events and not just future ones."
 msgstr ""
 
@@ -7352,10 +7345,10 @@ msgid "Filter mails"
 msgstr ""
 
 #: eme-mailer.php:2980
-#: eme-members.php:2890
-#: eme-people.php:1809
-#: eme-rsvp.php:5309
-#: eme-rsvp.php:5324
+#: eme-members.php:2889
+#: eme-people.php:1812
+#: eme-rsvp.php:5318
+#: eme-rsvp.php:5333
 #: eme-tasks.php:483
 msgid "Send generic email to selected persons"
 msgstr ""
@@ -7490,10 +7483,10 @@ msgstr ""
 #: eme-members.php:658
 #: eme-members.php:1495
 #: eme-members.php:1621
-#: eme-members.php:6601
-#: eme-members.php:6610
-#: eme-members.php:6611
-#: eme-members.php:6612
+#: eme-members.php:6613
+#: eme-members.php:6622
+#: eme-members.php:6623
+#: eme-members.php:6624
 msgid "Edit member"
 msgstr ""
 
@@ -7616,12 +7609,12 @@ msgid "The extra charge for the membership is not a valid price and has been res
 msgstr ""
 
 #: eme-members.php:1488
-#: eme-members.php:3226
+#: eme-members.php:3225
 msgid "Add member"
 msgstr ""
 
 #: eme-members.php:1520
-#: eme-rsvp.php:4795
+#: eme-rsvp.php:4804
 msgid "Click on this link to edit the corresponding person info"
 msgstr ""
 
@@ -7658,7 +7651,7 @@ msgid "This member is head of the family for other members."
 msgstr ""
 
 #: eme-members.php:1615
-#: eme-people.php:2331
+#: eme-people.php:2334
 msgid "Family members:"
 msgstr ""
 
@@ -7738,7 +7731,7 @@ msgid "Mail format settings"
 msgstr ""
 
 #: eme-members.php:1872
-#: eme-members.php:3302
+#: eme-members.php:3301
 msgid "Add membership"
 msgstr ""
 
@@ -7875,12 +7868,12 @@ msgstr ""
 
 #: eme-members.php:2059
 #: eme-members.php:2090
-#: eme-members.php:2914
-#: eme-members.php:2919
-#: eme-people.php:1846
-#: eme-people.php:1851
-#: eme-rsvp.php:5363
-#: eme-rsvp.php:5368
+#: eme-members.php:2913
+#: eme-members.php:2918
+#: eme-people.php:1849
+#: eme-people.php:1854
+#: eme-rsvp.php:5372
+#: eme-rsvp.php:5377
 msgid "Please select a template"
 msgstr ""
 
@@ -8384,393 +8377,393 @@ msgid "Filter members"
 msgstr ""
 
 #: eme-members.php:2856
-#: eme-people.php:1779
+#: eme-people.php:1783
 msgid "Store result as dynamic group"
 msgstr ""
 
 #: eme-members.php:2857
-#: eme-people.php:1780
+#: eme-people.php:1784
 msgid "Enter a name for this dynamic group"
 msgstr ""
 
 #: eme-members.php:2858
-#: eme-people.php:1781
+#: eme-people.php:1785
 msgid "Store dynamic group"
 msgstr ""
 
-#: eme-members.php:2883
+#: eme-members.php:2882
 msgid "Accept membership payment"
 msgstr ""
 
-#: eme-members.php:2884
+#: eme-members.php:2883
 msgid "Set membership unpaid"
 msgstr ""
 
-#: eme-members.php:2885
+#: eme-members.php:2884
 msgid "Stop membership"
 msgstr ""
 
-#: eme-members.php:2886
+#: eme-members.php:2885
 msgid "Delete selected members"
 msgstr ""
 
-#: eme-members.php:2887
+#: eme-members.php:2886
 msgid "Resend the mail for pending members"
 msgstr ""
 
-#: eme-members.php:2888
+#: eme-members.php:2887
 msgid "Resend the mail for paid members"
 msgstr ""
 
-#: eme-members.php:2889
+#: eme-members.php:2888
 msgid "Resend the expiration reminder mail"
 msgstr ""
 
-#: eme-members.php:2891
+#: eme-members.php:2890
 msgid "Send membership related email to selected members"
 msgstr ""
 
-#: eme-members.php:2893
-#: eme-people.php:1825
-#: eme-rsvp.php:5311
-#: eme-rsvp.php:5326
+#: eme-members.php:2892
+#: eme-people.php:1828
+#: eme-rsvp.php:5320
+#: eme-rsvp.php:5335
 msgid "PDF output"
 msgstr ""
 
-#: eme-members.php:2894
-#: eme-people.php:1826
-#: eme-rsvp.php:5312
-#: eme-rsvp.php:5327
+#: eme-members.php:2893
+#: eme-people.php:1829
+#: eme-rsvp.php:5321
+#: eme-rsvp.php:5336
 msgid "HTML output"
 msgstr ""
 
-#: eme-members.php:2898
+#: eme-members.php:2897
 msgid "Send mails to members upon changes being made?"
 msgstr ""
 
-#: eme-members.php:2904
+#: eme-members.php:2903
 msgid "Move corresponding persons to the trash bin?"
 msgstr ""
 
-#: eme-members.php:2909
-#: eme-rsvp.php:5358
+#: eme-members.php:2908
+#: eme-rsvp.php:5367
 msgid "Select a subject template"
 msgstr ""
 
-#: eme-members.php:2910
-#: eme-rsvp.php:5359
+#: eme-members.php:2909
+#: eme-rsvp.php:5368
 msgid "Please select a body template"
 msgstr ""
 
-#: eme-members.php:2913
-#: eme-members.php:2918
-#: eme-people.php:1845
-#: eme-people.php:1850
-#: eme-rsvp.php:5362
-#: eme-rsvp.php:5367
+#: eme-members.php:2912
+#: eme-members.php:2917
+#: eme-people.php:1848
+#: eme-people.php:1853
+#: eme-rsvp.php:5371
+#: eme-rsvp.php:5376
 msgid "Select an optional header template"
 msgstr ""
 
-#: eme-members.php:2915
-#: eme-members.php:2920
-#: eme-people.php:1847
-#: eme-people.php:1852
-#: eme-rsvp.php:5364
-#: eme-rsvp.php:5369
+#: eme-members.php:2914
+#: eme-members.php:2919
+#: eme-people.php:1850
+#: eme-people.php:1855
+#: eme-rsvp.php:5373
+#: eme-rsvp.php:5378
 msgid "Select an optional footer template"
 msgstr ""
 
-#: eme-members.php:2975
-#: eme-people.php:1926
+#: eme-members.php:2974
+#: eme-people.php:1929
 msgid "Select memberships"
 msgstr ""
 
-#: eme-members.php:2984
-#: eme-people.php:1936
+#: eme-members.php:2983
+#: eme-people.php:1939
 msgid "Select member status"
 msgstr ""
 
-#: eme-members.php:2993
-#: eme-members.php:3000
-#: eme-people.php:1902
-#: eme-people.php:1909
-#: eme-rsvp.php:5279
+#: eme-members.php:2992
+#: eme-members.php:2999
+#: eme-people.php:1905
+#: eme-people.php:1912
+#: eme-rsvp.php:5288
 msgid "Filter on person"
 msgstr ""
 
-#: eme-members.php:3003
-#: eme-members.php:3010
+#: eme-members.php:3002
+#: eme-members.php:3009
 msgid "Filter on member ID"
 msgstr ""
 
-#: eme-members.php:3011
-#: eme-rsvp.php:5283
+#: eme-members.php:3010
+#: eme-rsvp.php:5292
 msgid "Filter on payment id"
 msgstr ""
 
-#: eme-members.php:3012
-#: eme-rsvp.php:5284
+#: eme-members.php:3011
+#: eme-rsvp.php:5293
 msgid "Filter on payment GW id"
 msgstr ""
 
-#: eme-members.php:3026
-#: eme-people.php:1958
+#: eme-members.php:3025
+#: eme-people.php:1961
 msgid "Custom field to search"
 msgstr ""
 
-#: eme-members.php:3037
-#: eme-members.php:3049
-#: eme-people.php:1969
-#: eme-people.php:1981
+#: eme-members.php:3036
+#: eme-members.php:3048
+#: eme-people.php:1972
+#: eme-people.php:1984
 msgid "Exact custom field search match"
 msgstr ""
 
-#: eme-members.php:3047
-#: eme-people.php:1979
+#: eme-members.php:3046
+#: eme-people.php:1982
 msgid "Exact?"
 msgstr ""
 
-#: eme-members.php:3217
+#: eme-members.php:3216
 msgid "Add a new member"
 msgstr ""
 
-#: eme-members.php:3236
+#: eme-members.php:3235
 msgid "Manage members"
 msgstr ""
 
-#: eme-members.php:3252
+#: eme-members.php:3251
 msgid "Import members"
 msgstr ""
 
-#: eme-members.php:3253
+#: eme-members.php:3252
 msgid "If you want, use this to import members info into the database"
 msgstr ""
 
-#: eme-members.php:3263
+#: eme-members.php:3262
 msgid "Import dynamic field answers"
 msgstr ""
 
-#: eme-members.php:3264
+#: eme-members.php:3263
 msgid "Once you finished importing members, use this to import dynamic field answers into the database"
 msgstr ""
 
-#: eme-members.php:3297
+#: eme-members.php:3296
 msgid "Add a new membership definition"
 msgstr ""
 
-#: eme-members.php:3307
+#: eme-members.php:3306
 msgid "Manage memberships"
 msgstr ""
 
-#: eme-members.php:3315
+#: eme-members.php:3314
 msgid "Delete selected memberships"
 msgstr ""
 
-#: eme-members.php:3316
+#: eme-members.php:3315
 msgid "Show membership statistics"
 msgstr ""
 
-#: eme-members.php:4699
+#: eme-members.php:4698
 msgid "Members CSV"
 msgstr ""
 
-#: eme-members.php:4950
+#: eme-members.php:4949
 msgid "Limit access to EME members of"
 msgstr ""
 
-#: eme-members.php:4956
+#: eme-members.php:4955
 msgid "Allow access after the membership has been active for this many days (drip content):"
 msgstr ""
 
-#: eme-members.php:4959
+#: eme-members.php:4958
 msgid "Limit access to EME people that are members of the following groups"
 msgstr ""
 
-#: eme-members.php:4966
+#: eme-members.php:4965
 msgid "Access denied message template"
 msgstr ""
 
-#: eme-members.php:4970
+#: eme-members.php:4969
 msgid "The format of the text shown if access to the page is denied. If left empty, a default message will be shown."
 msgstr ""
 
-#: eme-members.php:5045
+#: eme-members.php:5044
 msgid "No membership selected"
 msgstr ""
 
-#: eme-members.php:5065
+#: eme-members.php:5064
 #: eme-rsvp.php:1527
 msgid "You did not enter a valid discount code"
 msgstr ""
 
-#: eme-members.php:5331
-#: eme-rsvp.php:6017
+#: eme-members.php:5330
+#: eme-rsvp.php:6026
 msgid "Never"
 msgstr ""
 
-#: eme-members.php:5362
-#: eme-members.php:5380
-#: eme-members.php:5419
-#: eme-members.php:5441
+#: eme-members.php:5361
+#: eme-members.php:5379
+#: eme-members.php:5418
+#: eme-members.php:5440
 msgid "no end date"
 msgstr ""
 
-#: eme-members.php:5435
+#: eme-members.php:5434
 msgid "expired"
 msgstr ""
 
-#: eme-members.php:5983
-#: eme-members.php:6169
+#: eme-members.php:5995
+#: eme-members.php:6181
 msgid "Access denied"
 msgstr ""
 
-#: eme-members.php:6039
-#: eme-members.php:6227
-#: eme-people.php:901
+#: eme-members.php:6051
+#: eme-members.php:6239
+#: eme-people.php:905
 msgid "Not imported (both email and lastname are empty): %s"
 msgstr ""
 
-#: eme-members.php:6094
-#: eme-people.php:941
+#: eme-members.php:6106
+#: eme-people.php:945
 msgid "Not imported (problem updating the person in the db): %s"
 msgstr ""
 
-#: eme-members.php:6100
-#: eme-members.php:6256
+#: eme-members.php:6112
+#: eme-members.php:6268
 msgid "Not imported (membership does not exist): %s"
 msgstr ""
 
-#: eme-members.php:6150
+#: eme-members.php:6162
 msgid "Not imported (problem inserting the member in the db): %s"
 msgstr ""
 
-#: eme-members.php:6251
+#: eme-members.php:6263
 msgid "Not imported (person does not exist): %s"
 msgstr ""
 
-#: eme-members.php:6301
+#: eme-members.php:6313
 msgid "Not imported (member does not exist): %s"
 msgstr ""
 
-#: eme-members.php:6305
+#: eme-members.php:6317
 msgid "Not imported (no matching person found): %s"
 msgstr ""
 
-#: eme-members.php:6499
+#: eme-members.php:6511
 msgid "Edit membership"
 msgstr ""
 
-#: eme-members.php:6508
+#: eme-members.php:6520
 msgid "No membership form has been defined for this membership, a simple default will be used."
 msgstr ""
 
-#: eme-members.php:6521
+#: eme-members.php:6533
 msgid "%d head of the family accounts + %d family members"
 msgstr ""
 
-#: eme-members.php:6597
-#: eme-people.php:5122
+#: eme-members.php:6609
+#: eme-people.php:5125
 msgid "(family member)"
 msgstr ""
 
-#: eme-members.php:6602
+#: eme-members.php:6614
 msgid "Head of the family: "
 msgstr ""
 
-#: eme-members.php:6605
+#: eme-members.php:6617
 msgid "(head of the family)"
 msgstr ""
 
-#: eme-members.php:6650
+#: eme-members.php:6662
 msgid "This is based on the payment ID of the member: %d"
 msgstr ""
 
-#: eme-members.php:6769
-#: eme-people.php:5325
+#: eme-members.php:6781
+#: eme-people.php:5328
 msgid "(Dynamic)"
 msgstr ""
 
-#: eme-members.php:6781
-#: eme-people.php:5337
+#: eme-members.php:6793
+#: eme-people.php:5340
 msgid "Dynamic group added"
 msgstr ""
 
-#: eme-members.php:6783
-#: eme-people.php:5339
+#: eme-members.php:6795
+#: eme-people.php:5342
 msgid "There was a problem adding the group"
 msgstr ""
 
-#: eme-members.php:6786
-#: eme-people.php:5342
+#: eme-members.php:6798
+#: eme-people.php:5345
 msgid "Please enter a name for the group"
 msgstr ""
 
-#: eme-members.php:6845
-#: eme-members.php:6914
+#: eme-members.php:6857
+#: eme-members.php:6926
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr ""
 
-#: eme-members.php:6899
+#: eme-members.php:6911
 msgid "Memberships deleted."
 msgstr ""
 
-#: eme-members.php:6955
+#: eme-members.php:6967
 msgid "No corresponding persons found."
 msgstr ""
 
-#: eme-members.php:6965
+#: eme-members.php:6977
 msgid "Members deleted."
 msgstr ""
 
-#: eme-members.php:6991
-#: eme-members.php:7017
-#: eme-members.php:7080
-#: eme-members.php:7111
-#: eme-members.php:7136
-#: eme-members.php:7153
-#: eme-rsvp.php:6254
-#: eme-rsvp.php:6288
-#: eme-rsvp.php:6332
-#: eme-rsvp.php:6372
-#: eme-rsvp.php:6394
-#: eme-rsvp.php:6436
-#: eme-rsvp.php:6497
-#: eme-rsvp.php:6539
-#: eme-rsvp.php:6588
-#: eme-rsvp.php:6650
-#: eme-rsvp.php:6701
+#: eme-members.php:7003
+#: eme-members.php:7029
+#: eme-members.php:7092
+#: eme-members.php:7123
+#: eme-members.php:7148
+#: eme-members.php:7165
+#: eme-rsvp.php:6263
+#: eme-rsvp.php:6297
+#: eme-rsvp.php:6341
+#: eme-rsvp.php:6381
+#: eme-rsvp.php:6403
+#: eme-rsvp.php:6445
+#: eme-rsvp.php:6506
+#: eme-rsvp.php:6548
+#: eme-rsvp.php:6597
+#: eme-rsvp.php:6659
+#: eme-rsvp.php:6710
 #: eme-tasks.php:2003
 #: eme-tasks.php:2029
 #: eme-tasks.php:2053
 msgid "The action has been executed successfully."
 msgstr ""
 
-#: eme-members.php:6994
-#: eme-members.php:7114
-#: eme-rsvp.php:6257
-#: eme-rsvp.php:6291
-#: eme-rsvp.php:6335
-#: eme-rsvp.php:6375
-#: eme-rsvp.php:6439
-#: eme-rsvp.php:6500
-#: eme-rsvp.php:6542
-#: eme-rsvp.php:6585
-#: eme-rsvp.php:6704
+#: eme-members.php:7006
+#: eme-members.php:7126
+#: eme-rsvp.php:6266
+#: eme-rsvp.php:6300
+#: eme-rsvp.php:6344
+#: eme-rsvp.php:6384
+#: eme-rsvp.php:6448
+#: eme-rsvp.php:6509
+#: eme-rsvp.php:6551
+#: eme-rsvp.php:6594
+#: eme-rsvp.php:6713
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr ""
 
-#: eme-members.php:6997
-#: eme-members.php:7117
-#: eme-rsvp.php:6260
-#: eme-rsvp.php:6294
-#: eme-rsvp.php:6329
-#: eme-rsvp.php:6378
-#: eme-rsvp.php:6397
-#: eme-rsvp.php:6433
-#: eme-rsvp.php:6503
-#: eme-rsvp.php:6545
-#: eme-rsvp.php:6581
-#: eme-rsvp.php:6698
+#: eme-members.php:7009
+#: eme-members.php:7129
+#: eme-rsvp.php:6269
+#: eme-rsvp.php:6303
+#: eme-rsvp.php:6338
+#: eme-rsvp.php:6387
+#: eme-rsvp.php:6406
+#: eme-rsvp.php:6442
+#: eme-rsvp.php:6512
+#: eme-rsvp.php:6554
+#: eme-rsvp.php:6590
+#: eme-rsvp.php:6707
 #: eme-tasks.php:2006
 #: eme-tasks.php:2032
 #: eme-tasks.php:2056
@@ -8883,7 +8876,7 @@ msgid "You're about to cancel the following bookings:"
 msgstr ""
 
 #: eme-options.php:51
-#: eme-people.php:4351
+#: eme-people.php:4354
 msgid "seats"
 msgstr ""
 
@@ -12942,485 +12935,485 @@ msgstr ""
 msgid "You have no right to update groups!"
 msgstr ""
 
-#: eme-people.php:949
+#: eme-people.php:953
 msgid "Not imported (problem inserting the person in the db): %s"
 msgstr ""
 
-#: eme-people.php:1043
-#: eme-people.php:2386
+#: eme-people.php:1047
+#: eme-people.php:2389
 msgid "Birthday email"
 msgstr ""
 
-#: eme-people.php:1055
+#: eme-people.php:1059
 msgid "Seats \"%s\""
 msgstr ""
 
-#: eme-people.php:1057
+#: eme-people.php:1061
 msgid "Seats category %d"
-msgstr ""
-
-#: eme-people.php:1096
-#: eme-people.php:1424
-msgid "On waiting list"
 msgstr ""
 
 #: eme-people.php:1100
 #: eme-people.php:1428
+msgid "On waiting list"
+msgstr ""
+
+#: eme-people.php:1104
+#: eme-people.php:1432
 msgid "Awaiting user confirmation"
 msgstr ""
 
-#: eme-people.php:1102
-#: eme-people.php:1430
-#: eme-people.php:1550
+#: eme-people.php:1106
+#: eme-people.php:1434
+#: eme-people.php:1554
 #: eme-tasks.php:462
 #: eme-tasks.php:1946
 msgid "Approved"
 msgstr ""
 
-#: eme-people.php:1272
-#: eme-people.php:1287
+#: eme-people.php:1276
+#: eme-people.php:1291
 msgid "Bookings for"
 msgstr ""
 
-#: eme-people.php:1317
+#: eme-people.php:1321
 msgid "Bookings data"
 msgstr ""
 
-#: eme-people.php:1359
+#: eme-people.php:1363
 msgid "Seats (Multiprice)"
 msgstr ""
 
-#: eme-people.php:1534
+#: eme-people.php:1538
 msgid "Booked"
 msgstr ""
 
-#: eme-people.php:1582
+#: eme-people.php:1586
 msgid "Available"
 msgstr ""
 
-#: eme-people.php:1602
+#: eme-people.php:1606
 msgid "Absent"
 msgstr ""
 
-#: eme-people.php:1624
+#: eme-people.php:1628
 msgid "Verify link between people and WP"
 msgstr ""
 
-#: eme-people.php:1629
+#: eme-people.php:1633
 msgid "The table below shows the people that are linked to the same WordPress user"
 msgstr ""
 
-#: eme-people.php:1631
+#: eme-people.php:1635
 msgid "Please correct these errors: a WordPress user should be linked to at most one EME person."
 msgstr ""
 
-#: eme-people.php:1641
-#: eme-people.php:1689
-#: eme-people.php:1732
-#: eme-people.php:2430
-#: eme-people.php:4367
+#: eme-people.php:1645
+#: eme-people.php:1693
+#: eme-people.php:1736
+#: eme-people.php:2433
+#: eme-people.php:4370
 msgid "Active memberships"
 msgstr ""
 
-#: eme-people.php:1642
-#: eme-people.php:1690
-#: eme-people.php:1733
+#: eme-people.php:1646
+#: eme-people.php:1694
+#: eme-people.php:1737
 msgid "Future bookings made?"
 msgstr ""
 
-#: eme-people.php:1655
+#: eme-people.php:1659
 msgid "Non-existing WP user linked!!"
 msgstr ""
 
-#: eme-people.php:1670
-#: eme-people.php:1713
-#: eme-people.php:1756
+#: eme-people.php:1674
+#: eme-people.php:1717
+#: eme-people.php:1760
 msgid "No issues found"
 msgstr ""
 
-#: eme-people.php:1675
+#: eme-people.php:1679
 msgid "Verify unique emails"
 msgstr ""
 
-#: eme-people.php:1680
+#: eme-people.php:1684
 msgid "The table below shows the people that have identical emails while you require a unique email per person"
 msgstr ""
 
-#: eme-people.php:1682
+#: eme-people.php:1686
 msgid "Please correct these errors: all EME people should have a unique email."
 msgstr ""
 
-#: eme-people.php:1718
+#: eme-people.php:1722
 msgid "Verify unique name/email combinations"
 msgstr ""
 
-#: eme-people.php:1723
+#: eme-people.php:1727
 msgid "The table below shows the people that have an identical name and email"
 msgstr ""
 
-#: eme-people.php:1725
+#: eme-people.php:1729
 msgid "Please correct these errors: all EME people should have an unique name and email combination."
 msgstr ""
 
-#: eme-people.php:1775
+#: eme-people.php:1779
 msgid "Filter people"
 msgstr ""
 
-#: eme-people.php:1806
+#: eme-people.php:1809
 msgid "Restore selected persons"
 msgstr ""
 
-#: eme-people.php:1807
+#: eme-people.php:1810
 msgid "Permanently delete selected persons"
 msgstr ""
 
-#: eme-people.php:1814
+#: eme-people.php:1817
 msgid "Set GDPR approval to yes"
 msgstr ""
 
-#: eme-people.php:1815
+#: eme-people.php:1818
 msgid "Set GDPR approval to no"
 msgstr ""
 
-#: eme-people.php:1816
+#: eme-people.php:1819
 msgid "Set Massmail to yes"
 msgstr ""
 
-#: eme-people.php:1817
+#: eme-people.php:1820
 msgid "Set Massmail to no"
 msgstr ""
 
-#: eme-people.php:1818
+#: eme-people.php:1821
 msgid "Set Birthday email to yes"
 msgstr ""
 
-#: eme-people.php:1819
+#: eme-people.php:1822
 msgid "Set Birthday email to no"
 msgstr ""
 
-#: eme-people.php:1821
+#: eme-people.php:1824
 msgid "Delete selected persons (move to trash)"
 msgstr ""
 
-#: eme-people.php:1822
+#: eme-people.php:1825
 msgid "Remove personal data (and move to trash bin)"
 msgstr ""
 
-#: eme-people.php:1824
+#: eme-people.php:1827
 msgid "Change language of selected persons"
 msgstr ""
 
-#: eme-people.php:1830
+#: eme-people.php:1833
 msgid "Change language to: "
 msgstr ""
 
-#: eme-people.php:1834
+#: eme-people.php:1837
 msgid "Transfer associated bookings and task signups to (leave empty for moving bookings for future events to trash too):"
 msgstr ""
 
-#: eme-people.php:1915
+#: eme-people.php:1918
 msgid "Filter on group"
 msgstr ""
 
-#: eme-people.php:2142
+#: eme-people.php:2145
 msgid "Add a new person"
 msgstr ""
 
-#: eme-people.php:2147
-#: eme-people.php:2255
-#: eme-people.php:2481
+#: eme-people.php:2150
+#: eme-people.php:2258
+#: eme-people.php:2484
 msgid "Add person"
 msgstr ""
 
-#: eme-people.php:2152
+#: eme-people.php:2155
 msgid "Manage people"
 msgstr ""
 
-#: eme-people.php:2153
+#: eme-people.php:2156
 msgid "Click <a href='%s'>here</a> to verify the integrity of EME people"
 msgstr ""
 
-#: eme-people.php:2174
+#: eme-people.php:2177
 msgid "If you want, use this to import people info into the database"
 msgstr ""
 
-#: eme-people.php:2257
+#: eme-people.php:2260
 msgid "View person in trash (read-only)"
 msgstr ""
 
-#: eme-people.php:2291
-#: eme-people.php:2303
-#: eme-people.php:2313
+#: eme-people.php:2294
+#: eme-people.php:2306
+#: eme-people.php:2316
 msgid "Since this person is linked to a WP user, this field is read-only"
 msgstr ""
 
-#: eme-people.php:2319
+#: eme-people.php:2322
 msgid "Related family member"
 msgstr ""
 
-#: eme-people.php:2324
+#: eme-people.php:2327
 msgid "Click here to edit that person"
 msgstr ""
 
-#: eme-people.php:2348
+#: eme-people.php:2351
 msgid "Phone Number"
 msgstr ""
 
-#: eme-people.php:2390
+#: eme-people.php:2393
 msgid "If active, the person will receive a birthday email."
 msgstr ""
 
-#: eme-people.php:2418
+#: eme-people.php:2421
 msgid "Don't forget that you can define custom fields with purpose 'People' that will allow extra info based on the group the person is in."
 msgstr ""
 
-#: eme-people.php:2453
+#: eme-people.php:2456
 msgid "Linking an EME person with a WP user will not be allowed if there's another EME person matching the WP user's firstname/lastname/email."
 msgstr ""
 
-#: eme-people.php:2454
+#: eme-people.php:2457
 msgid "Linking an EME person with a WP user will change the person firstname/lastname/email to the WP user's firstname/lastname/email and those fields can then only be changed via the WP profile of that person."
 msgstr ""
 
-#: eme-people.php:2458
+#: eme-people.php:2461
 msgid "Delete linked WP user?"
 msgstr ""
 
-#: eme-people.php:2461
+#: eme-people.php:2464
 msgid "Set this to yes if you want the linked WP user to be deleted when the EME person gets removed (moved to trash bin)."
 msgstr ""
 
-#: eme-people.php:2462
+#: eme-people.php:2465
 msgid "By default, this is only set to true when a WP user is created by EME (when creating a member or doing a reservation for an event and the option to create a WP user is set). An admin will never be deleted."
 msgstr ""
 
-#: eme-people.php:2481
+#: eme-people.php:2484
 msgid "Update person"
 msgstr ""
 
-#: eme-people.php:2524
-#: eme-people.php:2643
+#: eme-people.php:2527
+#: eme-people.php:2646
 msgid "Add dynamic group of people"
 msgstr ""
 
-#: eme-people.php:2526
-#: eme-people.php:2644
+#: eme-people.php:2529
+#: eme-people.php:2647
 msgid "Add dynamic group of members"
 msgstr ""
 
-#: eme-people.php:2528
-#: eme-people.php:2603
-#: eme-people.php:2642
+#: eme-people.php:2531
+#: eme-people.php:2606
+#: eme-people.php:2645
 msgid "Add group"
 msgstr ""
 
-#: eme-people.php:2532
+#: eme-people.php:2535
 msgid "Edit dynamic group of people"
 msgstr ""
 
-#: eme-people.php:2534
+#: eme-people.php:2537
 msgid "Edit dynamic group of members"
 msgstr ""
 
-#: eme-people.php:2536
-#: eme-people.php:5234
+#: eme-people.php:2539
+#: eme-people.php:5237
 msgid "Edit group"
 msgstr ""
 
-#: eme-people.php:2571
+#: eme-people.php:2574
 msgid "Group email"
 msgstr ""
 
-#: eme-people.php:2573
+#: eme-people.php:2576
 msgid "If you want to be able to send mail to this group via your mail client (and not just via EME), you need to configure the cli_mail method (see doc) and enter a unique email address for this group. This can be left empty."
 msgstr ""
 
-#: eme-people.php:2578
+#: eme-people.php:2581
 msgid "Public?"
 msgstr ""
 
-#: eme-people.php:2580
+#: eme-people.php:2583
 msgid "If you chose for this group to be a public group, then this group will appear in the list of groups to subscribe/unsubscribe in the eme_subform and eme_unsubform shortcodes (and the form generated by #_UNSUB_URL)."
 msgstr ""
 
-#: eme-people.php:2590
-#: eme-people.php:2595
+#: eme-people.php:2593
+#: eme-people.php:2598
 msgid "Warning: this group is using an older method of defining the criteria for the members in it. Upon saving this group, you will lose that info, so make sure to reenter the criteria in the fields below"
 msgstr ""
 
-#: eme-people.php:2603
+#: eme-people.php:2606
 msgid "Update group"
 msgstr ""
 
-#: eme-people.php:2637
+#: eme-people.php:2640
 msgid "Add a new group"
 msgstr ""
 
-#: eme-people.php:2649
+#: eme-people.php:2652
 msgid "Manage groups"
 msgstr ""
 
-#: eme-people.php:2657
+#: eme-people.php:2660
 msgid "Delete selected groups"
-msgstr ""
-
-#: eme-people.php:2680
-#: eme-people.php:2720
-msgid "No image set"
-msgstr ""
-
-#: eme-people.php:2682
-#: eme-people.php:2722
-msgid "Remove image"
 msgstr ""
 
 #: eme-people.php:2683
 #: eme-people.php:2723
+msgid "No image set"
+msgstr ""
+
+#: eme-people.php:2685
+#: eme-people.php:2725
+msgid "Remove image"
+msgstr ""
+
+#: eme-people.php:2686
+#: eme-people.php:2726
 msgid "Person image"
 msgstr ""
 
-#: eme-people.php:3876
+#: eme-people.php:3879
 msgid "A person with this name and email already exists"
 msgstr ""
 
-#: eme-people.php:4025
-#: eme-people.php:4169
+#: eme-people.php:4028
+#: eme-people.php:4172
 msgid "Invalid country code"
 msgstr ""
 
-#: eme-people.php:4036
-#: eme-people.php:4180
+#: eme-people.php:4039
+#: eme-people.php:4183
 msgid "Invalid state code"
 msgstr ""
 
-#: eme-people.php:4127
-#: eme-people.php:4271
-#: eme-people.php:4343
+#: eme-people.php:4130
+#: eme-people.php:4274
+#: eme-people.php:4346
 msgid "Error encountered while updating person"
 msgstr ""
 
-#: eme-people.php:4143
+#: eme-people.php:4146
 msgid "The email address belongs to an existing user. Please log in first before continuing to register with this email address."
 msgstr ""
 
-#: eme-people.php:4294
+#: eme-people.php:4297
 msgid "Error encountered while adding person"
 msgstr ""
 
-#: eme-people.php:4325
+#: eme-people.php:4328
 msgid "Conflict with info from other person, please use another lastname, firstname or email"
 msgstr ""
 
-#: eme-people.php:4355
+#: eme-people.php:4358
 msgid "Events Made Easy settings"
 msgstr ""
 
-#: eme-people.php:4360
+#: eme-people.php:4363
 msgid "The phone number used by Events Made Easy when the user is indicated as the contact person for an event."
 msgstr ""
 
-#: eme-people.php:4363
+#: eme-people.php:4366
 msgid "Bookings made for future events"
 msgstr ""
 
-#: eme-people.php:4605
-#: eme-people.php:4692
+#: eme-people.php:4608
+#: eme-people.php:4695
 msgid "A request for confirmation has been sent to the given email address."
 msgstr ""
 
-#: eme-people.php:4633
+#: eme-people.php:4636
 msgid "If you want to subscribe to future mailings, please do so by entering your email here."
 msgstr ""
 
-#: eme-people.php:4636
+#: eme-people.php:4639
 msgid "Please select the groups you wish to subscribe to."
 msgstr ""
 
-#: eme-people.php:4720
+#: eme-people.php:4723
 msgid "If you want to unsubscribe from future mailings, please do so by entering your email here."
 msgstr ""
 
-#: eme-people.php:4723
+#: eme-people.php:4726
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr ""
 
-#: eme-people.php:5116
+#: eme-people.php:5119
 msgid "No surname"
 msgstr ""
 
-#: eme-people.php:5240
+#: eme-people.php:5243
 msgid "Dynamic group of people"
 msgstr ""
 
-#: eme-people.php:5246
+#: eme-people.php:5249
 msgid "(1 person)"
 msgid_plural "(%d persons)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-people.php:5250
+#: eme-people.php:5253
 msgid "Dynamic group of members"
 msgstr ""
 
-#: eme-people.php:5256
+#: eme-people.php:5259
 msgid "(1 member)"
 msgid_plural "(%d members)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-people.php:5470
+#: eme-people.php:5473
 msgid "People recovered from trash bin."
 msgstr ""
 
-#: eme-people.php:5482
+#: eme-people.php:5485
 msgid "People moved to trash bin."
 msgstr ""
 
-#: eme-people.php:5490
+#: eme-people.php:5493
 msgid "Personal data removed and moved to trash bin."
 msgstr ""
 
-#: eme-people.php:5498
+#: eme-people.php:5501
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr ""
 
-#: eme-people.php:5506
+#: eme-people.php:5509
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr ""
 
-#: eme-people.php:5514
+#: eme-people.php:5517
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr ""
 
-#: eme-people.php:5522
+#: eme-people.php:5525
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr ""
 
-#: eme-people.php:5530
+#: eme-people.php:5533
 msgid "Birthday email set to \"Yes\"."
 msgstr ""
 
-#: eme-people.php:5538
+#: eme-people.php:5541
 msgid "Birthday email set to \"No\"."
 msgstr ""
 
-#: eme-people.php:5547
+#: eme-people.php:5550
 msgid "Language updated."
 msgstr ""
 
-#: eme-people.php:5560
+#: eme-people.php:5563
 msgid "People deleted."
 msgstr ""
 
-#: eme-people.php:5570
+#: eme-people.php:5573
 msgid "People added to group."
 msgstr ""
 
-#: eme-people.php:5581
+#: eme-people.php:5584
 msgid "People removed from group."
 msgstr ""
 
-#: eme-people.php:5590
+#: eme-people.php:5593
 msgid "Groups deleted."
 msgstr ""
 
@@ -13597,262 +13590,262 @@ msgstr ""
 msgid "No bookings found."
 msgstr ""
 
-#: eme-rsvp.php:4755
+#: eme-rsvp.php:4764
 msgid "Add booking"
 msgstr ""
 
-#: eme-rsvp.php:4757
+#: eme-rsvp.php:4766
 msgid "Be aware: the overbooking option is set."
 msgstr ""
 
-#: eme-rsvp.php:4761
+#: eme-rsvp.php:4770
 msgid "Send mails for new booking?"
 msgstr ""
 
-#: eme-rsvp.php:4794
+#: eme-rsvp.php:4803
 msgid "Edit booking"
 msgstr ""
 
-#: eme-rsvp.php:4803
+#: eme-rsvp.php:4812
 msgid "Send mails for changed booking?"
 msgstr ""
 
-#: eme-rsvp.php:4804
+#: eme-rsvp.php:4813
 msgid "Move booking to event"
 msgstr ""
 
-#: eme-rsvp.php:4807
+#: eme-rsvp.php:4816
 msgid "Start typing an event name"
 msgstr ""
 
-#: eme-rsvp.php:4809
+#: eme-rsvp.php:4818
 msgid "Has the booking been paid?"
 msgstr ""
 
-#: eme-rsvp.php:4812
+#: eme-rsvp.php:4821
 msgid "Warning: the event related to this booking has been removed, editing is no longer allowed!"
 msgstr ""
 
-#: eme-rsvp.php:4814
+#: eme-rsvp.php:4823
 msgid "Warning: the price of the event has changed compared to this booking, the new price will be taken into account for changes!"
 msgstr ""
 
-#: eme-rsvp.php:4991
+#: eme-rsvp.php:5000
 msgid "Booking updated"
 msgstr ""
 
-#: eme-rsvp.php:5010
+#: eme-rsvp.php:5019
 msgid "During the time of your change, some free seats were taken leaving not enough free seats available anymore"
 msgstr ""
 
-#: eme-rsvp.php:5111
+#: eme-rsvp.php:5120
 msgid "No linked payment found: %s"
 msgstr ""
 
-#: eme-rsvp.php:5114
-#: eme-rsvp.php:5117
+#: eme-rsvp.php:5123
+#: eme-rsvp.php:5126
 msgid "Field %s not valid: %s"
 msgstr ""
 
-#: eme-rsvp.php:5122
+#: eme-rsvp.php:5131
 msgid "Already paid in full: %s"
 msgstr ""
 
-#: eme-rsvp.php:5128
+#: eme-rsvp.php:5137
 msgid "Amount paid (%s) is not equal to the expected amount (%s): %s"
 msgstr ""
 
-#: eme-rsvp.php:5132
+#: eme-rsvp.php:5141
 msgid "Import finished: %d entries marked as paid, %d ignored, %d errors"
 msgstr ""
 
-#: eme-rsvp.php:5134
+#: eme-rsvp.php:5143
 msgid "Ignored entries"
 msgstr ""
 
-#: eme-rsvp.php:5137
+#: eme-rsvp.php:5146
 msgid "Erronous entries"
 msgstr ""
 
-#: eme-rsvp.php:5186
+#: eme-rsvp.php:5195
 msgid "Manage pending bookings for %s"
 msgstr ""
 
-#: eme-rsvp.php:5188
+#: eme-rsvp.php:5197
 msgid "Manage approved bookings for %s"
 msgstr ""
 
-#: eme-rsvp.php:5195
+#: eme-rsvp.php:5204
 msgid "Manage trashed bookings"
 msgstr ""
 
-#: eme-rsvp.php:5197
+#: eme-rsvp.php:5206
 msgid "Manage pending bookings"
 msgstr ""
 
-#: eme-rsvp.php:5199
+#: eme-rsvp.php:5208
 msgid "Manage approved bookings"
 msgstr ""
 
-#: eme-rsvp.php:5210
+#: eme-rsvp.php:5219
 msgid "Click on the icon to show the import form to import payments"
 msgstr ""
 
-#: eme-rsvp.php:5223
+#: eme-rsvp.php:5232
 msgid "If you want, use this to import booking payments"
 msgstr ""
 
-#: eme-rsvp.php:5264
+#: eme-rsvp.php:5273
 msgid "Filter on event"
 msgstr ""
 
-#: eme-rsvp.php:5281
+#: eme-rsvp.php:5290
 msgid "Filter on custom field answer"
 msgstr ""
 
-#: eme-rsvp.php:5282
+#: eme-rsvp.php:5291
 msgid "Filter on unique nbr"
 msgstr ""
 
-#: eme-rsvp.php:5286
+#: eme-rsvp.php:5295
 msgid "Filter bookings"
 msgstr ""
 
-#: eme-rsvp.php:5294
+#: eme-rsvp.php:5303
 msgid "Permanently delete booking"
 msgstr ""
 
-#: eme-rsvp.php:5295
+#: eme-rsvp.php:5304
 msgid "Restore booking and mark pending and awaiting user confirmation"
 msgstr ""
 
-#: eme-rsvp.php:5296
+#: eme-rsvp.php:5305
 msgid "Restore booking and mark pending"
 msgstr ""
 
-#: eme-rsvp.php:5297
+#: eme-rsvp.php:5306
 msgid "Restore booking and mark approved"
 msgstr ""
 
-#: eme-rsvp.php:5299
+#: eme-rsvp.php:5308
 msgid "Approve booking"
 msgstr ""
 
-#: eme-rsvp.php:5300
-#: eme-rsvp.php:5315
+#: eme-rsvp.php:5309
+#: eme-rsvp.php:5324
 msgid "Delete booking (move to trash)"
 msgstr ""
 
-#: eme-rsvp.php:5302
+#: eme-rsvp.php:5311
 msgid "Resend the mail for pending booking"
 msgstr ""
 
-#: eme-rsvp.php:5305
-#: eme-rsvp.php:5320
+#: eme-rsvp.php:5314
+#: eme-rsvp.php:5329
 msgid "Mark unpaid"
 msgstr ""
 
-#: eme-rsvp.php:5306
-#: eme-rsvp.php:5321
+#: eme-rsvp.php:5315
+#: eme-rsvp.php:5330
 msgid "Partial payment"
 msgstr ""
 
-#: eme-rsvp.php:5307
+#: eme-rsvp.php:5316
 msgid "Move booking off the waitinglist"
 msgstr ""
 
-#: eme-rsvp.php:5308
-#: eme-rsvp.php:5323
+#: eme-rsvp.php:5317
+#: eme-rsvp.php:5332
 msgid "Put booking on the waitinglist"
 msgstr ""
 
-#: eme-rsvp.php:5310
-#: eme-rsvp.php:5325
+#: eme-rsvp.php:5319
+#: eme-rsvp.php:5334
 msgid "Send booking related email to selected bookings"
 msgstr ""
 
-#: eme-rsvp.php:5314
+#: eme-rsvp.php:5323
 msgid "Make booking pending"
 msgstr ""
 
-#: eme-rsvp.php:5317
+#: eme-rsvp.php:5326
 msgid "Resend the mail for approved booking"
 msgstr ""
 
-#: eme-rsvp.php:5322
+#: eme-rsvp.php:5331
 msgid "Mark person as present (attendance record)"
 msgstr ""
 
-#: eme-rsvp.php:5332
+#: eme-rsvp.php:5341
 msgid "Send mails to contact person too?"
 msgstr ""
 
-#: eme-rsvp.php:5338
+#: eme-rsvp.php:5347
 msgid "Send mails to attendees upon changes being made?"
 msgstr ""
 
-#: eme-rsvp.php:5345
+#: eme-rsvp.php:5354
 msgid "Refund if possible?"
 msgstr ""
 
-#: eme-rsvp.php:5352
+#: eme-rsvp.php:5361
 msgid "Partial payment amount"
 msgstr ""
 
-#: eme-rsvp.php:5392
+#: eme-rsvp.php:5401
 msgid "Event fields"
 msgstr ""
 
-#: eme-rsvp.php:5831
+#: eme-rsvp.php:5840
 msgid "Click the name of the booker in order to see and/or edit the details of the booker."
 msgstr ""
 
-#: eme-rsvp.php:5834
+#: eme-rsvp.php:5843
 msgid "Anonymous"
 msgstr ""
 
-#: eme-rsvp.php:5863
+#: eme-rsvp.php:5872
 msgid "Click here to see and/or edit the details of the booking."
 msgstr ""
 
-#: eme-rsvp.php:6009
+#: eme-rsvp.php:6018
 msgid "(On waitinglist)"
 msgstr ""
 
-#: eme-rsvp.php:6012
+#: eme-rsvp.php:6021
 msgid "(Awaiting user confirmation)"
 msgstr ""
 
-#: eme-rsvp.php:6024
+#: eme-rsvp.php:6033
 msgid "This is based on the payment ID of the booking: %d"
 msgstr ""
 
-#: eme-rsvp.php:6039
+#: eme-rsvp.php:6048
 msgid "Get IBAN"
 msgstr ""
 
-#: eme-rsvp.php:6260
-#: eme-rsvp.php:6378
+#: eme-rsvp.php:6269
+#: eme-rsvp.php:6387
 msgid "Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list."
 msgstr ""
 
-#: eme-rsvp.php:6338
-#: eme-rsvp.php:6442
-#: eme-rsvp.php:6707
+#: eme-rsvp.php:6347
+#: eme-rsvp.php:6451
+#: eme-rsvp.php:6716
 msgid "The action has been executed successfully but there were some problems refunding the payment."
 msgstr ""
 
-#: eme-rsvp.php:6341
-#: eme-rsvp.php:6445
-#: eme-rsvp.php:6710
+#: eme-rsvp.php:6350
+#: eme-rsvp.php:6454
+#: eme-rsvp.php:6719
 msgid "The action has been executed successfully but there were some problems sending mail and refunding the payment."
 msgstr ""
 
-#: eme-rsvp.php:6579
+#: eme-rsvp.php:6588
 msgid "There was a problem refunding the payment, please check your logs."
 msgstr ""
 
-#: eme-rsvp.php:6665
+#: eme-rsvp.php:6674
 msgid "Attendance noted."
 msgstr ""
 

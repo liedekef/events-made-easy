@@ -5608,7 +5608,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
             $res_files = [];
             foreach ( $files as $file ) {
                 if ( $target == 'html' ) {
-                    $res_files[] = eme_get_uploaded_file_html( $file );
+                    $res_files[] = eme_get_uploaded_file_html( $file, 0 );
                 } else {
                     $res_files[] = $file['name'] . ' [' . $file['url'] . ']';
                 }
@@ -5623,7 +5623,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
             $person_files = eme_get_uploaded_files( $member['person_id'], 'people' );
             foreach ( $person_files as $file ) {
                 if ( $target == 'html' ) {
-                    $res_files[] = eme_get_uploaded_file_html( $file );
+                    $res_files[] = eme_get_uploaded_file_html( $file, 0 );
                 } else {
                     $res_files[] = $file['name'] . ' [' . $file['url'] . ']';
                 }
@@ -5689,7 +5689,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                             }
                         } else {
                             if ( $target == 'html' ) {
-                                $matched_answers[] = eme_get_uploaded_file_html( $file );
+                                $matched_answers[] = eme_get_uploaded_file_html( $file, 0 );
                             } else {
                                 $matched_answers[] = $file['name'] . ' [' . $file['url'] . ']';
                             }
@@ -5943,7 +5943,7 @@ function eme_replace_membership_placeholders( $format, $membership, $target = 'h
                             }
                         } else {
                             if ( $target == 'html' ) {
-                                $field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';
+                                $field_replace .= eme_get_uploaded_file_html( $file, 0 ) . '<br>';
                             } else {
                                 $field_replace .= $file['name'] . ' [' . $file['url'] . ']' . "\n";
                             }
@@ -6553,11 +6553,7 @@ function eme_ajax_memberships_list() {
         $files = eme_get_uploaded_files( $item['membership_id'], 'memberships' );
         foreach ( $files as $file ) {
             $key = 'FIELD_' . $file['field_id'];
-            if ( isset( $record[ $key ] ) ) {
-                $record[ $key ] .= eme_get_uploaded_file_html( $file );
-            } else {
-                $record[ $key ] = eme_get_uploaded_file_html( $file );
-            }
+            $record[$key] = ($record[$key] ?? '') . eme_get_uploaded_file_html($file, 1);
         }
 
         $records[] = $record;
@@ -6701,11 +6697,7 @@ function eme_ajax_members_list( ) {
         $files  = array_merge( $files1, $files2 );
         foreach ( $files as $file ) {
             $key = 'FIELD_' . $file['field_id'];
-            if ( isset( $record[ $key ] ) ) {
-                $record[ $key ] .= eme_get_uploaded_file_html( $file );
-            } else {
-                $record[ $key ] = eme_get_uploaded_file_html( $file );
-            }
+            $record[$key] = ($record[$key] ?? '') . eme_get_uploaded_file_html($file, 1);
         }
         $records[] = $record;
     }

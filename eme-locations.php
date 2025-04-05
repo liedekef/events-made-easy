@@ -2506,7 +2506,7 @@ function eme_replace_locations_placeholders( $format, $location = '', $target = 
                                 }
                             } else {
                                 if ( $target == 'html' ) {
-                                    $field_replace .= eme_get_uploaded_file_html( $file ) . '<br>';
+                                    $field_replace .= eme_get_uploaded_file_html( $file, 0 ) . '<br>';
                                 } else {
                                     $field_replace .= $file['name'] . ' [' . $file['url'] . ']' . "\n";
                                 }
@@ -3048,11 +3048,7 @@ function eme_ajax_locations_list() {
         $files = eme_get_uploaded_files( $location['location_id'], 'locations' );
         foreach ( $files as $file ) {
             $key = 'FIELD_' . $file['field_id'];
-            if ( isset( $record[ $key ] ) ) {
-                $record[ $key ] .= eme_get_uploaded_file_html( $file );
-            } else {
-                $record[ $key ] = eme_get_uploaded_file_html( $file );
-            }
+            $record[$key] = ($record[$key] ?? '') . eme_get_uploaded_file_html($file, 1);
         }
 
         $records[] = $record;

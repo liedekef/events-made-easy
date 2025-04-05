@@ -3186,11 +3186,15 @@ function eme_get_uploaded_file_linkdelete( $file ) {
     return "<span id='span_$random_id'>$html<br></span>";
 }
 
-function eme_get_uploaded_file_html( $file ) {
+function eme_get_uploaded_file_html( $file, $new_tab = 1 ) {
     // the name of the file given by the person
-    $name = $file['name'];
-    $url  = $file['url'];
-    return "<a href='$url'>$name</a><br>";
+    $name = esc_html($file['name']);
+    $url  = esc_url($file['url']);
+    if ( $new_tab ) {
+        return "<a href='$url' target='_blank'>$name</a><br>";
+    } else {
+        return "<a href='$url'>$name</a><br>";
+    }
 }
 
 function eme_delTree( $dir ) {

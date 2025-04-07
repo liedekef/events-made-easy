@@ -34,7 +34,6 @@
     margin-bottom: 5px;
     field-sizing: content;
     max-width: 100%;
-    min-inline-size: 10ch;
 }
 
 .select2-selection--multiple ul li {

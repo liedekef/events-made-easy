@@ -600,18 +600,22 @@ jQuery(document).ready( function($) {
     });
     $('.eme_select2_groups_class').select2({
         placeholder: emeadmin.translate_selectgroups,
+        dropdownAutoWidth: true,
         width: 'style'
     });
     $('.eme_select2_people_groups_class').select2({
+        placeholder: emeadmin.translate_anygroup,
         dropdownAutoWidth: true,
-        placeholder: emeadmin.translate_anygroup
+        width: 'style'
     });
     $('.eme_select2_memberstatus_class').select2({
         placeholder: emeadmin.translate_selectmemberstatus,
+        dropdownAutoWidth: true,
         width: 'style'
     });
     $('.eme_select2_memberships_class').select2({
         placeholder: emeadmin.translate_selectmemberships,
+        dropdownAutoWidth: true,
         width: 'style'
     });
     $('.eme_select2_discounts_class').select2({

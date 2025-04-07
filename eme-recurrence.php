@@ -452,7 +452,10 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 		$event_end_date     = $eme_date_obj->getDate();
 		$event['event_end'] = "$event_end_date $event_end_time";
 		++$count;
-		eme_db_insert_event( $event, 1, $day_difference );
+		$event_id = eme_db_insert_event( $event, 1, $day_difference );
+		if ( $event_id ) {
+			eme_event_store_answers( $event_id );
+		}
 	}
 	return $count;
 }

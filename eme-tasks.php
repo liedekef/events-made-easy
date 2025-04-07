@@ -775,7 +775,18 @@ function eme_meta_box_div_event_tasks( $event, $edit_recurrence = 0 ) {
 				<?php endif; ?>
 				</td>
 				<td>
-				<input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][name]" name="eme_tasks[<?php echo $count; ?>][name]" size="12" aria-label="name" value="<?php echo $task['name']; ?>">
+				<input <?php echo $required; ?> id="eme_tasks[<?php echo $count; ?>][name]" name="eme_tasks[<?php echo $count; ?>][name]" size="15" aria-label="name" value="<?php echo $task['name']; ?>">
+<?php
+                if (!empty($task['task_id'])) {
+                    $count_signups = eme_count_task_signups($task['task_id']);
+                    if ($count_signups>0) {
+                        echo "<span name='eme_tasks[$count][signup_count]' id='eme_tasks[$count][signup_count]'><br>";
+                        echo "<br>";
+                        echo esc_html(sprintf( _n( 'One person already signed up for this task','%d people already signed up for this task', $count_signups, 'events-made-easy' ), $count_signups ));
+                        echo "</span>";
+                    }
+                }
+?>
 				</td>
 				<td>
 				<input type='hidden' readonly='readonly' name='eme_tasks[<?php echo $count; ?>][task_start]' id='eme_tasks[<?php echo $count; ?>][task_start]'>

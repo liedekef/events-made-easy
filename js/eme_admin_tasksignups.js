@@ -4,7 +4,7 @@ jQuery(document).ready( function($) {
         paging: true,
         sorting: true,
         multiSorting: true,
-        defaultSorting: 'task_start ASC',
+        defaultSorting: 'event_name ASC, task_start ASC, task_name ASC, signup_status',
         selecting: true, // Enable selecting
         multiselect: true, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column

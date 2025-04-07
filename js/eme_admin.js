@@ -309,6 +309,8 @@ jQuery(document).ready( function($) {
         let currentId = metaCopy.attr('id').replace('eme_row_task_','');
         metaCopy.attr('id', 'eme_row_task_'+newId);
         metaCopy.find('a').attr('rel', newId);
+        // lets remove some unwanted stuff
+        metaCopy.find('[name="eme_tasks['+currentId+'][signup_count]"]').remove();
         // lets change the name, id and value for all text fields
         let metafields=['task_id','name','task_start','task_end','spaces','dp_task_start','dp_task_end','description'];
         let arrayLength = metafields.length;

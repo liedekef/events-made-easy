@@ -59,6 +59,7 @@ THE SOFTWARE.
             showCloseButton: false,
             loadingAnimationDelay: 500,
             saveUserPreferences: true,
+            saveUserPreferencesMethod: 'localstorage',
             jqueryuiTheme: false,
             unAuthorizedRequestRedirectUrl: null,
             listQueryParams: {},
@@ -140,7 +141,7 @@ THE SOFTWARE.
 
             // Needs to be before _loadExtraSettings, so _loadExtraSettings can load the cookie
             // But needs to come after _createFieldAndColumnList
-            this._cookieKeyPrefix = this._generateCookieKeyPrefix();            
+            this._userPrefPrefix = this._generateUserPrefPrefix();            
 
             // Load optional extra settings for fields
             // This is done before _normalizeFieldsOptions, so that runs all regular code and checks
@@ -1281,33 +1282,46 @@ THE SOFTWARE.
 
         /* Sets a cookie with given key.
          *************************************************************************/
-        _setCookie: function (key, value) {
-            key = this._cookieKeyPrefix + key;
+        _setUserPref: function (key, value) {
+            key = this._userPrefPrefix + key;
 
-            let expireDate = new Date();
-            expireDate.setDate(expireDate.getDate() + 30);
-	    $.cookie(key, value, { expires: expireDate });
+            if (this.options.saveUserPreferencesMethod == 'cookie') {
+                let expireDate = new Date();
+                expireDate.setDate(expireDate.getDate() + 30);
+                Cookies.set(key, value, { expires: expireDate });
+            } else {
+                localStorage.setItem(key,value);
+            }
+            return null;
         },
 
         /* Gets a cookie with given key.
          *************************************************************************/
-        _getCookie: function (key) {
-            key = this._cookieKeyPrefix + key;
+        _getUserPref: function (key) {
+            key = this._userPrefPrefix + key;
 
-	    return $.cookie(key);
+            if (this.options.saveUserPreferencesMethod == 'cookie') {
+                return Cookies.get(key);
+            } else {
+                return localStorage.getItem(key);
+            }
         },
 
         /* Remove a cookie with given key.
          *************************************************************************/
-        _removeCookie: function (key) {
-            key = this._cookieKeyPrefix + key;
-            $.removeCookie(key, { path: '/' });
+        _removeUserPref: function (key) {
+            key = this._userPrefPrefix + key;
+            if (this.options.saveUserPreferencesMethod == 'cookie') {
+                Cookies.remove(key);
+            } else {
+                localStorage.removeItem(key);
+            }
             return null;
         },
 
         /* Generates a hash key to be prefix for all cookies for this jtable instance.
          *************************************************************************/
-        _generateCookieKeyPrefix: function () {
+        _generateUserPrefPrefix: function () {
 
             let simpleHash = function (value) {
                 let hash = 0;
@@ -3777,12 +3791,12 @@ THE SOFTWARE.
                 return;
             }
 
-            let pageSize = this._getCookie('page-size');
+            let pageSize = this._getUserPref('page-size');
             if (pageSize == null) {
                 return;
             }
             if (!pageSize) { // empty cookie? Remove it
-		self._removeCookie('page-size');
+                self._removeUserPref('page-size');
                 return;
             }
             if (pageSize) {
@@ -4018,7 +4032,7 @@ THE SOFTWARE.
                 return;
             }
 
-            this._setCookie('page-size', this.options.pageSize);
+            this._setUserPref('page-size', this.options.pageSize);
         },
 
         /* Overrides _createRecordLoadUrl method to add paging info to URL.
@@ -4599,7 +4613,7 @@ THE SOFTWARE.
                 let fieldSetting = value.fieldName + "=" + value.sortOrder;
                 fieldSettings = fieldSettings + fieldSetting + '|';
             });
-            this._setCookie('column-sortsettings', fieldSettings.substr(0, fieldSettings.length - 1));
+            this._setUserPref('column-sortsettings', fieldSettings.substr(0, fieldSettings.length - 1));
         },
 
         /* Loads field settings from cookie that is saved by _saveColumnSortSettings method.
@@ -4607,16 +4621,16 @@ THE SOFTWARE.
         _loadColumnSortSettings: function () {
             let self = this;
 
-            let columnSortSettingsCookie = self._getCookie('column-sortsettings');
-            if (columnSortSettingsCookie == null) {
+            let columnSortSettingsUserPref = self._getUserPref('column-sortsettings');
+            if (columnSortSettingsUserPref == null) {
                 return;
             }
-            if (!columnSortSettingsCookie) { // empty cookie? Remove it
-                self._removeCookie('column-sortsettings');
+            if (!columnSortSettingsUserPref) { // empty cookie? Remove it
+                self._removeUserPref('column-sortsettings');
                 return;
             }
             self._lastSorting = [];
-            $.each(columnSortSettingsCookie.split('|'), function (inx, fieldSetting) {
+            $.each(columnSortSettingsUserPref.split('|'), function (inx, fieldSetting) {
                 let splitted = fieldSetting.split('=');
                 let fieldName = splitted[0];
                 let sortOrder = splitted[1];
@@ -4714,7 +4728,7 @@ THE SOFTWARE.
          *************************************************************************/
         _$columnSelectionDiv: null,
         _$columnResizeBar: null,
-        _cookieKeyPrefix: null,
+        _userPrefPrefix: null,
         _currentResizeArgs: null,
 
         /************************************************************************
@@ -5156,7 +5170,7 @@ THE SOFTWARE.
                     fieldSettings = fieldSettings + fieldSetting + '|';
             });
 
-            this._setCookie('column-settings', fieldSettings.substr(0, fieldSettings.length - 1));
+            this._setUserPref('column-settings', fieldSettings.substr(0, fieldSettings.length - 1));
         },
 
         /* Loads field settings from cookie that is saved by _saveColumnSettings method.
@@ -5164,17 +5178,17 @@ THE SOFTWARE.
         _loadColumnSettings: function () {
             let self = this;
 
-            let columnSettingsCookie = self._getCookie('column-settings');
-            if (columnSettingsCookie == null) {
+            let columnSettingsUserPref = self._getUserPref('column-settings');
+            if (columnSettingsUserPref == null) {
                 return;
             }
-            if (!columnSettingsCookie) { // empty cookie? Remove it
-                self._removeCookie('column-settings');
+            if (!columnSettingsUserPref) { // empty cookie? Remove it
+                self._removeUserPref('column-settings');
                 return;
             }
 
             let columnSettings = {};
-            $.each(columnSettingsCookie.split('|'), function (inx, fieldSetting) {
+            $.each(columnSettingsUserPref.split('|'), function (inx, fieldSetting) {
                 let splitted = fieldSetting.split('=');
                 let fieldName = splitted[0];
                 let settings = splitted[1].split(';');

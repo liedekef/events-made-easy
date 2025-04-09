@@ -30,18 +30,18 @@ msgstr ""
 #: eme-discounts.php:1640
 #: eme-discounts.php:1680
 #: eme-events.php:10264
-#: eme-events.php:10662
-#: eme-events.php:10922
+#: eme-events.php:10658
+#: eme-events.php:10918
 #: eme-formfields.php:5074
 #: eme-formfields.php:5125
 #: eme-formfields.php:5136
 #: eme-formfields.php:5137
 #: eme-formfields.php:5159
 #: eme-formfields.php:5160
-#: eme-functions.php:3320
-#: eme-functions.php:3341
-#: eme-functions.php:3342
-#: eme-functions.php:3385
+#: eme-functions.php:3324
+#: eme-functions.php:3345
+#: eme-functions.php:3346
+#: eme-functions.php:3389
 #: eme-holidays.php:277
 #: eme-holidays.php:316
 #: eme-locations.php:2910
@@ -57,21 +57,21 @@ msgstr ""
 #: eme-mailer.php:2996
 #: eme-mailer.php:3053
 #: eme-members.php:6461
-#: eme-members.php:6582
-#: eme-members.php:6727
-#: eme-members.php:6815
-#: eme-members.php:6895
+#: eme-members.php:6578
+#: eme-members.php:6719
+#: eme-members.php:6807
+#: eme-members.php:6887
 #: eme-options.php:138
 #: eme-payments.php:3988
 #: eme-people.php:3998
 #: eme-people.php:5099
-#: eme-people.php:5209
-#: eme-people.php:5281
-#: eme-people.php:5321
-#: eme-people.php:5360
-#: eme-people.php:5456
-#: eme-recurrence.php:631
-#: eme-recurrence.php:800
+#: eme-people.php:5205
+#: eme-people.php:5277
+#: eme-people.php:5317
+#: eme-people.php:5356
+#: eme-people.php:5452
+#: eme-recurrence.php:634
+#: eme-recurrence.php:803
 #: eme-rsvp.php:1264
 #: eme-rsvp.php:4751
 #: eme-rsvp.php:4758
@@ -80,9 +80,9 @@ msgstr ""
 #: eme-rsvp.php:4844
 #: eme-rsvp.php:5651
 #: eme-rsvp.php:5673
-#: eme-tasks.php:1854
-#: eme-tasks.php:1958
+#: eme-tasks.php:1865
 #: eme-tasks.php:1969
+#: eme-tasks.php:1980
 #: eme-templates.php:496
 msgid "Access denied!"
 msgstr "拒绝访问!"
@@ -102,7 +102,7 @@ msgstr "活动"
 msgid "Location"
 msgstr "地点"
 
-#: eme-actions.php:358
+#: eme-actions.php:357
 #: eme-events.php:9616
 #: eme-events.php:9849
 #: eme-events.php:9882
@@ -117,7 +117,7 @@ msgstr "地点"
 msgid "State"
 msgstr "州/省"
 
-#: eme-actions.php:359
+#: eme-actions.php:358
 #: eme-countries.php:517
 #: eme-events.php:9617
 #: eme-events.php:9848
@@ -133,34 +133,34 @@ msgstr "州/省"
 msgid "Country"
 msgstr "国家"
 
-#: eme-actions.php:361
+#: eme-actions.php:360
 #: eme-events.php:9619
 msgid "An error has occurred"
 msgstr "出现错误。"
 
-#: eme-actions.php:362
+#: eme-actions.php:361
 msgid "Clear"
 msgstr "清空"
 
-#: eme-actions.php:363
+#: eme-actions.php:362
 #: eme-events.php:9620
 msgid "Mailing preferences"
 msgstr "邮寄优先权"
 
-#: eme-actions.php:364
+#: eme-actions.php:363
 #: eme-events.php:9621
 msgid "Yes, I'm sure"
 msgstr "是的，我肯定"
 
-#: eme-actions.php:485
+#: eme-actions.php:484
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "本页对应于 <strong>Events Made Easy</strong> 的活动页面。它的内容将被 <strong>Events Made Easy</strong> 覆盖。如果您想显示您的内容，您可以在 <a href='%s'>Settings</a> 中为 <strong>Events Made Easy</strong> 指定另一个页面。"
 
-#: eme-actions.php:509
+#: eme-actions.php:508
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr ""
 
-#: eme-actions.php:520
+#: eme-actions.php:519
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "如果您觉得 <strong>Events Made Easy</strong> 对您有用，请考虑进行小额捐赠，以帮助我投入时间和进一步发展。谢谢您的善意支持!"
 
@@ -297,7 +297,7 @@ msgstr "提示：右键单击列标题以显示或隐藏列"
 #: eme-people.php:5138
 #: eme-people.php:5139
 #: eme-people.php:5140
-#: eme-tasks.php:1950
+#: eme-tasks.php:1961
 msgid "Edit person"
 msgstr "编辑人员"
 
@@ -313,7 +313,7 @@ msgid "Manual entry"
 msgstr "手动"
 
 #: eme-attendances.php:265
-#: eme-events.php:10704
+#: eme-events.php:10700
 msgid "Events deleted"
 msgstr "活动已删除"
 
@@ -337,7 +337,7 @@ msgstr "模板中没有定义"
 #: eme-attributes.php:123
 #: eme-attributes.php:143
 #: eme-formfields.php:4978
-#: eme-tasks.php:795
+#: eme-tasks.php:806
 #: eme-todos.php:221
 msgid "Remove"
 msgstr "移除"
@@ -428,7 +428,7 @@ msgstr "名字"
 #: eme-holidays.php:295
 #: eme-locations.php:2992
 #: eme-members.php:6497
-#: eme-people.php:5232
+#: eme-people.php:5228
 #: eme-templates.php:478
 msgid "No name"
 msgstr "没有名字"
@@ -1029,12 +1029,12 @@ msgid "Incorrect country selection"
 msgstr "国家选择不正确"
 
 #: eme-countries.php:1032
-#: eme-functions.php:3367
+#: eme-functions.php:3371
 msgid "Update failed: "
 msgstr "更新失败："
 
 #: eme-countries.php:1034
-#: eme-functions.php:3369
+#: eme-functions.php:3373
 msgid "Insert failed: "
 msgstr "插入失败："
 
@@ -1148,7 +1148,7 @@ msgstr "向所有 EME 的注册者发送邮件，介绍即将在接下来发生�
 #: eme-events.php:8977
 #: eme-options.php:1827
 #: eme-options.php:1843
-#: eme-recurrence.php:705
+#: eme-recurrence.php:708
 msgid "days"
 msgstr "天"
 
@@ -1540,7 +1540,7 @@ msgstr "每个座位固定"
 #: eme-gdpr.php:550
 #: eme-gdpr.php:551
 #: eme-locations.php:3028
-#: eme-members.php:6660
+#: eme-members.php:6656
 #: eme-people.php:506
 #: eme-people.php:514
 #: eme-people.php:522
@@ -1552,7 +1552,7 @@ msgstr "每个座位固定"
 #: eme-people.php:5143
 #: eme-people.php:5160
 #: eme-people.php:5161
-#: eme-people.php:5235
+#: eme-people.php:5231
 #: eme-rsvp.php:3892
 #: eme-rsvp.php:6034
 #: eme-ui-helpers.php:120
@@ -1581,7 +1581,7 @@ msgstr "是的"
 #: eme-gdpr.php:550
 #: eme-gdpr.php:551
 #: eme-locations.php:3028
-#: eme-members.php:6660
+#: eme-members.php:6656
 #: eme-people.php:506
 #: eme-people.php:514
 #: eme-people.php:522
@@ -1593,7 +1593,7 @@ msgstr "是的"
 #: eme-people.php:5143
 #: eme-people.php:5160
 #: eme-people.php:5161
-#: eme-people.php:5235
+#: eme-people.php:5231
 #: eme-rsvp.php:3892
 #: eme-rsvp.php:6034
 #: eme-ui-helpers.php:121
@@ -1921,7 +1921,7 @@ msgstr "取消预订"
 
 #: eme-events.php:1512
 #: eme-events.php:1606
-#: eme-tasks.php:1601
+#: eme-tasks.php:1612
 msgid "Cancel task signup"
 msgstr "取消任务报名"
 
@@ -2532,7 +2532,7 @@ msgstr "由于该活动的作者未被定义，任何对联系人的引用（比
 #: eme-events.php:10385
 #: eme-locations.php:449
 #: eme-locations.php:3002
-#: eme-recurrence.php:739
+#: eme-recurrence.php:742
 #: eme-widgets.php:179
 #: eme-widgets.php:343
 msgid "Category"
@@ -2725,7 +2725,7 @@ msgid "Every"
 msgstr "每"
 
 #: eme-events.php:7342
-#: eme-recurrence.php:707
+#: eme-recurrence.php:710
 msgid "day"
 msgstr "天"
 
@@ -3711,13 +3711,13 @@ msgstr "需要登录的用户必须是选定的 EME 会籍之一，才能使用�
 
 #: eme-events.php:8933
 #: eme-members.php:2181
-#: eme-tasks.php:833
+#: eme-tasks.php:844
 msgid "Group to add people to"
 msgstr "添加人员到此群组"
 
 #: eme-events.php:8934
 #: eme-members.php:2182
-#: eme-tasks.php:834
+#: eme-tasks.php:845
 msgid "The group you want people to automatically become a member of when they subscribe."
 msgstr "您希望人们在订阅时自动成为该群组的会员。"
 
@@ -4202,7 +4202,7 @@ msgstr "州"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "没有与该州相关的国家，它将不会显示在下拉列表中。请编辑该州并纠正国家信息。"
 
-#: eme-actions.php:414
+#: eme-actions.php:413
 #: eme-events.php:9680
 #: eme-events.php:9870
 msgid "No matching location found"
@@ -4695,7 +4695,7 @@ msgstr "选择一个或多个活动"
 
 #: eme-events.php:10381
 #: eme-rsvp.php:5881
-#: eme-tasks.php:1939
+#: eme-tasks.php:1950
 msgid "Edit event"
 msgstr "编辑活动"
 
@@ -4764,13 +4764,13 @@ msgstr ""
 #: eme-events.php:10508
 #: eme-locations.php:534
 #: eme-locations.php:2996
-#: eme-recurrence.php:757
+#: eme-recurrence.php:760
 msgid "Edit location"
 msgstr "编辑地点"
 
 #: eme-events.php:10510
 #: eme-locations.php:2998
-#: eme-recurrence.php:759
+#: eme-recurrence.php:762
 msgid "Location map coordinates are empty! Please edit the location to correct this, otherwise it will not show correctly on your website."
 msgstr "地点地图坐标为空! 请编辑位置以纠正这一点，否则它将无法在您的网站上正确显示。"
 
@@ -4797,24 +4797,24 @@ msgid "Password protected"
 msgstr "被密码保护"
 
 #: eme-events.php:10560
-#: eme-recurrence.php:729
+#: eme-recurrence.php:732
 msgid "Free"
 msgstr "免费"
 
-#: eme-events.php:10694
-#: eme-recurrence.php:824
+#: eme-events.php:10690
+#: eme-recurrence.php:827
 msgid "No action defined!"
 msgstr "没有定义行动!"
 
-#: eme-events.php:10720
+#: eme-events.php:10716
 msgid "Restored selected events to draft status"
 msgstr "将选定的活动恢复到草稿状态"
 
-#: eme-events.php:10728
+#: eme-events.php:10724
 msgid "Events status updated"
 msgstr "活动状态已更新"
 
-#: eme-events.php:10741
+#: eme-events.php:10737
 msgid "Events added to category"
 msgstr "活动已添加到分类"
 
@@ -5678,7 +5678,7 @@ msgstr "使用占位符 #_DYNAMICDATA 来显示您表格中的动态表格。"
 
 #: eme-formfields.php:5146
 #: eme-formfields.php:5156
-#: eme-functions.php:3338
+#: eme-functions.php:3342
 msgid "Records deleted!"
 msgstr "记录已被删除!"
 
@@ -5724,7 +5724,7 @@ msgstr "草稿"
 #: eme-people.php:1430
 #: eme-people.php:1569
 #: eme-tasks.php:461
-#: eme-tasks.php:1948
+#: eme-tasks.php:1959
 msgid "Pending"
 msgstr "待订"
 
@@ -5982,7 +5982,7 @@ msgstr "上传失败。"
 msgid "Errors encountered while uploading files"
 msgstr "上传文件时遇到的错误"
 
-#: eme-functions.php:3354
+#: eme-functions.php:3358
 msgid "No such record"
 msgstr "没有这样的记录"
 
@@ -5997,7 +5997,7 @@ msgstr "没有这样的记录"
 #: eme-people.php:4659
 #: eme-rsvp.php:841
 #: eme-rsvp.php:1141
-#: eme-tasks.php:1645
+#: eme-tasks.php:1656
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到机器人。如果您认为您收到这个消息是错误的，请联系网站所有者。"
 
@@ -6015,7 +6015,7 @@ msgstr "检测到机器人。如果您认为您收到这个消息是错误的，
 #: eme-people.php:4671
 #: eme-rsvp.php:853
 #: eme-rsvp.php:1153
-#: eme-tasks.php:1656
+#: eme-tasks.php:1667
 msgid "Form tampering detected. If you believe you've received this message in error please contact the site owner."
 msgstr "检测到表格被篡改。如果您认为您收到这个消息是错误的，请联系网站所有者。"
 
@@ -6035,7 +6035,7 @@ msgstr "谢谢您的请求，我们将发送电子邮件提供进一步信息。
 #: eme-people.php:4732
 #: eme-rsvp.php:158
 #: eme-rsvp.php:808
-#: eme-tasks.php:1347
+#: eme-tasks.php:1358
 msgid "Javascript is required for this form to work properly"
 msgstr "为使本表正常工作，需要使用 Javascript"
 
@@ -6116,7 +6116,7 @@ msgstr "EME 有选择地使用一个 cookie 来存储客户端的日期和时间
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:670
+#: eme-actions.php:669
 #: eme-gdpr.php:528
 #: events-manager.php:344
 msgid "Events Made Easy"
@@ -6397,13 +6397,13 @@ msgstr "复制这个地点"
 #: eme-mailer.php:2007
 #: eme-mailer.php:2104
 #: eme-mailer.php:2202
-#: eme-members.php:6953
-#: eme-members.php:7032
-#: eme-members.php:7151
+#: eme-members.php:6945
+#: eme-members.php:7024
+#: eme-members.php:7143
 #: eme-rsvp.php:1234
 #: eme-rsvp.php:5015
-#: eme-rsvp.php:6630
-#: eme-rsvp.php:6650
+#: eme-rsvp.php:6626
+#: eme-rsvp.php:6646
 msgid "There were some problems while sending mail."
 msgstr "在发送邮件时出现了一些问题。"
 
@@ -6495,9 +6495,9 @@ msgstr "请输入有效的电子邮件地址"
 #: eme-mailer.php:1997
 #: eme-mailer.php:2101
 #: eme-mailer.php:2195
-#: eme-members.php:6950
-#: eme-rsvp.php:6627
-#: eme-rsvp.php:6647
+#: eme-members.php:6942
+#: eme-rsvp.php:6623
+#: eme-rsvp.php:6643
 msgid "The mail has been sent."
 msgstr "邮件已经发送。"
 
@@ -7085,10 +7085,10 @@ msgstr "添加会员"
 #: eme-members.php:658
 #: eme-members.php:1495
 #: eme-members.php:1621
-#: eme-members.php:6613
-#: eme-members.php:6622
-#: eme-members.php:6623
-#: eme-members.php:6624
+#: eme-members.php:6609
+#: eme-members.php:6618
+#: eme-members.php:6619
+#: eme-members.php:6620
 msgid "Edit member"
 msgstr "编辑会员"
 
@@ -7292,15 +7292,15 @@ msgstr "基于结束日期的有效会员的续期"
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr "只有当会员资格结束日期少于所提到的天数时，才允许有效的会员支付续约费用。这可以防止人员连续多次付款。输入 \"0\" 或 \"无\" 来禁用它（默认）。"
 
-#: eme-functions.php:4108
+#: eme-functions.php:4112
 msgid "Google reCAPTCHA"
 msgstr "谷歌 reCAPTCHA"
 
-#: eme-functions.php:4110
+#: eme-functions.php:4114
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4112
+#: eme-functions.php:4116
 msgid "Cloudflare Turnstile"
 msgstr ""
 
@@ -8112,113 +8112,113 @@ msgstr ""
 msgid "%d head of the family accounts + %d family members"
 msgstr "“一家之主” 账户"
 
-#: eme-members.php:6609
+#: eme-members.php:6605
 #: eme-people.php:5125
 msgid "(family member)"
 msgstr "(家庭成员)"
 
-#: eme-members.php:6614
+#: eme-members.php:6610
 msgid "Head of the family: "
 msgstr "一家之主"
 
-#: eme-members.php:6617
+#: eme-members.php:6613
 msgid "(head of the family)"
 msgstr "(一家之主)"
 
-#: eme-members.php:6662
+#: eme-members.php:6658
 msgid "This is based on the payment ID of the member: %d"
 msgstr ""
 
-#: eme-members.php:6781
-#: eme-people.php:5328
+#: eme-members.php:6773
+#: eme-people.php:5324
 msgid "(Dynamic)"
 msgstr "(动态)"
 
-#: eme-members.php:6793
-#: eme-people.php:5340
+#: eme-members.php:6785
+#: eme-people.php:5336
 msgid "Dynamic group added"
 msgstr "已添加动态群组"
 
-#: eme-members.php:6795
-#: eme-people.php:5342
+#: eme-members.php:6787
+#: eme-people.php:5338
 #, fuzzy
 msgid "There was a problem adding the group"
 msgstr "添加字段时出现了问题"
 
-#: eme-members.php:6798
-#: eme-people.php:5345
+#: eme-members.php:6790
+#: eme-people.php:5341
 msgid "Please enter a name for the group"
 msgstr "请为该群组输入名称"
 
-#: eme-members.php:6857
-#: eme-members.php:6926
+#: eme-members.php:6849
+#: eme-members.php:6918
 msgid "Content of subject or body was empty, no mail has been sent."
 msgstr "主题或正文的内容是空的，没有邮件被发送。"
 
-#: eme-members.php:6911
+#: eme-members.php:6903
 msgid "Memberships deleted."
 msgstr "已删除会籍。"
 
-#: eme-members.php:6967
+#: eme-members.php:6959
 msgid "No corresponding persons found."
 msgstr "没有找到相应的人们。"
 
-#: eme-members.php:6977
+#: eme-members.php:6969
 msgid "Members deleted."
 msgstr "已删除会员。"
 
-#: eme-members.php:7003
-#: eme-members.php:7029
-#: eme-members.php:7092
-#: eme-members.php:7123
-#: eme-members.php:7148
-#: eme-members.php:7165
-#: eme-rsvp.php:6263
-#: eme-rsvp.php:6297
-#: eme-rsvp.php:6341
-#: eme-rsvp.php:6381
-#: eme-rsvp.php:6403
-#: eme-rsvp.php:6445
-#: eme-rsvp.php:6506
-#: eme-rsvp.php:6548
-#: eme-rsvp.php:6597
-#: eme-rsvp.php:6659
-#: eme-rsvp.php:6710
-#: eme-tasks.php:2003
-#: eme-tasks.php:2029
-#: eme-tasks.php:2053
+#: eme-members.php:6995
+#: eme-members.php:7021
+#: eme-members.php:7084
+#: eme-members.php:7115
+#: eme-members.php:7140
+#: eme-members.php:7157
+#: eme-rsvp.php:6259
+#: eme-rsvp.php:6293
+#: eme-rsvp.php:6337
+#: eme-rsvp.php:6377
+#: eme-rsvp.php:6399
+#: eme-rsvp.php:6441
+#: eme-rsvp.php:6502
+#: eme-rsvp.php:6544
+#: eme-rsvp.php:6593
+#: eme-rsvp.php:6655
+#: eme-rsvp.php:6706
+#: eme-tasks.php:2014
+#: eme-tasks.php:2040
+#: eme-tasks.php:2064
 msgid "The action has been executed successfully."
 msgstr "该行动已成功执行。"
 
-#: eme-members.php:7006
-#: eme-members.php:7126
-#: eme-rsvp.php:6266
-#: eme-rsvp.php:6300
-#: eme-rsvp.php:6344
-#: eme-rsvp.php:6384
-#: eme-rsvp.php:6448
-#: eme-rsvp.php:6509
-#: eme-rsvp.php:6551
-#: eme-rsvp.php:6594
-#: eme-rsvp.php:6713
+#: eme-members.php:6998
+#: eme-members.php:7118
+#: eme-rsvp.php:6262
+#: eme-rsvp.php:6296
+#: eme-rsvp.php:6340
+#: eme-rsvp.php:6380
+#: eme-rsvp.php:6444
+#: eme-rsvp.php:6505
+#: eme-rsvp.php:6547
+#: eme-rsvp.php:6590
+#: eme-rsvp.php:6709
 msgid "The action has been executed successfully but there were some problems while sending mail."
 msgstr "该行动已成功执行，但在发送邮件时出现了一些问题。"
 
-#: eme-members.php:7009
-#: eme-members.php:7129
-#: eme-rsvp.php:6269
-#: eme-rsvp.php:6303
-#: eme-rsvp.php:6338
-#: eme-rsvp.php:6387
-#: eme-rsvp.php:6406
-#: eme-rsvp.php:6442
-#: eme-rsvp.php:6512
-#: eme-rsvp.php:6554
-#: eme-rsvp.php:6590
-#: eme-rsvp.php:6707
-#: eme-tasks.php:2006
-#: eme-tasks.php:2032
-#: eme-tasks.php:2056
+#: eme-members.php:7001
+#: eme-members.php:7121
+#: eme-rsvp.php:6265
+#: eme-rsvp.php:6299
+#: eme-rsvp.php:6334
+#: eme-rsvp.php:6383
+#: eme-rsvp.php:6402
+#: eme-rsvp.php:6438
+#: eme-rsvp.php:6508
+#: eme-rsvp.php:6550
+#: eme-rsvp.php:6586
+#: eme-rsvp.php:6703
+#: eme-tasks.php:2017
+#: eme-tasks.php:2043
+#: eme-tasks.php:2067
 msgid "There was a problem executing the desired action, please check your logs."
 msgstr "在执行所需的操作时出现了问题，请检查您的日志。"
 
@@ -10029,7 +10029,7 @@ msgid "Check this option if you want by default that signups for tasks need to b
 msgstr "如果您想在默认情况下，新的注册需要批准，请选中该选项。"
 
 #: eme-options.php:1908
-#: eme-tasks.php:845
+#: eme-tasks.php:856
 msgid "Allow overlap for task signups?"
 msgstr "允许任务报名时有重叠？"
 
@@ -10088,7 +10088,7 @@ msgid "Send out reminder emails"
 msgstr "发出提醒的电子邮件"
 
 #: eme-options.php:1914
-#: eme-tasks.php:849
+#: eme-tasks.php:860
 msgid "Set the number of days before task signup reminder emails will be sent (counting from the start date of the task). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails."
 msgstr "设置任务报名提醒邮件发送前的天数（从任务的开始日期算起）。如果您想发送多封提醒邮件，请用逗号将这些天数隔开。留空表示不发送提醒邮件。"
 
@@ -12133,7 +12133,7 @@ msgstr "等待用户的确认中"
 #: eme-people.php:1434
 #: eme-people.php:1554
 #: eme-tasks.php:462
-#: eme-tasks.php:1946
+#: eme-tasks.php:1957
 msgid "Approved"
 msgstr "已批准"
 
@@ -12398,7 +12398,7 @@ msgid "Edit dynamic group of members"
 msgstr "动态的会员群组"
 
 #: eme-people.php:2539
-#: eme-people.php:5237
+#: eme-people.php:5233
 msgid "Edit group"
 msgstr "编辑群组"
 
@@ -12523,156 +12523,156 @@ msgstr "请选择您想退订的群组。"
 msgid "No surname"
 msgstr "没有姓氏"
 
-#: eme-people.php:5243
+#: eme-people.php:5239
 msgid "Dynamic group of people"
 msgstr "动态的人们群组"
 
-#: eme-people.php:5249
+#: eme-people.php:5245
 msgid "(1 person)"
 msgid_plural "(%d persons)"
 msgstr[0] "（%d 个人）"
 
-#: eme-people.php:5253
+#: eme-people.php:5249
 msgid "Dynamic group of members"
 msgstr "动态的会员群组"
 
-#: eme-people.php:5259
+#: eme-people.php:5255
 msgid "(1 member)"
 msgid_plural "(%d members)"
 msgstr[0] "（%d 名成员）"
 
-#: eme-people.php:5473
+#: eme-people.php:5469
 msgid "People recovered from trash bin."
 msgstr "人员已从回收站里回收了。"
 
-#: eme-people.php:5485
+#: eme-people.php:5481
 msgid "People moved to trash bin."
 msgstr "人员移至回收站。"
 
-#: eme-people.php:5493
+#: eme-people.php:5489
 msgid "Personal data removed and moved to trash bin."
 msgstr "个人数据已被删除并移至回收站。"
 
-#: eme-people.php:5501
+#: eme-people.php:5497
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "GDPR 批准设置为 \"是\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5509
+#: eme-people.php:5505
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "GDPR 批准设置为 \"否\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5517
+#: eme-people.php:5513
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "群发邮件设置为 \"是\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5525
+#: eme-people.php:5521
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "群发邮件设置为 \"否\"（确保所选人员知道这一点）。"
 
-#: eme-people.php:5533
+#: eme-people.php:5529
 msgid "Birthday email set to \"Yes\"."
 msgstr "生日电子邮件设置为 ‘是’。"
 
-#: eme-people.php:5541
+#: eme-people.php:5537
 msgid "Birthday email set to \"No\"."
 msgstr "生日电子邮件设置为 ‘否’。"
 
-#: eme-people.php:5550
+#: eme-people.php:5546
 msgid "Language updated."
 msgstr "语言已更新。"
 
-#: eme-people.php:5563
+#: eme-people.php:5559
 msgid "People deleted."
 msgstr "人们已删除。"
 
-#: eme-people.php:5573
+#: eme-people.php:5569
 msgid "People added to group."
 msgstr "人们添加到群组。"
 
-#: eme-people.php:5584
+#: eme-people.php:5580
 msgid "People removed from group."
 msgstr "从群组中删除的人。"
 
-#: eme-people.php:5593
+#: eme-people.php:5589
 msgid "Groups deleted."
 msgstr "已删掉的群组。"
 
-#: eme-recurrence.php:514
+#: eme-recurrence.php:517
 msgid "the first %s of the month"
 msgstr "该月的第一个 %s"
 
-#: eme-recurrence.php:515
+#: eme-recurrence.php:518
 msgid "the second %s of the month"
 msgstr "该月的第二个 %s"
 
-#: eme-recurrence.php:516
+#: eme-recurrence.php:519
 msgid "the third %s of the month"
 msgstr "该月的第三个 %s"
 
-#: eme-recurrence.php:517
+#: eme-recurrence.php:520
 msgid "the fourth %s of the month"
 msgstr "该月的第四个 %s"
 
-#: eme-recurrence.php:518
+#: eme-recurrence.php:521
 msgid "the fifth %s of the month"
 msgstr "该月的第五个 %s"
 
-#: eme-recurrence.php:519
+#: eme-recurrence.php:522
 msgid "the last %s of the month"
 msgstr "该月的最后 %s"
 
-#: eme-recurrence.php:524
+#: eme-recurrence.php:527
 #, fuzzy
 msgid "From %s to %s"
 msgstr "从 %1$s 到 %2$s"
 
-#: eme-recurrence.php:527
+#: eme-recurrence.php:530
 msgid "everyday"
 msgstr "每天"
 
-#: eme-recurrence.php:529
+#: eme-recurrence.php:532
 msgid "every %s days"
 msgstr "每 %s 天"
 
-#: eme-recurrence.php:546
-#: eme-recurrence.php:563
-#: eme-recurrence.php:581
+#: eme-recurrence.php:549
+#: eme-recurrence.php:566
+#: eme-recurrence.php:584
 msgid " and "
 msgstr " 和 "
 
-#: eme-recurrence.php:548
+#: eme-recurrence.php:551
 msgid "every week"
 msgstr "每星期"
 
-#: eme-recurrence.php:550
+#: eme-recurrence.php:553
 msgid "every %s weeks"
 msgstr "每 %s 个星期"
 
-#: eme-recurrence.php:566
+#: eme-recurrence.php:569
 msgid "every %s months"
 msgstr "每 %s 个月"
 
-#: eme-recurrence.php:568
+#: eme-recurrence.php:571
 msgid "every month"
 msgstr "每个月"
 
-#: eme-recurrence.php:717
+#: eme-recurrence.php:720
 msgid "Edit recurrence"
 msgstr "编辑循环"
 
-#: eme-recurrence.php:719
+#: eme-recurrence.php:722
 msgid "Duplicate this recurrence"
 msgstr "复制此循环"
 
-#: eme-recurrence.php:836
+#: eme-recurrence.php:839
 msgid "Recurrences deleted and events moved to trash"
 msgstr "循环被删除，活动被移至回收站"
 
-#: eme-recurrence.php:847
+#: eme-recurrence.php:850
 msgid "Recurrences status updated"
 msgstr "循环情况更新"
 
-#: eme-recurrence.php:880
+#: eme-recurrence.php:883
 msgid "Start and end date adjusted for the selected recurrences"
 msgstr ""
 
@@ -12996,24 +12996,24 @@ msgstr "(等待用户的确认中)"
 msgid "This is based on the payment ID of the booking: %d"
 msgstr "这是基于预订的付款 ID：%d"
 
-#: eme-rsvp.php:6269
-#: eme-rsvp.php:6387
+#: eme-rsvp.php:6265
+#: eme-rsvp.php:6383
 msgid "Hint: for a booking on the waiting list, the only allowed action is to move it off the waiting list."
 msgstr "提示：对于等待名单上的预订，唯一允许的行动是将其移出等待名单。"
 
-#: eme-rsvp.php:6347
-#: eme-rsvp.php:6451
-#: eme-rsvp.php:6716
+#: eme-rsvp.php:6343
+#: eme-rsvp.php:6447
+#: eme-rsvp.php:6712
 msgid "The action has been executed successfully but there were some problems refunding the payment."
 msgstr "该行动已成功执行，但在退还款项时出现了一些问题。"
 
-#: eme-rsvp.php:6350
-#: eme-rsvp.php:6454
-#: eme-rsvp.php:6719
+#: eme-rsvp.php:6346
+#: eme-rsvp.php:6450
+#: eme-rsvp.php:6715
 msgid "The action has been executed successfully but there were some problems sending mail and refunding the payment."
 msgstr "该行动已成功执行，但在发送邮件和退还款项方面出现了一些问题。"
 
-#: eme-rsvp.php:6588
+#: eme-rsvp.php:6584
 msgid "There was a problem refunding the payment, please check your logs."
 msgstr "退款时出现了问题，请检查您的日志。"
 
@@ -13102,53 +13102,53 @@ msgstr "开始"
 msgid "Spaces"
 msgstr "空位"
 
-#: eme-tasks.php:795
+#: eme-tasks.php:806
 msgid "Add new task"
 msgstr "添加新任务"
 
-#: eme-tasks.php:803
+#: eme-tasks.php:814
 msgid "If name, start date or end date of a task is empty, it will be ignored."
 msgstr "如果一个任务的名称、开始日期或结束日期是空的，它将被忽略。"
 
-#: eme-tasks.php:808
+#: eme-tasks.php:819
 msgid "For recurring events, enter the start and end date of the task as if you would do it for the first event in the series. The tasks for the other events will be adjusted accordingly."
 msgstr "对于循环性的活动，输入任务的开始和结束日期，就像您为系列中的第一个活动做的那样。其他活动的任务将被相应地调整。"
 
-#: eme-tasks.php:811
+#: eme-tasks.php:822
 msgid "The start date of the first event in the series was initially %s"
 msgstr "系列中第一个活动的开始日期最初为 %s"
 
-#: eme-tasks.php:830
+#: eme-tasks.php:841
 msgid "Require WP membership to be able to sign up for tasks?"
 msgstr "要求是 WP 会员才可以报名参加任务？"
 
-#: eme-tasks.php:837
+#: eme-tasks.php:848
 #, fuzzy
 msgid "Require approval for task signups?"
 msgstr "允许任务报名时有重叠？"
 
-#: eme-tasks.php:1303
-#: eme-tasks.php:1418
+#: eme-tasks.php:1314
+#: eme-tasks.php:1429
 msgid "There are no tasks to sign up for right now"
 msgstr "现在没有任何任务可以报名参加"
 
-#: eme-tasks.php:1666
+#: eme-tasks.php:1677
 msgid "Please select at least one task."
 msgstr "请至少选择一项任务。"
 
-#: eme-tasks.php:1737
+#: eme-tasks.php:1748
 msgid "No more open spaces for this task"
 msgstr "这项任务没有更多的空隙"
 
-#: eme-tasks.php:1752
+#: eme-tasks.php:1763
 msgid "Duplicate signup detected"
 msgstr "检测到重复的报名"
 
-#: eme-tasks.php:1759
+#: eme-tasks.php:1770
 msgid "Signup overlap with another task detected"
 msgstr "检测到与另一项任务重叠的报名"
 
-#: eme-tasks.php:1796
+#: eme-tasks.php:1807
 #, fuzzy
 msgid "Signup failed"
 msgstr "报名完成"
@@ -13611,23 +13611,23 @@ msgstr ""
 msgid "The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one."
 msgstr ""
 
-#: eme-recurrence.php:522
+#: eme-recurrence.php:525
 msgid "From %s onwards (automatically extended)"
 msgstr ""
 
-#: eme-tasks.php:804
+#: eme-tasks.php:815
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr ""
 
-#: eme-actions.php:517
+#: eme-actions.php:516
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: eme-actions.php:518
+#: eme-actions.php:517
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: eme-actions.php:528
+#: eme-actions.php:527
 msgid "Dismiss"
 msgstr ""
 
@@ -13655,7 +13655,7 @@ msgstr ""
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr ""
 
-#: eme-actions.php:676
+#: eme-actions.php:675
 msgid "List of next 10 events"
 msgstr ""
 
@@ -13832,7 +13832,7 @@ msgstr ""
 msgid "Frontend Draft (unpaid)"
 msgstr ""
 
-#: eme-functions.php:4116
+#: eme-functions.php:4120
 msgid "Basic EME Captcha"
 msgstr ""
 
@@ -13976,11 +13976,11 @@ msgstr ""
 msgid "Set the delimiter used in CSV exports."
 msgstr ""
 
-#: eme-tasks.php:841
+#: eme-tasks.php:852
 msgid "Allow only one sign up for tasks per event for a person?"
 msgstr ""
 
-#: eme-tasks.php:1725
+#: eme-tasks.php:1736
 msgid "Only one signup allowed"
 msgstr ""
 
@@ -14065,7 +14065,7 @@ msgstr ""
 msgid "Mark person as present (attendance record)"
 msgstr ""
 
-#: eme-rsvp.php:6674
+#: eme-rsvp.php:6670
 msgid "Attendance noted."
 msgstr ""
 
@@ -14312,7 +14312,7 @@ msgstr ""
 msgid "Move event to trash bin"
 msgstr ""
 
-#: eme-events.php:10712
+#: eme-events.php:10708
 msgid "Events moved to the trash bin"
 msgstr ""
 
@@ -14324,7 +14324,7 @@ msgstr ""
 msgid "Please check the Friendly Captcha box"
 msgstr ""
 
-#: eme-functions.php:4114
+#: eme-functions.php:4118
 msgid "Friendly Captcha"
 msgstr ""
 
@@ -14366,8 +14366,8 @@ msgstr ""
 #: eme-events.php:6666
 #: eme-events.php:10458
 #: eme-events.php:10461
-#: eme-members.php:6648
-#: eme-recurrence.php:727
+#: eme-members.php:6644
+#: eme-recurrence.php:730
 #: eme-rsvp.php:5931
 #: eme-rsvp.php:5934
 msgid "Max:"
@@ -14382,3 +14382,8 @@ msgstr ""
 #: eme-events.php:8846
 msgid "A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence."
 msgstr ""
+
+#: eme-tasks.php:785
+msgid "One person already signed up for this task"
+msgid_plural "%d persons already signed up for this task"
+msgstr[0] ""

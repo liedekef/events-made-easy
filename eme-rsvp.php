@@ -3856,7 +3856,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
             $res_files = [];
             foreach ( $files as $file ) {
                 if ( $target == 'html' ) {
-                    $res_files[] = eme_get_uploaded_file_html( $file, 0 );
+                    $res_files[] = eme_get_uploaded_file_html( $file );
                 } else {
                     $res_files[] = $file['name'] . ' [' . $file['url'] . ']';
                 }
@@ -3968,7 +3968,7 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
                             }
                         } else {
                             if ( $target == 'html' ) {
-                                $matched_answers[] = eme_get_uploaded_file_html( $file, 0 );
+                                $matched_answers[] = eme_get_uploaded_file_html( $file );
                             } else {
                                 $matched_answers[] = $file['name'] . ' [' . $file['url'] . ']';
                             }
@@ -6073,7 +6073,7 @@ function eme_ajax_bookings_list() {
         $files  = array_merge( $files1, $files2 );
         foreach ( $files as $file ) {
             $key = 'FIELD_' . $file['field_id'];
-            $line[$key] = ($line[$key] ?? '') . eme_get_uploaded_file_html($file, 1);
+            $line[$key] = ($line[$key] ?? '') . eme_get_uploaded_file_html( $file );
         }
         $rows[] = $line;
     }

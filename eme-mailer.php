@@ -403,23 +403,23 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         $send_immediately = 1;
     }
 
-    // not needed if part of a mailing: then this is already done
-    if (!$mailing_id) {
-        if ( empty( $fromemail ) ) {
-            $fromemail = $replytoemail;
-            $fromname  = $replytoname;
-        }
-        // if forced or fromemail is still empty
-        if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
-            [$fromname, $fromemail] = eme_get_default_mailer_info();
-        }
-        // now the from should never be empty, so just check reply to again
-        if ( empty( $replytoemail ) ) {
-            $replytoemail = $fromemail;
-        }
-        if ( empty( $replytoname ) ) {
-            $replytoname = $fromname;
-        }
+    // the next checks are normally not needed if part of a mailing: then this is already done
+    // but when calling eme_queue_mail directly (the case for eme_db_insert_ongoing_mailing) it needs to be done
+    // so we do it again here (identical as for eme_db_insert_mailing)
+    if ( empty( $fromemail ) ) {
+        $fromemail = $replytoemail;
+        $fromname  = $replytoname;
+    }
+    // if forced or fromemail is still empty
+    if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
+        [$fromname, $fromemail] = eme_get_default_mailer_info();
+    }
+    // now the from should never be empty, so just check reply to again
+    if ( empty( $replytoemail ) ) {
+        $replytoemail = $fromemail;
+    }
+    if ( empty( $replytoname ) ) {
+        $replytoname = $fromname;
     }
 
     $now  = current_time( 'mysql', false );

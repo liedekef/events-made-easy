@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.45 (2025/04/) =
 * Fix copying event answers for missing events when updating an event
+* Make sure every mail has the desired sender for newsletters too
 
 = 2.5.44 (2025/04/04) =
 * Fix discount filtering in events

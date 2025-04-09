@@ -5162,7 +5162,7 @@ function eme_ajax_people_list( ) {
         $record['people.gdpr_date']     = eme_esc_html( $item['gdpr_date'] );
         $record['people.creation_date'] = eme_localized_datetime( $item['creation_date'], EME_TIMEZONE, 1 );
         $record['people.modif_date']    = eme_localized_datetime( $item['modif_date'], EME_TIMEZONE, 1 );
-        $record['people.groups']        = join( ',', eme_esc_html( eme_get_persongroup_names( $item['person_id'] ) ) );
+        $record['people.groups']        = join( ', ', eme_esc_html( eme_get_persongroup_names( $item['person_id'] ) ) );
         $record['people.memberships']   = eme_get_activemembership_names_by_personid( $item['person_id'] );
         $answers = eme_get_person_answers( $item['person_id'] );
         foreach ( $formfields as $formfield ) {

@@ -320,6 +320,19 @@ jQuery(document).ready( function($) {
                     $('#'+form_id).find(':submit').show();
                     $('#'+form_id).find('span#eme_calc_bookingprice').html('Invalid reply');
                 });
+        } else if ($('#'+form_id).find('span#eme_calc_bookingprice_ppg').length) {
+            alldata.append('action', 'eme_calc_bookingprice_ppg');
+            alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
+            $('#'+form_id).find('span#eme_calc_bookingprice_ppg').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
+            $.ajax({url: emebasic.translate_ajax_url, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
+                .done(function(data){
+                    $('#'+form_id).find(':submit').show();
+                    $('#'+form_id).find('span#eme_calc_bookingprice_ppg').html(data.total);
+                })
+                .fail(function(xhr, textStatus, error){
+                    $('#'+form_id).find(':submit').show();
+                    $('#'+form_id).find('span#eme_calc_bookingprice_ppg').html('Invalid reply');
+                });
         } else {
             $('#'+form_id).find(':submit').show();
         }
@@ -437,6 +450,19 @@ jQuery(document).ready( function($) {
                 .fail(function(xhr, textStatus, error){
                     $('#'+form_id).find(':submit').show();
                     $('#'+form_id).find('span#eme_calc_memberprice').html('Invalid reply');
+                });
+        } else if ($('#'+form_id).find('span#eme_calc_memberprice_ppg').length) {
+            $('#'+form_id).find('span#eme_calc_memberprice_ppg').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
+            alldata.append('action', 'eme_calc_memberprice_ppg');
+            alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
+            $.ajax({url: emebasic.translate_ajax_url, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
+                .done(function(data){
+                    $('#'+form_id).find(':submit').show();
+                    $('#'+form_id).find('span#eme_calc_memberprice_ppg').html(data.total);
+                })
+                .fail(function(xhr, textStatus, error){
+                    $('#'+form_id).find(':submit').show();
+                    $('#'+form_id).find('span#eme_calc_memberprice_ppg').html('Invalid reply');
                 });
         } else {
             $('#'+form_id).find(':submit').show();

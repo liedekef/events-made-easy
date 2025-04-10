@@ -3613,6 +3613,31 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
             } else {
                 $replacement = eme_localized_price( $price, $event['currency'], $target );
             }
+        } elseif ( preg_match( '/#_TOTALPRICE\{(\d+)\}/', $result, $matches ) ) {
+            // total price to pay per price if multiprice
+            $total_prices = eme_get_total_booking_multiprice_arr( $booking );
+            $field_id     = intval( $matches[1] ) - 1;
+            if ( array_key_exists( $field_id, $total_prices ) ) {
+                $price = $total_prices[ $field_id ];
+                if ( $need_escape ) {
+                    $replacement = $price;
+                } else {
+                    $replacement = eme_localized_price( $price, $event['currency'], $target );
+                }
+            }
+        } elseif ( preg_match( '/#_TOTALPRICE\{(.+)\}/', $result, $matches ) ) {
+            $charge = eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] );
+            if ( $need_escape ) {
+                $replacement = $total_booking_price+$charge;
+            } else {
+                $replacement = eme_localized_price( $total_booking_price+$charge, $event['currency'], $target );
+            }
+        } elseif ( preg_match( '/#_CHARGE\{(.+)\}$/', $result, $matches ) ) {
+            if ( $need_escape ) {
+                $replacement = eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] );
+            } else {
+                $replacement = eme_localized_price( eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] ), $event['currency'], $target );
+            }
         } elseif ( preg_match( '/#_AMOUNTRECEIVED$/', $result ) ) {
             $replacement = eme_localized_price( $booking['received'], $event['currency'], $target );
         } elseif ( preg_match( '/#_AMOUNTREMAINING$/', $result ) ) {
@@ -3721,24 +3746,6 @@ function eme_replace_booking_placeholders( $format, $event, $booking, $is_multib
             $generated_pdf = eme_generate_booking_pdf( $booking, $event, $template_id );
             if ( ! empty( $generated_pdf ) ) {
                 $replacement = EME_UPLOAD_URL . '/bookings/' . $booking['booking_id'] . '/' . basename( $generated_pdf[1] );
-            }
-        } elseif ( preg_match( '/#_TOTALPRICE\{(\d+)\}/', $result, $matches ) ) {
-            // total price to pay per price if multiprice
-            $total_prices = eme_get_total_booking_multiprice_arr( $booking );
-            $field_id     = intval( $matches[1] ) - 1;
-            if ( array_key_exists( $field_id, $total_prices ) ) {
-                $price = $total_prices[ $field_id ];
-                if ( $need_escape ) {
-                    $replacement = $price;
-                } else {
-                    $replacement = eme_localized_price( $price, $event['currency'], $target );
-                }
-            }
-        } elseif ( preg_match( '/#_CHARGE\{(.+)\}$/', $result, $matches ) ) {
-            if ( $need_escape ) {
-                $replacement = eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] );
-            } else {
-                $replacement = eme_localized_price( eme_payment_gateway_extra_charge( $total_booking_price, $matches[1] ), $event['currency'], $target );
             }
         } elseif ( preg_match( '/#_RESPSPACES$|#_SPACES$|#_RESPSEATS$|#_SEATS$/', $result ) ) {
             $replacement = eme_get_total( $booking['booking_seats'] );

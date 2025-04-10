@@ -102,6 +102,9 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 = 2.5.45 (2025/04/) =
 * Fix copying event answers for missing events when updating an event
 * Make sure every mail has the desired sender for newsletters too
+* Extended RSVP placeholder #_TOTALPRICE{xx}: xx can now be the name of a payment gateway (and not only a number for multiseat event), this returns the total price including the extra costs for that particular payment gateway
+* Added member placeholders #_PRICE{xx} (see above) and #_CHARGE{xx} (see the doc)
+* Added member and rsvp placeholders #_DYNAMICPRICE_PER_PG , which will show the total price to pay per configured gateway
 
 = 2.5.44 (2025/04/04) =
 * Fix discount filtering in events

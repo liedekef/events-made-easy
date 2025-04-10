@@ -2059,6 +2059,8 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
 			$replacement = "<img id='rsvp_add_loading_gif' alt='loading' src='" . esc_url(EME_PLUGIN_URL) . "images/spinner.gif' style='display:none;'><input name='eme_submit_button' class='eme_submit_button' type='submit' value='" . eme_trans_esc_html( $label ) . "'>";
 		} elseif ( preg_match( '/#_DYNAMICPRICE$/', $result ) ) {
 			$replacement = "<span id='eme_calc_bookingprice'></span>";
+		} elseif ( preg_match( '/#_DYNAMICPRICE_PER_PG$/', $result ) ) {
+			$replacement = "<span id='eme_calc_bookingprice_ppg'></span>";
 		} elseif ( preg_match( '/#_FIELDNAME\{(.+)\}/', $result, $matches ) ) {
 			$field_key = $matches[1];
 			$formfield = eme_get_formfield( $field_key );
@@ -3153,6 +3155,10 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
 			if ( ! $is_multibooking ) {
 				$replacement = "<span id='eme_calc_bookingprice'></span>";
 			}
+		} elseif ( preg_match( '/#_DYNAMICPRICE_PER_PG$/', $result ) ) {
+			if ( ! $is_multibooking ) {
+                $replacement = "<span id='eme_calc_bookingprice_ppg'></span>";
+			}
 		} elseif ( preg_match( '/#_DYNAMICDATA$/', $result ) ) {
 			if ( !$dynamic_data_rendered && ! empty( $event['event_properties']['rsvp_dyndata'] ) ) {
 				$replacement = "<div id='eme_dyndata'></div>";
@@ -3776,7 +3782,7 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
     # if these are not present: we don't replace anything and the form is worthless
 
     # first we check if people desire dynamic pricing on it's own, if not: we set the relevant price class to empty
-    if ( strstr( $format, '#_DYNAMICPRICE' ) ) {
+    if ( str_contains( $format, '#_DYNAMICPRICE' ) ) {
         $dynamic_price_class       = "class='dynamicprice'";
         $dynamic_price_class_basic = 'dynamicprice';
     } else {
@@ -4110,6 +4116,8 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
             }
         } elseif ( preg_match( '/#_DYNAMICPRICE$/', $result ) ) {
             $replacement = "<span id='eme_calc_memberprice'></span>";
+        } elseif ( preg_match( '/#_DYNAMICPRICE_PER_PG$/', $result ) ) {
+			$replacement = "<span id='eme_calc_memberprice_ppg'></span>";
         } elseif ( preg_match( '/#_DYNAMICDATA$/', $result ) ) {
             if ( !$dynamic_data_rendered && ! empty( $membership['properties']['dyndata'] ) ) {
                 $replacement = "<div id='eme_dyndata'></div>";

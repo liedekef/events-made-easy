@@ -1697,7 +1697,7 @@ MEMBER_STATUS_EXPIRED => EME_MEMBER_STATUS_EXPIRED
 * Small sql fix that caused people to be shown multiple times if you selected groups in the backend
 
 = 2.1.61 (2020/02/02) =
-* Fix #_DYNAMIC_PRICE for members
+* Fix #_DYNAMICPRICE for members
 * Fix fields with extra charge for members
 * Allow logged in user to change his address for membership signup
 * The extra_charge for members was not allowed to be >127, this has been corrected

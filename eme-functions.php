@@ -2209,6 +2209,45 @@ function eme_calc_bookingprice_ajax() {
     wp_die();
 }
 
+add_action( 'wp_ajax_eme_calc_bookingprice_ppg', 'eme_calc_bookingprice_ppg_ajax' );
+add_action( 'wp_ajax_nopriv_eme_calc_bookingprice_ppg', 'eme_calc_bookingprice_ppg_ajax' );
+function eme_calc_bookingprice_ppg_ajax() {
+    // has an extra frontend nonce set (even if executed in the backend)
+    check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
+
+    header( 'Content-type: application/json; charset=utf-8' );
+    // first detect multibooking
+    $event_ids = [];
+    if ( isset( $_POST['bookings'] ) ) {
+        foreach ( $_POST['bookings'] as $key => $val ) {
+            $event_ids[] = intval( $key );
+        }
+    }
+    $total  = 0;
+    $cur    = '';
+    $result = '';
+    $pgs    = eme_configured_pgs_descriptions();
+
+    foreach ( $event_ids as $event_id ) {
+        $event = eme_get_event( $event_id );
+        if ( ! empty( $event ) ) {
+            $fake_booking = eme_fake_booking( $event );
+            $total       += $fake_booking['remaining'];
+            $cur          = $event['currency'];
+            foreach ( $pgs as $pg => $value ) {
+                if ( isset($event['event_properties']['payment_gateways']) && in_array($pg, $event['event_properties']['payment_gateways']) ) {
+                    $charge = eme_payment_gateway_extra_charge( $total, $pg);
+                    $new_total = eme_localized_price( $total + $charge, $cur );
+                    $result .= "$value: $new_total<br>";
+                }
+            }
+        }
+    }
+
+    echo wp_json_encode( [ 'total' => $result ] );
+    wp_die();
+}
+
 // the people dyndata only gets called from the backend, so we use wp ajax and check the admin nonce
 add_action( 'wp_ajax_eme_people_dyndata', 'eme_dyndata_people_ajax' );
 function eme_dyndata_people_ajax() {

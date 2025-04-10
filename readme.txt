@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.44
+Stable tag: 2.5.45
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.45 (2025/04/) =
+= 2.5.45 (2025/04/10) =
 * Fix copying event answers for missing events when updating an event
 * Make sure every mail has the desired sender for newsletters too
 * Extended RSVP placeholder #_TOTALPRICE{xx}: xx can now be the name of a payment gateway (and not only a number for multiseat event), this returns the total price including the extra costs for that particular payment gateway

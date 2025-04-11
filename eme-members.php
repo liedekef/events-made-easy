@@ -3415,9 +3415,9 @@ function eme_calc_memberprice_ajax() {
     wp_die();
 }
 
-add_action( 'wp_ajax_eme_calc_memberprice_ppg', 'eme_calc_memberprice_ppg_ajax' );
-add_action( 'wp_ajax_nopriv_eme_calc_memberprice_ppg', 'eme_calc_memberprice_ppg_ajax' );
-function eme_calc_memberprice_ppg_ajax() {
+add_action( 'wp_ajax_eme_calc_memberprice_detail', 'eme_calc_memberprice_detail_ajax' );
+add_action( 'wp_ajax_nopriv_eme_calc_memberprice_detail', 'eme_calc_memberprice_detail_ajax' );
+function eme_calc_memberprice_detail_ajax() {
     // has an extra frontend nonce set (even if executed in the backend)
     check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 

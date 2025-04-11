@@ -306,8 +306,10 @@ jQuery(document).ready( function($) {
     function eme_dynamic_bookingprice_json(form_id) {
         $('#'+form_id).find(':submit').hide();
         let alldata = new FormData($('#'+form_id)[0]);
+	let calc_found = 0;
         // now calculate the price, but only do it if we have a "full" form
         if ($('#'+form_id).find('span#eme_calc_bookingprice').length) {
+            calc_found = 1;
             alldata.append('action', 'eme_calc_bookingprice');
             alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
             $('#'+form_id).find('span#eme_calc_bookingprice').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
@@ -320,20 +322,22 @@ jQuery(document).ready( function($) {
                     $('#'+form_id).find(':submit').show();
                     $('#'+form_id).find('span#eme_calc_bookingprice').html('Invalid reply');
                 });
-        } else if ($('#'+form_id).find('span#eme_calc_bookingprice_ppg').length) {
-            alldata.append('action', 'eme_calc_bookingprice_ppg');
+        } else if ($('#'+form_id).find('span#eme_calc_bookingprice_detail').length) {
+            calc_found = 1;
+            alldata.append('action', 'eme_calc_bookingprice_detail');
             alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
-            $('#'+form_id).find('span#eme_calc_bookingprice_ppg').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
+            $('#'+form_id).find('span#eme_calc_bookingprice_detail').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
             $.ajax({url: emebasic.translate_ajax_url, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
                 .done(function(data){
                     $('#'+form_id).find(':submit').show();
-                    $('#'+form_id).find('span#eme_calc_bookingprice_ppg').html(data.total);
+                    $('#'+form_id).find('span#eme_calc_bookingprice_detail').html(data.total);
                 })
                 .fail(function(xhr, textStatus, error){
                     $('#'+form_id).find(':submit').show();
-                    $('#'+form_id).find('span#eme_calc_bookingprice_ppg').html('Invalid reply');
+                    $('#'+form_id).find('span#eme_calc_bookingprice_detail').html('Invalid reply');
                 });
-        } else {
+	}
+        if (!calc_found) {
             $('#'+form_id).find(':submit').show();
         }
     }
@@ -437,8 +441,10 @@ jQuery(document).ready( function($) {
     function eme_dynamic_memberprice_json(form_id) {
         $('#'+form_id).find(':submit').hide();
         let alldata = new FormData($('#'+form_id)[0]);
+	let calc_found = 0;
         // calculate the price, but only do it if we have a "full" form
         if ($('#'+form_id).find('span#eme_calc_memberprice').length) {
+            calc_found = 1;
             $('#'+form_id).find('span#eme_calc_memberprice').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
             alldata.append('action', 'eme_calc_memberprice');
             alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
@@ -451,20 +457,23 @@ jQuery(document).ready( function($) {
                     $('#'+form_id).find(':submit').show();
                     $('#'+form_id).find('span#eme_calc_memberprice').html('Invalid reply');
                 });
-        } else if ($('#'+form_id).find('span#eme_calc_memberprice_ppg').length) {
-            $('#'+form_id).find('span#eme_calc_memberprice_ppg').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
-            alldata.append('action', 'eme_calc_memberprice_ppg');
+        }
+	if ($('#'+form_id).find('span#eme_calc_memberprice_detail').length) {
+            calc_found = 1;
+            $('#'+form_id).find('span#eme_calc_memberprice_detail').html('<img src="'+emebasic.translate_plugin_url+'images/spinner.gif">');
+            alldata.append('action', 'eme_calc_memberprice_detail');
             alldata.append('eme_frontend_nonce', emebasic.translate_frontendnonce);
             $.ajax({url: emebasic.translate_ajax_url, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
                 .done(function(data){
                     $('#'+form_id).find(':submit').show();
-                    $('#'+form_id).find('span#eme_calc_memberprice_ppg').html(data.total);
+                    $('#'+form_id).find('span#eme_calc_memberprice_detail').html(data.total);
                 })
                 .fail(function(xhr, textStatus, error){
                     $('#'+form_id).find(':submit').show();
-                    $('#'+form_id).find('span#eme_calc_memberprice_ppg').html('Invalid reply');
+                    $('#'+form_id).find('span#eme_calc_memberprice_detail').html('Invalid reply');
                 });
-        } else {
+	}
+        if (!calc_found) {
             $('#'+form_id).find(':submit').show();
         }
     }
@@ -1186,5 +1195,5 @@ jQuery(document).ready( function($) {
     }
 
     $('.eme_select2_filter').select2();
-    $('.eme_select2_fitcontent').select2({width: 'fit-content'});
+    $('.eme_select2_fitcontent').select2({dropdownAutoWidth: true, width: 'fit-content'});
 });

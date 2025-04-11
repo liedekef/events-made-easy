@@ -385,6 +385,7 @@ function eme_add_options( $reset = 0 ) {
         'eme_location_html_headers_format'                => '',
         'eme_offline_payment'                             => '',
         'eme_offline_cost'                                => '',
+        'eme_offline_cost2'                               => '',
         'eme_legacypaypal_url'                            => 'live',
         'eme_legacypaypal_business'                       => '',
         'eme_legacypaypal_no_tax'                         => 0,
@@ -1167,7 +1168,7 @@ function eme_options_register() {
         'mail' => [ 'eme_rsvp_mail_notify_is_active', 'eme_rsvp_mail_notify_pending', 'eme_rsvp_mail_notify_paid', 'eme_rsvp_mail_notify_approved', 'eme_mail_sender_name', 'eme_mail_sender_address', 'eme_mail_force_from', 'eme_mail_send_method', 'eme_smtp_host', 'eme_smtp_port', 'eme_smtp_encryption', 'eme_smtp_auth', 'eme_smtp_username', 'eme_smtp_password', 'eme_smtp_debug', 'eme_mail_send_html', 'eme_mail_bcc_address', 'eme_smtp_verify_cert', 'eme_queue_mails', 'eme_cron_send_queued', 'eme_cron_queue_count', 'eme_people_newsletter', 'eme_people_massmail', 'eme_massmail_popup_text', 'eme_massmail_popup', 'eme_mail_tracking', 'eme_mail_sleep', 'eme_mail_blacklist' ],
         'mailtemplates' => [ 'eme_contactperson_email_subject', 'eme_contactperson_cancelled_email_subject', 'eme_contactperson_pending_email_subject', 'eme_contactperson_email_body', 'eme_contactperson_cancelled_email_body', 'eme_contactperson_pending_email_body', 'eme_contactperson_ipn_email_subject', 'eme_contactperson_ipn_email_body', 'eme_contactperson_paid_email_subject', 'eme_contactperson_paid_email_body', 'eme_respondent_email_subject', 'eme_respondent_email_body', 'eme_registration_pending_email_subject', 'eme_registration_pending_email_body', 'eme_registration_userpending_email_subject', 'eme_registration_userpending_email_body', 'eme_registration_cancelled_email_subject', 'eme_registration_cancelled_email_body', 'eme_registration_trashed_email_subject', 'eme_registration_trashed_email_body', 'eme_registration_updated_email_subject', 'eme_registration_updated_email_body', 'eme_registration_paid_email_subject', 'eme_registration_paid_email_body', 'eme_registration_pending_reminder_email_subject', 'eme_registration_pending_reminder_email_body', 'eme_registration_reminder_email_subject', 'eme_registration_reminder_email_body', 'eme_sub_subject', 'eme_sub_body', 'eme_unsub_subject', 'eme_unsub_body', 'eme_booking_attach_ids', 'eme_pending_attach_ids', 'eme_paid_attach_ids', 'eme_booking_attach_tmpl_ids', 'eme_pending_attach_tmpl_ids', 'eme_paid_attach_tmpl_ids', 'eme_subscribe_attach_ids', 'eme_full_name_format', 'eme_cp_task_signup_pending_email_subject', 'eme_cp_task_signup_pending_email_body', 'eme_cp_task_signup_email_subject', 'eme_cp_task_signup_email_body', 'eme_cp_task_signup_cancelled_email_subject', 'eme_cp_task_signup_cancelled_email_body', 'eme_task_signup_pending_email_subject', 'eme_task_signup_pending_email_body', 'eme_task_signup_email_subject', 'eme_task_signup_email_body', 'eme_task_signup_cancelled_email_subject', 'eme_task_signup_cancelled_email_body', 'eme_task_signup_trashed_email_subject', 'eme_task_signup_trashed_email_body', 'eme_task_signup_reminder_email_subject', 'eme_task_signup_reminder_email_body', 'eme_bd_email_subject', 'eme_bd_email_body', 'eme_fs_contactperson_ipn_email_subject', 'eme_fs_contactperson_ipn_email_body', 'eme_fs_author_ipn_email_subject', 'eme_fs_author_ipn_email_body', 'eme_fs_contactperson_newevent_email_subject', 'eme_fs_contactperson_newevent_email_body', 'eme_fs_ipn_attach_ids', 'eme_fs_ipn_attach_tmpl_ids' ],
         'gdpr' => [ 'eme_cpi_subject', 'eme_cpi_body', 'eme_cpi_form', 'eme_gdpr_subject', 'eme_gdpr_body', 'eme_gdpr_approve_subject', 'eme_gdpr_approve_body', 'eme_gdpr_page_title', 'eme_gdpr_page_header', 'eme_gdpr_page_footer', 'eme_gdpr_approve_page_title', 'eme_gdpr_approve_page_content', 'eme_gdpr_remove_expired_member_days', 'eme_gdpr_anonymize_expired_member_days', 'eme_gdpr_anonymize_old_bookings_days', 'eme_gdpr_remove_old_events_days', 'eme_gdpr_archive_old_mailings_days', 'eme_gdpr_remove_old_attendances_days', 'eme_gdpr_remove_old_signups_days' ],
-        'payments' => [ 'eme_default_vat', 'eme_payment_form_header_format', 'eme_payment_form_footer_format', 'eme_multipayment_form_header_format', 'eme_multipayment_form_footer_format', 'eme_fs_payment_form_header_format', 'eme_fs_payment_form_footer_format', 'eme_payment_succes_format', 'eme_payment_fail_format', 'eme_payment_member_succes_format', 'eme_payment_member_fail_format', 'eme_payment_booking_already_paid_format', 'eme_payment_booking_on_waitinglist_format', 'eme_default_currency', 'eme_default_price', 'eme_payment_refund_ok', 'eme_pg_submit_immediately', 'eme_payment_redirect', 'eme_payment_redirect_wait', 'eme_payment_redirect_msg', 'eme_paypal_url', 'eme_paypal_clientid', 'eme_paypal_secret', 'eme_webmoney_purse', 'eme_webmoney_secret', 'eme_webmoney_demo', 'eme_fdgg_url', 'eme_fdgg_store_name', 'eme_fdgg_shared_secret', 'eme_paypal_cost', 'eme_fdgg_cost', 'eme_webmoney_cost', 'eme_paypal_cost2', 'eme_fdgg_cost2', 'eme_webmoney_cost2', 'eme_mollie_api_key', 'eme_mollie_cost', 'eme_mollie_cost2', 'eme_paypal_button_label', 'eme_paypal_button_above', 'eme_paypal_button_below', 'eme_fdgg_button_label', 'eme_fdgg_button_above', 'eme_fdgg_button_below', 'eme_webmoney_button_label', 'eme_webmoney_button_above', 'eme_webmoney_button_below', 'eme_mollie_button_label', 'eme_mollie_button_above', 'eme_mollie_button_below', 'eme_paypal_button_img_url', 'eme_fdgg_button_img_url', 'eme_webmoney_button_img_url', 'eme_mollie_button_img_url', 'eme_worldpay_demo', 'eme_worldpay_instid', 'eme_worldpay_md5_secret', 'eme_worldpay_md5_parameters', 'eme_worldpay_test_pwd', 'eme_worldpay_live_pwd', 'eme_worldpay_cost', 'eme_worldpay_cost2', 'eme_worldpay_button_label', 'eme_worldpay_button_img_url', 'eme_worldpay_button_above', 'eme_worldpay_button_below', 'eme_braintree_private_key', 'eme_braintree_public_key', 'eme_braintree_merchant_id', 'eme_braintree_env', 'eme_braintree_cost', 'eme_braintree_cost2', 'eme_braintree_button_label', 'eme_braintree_button_img_url', 'eme_braintree_button_above', 'eme_braintree_button_below', 'eme_stripe_private_key', 'eme_stripe_public_key', 'eme_stripe_cost', 'eme_stripe_cost2', 'eme_stripe_button_label', 'eme_stripe_button_img_url', 'eme_stripe_button_above', 'eme_stripe_button_below', 'eme_stripe_payment_methods', 'eme_offline_payment', 'eme_offline_cost', 'eme_legacypaypal_url', 'eme_legacypaypal_business', 'eme_legacypaypal_no_tax', 'eme_legacypaypal_cost', 'eme_legacypaypal_cost2', 'eme_legacypaypal_button_label', 'eme_legacypaypal_button_img_url', 'eme_legacypaypal_button_above', 'eme_legacypaypal_button_below', 'eme_instamojo_env', 'eme_instamojo_key', 'eme_instamojo_auth_token', 'eme_instamojo_salt', 'eme_instamojo_cost', 'eme_instamojo_cost2', 'eme_instamojo_button_label', 'eme_instamojo_button_img_url', 'eme_instamojo_button_above', 'eme_instamojo_button_below', 'eme_mercadopago_demo', 'eme_mercadopago_sandbox_token', 'eme_mercadopago_live_token', 'eme_mercadopago_cost', 'eme_mercadopago_cost2', 'eme_mercadopago_button_label', 'eme_mercadopago_button_img_url', 'eme_mercadopago_button_above', 'eme_mercadopago_button_below', 'eme_fondy_merchant_id', 'eme_fondy_secret_key', 'eme_fondy_cost', 'eme_fondy_cost2', 'eme_fondy_button_label', 'eme_fondy_button_img_url', 'eme_fondy_button_above', 'eme_fondy_button_below', 'eme_payconiq_api_key', 'eme_payconiq_env', 'eme_payconiq_merchant_id', 'eme_payconiq_cost', 'eme_payconiq_cost2', 'eme_payconiq_button_label', 'eme_payconiq_button_img_url', 'eme_payconiq_button_above', 'eme_payconiq_button_below', 'eme_sumup_merchant_code', 'eme_sumup_app_id', 'eme_sumup_app_secret', 'eme_sumup_cost', 'eme_sumup_cost2', 'eme_sumup_button_label', 'eme_sumup_button_img_url', 'eme_sumup_button_above', 'eme_sumup_button_below', 'eme_opayo_demo', 'eme_opayo_vendor_name', 'eme_opayo_test_pwd', 'eme_opayo_live_pwd', 'eme_opayo_cost', 'eme_opayo_cost2', 'eme_opayo_button_label', 'eme_opayo_button_img_url', 'eme_opayo_button_above', 'eme_opayo_button_below' ],
+        'payments' => [ 'eme_default_vat', 'eme_payment_form_header_format', 'eme_payment_form_footer_format', 'eme_multipayment_form_header_format', 'eme_multipayment_form_footer_format', 'eme_fs_payment_form_header_format', 'eme_fs_payment_form_footer_format', 'eme_payment_succes_format', 'eme_payment_fail_format', 'eme_payment_member_succes_format', 'eme_payment_member_fail_format', 'eme_payment_booking_already_paid_format', 'eme_payment_booking_on_waitinglist_format', 'eme_default_currency', 'eme_default_price', 'eme_payment_refund_ok', 'eme_pg_submit_immediately', 'eme_payment_redirect', 'eme_payment_redirect_wait', 'eme_payment_redirect_msg', 'eme_paypal_url', 'eme_paypal_clientid', 'eme_paypal_secret', 'eme_webmoney_purse', 'eme_webmoney_secret', 'eme_webmoney_demo', 'eme_fdgg_url', 'eme_fdgg_store_name', 'eme_fdgg_shared_secret', 'eme_paypal_cost', 'eme_fdgg_cost', 'eme_webmoney_cost', 'eme_paypal_cost2', 'eme_fdgg_cost2', 'eme_webmoney_cost2', 'eme_mollie_api_key', 'eme_mollie_cost', 'eme_mollie_cost2', 'eme_paypal_button_label', 'eme_paypal_button_above', 'eme_paypal_button_below', 'eme_fdgg_button_label', 'eme_fdgg_button_above', 'eme_fdgg_button_below', 'eme_webmoney_button_label', 'eme_webmoney_button_above', 'eme_webmoney_button_below', 'eme_mollie_button_label', 'eme_mollie_button_above', 'eme_mollie_button_below', 'eme_paypal_button_img_url', 'eme_fdgg_button_img_url', 'eme_webmoney_button_img_url', 'eme_mollie_button_img_url', 'eme_worldpay_demo', 'eme_worldpay_instid', 'eme_worldpay_md5_secret', 'eme_worldpay_md5_parameters', 'eme_worldpay_test_pwd', 'eme_worldpay_live_pwd', 'eme_worldpay_cost', 'eme_worldpay_cost2', 'eme_worldpay_button_label', 'eme_worldpay_button_img_url', 'eme_worldpay_button_above', 'eme_worldpay_button_below', 'eme_braintree_private_key', 'eme_braintree_public_key', 'eme_braintree_merchant_id', 'eme_braintree_env', 'eme_braintree_cost', 'eme_braintree_cost2', 'eme_braintree_button_label', 'eme_braintree_button_img_url', 'eme_braintree_button_above', 'eme_braintree_button_below', 'eme_stripe_private_key', 'eme_stripe_public_key', 'eme_stripe_cost', 'eme_stripe_cost2', 'eme_stripe_button_label', 'eme_stripe_button_img_url', 'eme_stripe_button_above', 'eme_stripe_button_below', 'eme_stripe_payment_methods', 'eme_offline_payment', 'eme_offline_cost', 'eme_offline_cost2', 'eme_legacypaypal_url', 'eme_legacypaypal_business', 'eme_legacypaypal_no_tax', 'eme_legacypaypal_cost', 'eme_legacypaypal_cost2', 'eme_legacypaypal_button_label', 'eme_legacypaypal_button_img_url', 'eme_legacypaypal_button_above', 'eme_legacypaypal_button_below', 'eme_instamojo_env', 'eme_instamojo_key', 'eme_instamojo_auth_token', 'eme_instamojo_salt', 'eme_instamojo_cost', 'eme_instamojo_cost2', 'eme_instamojo_button_label', 'eme_instamojo_button_img_url', 'eme_instamojo_button_above', 'eme_instamojo_button_below', 'eme_mercadopago_demo', 'eme_mercadopago_sandbox_token', 'eme_mercadopago_live_token', 'eme_mercadopago_cost', 'eme_mercadopago_cost2', 'eme_mercadopago_button_label', 'eme_mercadopago_button_img_url', 'eme_mercadopago_button_above', 'eme_mercadopago_button_below', 'eme_fondy_merchant_id', 'eme_fondy_secret_key', 'eme_fondy_cost', 'eme_fondy_cost2', 'eme_fondy_button_label', 'eme_fondy_button_img_url', 'eme_fondy_button_above', 'eme_fondy_button_below', 'eme_payconiq_api_key', 'eme_payconiq_env', 'eme_payconiq_merchant_id', 'eme_payconiq_cost', 'eme_payconiq_cost2', 'eme_payconiq_button_label', 'eme_payconiq_button_img_url', 'eme_payconiq_button_above', 'eme_payconiq_button_below', 'eme_sumup_merchant_code', 'eme_sumup_app_id', 'eme_sumup_app_secret', 'eme_sumup_cost', 'eme_sumup_cost2', 'eme_sumup_button_label', 'eme_sumup_button_img_url', 'eme_sumup_button_above', 'eme_sumup_button_below', 'eme_opayo_demo', 'eme_opayo_vendor_name', 'eme_opayo_test_pwd', 'eme_opayo_live_pwd', 'eme_opayo_cost', 'eme_opayo_cost2', 'eme_opayo_button_label', 'eme_opayo_button_img_url', 'eme_opayo_button_above', 'eme_opayo_button_below' ],
         'maps' => [ 'eme_indiv_zoom_factor', 'eme_map_zooming', 'eme_location_baloon_format', 'eme_location_map_icon', 'eme_map_gesture_handling' ],
         'emefs' => [ 'eme_fs' ],
         'other' => [ 'eme_allowed_style_attr', 'eme_allowed_html', 'eme_thumbnail_size', 'eme_image_max_width', 'eme_image_max_height', 'eme_image_max_size', 'eme_html_header', 'eme_html_footer', 'eme_event_html_headers_format', 'eme_location_html_headers_format', 'eme_csv_delimiter', 'eme_use_external_url', 'eme_bd_email', 'eme_bd_email_members_only', 'eme_time_remove_leading_zeros', 'eme_stay_on_edit_page', 'eme_localize_price', 'eme_decimals', 'eme_timepicker_minutesstep', 'eme_form_required_field_string', 'eme_version', 'eme_pdf_font', 'eme_backend_dateformat', 'eme_backend_timeformat', 'eme_address1_string', 'eme_address2_string', 'eme_multisite_active' ],
@@ -2562,9 +2563,13 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
+    $gateway = 'offline';
     eme_options_textarea( __( 'Offline payment info', 'events-made-easy' ), 'eme_offline_payment', __( 'The text containing all info for offline payment. Can contain HTML and placeholders like the payment header/footer settings.', 'events-made-easy' ) . ' ' . __( 'This option is only valid for event bookings, for memberships this can be defined for each membership individually.', 'events-made-easy' ), 1 );
-    eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_offline_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
+    eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
+    eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy');?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), 'offline');?></td></tr>
 </table>
 </div>
 </details>
@@ -2574,6 +2579,7 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
+    $gateway = 'paypal';
     echo "<tr><td colspan='2' class='notice notice-warning'>" . esc_html__( 'Remark: due to the incomplete PHP implementation by Paypal, it is not recommended to use this method. It works fine, but has some shortcomings: no webhook functionality (meaning: if someone closes the browser immediately after payment, the payment will not get marked as paid in EME) and refunding is not possible.', 'events-made-easy' ) . '</td></tr>';
     eme_options_select(
         __( 'PayPal live or test', 'events-made-easy' ),
@@ -2589,15 +2595,16 @@ case 'payments':
     );
     eme_options_input_text( __( 'PayPal client ID', 'events-made-easy' ), 'eme_paypal_clientid', __( 'Paypal client ID.', 'events-made-easy' ) . '<br>' . sprintf( __( 'For more info on Paypal apps and credentials, see <a href="%s">this page</a>', 'events-made-easy' ), 'https://developer.paypal.com/docs/integration/admin/manage-apps/#create-an-app-for-testing' ) );
     eme_options_input_text( __( 'PayPal secret', 'events-made-easy' ), 'eme_paypal_secret', __( 'Paypal secret.', 'events-made-easy' ) . '<br>' . sprintf( __( 'For more info on Paypal apps and credentials, see <a href="%s">this page</a>', 'events-made-easy' ), 'https://developer.paypal.com/docs/integration/admin/manage-apps/#create-an-app-for-testing' ) );
-    $gateway = 'paypal';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2607,7 +2614,8 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
-    $notification_link = add_query_arg( [ 'eme_eventAction' => 'legacypaypal_notification' ], $events_page_link );
+    $gateway = 'legacypaypal';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_select(
         __( 'PayPal live or test', 'events-made-easy' ),
         'eme_legacypaypal_url',
@@ -2622,16 +2630,17 @@ case 'payments':
     );
     eme_options_input_text( __( 'PayPal business info', 'events-made-easy' ), 'eme_legacypaypal_business', __( 'Paypal business ID or email.', 'events-made-easy' ) );
     eme_options_radio_binary( __( 'Ignore Paypal tax setting?', 'events-made-easy' ), 'eme_legacypaypal_no_tax', __( 'Select yes to ignore the tax setting in your Paypal profile.', 'events-made-easy' ) );
-    $gateway = 'legacypaypal';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2641,8 +2650,8 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
-    $notification_link = add_query_arg( [ 'eme_eventAction' => 'webmoney_notification' ], $events_page_link );
-
+    $gateway = 'webmoney';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_select(
         __( 'Webmoney live or test', 'events-made-easy' ),
         'eme_webmoney_demo',
@@ -2657,16 +2666,17 @@ case 'payments':
     );
     eme_options_input_text( __( 'Webmoney Purse', 'events-made-easy' ), 'eme_webmoney_purse', __( 'Webmoney Purse.', 'events-made-easy' ) );
     eme_options_input_password( __( 'Webmoney Secret', 'events-made-easy' ), 'eme_webmoney_secret', __( 'Webmoney secret.', 'events-made-easy' ) );
-    $gateway = 'webmoney';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding not implemented possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2676,8 +2686,8 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
-    $notification_link = add_query_arg( [ 'eme_eventAction' => 'fdgg_notification' ], $events_page_link );
-
+    $gateway = 'fdgg';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_select(
         __( 'First Data live or test', 'events-made-easy' ),
         'eme_fdgg_url',
@@ -2692,16 +2702,17 @@ case 'payments':
     );
     eme_options_input_text( __( 'First Data Store Name', 'events-made-easy' ), 'eme_fdgg_store_name', __( 'First Data Store Name.', 'events-made-easy' ) );
     eme_options_input_password( __( 'First Data Shared Secret', 'events-made-easy' ), 'eme_fdgg_shared_secret', __( 'First Data Shared Secret.', 'events-made-easy' ) );
-    $gateway = 'fdgg';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2711,19 +2722,20 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
-    $notification_link = add_query_arg( [ 'eme_eventAction' => 'mollie_notification' ], $events_page_link );
-
-    eme_options_input_text( __( 'Mollie API key', 'events-made-easy' ), 'eme_mollie_api_key', __( 'Mollie API key', 'events-made-easy' ) );
     $gateway = 'mollie';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
+    eme_options_input_text( __( 'Mollie API key', 'events-made-easy' ), 'eme_mollie_api_key', __( 'Mollie API key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2733,7 +2745,8 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
-    $notification_link = add_query_arg( [ 'eme_eventAction' => 'payconiq_notification' ], $events_page_link );
+    $gateway = 'payconiq';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_select(
         __( 'Payconiq live or test', 'events-made-easy' ),
         'eme_payconiq_env',
@@ -2748,16 +2761,17 @@ case 'payments':
     );
     eme_options_input_text( __( 'Payconiq API key', 'events-made-easy' ), 'eme_payconiq_api_key', __( 'Payconiq API key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payconiq Merchant ID', 'events-made-easy' ), 'eme_payconiq_merchant_id', __( 'Payconiq Merchant ID', 'events-made-easy' ) );
-    $gateway = 'payconiq';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is implemented but the way payconiq works it might still require manual transfer of the funds to the relevant bank accounts anyway.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding is possible if funds are available on the account.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2767,7 +2781,8 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
-    $notification_link = add_query_arg( [ 'eme_eventAction' => 'worldpay_notification' ], $events_page_link );
+    $gateway = 'worldpay';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_select(
         __( 'Worldpay live or test', 'events-made-easy' ),
         'eme_worldpay_demo',
@@ -2785,16 +2800,17 @@ case 'payments':
     eme_options_input_text( __( 'Worldpay MD5 parameters', 'events-made-easy' ), 'eme_worldpay_md5_parameters', __( "Worldpay parameters used to generate the MD5 signature, separated by ':'. Only use these 4 in the order of your choice: instId,cartId,currency and/or amount", 'events-made-easy' ) );
     eme_options_input_password( __( 'Worldpay Test Password', 'events-made-easy' ), 'eme_worldpay_test_pwd', __( 'Worldpay password for payment notifications when testing', 'events-made-easy' ) );
     eme_options_input_password( __( 'Worldpay Live Password', 'events-made-easy' ), 'eme_worldpay_live_pwd', __( 'Worldpay password for payment notifications when using Worldpay for real', 'events-made-easy' ) );
-    $gateway = 'worldpay';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2804,6 +2820,7 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
+    $gateway = 'opayo';
     eme_options_select(
         __( 'Opayo live or test', 'events-made-easy' ),
         'eme_opayo_demo',
@@ -2819,16 +2836,17 @@ case 'payments':
     eme_options_input_text( __( 'Opayo Vendor Name', 'events-made-easy' ), 'eme_opayo_vendor_name', __( 'Opayo Vendor Name', 'events-made-easy' ) );
     eme_options_input_password( __( 'Opayo Test Password', 'events-made-easy' ), 'eme_opayo_test_pwd', __( 'Opayo password for testing purposes', 'events-made-easy' ) );
     eme_options_input_password( __( 'Opayo Live Password', 'events-made-easy' ), 'eme_opayo_live_pwd', __( 'Opayo password when using Opayo for real', 'events-made-easy' ) );
-    $gateway = 'opayo';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: for Opayo to work, your PHP installation must have the mcrypt module installed and activated. Search the internet for which extra PHP package to install and/or which line in php.ini to change.', 'events-made-easy' ) . '</td></tr>';
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php _e( 'Info: for Opayo to work, your PHP installation must have the mcrypt module installed and activated. Search the internet for which extra PHP package to install and/or which line in php.ini to change.', 'events-made-easy' ); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2838,20 +2856,22 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
-    $notification_link = add_query_arg( [ 'eme_eventAction' => 'sumup_notification' ], $events_page_link );
+    $gateway = 'sumup';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_input_text( __( 'SumUp Merchant Code', 'events-made-easy' ), 'eme_sumup_merchant_code', __( 'SumUp Merchant Code', 'events-made-easy' ) );
     eme_options_input_text( __( 'SumUp App ID', 'events-made-easy' ), 'eme_sumup_app_id', __( 'SumUp App ID', 'events-made-easy' ) );
     eme_options_input_text( __( 'SumUp App Secret', 'events-made-easy' ), 'eme_sumup_app_secret', __( 'SumUp App Secret', 'events-made-easy' ) );
-    $gateway = 'sumup';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding not implemented yet.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2861,10 +2881,10 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
-    $notification_link = add_query_arg( [ 'eme_eventAction' => 'stripe_notification' ], $events_page_link );
+    $gateway = 'stripe';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_input_text( __( 'Stripe Secret Key', 'events-made-easy' ), 'eme_stripe_private_key', __( 'Stripe Secret Key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Stripe Public Key', 'events-made-easy' ), 'eme_stripe_public_key', __( 'Stripe Public Key', 'events-made-easy' ) );
-    $gateway = 'stripe';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
@@ -2891,9 +2911,12 @@ case 'payments':
         'oxxo'              => 'oxxo',
     ];
     eme_options_multiselect( __( 'Stripe payment methods', 'events-made-easy' ), 'eme_stripe_payment_methods', $stripe_pms, __( "The different Stripe payment methods you want to handle/provide. Defaults to 'card'. See the <a href='https://stripe.com/docs/api/checkout/sessions/create#create_checkout_session-payment_method_types'>Stripe doc</a> for more info.", 'events-made-easy' ), false, 'eme_select2_width50_class' );
-
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: the url for payment notifications is: ', 'events-made-easy' ) . $notification_link . '</td></tr>';
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
+?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
+<?php
     $eme_stripe_private_key = get_option( 'eme_stripe_private_key' );
     if ( ! empty( $eme_stripe_private_key ) ) {
         $stripe_webhookid = get_option( 'eme_stripe_webhook_secret' );
@@ -2917,7 +2940,9 @@ case 'payments':
 <summary><?php esc_html_e( 'Braintree', 'events-made-easy' ); echo_configured_pg('braintree'); ?></summary>
 <div>
 <table class='form-table'>
+<tr><td> <?php _e('Internal payment method name','events-made-easy');?></td><td>braintree</td></tr>
 <?php
+    $gateway = 'braintree';
     eme_options_select(
         __( 'Braintree live or test', 'events-made-easy' ),
         'eme_braintree_env',
@@ -2933,15 +2958,16 @@ case 'payments':
     eme_options_input_text( __( 'Braintree Merchant ID', 'events-made-easy' ), 'eme_braintree_merchant_id', __( 'Braintree Merchant ID', 'events-made-easy' ) );
     eme_options_input_text( __( 'Braintree Public Key', 'events-made-easy' ), 'eme_braintree_public_key', __( 'Braintree Public Key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Braintree Private Key', 'events-made-easy' ), 'eme_braintree_private_key', __( 'Braintree Private Key', 'events-made-easy' ) );
-    $gateway = 'braintree';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2951,6 +2977,8 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
+    $gateway = 'instamojo';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_select(
         __( 'Instamojo live or test', 'events-made-easy' ),
         'eme_instamojo_env',
@@ -2966,15 +2994,17 @@ case 'payments':
     eme_options_input_text( __( 'Instamojo Private Key', 'events-made-easy' ), 'eme_instamojo_key', __( 'Instamojo Private Key', 'events-made-easy' ) );
     eme_options_input_text( __( 'Instamojo Private Auth Token', 'events-made-easy' ), 'eme_instamojo_auth_token', __( 'Instamojo Private Auth Token', 'events-made-easy' ) );
     eme_options_input_text( __( 'Instamojo Private Salt', 'events-made-easy' ), 'eme_instamojo_salt', __( 'Instamojo Private Salt', 'events-made-easy' ) );
-    $gateway = 'instamojo';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -2984,6 +3014,7 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
+    $gateway = 'mercadopago';
     eme_options_select(
         __( 'Mercado Pago live or test', 'events-made-easy' ),
         'eme_mercadopago_demo',
@@ -2998,15 +3029,16 @@ case 'payments':
     );
     eme_options_input_text( __( 'Mercado Pago Sandbox Access Token', 'events-made-easy' ), 'eme_mercadopago_sandbox_token', __( 'Mercado Pago Sandbox Access Token', 'events-made-easy' ) );
     eme_options_input_text( __( 'Mercado Pago Live Access Token', 'events-made-easy' ), 'eme_mercadopago_live_token', __( 'Mercado Pago Live Access Token', 'events-made-easy' ) );
-    $gateway = 'mercadopago';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>
@@ -3016,17 +3048,21 @@ case 'payments':
 <div>
 <table class='form-table'>
 <?php
+    $gateway = 'fondy';
+    $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_input_text( __( 'Fondy Merchant ID', 'events-made-easy' ), 'eme_fondy_merchant_id', __( 'Fondy Merchant ID', 'events-made-easy' ) );
     eme_options_input_text( __( 'Fondy Secret Key', 'events-made-easy' ), 'eme_fondy_secret_key', __( 'Fondy Secret Key', 'events-made-easy' ) );
-    $gateway = 'fondy';
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button image', 'events-made-easy' ), 'eme_' . $gateway . '_button_img_url', __( 'The url to an image for the payment button that replaces the standard submit button with the label mentioned above.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Text above payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_above', __( 'The text shown just above the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
     eme_options_input_text( __( 'Text below payment button', 'events-made-easy' ), 'eme_' . $gateway . '_button_below', __( 'The text shown just below the payment button', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/payment-gateways/'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
-    echo "<tr><td colspan='2'>" . esc_html__( 'Info: refunding is possible.', 'events-made-easy' ) . '</td></tr>';
 ?>
+<tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
+<tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding is possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>
 </details>

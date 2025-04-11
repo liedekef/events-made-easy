@@ -1606,7 +1606,7 @@ function eme_rfc822_date( $mydate, $tz ) {
     return $eme_date_obj->format( 'r' );
 }
 
-function eme_localized_currencysymbol( $cur, $target = 'html' ) {
+function eme_localized_currencysymbol( $cur ) {
     if ( ! class_exists( 'NumberFormatter' ) ) {
         return $cur;
     } else {
@@ -2209,9 +2209,9 @@ function eme_calc_bookingprice_ajax() {
     wp_die();
 }
 
-add_action( 'wp_ajax_eme_calc_bookingprice_ppg', 'eme_calc_bookingprice_ppg_ajax' );
-add_action( 'wp_ajax_nopriv_eme_calc_bookingprice_ppg', 'eme_calc_bookingprice_ppg_ajax' );
-function eme_calc_bookingprice_ppg_ajax() {
+add_action( 'wp_ajax_eme_calc_bookingprice_detail', 'eme_calc_bookingprice_detail_ajax' );
+add_action( 'wp_ajax_nopriv_eme_calc_bookingprice_detail', 'eme_calc_bookingprice_detail_ajax' );
+function eme_calc_bookingprice_detail_ajax() {
     // has an extra frontend nonce set (even if executed in the backend)
     check_ajax_referer( 'eme_frontend', 'eme_frontend_nonce' );
 

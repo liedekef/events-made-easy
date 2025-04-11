@@ -574,7 +574,7 @@ function eme_payment_gateway_extra_charge( $price, $gateway ) {
     $result = 0;
     if ( $extra ) {
         if ( strstr( $extra, '%' ) ) {
-            $extra   = str_replace( '%', '', $extra );
+            $extra   = floatval(str_replace( '%', '', $extra ));
             $result += sprintf( '%01.2f', $price * $extra / 100 );
         } else {
             $result += sprintf( '%01.2f', $extra );
@@ -583,7 +583,7 @@ function eme_payment_gateway_extra_charge( $price, $gateway ) {
     $extra = get_option( 'eme_' . $gateway . '_cost2' );
     if ( $extra ) {
         if ( strstr( $extra, '%' ) ) {
-            $extra   = str_replace( '%', '', $extra );
+            $extra   = floatval(str_replace( '%', '', $extra ));
             $result += sprintf( '%01.2f', $price * $extra / 100 );
         } else {
             $result += sprintf( '%01.2f', $extra );

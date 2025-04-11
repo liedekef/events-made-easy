@@ -1419,10 +1419,6 @@ function eme_options_page() {
 <div class="wrap">
 <div id='icon-options-general' class='icon32'>
 </div>
-<h1><?php esc_html_e( 'Event Manager Options', 'events-made-easy' ); ?></h1>
-<p> 
-    <?php printf( __( "Please also check <a href='%s'>your profile</a> for some per-user EME settings.", 'events-made-easy' ), admin_url( 'profile.php' ) ); ?>
-</p>
 <form id="eme_options_form" method="post" action="options.php" autocomplete="off">
 <input type='hidden' name='tab' value='<?php echo eme_esc_html( $tab ); ?>'>
     <?php
@@ -1431,7 +1427,10 @@ function eme_options_page() {
         case 'general':
             ?>
 
-<h3><?php esc_html_e( 'General options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'General options', 'events-made-easy' ); ?></h2>
+<p> 
+    <?php printf( __( "Please also check <a href='%s'>your profile</a> for some per-user EME settings.", 'events-made-easy' ), admin_url( 'profile.php' ) ); ?>
+</p>
 <table class="form-table">
             <?php
                 eme_options_radio_binary( __( 'Use dropdown for locations?', 'events-made-easy' ), 'eme_use_select_for_locations', __( 'Select yes to select the location from a drop-down menu; location selection will be faster, but you will lose the ability to insert locations with events.', 'events-made-easy' ) . '<br>' . __( 'When the qtranslate plugin is installed and activated, this setting will be ignored and always considered \'Yes\'.', 'events-made-easy' ) );
@@ -1487,7 +1486,7 @@ function eme_options_page() {
         case 'seo':
             ?>
 
-<h3><?php esc_html_e( 'Permalink options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Permalink options', 'events-made-easy' ); ?></h2>
 <table class="form-table">
             <?php
                 eme_options_radio_binary( __( 'Enable event permalinks if possible?', 'events-made-easy' ), 'eme_seo_permalink', __( 'If Yes, EME will render SEO permalinks if permalinks are activated.', 'events-made-easy' ) );
@@ -1504,7 +1503,7 @@ function eme_options_page() {
         case 'access':
             ?>
 
-<h3><?php esc_html_e( 'Access rights', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Access rights', 'events-made-easy' ); ?></h2>
 <p><?php esc_html_e( 'Tip: Use a plugin like "User Role Editor" to add/edit capabilities and roles.', 'events-made-easy' ); ?></p>
 
 <details name='eme_details_options' class="eme_accordion">
@@ -1680,7 +1679,7 @@ function eme_options_page() {
         case 'events':
 ?>
 
-<h3><?php esc_html_e( 'Events page', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Events page', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
             eme_options_select( __( 'Events page', 'events-made-easy' ), 'eme_events_page', eme_get_all_pages(), __( 'This option allows you to select which page to use as an events page.', 'events-made-easy' ) . '<br><strong>' . __( 'The content of this page (including shortcodes of any kind) will be ignored completely and dynamically replaced by events data.', 'events-made-easy' ) . '</strong>' );
@@ -1691,7 +1690,7 @@ function eme_options_page() {
             eme_options_input_text( __( 'URL to redirect private events to', 'events-made-easy' ), 'eme_redir_priv_event_url', __( 'When a person that is not logged-in wants to look at a private event, that person is redirected to the WordPress login page. If you want to redirect to another url, enter it here. The permalink of the current visited page will be added to the mentioned url query string with a parameter called "redirect".', 'events-made-easy' ) );
 ?>
 </table>
-<h3><?php esc_html_e( 'Events format', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Events format', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
             eme_options_textarea( __( 'Default event list format header', 'events-made-easy' ), 'eme_event_list_item_format_header', sprintf( __( 'This content will appear just above your code for the default event list format. If you leave this empty, the value <code>%s</code> will be used.', 'events-made-easy' ), eme_esc_html( DEFAULT_EVENT_LIST_HEADER_FORMAT ) ) );
@@ -1708,7 +1707,7 @@ function eme_options_page() {
             eme_options_input_text( __( 'No events message', 'events-made-easy' ), 'eme_no_events_message', __( 'The message displayed when no events are available.', 'events-made-easy' ) );
 ?>
 </table>
-<h3><?php esc_html_e( 'Events filtering format', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Events filtering format', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
             eme_options_textarea( __( 'Default event list filtering format', 'events-made-easy' ), 'eme_filter_form_format', __( 'This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_TOWNS</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=28'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
@@ -1720,14 +1719,14 @@ function eme_options_page() {
         case 'calendar':
 ?>
 
-<h3><?php esc_html_e( 'Calendar options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Calendar options', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
             eme_options_radio_binary( __( 'Hide past events?', 'events-made-easy' ), 'eme_cal_hide_past_events', __( 'Check this option if you want to hide past events in the calendar.', 'events-made-easy' ) );
             eme_options_radio_binary( __( 'Show single event?', 'events-made-easy' ), 'eme_cal_show_single', __( 'Check this option if you want to immediately show the single event and not a list of events if there is only one event on a specific day.', 'events-made-easy' ) );
 ?>
 </table>
-<h3><?php esc_html_e( 'Calendar format', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Calendar format', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
             eme_options_input_text( __( 'Small calendar title', 'events-made-easy' ), 'eme_small_calendar_event_title_format', __( 'The format of the title, corresponding to the text that appears when hovering on an eventful calendar day.', 'events-made-easy' ) );
@@ -1741,7 +1740,7 @@ function eme_options_page() {
         case 'locations':
 ?>
 
-<h3><?php esc_html_e( 'Locations format', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Locations format', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
             eme_options_textarea( __( 'Default location list format header', 'events-made-easy' ), 'eme_location_list_format_header', sprintf( __( 'This content will appear just above your code for the default location list format. If you leave this empty, the value <code>%s</code> will be used.<br>Used by the shortcode <code>[eme_locations]</code>', 'events-made-easy' ), eme_esc_html( DEFAULT_LOCATION_LIST_HEADER_FORMAT ) ) );
@@ -1761,7 +1760,7 @@ function eme_options_page() {
         case 'members':
 ?>
 
-<h3><?php esc_html_e( 'Membership options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Membership options', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
             eme_options_input_text( __( 'Membership form login required text', 'events-made-easy' ), 'eme_membership_login_required_string', __( 'The text shown instead of the membership form if a person needs to be logged in in order to register. You can use membership placeholders here.', 'events-made-easy' ) );
@@ -1780,7 +1779,7 @@ function eme_options_page() {
             $rss_options  = get_option('eme_rss');
 ?>
 
-<h3><?php esc_html_e( 'RSS and ICAL feed format', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'RSS and ICAL feed format', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
             eme_options_input_text( __( 'RSS main title', 'events-made-easy' ), eme_get_field_name('eme_rss','main_title'), __( 'The main title of your RSS events feed.', 'events-made-easy' ), $rss_options['main_title'] );
@@ -1800,7 +1799,7 @@ function eme_options_page() {
         case 'rsvp':
 ?>
 
-<h3><?php esc_html_e( 'RSVP: registrations and bookings', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'RSVP: registrations and bookings', 'events-made-easy' ); ?></h2>
 <table class='form-table'>
 <?php
             $indexed_users[-1] = __( 'Event author', 'events-made-easy' );
@@ -1886,7 +1885,7 @@ function eme_options_page() {
 ?>
 </table>
 
-<h3><?php esc_html_e( 'RSVP forms format', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'RSVP forms format', 'events-made-easy' ); ?></h2>
 <table class='form-table'>
 <?php
             eme_options_textarea( __( 'Booking form format', 'events-made-easy' ), 'eme_registration_form_format', __( 'The layout of the form for bookings. #_NAME, #_EMAIL and #_SEATS are obligated fields, if not present then the form will not be shown.', 'events-made-easy' ) . '<br>' . __( 'For more information about form fields, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=44'>" . __( 'the documentation', 'events-made-easy' ) . '</a>', 1 );
@@ -1901,7 +1900,7 @@ function eme_options_page() {
             break;
         case 'tasks':
 ?>
-<h3><?php esc_html_e( 'Event tasks options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Event tasks options', 'events-made-easy' ); ?></h2>
 <table class='form-table'>
 <?php
             eme_options_radio_binary( __( 'By default require WP membership to be able to sign up for tasks?', 'events-made-easy' ), 'eme_task_registered_users_only', __( 'Check this option if you want by default that only logged-in users can sign up for tasks.', 'events-made-easy' ) );
@@ -1922,7 +1921,7 @@ function eme_options_page() {
             break;
         case 'mail':
 ?>
-<h3><?php esc_html_e( 'Email options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Email options', 'events-made-easy' ); ?></h2>
 <table class='form-table'>
 <?php
             eme_options_radio_binary( __( 'Enable the RSVP email notifications?', 'events-made-easy' ), 'eme_rsvp_mail_notify_is_active', __( 'Check this option if you want to receive an email when someone books seats for your events.', 'events-made-easy' ) );
@@ -2472,7 +2471,7 @@ function eme_options_page() {
             break;
 case 'gdpr':
 ?>
-<h3><?php esc_html_e( 'GDPR: General Data Protection Regulation options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'GDPR: General Data Protection Regulation options', 'events-made-easy' ); ?></h2>
             <?php print esc_html__( 'For more info concerning GDPR, see', 'events-made-easy' ) . " <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_gdpr_approve/'>" . esc_html(sprintf( __( 'the documentation about the shortcode %s', 'events-made-easy' ), 'eme_gdpr_approve' )) . "</a>, <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_request_personal_info/'>" . esc_html(sprintf( __( 'the documentation about the shortcode %s', 'events-made-easy' ), 'eme_request_personal_info' )) . '</a> ' . esc_html__( 'and', 'events-made-easy' ) . " <a target='_blank' href='//www.e-dynamics.be/wordpress/category/documentation/6-shortcodes/eme_change_personal_info/'>" .esc_html( sprintf( __( 'the documentation about the shortcode %s', 'events-made-easy' ), 'eme_change_personal_info' )) . '</a>'; ?>
 <table class='form-table'>
 <?php
@@ -3071,7 +3070,7 @@ case 'payments':
     break;
 case 'maps':
 ?>
-<h3><?php esc_html_e( 'Map options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Map options', 'events-made-easy' ); ?></h2>
 <table class='form-table'>
 <?php
     eme_options_radio_binary( __( 'Enable map scroll-wheel zooming?', 'events-made-easy' ), 'eme_map_zooming', __( 'Yes, enables map scroll-wheel zooming. No, enables scroll-wheel page scrolling over maps. (It will be necessary to refresh your web browser on a map page to see the effect of this change.)', 'events-made-easy' ) );
@@ -3085,7 +3084,7 @@ case 'maps':
     break;
 case 'emefs':
 ?>
-<h3><?php esc_html_e( 'Frontend Submit options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Frontend Submit options', 'events-made-easy' ); ?></h2>
 <?php echo sprintf( __( "For all information concerning frontend submit, see <a target='_blank' href='%s'>the documentation</a>", 'events-made-easy' ), '//www.e-dynamics.be/wordpress/category/documentation/6-placeholders/eme_add_event_form/' );
 echo '<br><br>';
 _e("Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings.", 'events-made-easy' );
@@ -3135,7 +3134,7 @@ break;
 case 'other':
 ?>
 
-<h3><?php esc_html_e( 'Other settings', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Other settings', 'events-made-easy' ); ?></h2>
 <table class='form-table'>
 <?php
     eme_options_radio_binary( __( 'Stay on edit page after save?', 'events-made-easy' ), 'eme_stay_on_edit_page', __( 'This allows you to stay on the edit page after saving events, locations, templates, formfields, people, groups or memberships.', 'events-made-easy' ) );
@@ -3165,14 +3164,14 @@ case 'other':
 ?>
 </table>
 
-<h3><?php esc_html_e( 'Extra html tags', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Extra html tags', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
     eme_options_textarea( __( 'Extra html tags', 'events-made-easy' ), 'eme_allowed_html', __( 'By default WordPress is strict in what html tags and attributes are allowed. You can here add a list of tags+attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one tag per line, followed by its optional attributes, all seperated by ",". As an example, to allow the iframe tag and some attributes, you would add: "iframe,src,height,width,frameborder" ', 'events-made-easy' ) );
     eme_options_textarea( __( 'Extra style attributes', 'events-made-easy' ), 'eme_allowed_style_attr', __( 'While the setting above allows you to add extra html tags and attributes, WordPress is even more strict concerning attributes allowed in the style tag. You can here add a list of extra style attributes you want to allow in EME settings that allow html (in addition to the defaults, nothing gets removed). The list should be one attribute per line. As an example, to allow the visibility attribute for the style tag, you would add: "visbility" ', 'events-made-easy' ) );
 ?>
 </table>
-<h3><?php esc_html_e( 'Extra html headers', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Extra html headers', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
     eme_options_textarea( __( 'Extra html header', 'events-made-easy' ), 'eme_html_header', __( 'Here you can define extra html headers, no placeholders can be used.', 'events-made-easy' ) );
@@ -3181,7 +3180,7 @@ case 'other':
     eme_options_textarea( __( 'Extra location html headers', 'events-made-easy' ), 'eme_location_html_headers_format', __( 'Here you can define extra html headers when viewing a single location, typically used to add meta tags for facebook or SEO. All location placeholders can be used, but will be stripped from resulting html.', 'events-made-easy' ) );
 ?>
 </table>
-<h3><?php esc_html_e( 'Multisite options', 'events-made-easy' ); ?></h3>
+<h2><?php esc_html_e( 'Multisite options', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
     eme_options_radio_binary( __( 'Activate multisite data sharing?', 'events-made-easy' ), 'eme_multisite_active', __( 'If selected and WordPress multisite is active, this EME instance will use the database tables of the main multisite instance. This will cause all events, locations, bookings, memberships, templates etc ... to be shared with the main site. The only thing that remains local are all the EME options, allowing you to make language subsites or other things. Also be aware of planned actions: those will only be executed based on the options set in the main site, not per subsite. If you do not want to share data amongst subsites, this option is not needed.', 'events-made-easy' ) );

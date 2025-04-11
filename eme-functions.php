@@ -2228,18 +2228,27 @@ function eme_calc_bookingprice_detail_ajax() {
     $result = '';
     $pgs    = eme_configured_pgs_descriptions();
 
+    $count = count($event_ids);
     foreach ( $event_ids as $event_id ) {
         $event = eme_get_event( $event_id );
+        // if there's more than 1 event: show the event name too
+        if ($count>1) {
+            $result .= eme_trans_esc_html( $event['event_name'] . ' (' . eme_localized_date( $event['event_start'], EME_TIMEZONE, 1 ) . ')' ) . "<br>";
+        }
         if ( ! empty( $event ) ) {
             $fake_booking = eme_fake_booking( $event );
-            $total       += $fake_booking['remaining'];
+            $total        = $fake_booking['remaining'];
             $cur          = $event['currency'];
-            foreach ( $pgs as $pg => $value ) {
-                if ( isset($event['event_properties']['payment_gateways']) && in_array($pg, $event['event_properties']['payment_gateways']) ) {
-                    $charge = eme_payment_gateway_extra_charge( $total, $pg);
-                    $new_total = eme_localized_price( $total + $charge, $cur );
-                    $result .= "$value: $new_total<br>";
+            if ($total > 0) {
+                foreach ( $pgs as $pg => $pg_name ) {
+                    if ( isset($event['event_properties']['payment_gateways']) && in_array($pg, $event['event_properties']['payment_gateways']) ) {
+                        $charge = eme_payment_gateway_extra_charge( $total, $pg);
+                        $new_total = eme_localized_price( $total + $charge, $cur );
+                        $result .= " $pg_name: $new_total<br>";
+                    }
                 }
+            } else {
+                $result .= eme_localized_price( $total, $cur );
             }
         }
     }

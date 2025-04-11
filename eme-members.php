@@ -3443,12 +3443,16 @@ function eme_calc_memberprice_detail_ajax() {
     $cur    = $membership['properties']['currency'];
     $result = "";
     $pgs    = eme_configured_pgs_descriptions();
-    foreach ( $pgs as $pg => $value ) {
-        if ( isset($membership['properties']['payment_gateways']) && in_array($pg, $membership['properties']['payment_gateways']) ) {
-            $charge = eme_payment_gateway_extra_charge( $total, $pg);
-            $new_total = eme_localized_price( $total + $charge, $cur );
-            $result .= "$value: $new_total<br>";
+    if ($total > 0) {
+        foreach ( $pgs as $pg => $value ) {
+            if ( isset($membership['properties']['payment_gateways']) && in_array($pg, $membership['properties']['payment_gateways']) ) {
+                $charge = eme_payment_gateway_extra_charge( $total, $pg);
+                $new_total = eme_localized_price( $total + $charge, $cur );
+                $result .= "$value: $new_total<br>";
+            }
         }
+    } else {
+        $result .= eme_localized_price( $total, $cur );
     }
 
     echo wp_json_encode( [ 'total' => $result ] );

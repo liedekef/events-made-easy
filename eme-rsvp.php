@@ -5199,9 +5199,9 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         } else {
             $event_q_string = '&event_id=' . intval( $_GET['event_id'] );
             if ( $pending ) {
-                printf( __( 'Manage pending bookings for %s', 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+                printf( __( 'Manage pending bookings for %s', 'events-made-easy' ), eme_trans_esc_html( $event['event_name'] ) );
             } else {
-                printf( __( 'Manage approved bookings for %s', 'events-made-easy' ), eme_translate( $event['event_name'] ) );
+                printf( __( 'Manage approved bookings for %s', 'events-made-easy' ), eme_trans_esc_html( $event['event_name'] ) );
             }
         }
     } else {

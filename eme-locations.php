@@ -378,7 +378,7 @@ function eme_locations_edit_layout( $location, $message = '' ) {
     if ( $action == 'add' ) {
         esc_html_e( 'Insert New Location', 'events-made-easy' );
     } else {
-        echo sprintf( __( "Edit Location '%s'", 'events-made-easy' ), eme_translate( $location['location_name'] ) );
+        echo sprintf( __( "Edit Location '%s'", 'events-made-easy' ), eme_trans_esc_html( $location['location_name'] ) );
     }
 ?>
         </h1>

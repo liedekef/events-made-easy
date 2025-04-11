@@ -1124,7 +1124,7 @@ function eme_tasks_signups_shortcode( $atts ) {
 		$result .= '<br>';
 		foreach ( $tasks as $task ) {
 			if ( $task['spaces'] == 0 ) {
-				$result .= '<br><span class="eme_task_section_header">'.eme_translate( $task['name'], $lang ).'</span><br>';
+				$result .= '<br><span class="eme_task_section_header">'.eme_trans_esc_html( $task['name'], $lang ).'</span><br>';
 			} else {
 				$signups = eme_get_task_signups( $task['task_id'] );
 				foreach ( $signups as $signup ) {
@@ -1398,7 +1398,7 @@ function eme_tasks_signupform_shortcode( $atts ) {
 				++$open_tasks_found;
 			}
 			if ( $task['spaces'] == 0 ) {
-				$result .= '<br><span class="eme_task_section_header">'.eme_translate( $task['name'], $lang ).'</span><br>';
+				$result .= '<br><span class="eme_task_section_header">'.eme_trans_esc_html( $task['name'], $lang ).'</span><br>';
 			} elseif ( ! $skip ) {
 				$result .= eme_replace_eventtaskformfields_placeholders( $format, $task, $event );
 			}

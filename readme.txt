@@ -101,13 +101,16 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.46 (2025/04/) =
 * Renamed #_DYNAMICPRICE_PER_PG to #_DYNAMICPRICE_DETAILED
+* #_DYNAMICPRICE_DETAILED now will return 0 (localized) if the price is 0, not the per payment method info in that case
+* Allow #_DYNAMICPRICE and #_DYNAMICPRICE_DETAILED to be used together (although not recommended)
+* Added better info per payment method option in the backend
 
 = 2.5.45 (2025/04/10) =
 * Fix copying event answers for missing events when updating an event
 * Make sure every mail has the desired sender for newsletters too
 * Extended RSVP placeholder #_TOTALPRICE{xx}: xx can now be the name of a payment method (and not only a number for multiseat event), this returns the total price including the extra costs for that particular payment method
 * Added member placeholders #_PRICE{xx} (see above) and #_CHARGE{xx} (see the doc)
-* Added member and rsvp placeholders #_DYNAMICPRICE_DETAILED , which will show the total price to pay per relevant payment method
+* Added member and rsvp placeholders #_DYNAMICPRICE_PER_PG , which will show the total price to pay per relevant payment method
 
 = 2.5.44 (2025/04/04) =
 * Fix discount filtering in events

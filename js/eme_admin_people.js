@@ -291,7 +291,7 @@ jQuery(document).ready(function ($) {
             }
         });
         $('#PeopleTableContainer').jtable('load');
-        $('<div id="peopletablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#PeopleTableContainer');
+        $('<div id="peopletablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#PeopleTableContainer');
     }
 
     if ($('#GroupsTableContainer').length) {

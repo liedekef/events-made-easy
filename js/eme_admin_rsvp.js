@@ -281,7 +281,7 @@ jQuery(document).ready(function ($) {
         });
 
         $('#BookingsTableContainer').jtable('load');
-        $('<div id="bookingstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#BookingsTableContainer');
+        $('<div id="bookingstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#BookingsTableContainer');
 
     }
 

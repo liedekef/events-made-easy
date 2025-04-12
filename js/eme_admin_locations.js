@@ -130,7 +130,7 @@ jQuery(document).ready(function ($) {
         });
 
         $('#LocationsTableContainer').jtable('load');
-        $('<div id="locationstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#LocationsTableContainer');
+        $('<div id="locationstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#LocationsTableContainer');
     }
 
     function updateShowHideStuff () {

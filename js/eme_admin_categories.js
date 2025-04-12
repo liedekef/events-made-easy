@@ -34,7 +34,7 @@ jQuery(document).ready( function($) {
             }
         });
         $('#CategoriesTableContainer').jtable('load');
-        $('<div id="categoriestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#CategoriesTableContainer');
+        $('<div id="categoriestablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#CategoriesTableContainer');
 
         // Actions button
         $('#CategoriesActionsButton').on("click",function (e) {

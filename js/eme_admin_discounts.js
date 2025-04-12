@@ -113,12 +113,12 @@ jQuery(document).ready(function ($) {
     // Load list from server, but only if the container is there
     if ($('#DiscountsTableContainer').length) {
         $('#DiscountsTableContainer').jtable('load');
-        $('<div id="discountstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#DiscountsTableContainer');
+        $('<div id="discountstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#DiscountsTableContainer');
 
     }
     if ($('#DiscountGroupsTableContainer').length) {
         $('#DiscountGroupsTableContainer').jtable('load');
-        $('<div id="discountgroupstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#DiscountGroupsTableContainer');
+        $('<div id="discountgroupstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#DiscountGroupsTableContainer');
     }
 
     // Actions button

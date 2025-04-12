@@ -69,7 +69,7 @@ jQuery(document).ready( function($) {
         });
 
         $('#FormfieldsTableContainer').jtable('load');
-        $('<div id="formfieldstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#FormfieldsTableContainer');
+        $('<div id="formfieldstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#FormfieldsTableContainer');
 
         // Actions button
         $('#FormfieldsActionsButton').on("click",function (e) {

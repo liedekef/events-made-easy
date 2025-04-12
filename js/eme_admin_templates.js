@@ -56,7 +56,7 @@ jQuery(document).ready( function($) {
         });
 
         $('#TemplatesTableContainer').jtable('load');
-        $('<div id="templatestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#TemplatesTableContainer');
+        $('<div id="templatestablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#TemplatesTableContainer');
     }
 
     // Actions button

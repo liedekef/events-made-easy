@@ -615,7 +615,7 @@ jQuery(document).ready( function($) {
 
         // Load list from server
         $('#EventsTableContainer').jtable('load');
-        $('<div id="eventstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#EventsTableContainer');
+        $('<div id="eventstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#EventsTableContainer');
 
         // Actions button
         $('#EventsActionsButton').on("click",function (e) {

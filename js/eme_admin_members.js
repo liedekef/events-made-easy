@@ -215,7 +215,7 @@ jQuery(document).ready(function ($) {
             }
         });
         $('#MembersTableContainer').jtable('load');
-        $('<div id="memberstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MembersTableContainer');
+        $('<div id="memberstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#MembersTableContainer');
     }
 
     if ($('#MembershipsTableContainer').length) {
@@ -284,7 +284,7 @@ jQuery(document).ready(function ($) {
             }
         });
         $('#MembershipsTableContainer').jtable('load');
-        $('<div id="membershipstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MembershipsTableContainer');
+        $('<div id="membershipstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#MembershipsTableContainer');
     }
 
     // Actions button

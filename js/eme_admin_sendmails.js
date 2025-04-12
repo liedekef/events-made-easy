@@ -500,7 +500,7 @@ jQuery(document).ready( function($) {
             }
         });
         $('#MailingReportTableContainer').jtable('load');
-        $('<div id="mailingreporttablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MailingReportTableContainer');
+        $('<div id="mailingreporttablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#MailingReportTableContainer');
 
         // Re-load records when user click 'load records' button.
         $('#ReportLoadRecordsButton').on("click",function (e) {
@@ -598,7 +598,7 @@ jQuery(document).ready( function($) {
             }
         });
         //$('#MailsTableContainer').jtable('load');
-        $('<div id="mailstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MailsTableContainer');
+        $('<div id="mailstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#MailsTableContainer');
 
         // Actions button
         $('#MailsActionsButton').on("click",function (e) {
@@ -736,7 +736,7 @@ jQuery(document).ready( function($) {
             }
         });
         //$('#MailingsTableContainer').jtable('load');
-        $('<div id="mailingstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#MailingsTableContainer');
+        $('<div id="mailingstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#MailingsTableContainer');
 
         // Actions button
         $('#MailingsActionsButton').on("click",function (e) {
@@ -845,7 +845,7 @@ jQuery(document).ready( function($) {
             }
         });
         //$('#ArchivedMailingsTableContainer').jtable('load');
-        $('<div id="archivedmailingstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#ArchivedMailingsTableContainer');
+        $('<div id="archivedmailingstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#ArchivedMailingsTableContainer');
 
         // Actions button
         $('#ArchivedMailingsActionsButton').on("click",function (e) {

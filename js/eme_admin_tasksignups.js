@@ -91,7 +91,7 @@ jQuery(document).ready( function($) {
 
     if ($('#TaskSignupsTableContainer').length) {
         $('#TaskSignupsTableContainer').jtable('load');
-        $('<div id="tasksignupstablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#TaskSignupsTableContainer');
+        $('<div id="tasksignupstablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#TaskSignupsTableContainer');
     }
 
     function updateShowHideStuff () {

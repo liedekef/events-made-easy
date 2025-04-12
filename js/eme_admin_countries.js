@@ -89,12 +89,12 @@ jQuery(document).ready(function ($) {
     // Load list from server, but only if the container is there
     if ($('#CountriesTableContainer').length) {
         $('#CountriesTableContainer').jtable('load');
-        $('<div id="countriestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#CountriesTableContainer');
+        $('<div id="countriestablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#CountriesTableContainer');
 
     }
     if ($('#StatesTableContainer').length) {
         $('#StatesTableContainer').jtable('load');
-        $('<div id="statestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#StatesTableContainer');
+        $('<div id="statestablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#StatesTableContainer');
     }
 
     // Actions button

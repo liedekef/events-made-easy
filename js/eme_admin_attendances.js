@@ -67,7 +67,7 @@ jQuery(document).ready( function($) {
         });
 
         $('#AttendancesTableContainer').jtable('load');
-        $('<div id="attendancestablesortingInfo" style="margin-top: 10px; font-weight: bold;"></div>').insertBefore('#AttendancesTableContainer');
+        $('<div id="attendancestablesortingInfo" style="margin-top: 0px; font-weight: bold;"></div>').insertBefore('#AttendancesTableContainer');
     }
 
     // Re-load records when user click 'load records' button.

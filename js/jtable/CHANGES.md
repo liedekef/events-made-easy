@@ -1,3 +1,6 @@
+= 1.0.44 (2025/04/08) =
+* Integrated the localstorage extension as standard, thanks to SnrDidcot for the original code
+
 = 1.0.43 (2025/03/08) =
 * Added option multiSortingCtrlKey (true/false) to restore old behavior of needing to hold down the Ctrl-key for multi-column sorting
 

@@ -4338,7 +4338,7 @@ THE SOFTWARE.
         options: {
             sorting: false,
             multiSorting: false,
-            multiSortingCtrlKey: false,
+            multiSortingCtrlKey: true,
             roomForSortableIcon: true,
             defaultSorting: '',
             sortingInfoSelector: '',

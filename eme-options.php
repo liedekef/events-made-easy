@@ -2674,7 +2674,7 @@ case 'payments':
 ?>
 <tr><th colspan='2'><?php _e('Extra payment method information','events-made-easy'); ?></th></tr>
 <tr><td colspan='2'><?php echo sprintf(__('The url for payment notifications is: %s','events-made-easy'), $notification_link); ?></td></tr>
-<tr><td colspan='2'><?php _e('Refunding not implemented possible.','events-made-easy'); ?></td></tr>
+<tr><td colspan='2'><?php _e('Refunding not implemented.','events-made-easy'); ?></td></tr>
 <tr><td colspan='2'><?php echo sprintf(__('Internal payment method name: %s','events-made-easy'), $gateway); ?></td></tr>
 </table>
 </div>

@@ -99,9 +99,7 @@ function eme_holidays_table_layout( $message = '' ) {
     <option value="deleteHolidays"><?php esc_html_e( 'Delete selected lists of holidays', 'events-made-easy' ); ?></option>
     </select>
     <button id="HolidaysActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
-        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-    </span>
+    <?php eme_rightclickhint(); ?>
     </form>
     </div>
     <div id="HolidaysTableContainer"></div>

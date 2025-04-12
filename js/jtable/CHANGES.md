@@ -1,3 +1,9 @@
+= 1.0.46 (2025/04/12) =
+* Added message sortingInfoSuffix, default empty. See sortingInfoPrefix
+
+= 1.0.45 (2025/04/12) =
+* Ctrl-click is the default again for multi-sorting on columns
+
 = 1.0.44 (2025/04/08) =
 * Integrated the localstorage extension as standard, thanks to SnrDidcot for the original code
 

@@ -4346,6 +4346,7 @@ THE SOFTWARE.
             // Localization
             messages: {
                 sortingInfoPrefix: 'Sorting applied: ',
+                sortingInfoSuffix: '',
                 ascending: 'Ascending',
                 descending: 'Descending',
                 sortingInfoNone: 'No sorting applied',
@@ -4415,6 +4416,11 @@ THE SOFTWARE.
                         .on('click', function () {
                             self.resetSorting();
                         })
+                        .appendTo(self.options.sortingInfoSelector);
+                }
+                if (self.options.messages.sortingInfoSuffix.length > 0) {
+                    $('<span"></span>')
+                        .html(self.options.messages.sortingInfoSuffix)
                         .appendTo(self.options.sortingInfoSelector);
                 }
             }

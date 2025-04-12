@@ -6088,16 +6088,14 @@ function eme_events_table( $message = '' ) {
     <span id="span_sendtrashmails" class="eme-hidden">
 <?php
         esc_html_e( 'Send mails for cancelled bookings too?', 'events-made-easy' );
-    echo eme_ui_select_binary( 0, 'send_trashmails' );
+        echo eme_ui_select_binary( 0, 'send_trashmails' );
 ?>
     </span>
     <span id="span_addtocategory" class="eme-hidden">
         <?php echo eme_ui_select_key_value( '', 'addtocategory', $categories, 'category_id', 'category_name', __( 'Please select a category', 'events-made-easy' ), 1 ); ?>
     </span>
     <button id="EventsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
-        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-    </span>
+    <?php eme_rightclickhint(); ?>
     </form>
     </div>
 <?php
@@ -6197,9 +6195,7 @@ function eme_recurrences_table( $message = '' ) {
     <input id="eme_localized_rec_new_end_date" type="text" name="eme_localized_rec_new_end_date" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_attr_e( 'Select new end date', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='rec_new_end_date' class='eme_formfield_fdate'>
     </span>
     <button id="RecurrencesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
-        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-    </span>
+    <?php eme_rightclickhint(); ?>
     </form>
     </div>
     <div id="RecurrencesTableContainer"></div>

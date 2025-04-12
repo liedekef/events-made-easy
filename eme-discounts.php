@@ -460,9 +460,7 @@ function eme_manage_discounts_layout( $message = '' ) {
 	<input id="eme_localized_new_validto" type="text" name="eme_localized_new_validto" value="" style="background: #FCFFAA;" readonly="readonly" placeholder="<?php esc_html_e( 'Select new "valid until" date/time', 'events-made-easy' ); ?>" size=15 data-date='' data-alt-field='new_validto' class='eme_formfield_fdatetime'>
 	</span>
 	<button id="DiscountsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
-		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-	</span>
+    <?php eme_rightclickhint(); ?>
 	</form>
     </div>
 	<div id="DiscountsTableContainer"></div>
@@ -527,9 +525,7 @@ function eme_manage_dgroups_layout( $message = '' ) {
 	<option value="deleteDiscountGroups"><?php esc_html_e( 'Delete selected discountgroups', 'events-made-easy' ); ?></option>
 	</select>
 	<button id="DiscountGroupsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-	<span class="rightclickhint">
-		<?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-	</span>
+    <?php eme_rightclickhint(); ?>
 	</form>
     </div>
 	<div id="DiscountGroupsTableContainer"></div>

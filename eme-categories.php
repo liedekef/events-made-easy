@@ -111,9 +111,7 @@ function eme_categories_table_layout( $message = '' ) {
     <option value="deleteCategories"><?php esc_html_e( 'Delete selected categories', 'events-made-easy' ); ?></option>
     </select>
     <button id="CategoriesActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
-        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-    </span>
+    <?php eme_rightclickhint(); ?>
     </form>
     </div>
     <div id="CategoriesTableContainer"></div>

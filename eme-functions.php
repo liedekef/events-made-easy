@@ -4216,4 +4216,13 @@ function eme_get_datatables_orderby($preferred_sorting='') {
     return '';
 }
 
+function eme_rightclickhint() {
+?>
+        <span class="rightclickhint">
+        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
+        <br>
+        <?php esc_html_e( 'Use Ctrl-click to sort on multiple columns', 'events-made-easy' ); ?>
+    </span>
+<?php
+}
 ?>

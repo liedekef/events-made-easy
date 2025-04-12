@@ -902,9 +902,7 @@ function eme_locations_table( $message = '' ) {
     <input type='text' id='chooselocation' name='chooselocation' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>">
     </span>
     <button id="LocationsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
-        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-    </span>
+    <?php eme_rightclickhint(); ?>
     </form>
     </div>
 <?php

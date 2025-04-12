@@ -2981,8 +2981,7 @@ function eme_mails_div() {
     <option value="deleteMails"><?php esc_html_e( 'Delete selected mails', 'events-made-easy' ); ?></option>
     </select>
     <button id="MailsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
-        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
+    <?php eme_rightclickhint(); ?>
     </span>
     </form>
     </div>
@@ -3038,9 +3037,7 @@ function eme_mailings_div() {
     <option value="deleteMailings"><?php esc_html_e( 'Delete selected mailings', 'events-made-easy' ); ?></option>
     </select>
     <button id="MailingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
-        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-    </span>
+    <?php eme_rightclickhint(); ?>
     </form>
     </div>
 	<div id="MailingsTableContainer"></div>
@@ -3073,9 +3070,7 @@ function eme_mailings_archive_div() {
     <option value="deleteArchivedMailings"><?php esc_html_e( 'Delete selected mailings', 'events-made-easy' ); ?></option>
     </select>
     <button id="ArchivedMailingsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
-    <span class="rightclickhint">
-        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-    </span>
+    <?php eme_rightclickhint(); ?>
     </form>
     </div>
 	<div id="ArchivedMailingsTableContainer"></div>

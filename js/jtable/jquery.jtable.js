@@ -4494,9 +4494,14 @@ THE SOFTWARE.
                 .addClass('jtable-column-header-sortable')
                 .on("click", function (e) {
                     e.preventDefault();
+                    let multiSortingCtrlKey = self.options.multiSortingCtrlKey;
+                    // mobile: no ctrl-key present ...
+                    if (/Mobi|Android/i.test(navigator.userAgent)) {
+                        multiSortingCtrlKey=false;
+                    }
                     //if (!self.options.multiSorting || !e.ctrlKey) {
                     if (!self.options.multiSorting || 
-                        (self.options.multiSortingCtrlKey && !e.ctrlKey)) {
+                        (multiSortingCtrlKey && !e.ctrlKey)) {
                         self._lastSorting = []; // clear previous sorting
                         // also remove column styling from other columns
                         $columnHeader.siblings().removeClass('jtable-column-header-sorted-asc jtable-column-header-sorted-desc');

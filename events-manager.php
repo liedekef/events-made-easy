@@ -68,7 +68,9 @@ require_once 'eme-tasks.php';
 require_once 'eme-todos.php';
 require_once 'eme-translate.php';
 require_once 'eme-fs.php';
-require_once 'class-expressivedate.php';
+if ( ! class_exists( 'ExpressiveDate' ) ) {
+    require_once 'class-expressivedate.php';
+}
 
 // Setting constants
 define( 'EME_VERSION', '2.5.45' );

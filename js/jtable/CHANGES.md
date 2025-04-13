@@ -1,3 +1,6 @@
+= 1.0.47 (2025/04/13) =
+* Simple check for mobile devices (using useragent) because they don't have a Ctrl-key, so multiSortingCtrlKey is set to false then
+
 = 1.0.46 (2025/04/12) =
 * Added message sortingInfoSuffix, default empty. See sortingInfoPrefix
 

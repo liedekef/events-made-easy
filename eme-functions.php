@@ -4218,10 +4218,16 @@ function eme_get_datatables_orderby($preferred_sorting='') {
 
 function eme_rightclickhint() {
 ?>
-        <span class="rightclickhint">
-        <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' ); ?>
-        <br>
-        <?php esc_html_e( 'Use Ctrl-click to sort on multiple columns', 'events-made-easy' ); ?>
+    <span class="rightclickhint">
+    <?php esc_html_e( 'Hint: rightclick on the column headers to show/hide columns', 'events-made-easy' );
+
+    echo "<br>";
+    if ( !preg_match('/Mobi|Android/i',$_SERVER['HTTP_USER_AGENT'] ) ) {
+        esc_html_e( 'Use Ctrl-click to sort on multiple columns', 'events-made-easy' );
+    } else {
+        esc_html_e( 'All selected columns are used for sorting', 'events-made-easy' );
+    }
+    ?>;
     </span>
 <?php
 }

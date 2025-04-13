@@ -105,6 +105,8 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Allow #_DYNAMICPRICE and #_DYNAMICPRICE_DETAILED to be used together (although not recommended)
 * Added better info per payment method option in the backend
 * Ctrl-click is the default again for sorting on multiple columns (hint added for that part too)
+  For mobile Ctrl-key is not available, there the single-click stays functional
+* Add List-unsub one-click headers if/where possible
 
 = 2.5.45 (2025/04/10) =
 * Fix copying event answers for missing events when updating an event

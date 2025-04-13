@@ -912,6 +912,33 @@ function eme_events_page_content() {
         } else {
             return "<div class='eme-message-success eme-subscribe-message-success'>" . __( 'You have successfully cancelled your signup for this task.', 'events-made-easy' ) . '</div>';
         }
+    } elseif ( $_SERVER['REQUEST_METHOD'] === "POST" && ! empty( $_GET['eme_unsub_oc'] ) ) {
+        $rid = eme_sanitize_request( $_GET['eme_unsub_oc'] );
+        $mail = eme_get_mail_by_rid( $random_id );
+        if (!empty($mail['mailing_id'])) {
+            $mailing = eme_get_mailing($mail['mailing_id']);
+            $conditions = eme_unserialize( $mailing['conditions'] );
+            $eme_email_groups_arr = [];
+            if ($conditions['action'] == 'newsletter') {
+                $eme_email_groups_arr = [ '-1' ];
+            } elseif (!empty($conditions['eme_send_all_people'])) { // generic mail to all people
+                $eme_email_groups_arr = [];
+            } elseif (!empty($conditions['eme_mail_type']) && ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'all_people_not_registered' )) { // eventmail to all people
+                $eme_email_groups_arr = [];
+            } elseif (!empty($conditions['eme_genericmail_send_peoplegroups'])) { // event mail to certain groups
+                $eme_email_groups_arr = explode( ',', $conditions['eme_genericmail_send_peoplegroups'] );
+            } elseif (!empty($conditions['eme_eventmail_send_groups'])) { // event mail to certain groups
+                $eme_email_groups_arr = explode( ',', $conditions['eme_eventmail_send_groups'] );
+            }
+            if ( ! eme_is_numeric_array( $eme_email_groups_arr ) ) {
+                $eme_email_groups_arr = [];
+            }
+            eme_unsub_do( $mail['receiveremail'], $eme_email_groups_arr );
+            return "<div class='eme-message-success eme-unsubscribe-message-success'>" . __( 'You have been unsubscribed.', 'events-made-easy' ) . '</div>';
+        } else {
+            return "<div class='eme-message-error eme-unsubscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
+        }
+
     } elseif ( ! empty( $_GET['eme_unsub'] ) ) {
         // lets act as if the unsub shortcode is on the page
         return eme_unsubform_shortcode( );

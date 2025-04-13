@@ -111,7 +111,8 @@ function eme_cron_send_new_events_function() {
     $eme_date_obj     = new ExpressiveDate( 'now', EME_TIMEZONE );
     $mailing_datetime = $eme_date_obj->getDateTime();
     $mailing_name     = "newsletter $mailing_datetime";
-    $mailing_id       = eme_db_insert_ongoing_mailing( $mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html );
+    $conditions       = [ 'action' => 'newsletter' ];
+    $mailing_id       = eme_db_insert_ongoing_mailing( $mailing_name, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
     // even if we fail to create a mailing, we'll continue
     if ( ! $mailing_id ) {
         $mailing_id = 0;

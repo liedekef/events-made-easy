@@ -453,6 +453,10 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
             return false;
         } else {
             $custom_headers = [ 'X-EME-mailid:' . $random_id ];
+            if (eme_add_unsub_headers( $mail['mailing_id']) ) {
+                $custom_headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
+                $custom_headers[] = sprintf("List-Unsubscribe: <%s>", eme_unsub_rid_url($random_id));
+            }
             $mail_res_arr = eme_send_mail( $subject, $body, $receiveremail, $receivername, $replytoemail, $replytoname, $fromemail, $fromname, $atts_arr, $custom_headers );
             if ( $mail_res_arr[0] ) {
                 return true;
@@ -652,6 +656,10 @@ function eme_send_queued($force_interval=0) {
             }
         }
         $custom_headers = [ 'X-EME-mailid:' . $mail['random_id'] ];
+        if (eme_add_unsub_headers( $mail['mailing_id']) ) {
+            $custom_headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
+            $custom_headers[] = sprintf("List-Unsubscribe: <%s>", eme_unsub_rid_url( $mail['random_id'] ));
+        }
         $mail_res_arr   = eme_send_mail( $mail['subject'], $body, $mail['receiveremail'], $mail['receivername'], $mail['replytoemail'], $mail['replytoname'], $mail['fromemail'], $mail['fromname'], $atts, $custom_headers );
         if ( $mail_res_arr[0] ) {
             eme_mark_mail_sent( $mail['id'] );
@@ -705,6 +713,7 @@ function eme_mark_mailing_planned( $mailing_id, $planned_count ) {
     ];
     $sql = $wpdb->prepare( "UPDATE $mailings_table SET status='planned', stats=%s WHERE id=%d", eme_serialize( $stats ), $mailing_id );
     $wpdb->query( $sql );
+    wp_cache_delete( "eme_mailing $mailing_id" );
 }
 
 function eme_mark_mailing_ongoing( $mailing_id ) {
@@ -712,6 +721,7 @@ function eme_mark_mailing_ongoing( $mailing_id ) {
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     $sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='ongoing' WHERE id=%d", $mailing_id );
     $wpdb->query( $sql );
+    wp_cache_delete( "eme_mailing $mailing_id" );
 }
 
 function eme_mark_mailing_completed( $mailing_id ) {
@@ -720,6 +730,7 @@ function eme_mark_mailing_completed( $mailing_id ) {
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     $sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='completed', stats=%s WHERE id=%d", eme_serialize( $stats ), $mailing_id );
     $wpdb->query( $sql );
+    wp_cache_delete( "eme_mailing $mailing_id" );
     if ( $stats['failed'] > 0 ) {
         $mailing        = eme_get_mailing( $mailing_id );
         $failed_subject = __( 'Mailing completed with errors', 'events-made-easy' );
@@ -746,6 +757,7 @@ function eme_archive_mailing( $mailing_id ) {
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $sql         = $wpdb->prepare( "DELETE FROM $queue_table WHERE mailing_id=%d", $mailing_id );
     $wpdb->query( $sql );
+    wp_cache_delete( "eme_mailing $mailing_id" );
 }
 
 function eme_mailing_retry_failed( $id ) {
@@ -803,6 +815,7 @@ function eme_cancel_mailing( $mailing_id ) {
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     $sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='cancelled', stats=%s WHERE id=%d", $stats, $mailing_id );
     $wpdb->query( $sql );
+    wp_cache_delete( "eme_mailing $mailing_id" );
 }
 
 function eme_delete_mail( $id ) {
@@ -834,11 +847,23 @@ function eme_get_mail( $id ) {
     return $wpdb->get_row( $sql, ARRAY_A );
 }
 
+function eme_get_mail_by_rid( $rid ) {
+    global $wpdb;
+    $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+    $sql   = $wpdb->prepare( "SELECT * FROM $table WHERE random_id=%s", $rid );
+    return $wpdb->get_row( $sql, ARRAY_A );
+}
+
 function eme_get_mailing( $id ) {
     global $wpdb;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $sql            = $wpdb->prepare( "SELECT * FROM $mailings_table WHERE id=%d", $id );
-    return $wpdb->get_row( $sql, ARRAY_A );
+    $mailing = wp_cache_get( "eme_mailing $id" );
+    if ( $mailing === false ) {
+        $sql     = $wpdb->prepare( "SELECT * FROM $mailings_table WHERE id=%d", $id );
+        $mailing = $wpdb->get_row( $sql, ARRAY_A );
+        wp_cache_set( "eme_mailing $id", $mailing, '', 10 );
+    }
+    return $mailing;
 }
 
 function eme_get_mailings( $status = '', $search_text = '' ) {
@@ -931,8 +956,7 @@ function eme_mail_track( $random_id ) {
         // so if 2 requests for the same id arrive at the same time, it will hopefully not do the select at the same time
         // Without the random sleep, 2 request for the same id would cause the read_count in the mailings_table to be updated too much (nothing to worry about, but it wouldn't reflect reality)
         // /usleep(rand(0, 20)*100000); // we do it in microseconds with random, is better than simple sleep(rand(0,2)) which could return the same result for rand too often
-        $sql         = $wpdb->prepare( "SELECT * FROM $table WHERE random_id=%s", $random_id );
-        $queued_mail = $wpdb->get_row( $sql, ARRAY_A );
+        $queued_mail = eme_get_mail_by_rid( $random_id );
         if ( $queued_mail ) {
             // update the queue table when the mail was read for the first time
             $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
@@ -957,6 +981,7 @@ function eme_mail_track( $random_id ) {
                         if ( $queued_mail['mailing_id'] > 0 ) {
                             $sql = $wpdb->prepare( "UPDATE $mailings_table SET read_count=read_count+1, total_read_count=total_read_count+1 WHERE id = %d", $queued_mail['mailing_id'] );
                             $wpdb->query( $sql );
+                            wp_cache_delete( "eme_mailing ".$queued_mail['mailing_id'] );
                         }
                     } else {
                         // no row changed, meaning the mail was already read once, so do it without read_count=0 check
@@ -965,6 +990,7 @@ function eme_mail_track( $random_id ) {
                         if ( ! empty( $res ) && $queued_mail['mailing_id'] > 0 ) { // not false and >0
                             $sql = $wpdb->prepare( "UPDATE $mailings_table SET total_read_count=total_read_count+1 WHERE id = %d", $queued_mail['mailing_id'] );
                             $wpdb->query( $sql );
+                            wp_cache_delete( "eme_mailing ".$queued_mail['mailing_id'] );
                         }
                     }
                 }
@@ -3097,6 +3123,21 @@ function eme_get_default_mailer_info() {
         $fromname = get_option( 'blogname' );
     }
     return [$fromname,$fromemail];
+}
+
+function eme_add_unsub_headers( $mailing_id ) {
+    $add_unsub_headers = false;
+    $mailing = eme_get_mailing($mail['mailing_id']);
+    $conditions = eme_unserialize($mailing['conditions']);
+    if ($conditions['action'] == 'newsletter' ||
+        !empty($conditions['eme_send_all_people']) || // generic mail to all people
+        (!empty($conditions['eme_mail_type']) && ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'all_people_not_registered' )) || // eventmail to all people
+        !empty($conditions['eme_genericmail_send_peoplegroups']) || // event mail to certain groups
+        !empty($conditions['eme_eventmail_send_groups']) // event mail to certain groups
+    ) {
+        $add_unsub_headers = true;
+    }
+    return $add_unsub_headers;
 }
 
 ?>

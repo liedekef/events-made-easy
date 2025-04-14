@@ -3127,7 +3127,7 @@ function eme_get_default_mailer_info() {
 
 function eme_add_unsub_headers( $mailing_id ) {
     $add_unsub_headers = false;
-    $mailing = eme_get_mailing($mail['mailing_id']);
+    $mailing = eme_get_mailing($mailing_id);
     $conditions = eme_unserialize($mailing['conditions']);
     if ($conditions['action'] == 'newsletter' ||
         !empty($conditions['eme_send_all_people']) || // generic mail to all people

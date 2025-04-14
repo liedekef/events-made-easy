@@ -914,7 +914,7 @@ function eme_events_page_content() {
         }
     } elseif ( $_SERVER['REQUEST_METHOD'] === "POST" && ! empty( $_GET['eme_unsub_oc'] ) ) {
         $rid = eme_sanitize_request( $_GET['eme_unsub_oc'] );
-        $mail = eme_get_mail_by_rid( $random_id );
+        $mail = eme_get_mail_by_rid( $rid );
         if (!empty($mail['mailing_id'])) {
             $mailing = eme_get_mailing($mail['mailing_id']);
             $conditions = eme_unserialize( $mailing['conditions'] );

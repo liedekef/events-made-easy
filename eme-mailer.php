@@ -453,7 +453,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
             return false;
         } else {
             $custom_headers = [ 'X-EME-mailid:' . $random_id ];
-            if (eme_add_unsub_headers( $mail['mailing_id']) ) {
+            if (!empty($mail['mailing_id']) && eme_add_unsub_headers( $mail['mailing_id']) ) {
                 $custom_headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
                 $custom_headers[] = sprintf("List-Unsubscribe: <%s>", eme_unsub_rid_url($random_id));
             }
@@ -656,7 +656,7 @@ function eme_send_queued($force_interval=0) {
             }
         }
         $custom_headers = [ 'X-EME-mailid:' . $mail['random_id'] ];
-        if (eme_add_unsub_headers( $mail['mailing_id']) ) {
+        if (!empty($mail['mailing_id']) && eme_add_unsub_headers( $mail['mailing_id']) ) {
             $custom_headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
             $custom_headers[] = sprintf("List-Unsubscribe: <%s>", eme_unsub_rid_url( $mail['random_id'] ));
         }
@@ -3127,7 +3127,13 @@ function eme_get_default_mailer_info() {
 
 function eme_add_unsub_headers( $mailing_id ) {
     $add_unsub_headers = false;
+    if (empty($mailing_id)) {
+        return false;
+    }
     $mailing = eme_get_mailing($mailing_id);
+    if (empty($mailing)) {
+        return false;
+    }
     $conditions = eme_unserialize($mailing['conditions']);
     if ($conditions['action'] == 'newsletter' ||
         !empty($conditions['eme_send_all_people']) || // generic mail to all people

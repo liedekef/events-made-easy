@@ -4365,7 +4365,7 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
                     // if only 1 group id, take that one
                     $ids_arr = explode( ',', $group_ids );
                     if (in_array('-1',$ids_arr) && wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
-                        $groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
+                        $groups[] = [ 'group_id'=>-1, 'name' => __( 'Newsletter concerning new events', 'events-made-easy' )];
                     }
                     if ( count( $ids_arr ) == 1 ) {
                         $selected_value = $ids_arr[0];

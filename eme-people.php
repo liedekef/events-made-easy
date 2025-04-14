@@ -4806,25 +4806,33 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
 }
 
 function eme_unsub_do( $email, $group_ids ) {
+    $count = 0;
     if ( eme_count_persons_by_email( $email ) > 0 ) {
         if ( empty( $group_ids ) ) {
             $group_ids = eme_get_public_groupids();
+            if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
+                $group_ids[] = -1;
+            }
             eme_update_email_massmail( $email, 0 );
+            $count++;
         }
         if ( ! empty( $group_ids ) ) {
             foreach ( $group_ids as $group_id ) {
                 // -1 is the newsletter
                 if ( $group_id == -1 ) {
                     eme_remove_email_from_newsletter( $email );
+                    $count++;
                 } else {
                     $group = eme_get_group( $group_id );
-                    if ( ! empty( $group ) && isset( $group['public'] ) && $group['public'] ) {
+                    if ( ! empty( $group['public'] ) && $group['type']='static' ) {
                         eme_delete_emailfromgroup( $email, $group_id );
+                        $count++;
                     }
                 }
             }
         }
     }
+    return $count;
 }
 
 function eme_get_person_answers( $person_id ) {

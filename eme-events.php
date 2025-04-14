@@ -912,8 +912,8 @@ function eme_events_page_content() {
         } else {
             return "<div class='eme-message-success eme-subscribe-message-success'>" . __( 'You have successfully cancelled your signup for this task.', 'events-made-easy' ) . '</div>';
         }
-    } elseif ( $_SERVER['REQUEST_METHOD'] === "POST" && ! empty( $_GET['eme_unsub_oc'] ) ) {
-        $rid = eme_sanitize_request( $_GET['eme_unsub_oc'] );
+    } elseif ( $_SERVER['REQUEST_METHOD'] === "POST" && ! empty( $_GET['eme_unsub'] ) ) {
+        $rid = eme_sanitize_request( $_GET['eme_unsub'] );
         $mail = eme_get_mail_by_rid( $rid );
         if (!empty($mail['mailing_id'])) {
             $mailing = eme_get_mailing($mail['mailing_id']);

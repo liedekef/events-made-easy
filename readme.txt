@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.46 (2025/04/) =
+= 2.5.46 (2025/04/15) =
 * Renamed #_DYNAMICPRICE_PER_PG to #_DYNAMICPRICE_DETAILED
 * #_DYNAMICPRICE_DETAILED now will return 0 (localized) if the price is 0, not the per payment method info in that case
 * Allow #_DYNAMICPRICE and #_DYNAMICPRICE_DETAILED to be used together (although not recommended)

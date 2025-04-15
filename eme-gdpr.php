@@ -675,7 +675,7 @@ function eme_gdpr_user_data_exporter( $email, $page = 1 ) {
 								if ( $related_person ) {
 									$data[] = [
 										'name'  => __( 'Main family account for', 'events-made-easy' ),
-										'value' => eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) . ' (' . $related_person['email'] . ')',
+										'value' => eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) . ' (' . $related_person['email'] . ')',
 									];
 								}
 							}

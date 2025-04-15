@@ -18,7 +18,7 @@ function eme_email_fs_event_action( $event, $action ) {
     if ( empty( $person ) ) {
         $person = eme_fake_person_by_wp_id( $author->ID );
     }
-    $person_name    = eme_format_full_name( $person['firstname'], $person['lastname'] );
+    $person_name    = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
 
     // first get the initial values
     $person_subject  = '';

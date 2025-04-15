@@ -4455,7 +4455,7 @@ function eme_stop_member( $member_id ) {
 function eme_email_member_action( $member, $action ) {
     $person       = eme_get_person( $member['person_id'] );
     $person_email = $person['email'];
-    $person_name  = eme_format_full_name( $person['firstname'], $person['lastname'] );
+    $person_name  = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
 
     $membership     = eme_get_membership( $member['membership_id'] );
     $contact        = eme_get_contact( $membership['properties']['contact_id'] );
@@ -5544,7 +5544,7 @@ function eme_replace_member_placeholders( $format, $membership, $member, $target
                     if ( $related_member ) {
                         $related_person = eme_get_person( $related_member['person_id'] );
                         if ( $related_person ) {
-                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'>" . eme_esc_html( $related_person['email'] ) . '</td></tr>';
+                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'>" . eme_esc_html( $related_person['email'] ) . '</td></tr>';
                         }
                     }
                 }
@@ -6991,7 +6991,7 @@ function eme_ajax_action_send_member_mails( $ids_arr, $subject_template_id, $bod
             $contact_name  = $contact->display_name;
             $tmp_subject   = eme_replace_member_placeholders( $subject, $membership, $member, $mail_text_html );
             $tmp_message   = eme_replace_member_placeholders( $body, $membership, $member, $mail_text_html );
-            $person_name   = eme_format_full_name( $person['firstname'], $person['lastname'] );
+            $person_name   = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             $mail_res      = eme_queue_mail( $tmp_subject, $tmp_message, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, 0, $member['member_id'] );
             if ( ! $mail_res ) {
                 $mail_ok = 0;

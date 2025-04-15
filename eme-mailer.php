@@ -3173,49 +3173,36 @@ function eme_sub_send_mail( $lastname, $firstname, $email, $groups ) {
     $sub_body    = str_replace( '#_LASTNAME', $lastname, $sub_body );
     $sub_body    = str_replace( '#_FIRSTNAME', $firstname, $sub_body );
     $sub_body    = str_replace( '#_EMAIL', $email, $sub_body );
-    $full_name   = eme_format_full_name( $firstname, $lastname );
+    $full_name   = eme_format_full_name( $firstname, $lastname, $email );
     eme_queue_fastmail( $sub_subject, $sub_body, $contact_email, $contact_name, $email, $full_name, $contact_email, $contact_name );
 }
 
 function eme_unsub_send_mail( $email, $groupids ) {
     // find persons with matching email in the mentioned groups
-    $person_id = eme_get_person_by_email_in_groups( $email, $groupids );
+    $person_id = eme_get_personid_by_email_in_groups( $email, $groupids );
     if ( ! empty( $person_id ) ) {
         [$contact_name, $contact_email] = eme_get_default_mailer_info();
         $unsub_link    = eme_unsub_confirm_url( $email, $groupids );
-        $unsub_subject = get_option( 'eme_unsub_subject' );
+        $unsub_subject = eme_translate( get_option( 'eme_unsub_subject' ) );
         $unsub_body    = eme_translate( get_option( 'eme_unsub_body' ) );
         $unsub_body    = str_replace( '#_UNSUB_CONFIRM_URL', $unsub_link, $unsub_body );
         $person        = eme_get_person( $person_id );
         $unsub_body    = eme_replace_people_placeholders( $unsub_body, $person );
-        $name          = '';
-        if ( ! empty( $person['lastname'] ) ) {
-            $name = $person['lastname'];
-        }
-        if ( ! empty( $person['firstname'] ) ) {
-            $name .= ' ' . $person['firstname'];
-        }
-        eme_queue_fastmail( $unsub_subject, $unsub_body, $contact_email, $contact_name, $email, $name, $contact_email, $contact_name );
+        $full_name     = eme_format_full_name( $person['firstname'], $person['lastname'], $email );
+        eme_queue_fastmail( $unsub_subject, $unsub_body, $contact_email, $contact_name, $email, $full_name, $contact_email, $contact_name );
     }
 }
 
 function eme_unsub_send_confirmation_mail( $email ) {
-    // find persons with matching email in the mentioned groups
-    $person_id = eme_get_person_by_email_only( $email );
-    if ( ! empty( $person_id ) ) {
+    // find at least one person with matching email
+    $person = eme_get_person_by_email( $email );
+    if ( ! empty( $person ) ) {
         [$contact_name, $contact_email] = eme_get_default_mailer_info();
-        $unsub_confirm_subject = get_option( 'eme_unsub_confirm_subject' );
+        $unsub_confirm_subject = eme_translate( get_option( 'eme_unsub_confirm_subject' ) );
         $unsub_confirm_body    = eme_translate( get_option( 'eme_unsub_confirm_body' ) );
-        $person        = eme_get_person( $person_id );
         $unsub_confirm_body    = eme_replace_people_placeholders( $unsub_confirm_body, $person );
-        $name          = '';
-        if ( ! empty( $person['lastname'] ) ) {
-            $name = $person['lastname'];
-        }
-        if ( ! empty( $person['firstname'] ) ) {
-            $name .= ' ' . $person['firstname'];
-        }
-        eme_queue_fastmail( $unsub_confirm_subject, $unsub_confirm_body, $contact_email, $contact_name, $email, $name, $contact_email, $contact_name );
+        $full_name             = eme_format_full_name( $person['firstname'], $person['lastname'] );
+        eme_queue_fastmail( $unsub_confirm_subject, $unsub_confirm_body, $contact_email, $contact_name, $email, $full_name, $contact_email, $contact_name );
     }
 }
 

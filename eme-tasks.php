@@ -1477,7 +1477,7 @@ function eme_email_tasksignup_action( $signup, $action ) {
 	}
 	$subject     = eme_replace_tasksignup_placeholders( $subject, $signup, $person, $event, $task, 'text' );
 	$body        = eme_replace_tasksignup_placeholders( $body, $signup, $person, $event, $task, $mail_text_html );
-	$person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+	$person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
 	$mail_res    = eme_queue_mail( $subject, $body, $contact_email, $contact_name, $person_email, $person_name, $contact_email, $contact_name, 0, $person['person_id'] );
 	return $mail_res;
 }

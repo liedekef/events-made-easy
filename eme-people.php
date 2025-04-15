@@ -800,7 +800,7 @@ function eme_replace_people_placeholders( $format, $person, $target = 'html', $l
                     foreach ( $familymember_person_ids as $familymember_person_id ) {
                         $related_person = eme_get_person( $familymember_person_id );
                         if ( $related_person ) {
-                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'] ) ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'>" . eme_esc_html( $related_person['email'] ) . '</td></tr>';
+                            $replacement .= "<tr class='eme_dyndata_row'><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_left'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . "</td><td style='border: 1px solid black;padding: 5px;' class='eme_dyndata_column_right'>" . eme_esc_html( $related_person['email'] ) . '</td></tr>';
                         }
                     }
                     $replacement .= '</table>';
@@ -2224,7 +2224,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
     }
     if ( ! empty( $related_person ) ) {
         $related_person_id    = $person['related_person_id'];
-        $related_person_name  = eme_format_full_name( $related_person['firstname'], $related_person['lastname'] );
+        $related_person_name  = eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] );
         $related_person_class = "readonly='readonly' class='clearable x'";
     } else {
         $related_person_id    = '';
@@ -2337,7 +2337,7 @@ function eme_person_edit_layout( $person_id = 0, $message = '' ) {
         foreach ( $familymember_person_ids as $family_person_id ) {
             $family_person = eme_get_person( $family_person_id );
             if ( $family_person ) {
-                print "<a href='" . admin_url( "admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=$family_person_id" ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $family_person['firstname'], $family_person['lastname'] ) ) . '</a><br>';
+                print "<a href='" . admin_url( "admin.php?page=eme-people&amp;eme_admin_action=edit_person&amp;person_id=$family_person_id" ) . "' title='" . esc_attr__( 'Edit person', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $family_person['firstname'], $family_person['lastname'], $family_person['email'] ) ) . '</a><br>';
             }
         }
     }
@@ -2505,7 +2505,7 @@ function eme_group_edit_layout( $group_id = 0, $message = '', $group_type = 'sta
                 if ( empty( $person['lastname'] ) ) {
                     $mygroups[ $person['person_id'] ] = $person['email'];
                 } else {
-                    $mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'] );
+                    $mygroups[ $person['person_id'] ] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
                 }
                 $grouppersons[] = $person['person_id'];
             }
@@ -2769,6 +2769,17 @@ function eme_get_personids_by_email( $email ) {
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $sql          = $wpdb->prepare( "SELECT person_id FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE, $email );
     return $wpdb->get_col( $sql );
+}
+
+function eme_get_person_by_email( $email ) {
+    global $wpdb;
+    $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
+    $sql = $wpdb->prepare( "SELECT * FROM $people_table WHERE email = %s AND status=" . EME_PEOPLE_STATUS_ACTIVE . ' LIMIT 1', $email );
+    $res     = $wpdb->get_row( $sql, ARRAY_A );
+    if ( $res ) {
+        $res['properties'] = eme_init_person_props( eme_unserialize( $res['properties'] ) );
+    }
+    return $res;
 }
 
 function eme_get_person_by_email_only( $email ) {
@@ -3086,7 +3097,7 @@ function eme_people_birthday_emails() {
         $person    = eme_get_person( $person_id );
         $subject   = eme_replace_people_placeholders( $subject_template, $person, 'text' );
         $body      = eme_replace_people_placeholders( $body_template, $person, $mail_text_html );
-        $full_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
+        $full_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
         eme_queue_mail( $subject, $body, $contact_email, $contact_name, $person['email'], $full_name, $contact_email, $contact_name );
     }
 }
@@ -3307,7 +3318,7 @@ function eme_add_persongroups( $person_id, $group_ids, $public = 0 ) {
     return $res;
 }
 
-function eme_get_person_by_email_in_groups( $email, $group_ids ) {
+function eme_get_personid_by_email_in_groups( $email, $group_ids ) {
     global $wpdb;
     $people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
@@ -5204,7 +5215,7 @@ function eme_ajax_people_select2() {
         $record       = [];
         $record['id'] = $person['person_id'];
         // no eme_esc_html here, select2 does it own escaping upon arrival
-        $record['text'] = eme_format_full_name( $person['firstname'], $person['lastname'] ) . ' (' . $person['email'] . ')';
+        $record['text'] = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) . ' (' . $person['email'] . ')';
         $records[]      = $record;
     }
     $jTableResult['Records']          = $records;

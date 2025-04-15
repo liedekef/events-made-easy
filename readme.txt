@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.49 (2025/04/) =
+* Unsub confirmation email was not being sent, fixed
+
 = 2.5.48 (2025/04/15) =
 * Make sure unsub actually does something
 * Add unsub confirm emails so people know they unsubscribed

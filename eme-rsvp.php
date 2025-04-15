@@ -4165,7 +4165,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
     $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
     // and now send the wanted mails
-    $person_name            = eme_format_full_name( $person['firstname'], $person['lastname'] );
+    $person_name            = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
     $person_subject         = '';
     $person_subject_filter  = '';
     $person_body            = '';
@@ -5835,7 +5835,7 @@ function eme_ajax_bookings_list() {
             if ( empty( $person ) ) {
                 $person = eme_new_person();
             }
-            $person_info_shown  = eme_esc_html( eme_format_full_name( $person['firstname'], $person['lastname'] ) );
+            $person_info_shown  = eme_esc_html( eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] ) );
             $person_info_shown .= ' (' . eme_esc_html( $person['email'] ) . ')';
             if ( ! empty( $person['wp_id'] ) && isset( $wp_users[ $person['wp_id'] ] ) ) {
                 $line['wp_user'] = eme_esc_html( $wp_users[ $person['wp_id'] ] );
@@ -6616,7 +6616,7 @@ function eme_ajax_action_send_booking_mails( $ids_arr, $subject_template_id, $bo
             $contact_name  = $contact->display_name;
             $tmp_subject       = eme_replace_booking_placeholders( $subject, $event, $booking, 0, 'text' );
             $tmp_message       = eme_replace_booking_placeholders( $body, $event, $booking, 0, $mail_text_html );
-            $person_name       = eme_format_full_name( $person['firstname'], $person['lastname'] );
+            $person_name       = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
             $mail_res          = eme_queue_mail( $tmp_subject, $tmp_message, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $person['person_id'] );
             if ( ! $mail_res ) {
                 $mail_ok = 0;

@@ -3164,6 +3164,61 @@ function eme_add_listhdrs( $mailing_id ) {
     return $add_listhdrs;
 }
 
+function eme_sub_send_mail( $lastname, $firstname, $email, $groups ) {
+    [$contact_name, $contact_email] = eme_get_default_mailer_info();
+    $sub_link    = eme_sub_confirm_url( $lastname, $firstname, $email, $groups );
+    $sub_subject = eme_translate( get_option( 'eme_sub_subject' ) );
+    $sub_body    = eme_translate( get_option( 'eme_sub_body' ) );
+    $sub_body    = str_replace( '#_SUB_CONFIRM_URL', $sub_link, $sub_body );
+    $sub_body    = str_replace( '#_LASTNAME', $lastname, $sub_body );
+    $sub_body    = str_replace( '#_FIRSTNAME', $firstname, $sub_body );
+    $sub_body    = str_replace( '#_EMAIL', $email, $sub_body );
+    $full_name   = eme_format_full_name( $firstname, $lastname );
+    eme_queue_fastmail( $sub_subject, $sub_body, $contact_email, $contact_name, $email, $full_name, $contact_email, $contact_name );
+}
+
+function eme_unsub_send_mail( $email, $groupids ) {
+    // find persons with matching email in the mentioned groups
+    $person_id = eme_get_person_by_email_in_groups( $email, $groupids );
+    if ( ! empty( $person_id ) ) {
+        [$contact_name, $contact_email] = eme_get_default_mailer_info();
+        $unsub_link    = eme_unsub_confirm_url( $email, $groupids );
+        $unsub_subject = get_option( 'eme_unsub_subject' );
+        $unsub_body    = eme_translate( get_option( 'eme_unsub_body' ) );
+        $unsub_body    = str_replace( '#_UNSUB_CONFIRM_URL', $unsub_link, $unsub_body );
+        $person        = eme_get_person( $person_id );
+        $unsub_body    = eme_replace_people_placeholders( $unsub_body, $person );
+        $name          = '';
+        if ( ! empty( $person['lastname'] ) ) {
+            $name = $person['lastname'];
+        }
+        if ( ! empty( $person['firstname'] ) ) {
+            $name .= ' ' . $person['firstname'];
+        }
+        eme_queue_fastmail( $unsub_subject, $unsub_body, $contact_email, $contact_name, $email, $name, $contact_email, $contact_name );
+    }
+}
+
+function eme_unsub_send_confirmation_mail( $email ) {
+    // find persons with matching email in the mentioned groups
+    $person_id = eme_get_person_by_email_only( $email );
+    if ( ! empty( $person_id ) ) {
+        [$contact_name, $contact_email] = eme_get_default_mailer_info();
+        $unsub_confirm_subject = get_option( 'eme_unsub_confirm_subject' );
+        $unsub_confirm_body    = eme_translate( get_option( 'eme_unsub_confirm_body' ) );
+        $person        = eme_get_person( $person_id );
+        $unsub_confirm_body    = eme_replace_people_placeholders( $unsub_confirm_body, $person );
+        $name          = '';
+        if ( ! empty( $person['lastname'] ) ) {
+            $name = $person['lastname'];
+        }
+        if ( ! empty( $person['firstname'] ) ) {
+            $name .= ' ' . $person['firstname'];
+        }
+        eme_queue_fastmail( $unsub_confirm_subject, $unsub_confirm_body, $contact_email, $contact_name, $email, $name, $contact_email, $contact_name );
+    }
+}
+
 function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
     $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
     $res    = false;
@@ -3211,9 +3266,27 @@ function eme_unsub_do( $email, $group_ids ) {
             eme_update_email_massmail( $email, 0 );
             $count++;
         } else {
-             $group_ids = array_intersect( $group_ids, $public_groupids );
-
+            $group_ids = array_intersect( $group_ids, $public_groupids );
+        }
+        if ( ! empty( $group_ids ) ) {
+            foreach ( $group_ids as $group_id ) {
+                // -1 is the newsletter
+                if ( $group_id == -1 ) {
+                    eme_remove_email_from_newsletter( $email );
+                    $count++;
+                } else {
+                    $group = eme_get_group( $group_id );
+                    if ( ! empty( $group['public'] ) && $group['type']='static' ) {
+                        eme_delete_emailfromgroup( $email, $group_id );
+                        $count++;
+                    }
+                }
+            }
         }
     }
+    if ( $count ) {
+        eme_unsub_send_confirmation_mail( $email );
+    }
+    return $count;
 }
 

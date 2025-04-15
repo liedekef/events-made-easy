@@ -2742,14 +2742,14 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson payment notification email subject', 'events-made-easy' ); ?></label></td>
     <td><input id="properties[contact_ipn_subject_format]" name="properties[contact_ipn_subject_format]" type="text" value="<?php echo eme_esc_html( $membership['properties']['contact_ipn_subject_format'] ); ?>" size="40">
-        <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the email which will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?></p>
+        <br><p class='eme_smaller'><?php esc_html_e( 'The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?></p>
         <br>
     </td>
     </tr>
     <tr>
     <td><label for="name"><?php esc_html_e( 'Contactperson payment notification email body', 'events-made-easy' ); ?></label></td>
     <td><?php echo eme_ui_select( $membership['properties']['contact_ipn_body_format_tpl'], 'properties[contact_ipn_body_format_tpl]', $templates_array ); ?>
-        <br><p class='eme_smaller'><?php esc_html_e( 'The body of the email which will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?><br>
+        <br><p class='eme_smaller'><?php esc_html_e( 'The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?><br>
         </p>
         <?php esc_html_e( 'No template shown in the list? Then go in the section Templates and create a template of type "Membership related mail".', 'events-made-easy' ); ?>
         <br>

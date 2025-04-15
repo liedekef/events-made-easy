@@ -7509,7 +7509,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
 ?>
 <div id="div_event_contactperson_email_ipn">
     <b><?php esc_html_e( 'Contact Person Payment Gateway Notification Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7531,7 +7531,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
     }
     echo '<b>' . esc_html__( 'Contact Person Payment Gateway Notification Email Body', 'events-made-easy' ) . '</b>';
 ?>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7659,7 +7659,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
 ?>
 <div>
     <b><?php esc_html_e( 'Contact Person Booking Made Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the contact person when a booking is made.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the contact person when a booking is made.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7681,7 +7681,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     }
 ?>
     <b><?php esc_html_e( 'Contact Person Booking Made Email Body', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person when a booking is made.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the contact person when a booking is made.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7754,7 +7754,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
 
 <div>
     <b><?php esc_html_e( 'Booking Awaiting User Confirmation Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent if the booking requires user confirmation.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent if the booking requires user confirmation.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7776,7 +7776,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
     }
     echo '<b>' . esc_html__( 'Booking Awaiting User Confirmation Email Body', 'events-made-easy' ) . '</b>';
 ?>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent if the booking requires user confirmation.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent if the booking requires user confirmation.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7811,7 +7811,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 
 <div>
     <b><?php esc_html_e( 'Booking Pending Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent if the booking requires approval.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent if the booking requires approval.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7833,7 +7833,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     }
     echo '<b>' . esc_html__( 'Booking Pending Email Body', 'events-made-easy' ) . '</b>';
 ?>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent if the booking requires approval.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent if the booking requires approval.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7859,7 +7859,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
 ?>
 <div>
     <b><?php esc_html_e( 'Contact Person Pending Booking Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the contact person if a booking requires approval.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the contact person if a booking requires approval.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7881,7 +7881,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     }
 ?>
     <b><?php esc_html_e( 'Contact Person Pending Booking Email Body', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person if a booking requires approval.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the contact person if a booking requires approval.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7948,7 +7948,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
 ?>
 <div id="div_event_registration_updated_email">
     <b><?php esc_html_e( 'Booking Updated Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent if the booking has been updated by an admin.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent if the booking has been updated by an admin.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7970,7 +7970,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
     }
 ?>
     <b><?php esc_html_e( 'Booking Updated Email Body', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent if the booking has been updated by an admin.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent if the booking has been updated by an admin.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -7999,7 +7999,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 ?>
 <div id="div_event_registration_pending_reminder_email">
     <b><?php esc_html_e( 'Pending Booking Reminder Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent as a reminder of a pending booking.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent as a reminder of a pending booking.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8021,7 +8021,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     }
 ?>
     <b><?php esc_html_e( 'Pending Booking Reminder Email Body', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent as a reminder of a pending booking.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent as a reminder of a pending booking.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8040,7 +8040,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
 </div>
 <div id="div_event_registration_reminder_email">
     <b><?php esc_html_e( 'Accepted Booking Reminder Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent as a reminder of an approved booking.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent as a reminder of an approved booking.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8062,7 +8062,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     }
 ?>
     <b><?php esc_html_e( 'Accepted Booking Reminder Email Body', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent as a reminder of an approved booking.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent as a reminder of an approved booking.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8091,7 +8091,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 ?>
 <div>
     <b><?php esc_html_e( 'Booking Cancelled Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent when he cancels all his bookings for an event.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent when he cancels all his bookings for an event.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8113,7 +8113,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     }
 ?>
     <b><?php esc_html_e( 'Booking Cancelled Email Body', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent when he cancels all his bookings for an event.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent when he cancels all his bookings for an event.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8139,7 +8139,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
 ?>
 <div>
     <b><?php esc_html_e( 'Contact Person Cancelled Booking Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the contact person when a respondent cancels all his bookings for an event.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the contact person when a respondent cancels all his bookings for an event.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8161,7 +8161,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     }
 ?>
     <b><?php esc_html_e( 'Contact Person Cancelled Booking Email Body', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person when a respondent cancels all his bookings for an event.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the contact person when a respondent cancels all his bookings for an event.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8196,7 +8196,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 <div>
     <br>
     <b><?php esc_html_e( 'Booking Paid Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent when a booking is marked as paid.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent when a booking is marked as paid.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8218,7 +8218,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     }
 ?>
     <b><?php esc_html_e( 'Booking Paid Email Body', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent when a booking is marked as paid.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent when a booking is marked as paid.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8244,7 +8244,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
 ?>
 <div>
     <b><?php esc_html_e( 'Contact Person Booking Paid Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the contact person when a booking is marked as paid (not via a payment gateway).', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the contact person when a booking is marked as paid (not via a payment gateway).', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8266,7 +8266,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     }
     echo '<b>' . esc_html__( 'Contact Person Booking Paid Email Body', 'events-made-easy' ) . '</b>';
 ?>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person when a booking is marked as paid (not via a payment gateway).', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the contact person when a booking is marked as paid (not via a payment gateway).', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8333,7 +8333,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
 ?>
 <div id="div_event_registration_trashed_email">
     <b><?php esc_html_e( 'Booking Deleted Email Subject', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent if the booking is deleted by an admin.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent if the booking is deleted by an admin.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>
@@ -8355,7 +8355,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
     }
 ?>
     <b><?php esc_html_e( 'Booking Deleted Email Body', 'events-made-easy' ); ?></b>
-    <p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent if the booking is deleted by an admin.', 'events-made-easy' ); ?>
+    <p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent if the booking is deleted by an admin.', 'events-made-easy' ); ?>
     <br>
     <?php esc_html_e( 'Only fill this in if you want to override the default settings.', 'events-made-easy' ); ?>
     </p>

@@ -524,7 +524,7 @@ function eme_meta_box_div_event_task_signup_made_email( $event, $templates_array
 <br>
 <div>
 	<b><?php esc_html_e( 'Contact Person Task Signup Made Email Subject', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the contact person when someone signs up for a task.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the contact person when someone signs up for a task.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -533,7 +533,7 @@ function eme_meta_box_div_event_task_signup_made_email( $event, $templates_array
 	<br>
 	<br>
 	<b><?php esc_html_e( 'Contact Person Task Signup Made Email Body', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person when someone signs up for a task.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the contact person when someone signs up for a task.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -566,7 +566,7 @@ function eme_meta_box_div_event_task_signup_pending_email( $event, $templates_ar
 <br>
 <div>
 	<b><?php esc_html_e( 'Contact Person Task Signup Pending Email Subject', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the contact person when someone signs up for a task that requires approval.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the contact person when someone signs up for a task that requires approval.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -575,7 +575,7 @@ function eme_meta_box_div_event_task_signup_pending_email( $event, $templates_ar
 	<br>
 	<br>
 	<b><?php esc_html_e( 'Contact Person Task Signup Pending Email Body', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person when someone signs up for a task that requires approval.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the contact person when someone signs up for a task that requires approval.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -589,7 +589,7 @@ function eme_meta_box_div_event_task_signup_updated_email( $event, $templates_ar
 	?>
 <div>
 	<b><?php esc_html_e( 'Task Signup Updated Email Subject', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent if the task signup has been updated by an admin.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent if the task signup has been updated by an admin.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -598,7 +598,7 @@ function eme_meta_box_div_event_task_signup_updated_email( $event, $templates_ar
 	<br>
 	<br>
 	<b><?php esc_html_e( 'Task Signup Updated Email Body', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent if the task signup has been updated by an admin.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent if the task signup has been updated by an admin.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -612,7 +612,7 @@ function eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_
 	?>
 <div>
 	<b><?php esc_html_e( 'Task Signup Cancelled Email Subject', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent when he himself cancels a task signup.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent when he himself cancels a task signup.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -621,7 +621,7 @@ function eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_
 	<br>
 	<br>
 	<b><?php esc_html_e( 'Task Signup Cancelled Email Body', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent when he himself cancels a task signup.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent when he himself cancels a task signup.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -631,7 +631,7 @@ function eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_
 <br>
 <div>
 	<b><?php esc_html_e( 'Contact Person Task Signup Cancelled Email Subject', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the contact person when a respondent cancels a task signup.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the contact person when a respondent cancels a task signup.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -640,7 +640,7 @@ function eme_meta_box_div_event_task_signup_cancelled_email( $event, $templates_
 	<br>
 	<br>
 	<b><?php esc_html_e( 'Contact Person Task Signup Cancelled Email Body', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the contact person when a respondent cancels a task signup.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the contact person when a respondent cancels a task signup.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -654,7 +654,7 @@ function eme_meta_box_div_event_task_signup_trashed_email( $event, $templates_ar
 	?>
 <div id="div_event_task_signup_trashed_email">
 	<b><?php esc_html_e( 'Task Signup Deleted Email Subject', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email which will be sent to the respondent if the task signup is deleted by an admin.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent if the task signup is deleted by an admin.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -663,7 +663,7 @@ function eme_meta_box_div_event_task_signup_trashed_email( $event, $templates_ar
 	<br>
 	<br>
 	<b><?php esc_html_e( 'Task Signup Deleted Email Body', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The body of the email which will be sent to the respondent if the task signup is deleted by an admin.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The body of the email that will be sent to the respondent if the task signup is deleted by an admin.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -677,7 +677,7 @@ function eme_meta_box_div_event_task_signup_reminder_email( $event, $templates_a
 	?>
 <div id="div_event_task_signup_reminder_email">
 	<b><?php esc_html_e( 'Task Signup Reminder Email Subject', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The subject of the reminder email which will be sent to the respondent.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The subject of the reminder email that will be sent to the respondent.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );
@@ -686,7 +686,7 @@ function eme_meta_box_div_event_task_signup_reminder_email( $event, $templates_a
 	<br>
 	<br>
 	<b><?php esc_html_e( 'Task Signup Reminder Email Body', 'events-made-easy' ); ?></b>
-	<p class="eme_smaller"><?php esc_html_e( 'The body of the reminder email which will be sent to the respondent.', 'events-made-easy' ); ?></p>
+	<p class="eme_smaller"><?php esc_html_e( 'The body of the reminder email that will be sent to the respondent.', 'events-made-easy' ); ?></p>
 	<br>
 	<?php
 	esc_html_e( 'Only choose a template if you want to override the default settings:', 'events-made-easy' );

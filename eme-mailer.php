@@ -865,10 +865,10 @@ function eme_get_mail( $id ) {
     return $wpdb->get_row( $sql, ARRAY_A );
 }
 
-function eme_get_mail_by_rid( $rid ) {
+function eme_get_mail_by_rid( $random_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT * FROM $table WHERE random_id=%s", $rid );
+    $sql   = $wpdb->prepare( "SELECT * FROM $table WHERE random_id=%s", $random_id );
     return $wpdb->get_row( $sql, ARRAY_A );
 }
 

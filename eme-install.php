@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 407 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 408 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -1325,7 +1325,7 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
          random_id varchar(50),
          error_msg tinytext,
          attachments text,
-         unsub_headers bool DEFAULT 0,
+         add_listhdrs bool DEFAULT 0,
          UNIQUE KEY  (id),
          KEY  (status),
          KEY  (random_id)
@@ -1339,7 +1339,8 @@ function eme_create_mqueue_table( $charset, $collate, $db_version, $db_prefix ) 
 		maybe_add_column( $table_name, 'read_count', "ALTER TABLE $table_name ADD read_count int DEFAULT 0;" );
 		maybe_add_column( $table_name, 'error_msg', "ALTER TABLE $table_name ADD error_msg tinytext;" );
 		maybe_add_column( $table_name, 'attachments', "ALTER TABLE $table_name ADD attachments text;" );
-		maybe_add_column( $table_name, 'unsub_headers', "ALTER TABLE $table_name ADD unsub_headers bool DEFAULT 0;" );
+		maybe_add_column( $table_name, 'add_listhdrs', "ALTER TABLE $table_name ADD add_listhdrs bool DEFAULT 0;" );
+		eme_maybe_drop_column( $table_name, 'unsub_headers' );
 		maybe_add_column( $table_name, 'fromname', "ALTER TABLE $table_name ADD fromname tinytext;" );
 		maybe_add_column( $table_name, 'fromemail', "ALTER TABLE $table_name ADD fromemail tinytext;" );
 		maybe_add_column( $table_name, 'created_by', "ALTER TABLE $table_name ADD created_by bigint(20) unsigned DEFAULT NULL;" );

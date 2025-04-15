@@ -422,9 +422,9 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         $replytoname = $fromname;
     }
 
-    $unsub_headers = 0;
-    if ( ! empty( $mailing_id ) && eme_add_unsub_headers( $mailing_id ) ) {
-        $unsub_headers = 1;
+    $add_listhdrs = 0;
+    if ( ! empty( $mailing_id ) && eme_add_listhdrs( $mailing_id ) ) {
+        $add_listhdrs = 1;
     }
 
     $now  = current_time( 'mysql', false );
@@ -441,7 +441,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         'person_id'     => $person_id,
         'member_id'     => $member_id,
         'attachments'   => eme_serialize( $atts_arr ),
-        'unsub_headers' => $unsub_headers,
+        'add_listhdrs'  => $add_listhdrs,
         'creation_date' => $now,
         'random_id'     => $random_id,
     ];
@@ -623,7 +623,7 @@ function eme_process_single_mail( $mail ) {
         }
     }
     $custom_headers = [ 'X-EME-mailid:' . $mail['random_id'] ];
-    if ( $mail['unsub_headers'] ) {
+    if ( $mail['add_listhdrs'] ) {
         $custom_headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
         $custom_headers[] = sprintf( "List-Unsubscribe: <%s>", eme_unsub_rid_url( $mail['random_id'] ) );
     }
@@ -3143,8 +3143,8 @@ function eme_get_default_mailer_info() {
     return [$fromname,$fromemail];
 }
 
-function eme_add_unsub_headers( $mailing_id ) {
-    $add_unsub_headers = false;
+function eme_add_listhdrs( $mailing_id ) {
+    $add_listhdrs = false;
     if (empty($mailing_id)) {
         return false;
     }
@@ -3159,9 +3159,61 @@ function eme_add_unsub_headers( $mailing_id ) {
         !empty($conditions['eme_genericmail_send_peoplegroups']) || // event mail to certain groups
         !empty($conditions['eme_eventmail_send_groups']) // event mail to certain groups
     ) {
-        $add_unsub_headers = true;
+        $add_listhdrs = true;
     }
-    return $add_unsub_headers;
+    return $add_listhdrs;
 }
 
-?>
+function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
+    $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
+    $res    = false;
+    if ( ! $person ) {
+        $person = eme_get_person_by_email_only( $email );
+    }
+    if ( empty( $group_ids ) ) {
+        $group_ids = eme_get_public_groupids();
+    }
+    if ( ! empty( $person ) ) {
+        $res = eme_add_persongroups( $person['person_id'], $group_ids, 1 );
+    } else {
+        $wp_id = 0;
+        // if the user is logged in, we overwrite the lastname/firstname with that info
+        if ( is_user_logged_in() ) {
+            $wp_id     = get_current_user_id();
+            $user_info = get_userdata( $wp_id );
+            $lastname  = $user_info->user_lastname;
+            if ( empty( $lastname ) ) {
+                $lastname = $user_info->display_name;
+            }
+            $firstname = $user_info->user_firstname;
+        }
+        $res2      = eme_add_update_person_from_form( 0, $lastname, $firstname, $email, $wp_id );
+        $person_id = $res2[0];
+        if ( $person_id ) {
+            $res = eme_add_persongroups( $person_id, $group_ids, 1 );
+        }
+    }
+    if ( $res ) {
+        eme_update_email_massmail( $email, 1 );
+    }
+    return $res;
+}
+
+function eme_unsub_do( $email, $group_ids ) {
+    $count = 0;
+    $public_groupids = eme_get_public_groupids(); // all public static groups
+    if ( eme_count_persons_by_email( $email ) > 0 ) {
+        if ( empty( $group_ids ) ) {
+            $group_ids = $public_groupids;
+            if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
+                $group_ids[] = -1;
+            }
+            eme_update_email_massmail( $email, 0 );
+            $count++;
+        } else {
+             $group_ids = array_intersect( $group_ids, $public_groupids );
+
+        }
+    }
+}
+

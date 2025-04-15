@@ -4770,71 +4770,6 @@ function eme_unsub_send_mail( $email, $groupids ) {
     }
 }
 
-function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
-    $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
-    $res    = false;
-    if ( ! $person ) {
-        $person = eme_get_person_by_email_only( $email );
-    }
-    if ( empty( $group_ids ) ) {
-        $group_ids = eme_get_public_groupids();
-    }
-    if ( ! empty( $person ) ) {
-        $res = eme_add_persongroups( $person['person_id'], $group_ids, 1 );
-    } else {
-        $wp_id = 0;
-        // if the user is logged in, we overwrite the lastname/firstname with that info
-        if ( is_user_logged_in() ) {
-            $wp_id     = get_current_user_id();
-            $user_info = get_userdata( $wp_id );
-            $lastname  = $user_info->user_lastname;
-            if ( empty( $lastname ) ) {
-                $lastname = $user_info->display_name;
-            }
-            $firstname = $user_info->user_firstname;
-        }
-        $res2      = eme_add_update_person_from_form( 0, $lastname, $firstname, $email, $wp_id );
-        $person_id = $res2[0];
-        if ( $person_id ) {
-            $res = eme_add_persongroups( $person_id, $group_ids, 1 );
-        }
-    }
-    if ( $res ) {
-        eme_update_email_massmail( $email, 1 );
-    }
-    return $res;
-}
-
-function eme_unsub_do( $email, $group_ids ) {
-    $count = 0;
-    if ( eme_count_persons_by_email( $email ) > 0 ) {
-        if ( empty( $group_ids ) ) {
-            $group_ids = eme_get_public_groupids();
-            if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
-                $group_ids[] = -1;
-            }
-            eme_update_email_massmail( $email, 0 );
-            $count++;
-        }
-        if ( ! empty( $group_ids ) ) {
-            foreach ( $group_ids as $group_id ) {
-                // -1 is the newsletter
-                if ( $group_id == -1 ) {
-                    eme_remove_email_from_newsletter( $email );
-                    $count++;
-                } else {
-                    $group = eme_get_group( $group_id );
-                    if ( ! empty( $group['public'] ) && $group['type']='static' ) {
-                        eme_delete_emailfromgroup( $email, $group_id );
-                        $count++;
-                    }
-                }
-            }
-        }
-    }
-    return $count;
-}
-
 function eme_get_person_answers( $person_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
@@ -5668,4 +5603,3 @@ function eme_get_family_person_ids( $person_id ) {
     return $wpdb->get_col( $sql );
 }
 
-?>

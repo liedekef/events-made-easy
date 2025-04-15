@@ -422,6 +422,11 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         $replytoname = $fromname;
     }
 
+    $unsub_headers = 0;
+    if ( ! empty( $mailing_id ) && eme_add_unsub_headers( $mailing_id ) ) {
+        $unsub_headers = 1;
+    }
+
     $now  = current_time( 'mysql', false );
     $mail = [
         'subject'       => mb_substr( $subject, 0, 255 ),
@@ -436,6 +441,7 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         'person_id'     => $person_id,
         'member_id'     => $member_id,
         'attachments'   => eme_serialize( $atts_arr ),
+        'unsub_headers' => $unsub_headers,
         'creation_date' => $now,
         'random_id'     => $random_id,
     ];
@@ -449,20 +455,10 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         // we add the mail to the queue as sent and send it immediately
         $mail['status']        = 1;
         $mail['sent_datetime'] = $now;
-        if ($wpdb->insert( $mqueue_table, $mail ) === false) {
+        if ( $wpdb->insert( $mqueue_table, $mail ) === false ) {
             return false;
         } else {
-            $custom_headers = [ 'X-EME-mailid:' . $random_id ];
-            if (!empty($mail['mailing_id']) && eme_add_unsub_headers( $mail['mailing_id']) ) {
-                $custom_headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
-                $custom_headers[] = sprintf("List-Unsubscribe: <%s>", eme_unsub_rid_url($random_id));
-            }
-            $mail_res_arr = eme_send_mail( $subject, $body, $receiveremail, $receivername, $replytoemail, $replytoname, $fromemail, $fromname, $atts_arr, $custom_headers );
-            if ( $mail_res_arr[0] ) {
-                return true;
-            } else {
-                return false;
-            }
+            return eme_process_single_mail( $mail );
         }
     } elseif ( $wpdb->insert( $mqueue_table, $mail ) === false ) {
         return false;
@@ -471,12 +467,16 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
     }
 }
 
-function eme_mark_mail_ignored( $id ) {
+function eme_mark_mail_ignored( $id, $random_id ) {
     global $wpdb;
     $mqueue_table            = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $where                   = [];
     $fields                  = [];
-    $where['id']             = intval( $id );
+    if ( empty( $id ) ) {
+        $where['random_id'] = $random_id;
+    } else {
+        $where['id'] = intval( $id );
+    }
     $fields['status']        = 4;
     $fields['sent_datetime'] = current_time( 'mysql', false );
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
@@ -486,11 +486,16 @@ function eme_mark_mail_ignored( $id ) {
     }
 }
 
-function eme_mark_mail_sent( $id ) {
+function eme_mark_mail_sent( $id, $random_id ) {
     global $wpdb;
     $mqueue_table            = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $where                   = [];
     $fields                  = [];
+    if ( empty( $id ) ) {
+        $where['random_id'] = $random_id;
+    } else {
+        $where['id'] = intval( $id );
+    }
     $where['id']             = intval( $id );
     $fields['status']        = 1;
     $fields['sent_datetime'] = current_time( 'mysql', false );
@@ -501,12 +506,16 @@ function eme_mark_mail_sent( $id ) {
     }
 }
 
-function eme_mark_mail_fail( $id, $error_msg = '' ) {
+function eme_mark_mail_fail( $id, $random_id, $error_msg = '' ) {
     global $wpdb;
     $mqueue_table            = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $where                   = [];
     $fields                  = [];
-    $where['id']             = intval( $id );
+    if ( empty( $id ) ) {
+        $where['random_id'] = $random_id;
+    } else {
+        $where['id'] = intval( $id );
+    }
     $fields['status']        = 2;
     $fields['error_msg']     = esc_sql( $error_msg );
     $fields['sent_datetime'] = current_time( 'mysql', false );
@@ -580,6 +589,54 @@ function eme_rest_send_queued( WP_REST_Request $request ) {
         eme_send_queued($force_interval);
 }
 
+function eme_process_single_mail( $mail ) {
+    // check if tracking is required and possible (meaning: only for html mails)
+    if ( get_option( 'eme_mail_send_html' ) && get_option( 'eme_mail_tracking' ) ) {
+        $add_tracking = true;
+    } else {
+        $add_tracking = false;
+    }
+
+    if ( empty( $mail['id'] ) ) {
+        // in the case of send_immediately (call to eme_queue_fastmail), the mail id is not set
+        $mail['id'] = 0;
+    }
+    if ( empty( $mail['receiveremail'] ) ) {
+        eme_mark_mail_ignored( $mail['id'], $mail['random_id'] );
+        return true;
+    }
+    $body = $mail['body'];
+    if (eme_is_serialized( $mail['attachments'] )) {
+        $atts_arr = eme_unserialize( $mail['attachments'] );
+    } else {
+        $atts_arr = [];
+    }
+    if ( $add_tracking && ! empty( $mail['random_id'] ) ) {
+        $track_url  = eme_tracker_url( $mail['random_id'] );
+        $track_html = "<img src='$track_url' alt=''>";
+        // if a closing body-tag is present, add it before that
+        // otherwise add it to the end
+        if ( strstr( $body, '</body>' ) ) {
+            $body = str_replace( '</body>', $track_html . '</body>', $body );
+        } else {
+            $body .= $track_html;
+        }
+    }
+    $custom_headers = [ 'X-EME-mailid:' . $mail['random_id'] ];
+    if ( $mail['unsub_headers'] ) {
+        $custom_headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
+        $custom_headers[] = sprintf( "List-Unsubscribe: <%s>", eme_unsub_rid_url( $mail['random_id'] ) );
+    }
+    $mail_res_arr   = eme_send_mail( $mail['subject'], $body, $mail['receiveremail'], $mail['receivername'], $mail['replytoemail'], $mail['replytoname'], $mail['fromemail'], $mail['fromname'], $atts_arr, $custom_headers );
+    if ( $mail_res_arr[0] ) {
+        eme_mark_mail_sent( $mail['id'], $mail['random_id'] );
+        return true;
+    } else {
+        eme_mark_mail_fail( $mail['id'], $mail['random_id'], $mail_res_arr[1] );
+        return false;
+    }
+}
+
 function eme_send_queued($force_interval=0) {
     // we'll build in a safety precaution to make sure to never surpass the schedule duration
     $start_time   = time();
@@ -596,7 +653,6 @@ function eme_send_queued($force_interval=0) {
         $interval = $force_interval-5;
     }
 
-    $eme_mail_send_html = get_option( 'eme_mail_send_html' );
     $eme_mail_sleep     = intval( get_option( 'eme_mail_sleep' ) );
     if ( $eme_mail_sleep >= 1000000 ) {
         $eme_mail_sleep_seconds  = intval( $eme_mail_sleep / 1000000 );
@@ -624,48 +680,10 @@ function eme_send_queued($force_interval=0) {
         eme_mark_mailing_ongoing( $mailing_id );
     }
 
-    // check if tracking is required and possible (meaning: only for html mails)
-    if ( $eme_mail_send_html && get_option( 'eme_mail_tracking' ) ) {
-        $add_tracking = true;
-    } else {
-        $add_tracking = false;
-    }
-
     // now handle any queued mails
     $mails = eme_get_queued( $now );
     foreach ( $mails as $mail ) {
-        if ( empty( $mail['receiveremail'] ) ) {
-            eme_mark_mail_ignored( $mail['id'] );
-            continue; // the continue-statement continues the higher foreach-loop
-        }
-        $body = $mail['body'];
-        if (eme_is_serialized( $mail['attachments'] )) {
-            $atts = eme_unserialize( $mail['attachments'] );
-        } else {
-            $atts = [];
-        }
-        if ( $add_tracking && ! empty( $mail['random_id'] ) ) {
-            $track_url  = eme_tracker_url( $mail['random_id'] );
-            $track_html = "<img src='$track_url' alt=''>";
-            // if a closing body-tag is present, add it before that
-            // otherwise add it to the end
-            if ( strstr( $body, '</body>' ) ) {
-                $body = str_replace( '</body>', $track_html . '</body>', $body );
-            } else {
-                $body .= $track_html;
-            }
-        }
-        $custom_headers = [ 'X-EME-mailid:' . $mail['random_id'] ];
-        if (!empty($mail['mailing_id']) && eme_add_unsub_headers( $mail['mailing_id']) ) {
-            $custom_headers[] = "List-Unsubscribe-Post: List-Unsubscribe=One-Click";
-            $custom_headers[] = sprintf("List-Unsubscribe: <%s>", eme_unsub_rid_url( $mail['random_id'] ));
-        }
-        $mail_res_arr   = eme_send_mail( $mail['subject'], $body, $mail['receiveremail'], $mail['receivername'], $mail['replytoemail'], $mail['replytoname'], $mail['fromemail'], $mail['fromname'], $atts, $custom_headers );
-        if ( $mail_res_arr[0] ) {
-            eme_mark_mail_sent( $mail['id'] );
-        } else {
-            eme_mark_mail_fail( $mail['id'], $mail_res_arr[1] );
-        }
+        eme_process_single_mail( $mail  );
 
         // we'll build in a safety precaution to make sure to never surpass the schedule duration
         // this is only usefull if the sleep is configured, since otherwise mails are send immediately, but just to be sure ...

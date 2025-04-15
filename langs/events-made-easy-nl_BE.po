@@ -63,13 +63,13 @@ msgstr "in naam van %s"
 #: eme-members.php:6948
 #: eme-options.php:140
 #: eme-payments.php:3988
-#: eme-people.php:3994
-#: eme-people.php:5003
-#: eme-people.php:5109
-#: eme-people.php:5181
-#: eme-people.php:5221
-#: eme-people.php:5260
-#: eme-people.php:5356
+#: eme-people.php:4005
+#: eme-people.php:5014
+#: eme-people.php:5120
+#: eme-people.php:5192
+#: eme-people.php:5232
+#: eme-people.php:5271
+#: eme-people.php:5367
 #: eme-recurrence.php:634
 #: eme-recurrence.php:803
 #: eme-rsvp.php:1264
@@ -273,10 +273,10 @@ msgstr "Hint: klik rechts op de kolom hoofdings om kolommen te tonen/verbergen"
 #: eme-people.php:2260
 #: eme-people.php:2325
 #: eme-people.php:2340
-#: eme-people.php:5028
-#: eme-people.php:5042
-#: eme-people.php:5043
-#: eme-people.php:5044
+#: eme-people.php:5039
+#: eme-people.php:5053
+#: eme-people.php:5054
+#: eme-people.php:5055
 #: eme-tasks.php:1959
 msgid "Edit person"
 msgstr "Pas persoon aan"
@@ -407,7 +407,7 @@ msgstr "Naam"
 #: eme-holidays.php:293
 #: eme-locations.php:2990
 #: eme-members.php:6558
-#: eme-people.php:5132
+#: eme-people.php:5143
 #: eme-templates.php:476
 msgid "No name"
 msgstr "Geen naam"
@@ -1521,10 +1521,10 @@ msgstr "Vast per plaats"
 #: eme-people.php:1125
 #: eme-people.php:1160
 #: eme-people.php:1460
-#: eme-people.php:5047
-#: eme-people.php:5064
-#: eme-people.php:5065
-#: eme-people.php:5135
+#: eme-people.php:5058
+#: eme-people.php:5075
+#: eme-people.php:5076
+#: eme-people.php:5146
 #: eme-rsvp.php:3899
 #: eme-rsvp.php:6039
 #: eme-ui-helpers.php:120
@@ -1562,10 +1562,10 @@ msgstr "Ja"
 #: eme-people.php:1125
 #: eme-people.php:1160
 #: eme-people.php:1462
-#: eme-people.php:5047
-#: eme-people.php:5064
-#: eme-people.php:5065
-#: eme-people.php:5135
+#: eme-people.php:5058
+#: eme-people.php:5075
+#: eme-people.php:5076
+#: eme-people.php:5146
 #: eme-rsvp.php:3899
 #: eme-rsvp.php:6039
 #: eme-ui-helpers.php:121
@@ -4368,7 +4368,7 @@ msgstr "E-mail"
 #: eme-options.php:37
 #: eme-people.php:1042
 #: eme-people.php:1350
-#: eme-people.php:4357
+#: eme-people.php:4368
 #: eme-rsvp.php:1438
 msgid "Phone number"
 msgstr "Telefoonnummer"
@@ -5972,8 +5972,8 @@ msgstr "Geen gegevens gevonden"
 #: eme-gdpr.php:338
 #: eme-members.php:5060
 #: eme-payments.php:3877
-#: eme-people.php:4567
-#: eme-people.php:4655
+#: eme-people.php:4578
+#: eme-people.php:4666
 #: eme-rsvp.php:841
 #: eme-rsvp.php:1141
 #: eme-tasks.php:1654
@@ -5990,8 +5990,8 @@ msgstr "Bot gedetecteerd. Als je denkt dat je deze boodschap ten onrechte ontvan
 #: eme-members.php:4674
 #: eme-members.php:5073
 #: eme-payments.php:3888
-#: eme-people.php:4578
-#: eme-people.php:4667
+#: eme-people.php:4589
+#: eme-people.php:4678
 #: eme-rsvp.php:853
 #: eme-rsvp.php:1153
 #: eme-tasks.php:1665
@@ -6010,8 +6010,8 @@ msgstr "Bedankt voor uw aanvraag, u ontvangt een e-mail met verdere informatie."
 #: eme-gdpr.php:320
 #: eme-gdpr.php:403
 #: eme-members.php:1767
-#: eme-people.php:4641
-#: eme-people.php:4728
+#: eme-people.php:4652
+#: eme-people.php:4739
 #: eme-rsvp.php:158
 #: eme-rsvp.php:808
 #: eme-tasks.php:1356
@@ -6457,12 +6457,12 @@ msgstr "Annuleer"
 #: eme-mailer.php:1874
 #: eme-members.php:1126
 #: eme-members.php:1129
-#: eme-people.php:3862
-#: eme-people.php:4013
-#: eme-people.php:4116
-#: eme-people.php:4316
-#: eme-people.php:4612
-#: eme-people.php:4699
+#: eme-people.php:3873
+#: eme-people.php:4024
+#: eme-people.php:4127
+#: eme-people.php:4327
+#: eme-people.php:4623
+#: eme-people.php:4710
 #: eme-rsvp.php:1389
 msgid "Please enter a valid email address"
 msgstr "Voer een geldig e-mailadres in"
@@ -8077,7 +8077,7 @@ msgid "%d head of the family accounts + %d family members"
 msgstr "%d gezinshoofd accounts + %d familieleden"
 
 #: eme-members.php:6666
-#: eme-people.php:5029
+#: eme-people.php:5040
 msgid "(family member)"
 msgstr "(familielid)"
 
@@ -8094,22 +8094,22 @@ msgid "This is based on the payment ID of the member: %d"
 msgstr "Dit is gebaseerd op het betalings-ID van het lid: %d"
 
 #: eme-members.php:6834
-#: eme-people.php:5228
+#: eme-people.php:5239
 msgid "(Dynamic)"
 msgstr "(Dynamisch)"
 
 #: eme-members.php:6846
-#: eme-people.php:5240
+#: eme-people.php:5251
 msgid "Dynamic group added"
 msgstr "Dynamische groep toegevoegd"
 
 #: eme-members.php:6848
-#: eme-people.php:5242
+#: eme-people.php:5253
 msgid "There was a problem adding the group"
 msgstr "Er was een probleem bij het toevoegen van de groep"
 
 #: eme-members.php:6851
-#: eme-people.php:5245
+#: eme-people.php:5256
 msgid "Please enter a name for the group"
 msgstr "Vul aub een naam voor de groep in"
 
@@ -8291,7 +8291,7 @@ msgid "You're about to cancel the following bookings:"
 msgstr "U staat op het punt de volgende boekingen te annuleren:"
 
 #: eme-options.php:51
-#: eme-people.php:4350
+#: eme-people.php:4361
 msgid "seats"
 msgstr "plaatsen"
 
@@ -12085,7 +12085,7 @@ msgstr "Corrigeer aub deze fouten: een WordPress gebruiker zou ten hoogste aan 1
 #: eme-people.php:1693
 #: eme-people.php:1736
 #: eme-people.php:2431
-#: eme-people.php:4366
+#: eme-people.php:4377
 msgid "Active memberships"
 msgstr "Actieve lidmaatschappen"
 
@@ -12295,7 +12295,7 @@ msgid "Edit dynamic group of members"
 msgstr "Wijzig dynamische groep van leden"
 
 #: eme-people.php:2537
-#: eme-people.php:5137
+#: eme-people.php:5148
 msgid "Edit group"
 msgstr "Pas groep aan"
 
@@ -12351,148 +12351,148 @@ msgstr "Verwijder afbeelding"
 msgid "Person image"
 msgstr "Afbeelding van persoon"
 
-#: eme-people.php:3875
+#: eme-people.php:3886
 msgid "A person with this name and email already exists"
 msgstr "Er bestaat al een persoon met deze naam en e-mailadres"
 
-#: eme-people.php:4024
-#: eme-people.php:4168
+#: eme-people.php:4035
+#: eme-people.php:4179
 msgid "Invalid country code"
 msgstr "Ongeldige land code"
 
-#: eme-people.php:4035
-#: eme-people.php:4179
+#: eme-people.php:4046
+#: eme-people.php:4190
 msgid "Invalid state code"
 msgstr "Ongeldige provincie/staat code"
 
-#: eme-people.php:4126
-#: eme-people.php:4270
-#: eme-people.php:4342
+#: eme-people.php:4137
+#: eme-people.php:4281
+#: eme-people.php:4353
 msgid "Error encountered while updating person"
 msgstr "Fout bij het aanpassen van de persoon"
 
-#: eme-people.php:4142
+#: eme-people.php:4153
 msgid "The email address belongs to an existing user. Please log in first before continuing to register with this email address."
 msgstr "Het e-mailadres is van een bestaande gebruiker. Log eerst in voordat u doorgaat met registreren met dit e-mailadres."
 
-#: eme-people.php:4293
+#: eme-people.php:4304
 msgid "Error encountered while adding person"
 msgstr "Fout bij het toevoegen van de persoon"
 
-#: eme-people.php:4324
+#: eme-people.php:4335
 msgid "Conflict with info from other person, please use another lastname, firstname or email"
 msgstr "Conflict met informatie van andere persoon, gebruik een andere achternaam, voornaam of e-mail"
 
-#: eme-people.php:4354
+#: eme-people.php:4365
 msgid "Events Made Easy settings"
 msgstr "Events Made Easy Instellingen"
 
-#: eme-people.php:4359
+#: eme-people.php:4370
 msgid "The phone number used by Events Made Easy when the user is indicated as the contact person for an event."
 msgstr "Het telefoonnummer dat door Events Made Easy wordt gebruikt wanneer een specifieke gebruiker wordt aangeduid als de contactpersoon voor een evenement."
 
-#: eme-people.php:4362
+#: eme-people.php:4373
 msgid "Bookings made for future events"
 msgstr "Gemaakte boekingen voor evenementen die in de toekomst plaatsvinden"
 
-#: eme-people.php:4604
-#: eme-people.php:4691
+#: eme-people.php:4615
+#: eme-people.php:4702
 msgid "A request for confirmation has been sent to the given email address."
 msgstr "Een aanvraag tot bevestiging is verstuurd naar het opgegeven e-mail adres."
 
-#: eme-people.php:4632
+#: eme-people.php:4643
 msgid "If you want to subscribe to future mailings, please do so by entering your email here."
 msgstr "Als je wil inschrijven voor toekomstige mailings, vul dan hier je e-mailadres in."
 
-#: eme-people.php:4635
+#: eme-people.php:4646
 msgid "Please select the groups you wish to subscribe to."
 msgstr "Selecteer de groepen waarop je je wenst in te schrijven."
 
-#: eme-people.php:4719
+#: eme-people.php:4730
 msgid "If you want to unsubscribe from future mailings, please do so by entering your email here."
 msgstr "Als je wil uitschrijven voor toekomstige mailings, vul hier je e-mail in."
 
-#: eme-people.php:4722
+#: eme-people.php:4733
 msgid "Please select the groups you wish to unsubscribe from."
 msgstr "Selecteer de groepen waarvan je je wenst uit te schrijven."
 
-#: eme-people.php:5023
+#: eme-people.php:5034
 msgid "No surname"
 msgstr "Geen familienaam"
 
-#: eme-people.php:5143
+#: eme-people.php:5154
 msgid "Dynamic group of people"
 msgstr "Dynamische groep van personen"
 
-#: eme-people.php:5149
+#: eme-people.php:5160
 msgid "(1 person)"
 msgid_plural "(%d persons)"
 msgstr[0] "(1 persoon)"
 msgstr[1] "(%d personen)"
 
-#: eme-people.php:5153
+#: eme-people.php:5164
 msgid "Dynamic group of members"
 msgstr "Dynamische groep van leden"
 
-#: eme-people.php:5159
+#: eme-people.php:5170
 msgid "(1 member)"
 msgid_plural "(%d members)"
 msgstr[0] "(1 lid)"
 msgstr[1] "(%d leden)"
 
-#: eme-people.php:5373
+#: eme-people.php:5384
 msgid "People recovered from trash bin."
 msgstr "Personen hersteld vanuit de prullenbak."
 
-#: eme-people.php:5385
+#: eme-people.php:5396
 msgid "People moved to trash bin."
 msgstr "Verplaatst naar de prullenbak."
 
-#: eme-people.php:5393
+#: eme-people.php:5404
 msgid "Personal data removed and moved to trash bin."
 msgstr "Persoonlijke gegevens verwijderd en verplaatst naar de prullenbak."
 
-#: eme-people.php:5401
+#: eme-people.php:5412
 msgid "GDPR approval set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "GDPR toestemming is op \"Ja\" gezet (wees er zeker van dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5409
+#: eme-people.php:5420
 msgid "GDPR approval set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "GDPR goedkeuring ingesteld op \"Nee\" (zorg ervoor dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5417
+#: eme-people.php:5428
 msgid "Massmail set to \"Yes\" (make sure the selected persons are aware of this)."
 msgstr "Massmail ingesteld op \"Ja\" (zorg ervoor dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5425
+#: eme-people.php:5436
 msgid "Massmail set to \"No\" (make sure the selected persons are aware of this)."
 msgstr "Massmail ingesteld op \"Nee\" (zorg ervoor dat de geselecteerde personen hiervan op de hoogte zijn)."
 
-#: eme-people.php:5433
+#: eme-people.php:5444
 msgid "Birthday email set to \"Yes\"."
 msgstr "Verjaardagsmail ingesteld op \"Ja\"."
 
-#: eme-people.php:5441
+#: eme-people.php:5452
 msgid "Birthday email set to \"No\"."
 msgstr "Verjaardagsmail ingesteld op \"Nee\"."
 
-#: eme-people.php:5450
+#: eme-people.php:5461
 msgid "Language updated."
 msgstr "Taal geüpdatet."
 
-#: eme-people.php:5463
+#: eme-people.php:5474
 msgid "People deleted."
 msgstr "Personen verwijderd."
 
-#: eme-people.php:5473
+#: eme-people.php:5484
 msgid "People added to group."
 msgstr "Personen toegevoegd aan groep."
 
-#: eme-people.php:5484
+#: eme-people.php:5495
 msgid "People removed from group."
 msgstr "Personen verwijderd uit groep."
 
-#: eme-people.php:5493
+#: eme-people.php:5504
 msgid "Groups deleted."
 msgstr "Groepen verwijderd."
 

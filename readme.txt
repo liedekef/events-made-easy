@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.5.47
+Stable tag: 2.5.48
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,6 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.48 (2025/04/15) =
+* Make sure unsub actually does something
+* Add unsub confirm emails so people know they unsubscribed
+
 = 2.5.47 (2025/04/15) =
 * Renamed #_DYNAMICPRICE_PER_PG to #_DYNAMICPRICE_DETAILED
 * #_DYNAMICPRICE_DETAILED now will return 0 (localized) if the price is 0, not the per payment method info in that case

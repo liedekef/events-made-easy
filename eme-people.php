@@ -3114,7 +3114,7 @@ function eme_untrash_people( $person_ids ) {
 function eme_add_personid_to_newsletter( $person_id ) {
     global $wpdb;
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $sql          = $wpdb->prepare( "UPDATE $people_table SET newsletter=1 WHERE person_id=%d", $person_id );
+    $sql          = $wpdb->prepare( "UPDATE $people_table SET newsletter=1 WHERE person_id=%d AND newsletter=0", $person_id );
     $sql_res      = $wpdb->query( $sql );
     if ( $sql_res === false ) {
         return false;
@@ -3125,8 +3125,14 @@ function eme_add_personid_to_newsletter( $person_id ) {
 function eme_remove_email_from_newsletter( $email ) {
     global $wpdb;
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $sql          = $wpdb->prepare( "UPDATE $people_table SET newsletter=0 WHERE email=%s", $email );
-    $wpdb->query( $sql );
+    $where = [
+	    'email' => $email,
+    ];
+    $fields = [
+	    'newsletter' => 0,
+    ];
+
+    return $wpdb->update( $people_table, $fields, $where );
 }
 
 function eme_delete_people( $person_ids ) {
@@ -3346,7 +3352,7 @@ function eme_delete_emailfromgroup( $email, $group_id ) {
     $people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
     $sql              = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE group_id=%d AND person_id IN (SELECT person_id FROM $people_table WHERE email=%s)", $group_id, $email );
-    $wpdb->query( $sql );
+    return $wpdb->query( $sql );
 }
 
 function eme_delete_personfromgroup( $person_id, $group_id ) {

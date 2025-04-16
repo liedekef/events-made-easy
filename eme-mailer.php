@@ -541,8 +541,7 @@ function eme_cancel_all_queued() {
 
     // cancel individual mails
     $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql          = "UPDATE $mqueue_table WHERE status=3 WHERE status=0";
-    $wpdb->query( $sql );
+    $wpdb->update( $mqueue_table, ['status'=>3], ['status'=>0] );
 }
 
 function eme_get_queued_count() {
@@ -729,16 +728,27 @@ function eme_mark_mailing_planned( $mailing_id, $planned_count ) {
         'ignored'          => 0,
         'total_read_count' => 0,
     ];
-    $sql = $wpdb->prepare( "UPDATE $mailings_table SET status='planned', stats=%s WHERE id=%d", eme_serialize( $stats ), $mailing_id );
-    $wpdb->query( $sql );
+    $where = [
+	    'id' => $mailing_id
+    ];
+    $fields = [
+	    'status' => 'planned',
+	    'stats' => eme_serialize( $stats )
+    ];
+    $wpdb->update( $mailings_table, $fields, $where );
     wp_cache_delete( "eme_mailing $mailing_id" );
 }
 
 function eme_mark_mailing_ongoing( $mailing_id ) {
     global $wpdb;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='ongoing' WHERE id=%d", $mailing_id );
-    $wpdb->query( $sql );
+    $where = [
+	    'id' => $mailing_id
+    ];
+    $fields = [
+	    'status' => 'ongoing'
+    ];
+    $wpdb->update( $mailings_table, $fields, $where );
     wp_cache_delete( "eme_mailing $mailing_id" );
 }
 
@@ -746,8 +756,14 @@ function eme_mark_mailing_completed( $mailing_id ) {
     global $wpdb;
     $stats          = eme_get_mailing_stats( $mailing_id );
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='completed', stats=%s WHERE id=%d", eme_serialize( $stats ), $mailing_id );
-    $wpdb->query( $sql );
+    $where = [
+	    'id' => $mailing_id
+    ];
+    $fields = [
+	    'status' => 'completed',
+	    'stats' => eme_serialize( $stats )
+    ];
+    $wpdb->update( $mailings_table, $fields, $where );
     wp_cache_delete( "eme_mailing $mailing_id" );
     if ( $stats['failed'] > 0 ) {
         $mailing        = eme_get_mailing( $mailing_id );
@@ -766,26 +782,34 @@ function eme_archive_mailing( $mailing_id ) {
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
     if ( $mailing['status'] == 'completed' ) {
         // for completed mailings, the stats no longer change
-        $sql = $wpdb->prepare( "UPDATE $mailings_table SET status='archived' WHERE id=%d", $mailing_id );
+	$fields = [
+		'status' => 'archived',
+	];
     } else {
         $stats = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
-        $sql   = $wpdb->prepare( "UPDATE $mailings_table SET status='archived', stats=%s WHERE id=%d", $stats, $mailing_id );
+	$fields = [
+		'status' => 'archived',
+		'stats' => eme_serialize( $stats )
+	];
     }
-    $wpdb->query( $sql );
+    $where = [
+	    'id' => $mailing_id
+    ];
+    $wpdb->update( $mailings_table, $fields, $where );
+
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql         = $wpdb->prepare( "DELETE FROM $queue_table WHERE mailing_id=%d", $mailing_id );
-    $wpdb->query( $sql );
+    $wpdb->delete( $queue_table, ['mailing_id' => $mailing_id] );
     wp_cache_delete( "eme_mailing $mailing_id" );
 }
 
 function eme_mailing_retry_failed( $id ) {
     global $wpdb;
     $mqueue_table            = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $where                   = [];
-    $fields                  = [];
-    $where['mailing_id']     = intval( $id );
-    $where['status']         = 2;
-    $fields['status']        = 0;
+    $where = [
+	    'mailing_id' => intval( $id ),
+	    'status' => 2
+    ];
+    $fields = ['status' => 0 ];
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
         return false;
     } else {
@@ -820,19 +844,33 @@ function eme_archive_old_mailings() {
 function eme_cancel_mail( $mail_id ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql         = $wpdb->prepare( "UPDATE $queue_table SET status=3 WHERE status=0 AND id=%d", $mail_id );
-    $wpdb->query( $sql );
+    $where = [
+	    'id' => $mail_id,
+	    'status' => 0
+    ];
+    $fields = ['status' => 3 ];
+    $wpdb->update( $queue_table, $fields, $where );
 }
 
 function eme_cancel_mailing( $mailing_id ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql         = $wpdb->prepare( "UPDATE $queue_table SET status=3 WHERE status=0 AND mailing_id=%d", $mailing_id );
-    $wpdb->query( $sql );
+    $where = [
+	    'mailing_id' => $mailing_id,
+	    'status' => 0
+    ];
+    $fields = ['status' => 3 ];
+    $wpdb->update( $queue_table, $fields, $where );
     $stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    $sql            = $wpdb->prepare( "UPDATE $mailings_table SET status='cancelled', stats=%s WHERE id=%d", $stats, $mailing_id );
-    $wpdb->query( $sql );
+    $where = [
+	    'id' => $mailing_id,
+    ];
+    $fields = [
+	    'status' => 'cancelled',
+	    'stats' => $stats
+    ];
+    $wpdb->update( $mailings_table, $fields, $where );
     wp_cache_delete( "eme_mailing $mailing_id" );
 }
 
@@ -989,8 +1027,16 @@ function eme_mail_track( $random_id ) {
             if ( ! $ignore ) {
                 $now = $eme_date_obj_now->getDateTime();
                 // we add the read_count=0 to the SQL statement so we know that 2 identical queries arriving almost at the same time will not cause the same update
-                $sql = $wpdb->prepare( "UPDATE $table SET first_read_on=%s, last_read_on=%s, read_count=1 WHERE id = %d AND read_count=0", $now, $now, $queued_mail['id'] );
-                $res = $wpdb->query( $sql );
+		$where = [
+			'id' => $queued_mail['id'],
+			'read_count' => 0
+		];
+		$fields = [
+			'first_read_on' => $now,
+			'last_read_on' => $now,
+			'read_count' => 1
+		];
+		$wpdb->update( $table, $fields, $where );
                 // update the mailing table with the count of times the mail was read
                 // read_count in the mailings_table is the unique read count for this mailing
                 if ( $res !== false ) {
@@ -3201,6 +3247,7 @@ function eme_unsub_send_confirmation_mail( $email ) {
         $unsub_confirm_subject = eme_translate( get_option( 'eme_unsub_confirm_subject' ) );
         $unsub_confirm_body    = eme_translate( get_option( 'eme_unsub_confirm_body' ) );
         $unsub_confirm_body    = eme_replace_people_placeholders( $unsub_confirm_body, $person );
+        $unsub_confirm_body    = str_replace( '#_CONTACTPERSON', $contact_email, $unsub_confirm_body );
         $full_name             = eme_format_full_name( $person['firstname'], $person['lastname'] );
         eme_queue_fastmail( $unsub_confirm_subject, $unsub_confirm_body, $contact_email, $contact_name, $email, $full_name, $contact_email, $contact_name );
     }
@@ -3244,10 +3291,17 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
 function eme_unsub_do( $email, $group_ids ) {
     $count = 0;
     $public_groupids = eme_get_public_groupids(); // all public static groups
+    $add_newsletter = 0;
+    if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
+	    $add_newsletter = 1;
+    }
+    if ( $add_newsletter ) {
+	    $public_groupids[] = -1;
+    }
     if ( eme_count_persons_by_email( $email ) > 0 ) {
         if ( empty( $group_ids ) ) {
             $group_ids = $public_groupids;
-            if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
+	    if ( $add_newsletter ) {
                 $group_ids[] = -1;
             }
             eme_update_email_massmail( $email, 0 );
@@ -3259,13 +3313,15 @@ function eme_unsub_do( $email, $group_ids ) {
             foreach ( $group_ids as $group_id ) {
                 // -1 is the newsletter
                 if ( $group_id == -1 ) {
-                    eme_remove_email_from_newsletter( $email );
-                    $count++;
+                    if ( eme_remove_email_from_newsletter( $email )) {
+			    $count++;
+		    }
                 } else {
                     $group = eme_get_group( $group_id );
                     if ( ! empty( $group['public'] ) && $group['type']='static' ) {
-                        eme_delete_emailfromgroup( $email, $group_id );
-                        $count++;
+                        if ( eme_delete_emailfromgroup( $email, $group_id )) {
+				$count++;
+			}
                     }
                 }
             }

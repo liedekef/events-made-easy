@@ -99,6 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.50 (2025/04/16) =
+* Unsub from the newsletter was not working: fixed
+* If nothing is done in unsub, now a message will be returned reflecting that
+* Start using more wpdb->update functions
+
 = 2.5.49 (2025/04/16) =
 * Unsub confirmation email was not being sent, fixed
 * Remove a borderline case causing a PHP notice from wordpress to pop up "Notice: Function _load_textdomain_just_in_time was called incorrectly."

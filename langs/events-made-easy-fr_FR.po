@@ -87,14 +87,14 @@ msgstr "au nom de %s"
 msgid "Access denied!"
 msgstr "Accès refusé!"
 
-#: eme-actions.php:223
+#: eme-actions.php:239
 #: eme-events.php:6365
 #: eme-events.php:9771
 #: eme-templates.php:44
 msgid "Event"
 msgstr "Évènement"
 
-#: eme-actions.php:232
+#: eme-actions.php:248
 #: eme-events.php:6366
 #: eme-events.php:8494
 #: eme-events.php:9718
@@ -102,7 +102,7 @@ msgstr "Évènement"
 msgid "Location"
 msgstr "Lieu"
 
-#: eme-actions.php:357
+#: eme-actions.php:373
 #: eme-events.php:9639
 #: eme-events.php:9872
 #: eme-events.php:9905
@@ -117,7 +117,7 @@ msgstr "Lieu"
 msgid "State"
 msgstr "État"
 
-#: eme-actions.php:358
+#: eme-actions.php:374
 #: eme-countries.php:513
 #: eme-events.php:9640
 #: eme-events.php:9871
@@ -133,34 +133,34 @@ msgstr "État"
 msgid "Country"
 msgstr "Pays"
 
-#: eme-actions.php:360
+#: eme-actions.php:376
 #: eme-events.php:9642
 msgid "An error has occurred"
 msgstr "Une erreur est survenue"
 
-#: eme-actions.php:361
+#: eme-actions.php:377
 msgid "Clear"
 msgstr "Vider"
 
-#: eme-actions.php:362
+#: eme-actions.php:378
 #: eme-events.php:9643
 msgid "Mailing preferences"
 msgstr "Préférences d’envoi"
 
-#: eme-actions.php:363
+#: eme-actions.php:379
 #: eme-events.php:9644
 msgid "Yes, I'm sure"
 msgstr "Oui, je suis sûr"
 
-#: eme-actions.php:484
+#: eme-actions.php:500
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Cette page correspond à la page des évènements <strong>Events Made Easy</strong>. Son contenu sera précisé par<strong>Events Made Easy</strong>. Si vous souhaitez afficher votre contenu, vous pouvez affecter une autre page à <strong>Events Made Easy</strong> dans les <a href='%s'>Réglages</a>. "
 
-#: eme-actions.php:508
+#: eme-actions.php:524
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Hey, <strong>%s</strong>, Bienvenue à <strong>Events Made Easy</strong>! Nous espérons que vous l'aimerez ici.</p><p>Maintenant il est temps d’insérer des listes d’évènements à travers<a href='%s' title=' Page des widgets'>widgets</a>, <a href='%s' title='Documentation sur les marqueurs de modèles'>marqueurs de modèle</a> ou <a href='%s' title='Documentation des codes courts'>codes courts</a>.</p><p>Au fait, avez-vous jeté un coup d’œil aux <a href='%s' title='Changer les paramètres'> Pages des paramètres</a> ? C'est là que vous personnalisez la manière dont les évènements et les emplacements sont affichés.</p><p>Quoi ? Fatigué de voir ce conseil ? Je vous entends, <a href=\"%s\" title=\"Ne plus afficher ce conseil\">cliquez ici</a> et vous ne le verrez plus !</p>"
 
-#: eme-actions.php:519
+#: eme-actions.php:535
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Si vous trouvez qu’<strong>Events Made Easy</strong> vous est utile, envisagez de faire un petit don pour contribuer au temps investi et aux développements ultérieurs. Merci de votre soutien !"
 
@@ -173,12 +173,12 @@ msgstr "Tout"
 #: eme-attendances.php:80
 #: eme-events.php:9705
 #: eme-install.php:1702
+#: eme-options.php:130
 #: eme-options.php:151
 #: eme-options.php:152
 #: eme-options.php:1287
 #: eme-options.php:1514
-#: events-manager.php:122
-#: events-manager.php:349
+#: events-manager.php:347
 msgid "Events"
 msgstr "Évènements"
 
@@ -186,7 +186,7 @@ msgstr "Évènements"
 #: eme-events.php:9987
 #: eme-gdpr.php:468
 #: eme-options.php:1596
-#: events-manager.php:368
+#: events-manager.php:366
 msgid "Memberships"
 msgstr "Les adhésions"
 
@@ -507,7 +507,7 @@ msgid "Action info"
 msgstr "Action info"
 
 #: eme-cleanup.php:283
-#: events-manager.php:373
+#: events-manager.php:371
 msgid "Cleanup actions"
 msgstr "Action de nettoyage"
 
@@ -1059,7 +1059,7 @@ msgid "New events will not be mailed to EME registered people."
 msgstr "Les nouveaux évènements ne seront pas envoyés aux personnes inscrites sur EME."
 
 #: eme-cron.php:302
-#: events-manager.php:372
+#: events-manager.php:370
 msgid "Scheduled actions"
 msgstr "Actions planifiées"
 
@@ -2088,7 +2088,7 @@ msgstr "Évènements passés"
 #: eme-events.php:5976
 #: eme-rsvp.php:5165
 #: eme-tasks.php:447
-#: events-manager.php:349
+#: events-manager.php:347
 msgid "All events"
 msgstr "Tous les événements"
 
@@ -4014,7 +4014,7 @@ msgid "No matching person found"
 msgstr "Aucune personne correspondante trouvée"
 
 #: eme-events.php:9766
-#: events-manager.php:363
+#: events-manager.php:361
 msgid "Task signups"
 msgstr "Inscription aux tâches"
 
@@ -4071,7 +4071,7 @@ msgstr "Enregistrements supprimés"
 #: eme-events.php:9791
 #: eme-formfields.php:4928
 #: eme-options.php:1563
-#: events-manager.php:356
+#: events-manager.php:354
 msgid "Templates"
 msgstr "Modèles"
 
@@ -4113,7 +4113,7 @@ msgstr "Obligatoire"
 
 #: eme-events.php:9832
 #: eme-options.php:1573
-#: events-manager.php:358
+#: events-manager.php:356
 msgid "Discounts"
 msgstr "Remises"
 
@@ -4169,7 +4169,7 @@ msgstr "États"
 msgid "No country associated with this state, it will not show up in dropdown lists. Please edit this state and correct the country info."
 msgstr "Aucun pays associé à cet état, il n'apparaîtra pas dans les listes déroulantes. Veuillez éditer cet état et corriger les informations sur le pays."
 
-#: eme-actions.php:413
+#: eme-actions.php:429
 #: eme-events.php:9703
 #: eme-events.php:9893
 msgid "No matching location found"
@@ -4178,7 +4178,7 @@ msgstr "Aucun emplacement correspondant trouvé"
 #: eme-events.php:9894
 #: eme-options.php:1288
 #: eme-options.php:1530
-#: events-manager.php:350
+#: events-manager.php:348
 msgid "Locations"
 msgstr "Lieux"
 
@@ -4253,14 +4253,14 @@ msgstr "Identifiant du Groupe"
 
 #: eme-events.php:9930
 #: eme-people.php:2585
-#: events-manager.php:365
+#: events-manager.php:363
 msgid "People"
 msgstr "Personnes"
 
 #: eme-events.php:9931
 #: eme-events.php:9953
 #: eme-people.php:2417
-#: events-manager.php:366
+#: events-manager.php:364
 msgid "Groups"
 msgstr "Groupes"
 
@@ -4445,7 +4445,7 @@ msgstr "Aucun membre correspondant trouvé"
 
 #: eme-events.php:9986
 #: eme-options.php:1289
-#: events-manager.php:367
+#: events-manager.php:365
 msgid "Members"
 msgstr "Membres"
 
@@ -6091,9 +6091,9 @@ msgstr "EME utilise éventuellement un cookie pour stocker la date et l'heure du
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:669
+#: eme-actions.php:685
 #: eme-gdpr.php:528
-#: events-manager.php:346
+#: events-manager.php:344
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
@@ -8469,7 +8469,6 @@ msgid "Hi #_PERSONFIRSTNAME,<br><br>Congratulations on your birthday!!!<br><br>F
 msgstr "Bonjour  #_PERSONFIRSTNAME,<br><br>Félicitations pour votre anniversaire !  !  ! <br><br>de EME"
 
 #: eme-options.php:131
-#: events-manager.php:125
 msgid "No events"
 msgstr "Aucun évènement"
 
@@ -8945,7 +8944,7 @@ msgstr "Permission nécessaire pour modifier tous les lieux. Par défaut: %s"
 
 #: eme-events.php:10092
 #: eme-options.php:1543
-#: events-manager.php:352
+#: events-manager.php:350
 msgid "Categories"
 msgstr "Catégories"
 
@@ -8960,7 +8959,7 @@ msgstr "Permission nécessaire pour modifier toutes les catégories. Par défaut
 #: eme-options.php:1553
 #: eme-options.php:1557
 #: eme-widgets.php:362
-#: events-manager.php:354
+#: events-manager.php:352
 msgid "Holidays"
 msgstr "Vacances"
 
@@ -9198,7 +9197,7 @@ msgid "Permission needed to execute cleanup actions, manage cron settings and im
 msgstr "Autorisation nécessaire pour exécuter des actions de nettoyage, gérer les paramètres cron et les actions d'importation. Valeur par défaut : %s"
 
 #: eme-options.php:1671
-#: events-manager.php:374
+#: events-manager.php:372
 msgid "Settings"
 msgstr "Paramètres"
 
@@ -9212,7 +9211,7 @@ msgstr "Permission nécessaire pour modifier les paramètres. Par défaut: %s"
 
 #: eme-options.php:1686
 #: eme-options.php:1689
-#: events-manager.php:379
+#: events-manager.php:377
 msgid "Events page"
 msgstr "Page événements"
 
@@ -13285,48 +13284,48 @@ msgstr "Calendrier Events Made Easy"
 msgid "Show Long Events?"
 msgstr "Afficher les évènements longs ?"
 
-#: events-manager.php:321
+#: events-manager.php:319
 msgid "%d pending booking"
 msgid_plural "%d pending bookings"
 msgstr[0] "%d réservations en attente"
 msgstr[1] "%d réservations en attente"
 
-#: events-manager.php:322
+#: events-manager.php:320
 msgid "%d pending member"
 msgid_plural "%d pending members"
 msgstr[0] "%d membres en attente"
 msgstr[1] "%d membres en attente"
 
 #: eme-events.php:9811
-#: events-manager.php:355
+#: events-manager.php:353
 msgid "Custom Fields"
 msgstr "Champs personnalisés"
 
-#: events-manager.php:359
+#: events-manager.php:357
 msgid "Pending Bookings"
 msgstr "Réservations en attente"
 
-#: events-manager.php:360
+#: events-manager.php:358
 msgid "Approved Bookings"
 msgstr "Réservations approuvées"
 
-#: events-manager.php:369
+#: events-manager.php:367
 msgid "Countries/states"
 msgstr "Pays/états"
 
-#: events-manager.php:370
+#: events-manager.php:368
 msgid "Email management"
 msgstr "Gestion des e-mails"
 
-#: events-manager.php:371
+#: events-manager.php:369
 msgid "Attendance Reports"
 msgstr "Rapports de présence"
 
-#: events-manager.php:374
+#: events-manager.php:372
 msgid "Events Made Easy Settings"
 msgstr "Réglages Event Made Easy"
 
-#: events-manager.php:379
+#: events-manager.php:377
 msgid "Error: the special events page is not set or no longer exist, please set the option '%s' to an existing page or EME will not work correctly!"
 msgstr "Erreur : la page d'évènements spéciaux n'est pas définie ou n'existe plus, veuillez définir l'option '%s' vers une page existante ou EME ne fonctionnera pas correctement !"
 
@@ -13500,15 +13499,15 @@ msgstr "À partir de %s (extension automatique)"
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr "Si le nombre de places pour une tâche est de 0, la description de la tâche sera traitée comme un en-tête de section pour la prochaine série de tâches."
 
-#: eme-actions.php:516
+#: eme-actions.php:532
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy a été installé ou mis à jour"
 
-#: eme-actions.php:517
+#: eme-actions.php:533
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Faites un don pour le développement d’Events Made Easy"
 
-#: eme-actions.php:527
+#: eme-actions.php:543
 msgid "Dismiss"
 msgstr "Ignorer"
 
@@ -13536,7 +13535,7 @@ msgstr "Corps de l’e-mail à la personne de contact d’un membre effacé"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "Le corps de l’e-mail envoyé à la personne de contact juste avant la suppression d'un membre."
 
-#: eme-actions.php:675
+#: eme-actions.php:691
 msgid "List of next 10 events"
 msgstr "Liste des 10 prochains évènements"
 

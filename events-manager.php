@@ -289,10 +289,9 @@ $myUpdateChecker->getVcsApi()->enableReleaseAssets('/events-made-easy\.zip/');
 add_action( 'admin_menu', 'eme_create_events_submenu' );
 function eme_create_events_submenu() {
 	# just in case: make sure the Settings page can be reached if something is not correct with the security settings
-	if ( get_option( 'eme_cap_settings' ) == '' ) {
+	$cap_settings = get_option( 'eme_cap_settings' );
+    if (empty($cap_settings)) {
 		$cap_settings = DEFAULT_CAP_SETTINGS;
-	} else {
-		$cap_settings = get_option( 'eme_cap_settings' );
 	}
 
 	$events_page_id = eme_get_events_page_id();

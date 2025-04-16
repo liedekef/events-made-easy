@@ -980,8 +980,12 @@ function eme_events_page_content() {
             $eme_email_groups_arr = [];
         }
         if ( wp_verify_nonce( eme_sanitize_request( $_GET['eme_unsub_nonce'] ), "unsub $eme_email$eme_email_groups" ) ) {
-            eme_unsub_do( $eme_email, $eme_email_groups_arr );
-            return "<div class='eme-message-success eme-unsubscribe-message-success'>" . __( 'You have been unsubscribed.', 'events-made-easy' ) . '</div>';
+            $res = eme_unsub_do( $eme_email, $eme_email_groups_arr );
+	    if (empty($res)) {
+		    return "<div class='eme-message-error eme-unsubscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
+	    } else {
+		    return "<div class='eme-message-success eme-unsubscribe-message-success'>" . __( 'You have been unsubscribed.', 'events-made-easy' ) . '</div>';
+	    }
         } else {
             return "<div class='eme-message-error eme-unsubscribe-message-error'>" . __( 'This link is not (or no longer) valid.', 'events-made-easy' ) . '</div>';
         }

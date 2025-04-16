@@ -3261,6 +3261,9 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
     }
     if ( empty( $group_ids ) ) {
         $group_ids = eme_get_public_groupids();
+        if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
+            $group_ids[] = -1;
+        }
     }
     if ( ! empty( $person ) ) {
         $res = eme_add_persongroups( $person['person_id'], $group_ids, 1 );
@@ -3301,7 +3304,7 @@ function eme_unsub_do( $email, $group_ids ) {
     if ( eme_count_persons_by_email( $email ) > 0 ) {
         if ( empty( $group_ids ) ) {
             $group_ids = $public_groupids;
-	    if ( $add_newsletter ) {
+            if ( $add_newsletter ) {
                 $group_ids[] = -1;
             }
             eme_update_email_massmail( $email, 0 );

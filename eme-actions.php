@@ -175,9 +175,25 @@ function eme_actions_init() {
 }
 
 add_action( 'init', 'eme_actions_init', 1 );
+
 // setup_theme fires before the theme is loaded, thus avoiding issues with themes adding empty lines at the top and thus e.g. rendering captcha invalid
 // But then the custom filters in the theme functions.php are not yet loaded, causing issues with a number of hooks here
 add_action( 'setup_theme', 'eme_actions_early_init', 1 );
+
+/*
+// EME loads the translation at init stage (as recommended) but still the "doing it wrong message" appears ...
+add_filter('doing_it_wrong_trigger_error',
+	function ( $doing_it_wrong, $function_name, $message ) {
+		// if the function is _load_textdomain_just_in_time, return false to prevent the error.
+		if ( '_load_textdomain_just_in_time' === $function_name && false !== strpos( $message, 'events-made-easy' ) ) {
+			return false;
+		}
+		return $doing_it_wrong;
+	},
+	10,
+	4
+);
+*/
 
 function eme_actions_admin_init() {
     global $current_user, $plugin_page;

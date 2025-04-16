@@ -72,7 +72,7 @@ if ( ! class_exists( 'ExpressiveDate' ) ) {
     require_once 'class-expressivedate.php';
 }
 
-// Setting constants
+// Setting constants, no calls to "__" here!!!
 define( 'EME_VERSION', '2.5.48' );
 define( 'EME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'DEFAULT_CAP_ADD_EVENT', 'edit_posts' );
@@ -119,10 +119,8 @@ define( 'DEFAULT_EVENT_LIST_HEADER_FORMAT', "<ul class='eme_events_list'>" );
 define( 'DEFAULT_EVENT_LIST_FOOTER_FORMAT', '</ul>' );
 define( 'DEFAULT_CAT_EVENT_LIST_HEADER_FORMAT', "<ul class='eme_events_list'>" );
 define( 'DEFAULT_CAT_EVENT_LIST_FOOTER_FORMAT', '</ul>' );
-define( 'DEFAULT_EVENTS_PAGE_TITLE', __( 'Events', 'events-made-easy' ) );
 define( 'DEFAULT_EVENT_HTML_TITLE_FORMAT', '#_EVENTNAME' );
 define( 'DEFAULT_WIDGET_EVENT_LIST_ITEM_FORMAT', '<li>#_LINKEDNAME<ul><li>#_STARTDATE</li><li>#_TOWN</li></ul></li>' );
-define( 'DEFAULT_NO_EVENTS_MESSAGE', __( 'No events', 'events-made-easy' ) );
 define( 'DEFAULT_LOCATION_HTML_TITLE_FORMAT', '#_LOCATIONNAME' );
 define( 'DEFAULT_LOCATION_LIST_HEADER_FORMAT', "<ul class='eme_locations_list'>" );
 define( 'DEFAULT_LOCATION_EVENT_LIST_ITEM_FORMAT', '<li>#_EVENTNAME - #_STARTDATE - #_STARTTIME</li>' );

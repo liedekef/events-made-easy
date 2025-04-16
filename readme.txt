@@ -101,6 +101,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 == Changelog ==
 = 2.5.49 (2025/04/) =
 * Unsub confirmation email was not being sent, fixed
+* Remove a borderline case causing a PHP notice from wordpress to pop up "Notice: Function _load_textdomain_just_in_time was called incorrectly."
 
 = 2.5.48 (2025/04/15) =
 * Make sure unsub actually does something

@@ -3254,16 +3254,20 @@ function eme_unsub_send_confirmation_mail( $email ) {
 }
 
 function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
-    $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
     $res    = false;
-    if ( ! $person ) {
-        $person = eme_get_person_by_email_only( $email );
+    $public_groupids = eme_get_public_groupids(); // all public static groups
+    if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
+	    $public_groupids[] = -1;
     }
     if ( empty( $group_ids ) ) {
-        $group_ids = eme_get_public_groupids();
-        if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
-            $group_ids[] = -1;
-        }
+        $group_ids = $public_groupids;
+    } else {
+        $group_ids = array_intersect( $group_ids, $public_groupids );
+    }
+
+    $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
+    if ( ! $person ) {
+        $person = eme_get_person_by_email_only( $email );
     }
     if ( ! empty( $person ) ) {
         $res = eme_add_persongroups( $person['person_id'], $group_ids, 1 );

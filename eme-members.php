@@ -3864,8 +3864,7 @@ function eme_store_member_answers( $member, $do_update = 1, $original_post_membe
     if ( $do_update && $member_id > 0 ) {
         // put the extra charge found in the member
         $members_table = EME_DB_PREFIX . EME_MEMBERS_TBNAME;
-        $sql           = $wpdb->prepare( "UPDATE $members_table SET extra_charge = %s WHERE member_id = %d", $extra_charge, $member_id );
-        $wpdb->query( $sql );
+        $wpdb->update( $members_table, ['extra_charge'=>$extra_charge], ['member_id'=>$member_id] );
 
         // delete old answer_ids
         foreach ( $all_answers as $answer ) {

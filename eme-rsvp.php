@@ -2302,8 +2302,7 @@ function eme_store_booking_answers( $booking, $do_update = 1 ) {
     if ( $do_update && $booking_id > 0 ) {
         // put the extra charge found in the booking made
         $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
-        $sql            = $wpdb->prepare( "UPDATE $bookings_table SET extra_charge = %s WHERE booking_id = %d", $extra_charge, $booking_id );
-        $wpdb->query( $sql );
+        $wpdb->update( $bookings_table, ['extra_charge'=>$extra_charge], ['booking_id'=>$booking_id] );
 
         // delete old answer_ids
         foreach ( $all_answers as $answer ) {

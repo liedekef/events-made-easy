@@ -3347,7 +3347,7 @@ function eme_get_personid_by_email_in_groups( $email, $group_ids ) {
     return $person_id;
 }
 
-function eme_delete_emailfromgroup( $email, $group_id ) {
+function eme_delete_email_from_group( $email, $group_id ) {
     global $wpdb;
     $people_table     = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
@@ -3355,7 +3355,7 @@ function eme_delete_emailfromgroup( $email, $group_id ) {
     return $wpdb->query( $sql );
 }
 
-function eme_delete_personfromgroup( $person_id, $group_id ) {
+function eme_delete_person_from_group( $person_id, $group_id ) {
     global $wpdb;
     $usergroups_table = EME_DB_PREFIX . EME_USERGROUPS_TBNAME;
     $sql              = $wpdb->prepare( "DELETE FROM $usergroups_table WHERE group_id=%d AND person_id=%d", $group_id, $person_id );
@@ -5495,7 +5495,7 @@ function eme_ajax_action_add_people_to_group( $ids_arr, $group_id ) {
 function eme_ajax_action_delete_people_from_group( $ids_arr, $group_id ) {
     $ajaxResult = [];
     foreach ( $ids_arr as $person_id ) {
-        eme_delete_personfromgroup( $person_id, $group_id );
+        eme_delete_person_from_group( $person_id, $group_id );
     }
     $ajaxResult['Result']      = 'OK';
     $ajaxResult['htmlmessage'] = esc_html__( 'People removed from group.', 'events-made-easy' );

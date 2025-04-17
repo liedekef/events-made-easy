@@ -3294,19 +3294,12 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
 function eme_unsub_do( $email, $group_ids ) {
     $count = 0;
     $public_groupids = eme_get_public_groupids(); // all public static groups
-    $add_newsletter = 0;
     if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
-	    $add_newsletter = 1;
-    }
-    if ( $add_newsletter ) {
 	    $public_groupids[] = -1;
     }
     if ( eme_count_persons_by_email( $email ) > 0 ) {
         if ( empty( $group_ids ) ) {
             $group_ids = $public_groupids;
-            if ( $add_newsletter ) {
-                $group_ids[] = -1;
-            }
             eme_update_email_massmail( $email, 0 );
             $count++;
         } else {
@@ -3317,14 +3310,11 @@ function eme_unsub_do( $email, $group_ids ) {
                 // -1 is the newsletter
                 if ( $group_id == -1 ) {
                     if ( eme_remove_email_from_newsletter( $email )) {
-			    $count++;
-		    }
+                        $count++;
+                    }
                 } else {
-                    $group = eme_get_group( $group_id );
-                    if ( ! empty( $group['public'] ) && $group['type']='static' ) {
-                        if ( eme_delete_emailfromgroup( $email, $group_id )) {
-				$count++;
-			}
+                    if ( eme_delete_email_from_group( $email, $group_id )) {
+                        $count++;
                     }
                 }
             }

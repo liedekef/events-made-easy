@@ -4070,14 +4070,12 @@ function eme_insert_answer( $type, $related_id, $field_id, $answer, $grouping_id
 function eme_update_answer( $answer_id, $value ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $sql           = $wpdb->prepare( "UPDATE $answers_table SET answer=%s WHERE answer_id=%d", $value, $answer_id );
-    $wpdb->query( $sql );
+    $wpdb->update( $answers_table, ['answer'=>$value], ['answer_id'=>$answer_id] );
 }
 function eme_delete_answer( $answer_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $sql           = $wpdb->prepare( "DELETE FROM $answers_table WHERE answer_id=%d", $answer_id );
-    $wpdb->query( $sql );
+    $wpdb->update( $answers_table, ['answer_id'=>$answer_id] );
 }
 
 function eme_get_db_prefix() {

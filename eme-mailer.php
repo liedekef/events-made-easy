@@ -1027,16 +1027,16 @@ function eme_mail_track( $random_id ) {
             if ( ! $ignore ) {
                 $now = $eme_date_obj_now->getDateTime();
                 // we add the read_count=0 to the SQL statement so we know that 2 identical queries arriving almost at the same time will not cause the same update
-		$where = [
-			'id' => $queued_mail['id'],
-			'read_count' => 0
-		];
-		$fields = [
-			'first_read_on' => $now,
-			'last_read_on' => $now,
-			'read_count' => 1
-		];
-		$wpdb->update( $table, $fields, $where );
+                $where = [
+                    'id' => $queued_mail['id'],
+                    'read_count' => 0
+                ];
+                $fields = [
+                    'first_read_on' => $now,
+                    'last_read_on' => $now,
+                    'read_count' => 1
+                ];
+                $res = $wpdb->update( $table, $fields, $where );
                 // update the mailing table with the count of times the mail was read
                 // read_count in the mailings_table is the unique read count for this mailing
                 if ( $res !== false ) {

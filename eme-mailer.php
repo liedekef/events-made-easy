@@ -3255,14 +3255,14 @@ function eme_unsub_send_confirmation_mail( $email ) {
 
 function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
     $res    = false;
-    $public_groupids = eme_get_public_groupids(); // all public static groups
+    $subscribable_groupids = eme_get_subscribable_groupids(); // all public static groups
     if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
-	    $public_groupids[] = -1;
+	    $subscribable_groupids[] = -1;
     }
     if ( empty( $group_ids ) ) {
-        $group_ids = $public_groupids;
+        $group_ids = $subscribable_groupids;
     } else {
-        $group_ids = array_intersect( $group_ids, $public_groupids );
+        $group_ids = array_intersect( $group_ids, $subscribable_groupids );
     }
 
     $person = eme_get_person_by_name_and_email( $lastname, $firstname, $email );
@@ -3296,28 +3296,30 @@ function eme_sub_do( $lastname, $firstname, $email, $group_ids ) {
 }
 
 function eme_unsub_do( $email, $group_ids ) {
-    $count = 0;
-    $public_groupids = eme_get_public_groupids(); // all public static groups
+    $count = 0; // we'll keep a count of actions done
+    $subscribable_groupids = eme_get_subscribable_groupids(); // all public static groups
     if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
-	    $public_groupids[] = -1;
+	    $subscribable_groupids[] = -1;
     }
     if ( eme_count_persons_by_email( $email ) > 0 ) {
         if ( empty( $group_ids ) ) {
-            $group_ids = $public_groupids;
-            eme_update_email_massmail( $email, 0 );
-            $count++;
+            $group_ids = $subscribable_groupids;
+            // also set massmail to 0, and add to the count of done actions
+            if (eme_update_email_massmail( $email, 0 ) ) {
+                $count++;
+            }
         } else {
-            $group_ids = array_intersect( $group_ids, $public_groupids );
+            $group_ids = array_intersect( $group_ids, $subscribable_groupids );
         }
         if ( ! empty( $group_ids ) ) {
             foreach ( $group_ids as $group_id ) {
                 // -1 is the newsletter
                 if ( $group_id == -1 ) {
-                    if ( eme_remove_email_from_newsletter( $email )) {
+                    if ( eme_remove_email_from_newsletter( $email ) ) {
                         $count++;
                     }
                 } else {
-                    if ( eme_delete_email_from_group( $email, $group_id )) {
+                    if ( eme_delete_email_from_group( $email, $group_id ) ) {
                         $count++;
                     }
                 }

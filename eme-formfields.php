@@ -4261,17 +4261,17 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
         $format = eme_add_captcha_submit( $format, $selected_captcha );
     }
 
-    $tmp_groups = eme_get_public_groups();
+    $tmp_groups = eme_get_subscribable_groups();
     if ( ! empty( $tmp_groups ) ) {
-        $public_groups = [ '' => esc_html__( 'All', 'events-made-easy' ) ];
+        $subscribable_groups = [ '' => esc_html__( 'All', 'events-made-easy' ) ];
     } else {
-        $public_groups = [];
+        $subscribable_groups = [];
     }
     if ( wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
-        $public_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
+        $subscribable_groups['-1'] = esc_html__( 'Newsletter concerning new events', 'events-made-easy' );
     }
     foreach ( $tmp_groups as $group ) {
-        $public_groups[ $group['group_id'] ] = eme_esc_html( $group['name'] );
+        $subscribable_groups[ $group['group_id'] ] = eme_esc_html( $group['name'] );
     }
 
     $bookerLastName  = '';
@@ -4361,25 +4361,25 @@ function eme_replace_subscribeform_placeholders( $format, $unsubscribe = 0 ) {
                 // remove { and } (first and last char of match)
                 $group_ids = substr( $matches[1], 1, -1 );
                 if ( eme_is_list_of_int( $group_ids ) ) {
-                    $groups  = eme_get_public_groups( $group_ids );
-                    // if only 1 group id, take that one
+                    $groups  = eme_get_subscribable_groups( $group_ids );
                     $ids_arr = explode( ',', $group_ids );
                     if (in_array('-1',$ids_arr) && wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
                         $groups[] = [ 'group_id'=>-1, 'name' => __( 'Newsletter concerning new events', 'events-made-easy' )];
                     }
                     if ( count( $ids_arr ) == 1 ) {
+                        // if only 1 group id, take that one and no need for multiselect
                         $selected_value = $ids_arr[0];
                         $replacement    = eme_ui_select_key_value( $selected_value, 'email_group', $groups, 'group_id', 'name', '', 1 );
                     } else {
                         $replacement = eme_ui_multiselect_key_value( '', 'email_groups', $groups, 'group_id', 'name', 5, '', 1 );
                     }
                 }
-            } elseif ( ! empty( $public_groups ) ) {
-                if ( count( $public_groups ) == 1 ) {
-                    $selected_value = $public_groups[0];
-                    $replacement    = eme_ui_select( '', 'email_group', $public_groups, '', 1 );
+            } elseif ( ! empty( $subscribable_groups ) ) {
+                if ( count( $subscribable_groups ) == 1 ) {
+                    $selected_value = $subscribable_groups[0];
+                    $replacement    = eme_ui_select( '', 'email_group', $subscribable_groups, '', 1 );
                 } else {
-                    $replacement = eme_ui_multiselect( '', 'email_groups', $public_groups, 5, '', 1 );
+                    $replacement = eme_ui_multiselect( '', 'email_groups', $subscribable_groups, 5, '', 1 );
                 }
             }
         } elseif ( preg_match( '/#_GDPR(\{.+?\})?/', $result, $matches ) ) {

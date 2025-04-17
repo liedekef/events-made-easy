@@ -1450,7 +1450,7 @@ function eme_delete_location( $location_id, $transfer_id = 0 ) {
 function eme_delete_location_answers( $location_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $wpdb->delete( $answers_table, ['related_id'=>$location_id], 'type'=>'location'] );
+    $wpdb->delete( $answers_table, ['related_id'=>$location_id, 'type'=>'location'] );
 }
 
 function eme_check_location_external_ref( $id ) {

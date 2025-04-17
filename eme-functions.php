@@ -4075,7 +4075,7 @@ function eme_update_answer( $answer_id, $value ) {
 function eme_delete_answer( $answer_id ) {
     global $wpdb;
     $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
-    $wpdb->update( $answers_table, ['answer_id'=>$answer_id] );
+    $wpdb->delete( $answers_table, ['answer_id'=>$answer_id] );
 }
 
 function eme_get_db_prefix() {

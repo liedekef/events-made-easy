@@ -3114,7 +3114,7 @@ function eme_untrash_people( $person_ids ) {
 function eme_add_personid_to_newsletter( $person_id ) {
     global $wpdb;
     $people_table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
-    $sql          = $wpdb->prepare( "UPDATE $people_table SET newsletter=1 WHERE person_id=%d AND newsletter=0", $person_id );
+    $sql          = $wpdb->prepare( "UPDATE $people_table SET newsletter=1 WHERE person_id=%d", $person_id );
     $sql_res      = $wpdb->query( $sql );
     if ( $sql_res === false ) {
         return false;
@@ -3200,7 +3200,7 @@ function eme_get_groups() {
     return $wpdb->get_results( $sql, ARRAY_A );
 }
 
-function eme_get_public_groups( $group_ids = '' ) {
+function eme_get_subscribable_groups( $group_ids = '' ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
     if ( !empty( $group_ids ) && eme_is_list_of_int( $group_ids ) ) {
@@ -3211,7 +3211,7 @@ function eme_get_public_groups( $group_ids = '' ) {
     return $wpdb->get_results( $sql, ARRAY_A );
 }
 
-function eme_get_public_groupids() {
+function eme_get_subscribable_groupids() {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
     $sql   = "SELECT group_id FROM $table WHERE public=1 AND type='static' ORDER BY name";
@@ -4483,7 +4483,7 @@ function eme_update_email_massmail( $email, $massmail ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_PEOPLE_TBNAME;
     $sql   = $wpdb->prepare( "UPDATE $table SET massmail = %d WHERE email = %s", $massmail, $email );
-    $wpdb->query( $sql );
+    return $wpdb->query( $sql );
 }
 
 function eme_update_people_massmail( $person_ids, $massmail = 1 ) {
@@ -4647,7 +4647,7 @@ function eme_subform_shortcode( $atts ) {
         $format = eme_get_template_format( intval($atts['template_id']) );
     } else {
         $format     = '<p>' . esc_html__( 'If you want to subscribe to future mailings, please do so by entering your email here.', 'events-made-easy' ) . '<p>#_EMAIL';
-        $tmp_groups = eme_get_public_groupids();
+        $tmp_groups = eme_get_subscribable_groupids();
         if ( ! empty( $tmp_groups ) ) {
             $format .= '<p>' . esc_html__( 'Please select the groups you wish to subscribe to.', 'events-made-easy' ) . '</p> #_MAILGROUPS';
         }
@@ -4734,7 +4734,7 @@ function eme_unsubform_shortcode( $atts = [] ) {
         $format = eme_get_template_format( intval($atts['template_id']) );
     } else {
         $format     = '<p>' . esc_html__( 'If you want to unsubscribe from future mailings, please do so by entering your email here.', 'events-made-easy' ) . '<p>#_EMAIL';
-        $tmp_groups = eme_get_public_groups();
+        $tmp_groups = eme_get_subscribable_groups();
         if ( ! empty( $tmp_groups ) || wp_next_scheduled( 'eme_cron_send_new_events' ) ) {
             $format .= '<p>' . esc_html__( 'Please select the groups you wish to unsubscribe from.', 'events-made-easy' ) . '</p> #_MAILGROUPS';
         }

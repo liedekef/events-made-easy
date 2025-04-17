@@ -4238,7 +4238,7 @@ function eme_rightclickhint() {
     } else {
         esc_html_e( 'All selected columns are used for sorting', 'events-made-easy' );
     }
-    ?>;
+    ?>
     </span>
 <?php
 }

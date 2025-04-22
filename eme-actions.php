@@ -686,8 +686,7 @@ function eme_custom_dashboard_widget() {
 }
 
 function eme_custom_dashboard_next_events() {
-    $format = "<li>#_STARTDATE #_STARTTIME <a href='#_EDITEVENTURL'>#_EVENTNAME</a> </li>";
-    #$format = '';
+    $format        = "<li>#_STARTDATE #_STARTTIME <a href='#_EDITEVENTURL'>#_EVENTNAME</a> </li>";
     $format_header = '<h3>'.__('List of next 10 events','events-made-easy').'</h3><ul>';
     $format_footer = '</ul>';
     echo eme_get_events_list(limit: 10, format: $format, format_header: $format_header, format_footer: $format_footer);

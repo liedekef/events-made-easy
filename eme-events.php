@@ -4259,6 +4259,9 @@ function eme_get_events_list( $limit = -1, $scope = 'future', $order = 'ASC', $f
     if ( ! empty( $event_ids ) ) {
         $extra_conditions_arr[] = "event_id in ($event_ids)";
     }
+    // never trashed events in the list
+    $extra_conditions_arr[] = 'event_status != '.EME_EVENT_STATUS_TRASH;
+
     if ( ! empty( $extra_conditions_arr ) ) {
         $extra_conditions = '(' . join( ' AND ', $extra_conditions_arr ) . ')';
     }
@@ -6612,7 +6615,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
                         <select id="status" name="event_status">
 <?php
         foreach ( $event_status_array as $key => $value ) {
-            if ( $event['event_status'] && ( $event['event_status'] == $key ) ) {
+            if ( $event['event_status'] == $key ) {
                 $selected = "selected='selected'";
             } else {
                 $selected = '';

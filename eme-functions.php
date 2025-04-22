@@ -1477,6 +1477,7 @@ function eme_status_array() {
     $status_array[ EME_EVENT_STATUS_UNLISTED ] = __( 'Unlisted (hidden)', 'events-made-easy' );
     $status_array[ EME_EVENT_STATUS_DRAFT ]    = __( 'Draft', 'events-made-easy' );
     $status_array[ EME_EVENT_STATUS_FS_DRAFT ] = __( 'Frontend Draft (unpaid)', 'events-made-easy' );
+    $status_array[ EME_EVENT_STATUS_TRASH ]    = __( 'Trashed', 'events-made-easy' );
     return $status_array;
 }
 

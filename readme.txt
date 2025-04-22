@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.52 (2025/04/) =
+* Trashed events should not be shown in eme_events shortcode nor in the dashboard overview
+
 = 2.5.51 (2025/04/17) =
 * Unsub from the newsletter was not working: fixed
 * If nothing is done in unsub, now a message will be returned reflecting that

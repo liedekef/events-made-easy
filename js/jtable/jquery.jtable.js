@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable 1.0.50 (edited by Franky Van Liedekerke)
+jTable 1.0.51 (edited by Franky Van Liedekerke)
 https://www.e-dynamics.be
 
 ---------------------------------------------------------------------------
@@ -4884,7 +4884,6 @@ THE SOFTWARE.
             }
 
             // Hide or show the column if needed
-		console.log(this._firstDataColumnOffset);
             let columnIndexInTable = this._firstDataColumnOffset + columnIndex + 1;
             if (field.visibility != 'hidden' && visibility == 'hidden') {
                 this._$table

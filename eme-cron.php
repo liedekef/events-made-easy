@@ -103,7 +103,7 @@ function eme_cron_send_new_events_function() {
 
     $person_ids           = eme_get_newsletter_person_ids();
     $mail_text_html       = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
-    $contact              = eme_get_event_contact();
+    $contact              = eme_get_contact();
     $contact_email        = $contact->user_email;
     $contact_name         = $contact->display_name;
 

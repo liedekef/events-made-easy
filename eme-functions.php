@@ -813,7 +813,7 @@ function eme_get_event_contact( $event = null ) {
             $contact_id = $event['event_author'];
         }
     } else {
-        $contact_id = intval(get_option( 'eme_default_contact_person',0) );
+        $contact_id = 0;
     }
     return eme_get_contact( $contact_id );
 }

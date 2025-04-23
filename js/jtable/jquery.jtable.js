@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable 1.0.49 (edited by Franky Van Liedekerke)
+jTable 1.0.50 (edited by Franky Van Liedekerke)
 https://www.e-dynamics.be
 
 ---------------------------------------------------------------------------
@@ -3369,13 +3369,15 @@ THE SOFTWARE.
             this._selectedRecordIdsBeforeLoad = null; // This array is used to store selected row Id's to restore them after a page refresh (string array).
             this._$selectAllCheckbox = null; // Reference to the 'select/deselect all' checkbox (jQuery object)
             this._shiftKeyDown = false; // True, if shift key is currently down.
+            if (this.options.selecting && this.options.selectingCheckboxes) {
+                ++this._firstDataColumnOffset;
+            }
         },
 
         /* Overrides base method to do selecting-specific constructions.
          *************************************************************************/
         _create: function () {
             if (this.options.selecting && this.options.selectingCheckboxes) {
-                ++this._firstDataColumnOffset;
                 this._bindKeyboardEvents();
             }
 
@@ -4882,6 +4884,7 @@ THE SOFTWARE.
             }
 
             // Hide or show the column if needed
+		console.log(this._firstDataColumnOffset);
             let columnIndexInTable = this._firstDataColumnOffset + columnIndex + 1;
             if (field.visibility != 'hidden' && visibility == 'hidden') {
                 this._$table

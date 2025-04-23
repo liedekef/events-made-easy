@@ -489,7 +489,7 @@ jQuery(document).ready( function($) {
     if ($('#EventsTableContainer').length) {
         let eventfields = {
             event_id: {
-		key: true,
+                key: true,
                 title: emeevents.translate_id,
                 visibility: 'hidden'
             },

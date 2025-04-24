@@ -393,7 +393,7 @@ function eme_send_mail_to_groups( $group_ids, $subject, $body, $fromemail, $from
     $now          = current_time( 'mysql', false );
     $conditions   = [
         'action' => 'genericmail',
-        'eme_genericmail_send_peoplegroups' = $group_ids
+        'eme_genericmail_send_peoplegroups' => $group_ids
     ];
     if ($queue) {
         $mailing_id   = eme_db_insert_mailing( $mailing_name, $now, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions );

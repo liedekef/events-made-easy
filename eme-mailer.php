@@ -392,7 +392,7 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
 
 // API function
 function eme_send_mail_to_groups( $group_ids, $subject, $body, $fromemail, $fromname, $replytoemail='', $replytoname='' ) {
-    if (!eme_is_list_of_int($group_ids)) {
+    if (!eme_is_list_of_int($group_ids) || empty($subject) || empty($body)) {
         return false;
     }
 

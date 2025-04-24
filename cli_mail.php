@@ -239,9 +239,9 @@ if ( ! $mailing_id ) {
 foreach ( $names_emails as $entry ) {
 	$person_name = eme_format_full_name( $entry['firstname'], $entry['lastname'], $entry['email'] );
 	if ( isset( $arguments['fast'] ) ) {
-		eme_queue_fastmail( $subject, $body, $from_email, $group['name'] . $on_behalf_of, $entry['email'], $person_name, $replyto_email, $group['name'], $mailing_id );
+		eme_queue_fastmail( $subject, $body, $from_email, $group['name'] . $on_behalf_of, $entry['email'], $person_name, $replyto_email, $group['name'], $mailing_id, add_listhdrs: 1 );
 	} else {
-		eme_queue_mail( $subject, $body, $from_email, $group['name'] . $on_behalf_of, $entry['email'], $person_name, $replyto_email, $group['name'], $mailing_id );
+		eme_queue_mail( $subject, $body, $from_email, $group['name'] . $on_behalf_of, $entry['email'], $person_name, $replyto_email, $group['name'], $mailing_id, add_listhdrs: 1 );
 	}
 }
 

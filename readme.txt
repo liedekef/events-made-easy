@@ -99,6 +99,13 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.55 (2025/04/) =
+* Added API function eme_send_mail_to_groups to easily send emails to an EME group and obey list headers etc...
+  Function def:
+     eme_send_mail_to_groups( $group_ids, $subject, $body, $fromemail, $fromname, $replytoemail='', $replytoname='')
+     ==> $group_ids needs to be a CSV list of groups
+     ==> $replytoemail and $replytoname are optional (then the from-info is taken)
+
 = 2.5.54 (2025/04/23) =
 * Fix show/hide columns, offset was wrong by 1 due to code reorg in jtable
 

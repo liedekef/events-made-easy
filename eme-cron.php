@@ -122,7 +122,7 @@ function eme_cron_send_new_events_function() {
         $person      = eme_get_person( $person_id );
         $tmp_message = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
         $person_name = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
-        eme_queue_mail( $mail_subject, $tmp_message, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, $mailing_id, $person_id );
+        eme_queue_mail( $mail_subject, $tmp_message, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, $mailing_id, $person_id, add_listhdrs: 1 );
     }
 }
 

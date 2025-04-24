@@ -380,11 +380,36 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
     }
 }
 
-function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts_arr = [] ) {
-    return eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id, $person_id, $member_id, $atts_arr, 1 );
+// API function
+function eme_send_mail_to_groups( $group_ids, $subject, $body, $fromemail, $fromname, $replytoemail='', $replytoname='' ) {
+    if (!eme_is_list_of_int($group_ids)) {
+        return false;
+    }
+
+    $queue = intval( get_option( 'eme_queue_mails' ) );
+    $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
+
+    $mailing_name = "mail to groups $group_ids";
+    $now          = current_time( 'mysql', false );
+    $conditions   = [
+        'action' => 'genericmail',
+        'eme_genericmail_send_peoplegroups' = $group_ids
+    ];
+    if ($queue) {
+        $mailing_id   = eme_db_insert_mailing( $mailing_name, $now, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions );
+        $res          = eme_count_planned_mailing_receivers( $conditions );
+        eme_mark_mailing_planned( $mailing_id, $res['total'] );
+    } else {
+        $res = eme_update_mailing_receivers( $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions );
+    }
+    return $res;
 }
 
-function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail = '', $replytoname = '', $mailing_id = 0, $person_id = 0, $member_id = 0, $atts_arr = [], $send_immediately = 0 ) {
+function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts_arr = [], $add_listhdrs = -1 ) {
+    return eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id, $person_id, $member_id, $atts_arr, 1, $add_listhdrs );
+}
+
+function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail = '', $replytoname = '', $mailing_id = 0, $person_id = 0, $member_id = 0, $atts_arr = [], $send_immediately = 0, $add_listhdrs = -1 ) {
     global $wpdb;
     $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
 
@@ -422,9 +447,12 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         $replytoname = $fromname;
     }
 
-    $add_listhdrs = 0;
-    if ( ! empty( $mailing_id ) && eme_add_listhdrs( $mailing_id ) ) {
-        $add_listhdrs = 1;
+    if ( $add_listhdrs == -1) {
+        if ( ! empty( $mailing_id ) && eme_mailing_requires_listhdrs( $mailing_id ) ) {
+            $add_listhdrs = 1;
+        } else {
+            $add_listhdrs = 0;
+        }
     }
 
     $now  = current_time( 'mysql', false );
@@ -1079,14 +1107,11 @@ function eme_check_mailing_receivers( $mailing_id ) {
         return;
     }
     $conditions = eme_unserialize( $mailing['conditions'] );
-    // we delete all planned mails for the mailing and enter the mails anew, this allows us to have all mails with the latest content and receivers
-    // for newer versions of EME this delete no longer does anything since the individual mails are only inserted here when calling eme_update_mailing_receivers
-    eme_delete_mailing_mails( $mailing_id );
     eme_update_mailing_receivers( $mailing['subject'], $mailing['body'], $mailing['fromemail'], $mailing['fromname'], $mailing['replytoemail'], $mailing['replytoname'], $mailing['mail_text_html'], $conditions, $mailing_id );
 }
 
-function eme_count_planned_mailing_receivers( $conditions, $mailing_id = 0) {
-    return eme_update_mailing_receivers( conditions: $conditions, mailing_id: $mailing_id, count_only: 1);
+function eme_count_planned_mailing_receivers( $conditions ) {
+    return eme_update_mailing_receivers( conditions: $conditions, count_only: 1);
 }
 
 function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $from_email = '', $from_name = '', $replyto_email = '', $replyto_name = '', $mail_text_html = 'html', $conditions = [], $mailing_id = 0, $count_only = 0 ) {
@@ -1112,7 +1137,8 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
     $member_ids          = [];
     $cond_person_ids_arr = [];
     $cond_member_ids_arr = [];
-    $atts_arr          = [];
+    $atts_arr            = [];
+    $add_listhdrs        = eme_add_listhdrs( $conditions );
 
     if ( $conditions['action'] == 'genericmail' ) {
         if ( isset( $conditions['eme_generic_attach_ids'] ) && eme_is_list_of_int( $conditions['eme_generic_attach_ids'] ) ) {
@@ -1166,7 +1192,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                 $membership  = eme_get_membership( $member['membership_id'] );
                 $tmp_subject = eme_replace_member_placeholders( $mail_subject, $membership, $member, 'text' );
                 $tmp_message = eme_replace_member_placeholders( $mail_message, $membership, $member, $mail_text_html );
-                $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $atts_arr );
+                $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $atts_arr, add_listhdrs: $add_listhdrs );
             }
             if ( ! $mail_res ) {
                 $res['mail_problems'] = 1;
@@ -1189,7 +1215,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                 } else {
                     $tmp_subject = eme_replace_people_placeholders( $mail_subject, $person, 'text' );
                     $tmp_message = eme_replace_people_placeholders( $mail_message, $person, $mail_text_html );
-                    $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr );
+                    $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
                 }
                 if ( ! $mail_res ) {
                     $res['mail_problems'] = 1;
@@ -1241,7 +1267,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                         $tmp_message = eme_replace_attendees_placeholders( $mail_message, $event, $attendee, $mail_text_html );
                         $person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
                         $person_id   = $attendee['person_id'];
-                        $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr );
+                        $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
                     }
                     if ( ! $mail_res ) {
                         $res['mail_problems'] = 1;
@@ -1263,7 +1289,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                             $tmp_message = eme_replace_booking_placeholders( $mail_message, $event, $booking, 0, $mail_text_html );
                             $person_name = eme_format_full_name( $attendee['firstname'], $attendee['lastname'] );
                             $person_id   = $attendee['person_id'];
-                            $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr );
+                            $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $attendee['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
                         }
                         if ( ! $mail_res ) {
                             $res['mail_problems'] = 1;
@@ -1329,7 +1355,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                         $membership  = eme_get_membership( $member['membership_id'] );
                         $tmp_subject = eme_replace_member_placeholders( $tmp_subject, $membership, $member, 'text' );
                         $tmp_message = eme_replace_member_placeholders( $tmp_message, $membership, $member, $mail_text_html );
-                        $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $atts_arr );
+                        $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, 0, $member_id, $atts_arr, add_listhdrs: $add_listhdrs );
                     }
 
                     if ( ! $mail_res ) {
@@ -1359,7 +1385,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                             $tmp_subject = eme_replace_people_placeholders( $tmp_subject, $person, 'text' );
                             $tmp_message = eme_replace_people_placeholders( $tmp_message, $person, $mail_text_html );
                             $person_id   = $person['person_id'];
-                            $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr );
+                            $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $person['email'], $person_name, $replyto_email, $replyto_name, $mailing_id, $person_id, 0, $atts_arr, add_listhdrs: $add_listhdrs );
                         }
                         if ( ! $mail_res ) {
                             $res['mail_problems'] = 1;
@@ -1391,7 +1417,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                         $tmp_subject = eme_replace_event_placeholders( $mail_subject, $event, 'text', $lang, 0 );
                         $tmp_message = eme_replace_event_placeholders( $mail_message, $event, $mail_text_html, $lang, 0 );
                         $tmp_message = eme_replace_email_event_placeholders( $tmp_message, $wp_user->user_firstname, $wp_user->display_name, $wp_user->display_name, $event );
-                        $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $atts_arr );
+                        $mail_res    = eme_queue_mail( $tmp_subject, $tmp_message, $from_email, $from_name, $wp_user->user_email, $wp_user->display_name, $replyto_email, $replyto_name, $mailing_id, 0, 0, $atts_arr, add_listhdrs: $add_listhdrs );
                     }
                     if ( ! $mail_res ) {
                         $res['mail_problems'] = 1;
@@ -2071,7 +2097,7 @@ function eme_send_mails_ajax_actions( $action ) {
                 foreach ( $dates as $datetime ) {
                     $mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
                     // we just need the count of receivers here, the actual insert of individual mails happens when the mailing starts
-                    $res        = eme_count_planned_mailing_receivers( $conditions, $mailing_id );
+                    $res        = eme_count_planned_mailing_receivers( $conditions );
                     eme_mark_mailing_planned( $mailing_id, $res['total'] );
                 }
             } else {
@@ -2265,7 +2291,7 @@ function eme_send_mails_ajax_actions( $action ) {
                     foreach ( $dates as $datetime ) {
                         $mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
                         // we just need the count of receivers here, the actual insert of individual mails happens when the mailing starts
-                        $res        = eme_count_planned_mailing_receivers( $conditions, $mailing_id );
+                        $res        = eme_count_planned_mailing_receivers( $conditions );
                         eme_mark_mailing_planned( $mailing_id, $res['total'] );
                     }
                 } else {
@@ -3189,8 +3215,7 @@ function eme_get_default_mailer_info() {
     return [$fromname,$fromemail];
 }
 
-function eme_add_listhdrs( $mailing_id ) {
-    $add_listhdrs = false;
+function eme_mailing_requires_listhdrs( $mailing_id ) {
     if (empty($mailing_id)) {
         return false;
     }
@@ -3199,11 +3224,16 @@ function eme_add_listhdrs( $mailing_id ) {
         return false;
     }
     $conditions = eme_unserialize($mailing['conditions']);
+    return eme_add_listhdrs( $conditions );
+}
+
+function eme_add_listhdrs( $conditions ) {
+    $add_listhdrs = false;
     if ($conditions['action'] == 'newsletter' ||
         !empty($conditions['eme_send_all_people']) || // generic mail to all people
         (!empty($conditions['eme_mail_type']) && ( $conditions['eme_mail_type'] == 'all_people' || $conditions['eme_mail_type'] == 'all_people_not_registered' )) || // eventmail to all people
-        !empty($conditions['eme_genericmail_send_peoplegroups']) || // event mail to certain groups
-        !empty($conditions['eme_eventmail_send_groups']) // event mail to certain groups
+        !empty($conditions['eme_genericmail_send_peoplegroups']) ||
+        !empty($conditions['eme_eventmail_send_groups'])
     ) {
         $add_listhdrs = true;
     }

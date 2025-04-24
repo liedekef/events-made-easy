@@ -26,9 +26,14 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
     }
     // if forced or fromemail is still empty
     if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
+        // if the from and reply-to were identical, we will force the reply-to to be the same too
+        if ( $fromemail == $replytoemail ) {
+            $replytoemail = "";
+            $replytoname = "";
+        }
         [$fromname, $fromemail] = eme_get_default_mailer_info();
     }
-    // now the from should never be empty, so just check reply to again
+    // now the from should never be empty, so just check replyto again
     if ( empty( $replytoemail ) ) {
         $replytoemail = $fromemail;
     }
@@ -341,9 +346,14 @@ function eme_db_insert_mailing( $mailing_name, $planned_on, $subject, $body, $fr
     }
     // if forced or fromemail is still empty
     if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
+        // if the from and reply-to were identical, we will force the reply-to to be the same too
+        if ( $fromemail == $replytoemail ) {
+            $replytoemail = "";
+            $replytoname = "";
+        }
         [$fromname, $fromemail] = eme_get_default_mailer_info();
     }
-    // now the from should never be empty, so just check reply to again
+    // now the from should never be empty, so just check replyto again
     if ( empty( $replytoemail ) ) {
         $replytoemail = $fromemail;
     }
@@ -437,9 +447,14 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
     }
     // if forced or fromemail is still empty
     if ( get_option( 'eme_mail_force_from' ) || empty( $fromemail ) ) {
+        // if the from and reply-to were identical, we will force the reply-to to be the same too
+        if ( $fromemail == $replytoemail ) {
+            $replytoemail = "";
+            $replytoname = "";
+        }
         [$fromname, $fromemail] = eme_get_default_mailer_info();
     }
-    // now the from should never be empty, so just check reply to again
+    // now the from should never be empty, so just check replyto again
     if ( empty( $replytoemail ) ) {
         $replytoemail = $fromemail;
     }

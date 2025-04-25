@@ -13360,23 +13360,23 @@ msgstr "https://www.e-dynamics.be/"
 
 #: eme-mailer.php:2748
 msgid "Only take unpaid bookings into account"
-msgstr ""
+msgstr "Nur unbezahlte Buchungen berücksichtigen"
 
 #: eme-members.php:1414
 msgid "The membership price is not a valid price and has been reset to 0"
-msgstr ""
+msgstr "Der Mitgliedschaftspreis ist ungültig und wurde auf 0 zurückgesetzt"
 
 #: eme-members.php:1422
 msgid "The extra charge for the membership is not a valid price and has been reset to 0"
-msgstr ""
+msgstr "Der Zusatzbetrag für die Mitgliedschaft ist ungültig und wurde auf 0 zurückgesetzt"
 
 #: eme-events.php:6642
 msgid "Bookings and tasks"
-msgstr ""
+msgstr "Buchungen und Aufgaben"
 
 #: eme-events.php:9790
 msgid "Signup date"
-msgstr ""
+msgstr "Anmeldedatum"
 
 #: eme-events.php:7732
 #: eme-events.php:7932
@@ -13389,7 +13389,7 @@ msgstr ""
 #: eme-options.php:2276
 #: eme-options.php:2342
 msgid "PDF templates as attachments"
-msgstr ""
+msgstr "PDF-Vorlagen als Anhänge"
 
 #: eme-events.php:7737
 #: eme-events.php:7937
@@ -13405,7 +13405,7 @@ msgstr ""
 #: eme-options.php:2278
 #: eme-options.php:2344
 msgid "Optionally add PDF templates as attachments to the mail."
-msgstr ""
+msgstr "PDF-Vorlagen optional als Anhänge zur E-Mail hinzufügen."
 
 #: eme-events.php:7741
 #: eme-events.php:7941
@@ -13418,838 +13418,838 @@ msgstr ""
 #: eme-options.php:2281
 #: eme-options.php:2347
 msgid "No PDF templates defined yet."
-msgstr ""
+msgstr "Noch keine PDF-Vorlagen definiert."
 
 #: eme-events.php:7930
 #: eme-options.php:2151
 msgid "Optionally add attachments to the mail when a booking is pending."
-msgstr ""
+msgstr "Anhänge optional zur E-Mail hinzufügen, wenn eine Buchung aussteht."
 
 #: eme-members.php:2437
 #: eme-members.php:2516
 msgid "Mail attachments"
-msgstr ""
+msgstr "E-Mail-Anhänge"
 
 #: eme-members.php:2459
 msgid "Optionally add attachments to the mail when a member extends its membership."
-msgstr ""
+msgstr "Anhänge optional zur E-Mail hinzufügen, wenn ein Mitglied seine Mitgliedschaft verlängert."
 
 #: eme-members.php:2538
 msgid "Optionally add attachments to the mail when a member has paid for the membership."
-msgstr ""
+msgstr "Anhänge optional zur E-Mail hinzufügen, wenn ein Mitglied für die Mitgliedschaft bezahlt hat."
 
 #: eme-cleanup.php:322
 msgid "Move people who are no longer referenced in bookings, groups or memberships to the trash bin"
-msgstr ""
+msgstr "Personen, die nicht mehr in Buchungen, Gruppen oder Mitgliedschaften referenziert sind, in den Papierkorb verschieben"
 
 #: eme-members.php:516
 msgid "Period"
-msgstr ""
+msgstr "Zeitraum"
 
 #: eme-members.php:516
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 #: eme-members.php:516
 msgid "Total"
-msgstr ""
+msgstr "Gesamt"
 
 #: eme-options.php:2492
 msgid "Automatically anonymize expired members"
-msgstr ""
+msgstr "Abgelaufene Mitglieder automatisch anonymisieren"
 
 #: eme-options.php:2492
 msgid "Set the number of days after which expired members are automatically anonymized. Leave empty or 0 if not wanted."
-msgstr ""
+msgstr "Anzahl der Tage festlegen, nach denen abgelaufene Mitglieder automatisch anonymisiert werden. Leer lassen oder 0 eingeben, wenn nicht gewünscht."
 
 #: eme-options.php:2493
 msgid "If set, the value must be greater than the number of days after which you want expired members to be anonymized."
-msgstr ""
+msgstr "Falls eingestellt, muss der Wert größer sein als die Anzahl der Tage, nach denen abgelaufene Mitglieder anonymisiert werden sollen."
 
 #: eme-members.php:3034
 #: eme-members.php:3046
 #: eme-people.php:1970
 #: eme-people.php:1982
 msgid "Exact custom field search match"
-msgstr ""
+msgstr "Exakte Suche nach benutzerdefiniertem Feld"
 
 #: eme-members.php:3044
 #: eme-people.php:1980
 msgid "Exact?"
-msgstr ""
+msgstr "Exakt?"
 
 #: eme-members.php:516
 msgid "Renewed"
-msgstr ""
+msgstr "Erneuert"
 
 #: eme-payments.php:281
 msgid "No member found linked to this payment. If you believe you've received this message in error please contact the site owner."
-msgstr ""
+msgstr "Kein Mitglied zu dieser Zahlung gefunden. Wenn Sie glauben, diese Nachricht irrtümlich erhalten zu haben, kontaktieren Sie bitte den Website-Betreiber."
 
 #: eme-members.php:6111
 #: eme-members.php:6299
 #: eme-people.php:905
 msgid "Not imported (both email and lastname are empty): %s"
-msgstr ""
+msgstr "Nicht importiert (E-Mail und Nachname sind leer): %s"
 
 #: eme-members.php:6377
 msgid "Not imported (no matching person found): %s"
-msgstr ""
+msgstr "Nicht importiert (keine passende Person gefunden): %s"
 
 #: eme-events.php:7353
 msgid "The recurrence beginning and end date (consider it as the day of the first event in the series and the day of the last event in the series). If you leave the end date empty, the recurrence will run forever and the next 10 events will automatically be planned (checked daily) while older events will be removed except the most recent one."
-msgstr ""
+msgstr "Anfangs- und Enddatum der Wiederholung (betrachten Sie es als den Tag des ersten und letzten Ereignisses in der Serie). Wenn Sie das Enddatum leer lassen, läuft die Wiederholung unbegrenzt und die nächsten 10 Ereignisse werden automatisch geplant (täglich überprüft), während ältere Ereignisse bis auf das neueste entfernt werden."
 
 #: eme-recurrence.php:525
 msgid "From %s onwards (automatically extended)"
-msgstr ""
+msgstr "Ab %s (automatisch verlängert)"
 
 #: eme-tasks.php:813
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
-msgstr ""
+msgstr "Wenn die Anzahl der Plätze für eine Aufgabe 0 ist, wird die Aufgabenbeschreibung als Abschnittsüberschrift für den nächsten Satz von Aufgaben behandelt."
 
 #: eme-actions.php:532
 msgid "Events Made Easy has been installed or upgraded"
-msgstr ""
+msgstr "Events Made Easy wurde installiert oder aktualisiert"
 
 #: eme-actions.php:533
 msgid "Please donate to the development of Events Made Easy"
-msgstr ""
+msgstr "Bitte spenden Sie für die Entwicklung von Events Made Easy"
 
 #: eme-actions.php:543
 msgid "Dismiss"
-msgstr ""
+msgstr "Verwerfen"
 
 #: eme-members.php:232
 msgid "Member deleted"
-msgstr ""
+msgstr "Mitglied gelöscht"
 
 #: eme-members.php:2702
 msgid "Member deleted email"
-msgstr ""
+msgstr "E-Mail bei Löschung eines Mitglieds"
 
 #: eme-members.php:2706
 msgid "Contactperson member deleted email subject"
-msgstr ""
+msgstr "Betreff der E-Mail an die Kontaktperson bei Löschung eines Mitglieds"
 
 #: eme-members.php:2708
 msgid "The subject of the mail sent to the contactperson just before a member is deleted."
-msgstr ""
+msgstr "Betreff der E-Mail, die an die Kontaktperson gesendet wird, kurz bevor ein Mitglied gelöscht wird."
 
 #: eme-members.php:2714
 msgid "Contactperson member deleted email body"
-msgstr ""
+msgstr "Inhalt der E-Mail an die Kontaktperson bei Löschung eines Mitglieds"
 
 #: eme-members.php:2716
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
-msgstr ""
+msgstr "Inhalt der E-Mail, die an die Kontaktperson gesendet wird, kurz bevor ein Mitglied gelöscht wird."
 
 #: eme-actions.php:690
 msgid "List of next 10 events"
-msgstr ""
+msgstr "Liste der nächsten 10 Ereignisse"
 
 #: eme-options.php:3093
 msgid "Frontend Submit options"
-msgstr ""
+msgstr "Frontend-Einreichungsoptionen"
 
 #: eme-options.php:3112
 msgid "State for new event"
-msgstr ""
+msgstr "Status für neues Ereignis"
 
 #: eme-options.php:3112
 msgid "The state for a newly submitted event."
-msgstr ""
+msgstr "Status für ein neu eingereichtes Ereignis."
 
 #: eme-options.php:3120
 msgid "Default category for new event"
-msgstr ""
+msgstr "Standardkategorie für neues Ereignis"
 
 #: eme-options.php:3120
 msgid "The default category assigned to an event if nothing is selected in the form."
-msgstr ""
+msgstr "Standardkategorie, die einem Ereignis zugewiesen wird, wenn im Formular nichts ausgewählt ist."
 
 #: eme-options.php:3121
 msgid "Force location creation?"
-msgstr ""
+msgstr "Standorterstellung erzwingen?"
 
 #: eme-options.php:3121
 msgid "Check this option if you want the location to be always created, even if the user does not have the needed capability set in EME to create locations."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn der Standort immer erstellt werden soll, auch wenn der Benutzer nicht die erforderliche Berechtigung in EME hat, Standorte zu erstellen."
 
 #: eme-options.php:3122
 msgid "Allow guest submit?"
-msgstr ""
+msgstr "Gast-Einreichung erlauben?"
 
 #: eme-options.php:3122
 msgid "Check this option if you want guests also to be able to add new events."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn auch Gäste neue Ereignisse hinzufügen dürfen sollen."
 
 #: eme-options.php:3126
 msgid "Guests not allowed text"
-msgstr ""
+msgstr "Text für Gäste, die nicht erlaubt sind"
 
 #: eme-options.php:3127
 msgid "Redirect to login page"
-msgstr ""
+msgstr "Zur Anmeldeseite weiterleiten"
 
 #: eme-options.php:3128
 msgid "Permission needed to submit a new event when guest submit is not allowed. Default: %s"
-msgstr ""
+msgstr "Berechtigung, die zum Einreichen eines neuen Ereignisses erforderlich ist, wenn Gast-Einreichungen nicht erlaubt sind. Standard: %s"
 
 #: eme-options.php:3133
 msgid "Use wysiwyg?"
-msgstr ""
+msgstr "WYSIWYG verwenden?"
 
 #: eme-options.php:3133
 msgid "Check this option if you want to use a frontend wysiwyg editor for the event notes."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn Sie einen Frontend-WYSIWYG-Editor für die Ereignisnotizen verwenden möchten."
 
 #: eme-options.php:3134
 msgid "Allow image upload?"
-msgstr ""
+msgstr "Bild-Upload erlauben?"
 
 #: eme-options.php:3134
 msgid "Check this option if you want to allow image upload in the frontend wysiwyg editor for the event notes."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn Sie den Bild-Upload im Frontend-WYSIWYG-Editor für die Ereignisnotizen erlauben möchten."
 
 #: eme-fs.php:188
 #: eme-fs.php:830
 msgid "Sorry, but you're not allowed to submit new events."
-msgstr ""
+msgstr "Entschuldigung, aber Sie dürfen keine neuen Ereignisse einreichen."
 
 #: eme-fs.php:366
 msgid "Create event"
-msgstr ""
+msgstr "Ereignis erstellen"
 
 #: eme-fs.php:610
 #: eme-options.php:599
 msgid "New event succesfully created."
-msgstr ""
+msgstr "Neues Ereignis erfolgreich erstellt."
 
 #: eme-fs.php:630
 msgid "Please enter a name for the event"
-msgstr ""
+msgstr "Bitte geben Sie einen Namen für das Ereignis ein"
 
 #: eme-fs.php:634
 msgid "Please enter an event description"
-msgstr ""
+msgstr "Bitte geben Sie eine Ereignisbeschreibung ein"
 
 #: eme-fs.php:637
 msgid "Please enter a location description"
-msgstr ""
+msgstr "Bitte geben Sie eine Standortbeschreibung ein"
 
 #: eme-fs.php:640
 msgid "Enter the event's start date"
-msgstr ""
+msgstr "Geben Sie das Startdatum des Ereignisses ein"
 
 #: eme-fs.php:671
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
-msgstr ""
+msgstr "Das Enddatum/-zeit muss <strong>nach</strong> dem Startdatum/-zeit liegen"
 
 #: eme-options.php:1299
 msgid "Frontend Submit"
-msgstr ""
+msgstr "Frontend-Einreichung"
 
 #: eme-options.php:3123
 msgid "Success Message"
-msgstr ""
+msgstr "Erfolgsmeldung"
 
 #: eme-options.php:3124
 msgid "Indicate in seconds how many seconds to wait before redirecting to the newly created event after showing the success message. If 0, the success message will not be shown and the redirect will happen immediately."
-msgstr ""
+msgstr "Geben Sie in Sekunden an, wie lange gewartet werden soll, bevor nach Anzeige der Erfolgsmeldung zum neu erstellten Ereignis weitergeleitet wird. Wenn 0, wird die Erfolgsmeldung nicht angezeigt und die Weiterleitung erfolgt sofort."
 
 #: eme-options.php:3094
 msgid "For all information concerning frontend submit, see <a target='_blank' href='%s'>the documentation</a>"
-msgstr ""
+msgstr "Für alle Informationen zur Frontend-Einreichung siehe <a target='_blank' href='%s'>die Dokumentation</a>"
 
 #: eme-options.php:3135
 msgid "Default form format"
-msgstr ""
+msgstr "Standard-Formularformat"
 
 #: eme-options.php:3135
 msgid "The default form format for submitting a new event."
-msgstr ""
+msgstr "Standard-Formularformat für die Einreichung eines neuen Ereignisses."
 
 #: eme-options.php:3125
 msgid "Always show success message"
-msgstr ""
+msgstr "Erfolgsmeldung immer anzeigen"
 
 #: eme-options.php:3125
 msgid "Check this option if you want to always show the success message even if the person submitting the event has the right to see the newly submitted event. This also means no redirection will happen."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn die Erfolgsmeldung immer angezeigt werden soll, auch wenn die Person, die das Ereignis einreicht, das Recht hat, das neu eingereichte Ereignis zu sehen. Dies bedeutet auch, dass keine Weiterleitung erfolgt."
 
 #: eme-options.php:3126
 msgid "The text shown to a guest when trying to submit a new event when they are not allowed to do so and the option to redirect to the login page is not set."
-msgstr ""
+msgstr "Der Text, der einem Gast angezeigt wird, wenn er versucht, ein neues Ereignis einzureichen, obwohl er dies nicht darf und die Option zur Weiterleitung zur Anmeldeseite nicht aktiviert ist."
 
 #: eme-options.php:3127
 msgid "Check this option if you want the submitter to be redirected to the login page if not logged in (or does not have the needed access rights) and guests are not allowed to submit new events."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn der Einreichende zur Anmeldeseite weitergeleitet werden soll, wenn er nicht angemeldet ist (oder nicht die erforderlichen Zugriffsrechte hat) und Gäste keine neuen Ereignisse einreichen dürfen."
 
 #: eme-options.php:3128
 msgid "Access right to submit new events"
-msgstr ""
+msgstr "Zugriffsrecht zum Einreichen neuer Ereignisse"
 
 #: eme-members.php:570
 msgid "Inactive"
-msgstr ""
+msgstr "Inaktiv"
 
 #: eme-members.php:1924
 msgid "Inactive memberships will not be shown in membership selection lists."
-msgstr ""
+msgstr "Inaktive Mitgliedschaften werden nicht in den Mitgliedschaftsauswahllisten angezeigt."
 
 #: eme-events.php:1227
 msgid "Payment success for your event submission"
-msgstr ""
+msgstr "Zahlung erfolgreich für Ihre Ereigniseinreichung"
 
 #: eme-events.php:1229
 msgid "Payment failed for your event submission"
-msgstr ""
+msgstr "Zahlung fehlgeschlagen für Ihre Ereigniseinreichung"
 
 #: eme-events.php:1482
 #: eme-events.php:1585
 msgid "Event submit payment page"
-msgstr ""
+msgstr "Zahlungsseite für Ereigniseinreichung"
 
 #: eme-events.php:8454
 #: eme-members.php:1987
 #: eme-options.php:3132
 msgid "Select a captcha to use"
-msgstr ""
+msgstr "Captcha auswählen"
 
 #: eme-functions.php:1479
 msgid "Frontend Draft (unpaid)"
-msgstr ""
+msgstr "Frontend-Entwurf (unbezahlt)"
 
 #: eme-functions.php:4180
 msgid "Basic EME Captcha"
-msgstr ""
+msgstr "Grundlegendes EME Captcha"
 
 #: eme-options.php:111
 msgid "A new event has been submitted via the frontend"
-msgstr ""
+msgstr "Ein neues Ereignis wurde über das Frontend eingereicht"
 
 #: eme-options.php:112
 msgid "The following event has been submitted:<br>#_EVENTNAME (#_STARTDATE #_SARTTIME), edit it here: #_EDITEVENTLINK <br><br>Yours faithfully,<br>#_CONTACTPERSON"
-msgstr ""
+msgstr "Folgendes Ereignis wurde eingereicht:<br>#_EVENTNAME (#_STARTDATE #_SARTTIME), bearbeiten Sie es hier: #_EDITEVENTLINK <br><br>Mit freundlichen Grüßen,<br>#_CONTACTPERSON"
 
 #: eme-options.php:1451
 msgid "Check this option if you want to use Google reCAPTCHA on the booking/cancel/membership forms, to thwart spammers a bit. Currently only supports reCAPTCHA v2 Tickbox. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn Sie Google reCAPTCHA in den Buchungs-/Stornierungs-/Mitgliedschaftsformularen verwenden möchten, um Spammer etwas abzuwehren. Unterstützt derzeit nur reCAPTCHA v2 Tickbox. Sie können dann entweder #_CAPTCHA selbst zu Ihrem Formularlayout hinzufügen oder es wird automatisch direkt über der Senden-Schaltfläche hinzugefügt, wenn es nicht vorhanden ist."
 
 #: eme-options.php:1454
 msgid "Check this option if you want to use hCaptcha on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn Sie hCaptcha in den Buchungs-/Stornierungs-/Mitgliedschaftsformularen verwenden möchten, um Spammer etwas abzuwehren. Sie können dann entweder #_CAPTCHA selbst zu Ihrem Formularlayout hinzufügen oder es wird automatisch direkt über der Senden-Schaltfläche hinzugefügt, wenn es nicht vorhanden ist."
 
 #: eme-options.php:1457
 msgid "Check this option if you want to use Cloudflare Turnstile on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn Sie Cloudflare Turnstile in den Buchungs-/Stornierungs-/Mitgliedschaftsformularen verwenden möchten, um Spammer etwas abzuwehren. Sie können dann entweder #_CAPTCHA selbst zu Ihrem Formularlayout hinzufügen oder es wird automatisch direkt über der Senden-Schaltfläche hinzugefügt, wenn es nicht vorhanden ist."
 
 #: eme-options.php:2304
 msgid "Frontend Event Submit Notification Email"
-msgstr ""
+msgstr "Benachrichtigungs-E-Mail für Frontend-Ereigniseinreichung"
 
 #: eme-options.php:2308
 msgid "Contact Person New Event Email Subject"
-msgstr ""
+msgstr "Betreff der E-Mail an die Kontaktperson für neues Ereignis"
 
 #: eme-options.php:2308
 msgid "The subject of the email that will be sent to the contact person when a new event is submitted."
-msgstr ""
+msgstr "Betreff der E-Mail, die an die Kontaktperson gesendet wird, wenn ein neues Ereignis eingereicht wird."
 
 #: eme-options.php:2309
 msgid "Contact Person New Event Email Body"
-msgstr ""
+msgstr "Inhalt der E-Mail an die Kontaktperson für neues Ereignis"
 
 #: eme-options.php:2309
 msgid "The body of the email that will be sent to the contact person when a new event is submitted."
-msgstr ""
+msgstr "Inhalt der E-Mail, die an die Kontaktperson gesendet wird, wenn ein neues Ereignis eingereicht wird."
 
 #: eme-options.php:2310
 msgid "Author Payment Notification Email Subject"
-msgstr ""
+msgstr "Betreff der Zahlungsbenachrichtigungs-E-Mail an den Autor"
 
 #: eme-options.php:2310
 msgid "The subject of the email that will be sent to the event author (the creator normally) when a payment notification is received via a payment gateway."
-msgstr ""
+msgstr "Betreff der E-Mail, die an den Ereignisautor (normalerweise der Ersteller) gesendet wird, wenn eine Zahlungsbenachrichtigung über ein Zahlungsgateway empfangen wird."
 
 #: eme-options.php:2311
 msgid "Author Payment Notification Email Body"
-msgstr ""
+msgstr "Inhalt der Zahlungsbenachrichtigungs-E-Mail an den Autor"
 
 #: eme-options.php:2311
 msgid "The body of the email that will be sent to the event author (the creator normally) when a payment notification is received via a payment gateway."
-msgstr ""
+msgstr "Inhalt der E-Mail, die an den Ereignisautor (normalerweise der Ersteller) gesendet wird, wenn eine Zahlungsbenachrichtigung über ein Zahlungsgateway empfangen wird."
 
 #: eme-options.php:2315
 msgid "Event paid mail attachments"
-msgstr ""
+msgstr "E-Mail-Anhänge für bezahltes Ereignis"
 
 #: eme-options.php:2337
 msgid "Optionally add attachments to the mail when an event is paid for."
-msgstr ""
+msgstr "Anhänge optional zur E-Mail hinzufügen, wenn ein Ereignis bezahlt wird."
 
 #: eme-options.php:2552
 msgid "Frontend Event Submit Payment form header format"
-msgstr ""
+msgstr "Format der Kopfzeile des Zahlungsformulars für Frontend-Ereigniseinreichung"
 
 #: eme-options.php:2552
 msgid "The format of the text shown above the payment buttons if the frontend submit form for events requires payment. If left empty, a default message will be shown."
-msgstr ""
+msgstr "Format des Textes, der über den Zahlungsschaltflächen angezeigt wird, wenn das Frontend-Einreichungsformular für Ereignisse eine Zahlung erfordert. Wenn leer gelassen, wird eine Standardnachricht angezeigt."
 
 #: eme-options.php:2553
 msgid "Frontend Event Submit Payment form footer format"
-msgstr ""
+msgstr "Format der Fußzeile des Zahlungsformulars für Frontend-Ereigniseinreichung"
 
 #: eme-options.php:2553
 msgid "The format of the text shown below the payment buttons if the frontend submit form for events requires payment."
-msgstr ""
+msgstr "Format des Textes, der unter den Zahlungsschaltflächen angezeigt wird, wenn das Frontend-Einreichungsformular für Ereignisse eine Zahlung erfordert."
 
 #: eme-options.php:3096
 msgid "Also check out the 'Email templates' and the 'Payment' sections for some extra frontend submit settings."
-msgstr ""
+msgstr "Schauen Sie sich auch die Abschnitte 'E-Mail-Vorlagen' und 'Zahlung' für einige zusätzliche Frontend-Einreichungseinstellungen an."
 
 #: eme-options.php:3119
 msgid "Select the contact person that will receive email notifications whenever an event gets submitted or paid for. The mail templates are to be configured in the regular mail templates section."
-msgstr ""
+msgstr "Wählen Sie die Kontaktperson aus, die E-Mail-Benachrichtigungen erhält, wenn ein Ereignis eingereicht oder bezahlt wird. Die E-Mail-Vorlagen sind im regulären Abschnitt für E-Mail-Vorlagen zu konfigurieren."
 
 #: eme-options.php:3119
 msgid "No contact"
-msgstr ""
+msgstr "Kein Kontakt"
 
 #: eme-options.php:3123
 msgid "The message shown after successfully submitting a new event if the person submitting the event has no right to see the newly submitted event. The message is also shown if the event submission needs to be paid for and the redirection wait period (setting below this one) is not 0. This message can contain all event placeholders."
-msgstr ""
+msgstr "Die Nachricht, die nach erfolgreicher Einreichung eines neuen Ereignisses angezeigt wird, wenn die einreichende Person kein Recht hat, das neu eingereichte Ereignis zu sehen. Die Nachricht wird auch angezeigt, wenn die Ereigniseinreichung bezahlt werden muss und die Wartezeit für die Weiterleitung (Einstellung darunter) nicht 0 ist. Diese Nachricht kann alle Ereignis-Platzhalter enthalten."
 
 #: eme-payments.php:53
 msgid "Event submission '%s'"
-msgstr ""
+msgstr "Ereigniseinreichung '%s'"
 
 #: eme-payments.php:423
 msgid "No event found linked to this payment. If you believe you've received this message in error please contact the site owner."
-msgstr ""
+msgstr "Kein Ereignis zu dieser Zahlung gefunden. Wenn Sie glauben, diese Nachricht irrtümlich erhalten zu haben, kontaktieren Sie bitte den Website-Betreiber."
 
 #: eme-payments.php:1994
 msgid "Incorrect currency."
-msgstr ""
+msgstr "Falsche Währung."
 
 #: eme-options.php:3113
 msgid "The price to pay in order to submit a new event. Leave empty or 0 if no price is to be paid. This is not related to RSVP settings inside the submitted event itself! Configure the optional payment form header/footer sections in the EME Payment settings."
-msgstr ""
+msgstr "Der zu zahlende Preis, um ein neues Ereignis einzureichen. Leer lassen oder 0 eingeben, wenn kein Preis zu zahlen ist. Dies hat nichts mit den RSVP-Einstellungen im eingereichten Ereignis selbst zu tun! Konfigurieren Sie die optionalen Kopf-/Fußzeilenabschnitte des Zahlungsformulars in den EME-Zahlungseinstellungen."
 
 #: eme-options.php:3114
 msgid "The currency used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
-msgstr ""
+msgstr "Die Währung, die verwendet wird, wenn eingereichte Ereignisse bezahlt werden müssen. Dies hat nichts mit den RSVP-Einstellungen im eingereichten Ereignis selbst zu tun!"
 
 #: eme-options.php:3115
 msgid "The payment method(s) to be used when submitted events need to be paid for. This is not related to RSVP settings inside the submitted event itself!"
-msgstr ""
+msgstr "Die Zahlungsmethode(n), die verwendet werden soll(en), wenn eingereichte Ereignisse bezahlt werden müssen. Dies hat nichts mit den RSVP-Einstellungen im eingereichten Ereignis selbst zu tun!"
 
 #: eme-payments.php:4023
 msgid "Configured"
-msgstr ""
+msgstr "Konfiguriert"
 
 #: eme-options.php:1912
 msgid "By default allow only one sign up for tasks per event for a person?"
-msgstr ""
+msgstr "Standardmäßig nur eine Anmeldung für Aufgaben pro Ereignis für eine Person erlauben?"
 
 #: eme-options.php:1912
 msgid "Check this option if you want by default that a person can only signup for one task per event."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn standardmäßig eine Person nur für eine Aufgabe pro Ereignis angemeldet werden soll."
 
 #: eme-options.php:3148
 msgid "CSV delimiter"
-msgstr ""
+msgstr "CSV-Trennzeichen"
 
 #: eme-options.php:3148
 msgid "Set the delimiter used in CSV exports."
-msgstr ""
+msgstr "Trennzeichen für CSV-Exporte festlegen."
 
 #: eme-tasks.php:850
 msgid "Allow only one sign up for tasks per event for a person?"
-msgstr ""
+msgstr "Nur eine Anmeldung für Aufgaben pro Ereignis für eine Person erlauben?"
 
 #: eme-tasks.php:1734
 msgid "Only one signup allowed"
-msgstr ""
+msgstr "Nur eine Anmeldung erlaubt"
 
 #: eme-events.php:6380
 msgid "Todos"
-msgstr ""
+msgstr "Aufgaben"
 
 #: eme-events.php:6494
 msgid "Tasks can be used to rally volunteers to help with an event (e.g. 5 people behind the bar per shift, cleanup duty, ...) or to allow people to subscribe for a certain timeframe for an event (appointment-like). While you can impose limits and ask for confirmation for tasks, there is no price per task so no payment is possible upon subscribing for a task."
-msgstr ""
+msgstr "Aufgaben können verwendet werden, um Freiwillige zu gewinnen, die bei einem Ereignis helfen (z.B. 5 Personen hinter der Bar pro Schicht, Reinigungsdienst, ...) oder um Personen die Anmeldung für einen bestimmten Zeitraum für ein Ereignis (terminähnlich) zu ermöglichen. Während Sie Limits auferlegen und eine Bestätigung für Aufgaben anfordern können, gibt es keinen Preis pro Aufgabe, sodass keine Zahlung bei der Anmeldung für eine Aufgabe möglich ist."
 
 #: eme-events.php:6547
 msgid "Enable todos for this event"
-msgstr ""
+msgstr "Aufgaben für dieses Ereignis aktivieren"
 
 #: eme-events.php:6550
 msgid "Each todo with a date in the past will send a mail to the contact person so you can use this to plan your event and not forget things. The date of the todo is based on the event start date and the todo offset parameter in days: an offset of 5 means 5 days before the event starts, an offset of -2 means 2 days after the event started."
-msgstr ""
+msgstr "Jede Aufgabe mit einem Datum in der Vergangenheit sendet eine E-Mail an die Kontaktperson, sodass Sie dies zur Planung Ihres Ereignisses verwenden und nichts vergessen können. Das Datum der Aufgabe basiert auf dem Startdatum des Ereignisses und dem Aufgaben-Offset-Parameter in Tagen: Ein Offset von 5 bedeutet 5 Tage vor Beginn des Ereignisses, ein Offset von -2 bedeutet 2 Tage nach Beginn des Ereignisses."
 
 #: eme-events.php:6554
 msgid "List of todos"
-msgstr ""
+msgstr "Liste der Aufgaben"
 
 #: eme-todos.php:184
 msgid "Event start offset (days)"
-msgstr ""
+msgstr "Ereignisstart-Offset (Tage)"
 
 #: eme-todos.php:221
 msgid "Add new todo"
-msgstr ""
+msgstr "Neue Aufgabe hinzufügen"
 
 #: eme-events.php:6628
 msgid "Private events are only visible for logged in users. Draft events are not visible from the front end. Unlisted (hidden) events are not shown in any list or calendar. Frontend Draft is normally the state for events submitted via the frontend submit form."
-msgstr ""
+msgstr "Private Ereignisse sind nur für angemeldete Benutzer sichtbar. Entwurfsereignisse sind im Frontend nicht sichtbar. Nicht aufgeführte (versteckte) Ereignisse werden in keiner Liste oder im Kalender angezeigt. Frontend-Entwurf ist normalerweise der Status für Ereignisse, die über das Frontend-Einreichungsformular eingereicht werden."
 
 #: eme-functions.php:1477
 msgid "Unlisted (hidden)"
-msgstr ""
+msgstr "Nicht aufgeführt (versteckt)"
 
 #: eme-tasks.php:484
 msgid "Send reminders for task signups"
-msgstr ""
+msgstr "Erinnerungen für Aufgabenanmeldungen senden"
 
 #: eme-templates.php:316
 msgid "PDF mail attach format"
-msgstr ""
+msgstr "Format des PDF-E-Mail-Anhangs"
 
 #: eme-templates.php:318
 msgid "When the template is being used as an attacment in a mail, the attachment has a default name. If you don't like the name given to the attachment in the mail, you can change it here. Relevant placeholders are allowed in their context (event/membership/booking/member/...). The '.pdf' extension will get added automatically, so no need to mention it."
-msgstr ""
+msgstr "Wenn die Vorlage als Anhang in einer E-Mail verwendet wird, hat der Anhang einen Standardnamen. Wenn Ihnen der Name des Anhangs in der E-Mail nicht gefällt, können Sie ihn hier ändern. Relevante Platzhalter sind in ihrem Kontext (Ereignis/Mitgliedschaft/Buchung/Mitglied/...) erlaubt. Die Erweiterung '.pdf' wird automatisch hinzugefügt, sodass Sie diese nicht angeben müssen."
 
 #: eme-events.php:625
 msgid "Could not create the new location for this event: either you don't have the right to insert locations or there's a DB problem."
-msgstr ""
+msgstr "Der neue Standort für dieses Ereignis konnte nicht erstellt werden: Entweder haben Sie nicht das Recht, Standorte einzufügen, oder es liegt ein Datenbankproblem vor."
 
 #. translators: Accessibility text.
 #: eme-events.php:6593
 msgid "(opens in a new tab)"
-msgstr ""
+msgstr "(öffnet in einem neuen Tab)"
 
 #: eme-options.php:1879
 msgid "Attendees/bookings list ignore pending"
-msgstr ""
+msgstr "Liste der Teilnehmer/Buchungen ausstehende ignorieren"
 
 #: eme-options.php:1879
 msgid "Whether or not to ignore pending bookings when using the <code>#_ATTENDEES</code> or <code>#_BOOKINGS</code> placeholders."
-msgstr ""
+msgstr "Ob ausstehende Buchungen ignoriert werden sollen oder nicht, wenn die Platzhalter <code>#_ATTENDEES</code> oder <code>#_BOOKINGS</code> verwendet werden."
 
 #: eme-events.php:8801
 msgid "Attendance PDF proof"
-msgstr ""
+msgstr "Teilnahme-PDF-Nachweis"
 
 #: eme-events.php:8802
 msgid "When the URL generated by #_ATTENDANCEPROOF_URL is visited, the selected PDF template will be used to generate a PDF for the user that can serve as proof of attendance. All event and RSVP placeholders are allowed."
-msgstr ""
+msgstr "Wenn die von #_ATTENDANCEPROOF_URL generierte URL besucht wird, wird die ausgewählte PDF-Vorlage verwendet, um ein PDF für den Benutzer zu generieren, das als Teilnahmenachweis dienen kann. Alle Ereignis- und RSVP-Platzhalter sind erlaubt."
 
 #: eme-events.php:8804
 msgid "Choose from a template: "
-msgstr ""
+msgstr "Aus einer Vorlage auswählen: "
 
 #: eme-rsvp.php:5337
 msgid "Mark person as present (attendance record)"
-msgstr ""
+msgstr "Person als anwesend markieren (Teilnahmeprotokoll)"
 
 #: eme-rsvp.php:6674
 msgid "Attendance noted."
-msgstr ""
+msgstr "Teilnahme vermerkt."
 
 #: eme-formfields.php:210
 #: eme-formfields.php:216
 msgid "Add custom field"
-msgstr ""
+msgstr "Benutzerdefiniertes Feld hinzufügen"
 
 #: eme-formfields.php:219
 msgid "Manage custom fields"
-msgstr ""
+msgstr "Benutzerdefinierte Felder verwalten"
 
 #: eme-cron.php:402
 msgid "All queued mails will be send out without limit %s."
-msgstr ""
+msgstr "Alle in der Warteschlange befindlichen E-Mails werden ohne Limit %s gesendet."
 
 #: eme-cron.php:478
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once %s)"
-msgstr ""
+msgstr "%s wird überprüft, ob neue Ereignisse an bei EME registrierte Personen gesendet werden sollen (diese werden dann in die Warteschlange gestellt und alle auf einmal %s gesendet)"
 
 #: eme-cron.php:482
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out in batches of %d every time the queue is processed via the REST API call)"
-msgstr ""
+msgstr "%s wird überprüft, ob neue Ereignisse an bei EME registrierte Personen gesendet werden sollen (diese werden dann in die Warteschlange gestellt und in Stapeln von %d gesendet, wenn die Warteschlange über den REST-API-Aufruf verarbeitet wird)"
 
 #: eme-cron.php:484
 msgid "%s there will be a check if new events should be mailed to EME registered people (those will then be queued and send out all at once every time the queue is processed via the REST API call)"
-msgstr ""
+msgstr "%s wird überprüft, ob neue Ereignisse an bei EME registrierte Personen gesendet werden sollen (diese werden dann in die Warteschlange gestellt und alle auf einmal gesendet, wenn die Warteschlange über den REST-API-Aufruf verarbeitet wird)"
 
 #: eme-events.php:8758
 msgid "Select this option if you want an attendance record to be kept every time the RSVP attendance QRCODE is scanned by an authorized user."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn ein Teilnahmeprotokoll geführt werden soll, wenn der RSVP-Teilnahme-QR-Code von einem autorisierten Benutzer gescannt wird."
 
 #: eme-members.php:2054
 msgid "Select this option if you want an attendance record to be kept every time the member QRCODE is scanned by an EME admin."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn ein Teilnahmeprotokoll geführt werden soll, wenn der Mitglieds-QR-Code von einem EME-Administrator gescannt wird."
 
 #: eme-options.php:1969
 msgid "If you plan to use the registered REST API call to send your queued mails, set the schedule to \"Not scheduled\"."
-msgstr ""
+msgstr "Wenn Sie planen, den registrierten REST-API-Aufruf zu verwenden, um Ihre in der Warteschlange befindlichen E-Mails zu senden, setzen Sie den Zeitplan auf \"Nicht geplant\"."
 
 #: eme-options.php:1971
 msgid "Set the batch count to 0 if you want all queued mails to be send out every time the queue is processed (not recommended)."
-msgstr ""
+msgstr "Setzen Sie die Stapelanzahl auf 0, wenn alle in der Warteschlange befindlichen E-Mails jedes Mal gesendet werden sollen, wenn die Warteschlange verarbeitet wird (nicht empfohlen)."
 
 #: eme-cron.php:389
 msgid "WARNING: messages found in the queue but the mail queue is not activated, so they will not be sent out. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
-msgstr ""
+msgstr "WARNUNG: Nachrichten in der Warteschlange gefunden, aber die E-Mail-Warteschlange ist nicht aktiviert, sodass sie nicht gesendet werden. Stellen Sie sicher, dass Sie den registrierten REST-API-Aufruf mit den entsprechenden Optionen aus dem System-Cron ausführen, um die Warteschlange zu verarbeiten."
 
 #: eme-cron.php:391
 msgid "WARNING: messages found in the queue but the mail queue is not scheduled to be processed. Make sure to run the registered REST API call from system cron with the appropriate options in order to process the queue."
-msgstr ""
+msgstr "WARNUNG: Nachrichten in der Warteschlange gefunden, aber die E-Mail-Warteschlange ist nicht zur Verarbeitung geplant. Stellen Sie sicher, dass Sie den registrierten REST-API-Aufruf mit den entsprechenden Optionen aus dem System-Cron ausführen, um die Warteschlange zu verarbeiten."
 
 #: eme-mailer.php:2901
 #: eme-mailer.php:3080
 msgid "Email queueing has been activated but not scheduled. Go in the <a href=\"%s\">Email settings</a> and select a schedule or make sure to run the registered REST API call from system cron with the appropriate options to process the queue."
-msgstr ""
+msgstr "Die E-Mail-Warteschlange wurde aktiviert, aber nicht geplant. Gehen Sie in die <a href=\"%s\">E-Mail-Einstellungen</a> und wählen Sie einen Zeitplan aus oder stellen Sie sicher, dass Sie den registrierten REST-API-Aufruf mit den entsprechenden Optionen aus dem System-Cron ausführen, um die Warteschlange zu verarbeiten."
 
 #: eme-cron.php:325
 msgid "Mail queueing is active but the mail queue is not scheduled to be processed. Make sure to either configure a schedule or run the registered REST API call from system cron with the appropriate options in order to process the queue."
-msgstr ""
+msgstr "Die E-Mail-Warteschlange ist aktiv, aber die Verarbeitung der E-Mail-Warteschlange ist nicht geplant. Stellen Sie sicher, dass Sie entweder einen Zeitplan konfigurieren oder den registrierten REST-API-Aufruf mit den entsprechenden Optionen aus dem System-Cron ausführen, um die Warteschlange zu verarbeiten."
 
 #: eme-cron.php:330
 msgid "Change the \"username\" by your user and the \"password\" by an application password generated in your WP user settings."
-msgstr ""
+msgstr "Ändern Sie den \"Benutzernamen\" in Ihren Benutzernamen und das \"Passwort\" in ein Anwendungspasswort, das in Ihren WP-Benutzereinstellungen generiert wurde."
 
 #: eme-mailer.php:3183
 #: eme-mailer.php:3218
 msgid "Enter the search text (leave empty to show all)"
-msgstr ""
+msgstr "Suchtext eingeben (leer lassen, um alle anzuzeigen)"
 
 #: eme-mailer.php:2705
 msgid "Select the event(s)"
-msgstr ""
+msgstr "Ereignis(se) auswählen"
 
 #: eme-rsvp.php:6052
 msgid "Get IBAN"
-msgstr ""
+msgstr "IBAN abrufen"
 
 #: eme-events.php:6578
 msgid "If pressing Save does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
-msgstr ""
+msgstr "Wenn das Drücken von Speichern keine Wirkung zu haben scheint, überprüfen Sie alle anderen Registerkarten, um sicherzustellen, dass alle erforderlichen Felder ausgefüllt sind."
 
 #: eme-events.php:6597
 msgid "If pressing Update does not seem to be doing anything, then check all other tabs to make sure all required fields are filled out."
-msgstr ""
+msgstr "Wenn das Drücken von Aktualisieren keine Wirkung zu haben scheint, überprüfen Sie alle anderen Registerkarten, um sicherzustellen, dass alle erforderlichen Felder ausgefüllt sind."
 
 #: eme-events.php:7418
 msgid "No events will be created on excluded days."
-msgstr ""
+msgstr "An ausgeschlossenen Tagen werden keine Ereignisse erstellt."
 
 #: eme-events.php:8729
 msgid "Select a payment method"
-msgstr ""
+msgstr "Zahlungsmethode auswählen"
 
 #: eme-mailer.php:1036
 msgid "Archived"
-msgstr ""
+msgstr "Archiviert"
 
 #: eme-cron.php:332
 msgid "\"60\" means the script can run at most for 55 seconds (=60-5, 5 being a safety measure). Never set this higher than your cron recurrence of course."
-msgstr ""
+msgstr "\"60\" bedeutet, dass das Skript maximal 55 Sekunden lang ausgeführt werden kann (=60-5, 5 ist eine Sicherheitsmaßnahme). Setzen Sie dies natürlich niemals höher als Ihre Cron-Wiederholungsrate."
 
 #: eme-events.php:7413
 msgid "Excluded days:"
-msgstr ""
+msgstr "Ausgeschlossene Tage:"
 
 #: eme-events.php:8848
 msgid "Extra approval settings (also check out the mail templates)"
-msgstr ""
+msgstr "Zusätzliche Genehmigungseinstellungen (schauen Sie sich auch die E-Mail-Vorlagen an)"
 
 #: eme-mailer.php:3138
 msgid "Delete selected mails"
-msgstr ""
+msgstr "Ausgewählte E-Mails löschen"
 
 #: eme-categories.php:88
 msgid "Add a new category"
-msgstr ""
+msgstr "Neue Kategorie hinzufügen"
 
 #: eme-categories.php:111
 msgid "Delete selected categories"
-msgstr ""
+msgstr "Ausgewählte Kategorien löschen"
 
 #: eme-categories.php:608
 msgid "Categories deleted"
-msgstr ""
+msgstr "Kategorien gelöscht"
 
 #: eme-events.php:10114
 msgid "Holiday lists"
-msgstr ""
+msgstr "Feiertagslisten"
 
 #: eme-events.php:10154
 msgid "Mails"
-msgstr ""
+msgstr "E-Mails"
 
 #: eme-events.php:10156
 #: eme-mailer.php:3212
 msgid "Archived mailings"
-msgstr ""
+msgstr "Archivierte Mailings"
 
 #: eme-holidays.php:76
 msgid "Add a new list of holidays"
-msgstr ""
+msgstr "Neue Feiertagsliste hinzufügen"
 
 #: eme-holidays.php:81
 msgid "Add holidays list"
-msgstr ""
+msgstr "Feiertagsliste hinzufügen"
 
 #: eme-holidays.php:86
 msgid "Manage list of holidays"
-msgstr ""
+msgstr "Feiertagsliste verwalten"
 
 #: eme-holidays.php:99
 msgid "Delete selected lists of holidays"
-msgstr ""
+msgstr "Ausgewählte Feiertagslisten löschen"
 
 #: eme-holidays.php:328
 msgid "Holiday lists deleted"
-msgstr ""
+msgstr "Feiertagslisten gelöscht"
 
 #: eme-mailer.php:1701
 msgid "Mailings archived"
-msgstr ""
+msgstr "Mailings archiviert"
 
 #: eme-mailer.php:1711
 #: eme-mailer.php:1801
 msgid "Mailings deleted"
-msgstr ""
+msgstr "Mailings gelöscht"
 
 #: eme-mailer.php:1921
 msgid "Mails deleted"
-msgstr ""
+msgstr "E-Mails gelöscht"
 
 #: eme-mailer.php:3126
 msgid "Enter an optional search text"
-msgstr ""
+msgstr "Optionalen Suchtext eingeben"
 
 #: eme-mailer.php:3129
 msgid "Filter mails"
-msgstr ""
+msgstr "E-Mails filtern"
 
 #: eme-mailer.php:1547
 #: eme-mailer.php:1884
 #: eme-mailer.php:1890
 msgid "Reuse this mail"
-msgstr ""
+msgstr "Diese E-Mail wiederverwenden"
 
 #: eme-mailer.php:1633
 #: eme-mailer.php:1641
 #: eme-mailer.php:1756
 msgid "Delete this mailing"
-msgstr ""
+msgstr "Dieses Mailing löschen"
 
 #: eme-mailer.php:1633
 #: eme-mailer.php:1637
 msgid "Cancel the sending of this mailing"
-msgstr ""
+msgstr "Senden dieses Mailings abbrechen"
 
 #: eme-mailer.php:1641
 msgid "Archive this mailing"
-msgstr ""
+msgstr "Dieses Mailing archivieren"
 
 #: eme-mailer.php:1644
 #: eme-mailer.php:1758
 msgid "Reuse this mailing"
-msgstr ""
+msgstr "Dieses Mailing wiederverwenden"
 
 #: eme-mailer.php:1647
 msgid "Retry failed messages from this mailing"
-msgstr ""
+msgstr "Fehlgeschlagene Nachrichten aus diesem Mailing erneut versuchen"
 
 #: eme-mailer.php:1660
 msgid "The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time."
-msgstr ""
+msgstr "Die Anzahl der zu sendenden E-Mails wurde zum Zeitpunkt der Erstellung des Mailings geschätzt (%s). Dies wird zum Sendezeitpunkt neu bewertet."
 
 #: eme-mailer.php:1668
 msgid "Show mailing report"
-msgstr ""
+msgstr "Mailingbericht anzeigen"
 
 #: eme-mailer.php:1890
 msgid "Cancel the sending of this mail"
-msgstr ""
+msgstr "Senden dieser E-Mail abbrechen"
 
 #: eme-mailer.php:3096
 msgid "Enter any valid mail address"
-msgstr ""
+msgstr "Gültige E-Mail-Adresse eingeben"
 
 #: eme-events.php:349
 msgid "Event moved to the trash bin"
-msgstr ""
+msgstr "Ereignis in den Papierkorb verschoben"
 
 #: eme-events.php:6115
 msgid "Delete selected events (move to trash bin)"
-msgstr ""
+msgstr "Ausgewählte Ereignisse löschen (in den Papierkorb verschieben)"
 
 #: eme-events.php:6219
 msgid "Delete selected recurrences (and move events to trash bin)"
-msgstr ""
+msgstr "Ausgewählte Wiederholungen löschen (und Ereignisse in den Papierkorb verschieben)"
 
 #: eme-events.php:6581
 msgid "Are you sure you want to move this event to the trash bin?"
-msgstr ""
+msgstr "Sind Sie sicher, dass Sie dieses Ereignis in den Papierkorb verschieben möchten?"
 
 #: eme-events.php:6586
 msgid "Move event to trash bin"
-msgstr ""
+msgstr "Ereignis in den Papierkorb verschieben"
 
 #: eme-events.php:10738
 msgid "Events moved to the trash bin"
-msgstr ""
+msgstr "Ereignisse in den Papierkorb verschoben"
 
 #: eme-cleanup.php:366
 msgid "Also delete defined categories, templates, holidays, discounts, states, countries and custom form fields"
-msgstr ""
+msgstr "Auch definierte Kategorien, Vorlagen, Feiertage, Rabatte, Bundesländer, Länder und benutzerdefinierte Formularfelder löschen"
 
 #: eme-functions.php:460
 msgid "Please check the Friendly Captcha box"
-msgstr ""
+msgstr "Bitte das Friendly Captcha-Feld aktivieren"
 
 #: eme-functions.php:4178
 msgid "Friendly Captcha"
-msgstr ""
+msgstr "Friendly Captcha"
 
 #: eme-options.php:1460
 msgid "Use Friendly Captcha for forms?"
-msgstr ""
+msgstr "Friendly Captcha für Formulare verwenden?"
 
 #: eme-options.php:1460
 msgid "Check this option if you want to use Friendly Captcha on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present."
-msgstr ""
+msgstr "Diese Option aktivieren, wenn Sie Friendly Captcha in den Buchungs-/Stornierungs-/Mitgliedschaftsformularen verwenden möchten, um Spammer etwas abzuwehren. Sie können dann entweder #_CAPTCHA selbst zu Ihrem Formularlayout hinzufügen oder es wird automatisch direkt über der Senden-Schaltfläche hinzugefügt, wenn es nicht vorhanden ist."
 
 #: eme-options.php:1461
 msgid "Friendly Captcha site key"
-msgstr ""
+msgstr "Friendly Captcha-Website-Schlüssel"
 
 #: eme-options.php:1462
 msgid "Friendly Captcha API key"
-msgstr ""
+msgstr "Friendly Captcha API-Schlüssel"
 
 #: eme-events.php:6902
 msgid "Your event seems to have only one price, so you can't use #_SEATS{xx} in your event RSVP form format. Please correct the RSVP form format to use #_SEATS (or #_SPACES)."
-msgstr ""
+msgstr "Ihr Ereignis scheint nur einen Preis zu haben, sodass Sie #_SEATS{xx} nicht in Ihrem Ereignis-RSVP-Formularformat verwenden können. Bitte korrigieren Sie das RSVP-Formularformat, um #_SEATS (oder #_SPACES) zu verwenden."
 
 #: eme-events.php:6927
 msgid "Please correct the RSVP form format to use #_SEATS."
-msgstr ""
+msgstr "Bitte korrigieren Sie das RSVP-Formularformat, um #_SEATS zu verwenden."
 
 #: eme-events.php:6929
 msgid "Please correct the RSVP form format to use #_SEATS{xx} for all price categories."
-msgstr ""
+msgstr "Bitte korrigieren Sie das RSVP-Formularformat, um #_SEATS{xx} für alle Preiskategorien zu verwenden."
 
 #: eme-events.php:6675
 #: eme-events.php:10455
 #: eme-rsvp.php:5918
 msgid "Free:"
-msgstr ""
+msgstr "Kostenlos:"
 
 #: eme-events.php:6693
 #: eme-events.php:6696
@@ -14260,27 +14260,63 @@ msgstr ""
 #: eme-rsvp.php:5935
 #: eme-rsvp.php:5938
 msgid "Max:"
-msgstr ""
+msgstr "Max:"
 
 #: eme-events.php:6694
 #: eme-events.php:10489
 #: eme-rsvp.php:5936
 msgid "Max (from location):"
-msgstr ""
+msgstr "Max (vom Standort):"
 
 #: eme-events.php:8876
 msgid "A location maximum capacity is set. If your event maximum surpasses this capacity, the location capacity will take precendence."
-msgstr ""
+msgstr "Eine maximale Kapazität für den Standort ist festgelegt. Wenn das Maximum Ihres Ereignisses diese Kapazität überschreitet, hat die Standortkapazität Vorrang."
 
 #: eme-tasks.php:783
 msgid "One person already signed up for this task"
 msgid_plural "%d persons already signed up for this task"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Eine Person hat sich bereits für diese Aufgabe angemeldet"
+msgstr[1] "%d Personen haben sich bereits für diese Aufgabe angemeldet"
+
+#: eme-functions.php:1480
+msgid "Trashed"
+msgstr "Gelöscht"
 
 #: eme-functions.php:4238
 msgid "Use Ctrl-click to sort on multiple columns"
-msgstr ""
+msgstr "Verwenden Sie Strg-Klick, um nach mehreren Spalten zu sortieren"
+
+#: eme-functions.php:4240
+msgid "All selected columns are used for sorting"
+msgstr "Alle ausgewählten Spalten werden zum Sortieren verwendet"
+
+#: eme-options.php:67
+msgid "Unsubscription confirmation"
+msgstr "Bestätigung der Abmeldung"
+
+#: eme-options.php:68
+msgid "Hi,<br><br>This email is to confirm that you have been successfully unsubscribed.<br><br>If you ever wish to resubscribe or have any questions, please feel free to reach out to us at #_CONTACTPERSON<br><br>Yours faithfully"
+msgstr "Hallo,<br><br>diese E-Mail bestätigt, dass Sie erfolgreich abgemeldet wurden.<br><br>Falls Sie sich erneut anmelden möchten oder Fragen haben, können Sie sich gerne an #_CONTACTPERSON wenden.<br><br>Mit freundlichen Grüßen"
+
+#: eme-options.php:1989
+msgid "Remark: if - for certain emails - the reply-to address was identical to the from address, the value of the reply-to address will be forced too."
+msgstr "Hinweis: Wenn bei bestimmten E-Mails die Antwortadresse mit der Absenderadresse identisch ist, wird der Wert der Antwortadresse ebenfalls erzwungen."
+
+#: eme-options.php:2389
+msgid "Unsubscribe confirmation email subject"
+msgstr "Betreff der Bestätigungs-E-Mail für die Abmeldung"
+
+#: eme-options.php:2389
+msgid "The subject of the email that will be sent to the person as confirmation after they unsubscribe."
+msgstr "Der Betreff der E-Mail, die an die Person als Bestätigung nach der Abmeldung gesendet wird."
+
+#: eme-options.php:2390
+msgid "Unsubscribe confirmation email body"
+msgstr "Inhalt der Bestätigungs-E-Mail für die Abmeldung"
+
+#: eme-options.php:2390
+msgid "The body of the email that will be sent to the person as confirmation after they unsubscribe."
+msgstr "Der Inhalt der E-Mail, die an die Person als Bestätigung nach der Abmeldung gesendet wird."
 
 #: eme-options.php:2576
 #: eme-options.php:2610
@@ -14298,7 +14334,7 @@ msgstr ""
 #: eme-options.php:3044
 #: eme-options.php:3067
 msgid "Extra payment method information"
-msgstr ""
+msgstr "Zusätzliche Informationen zur Zahlungsmethode"
 
 #: eme-options.php:2577
 #: eme-options.php:2612
@@ -14316,7 +14352,7 @@ msgstr ""
 #: eme-options.php:3046
 #: eme-options.php:3070
 msgid "Internal payment method name: %s"
-msgstr ""
+msgstr "Interner Name der Zahlungsmethode: %s"
 
 #: eme-options.php:2611
 #: eme-options.php:2683
@@ -14325,7 +14361,7 @@ msgstr ""
 #: eme-options.php:2853
 #: eme-options.php:2878
 msgid "Refunding not implemented."
-msgstr ""
+msgstr "Rückerstattung nicht implementiert."
 
 #: eme-options.php:2646
 #: eme-options.php:2682
@@ -14338,7 +14374,7 @@ msgstr ""
 #: eme-options.php:3010
 #: eme-options.php:3068
 msgid "The url for payment notifications is: %s"
-msgstr ""
+msgstr "Die URL für Zahlungsbenachrichtigungen lautet: %s"
 
 #: eme-options.php:2647
 #: eme-options.php:2742
@@ -14348,56 +14384,20 @@ msgstr ""
 #: eme-options.php:3045
 #: eme-options.php:3069
 msgid "Refunding is possible."
-msgstr ""
+msgstr "Rückerstattung ist möglich."
 
 #: eme-options.php:2778
 msgid "Refunding is possible if funds are available on the account."
-msgstr ""
+msgstr "Rückerstattung ist möglich, wenn ausreichend Mittel auf dem Konto vorhanden sind."
 
 #: eme-options.php:2948
 msgid "Internal payment method name"
-msgstr ""
-
-#: eme-functions.php:4240
-msgid "All selected columns are used for sorting"
-msgstr ""
-
-#: eme-options.php:67
-msgid "Unsubscription confirmation"
-msgstr ""
-
-#: eme-options.php:2389
-msgid "Unsubscribe confirmation email subject"
-msgstr ""
-
-#: eme-options.php:2389
-msgid "The subject of the email that will be sent to the person as confirmation after they unsubscribe."
-msgstr ""
-
-#: eme-options.php:2390
-msgid "Unsubscribe confirmation email body"
-msgstr ""
-
-#: eme-options.php:2390
-msgid "The body of the email that will be sent to the person as confirmation after they unsubscribe."
-msgstr ""
+msgstr "Interner Name der Zahlungsmethode"
 
 #: eme-tasks.php:592
 msgid "The subject of the email that will be sent to the respondent if the task signup has been updated by an admin."
-msgstr ""
+msgstr "Der Betreff der E-Mail, die an den Empfänger gesendet wird, wenn die Aufgabenanmeldung von einem Administrator aktualisiert wurde."
 
 #: eme-tasks.php:601
 msgid "The body of the email that will be sent to the respondent if the task signup has been updated by an admin."
-msgstr ""
-
-#: eme-options.php:68
-msgid "Hi,<br><br>This email is to confirm that you have been successfully unsubscribed.<br><br>If you ever wish to resubscribe or have any questions, please feel free to reach out to us at #_CONTACTPERSON<br><br>Yours faithfully"
-msgstr ""
-
-#: eme-functions.php:1480
-msgid "Trashed"
-msgstr ""
-
-#: eme-options.php:1989
-msgid "Remark: if - for certain emails - the reply-to address was identical to the from address, the value of the reply-to address will be forced too."
-msgstr ""
+msgstr "Der Inhalt der E-Mail, die an den Empfänger gesendet wird, wenn die Aufgabenanmeldung von einem Administrator aktualisiert wurde."

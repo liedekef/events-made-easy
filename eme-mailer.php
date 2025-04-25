@@ -415,6 +415,32 @@ function eme_send_mail_to_groups( $group_ids, $subject, $body, $fromemail, $from
     return $res;
 }
 
+// API function
+function eme_send_eventmail_to_groups( $event_ids, $group_ids, $subject, $body, $fromemail, $fromname, $replytoemail='', $replytoname='' ) {
+    if (!eme_is_list_of_int($event_ids) || !eme_is_list_of_int($group_ids) || empty($subject) || empty($body)) {
+        return false;
+    }
+
+    $queue = intval( get_option( 'eme_queue_mails' ) );
+    $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
+
+    $mailing_name = "eventmail to groups $group_ids";
+    $now          = current_time( 'mysql', false );
+    $conditions   = [
+        'action' => 'eventmail',
+        'event_id' => $event_ids,
+        'eme_eventmail_send_groups' => $group_ids
+    ];
+    if ($queue) {
+        $mailing_id   = eme_db_insert_mailing( $mailing_name, $now, $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions );
+        $res          = eme_count_planned_mailing_receivers( $conditions );
+        eme_mark_mailing_planned( $mailing_id, $res['total'] );
+    } else {
+        $res = eme_update_mailing_receivers( $subject, $body, $fromemail, $fromname, $replytoemail, $replytoname, $mail_text_html, $conditions );
+    }
+    return $res;
+}
+
 function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id = 0, $person_id = 0, $member_id = 0, $atts_arr = [], $add_listhdrs = -1 ) {
     return eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id, $person_id, $member_id, $atts_arr, 1, $add_listhdrs );
 }

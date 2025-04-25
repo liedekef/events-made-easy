@@ -103,7 +103,13 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Added API function eme_send_mail_to_groups to easily send emails to an EME group and obey list headers etc...
   Function def:
      eme_send_mail_to_groups( $group_ids, $subject, $body, $fromemail, $fromname, $replytoemail='', $replytoname='')
-     ==> $group_ids needs to be a CSV list of groups
+     ==> $group_ids needs to be a CSV list of group ids
+     ==> $replytoemail and $replytoname are optional (then the from-info is taken)
+* Added API function eme_send_eventmail_to_groups to easily send emails to an EME group concerning events and obey list headers etc...
+  Function def:
+     eme_send_eventmail_to_groups( $event_ids, $group_ids, $subject, $body, $fromemail, $fromname, $replytoemail='', $replytoname='')
+     ==> $event_ids needs to be a CSV list of event ids
+     ==> $group_ids needs to be a CSV list of group ids
      ==> $replytoemail and $replytoname are optional (then the from-info is taken)
 
 = 2.5.54 (2025/04/23) =

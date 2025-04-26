@@ -114,6 +114,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 
 = 2.5.54 (2025/04/23) =
 * Fix show/hide columns, offset was wrong by 1 due to code reorg in jtable
+* Unsent mail for a pending booking is removed if the payment arrives in time, to avoid the booker to receive 2 emails at the same time
 
 = 2.5.52 (2025/04/23) =
 * Trashed events should not be shown in eme_events shortcode nor in the dashboard overview

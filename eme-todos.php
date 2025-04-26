@@ -130,7 +130,7 @@ function eme_mark_todo_sent( $todo_id ) {
 function eme_db_delete_todo( $todo_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TODOS_TBNAME;
-	$wpdb->delete( $table, [ 'todo_id' => $todo_id ] );
+	$wpdb->delete( $table, [ 'todo_id' => $todo_id ], ['%d'] );
 }
 
 function eme_delete_event_todos( $event_id ) {

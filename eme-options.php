@@ -2057,6 +2057,7 @@ function eme_options_page() {
             } elseif ( ! get_option( 'eme_rsvp_mail_notify_approved' ) ) {
                 print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for bookings made or approved, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
+            echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
             esc_html_e( 'When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid.', 'events-made-easy' );
 ?>
 <table class='form-table'>
@@ -2115,6 +2116,8 @@ function eme_options_page() {
             } elseif ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
                 print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
+            echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
+            esc_html_e( 'When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 mails at the same time.', 'events-made-easy' );
 ?>
 <table class='form-table'>
 <?php

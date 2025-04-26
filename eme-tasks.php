@@ -124,7 +124,7 @@ function eme_db_update_task( $line ) {
 function eme_db_delete_task( $task_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TASKS_TBNAME;
-	$wpdb->delete( $table, [ 'task_id' => $task_id ] );
+	$wpdb->delete( $table, [ 'task_id' => $task_id ], ['%d'] );
 }
 
 function eme_delete_event_tasks( $event_id ) {
@@ -215,7 +215,7 @@ function eme_transfer_person_task_signups( $person_ids, $to_person_id ) {
 function eme_db_delete_task_signup( $signup_id ) {
 	global $wpdb;
 	$table = EME_DB_PREFIX . EME_TASK_SIGNUPS_TBNAME;
-	if ( $wpdb->delete( $table, [ 'id' => $signup_id ] ) === false ) {
+	if ( $wpdb->delete( $table, [ 'id' => $signup_id ], ['%d'] ) === false ) {
 		$res = false;
 	} else {
 		$res = true;

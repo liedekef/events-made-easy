@@ -3679,6 +3679,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
                             // if the option to send a mail after payment is received is active, we don't send a second mail for approval
                             // However: if the price to pay is 0, then no payment mail is sent ... so then we do send the approval mail
                             if ( $mailing_approved && ( ! $mailing_paid || $total_price == 0 ) ) {
+                                eme_delete_pendingbooking_mail( $booking );
                                 eme_email_booking_action( $booking, 'approveBooking' );
                                 $mail_sent = 1;
                             }
@@ -3701,6 +3702,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
                         // if the option to send a mail after payment is received is active, we don't send a second mail for approval
                         // However: if the price to pay is 0, then no payment mail is sent ... so then we do send the approval mail
                         if ( $mailing_approved && ( ! $mailing_paid || $total_price == 0 ) ) {
+                            eme_delete_pendingbooking_mail( $booking );
                             eme_email_booking_action( $booking, 'approveBooking' );
                             $mail_sent = 1;
                         }
@@ -3717,6 +3719,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
             // Send the paid email if the event price is >0, not when the total price to pay is >0, since that can be 0 due to discount
             $booking_event_price = eme_get_booking_event_price( $booking );
             if ( $mailing_paid && ( $total_price > 0 || ( $total_price == 0 && $booking_event_price > 0 && $mail_sent == 0 ) ) ) {
+                eme_delete_pendingbooking_mail( $booking );
                 eme_email_booking_action( $booking, 'paidBooking' );
             }
 

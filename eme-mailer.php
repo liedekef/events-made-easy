@@ -527,12 +527,18 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         if ( $wpdb->insert( $mqueue_table, $mail ) === false ) {
             return false;
         } else {
-            return eme_process_single_mail( $mail );
+            $mail_id = $wpdb->insert_id;
+            $res = eme_process_single_mail( $mail );
+            if ( $res ) {
+                return $mail_id;
+            } else {
+                return false;
+            }
         }
     } elseif ( $wpdb->insert( $mqueue_table, $mail ) === false ) {
         return false;
     } else {
-        return true;
+        return $wpdb->insert_id;
     }
 }
 
@@ -867,7 +873,7 @@ function eme_archive_mailing( $mailing_id ) {
     $wpdb->update( $mailings_table, $fields, $where );
 
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $wpdb->delete( $queue_table, ['mailing_id' => $mailing_id] );
+    $wpdb->delete( $queue_table, ['mailing_id' => $mailing_id], ['%d'] );
     wp_cache_delete( "eme_mailing $mailing_id" );
 }
 
@@ -1834,10 +1840,10 @@ function eme_ajax_mails_list() {
         $count_sql = "SELECT COUNT(*) FROM $table";
         if (empty($orderby)) {
             // subselect to first get the last 100, and then the outer select to reverse sort them (newer last)
-            $sql  = "SELECT * FROM (SELECT * FROM $table $where ORDER BY id DESC $limit) as q ORDER BY q.id";
-        } else {
-            $sql  = "SELECT * FROM $table $where $orderby $limit";
+            //$sql  = "SELECT * FROM (SELECT * FROM $table $where ORDER BY id DESC $limit) as q ORDER BY q.id";
+            $orderby = "ORDER BY creation_date DESC";
         }
+        $sql  = "SELECT * FROM $table $where $orderby $limit";
     } else {
         $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
         if ( ! empty( $_POST['search_failed'] ) ) {

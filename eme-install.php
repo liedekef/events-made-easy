@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // we define all db-constants here, this also means the uninstall can include this file and use it
 // and doesn't need to include the main file
-define( 'EME_DB_VERSION', 409 ); // increase this if the db schema changes or the options change
+define( 'EME_DB_VERSION', 410 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
 define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
@@ -691,12 +691,14 @@ function eme_create_bookings_table( $charset, $collate, $db_version, $db_prefix 
          dcodes_used tinytext,
          dgroupid INT(11) DEFAULT 0,
          attend_count INT(11) DEFAULT 0,
+         pending_mailid int(11) DEFAULT 0,
          UNIQUE KEY  (booking_id),
          KEY (status)
          ) $charset $collate;";
 		maybe_create_table( $table_name, $sql );
 	} else {
 		maybe_add_column( $table_name, 'attend_count', "ALTER TABLE $table_name ADD attend_count INT(11) DEFAULT 0;" );
+		maybe_add_column( $table_name, 'pending_mailid', "ALTER TABLE $table_name ADD pending_mailid INT(11) DEFAULT 0;" );
 		maybe_add_column( $table_name, 'status', "ALTER TABLE $table_name ADD status tinyint DEFAULT 1;" );
 		maybe_add_column( $table_name, 'booking_comment', "ALTER TABLE $table_name ADD booking_comment text;" );
 		maybe_add_column( $table_name, 'waitinglist', "ALTER TABLE $table_name ADD waitinglist bool DEFAULT 0;" );

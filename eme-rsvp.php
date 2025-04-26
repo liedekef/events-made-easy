@@ -4176,6 +4176,8 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
     $attachment_ids         = '';
     $attachment_tmpl_ids_arr = [];
     $ticket_attachment      = '';
+    $add_pending_mailid     = 0;
+
     switch ( $action ) {
     case 'resendApprovedBooking':
         // can only be called from within the backend interface
@@ -4590,6 +4592,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
             $person_body_filter     = 'pending_body';
             $contact_subject_filter = 'contact_pending_subject';
             $contact_body_filter    = 'contact_pending_body';
+            $add_pending_mailid     = 1;
         } else {
             // if we don't require approval and the total price is 0, we add the optional ticket template here
             if ( $mailing_approved ) {
@@ -4736,6 +4739,12 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
             $mail_res = eme_queue_fastmail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
         } else {
             $mail_res = eme_queue_mail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
+            if ( $add_pending_mailid == 1 ) {
+                // add the pending mailid to the booking
+                if ( $mail_res ) { // if ok, mail_res contains the mail id of the inserted mail, so add it to the booking
+                    eme_add_pendingbooking_mail( $booking['booking_id'], $mail_res );
+                }
+            }
         }
     }
     return $mail_res;
@@ -6119,7 +6128,7 @@ function eme_ajax_manage_bookings() {
                 break;
             case 'approveBooking':
                 header( 'Content-type: application/json; charset=utf-8' );
-                eme_ajax_action_rsvp_aprove( $ids_arr, $do_action, $send_mail );
+                eme_ajax_action_rsvp_approve( $ids_arr, $do_action, $send_mail );
                 break;
             case 'deleteBooking':
                 header( 'Content-type: application/json; charset=utf-8' );
@@ -6352,7 +6361,7 @@ function eme_ajax_action_move_waitinglist( $ids_arr, $action, $send_mail, $refun
     print wp_json_encode( $ajaxResult );
 }
 
-function eme_ajax_action_rsvp_aprove( $ids_arr, $action, $send_mail ) {
+function eme_ajax_action_rsvp_approve( $ids_arr, $action, $send_mail ) {
     $action_ok = 1;
     $mail_ok   = 1;
     foreach ( $ids_arr as $booking_id ) {
@@ -7047,6 +7056,33 @@ function eme_manage_waitinglist( $event, $send_mail = 1 ) {
                 }
             }
         }
+    }
+}
+
+function eme_add_pendingbooking_mail( $booking_id, $mailid ) {
+    global $wpdb;
+    $bookings_table = EME_DB_PREFIX . EME_BOOKINGS_TBNAME;
+    $where = [
+        'booking_id' => $booking_id
+    ];
+    $fields = [
+        'pending_mailid' => $mailid
+    ];
+    $res = $wpdb->update( $bookings_table, $fields, $where );
+    if ( $res === false ) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function eme_delete_pendingbooking_mail( $booking ) {
+    global $wpdb;
+    $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+
+    if ( $booking['pending_mailid'] > 0 ) {
+        // delete if status=0 (= not sent)
+        $wpdb->delete( $queue_table, ['id' => intval($booking['pending_mailid']), 'status' => 0 ], ['%d','%d'] );
     }
 }
 

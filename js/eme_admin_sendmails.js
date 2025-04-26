@@ -517,7 +517,7 @@ jQuery(document).ready( function($) {
             paging: true,
             sorting: true,
             multiSorting: true,
-            defaultSorting: 'sent_datetime DESC',
+            defaultSorting: "creation_date DESC",
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
@@ -539,6 +539,7 @@ jQuery(document).ready( function($) {
             },
             fields: {
                 id: {
+                    title: ememails.translate_id,
                     key: true,
                     list: false,
                 },

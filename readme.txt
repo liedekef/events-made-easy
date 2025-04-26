@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 2.5.54
+Stable tag: 2.5.55
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,7 +99,7 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.55 (2025/04/) =
+= 2.5.55 (2025/04/26) =
 * Added API function eme_send_mail_to_groups to easily send emails to an EME group and obey list headers etc...
   Function def:
      eme_send_mail_to_groups( $group_ids, $subject, $body, $fromemail, $fromname, $replytoemail='', $replytoname='')
@@ -111,10 +111,10 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
      ==> $event_ids needs to be a CSV list of event ids
      ==> $group_ids needs to be a CSV list of group ids
      ==> $replytoemail and $replytoname are optional (then the from-info is taken)
+* Unsent mail for a pending booking is removed if the payment arrives in time, to avoid the booker to receive 2 emails at the same time
 
 = 2.5.54 (2025/04/23) =
 * Fix show/hide columns, offset was wrong by 1 due to code reorg in jtable
-* Unsent mail for a pending booking is removed if the payment arrives in time, to avoid the booker to receive 2 emails at the same time
 
 = 2.5.52 (2025/04/23) =
 * Trashed events should not be shown in eme_events shortcode nor in the dashboard overview

@@ -6248,16 +6248,19 @@ function eme_ajax_action_rsvp_markpaidandapprove( $ids_arr ) {
             }
             // if we need to send out approval mails, we don't send out the paid mails too
             if ( $mailing_paid && $paid_mail_gets_precedence ) {
+                eme_delete_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'paidBooking' );
                 if ( ! $res2 ) {
                     $mail_ok = 0;
                 }
             } elseif ( $mailing_approved ) {
+                eme_delete_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'approveBooking' );
                 if ( ! $res2 ) {
                     $mail_ok = 0;
                 }
             } elseif ( $mailing_paid ) {
+                eme_delete_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'paidBooking' );
                 if ( ! $res2 ) {
                     $mail_ok = 0;
@@ -6375,6 +6378,7 @@ function eme_ajax_action_rsvp_approve( $ids_arr, $action, $send_mail ) {
                     do_action( 'eme_approve_rsvp_action', $booking );
                 }
                 if ( $send_mail ) {
+                    eme_delete_pendingbooking_mail( $booking );
                     $res2 = eme_email_booking_action( $booking, $action );
                     if ( ! $res2 ) {
                         $mail_ok = 0;

@@ -429,6 +429,7 @@ function eme_send_eventmail_to_groups( $event_ids, $group_ids, $subject, $body, 
     $conditions   = [
         'action' => 'eventmail',
         'event_id' => $event_ids,
+        'eme_mail_type' => 'people_and_groups',
         'eme_eventmail_send_groups' => $group_ids
     ];
     if ($queue) {

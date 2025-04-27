@@ -3266,29 +3266,51 @@ function eme_configured_pgs_descriptions() {
     return $pgs;
 }
 
-// old name
 function eme_event_can_pay_online( $event ) {
-    return eme_event_has_pgs_configured( $event );
+    // count the online payment gateways active for this event
+    if ( empty( $event['event_properties']['payment_gateways'] ) || !is_array( $event['event_properties']['payment_gateways'] ) )
+        return 0;
+    $pgs      = eme_get_configured_pgs();
+    $pg_count = 0;
+    foreach ( $pgs as $pg ) {
+        if ( !eme_is_offline_pg($pg) && in_array($pg, $event['event_properties']['payment_gateways']) ) {
+            ++$pg_count;
+        }
+    }
+    return $pg_count;
 }
+
 function eme_event_has_pgs_configured( $event ) {
-    if ( !empty($event['event_properties']['payment_gateways'] )) {
-        return 1;
+    if ( eme_event_count_pgs( $event ) > 0 ) {
+        return true;
     }
-    return 0;
+    return false;
 }
+
 function eme_membership_can_pay_online( $membership ) {
-    return eme_membership_has_pgs_configured( $membership );
-}
-function eme_membership_has_pgs_configured( $membership ) {
-    if ( !empty($membership['properties']['payment_gateways'] )) {
-        return 1;
+    // count the payment gateways active for this event
+    if ( empty( $membership['properties']['payment_gateways'] ) || !is_array( $membership['properties']['payment_gateways'] ) )
+        return 0;
+    $pgs      = eme_get_configured_pgs();
+    $pg_count = 0;
+    foreach ( $pgs as $pg ) {
+        if ( !eme_is_offline_pg($pg) && in_array($pg, $membership['properties']['payment_gateways']) ) {
+            ++$pg_count;
+        }
     }
-    return 0;
+    return $pg_count;
+}
+
+function eme_membership_has_pgs_configured( $membership ) {
+    if ( eme_membership_count_pgs( $membership ) > 0 ) {
+        return true;
+    }
+    return false;
 }
 
 function eme_event_count_pgs( $event ) {
     // count the payment gateways active for this event
-    if (empty($event['event_properties']['payment_gateways']) || !is_array($event['event_properties']['payment_gateways']))
+    if ( empty( $event['event_properties']['payment_gateways'] ) || !is_array( $event['event_properties']['payment_gateways'] ) )
         return 0;
     $pgs      = eme_get_configured_pgs();
     $pg_count = 0;
@@ -3302,7 +3324,7 @@ function eme_event_count_pgs( $event ) {
 
 function eme_membership_count_pgs( $membership ) {
     // count the payment gateways active for this event
-    if (empty($membership['properties']['payment_gateways']) || !is_array($membership['properties']['payment_gateways']))
+    if ( empty( $membership['properties']['payment_gateways'] ) || !is_array( $membership['properties']['payment_gateways'] ) )
         return 0;
     $pgs      = eme_get_configured_pgs();
     $pg_count = 0;

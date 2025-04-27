@@ -4592,7 +4592,11 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
             $person_body_filter     = 'pending_body';
             $contact_subject_filter = 'contact_pending_subject';
             $contact_body_filter    = 'contact_pending_body';
-            $add_pending_mailid     = 1;
+            // people can pay online, so we store the pending mailid in the booking in order to be able to cancel it 
+            //    if the payment arrives in time
+            if ( eme_event_can_pay_online( $event ) ) {
+                $add_pending_mailid     = 1;
+            }
         } else {
             // if we don't require approval and the total price is 0, we add the optional ticket template here
             if ( $mailing_approved ) {

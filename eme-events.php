@@ -8728,7 +8728,7 @@ function eme_meta_box_div_event_payment_methods( $event, $is_new_event ) {
         esc_html_e( 'No payment methods configured yet. Go in the EME payment settings and configure some.', 'events-made-easy' );
         echo "</b>";
     } else {
-        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_select2_width50_class', 'data-placeholder="'.__('Select a payment method','events-made-easy') .'"' );
+        echo eme_ui_multiselect( $event['event_properties']['payment_gateways'], 'eme_prop_payment_gateways', $configured_pgs_descriptions, 5, '', 0, 'eme_select2_width50_class', 'data-placeholder="'.esc_html__('Select a payment method','events-made-easy') .'"' );
     }
 ?>
                 </p>

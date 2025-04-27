@@ -4738,12 +4738,14 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
             $mail_res = eme_queue_fastmail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
         } else {
-            $mail_res = eme_queue_mail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
             if ( $add_pending_mailid == 1 ) {
+                $mail_res = eme_queue_mail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr, status: EME_MAIL_STATUS_DELAYED );
                 // add the pending mailid to the booking
                 if ( $mail_res ) { // if ok, mail_res contains the mail id of the inserted mail, so add it to the booking
                     eme_add_pendingbooking_mail( $booking['booking_id'], $mail_res );
                 }
+            } else {
+                $mail_res = eme_queue_mail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
             }
         }
     }
@@ -7084,9 +7086,10 @@ function eme_delete_pendingbooking_mail( $booking ) {
     global $wpdb;
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
 
-    if ( $booking['pending_mailid'] > 0 ) {
+    $pending_mailid = intval ( $booking['pending_mailid'] );
+    if ( $pending_mailid > 0 ) {
         // delete if status=0 (= not sent)
-        $wpdb->delete( $queue_table, ['id' => intval($booking['pending_mailid']), 'status' => 0 ], ['%d','%d'] );
+        $wpdb->delete( $queue_table, ['id' => $pending_mailid, 'status' => EME_MAIL_STATUS_DELAYED ], ['%d','%d'] );
     }
 }
 

@@ -446,7 +446,7 @@ function eme_queue_fastmail( $subject, $body, $fromemail, $fromname, $receiverem
     return eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail, $replytoname, $mailing_id, $person_id, $member_id, $atts_arr, 1, $add_listhdrs );
 }
 
-function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail = '', $replytoname = '', $mailing_id = 0, $person_id = 0, $member_id = 0, $atts_arr = [], $send_immediately = 0, $add_listhdrs = -1 ) {
+function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail, $receivername, $replytoemail = '', $replytoname = '', $mailing_id = 0, $person_id = 0, $member_id = 0, $atts_arr = [], $send_immediately = 0, $add_listhdrs = -1, $status = EME_MAIL_STATUS_PLANNED ) {
     global $wpdb;
     $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
 
@@ -521,14 +521,17 @@ function eme_queue_mail( $subject, $body, $fromemail, $fromname, $receiveremail,
         $mail['created_by'] = $current_userid;
     }
 
+    $mail['status'] = intval($status);
     if ( $send_immediately ) {
-        // we add the mail to the queue as sent and send it immediately
-        $mail['status']        = 1;
+        // we add the mail to the queue as sent and process it immediately
+        // we set status to SENT so the cron might not accidentally pick it up
+        $mail['status'] = EME_MAIL_STATUS_SENT;
         $mail['sent_datetime'] = $now;
         if ( $wpdb->insert( $mqueue_table, $mail ) === false ) {
             return false;
         } else {
             $mail_id = $wpdb->insert_id;
+            $mail['id'] = $mail_id; // make sure the mail id is set
             $res = eme_process_single_mail( $mail );
             if ( $res ) {
                 return $mail_id;
@@ -553,8 +556,20 @@ function eme_mark_mail_ignored( $id, $random_id ) {
     } else {
         $where['id'] = intval( $id );
     }
-    $fields['status']        = 4;
+    $fields['status']        = EME_MAIL_STATUS_IGNORED;
     $fields['sent_datetime'] = current_time( 'mysql', false );
+    if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+function eme_mark_delayed_mails_planned( ) {
+    global $wpdb;
+    $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+    $where  = [ 'status' => EME_MAIL_STATUS_DELAYED ];
+    $fields = [ 'status' => EME_MAIL_STATUS_PLANNED ];
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
         return false;
     } else {
@@ -573,7 +588,7 @@ function eme_mark_mail_sent( $id, $random_id ) {
         $where['id'] = intval( $id );
     }
     $where['id']             = intval( $id );
-    $fields['status']        = 1;
+    $fields['status']        = EME_MAIL_STATUS_SENT;
     $fields['sent_datetime'] = current_time( 'mysql', false );
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
         return false;
@@ -592,7 +607,7 @@ function eme_mark_mail_fail( $id, $random_id, $error_msg = '' ) {
     } else {
         $where['id'] = intval( $id );
     }
-    $fields['status']        = 2;
+    $fields['status']        = EME_MAIL_STATUS_FAILED;
     $fields['error_msg']     = esc_sql( $error_msg );
     $fields['sent_datetime'] = current_time( 'mysql', false );
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
@@ -617,7 +632,7 @@ function eme_cancel_all_queued() {
 
     // cancel individual mails
     $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $wpdb->update( $mqueue_table, ['status'=>3], ['status'=>0] );
+    $wpdb->update( $mqueue_table, [ 'status' => EME_MAIL_STATUS_CANCELLED ], [ 'status' => EME_MAIL_STATUS_PLANNED ] );
 }
 
 function eme_get_queued_count() {
@@ -672,10 +687,6 @@ function eme_process_single_mail( $mail ) {
         $add_tracking = false;
     }
 
-    if ( empty( $mail['id'] ) ) {
-        // in the case of send_immediately (call to eme_queue_fastmail), the mail id is not set
-        $mail['id'] = 0;
-    }
     if ( empty( $mail['receiveremail'] ) ) {
         eme_mark_mail_ignored( $mail['id'], $mail['random_id'] );
         return true;
@@ -1018,22 +1029,24 @@ function eme_get_mailings( $status = '', $search_text = '' ) {
 
 function eme_mail_states() {
     $states = [
-        0 => 'planned',
-        1 => 'sent',
-        2 => 'failed',
-        3 => 'cancelled',
-        4 => 'ignored',
+        EME_MAIL_STATUS_PLANNED   => 'planned',
+        EME_MAIL_STATUS_SENT      => 'sent',
+        EME_MAIL_STATUS_FAILED    => 'failed',
+        EME_MAIL_STATUS_CANCELLED => 'cancelled',
+        EME_MAIL_STATUS_IGNORED   => 'ignored',
+        EME_MAIL_STATUS_DELAYED   => 'delayed one round',
     ];
     return $states;
 }
 
 function eme_mail_localizedstates() {
     $states = [
-        0 => __( 'Planned', 'events-made-easy' ),
-        1 => __( 'Sent', 'events-made-easy' ),
-        2 => __( 'Failed', 'events-made-easy' ),
-        3 => __( 'Cancelled', 'events-made-easy' ),
-        4 => __( 'Ignored', 'events-made-easy' )
+        EME_MAIL_STATUS_PLANNED   => __( 'Planned', 'events-made-easy' ),
+        EME_MAIL_STATUS_SENT      => __( 'Sent', 'events-made-easy' ),
+        EME_MAIL_STATUS_FAILED    => __( 'Failed', 'events-made-easy' ),
+        EME_MAIL_STATUS_CANCELLED => __( 'Cancelled', 'events-made-easy' ),
+        EME_MAIL_STATUS_IGNORED   => __( 'Ignored', 'events-made-easy' ),
+        EME_MAIL_STATUS_DELAYED   => __( 'Delayed', 'events-made-easy' ),
     ];
     return $states;
 }
@@ -1528,7 +1541,7 @@ function eme_mailingreport_list() {
         $record['receiveremail'] = $item['receiveremail'];
         $record['receivername']  = $item['receivername'];
         $record['status']        = $states[ $item['status'] ];
-        if ($item['status'] == 0) // for planned mails, the read count is empty (and not 0)
+        if ($item['status'] == EME_MAIL_STATUS_PLANNED || $item['status'] == EME_MAIL_STATUS_DELAYED ) // for planned mails, the read count is empty (and not 0)
             $record['read_count']    = '';
         else
             $record['read_count']    = $item['read_count'];
@@ -1848,12 +1861,12 @@ function eme_ajax_mails_list() {
     } else {
         $search_text = "%" . $wpdb->esc_like( eme_sanitize_request( $_POST['search_text'] ) ) . "%";
         if ( ! empty( $_POST['search_failed'] ) ) {
-            $where = 'AND status=2';
+            $where = 'AND status='.EME_MAIL_STATUS_FAILED;
         }
         $count_sql  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where", $search_text, $search_text, $search_text );
         if (empty($orderby)) {
-            // "order by status=0, id" will show the planned mails (status=0) last
-            $orderby = "ORDER BY status=0,id";
+            // "order by status=EME_MAIL_STATUS_PLANNED, id" will show the planned mails (status=EME_MAIL_STATUS_PLANNED) last
+            $orderby = "ORDER BY status=".EME_MAIL_STATUS_PLANNED.",id";
         }
         $sql  = $wpdb->prepare( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where $orderby $limit", $search_text, $search_text, $search_text );
     }
@@ -1874,7 +1887,7 @@ function eme_ajax_mails_list() {
         $record['status'] = $states[ $row['status'] ];
         $record['creation_date'] = eme_localized_datetime( $row['creation_date'] );
         // if status >0, then the mail is already treated
-        if ( $row['status'] > 0 ) {
+        if ( $row['status'] != EME_MAIL_STATUS_PLANNED && $row['status'] != EME_MAIL_STATUS_DELAYED ) {
             if ( ! eme_is_empty_datetime( $row['sent_datetime'] ) ) {
                 $record['sent_datetime'] = eme_localized_datetime( $row['sent_datetime'] );
             }

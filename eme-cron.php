@@ -162,6 +162,8 @@ function eme_cron_send_queued() {
     }
     if ( get_option( 'eme_queue_mails' ) ) {
         eme_send_queued();
+        // at the end of a round, we now set all delayed mails to planned too
+        eme_mark_delayed_mails_planned();
     }
 }
 

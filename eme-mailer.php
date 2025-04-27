@@ -557,7 +557,6 @@ function eme_mark_mail_ignored( $id, $random_id = '' ) {
         $where['id'] = intval( $id );
     }
     $fields['status']        = EME_MAIL_STATUS_IGNORED;
-    $fields['sent_datetime'] = current_time( 'mysql', false );
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
         return false;
     } else {

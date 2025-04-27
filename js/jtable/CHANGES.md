@@ -1,3 +1,20 @@
+= 1.0.52 (2025/04/27) =
+* Uniform function naming for edit/add record
+
+= 1.0.51 (2025/04/23) =
+* remove debug console.log
+
+= 1.0.50 (2025/04/23) =
+* fix show/hide columns, offset was wrong by 1 due to code reorg
+* remove localstorage extension, is now the default
+* remove aspnet extension, was ancient stuff
+
+= 1.0.49 (2025/04/22) =
+* More code re-org
+
+= 1.0.48 (2025/04/22) =
+* re-add event handlers correctly
+
 = 1.0.47 (2025/04/13) =
 * Simple check for mobile devices (using useragent) because they don't have a Ctrl-key, so multiSortingCtrlKey is set to false then
 

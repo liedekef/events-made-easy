@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable 1.0.51 (edited by Franky Van Liedekerke)
+jTable 1.0.52 (edited by Franky Van Liedekerke)
 https://www.e-dynamics.be
 
 ---------------------------------------------------------------------------
@@ -2333,7 +2333,7 @@ THE SOFTWARE.
             self._$addRecordDialog.find('form:first').remove();
 
             // Make sure people can click on the save button
-            let $saveButton = self._$editRecordDialog.find('#EditDialogSaveButton');
+            let $saveButton = self._$addRecordDialog.find('#AddRecordDialogSaveButton');
             self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
 
             // Show the form
@@ -2464,12 +2464,12 @@ THE SOFTWARE.
                 return;
             }
 
-            this._createEditDialog();
+            this._createEditRecordDialog();
         },
 
         /* Creates and prepares edit dialog div
          *************************************************************************/
-        _createEditDialog: function () {
+        _createEditRecordDialog: function () {
             let self = this;
 
             // Create a div for dialog and add to container element
@@ -2478,12 +2478,12 @@ THE SOFTWARE.
                 .appendTo(self._$mainContainer)
                 .on('close', function () {
                     // the close event is called upon close-call or pressing escape
-                    let $editForm = self._$editRecordDialog.find('form:first');
-                    self._$mainContainer.trigger("formClosed", { form: $editForm, formType: 'edit', row: self._$editingRow });
-                    $editForm.remove();
+                    let $editRecordForm = self._$editRecordDialog.find('form:first');
+                    self._$mainContainer.trigger("formClosed", { form: $editRecordForm, formType: 'edit', row: self._$editingRow });
+                    $editRecordForm.remove();
                 });
 
-            $('<h2 id="editDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.editRecord).appendTo(self._$editRecordDialog);
+            $('<h2 id="editRecordDialogTitle"></h2>').css({padding: '0px'}).text(self.options.messages.editRecord).appendTo(self._$editRecordDialog);
             const $cancelButton = $('<button class="jtable-dialog-button jtable-dialog-cancelbutton"></button> ')
                 .attr('id', 'EditRecordDialogCancelButton')
                 .html('<span>' + self.options.messages.cancel + '</span>')
@@ -2492,7 +2492,7 @@ THE SOFTWARE.
                 });
 
             let $saveButton = $('<button class="jtable-dialog-button jtable-dialog-savebutton"></button>')
-                .attr('id', 'EditDialogSaveButton')
+                .attr('id', 'EditRecordDialogSaveButton')
                 .html('<span>' + self.options.messages.save + '</span>')
                 .on('click', function () {
                     self._onSaveClickedOnEditForm();
@@ -2513,11 +2513,11 @@ THE SOFTWARE.
                 return;
             }
 
-            let $saveButton = self._$editRecordDialog.find('#EditDialogSaveButton');
-            let $editForm = self._$editRecordDialog.find('form');
-            if (self._$mainContainer.trigger("formSubmitting", { form: $editForm, formType: 'edit', row: self._$editingRow }) != false) {
+            let $saveButton = self._$editRecordDialog.find('#EditRecordDialogSaveButton');
+            let $editRecordForm = self._$editRecordDialog.find('form');
+            if (self._$mainContainer.trigger("formSubmitting", { form: $editRecordForm, formType: 'edit', row: self._$editingRow }) != false) {
                 self._setEnabledOfDialogButton($saveButton, false, self.options.messages.saving);
-                self._saveEditForm($editForm, $saveButton);
+                self._saveEditRecordForm($editRecordForm, $saveButton);
             }
         },
 
@@ -2651,7 +2651,7 @@ THE SOFTWARE.
                     .on("click", function (e) {
                         e.preventDefault();
                         e.stopPropagation();
-                        self._showEditForm($row);
+                        self._showEditRecordForm($row);
                     });
                 $('<td></td>')
                     .addClass('jtable-command-column')
@@ -2666,12 +2666,12 @@ THE SOFTWARE.
 
         /* Shows edit form for a row.
          *************************************************************************/
-        _showEditForm: function ($tableRow) {
+        _showEditRecordForm: function ($tableRow) {
             let self = this;
             let record = $tableRow.data('record');
 
             // Create edit form
-            let $editForm = $('<form id="jtable-edit-form" class="jtable-dialog-form jtable-edit-form"></form>');
+            let $editRecordForm = $('<form id="jtable-edit-form" class="jtable-dialog-form jtable-edit-form"></form>');
 
             // Create input fields
             for (let i = 0; i < self._fieldList.length; i++) {
@@ -2683,11 +2683,11 @@ THE SOFTWARE.
                 if (field.key == true) {
                     if (field.edit != true) {
                         // Create hidden field for key
-                        $editForm.append(self._createInputForHidden(fieldName, fieldValue));
+                        $editRecordForm.append(self._createInputForHidden(fieldName, fieldValue));
                         continue;
                     } else {
                         // Create a special hidden field for key (since key is be editable)
-                        $editForm.append(self._createInputForHidden('jtRecordKey', fieldValue));
+                        $editRecordForm.append(self._createInputForHidden('jtRecordKey', fieldValue));
                     }
                 }
 
@@ -2698,12 +2698,12 @@ THE SOFTWARE.
 
                 // Hidden field
                 if (field.type == 'hidden') {
-                    $editForm.append(self._createInputForHidden(fieldName, fieldValue));
+                    $editRecordForm.append(self._createInputForHidden(fieldName, fieldValue));
                     continue;
                 }
 
                 // Create a container div for this input field and add to form
-                let $fieldContainer = $('<div class="jtable-input-field-container"></div>').appendTo($editForm);
+                let $fieldContainer = $('<div class="jtable-input-field-container"></div>').appendTo($editRecordForm);
 
                 // Create a label for input
                 $fieldContainer.append(self._createInputLabelForRecordField(fieldName));
@@ -2716,13 +2716,13 @@ THE SOFTWARE.
                         value: currentValue,
                         record: record,
                         formType: 'edit',
-                        form: $editForm
+                        form: $editRecordForm
                     }));
             }
 
-            self._makeCascadeDropDowns($editForm, record, 'edit');
+            self._makeCascadeDropDowns($editRecordForm, record, 'edit');
 
-            $editForm.submit(function () {
+            $editRecordForm.submit(function () {
                 self._onSaveClickedOnEditForm();
                 return false;
             });
@@ -2733,18 +2733,18 @@ THE SOFTWARE.
             self._$editRecordDialog.find('form:first').remove();
  
             // Make sure people can click on the save button
-            let $saveButton = self._$editRecordDialog.find('#EditDialogSaveButton');
+            let $saveButton = self._$editRecordDialog.find('#EditRecordDialogSaveButton');
             self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
 
             // Show the form
-            self._$editRecordDialog.find('#editDialogTitle:first').after($editForm);
+            self._$editRecordDialog.find('#editRecordDialogTitle:first').after($editRecordForm);
             self._$editRecordDialog[0].showModal();
-            self._$mainContainer.trigger("formCreated", { form: $editForm, formType: 'edit', record: record, row: $tableRow });
+            self._$mainContainer.trigger("formCreated", { form: $editRecordForm, formType: 'edit', record: record, row: $tableRow });
         },
 
         /* Saves editing form to the server and updates the record on the table.
          *************************************************************************/
-        _saveEditForm: function ($editForm, $saveButton) {
+        _saveEditRecordForm: function ($editRecordForm, $saveButton) {
             let self = this;
 
             let completeEdit = function (data) {
@@ -2755,7 +2755,7 @@ THE SOFTWARE.
 
                 let record = self._$editingRow.data('record');
 
-                self._updateRecordValuesFromForm(record, $editForm);
+                self._updateRecordValuesFromForm(record, $editRecordForm);
                 self._updateRecordValuesFromServerResponse(record, data);
                 self._updateRowTexts(self._$editingRow);
 
@@ -2775,7 +2775,7 @@ THE SOFTWARE.
             if (typeof self.options.actions.updateAction === "function") {
 
                 // Execute the function
-                let funcResult = self.options.actions.updateAction($editForm.serialize());
+                let funcResult = self.options.actions.updateAction($editRecordForm.serialize());
 
                 // Check if result is a jQuery Deferred object
                 if (self._isDeferredObject(funcResult)) {
@@ -2794,7 +2794,7 @@ THE SOFTWARE.
                 // Make an Ajax call to update record
                 self._submitFormUsingAjax(
                     self.options.actions.updateAction,
-                    $editForm.serialize(),
+                    $editRecordForm.serialize(),
                     function(data) {
                         completeEdit(data);
                     },

@@ -7084,7 +7084,12 @@ function eme_add_pendingbooking_mail( $booking_id, $mailid ) {
 
 function eme_cancel_pendingbooking_mail( $booking ) {
     $pending_mailid = intval ( $booking['pending_mailid'] );
-    eme_mark_mail_cancelledpaid( $pending_mailid );
+    if ( $pending_maildid > 0 ) {
+        $mail = eme_get_mail( $pending_maildid );
+        if ( $mail['status'] == EME_MAIL_STATUS_DELAYED || $mail['status'] == EME_MAIL_STATUS_PENDING ) {
+            eme_mark_mail_cancelledpaid( $pending_mailid );
+        }
+    }
 }
 
 ?>

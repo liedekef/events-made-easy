@@ -639,7 +639,7 @@ function eme_get_queued_count() {
     global $wpdb;
     $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     // the queued count is to know how much mails are left unsent in the queue
-    $sql = "SELECT COUNT(*) FROM $mqueue_table WHERE status=0";
+    $sql = "SELECT COUNT(*) FROM $mqueue_table WHERE status= " . EME_MAIL_STATUS_PLANNED . " OR status=" . EME_MAIL_STATUS_DELAYED ;
     $count = $wpdb->get_var( $sql );
 
     // now also include planned mailings
@@ -661,8 +661,8 @@ function eme_get_queued( $now ) {
     global $wpdb;
     $mqueue_table   = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    // we take only the queued mails with status=0 where either the planning date for the mailing has passed (so we know those can be send) or that are not part of a mailing
-    $sql                  = "SELECT $mqueue_table.* FROM $mqueue_table LEFT JOIN $mailings_table ON $mqueue_table.mailing_id=$mailings_table.id WHERE $mqueue_table.status=0 AND ($mqueue_table.mailing_id=0 OR ($mqueue_table.mailing_id>0 and $mailings_table.planned_on<'$now'))";
+    // we take only the queued mails with status PLANNED where either the planning date for the mailing has passed (so we know those can be send) or that are not part of a mailing
+    $sql                  = "SELECT $mqueue_table.* FROM $mqueue_table LEFT JOIN $mailings_table ON $mqueue_table.mailing_id=$mailings_table.id WHERE $mqueue_table.status=" . EME_MAIL_STATUS_PLANNED . " AND ($mqueue_table.mailing_id=0 OR ($mqueue_table.mailing_id>0 and $mailings_table.planned_on<'$now'))";
     $eme_cron_queue_count = intval( get_option( 'eme_cron_queue_count' ) );
     if ( $eme_cron_queue_count > 0 ) {
         $sql .= " LIMIT $eme_cron_queue_count";
@@ -891,12 +891,12 @@ function eme_archive_mailing( $mailing_id ) {
 
 function eme_mailing_retry_failed( $id ) {
     global $wpdb;
-    $mqueue_table            = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+    $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $where = [
 	    'mailing_id' => intval( $id ),
-	    'status' => 2
+	    'status' => EME_MAIL_STATUS_FAILED 
     ];
-    $fields = ['status' => 0 ];
+    $fields = ['status' => EME_MAIL_STATUS_PLANNED ];
     if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
         return false;
     } else {
@@ -933,9 +933,9 @@ function eme_cancel_mail( $mail_id ) {
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $where = [
 	    'id' => $mail_id,
-	    'status' => 0
+	    'status' => EME_MAIL_STATUS_PLANNED
     ];
-    $fields = ['status' => 3 ];
+    $fields = ['status' => EME_MAIL_STATUS_CANCELLED ];
     $wpdb->update( $queue_table, $fields, $where );
 }
 
@@ -944,9 +944,9 @@ function eme_cancel_mailing( $mailing_id ) {
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $where = [
 	    'mailing_id' => $mailing_id,
-	    'status' => 0
+	    'status' => EME_MAIL_STATUS_PLANNED
     ];
-    $fields = ['status' => 3 ];
+    $fields = ['status' => EME_MAIL_STATUS_CANCELLED ];
     $wpdb->update( $queue_table, $fields, $where );
     $stats          = eme_serialize( eme_get_mailing_stats( $mailing_id ) );
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
@@ -1066,7 +1066,7 @@ function eme_mailing_localizedstates() {
 function eme_count_mails_to_send( $mailing_id ) {
     global $wpdb;
     $table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE status=0 AND mailing_id=%d", $mailing_id );
+    $sql   = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE ( status = %d OR status = %d ) AND mailing_id=%d", EME_MAIL_STATUS_PLANNED, EME_MAIL_STATUS_DELAYED, $mailing_id );
     return $wpdb->get_var( $sql );
 }
 
@@ -1541,12 +1541,10 @@ function eme_mailingreport_list() {
         $record['receiveremail'] = $item['receiveremail'];
         $record['receivername']  = $item['receivername'];
         $record['status']        = $states[ $item['status'] ];
-        if ($item['status'] == EME_MAIL_STATUS_PLANNED || $item['status'] == EME_MAIL_STATUS_DELAYED ) // for planned mails, the read count is empty (and not 0)
-            $record['read_count']    = '';
-        else
-            $record['read_count']    = $item['read_count'];
         $record['error_msg']     = eme_esc_html( $item['error_msg'] );
-        if ( $item['status'] > 0 ) {
+
+        if ( $item['status'] != EME_MAIL_STATUS_PLANNED && $item['status'] != EME_MAIL_STATUS_DELAYED ) {
+            $record['read_count']    = $item['read_count'];
             $localized_datetime      = eme_localized_datetime( $item['sent_datetime'] );
             $record['sent_datetime'] = $localized_datetime;
             if ( ! eme_is_empty_datetime( $item['first_read_on'] ) ) {
@@ -1556,16 +1554,13 @@ function eme_mailingreport_list() {
                     $item['last_read_on'] = $item['first_read_on'];
                 }
                 $record['last_read_on'] = eme_localized_datetime( $item['last_read_on'] );
-                // to account for older mailings
-                if ( $record['read_count'] == 0 ) {
-                    $record['read_count'] = 1;
-                }
             } else {
                 $record['first_read_on'] = '';
                 $record['last_read_on']  = '';
             }
             $record['action'] = " <a title='".__( 'Reuse this mail', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mail&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a>';
         } else {
+            $record['read_count']    = '';
             $record['sent_datetime'] = '';
             $record['first_read_on'] = '';
             $record['last_read_on']  = '';
@@ -1679,12 +1674,9 @@ function eme_ajax_mailings_list() {
         if ( $mailing['status'] == 'planned' ) {
             $planned_estimation_title = eme_esc_html( sprintf(__('The number of emails to be sent was estimated the moment the mailing was created (%s). This will be re-evaluated at send time.','events-made-easy'), $record['creation_date']) ) ;
             $record['extra_info'] = eme_esc_html( $extra ) . "&nbsp;<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning' title='$planned_estimation_title'>";
-        } else {
-            $record['extra_info'] = eme_esc_html( $extra );
-        }
-        if ( $mailing['status'] == 'planned' ) {
             $record['report'] = '';
         } else {
+            $record['extra_info'] = eme_esc_html( $extra );
             $record['report'] = "<a title='".__( 'Show mailing report', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=report_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Report', 'events-made-easy' ) . '</a>';
         }
         $record['action'] = $action;
@@ -1849,7 +1841,7 @@ function eme_ajax_mails_list() {
 
     if ( !isset($_POST['search_text'] ) || eme_is_empty_string( $_POST['search_text'] ) ) {
         if ( ! empty( $_POST['search_failed'] ) ) {
-            $where = 'WHERE status=2';
+            $where = 'WHERE status='. EME_MAIL_STATUS_FAILED;
         }
         $count_sql = "SELECT COUNT(*) FROM $table";
         if (empty($orderby)) {

@@ -6250,19 +6250,19 @@ function eme_ajax_action_rsvp_markpaidandapprove( $ids_arr ) {
             }
             // if we need to send out approval mails, we don't send out the paid mails too
             if ( $mailing_paid && $paid_mail_gets_precedence ) {
-                eme_delete_pendingbooking_mail( $booking );
+                eme_cancel_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'paidBooking' );
                 if ( ! $res2 ) {
                     $mail_ok = 0;
                 }
             } elseif ( $mailing_approved ) {
-                eme_delete_pendingbooking_mail( $booking );
+                eme_cancel_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'approveBooking' );
                 if ( ! $res2 ) {
                     $mail_ok = 0;
                 }
             } elseif ( $mailing_paid ) {
-                eme_delete_pendingbooking_mail( $booking );
+                eme_cancel_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'paidBooking' );
                 if ( ! $res2 ) {
                     $mail_ok = 0;
@@ -6380,7 +6380,7 @@ function eme_ajax_action_rsvp_approve( $ids_arr, $action, $send_mail ) {
                     do_action( 'eme_approve_rsvp_action', $booking );
                 }
                 if ( $send_mail ) {
-                    eme_delete_pendingbooking_mail( $booking );
+                    eme_cancel_pendingbooking_mail( $booking );
                     $res2 = eme_email_booking_action( $booking, $action );
                     if ( ! $res2 ) {
                         $mail_ok = 0;
@@ -7082,15 +7082,9 @@ function eme_add_pendingbooking_mail( $booking_id, $mailid ) {
     }
 }
 
-function eme_delete_pendingbooking_mail( $booking ) {
-    global $wpdb;
-    $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-
+function eme_cancel_pendingbooking_mail( $booking ) {
     $pending_mailid = intval ( $booking['pending_mailid'] );
-    if ( $pending_mailid > 0 ) {
-        // delete if status=0 (= not sent)
-        $wpdb->delete( $queue_table, ['id' => $pending_mailid ], ['%d'] );
-    }
+    eme_mark_mail_cancelledpaid( $pending_mailid );
 }
 
 ?>

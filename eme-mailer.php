@@ -565,6 +565,19 @@ function eme_mark_mail_ignored( $id, $random_id ) {
     }
 }
 
+function eme_mark_mail_cancelledpaid( $id ) {
+    global $wpdb;
+    $mqueue_table            = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+    $fields                  = [];
+    $where  = [ 'id' => intval( $id ) ];
+    $fields = [ 'status' => EME_MAIL_STATUS_CANCELLEDPAID ];
+    if ( $wpdb->update( $mqueue_table, $fields, $where ) === false ) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function eme_mark_delayed_mails_planned( ) {
     global $wpdb;
     $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
@@ -1035,6 +1048,7 @@ function eme_mail_states() {
         EME_MAIL_STATUS_CANCELLED => 'cancelled',
         EME_MAIL_STATUS_IGNORED   => 'ignored',
         EME_MAIL_STATUS_DELAYED   => 'delayed one round',
+        EME_MAIL_STATUS_PAIDCANCELLED   => 'cancelled by payment',
     ];
     return $states;
 }
@@ -1046,7 +1060,7 @@ function eme_mail_localizedstates() {
         EME_MAIL_STATUS_FAILED    => __( 'Failed', 'events-made-easy' ),
         EME_MAIL_STATUS_CANCELLED => __( 'Cancelled', 'events-made-easy' ),
         EME_MAIL_STATUS_IGNORED   => __( 'Ignored', 'events-made-easy' ),
-        EME_MAIL_STATUS_DELAYED   => __( 'Delayed', 'events-made-easy' ),
+        EME_MAIL_STATUS_PAIDCANCELLED  => __( 'Cancelled by payment', 'events-made-easy' ),
     ];
     return $states;
 }

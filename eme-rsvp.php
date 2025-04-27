@@ -7089,7 +7089,7 @@ function eme_delete_pendingbooking_mail( $booking ) {
     $pending_mailid = intval ( $booking['pending_mailid'] );
     if ( $pending_mailid > 0 ) {
         // delete if status=0 (= not sent)
-        $wpdb->delete( $queue_table, ['id' => $pending_mailid, 'status' => EME_MAIL_STATUS_DELAYED ], ['%d','%d'] );
+        $wpdb->delete( $queue_table, ['id' => $pending_mailid ], ['%d'] );
     }
 }
 

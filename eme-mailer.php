@@ -2666,7 +2666,7 @@ function eme_emails_page() {
         $id = intval( $_GET['id'] );
         check_admin_referer( 'eme_admin', 'eme_admin_nonce' );
         eme_cancel_mail( $id );
-        $data_forced_tab    = 'data-showtab="tab-sentmail"';
+        $data_forced_tab    = 'data-showtab="tab-allmail"';
     }
     if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'report_mailing' && isset( $_GET['id'] ) ) {
         // the id param will be captured by js to fill out the report table via jtable
@@ -2703,7 +2703,7 @@ function eme_emails_page() {
     <div class="eme-tab" data-tab="tab-genericmails"><?php esc_html_e( 'Generic email', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-mailings"><?php esc_html_e( 'Mailings', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-mailingsarchive"><?php esc_html_e( 'Mailings archive', 'events-made-easy' ); ?></div>
-    <div class="eme-tab" data-tab="tab-sentmail"><?php esc_html_e( 'Sent emails', 'events-made-easy' ); ?></div>
+    <div class="eme-tab" data-tab="tab-allmail"><?php esc_html_e( 'All emails', 'events-made-easy' ); ?></div>
     <div class="eme-tab" data-tab="tab-testmail"><?php esc_html_e( 'Test email', 'events-made-easy' ); ?></div>
 </div>
 <div class="eme-tab-content" id="tab-mailings">
@@ -2712,7 +2712,7 @@ function eme_emails_page() {
 <div class="eme-tab-content" id="tab-mailingsarchive">
         <?php eme_mailings_archive_div(); ?>
 </div>
-<div class="eme-tab-content" id="tab-sentmail">
+<div class="eme-tab-content" id="tab-allmail">
         <?php eme_mails_div(); ?>
 </div>
 <div class="eme-tab-content" id="tab-eventmails">

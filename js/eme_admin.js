@@ -32,7 +32,7 @@ function activateTab(target) {
             jQuery('#ArchivedMailingsLoadRecordsButton').trigger('click');
         }, 100); // Adjust the delay as necessary
     }
-    if (target == "tab-sentmail" ) {
+    if (target == "tab-allmail" ) {
         // do this only when the tab is active, to avoid doing mail lookups if not needed
         // Delay the trigger to ensure the tab content is fully rendered
         setTimeout(function() {

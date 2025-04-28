@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 2.5.55
+Stable tag: 2.5.56
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,8 +99,8 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.56 (2025/04/26) =
-* The pending booking mail now gets removed after one run from the mail queue if the payment arrives. This is a more consistent removal period
+= 2.5.56 (2025/04/28) =
+* The pending booking mail now gets removed after one run from the mail queue if the payment arrives (and only if online payments are possible). This is a more consistent removal period and action
 
 = 2.5.55 (2025/04/26) =
 * Added API function eme_send_mail_to_groups to easily send emails to an EME group and obey list headers etc...

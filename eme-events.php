@@ -6445,7 +6445,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
     echo '<summary>' . esc_html__( 'Booking Made or Approved Email', 'events-made-easy' ) . '</summary><div>';
     eme_meta_box_div_event_registration_approved_email( $event, $templates_array, $pdf_templates_array );
     echo '</div></details>';
-    echo '<details name="eme_details_rsvp" class="eme_accordion">';
+    echo '<details id="details_userconfirm" name="eme_details_rsvp" class="eme_accordion">';
     echo '<summary>' . esc_html__( 'Booking Awaiting User Confirmation Email', 'events-made-easy' ) . '</summary><div>';
     eme_meta_box_div_event_registration_userpending_email( $event, $templates_array );
     echo '</div></details>';

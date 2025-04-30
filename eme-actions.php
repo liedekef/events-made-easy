@@ -422,10 +422,10 @@ function eme_register_scripts() {
     } else {
         wp_register_script( 'eme-fs-location', EME_PLUGIN_URL . 'js/eme_fs.js', [ 'jquery' ], EME_VERSION, true );
     }
-    $map_enabled = $eme_map_is_active ? 'true' : 'false';
+    $map_is_active = $eme_map_is_active ? 'true' : 'false';
     $translation_array = [
         'translate_ajax_url' => admin_url( 'admin-ajax.php' ),
-        'translate_map_is_active' => $map_enabled,
+        'translate_map_is_active' => $map_is_active,
         'translate_nomatchlocation' => __( 'No matching location found', 'events-made-easy' ),
         'translate_frontendnonce' => wp_create_nonce( 'eme_frontend' )
     ];

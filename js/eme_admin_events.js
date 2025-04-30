@@ -119,6 +119,14 @@ jQuery(document).ready( function($) {
         }
     }
 
+    function updateShowHideRsvpRequireUserConfirmation() {
+        if ($('input#eme_prop_require_user_confirmation').prop('checked')) {
+            $('#details_userconfirm').show();
+        } else {
+            $('#details_userconfirm').hide();
+        }
+    }
+
     function updateShowHideTime() {
         if ($('input#eme_prop_all_day').prop('checked')) {
             $('div#time-selector').hide();
@@ -457,6 +465,7 @@ jQuery(document).ready( function($) {
     updateShowHideTime();
     updateShowHideMultiPriceDescription();
     updateShowHideLocMaxCapWarning();
+    updateShowHideRsvpRequireUserConfirmation();
     $('input#event-recurrence').on("change",updateShowHideRecurrence);
     $('input#event_tasks').on("change",updateShowHideTasks);
     $('input#event_todos').on("change",updateShowHideTodos);
@@ -465,6 +474,7 @@ jQuery(document).ready( function($) {
     $('input#price').on("change",updateShowHideMultiPriceDescription);
     $('input#eme_loc_prop_max_capacity').on("change",updateShowHideLocMaxCapWarning);
     $('input#approval_required-checkbox').on("change",updateShowHideRsvpAutoApprove);
+    $('input#eme_prop_require_user_confirmation').on("change",updateShowHideRsvpRequireUserConfirmation);
     // recurrency elements
     $('input#recurrence-interval').on("keyup",updateIntervalDescriptor);
     $('select#recurrence-frequency').on("change",updateIntervalDescriptor);

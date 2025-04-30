@@ -3897,17 +3897,15 @@ add_action( 'wp_ajax_eme_get_payconiq_iban', 'eme_ajax_get_payconiq_iban' );
 
 function eme_cancel_payment_ajax() {
     $payment_randomid = eme_sanitize_request( $_POST['eme_pmt_rndid'] );
-    if ( get_option( 'eme_honeypot_for_forms' ) ) {
-        if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
-            $form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
-            echo wp_json_encode(
-                [
-                    'Result'      => 'NOK',
-                    'htmlmessage' => $form_html,
-                ]
-            );
-            wp_die();
-        }
+    if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
+        $form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        echo wp_json_encode(
+            [
+                'Result'      => 'NOK',
+                'htmlmessage' => $form_html,
+            ]
+        );
+        wp_die();
     }
     if ( empty( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( $_POST['eme_frontend_nonce'], "cancel payment $payment_randomid" ) ) {
         $form_html = __( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );

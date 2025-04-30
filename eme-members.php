@@ -5054,17 +5054,15 @@ function eme_access_meta_box_save( $post_id ) {
 add_action( 'wp_ajax_eme_add_member', 'eme_add_member_ajax' );
 add_action( 'wp_ajax_nopriv_eme_add_member', 'eme_add_member_ajax' );
 function eme_add_member_ajax() {
-    if ( get_option( 'eme_honeypot_for_forms' ) ) {
-        if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
-            $form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
-            echo wp_json_encode(
-                [
-                    'Result'      => 'NOK',
-                    'htmlmessage' => $form_html,
-                ]
-            );
-            wp_die();
-        }
+    if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
+        $form_html = __( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        echo wp_json_encode(
+            [
+                'Result'      => 'NOK',
+                'htmlmessage' => $form_html,
+            ]
+        );
+        wp_die();
     }
 
     if ( ! isset( $_POST['eme_frontend_nonce'] ) || 

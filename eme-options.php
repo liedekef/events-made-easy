@@ -166,7 +166,6 @@ function eme_add_options( $reset = 0 ) {
         'eme_permalink_calendar_prefix'                   => '',
         'eme_permalink_payments_prefix'                   => '',
         'eme_default_contact_person'                      => -1,
-        'eme_honeypot_for_forms'                          => 1,
         'eme_captcha_only_logged_out'                     => 0,
         'eme_hcaptcha_for_forms'                          => 0,
         'eme_hcaptcha_site_key'                           => '',
@@ -1043,6 +1042,9 @@ function eme_update_options( $db_version ) {
             }
             update_option( 'eme_rss', $rss_options);
         }
+        if ( $db_version < 411 ) {
+            delete_option( 'eme_honeypot_for_forms' );
+        }
     }
 
     // always reset the drop data option
@@ -1159,7 +1161,7 @@ function eme_options_register() {
     $options = [];
     $tab     = isset( $_POST['tab'] ) ? eme_sanitize_request( $_POST['tab'] ) : 'general';
     $options = match( $tab ) {
-        'general' => [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_friendlycaptcha_for_forms', 'eme_friendlycaptcha_site_key', 'eme_friendlycaptcha_secret_key', 'eme_honeypot_for_forms', 'eme_captcha_only_logged_out', 'eme_frontend_nocache', 'eme_use_is_page_for_title', 'eme_rememberme' ],
+        'general' => [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_friendlycaptcha_for_forms', 'eme_friendlycaptcha_site_key', 'eme_friendlycaptcha_secret_key', 'eme_captcha_only_logged_out', 'eme_frontend_nocache', 'eme_use_is_page_for_title', 'eme_rememberme' ],
         'seo' => [ 'eme_seo_permalink', 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ],
         'access' => [ 'eme_cap_add_event', 'eme_cap_author_event', 'eme_cap_publish_event', 'eme_cap_list_events', 'eme_cap_edit_events', 'eme_cap_manage_task_signups', 'eme_cap_list_locations', 'eme_cap_add_locations', 'eme_cap_author_locations', 'eme_cap_edit_locations', 'eme_cap_categories', 'eme_cap_holidays', 'eme_cap_templates', 'eme_cap_access_people', 'eme_cap_list_people', 'eme_cap_edit_people', 'eme_cap_author_person', 'eme_cap_access_members', 'eme_cap_list_members', 'eme_cap_edit_members', 'eme_cap_author_member', 'eme_cap_discounts', 'eme_cap_list_approve', 'eme_cap_author_approve', 'eme_cap_approve', 'eme_cap_list_registrations', 'eme_cap_author_registrations', 'eme_cap_registrations', 'eme_cap_attendancecheck', 'eme_cap_membercheck', 'eme_cap_forms', 'eme_cap_cleanup', 'eme_cap_settings', 'eme_cap_send_mails', 'eme_cap_send_other_mails', 'eme_cap_list_attendances', 'eme_cap_manage_attendances', 'eme_limit_admin_event_listing' ],
         'events' => [ 'eme_events_page', 'eme_display_events_in_events_page', 'eme_display_calendar_in_events_page', 'eme_event_list_number_items', 'eme_event_initial_state', 'eme_event_list_item_format_header', 'eme_cat_event_list_item_format_header', 'eme_event_list_item_format', 'eme_event_list_item_format_footer', 'eme_cat_event_list_item_format_footer', 'eme_event_page_title_format', 'eme_event_html_title_format', 'eme_single_event_format', 'eme_show_period_monthly_dateformat', 'eme_show_period_yearly_dateformat', 'eme_events_page_title', 'eme_no_events_message', 'eme_filter_form_format', 'eme_redir_priv_event_url' ],
@@ -1446,7 +1448,6 @@ function eme_options_page() {
                 eme_options_radio_binary( __( 'Enable Maps?', 'events-made-easy' ), 'eme_map_is_active', __( 'Check this option to be able to show a map of the event or location using #_MAP or the available shortcodes.', 'events-made-easy' ) );
                 eme_options_radio_binary( __( 'Always include JS in header?', 'events-made-easy' ), 'eme_load_js_in_header', __( 'Some themes are badly designed and can have issues showing the map or advancing in the calendar. If so, try activating this option which will cause the javascript to always be included in the header of every page (off by default).', 'events-made-easy' ) );
                 eme_options_radio_binary( __( 'Use the client computer clock for the calendar', 'events-made-easy' ), 'eme_use_client_clock', __( 'Check this option if you want to use the clock of the client as base to calculate current day for the calendar.', 'events-made-easy' ) );
-                eme_options_radio_binary( __( 'Add anti-spam honeypot field for forms?', 'events-made-easy' ), 'eme_honeypot_for_forms', __( 'Check this option if you want to add an invisible field to your forms. Bots will fill out this field and thus get trapped.', 'events-made-easy' ) );
                 eme_options_radio_binary( __( 'Use EME captcha for forms?', 'events-made-easy' ), 'eme_captcha_for_forms', __( 'Check this option if you want to use a simple image captcha on the booking/cancel/membership forms, to thwart spammers a bit. You can then either add #_CAPTCHA to your form layout yourself or it will automatically be added just above the submit button if not present.', 'events-made-easy' ) );
                 eme_options_radio_binary( __( 'Use Google reCAPTCHA for forms?', 'events-made-easy' ), 'eme_recaptcha_for_forms', __( 'Check this option if you want to use Google reCAPTCHA on the booking/cancel/membership forms, to thwart spammers a bit. Currently only supports reCAPTCHA v2 Tickbox. You can then either add #_CAPTCHA to your form layout yourself or it will automatically added just above the submit button if not present.', 'events-made-easy' ) );
                 eme_options_input_text( __( 'Google reCAPTCHA site key', 'events-made-easy' ), 'eme_recaptcha_site_key', __( 'This field is required', 'events-made-easy' ) );

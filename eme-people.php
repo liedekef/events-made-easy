@@ -4579,17 +4579,15 @@ add_action( 'wp_ajax_eme_subscribe', 'eme_subscribe_ajax' );
 add_action( 'wp_ajax_nopriv_eme_subscribe', 'eme_subscribe_ajax' );
 function eme_subscribe_ajax() {
     // check for spammers as early as possible
-    if ( get_option( 'eme_honeypot_for_forms' ) ) {
-        if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
-            $message = esc_html__( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
-            echo wp_json_encode(
-                [
-                    'Result'      => 'NOK',
-                    'htmlmessage' => $message,
-                ]
-            );
-            wp_die();
-        }
+    if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
+        $message = esc_html__( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        echo wp_json_encode(
+            [
+                'Result'      => 'NOK',
+                'htmlmessage' => $message,
+            ]
+        );
+        wp_die();
     }
     if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {
         $message = esc_html__( "Form tampering detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
@@ -4667,17 +4665,15 @@ function eme_subform_shortcode( $atts ) {
 add_action( 'wp_ajax_eme_unsubscribe', 'eme_unsubscribe_ajax' );
 add_action( 'wp_ajax_nopriv_eme_unsubscribe', 'eme_unsubscribe_ajax' );
 function eme_unsubscribe_ajax() {
-    if ( get_option( 'eme_honeypot_for_forms' ) ) {
-        if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
-            $message = esc_html__( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
-            echo wp_json_encode(
-                [
-                    'Result'      => 'NOK',
-                    'htmlmessage' => $message,
-                ]
-            );
-            wp_die();
-        }
+    if ( ! isset( $_POST['honeypot_check'] ) || ! empty( $_POST['honeypot_check'] ) ) {
+        $message = esc_html__( "Bot detected. If you believe you've received this message in error please contact the site owner.", 'events-made-easy' );
+        echo wp_json_encode(
+            [
+                'Result'      => 'NOK',
+                'htmlmessage' => $message,
+            ]
+        );
+        wp_die();
     }
     // check for spammers as early as possible
     if ( ! isset( $_POST['eme_frontend_nonce'] ) || ! wp_verify_nonce( eme_sanitize_request($_POST['eme_frontend_nonce']), 'eme_frontend' ) ) {

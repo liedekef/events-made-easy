@@ -6020,7 +6020,7 @@ function eme_ajax_bookings_list() {
 
         $line['creation_date'] = esc_html($localized_booking_datetime);
         $line['payment_id']    = eme_esc_html( $booking['payment_id'] );
-        if ( $booking['payment_date'] != '0000-00-00 00:00:00' ) {
+        if ( !eme_is_empty_datetime( $booking['payment_date'] ) ) {
             $line['payment_date'] = esc_html($localized_payment_datetime);
         } else {
             $line['payment_date'] = '';
@@ -6939,7 +6939,7 @@ function eme_ajax_generate_booking_html( $ids_arr, $template_id, $template_id_he
 // for CRON
 function eme_rsvp_send_pending_reminders() {
     $eme_date_obj_now = new ExpressiveDate( 'now', EME_TIMEZONE );
-    // this gets us future and ongoing events with tasks enabled
+    // this gets us future and ongoing events with rsvp enabled
     $events = eme_get_events( extra_conditions: 'event_rsvp=1' );
     foreach ( $events as $event ) {
         if ( eme_is_empty_string( $event['event_properties']['rsvp_pending_reminder_days'] ) ) {

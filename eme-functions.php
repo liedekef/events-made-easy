@@ -4011,25 +4011,25 @@ function eme_is_empty_string( $text ) {
         $text = trim( $text );
     }
     if ( $text == '' ) {
-        return 1;
+        return true;
     } else {
-        return 0;
+        return false;
     }
 }
 
 function eme_is_empty_date( $mydate ) {
     if ( empty( $mydate ) || $mydate == '0000-00-00' || $mydate == 'NULL' ) {
-        return 1;
+        return true;
     } else {
-        return 0;
+        return false;
     }
 }
 
 function eme_is_empty_datetime( $mydate ) {
     if ( empty( $mydate ) || $mydate == '0000-00-00 00:00:00' || $mydate == 'NULL' ) {
-        return 1;
+        return true;
     } else {
-        return 0;
+        return false;
     }
 }
 

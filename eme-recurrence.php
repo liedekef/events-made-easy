@@ -310,7 +310,7 @@ function eme_insert_events_for_recurrence( $recurrence, $event ) {
 		$event['event_start'] = "$day $event_start_time";
 		$eme_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
 		// no past events will be created, unless for specific days
-		if ($recurrence['recurrence_freq'] != 'specific' && $eme_date_obj < $eme_date_obj_now) {
+		if ( $recurrence['recurrence_freq'] != 'specific' && $eme_date_obj < $eme_date_obj_now ) {
                         continue;
 		}
 		$day_difference       = $eme_date_obj_orig->getDifferenceInDays( $eme_date_obj );
@@ -338,7 +338,7 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 	// some sanity checks
 	// if the end date is set, it should be a sensible end date
 	if ( $recurrence['recurrence_freq'] != 'specific' ) {
-	       	if ( eme_is_empty_date($recurrence['recurrence_end_date']) ) {
+	       	if ( eme_is_empty_date( $recurrence['recurrence_end_date'] ) ) {
 			// if the end date is empty, we set the start date to the first occurence
 			// (which is 1 event in the past), this allows for cleanup
 			$matching_days = eme_get_recurrence_days( $recurrence );
@@ -351,7 +351,7 @@ function eme_db_update_recurrence( $recurrence, $event, $only_change_recdates = 
 			}
 		}
 	} else {
-		if (empty($recurrence['specific_days'])) {
+		if ( empty( $recurrence['specific_days'] ) ) {
 			return 0;
 		}
 		// get the recurrence start days
@@ -413,12 +413,12 @@ function eme_update_events_for_recurrence( $recurrence, $event, $only_change_rec
 		$array_key = array_search( $day, $matching_days );
 		$existing_event_start_obj = new ExpressiveDate( $existing_event['event_start'], EME_TIMEZONE );
 		// if future events in the recurrence have bookings, we won't delete those but keep them in the recurrence series
-		if ($existing_event_start_obj >= $eme_date_obj_now) {
-			$bookings_count = eme_count_bookings_for($existing_event['event_id']);
+		if ( $existing_event_start_obj >= $eme_date_obj_now ) {
+			$bookings_count = eme_count_bookings_for( $existing_event['event_id'] );
 		} else {
 			$bookings_count = 0;
 		}
-		if ( $array_key !== false || $bookings_count>0) {
+		if ( $array_key !== false || $bookings_count > 0 ) {
 			if ( ! $only_change_recdates ) {
 				$event['event_start'] = "$day $event_start_time";
 				$eme_date_obj         = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );

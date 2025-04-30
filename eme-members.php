@@ -1319,7 +1319,7 @@ function eme_is_member( $person_id, $membership_id, $include_expired = 0 ) {
 
 function eme_check_member_allowed_to_pay( $member, $membership ) {
     if ( $membership['properties']['allow_renewal'] && $member['status'] != EME_MEMBER_STATUS_PENDING ) {
-        if ( empty( $member['end_date'] ) || $member['end_date'] == '0000-00-00' ) {
+        if ( is_empty_date( $member['end_date'] ) ) {
             return "<div class='eme-message-success eme-already-paid'>" . __( 'This has already been paid for', 'events-made-easy' ) . '</div>';
         } else {
             $too_soon_to_pay = 0;

@@ -1674,7 +1674,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
         if ( $simple ) {
             $ok_format = eme_nl2br_save_html( get_option( 'eme_registration_recorded_ok_html' ) );
             $lang      = eme_detect_lang();
-            // in simple form: we send all mails (even user confirmation required) for each booking
+            // in simple form: we send all emails (even user confirmation required) for each booking
             foreach ( $booking_ids as $booking_id ) {
                 $email_success = true;
                 $booking       = eme_get_booking( $booking_id );
@@ -4160,7 +4160,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
     $contact_name   = $contact->display_name;
     $mail_text_html = get_option( 'eme_mail_send_html' ) ? 'htmlmail' : 'text';
 
-    // and now send the wanted mails
+    // and now send the wanted emails
     $person_name            = eme_format_full_name( $person['firstname'], $person['lastname'], $person['email'] );
     $person_subject         = '';
     $person_subject_filter  = '';
@@ -4519,7 +4519,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         // case 'approveBooking':
     default:
         // this is the case when booking from frontend happened, there we decide pending or approved based on event and booking properties
-        // send different mails depending on approval or not
+        // send different emails depending on approval or not
         if ( $booking['status'] == EME_RSVP_STATUS_USERPENDING ) {
             if ( ! empty( $event['event_properties']['event_registration_userpending_email_subject'] ) ) {
                 $person_subject = $event['event_properties']['event_registration_userpending_email_subject'];
@@ -4711,7 +4711,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         do_action( 'eme_rsvp_email_action', $booking, $action, $person_subject, $person_body );
     }
 
-    // now send the mails
+    // now send the emails
     $mail_res = true; // make sure we return true if no mail is sent due to empty subject or body
     if ( ! empty( $contact_subject ) && ! empty( $contact_body ) ) {
         // from, to and replyto are all 3 identical, so the next function call seems a bit weird :-)
@@ -4785,7 +4785,7 @@ function eme_registration_seats_page( $pending = 0 ) {
         }
         $ret_string .= "<form id='eme-rsvp-adminform' name='eme-rsvp-adminform' method='post' action='$action_url' enctype='multipart/form-data' >";
         $ret_string .= $nonce_field;
-        $ret_string .= __( 'Send mails for new booking?', 'events-made-easy' ) . eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' );
+        $ret_string .= __( 'Send emails for new booking?', 'events-made-easy' ) . eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' );
         $ret_string .= '<br>';
         $new_booking = eme_new_booking();
         $ret_string .= eme_replace_rsvp_formfields_placeholders( '', $event, $new_booking );
@@ -4827,7 +4827,7 @@ function eme_registration_seats_page( $pending = 0 ) {
         }
         $ret_string .= $nonce_field;
         $ret_string .= '<table>';
-        $ret_string .= '<tr><td>' . __( 'Send mails for changed booking?', 'events-made-easy' ) . '</td><td>' . eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ) . '</td></tr>';
+        $ret_string .= '<tr><td>' . __( 'Send emails for changed booking?', 'events-made-easy' ) . '</td><td>' . eme_ui_select_binary( 1, 'send_mail', 0, 'nodynamicupdates' ) . '</td></tr>';
         $ret_string .= '<tr><td>' . __( 'Move booking to event', 'events-made-easy' ) . '</td><td>';
         $ret_string .= "<input type='hidden' id='transferto_id' name='transferto_id'>";
         $ret_string .= "<input type='hidden' id='person_id' name='person_id' value='" . $booking['person_id'] . "'>";
@@ -5356,13 +5356,13 @@ function eme_registration_seats_form_table( $pending = 0 ) {
     </select>
     <span id="span_sendtocontact" class="eme-hidden">
 <?php
-    esc_html_e( 'Send mails to contact person too?', 'events-made-easy' );
+    esc_html_e( 'Send emails to contact person too?', 'events-made-easy' );
     echo eme_ui_select_binary( 0, 'send_to_contact_too' );
 ?>
     </span>
     <span id="span_sendmails" class="eme-hidden">
 <?php
-    esc_html_e( 'Send mails to attendees upon changes being made?', 'events-made-easy' );
+    esc_html_e( 'Send emails to attendees upon changes being made?', 'events-made-easy' );
     echo eme_ui_select_binary( 1, 'send_mail' );
 ?>
     </span>
@@ -6249,7 +6249,7 @@ function eme_ajax_action_rsvp_markpaidandapprove( $ids_arr ) {
             if ( has_action( 'eme_approve_rsvp_action' ) ) {
                 do_action( 'eme_approve_rsvp_action', $booking );
             }
-            // if we need to send out approval mails, we don't send out the paid mails too
+            // if we need to send out approval emails, we don't send out the paid emails too
             if ( $mailing_paid && $paid_mail_gets_precedence ) {
                 eme_ignore_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'paidBooking' );
@@ -6489,7 +6489,7 @@ function eme_ajax_action_booking_partial_payment( $booking_id, $amount, $send_ma
         // the booking has changed, so get it again
         $booking = eme_get_booking( $booking_id );
         $event   = eme_get_event( $booking['event_id'] );
-        // if the booking is now paid for, approve if needed and send out the expected mails
+        // if the booking is now paid for, approve if needed and send out the expected emails
         if ( ! empty( $event ) && $booking['booking_paid'] ) {
             if ( $event['event_properties']['auto_approve'] && ( $booking['status'] == EME_RSVP_STATUS_PENDING || $booking['status'] == EME_RSVP_STATUS_USERPENDING ) ) {
                 eme_approve_booking( $booking_id );

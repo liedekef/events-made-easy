@@ -2894,7 +2894,7 @@ function eme_render_member_table_and_filters ($limit_to_group = 0 ) {
     </select>
     <span id="span_sendmails" class="eme-hidden">
 <?php
-    esc_html_e( 'Send mails to members upon changes being made?', 'events-made-easy' );
+    esc_html_e( 'Send emails to members upon changes being made?', 'events-made-easy' );
     echo eme_ui_select_binary( 1, 'send_mail' );
 ?>
     </span>
@@ -7020,7 +7020,7 @@ function eme_ajax_action_delete_members( $ids_arr, $trash_person = 0 ) {
     } else {
         $ajaxResult = [];
         foreach ( $ids_arr as $member_id ) {
-            // we set the second param to 1, in which case mails will be sent for deleting members
+            // we set the second param to 1, in which case emails will be sent for deleting members
             eme_delete_member( $member_id, 1 );
         }
         $ajaxResult['Result']      = 'OK';

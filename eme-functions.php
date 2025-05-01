@@ -1667,7 +1667,7 @@ function eme_localized_price( $price, $cur, $target = 'html' ) {
             $result = number_format_i18n( $t_price, $decimals );
         }
 
-        // the result can contain html entities, for e.g. text mails we don't want that of course
+        // the result can contain html entities, for e.g. text emails we don't want that of course
         if ( $target == 'html' ) {
             $res[] = $result;
         } else {

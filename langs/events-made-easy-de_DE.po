@@ -1103,7 +1103,7 @@ msgid "Email queue info"
 msgstr "Mail-Warteschlangen-Info"
 
 #: eme-cron.php:402
-msgid "Queued mails will be send out in batches of %d %s"
+msgid "Queued emails will be send out in batches of %d %s"
 msgstr "E-Mails in der Warteschlange werden in Gruppen von %d %s verschickt"
 
 #: eme-cron.php:417
@@ -2221,7 +2221,7 @@ msgid "Add selected events to category"
 msgstr "Ausgewählte Veranstaltungen der Kategorie hinzufügen"
 
 #: eme-events.php:6124
-msgid "Send mails for cancelled bookings too?"
+msgid "Send emails for cancelled bookings too?"
 msgstr "E-Mails für stornierte Buchungen versenden?"
 
 #: eme-events.php:6129
@@ -2503,7 +2503,7 @@ msgid "If you leave this empty, the author will be used as contact person."
 msgstr "Wenn du dieses Feld leer lässt, wird der Autor als Kontaktperson verwendet."
 
 #: eme-events.php:6782
-msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending mails), will use the admin user info."
+msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending emails), will use the admin user info."
 msgstr "Da der Autor für diese Veranstaltung nicht gesetzt wurde, wird jede Referenz zur Kontaktperson (z. Bsp. beim Platzhalter #_CONTACTPERSON in E-Mails) durch die des Administrators ergänzt."
 
 #: eme-events.php:6790
@@ -2962,7 +2962,7 @@ msgstr "Der Text, der nach erfolgreicher Buchung angezeigt wird (HTML erlaubt)."
 
 #: eme-events.php:7612
 #: eme-options.php:2061
-msgid "When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid."
+msgid "When an event is configured to auto-approve bookings after payment and you have selected to send out payment emails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid."
 msgstr "Wenn eine Veranstaltung so konfiguriert ist, dass Buchungen nach der Zahlung automatisch genehmigt werden, und Du Dich für den Versand von Zahlungs-Mails entschieden hast und der zu zahlende Gesamtbetrag nicht 0 ist, wird diese Mail nicht gesendet, aber die Mail bezüglich einer zu zahlenden Buchung wird gesendet, wenn eine ausstehende Buchung als bezahlt markiert ist."
 
 #: eme-events.php:7614
@@ -2977,13 +2977,13 @@ msgstr "Wenn eine Veranstaltung so konfiguriert ist, dass Buchungen nach der Zah
 #: eme-options.php:2226
 #: eme-options.php:2240
 #: eme-options.php:2297
-msgid "RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted."
-msgstr "Buchungs-Benachrichtigungen sind nicht aktiviert, daher werden diese Mails nicht gesendet. Gehe in die Mail-Einstellungen, um dies zu aktivieren, falls gewünscht."
+msgid "RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted."
+msgstr "Buchungs-Benachrichtigungen sind nicht aktiviert, daher werden diese emails nicht gesendet. Gehe in die Mail-Einstellungen, um dies zu aktivieren, falls gewünscht."
 
 #: eme-events.php:7616
 #: eme-options.php:2058
-msgid "RSVP notifications are not activated for bookings made or approved, so these mails will not be sent. Go in the Email settings to activate this if wanted."
-msgstr "Buchungs-Benachrichtigungen sind für getätigte oder genehmigte Buchungen nicht aktiviert, sodass diese Mails nicht gesendet werden. Gehe in die Mail-Einstellungen, um dies zu aktivieren, falls gewünscht."
+msgid "RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted."
+msgstr "Buchungs-Benachrichtigungen sind für getätigte oder genehmigte Buchungen nicht aktiviert, sodass diese emails nicht gesendet werden. Gehe in die Mail-Einstellungen, um dies zu aktivieren, falls gewünscht."
 
 #: eme-events.php:7620
 #: eme-options.php:2065
@@ -3074,8 +3074,8 @@ msgstr "Fügen Sie optional Anhänge zur E-Mail hinzu, wenn eine Buchung getäti
 #: eme-events.php:7815
 #: eme-events.php:8845
 #: eme-options.php:2117
-msgid "RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
-msgstr "Buchungs-Benachrichtigungen sind für ausstehende Buchungen nicht aktiviert, sodass diese Mails nicht gesendet werden. Gehe in die Mail-Einstellungen, um dies zu aktivieren, falls gewünscht."
+msgid "RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
+msgstr "Buchungs-Benachrichtigungen sind für ausstehende Buchungen nicht aktiviert, sodass diese emails nicht gesendet werden. Gehe in die Mail-Einstellungen, um dies zu aktivieren, falls gewünscht."
 
 #: eme-events.php:7763
 #: eme-options.php:2124
@@ -3244,8 +3244,8 @@ msgstr "Der E-Mail-Text der Nachricht, die an die Kontaktperson verschickt wird,
 
 #: eme-events.php:8202
 #: eme-options.php:2242
-msgid "RSVP notifications are not activated for paid bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
-msgstr "Buchungs-Benachrichtigungen sind für bezahlte Buchungen nicht aktiviert, sodass diese Mails nicht gesendet werden. Gehe in die Mail-Einstellungen, um diese zu aktivieren, falls gewünscht."
+msgid "RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
+msgstr "Buchungs-Benachrichtigungen sind für bezahlte Buchungen nicht aktiviert, sodass diese emails nicht gesendet werden. Gehe in die Mail-Einstellungen, um diese zu aktivieren, falls gewünscht."
 
 #: eme-events.php:8207
 #: eme-options.php:2247
@@ -6511,7 +6511,7 @@ msgid "Please select the type of mail to be sent."
 msgstr "Bitte wähle den Typ der E-Mail die gesendet werden soll."
 
 #: eme-mailer.php:2368
-msgid "Only mails for events you have the right to send mails for have been sent."
+msgid "Only emails for events you have the right to send emails for have been sent."
 msgstr "Es wurden nur E-Mails für die Veranstaltungen verschickt für die Du Berechtigungen hast."
 
 #: eme-mailer.php:2672
@@ -6573,12 +6573,12 @@ msgstr "E-Mail-Typ auswählen"
 
 #: eme-mailer.php:2731
 #: eme-mailer.php:2851
-msgid "Attendee mails"
+msgid "Attendee emails"
 msgstr "Teilnehmer E-Mails"
 
 #: eme-mailer.php:2732
 #: eme-mailer.php:2852
-msgid "Booking mails"
+msgid "Booking emails"
 msgstr "Buchungs-E-Mails"
 
 #: eme-mailer.php:2733
@@ -6614,7 +6614,7 @@ msgid "Exclude people already registered for the selected event(s)"
 msgstr "Personen ausschließen, die bereits für die ausgewählte(n) Veranstaltung(en) registriert sind"
 
 #: eme-mailer.php:2758
-msgid "Only send mails to attendees who did not pay yet"
+msgid "Only send emails to attendees who did not pay yet"
 msgstr "E-Mail nur an Besteller versenden, die noch nicht bezahlt haben"
 
 #: eme-mailer.php:2818
@@ -6723,7 +6723,7 @@ msgstr "Versende Vorschau E-Mail"
 
 #: eme-mailer.php:2904
 #: eme-mailer.php:3083
-msgid "Warning: using this functionality to send mails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing."
+msgid "Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing."
 msgstr "Warnung: Die Verwendung dieser Funktion, um E-Mails an alle Teilnehmer zu versenden, kann zu einem PHP Timeout führen, so dass nicht alle Personen erreicht werden können. Dies hängt von der Anzahl der Teilnehmer und der Last des Servers ab,... . Sollte dies passieren sollte die Warteschlangen-Funktion konfiguriert und eingeschaltet werden."
 
 #: eme-mailer.php:2924
@@ -6757,14 +6757,14 @@ msgstr "Mitglieder"
 
 #: eme-mailer.php:3130
 #: eme-mailer.php:3179
-msgid "If you want to archive old mailings and clean up old mails automatically, check the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME"
-msgstr "Wenn du automatisch alte Mailverläufe archivieren und alte Mails bereinigen möchtest, aktiviere die Option „Alte Mailings automatisch archivieren und alte Mails entfernen“ in den DSGVO-Einstellungen von Events Made Easy"
+msgid "If you want to archive old mailings and clean up old emails automatically, check the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME"
+msgstr "Wenn du automatisch alte Mailverläufe archivieren und alte emails bereinigen möchtest, aktiviere die Option „Alte Mailings automatisch archivieren und alte emails entfernen“ in den DSGVO-Einstellungen von Events Made Easy"
 
 #: eme-mailer.php:3132
 #: eme-mailer.php:3181
 #, fuzzy
-msgid "Every %d days, old mailings will be archived and old mails will be cleaned up (see the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME)"
-msgstr "Wenn du automatisch alte Mailverläufe archivieren und alte Mails bereinigen möchtest, aktiviere die Option „Alte Mailings automatisch archivieren und alte Mails entfernen“ in den DSGVO-Einstellungen von Events Made Easy"
+msgid "Every %d days, old mailings will be archived and old emails will be cleaned up (see the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME)"
+msgstr "Wenn du automatisch alte Mailverläufe archivieren und alte emails bereinigen möchtest, aktiviere die Option „Alte Mailings automatisch archivieren und alte emails entfernen“ in den DSGVO-Einstellungen von Events Made Easy"
 
 #: eme-mailer.php:3139
 msgid "Only show failed emails"
@@ -6795,8 +6795,8 @@ msgid "Here you can find an overview of all planned, ongoing or completed mailin
 msgstr "Hier findest du eine Übersicht über alle geplanten, laufenden oder abgeschlossenen Mailings. Eine Übersicht über alle E-Mails findest du im Reiter \"Gesendete E-Mails\"."
 
 #: eme-mailer.php:3188
-msgid "Email queueing is not activated, so sent mails will only be visible in the \"Sent emails\" tab"
-msgstr "Die Mail-Warteschlange ist nicht aktiviert, so dass gesendete Mails nur im Reiter \"Gesendete Mails\" sichtbar sind"
+msgid "Email queueing is not activated, so sent emails will only be visible in the \"Sent emails\" tab"
+msgstr "Die Mail-Warteschlange ist nicht aktiviert, so dass gesendete emails nur im Reiter \"Gesendete emails\" sichtbar sind"
 
 #: eme-mailer.php:3205
 #: eme-mailer.php:3238
@@ -6822,7 +6822,7 @@ msgstr "Bericht"
 
 #: eme-mailer.php:1632
 #: eme-mailer.php:1766
-msgid "%d mails sent, %d mails failed, %d mails cancelled"
+msgid "%d emails sent, %d emails failed, %d emails cancelled"
 msgstr "%d Nachrichten versendet, %d fehlgeschlagen, %d abgebrochen"
 
 #: eme-mailer.php:1633
@@ -6835,7 +6835,7 @@ msgid "Initializing ..."
 msgstr "Initialisierung ..."
 
 #: eme-mailer.php:1646
-msgid "%d mails left"
+msgid "%d emails left"
 msgstr "%d Nachrichten ausstehend"
 
 #: eme-mailer.php:1057
@@ -6843,7 +6843,7 @@ msgid "Ongoing"
 msgstr "Andauernd"
 
 #: eme-mailer.php:1650
-msgid "%d mails sent, %d mails failed, %d mails left"
+msgid "%d emails sent, %d emails failed, %d emails left"
 msgstr "%d Nachrichten versendet, %d fehlgeschlagen, %d ausstehend"
 
 #: eme-mailer.php:1058
@@ -6851,11 +6851,11 @@ msgid "Completed"
 msgstr "Abgeschlossen"
 
 #: eme-mailer.php:1654
-msgid "%d mails sent, %d mails failed"
+msgid "%d emails sent, %d emails failed"
 msgstr "%d E-Mails gesendet, %d E-Mails fehlgeschlagen"
 
 #: eme-mailer.php:1661
-msgid "Retry failed mails"
+msgid "Retry failed emails"
 msgstr "Fehlgeschlagene E-Mails erneut versuchen"
 
 #: eme-mailer.php:3225
@@ -7866,7 +7866,7 @@ msgid "HTML output"
 msgstr "HTML Ausgabe"
 
 #: eme-members.php:2897
-msgid "Send mails to members upon changes being made?"
+msgid "Send emails to members upon changes being made?"
 msgstr "Sende E-Mails an Mitglieder nach der Aktualisierung?"
 
 #: eme-members.php:2903
@@ -8509,7 +8509,7 @@ msgid "This booking is on a waitinglist, payment is not possible."
 msgstr "Diese Buchung ist auf der Warteliste und kann deshalb nicht bezahlt werden."
 
 #: eme-options.php:570
-msgid "You selected to not receive future mails. Are you sure about this?"
+msgid "You selected to not receive future emails. Are you sure about this?"
 msgstr "Du hast angegeben zukünftig keine Nachrichten zu erhalten. Bist Du Dir sicher?"
 
 #: eme-options.php:876
@@ -9127,7 +9127,7 @@ msgstr "Sende E-Mail bei neuer Buchung?"
 
 #: eme-options.php:1630
 #, fuzzy
-msgid "Permission needed to send mails for own events and be able to access the mailing submenu. Default: %s."
+msgid "Permission needed to send emails for own events and be able to access the mailing submenu. Default: %s."
 msgstr "Benötigte Berechtigung um E-Mails für eigene Veranstaltungen senden zu können. Standard: %s"
 
 #: eme-options.php:1631
@@ -9136,12 +9136,12 @@ msgid "Send emails for any event"
 msgstr "E-Mail für geändertes Mitglied senden?"
 
 #: eme-options.php:1631
-msgid "Permission needed to send mails for any event. Default: %s"
+msgid "Permission needed to send emails for any event. Default: %s"
 msgstr "Benötigte Berechtigung um E-Mails für eine beliebige Veranstaltung senden zu können. Standard: %s"
 
 #: eme-options.php:1632
 #, fuzzy
-msgid "Permission needed to send generic mails. Default: %s"
+msgid "Permission needed to send generic emails. Default: %s"
 msgstr "Benötigte Berechtigung um Formularfelder zu bearbeiten. Standard: %s"
 
 #: eme-options.php:1633
@@ -10055,7 +10055,7 @@ msgid "Enable pending RSVP emails?"
 msgstr "E-Mails für noch zu bestätigende Buchungen aktivieren?"
 
 #: eme-options.php:1936
-msgid "Check this option if you want to send mails for pending bookings."
+msgid "Check this option if you want to send emails for pending bookings."
 msgstr "Aktiviere diese Option, wenn Du E-Mails für unbestätigt Buchungen versenden möchtest."
 
 #: eme-options.php:1937
@@ -10063,7 +10063,7 @@ msgid "Enable approved RSVP emails?"
 msgstr "E-Mails für Bestätigung der Buchung aktivieren?"
 
 #: eme-options.php:1937
-msgid "Check this option if you want to send mails for approved bookings."
+msgid "Check this option if you want to send emails for approved bookings."
 msgstr "Aktiviere diese Option, wenn Du E-Mails für genehmigte Buchungen versenden möchtest."
 
 #: eme-options.php:1938
@@ -10071,15 +10071,15 @@ msgid "Enable paid RSVP emails?"
 msgstr "Aktiviere Zahlungsbenachrichtigung E-Mails?"
 
 #: eme-options.php:1938
-msgid "Check this option if you want to send mails when a payment arrives via a payment gateway or when a booking is marked as paid."
+msgid "Check this option if you want to send emails when a payment arrives via a payment gateway or when a booking is marked as paid."
 msgstr "Aktiviere diese Option falls eine Bestätigungs-E-Mail verschickt werden soll sobald eine Buchung über einen Zahlungsdienst oder manuell als Bezahlt gekennzeichnet wurde."
 
 #: eme-options.php:1943
-msgid "Send HTML mails"
+msgid "Send HTML emails"
 msgstr "Versende HTML Nachrichten"
 
 #: eme-options.php:1943
-msgid "Check this option if you want to use html in the mails being sent."
+msgid "Check this option if you want to use html in the emails being sent."
 msgstr "Aktiviere diese Option um HTML Nachrichten per E-Mail zu versenden."
 
 #: eme-options.php:1945
@@ -10087,8 +10087,8 @@ msgid "Use mail queuing?"
 msgstr "Mail-Warteschlange verwenden?"
 
 #: eme-options.php:1945
-msgid "If activated, you can plan mails for sending at a later date and time."
-msgstr "Wenn diese Funktion aktiviert ist, kannst du Mails für den Versand zu einem späteren Datum und einer späteren Uhrzeit planen."
+msgid "If activated, you can plan emails for sending at a later date and time."
+msgstr "Wenn diese Funktion aktiviert ist, kannst du emails für den Versand zu einem späteren Datum und einer späteren Uhrzeit planen."
 
 #: eme-options.php:1945
 msgid "It is recommended to activate this option."
@@ -10099,17 +10099,17 @@ msgid "Email queue settings"
 msgstr "Einstellungen der Mail-Warteschlange"
 
 #: eme-options.php:1953
-msgid "Send out queued mails in batches of "
+msgid "Send out queued emails in batches of "
 msgstr "Anzahl der E-Mails pro Versand "
 
 #: eme-options.php:1976
 #: eme-options.php:1980
-msgid "Pause between mails"
+msgid "Pause between emails"
 msgstr "Pause zwischen den E-Mails"
 
 #: eme-options.php:1976
-msgid "Indicate how much time (in microseconds, one microsecond being one millionth of a second) to wait between queued mails being sent. By default this is 0, meaning EME sends mails in bursts based on your mail queue settings. This option can be used to send mails more slowly, but be aware to not cause PHP timeouts."
-msgstr "Gib an, wie lange (in Mikrosekunden, wobei eine Mikrosekunde ein Millionstel einer Sekunde ist) zwischen dem Versand von Mails in der Warteschlange gewartet werden soll. Standardmäßig ist dies der Wert 0, d. h. EME sendet E-Mails entsprechend den Einstellungen deiner E-Mail-Warteschlange in Blöcken. Diese Option kann verwendet werden, um Mails langsamer zu versenden, aber achte darauf, keine PHP-Timeouts zu verursachen."
+msgid "Indicate how much time (in microseconds, one microsecond being one millionth of a second) to wait between queued emails being sent. By default this is 0, meaning EME sends emails in bursts based on your mail queue settings. This option can be used to send emails more slowly, but be aware to not cause PHP timeouts."
+msgstr "Gib an, wie lange (in Mikrosekunden, wobei eine Mikrosekunde ein Millionstel einer Sekunde ist) zwischen dem Versand von emails in der Warteschlange gewartet werden soll. Standardmäßig ist dies der Wert 0, d. h. EME sendet E-Mails entsprechend den Einstellungen deiner E-Mail-Warteschlange in Blöcken. Diese Option kann verwendet werden, um emails langsamer zu versenden, aber achte darauf, keine PHP-Timeouts zu verursachen."
 
 #: eme-options.php:1978
 #: eme-options.php:1980
@@ -10131,7 +10131,7 @@ msgid "Read tracking"
 msgstr "Leseverfolgung"
 
 #: eme-options.php:1982
-msgid "Add an image (1x1 transparant pixel) to html mails so you can track if people opened the mail or not (be aware that people can easily bypass this by disabling images in their mail client). As this might be a privacy issue, it is deactivated by default."
+msgid "Add an image (1x1 transparant pixel) to html emails so you can track if people opened the mail or not (be aware that people can easily bypass this by disabling images in their mail client). As this might be a privacy issue, it is deactivated by default."
 msgstr "Füge ein Bild (1x1 transparenter Pixel) zu HTML-Mails hinzu, damit man nachverfolgen kann, falls jemand die Mail geöffnet hat oder nicht (beachte, dass man dies leicht umgehen kann, indem man Bilder im Mail-Programm deaktiviert). Da dies ein Datenschutzproblem sein könnte, ist es standardmäßig deaktiviert."
 
 #: eme-options.php:1983
@@ -10163,23 +10163,23 @@ msgid "Default email sender name"
 msgstr "Standard Versand Sendername"
 
 #: eme-options.php:1987
-msgid "The default name on emails when EME sends mails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP mails will be used (or the blog admin if empty)."
-msgstr "Der Standardname in E-Mails, wenn EME Mails bezüglich GDPR, Mailing-Abonnements/Abbestellungen oder Geburtstagen versendet. Bleibt er leer, wird der Name der Standard-Kontaktperson für Buchungs-Mails verwendet (oder der Blog-Administrator, falls leer)."
+msgid "The default name on emails when EME sends emails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP emails will be used (or the blog admin if empty)."
+msgstr "Der Standardname in E-Mails, wenn EME emails bezüglich GDPR, Mailing-Abonnements/Abbestellungen oder Geburtstagen versendet. Bleibt er leer, wird der Name der Standard-Kontaktperson für Buchungs-Mails verwendet (oder der Blog-Administrator, falls leer)."
 
 #: eme-options.php:1988
 msgid "Default email sender address"
 msgstr "Standard Versand E-Mail-Adresse"
 
 #: eme-options.php:1988
-msgid "The default email address with which EME mails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP mails will be used (or the blog admin if empty). If you use Gmail to send mails, this must correspond with your Gmail account."
-msgstr "Die Standard-E-Mail-Adresse, an die EME-Mails zu GDPR, Mailing-Abonnements/Abbestellungen oder Geburtstagen gesendet werden. Bleibt sie leer, wird die Adresse der Standard-Kontaktperson für Buchungs-Mails verwendet (oder die des Blog-Administrators, falls leer). Wenn Gmail zum Versenden von Mails verwendt wird, muss diese Adresse mit dem Gmail-Konto übereinstimmen."
+msgid "The default email address with which EME emails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP emails will be used (or the blog admin if empty). If you use Gmail to send emails, this must correspond with your Gmail account."
+msgstr "Die Standard-E-Mail-Adresse, an die EME-Mails zu GDPR, Mailing-Abonnements/Abbestellungen oder Geburtstagen gesendet werden. Bleibt sie leer, wird die Adresse der Standard-Kontaktperson für Buchungs-Mails verwendet (oder die des Blog-Administrators, falls leer). Wenn Gmail zum Versenden von emails verwendt wird, muss diese Adresse mit dem Gmail-Konto übereinstimmen."
 
 #: eme-options.php:1989
 msgid "Force sender address everywhere"
 msgstr "Absenderadresse überall erzwingen"
 
 #: eme-options.php:1989
-msgid "Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP mails will be used for generic mails, while for event or membership related mails the configured contact person will be used (or the blog admin if empty)."
+msgid "Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP emails will be used for generic emails, while for event or membership related emails the configured contact person will be used (or the blog admin if empty)."
 msgstr "Erzwingt die Verwendung der konfigurierten Absenderadresse für alle ausgehenden E-Mails. Wenn nicht aktiviert, werden der Name und die E-Mail-Adresse der Standardkontaktperson für Buchungs-E-Mails für allgemeine E-Mails verwendet, während für veranstaltungs- oder mitgliederbezogene E-Mails die konfigurierte Kontaktperson verwendet wird (oder der Blog-Administrator, falls leer)."
 
 #: eme-options.php:1990
@@ -10187,7 +10187,7 @@ msgid "Default email BCC"
 msgstr "Standard BCC E-Mail-Adresse"
 
 #: eme-options.php:1990
-msgid "Insert an email address that will be added in Bcc to all outgoing mails (multiple addresses are to be separated by comma or semicolon). Can be left empty."
+msgid "Insert an email address that will be added in Bcc to all outgoing emails (multiple addresses are to be separated by comma or semicolon). Can be left empty."
 msgstr "Füge eine E-Mail-Adresse ein, an die eine Kopie, aller ausgehenden E-Mails verschickt werden soll (mehrere Adressen müssen per Komma oder Semikolon getrennt werden). Kann leer bleiben."
 
 #: eme-options.php:1992
@@ -10263,8 +10263,8 @@ msgid "Verify SMTP certificates?"
 msgstr "SMTP Zertifikate prüfen?"
 
 #: eme-options.php:2021
-msgid "Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public mailservers this is not allowed."
-msgstr "Deaktivieren diese Option, wenn Probleme beim Senden von E-Mails über sicheres SMTP bestehen, da die Zertifikate nicht übereinstimmen. Da dies in der Tat den Zweck des Besitzes von Zertifikaten zunichte macht, wird empfohlen, es nicht zu verwenden, aber manchmal wird es bei bestimmten Hosting-Providern benötigt. Dies hat nur Auswirkungen auf private IP-Bereiche (wie z.B. 127.0.0.0.1, localhost, ....), für öffentliche Mailserver ist dies nicht erlaubt."
+msgid "Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public emailservers this is not allowed."
+msgstr "Deaktivieren diese Option, wenn Probleme beim Senden von E-Mails über sicheres SMTP bestehen, da die Zertifikate nicht übereinstimmen. Da dies in der Tat den Zweck des Besitzes von Zertifikaten zunichte macht, wird empfohlen, es nicht zu verwenden, aber manchmal wird es bei bestimmten Hosting-Providern benötigt. Dies hat nur Auswirkungen auf private IP-Bereiche (wie z.B. 127.0.0.0.1, localhost, ....), für öffentliche emailserver ist dies nicht erlaubt."
 
 #: eme-options.php:2022
 msgid "Debug SMTP?"
@@ -10292,8 +10292,8 @@ msgid "Full name format"
 msgstr "Format des vollständigen Namens"
 
 #: eme-options.php:2045
-msgid "The format of the full name of a person, used when sending mails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is \"#_LASTNAME #_FIRSTNAME\"."
-msgstr "Das Format des vollständigen Namens einer Person, das verwendet wird, wenn Mails an eine Person gesendet werden oder der vollständige Name angezeigt wird. Es können und müssen nur 2 Platzhalter verwendet werden: #_FIRSTNAME und #_LASTNAME. Die Vorgabe ist \"#_LASTNAME #_FIRSTNAME\"."
+msgid "The format of the full name of a person, used when sending emails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is \"#_LASTNAME #_FIRSTNAME\"."
+msgstr "Das Format des vollständigen Namens einer Person, das verwendet wird, wenn emails an eine Person gesendet werden oder der vollständige Name angezeigt wird. Es können und müssen nur 2 Platzhalter verwendet werden: #_FIRSTNAME und #_LASTNAME. Die Vorgabe ist \"#_LASTNAME #_FIRSTNAME\"."
 
 #: eme-options.php:2065
 #: eme-options.php:2066
@@ -10670,12 +10670,12 @@ msgstr "Entfernt automatisch Anmeldungen für Aufgaben, die vor der angegebenen 
 
 #: eme-options.php:2500
 #: eme-options.php:2511
-msgid "Automatically archive old mailings and remove old mails"
-msgstr "Alte Mailings automatisch archivieren und alte Mails entfernen"
+msgid "Automatically archive old mailings and remove old emails"
+msgstr "Alte Mailings automatisch archivieren und alte emails entfernen"
 
 #: eme-options.php:2500
-msgid "Set the number of days after which mailings are automatically archived and old mails are removed. Leave empty or 0 for no automatic archiving or removal."
-msgstr "Lege die Anzahl der Tage fest, nach denen Mailings automatisch archiviert und alte Mails entfernt werden. Lasse den Eintrag leer oder 0, um keine automatische Archivierung oder Entfernung vorzunehmen."
+msgid "Set the number of days after which mailings are automatically archived and old emails are removed. Leave empty or 0 for no automatic archiving or removal."
+msgstr "Lege die Anzahl der Tage fest, nach denen Mailings automatisch archiviert und alte emails entfernt werden. Lasse den Eintrag leer oder 0, um keine automatische Archivierung oder Entfernung vorzunehmen."
 
 #: eme-options.php:2501
 #: eme-options.php:2513
@@ -12309,7 +12309,7 @@ msgstr "Gruppen-E-Mail"
 
 #: eme-people.php:2574
 msgid "If you want to be able to send mail to this group via your mail client (and not just via EME), you need to configure the cli_mail method (see doc) and enter a unique email address for this group. This can be left empty."
-msgstr "Wenn du in der Lage sein willst, Mails an diese Gruppe über deinen Mail-Client zu senden (und nicht nur über EME), musst du die cli_mail-Methode konfigurieren (siehe Doku) und eine eindeutige Email-Adresse für diese Gruppe eingeben. Diese kann leer gelassen werden."
+msgstr "Wenn du in der Lage sein willst, emails an diese Gruppe über deinen Mail-Client zu senden (und nicht nur über EME), musst du die cli_mail-Methode konfigurieren (siehe Doku) und eine eindeutige Email-Adresse für diese Gruppe eingeben. Diese kann leer gelassen werden."
 
 #: eme-people.php:2579
 msgid "Public?"
@@ -12678,7 +12678,7 @@ msgid "Be aware: the overbooking option is set."
 msgstr "Hinweis: Die Option zur Überbuchung ist aktiv."
 
 #: eme-rsvp.php:4791
-msgid "Send mails for new booking?"
+msgid "Send emails for new booking?"
 msgstr "Sende E-Mail bei neuer Buchung?"
 
 #: eme-rsvp.php:4824
@@ -12686,7 +12686,7 @@ msgid "Edit booking"
 msgstr "Buchung bearbeiten"
 
 #: eme-rsvp.php:4833
-msgid "Send mails for changed booking?"
+msgid "Send emails for changed booking?"
 msgstr "Sende E-Mail für geänderte Buchung?"
 
 #: eme-rsvp.php:4834
@@ -12852,11 +12852,11 @@ msgid "Resend the mail for approved booking"
 msgstr "Versende E-Mail für bestätigte Buchung erneut"
 
 #: eme-rsvp.php:5362
-msgid "Send mails to contact person too?"
+msgid "Send emails to contact person too?"
 msgstr "Auch E-Mails an die Kontaktperson senden?"
 
 #: eme-rsvp.php:5368
-msgid "Send mails to attendees upon changes being made?"
+msgid "Send emails to attendees upon changes being made?"
 msgstr "Soll bei Änderungen eine E-Mail an die Besteller versandt werden?"
 
 #: eme-rsvp.php:5375
@@ -12929,7 +12929,7 @@ msgid "Delete selected task signups"
 msgstr "Ausgewählte Aufgabenanmeldungen löschen"
 
 #: eme-tasks.php:490
-msgid "Send mails to people upon changes being made?"
+msgid "Send emails to people upon changes being made?"
 msgstr "E-Mails an Personen senden, wenn Änderungen vorgenommen werden?"
 
 #: eme-tasks.php:511
@@ -13967,7 +13967,7 @@ msgid "Manage custom fields"
 msgstr "Benutzerdefinierte Felder verwalten"
 
 #: eme-cron.php:404
-msgid "All queued mails will be send out without limit %s."
+msgid "All queued emails will be send out without limit %s."
 msgstr "Alle in der Warteschlange befindlichen E-Mails werden ohne Limit %s gesendet."
 
 #: eme-cron.php:480
@@ -13991,11 +13991,11 @@ msgid "Select this option if you want an attendance record to be kept every time
 msgstr "Diese Option aktivieren, wenn ein Teilnahmeprotokoll geführt werden soll, wenn der Mitglieds-QR-Code von einem EME-Administrator gescannt wird."
 
 #: eme-options.php:1969
-msgid "If you plan to use the registered REST API call to send your queued mails, set the schedule to \"Not scheduled\"."
+msgid "If you plan to use the registered REST API call to send your queued emails, set the schedule to \"Not scheduled\"."
 msgstr "Wenn Sie planen, den registrierten REST-API-Aufruf zu verwenden, um Ihre in der Warteschlange befindlichen E-Mails zu senden, setzen Sie den Zeitplan auf \"Nicht geplant\"."
 
 #: eme-options.php:1971
-msgid "Set the batch count to 0 if you want all queued mails to be send out every time the queue is processed (not recommended)."
+msgid "Set the batch count to 0 if you want all queued emails to be send out every time the queue is processed (not recommended)."
 msgstr "Setzen Sie die Stapelanzahl auf 0, wenn alle in der Warteschlange befindlichen E-Mails jedes Mal gesendet werden sollen, wenn die Warteschlange verarbeitet wird (nicht empfohlen)."
 
 #: eme-cron.php:391
@@ -14065,7 +14065,7 @@ msgid "Extra approval settings (also check out the mail templates)"
 msgstr "Zusätzliche Genehmigungseinstellungen (schauen Sie sich auch die E-Mail-Vorlagen an)"
 
 #: eme-mailer.php:3149
-msgid "Delete selected mails"
+msgid "Delete selected emails"
 msgstr "Ausgewählte E-Mails löschen"
 
 #: eme-categories.php:88
@@ -14131,7 +14131,7 @@ msgid "Enter an optional search text"
 msgstr "Optionalen Suchtext eingeben"
 
 #: eme-mailer.php:3140
-msgid "Filter mails"
+msgid "Filter emails"
 msgstr "E-Mails filtern"
 
 #: eme-mailer.php:1560
@@ -14403,7 +14403,7 @@ msgstr "Der Inhalt der E-Mail, die an den Empfänger gesendet wird, wenn die Auf
 
 #: eme-events.php:7818
 #: eme-options.php:2120
-msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 mails at the same time."
+msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time."
 msgstr ""
 
 #: eme-mailer.php:1048

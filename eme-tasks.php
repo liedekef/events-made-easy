@@ -487,7 +487,7 @@ function eme_task_signups_table_layout( $message = '' ) {
 	</select>
         <span id="span_sendmails" class="eme-hidden">
         <?php
-        esc_html_e( 'Send mails to people upon changes being made?', 'events-made-easy' );
+        esc_html_e( 'Send emails to people upon changes being made?', 'events-made-easy' );
         echo eme_ui_select_binary( 1, 'send_mail' );
         ?>
         </span>

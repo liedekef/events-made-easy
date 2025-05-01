@@ -28,7 +28,7 @@ function help( $progname ) {
 	echo "  Optional provide --extra_allowed_senders, to allow extra email addresses to send to this group (comma-separated list)\n";
 	echo "  Optional provide -f, to indicate the sender email. Normally this is extracted from the email, but programs like postfix can provide this already too and are more suited for email parsing\n";
 	echo "  Optional provide -a, to indicate all people in the group should receive the mail, and not only those with the 'massmail' option active.\n";
-	echo "  Optional provide --fast: by default the mails are queued inside EME and follow the general queueing rules, if you want these mails to be sent as quickly as possible add --fast\n";
+	echo "  Optional provide --fast: by default the emails are queued inside EME and follow the general queueing rules, if you want these emails to be sent as quickly as possible add --fast\n";
 	echo "Examples:\n";
 	echo "$progname -d mygroup@email\n";
 	echo "==> will forward emails to group with matching email mygroup@email\n\n";

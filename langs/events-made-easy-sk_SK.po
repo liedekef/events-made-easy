@@ -1150,7 +1150,7 @@ msgid "Email queue info"
 msgstr "Informácie o emailovom poradí"
 
 #: eme-cron.php:402
-msgid "Queued mails will be send out in batches of %d %s"
+msgid "Queued emails will be send out in batches of %d %s"
 msgstr "Emaily v poradí budú odoslané v dávkach %d %s"
 
 #: eme-cron.php:417
@@ -2285,7 +2285,7 @@ msgid "Add selected events to category"
 msgstr "Pridať vybrané podujatia do kategórie"
 
 #: eme-events.php:6124
-msgid "Send mails for cancelled bookings too?"
+msgid "Send emails for cancelled bookings too?"
 msgstr "Posielať e-maily aj pre zrušené rezervácie?"
 
 #: eme-events.php:6129
@@ -2651,7 +2651,7 @@ msgid "If you leave this empty, the author will be used as contact person."
 msgstr "Ak necháte túto položku prázdnu, ako kontaktná osoba sa použije autor."
 
 #: eme-events.php:6782
-msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending mails), will use the admin user info."
+msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending emails), will use the admin user info."
 msgstr "Keďže autor nie je pre toto podujatie definovaný, pri akýkoľvek odkaze na kontaktnú osobu (napríklad pri použití #_CONTACTPERSON pri odosielaní e-mailov) sa použijú informácie o používateľovi admin."
 
 #: eme-events.php:6790
@@ -3113,7 +3113,7 @@ msgstr "Po úspešnej rezervácii sa používateľovi zobrazí text (html povole
 
 #: eme-events.php:7612
 #: eme-options.php:2061
-msgid "When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid."
+msgid "When an event is configured to auto-approve bookings after payment and you have selected to send out payment emails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid."
 msgstr ""
 "Ak je podujatie nakonfigurované na automatické schvaľovanie rezervácií po zaplatení, tento email sa neodošle, ale oznámenie týkajúce sa schválenej rezervácie sa odošle, keď čakajúca rezervácia označí ako zaplatená.\n"
 "\n"
@@ -3131,12 +3131,12 @@ msgstr ""
 #: eme-options.php:2226
 #: eme-options.php:2240
 #: eme-options.php:2297
-msgid "RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted."
+msgid "RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Oznámenia o potvrdení účasti nie sú aktivované, takže tieto e-maily nebudú odoslané. V prípade potreby túto funkciu aktivujte v nastaveniach emailov."
 
 #: eme-events.php:7616
 #: eme-options.php:2058
-msgid "RSVP notifications are not activated for bookings made or approved, so these mails will not be sent. Go in the Email settings to activate this if wanted."
+msgid "RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Oznámenia o potvrdení účasti nie sú pri vykonaných alebo schválených rezerváciách aktivované, takže tieto e-maily nebudú odoslané. V prípade potreby túto funkciu aktivujte v nastaveniach emailov."
 
 #: eme-events.php:7620
@@ -3270,7 +3270,7 @@ msgstr "Žiadne šablóny ešte nie sú definované."
 #: eme-events.php:7815
 #: eme-events.php:8845
 #: eme-options.php:2117
-msgid "RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
+msgid "RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Oznámenia o potvrdení účasti nie sú pri čakajúcich rezerváciách aktivované, takže tieto e-maily nebudú odoslané. Ak chcete, môžete túto funkciu aktivovať v nastaveniach emailov."
 
 #: eme-events.php:7763
@@ -3445,7 +3445,7 @@ msgstr "Telo e-mailu, ktorý sa pošle kontaktnej osobe, keď osoba zruší vše
 
 #: eme-events.php:8202
 #: eme-options.php:2242
-msgid "RSVP notifications are not activated for paid bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
+msgid "RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr "Oznámenia o potvrdení účasti nie sú pri platených rezerváciách aktivované, takže tieto e-maily nebudú odoslané. Ak chcete, môžete túto funkciu aktivovať v nastaveniach emailov."
 
 #: eme-events.php:8207
@@ -6702,7 +6702,7 @@ msgid "Please select the type of mail to be sent."
 msgstr "Prosím vyberte typ emailu na odoslanie."
 
 #: eme-mailer.php:2368
-msgid "Only mails for events you have the right to send mails for have been sent."
+msgid "Only emails for events you have the right to send emails for have been sent."
 msgstr "Boli odoslané iba e-maily pre podujatia, na ktoré máte právo poslať e-maily."
 
 #: eme-mailer.php:2672
@@ -6764,12 +6764,12 @@ msgstr "Vybrať typ emailu"
 
 #: eme-mailer.php:2731
 #: eme-mailer.php:2851
-msgid "Attendee mails"
+msgid "Attendee emails"
 msgstr "Emaily účastníkov"
 
 #: eme-mailer.php:2732
 #: eme-mailer.php:2852
-msgid "Booking mails"
+msgid "Booking emails"
 msgstr "Rezervačné emaily"
 
 #: eme-mailer.php:2733
@@ -6805,7 +6805,7 @@ msgid "Exclude people already registered for the selected event(s)"
 msgstr "Vylúčiť osoby, ktoré sa už zaregistrovali na vybrané podujatie (podujatia)"
 
 #: eme-mailer.php:2758
-msgid "Only send mails to attendees who did not pay yet"
+msgid "Only send emails to attendees who did not pay yet"
 msgstr "Poslať email iba účastníkom, ktorí ešte nezaplatili"
 
 #: eme-mailer.php:2759
@@ -6918,7 +6918,7 @@ msgstr "Odoslať náhľad emailu"
 
 #: eme-mailer.php:2904
 #: eme-mailer.php:3083
-msgid "Warning: using this functionality to send mails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing."
+msgid "Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing."
 msgstr "Upozornenie: Použitie tejto funkcie na odosielanie e-mailov účastníkom môže mať za následok vypršanie časového limitu php, takže nie každý potom dostane e-mail. Závisí to od počtu účastníkov, zaťaženia servera,... . Ak k tomu dôjde, aktivujte a nakonfigurujte poradovník pošty."
 
 #: eme-mailer.php:2924
@@ -6952,12 +6952,12 @@ msgstr "členov"
 
 #: eme-mailer.php:3130
 #: eme-mailer.php:3179
-msgid "If you want to archive old mailings and clean up old mails automatically, check the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME"
+msgid "If you want to archive old mailings and clean up old emails automatically, check the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME"
 msgstr "Ak chcete automaticky archivovať staré mailingy a vyčistiť staré e-maily, označte možnosť \"Automaticky archivovať staré mailingy a odstraňovať staré e-maily\" v nastaveniach GDPR v EME"
 
 #: eme-mailer.php:3132
 #: eme-mailer.php:3181
-msgid "Every %d days, old mailings will be archived and old mails will be cleaned up (see the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME)"
+msgid "Every %d days, old mailings will be archived and old emails will be cleaned up (see the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME)"
 msgstr "Každých %d dní sa archivujú staré mailingy a staré maily sa vyčistia (pozri možnosť \"Automaticky archivovať staré mailingy a odstraňovať staré maily\" v nastaveniach GDPR v EME)."
 
 #: eme-mailer.php:3139
@@ -6989,7 +6989,7 @@ msgid "Here you can find an overview of all planned, ongoing or completed mailin
 msgstr "Tu nájdete prehľad všetkých plánovaných, prebiehajúcich alebo dokončených mailingoch. Prehľad všetkých e-mailov nájdete na karte \"Odoslané e-maily\"."
 
 #: eme-mailer.php:3188
-msgid "Email queueing is not activated, so sent mails will only be visible in the \"Sent emails\" tab"
+msgid "Email queueing is not activated, so sent emails will only be visible in the \"Sent emails\" tab"
 msgstr "Emailové poradie nie je aktivované, takže odoslané emaily budú viditeľné len na karte \"Odoslané emaily\""
 
 #: eme-mailer.php:3205
@@ -7016,7 +7016,7 @@ msgstr "Správa o stave"
 
 #: eme-mailer.php:1632
 #: eme-mailer.php:1766
-msgid "%d mails sent, %d mails failed, %d mails cancelled"
+msgid "%d emails sent, %d emails failed, %d emails cancelled"
 msgstr "%d odoslaných emailov, %d neúspešných emailov, %d zrušených emailov"
 
 #: eme-mailer.php:1633
@@ -7029,7 +7029,7 @@ msgid "Initializing ..."
 msgstr "Inicializácia ..."
 
 #: eme-mailer.php:1646
-msgid "%d mails left"
+msgid "%d emails left"
 msgstr "%d mailov ostalo"
 
 #: eme-mailer.php:1057
@@ -7037,7 +7037,7 @@ msgid "Ongoing"
 msgstr "Prebieha"
 
 #: eme-mailer.php:1650
-msgid "%d mails sent, %d mails failed, %d mails left"
+msgid "%d emails sent, %d emails failed, %d emails left"
 msgstr "%d odoslaných emailov, %d zlyhalo, %d emailov ostáva"
 
 #: eme-mailer.php:1058
@@ -7045,11 +7045,11 @@ msgid "Completed"
 msgstr "Hotovo"
 
 #: eme-mailer.php:1654
-msgid "%d mails sent, %d mails failed"
+msgid "%d emails sent, %d emails failed"
 msgstr "%d odoslaných emailov, %d emailov zlyhalo"
 
 #: eme-mailer.php:1661
-msgid "Retry failed mails"
+msgid "Retry failed emails"
 msgstr "Opakovať neúspešné e-maily"
 
 #: eme-mailer.php:3225
@@ -8112,7 +8112,7 @@ msgid "HTML output"
 msgstr "HTML výstup"
 
 #: eme-members.php:2897
-msgid "Send mails to members upon changes being made?"
+msgid "Send emails to members upon changes being made?"
 msgstr "Poslať členom správy po vykonaní zmien?"
 
 #: eme-members.php:2903
@@ -8784,7 +8784,7 @@ msgid "This booking is on a waitinglist, payment is not possible."
 msgstr "Táto rezervácia je na čakacej listine, platba nie je možná."
 
 #: eme-options.php:570
-msgid "You selected to not receive future mails. Are you sure about this?"
+msgid "You selected to not receive future emails. Are you sure about this?"
 msgstr "Rozhodli ste sa, že od nás nechcete dostávať emaily. Ste si istý?"
 
 #: eme-options.php:876
@@ -9423,7 +9423,7 @@ msgid "Send emails for own events"
 msgstr "Poslať emaily pre vlastné podujatie"
 
 #: eme-options.php:1630
-msgid "Permission needed to send mails for own events and be able to access the mailing submenu. Default: %s."
+msgid "Permission needed to send emails for own events and be able to access the mailing submenu. Default: %s."
 msgstr "Oprávnenie potrebné na odosielanie e-mailov pre vlastné podujatia a prístup k podponuke odosielania e-mailov. Predvolené: %s."
 
 #: eme-options.php:1631
@@ -9431,11 +9431,11 @@ msgid "Send emails for any event"
 msgstr "Odoslať e-maily pre akúkoľvek udalosť"
 
 #: eme-options.php:1631
-msgid "Permission needed to send mails for any event. Default: %s"
+msgid "Permission needed to send emails for any event. Default: %s"
 msgstr "Oprávnenie potrebné na odoslanie emailov pre ktorékoľvek podujatie. Predvolené: %s"
 
 #: eme-options.php:1632
-msgid "Permission needed to send generic mails. Default: %s"
+msgid "Permission needed to send generic emails. Default: %s"
 msgstr "Povolenie potrebné na odosielanie všeobecných e-mailov. Predvolené: %s"
 
 #: eme-options.php:1633
@@ -10354,7 +10354,7 @@ msgid "Enable pending RSVP emails?"
 msgstr "Povoliť emaily čakajúcich rezervácií?"
 
 #: eme-options.php:1936
-msgid "Check this option if you want to send mails for pending bookings."
+msgid "Check this option if you want to send emails for pending bookings."
 msgstr "Označte túto možnosť, ak chcete odosielať e-maily pre čakajúce rezervácie."
 
 #: eme-options.php:1937
@@ -10362,7 +10362,7 @@ msgid "Enable approved RSVP emails?"
 msgstr "Povoliť emaily schválených rezervácií?"
 
 #: eme-options.php:1937
-msgid "Check this option if you want to send mails for approved bookings."
+msgid "Check this option if you want to send emails for approved bookings."
 msgstr "Označte túto možnosť, ak chcete odosielať e-maily pre schválené rezervácie."
 
 #: eme-options.php:1938
@@ -10370,15 +10370,15 @@ msgid "Enable paid RSVP emails?"
 msgstr "Povoliť emaily platených rezervácií?"
 
 #: eme-options.php:1938
-msgid "Check this option if you want to send mails when a payment arrives via a payment gateway or when a booking is marked as paid."
+msgid "Check this option if you want to send emails when a payment arrives via a payment gateway or when a booking is marked as paid."
 msgstr "Označte túto možnosť, ak chcete odosielať e-maily, keď dôjde k platbe prostredníctvom platobnej brány alebo keď je rezervácia označená ako zaplatená."
 
 #: eme-options.php:1943
-msgid "Send HTML mails"
+msgid "Send HTML emails"
 msgstr "Poslať HTML emaily"
 
 #: eme-options.php:1943
-msgid "Check this option if you want to use html in the mails being sent."
+msgid "Check this option if you want to use html in the emails being sent."
 msgstr "Označte túto možnosť, ak chcete v odosielaných správach používať html."
 
 #: eme-options.php:1945
@@ -10386,7 +10386,7 @@ msgid "Use mail queuing?"
 msgstr "Používať poradovník emailov?"
 
 #: eme-options.php:1945
-msgid "If activated, you can plan mails for sending at a later date and time."
+msgid "If activated, you can plan emails for sending at a later date and time."
 msgstr "Ak je táto funkcia aktivovaná, môžete naplánovať odoslanie e-mailov na neskorší dátum a čas."
 
 #: eme-options.php:1945
@@ -10398,16 +10398,16 @@ msgid "Email queue settings"
 msgstr "Nastavenia poradovníka emailov"
 
 #: eme-options.php:1953
-msgid "Send out queued mails in batches of "
+msgid "Send out queued emails in batches of "
 msgstr "Odoslať emaily v poradí v dávkach po "
 
 #: eme-options.php:1976
 #: eme-options.php:1980
-msgid "Pause between mails"
+msgid "Pause between emails"
 msgstr "Pauza medzi e-mailami"
 
 #: eme-options.php:1976
-msgid "Indicate how much time (in microseconds, one microsecond being one millionth of a second) to wait between queued mails being sent. By default this is 0, meaning EME sends mails in bursts based on your mail queue settings. This option can be used to send mails more slowly, but be aware to not cause PHP timeouts."
+msgid "Indicate how much time (in microseconds, one microsecond being one millionth of a second) to wait between queued emails being sent. By default this is 0, meaning EME sends emails in bursts based on your mail queue settings. This option can be used to send emails more slowly, but be aware to not cause PHP timeouts."
 msgstr "Uveďte, koľko času (v mikrosekundách, pričom jedna mikrosekunda je jedna milióntina sekundy) sa má čakať medzi odoslaním pošty vo fronte. V predvolenom nastavení je táto hodnota 0, čo znamená, že EME posiela e-maily v dávkach na základe nastavení e-mailového frontu. Túto možnosť môžete použiť na pomalšie odosielanie pošty, ale dávajte pozor, aby ste nespôsobili časové výpadky PHP."
 
 #: eme-options.php:1978
@@ -10430,7 +10430,7 @@ msgid "Read tracking"
 msgstr "Čítať sledovanie"
 
 #: eme-options.php:1982
-msgid "Add an image (1x1 transparant pixel) to html mails so you can track if people opened the mail or not (be aware that people can easily bypass this by disabling images in their mail client). As this might be a privacy issue, it is deactivated by default."
+msgid "Add an image (1x1 transparant pixel) to html emails so you can track if people opened the mail or not (be aware that people can easily bypass this by disabling images in their mail client). As this might be a privacy issue, it is deactivated by default."
 msgstr "Pridajte do html mailov obrázok (1x1 pixel, priehľadný), aby ste mohli sledovať, či ľudia email otvorili alebo nie (uvedomte si, že ľudia to môžu ľahko obísť zakázaním obrázkov vo svojom emailovom klientovi). Pretože to môže byť problémom s ochranou osobných údajov, je predvolene deaktivovaný."
 
 #: eme-options.php:1983
@@ -10462,7 +10462,7 @@ msgid "Default email sender name"
 msgstr "Predvolené meno odosielateľa e-mailu"
 
 #: eme-options.php:1987
-msgid "The default name on emails when EME sends mails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP mails will be used (or the blog admin if empty)."
+msgid "The default name on emails when EME sends emails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP emails will be used (or the blog admin if empty)."
 msgstr "Predvolené meno v e-mailoch, keď EME posiela e-maily týkajúce sa GDPR, prihlásenia na odber/odhlásenia z odberu alebo narodenín. Ak zostane prázdne, použije sa meno predvolenej kontaktnej osoby pre rezervačné emaily (alebo správcu blogu, ak je prázdne)."
 
 #: eme-options.php:1988
@@ -10470,7 +10470,7 @@ msgid "Default email sender address"
 msgstr "Predvolená adresa odosielateľa e-mailu"
 
 #: eme-options.php:1988
-msgid "The default email address with which EME mails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP mails will be used (or the blog admin if empty). If you use Gmail to send mails, this must correspond with your Gmail account."
+msgid "The default email address with which EME emails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP emails will be used (or the blog admin if empty). If you use Gmail to send emails, this must correspond with your Gmail account."
 msgstr "Predvolená e-mailová adresa, z ktorej sa budú posielať e-maily týkajúce sa GDPR, prihlásenia/odhlásenia z odberu alebo narodenín. Ak zostane prázdna, použije sa adresa predvolenej kontaktnej osoby pre rezervačné emaily (alebo správcu blogu, ak je prázdna). Ak na odoslanie e-mailov používate službu Gmail, musí táto adresa zodpovedať vášmu účtu Gmail."
 
 #: eme-options.php:1989
@@ -10478,7 +10478,7 @@ msgid "Force sender address everywhere"
 msgstr "Vynútiť adresu odosielateľa všade"
 
 #: eme-options.php:1989
-msgid "Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP mails will be used for generic mails, while for event or membership related mails the configured contact person will be used (or the blog admin if empty)."
+msgid "Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP emails will be used for generic emails, while for event or membership related emails the configured contact person will be used (or the blog admin if empty)."
 msgstr "Vynútiť použitie nakonfigurovanej adresy odosielateľa pre všetky odchádzajúce e-maily. Ak nie je aktivovaná, pre všeobecné e-maily sa použije meno a e-mailová adresa predvolenej kontaktnej osoby pre rezervačné e-maily, zatiaľ čo pre e-maily týkajúce sa podujatí alebo členstva sa použije nakonfigurovaná kontaktná osoba (alebo správca blogu, ak je prázdne)."
 
 #: eme-options.php:1990
@@ -10486,7 +10486,7 @@ msgid "Default email BCC"
 msgstr "Predvolený email BCC"
 
 #: eme-options.php:1990
-msgid "Insert an email address that will be added in Bcc to all outgoing mails (multiple addresses are to be separated by comma or semicolon). Can be left empty."
+msgid "Insert an email address that will be added in Bcc to all outgoing emails (multiple addresses are to be separated by comma or semicolon). Can be left empty."
 msgstr "Vložte emailovú adresu, ktorá sa pridá do skrytej kópie (Bcc) do všetkých odchádzajúcich e-mailov (viacero adries sa oddeľuje čiarkou alebo bodkočiarkou). Môžete nechať prázdne."
 
 #: eme-options.php:1992
@@ -10562,7 +10562,7 @@ msgid "Verify SMTP certificates?"
 msgstr "Overiť SMTP certifikáty?"
 
 #: eme-options.php:2021
-msgid "Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public mailservers this is not allowed."
+msgid "Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public emailservers this is not allowed."
 msgstr "Zrušte označenie tejto možnosti, ak máte problémy s odosielaním pošty prostredníctvom zabezpečeného protokolu SMTP z dôvodu nezhodujúcich sa certifikátov. Pretože to vlastne ruší účel certifikátov, neodporúča sa toto používať, ale niekedy je to potrebné u konkrétnych poskytovateľov hostingu. Toto má vplyv iba na súkromné rozsahy ip (napríklad 127.0.0.1, localhost, ...), pre verejné poštové servery toto nie je povolené."
 
 #: eme-options.php:2022
@@ -10591,7 +10591,7 @@ msgid "Full name format"
 msgstr "Formát celého mena"
 
 #: eme-options.php:2045
-msgid "The format of the full name of a person, used when sending mails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is \"#_LASTNAME #_FIRSTNAME\"."
+msgid "The format of the full name of a person, used when sending emails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is \"#_LASTNAME #_FIRSTNAME\"."
 msgstr "Formát celého mena osoby, ktorý sa používa pri odosielaní e-mailov osobe alebo pri zobrazovaní celého mena. Môžu a musia sa použiť len 2 zástupné výrazy: #_FIRSTNAME a #_LASTNAME. Predvolené nastavenie je \"#_LASTNAME #_FIRSTNAME\"."
 
 #: eme-options.php:2065
@@ -11025,11 +11025,11 @@ msgstr "Automatické odstránenie prihlásení na úlohy, ktoré skončili pred 
 
 #: eme-options.php:2500
 #: eme-options.php:2511
-msgid "Automatically archive old mailings and remove old mails"
+msgid "Automatically archive old mailings and remove old emails"
 msgstr "Automaticky archivovať staré mailingy a odstraňovať staré emaily"
 
 #: eme-options.php:2500
-msgid "Set the number of days after which mailings are automatically archived and old mails are removed. Leave empty or 0 for no automatic archiving or removal."
+msgid "Set the number of days after which mailings are automatically archived and old emails are removed. Leave empty or 0 for no automatic archiving or removal."
 msgstr "Nastavte počet dní, po ktorých sa mailingy automaticky archivujú a staré emaily sa odstránia. Ponechajte prázdne alebo 0 pre žiadnu automatickú archiváciu alebo odstraňovanie."
 
 #: eme-options.php:2501
@@ -13210,7 +13210,7 @@ msgid "Be aware: the overbooking option is set."
 msgstr "Uvedomte si, že je nastavená možnosť nadpočetnej rezervácie."
 
 #: eme-rsvp.php:4791
-msgid "Send mails for new booking?"
+msgid "Send emails for new booking?"
 msgstr "Poslať email novej rezervácii?"
 
 #: eme-rsvp.php:4824
@@ -13218,7 +13218,7 @@ msgid "Edit booking"
 msgstr "Upraviť rezerváciu"
 
 #: eme-rsvp.php:4833
-msgid "Send mails for changed booking?"
+msgid "Send emails for changed booking?"
 msgstr "Odoslať maily na zmenu rezervácie?"
 
 #: eme-rsvp.php:4834
@@ -13384,11 +13384,11 @@ msgid "Resend the mail for approved booking"
 msgstr "Znovu odoslať email o schválenej rezervácii"
 
 #: eme-rsvp.php:5362
-msgid "Send mails to contact person too?"
+msgid "Send emails to contact person too?"
 msgstr "Odoslať e-maily aj kontaktnej osobe?"
 
 #: eme-rsvp.php:5368
-msgid "Send mails to attendees upon changes being made?"
+msgid "Send emails to attendees upon changes being made?"
 msgstr "Posielať účastníkom email po vykonaní zmien?"
 
 #: eme-rsvp.php:5375
@@ -13465,7 +13465,7 @@ msgid "Delete selected task signups"
 msgstr "Odstrániť vybrané prihlásenia na úlohy"
 
 #: eme-tasks.php:490
-msgid "Send mails to people upon changes being made?"
+msgid "Send emails to people upon changes being made?"
 msgstr "Poslať členom správy po vykonaní zmien?"
 
 #: eme-tasks.php:511
@@ -13949,7 +13949,7 @@ msgid "Manage custom fields"
 msgstr ""
 
 #: eme-cron.php:404
-msgid "All queued mails will be send out without limit %s."
+msgid "All queued emails will be send out without limit %s."
 msgstr ""
 
 #: eme-cron.php:480
@@ -13973,11 +13973,11 @@ msgid "Select this option if you want an attendance record to be kept every time
 msgstr ""
 
 #: eme-options.php:1969
-msgid "If you plan to use the registered REST API call to send your queued mails, set the schedule to \"Not scheduled\"."
+msgid "If you plan to use the registered REST API call to send your queued emails, set the schedule to \"Not scheduled\"."
 msgstr ""
 
 #: eme-options.php:1971
-msgid "Set the batch count to 0 if you want all queued mails to be send out every time the queue is processed (not recommended)."
+msgid "Set the batch count to 0 if you want all queued emails to be send out every time the queue is processed (not recommended)."
 msgstr ""
 
 #: eme-cron.php:391
@@ -14047,7 +14047,7 @@ msgid "Extra approval settings (also check out the mail templates)"
 msgstr ""
 
 #: eme-mailer.php:3149
-msgid "Delete selected mails"
+msgid "Delete selected emails"
 msgstr ""
 
 #: eme-categories.php:88
@@ -14113,7 +14113,7 @@ msgid "Enter an optional search text"
 msgstr ""
 
 #: eme-mailer.php:3140
-msgid "Filter mails"
+msgid "Filter emails"
 msgstr ""
 
 #: eme-mailer.php:1560
@@ -14386,7 +14386,7 @@ msgstr ""
 
 #: eme-events.php:7818
 #: eme-options.php:2120
-msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 mails at the same time."
+msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time."
 msgstr ""
 
 #: eme-mailer.php:1048

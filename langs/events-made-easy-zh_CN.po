@@ -1108,7 +1108,7 @@ msgstr ""
 
 #: eme-cron.php:402
 #, fuzzy
-msgid "Queued mails will be send out in batches of %d %s"
+msgid "Queued emails will be send out in batches of %d %s"
 msgstr "分批发送队列的邮件"
 
 #: eme-cron.php:417
@@ -2224,7 +2224,7 @@ msgid "Add selected events to category"
 msgstr "将选定的活动添加到分类中"
 
 #: eme-events.php:6124
-msgid "Send mails for cancelled bookings too?"
+msgid "Send emails for cancelled bookings too?"
 msgstr "对取消的预订也发送邮件？"
 
 #: eme-events.php:6129
@@ -2507,7 +2507,7 @@ msgid "If you leave this empty, the author will be used as contact person."
 msgstr "如果您留空，作者将被用作联系人。"
 
 #: eme-events.php:6782
-msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending mails), will use the admin user info."
+msgid "Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending emails), will use the admin user info."
 msgstr "由于该活动的作者未被定义，任何对联系人的引用（比如在发送邮件时使用 #_CONTACTPERSON），都将使用管理用户信息。"
 
 #: eme-events.php:6790
@@ -2966,7 +2966,7 @@ msgstr "当预订成功后显示给用户的文本（允许使用 html）。"
 
 #: eme-events.php:7612
 #: eme-options.php:2061
-msgid "When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid."
+msgid "When an event is configured to auto-approve bookings after payment and you have selected to send out payment emails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid."
 msgstr "当一个活动被配置为付款后自动批准预订，并且您选择了发送付款邮件，并且支付的总金额不为 0 时，该邮件不会被发送，但是当一个待订被标记为付款时，有关预订被支付的邮件会被发送。"
 
 #: eme-events.php:7614
@@ -2981,12 +2981,12 @@ msgstr "当一个活动被配置为付款后自动批准预订，并且您选择
 #: eme-options.php:2226
 #: eme-options.php:2240
 #: eme-options.php:2297
-msgid "RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted."
+msgid "RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
 #: eme-events.php:7616
 #: eme-options.php:2058
-msgid "RSVP notifications are not activated for bookings made or approved, so these mails will not be sent. Go in the Email settings to activate this if wanted."
+msgid "RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
 #: eme-events.php:7620
@@ -3078,7 +3078,7 @@ msgstr "当有新的预订时，可以选择在邮件中添加附件。"
 #: eme-events.php:7815
 #: eme-events.php:8845
 #: eme-options.php:2117
-msgid "RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
+msgid "RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
 #: eme-events.php:7763
@@ -3248,7 +3248,7 @@ msgstr "当应答者取消其对某一事件的所有预订时，将向联系人
 
 #: eme-events.php:8202
 #: eme-options.php:2242
-msgid "RSVP notifications are not activated for paid bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted."
+msgid "RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted."
 msgstr ""
 
 #: eme-events.php:8207
@@ -6529,7 +6529,7 @@ msgid "Please select the type of mail to be sent."
 msgstr "请选择要发送的邮件类型。"
 
 #: eme-mailer.php:2368
-msgid "Only mails for events you have the right to send mails for have been sent."
+msgid "Only emails for events you have the right to send emails for have been sent."
 msgstr "只有您有权发送邮件的活动邮件才会被发送。"
 
 #: eme-mailer.php:2672
@@ -6591,12 +6591,12 @@ msgstr "选择邮件的类型"
 
 #: eme-mailer.php:2731
 #: eme-mailer.php:2851
-msgid "Attendee mails"
+msgid "Attendee emails"
 msgstr "出席者邮件"
 
 #: eme-mailer.php:2732
 #: eme-mailer.php:2852
-msgid "Booking mails"
+msgid "Booking emails"
 msgstr "预订邮件"
 
 #: eme-mailer.php:2733
@@ -6632,7 +6632,7 @@ msgid "Exclude people already registered for the selected event(s)"
 msgstr "排除已经注册所选活动的人员"
 
 #: eme-mailer.php:2758
-msgid "Only send mails to attendees who did not pay yet"
+msgid "Only send emails to attendees who did not pay yet"
 msgstr "只给尚未付款的出席者发送邮件"
 
 #: eme-mailer.php:2818
@@ -6741,7 +6741,7 @@ msgstr ""
 
 #: eme-mailer.php:2904
 #: eme-mailer.php:3083
-msgid "Warning: using this functionality to send mails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing."
+msgid "Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing."
 msgstr "警告：使用这个功能向参与者发送邮件可能会导致 php 超时，所以不是每个人都会收到邮件。这取决于与会者的数量、服务器的负载 ...。如果发生这种情况，请激活并配置邮件队列。"
 
 #: eme-mailer.php:2924
@@ -6775,13 +6775,13 @@ msgstr "会员"
 
 #: eme-mailer.php:3130
 #: eme-mailer.php:3179
-msgid "If you want to archive old mailings and clean up old mails automatically, check the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME"
+msgid "If you want to archive old mailings and clean up old emails automatically, check the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME"
 msgstr "如果您想对旧邮件进行归档并自动清理旧邮件，请在 EME 的 GDPR 设置中勾选 \"自动归档旧邮件并删除旧邮件\" 的选项。"
 
 #: eme-mailer.php:3132
 #: eme-mailer.php:3181
 #, fuzzy
-msgid "Every %d days, old mailings will be archived and old mails will be cleaned up (see the option \"Automatically archive old mailings and remove old mails\" in the GDPR Settings of EME)"
+msgid "Every %d days, old mailings will be archived and old emails will be cleaned up (see the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME)"
 msgstr "如果您想对旧邮件进行归档并自动清理旧邮件，请在 EME 的 GDPR 设置中勾选 \"自动归档旧邮件并删除旧邮件\" 的选项。"
 
 #: eme-mailer.php:3139
@@ -6813,7 +6813,7 @@ msgid "Here you can find an overview of all planned, ongoing or completed mailin
 msgstr "在这里，您可以找到所有计划中的、正在进行中的或已经完成的邮件的概述。要了解所有邮件的概况，请查看 \"已发送的电子邮件\" 标签。"
 
 #: eme-mailer.php:3188
-msgid "Email queueing is not activated, so sent mails will only be visible in the \"Sent emails\" tab"
+msgid "Email queueing is not activated, so sent emails will only be visible in the \"Sent emails\" tab"
 msgstr ""
 
 #: eme-mailer.php:3205
@@ -6840,7 +6840,7 @@ msgstr "报告"
 
 #: eme-mailer.php:1632
 #: eme-mailer.php:1766
-msgid "%d mails sent, %d mails failed, %d mails cancelled"
+msgid "%d emails sent, %d emails failed, %d emails cancelled"
 msgstr ""
 
 #: eme-mailer.php:1633
@@ -6853,7 +6853,7 @@ msgid "Initializing ..."
 msgstr "初始化 ..."
 
 #: eme-mailer.php:1646
-msgid "%d mails left"
+msgid "%d emails left"
 msgstr "还剩 %d 邮件"
 
 #: eme-mailer.php:1057
@@ -6861,7 +6861,7 @@ msgid "Ongoing"
 msgstr "正在进行中"
 
 #: eme-mailer.php:1650
-msgid "%d mails sent, %d mails failed, %d mails left"
+msgid "%d emails sent, %d emails failed, %d emails left"
 msgstr ""
 
 #: eme-mailer.php:1058
@@ -6869,12 +6869,12 @@ msgid "Completed"
 msgstr "已完成"
 
 #: eme-mailer.php:1654
-msgid "%d mails sent, %d mails failed"
+msgid "%d emails sent, %d emails failed"
 msgstr ""
 
 #: eme-mailer.php:1661
 #, fuzzy
-msgid "Retry failed mails"
+msgid "Retry failed emails"
 msgstr "只显示失败的电子邮件"
 
 #: eme-mailer.php:3225
@@ -7893,7 +7893,7 @@ msgid "HTML output"
 msgstr "HTML 输出"
 
 #: eme-members.php:2897
-msgid "Send mails to members upon changes being made?"
+msgid "Send emails to members upon changes being made?"
 msgstr "做出改变后向会员发送邮件？"
 
 #: eme-members.php:2903
@@ -8540,7 +8540,7 @@ msgid "This booking is on a waitinglist, payment is not possible."
 msgstr "此项预订在等待名单上，不可能付款。"
 
 #: eme-options.php:570
-msgid "You selected to not receive future mails. Are you sure about this?"
+msgid "You selected to not receive future emails. Are you sure about this?"
 msgstr "您选择不接收未来的邮件。您确定这样做吗？"
 
 #: eme-options.php:876
@@ -9158,7 +9158,7 @@ msgstr "为新的预订发送邮件？"
 
 #: eme-options.php:1630
 #, fuzzy
-msgid "Permission needed to send mails for own events and be able to access the mailing submenu. Default: %s."
+msgid "Permission needed to send emails for own events and be able to access the mailing submenu. Default: %s."
 msgstr "为自己的活动发送邮件所需的权限。默认值：%s"
 
 #: eme-options.php:1631
@@ -9167,12 +9167,12 @@ msgid "Send emails for any event"
 msgstr "向新会员发送邮件？"
 
 #: eme-options.php:1631
-msgid "Permission needed to send mails for any event. Default: %s"
+msgid "Permission needed to send emails for any event. Default: %s"
 msgstr "为任何活动发送邮件所需的权限。默认值：%s"
 
 #: eme-options.php:1632
 #, fuzzy
-msgid "Permission needed to send generic mails. Default: %s"
+msgid "Permission needed to send generic emails. Default: %s"
 msgstr "编辑表格字段所需的权限。默认值：%s"
 
 #: eme-options.php:1633
@@ -10088,7 +10088,7 @@ msgid "Enable pending RSVP emails?"
 msgstr ""
 
 #: eme-options.php:1936
-msgid "Check this option if you want to send mails for pending bookings."
+msgid "Check this option if you want to send emails for pending bookings."
 msgstr "如果您想为待订的预订发送邮件，请选中该选项。"
 
 #: eme-options.php:1937
@@ -10096,7 +10096,7 @@ msgid "Enable approved RSVP emails?"
 msgstr ""
 
 #: eme-options.php:1937
-msgid "Check this option if you want to send mails for approved bookings."
+msgid "Check this option if you want to send emails for approved bookings."
 msgstr "如果您想为已批准的预订发送邮件，请选中该选项。"
 
 #: eme-options.php:1938
@@ -10104,15 +10104,15 @@ msgid "Enable paid RSVP emails?"
 msgstr ""
 
 #: eme-options.php:1938
-msgid "Check this option if you want to send mails when a payment arrives via a payment gateway or when a booking is marked as paid."
+msgid "Check this option if you want to send emails when a payment arrives via a payment gateway or when a booking is marked as paid."
 msgstr "如果您想在付款通过支付网关到达时或预订被标记为已付款时发送邮件，请勾选该选项。"
 
 #: eme-options.php:1943
-msgid "Send HTML mails"
+msgid "Send HTML emails"
 msgstr "发送 HTML 邮件"
 
 #: eme-options.php:1943
-msgid "Check this option if you want to use html in the mails being sent."
+msgid "Check this option if you want to use html in the emails being sent."
 msgstr "如果您想在发送的邮件中使用 HTML，请选中该选项。"
 
 #: eme-options.php:1945
@@ -10120,7 +10120,7 @@ msgid "Use mail queuing?"
 msgstr "使用邮件排队？"
 
 #: eme-options.php:1945
-msgid "If activated, you can plan mails for sending at a later date and time."
+msgid "If activated, you can plan emails for sending at a later date and time."
 msgstr "如果激活，您可以计划在以后的日期和时间发送邮件。"
 
 #: eme-options.php:1945
@@ -10132,16 +10132,16 @@ msgid "Email queue settings"
 msgstr ""
 
 #: eme-options.php:1953
-msgid "Send out queued mails in batches of "
+msgid "Send out queued emails in batches of "
 msgstr "分批发送队列的邮件"
 
 #: eme-options.php:1976
 #: eme-options.php:1980
-msgid "Pause between mails"
+msgid "Pause between emails"
 msgstr "邮件之间的停顿"
 
 #: eme-options.php:1976
-msgid "Indicate how much time (in microseconds, one microsecond being one millionth of a second) to wait between queued mails being sent. By default this is 0, meaning EME sends mails in bursts based on your mail queue settings. This option can be used to send mails more slowly, but be aware to not cause PHP timeouts."
+msgid "Indicate how much time (in microseconds, one microsecond being one millionth of a second) to wait between queued emails being sent. By default this is 0, meaning EME sends emails in bursts based on your mail queue settings. This option can be used to send emails more slowly, but be aware to not cause PHP timeouts."
 msgstr "指明在列队的邮件发送之间要等待多少时间（以微秒为单位，一微秒为百万分之一秒）。默认情况下，这个选项为0，意味着 EME 根据您的邮件队列设置以爆发式发送邮件。这个选项可以用来更缓慢地发送邮件，但要注意不要导致 PHP 超时。"
 
 #: eme-options.php:1978
@@ -10164,7 +10164,7 @@ msgid "Read tracking"
 msgstr "阅读跟踪"
 
 #: eme-options.php:1982
-msgid "Add an image (1x1 transparant pixel) to html mails so you can track if people opened the mail or not (be aware that people can easily bypass this by disabling images in their mail client). As this might be a privacy issue, it is deactivated by default."
+msgid "Add an image (1x1 transparant pixel) to html emails so you can track if people opened the mail or not (be aware that people can easily bypass this by disabling images in their mail client). As this might be a privacy issue, it is deactivated by default."
 msgstr "在 html 邮件中添加一个图像（1x1 的透明像素），这样您就可以跟踪人们是否打开了邮件（注意人们可以通过在他们的邮件客户端中禁用图像而轻易地绕过这个问题）。由于这可能是一个隐私问题，它在默认情况下是停用的。"
 
 #: eme-options.php:1983
@@ -10196,7 +10196,7 @@ msgid "Default email sender name"
 msgstr "默认的电子邮件发件人名称"
 
 #: eme-options.php:1987
-msgid "The default name on emails when EME sends mails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP mails will be used (or the blog admin if empty)."
+msgid "The default name on emails when EME sends emails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP emails will be used (or the blog admin if empty)."
 msgstr ""
 
 #: eme-options.php:1988
@@ -10204,7 +10204,7 @@ msgid "Default email sender address"
 msgstr "默认的电子邮件发件人地址"
 
 #: eme-options.php:1988
-msgid "The default email address with which EME mails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP mails will be used (or the blog admin if empty). If you use Gmail to send mails, this must correspond with your Gmail account."
+msgid "The default email address with which EME emails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP emails will be used (or the blog admin if empty). If you use Gmail to send emails, this must correspond with your Gmail account."
 msgstr ""
 
 #: eme-options.php:1989
@@ -10212,7 +10212,7 @@ msgid "Force sender address everywhere"
 msgstr ""
 
 #: eme-options.php:1989
-msgid "Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP mails will be used for generic mails, while for event or membership related mails the configured contact person will be used (or the blog admin if empty)."
+msgid "Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP emails will be used for generic emails, while for event or membership related emails the configured contact person will be used (or the blog admin if empty)."
 msgstr ""
 
 #: eme-options.php:1990
@@ -10220,7 +10220,7 @@ msgid "Default email BCC"
 msgstr "默认电子邮件 BCC"
 
 #: eme-options.php:1990
-msgid "Insert an email address that will be added in Bcc to all outgoing mails (multiple addresses are to be separated by comma or semicolon). Can be left empty."
+msgid "Insert an email address that will be added in Bcc to all outgoing emails (multiple addresses are to be separated by comma or semicolon). Can be left empty."
 msgstr "插入一个电子邮件地址，它将被添加到所有外发邮件的密件中（多个地址要用逗号或分号隔开）。可以留空。"
 
 #: eme-options.php:1992
@@ -10296,7 +10296,7 @@ msgid "Verify SMTP certificates?"
 msgstr "验证 SMTP 证书？"
 
 #: eme-options.php:2021
-msgid "Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public mailservers this is not allowed."
+msgid "Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public emailservers this is not allowed."
 msgstr "如果您由于不匹配的证书而导致通过安全 SMTP 发送邮件的问题，请取消勾选该选项。因为这事实上违背了拥有证书的目的，所以不建议使用它，但有时在特定的主机供应商那里需要它。这只对私人 IP 范围有影响（如 127.0.0.1，localhost，...），对公共邮件服务器不允许这样做。"
 
 #: eme-options.php:2022
@@ -10325,7 +10325,7 @@ msgid "Full name format"
 msgstr "全名格式"
 
 #: eme-options.php:2045
-msgid "The format of the full name of a person, used when sending mails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is \"#_LASTNAME #_FIRSTNAME\"."
+msgid "The format of the full name of a person, used when sending emails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is \"#_LASTNAME #_FIRSTNAME\"."
 msgstr "一个人全名的格式，在向一个人发送邮件或显示全名时使用。只有 2 个占位符可以而且需要使用。#_FIRSTNAME 和 #_LASTNAME。默认值是 \"#_LASTNAME #_FIRSTNAME\"。"
 
 #: eme-options.php:2065
@@ -10711,11 +10711,11 @@ msgstr "自动删除在指定天数前已经结束的任务的报名。留空或
 
 #: eme-options.php:2500
 #: eme-options.php:2511
-msgid "Automatically archive old mailings and remove old mails"
+msgid "Automatically archive old mailings and remove old emails"
 msgstr "自动归档旧邮件并删除旧邮件"
 
 #: eme-options.php:2500
-msgid "Set the number of days after which mailings are automatically archived and old mails are removed. Leave empty or 0 for no automatic archiving or removal."
+msgid "Set the number of days after which mailings are automatically archived and old emails are removed. Leave empty or 0 for no automatic archiving or removal."
 msgstr "设置邮件自动归档和旧邮件被删除的天数。留空或 0 表示没有自动归档或删除。"
 
 #: eme-options.php:2501
@@ -12721,7 +12721,7 @@ msgid "Be aware: the overbooking option is set."
 msgstr "请注意：超额订票选项已被设定。"
 
 #: eme-rsvp.php:4791
-msgid "Send mails for new booking?"
+msgid "Send emails for new booking?"
 msgstr "为新的预订发送邮件？"
 
 #: eme-rsvp.php:4824
@@ -12729,7 +12729,7 @@ msgid "Edit booking"
 msgstr "编辑预订"
 
 #: eme-rsvp.php:4833
-msgid "Send mails for changed booking?"
+msgid "Send emails for changed booking?"
 msgstr "为已改变的预订而发送邮件？"
 
 #: eme-rsvp.php:4834
@@ -12896,11 +12896,11 @@ msgstr "重新发送已批准的预订邮件"
 
 #: eme-rsvp.php:5362
 #, fuzzy
-msgid "Send mails to contact person too?"
+msgid "Send emails to contact person too?"
 msgstr "默认联系人"
 
 #: eme-rsvp.php:5368
-msgid "Send mails to attendees upon changes being made?"
+msgid "Send emails to attendees upon changes being made?"
 msgstr "在进行修改时向出席者发送邮件？"
 
 #: eme-rsvp.php:5375
@@ -12976,7 +12976,7 @@ msgstr "删除选定的任务报名"
 
 #: eme-tasks.php:490
 #, fuzzy
-msgid "Send mails to people upon changes being made?"
+msgid "Send emails to people upon changes being made?"
 msgstr "做出改变后向会员发送邮件？"
 
 #: eme-tasks.php:511
@@ -14015,7 +14015,7 @@ msgid "Manage custom fields"
 msgstr ""
 
 #: eme-cron.php:404
-msgid "All queued mails will be send out without limit %s."
+msgid "All queued emails will be send out without limit %s."
 msgstr ""
 
 #: eme-cron.php:480
@@ -14039,11 +14039,11 @@ msgid "Select this option if you want an attendance record to be kept every time
 msgstr ""
 
 #: eme-options.php:1969
-msgid "If you plan to use the registered REST API call to send your queued mails, set the schedule to \"Not scheduled\"."
+msgid "If you plan to use the registered REST API call to send your queued emails, set the schedule to \"Not scheduled\"."
 msgstr ""
 
 #: eme-options.php:1971
-msgid "Set the batch count to 0 if you want all queued mails to be send out every time the queue is processed (not recommended)."
+msgid "Set the batch count to 0 if you want all queued emails to be send out every time the queue is processed (not recommended)."
 msgstr ""
 
 #: eme-cron.php:391
@@ -14113,7 +14113,7 @@ msgid "Extra approval settings (also check out the mail templates)"
 msgstr ""
 
 #: eme-mailer.php:3149
-msgid "Delete selected mails"
+msgid "Delete selected emails"
 msgstr ""
 
 #: eme-categories.php:88
@@ -14179,7 +14179,7 @@ msgid "Enter an optional search text"
 msgstr ""
 
 #: eme-mailer.php:3140
-msgid "Filter mails"
+msgid "Filter emails"
 msgstr ""
 
 #: eme-mailer.php:1560
@@ -14450,7 +14450,7 @@ msgstr ""
 
 #: eme-events.php:7818
 #: eme-options.php:2120
-msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 mails at the same time."
+msgid "When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time."
 msgstr ""
 
 #: eme-mailer.php:1048

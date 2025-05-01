@@ -23,7 +23,7 @@
 * Mollie API update
 * Avoid creating past events for recurrences
 * Make sure captcha settings can be deactivated per event/membership
-* Planned mailings will now no longer insert the individual mails but do that just before being sent
+* Planned mailings will now no longer insert the individual emails but do that just before being sent
 * Recurrences no longer need an end date, in which case the next 10 events will be planned (checked daily),
   while older events will be removed except the most recent one.
 * The number of spaces for a task can now be 0 too. If that's the case, the description of that task
@@ -47,7 +47,7 @@
 
 = 2.4.44 (2024/05/17) =
 * Make #_IS_USER_IN_GROUP also work for dynamic groups
-* Account for empty/forced from-email when inserting a mailing (the individual mails were ok, so it just caused a php warning)
+* Account for empty/forced from-email when inserting a mailing (the individual emails were ok, so it just caused a php warning)
 
 = 2.4.43 (2024/05/09) =
 * Correct direct adding of dynamic groups of people or members
@@ -69,8 +69,8 @@
 
 = 2.4.39 (2024/04/18) =
 * Show RSVP and task info overview in the event edit window too (in the sidebar), like in the events overview table
-* PDF templates can now be added to the paid/pending/booking made/approved mails (default and per event)
-* PDF templates can now be added to the paid/extended/new member mails (set per membership)
+* PDF templates can now be added to the paid/pending/booking made/approved emails (default and per event)
+* PDF templates can now be added to the paid/extended/new member emails (set per membership)
 * Update dompdf to 2.0.5
 
 = 2.4.38 (2024/04/01) =
@@ -290,7 +290,7 @@
 = 2.3.67 (2023/05/27) =
 * Always allow style, span and meta html-tags in formats
 * Remove confusing nl2br option for templates
-* Reuse mailing for event mails now fills out all mail options too
+* Reuse mailing for event emails now fills out all mail options too
 * Added action hook eme_delete_member_action (executed just before the member gets deleted). 1 param: $member (array)
 * Added action hook eme_status_change_action (executed after the member status changes). 2 parasm: $member_id and status
 * Action hook eme_ipn_member_action fires for members after payment arrives through a payment gateway (like eme_ipn_action for bookings)
@@ -353,7 +353,7 @@
   #_REMEMBERME can have an optional lable (#_REMEMBERME{xx}) otherwise "Remember me?" will be used as label
 * A comment can be added to task signups (generic comment, will be added to each signup). For this #_COMMENT can be used in the form and emails
 * Improvement: German language updates, thanks to Joerg Knoerchen
-* Allow to choose wether or not to send mails when approving/deleting task signups
+* Allow to choose wether or not to send emails when approving/deleting task signups
 * Fix: tasks for hidden events were not being rendered on public pages when specifying the event id
 
 = 2.3.56 (2023/03/01) =
@@ -434,7 +434,7 @@
 * Fix categories include/exclude in #_EVENTCATEGORIES placeholders (typo in php)
 
 = 2.3.41 (2023/01/15) =
-* Add an action to (retry to) resend all failed mails in a mailing
+* Add an action to (retry to) resend all failed emails in a mailing
 * Fix wrongfull captcha check if captcha was disabled for an event
 * Decrease use of globals as much as possible, "define" is more than enough (and available during plugin install, while globals are not)
  
@@ -476,7 +476,7 @@
 
 = 2.3.29 (2022/12/30) =
 * Update cron schedules to prefix them with "eme_".
-    After update, verify your EME Email setting "Send out queued mails in batches of" (if mail queuing is activated) and the Newsletter setting in the menu "Scheduled actions"
+    After update, verify your EME Email setting "Send out queued emails in batches of" (if mail queuing is activated) and the Newsletter setting in the menu "Scheduled actions"
     (the Newsletter setting will probably need to be set again)
 * Fix autocomplete people
 
@@ -574,7 +574,7 @@
 * Show uploaded files instead of the upload formfield when appropriate (and not a list of uploaded files at the top)
 
 = 2.3.1 (2022/10/08) =
-* For generic mails, the option to send to all people is no longer selected by default. This causes less mistakes
+* For generic emails, the option to send to all people is no longer selected by default. This causes less mistakes
 * Fix Stripe checkout for newer api keys
 * Fix discount import when discount groups are used as well
 * Update Stripe API to 9.6.0
@@ -590,7 +590,7 @@
 = 2.2.99 (2022/09/25) =
 * Also allow #_FAMILYCOUNT and #_FAMILYMEMBERS for people placeholders
 * Add multiprice_template_id to shortcode eme_add_multibooking_form (used as template in the list of events in a multibooking form if the event is multiprice and the value is not 0, the default is 0 in which caste template_id is used as usual). This allows mixing multiprice and regular price events in one multibooking form.
-* Fix sending event mails to groups 
+* Fix sending event emails to groups 
 
 = 2.2.98 (2022/09/16) =
 * Small fix for custom fields of type person and RSVP form
@@ -602,7 +602,7 @@
 * Add rsvp placeholder #_IS_USERPENDING
 * Allow members, member groups and membership selection for event related emails too
 * Take multibooking into account for bookings needing user confirmation
-* Add option "Pause between mails"
+* Add option "Pause between emails"
 * Fix placeholders #_TASKSTARTDATE and #_TASKENDDATE
 
 = 2.2.96 (2022/08/17) =
@@ -728,7 +728,7 @@
 * Added the possibility to filter on category in bookings overview
 * Added #_YOUNGPENDINGSEATS: gives the number of pending seats younger than 5 minutes for an event (those are counted as occupied too, even if pending seats are considered as free)
 * Added #_YOUNGPENDINGSEATS{xx} gives the number of pending seats younger than 5 minutes for the xx-th seat category for a multi-seat event
-* Include all member attachments in mails to the contact person
+* Include all member attachments in emails to the contact person
 
 = 2.2.75 (2022/05/06) =
 * Fix BCC mail sending
@@ -777,7 +777,7 @@
 
 = 2.2.71 (2022/04/09) =
 * Better plan cron (WP only takes 24 hours in a day, not taking summer/winter timezones into account)
-* Birthday mails needs to be sent for people indicated to do so, despite the default setting for new people
+* Birthday emails needs to be sent for people indicated to do so, despite the default setting for new people
 
 = 2.2.70 (2022/04/08) =
 * Update Stripe API to 7.121.0
@@ -826,7 +826,7 @@ Older changes can be found in changelog.txt
 * Update Braintree API to 6.6.0
 * Update Dompdf to 1.2.0
 * Added "on behalf of" part for cli_mail forwarding
-* Add all sent mails to the database, even if no queueing is active
+* Add all sent emails to the database, even if no queueing is active
 * Support "scope" as a parameter for the shortcode eme_mybookings. Default value "future" (other options: "past" or "all"). The old "future" parameter will override the scope parameter if set
 
 = 2.2.64 (2022/02/19) =
@@ -858,7 +858,7 @@ Older changes can be found in changelog.txt
 * For subscribe/unsubscribe: #_MAILGROUPS shows by default a list of all public groups, now you can limit that list by using #_MAILGROUPS{xx} with xx a comma-separated list of group ids
 * Obfuscate all emails of people (not just contact/author but also bookers or members) if shown on the site
 * Defined action eme_trash_person_action
-* Added code to prevent mail obfuscation in html mails
+* Added code to prevent mail obfuscation in html emails
 
 = 2.2.58 (2022/02/10) =
 * Attendance check returned empty for qrcode scan if a booking was not paid and the user doing the scan was logged in
@@ -1060,7 +1060,7 @@ Older changes can be found in changelog.txt
 * Fix subscribe/unsubscribe mail forms
 
 = 2.2.25 (2021/10/01) =
-* Fix sending of booking mails (due to the quick release of the security issue, I didn't get around to testing that too well, so made a typo)
+* Fix sending of booking emails (due to the quick release of the security issue, I didn't get around to testing that too well, so made a typo)
 
 = 2.2.24 (2021/10/01) =
 * More nl2br tuning: don't add a br-tag if the next line starts with a html closing tag
@@ -1113,7 +1113,7 @@ Older changes can be found in changelog.txt
   If a logged-in user wants to subscribe, the info is readonly in the form and taken from the wp profile
 * Fix edit window for states/countries upon saving when also the option to "Stay on edit page after save" was set
 * Fix slug-duplication check/warning in EME options
-* Fix booking mails for pending bookings on waiting list
+* Fix booking emails for pending bookings on waiting list
 * Only add person to group for a membership (if configured to do so) if the member actually paid
 * Added the option to automatically take a booking from the waiting list when seats become available for an event
 * Added aria-label for input selects/dropdowns
@@ -1124,7 +1124,7 @@ Older changes can be found in changelog.txt
 * Fix CSV export of bookings with people custom fields
 * Fix discount and limits for groups/members
 * When a person subscribes to "all" groups, add them to every group designated as "mail only"
-* Be more strict in length of subject when sending mails (wordpress doesn't catch db length issues, so it seems to be an error but one can't trace it back)
+* Be more strict in length of subject when sending emails (wordpress doesn't catch db length issues, so it seems to be an error but one can't trace it back)
 
 = 2.2.15 (2021/08/11) =
 * Fix some placeholder matching that accidentally got too strict
@@ -1209,7 +1209,7 @@ Older changes can be found in changelog.txt
 * Fix filtering for multiple custom fields (using shortcode eme_filterform) of type "event"
 * Show linked WP user correctly when editing a person
 * Membership evaluation was not working due to added code for discounts, corrected now
-* Add attachments to preview mails too if present
+* Add attachments to preview emails too if present
 
 = 2.2.5 (2021/06/29) =
 * Add membership discounts
@@ -1255,7 +1255,7 @@ Older changes can be found in changelog.txt
 * Added generic placeholder #_WPID to return the wp id, this can then be used in included eme_events shortcodes (if e.g. you want to filter on contact id based on current logged in user)
   Also added the person placeholder #_PERSONWPID, to optionally return the wp id of the person you're looking at via [eme_people], so you could then show a list of events where that person is contact for (as an example)
 * Fix ++YYY-MM-DD scope so it really searches for days greater than, not starting from the beginning of the mentioned day
-* Fix sending event related mails (bug introduced in 2.1.117)
+* Fix sending event related emails (bug introduced in 2.1.117)
 * Fix #_FIELD{xx} for files for rsvp/people/member answers (was new in 2.2.0 but not working as expected)
 * Make sure events show on the last day too in the calendar if the end time was smaller than the start time (was a new bug in 2.2.0 due to switching over from separate date/time columns to 1)
 
@@ -1313,7 +1313,7 @@ Older changes can be found in changelog.txt
 * Added placeholder #_DATETIMEDIFF_START_END{xx}, to indicate the date/time diffeence between start and end, with xx being a php date interval format (see https://www.php.net/manual/en/dateinterval.format.php )
 * if the booking is paid for after entering a partial payment and the event is not set to automatic approve, send out the paid mail
 * Fix unsub from email groups if the name of a person in EME is not empty
-* Fix #_INVITEURL{xx} in rsvp mails when you want to invite the booker for another event
+* Fix #_INVITEURL{xx} in rsvp emails when you want to invite the booker for another event
 * The attendance qrcode for events is now scannable also when not logged in, people then just see if it is paid for or not (like the qrcode for members in fact)
 
 = 2.1.118 (2021/04/21) =
@@ -1322,7 +1322,7 @@ Older changes can be found in changelog.txt
 
 = 2.1.117 (2021/04/17) =
 * Fix new mail actions from bookings and members admin menu
-* Don't queue mails with empty subject and body, they don't get sent anyway
+* Don't queue emails with empty subject and body, they don't get sent anyway
 * For invite-only events, the RSVP form now also takes the lastname/firstname from the invite url if present (and then it can't be modified in the rsvp form)
 * Fix delete of custom formfields
 * Treat a string consisting of only whitespaces as an empty string where appropriate in the admin setting for events and mail templates (and so take the default value if needed)
@@ -1332,7 +1332,7 @@ Older changes can be found in changelog.txt
 * Copy the event custom field answers too when copying an event
 
 = 2.1.116 (2021/03/29) =
-* New mail actions from bookings and members admin menu (to be able to send bookings/members related mails directly from there using templates)
+* New mail actions from bookings and members admin menu (to be able to send bookings/members related emails directly from there using templates)
 * Added Stripe refund
 * Fix a newly introduced db setup issue in 2.1.115 that would empty the title column in templates and type in formfields if you skipped some EME versions and needed a db update
 
@@ -1394,7 +1394,7 @@ Older changes can be found in changelog.txt
 * Fix mail tracking (it was not being stored in the db due to the new option)
 * Add database index to random_id in the mail queue table, to be more efficient for searching
 * Correct multivalue event field filtering in the filter form
-* Implement first/last read datetime for mails (and not just the first read datetime)
+* Implement first/last read datetime for emails (and not just the first read datetime)
 * Added event scopes this_year--yesterday and YYYY-MM-DD--yesterday to show past events
 * Align some event payment options with newer code (removes 6 columns in the database for events: 'use_paypal','use_2co','use_webmoney','use_fdgg','use_mollie' and 'use_sagepay')
 * Ajaxify subscribe/unsubscribe/gdpr/gdpr approval forms
@@ -1407,12 +1407,12 @@ Older changes can be found in changelog.txt
 
 = 2.1.104 (2021/01/14) =
 * Remove the "always queue" option, now this is default when mail queueing is activated.
-* Store the person id or member id for rsvp or member mails, so you can reschedule properly if wanted
-* Allow the reschedule action on all queued mails
+* Store the person id or member id for rsvp or member emails, so you can reschedule properly if wanted
+* Allow the reschedule action on all queued emails
 * Add an option so you need to explicitly activate mail read tracking
 * Fix for: if the option to create a WP user upon registering is checked, we check if the email is not already taken in WP before accepting the booking if the booker is not logged in
 * WP id is stored with the EME person, so no need to store it again per booking.
-* Show all future events when trying to send event-related mails, not just the rsvp-enabled ones
+* Show all future events when trying to send event-related emails, not just the rsvp-enabled ones
 * The placeholders #_MEMBERNEXTENDDATE and #_MEMBERENDDATE also take expired into account now
 * Update Stripe API to 7.67.0
 * Editing people resulted in a copy of the person with the changes if lastname/firstname/email was changed
@@ -1420,7 +1420,7 @@ Older changes can be found in changelog.txt
 = 2.1.103 (2021/01/07) =
 * Allow custom seo prefix for categories and locations as well
 * Correctly show relevant uploaded files in rsvp overview
-* Allow "0" for membership reminder mails too, and don't send expiration reminderds for pending members
+* Allow "0" for membership reminder emails too, and don't send expiration reminderds for pending members
 * Make #ESC_TOTALSPACES return 0 for events with no space limit
 
 = 2.1.102 (2020/12/30) =
@@ -1592,7 +1592,7 @@ MEMBER_STATUS_EXPIRED => EME_MEMBER_STATUS_EXPIRED
 * The placeholders #_ADDBOOKINGFORM_IF_USER_HAS_CAP, #_ADDBOOKINGFORM_IF_USER_HAS_ROLE, #_ADDBOOKINGFORM_IF_USER_IN_GROUP and #_ADDBOOKINGFORM_IF_USER_IS_MEMBER_OF now allow multiple arguments (separated by ",") so you can e.g. show the form to only users that are in one of the mentioned EME groups, with certain rols, or if member of one of the mentioned memberships
 * Added an option so you can set the text when WP membership (login) is required for a membership
 * Added a new bulk action in the members admin interface so you can resend the mail for paid memberships
-* Improve the logic to send paid mails (if total price=0 due to a discount, it will be sent too)
+* Improve the logic to send paid emails (if total price=0 due to a discount, it will be sent too)
 * Added an option to disable browser caching of pages (and I recommend activating it ...)
 * Added attendance count to CSV export report for bookings
 * Added eme_if condition 'notincsv', so for ex. you can compare if a certain value is not in a CSV list (like groups/categories) and based on that show/hide stuff. Also added this as a test condition for dynamic data.
@@ -1647,7 +1647,7 @@ MEMBER_STATUS_EXPIRED => EME_MEMBER_STATUS_EXPIRED
 = 2.1.69 (2020/03/13) =
 * Implement drip content
 * Update dompdf to 0.8.5
-* Fix some url escaping when sending mails
+* Fix some url escaping when sending emails
 * Extra generic placeholder #_INCLUDE_TEMPLATE, so you can include a generic template where you want
 * Template include placeholder (#_INCLUDE) has been renamed to #_INCLUDE_TEMPLATE too
 
@@ -1863,7 +1863,7 @@ MEMBER_STATUS_EXPIRED => EME_MEMBER_STATUS_EXPIRED
 * Added a "Manage recurrences" section next to "Manage events", to more easily have an overview of just recurrences
 * Added access controls for people and members (list/author/edit).
   The list access control is new and for those already limiting access specifically for people or members, this value needs to be checked.
-* Allow attachments for approved,pending and paid mails per event too
+* Allow attachments for approved,pending and paid emails per event too
 
 = 2.1.40 (2019/09/30) =
 * Implemented trash/restore for events
@@ -1911,11 +1911,11 @@ Older changes can be found in changelog.txt
 * The payment options tab is now an collapsed list op options per gateway, sos you can go faster to the gateway of choice
 
 = 2.1.32 (2019/08/03) =
-* Mailing fixes (updated template was used for approval mails, which was wrong, and also the denied and pending mails were not sent)
+* Mailing fixes (updated template was used for approval emails, which was wrong, and also the denied and pending emails were not sent)
 
 = 2.1.31 (2019/07/31) =
 * Small html fixes in the events editing pane
-* Some mails were not being sent (IPN and mail to contact person upon payment)
+* Some emails were not being sent (IPN and mail to contact person upon payment)
 
 = 2.1.30 (2019/07/29) =
 * small bugfix for people placeholders replacement
@@ -1997,7 +1997,7 @@ Older changes can be found in changelog.txt
 * Mollie notification can arrive later than the return page shown, resulting in an wrong message shown of the payment not being paid
   Now we store the mollie payment id generated with the EME payment, so we can check in the return page the result too
 * Image url in the db was stored as relative url. Although the image id takes precedence, it is cleaner to store the url as is too.
-  Also the image placeholders (for events, people) now have a full url (so they work correctly in mails too)
+  Also the image placeholders (for events, people) now have a full url (so they work correctly in emails too)
 * Add a parseFloat conversion in the javascript for single map locations, to make sure javascript recognizes the coordinates as floating point and not text
 * In the location map, the popup was not sized correctly if an image was included, due to the image size not being known yet. JS code has been added to rectify that.
 * Update to new v2-API for PayPal payments (v1 is in the process of being deprecated by PayPal)
@@ -2024,11 +2024,11 @@ Older changes can be found in changelog.txt
 
 = 2.1.14 (2019/04/16) =
 * If the booking price is 0 and there's no approval required, the optional PDF will be included in the mail sent at booking time
-* #_ATTENDANCE_QRCODE can now also be used in regular mails, not only in a PDF template
+* #_ATTENDANCE_QRCODE can now also be used in regular emails, not only in a PDF template
 * #_PERSONAL_FILES is now a people placeholder too
 * For people, #_ID is deprecated in favor of #_PERSONID, and all people placeholders can be preceded with #_PERSON (so #_PERSONID, #_PERSONLASTNAME, etc ...)
 * For bookings and attendees: the person-related placeholders should now start with #_PERSONxxx (and not with #_RESP or #_ATTEND anymore for the placeholders that hold person info)
-* #_INVITEURL and #_INVITEURL{xx} can now be used in mails towards people (in case the mail is event-related #_INVITEURL will take the event id of the related event,
+* #_INVITEURL and #_INVITEURL{xx} can now be used in emails towards people (in case the mail is event-related #_INVITEURL will take the event id of the related event,
   otherwise #_INVITEURL{xx} should be used with 'xx' being the id or name of the event)
   These 2 can send out an invite url to people concerning an event. In case the event is then marked as invite-only, only the people that received such a mail can rsvp once.
 * Added a new event placeholder #_IS_INVITE_ONLY (can be used in a eme_if-condition to show some other content if the event is invitation-only)
@@ -2042,7 +2042,7 @@ Older changes can be found in changelog.txt
 * Fix using show_recurrent_events_once and limit together
 * Beter default contact person detection
 * Ignore people in trash status in more functions, avoids problems when someone subscribes to an email group and the same person/email is already in the trash
-* Make adding attachments work also when html mails are not activated
+* Make adding attachments work also when html emails are not activated
 * CSS change: the calendar header showing the month name (when using the table layout) is now also using thead+th and not thead+td
 
 = 2.1.11 (2019/03/16) =
@@ -2060,7 +2060,7 @@ Older changes can be found in changelog.txt
 = 2.1.9 (2019/03/02) =
 * Fix editing a multiprice booking when the total amount of seats is 0 (meaning unlimited)
 * Allow sending a mail when adding a new member via the admin backend
-* Fix #_FIELDS in rsvp mails
+* Fix #_FIELDS in rsvp emails
 * Small sql fixes to be able to sort (as expected) on custom fields in people/members admin screen
 
 = 2.1.8 (2019/02/22) =
@@ -2092,7 +2092,7 @@ Older changes can be found in changelog.txt
 = 2.1.4 (2019/02/05) =
 * Add a new option in the RSVP settings for an event so you can decide in which mail the optional PDF attachment should be included: the approval or payment mail
 * Placeholders #_ADDBOOKINGFORM_IF_USER_IN_GROUP{xx}, #_ADDBOOKINGFORM_IF_USER_IS_MEMBER_OF{xx}, #_IS_USER_IN_GROUP{xx} and #_IS_USER_MEMBER_OF{xx} can now also take the id of the group or membership as parameter (and not just the name anymore)
-* Send membership reminder mails also in grace period
+* Send membership reminder emails also in grace period
 * Some more sanitizing, we don't even trust admins ...
 * Unslash where needed
 * RSVP cancel cutoff time was ignored
@@ -2108,7 +2108,7 @@ Older changes can be found in changelog.txt
   You need to create a Paypal "app" and enter the newly obtained client ID and secret in the EME payment options.
   See [this page](https://developer.paypal.com/docs/integration/admin/manage-apps/#overview) for more info and guidelines.
 * Add custom fields for membership definitions too (like for events and locations)
-* Disabling certificates for sending mail is now only possible for private ip's, not for public mailservers anymore
+* Disabling certificates for sending mail is now only possible for private ip's, not for public emailservers anymore
 
 = 2.1.1 (2019/01/27) =
 * Fix dynamic-table html generation (closing ">" was missing for "table", most browsers fix this automatically, but is not nice)
@@ -2123,9 +2123,9 @@ Older changes can be found in changelog.txt
 * Make the permalink for calendar days a little more strict, so events starting with yyyy-mm-dd-* don't match and correctly go to the event
 * "Extra event html headers" and "Extra location html headers" now allow javascript too
 * Add an action in the People admin window to verify the integrity between WP users and EME people (a WP user should be linked to at most 1 EME person)
-* Add a mailing option to ignore the massmail setting if wanted (explanation added in-screen) for both event and generic mails
+* Add a mailing option to ignore the massmail setting if wanted (explanation added in-screen) for both event and generic emails
 * Early-bird discount is possible by just leaving the coupon code empty for the discount and if you define an expiration date
-* Fix mail logic for rsvp mails (some combinations of EME settings did not send out mails as would be expected)
+* Fix mail logic for rsvp emails (some combinations of EME settings did not send out emails as would be expected)
 * Avoid loading the Mollie API if it is already loaded by another plugin
 * Update Mollie API to 2.5.0
 * RSVP full message can now also be changed in the backend
@@ -2376,7 +2376,7 @@ Older changes can be found in changelog.txt
 
 = 2.0.48 (2018/09/03) =
 * Show reason of failed mail in the mailing report
-* When mailing is finished with failed mails, let the mailing contact person know
+* When mailing is finished with failed emails, let the mailing contact person know
 * Fix mail error message after rsvp
 * Fix massmail popup dialog
 
@@ -2428,7 +2428,7 @@ Older changes can be found in changelog.txt
 
 = 2.0.40 (2018/08/17) =
 * Re-added the default setting for massmail for new persons
-* Option added to show a popup if a person selects 'No' for #_OPT_IN or #_OPT_OUT. This allows to ask the person if they are sure that they don't want to receive mails
+* Option added to show a popup if a person selects 'No' for #_OPT_IN or #_OPT_OUT. This allows to ask the person if they are sure that they don't want to receive emails
 * GDPR removal of a person keeps the person id, but removes all user info in it. This allows booking counts for events to stay correct.
 * In the events overview you can now filter on start or end date, or both (in which case it is a range for events starting on or later than the first selected date and ending on or before the second selected date)
 * The subscribe form shortcode eme_subform now takes 1 argument: template_id. This template can use the following placeholders: #_EMAIL, #_MAILGROUPS, #_GDPR (or #_GDPR{xxx}), and #_SUBMIT (or #_SUBMIT{xx})
@@ -2500,8 +2500,8 @@ Older changes can be found in changelog.txt
 
 = 2.0.30 (2018/05/04) =
 * Don't store the IP when creating a booking, this is unneeded info to keep and might be a problem for GDPR compliancy
-* Fix sending custom event mails to specific wordpress users/groups
-* Allow sending a preview mail for event mails
+* Fix sending custom event emails to specific wordpress users/groups
+* Allow sending a preview mail for event emails
 * Add payment gateway and transaction ID info to booking/member payment info
 * Improve FirstData payments (other currencies except USD accepted now)
 * Add filter eme_add_currency_codes to be able to define the 4217 numeric code for own currencies (next to eme_add_currencies filter)
@@ -2526,7 +2526,7 @@ Older changes can be found in changelog.txt
 * Add an option to exclude registered people from event mailings
 * Added creation_date and modif_date columns to virtual every eme table (and removed the unused *_gmt columns)
 * Review #_EVENTFIELD{xx}, #_LOCATIONFIELD{xx}, #_PERSONFIELD{xx}, #_BOOKINGFIELD{xx} and #_ATTENDFIELD{xx} with 'xx' being the name of a field for events, locations, persons, bookings or attendees. With the newly (or existing) columns for creation/modif you can use these placeholders for creation/modif timings
-* Allow all mails to be queued (new option in EME settings)
+* Allow all emails to be queued (new option in EME settings)
 
 = 2.0.26 (2018/03/27) =
 * Database table definition fixes for new installations
@@ -2565,7 +2565,7 @@ Older changes can be found in changelog.txt
 
 = 2.0.21 (2018/03/01) =
 * Bugfix: fix country/state required validation in the rsvp form
-* Bugfix: if mail queuing was not activated, custom mails for events were not possible
+* Bugfix: if mail queuing was not activated, custom emails for events were not possible
 * Fix num-3 validation
 
 = 2.0.20 (2018/02/28) =
@@ -2596,14 +2596,14 @@ Older changes can be found in changelog.txt
 * Added the possibility to store the filter for people or member lists as a dynamic group, so you can send mail to that group
 * Make #_CAPTCHAHTML\{...} obey newlines
 * More mailing options (archiving + better cleanup done)
-* Allow sending of mails to specific EME people and groups for event mails
+* Allow sending of emails to specific EME people and groups for event emails
 * More search-functionality in people/member admin screens
 * Show the applied discount i(group) names in the rsvp csv and printable report, and when editing a booking
 * Add rsvp placeholder #_APPLIEDDISCOUNTNAMES, returns a csv-list of applied discount names for a booking
-* Fix planning of generic mails again
+* Fix planning of generic emails again
 
 = 2.0.17 (2018/01/08) =
-* Allow planning of event mails too
+* Allow planning of event emails too
 * Some more mailing stats
 * Extra RSVP setting per event to optionally require an unique person or email registration
 * Add option to check lastname/firstname without_accents when required (for unique registrations or the cancel form)
@@ -2620,11 +2620,11 @@ Older changes can be found in changelog.txt
 
 = 2.0.15 (2017/12/30) =
 * Use even less sessions (no sessions in admin backend needed at all for eme)
-* Track queued mails (count the times a mailing is read and when someone read the mail)
+* Track queued emails (count the times a mailing is read and when someone read the mail)
 * Allow include/exclude in #_EVENTCATEGORYDESCRIPTIONS too, and allow html in the cat description
 * Allow multiple category ids in the eme_add_multibooking_form shortcode
 * When deleting locations, you can now select to transfer associated events to another location
-* Bugfix for sending mails to "all" for events (and in cron)
+* Bugfix for sending emails to "all" for events (and in cron)
 * Added filters eme_event_categories_sep_filter, eme_event_categorydescriptions_sep_filter, eme_linked_event_categories_sep_filter
   Also added options for these (in the 'Other' section), so the filters shouldn't be needed
   These control the separator for #_EVENTCATEGORIES (default: ", "), #_EVENTCATEGORYDESCRIPTIONS (default: ", ") and #_LINKEDEVENTCATEGORIES (default: ", ")
@@ -2706,8 +2706,8 @@ Older changes can be found in changelog.txt
 = 2.0.4 (2017/11/10) =
 * Add #_FIELDCOUNTER and #_FIELDGROUPINDEX for dynamic field formfields, so you can indicate the number used
 * Small bugfix to make "Show all bookings" link work as expected again
-* The mailing report showed all mails sent, not the one from the selected mailing
-* Allow individual mails from the report to be reused
+* The mailing report showed all emails sent, not the one from the selected mailing
+* Allow individual emails from the report to be reused
 * Allow people to have a picture
 * Add shortcode [eme_people] with option group_id (to show a specific group) and template_id (for the formatting)
   All people placeholders can be used in the format
@@ -2736,10 +2736,10 @@ Older changes can be found in changelog.txt
 Because of new membership functionality, this is a major update.
 * INCOMPATIBILITY: Dynamic field conditions are now much more flexible, but not backwards compatible!
 * "Add event" submenu is now part of "Events"
-* Allow mails to be sent concerning multiple events
+* Allow emails to be sent concerning multiple events
 * Revamp the send-mails, holidays, categories, templates and formfields screens
 * Form fields with multiple choice can now have different values in the backend as in the frontend
-* Groups added, and the possibility to send mails to groups
+* Groups added, and the possibility to send emails to groups
 * Mailings can now be planned, making EME into a very nice mailing system
 * Custom fields are now possible for people (even with the possibility to conditionally show them for a specific group), and FIELDVALUE can be used in people placeholders now
 * Add custom formfield type Date (JS) ==> to show a datefield via jquery
@@ -2783,7 +2783,7 @@ Because of new membership functionality, this is a major update.
 * Add an option to send a "registration paid" mail when a payment arrives via a payment gateway or you mark a registration as paid
 * Make 2Checkout actually work ...
 * Currency South African Rand (ZAR) added
-* Add an option to force nl2br conversion for HTML mails, to work around some WP editor weirdness
+* Add an option to force nl2br conversion for HTML emails, to work around some WP editor weirdness
 * Removed columns modif_date(_gmt) for bookings and locations (and the placeholders #_BOOKING_MODIF*), this greatly simplifies the code ...
 * Added placeholders #_BOOKINGPAYMENTDATE and #_BOOKINGPAYMENTTIME so you can use these in payment-mails
 * Fix EME phone wordpress profile field
@@ -2798,7 +2798,7 @@ Because of new membership functionality, this is a major update.
 * #_PAYMENT_URL now contains a random id, a bit safer, the older url will be deprecated after some releases
 * The newsletter will now be sent only to unique emails, no more doubles ...
 * You can now ask for more info based on number of booked seats. See the RSVP section when creating a new event and use #_DYNAMICDATA to show the extra form info wanted in your RSVP form
-* You can also use the placeholder #_DYNAMICDATA to show the entered dynamic data in mails or booking info
+* You can also use the placeholder #_DYNAMICDATA to show the entered dynamic data in emails or booking info
 * The dynamic added fields can also influence the price
 * The rsvp placeholder #_FIELDVALUE will show the value as a price if the formfield indicated an extra charge
 * Bookings on a waitinglist can't be paid for or get auto-approved. This wasn't the case but extra checks have been put in place.
@@ -2810,14 +2810,14 @@ Because of new membership functionality, this is a major update.
 * Bugfix for weekly selector in recurring events
 * Bugfix for dynamic price update when filling out a discount input field
 * Bugfix for event scope 0000-MM
-* Fixes for not sending pending mails
+* Fixes for not sending pending emails
 
 = 1.9.2 (2017/08/11) =
-* Sending of generic mails and newsletter now uses the mail from name/address as indicated in the Mail settings tab
+* Sending of generic emails and newsletter now uses the mail from name/address as indicated in the Mail settings tab
   (and as backup the default contact person for events)
-* You can now send a preview mail to an existing person when sending generic mails
+* You can now send a preview mail to an existing person when sending generic emails
 * To make sure no accidental mail to everyone is done, you're now asked to confirm
-* Fix to be able to send HTML mails when sending a generic mail to everyone
+* Fix to be able to send HTML emails when sending a generic mail to everyone
 * Tip: you can clear all messages in the mail queue in the Cleanup section
 
 = 1.9.1 (2017/08/10) =
@@ -2827,11 +2827,11 @@ Because of new membership functionality, this is a major update.
 * CSS fix
 
 = 1.9.0 (2017/08/03) =
-* Add an option to queue mails and send them in the background
-* Allow mails to be sent to all people that ever registered in EME (don't forget to use queueing)
-* Added a placeholder #_UNSUB_URL for attendee mails, new newsletter feature and new "generic mail sending" feature if you decide to send mails to all people that ever registered
+* Add an option to queue emails and send them in the background
+* Allow emails to be sent to all people that ever registered in EME (don't forget to use queueing)
+* Added a placeholder #_UNSUB_URL for attendee emails, new newsletter feature and new "generic mail sending" feature if you decide to send emails to all people that ever registered
 * Added a placeholder #_UNSUB_CONFIRM_URL, to be used in the new mail option "Unsubscribe email body"
-* Add the possibility to import people into the database, can be used together with the queue mail functionality to send mails for new events ...
+* Add the possibility to import people into the database, can be used together with the queue mail functionality to send emails for new events ...
 * You can now plan a newsletter to send automatically for upcoming events, or send a mail to all EME people
 * The date of the last automatic reminder sent for a booking can now be shown in the pending booking overview
 * Attendance can be for multi-price events too
@@ -2839,8 +2839,8 @@ Because of new membership functionality, this is a major update.
 * Sometimes sending of mail was attempted even if not wanted
 
 = 1.8.9 (2017/06/15) =
-* Make sure mails are send out also when canceling a registration from the frontend if the event doesn't require approval
-* Make sure mails are send out also when updating/denying a registration from the backend if the event doesn't require approval
+* Make sure emails are send out also when canceling a registration from the frontend if the event doesn't require approval
+* Make sure emails are send out also when updating/denying a registration from the backend if the event doesn't require approval
 * Make google maps work again with 'javascript in the header' setting
 
 = 1.8.8 (2017/06/13) =
@@ -2862,7 +2862,7 @@ Because of new membership functionality, this is a major update.
   An option is created to deactivate this behavior if you don't like it.
   *** It might be needed to change your templates accordingly to not show multiple times the same currency symbol ***
 * Add #_CURRENCYSYMBOL as placeholder to show the symbol if you need it specifically. This option only works if the php class NumberFormatter is present, which is the case in all newer php versions.
-* If possible, show the currency symbol in booking table, csv and printable outputs and for mails (when using price-related placeholders). Again, see above: this option can be deactivated.
+* If possible, show the currency symbol in booking table, csv and printable outputs and for emails (when using price-related placeholders). Again, see above: this option can be deactivated.
 * The placeholder #_RECURRENCE_DESC now returns a list of comma-separated days in the frontend
 
 = 1.8.4 (2017/05/27) =
@@ -2870,7 +2870,7 @@ Because of new membership functionality, this is a major update.
 
 = 1.8.3 (2017/05/27) =
 * Allow automatic reminders to be sent (in the cleanup section)
-* More control over sending mails when changing registrations
+* More control over sending emails when changing registrations
 * Allow resending pending or approved mail for selected bookings in the rsvp admin screens
 * Revamp the edit-event screen
 * Removed the fb-sync here, there's a separate plugin that does that better
@@ -2880,7 +2880,7 @@ Because of new membership functionality, this is a major update.
 
 = 1.8.1 (2017/05/14) =
 * Added placeholders #_AVAILABLEWAITINGLISTSEATS and #_WAITING_LIST_CLOSED, and make #_WAITING_LIST_ACTIVE actually work too
-* Correct template sorting selection when sending mails
+* Correct template sorting selection when sending emails
 * Add a setting to ignore certificate problems for secure SMTP (some hosting providers need this ...)
 * Remove a redundant end-div tag in the cancel form if the event has already passed
 
@@ -2890,7 +2890,7 @@ Because of new membership functionality, this is a major update.
 * Stripe payments were twice multiplied by 100, this is fixed now, together with other stripe fixes
 * Make sure the example locations are created correctly for new installations
 * Improvement: the 'No events' message now also has a span and not a div surrounding it, with id 'events-no-events'. Reason: div could interfere with the surrounding layout (if inside a p-tag for example)
-* Waiting list feature implemented, together with some extra placeholders for events (#_WAITING_LIST_ACTIVATED and #_WAITINGLISTSEATS) and for the RSVP mails (#_ON_WAITINGLIST), see the doc
+* Waiting list feature implemented, together with some extra placeholders for events (#_WAITING_LIST_ACTIVATED and #_WAITINGLISTSEATS) and for the RSVP emails (#_ON_WAITINGLIST), see the doc
 * Now one can indicate that RSVP formfields can influence the total price, this allows you to create for example "donation fields"
   or allow people to pay for extra attributes ordered (t-shirt, drinking tickets, ...)
 
@@ -2899,8 +2899,8 @@ Because of new membership functionality, this is a major update.
 * Make the field_name available in eme_get_answers again, easier for discount codes (so people don't need to change their code)
 
 = 1.7.17 (2017/03/27) =
-* In mails, add newlines carefully, to not disrupt possible html layout
-* Custom field values were empty in the mails
+* In emails, add newlines carefully, to not disrupt possible html layout
+* Custom field values were empty in the emails
 
 = 1.7.16 (2017/03/26) =
 * BUGFIX BUGFIX BUGFIX!!!
@@ -2926,7 +2926,7 @@ You can check if you're impacted by looking at your wp_eme_answers table in mysq
 * Even more rigurous javascript/html removal from rsvp form input. I already removed all html-tags, but sometimes it might not be enough (no XSS known here, but one never knows)
 * Better error message if a new recurrence contains no events
 * Allow to put a registration back in pending state
-* Bugfix: when sending mails concerning unpaid bookings, all bookings were mailed (not just the unpaid ones) 
+* Bugfix: when sending emails concerning unpaid bookings, all bookings were mailed (not just the unpaid ones) 
 * Bugfix: location dropdown select was not showing the map anymore
 * Workaround: wordpress allows wrongly encoded chars to pass in their db-functions, so I'm cleaning these out now (useful for e.g. facebook syncs, that also can pass wrongly encoded chars)
 * Renamed the admin page events-manager to eme-manager
@@ -2976,7 +2976,7 @@ You can check if you're impacted by looking at your wp_eme_answers table in mysq
 = 1.7.10 (2016/12/16) =
 * Fixed #_LOCATIONIMAGETHUMBURL
 * Added #_LOCATIONIMAGETHUMBURL{MyCustomSize}
-* Split out mail templates in separate section, so we can easily take the option to send html mails into account and disable the
+* Split out mail templates in separate section, so we can easily take the option to send html emails into account and disable the
   html editor if not needed
 * Fixed some location issues
 
@@ -3002,7 +3002,7 @@ You can check if you're impacted by looking at your wp_eme_answers table in mysq
 * Bugfix: show the no-longer-allowed-to-book message again if the end-date has passed (not for multi-booking)
 * Bugfix: allow 0-seats for attendance-like events again
 * Bugfix: the extra attributes field for formfields was not showing the correct value when editing the formfield
-* Add the possibility to send a test email via the "Send Mails" page
+* Add the possibility to send a test email via the "Send emails" page
 * Bugfix: the smtp port setting was not correctly taken into account (always resulting in port 25 being used)
 
 = 1.7.5 (2016/09/14) =
@@ -3029,7 +3029,7 @@ You can check if you're impacted by looking at your wp_eme_answers table in mysq
 = 1.7.0 (2016/09/06) =
 * Paging events for the last day of the month failed if the next month has fewer days. E.g. if you're
   on August 31 and tried to go to the next month via event paging, it would give you October because Sept 31 doesn't exist
-* Added the possibility to send mails after payment notification from payment gateway was received. You just need to set what you want in the regular mail settings page of EME.
+* Added the possibility to send emails after payment notification from payment gateway was received. You just need to set what you want in the regular mail settings page of EME.
 * Added shortcode [eme_holidays], with 1 parameter: the id of the holidays list. Will return a simple html list of your holidays list
 * The event listing in the backend is now ajax based, this will result in much better performance if you have many events
 * Bugfix: typo: payed => paid
@@ -3058,9 +3058,9 @@ You can check if you're impacted by looking at your wp_eme_answers table in mysq
 * Finally removed legacy and deprecated placeholders.
 * INCOMPATIBILITY: The pattern for custom formfields is gone and replaced by a more generic attributes field
   So if you had patterns for a formfield (only possible for the datefield in fact), please re-add these
-* Show that there were mail problems if not all mails went through in the "Send Mail" window
+* Show that there were mail problems if not all emails went through in the "Send Mail" window
 * Use dismissable admin notices, much prettier... (using a slightly adapted version of collizo4sky's persist-admin-notices-dismissal)
-* Bugfix that prevented correct mails to be sent out for private events after IPN from e.g. paypal arrived
+* Bugfix that prevented correct emails to be sent out for private events after IPN from e.g. paypal arrived
 
 = 1.6.21 (2016/08/02) =
 * Added holidays selection to the widget
@@ -3078,7 +3078,7 @@ about anything, except
 * Booking return page was not shown correctly
 
 = 1.6.20 (2016/07/28) =
-* Bugfix in sending mails on first booking
+* Bugfix in sending emails on first booking
 
 = 1.6.19 (2016/07/28) =
 * Added an option to disable the extra html paragraph tags around notes/excerpts
@@ -3110,7 +3110,7 @@ be in the header or footer section)
 * Feature: cleanup of unpaid bookings can be scheduled now, and should be working too ...
 * Feature: added discounts (coupon codes) with fixed discount or a percentage, expiration date, limit number of uses, allow different discounts to be entered, (discount groups) and CSV upload of coupons and groups. See the documentation for more.
 * Added placeholder #_RESPFIELD{xx}, with 'xx' being a db field property of a person (like person_id, lastname, firstname, email, phone; ... see events-manager.php, function eme_create_people_table)
-* Added placeholder #_LANG, so now you can use conditional tags, check the lang and then use your own text where you want it. Since conditional tags are possible just about anywhere, this allows for true multilanguage mails, subjects, screen messages etc ...
+* Added placeholder #_LANG, so now you can use conditional tags, check the lang and then use your own text where you want it. Since conditional tags are possible just about anywhere, this allows for true multilanguage emails, subjects, screen messages etc ...
 * Added event placeholder #_NOEXCERPT, so you can show the rest of the event notes and not the excerpt itself. Together with the other 2 placeholders (#_EXCERPT and #_NOTES) this now gives you full control of what part of the notes you want to show.
 * Updated Mollie API to version 1.6.0
 * Added a setting to bring back the google api key for google maps, and added a separate Maps section in the options.
@@ -3201,7 +3201,7 @@ eventful, scope, template_id, template_id_header and template_id_footer
 * Feature: added option weekdays to the calendar shortcode, so you can select which days of the week you want to show (0-6 as values)
 * Feature: added #_CANCEL_OWN_URL rsvp shortcode, can be used in event lists so you can allow logged in people to just cancel their own booking with
            a single click, or the event owner/author
-           Difference with #_CANCEL_URL is that #_CANCEL_URL gives the url no matter what (easier for mails, not wp-members and such)
+           Difference with #_CANCEL_URL is that #_CANCEL_URL gives the url no matter what (easier for emails, not wp-members and such)
 * Feature: added shortcode [eme_attendees_report_link], generating a csv for the attendees/events (events as rows, dates as columns, attendees as cell entries)
   Options: - event_template_id (if not given, format is "#_EVENTNAME #_STARTTIME")
            - attend_template_id (if not given, format is "#_ATTENDFIRSTNAME #_ATTENDLASTNAME")
@@ -3304,7 +3304,7 @@ eventful, scope, template_id, template_id_header and template_id_footer
 * Feature: add extra header/footer format settings when showing the list of events for a specific category
 * Feature: allow attributes to be text areas now, so you can do more with them
 * Feature: add the option to ignore paypal tax setting in your profile
-* Change: mails with no subject or body will not be sent
+* Change: emails with no subject or body will not be sent
 * Bugfix: for some reason, in the older plugin code I added the logic that the excerpt was never to be shown on single event pages. This has been corrected now.
 * Bugfix: add db column 'lang' for the peoples table if missing
 * Bugfix: the booker firstname/lastname was not correctly replaced in the cancel form for WP users
@@ -3318,7 +3318,7 @@ eventful, scope, template_id, template_id_header and template_id_footer
 * Bugfix: small fix for undefined variable
 
 = 1.5.38 (2015/05/21) =
-* Bugfix: multibooking fix for mails
+* Bugfix: multibooking fix for emails
 * Bugfix: allow firstname to be required too
 
 = 1.5.37 (2015/05/08) =
@@ -3338,19 +3338,19 @@ eventful, scope, template_id, template_id_header and template_id_footer
   if (!empty($booker)) {
      $already_registered=1;
   }
-* Feature: now everybody can cancel a booking (even non-wp users) via a special link. Cancel urls in mails and user profile use these links now.
+* Feature: now everybody can cancel a booking (even non-wp users) via a special link. Cancel urls in emails and user profile use these links now.
            The old booking cancel form will be deprecated in the future, as using this link/form is more secure and easier to maintain
            For this #_CANCEL_LINK and #_CANCEL_URL have been adapted already. And a new placeholder #_CANCEL_CODE has been added that
            returns the cancel code to be used in the new cancel booking form (to be implemented)
 * Feature: added option ignore_url to shortcode eme_event: in a number of cases (like when using this shortcode in the calendar format for an event entry), the url would case the page to be redirected. Using this, you can ignore that url.
 * Bugfix: when canceling a booking via the cancel url, the mail being sent contained the free spaces info from before the cancel, it was sent too early in the process
-* Bugfix: event placeholders were not being replaced in booking mails (they were replaced in attendee mails)
+* Bugfix: event placeholders were not being replaced in booking emails (they were replaced in attendee emails)
 * Bugfix: make sure you can require the first name to be completed if wanted
 * Bugfix: a redundant check was made for firstname in multibooking events, so people filling in their last name still received an error that the last name was not filled out
 * Bugfix: some category link fixes
 
 = 1.5.35 =
-* Bugfix: RSVP placeholders in multibooking mails were not being correctly replaced
+* Bugfix: RSVP placeholders in multibooking emails were not being correctly replaced
 
 = 1.5.34 =
 * Bugfix: make #_FIELDVALUE actually work ..
@@ -3399,10 +3399,10 @@ eventful, scope, template_id, template_id_header and template_id_footer
 * Bugfix: fix the double headers-options in EME settings (tab 'Other')
 * Bugfix: datapicker was not being added in the front end (for the monthly filter)
 * Bugfix: load google js via https when needed
-* Improvement: the smtp port setting should not be shown if smtp is not used for sending mails
+* Improvement: the smtp port setting should not be shown if smtp is not used for sending emails
 
 = 1.5.25 =
-* Feature: added the possibility to add a Bcc address to all outgoing mails
+* Feature: added the possibility to add a Bcc address to all outgoing emails
 * Bugfix: Mollie form was not being displayed
 
 = 1.5.24 =
@@ -3506,7 +3506,7 @@ template_id for header, content and footer, and an option to show future or all 
 * Bugfix: use php 5.3 notation for arrays, not everybody uses php 5.4 ...
 
 = 1.5.11 =
-* Bugfix: not all mails were being sent out correctly
+* Bugfix: not all emails were being sent out correctly
 
 = 1.5.10 =
 * Feature: support qtranslate plus, next to qtranslate and mqtranslate
@@ -3587,7 +3587,7 @@ and footer of the form list. More info in the doc.
 * Feature: new rsvp placeholder #_MULTIBOOKING_DETAILS_TEMPLATE{xx} (with xx a template id): parses the template for each booking in a multibooking scenario, all regular booking and event placeholders can be used in the template
 * Feature: new rsvp placeholder #_MULTIBOOKING_TOTALPRICE (the total price of all bookings in a multibooking scenario)
 * Feature: new rsvp placeholder #_MULTIBOOKING_SEATS (the total seats of all bookings in a multibooking scenario)
-* Feature: new rsvp placeholder #_IS_MULTIBOOKING (conditional tag you can use in rsvp mails)
+* Feature: new rsvp placeholder #_IS_MULTIBOOKING (conditional tag you can use in rsvp emails)
 * Feature: new event placeholder #_EVENTATT, taking 2 arguments: eventid and attribute key. This allows to get the non-default value for an attribute from another event. E.g, for eventid 3 and attribute "my_att": #_EVENTATT{3}{my_att}
 * Feature: added the possibility to define an extra charge when paying via a payment gateway. Also added an extra rsvp placeholder so you can show the extra cost being added per payment gateway: #_CHARGE{google}, #_CHARGE{fdgg}, #_CHARGE{2co}, #_CHARGE{paypal}, #_CHARGE{webmoney}
 * Feature: now more than one global map can be shown on the same page
@@ -3597,7 +3597,7 @@ and footer of the form list. More info in the doc.
 * Feature: you can now select multiple categories in the widget. Multiple selected categories will be OR'd together (see the events placeholder)
 * Feature: added new filter eme_event_preupdate_filter, taking place just before the event is updated in the DB (the update companion of eme_event_preinsert_filter)
 * Feature: added a global option to ignore pending users when using the #_ATTENDEES or #_BOOKINGS placeholders.
-* Feature: you can now also send mails about a new event to all WP users, or to all WP users that did not yet register
+* Feature: you can now also send emails about a new event to all WP users, or to all WP users that did not yet register
 * Improvement: better image selection code for the featured image (since WP doesn't play nice with the 'insert from url', I needed to remove this)
 * Improvement: show the compact bookings table only when not editing a recurrence
 * Bugfix: eme_locations shortcode wasn't showing anything for option eventful=1
@@ -3611,8 +3611,8 @@ and footer of the form list. More info in the doc.
 = 1.4.6 =
 * Feature: added an option to hide past events (on a day-basis, not hour) in the calendar
 * Feature: added an option to hide events (from lists and calendar) which RSVP registration period has already ended
-* Feature: added #_FIELDVALUE{xx} to get the formfield value (can be used in the registration form, in #_BOOKINGS and RSVP mails)
-* Bugfix: using custom fields and/or html when re-sending mails didn't work as expected
+* Feature: added #_FIELDVALUE{xx} to get the formfield value (can be used in the registration form, in #_BOOKINGS and RSVP emails)
+* Bugfix: using custom fields and/or html when re-sending emails didn't work as expected
 * Improvement: Italian language updates, thanks to Gianluca Granero
 * Improvement: Ukranian language updates, thanks to Michael Yunat (michael.yunat@gmail.com, see also http://www.iphostmonitor.com )
 * Improvement: updated Italian translation, tx to Antonio Venneri
@@ -3629,7 +3629,7 @@ and footer of the form list. More info in the doc.
 * Feature: added placeholders #_12HSTARTTIME_NOLEADINGZERO and #_12HENDTIME_NOLEADINGZERO
 * Feature: added filter eme_eval_booking_filter, doing evaluations before the person is entered in the db. One parameter: $event. And $_POST can be used too of course.
 * Feature: added #_BOOKINGPRICEPERSEAT and #_BOOKINGPRICEPERSEAT{xx} rsvp placeholders, to return the end-price per booked seat (either normally or for multiprice for the indicated price category). The filter eme_insert_rsvp_action is taken into account, so the end-price includes anything you do with it (including discounts)
-* Feature: subjects of mails being send to bookers is now also customizable and multi-lang ready
+* Feature: subjects of emails being send to bookers is now also customizable and multi-lang ready
 * Feature: you can now delete "unused" people (people without bookings, can happen if you delete old events)
 * Feature: you can now select a template for mail message and body when sending after-mails, and for many format settings when creating/editing an event
 * Feature: added an option to no longer show the RSVP form after a successful booking
@@ -3673,7 +3673,7 @@ and footer of the form list. More info in the doc.
 * Improvement: show a warning if a custom field requires a value but it was left empty
 
 = 1.3.4 =
-* Feature: when doing the "quick" deny for registrations while editing an event, no mails were being sent. There's now a general option in the Mail section that allows you to change that.
+* Feature: when doing the "quick" deny for registrations while editing an event, no emails were being sent. There's now a general option in the Mail section that allows you to change that.
 * Bugfix: make #_ADDBOOKINGFORM_IF_NOT_REGISTERED and #_REMOVEBOOKINGFORM_IF_REGISTERED work again
 * Bugfix: added a CSS to the datatables when showing events, so the footer div following it is moved when the table grows or shrinks
 * Bugfix: adding shortcodes to event details resulted in bad headers when using the setting "extra html headers" with placeholders like #_EXCERPT, and also gave problems for conditional tags
@@ -3746,7 +3746,7 @@ and footer of the form list. More info in the doc.
 argument, and optional a template_id for header, content and footer
   [eme_attendees id=1 template_id=3 template_id_header=7 template_id_footer=9]
 * Feature: added placeholder #_IS_MULTIDAY. Returns 1 if the event start date is different from the end date, 0 otherwise.
-* Feature: added placeholder #_BOOKINGID for rsvp mails and booking info, in case you want to share the booking id
+* Feature: added placeholder #_BOOKINGID for rsvp emails and booking info, in case you want to share the booking id
 * Feature: added new filter eme_add_currencies, so you can add extra currencies to the list. Be aware that not all payment portals support all currencies.
   Example: to add Ghanaian Cedi (GHS) to the list of currencies, add the following to your theme's functions.php:
 
@@ -3823,7 +3823,7 @@ footers
 * Improvement: Dutch language update, thanks to Guido
 * Improvement: show which required fields are missing when filling out a rsvp form
 * Bugfix: better all-day indication in ical
-* Bugfix: make #_TOTALPRICE and #_TOTALPRICExx also work for "Booking mails" reminders
+* Bugfix: make #_TOTALPRICE and #_TOTALPRICExx also work for "Booking emails" reminders
 * Bugfix: jump to RSVP confirmation message upon successfull registration
 * Bugfix: better matching rules for #_CATEGORIES with include/exclude categories
 * Bugfix: all day event fix
@@ -3917,7 +3917,7 @@ footers
 
 = 1.1.1 =
 * Feature: new placeholder #_PAYMENT_URL for bookings, in case you want people to be able to pay later on, or for reminders
-* Feature: you can now select paid/unpaid and pending status when sending mails, good for sending reminders for payments etc ...
+* Feature: you can now select paid/unpaid and pending status when sending emails, good for sending reminders for payments etc ...
 * Feature: you can now specify the latitude/longitude of a location if wanted, overriding the detected values
 * Feature: you can now specify the cut-off hours for RSVP as well
 * Bugfix: make qtranslate work again (one-liner fix)
@@ -3927,7 +3927,7 @@ footers
 
 = 1.1.0 =
 * Feature: multiprice events are now possible (see wordpress site for explanation: price and booked seats need to be seperated by "||"). Also, for multiprice events, the min number of seats to book is always 0
-* Feature: you can now send mails to all attendees for an event in the admin backend. This functionality has it's own access right settings as well.
+* Feature: you can now send emails to all attendees for an event in the admin backend. This functionality has it's own access right settings as well.
 * Feature: revamped the edit/add event interface: you can now use wordpress 'screen options' in the admin page to decide which parts to show and in what sequence
 * Feature: added the possibility to use a print stylesheet called eme_print.css in your theme style dir
 * Feature: shortcode events_ical_link now has 3 extra options: scope, author and contact_person
@@ -3938,7 +3938,7 @@ footers
 * Improvement: the CSV export didn't show the paid status
 * Improvement: when editing a single event, delete buttons to edit the event and/or recurrence are now there (and asked for confirmation)
 * Improvement: when trying to view a non-existing location, now also a 404 is returned (as for events)
-* Improvement: in the backend, you can now choose wether or not mails are being sent when approving or changing registrations
+* Improvement: in the backend, you can now choose wether or not emails are being sent when approving or changing registrations
 * Bugfix: for recurrent events, the wanted date/time format was not being taken into account when being shown in the admin interface or when using #_RECURRENTDESC
 * Bugfix: #_EVENTDETAILS has never been working (#_NOTES and #_DETAILS did work ok)
 * Bugfix: according to http://codex.wordpress.org/Plugin_API/Action_Reference/wp_print_styles: wp_print_styles should not be used to enqueue styles or scripts on the front page. Use wp_enqueue_scripts instead.
@@ -3987,7 +3987,7 @@ footers
 * Improvement: use google maps https if the page is https as well 
 
 = 1.0.12 =
-* Bugfix: the participant info was not correctly replaced in mails sent
+* Bugfix: the participant info was not correctly replaced in emails sent
 * Bugfix: make paypal work via https and HTTP/1.1
 * Bugfix: the CSS classes in the calendar indicating the weekday were wrong for days in the previous/next month
 
@@ -3996,7 +3996,7 @@ footers
 
 = 1.0.10 =
 * Feature: added #_BOOKINGS placeholder (+ customizable bookings format)
-* Feature: added #_FIELNAMExx to get the formfield name (can be used in the registration form, in #_BOOKINGS and RSVP mails)
+* Feature: added #_FIELNAMExx to get the formfield name (can be used in the registration form, in #_BOOKINGS and RSVP emails)
 * Feature: added shortcodes [events_add_booking_form] and [events_delete_booking_form] (with 'id' as parameter: the id of the event)
            This way you can have normal pages for events (using the url option), but still show the booking form as well
 * Bugfix: make qtranslate work again
@@ -4040,7 +4040,7 @@ footers
 
 = 1.0.5 =
 * Feature: forms are customizable now, although extra defined fields can be viewed/exported but not changed in the admin backend (and is qtranslate compatible)
-* Feature: contact person mails for cancellations and approvals are now customizable
+* Feature: contact person emails for cancellations and approvals are now customizable
 * Feature: submit button for registration form is now qtranslate compatible
 * Bugfix: make html title work correctly for locations too
 * Bugfix: the html anchor was not always being shown for RSVP
@@ -4093,7 +4093,7 @@ footers
 * Bugfix: when clicking on calendar day and there's only 1 event, only show the event content directly if the event doesn't point to an external url
 * Bugfix: the booking form was still shown for fully booked events if the max number of seats to book was not defined
 * Bugfix: typo fix in the admin edit location pages
-* Bugfix: #_PLAIN_CONTACTEMAIL was being replaced by empty string in mails
+* Bugfix: #_PLAIN_CONTACTEMAIL was being replaced by empty string in emails
 
 = 1.0.1 =
 * Bugfix: fix replacement in menu for page title by events title when viewing a single event
@@ -4103,7 +4103,7 @@ footers
 * Feature: added options 'category' and 'notcategory' to the shortcode [events_filterform], so you can choose to only show specific categories or exclude certain categories from the select box
 * Feature: all location placeholders can now be used inside events (those that make sense of course). In order to make a distinction among event and location placeholders with the same name, some have been deprecated (see below)
 * Feature: the end time can now be the same as the start time, so you can test on this to not show end date/time info (for eg. events without end)
-* Feature: each booking now has a unique bank transfer number for belgian transfers, the placeholder "#_TRANSFER_NBR_BE97" can be used in booking mails
+* Feature: each booking now has a unique bank transfer number for belgian transfers, the placeholder "#_TRANSFER_NBR_BE97" can be used in booking emails
 * Improvement: when adding a registration in the backend, you can now only choose from events that have RSVP activated
 * Improvement: when the setting "Max number of spaces to book" is empty, it is now ignored so unlimited number of attendees is now possible
 * Improvement/fix: price can be a decimal number as well

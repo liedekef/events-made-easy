@@ -162,7 +162,7 @@ function eme_cron_send_queued() {
     }
     if ( get_option( 'eme_queue_mails' ) ) {
         eme_send_queued();
-        // at the end of a round, we now set all delayed mails to planned too
+        // at the end of a round, we now set all delayed emails to planned too
         eme_mark_delayed_mails_planned();
     }
 }
@@ -399,9 +399,9 @@ function eme_cron_form( $message = '' ) {
             $schedule = $schedules[ $eme_cron_send_queued_schedule ];
             echo '<br>';
             if ($eme_cron_queue_count > 0 ) {
-                echo sprintf( esc_html__( 'Queued mails will be send out in batches of %d %s', 'events-made-easy' ), get_option( 'eme_cron_queue_count' ), $schedule['display'] );
+                echo sprintf( esc_html__( 'Queued emails will be send out in batches of %d %s', 'events-made-easy' ), get_option( 'eme_cron_queue_count' ), $schedule['display'] );
             } else {
-                echo sprintf( esc_html__( 'All queued mails will be send out without limit %s.', 'events-made-easy' ), $schedule['display'] );
+                echo sprintf( esc_html__( 'All queued emails will be send out without limit %s.', 'events-made-easy' ), $schedule['display'] );
             }
         }
     }

@@ -32,16 +32,16 @@ Main features:
 * Location management, with optional OpenStreetMap integration
 * RSVP bookings with custom fields and dynamic fields, payment tracking, optional approval, discounts
 * Protection of forms with internal captcha, Google reCaptcha or hCaptcha
-* Templating for mails, event lists, single events, feeds, RSVP forms, ... with specific placeholders for each
+* Templating for emails, event lists, single events, feeds, RSVP forms, ... with specific placeholders for each
 * Lots of shortcodes and options
 * Payment gateways: Paypal, FirstData, 2CheckOut, Mollie, Payconiq, Worldpay, Stripe, Braintree, Instamojo, Mercado Pago, Fondy, SumUp, Opayo
-* Send mails to registered people, automatically send reminders for payments
+* Send emails to registered people, automatically send reminders for payments
 * Automatically send reminders for memberships that are about to expire or have expired
 * Mail queueing and newsletter functionality
 * Mailings can be planned in the future, cancelled ... and can include extra attacments
 * Multi-site compatible
 * Several GDPR assistance features (request, view and edit personal info via link; delete old records for mailings, attendances, bookings)
-* Fully localisable and already fully localised in German, Swedish, French and Dutch. Also fully compatible with polylang and qtranslate-xt (https://github.com/qtranslate/qtranslate-xt/): most of the settings allow for language tags so you can show your events in different languages to different people. The booking mails also take the choosen language into account. For other multi-lingual plugins, EME provides its own in-text language tags and takes the current chosen language into account.
+* Fully localisable and already fully localised in German, Swedish, French and Dutch. Also fully compatible with polylang and qtranslate-xt (https://github.com/qtranslate/qtranslate-xt/): most of the settings allow for language tags so you can show your events in different languages to different people. The booking emails also take the choosen language into account. For other multi-lingual plugins, EME provides its own in-text language tags and takes the current chosen language into account.
 
 For documentation on all shortcodes and placeholders, visit the [Official site](https://www.e-dynamics.be/wordpress/) .
 
@@ -71,12 +71,12 @@ For new users:
 After the installation, Events Made Easy add a top level "Events" menu to your Wordpress Administration.
 
 *  The *Events* page lets you manage your events. The *Add new* page lets you insert a new event.
-   Generic EME settings concerning RSVP mails and templates can be overriden per event.
+   Generic EME settings concerning RSVP emails and templates can be overriden per event.
 *  The *Locations* page lets you add, delete and edit locations directly. Locations are automatically added with events if not present, but this interface lets you customise your locations data and add a picture.
 *  The *Categories* page lets you add, delete and edit categories (if Categories are activated in the Settings page).
 *  The *Holidays* page is used to define and manage holiday lists used in a calendar
 *  The *Custom fields* page lets you manage custom fields that can be used for events, locations, people, members, memberships and RSVP definitions
-*  The *Template* page lets you manage templates for events, memberships, mails, pdf creation, ...
+*  The *Template* page lets you manage templates for events, memberships, emails, pdf creation, ...
 *  The *Discounts* page lets you manage discounts and discount groups used in RSVP or membership definitions
 *  The *People* page serves as a gathering point for the information about the people who booked a space for one of your events or for members personal info.
    It can also be used to add custom info for a person based on the group he's in, so as to reflect the structure of an organization or just store extra info
@@ -86,10 +86,10 @@ After the installation, Events Made Easy add a top level "Events" menu to your W
 *  The *Members* page is used to manage all your members (e.g. membership status, custom member info).
 *  The *Memberships* page is used to define and manage your memberships. 
 *  The *Countries/states* page can be used to define countries and states (in different languages) for personal info in membership and RSVP forms
-*  The *Send mails* page allows the planning, creation and management of mailings for events or generic info (many options possible)
+*  The *Send emails* page allows the planning, creation and management of mailings for events or generic info (many options possible)
 *  The *Scheduled actions* page is used to plan automated EME tasks (like sending reminders, cancel unpaid bookings, newsletter)).
 *  The *Cleanup actions* page
-*  The *Settings* page is used to set generic EME defaults for events, payment gateways, mailserver info, mail templates, ...
+*  The *Settings* page is used to set generic EME defaults for events, payment gateways, emailserver info, mail templates, ...
 *  Fine-grainded configurable access control (ACL) for managing events, locations, bookings, members, ...
 
 Events list and calendars can be added to your blogs through widgets, shortcodes and placeholders. See the full documentation at the [Official site](https://www.e-dynamics.be/wordpress/).
@@ -227,7 +227,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 
 = 2.5.27 (2024/12/29) =
 * More jtable styling fixes
-* The action to clear the complete queue now cancels all ongoing and planned mailings and all individual mails too
+* The action to clear the complete queue now cancels all ongoing and planned mailings and all individual emails too
 
 = 2.5.26 (2024/12/25) =
 * Paging fix due to typo
@@ -291,7 +291,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 
 = 2.5.14 (2024/10/26) =
 * Bulk action to task signups added to send reminders
-* PDF templates have a setting to change the mail attachment name if the template is used in member or booking related mails
+* PDF templates have a setting to change the mail attachment name if the template is used in member or booking related emails
 
 = 2.5.13 (2024/10/05) =
 * Add generic placeholders #_USER_GROUPS and #_USER_MEMBERSHIPS

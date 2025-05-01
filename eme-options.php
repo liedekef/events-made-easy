@@ -566,7 +566,7 @@ function eme_add_options( $reset = 0 ) {
         'eme_people_newsletter'                           => 1,
         'eme_people_massmail'                             => 0,
         'eme_massmail_popup'                              => 1,
-        'eme_massmail_popup_text'                         => __( 'You selected to not receive future mails. Are you sure about this?', 'events-made-easy' ),
+        'eme_massmail_popup_text'                         => __( 'You selected to not receive future emails. Are you sure about this?', 'events-made-easy' ),
         'eme_add_events_locs_link_search'                 => 1,
         'eme_booking_attach_ids'                          => '',
         'eme_booking_attach_tmpl_ids'                     => [],
@@ -1628,9 +1628,9 @@ function eme_options_page() {
 <div>
 <table class="form-table">
 <?php
-            eme_options_select( __( 'Send emails for own events', 'events-made-easy' ), 'eme_cap_send_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send mails for own events and be able to access the mailing submenu. Default: %s.', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_MAILS ) ) );
-            eme_options_select( __( 'Send emails for any event', 'events-made-easy' ), 'eme_cap_send_other_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send mails for any event. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_OTHER_MAILS ) ) );
-            eme_options_select( __( 'Send generic emails', 'events-made-easy' ), 'eme_cap_send_generic_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send generic mails. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_GENERIC_MAILS ) ) );
+            eme_options_select( __( 'Send emails for own events', 'events-made-easy' ), 'eme_cap_send_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send emails for own events and be able to access the mailing submenu. Default: %s.', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_MAILS ) ) );
+            eme_options_select( __( 'Send emails for any event', 'events-made-easy' ), 'eme_cap_send_other_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send emails for any event. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_OTHER_MAILS ) ) );
+            eme_options_select( __( 'Send generic emails', 'events-made-easy' ), 'eme_cap_send_generic_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to send generic emails. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_SEND_GENERIC_MAILS ) ) );
             eme_options_select( __( 'View mailings and mail queue', 'events-made-easy' ), 'eme_cap_send_other_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to view planned mailings and the mail queue. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_VIEW_MAILS ) ) );
             eme_options_select( __( 'Manage mailings and mail queue', 'events-made-easy' ), 'eme_cap_send_other_mails', eme_get_all_caps(), sprintf( __( 'Permission needed to manage planned mailings and the mail queue. Default: %s', 'events-made-easy' ), eme_capNamesCB( DEFAULT_CAP_MANAGE_MAILS ) ) );
 ?>
@@ -1934,16 +1934,16 @@ function eme_options_page() {
 </table>
 <table id="rsvp_mail_notify-data" class='form-table'>
 <?php
-            eme_options_radio_binary( __( 'Enable pending RSVP emails?', 'events-made-easy' ), 'eme_rsvp_mail_notify_pending', __( 'Check this option if you want to send mails for pending bookings.', 'events-made-easy' ) );
-            eme_options_radio_binary( __( 'Enable approved RSVP emails?', 'events-made-easy' ), 'eme_rsvp_mail_notify_approved', __( 'Check this option if you want to send mails for approved bookings.', 'events-made-easy' ) );
-            eme_options_radio_binary( __( 'Enable paid RSVP emails?', 'events-made-easy' ), 'eme_rsvp_mail_notify_paid', __( 'Check this option if you want to send mails when a payment arrives via a payment gateway or when a booking is marked as paid.', 'events-made-easy' ) );
+            eme_options_radio_binary( __( 'Enable pending RSVP emails?', 'events-made-easy' ), 'eme_rsvp_mail_notify_pending', __( 'Check this option if you want to send emails for pending bookings.', 'events-made-easy' ) );
+            eme_options_radio_binary( __( 'Enable approved RSVP emails?', 'events-made-easy' ), 'eme_rsvp_mail_notify_approved', __( 'Check this option if you want to send emails for approved bookings.', 'events-made-easy' ) );
+            eme_options_radio_binary( __( 'Enable paid RSVP emails?', 'events-made-easy' ), 'eme_rsvp_mail_notify_paid', __( 'Check this option if you want to send emails when a payment arrives via a payment gateway or when a booking is marked as paid.', 'events-made-easy' ) );
 ?>
 </table>
 <table class='form-table'>
 <?php
-            eme_options_radio_binary( __( 'Send HTML mails', 'events-made-easy' ), 'eme_mail_send_html', __( 'Check this option if you want to use html in the mails being sent.', 'events-made-easy' ) );
+            eme_options_radio_binary( __( 'Send HTML emails', 'events-made-easy' ), 'eme_mail_send_html', __( 'Check this option if you want to use html in the emails being sent.', 'events-made-easy' ) );
             if ( eme_is_datamaster() ) {
-                eme_options_radio_binary( __( 'Use mail queuing?', 'events-made-easy' ), 'eme_queue_mails', __( 'If activated, you can plan mails for sending at a later date and time.', 'events-made-easy' ) . '<br><b>' . __( 'It is recommended to activate this option.', 'events-made-easy' ) . '</b>' );
+                eme_options_radio_binary( __( 'Use mail queuing?', 'events-made-easy' ), 'eme_queue_mails', __( 'If activated, you can plan emails for sending at a later date and time.', 'events-made-easy' ) . '<br><b>' . __( 'It is recommended to activate this option.', 'events-made-easy' ) . '</b>' );
 ?>
     <tr style='vertical-align:top' id='eme_queued_mails_options_row'>
         <th scope="row"><?php esc_html_e( 'Email queue settings', 'events-made-easy' ); ?></th>
@@ -1951,7 +1951,7 @@ function eme_options_page() {
         <label for="eme_cron_send_queued">
 <?php
                 $eme_cron_queue_count = intval( get_option( 'eme_cron_queue_count' ) );
-                esc_html_e( 'Send out queued mails in batches of ', 'events-made-easy' );
+                esc_html_e( 'Send out queued emails in batches of ', 'events-made-easy' );
 ?>
         </label>
         <input type="number" id="eme_cron_queue_count" name="eme_cron_queue_count" size="6" maxlength="6" min="1" max="999999" step="1" value="<?php echo $eme_cron_queue_count; ?>">&nbsp;
@@ -1967,28 +1967,28 @@ function eme_options_page() {
 ?>
         </select><br>
 <?php
-                esc_html_e( 'If you plan to use the registered REST API call to send your queued mails, set the schedule to "Not scheduled".', 'events-made-easy' );
+                esc_html_e( 'If you plan to use the registered REST API call to send your queued emails, set the schedule to "Not scheduled".', 'events-made-easy' );
                 echo '<br>';
-                esc_html_e( 'Set the batch count to 0 if you want all queued mails to be send out every time the queue is processed (not recommended).', 'events-made-easy' );
+                esc_html_e( 'Set the batch count to 0 if you want all queued emails to be send out every time the queue is processed (not recommended).', 'events-made-easy' );
 ?>
         </td>
     </tr>
 <?php
-                eme_options_input_int( __( 'Pause between mails', 'events-made-easy' ), 'eme_mail_sleep', __( 'Indicate how much time (in microseconds, one microsecond being one millionth of a second) to wait between queued mails being sent. By default this is 0, meaning EME sends mails in bursts based on your mail queue settings. This option can be used to send mails more slowly, but be aware to not cause PHP timeouts.', 'events-made-easy' ) );
+                eme_options_input_int( __( 'Pause between emails', 'events-made-easy' ), 'eme_mail_sleep', __( 'Indicate how much time (in microseconds, one microsecond being one millionth of a second) to wait between queued emails being sent. By default this is 0, meaning EME sends emails in bursts based on your mail queue settings. This option can be used to send emails more slowly, but be aware to not cause PHP timeouts.', 'events-made-easy' ) );
             } else {
                 echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Email queuing', 'events-made-easy' ) ));
                 echo '<br>';
-                echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Pause between mails', 'events-made-easy' ) ));
+                echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Pause between emails', 'events-made-easy' ) ));
             }
-            eme_options_radio_binary( __( 'Read tracking', 'events-made-easy' ), 'eme_mail_tracking', __( 'Add an image (1x1 transparant pixel) to html mails so you can track if people opened the mail or not (be aware that people can easily bypass this by disabling images in their mail client). As this might be a privacy issue, it is deactivated by default.', 'events-made-easy' ) );
+            eme_options_radio_binary( __( 'Read tracking', 'events-made-easy' ), 'eme_mail_tracking', __( 'Add an image (1x1 transparant pixel) to html emails so you can track if people opened the mail or not (be aware that people can easily bypass this by disabling images in their mail client). As this might be a privacy issue, it is deactivated by default.', 'events-made-easy' ) );
             eme_options_radio_binary( __( 'MassMail', 'events-made-easy' ), 'eme_people_massmail', __( "Should new persons in the database be considered for massmailing or not? This setting is used if you don't ask for opt-in/out info in e.g. the RSVP form. Warning: setting this to 'yes' is not GDPR compliant if you don't ask for a person's mail preferences.", 'events-made-easy' ) );
             eme_options_radio_binary( __( 'Massmail popup', 'events-made-easy' ), 'eme_massmail_popup', __( 'If a person chooses to not receive mail via #_OPT_IN or #_OPT_OUT, you can optionally show a popup asking if they are sure about this.', 'events-made-easy' ) );
             eme_options_input_text( __( 'Massmail popup text', 'events-made-easy' ), 'eme_massmail_popup_text', __( 'The text shown in the Massmail popup window.', 'events-made-easy' ) );
             eme_options_radio_binary( __( 'Newsletter', 'events-made-easy' ), 'eme_people_newsletter', __( "Should new persons receive the automatic EME newsletter concerning new events if it is scheduled to go out? Warning: setting this to 'yes' is not GDPR compliant, you should ask people to subscribe to the relevant groups and/or newsletter.", 'events-made-easy' ) );
-            eme_options_input_text( __( 'Default email sender name', 'events-made-easy' ), 'eme_mail_sender_name', __( 'The default name on emails when EME sends mails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP mails will be used (or the blog admin if empty).', 'events-made-easy' ) );
-            eme_options_input_type( __( 'Default email sender address', 'events-made-easy' ), 'eme_mail_sender_address', __( 'The default email address with which EME mails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP mails will be used (or the blog admin if empty). If you use Gmail to send mails, this must correspond with your Gmail account.', 'events-made-easy' ), 'email' );
-            eme_options_radio_binary( __( 'Force sender address everywhere', 'events-made-easy' ), 'eme_mail_force_from', __( 'Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP mails will be used for generic mails, while for event or membership related mails the configured contact person will be used (or the blog admin if empty).', 'events-made-easy' ) . '<br>' . __( 'Remark: if - for certain emails - the reply-to address was identical to the from address, the value of the reply-to address will be forced too.', 'events-made-easy' ) );
-            eme_options_input_text( __( 'Default email BCC', 'events-made-easy' ), 'eme_mail_bcc_address', __( 'Insert an email address that will be added in Bcc to all outgoing mails (multiple addresses are to be separated by comma or semicolon). Can be left empty.', 'events-made-easy' ) );
+            eme_options_input_text( __( 'Default email sender name', 'events-made-easy' ), 'eme_mail_sender_name', __( 'The default name on emails when EME sends emails concerning GDPR, mailing subscribe/unsubscribe or birthdays. If left empty, the name of the default contact person for RSVP emails will be used (or the blog admin if empty).', 'events-made-easy' ) );
+            eme_options_input_type( __( 'Default email sender address', 'events-made-easy' ), 'eme_mail_sender_address', __( 'The default email address with which EME emails concerning GDPR, mailing subscribe/unsubscribe or birthdays will be sent. If left empty, the address of the default contact person for RSVP emails will be used (or the blog admin if empty). If you use Gmail to send emails, this must correspond with your Gmail account.', 'events-made-easy' ), 'email' );
+            eme_options_radio_binary( __( 'Force sender address everywhere', 'events-made-easy' ), 'eme_mail_force_from', __( 'Force the configured sender address to be used for all outgoing emails. If not activated, the name and email address of the default contact person for RSVP emails will be used for generic emails, while for event or membership related emails the configured contact person will be used (or the blog admin if empty).', 'events-made-easy' ) . '<br>' . __( 'Remark: if - for certain emails - the reply-to address was identical to the from address, the value of the reply-to address will be forced too.', 'events-made-easy' ) );
+            eme_options_input_text( __( 'Default email BCC', 'events-made-easy' ), 'eme_mail_bcc_address', __( 'Insert an email address that will be added in Bcc to all outgoing emails (multiple addresses are to be separated by comma or semicolon). Can be left empty.', 'events-made-easy' ) );
             eme_options_select(
                 __( 'Email sending method', 'events-made-easy' ),
                 'eme_mail_send_method',
@@ -2019,7 +2019,7 @@ function eme_options_page() {
             eme_options_radio_binary( __( 'Use SMTP authentication?', 'events-made-easy' ), 'eme_smtp_auth', __( 'SMTP authentication is often needed. If you use Gmail, make sure to set this parameter to Yes', 'events-made-easy' ) );
             eme_options_input_text( __( 'SMTP username', 'events-made-easy' ), 'eme_smtp_username', __( 'Insert the username to be used to access your SMTP server.', 'events-made-easy' ) );
             eme_options_input_password( __( 'SMTP password', 'events-made-easy' ), 'eme_smtp_password', __( 'Insert the password to be used to access your SMTP server', 'events-made-easy' ) );
-            eme_options_radio_binary( __( 'Verify SMTP certificates?', 'events-made-easy' ), 'eme_smtp_verify_cert', __( 'Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public mailservers this is not allowed.', 'events-made-easy' ) );
+            eme_options_radio_binary( __( 'Verify SMTP certificates?', 'events-made-easy' ), 'eme_smtp_verify_cert', __( 'Uncheck this option if you have issues sending mail via secure SMTP due to mismatching certificates. Since this in fact defeats the purpose of having certificates, it is not recommended to use it, but sometimes it is needed at specific hosting providers. This has only an effect for private ip ranges (like e.g. 127.0.0.1, localhost, ...), for public emailservers this is not allowed.', 'events-made-easy' ) );
             eme_options_radio_binary( __( 'Debug SMTP?', 'events-made-easy' ), 'eme_smtp_debug', __( 'Check this option if you have issues sending mail via SMTP. Only do this for debugging purposes and deactivate it afterwards!', 'events-made-easy' ) );
             $test_url = admin_url( 'admin.php?page=eme-emails#tab-testmail' );
             eme_options_textarea( __( 'Email blacklist', 'events-made-easy' ), 'eme_mail_blacklist', __( 'A list of emails (one per line) that will not be accepted in EME. Examples can be ".com" (to not accept anything from ".com"), "anything.com" (to not accept addresses ending in "anything.com"), or even specific email addresses.', 'events-made-easy' ) );
@@ -2043,7 +2043,7 @@ function eme_options_page() {
 <div>
 <table class='form-table'>
 <?php
-            eme_options_input_text( __( 'Full name format', 'events-made-easy' ), 'eme_full_name_format', __( 'The format of the full name of a person, used when sending mails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is "#_LASTNAME #_FIRSTNAME".', 'events-made-easy' ) );
+            eme_options_input_text( __( 'Full name format', 'events-made-easy' ), 'eme_full_name_format', __( 'The format of the full name of a person, used when sending emails to a person or displaying the full name. Only 2 placeholders can and need to be used: #_FIRSTNAME and #_LASTNAME. The default is "#_LASTNAME #_FIRSTNAME".', 'events-made-easy' ) );
 ?>
 
 </table>
@@ -2054,12 +2054,12 @@ function eme_options_page() {
 <div>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             } elseif ( ! get_option( 'eme_rsvp_mail_notify_approved' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for bookings made or approved, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
-            esc_html_e( 'When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid.', 'events-made-easy' );
+            esc_html_e( 'When an event is configured to auto-approve bookings after payment and you have selected to send out payment emails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid.', 'events-made-easy' );
 ?>
 <table class='form-table'>
 <?php
@@ -2113,12 +2113,12 @@ function eme_options_page() {
 <div>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             } elseif ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
-            esc_html_e( 'When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 mails at the same time.', 'events-made-easy' );
+            esc_html_e( 'When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time.', 'events-made-easy' );
 ?>
 <table class='form-table'>
 <?php
@@ -2175,7 +2175,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Booking Updated Email Subject', 'events-made-easy' ), 'eme_registration_updated_email_subject', __( 'The subject of the email that will be sent to the respondent if the booking has been updated by an admin.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Booking Updated Email Body', 'events-made-easy' ), 'eme_registration_updated_email_body', __( 'The body of the email that will be sent to the respondent if the booking has been updated by an admin.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
@@ -2190,7 +2190,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Pending Booking Reminder Email Subject', 'events-made-easy' ), 'eme_registration_pending_reminder_email_subject', __( 'The subject of the email that will be sent to the respondent as a reminder of a pending booking.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Pending Booking Reminder Email Body', 'events-made-easy' ), 'eme_registration_pending_reminder_email_body', __( 'The body of the email that will be sent to the respondent as a reminder of a pending booking.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
@@ -2207,7 +2207,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Booking Cancelled Email Subject', 'events-made-easy' ), 'eme_registration_cancelled_email_subject', __( 'The subject of the email that will be sent to the respondent when he cancels all his bookings for an event.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Booking Cancelled Email Body', 'events-made-easy' ), 'eme_registration_cancelled_email_body', __( 'The body of the email that will be sent to the respondent when he cancels all his bookings for an event.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
@@ -2224,7 +2224,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Booking Deleted Email Subject', 'events-made-easy' ), 'eme_registration_trashed_email_subject', __( 'The subject of the email that will be sent to the respondent if the booking is deleted by an admin.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
             eme_options_textarea( __( 'Booking Deleted Email Body', 'events-made-easy' ), 'eme_registration_trashed_email_body', __( 'The body of the email that will be sent to the respondent if the booking is deleted by an admin.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a>', $use_html_editor, $use_full );
@@ -2238,9 +2238,9 @@ function eme_options_page() {
 <div>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             } elseif ( ! get_option( 'eme_rsvp_mail_notify_paid' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for paid bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
 ?>
 <table class='form-table'>
@@ -2295,7 +2295,7 @@ function eme_options_page() {
 <table class='form-table'>
 <?php
             if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
             }
             eme_options_input_text( __( 'Contact Person Payment Notification Email Subject', 'events-made-easy' ), 'eme_contactperson_ipn_email_subject', __( 'The subject of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ) );
             eme_options_textarea( __( 'Contact Person Payment Notification Email Body', 'events-made-easy' ), 'eme_contactperson_ipn_email_body', __( 'The body of the email that will be sent to the contact person when a payment notification is received via a payment gateway.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=27'>" . __( 'the documentation', 'events-made-easy' ) . '</a><br>' . __( 'If you leave this empty, this mail will not be sent.', 'events-made-easy' ), $use_html_editor, $use_full );
@@ -2498,7 +2498,7 @@ case 'gdpr':
         eme_options_input_text( __( 'Automatically anonimyze old bookings', 'events-made-easy' ), 'eme_gdpr_anonymize_old_bookings_days', __( 'Set the number of days after which old bookings for finished events are automatically anonimized. Bookings are not deleted to keep statistics and data on the old events. Leave empty or 0 if not wanted.', 'events-made-easy' ) . '<br>' . __( 'Setting this to something greater than 0 helps you in achieving GDPR compliance. Recommended values are 180 (half a year) or 365 (one year).', 'events-made-easy' ) );
         eme_options_input_text( __( 'Automatically remove old events', 'events-made-easy' ), 'eme_gdpr_remove_old_events_days', __( 'Set the number of days after which old events are automatically removed, including all their bookings. Leave empty or 0 for no automatic removal.', 'events-made-easy' ) . '<br>' . __( 'This value should be bigger than the number of days after which old bookings are anonimyzed.', 'events-made-easy' ) );
         eme_options_input_text( __( 'Automatically remove task signups for old events', 'events-made-easy' ), 'eme_gdpr_remove_old_signups_days', __( 'Automatically remove signups for tasks that have ended the specified number of days ago. Leave empty or 0 for no automatic removal.', 'events-made-easy' ) );
-        eme_options_input_text( __( 'Automatically archive old mailings and remove old mails', 'events-made-easy' ), 'eme_gdpr_archive_old_mailings_days', __( 'Set the number of days after which mailings are automatically archived and old mails are removed. Leave empty or 0 for no automatic archiving or removal.', 'events-made-easy' ) . '<br>' . __( 'Setting this to something greater than 0 helps you in achieving GDPR compliance. Recommended values are 180 (half a year) or 365 (one year).', 'events-made-easy' ) );
+        eme_options_input_text( __( 'Automatically archive old mailings and remove old emails', 'events-made-easy' ), 'eme_gdpr_archive_old_mailings_days', __( 'Set the number of days after which mailings are automatically archived and old emails are removed. Leave empty or 0 for no automatic archiving or removal.', 'events-made-easy' ) . '<br>' . __( 'Setting this to something greater than 0 helps you in achieving GDPR compliance. Recommended values are 180 (half a year) or 365 (one year).', 'events-made-easy' ) );
         eme_options_input_text( __( 'Automatically delete old attendance records', 'events-made-easy' ), 'eme_gdpr_remove_old_attendances_days', __( 'Set the number of days after which attendance records are automatically removed. Leave empty or 0 for no automatic removal.', 'events-made-easy' ) . '<br>' . __( 'Setting this to something greater than 0 helps you in achieving GDPR compliance. Recommended values are 180 (half a year) or 365 (one year).', 'events-made-easy' ) );
     } else {
         echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically remove expired members', 'events-made-easy' ) ));
@@ -2509,7 +2509,7 @@ case 'gdpr':
         echo '<br>';
         echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically remove task signups for old events', 'events-made-easy' )) );
         echo '<br>';
-        echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically archive old mailings and remove old mails', 'events-made-easy' ) ));
+        echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically archive old mailings and remove old emails', 'events-made-easy' ) ));
         echo '<br>';
         echo esc_html(sprintf( __( 'Multisite data sharing is activated for EME, the option "%s" will use the settings from the main site', 'events-made-easy' ), __( 'Automatically delete old attendance records', 'events-made-easy' ) ));
         echo '<br>';

@@ -629,7 +629,7 @@ function eme_cancel_all_queued() {
         eme_cancel_mailing( $mailing['id'] );
     }
 
-    // cancel individual mails
+    // cancel individual emails
     $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $wpdb->update( $mqueue_table, [ 'status' => EME_MAIL_STATUS_CANCELLED ], [ 'status' => EME_MAIL_STATUS_PLANNED ] );
 }
@@ -637,14 +637,14 @@ function eme_cancel_all_queued() {
 function eme_get_queued_count() {
     global $wpdb;
     $mqueue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    // the queued count is to know how much mails are left unsent in the queue
+    // the queued count is to know how much emails are left unsent in the queue
     $sql = "SELECT COUNT(*) FROM $mqueue_table WHERE status= " . EME_MAIL_STATUS_PLANNED . " OR status=" . EME_MAIL_STATUS_DELAYED ;
     $count = $wpdb->get_var( $sql );
 
     // now also include planned mailings
     $planned_mailings = eme_get_mailings(status: 'planned');
     foreach ($planned_mailings as $mailing) {
-        // older mailings inserted the mails directly and not update the stats
+        // older mailings inserted the emails directly and not update the stats
         // newer mailings only set the planned stats and update the receivers the moment the mailing starts
         if (empty($mailing['stats'])) {
             $stats = eme_get_mailing_stats( $mailing['id'] );
@@ -660,7 +660,7 @@ function eme_get_queued( $now ) {
     global $wpdb;
     $mqueue_table   = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $mailings_table = EME_DB_PREFIX . EME_MAILINGS_TBNAME;
-    // we take only the queued mails with status PLANNED where either the planning date for the mailing has passed (so we know those can be send) or that are not part of a mailing
+    // we take only the queued emails with status PLANNED where either the planning date for the mailing has passed (so we know those can be send) or that are not part of a mailing
     $sql                  = "SELECT $mqueue_table.* FROM $mqueue_table LEFT JOIN $mailings_table ON $mqueue_table.mailing_id=$mailings_table.id WHERE $mqueue_table.status=" . EME_MAIL_STATUS_PLANNED . " AND ($mqueue_table.mailing_id=0 OR ($mqueue_table.mailing_id>0 and $mailings_table.planned_on<'$now'))";
     $eme_cron_queue_count = intval( get_option( 'eme_cron_queue_count' ) );
     if ( $eme_cron_queue_count > 0 ) {
@@ -679,7 +679,7 @@ function eme_rest_send_queued( WP_REST_Request $request ) {
 }
 
 function eme_process_single_mail( $mail ) {
-    // check if tracking is required and possible (meaning: only for html mails)
+    // check if tracking is required and possible (meaning: only for html emails)
     if ( get_option( 'eme_mail_send_html' ) && get_option( 'eme_mail_tracking' ) ) {
         $add_tracking = true;
     } else {
@@ -765,13 +765,13 @@ function eme_send_queued($force_interval=0) {
         eme_mark_mailing_ongoing( $mailing_id );
     }
 
-    // now handle any queued mails
+    // now handle any queued emails
     $mails = eme_get_queued( $now );
     foreach ( $mails as $mail ) {
         eme_process_single_mail( $mail  );
 
         // we'll build in a safety precaution to make sure to never surpass the schedule duration
-        // this is only usefull if the sleep is configured, since otherwise mails are send immediately, but just to be sure ...
+        // this is only usefull if the sleep is configured, since otherwise emails are send immediately, but just to be sure ...
         $cur_time = time();
         if ( $cur_time - $start_time > $interval ) {
             break;
@@ -921,7 +921,7 @@ function eme_archive_old_mailings() {
         eme_archive_mailing( $mailing_id );
     }
 
-    // now remove old mails not belonging to a specific mailing
+    // now remove old emails not belonging to a specific mailing
     $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
     $sql         = "DELETE FROM $queue_table WHERE mailing_id=0 AND creation_date < '$old_date'";
     $wpdb->query( $sql );
@@ -958,6 +958,16 @@ function eme_cancel_mailing( $mailing_id ) {
     ];
     $wpdb->update( $mailings_table, $fields, $where );
     wp_cache_delete( "eme_mailing $mailing_id" );
+}
+
+function eme_resend_mail( $id ) {
+    global $wpdb;
+    $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
+    $where = [
+	    'id' => $mail_id,
+    ];
+    $fields = ['status' => EME_MAIL_STATUS_PLANNED ];
+    $wpdb->update( $queue_table, $fields, $where );
 }
 
 function eme_delete_mail( $id ) {
@@ -1242,8 +1252,8 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                 continue;
             }
             $person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
-            // we will NOT ignore double emails for member-related mails
-            // we could postpone the placeholder replacement until the moment of actual sending (for large number of mails)
+            // we will NOT ignore double emails for member-related emails
+            // we could postpone the placeholder replacement until the moment of actual sending (for large number of emails)
             // but that complicates the queue-code and is in fact ugly (I did it, but removed it on 2017-12-04)
             // Once I hit execution timeouts I'll rethink it again
             if ($count_only) {
@@ -1339,7 +1349,7 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
             } elseif ( $conditions['eme_mail_type'] == 'bookings' ) {
                 $bookings = eme_get_bookings_for( $event_id, $conditions['rsvp_status'], $conditions['only_unpaid'] );
                 foreach ( $bookings as $booking ) {
-                    // we use the language done in the booking for the mails, not the attendee lang in this case
+                    // we use the language done in the booking for the emails, not the attendee lang in this case
                     $attendee = eme_get_person( $booking['person_id'] );
                     if ( $attendee && is_array( $attendee ) ) {
                         if ($count_only) {
@@ -1402,8 +1412,8 @@ function eme_update_mailing_receivers( $mail_subject = '', $mail_message = '', $
                     }
                     $person_name = eme_format_full_name( $person['firstname'], $person['lastname'] );
 
-                    // we will NOT ignore double emails for member-related mails
-                    // we could postpone the placeholder replacement until the moment of actual sending (for large number of mails)
+                    // we will NOT ignore double emails for member-related emails
+                    // we could postpone the placeholder replacement until the moment of actual sending (for large number of emails)
                     // but that complicates the queue-code and is in fact ugly (I did it, but removed it on 2017-12-04)
                     // Once I hit execution timeouts I'll rethink it again
                     if ($count_only) {
@@ -1629,36 +1639,36 @@ function eme_ajax_mailings_list() {
         }
         if ( $mailing['status'] == 'cancelled' ) {
             $stats  = eme_unserialize( $mailing['stats'] );
-            $extra  = sprintf( __( '%d mails sent, %d mails failed, %d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
+            $extra  = sprintf( __( '%d emails sent, %d emails failed, %d emails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
             $action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=archive_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Archive', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'initial' ) {
             $stats  = '';
             $extra  = '';
             $action = "<a onclick='return areyousure(\"$areyousure\");' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'planned' ) {
-            // older mailings inserted the mails directly and not update the stats
+            // older mailings inserted the emails directly and not update the stats
             // newer mailings only set the planned stats and update the receivers the moment the mailing starts
             if (empty($mailing['stats'])) {
                 $stats  = eme_get_mailing_stats( $id );
             } else {
                 $stats  = eme_unserialize( $mailing['stats'] );
             }
-            $extra  = sprintf( __( '%d mails left', 'events-made-easy' ), $stats['planned'] );
+            $extra  = sprintf( __( '%d emails left', 'events-made-easy' ), $stats['planned'] );
             $action = "<a onclick='return areyousure(\"$areyousure\");' title='".__( 'Delete this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return areyousure(\"$areyousure\");' title='".__( 'Cancel the sending of this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'ongoing' ) {
             $stats  = eme_get_mailing_stats( $id );
-            $extra  = sprintf( __( '%d mails sent, %d mails failed, %d mails left', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['planned'] );
+            $extra  = sprintf( __( '%d emails sent, %d emails failed, %d emails left', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['planned'] );
             $action = "<a onclick='return areyousure(\"$areyousure\");' title='".__( 'Cancel the sending of this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=cancel_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Cancel', 'events-made-easy' ) . '</a>';
         } elseif ( $mailing['status'] == 'completed' || $mailing['status'] == '' ) {
             $stats  = eme_unserialize( $mailing['stats'] );
-            $extra  = sprintf( __( '%d mails sent, %d mails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
+            $extra  = sprintf( __( '%d emails sent, %d emails failed', 'events-made-easy' ), $stats['sent'], $stats['failed'] );
             $action = "<a onclick='return areyousure(\"$areyousure\");' title='".__( 'Delete this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . "</a><br><a onclick='return areyousure(\"$areyousure\");' title='".__( 'Archive this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=archive_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Archive', 'events-made-easy' ) . '</a>';
         }
         if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
             $action .= "<br><a title='".__( 'Reuse this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a>';
         }
         if ( is_array( $stats ) && !empty( $stats['failed'] ) ) {
-            $action .= "<br><a onclick='return areyousure(\"$areyousure\");' title='".__( 'Retry failed messages from this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=retry_failed_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Retry failed mails', 'events-made-easy' ) . '</a>';
+            $action .= "<br><a onclick='return areyousure(\"$areyousure\");' title='".__( 'Retry failed messages from this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=retry_failed_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Retry failed emails', 'events-made-easy' ) . '</a>';
         }
 
         $record = [];
@@ -1763,7 +1773,7 @@ function eme_ajax_archivedmailings_list() {
         $id = $mailing['id'];
 
         $stats  = eme_unserialize( $mailing['stats'] );
-        $extra  = sprintf( __( '%d mails sent, %d mails failed, %d mails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
+        $extra  = sprintf( __( '%d emails sent, %d emails failed, %d emails cancelled', 'events-made-easy' ), $stats['sent'], $stats['failed'], $stats['cancelled'] );
         $action = "<a onclick='return areyousure(\"$areyousure\");' title='".__( 'Delete this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=delete_archivedmailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Delete', 'events-made-easy' ) . '</a>';
         if ( ! empty( $mailing['subject'] ) && ! empty( $mailing['body'] ) ) {
             $action .= "<br><a title='".__( 'Reuse this mailing', 'events-made-easy' )."' href='" . wp_nonce_url( admin_url( 'admin.php?page=eme-emails&amp;eme_admin_action=reuse_mailing&amp;id=' . $id ), 'eme_admin', 'eme_admin_nonce' ) . "'>" . __( 'Reuse', 'events-made-easy' ) . '</a>';
@@ -1856,7 +1866,7 @@ function eme_ajax_mails_list() {
         }
         $count_sql  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where", $search_text, $search_text, $search_text );
         if (empty($orderby)) {
-            // "order by status=EME_MAIL_STATUS_PLANNED, id" will show the planned mails (status=EME_MAIL_STATUS_PLANNED) last
+            // "order by status=EME_MAIL_STATUS_PLANNED, id" will show the planned emails (status=EME_MAIL_STATUS_PLANNED) last
             $orderby = "ORDER BY status=".EME_MAIL_STATUS_PLANNED.",id";
         }
         $sql  = $wpdb->prepare( "SELECT * FROM $table WHERE (receivername LIKE %s OR receiveremail LIKE %s OR subject LIKE %s) $where $orderby $limit", $search_text, $search_text, $search_text );
@@ -1922,6 +1932,16 @@ function eme_ajax_manage_mails() {
     if ( isset( $_POST['do_action'] ) ) {
         $do_action = eme_sanitize_request( $_POST['do_action'] );
         switch ( $do_action ) {
+            case 'resendMails':
+                $mail_ids = explode( ',', eme_sanitize_request($_POST['mail_ids']) );
+                if (eme_is_integer_array($mail_ids)) {
+                    foreach ( $mail_ids as $mail_id ) {
+                        eme_resend_mail( $mail_id );
+                    }
+                }
+                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Emails scheduled to be resend','events-made-easy')."</div>";
+                $jTableResult['Result'] = 'OK';
+                break;
             case 'deleteMails':
                 $mail_ids = explode( ',', eme_sanitize_request($_POST['mail_ids']) );
                 if (eme_is_integer_array($mail_ids)) {
@@ -1929,7 +1949,7 @@ function eme_ajax_manage_mails() {
                         eme_delete_mail( $mail_id );
                     }
                 }
-                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Mails deleted','events-made-easy')."</div>";
+                $jTableResult['htmlmessage'] = "<div class='updated eme-message-admin'>".__('Emails deleted','events-made-easy')."</div>";
                 $jTableResult['Result'] = 'OK';
                 break;
         }
@@ -2148,7 +2168,7 @@ function eme_send_mails_ajax_actions( $action ) {
                 $dates = explode( ',', $mailing_datetime );
                 foreach ( $dates as $datetime ) {
                     $mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-                    // we just need the count of receivers here, the actual insert of individual mails happens when the mailing starts
+                    // we just need the count of receivers here, the actual insert of individual emails happens when the mailing starts
                     $res        = eme_count_planned_mailing_receivers( $conditions );
                     eme_mark_mailing_planned( $mailing_id, $res['total'] );
                 }
@@ -2342,7 +2362,7 @@ function eme_send_mails_ajax_actions( $action ) {
                     $dates = explode( ',', $mailing_datetime );
                     foreach ( $dates as $datetime ) {
                         $mailing_id = eme_db_insert_mailing( $mailing_name, $datetime, $mail_subject, $mail_message, $contact_email, $contact_name, $contact_email, $contact_name, $mail_text_html, $conditions );
-                        // we just need the count of receivers here, the actual insert of individual mails happens when the mailing starts
+                        // we just need the count of receivers here, the actual insert of individual emails happens when the mailing starts
                         $res        = eme_count_planned_mailing_receivers( $conditions );
                         eme_mark_mailing_planned( $mailing_id, $res['total'] );
                     }
@@ -2365,7 +2385,7 @@ function eme_send_mails_ajax_actions( $action ) {
             $ajaxResult['Result'] = 'OK';
         } else {
             if ( $mail_access_problems ) {
-                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Only mails for events you have the right to send mails for have been sent.', 'events-made-easy' ) . '</p></div>';
+                $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'Only emails for events you have the right to send emails for have been sent.', 'events-made-easy' ) . '</p></div>';
             } else {
                 $ajaxResult['htmlmessage'] = "<div id='message' class='error eme-message-admin'><p>" . __( 'There were some problems while sending mail.', 'events-made-easy' ) . '</p></div>';
                 if ( ! empty( $not_sent ) ) {
@@ -2728,8 +2748,8 @@ function eme_emails_page() {
         <td>
 <?php
     $eme_mail_type_arr = [
-        'attendees' => __( 'Attendee mails', 'events-made-easy' ),
-        'bookings' => __('Booking mails', 'events-made-easy'),
+        'attendees' => __( 'Attendee emails', 'events-made-easy' ),
+        'bookings' => __('Booking emails', 'events-made-easy'),
         'all_people' => __('Email to all people registered in EME', 'events-made-easy'),
         'people_and_groups' => __('Email to people and/or groups registered in EME', 'events-made-easy'),
         'all_wp' => __('Email to all WP users', 'events-made-easy'),
@@ -2755,7 +2775,7 @@ function eme_emails_page() {
         </td>
         </tr>
         <tr id="eme_only_unpaid_row">
-        <td><span id="span_unpaid_attendees"><?php esc_html_e( 'Only send mails to attendees who did not pay yet', 'events-made-easy' ); ?></span>
+        <td><span id="span_unpaid_attendees"><?php esc_html_e( 'Only send emails to attendees who did not pay yet', 'events-made-easy' ); ?></span>
         <span id="span_unpaid_bookings"><?php esc_html_e( 'Only take unpaid bookings into account', 'events-made-easy' ); ?></span>
         &nbsp;
         </td>
@@ -2831,7 +2851,7 @@ function eme_emails_page() {
         </p>
 <?php
     if ( get_option( 'eme_mail_send_html' ) ) {
-        // for mails, let enable the full html editor
+        // for emails, let enable the full html editor
         eme_wysiwyg_textarea( 'event_mail_message', $event_mail_message, 1, 1 );
         if ( current_user_can( 'unfiltered_html' ) ) {
             echo "<div class='eme_notice_unfiltered_html'>";
@@ -2848,8 +2868,8 @@ function eme_emails_page() {
     esc_html_e( 'You can use any placeholders mentioned here:', 'events-made-easy' );
     print "<br><a href='//www.e-dynamics.be/wordpress/?cat=25'>" . __( 'Event placeholders', 'events-made-easy' ) . '</a>';
     print "<br><a href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-12-people/'>" . __( 'People placeholders', 'events-made-easy' ) . '</a>';
-    print "<br><a href='//www.e-dynamics.be/wordpress/?cat=48'>" . __( 'Attendees placeholders', 'events-made-easy' ) . '</a> (' . __( 'for ', 'events-made-easy' ) . __( 'Attendee mails', 'events-made-easy' ) . ')';
-    print "<br><a href='//www.e-dynamics.be/wordpress/?cat=45'>" . __( 'Booking placeholders', 'events-made-easy' ) . '</a> (' . __( 'for ', 'events-made-easy' ) . __( 'Booking mails', 'events-made-easy' ) . ')';
+    print "<br><a href='//www.e-dynamics.be/wordpress/?cat=48'>" . __( 'Attendees placeholders', 'events-made-easy' ) . '</a> (' . __( 'for ', 'events-made-easy' ) . __( 'Attendee emails', 'events-made-easy' ) . ')';
+    print "<br><a href='//www.e-dynamics.be/wordpress/?cat=45'>" . __( 'Booking placeholders', 'events-made-easy' ) . '</a> (' . __( 'for ', 'events-made-easy' ) . __( 'Booking emails', 'events-made-easy' ) . ')';
     print "<br><a href='//www.e-dynamics.be/wordpress/category/documentation/7-placeholders/7-14-members/'>" . __( 'Member placeholders', 'events-made-easy' ) . '</a> (' . __( 'if you selected members, memberships or member groups', 'events-made-easy' ) . ')';
     print '<br>' . __( 'You can also use any shortcode you want.', 'events-made-easy' );
 ?>
@@ -2901,7 +2921,7 @@ function eme_emails_page() {
 ?>
             <div class='eme-message-admin'><p>
 <?php
-            esc_html_e( 'Warning: using this functionality to send mails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing.', 'events-made-easy' );
+            esc_html_e( 'Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing.', 'events-made-easy' );
 ?>
                 </p></div>
 <?php
@@ -3013,7 +3033,7 @@ function eme_emails_page() {
         </p>
 <?php
         if ( get_option( 'eme_mail_send_html' ) ) {
-            // for mails, let enable the full html editor
+            // for emails, let enable the full html editor
             eme_wysiwyg_textarea( 'generic_mail_message', $generic_mail_message, 1, 1 );
             if ( current_user_can( 'unfiltered_html' ) ) {
                 echo "<div class='eme_notice_unfiltered_html'>";
@@ -3080,7 +3100,7 @@ function eme_emails_page() {
 ?>
             <div class='eme-message-admin'><p>
 <?php
-                esc_html_e( 'Warning: using this functionality to send mails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing.', 'events-made-easy' );
+                esc_html_e( 'Warning: using this functionality to send emails to attendees can result in a php timeout, so not everybody will receive the mail then. This depends on the number of attendees, the load on the server, ... . If this happens, activate and configure mail queueing.', 'events-made-easy' );
 ?>
                 </p></div>
 <?php
@@ -3127,9 +3147,9 @@ function eme_mails_div() {
 <?php
             $archive_old_mailings_days = get_option( 'eme_gdpr_archive_old_mailings_days' );
             if ( empty( $archive_old_mailings_days ) ) {
-                esc_html_e( 'If you want to archive old mailings and clean up old mails automatically, check the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME', 'events-made-easy' );
+                esc_html_e( 'If you want to archive old mailings and clean up old emails automatically, check the option "Automatically archive old mailings and remove old emails" in the GDPR Settings of EME', 'events-made-easy' );
             } else {
-                sprintf(esc_html__( 'Every %d days, old mailings will be archived and old mails will be cleaned up (see the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME)', 'events-made-easy' ),$archive_old_mailings_days);
+                sprintf(esc_html__( 'Every %d days, old mailings will be archived and old emails will be cleaned up (see the option "Automatically archive old mailings and remove old emails" in the GDPR Settings of EME)', 'events-made-easy' ),$archive_old_mailings_days);
             }
 ?>
     </p></div>
@@ -3137,7 +3157,7 @@ function eme_mails_div() {
     <label for='search_text'><?php esc_html_e( 'Enter an optional search text', 'events-made-easy' ); ?></label>
     <input type="search" name="search_text" id="search_text" value="">
     <input id="search_failed" name='search_failed' value='1' type='checkbox' ><label for='search_failed'><?php esc_html_e( 'Only show failed emails', 'events-made-easy' ); ?></label>
-    <button id='MailsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Filter mails', 'events-made-easy' ); ?></button>
+    <button id='MailsLoadRecordsButton' class="button-primary action"> <?php esc_html_e( 'Filter emails', 'events-made-easy' ); ?></button>
     </form>
     <br>
     <div id="mails-message" class="eme-hidden" ></div>
@@ -3146,7 +3166,8 @@ function eme_mails_div() {
     <select id="eme_admin_action_mails" name="eme_admin_action_mails">
     <option value="" selected="selected"><?php esc_html_e( 'Bulk Actions', 'events-made-easy' ); ?></option>
     <option value="sendMails"><?php esc_html_e( 'Send generic email to selected persons', 'events-made-easy' ); ?></option>
-    <option value="deleteMails"><?php esc_html_e( 'Delete selected mails', 'events-made-easy' ); ?></option>
+    <option value="resendMails"><?php esc_html_e( 'Resend selected emails', 'events-made-easy' ); ?></option>
+    <option value="deleteMails"><?php esc_html_e( 'Delete selected emails', 'events-made-easy' ); ?></option>
     </select>
     <button id="MailsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
@@ -3176,16 +3197,16 @@ function eme_mailings_div() {
 <?php
     $archive_old_mailings_days = get_option( 'eme_gdpr_archive_old_mailings_days' );
     if ( empty( $archive_old_mailings_days ) ) {
-        esc_html_e( 'If you want to archive old mailings and clean up old mails automatically, check the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME', 'events-made-easy' );
+        esc_html_e( 'If you want to archive old mailings and clean up old emails automatically, check the option "Automatically archive old mailings and remove old emails" in the GDPR Settings of EME', 'events-made-easy' );
     } else {
-        sprintf(esc_html__( 'Every %d days, old mailings will be archived and old mails will be cleaned up (see the option "Automatically archive old mailings and remove old mails" in the GDPR Settings of EME)', 'events-made-easy' ),$archive_old_mailings_days);
+        sprintf(esc_html__( 'Every %d days, old mailings will be archived and old emails will be cleaned up (see the option "Automatically archive old mailings and remove old emails" in the GDPR Settings of EME)', 'events-made-easy' ),$archive_old_mailings_days);
     }
 ?>
     </p></div>
 <?php
     if ( ! get_option( 'eme_queue_mails' ) ) {
         print "<div class='eme-message-admin'><p>";
-        esc_html_e( 'Email queueing is not activated, so sent mails will only be visible in the "Sent emails" tab', 'events-made-easy' );
+        esc_html_e( 'Email queueing is not activated, so sent emails will only be visible in the "Sent emails" tab', 'events-made-easy' );
         print '</p></div>';
     }
 ?>

@@ -6121,7 +6121,7 @@ function eme_events_table( $message = '' ) {
     </select>
     <span id="span_sendtrashmails" class="eme-hidden">
 <?php
-        esc_html_e( 'Send mails for cancelled bookings too?', 'events-made-easy' );
+        esc_html_e( 'Send emails for cancelled bookings too?', 'events-made-easy' );
         echo eme_ui_select_binary( 0, 'send_trashmails' );
 ?>
     </span>
@@ -6779,7 +6779,7 @@ function eme_event_form( $event, $info, $edit_recurrence = 0 ) {
         // if it is not a new event and there's no contact person defined, then the event author becomes contact person
         // So let's display a warning what this means if there's no author (like when submitting via the frontend submission form)
         if ( ! $is_new_event && $event['event_contactperson_id'] < 1 && $event['event_author'] < 1 ) {
-            print '<br>' . __( 'Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending mails), will use the admin user info.', 'events-made-easy' );
+            print '<br>' . __( 'Since the author is undefined for this event, any reference to the contact person (like when using #_CONTACTPERSON when sending emails), will use the admin user info.', 'events-made-easy' );
         }
 ?>
         </p>
@@ -7609,11 +7609,11 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
         $showhide_style = 'style="width:100%;"';
     }
     echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
-    esc_html_e( 'When an event is configured to auto-approve bookings after payment and you have selected to send out payment mails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid.', 'events-made-easy' );
+    esc_html_e( 'When an event is configured to auto-approve bookings after payment and you have selected to send out payment emails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid.', 'events-made-easy' );
     if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
     } elseif ( ! get_option( 'eme_rsvp_mail_notify_approved' ) ) {
-        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for bookings made or approved, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
     }
 ?>
 <div>
@@ -7753,9 +7753,9 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
         $showhide_style = 'style="width:100%;"';
     }
     if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
     } elseif ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
-        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
     }
 ?>
 
@@ -7810,12 +7810,12 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
         $showhide_style = 'style="width:100%;"';
     }
     if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
     } elseif ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
-        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
     }
     echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
-    esc_html_e( 'When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 mails at the same time.', 'events-made-easy' );
+    esc_html_e( 'When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time.', 'events-made-easy' );
 ?>
 
 <div>
@@ -8197,9 +8197,9 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
         $showhide_style = 'style="width:100%;"';
     }
     if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
-        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
     } elseif ( ! get_option( 'eme_rsvp_mail_notify_paid' ) ) {
-        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for paid bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for paid bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
     }
 ?>
 <div>
@@ -8842,7 +8842,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
         <br>
 <?php
     if ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
-        print "<span id='span_approval_required_mail_warning'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . __( 'RSVP notifications are not activated for pending bookings, so these mails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</span>';
+        print "<span id='span_approval_required_mail_warning'><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . __( 'RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</span>';
     }
 ?>
     </p>
@@ -10094,7 +10094,7 @@ function eme_admin_enqueue_js() {
         wp_enqueue_script( 'eme-rsvp' );
     }
     if ( in_array( $plugin_page, [ 'eme-categories' ] ) ) {
-        // if html mails are disabled, this is needed
+        // if html emails are disabled, this is needed
         wp_enqueue_media();
         $translation_array = [
             'translate_id'              => __( 'ID', 'events-made-easy' ),
@@ -10109,7 +10109,7 @@ function eme_admin_enqueue_js() {
         wp_enqueue_script( 'eme-categories' );
     }
     if ( in_array( $plugin_page, [ 'eme-holidays' ] ) ) {
-        // if html mails are disabled, this is needed
+        // if html emails are disabled, this is needed
         wp_enqueue_media();
         $translation_array = [
             'translate_id'              => __( 'ID', 'events-made-easy' ),
@@ -10124,7 +10124,7 @@ function eme_admin_enqueue_js() {
         wp_enqueue_script( 'eme-holidays' );
     }
     if ( in_array( $plugin_page, [ 'eme-emails' ] ) ) {
-        // if html mails are disabled, this is needed
+        // if html emails are disabled, this is needed
         wp_enqueue_media();
         $translation_array = [
             'translate_id'              => __( 'ID', 'events-made-easy' ),

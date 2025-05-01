@@ -1343,7 +1343,7 @@ function eme_payment_form_legacypaypal( $item_name, $payment, $baseprice, $cur, 
     $events_page_link  = eme_get_events_page();
     $payment_id        = $payment['id'];
     $success_link      = eme_payment_return_url( $payment, 0 );
-    $fail_link         = eme_payment_return_url( $payment, 1 );
+    $cancel_link       = eme_payment_url( $payment );
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
     $description = eme_get_payment_desc( $item_name, $payment, $gateway, $multi_booking );
@@ -1392,7 +1392,7 @@ function eme_payment_form_legacypaypal( $item_name, $payment, $baseprice, $cur, 
     $p->add_field( 'charset', 'utf-8' );
     $p->add_field( 'business', $eme_paypal_business );
     $p->add_field( 'return', $success_link );
-    $p->add_field( 'cancel_return', $fail_link );
+    $p->add_field( 'cancel_return', $cancel_link );
     $p->add_field( 'notify_url', $notification_link );
     $p->add_field( 'item_name', $description );
     $p->add_field( 'item_number', $payment_id );
@@ -1424,7 +1424,6 @@ function eme_payment_form_mercadopago( $item_name, $payment, $baseprice, $cur, $
     $payment_id        = $payment['id'];
     $events_page_link  = eme_get_events_page();
     $success_link      = eme_payment_return_url( $payment, 0 );
-    $fail_link         = eme_payment_return_url( $payment, 1 );
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
     require_once 'payment_gateways/mercadopago/vendor/autoload.php';
@@ -2187,6 +2186,7 @@ function eme_charge_paypal() {
     $payment          = eme_get_payment( $payment_id );
     $success_link     = eme_payment_return_url( $payment, $gateway );
     $fail_link        = eme_payment_return_url( $payment, 1 );
+    $cancel_link      = eme_payment_url( $payment );
     // $notification_link = add_query_arg(array('eme_eventAction'=>'paypal_notification'),$events_page_link);
 
     // no cheating
@@ -2246,7 +2246,7 @@ function eme_charge_paypal() {
             ],
         ],
         'application_context' => [
-            'cancel_url' => $fail_link,
+            'cancel_url' => $cancel_link,
             'return_url' => $success_link,
         ],
     ];
@@ -2360,7 +2360,7 @@ function eme_charge_stripe() {
     $description      = eme_sanitize_request( $_POST['description'] );
     $payment          = eme_get_payment( $payment_id );
     $success_link     = eme_payment_return_url( $payment, $gateway );
-    $fail_link        = eme_payment_return_url( $payment, 1 );
+    $cancel_link      = eme_payment_url( $payment );
 
     // no cheating
     if ( empty($_POST["eme_{$gateway}_nonce"]) || ! wp_verify_nonce( $_POST["eme_{$gateway}_nonce"], "$price$cur" ) ) {
@@ -2416,7 +2416,7 @@ function eme_charge_stripe() {
         'mode'                 => 'payment',
         'client_reference_id'  => $payment_id,
         'success_url'          => $success_link,
-        'cancel_url'           => $fail_link,
+        'cancel_url'           => $cancel_link,
     ];
 
     // prefill e-mail in Stripe form if possible
@@ -2555,8 +2555,7 @@ function eme_charge_instamojo() {
                 'purpose'      => $description,
                 'amount'       => "$price",
                 'redirect_url' => $return_link,
-                'webhook'      => $notification_link,
-
+                'webhook'      => $notification_link
             ]
         );
         $url = $instamojo_payment['longurl'];
@@ -2903,6 +2902,7 @@ function eme_charge_mollie() {
 
     $return_link       = eme_payment_return_url( $payment, $gateway );
     $fail_link         = eme_payment_return_url( $payment, $gateway );
+    $cancel_link       = eme_payment_url( $payment );
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
 
     // no cheating
@@ -2936,6 +2936,7 @@ function eme_charge_mollie() {
                 'description' => $description,
                 'redirectUrl' => $return_link,
                 'webhookUrl'  => $notification_link,
+                'cancelUrl'   => $cancel_link,
                 'metadata'    => [
                     'payment_id' => $payment_id,
                 ],

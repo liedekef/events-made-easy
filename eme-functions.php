@@ -410,10 +410,7 @@ function eme_check_captcha( $properties = [], $remove_captcha_if_ok = 0 ) {
         }
     }
     $configured_captchas = eme_get_configured_captchas();
-    if (! empty( $properties ) && isset($properties['selected_captcha']))
-        $selected_captcha = $properties['selected_captcha'];
-    else
-        $selected_captcha = '';
+    $selected_captcha = !empty($properties) && isset($properties['selected_captcha']) && isset($configured_captchas[$properties['selected_captcha']]) ? $properties['selected_captcha'] : '';
 
     if ( ( ! empty( $properties ) && $selected_captcha == 'recaptcha' ) || ( empty( $properties ) && isset( $configured_captchas['recaptcha'] ) ) ) {
         $captcha_res = eme_check_recaptcha();

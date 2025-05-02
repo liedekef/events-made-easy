@@ -961,13 +961,10 @@ function eme_cancel_mailing( $mailing_id ) {
 }
 
 function eme_resend_mail( $id ) {
-    global $wpdb;
-    $queue_table = EME_DB_PREFIX . EME_MQUEUE_TBNAME;
-    $where = [
-	    'id' => $mail_id,
-    ];
-    $fields = ['status' => EME_MAIL_STATUS_PLANNED ];
-    $wpdb->update( $queue_table, $fields, $where );
+    $mail = eme_get_mail( $id );
+    if (!empty($mail)) {
+        eme_queue_mail( $mail['subject'], $mail['body'], $mail['fromemail'], $mail['fromname'], $mail['receiveremail'], $mail['receivername'], $mail['replytoemail'], $mail['replytoname '], $mail['mailing_id'], $mail['person_id'], $mail['member_id'], eme_unserialize($mail['attachments']), add_listhdrs: $mail['add_listhdrs'] );
+    }
 }
 
 function eme_delete_mail( $id ) {

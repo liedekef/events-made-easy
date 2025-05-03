@@ -2653,11 +2653,11 @@ function eme_nl2br_save_html( $string ) {
     foreach ( $lines as $i => $line ) {
         if ( $i != $last_index ) {
             // no br if certain tags are found
-            if ( strstr( $line, '<script' ) ) {
+            if ( str_contains( $line, '<script' ) ) {
                 $add_br = 0;
                 continue;
             }
-            if ( strstr( $line, '</script>' ) ) {
+            if ( str_contains( $line, '</script>' ) ) {
                 $add_br = 1;
                 continue;
             }

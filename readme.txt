@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.57 (2025//) =
+* If wanted, send out paid emails immediately (when a payment arrives via a payment gateway)
+
 = 2.5.56 (2025/04/28) =
 * The pending booking mail now gets removed after one run from the mail queue if the payment arrives (and only if online payments are possible). This is a more consistent removal period and action
 

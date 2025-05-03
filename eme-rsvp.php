@@ -4174,6 +4174,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
     $attachment_tmpl_ids_arr = [];
     $ticket_attachment      = '';
     $add_pending_mailid     = 0;
+    $send_immediately       = 0;
 
     switch ( $action ) {
     case 'resendApprovedBooking':
@@ -4436,6 +4437,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         $contact_subject_filter = 'contact_cancelled_body';
         $contact_body_filter    = 'contact_cancelled_subject';
         break;
+    case 'paidBookingFromFrontend':
     case 'paidBooking':
         if ( $mailing_paid ) {
             $template_id = $event['event_properties']['ticket_template_id'];
@@ -4487,6 +4489,9 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         $person_body_filter     = 'paid_body';
         $contact_subject_filter = 'contact_paid_subject';
         $contact_body_filter    = 'contact_paid_body';
+        if ( $action == "paidBookingFromFrontend" && get_option('eme_rsvp_paidmail_immediately') ) {
+            $send_immediately = 1;
+        }
         break;
     case 'pendingButPaid':
         $contact_subject = 'Failed to auto-approve pending paid booking';
@@ -4746,7 +4751,11 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
                     eme_add_pendingbooking_mail( $booking['booking_id'], $mail_res );
                 }
             } else {
-                $mail_res = eme_queue_mail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
+                if ( $send_immediately ) {
+                    $mail_res = eme_queue_fastmail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
+                } else {
+                    $mail_res = eme_queue_mail( $person_subject, $person_body, $contact_email, $contact_name, $person['email'], $person_name, $contact_email, $contact_name, 0, $booking['person_id'], 0, $attachment_ids_arr );
+                }
             }
         }
     }

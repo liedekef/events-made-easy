@@ -326,6 +326,7 @@ function eme_add_options( $reset = 0 ) {
         'eme_use_select_for_locations'                    => false,
         'eme_attributes_enabled'                          => false,
         'eme_rsvp_enabled'                                => true,
+        'eme_members_enabled'                             => true,
         'eme_rsvp_addbooking_submit_string'               => __( 'Send your booking', 'events-made-easy' ),
         'eme_rsvp_addbooking_min_spaces'                  => 1,
         'eme_rsvp_addbooking_max_spaces'                  => 10,
@@ -1162,7 +1163,7 @@ function eme_options_register() {
     $options = [];
     $tab     = isset( $_POST['tab'] ) ? eme_sanitize_request( $_POST['tab'] ) : 'general';
     $options = match( $tab ) {
-        'general' => [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_friendlycaptcha_for_forms', 'eme_friendlycaptcha_site_key', 'eme_friendlycaptcha_secret_key', 'eme_captcha_only_logged_out', 'eme_frontend_nocache', 'eme_use_is_page_for_title', 'eme_rememberme' ],
+        'general' => [ 'eme_use_select_for_locations', 'eme_add_events_locs_link_search', 'eme_rsvp_enabled', 'eme_tasks_enabled', 'eme_categories_enabled', 'eme_attributes_enabled', 'eme_members_enabled', 'eme_map_is_active', 'eme_load_js_in_header', 'eme_use_client_clock', 'eme_uninstall_drop_data', 'eme_uninstall_drop_settings', 'eme_shortcodes_in_widgets', 'eme_enable_notes_placeholders', 'eme_autocomplete_sources', 'eme_captcha_for_forms', 'eme_recaptcha_for_forms', 'eme_recaptcha_site_key', 'eme_recaptcha_secret_key', 'eme_hcaptcha_for_forms', 'eme_hcaptcha_site_key', 'eme_hcaptcha_secret_key', 'eme_cfcaptcha_for_forms', 'eme_cfcaptcha_site_key', 'eme_cfcaptcha_secret_key', 'eme_friendlycaptcha_for_forms', 'eme_friendlycaptcha_site_key', 'eme_friendlycaptcha_secret_key', 'eme_captcha_only_logged_out', 'eme_frontend_nocache', 'eme_use_is_page_for_title', 'eme_rememberme' ],
         'seo' => [ 'eme_seo_permalink', 'eme_permalink_events_prefix', 'eme_permalink_locations_prefix', 'eme_permalink_categories_prefix', 'eme_permalink_calendar_prefix', 'eme_permalink_payments_prefix' ],
         'access' => [ 'eme_cap_add_event', 'eme_cap_author_event', 'eme_cap_publish_event', 'eme_cap_list_events', 'eme_cap_edit_events', 'eme_cap_manage_task_signups', 'eme_cap_list_locations', 'eme_cap_add_locations', 'eme_cap_author_locations', 'eme_cap_edit_locations', 'eme_cap_categories', 'eme_cap_holidays', 'eme_cap_templates', 'eme_cap_access_people', 'eme_cap_list_people', 'eme_cap_edit_people', 'eme_cap_author_person', 'eme_cap_access_members', 'eme_cap_list_members', 'eme_cap_edit_members', 'eme_cap_author_member', 'eme_cap_discounts', 'eme_cap_list_approve', 'eme_cap_author_approve', 'eme_cap_approve', 'eme_cap_list_registrations', 'eme_cap_author_registrations', 'eme_cap_registrations', 'eme_cap_attendancecheck', 'eme_cap_membercheck', 'eme_cap_forms', 'eme_cap_cleanup', 'eme_cap_settings', 'eme_cap_send_mails', 'eme_cap_send_other_mails', 'eme_cap_list_attendances', 'eme_cap_manage_attendances', 'eme_limit_admin_event_listing' ],
         'events' => [ 'eme_events_page', 'eme_display_events_in_events_page', 'eme_display_calendar_in_events_page', 'eme_event_list_number_items', 'eme_event_initial_state', 'eme_event_list_item_format_header', 'eme_cat_event_list_item_format_header', 'eme_event_list_item_format', 'eme_event_list_item_format_footer', 'eme_cat_event_list_item_format_footer', 'eme_event_page_title_format', 'eme_event_html_title_format', 'eme_single_event_format', 'eme_show_period_monthly_dateformat', 'eme_show_period_yearly_dateformat', 'eme_events_page_title', 'eme_no_events_message', 'eme_filter_form_format', 'eme_redir_priv_event_url' ],
@@ -1311,6 +1312,9 @@ function eme_admin_tabs( $current = 'homepage' ) {
     if ( ! get_option( 'eme_tasks_enabled' ) ) {
         unset( $tabs['tasks'] );
     }
+    if ( ! get_option( 'eme_members_enabled' ) ) {
+        unset( $tabs['members'] );
+    }
     echo '<div id="icon-themes" class="icon32"></div>';
     echo '<h1 class="nav-tab-wrapper">';
     $eme_options_url = admin_url( 'admin.php?page=eme-options' );
@@ -1446,6 +1450,7 @@ function eme_options_page() {
                 eme_options_radio_binary( __( 'Use tasks?', 'events-made-easy' ), 'eme_tasks_enabled', __( 'Select yes to enable the Tasks feature so people can sign up for event tasks (volunteer management).', 'events-made-easy' ) );
                 eme_options_radio_binary( __( 'Use categories?', 'events-made-easy' ), 'eme_categories_enabled', __( 'Select yes to enable the category features.', 'events-made-easy' ) );
                 eme_options_radio_binary( __( 'Use attributes?', 'events-made-easy' ), 'eme_attributes_enabled', __( 'Select yes to enable the attributes feature.', 'events-made-easy' ) );
+                eme_options_radio_binary( __( 'Use members?', 'events-made-easy' ), 'eme_members_enabled', __( 'Select yes to enable the members and membership features.', 'events-made-easy' ) );
                 eme_options_radio_binary( __( 'Enable Maps?', 'events-made-easy' ), 'eme_map_is_active', __( 'Check this option to be able to show a map of the event or location using #_MAP or the available shortcodes.', 'events-made-easy' ) );
                 eme_options_radio_binary( __( 'Always include JS in header?', 'events-made-easy' ), 'eme_load_js_in_header', __( 'Some themes are badly designed and can have issues showing the map or advancing in the calendar. If so, try activating this option which will cause the javascript to always be included in the header of every page (off by default).', 'events-made-easy' ) );
                 eme_options_radio_binary( __( 'Use the client computer clock for the calendar', 'events-made-easy' ), 'eme_use_client_clock', __( 'Check this option if you want to use the clock of the client as base to calculate current day for the calendar.', 'events-made-easy' ) );

@@ -7608,12 +7608,18 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     } else {
         $showhide_style = 'style="width:100%;"';
     }
-    echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
-    esc_html_e( 'When an event is configured to auto-approve bookings after payment and you have selected to send out payment emails and the total amount to pay is not 0, this mail is not sent but the mail concerning a booking being paid is sent when a pending booking is marked as paid.', 'events-made-easy' );
     if ( ! get_option( 'eme_rsvp_mail_notify_is_active' ) ) {
         print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
-    } elseif ( ! get_option( 'eme_rsvp_mail_notify_approved' ) ) {
-        print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+    } else {
+        if ( ! get_option( 'eme_rsvp_mail_notify_approved' ) ) {
+            print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
+        } else {
+            if ( get_option( 'eme_rsvp_mail_notify_paid' ) ) {
+                print "<div class='info eme-message-admin'><p>" . __( 'When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this mail is sent when a pending booking is marked as paid..', 'events-made-easy' ) . '</p></div>';
+            } else {
+                print "<div class='info eme-message-admin'><p>" . __( 'Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid.', 'events-made-easy' ) . '</p></div>';
+            }
+        }
     }
 ?>
 <div>

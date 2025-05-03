@@ -3743,7 +3743,7 @@ function eme_mark_payment_paid( $payment_id, $is_ipn = 1, $pg = '', $pg_pid = ''
             $booking_event_price = eme_get_booking_event_price( $booking );
             if ( $mailing_paid && ( $total_price > 0 || ( $total_price == 0 && $booking_event_price > 0 && $mail_sent == 0 ) ) ) {
                 eme_ignore_pendingbooking_mail( $booking );
-                eme_email_booking_action( $booking, 'paidBookingFromFrontend' );
+                eme_email_booking_action( $booking, 'paidBooking' );
             }
 
             if ( $is_ipn ) {

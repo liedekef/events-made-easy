@@ -4437,7 +4437,6 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         $contact_subject_filter = 'contact_cancelled_body';
         $contact_body_filter    = 'contact_cancelled_subject';
         break;
-    case 'paidBookingFromFrontend':
     case 'paidBooking':
         if ( $mailing_paid ) {
             $template_id = $event['event_properties']['ticket_template_id'];
@@ -4489,7 +4488,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         $person_body_filter     = 'paid_body';
         $contact_subject_filter = 'contact_paid_subject';
         $contact_body_filter    = 'contact_paid_body';
-        if ( $action == "paidBookingFromFrontend" && get_option('eme_rsvp_paidmail_immediately') ) {
+        if ( get_option('eme_rsvp_paidmail_immediately') ) {
             $send_immediately = 1;
         }
         break;

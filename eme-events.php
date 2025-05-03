@@ -7578,7 +7578,7 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
     }
 ?>
 <div id="div_event_registration_recorded_ok_html">
-        <br>
+    <br>
 <?php
     echo '<b>' . esc_html__( 'Booking recorded message', 'events-made-easy' ) . '</b>';
 ?>
@@ -7615,7 +7615,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
             print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for bookings made or approved, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
         } else {
             if ( get_option( 'eme_rsvp_mail_notify_paid' ) ) {
-                print "<div class='info eme-message-admin'><p>" . __( 'When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this mail is sent when a pending booking is marked as paid..', 'events-made-easy' ) . '</p></div>';
+                print "<div class='info eme-message-admin'><p>" . __( 'When an event is configured to auto-approve bookings after payment and the total amount to pay is 0, this email will be sent when a pending booking is marked as paid (and not the paid-email, since there was nothing to pay for).', 'events-made-easy' ) . '</p></div>';
             } else {
                 print "<div class='info eme-message-admin'><p>" . __( 'Since RSVP notifications after payment are not active, this email will also be sent when a booking is marked as paid.', 'events-made-easy' ) . '</p></div>';
             }
@@ -8209,7 +8209,6 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     }
 ?>
 <div>
-    <br>
     <b><?php esc_html_e( 'Booking Paid Email Subject', 'events-made-easy' ); ?></b>
     <p class="eme_smaller"><?php esc_html_e( 'The subject of the email that will be sent to the respondent when a booking is marked as paid.', 'events-made-easy' ); ?>
     <br>

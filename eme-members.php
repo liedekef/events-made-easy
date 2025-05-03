@@ -1605,33 +1605,33 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <td style="vertical-align:top"><label for="chooserelatedmember"><?php esc_html_e( "'Head of the family' account", 'events-made-easy' ); ?></label></td>
         <td> <input type="hidden" name="related_member_id" id="related_member_id" value="<?php echo intval( $member['related_member_id'] ); ?>">
 <?php
-                    if (isset( $member['member_id'] )) {
-                        $related_member_ids = eme_get_family_member_ids( $member['member_id'] );
-                    } else {
-                        $related_member_ids = [];
-                    }
-                    if ( $action == 'edit' && ! empty( $related_member_ids ) ) {
-                        esc_html_e( 'This member is head of the family for other members.', 'events-made-easy' );
-                        print '<br>' . esc_html__( 'Family members:', 'events-made-easy' );
-                        foreach ( $related_member_ids as $related_member_id ) {
-                            $related_member = eme_get_member( $related_member_id );
-                            if ( $related_member ) {
-                                $related_person = eme_get_person( $related_member['person_id'] );
-                                if ( $related_person ) {
-                                    print "<br><a href='" . admin_url( "admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=$related_member_id" ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
-                                }
-                            }
-                        }
-                    } else {
+             if ( isset( $member['member_id'] ) ) {
+                 $related_member_ids = eme_get_family_member_ids( $member['member_id'] );
+             } else {
+                 $related_member_ids = [];
+             }
+             if ( $action == 'edit' && ! empty( $related_member_ids ) ) {
+                 esc_html_e( 'This member is head of the family for other members.', 'events-made-easy' );
+                 print '<br>' . esc_html__( 'Family members:', 'events-made-easy' );
+                 foreach ( $related_member_ids as $related_member_id ) {
+                     $related_member = eme_get_member( $related_member_id );
+                     if ( $related_member ) {
+                         $related_person = eme_get_person( $related_member['person_id'] );
+                         if ( $related_person ) {
+                             print "<br><a href='" . admin_url( "admin.php?page=eme-members&amp;eme_admin_action=edit_member&amp;member_id=$related_member_id" ) . "' title='" . esc_html__( 'Edit member', 'events-made-easy' ) . "'>" . eme_esc_html( eme_format_full_name( $related_person['firstname'], $related_person['lastname'], $related_person['email'] ) ) . '</a>';
+                         }
+                     }
+                 }
+             } else {
 ?>
-        <input type='text' id='chooserelatedmember' name='chooserelatedmember' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" value="<?php echo $related_person_name; ?>" <?php echo $related_person_class; ?>>
-        <br><?php esc_html_e( "You can link this member to a 'head of the family' account, after which this member's start/end date and status are linked to the values of the head of the family and the below values for those fields are then ignored. This person will then no longer be charged for his membership too.", 'events-made-easy' ); ?>
+                 <input type='text' id='chooserelatedmember' name='chooserelatedmember' placeholder="<?php esc_attr_e( 'Start typing a name', 'events-made-easy' ); ?>" value="<?php echo $related_person_name; ?>" <?php echo $related_person_class; ?>>
+                 <br><?php esc_html_e( "You can link this member to a 'head of the family' account, after which this member's start/end date and status are linked to the values of the head of the family and the below values for those fields are then ignored. This person will then no longer be charged for his membership too.", 'events-made-easy' ); ?>
 <?php
-                        if ( ! empty( $member['related_member_id'] ) ) {
-                            echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
-                            esc_html_e( "Since this member relates to another family member, you can't edit the basic membership info. Please first remove the relationship (by emptying this field) and press save if you want to do that.", 'events-made-easy' );
-                        }
-                    }
+                 if ( ! empty( $member['related_member_id'] ) ) {
+                     echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
+                     esc_html_e( "Since this member relates to another family member, you can't edit the basic membership info. Please first remove the relationship (by emptying this field) and press save if you want to do that.", 'events-made-easy' );
+                 }
+             }
 ?>
         </td>
     </tr>
@@ -1640,23 +1640,23 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <td>
             <input type='hidden' name='start_date' id='start_date' value='<?php echo $member['start_date']; ?>'>
 <?php
-                    if ( $limited ) {
-                        echo eme_localized_date( $member['start_date'], EME_TIMEZONE, 1 );
-                    } else {
+            if ( $limited ) {
+                echo eme_localized_date( $member['start_date'], EME_TIMEZONE, 1 );
+            } else {
 ?>
-            <input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo eme_js_datetime( $member['start_date'] ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
-        <?php } ?>
+                 <input type='text' readonly='readonly' name='dp_start_date' id='dp_start_date' data-date='<?php echo eme_js_datetime( $member['start_date'] ); ?>' data-alt-field='start_date' class='eme_formfield_fdate'>
+<?php       } ?>
     </td></tr>
     <tr><td><?php esc_html_e( 'End date', 'events-made-easy' ); ?></td>
         <td>
             <input type='hidden' name='end_date' id='end_date' value='<?php echo $member['end_date']; ?>'>
 <?php
-                        if ( $limited ) {
-                            echo eme_localized_date( $member['end_date'], EME_TIMEZONE, 1 );
-                        } else {
+            if ( $limited ) {
+                echo eme_localized_date( $member['end_date'], EME_TIMEZONE, 1 );
+            } else {
 ?>
-            <input type='text' readonly='readonly' name='dp_end_date' id='dp_end_date' data-date='<?php echo eme_js_datetime( $member['end_date'] ); ?>' data-alt-field='end_date' class='eme_formfield_fdate'>
-        <?php } ?>
+                <input type='text' readonly='readonly' name='dp_end_date' id='dp_end_date' data-date='<?php echo eme_js_datetime( $member['end_date'] ); ?>' data-alt-field='end_date' class='eme_formfield_fdate'>
+<?php       } ?>
     </td></tr>
 <?php if ( $membership['properties']['max_usage_count'] > 0 ) { ?>
     <tr>
@@ -1664,9 +1664,9 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     <td><input type="number" id="properties[usage_count]" name="properties[usage_count]" value="<?php echo $member['properties']['usage_count']; ?>" size="40">
         <br><p class='eme_smaller'><?php esc_html_e( 'This indicates the amount of times this member has RSVP-ed to an event that requires this membership.', 'events-made-easy' ); ?>
 <?php 
-                            if ( $member['properties']['usage_count'] >= $membership['properties']['max_usage_count'] ) {
-                                echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: usage count is at its maximum, the status will therefore always be set to Expired!', 'events-made-easy' );
-                            }
+        if ( $member['properties']['usage_count'] >= $membership['properties']['max_usage_count'] ) {
+            echo "<br><img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: usage count is at its maximum, the status will therefore always be set to Expired!', 'events-made-easy' );
+        }
 ?>
         </p>
     </td>
@@ -1675,9 +1675,9 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
     <tr><td><?php esc_html_e( 'Member status calculated automatically', 'events-made-easy' ); ?></td>
     <td><?php echo eme_ui_select_binary( $member['status_automatic'], 'status_automatic', 0, 'nodynamicupdates', $disabled ); ?>
 <?php
-                            if ( $member['status_automatic'] && ! $member['paid'] && $action == 'edit' && empty( $member['related_member_id'] ) ) {
-                                echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: membership is not paid for, so automatic status calculation will not happen!', 'events-made-easy' );
-                            }
+        if ( $member['status_automatic'] && ! $member['paid'] && $action == 'edit' && empty( $member['related_member_id'] ) ) {
+            echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>" . esc_html__( 'Warning: membership is not paid for, so automatic status calculation will not happen!', 'events-made-easy' );
+        }
 ?>
         <?php echo "<p class='eme_smaller'>" . esc_html__( 'If set to automatic and the membership is paid for, the status will be recalculated on a daily basis.', 'events-made-easy' ) . '</p>'; ?>
         </td></tr>
@@ -1691,32 +1691,20 @@ function eme_admin_edit_memberform( $member, $membership_id, $limited = 0 ) {
         <td>
             <input type='hidden' name='payment_date' id='payment_date' value='<?php echo $member['payment_date']; ?>'>
 <?php
-                            if ( $limited ) {
-                                echo eme_localized_datetime( $member['payment_date'], EME_TIMEZONE, 1 );
-                            } else {
+            if ( $limited ) {
+                echo eme_localized_datetime( $member['payment_date'], EME_TIMEZONE, 1 );
+            } else {
 ?>
-            <input type='text' readonly='readonly' name='dp_payment_date' id='dp_payment_date' data-date='<?php echo eme_js_datetime( $member['payment_date'] ); ?>' data-alt-field='payment_date' class='eme_formfield_fdatetime'>
-        <?php } ?>
+                <input type='text' readonly='readonly' name='dp_payment_date' id='dp_payment_date' data-date='<?php echo eme_js_datetime( $member['payment_date'] ); ?>' data-alt-field='payment_date' class='eme_formfield_fdatetime'>
+<?php       } ?>
         <br>
         <?php echo "<p class='eme_smaller'>" . esc_html__( 'This indicates the last date a payment was received. Changing this will only change that date, no new payment will actually be processed and the membership state is not influenced by this.', 'events-made-easy' ) . '</p>'; ?>
     </td></tr>
+    </table><br><br>
 <?php
-                                //if ($action == "edit") {
-                                //  $member_id=$member['member_id'];
-                                // $files_title=__('Uploaded files related to the person', 'events-made-easy');
-                                // print eme_get_uploaded_files_tr($member['person_id'],"people",$files_title,1);
-                                // $files_title=__('Uploaded files related to the membership', 'events-made-easy');
-                                // print eme_get_uploaded_files_tr($member_id,"members",$files_title);
-                                //}
+    echo eme_member_form( $member, $membership_id, 1 );
 ?>
-
-        </table><br><br>
-<?php
-                                //esc_html_e( 'Member info', 'events-made-easy' );
-                                //echo '<br>';
-                                echo eme_member_form( $member, $membership_id, 1 );
-?>
-        </form>
+    </form>
 <?php
 }
 

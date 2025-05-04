@@ -4546,7 +4546,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
             }
             $person_subject_filter = 'userconfirmation_pending_subject';
             $person_body_filter    = 'userconfirmation_pending_body';
-        } elseif ( $booking['status'] == EME_RSVP_STATUS_PENDING && ( $event['registration_requires_approval'] || $booking['waitinglist'] ) ) {
+        } elseif ( $booking['status'] == EME_RSVP_STATUS_PLANNED && ( $event['registration_requires_approval'] || $booking['waitinglist'] ) ) {
             if ( $mailing_pending ) {
                 $template_id = $event['event_properties']['ticket_template_id'];
                 if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'booking' || $event['event_properties']['ticket_mail'] == 'always' ) ) {

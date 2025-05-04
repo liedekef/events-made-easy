@@ -723,6 +723,10 @@ function eme_process_single_mail( $mail ) {
 }
 
 function eme_send_queued($force_interval=0) {
+    if ( ! get_option( 'eme_queue_mails' ) ) {
+        return;
+    }
+
     // we'll build in a safety precaution to make sure to never surpass the schedule duration
     $start_time   = time();
     if (!$force_interval || !is_numeric($force_interval)) {
@@ -794,6 +798,9 @@ function eme_send_queued($force_interval=0) {
             eme_mark_mailing_completed( $mailing['id'] );
         }
     }
+
+    // at the end of a round, we now set all delayed emails to planned too
+    eme_mark_delayed_mails_planned();
 }
 
 function eme_get_passed_planned_mailingids( $now ) {

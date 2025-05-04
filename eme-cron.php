@@ -160,11 +160,7 @@ function eme_cron_send_queued() {
     if ( ! eme_is_datamaster() ) {
         return;
     }
-    if ( get_option( 'eme_queue_mails' ) ) {
-        eme_send_queued();
-        // at the end of a round, we now set all delayed emails to planned too
-        eme_mark_delayed_mails_planned();
-    }
+    eme_send_queued();
 }
 
 add_action( 'eme_cron_member_daily_actions', 'eme_cron_member_daily_actions' );

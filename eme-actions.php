@@ -701,7 +701,7 @@ add_action( 'rest_api_init', function () {
                 'validate_callback' => function($param, $request, $key) {
                     return is_numeric( $param );
                 }
-    ),
+            ),
         ),
         'permission_callback' => function () {
             return current_user_can( get_option( 'eme_cap_send_other_mails' ) ) ||

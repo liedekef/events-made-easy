@@ -4181,6 +4181,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         // can only be called from within the backend interface
         // so we don't send the mail to the event contact
         if ( $mailing_approved ) {
+            eme_ignore_pendingbooking_mail( $booking );
             $template_id = $event['event_properties']['ticket_template_id'];
             if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'approval' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
                 $ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
@@ -4362,6 +4363,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         $person_body_filter    = 'reminder_body';
         break;
     case 'trashBooking':
+        eme_ignore_pendingbooking_mail( $booking );
         if ( ! empty( $event['event_properties']['event_registration_trashed_email_subject'] ) ) {
             $person_subject = $event['event_properties']['event_registration_trashed_email_subject'];
         } elseif ( $event['event_properties']['event_registration_trashed_email_subject_tpl'] > 0 ) {
@@ -4400,6 +4402,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         $person_body_filter    = 'updated_body';
         break;
     case 'cancelBooking':
+        eme_ignore_pendingbooking_mail( $booking );
         if ( ! empty( $event['event_properties']['event_registration_cancelled_email_subject'] ) ) {
             $person_subject = $event['event_properties']['event_registration_cancelled_email_subject'];
         } elseif ( $event['event_properties']['event_registration_cancelled_email_subject_tpl'] > 0 ) {
@@ -4439,6 +4442,7 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
         break;
     case 'paidBooking':
         if ( $mailing_paid ) {
+            eme_ignore_pendingbooking_mail( $booking );
             $template_id = $event['event_properties']['ticket_template_id'];
             if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'payment' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
                 $ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
@@ -4599,8 +4603,8 @@ function eme_email_booking_action( $booking, $action, $is_multibooking = 0 ) {
                 $add_pending_mailid     = 1;
             }
         } else {
-            // if we don't require approval and the total price is 0, we add the optional ticket template here
             if ( $mailing_approved ) {
+                eme_ignore_pendingbooking_mail( $booking );
                 $template_id = $event['event_properties']['ticket_template_id'];
                 if ( $template_id && ( $event['event_properties']['ticket_mail'] == 'booking' || $event['event_properties']['ticket_mail'] == 'approval' || $event['event_properties']['ticket_mail'] == 'always' ) ) {
                     $ticket_attachment = eme_generate_booking_pdf( $booking, $event, $template_id );
@@ -6259,19 +6263,16 @@ function eme_ajax_action_rsvp_markpaidandapprove( $ids_arr ) {
             }
             // if we need to send out approval emails, we don't send out the paid emails too
             if ( $mailing_paid && $paid_mail_gets_precedence ) {
-                eme_ignore_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'paidBooking' );
                 if ( ! $res2 ) {
                     $mail_ok = 0;
                 }
             } elseif ( $mailing_approved ) {
-                eme_ignore_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'approveBooking' );
                 if ( ! $res2 ) {
                     $mail_ok = 0;
                 }
             } elseif ( $mailing_paid ) {
-                eme_ignore_pendingbooking_mail( $booking );
                 $res2 = eme_email_booking_action( $booking, 'paidBooking' );
                 if ( ! $res2 ) {
                     $mail_ok = 0;
@@ -6389,7 +6390,6 @@ function eme_ajax_action_rsvp_approve( $ids_arr, $action, $send_mail ) {
                     do_action( 'eme_approve_rsvp_action', $booking );
                 }
                 if ( $send_mail ) {
-                    eme_ignore_pendingbooking_mail( $booking );
                     $res2 = eme_email_booking_action( $booking, $action );
                     if ( ! $res2 ) {
                         $mail_ok = 0;

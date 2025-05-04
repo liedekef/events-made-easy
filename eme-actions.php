@@ -695,7 +695,7 @@ function eme_custom_dashboard_next_events() {
 add_action( 'rest_api_init', function () {
     register_rest_route( 'events-made-easy/v1', '/processqueue/(?P<interval>\d+)', array(
         'methods' => 'GET',
-        'callback' => 'eme_manage_queue',
+        'callback' => 'eme_process_queue',
         'args' => array(
             'interval' => array(
                 'validate_callback' => function($param, $request, $key) {

@@ -669,14 +669,14 @@ function eme_get_queued( $now ) {
     return $wpdb->get_results( $sql, ARRAY_A );
 }
 
-// unused function, the REST api call currenty directly calls eme_manage_queue
+// unused function, the REST api call currenty directly calls eme_process_queue
 function eme_rest_send_queued( WP_REST_Request $request ) {
     $force_interval = $request['interval'];
     //if (defined('REST_REQUEST')) {
     //	return new WP_REST_Response( $force_interval, 200 );
     //}
     if (is_numeric($force_interval))
-        eme_manage_queue($force_interval);
+        eme_process_queue($force_interval);
 }
 
 function eme_process_single_mail( $mail ) {
@@ -723,17 +723,22 @@ function eme_process_single_mail( $mail ) {
     }
 }
 
-// the function eme_manage_queue is called from cron and/or the REST API call (see rest_api_init in eme-actions.php)
-function eme_manage_queue($force_interval=0) {
+// for backwards compat
+function eme_send_queued( $force_interval = 0 ) {
+    return eme_process_queue( $force_interval );
+}
+
+// the function eme_process_queue is called from cron and/or the REST API call (see rest_api_init in eme-actions.php)
+function eme_process_queue( $force_interval = 0 ) {
     if ( ! get_option( 'eme_queue_mails' ) ) {
         return;
     }
 
     // we'll build in a safety precaution to make sure to never surpass the schedule duration
-    $start_time   = time();
-    if (!$force_interval || !is_numeric($force_interval)) {
+    $start_time = time();
+    if ( ! $force_interval || ! is_numeric( $force_interval ) ) {
         $scheduled    = wp_get_schedule( 'eme_cron_send_queued' );
-        if (!$scheduled) { // issue with wp cron? Then take 1 hour, to make sure this still runs ok
+        if ( ! $scheduled ) { // issue with wp cron? Then take 1 hour, to make sure this still runs ok
             $scheduled = 'hourly';
         }
         $wp_schedules = wp_get_schedules();

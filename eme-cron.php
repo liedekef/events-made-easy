@@ -160,8 +160,8 @@ function eme_cron_send_queued() {
     if ( ! eme_is_datamaster() ) {
         return;
     }
-    // all other logic is inside eme_manage_queue, so the REST API call (that uses it too) works also completely the same
-    eme_manage_queue();
+    // all other logic is inside eme_process_queue, so the REST API call (that uses it too) works also completely the same
+    eme_process_queue();
 }
 
 add_action( 'eme_cron_member_daily_actions', 'eme_cron_member_daily_actions' );

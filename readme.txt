@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.5.61 (2025/05/05) =
+* Fix the REST API call to take the new status for pending mails into account as well
+
 = 2.5.60 (2025/05/04) =
 * Fixed yet another constant typo causing bookings to fail now ...
 

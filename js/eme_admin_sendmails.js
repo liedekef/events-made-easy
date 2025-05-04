@@ -564,7 +564,6 @@ jQuery(document).ready( function($) {
                 },
                 creation_date: {
                     title: ememails.translate_queueddatetime,
-                    visibility: 'hidden',
                 },
                 sent_datetime: {
                     title: ememails.translate_sentdatetime,

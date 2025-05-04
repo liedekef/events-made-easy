@@ -551,10 +551,10 @@ jQuery(document).ready( function($) {
                     title: ememails.translate_sendername,
                 },
                 receiveremail: {
-                    title: ememails.translate_email,
+                    title: ememails.translate_recipientemail,
                 },
                 receivername: {
-                    title: ememails.translate_name,
+                    title: ememails.translate_recipientname,
                 },
                 subject: {
                     title: ememails.translate_subject,

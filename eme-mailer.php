@@ -963,7 +963,7 @@ function eme_cancel_mailing( $mailing_id ) {
 function eme_resend_mail( $id ) {
     $mail = eme_get_mail( $id );
     if (!empty($mail)) {
-        eme_queue_mail( $mail['subject'], $mail['body'], $mail['fromemail'], $mail['fromname'], $mail['receiveremail'], $mail['receivername'], $mail['replytoemail'], $mail['replytoname '], $mail['mailing_id'], $mail['person_id'], $mail['member_id'], eme_unserialize($mail['attachments']), add_listhdrs: $mail['add_listhdrs'] );
+        eme_queue_mail( $mail['subject'], $mail['body'], $mail['fromemail'], $mail['fromname'], $mail['receiveremail'], $mail['receivername'], $mail['replytoemail'], $mail['replytoname'], $mail['mailing_id'], $mail['person_id'], $mail['member_id'], eme_unserialize($mail['attachments']), add_listhdrs: $mail['add_listhdrs'] );
     }
 }
 

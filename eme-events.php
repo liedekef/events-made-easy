@@ -10149,6 +10149,8 @@ function eme_admin_enqueue_js() {
             'translate_nomatchperson'   => __( 'No matching person found', 'events-made-easy' ),
             'translate_sendername'      => __( 'Sender name', 'events-made-easy' ),
             'translate_senderemail'     => __( 'Sender email', 'events-made-easy' ),
+            'translate_recipientname'   => __( 'Recipient name', 'events-made-easy' ),
+            'translate_recipientemail'  => __( 'Recipient email', 'events-made-easy' ),
             'translate_mailingname'     => __( 'Name', 'events-made-easy' ),
             'translate_name'            => __( 'Name', 'events-made-easy' ),
             'translate_email'           => __( 'Email', 'events-made-easy' ),

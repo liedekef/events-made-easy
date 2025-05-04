@@ -17,7 +17,7 @@ msgstr ""
 #: events-manager.php
 #: eme-actions.php:685
 #: eme-gdpr.php:520
-#: events-manager.php:349
+#: events-manager.php:350
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
@@ -222,7 +222,7 @@ msgstr "Akékoľvek"
 #: eme-options.php:152
 #: eme-options.php:1291
 #: eme-options.php:1521
-#: events-manager.php:352
+#: events-manager.php:353
 msgid "Events"
 msgstr "Podujatia"
 
@@ -230,7 +230,7 @@ msgstr "Podujatia"
 #: eme-events.php:10001
 #: eme-gdpr.php:460
 #: eme-options.php:1603
-#: events-manager.php:372
+#: events-manager.php:373
 msgid "Memberships"
 msgstr "Členstvá"
 
@@ -551,7 +551,7 @@ msgid "Action info"
 msgstr "Info o akcii"
 
 #: eme-cleanup.php:283
-#: events-manager.php:378
+#: events-manager.php:379
 msgid "Cleanup actions"
 msgstr "Prečistenie"
 
@@ -1107,7 +1107,7 @@ msgid "New events will not be mailed to EME registered people."
 msgstr "Nové podujatia nebudú zasielané ľuďom zaregistrovaným v EME."
 
 #: eme-cron.php:304
-#: events-manager.php:377
+#: events-manager.php:378
 msgid "Scheduled actions"
 msgstr "Plánované akcie"
 
@@ -2156,7 +2156,7 @@ msgstr "Minulé podujatia"
 #: eme-events.php:5983
 #: eme-rsvp.php:5188
 #: eme-tasks.php:447
-#: events-manager.php:352
+#: events-manager.php:353
 msgid "All events"
 msgstr "Všetky podujatia"
 
@@ -4211,7 +4211,7 @@ msgid "No matching person found"
 msgstr "Nenašla sa vyhovujúca osoba"
 
 #: eme-events.php:9780
-#: events-manager.php:366
+#: events-manager.php:367
 msgid "Task signups"
 msgstr "Prihlasovanie na úlohy"
 
@@ -4272,7 +4272,7 @@ msgstr "Dátum prihlásenia"
 #: eme-events.php:9805
 #: eme-formfields.php:4928
 #: eme-options.php:1570
-#: events-manager.php:359
+#: events-manager.php:360
 msgid "Templates"
 msgstr "Šablóny"
 
@@ -4314,7 +4314,7 @@ msgstr "Povinné"
 
 #: eme-events.php:9846
 #: eme-options.php:1580
-#: events-manager.php:361
+#: events-manager.php:362
 msgid "Discounts"
 msgstr "Zľavy"
 
@@ -4379,7 +4379,7 @@ msgstr "Nenašli sa vyhovujúce miesta"
 #: eme-events.php:9908
 #: eme-options.php:1292
 #: eme-options.php:1537
-#: events-manager.php:353
+#: events-manager.php:354
 msgid "Locations"
 msgstr "Miesta"
 
@@ -4459,14 +4459,14 @@ msgstr "ID skupiny"
 
 #: eme-events.php:9944
 #: eme-people.php:2585
-#: events-manager.php:368
+#: events-manager.php:369
 msgid "People"
 msgstr "Ľudia"
 
 #: eme-events.php:9945
 #: eme-events.php:9967
 #: eme-people.php:2417
-#: events-manager.php:369
+#: events-manager.php:370
 msgid "Groups"
 msgstr "Skupiny"
 
@@ -4651,7 +4651,7 @@ msgstr "Nenašiel sa žiadny vyhovujúci člen"
 
 #: eme-events.php:10000
 #: eme-options.php:1293
-#: events-manager.php:371
+#: events-manager.php:372
 msgid "Members"
 msgstr "Členovia"
 
@@ -9223,7 +9223,7 @@ msgstr "Oprávnenie potrebné na úpravu všetkých miest. Predvolené: %s"
 
 #: eme-events.php:10106
 #: eme-options.php:1550
-#: events-manager.php:355
+#: events-manager.php:356
 msgid "Categories"
 msgstr "Kategórie"
 
@@ -9238,7 +9238,7 @@ msgstr "Oprávnenie potrebné na úpravu všetkých kategórií. Predvolené: %s
 #: eme-options.php:1560
 #: eme-options.php:1564
 #: eme-widgets.php:362
-#: events-manager.php:357
+#: events-manager.php:358
 msgid "Holidays"
 msgstr "Sviatky"
 
@@ -9476,7 +9476,7 @@ msgid "Permission needed to execute cleanup actions, manage cron settings and im
 msgstr "Oprávnenie potrebné na vykonanie čistiacich akcií, správu nastavení cronov a akcií importu. Predvolené: %s"
 
 #: eme-options.php:1678
-#: events-manager.php:379
+#: events-manager.php:380
 msgid "Settings"
 msgstr "Nastavenia"
 
@@ -9490,7 +9490,7 @@ msgstr "Oprávnenie potrebné na úpravu nastavení. Predvolené: %s"
 
 #: eme-options.php:1693
 #: eme-options.php:1696
-#: events-manager.php:384
+#: events-manager.php:385
 msgid "Events page"
 msgstr "Stránka podujatí"
 
@@ -13835,14 +13835,14 @@ msgstr "Events Made Easy Kalendár"
 msgid "Show Long Events?"
 msgstr "Zobraziť dlhé podujatia?"
 
-#: events-manager.php:324
+#: events-manager.php:325
 msgid "%d pending booking"
 msgid_plural "%d pending bookings"
 msgstr[0] "%d čakajúca rezervácia"
 msgstr[1] "%d čakajúce rezervácie"
 msgstr[2] "%d čakajúcich rezervácií"
 
-#: events-manager.php:325
+#: events-manager.php:326
 msgid "%d pending member"
 msgid_plural "%d pending members"
 msgstr[0] "%d čakajúci člen"
@@ -13850,35 +13850,35 @@ msgstr[1] "%d čakajúci členovia"
 msgstr[2] "%d čakajúcich členov"
 
 #: eme-events.php:9825
-#: events-manager.php:358
+#: events-manager.php:359
 msgid "Custom Fields"
 msgstr "Vlastné polia"
 
-#: events-manager.php:362
+#: events-manager.php:363
 msgid "Pending Bookings"
 msgstr "Nevybavené rezervácie"
 
-#: events-manager.php:363
+#: events-manager.php:364
 msgid "Approved Bookings"
 msgstr "Schválené rezervácie"
 
-#: events-manager.php:374
+#: events-manager.php:375
 msgid "Countries/states"
 msgstr "Krajiny/Štáty"
 
-#: events-manager.php:375
+#: events-manager.php:376
 msgid "Email management"
 msgstr "Správa emailov"
 
-#: events-manager.php:376
+#: events-manager.php:377
 msgid "Attendance Reports"
 msgstr "Prehľady o účasti"
 
-#: events-manager.php:379
+#: events-manager.php:380
 msgid "Events Made Easy Settings"
 msgstr "Nastavenia Events Made Easy"
 
-#: events-manager.php:384
+#: events-manager.php:385
 msgid "Error: the special events page is not set or no longer exist, please set the option '%s' to an existing page or EME will not work correctly!"
 msgstr "Chyba: špeciálna stránka podujatí nie je nastavená alebo už neexistuje, nastavte prosím možnosť '%s' na existujúcu stránku alebo EME nebude fungovať správne!"
 

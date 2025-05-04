@@ -178,7 +178,7 @@ msgstr "Elke"
 #: eme-options.php:152
 #: eme-options.php:1291
 #: eme-options.php:1521
-#: events-manager.php:352
+#: events-manager.php:353
 msgid "Events"
 msgstr "Evenementen"
 
@@ -186,7 +186,7 @@ msgstr "Evenementen"
 #: eme-events.php:10001
 #: eme-gdpr.php:460
 #: eme-options.php:1603
-#: events-manager.php:372
+#: events-manager.php:373
 msgid "Memberships"
 msgstr "Lidmaatschappen"
 
@@ -507,7 +507,7 @@ msgid "Action info"
 msgstr "Actie info"
 
 #: eme-cleanup.php:283
-#: events-manager.php:378
+#: events-manager.php:379
 msgid "Cleanup actions"
 msgstr "Opkuisacties"
 
@@ -1059,7 +1059,7 @@ msgid "New events will not be mailed to EME registered people."
 msgstr "Er worden geen berichten over nieuwe evenementen gestuurd naar EME-geregistreerde personen."
 
 #: eme-cron.php:304
-#: events-manager.php:377
+#: events-manager.php:378
 msgid "Scheduled actions"
 msgstr "Geplande acties"
 
@@ -2089,7 +2089,7 @@ msgstr "Voorbije evenementen"
 #: eme-events.php:5983
 #: eme-rsvp.php:5188
 #: eme-tasks.php:447
-#: events-manager.php:352
+#: events-manager.php:353
 msgid "All events"
 msgstr "Alle evenementen"
 
@@ -4010,7 +4010,7 @@ msgid "No matching person found"
 msgstr "Geen overeenkomende persoon gevonden."
 
 #: eme-events.php:9780
-#: events-manager.php:366
+#: events-manager.php:367
 msgid "Task signups"
 msgstr "Taakaanmeldingen"
 
@@ -4067,7 +4067,7 @@ msgstr "Records verwijderd"
 #: eme-events.php:9805
 #: eme-formfields.php:4928
 #: eme-options.php:1570
-#: events-manager.php:359
+#: events-manager.php:360
 msgid "Templates"
 msgstr "Templates"
 
@@ -4109,7 +4109,7 @@ msgstr "Vereist"
 
 #: eme-events.php:9846
 #: eme-options.php:1580
-#: events-manager.php:361
+#: events-manager.php:362
 msgid "Discounts"
 msgstr "Kortingen"
 
@@ -4174,7 +4174,7 @@ msgstr "Geen overeenkomende locatie gevonden."
 #: eme-events.php:9908
 #: eme-options.php:1292
 #: eme-options.php:1537
-#: events-manager.php:353
+#: events-manager.php:354
 msgid "Locations"
 msgstr "Locaties"
 
@@ -4249,14 +4249,14 @@ msgstr "Groeps-ID"
 
 #: eme-events.php:9944
 #: eme-people.php:2585
-#: events-manager.php:368
+#: events-manager.php:369
 msgid "People"
 msgstr "Personen"
 
 #: eme-events.php:9945
 #: eme-events.php:9967
 #: eme-people.php:2417
-#: events-manager.php:369
+#: events-manager.php:370
 msgid "Groups"
 msgstr "Groepen"
 
@@ -4441,7 +4441,7 @@ msgstr "Geen overeenkomend lid gevonden."
 
 #: eme-events.php:10000
 #: eme-options.php:1293
-#: events-manager.php:371
+#: events-manager.php:372
 msgid "Members"
 msgstr "Leden"
 
@@ -6093,7 +6093,7 @@ msgstr "Indien zo ingesteld, gebruikt EME een cookie voor het opslaan van de cli
 #: events-manager.php
 #: eme-actions.php:685
 #: eme-gdpr.php:520
-#: events-manager.php:349
+#: events-manager.php:350
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
@@ -8935,7 +8935,7 @@ msgstr "Rechten benodigd om alle locaties te bewerken. Standaard: %s"
 
 #: eme-events.php:10106
 #: eme-options.php:1550
-#: events-manager.php:355
+#: events-manager.php:356
 msgid "Categories"
 msgstr "Categorieën"
 
@@ -8950,7 +8950,7 @@ msgstr "Rechten benodigd om alle categorieën te bewerken. Standaard: %s"
 #: eme-options.php:1560
 #: eme-options.php:1564
 #: eme-widgets.php:362
-#: events-manager.php:357
+#: events-manager.php:358
 msgid "Holidays"
 msgstr "Vakanties"
 
@@ -9188,7 +9188,7 @@ msgid "Permission needed to execute cleanup actions, manage cron settings and im
 msgstr "Rechten nodig om opkuisacties uit te voeren, cron taken te beheren en te kunnen importeren. Standaard: %s"
 
 #: eme-options.php:1678
-#: events-manager.php:379
+#: events-manager.php:380
 msgid "Settings"
 msgstr "Instellingen"
 
@@ -9202,7 +9202,7 @@ msgstr "Rechten benodigd om instellingen te bewerken. Standaard: %s"
 
 #: eme-options.php:1693
 #: eme-options.php:1696
-#: events-manager.php:384
+#: events-manager.php:385
 msgid "Events page"
 msgstr "Evenementenpagina"
 
@@ -13269,48 +13269,48 @@ msgstr "Events Made Easy Kalender"
 msgid "Show Long Events?"
 msgstr "Uitgebreide info evenementen tonen?"
 
-#: events-manager.php:324
+#: events-manager.php:325
 msgid "%d pending booking"
 msgid_plural "%d pending bookings"
 msgstr[0] "%d goed te keuren boeking"
 msgstr[1] "%d goed te keuren boekingen"
 
-#: events-manager.php:325
+#: events-manager.php:326
 msgid "%d pending member"
 msgid_plural "%d pending members"
 msgstr[0] "%d goed te keuren lid"
 msgstr[1] "%d goed te keuren leden"
 
 #: eme-events.php:9825
-#: events-manager.php:358
+#: events-manager.php:359
 msgid "Custom Fields"
 msgstr "Eigen aangemaakte velden"
 
-#: events-manager.php:362
+#: events-manager.php:363
 msgid "Pending Bookings"
 msgstr "Goed te keuren boekingen"
 
-#: events-manager.php:363
+#: events-manager.php:364
 msgid "Approved Bookings"
 msgstr "Goedgekeurde Boekingen"
 
-#: events-manager.php:374
+#: events-manager.php:375
 msgid "Countries/states"
 msgstr "Landen/staten"
 
-#: events-manager.php:375
+#: events-manager.php:376
 msgid "Email management"
 msgstr "E-mail beheer"
 
-#: events-manager.php:376
+#: events-manager.php:377
 msgid "Attendance Reports"
 msgstr "Aanwezigheidsrapporten"
 
-#: events-manager.php:379
+#: events-manager.php:380
 msgid "Events Made Easy Settings"
 msgstr "Events Made Easy Instellingen"
 
-#: events-manager.php:384
+#: events-manager.php:385
 msgid "Error: the special events page is not set or no longer exist, please set the option '%s' to an existing page or EME will not work correctly!"
 msgstr "Error: de speciale evenementen pagina is niet ingesteld of bestaat niet langer, zet de optie '%s' naar een bestaande pagina of EME zal niet correct werken!"
 

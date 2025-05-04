@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-04T08:43:29+00:00\n"
+"POT-Creation-Date: 2025-05-04T11:59:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -18,7 +18,7 @@ msgstr ""
 #: events-manager.php
 #: eme-actions.php:685
 #: eme-gdpr.php:520
-#: events-manager.php:349
+#: events-manager.php:350
 msgid "Events Made Easy"
 msgstr ""
 
@@ -229,7 +229,7 @@ msgstr ""
 #: eme-options.php:152
 #: eme-options.php:1291
 #: eme-options.php:1521
-#: events-manager.php:352
+#: events-manager.php:353
 msgid "Events"
 msgstr ""
 
@@ -237,7 +237,7 @@ msgstr ""
 #: eme-events.php:10001
 #: eme-gdpr.php:460
 #: eme-options.php:1603
-#: events-manager.php:372
+#: events-manager.php:373
 msgid "Memberships"
 msgstr ""
 
@@ -581,7 +581,7 @@ msgid "Action info"
 msgstr ""
 
 #: eme-cleanup.php:283
-#: events-manager.php:378
+#: events-manager.php:379
 msgid "Cleanup actions"
 msgstr ""
 
@@ -1067,7 +1067,7 @@ msgid "New events will not be mailed to EME registered people."
 msgstr ""
 
 #: eme-cron.php:304
-#: events-manager.php:377
+#: events-manager.php:378
 msgid "Scheduled actions"
 msgstr ""
 
@@ -2158,7 +2158,7 @@ msgstr ""
 #: eme-events.php:5983
 #: eme-rsvp.php:5188
 #: eme-tasks.php:447
-#: events-manager.php:352
+#: events-manager.php:353
 msgid "All events"
 msgstr ""
 
@@ -4377,7 +4377,7 @@ msgid "No matching person found"
 msgstr ""
 
 #: eme-events.php:9780
-#: events-manager.php:366
+#: events-manager.php:367
 msgid "Task signups"
 msgstr ""
 
@@ -4438,12 +4438,12 @@ msgstr ""
 #: eme-events.php:9805
 #: eme-formfields.php:4928
 #: eme-options.php:1570
-#: events-manager.php:359
+#: events-manager.php:360
 msgid "Templates"
 msgstr ""
 
 #: eme-events.php:9825
-#: events-manager.php:358
+#: events-manager.php:359
 msgid "Custom Fields"
 msgstr ""
 
@@ -4485,7 +4485,7 @@ msgstr ""
 
 #: eme-events.php:9846
 #: eme-options.php:1580
-#: events-manager.php:361
+#: events-manager.php:362
 msgid "Discounts"
 msgstr ""
 
@@ -4544,7 +4544,7 @@ msgstr ""
 #: eme-events.php:9908
 #: eme-options.php:1292
 #: eme-options.php:1537
-#: events-manager.php:353
+#: events-manager.php:354
 msgid "Locations"
 msgstr ""
 
@@ -4619,14 +4619,14 @@ msgstr ""
 
 #: eme-events.php:9944
 #: eme-people.php:2585
-#: events-manager.php:368
+#: events-manager.php:369
 msgid "People"
 msgstr ""
 
 #: eme-events.php:9945
 #: eme-events.php:9967
 #: eme-people.php:2417
-#: events-manager.php:369
+#: events-manager.php:370
 msgid "Groups"
 msgstr ""
 
@@ -4811,7 +4811,7 @@ msgstr ""
 
 #: eme-events.php:10000
 #: eme-options.php:1293
-#: events-manager.php:371
+#: events-manager.php:372
 msgid "Members"
 msgstr ""
 
@@ -4987,7 +4987,7 @@ msgstr ""
 
 #: eme-events.php:10106
 #: eme-options.php:1550
-#: events-manager.php:355
+#: events-manager.php:356
 msgid "Categories"
 msgstr ""
 
@@ -9628,7 +9628,7 @@ msgstr ""
 #: eme-options.php:1560
 #: eme-options.php:1564
 #: eme-widgets.php:362
-#: events-manager.php:357
+#: events-manager.php:358
 msgid "Holidays"
 msgstr ""
 
@@ -9866,7 +9866,7 @@ msgid "Permission needed to execute cleanup actions, manage cron settings and im
 msgstr ""
 
 #: eme-options.php:1678
-#: events-manager.php:379
+#: events-manager.php:380
 msgid "Settings"
 msgstr ""
 
@@ -9880,7 +9880,7 @@ msgstr ""
 
 #: eme-options.php:1693
 #: eme-options.php:1696
-#: events-manager.php:384
+#: events-manager.php:385
 msgid "Events page"
 msgstr ""
 
@@ -14373,42 +14373,42 @@ msgstr ""
 msgid "Show Long Events?"
 msgstr ""
 
-#: events-manager.php:324
+#: events-manager.php:325
 msgid "%d pending booking"
 msgid_plural "%d pending bookings"
 msgstr[0] ""
 msgstr[1] ""
 
-#: events-manager.php:325
+#: events-manager.php:326
 msgid "%d pending member"
 msgid_plural "%d pending members"
 msgstr[0] ""
 msgstr[1] ""
 
-#: events-manager.php:362
+#: events-manager.php:363
 msgid "Pending Bookings"
 msgstr ""
 
-#: events-manager.php:363
+#: events-manager.php:364
 msgid "Approved Bookings"
 msgstr ""
 
-#: events-manager.php:374
+#: events-manager.php:375
 msgid "Countries/states"
 msgstr ""
 
-#: events-manager.php:375
+#: events-manager.php:376
 msgid "Email management"
 msgstr ""
 
-#: events-manager.php:376
+#: events-manager.php:377
 msgid "Attendance Reports"
 msgstr ""
 
-#: events-manager.php:379
+#: events-manager.php:380
 msgid "Events Made Easy Settings"
 msgstr ""
 
-#: events-manager.php:384
+#: events-manager.php:385
 msgid "Error: the special events page is not set or no longer exist, please set the option '%s' to an existing page or EME will not work correctly!"
 msgstr ""

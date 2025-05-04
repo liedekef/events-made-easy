@@ -178,7 +178,7 @@ msgstr "任何"
 #: eme-options.php:152
 #: eme-options.php:1291
 #: eme-options.php:1521
-#: events-manager.php:352
+#: events-manager.php:353
 msgid "Events"
 msgstr "活动"
 
@@ -186,7 +186,7 @@ msgstr "活动"
 #: eme-events.php:10001
 #: eme-gdpr.php:460
 #: eme-options.php:1603
-#: events-manager.php:372
+#: events-manager.php:373
 msgid "Memberships"
 msgstr "会籍"
 
@@ -510,7 +510,7 @@ msgid "Action info"
 msgstr "行动信息"
 
 #: eme-cleanup.php:283
-#: events-manager.php:378
+#: events-manager.php:379
 msgid "Cleanup actions"
 msgstr "清理行动"
 
@@ -1064,7 +1064,7 @@ msgid "New events will not be mailed to EME registered people."
 msgstr "新的活动将不会邮寄给 EME 的注册者。"
 
 #: eme-cron.php:304
-#: events-manager.php:377
+#: events-manager.php:378
 msgid "Scheduled actions"
 msgstr "预定的行动"
 
@@ -2094,7 +2094,7 @@ msgstr "过去的活动"
 #: eme-events.php:5983
 #: eme-rsvp.php:5188
 #: eme-tasks.php:447
-#: events-manager.php:352
+#: events-manager.php:353
 msgid "All events"
 msgstr "所有活动"
 
@@ -4026,7 +4026,7 @@ msgid "No matching person found"
 msgstr "没有找到匹配的人"
 
 #: eme-events.php:9780
-#: events-manager.php:366
+#: events-manager.php:367
 msgid "Task signups"
 msgstr "任务报名"
 
@@ -4083,7 +4083,7 @@ msgstr "已删除记录"
 #: eme-events.php:9805
 #: eme-formfields.php:4928
 #: eme-options.php:1570
-#: events-manager.php:359
+#: events-manager.php:360
 msgid "Templates"
 msgstr "模版"
 
@@ -4125,7 +4125,7 @@ msgstr "必需"
 
 #: eme-events.php:9846
 #: eme-options.php:1580
-#: events-manager.php:361
+#: events-manager.php:362
 msgid "Discounts"
 msgstr "折扣"
 
@@ -4190,7 +4190,7 @@ msgstr "没有找到匹配的地点"
 #: eme-events.php:9908
 #: eme-options.php:1292
 #: eme-options.php:1537
-#: events-manager.php:353
+#: events-manager.php:354
 msgid "Locations"
 msgstr "地點"
 
@@ -4265,14 +4265,14 @@ msgstr "群组 ID"
 
 #: eme-events.php:9944
 #: eme-people.php:2585
-#: events-manager.php:368
+#: events-manager.php:369
 msgid "People"
 msgstr "人员"
 
 #: eme-events.php:9945
 #: eme-events.php:9967
 #: eme-people.php:2417
-#: events-manager.php:369
+#: events-manager.php:370
 msgid "Groups"
 msgstr "群组"
 
@@ -4457,7 +4457,7 @@ msgstr "没有找到匹配的成员"
 
 #: eme-events.php:10000
 #: eme-options.php:1293
-#: events-manager.php:371
+#: events-manager.php:372
 msgid "Members"
 msgstr "会员"
 
@@ -6098,7 +6098,7 @@ msgstr "EME 有选择地使用一个 cookie 来存储客户端的日期和时间
 #: events-manager.php
 #: eme-actions.php:685
 #: eme-gdpr.php:520
-#: events-manager.php:349
+#: events-manager.php:350
 msgid "Events Made Easy"
 msgstr "Events Made Easy"
 
@@ -8959,7 +8959,7 @@ msgstr "编辑所有地点需要的权限。默认值：%s"
 
 #: eme-events.php:10106
 #: eme-options.php:1550
-#: events-manager.php:355
+#: events-manager.php:356
 msgid "Categories"
 msgstr "分类"
 
@@ -8974,7 +8974,7 @@ msgstr "编辑所有分类需要的权限。默认值：%s"
 #: eme-options.php:1560
 #: eme-options.php:1564
 #: eme-widgets.php:362
-#: events-manager.php:357
+#: events-manager.php:358
 msgid "Holidays"
 msgstr "假期"
 
@@ -9218,7 +9218,7 @@ msgid "Permission needed to execute cleanup actions, manage cron settings and im
 msgstr "执行清理行动、管理 cron 设置和导入行动需要的权限。默认值：%s"
 
 #: eme-options.php:1678
-#: events-manager.php:379
+#: events-manager.php:380
 msgid "Settings"
 msgstr "设置"
 
@@ -9232,7 +9232,7 @@ msgstr "编辑设置需要的权限。默认值：%s"
 
 #: eme-options.php:1693
 #: eme-options.php:1696
-#: events-manager.php:384
+#: events-manager.php:385
 msgid "Events page"
 msgstr "活动页面"
 
@@ -13327,48 +13327,48 @@ msgstr "Events Made Easy 日历"
 msgid "Show Long Events?"
 msgstr "显示长时间的活动？"
 
-#: events-manager.php:324
+#: events-manager.php:325
 #, fuzzy
 msgid "%d pending booking"
 msgid_plural "%d pending bookings"
 msgstr[0] "%d 个待订的预订"
 
-#: events-manager.php:325
+#: events-manager.php:326
 #, fuzzy
 msgid "%d pending member"
 msgid_plural "%d pending members"
 msgstr[0] "%d 待订会员"
 
 #: eme-events.php:9825
-#: events-manager.php:358
+#: events-manager.php:359
 msgid "Custom Fields"
 msgstr "自定义字段"
 
-#: events-manager.php:362
+#: events-manager.php:363
 msgid "Pending Bookings"
 msgstr "待订的预订"
 
-#: events-manager.php:363
+#: events-manager.php:364
 msgid "Approved Bookings"
 msgstr "已批准的预订"
 
-#: events-manager.php:374
+#: events-manager.php:375
 msgid "Countries/states"
 msgstr "国家或州"
 
-#: events-manager.php:375
+#: events-manager.php:376
 msgid "Email management"
 msgstr "电子邮件管理"
 
-#: events-manager.php:376
+#: events-manager.php:377
 msgid "Attendance Reports"
 msgstr "出席报告"
 
-#: events-manager.php:379
+#: events-manager.php:380
 msgid "Events Made Easy Settings"
 msgstr "Events Made Easy 设置"
 
-#: events-manager.php:384
+#: events-manager.php:385
 msgid "Error: the special events page is not set or no longer exist, please set the option '%s' to an existing page or EME will not work correctly!"
 msgstr "错误：特别活动页面没有设置或不再存在，请将选项 ”%s“ 设置为现有的页面，否则 EME 将无法正常工作。"
 

@@ -160,6 +160,7 @@ function eme_cron_send_queued() {
     if ( ! eme_is_datamaster() ) {
         return;
     }
+    // all other logic is inside eme_send_queued, so the REST API call (that uses it too) works also completely the same
     eme_send_queued();
 }
 

@@ -669,6 +669,7 @@ function eme_get_queued( $now ) {
     return $wpdb->get_results( $sql, ARRAY_A );
 }
 
+// unused function, the REST api call currenty directly calls eme_send_queued
 function eme_rest_send_queued( WP_REST_Request $request ) {
     $force_interval = $request['interval'];
     //if (defined('REST_REQUEST')) {
@@ -722,6 +723,7 @@ function eme_process_single_mail( $mail ) {
     }
 }
 
+// the function eme_send_queued is called from cron and/or the REST API call (see rest_api_init in eme-actions.php)
 function eme_send_queued($force_interval=0) {
     if ( ! get_option( 'eme_queue_mails' ) ) {
         return;

@@ -9382,8 +9382,8 @@ msgid "Default event list filtering format"
 msgstr "Standaard-opmaak evenementenlijst filter"
 
 #: eme-options.php:1724
-msgid "This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_TOWNS</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
-msgstr "Dit definieert de opmaak van het evenementen filter-formulier wanneer je de shortcode <code>[eme_filterform]</code> gebruikt. Gebruik <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_TOWNS</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
+msgid "This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
+msgstr "Dit definieert de opmaak van het evenementen filter-formulier wanneer je de shortcode <code>[eme_filterform]</code> gebruikt. Gebruik <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
 
 #: eme-options.php:1733
 msgid "Calendar options"

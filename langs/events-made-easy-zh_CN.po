@@ -9412,8 +9412,8 @@ msgid "Default event list filtering format"
 msgstr "默认的活动列表过滤格式"
 
 #: eme-options.php:1724
-msgid "This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_TOWNS</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
-msgstr "当使用简码 <code>[eme_filterform]</code> 时，这定义了活动列表过滤表格的布局。使用 <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_TOWNS</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>。"
+msgid "This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
+msgstr "当使用简码 <code>[eme_filterform]</code> 时，这定义了活动列表过滤表格的布局。使用 <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>。"
 
 #: eme-options.php:1733
 msgid "Calendar options"

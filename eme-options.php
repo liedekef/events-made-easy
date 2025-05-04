@@ -114,14 +114,14 @@ function eme_add_options( $reset = 0 ) {
     #$registration_paid_email_body_localizable                = __( 'Dear #_PERSONFULLNAME,<br><br>Your request to book #_RESPSEATS seat(s) for #_EVENTNAME has been paid for.<br><br>Yours faithfully,<br>#_CONTACTPERSON', 'events-made-easy' );
 
     $eme_options = [
-        'eme_event_list_item_format'                      => '<li>#_STARTDATE - #_STARTTIME<br> #_LINKEDNAME<br>#_TOWN </li>',
+        'eme_event_list_item_format'                      => '<li>#_STARTDATE - #_STARTTIME<br> #_LINKEDNAME<br>#_CITY </li>',
         'eme_event_list_item_format_header'               => DEFAULT_EVENT_LIST_HEADER_FORMAT,
         'eme_cat_event_list_item_format_header'           => DEFAULT_CAT_EVENT_LIST_HEADER_FORMAT,
         'eme_event_list_item_format_footer'               => DEFAULT_EVENT_LIST_FOOTER_FORMAT,
         'eme_cat_event_list_item_format_footer'           => DEFAULT_CAT_EVENT_LIST_FOOTER_FORMAT,
         'eme_display_calendar_in_events_page'             => 0,
         'eme_display_events_in_events_page'               => 0,
-        'eme_single_event_format'                         => '#_STARTDATE - #_STARTTIME<br>#_TOWN<br>#_NOTES<br>#_ADDBOOKINGFORM<br>#_MAP',
+        'eme_single_event_format'                         => '#_STARTDATE - #_STARTTIME<br>#_CITY<br>#_NOTES<br>#_ADDBOOKINGFORM<br>#_MAP',
         'eme_event_page_title_format'                     => '#_EVENTNAME',
         'eme_event_html_title_format'                     => DEFAULT_EVENT_HTML_TITLE_FORMAT,
         'eme_show_period_monthly_dateformat'              => DEFAULT_SHOW_PERIOD_MONTHLY_DATEFORMAT,
@@ -132,11 +132,11 @@ function eme_add_options( $reset = 0 ) {
         'eme_form_required_field_string'                  => $eme_form_required_field_string_localizable,
         'eme_location_page_title_format'                  => '#_LOCATIONNAME',
         'eme_location_html_title_format'                  => DEFAULT_LOCATION_HTML_TITLE_FORMAT,
-        'eme_location_baloon_format'                      => "<strong>#_LOCATIONNAME</strong><br>#_ADDRESS - #_TOWN<br><a href='#_LOCATIONPAGEURL'>Details</a>",
+        'eme_location_baloon_format'                      => "<strong>#_LOCATIONNAME</strong><br>#_ADDRESS - #_CITY<br><a href='#_LOCATIONPAGEURL'>Details</a>",
         'eme_location_map_icon'                           => '',
         'eme_location_event_list_item_format'             => DEFAULT_LOCATION_EVENT_LIST_ITEM_FORMAT,
         'eme_location_no_events_message'                  => __( 'No events at this location', 'events-made-easy' ),
-        'eme_single_location_format'                      => '#_ADDRESS<br>#_TOWN<br>#_DESCRIPTION #_MAP',
+        'eme_single_location_format'                      => '#_ADDRESS<br>#_CITY<br>#_DESCRIPTION #_MAP',
         'eme_page_access_denied'                          => __( 'Access denied!', 'events-made-easy' ),
         'eme_membership_login_required_string'            => __( 'You need to be logged in in order to be able to register for this membership.', 'events-made-easy' ),
         'eme_membership_unauth_attendance_msg'            => $eme_membership_unauth_attendance_msg_localizeable,
@@ -145,12 +145,12 @@ function eme_add_options( $reset = 0 ) {
         'eme_ical' => [
             'title_format'       => '#_EVENTNAME',
             'description_format' => '#_NOTES',
-            'location_format'    => '#_LOCATIONNAME, #_ADDRESS, #_TOWN'
+            'location_format'    => '#_LOCATIONNAME, #_ADDRESS, #_CITY'
         ],
         'eme_rss' => [
             'main_title'         => get_bloginfo( 'title' ) . ' - ' . __( 'Events', 'events-made-easy' ),
             'main_description'   => get_bloginfo( 'description' ) . ' - ' . __( 'Events', 'events-made-easy' ),
-            'description_format' => '#_STARTDATE - #_STARTTIME <br> #_NOTES <br>#_LOCATIONNAME <br>#_ADDRESS <br>#_TOWN',
+            'description_format' => '#_STARTDATE - #_STARTTIME <br> #_NOTES <br>#_LOCATIONNAME <br>#_ADDRESS <br>#_CITY',
             'title_format'       => '#_EVENTNAME',
             'show_pubdate'       => 1,
             'pubdate_startdate'  => 0
@@ -1721,7 +1721,7 @@ function eme_options_page() {
 <h2><?php esc_html_e( 'Events filtering format', 'events-made-easy' ); ?></h2>
 <table class="form-table">
 <?php
-            eme_options_textarea( __( 'Default event list filtering format', 'events-made-easy' ), 'eme_filter_form_format', __( 'This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_TOWNS</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=28'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
+            eme_options_textarea( __( 'Default event list filtering format', 'events-made-easy' ), 'eme_filter_form_format', __( 'This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>.', 'events-made-easy' ) . '<br>' . __( 'For all possible placeholders, see ', 'events-made-easy' ) . "<a target='_blank' href='//www.e-dynamics.be/wordpress/?cat=28'>" . __( 'the documentation', 'events-made-easy' ) . '</a>' );
 ?>
 </table>
 

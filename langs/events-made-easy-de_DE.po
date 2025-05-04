@@ -9381,8 +9381,8 @@ msgid "Default event list filtering format"
 msgstr "Format: Standard für Veranstaltungslisten Filter"
 
 #: eme-options.php:1724
-msgid "This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_TOWNS</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
-msgstr "Dies definiert das Layout des Filterformulars der Veranstaltungsliste, wenn der Shortcode <code>[events_filterform]</code> benutzt wird.<br/>Füge einen oder mehrere der folgenden Platzhalter ein: <code>#_FILTER_CATS</code> für Kategorie-Filter, <code>#_FILTER_LOCS</code> für Ortsfilter, <code>#_FILTER_TOWNS</code> für Stadtfilter, <code>#_FILTER_WEEKS</code> für Wochenfilter, <code>#_FILTER_MONTHS</code> für Monatsfilter."
+msgid "This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
+msgstr "Dies definiert das Layout des Filterformulars der Veranstaltungsliste, wenn der Shortcode <code>[events_filterform]</code> benutzt wird.<br/>Füge einen oder mehrere der folgenden Platzhalter ein: <code>#_FILTER_CATS</code> für Kategorie-Filter, <code>#_FILTER_LOCS</code> für Ortsfilter, <code>#_FILTER_CITIES</code> für Stadtfilter, <code>#_FILTER_WEEKS</code> für Wochenfilter, <code>#_FILTER_MONTHS</code> für Monatsfilter."
 
 #: eme-options.php:1733
 msgid "Calendar options"

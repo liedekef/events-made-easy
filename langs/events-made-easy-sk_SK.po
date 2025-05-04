@@ -9670,8 +9670,8 @@ msgid "Default event list filtering format"
 msgstr "Predvolený formát filtrovania zoznamu podujatí"
 
 #: eme-options.php:1724
-msgid "This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_TOWNS</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
-msgstr "Toto definuje rozloženie formulára na filtrovanie zoznamu podujatí pri použití skráteného kódu <code>[eme_filterform]</code>. Použite <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_TOWNS</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
+msgid "This defines the layout of the event list filtering form when using the shortcode <code>[eme_filterform]</code>. Use <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
+msgstr "Toto definuje rozloženie formulára na filtrovanie zoznamu podujatí pri použití skráteného kódu <code>[eme_filterform]</code>. Použite <code>#_FILTER_CATS</code>, <code>#_FILTER_LOCS</code>, <code>#_FILTER_CITIES</code>, <code>#_FILTER_WEEKS</code>, <code>#_FILTER_MONTHS</code>."
 
 #: eme-options.php:1733
 msgid "Calendar options"

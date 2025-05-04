@@ -7095,7 +7095,7 @@ function eme_ignore_pendingbooking_mail( $booking ) {
     $pending_mailid = intval ( $booking['pending_mailid'] );
     if ( $pending_mailid > 0 ) {
         $mail = eme_get_mail( $pending_mailid );
-        if ( !empty( $mail ) && $mail['status'] == EME_MAIL_STATUS_DELAYED || $mail['status'] == EME_MAIL_STATUS_PENDING ) {
+        if ( !empty( $mail ) && $mail['status'] == EME_MAIL_STATUS_DELAYED || $mail['status'] == EME_MAIL_STATUS_PLANNED ) {
             eme_mark_mail_ignored( $pending_mailid );
         }
     }

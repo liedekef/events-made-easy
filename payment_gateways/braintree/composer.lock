@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "braintree/braintree_php",
-            "version": "6.24.0",
+            "version": "6.25.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/braintree/braintree_php.git",
-                "reference": "8b5b96630106aff5c6564ace13bddb123ff68891"
+                "reference": "a4eea12988652fab39ba1dd8753e2f81d78cb053"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/8b5b96630106aff5c6564ace13bddb123ff68891",
-                "reference": "8b5b96630106aff5c6564ace13bddb123ff68891",
+                "url": "https://api.github.com/repos/braintree/braintree_php/zipball/a4eea12988652fab39ba1dd8753e2f81d78cb053",
+                "reference": "a4eea12988652fab39ba1dd8753e2f81d78cb053",
                 "shasum": ""
             },
             "require": {
@@ -51,18 +51,18 @@
             "description": "Braintree PHP Client Library",
             "support": {
                 "issues": "https://github.com/braintree/braintree_php/issues",
-                "source": "https://github.com/braintree/braintree_php/tree/6.24.0"
+                "source": "https://github.com/braintree/braintree_php/tree/6.25.0"
             },
-            "time": "2025-02-28T18:43:37+00:00"
+            "time": "2025-04-30T20:22:38+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

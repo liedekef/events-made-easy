@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fadce7c5adcc504648f27e78556681d6",
+    "content-hash": "0f9c5e058e700ec5cac6a669449a940b",
     "packages": [
         {
             "name": "mercadopago/dx-php",
-            "version": "3.2.0",
+            "version": "3.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mercadopago/sdk-php.git",
-                "reference": "84a30e5f23c5d722298c6faeffe574a2777c1439"
+                "reference": "de7466209efa6fdcc94e1d739e72062b1e93a349"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/84a30e5f23c5d722298c6faeffe574a2777c1439",
-                "reference": "84a30e5f23c5d722298c6faeffe574a2777c1439",
+                "url": "https://api.github.com/repos/mercadopago/sdk-php/zipball/de7466209efa6fdcc94e1d739e72062b1e93a349",
+                "reference": "de7466209efa6fdcc94e1d739e72062b1e93a349",
                 "shasum": ""
             },
             "require": {
@@ -41,18 +41,18 @@
             "description": "Mercado Pago PHP SDK",
             "homepage": "https://github.com/mercadopago/sdk-php",
             "support": {
-                "source": "https://github.com/mercadopago/sdk-php/tree/3.2.0"
+                "source": "https://github.com/mercadopago/sdk-php/tree/3.3.0"
             },
-            "time": "2025-04-01T19:59:55+00:00"
+            "time": "2025-04-29T17:32:41+00:00"
         }
     ],
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": {},
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }

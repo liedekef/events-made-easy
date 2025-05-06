@@ -487,7 +487,7 @@ function eme_mybooking_list_shortcode( $atts ) {
             foreach ($id_arr as $event_id) {
                 $event = eme_get_event( $event_id );
                 if ( ! empty( $event ) ) {
-                    $res .=  eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], 0, 0, $wp_id, $order );
+                    $res .=  eme_get_bookings_list_for_event( $event, $atts['template_id'], $atts['template_id_header'], $atts['template_id_footer'], 0, 0, $wp_id );
                 }
             }
             return $res;

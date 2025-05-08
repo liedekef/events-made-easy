@@ -856,6 +856,7 @@ function eme_import_csv_people() {
     $inserted  = 0;
     $errors    = 0;
     $error_msg = '';
+    $updated_msg = '';
     $handle    = fopen( $_FILES['eme_csv']['tmp_name'], 'r' );
     if ( ! $handle ) {
         return __( 'Problem accessing the uploaded the file, maybe some security issue?', 'events-made-easy' );
@@ -940,6 +941,7 @@ function eme_import_csv_people() {
                 $person_id = eme_db_update_person( $person['person_id'], $line );
                 if ( $person_id ) {
                     ++$updated;
+                    $updated_msg .= '<br>' . eme_esc_html( sprintf( __( 'Updated person %d: %s', 'events-made-easy' ), $person_id, implode( ',', $row ) ) );
                 } else {
                     ++$errors;
                     $error_msg .= '<br>' . eme_esc_html( sprintf( __( 'Not imported (problem updating the person in the db): %s', 'events-made-easy' ), implode( ',', $row ) ) );
@@ -980,6 +982,9 @@ function eme_import_csv_people() {
         $result = sprintf( esc_html__( 'Import finished: %d inserts, %d updates, %d errors', 'events-made-easy' ), $inserted, $updated, $errors );
     }
     fclose( $handle );
+    if ( $updated ) {
+        $result .= '<br>' . $updated_msg;
+    }
     if ( $errors ) {
         $result .= '<br>' . $error_msg;
     }

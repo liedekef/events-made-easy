@@ -3137,23 +3137,27 @@ function eme_refund_booking_mollie( $booking ) {
 
     $mollie = new \Mollie\Api\MollieApiClient();
     $mollie->setApiKey( $api_key );
+    $mollie_payment = $mollie->send(
+        new \Mollie\Api\Http\Requests\GetPaymentRequest(
+            id: $booking['pg_pid']
+        )
+    );
 
-    $mollie_payment = $mollie->payments->get( $booking['pg_pid'] );
-    // unsure, but according to the refund example, mollie requires 2 decimals
+    // according to the refund example, mollie requires 2 decimals
     $price = eme_get_total_booking_price( $booking );
     $price = sprintf( '%01.2f', $price );
     $event = eme_get_event( $booking['event_id'] );
     if ( ! empty( $event ) ) {
         $cur = $event['currency'];
         if ( $mollie_payment->canBeRefunded() && $mollie_payment->amountRemaining->currency === $cur && $mollie_payment->amountRemaining->value >= $price ) {
-            $refund = $mollie_payment->refund(
-                [
-                    'amount' => [
-                        'currency' => "$cur",
-                        'value'    => "$price",
-                    ],
-                ]
+            $refund = $mollie->send(
+                new \Mollie\Api\Http\Requests\CreatePaymentRefundRequest(
+                    paymentId: $mollie_payment->id,
+                    description: __('Booking cancelled and refunded','events-made-easy'),
+                    amount: new \Mollie\Api\Http\Data\Money(currency: $cur, value: $price )
+                )
             );
+
             return true;
         } else {
             return false;

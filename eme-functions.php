@@ -4040,7 +4040,7 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
         }
         wp_editor( $value, $editor_id, $eme_editor_settings );
     } else { ?>
-        <textarea name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" style="width: 95%" ><?php echo eme_esc_html( $value ); ?></textarea>
+        <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" style="width: 95%" ><?php echo eme_esc_html( $value ); ?></textarea>
 <?php
     }
 }

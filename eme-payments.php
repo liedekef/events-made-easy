@@ -3032,8 +3032,15 @@ function eme_charge_payconiq() {
             $payconiq->setEndpointTest();
     }
     try {
-        $payconiq_payment = $payconiq->createPayment( $price, $cur, $description, $payment_id, $notification_link, $return_link );
-        $url              = $payconiq_payment->_links->checkout->href;
+        $payconiq_payment = $payconiq->createPayment( 
+            amount: $price,
+            currency: $cur,
+            description: $description,
+            reference: $payment_id,
+            callbackUrl: $notification_link,
+            returnUrl: $return_link
+        );
+        $url = $payconiq_payment->_links->checkout->href;
         // fix a payconiq api bug where the href-links in sandbox point to prod too
         if ( preg_match( '/sandbox/', $mode ) ) {
             $url = str_replace( 'https://payconiq.com', 'https://ext.payconiq.com', $url );

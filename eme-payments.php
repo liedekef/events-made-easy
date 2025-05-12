@@ -2727,7 +2727,7 @@ function eme_refund_booking_payconiq( $booking ) {
         return;
     }
     if ( ! class_exists( 'Payconiq\Client' ) ) {
-                require_once 'payment_gateways/payconiq/liedekef-1.0.0rc1/src/Client.php';
+                require_once 'payment_gateways/payconiq/src/Client.php';
         }
 
     $mode     = get_option( 'eme_payconiq_env' );
@@ -2998,6 +2998,13 @@ function eme_charge_payconiq() {
     $cur              = eme_sanitize_request( $_POST['cur'] );
     $description      = eme_sanitize_request( $_POST['description'] );
     $payment          = eme_get_payment( $payment_id );
+    if ( $payment['target'] == 'member' ) {
+        $bulkId = "members";
+    } elseif ( $payment['target'] == 'fs_event' ) {
+        $bulkId = "frontend event";
+    } else {
+        $bulkId = "bookings";
+    }
 
     $gateway = 'payconiq';
     $api_key = get_option( "eme_{$gateway}_api_key" );
@@ -3023,7 +3030,7 @@ function eme_charge_payconiq() {
     }
 
     if ( ! class_exists( 'Payconiq\Client' ) ) {
-        require_once 'payment_gateways/payconiq/liedekef-1.0.0rc1/src/Client.php';
+        require_once 'payment_gateways/payconiq/src/Client.php';
     }
     $mode     = get_option( 'eme_payconiq_env' );
     $payconiq = new \Payconiq\Client( $api_key );
@@ -3036,6 +3043,7 @@ function eme_charge_payconiq() {
             currency: $cur,
             description: $description,
             reference: $payment_id,
+            bulkId: $bulkId,
             callbackUrl: $notification_link,
             returnUrl: $return_link
         );
@@ -3081,7 +3089,7 @@ function eme_notification_payconiq( $payconiq_paymentid = 0 ) {
     //error_log("EME saw payconiq payment id $payconiq_paymentid");
     // We won't verify the signature, but we'll get the current payment from EME and compare all that
     if ( ! class_exists( 'Payconiq\Client' ) ) {
-        require_once 'payment_gateways/payconiq/liedekef-1.0.0rc1/src/Client.php';
+        require_once 'payment_gateways/payconiq/src/Client.php';
     }
     $payconiq = new \Payconiq\Client( $api_key );
     $mode     = get_option( 'eme_payconiq_env' );
@@ -4015,37 +4023,37 @@ function eme_ajax_get_payconiq_iban() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
     $ajaxResult              = [];
 
-        if ( ! (
-                current_user_can( get_option( 'eme_cap_registrations' ) ) ||
-                current_user_can( get_option( 'eme_cap_author_registrations' ) ) ||
-                current_user_can( get_option( 'eme_cap_approve' ) ) ||
+    if ( ! (
+        current_user_can( get_option( 'eme_cap_registrations' ) ) ||
+        current_user_can( get_option( 'eme_cap_author_registrations' ) ) ||
+        current_user_can( get_option( 'eme_cap_approve' ) ) ||
         current_user_can( get_option( 'eme_cap_author_approve' ) ) ||
         current_user_can( get_option( 'eme_cap_list_members' ) )
-        ) ) {
-            $ajaxResult['Result']      = 'Error';
-            $ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
-            print wp_json_encode( $ajaxResult );
-            wp_die();
+    ) ) {
+        $ajaxResult['Result']      = 'Error';
+        $ajaxResult['htmlmessage'] = __( 'Access denied!', 'events-made-easy' );
+        print wp_json_encode( $ajaxResult );
+        wp_die();
     }
     $api_key = get_option( "eme_payconiq_api_key" );
-        if ( ! $api_key ) {
-                wp_die();
-        }
-        if ( ! class_exists( 'Payconiq\Client' ) ) {
-                require_once 'payment_gateways/payconiq/liedekef-1.0.0rc1/src/Client.php';
-        }
-
-    $pg_pid = eme_sanitize_request( $_POST['pg_pid'] );
-        $mode     = get_option( 'eme_payconiq_env' );
-        $payconiq = new \Payconiq\Client( $api_key );
-        if ( preg_match( '/sandbox/', $mode ) ) {
-                        $payconiq->setEndpointTest();
-        }
-        try {
-                $iban = $payconiq->getRefundIban( $pg_pid );
-        } catch ( Exception $e ) {
+    if ( ! $api_key ) {
         wp_die();
-        }
+    }
+    if ( ! class_exists( 'Payconiq\Client' ) ) {
+        require_once 'payment_gateways/payconiq/src/Client.php';
+    }
+
+    $pg_pid   = eme_sanitize_request( $_POST['pg_pid'] );
+    $mode     = get_option( 'eme_payconiq_env' );
+    $payconiq = new \Payconiq\Client( $api_key );
+    if ( preg_match( '/sandbox/', $mode ) ) {
+        $payconiq->setEndpointTest();
+    }
+    try {
+        $iban = $payconiq->getRefundIban( $pg_pid );
+    } catch ( Exception $e ) {
+        wp_die();
+    }
 
     $ajaxResult = [];
     $ajaxResult['iban'] = $iban;

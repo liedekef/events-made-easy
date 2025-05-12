@@ -2927,22 +2927,17 @@ function eme_charge_mollie() {
     // Mollie needs the price in EUR and 2 decimals
     try {
         $mollie->setApiKey( $api_key );
-        $mollie_payment = $mollie->payments->create(
-            [
-                'amount'      => [
-                    'currency' => $cur,
-                    'value'    => sprintf( '%01.2f', $price ),
-                ],
-                'description' => $description,
-                'redirectUrl' => $return_link,
-                'webhookUrl'  => $notification_link,
-                'cancelUrl'   => $cancel_link,
-                'metadata'    => [
-                    'payment_id' => $payment_id,
-                ],
-            ]
+        $mollie_payment = $mollie->send(
+            new \Mollie\Api\Http\Requests\CreatePaymentRequest(
+                description: $description,
+                amount: new \Mollie\Api\Http\Data\Money(currency: $cur, value: sprintf( '%01.2f', $price )),
+                redirectUrl: $return_link,
+                cancelUrl: $cancel_link,
+                webhookUrl: $notification_link,
+                metadata: ['payment_id' => $payment_id]
+            )
         );
-        $url            = $mollie_payment->getCheckoutUrl();
+        $url = $mollie_payment->getCheckoutUrl();
     } catch ( \Mollie\Api\Exceptions\ApiException $e ) {
         $url = '';
         print 'Mollie API call failed: ' . htmlspecialchars( $e->getMessage() );
@@ -2977,7 +2972,11 @@ function eme_notification_mollie( $mollie_payment_id = 0 ) {
     }
     try {
         $mollie->setApiKey( $api_key );
-        $mollie_payment = $mollie->payments->get( $mollie_payment_id );
+        $mollie_payment = $mollie->send(
+            new \Mollie\Api\Http\Requests\GetPaymentRequest(
+                id: $mollie_payment_id
+            )
+        );
     } catch ( Exception $e ) {
         return;
     }
@@ -3136,12 +3135,16 @@ function eme_refund_booking_mollie( $booking ) {
     }
 
     $mollie = new \Mollie\Api\MollieApiClient();
-    $mollie->setApiKey( $api_key );
-    $mollie_payment = $mollie->send(
-        new \Mollie\Api\Http\Requests\GetPaymentRequest(
-            id: $booking['pg_pid']
-        )
-    );
+    try {
+        $mollie->setApiKey( $api_key );
+        $mollie_payment = $mollie->send(
+            new \Mollie\Api\Http\Requests\GetPaymentRequest(
+                id: $booking['pg_pid']
+            )
+        );
+    } catch ( Exception $e ) {
+        return false;
+    }
 
     // according to the refund example, mollie requires 2 decimals
     $price = eme_get_total_booking_price( $booking );
@@ -3150,15 +3153,18 @@ function eme_refund_booking_mollie( $booking ) {
     if ( ! empty( $event ) ) {
         $cur = $event['currency'];
         if ( $mollie_payment->canBeRefunded() && $mollie_payment->amountRemaining->currency === $cur && $mollie_payment->amountRemaining->value >= $price ) {
-            $refund = $mollie->send(
-                new \Mollie\Api\Http\Requests\CreatePaymentRefundRequest(
-                    paymentId: $mollie_payment->id,
-                    description: __('Booking cancelled and refunded','events-made-easy'),
-                    amount: new \Mollie\Api\Http\Data\Money(currency: $cur, value: $price )
-                )
-            );
-
-            return true;
+            try {
+                $refund = $mollie->send(
+                    new \Mollie\Api\Http\Requests\CreatePaymentRefundRequest(
+                        paymentId: $mollie_payment->id,
+                        description: __('Booking cancelled and refunded','events-made-easy'),
+                        amount: new \Mollie\Api\Http\Data\Money(currency: $cur, value: $price )
+                    )
+                );
+                return true;
+            } catch ( Exception $e ) {
+                return false;
+            }
         } else {
             return false;
         }

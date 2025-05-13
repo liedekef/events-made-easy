@@ -111,20 +111,6 @@ class Client {
     }
 
     /**
-     * Get current payment checkout url
-     *
-     * @return  string  Checkout url
-     */
-    public function getPaymentCheckoutUrl() {
-        $url = $this->_links->checkout->href;
-        /* fix a possible API bug where the href-links in sandbox point to prod too */
-        if (preg_match( '/ext.payconiq.com/', $this->endpoint ) ) {
-            $url = str_replace( 'https://payconiq.com', 'https://ext.payconiq.com', $url );
-        }
-        return $url;
-    }
-
-    /**
      * Get payment details of an existing payment
      *
      * @param  string $paymentId  The unique Payconiq identifier of a payment as provided by the create payment service

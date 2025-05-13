@@ -2644,6 +2644,12 @@ function eme_nl2br_save_html( $string ) {
     // replace other lineendings
     $string = str_replace( [ "\r\n", "\r" ], "\n", $string );
 
+    // remove unwanted empty lines after tr/td tags
+    $string = preg_replace('/(<tr[^>]*>)\s+/i', '$1', $string);   // after opening <tr>
+    $string = preg_replace('/\s+(<\/tr>)/i', '$1', $string);      // before closing </tr>
+    $string = preg_replace('/(<td[^>]*>)\s+/i', '$1', $string);   // after opening <td>
+    $string = preg_replace('/\s+(<\/td>)/i', '$1', $string);      // before closing </td>
+
     // if br is found, replace it by BREAK
     $string = preg_replace( "/\n?<br\W*?\/?>\n?/", 'BREAK', $string );
 

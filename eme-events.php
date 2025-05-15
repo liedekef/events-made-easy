@@ -1513,15 +1513,13 @@ function eme_page_title( $data, $post_id = null ) {
                 } else {
                     $stored_page_title_format = get_option( 'eme_event_page_title_format' );
                 }
-                $page_title = eme_replace_event_placeholders( $stored_page_title_format, $event );
-                $res        = $page_title;
+                $res = eme_replace_event_placeholders( $stored_page_title_format, $event );
             }
         } elseif ( eme_is_single_location_page() ) {
             $location = eme_get_location( eme_sanitize_request( get_query_var( 'location_id' ) ) );
             if ( ! empty( $location ) ) {
                 $stored_page_title_format = get_option( 'eme_location_page_title_format' );
-                $page_title               = eme_replace_locations_placeholders( $stored_page_title_format, $location );
-                $res                      = $page_title;
+                $res                      = eme_replace_locations_placeholders( $stored_page_title_format, $location );
             } else {
                 $res = $data;
             }

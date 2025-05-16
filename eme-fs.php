@@ -519,7 +519,7 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
             $res = ob_get_clean();
 	}
 	if (get_option('eme_htmleditor') == 'jodit') {
-            $res = "<textarea class='eme-fs-editor eme_fs_wysiwig_editor_width' name='$field_id' id='$field_id' rows='6' data-allowupload='$allow_upload'></textarea>";
+            $res = "<textarea class='eme-fs-editor' name='$field_id' id='$field_id' rows='6' data-allowupload='$allow_upload'></textarea>";
 	}
         break;
     case 'localized_datetime':

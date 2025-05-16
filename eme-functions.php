@@ -4045,15 +4045,15 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
     }
     if ( $show_wp_editor ) {
         if ( $show_full ) {
-	    if ($html_editor == 'tinymce') {
+            if ($html_editor == 'tinymce') {
                 $eme_editor_settings = eme_get_editor_settings($name);
-	        wp_editor( $value, $editor_id, $eme_editor_settings );
-	    }
-	    if ($html_editor == 'jodit') {
+                wp_editor( $value, $editor_id, $eme_editor_settings );
+            }
+            if ($html_editor == 'jodit') {
                 ?>
-                <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" style="width: 95%" <?php echo $data_default; ?>><?php echo eme_esc_html( $value ); ?></textarea>
+                <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" <?php echo $data_default; ?>><?php echo eme_esc_html( $value ); ?></textarea>
                 <?php
-	    }
+	        }
         } else {
             $eme_editor_settings = eme_get_editor_settings($name, false );
             wp_editor( $value, $editor_id, $eme_editor_settings );

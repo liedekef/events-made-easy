@@ -3043,7 +3043,7 @@ function eme_charge_payconiq() {
             currency: $cur,
             description: $description,
             reference: $payment_id,
-            bulkId: $bulkId,
+            //bulkId: $bulkId,
             callbackUrl: $notification_link,
             returnUrl: $return_link
         );

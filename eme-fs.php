@@ -194,6 +194,13 @@ function eme_add_event_form_shortcode( $atts ) {
     wp_enqueue_style( 'eme-leaflet-css' );
     wp_enqueue_script( 'eme-fs-location' );
     wp_enqueue_script( 'eme-edit-maps' );
+    if (get_option( 'eme_htmleditor' ) == 'jodit') {
+        // WordPress media library
+        wp_enqueue_media();
+        wp_enqueue_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION, true);
+        wp_enqueue_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
+    }
+
     $atts = shortcode_atts( [ 'id' => 0, 'startdatetime' => '' ], $atts );
     $atts['id'] = intval($atts['id']);
     if ( $atts['startdatetime'] != 'now' )
@@ -497,15 +504,23 @@ function eme_get_fs_field_html( $field = false, $type = 'text', $more = '', $req
     $res = '';
     switch($type) {
     case 'wysiwyg_textarea':
-        if ($eme_fs_options['allow_upload'])
+        if ($eme_fs_options['allow_upload'] && is_user_logged_in()) {
             $editor_settings=['media_buttons'=>true,'textarea_name'=>"event[$field]"];
-        else
+	    $allow_upload="yes";
+	} else {
             $editor_settings=['media_buttons'=>false,'textarea_name'=>"event[$field]"];
+	    $allow_upload="no";
+	}
         $editor_settings['editor_class'] = "eme_fs_wysiwig_editor_width";
-        ob_start(); // Start output buffer
-        wp_editor('',$field_id,$editor_settings);
-        // Store the printed data in $editor variable
-        $res = ob_get_clean();
+	if (get_option('eme_htmleditor') == 'tinymce') {
+            ob_start(); // Start output buffer
+            wp_editor('',$field_id,$editor_settings);
+            // Store the printed data in $editor variable
+            $res = ob_get_clean();
+	}
+	if (get_option('eme_htmleditor') == 'jodit') {
+            $res = "<textarea class='eme-fs-editor eme_fs_wysiwig_editor_width' name='$field_id' id='$field_id' rows='6' data-allowupload='$allow_upload'></textarea>";
+	}
         break;
     case 'localized_datetime':
         //echo sprintf($html_by_type['hidden'], $field_id, $field, '', $more);

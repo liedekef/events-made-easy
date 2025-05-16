@@ -424,10 +424,15 @@ function eme_register_scripts() {
     }
     $map_is_active = $eme_map_is_active ? 'true' : 'false';
     $translation_array = [
-        'translate_ajax_url' => admin_url( 'admin-ajax.php' ),
-        'translate_map_is_active' => $map_is_active,
+        'translate_ajax_url'        => admin_url( 'admin-ajax.php' ),
+        'translate_plugin_url'      => EME_PLUGIN_URL,
+        'translate_map_is_active'   => $map_is_active,
+        'translate_flanguage'       => $language,
         'translate_nomatchlocation' => __( 'No matching location found', 'events-made-easy' ),
-        'translate_frontendnonce' => wp_create_nonce( 'eme_frontend' )
+        'translate_frontendnonce'   => wp_create_nonce( 'eme_frontend' ),
+	'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
+        'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
+        'translate_htmleditor'      => get_option( 'eme_htmleditor' ),
     ];
     wp_localize_script( 'eme-fs-location', 'emefs', $translation_array );
 
@@ -710,4 +715,25 @@ add_action( 'rest_api_init', function () {
     ) );
 } );
 
+// AJAX handler for rendering shortcodes in Jodit preview
+add_action('wp_ajax_eme_jodit_preview_render', 'eme_jodit_preview_render');
+function eme_jodit_preview_render() {
+    if (!current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
+        wp_send_json_error('Unauthorized', 403);
+    }
+
+    if (empty($_POST['html'])) {
+        wp_send_json_error('No HTML received.');
+    }
+
+    // Render shortcodes in the HTML
+    $content = do_shortcode(wp_unslash($_POST['html']));
+
+    // remove potential unsecured tags (optional, but recommended)
+    //$processed_html = wp_kses_post($processed_html);
+
+    $rendered = apply_filters('the_content', $content);
+    $rendered = '<div class="jodit__preview-box jodit-context" style="position: relative; padding: 16px; min-width: 1024px; min-height: 600px; border: 0px;">' . $rendered . '</div>';
+    wp_send_json_success(['html' => $rendered]);
+}
 ?>

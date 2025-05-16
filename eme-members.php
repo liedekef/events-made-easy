@@ -2274,7 +2274,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_new_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[new_body_text]', $membership['properties']['new_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[new_body_text]', $membership['properties']['new_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2344,7 +2344,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_contact_new_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[contact_new_body_text]', $membership['properties']['contact_new_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[contact_new_body_text]', $membership['properties']['contact_new_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2381,7 +2381,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_updated_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[updated_body_text]', $membership['properties']['updated_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[updated_body_text]', $membership['properties']['updated_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2418,7 +2418,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_extended_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[extended_body_text]', $membership['properties']['extended_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[extended_body_text]', $membership['properties']['extended_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2497,7 +2497,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_paid_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[paid_body_text]', $membership['properties']['paid_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[paid_body_text]', $membership['properties']['paid_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2567,7 +2567,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_contact_paid_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[contact_paid_body_text]', $membership['properties']['contact_paid_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[contact_paid_body_text]', $membership['properties']['contact_paid_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2607,7 +2607,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_reminder_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[reminder_body_text]', $membership['properties']['reminder_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[reminder_body_text]', $membership['properties']['reminder_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2647,7 +2647,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_stop_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[stop_body_text]', $membership['properties']['stop_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[stop_body_text]', $membership['properties']['stop_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2678,7 +2678,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_contact_stop_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[contact_stop_body_text]', $membership['properties']['contact_stop_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[contact_stop_body_text]', $membership['properties']['contact_stop_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2715,7 +2715,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_contact_deleted_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[contact_deleted_body_text]', $membership['properties']['contact_deleted_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[contact_deleted_body_text]', $membership['properties']['contact_deleted_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>
@@ -2751,7 +2751,7 @@ function eme_meta_box_div_membershipmailformats( $membership ) {
     }
 ?>
         <div id="div_membership_properties_contact_ipn_body_text" <?php echo $showhide_style; ?>>
-        <?php eme_wysiwyg_textarea( 'properties[contact_ipn_body_text]', $membership['properties']['contact_ipn_body_text'], 1, 0 ); ?>
+        <?php eme_wysiwyg_textarea( 'properties[contact_ipn_body_text]', $membership['properties']['contact_ipn_body_text'], 1, 1 ); ?>
         </div>
     </td>
     </tr>

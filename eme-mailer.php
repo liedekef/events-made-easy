@@ -285,11 +285,11 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
             }
         }
         $mail->setFrom( $mailoptions['fromMail'], $mailoptions['fromName'] );
-        $altbody = eme_replacelinks( $body );
+        $altbody = $mail->html2text( eme_replacelinks( $body ) );
         if ( $mailoptions['send_html'] ) {
             $mail->isHTML( true );
             // Convert all message body line breaks to CRLF, makes quoted-printable encoding work much better
-            $mail->AltBody = $mail->normalizeBreaks( $mail->html2text( $altbody ) );
+            $mail->AltBody = $mail->normalizeBreaks( $altbody );
             $mail->Body    = $mail->normalizeBreaks( eme_nl2br_save_html( $body ) );
         } else {
             $mail->Body = $mail->normalizeBreaks( $altbody );

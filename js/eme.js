@@ -833,7 +833,7 @@ jQuery(document).ready( function($) {
     $('[name=eme-fs-form]').on('submit', function(event) {
         event.preventDefault();
         let form_id=$(this).attr('id');
-        if (emebasic.translate_fs_wysiwyg=="true") {
+	if (emebasic.translate_htmleditor=="tinemce" && emebasic.translate_fs_wysiwyg=="true") {
             let editor = tinymce.get('event_notes');
             if ( editor !== null) {
                 editor.save();

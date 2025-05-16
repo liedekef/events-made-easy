@@ -4036,18 +4036,32 @@ function eme_is_empty_datetime( $mydate ) {
     }
 }
 
-function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 0 ) {
+function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 0, $data_default_optionname = '' ) {
+    $html_editor = get_option('eme_htmleditor');
     $editor_id =  preg_replace( '/\[|\]/', '_', $name);
+    $data_default = '';
+    if (!empty($data_default_optionname)) {
+	    $data_default = 'data-default="'.esc_attr(eme_nl2br_save_html(get_option($data_default_optionname))).'"';
+    }
     if ( $show_wp_editor ) {
         if ( $show_full ) {
-            $eme_editor_settings = eme_get_editor_settings($name);
+	    if ($html_editor == 'tinymce') {
+                $eme_editor_settings = eme_get_editor_settings($name);
+	        wp_editor( $value, $editor_id, $eme_editor_settings );
+	    }
+	    if ($html_editor == 'jodit') {
+                ?>
+                <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" style="width: 95%" <?php echo $data_default; ?>><?php echo eme_esc_html( $value ); ?></textarea>
+                <?php
+	    }
         } else {
             $eme_editor_settings = eme_get_editor_settings($name, false );
+            wp_editor( $value, $editor_id, $eme_editor_settings );
         }
-        wp_editor( $value, $editor_id, $eme_editor_settings );
-    } else { ?>
-        <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" style="width: 95%" ><?php echo eme_esc_html( $value ); ?></textarea>
-<?php
+    } else { 
+        ?>
+        <textarea name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" style="width: 95%" <?php echo $data_default; ?>><?php echo eme_esc_html( $value ); ?></textarea>
+        <?php
     }
 }
 

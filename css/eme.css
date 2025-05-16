@@ -707,3 +707,7 @@ div#div_import {
     width: 16px;
     height: 16px;
 }
+
+.eme_fs_wysiwig_editor_width {
+    width: 95%;
+}

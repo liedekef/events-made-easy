@@ -39,6 +39,14 @@ function activateTab(target) {
             jQuery('#MailsLoadRecordsButton').trigger('click');
         }, 100); // Adjust the delay as necessary
     }
+
+    if (emeadmin.translate_htmleditor=='jodit') {
+	    setTimeout(function() {
+		    Object.values(Jodit.instances).forEach(function(editor) {
+			    editor.events.fire('resize');
+		    });
+	    }, 100); // Adjust the delay as necessary
+    }
 }
 
 jQuery(document).ready( function($) {
@@ -938,6 +946,135 @@ jQuery(document).ready( function($) {
             }
         });
     });
+
+    if (emeadmin.translate_htmleditor=='jodit') {
+	    Jodit.modules.Icon.set('insertNbsp','<svg viewBox="0 0 100 40" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="96" height="36" rx="6" ry="6" fill="#f0f0f0" stroke="#333" stroke-width="3"/></svg>');
+	    Jodit.modules.Icon.set('insertFromMediaLibrary','<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20 3H4C2.897 3 2 3.897 2 5v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 5h16v8.586l-3.293-3.293a1 1 0 0 0-1.414 0L11 14l-2.293-2.293a1 1 0 0 0-1.414 0L4 14.586V5zm0 14v-2.586l4-4 2.293 2.293a1 1 0 0 0 1.414 0L16 11.414l4 4V19H4z"/></svg>');
+	    Jodit.defaultOptions.controls.insertNbsp = {
+		    icon: 'insertNbsp',
+		    tooltip: emeadmin.translate_insertnbsp,
+		    exec: function (editor) {
+			    editor.selection.insertHTML('&nbsp;');
+		    }
+	    };
+	    Jodit.defaultOptions.controls.insertFromMediaLibrary = {
+		    icon: 'insertFromMediaLibrary',
+		    exec: function (editor) {
+			    const frame = wp.media({
+				    multiple: true
+			    });
+			    frame.on('select', function () {
+				    const selection = frame.state().get('selection');
+				    selection.each(function (attachment) {
+					    const file = attachment.toJSON();
+					    const img = file.sizes && file.sizes.medium ? file.sizes.medium : file;
+					    const imgHTML = `<img src="${img.url}" width="${img.width}" height="${img.height}" alt="${file.alt || ''}"/>`;
+					    editor.selection.insertHTML(imgHTML);
+				    });
+				    frame.off('select'); // Avoid duplicate inserts
+			    });
+			    frame.open();
+		    },
+		    tooltip: emeadmin.translate_insertfrommedia
+	    };
+	    Jodit.defaultOptions.controls.preview = {
+		    icon: 'eye',
+		    exec: async (editor) => {
+			    const html = editor.value;
+			    try {
+				    const formData = new FormData();
+				    formData.append('action', 'eme_jodit_preview_render');
+				    formData.append('html', html);
+				    formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
+
+				    const response = await fetch(ajaxurl, {
+					    method: 'POST',
+					    body: formData,
+				    });
+
+				    const result = await response.json();
+				    const rendered = result.success ? result.data.html : `<pre>Error: ${result.data}</pre>`;
+
+				    const dialog = editor.dlg();
+				    dialog.setHeader('Live Preview');
+				    dialog.setContent(rendered);
+				    dialog.open();
+			    } catch (err) {
+				    editor.alert('Preview failed: ' + err.message);
+			    }
+		    }
+	    };
+
+
+	    $('.eme-editor').each(function () {
+		    const $textarea = $(this);
+		    const $emeeditor = new Jodit($textarea[0], {
+			    height: 300,
+			    toolbarSticky: false,
+			    toolbarAdaptive: false,
+			    showCharsCounter: false,
+			    showWordsCounter: false,
+			    hidePoweredByJodit: true,
+			    language: emeadmin.translate_flanguage,
+			    enter: 'br', // use <br> instead of <p> for line breaks
+			    cleanHTML: {
+				    replaceNBSP: false,
+				    removeEmptyElements: false,
+				    removeEmptyAttributes: false,
+				    fillEmptyParagraph: false
+			    },
+			    allowTagsWithoutClosing: true,
+			    buttons: [
+				    'undo', 'redo',
+				    '|', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript',
+				    '|', 'paragraph', 'fontsize', 'font', 'lineHeight',
+				    '|', 'brush',
+				    '|', 'source', 'fullsize',
+				    '\n',
+				    '|', 'align', 'outdent', 'indent',
+				    '|', 'ul', 'ol',
+				    '|', 'table', 'symbols',
+				    '|', 'link', 'image', 'video', 'insertFromMediaLibrary',
+				    '|', 'hr', 'insertNbsp', 'eraser', 'preview'
+			    ]
+		    });
+
+		    $emeeditor.events.on('focus', function () {
+			    $emeeditor.options.enter = 'p';
+		    });
+		    // when the “Link” popup opens…
+		    $emeeditor.events.on('afterOpenPopup.link', popup => {
+			    const popupEl = popup.container;    // <-- the real DOM element
+			    // find the URL input
+			    const urlField = popupEl.querySelector('input[data-ref="url_input"]');
+			    if (!urlField) {
+				    return;
+			    }
+			    const urlval = urlField.value.trim();
+			    // if empty url, we'll add something usefull based on content_input
+			    if (!urlval) {
+				    const contentval = popupEl.querySelector('input[data-ref="content_input"]').value.trim();
+				    // Email case
+				    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+				    if (emailRegex.test(contentval)) {
+					    urlField.value = 'mailto:' + contentval;
+					    return;
+				    }
+				    // URL case
+				    const urlRegex = /^(https?:\/\/)/i;
+				    if (urlRegex.test(contentval)) {
+					    urlField.value = contentval;
+					    return;
+				    }
+				    // Default: add https://
+				    urlField.value = 'https://' + contentval;
+			    }
+		    });
+
+		    // Optional: Store editor if needed elsewhere
+		    $textarea.data('joditEditor', $emeeditor);
+	    });
+    }
 });
 
 // the next is a Jtable CSV export function

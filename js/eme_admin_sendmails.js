@@ -136,12 +136,13 @@ jQuery(document).ready( function($) {
     $('#eventmailButton').on("click",function (e) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-        if (ememails.translate_htmlmail=='yes') {
+        if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
             let editor = tinymce.get('event_mail_message');
             if ( editor !== null) {
                 editor.save();
             }
         }
+
         let form_id = $(this.form).attr('id');
         let alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action', 'eme_eventmail');
@@ -174,8 +175,8 @@ jQuery(document).ready( function($) {
     $('#genericmailButton').on("click",function (e) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-        if (ememails.translate_htmlmail=='yes') {
-            let editor = tinymce.get('generic_mail_message');
+        if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
+            let editor = tinymce.get('event_mail_message');
             if ( editor !== null) {
                 editor.save();
             }
@@ -213,7 +214,7 @@ jQuery(document).ready( function($) {
     $('#previeweventmailButton').on("click",function (e) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-        if (ememails.translate_htmlmail=='yes') {
+        if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
             let editor = tinymce.get('event_mail_message');
             if ( editor !== null) {
                 editor.save();
@@ -239,8 +240,8 @@ jQuery(document).ready( function($) {
     $('#previewmailButton').on("click",function (e) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-        if (ememails.translate_htmlmail=='yes') {
-            let editor = tinymce.get('generic_mail_message');
+        if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
+            let editor = tinymce.get('event_mail_message');
             if ( editor !== null) {
                 editor.save();
             }
@@ -307,12 +308,26 @@ jQuery(document).ready( function($) {
                 template_id: $('select#event_message_template').val(),
             },
             function(data){
-                $('textarea#event_mail_message').val(data.htmlmessage);
-                if (ememails.translate_htmlmail=='yes') {
-                    let editor = tinymce.get('event_mail_message');
-                    if ( editor !== null) {
-                        editor.setContent(data.htmlmessage);
-                        editor.save();
+                if (ememails.translate_htmleditor=='tinymce') {
+	            $('textarea#event_mail_message').val(data.htmlmessage);
+                    if (ememails.translate_htmlmail=='yes') {
+                        let editor = tinymce.get('event_mail_message');
+                        if ( editor !== null) {
+                            editor.setContent(data.htmlmessage);
+                            editor.save();
+                        }
+                    }
+                }
+
+                if (ememails.translate_htmleditor=='jodit') {
+		    const $textarea = $('textarea#event_mail_message');
+		    const editorInstance = $textarea.data('joditEditor');
+
+		    if (editorInstance) {
+			    editorInstance.value = data.htmlmessage; // sets new HTML content
+		    } else {
+			    // fallback in case editor not yet initialized
+			    $textarea.val(data.htmlmessage);
                     }
                 }
             }, 'json');
@@ -341,12 +356,26 @@ jQuery(document).ready( function($) {
                 template_id: $('select#generic_message_template').val(),
             },
             function(data){
-                $('textarea#generic_mail_message').val(data.htmlmessage);
-                if (ememails.translate_htmlmail=='yes') {
-                    let editor = tinymce.get('generic_mail_message');
-                    if ( editor !== null) {
-                        editor.setContent(data.htmlmessage);
-                        editor.save();
+                if (ememails.translate_htmleditor=='tinymce') {
+                    $('textarea#generic_mail_message').val(data.htmlmessage);
+                    if (ememails.translate_htmlmail=='yes') {
+                        let editor = tinymce.get('generic_mail_message');
+                        if ( editor !== null) {
+                            editor.setContent(data.htmlmessage);
+                            editor.save();
+                        }
+                    }
+                }
+
+                if (ememails.translate_htmleditor=='jodit') {
+		    const $textarea = $('textarea#generic_mail_message');
+		    const editorInstance = $textarea.data('joditEditor');
+
+		    if (editorInstance) {
+			    editorInstance.value = data.htmlmessage; // sets new HTML content
+		    } else {
+			    // fallback in case editor not yet initialized
+			    $textarea.val(data.htmlmessage);
                     }
                 }
             }, 'json');

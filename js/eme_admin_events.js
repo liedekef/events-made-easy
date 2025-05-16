@@ -388,48 +388,46 @@ jQuery(document).ready( function($) {
     // if any of event_single_event_format,event_page_title_format,event_contactperson_email_body,event_respondent_email_body,event_registration_pending_email_body, event_registration_form_format, event_registration_updated_email_body
     // is empty: display default value on focus, and if the value hasn't changed from the default: empty it on blur
 
-    function text_focus_blur(target,def_value) {
-        $(target).on("focus",function(){
-            if ($(this).val() == '') {
-                $(this).val(def_value);
-            }
-        }).on("blur",function(){
-            if ($(this).val() == def_value) {
-                $(this).val('');
+    function applyDefaultOnFocusBlur() {
+       const joditEditors = Jodit.instances;
+       $('textarea[data-default], input[data-default]').each(function () {
+           const $el = $(this);
+           const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
+           const id = $el.attr('id');
+
+           // If a Jodit instance is associated
+           if (joditEditors[id]) {
+               const editorInstance = joditEditors[id];
+               editorInstance.events.on('focus', function () {
+                   if (editorInstance.value.trim() === '' || editorInstance.value.trim() === '<p><br></p>') {
+                       editorInstance.value = defaultValue;
+                   }
+               });
+
+               editorInstance.events.on('blur', function () {
+                   if (editorInstance.value.trim().replace(/<br\s*\/?>/gi, '<br>') === defaultValue || editorInstance.value.trim() === '<p>'+defaultValue+'</p>') {
+                       editorInstance.value = '';
+                   }
+               });
+           } else {
+               // Fallback for plain textarea
+               $el.on('focus', function () {
+                   if ($el.val().trim() === '') {
+                       $el.val(defaultValue);
+                   }
+               });
+
+               $el.on('blur', function () {
+                   if ($el.val().trim() === defaultValue) {
+                       $el.val('');
+                   }
+               });
             }
         }); 
     }
-    text_focus_blur('textarea#event_page_title_format',eme_event_page_title_format());
-    text_focus_blur('textarea#event_single_event_format',eme_single_event_format());
-    text_focus_blur('textarea#event_registration_recorded_ok_html',eme_registration_recorded_ok_html());
-    text_focus_blur('input#eme_prop_event_contactperson_email_subject',eme_contactperson_email_subject());
-    text_focus_blur('textarea#event_contactperson_email_body',eme_contactperson_email_body());
-    text_focus_blur('input#eme_prop_contactperson_registration_pending_email_subject',eme_contactperson_pending_email_subject());
-    text_focus_blur('textarea#eme_prop_contactperson_registration_pending_email_body',eme_contactperson_pending_email_body());
-    text_focus_blur('input#eme_prop_contactperson_registration_cancelled_email_subject',eme_contactperson_cancelled_email_subject());
-    text_focus_blur('textarea#eme_prop_contactperson_registration_cancelled_email_body',eme_contactperson_cancelled_email_body());
-    text_focus_blur('input#eme_prop_contactperson_registration_ipn_email_subject',eme_contactperson_ipn_email_subject());
-    text_focus_blur('textarea#eme_prop_contactperson_registration_ipn_email_body',eme_contactperson_ipn_email_body());
-    text_focus_blur('input#eme_prop_contactperson_registration_paid_email_subject',eme_contactperson_paid_email_subject());
-    text_focus_blur('textarea#eme_prop_contactperson_registration_paid_email_body',eme_contactperson_paid_email_body());
-    text_focus_blur('input#eme_prop_event_respondent_email_subject',eme_respondent_email_subject());
-    text_focus_blur('textarea#event_respondent_email_body',eme_respondent_email_body());
-    text_focus_blur('input#eme_prop_event_registration_pending_email_subject',eme_registration_pending_email_subject());
-    text_focus_blur('textarea#event_registration_pending_email_body',eme_registration_pending_email_body());
-    text_focus_blur('input#eme_prop_event_registration_pending_reminder_email_subject',eme_registration_pending_reminder_email_subject());
-    text_focus_blur('textarea#event_registration_pending_reminder_email_body',eme_registration_pending_reminder_email_body());
-    text_focus_blur('input#eme_prop_event_registration_updated_email_subject',eme_registration_updated_email_subject());
-    text_focus_blur('textarea#event_registration_updated_email_body',eme_registration_updated_email_body());
-    text_focus_blur('input#eme_prop_event_registration_reminder_email_subject',eme_registration_reminder_email_subject());
-    text_focus_blur('textarea#event_registration_reminder_email_body',eme_registration_reminder_email_body());
-    text_focus_blur('input#eme_prop_event_registration_cancelled_email_subject',eme_registration_cancelled_email_subject());
-    text_focus_blur('textarea#event_registration_cancelled_email_body',eme_registration_cancelled_email_body());
-    text_focus_blur('input#eme_prop_event_registration_trashed_email_subject',eme_registration_trashed_email_subject());
-    text_focus_blur('textarea#event_registration_trashed_email_body',eme_registration_trashed_email_body());
-    text_focus_blur('input#eme_prop_event_registration_paid_email_subject',eme_registration_paid_email_subject());
-    text_focus_blur('textarea#event_registration_paid_email_body',eme_registration_paid_email_body());
-    text_focus_blur('textarea#event_registration_form_format',eme_registration_form_format());
-    text_focus_blur('textarea#event_cancel_form_format',eme_cancel_form_format());
+    if (emeevents.translate_htmleditor=='jodit') {
+        applyDefaultOnFocusBlur();
+    }
 
     if ($('#eventForm').length) {
         // initialize the code for auto-complete of location info

@@ -986,6 +986,7 @@ jQuery(document).ready( function($) {
 				    const formData = new FormData();
 				    formData.append('action', 'eme_jodit_preview_render');
 				    formData.append('html', html);
+				    formData.append('screen_id', pagenow);
 				    formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
 				    const response = await fetch(ajaxurl, {

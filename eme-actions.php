@@ -730,9 +730,13 @@ function eme_jodit_preview_render() {
     $content = do_shortcode(wp_unslash($_POST['html']));
 
     // remove potential unsecured tags
+    //$rendered = apply_filters('the_content', $content);
     $rendered = eme_kses_maybe_unfiltered($content);
 
-    //$rendered = apply_filters('the_content', $content);
+    if ( ! empty( $_POST['screen_id'] ) && $_POST['screen_id'] == "events-made-easy_page_eme-emails" ) {
+        $rendered = eme_replaceiframe($rendered);
+    }
+
     $rendered = '<div class="jodit__preview-box jodit-context" style="position: relative; padding: 16px; min-width: 1024px; min-height: 600px; border: 0px;">' . $rendered . '</div>';
     wp_send_json_success(['html' => $rendered]);
 }

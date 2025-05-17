@@ -9489,6 +9489,7 @@ function eme_admin_enqueue_js() {
             'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
             'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
             'translate_insertfrommedia'            => __('Insert from Media Library', 'events-made-easy' ),
+            'translate_preview'                    => __('Preview', 'events-made-easy' ),
             'translate_insertnbsp'                 => __('Insert non-breaking space', 'events-made-easy' ),
             'translate_htmleditor'                 => get_option( 'eme_htmleditor' ),
         ];

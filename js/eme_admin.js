@@ -979,6 +979,7 @@ jQuery(document).ready( function($) {
 	    };
 	    Jodit.defaultOptions.controls.preview = {
 		    icon: 'eye',
+		    tooltip: emeadmin.translate_preview,
 		    exec: async (editor) => {
 			    const html = editor.value;
 			    try {
@@ -996,7 +997,7 @@ jQuery(document).ready( function($) {
 				    const rendered = result.success ? result.data.html : `<pre>Error: ${result.data}</pre>`;
 
 				    const dialog = editor.dlg();
-				    dialog.setHeader('Live Preview');
+				    dialog.setHeader(emeadmin.translate_preview);
 				    dialog.setContent(rendered);
 				    dialog.open();
 			    } catch (err) {
@@ -1004,7 +1005,6 @@ jQuery(document).ready( function($) {
 			    }
 		    }
 	    };
-
 
 	    $('.eme-editor').each(function () {
 		    const $textarea = $(this);
@@ -1029,13 +1029,14 @@ jQuery(document).ready( function($) {
 				    '|', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript',
 				    '|', 'paragraph', 'fontsize', 'font', 'lineHeight',
 				    '|', 'brush',
-				    '|', 'source', 'fullsize',
+				    '---', 'source', 'fullsize',
 				    '\n',
-				    '|', 'align', 'outdent', 'indent',
+				    'align', 'outdent', 'indent',
 				    '|', 'ul', 'ol',
 				    '|', 'table', 'symbols',
 				    '|', 'link', 'image', 'video', 'insertFromMediaLibrary',
-				    '|', 'hr', 'insertNbsp', 'eraser', 'preview'
+				    '|', 'hr', 'insertNbsp', 'eraser',
+				    '---', 'preview'
 			    ]
 		    });
 

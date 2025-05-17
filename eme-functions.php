@@ -4064,6 +4064,7 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
             }
             if ($html_editor == 'jodit') {
                 ?>
+                <span style="display: hidden;" <?php echo $data_default; ?> data-targetid="<?php echo $editor_id; ?>">
                 <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" <?php echo $data_default; ?>><?php echo eme_esc_html( $value ); ?></textarea>
                 <?php
 	        }

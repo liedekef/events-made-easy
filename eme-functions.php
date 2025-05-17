@@ -3284,14 +3284,22 @@ function eme_delete_uploaded_file( $file, $id, $type = 'bookings' ) {
 
 // the next 2 functions allow us to parse html-text and return the urls as "name [url]"
 function eme_buildlink_callback( $matches ) {
-    // Remove spaces in URL (#1487805)
-    $url = str_replace( ' ', '', $matches[4] );
-    $text = empty($matches[6]) ? "link" : $matches[6];
-    return $text . ' [' . $url . ']';
+    $url = str_replace( ' ', '', $matches[2] );
+    return $matches[4] . ' [' . $url . ']';
 }
 
 function eme_replacelinks( $text ) {
-    $linksearch = '/<(a|iframe) [^>]*(href|src)=("|\')([^"\']+)\3([^>]*)>(.*?)<\/(a|iframe)>/i';
+    $linksearch = '/<a [^>]*href=("|\')([^"\']+)\1([^>]*)>(.*?)<\/a>/i';
+    return preg_replace_callback( $linksearch, 'eme_buildlink_callback', $text );
+}
+
+// the next 2 functions allow us to parse html-text and return the iframe as "[url]"
+function eme_buildiframe_callback( $matches ) {
+    $url = str_replace( ' ', '', $matches[2] );
+    return ' [' . $url . ']';
+}
+function eme_replaceiframe( $text ) {
+    $linksearch = '/<iframe [^>]*src=("|\')([^"\']+)\1([^>]*)>(.*?)<\/iframe>/i';
     return preg_replace_callback( $linksearch, 'eme_buildlink_callback', $text );
 }
 

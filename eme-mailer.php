@@ -127,6 +127,9 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
         $mailoptions['mail_send_method'] = 'wp_mail';
     }
 
+    // body is not allowed to contain iframes
+    $body = eme_replaceiframe($body);
+
     if ( $mailoptions['mail_send_method'] == 'wp_mail' ) {
         // Set the correct mail headers (the first 2 are to try to avoid auto-repliers)
         $headers[] = 'Auto-Submitted: auto-generated';
@@ -155,7 +158,14 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
             // it is cleaner than add_filter/remove_filter of wp_mail_content_type ...
             $headers[] = 'Content-type: text/html';
             //add_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
-        }
+	} else {
+            // use phpmailer to convert html
+            require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+            require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+            require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
+            $mail = new PHPMailer\PHPMailer\PHPMailer();
+            $body = $mail->html2text( eme_replacelinks( $body ) );
+	}
 
         // now send it
         if ( ! empty( $mailoptions['toMail'] ) ) {
@@ -173,17 +183,10 @@ function eme_send_mail( $subject, $body, $receiveremail, $receivername = '', $re
         //	remove_filter( 'wp_mail_content_type', 'eme_set_wpmail_html_content_type' );
         //}
     } else {
-        // we prefer the new location first
-        if ( file_exists( ABSPATH . WPINC . '/PHPMailer/PHPMailer.php' ) ) {
-            require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
-            require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
-            require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
-            $mail = new PHPMailer\PHPMailer\PHPMailer();
-        } else {
-            // for older wp instances (pre 5.5)
-            require_once ABSPATH . WPINC . '/class-phpmailer.php';
-            $mail = new PHPMailer();
-        }
+        require_once ABSPATH . WPINC . '/PHPMailer/PHPMailer.php';
+        require_once ABSPATH . WPINC . '/PHPMailer/SMTP.php';
+        require_once ABSPATH . WPINC . '/PHPMailer/Exception.php';
+        $mail = new PHPMailer\PHPMailer\PHPMailer();
 
         $mail->ClearAllRecipients();
         $mail->ClearAddresses();

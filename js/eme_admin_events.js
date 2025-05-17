@@ -389,45 +389,62 @@ jQuery(document).ready( function($) {
     // is empty: display default value on focus, and if the value hasn't changed from the default: empty it on blur
 
     function applyDefaultOnFocusBlur() {
-       const joditEditors = Jodit.instances;
-       $('textarea[data-default], input[data-default]').each(function () {
-           const $el = $(this);
-           const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
-           const id = $el.attr('id');
+        let joditEditors = [];
+        if (emeevents.translate_htmleditor=='jodit') {
+            joditEditors = Jodit.instances;
+        }
+        $('input[data-default]').each(function () {
+            const $el = $(this);
+            const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
+		// Fallback for plain textarea
+                $el.on('focus', function () {
+                    if ($el.val().trim() === '') {
+                        $el.val(defaultValue);
+                    }
+                });
 
-           // If a Jodit instance is associated
-           if (joditEditors[id]) {
-               const editorInstance = joditEditors[id];
-               editorInstance.events.on('focus', function () {
-                   if (editorInstance.value.trim() === '' || editorInstance.value.trim() === '<p><br></p>') {
-                       editorInstance.value = defaultValue;
-                   }
-               });
-
-               editorInstance.events.on('blur', function () {
-                   if (editorInstance.value.trim().replace(/<br\s*\/?>/gi, '<br>') === defaultValue || editorInstance.value.trim() === '<p>'+defaultValue+'</p>') {
-                       editorInstance.value = '';
-                   }
-               });
-           } else {
-               // Fallback for plain textarea
-               $el.on('focus', function () {
-                   if ($el.val().trim() === '') {
-                       $el.val(defaultValue);
-                   }
-               });
-
-               $el.on('blur', function () {
-                   if ($el.val().trim() === defaultValue) {
-                       $el.val('');
-                   }
-               });
-            }
+                $el.on('blur', function () {
+                    if ($el.val().trim() === defaultValue) {
+                        $el.val('');
+                    }
+                });
         }); 
+	// the span-default is for regular textarea and jodit
+        $('span[data-default]').each(function () {
+            const $el = $(this);
+            const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
+	    const targetid = $el.data('targetid');
+            // If a Jodit instance is associated
+            if (joditEditors[targetid]) {
+                const editorInstance = joditEditors[targetid];
+                editorInstance.events.on('focus', function () {
+                    if (editorInstance.value.trim() === '' || editorInstance.value.trim() === '<p><br></p>') {
+                        editorInstance.value = defaultValue;
+                    }
+                });
+
+                editorInstance.events.on('blur', function () {
+                    if (editorInstance.value.trim().replace(/<br\s*\/?>/gi, '<br>') === defaultValue || editorInstance.value.trim() === '<p>'+defaultValue+'</p>') {
+                        editorInstance.value = '';
+                    }
+                });
+            } else {
+	        const target = $('#'+targetid);
+                target.on('focus', function () {
+                    if (target.val().trim() === '') {
+                        target.val(defaultValue);
+                    }
+                });
+
+                target.on('blur', function () {
+                    if (target.val().trim() === defaultValue) {
+                        target.val('');
+                    }
+                });
+	    }
+	});
     }
-    if (emeevents.translate_htmleditor=='jodit') {
-        applyDefaultOnFocusBlur();
-    }
+    applyDefaultOnFocusBlur();
 
     if ($('#eventForm').length) {
         // initialize the code for auto-complete of location info

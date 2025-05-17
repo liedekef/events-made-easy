@@ -3285,12 +3285,13 @@ function eme_delete_uploaded_file( $file, $id, $type = 'bookings' ) {
 // the next 2 functions allow us to parse html-text and return the urls as "name [url]"
 function eme_buildlink_callback( $matches ) {
     // Remove spaces in URL (#1487805)
-    $url = str_replace( ' ', '', $matches[3] );
-    return $matches[5] . ' [' . $url . ']';
+    $url = str_replace( ' ', '', $matches[4] );
+    $text = empty($matches[6]) ? "link" : $matches[6];
+    return $text . ' [' . $url . ']';
 }
 
 function eme_replacelinks( $text ) {
-    $linksearch = '/<(a) [^>]*href=("|\')([^"\']+)\2([^>]*)>(.*?)<\/a>/i';
+    $linksearch = '/<(a|iframe) [^>]*(href|src)=("|\')([^"\']+)\3([^>]*)>(.*?)<\/(a|iframe)>/i';
     return preg_replace_callback( $linksearch, 'eme_buildlink_callback', $text );
 }
 

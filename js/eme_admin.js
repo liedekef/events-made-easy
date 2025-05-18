@@ -50,6 +50,20 @@ function activateTab(target) {
 }
 
 jQuery(document).ready( function($) {
+    if (typeof getQueryParams === 'undefined') {
+        function getQueryParams(qs) {
+            qs = qs.split('+').join(' ');
+            let params = {},
+                tokens,
+                re = /[?&]?([^=]+)=([^&]*)/g;
+
+            while (tokens = re.exec(qs)) {
+                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+            }
+            return params;
+        }
+    }
+    let $_GET = getQueryParams(document.location.search);
     $('.eme-tab').on('click', function(e) {
         let target = $(this).data('tab');
         activateTab(target);
@@ -987,6 +1001,9 @@ jQuery(document).ready( function($) {
 				    formData.append('action', 'eme_jodit_preview_render');
 				    formData.append('html', html);
 				    formData.append('screen_id', pagenow);
+                    if ($_GET['tab']) {
+                        formData.append('eme_tab', $_GET['tab']);
+                    }
 				    formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
 				    const response = await fetch(ajaxurl, {

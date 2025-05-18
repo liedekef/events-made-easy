@@ -213,16 +213,14 @@ function eme_add_event_form_shortcode( $atts ) {
         $nonce
         <span id='honeypot_check'><input type='text' name='honeypot_check' value='' autocomplete='off'></span>
 ";
+    $format = eme_get_template_format( $atts['id'] );
     $form_html .= eme_event_fs_form( $atts['id'], $atts['startdatetime'] );
     $form_html  .= '</form></div>';
     return $form_html;
 }
 
-function eme_event_fs_form( $template_id, $startdatetime ) {
+function eme_event_fs_form( $format, $startdatetime = '' ) {
     $eme_fs_options = get_option('eme_fs');
-    if ( $template_id ) {
-        $format = eme_get_template_format( $template_id );
-    }
     if (empty($format)) {
         $format = $eme_fs_options['form_format'];
     }

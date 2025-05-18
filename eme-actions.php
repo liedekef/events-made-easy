@@ -736,6 +736,11 @@ function eme_jodit_preview_render() {
     if ( ! empty( $_POST['screen_id'] ) && $_POST['screen_id'] == "events-made-easy_page_eme-emails" ) {
         $rendered = eme_replaceiframe($rendered);
     }
+    if ( ! empty( $_POST['screen_id'] ) && $_POST['screen_id'] == "events-made-easy_page_eme-options" ) {
+        if (! empty( $_POST['eme_tab'] ) && $_POST['eme_tab'] == 'emefs') {
+            $rendered = eme_event_fs_form($rendered);
+        }
+    }
 
     $rendered = '<div class="jodit__preview-box jodit-context" style="position: relative; padding: 16px; min-width: 1024px; min-height: 600px; border: 0px;">' . $rendered . '</div>';
     wp_send_json_success(['html' => $rendered]);

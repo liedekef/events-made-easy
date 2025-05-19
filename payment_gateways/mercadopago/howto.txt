@@ -1,4 +1,4 @@
 composer update --no-dev
 cd vendor/mercadopago/dx-php
-rm -rf phpDocumentor.phar phpunit.* docs .phpdoc .git* .travis.yml tests
+rm -rf phpDocumentor.phar phpunit.* examples docs .phpdoc .git* .travis.yml tests
 rm -f .pre-commit-config.yaml *md

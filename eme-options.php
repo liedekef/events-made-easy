@@ -2963,7 +2963,6 @@ case 'payments':
 <summary><?php esc_html_e( 'Braintree', 'events-made-easy' ); echo_configured_pg('braintree'); ?></summary>
 <div>
 <table class='form-table'>
-<tr><td> <?php _e('Internal payment method name','events-made-easy');?></td><td>braintree</td></tr>
 <?php
     $gateway = 'braintree';
     eme_options_select(

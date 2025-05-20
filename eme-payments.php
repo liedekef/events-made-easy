@@ -173,17 +173,18 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
         }
     }
 
+    $eme_pg_submit_immediately = 0;
+    $hidden_class              = '';
+    $pg_in_use                 = '';
     // now: count the payment gateways active for this event
     // if only 1 and the option to immediately submit is set, hide the divs and forms and submit it
     $pg_count = eme_event_count_pgs( $event );
     if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
         $eme_pg_submit_immediately = 1;
-        $hidden_class              = 'eme-hidden';
         $pg_in_use                 = eme_event_get_first_pg( $event );
-    } else {
-        $eme_pg_submit_immediately = 0;
-        $hidden_class              = '';
-        $pg_in_use                 = '';
+        if ($pg_in_use != "braintree") { //braintree replaces our form, no need for submit/hidden
+            $hidden_class              = 'eme-hidden';
+        }
     }
 
     if ( $resultcode > 0 ) {
@@ -211,8 +212,12 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
 
     // if "submit immediately": we show the button text, since the rest of the div is hidden
     if ( $eme_pg_submit_immediately ) {
-        $button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
-        $above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $event['event_properties']['vat_pct'], 'html', $person['lang'] );
+        if ($pg_in_use == "braintree") {
+            $above_text = "";
+        } else {
+            $button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
+            $above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $event['event_properties']['vat_pct'], 'html', $person['lang'] );
+        }
         if ( ! eme_is_empty_string( $above_text ) ) {
             $ret_string .= "<div id='eme-payment-formtext-header' class='eme-message-success eme-rsvp-message-success'>";
             $ret_string .= $above_text;
@@ -235,7 +240,7 @@ function eme_event_payment_form( $payment_id, $resultcode = 0, $standalone = 0 )
                 if ( function_exists( $func ) ) {
                     $pg_form     = $func( $event['event_name'], $payment, $total_price, $cur, $is_multi );
                     $ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $event['event_properties']['vat_pct'], 'html', $person['lang'] );
-                    if ( $eme_pg_submit_immediately ) {
+                    if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         $ret_string .= '<script type="text/javascript">
                             jQuery(document).ready( function($) {
@@ -306,17 +311,18 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
 
     $cur = $membership['properties']['currency'];
 
+    $eme_pg_submit_immediately = 0;
+    $hidden_class              = '';
+    $pg_in_use                 = '';
     // now: count the payment gateways active for this membership
     // if only 1 and the option to immediately submit is set, hide the divs and forms and submit it
     $pg_count = eme_membership_count_pgs( $membership );
     if ( $pg_count == 1 && get_option( 'eme_pg_submit_immediately' ) ) {
         $eme_pg_submit_immediately = 1;
-        $hidden_class              = 'eme-hidden';
         $pg_in_use                 = eme_membership_get_first_pg( $membership );
-    } else {
-        $eme_pg_submit_immediately = 0;
-        $hidden_class              = '';
-        $pg_in_use                 = '';
+        if ($pg_in_use != "braintree") { //braintree replaces our form, no need for submit/hidden
+            $hidden_class              = 'eme-hidden';
+        }
     }
 
     // if not "submit immediately" or standalone: we show the header
@@ -344,8 +350,13 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
 
     // if "submit immediately": we show the button text, since the rest of the div is hidden
     if ( $eme_pg_submit_immediately ) {
-        $button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
-        $above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
+        // braintree shows anyway, so hide the button_above
+        if ($pg_in_use == "braintree") {
+            $above_text = "";
+        } else {
+            $button_above = get_option( 'eme_' . $pg_in_use . '_button_above' );
+            $above_text   = eme_replace_payment_gateway_placeholders( $button_above, $pg_in_use, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
+        }
         if ( ! eme_is_empty_string( $above_text ) ) {
             $ret_string .= "<div id='eme-payment-formtext-header' class='eme-message-success eme-rsvp-message-success'>";
             $ret_string .= $above_text;
@@ -372,7 +383,7 @@ function eme_member_payment_form( $payment_id, $resultcode = 0, $standalone = 0 
                 if ( function_exists( $func ) ) {
                     $pg_form     = $func( $membership['name'], $payment, $total_price, $cur, $is_multi );
                     $ret_string .= eme_replace_payment_gateway_placeholders( $pg_form, $pg, $total_price, $cur, $membership['properties']['vat_pct'], 'html', $person['lang'] );
-                    if ( $eme_pg_submit_immediately ) {
+                    if ( $eme_pg_submit_immediately && $pg != "braintree" ) { //braintree replaces our form, no need for submit/hidden
                         $waitperiod  = intval( get_option( 'eme_payment_redirect_wait' ) ) * 1000;
                         $ret_string .= '<script type="text/javascript">
                             jQuery(document).ready( function($) {

@@ -47,7 +47,7 @@ class Checkouts implements SumUpService
      * @param float  $amount
      * @param string $currency
      * @param string $checkoutRef
-     * @param string $payToEmail
+     * @param string $merchantCode
      * @param string $description
      * @param null   $payFromEmail
      * @param null   $returnURL
@@ -61,7 +61,7 @@ class Checkouts implements SumUpService
      * @throws \SumUp\Exceptions\SumUpAuthenticationException
      * @throws \SumUp\Exceptions\SumUpSDKException
      */
-    public function create($amount, $currency, $checkoutRef, $payToEmail, $description = '', $payFromEmail = null, $returnURL = null, $redirectURL = null)
+    public function create($amount, $currency, $checkoutRef, $merchantCode, $description = '', $payFromEmail = null, $returnURL = null, $redirectURL = null)
     {
         if (empty($amount) || !is_numeric($amount)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('amount'));
@@ -72,14 +72,14 @@ class Checkouts implements SumUpService
         if (empty($checkoutRef)) {
             throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('checkout reference id'));
         }
-        if (empty($payToEmail)) {
-            throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('pay to email'));
+        if (empty($merchantCode)) {
+            throw new SumUpArgumentException(ExceptionMessages::getMissingParamMsg('merchant code'));
         }
         $payload = [
             'amount' => $amount,
             'currency' => $currency,
             'checkout_reference' => $checkoutRef,
-            'pay_to_email' => $payToEmail,
+            'merchant_code' => $merchantCode,
             'description' => $description
         ];
         if (isset($payFromEmail)) {

@@ -502,6 +502,7 @@ input[type="checkbox"] {
 .eme_formfield_fdatetime, .eme_formfield_fdate {
     pointer-events: auto !important;
     opacity: 1 !important;
+    max-width: 100%;
 }
 
 /* for task section header */

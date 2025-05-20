@@ -81,7 +81,6 @@ jQuery(document).ready(function($) {
 
     if (emefs.translate_htmleditor=='jodit') {
 	    Jodit.modules.Icon.set('insertNbsp','<svg viewBox="0 0 100 40" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="96" height="36" rx="6" ry="6" fill="#f0f0f0" stroke="#333" stroke-width="3"/></svg>');
-	    Jodit.modules.Icon.set('insertFromMediaLibrary','<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M20 3H4C2.897 3 2 3.897 2 5v14c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2zM4 5h16v8.586l-3.293-3.293a1 1 0 0 0-1.414 0L11 14l-2.293-2.293a1 1 0 0 0-1.414 0L4 14.586V5zm0 14v-2.586l4-4 2.293 2.293a1 1 0 0 0 1.414 0L16 11.414l4 4V19H4z"/></svg>');
 	    Jodit.defaultOptions.controls.insertNbsp = {
 		    icon: 'insertNbsp',
 		    tooltip: emefs.translate_insertnbsp,
@@ -90,7 +89,11 @@ jQuery(document).ready(function($) {
 		    }
 	    };
 	    Jodit.defaultOptions.controls.insertFromMediaLibrary = {
-		    icon: 'insertFromMediaLibrary',
+            template: () => `
+                            <span style="display: flex; align-items: center;">
+                                <span style="font-size: 1.1em;">🎵 🖼️  📎</span>
+                        </span>
+            `,
 		    exec: function (editor) {
 			    const frame = wp.media({
 				    multiple: true

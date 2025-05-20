@@ -3100,7 +3100,7 @@ case 'maps':
     eme_options_radio_binary( __( 'Enable map gestures?', 'events-made-easy' ), 'eme_map_gesture_handling', __( 'If you choose to use map gestures, then on a desktop zooming must be done using ctrl+zoom, and on a mobile device the user needs to use two fingers to pan the map. This to prevent getting "trapped" in the map when a big map is shown.', 'events-made-easy' ) );
     eme_options_input_text( __( 'Individual map zoom factor', 'events-made-easy' ), 'eme_indiv_zoom_factor', __( 'The zoom factor used when showing a single map (max: 14).', 'events-made-easy' ) );
     eme_options_input_text( __( 'Default location map icon', 'events-made-easy' ), 'eme_location_map_icon', __( "By default a regular pin is shown on the map where the location is. If you don't like the default, you can set another map icon here.", 'events-made-easy' ) . '<br>' . __( 'Size should be 32x32, bottom center will be pointing to the location on the map.', 'events-made-easy' ) );
-    eme_options_textarea( __( 'Default location balloon format', 'events-made-easy' ), 'eme_location_baloon_format', __( 'The format of the text appearing in the balloon describing the location in the map.', 'events-made-easy' ) );
+    eme_options_textarea( __( 'Default location balloon format', 'events-made-easy' ), 'eme_location_baloon_format', __( 'The format of the text appearing in the balloon describing the location in the map.', 'events-made-easy' ), 1, 1 );
 ?>
 </table>
 <?php

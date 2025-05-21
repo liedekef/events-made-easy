@@ -1126,7 +1126,13 @@ jQuery(document).ready( function($) {
 			    if (fontSizeButton) {
 				    const computedSize = computedStyle.fontSize;
 				    const defaultSize = window.getComputedStyle(editor.editor).fontSize;
-				    fontSizeButton.text.textContent = computedSize === defaultSize ? '' : computedSize+' ';
+				    if (computedSize === defaultSize) {
+					    fontSizeButton.state.activated = false;
+					    fontSizeButton.state.active = false;
+					    fontSizeButton.text.textContent = '';
+				    } else {
+					    fontSizeButton.text.textContent = computedSize+' ';
+				    }
 			    }
 			    // Update Paragraph/Heading button
 			    if (fontParagraphButton?.control?.list) {

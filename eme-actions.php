@@ -300,6 +300,12 @@ function eme_admin_register_scripts() {
     wp_register_script( 'eme-options', EME_PLUGIN_URL . 'js/eme_admin_options.js', [ 'jquery' ], EME_VERSION );
     wp_register_script( 'eme-formfields', EME_PLUGIN_URL . 'js/eme_admin_fields.js', [ 'jquery' ], EME_VERSION );
 
+    // jodit stuff
+    wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
+    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', ['purify'], EME_VERSION, true);
+    wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
+    wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
+
     $locale_code     = determine_locale();
     $locale_code     = preg_replace( '/_/', '-', $locale_code );
     $locale_file     = $eme_plugin_dir . "js/jtable/localization/jquery.jtable.$locale_code.js";
@@ -315,6 +321,7 @@ function eme_admin_register_scripts() {
             wp_register_script( 'eme-jtable-locale', $locale_file_url, '', EME_VERSION );
         }
     }
+
 
     wp_register_script( 'eme-rsvp', EME_PLUGIN_URL . 'js/eme_admin_rsvp.js', [ 'eme-autocomplete-form' ], EME_VERSION );
     wp_register_script( 'eme-holidays', EME_PLUGIN_URL . 'js/eme_admin_holidays.js', [ 'eme-autocomplete-form' ], EME_VERSION );
@@ -430,11 +437,22 @@ function eme_register_scripts() {
         'translate_flanguage'       => $language,
         'translate_nomatchlocation' => __( 'No matching location found', 'events-made-easy' ),
         'translate_frontendnonce'   => wp_create_nonce( 'eme_frontend' ),
-	'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
-        'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
-        'translate_htmleditor'      => get_option( 'eme_htmleditor' ),
     ];
     wp_localize_script( 'eme-fs-location', 'emefs', $translation_array );
+
+    // jodit stuff
+    wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
+    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', ['purify'], EME_VERSION, true);
+    wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
+    wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
+    $translation_array = [
+        'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
+        'translate_flanguage'       => $language,
+        'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
+        'translate_preview'         => __('Preview', 'events-made-easy' ),
+        'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
+    ];
+    wp_localize_script( 'eme-jodit', 'emejodit', $translation_array );
 
     if ( get_option( 'eme_recaptcha_for_forms' ) ) {
         // using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...

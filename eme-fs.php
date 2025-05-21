@@ -197,8 +197,8 @@ function eme_add_event_form_shortcode( $atts ) {
     if (get_option( 'eme_htmleditor' ) == 'jodit') {
         // WordPress media library
         wp_enqueue_media();
-        wp_enqueue_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION, true);
-        wp_enqueue_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
+        wp_enqueue_script('eme-jodit');
+        wp_enqueue_style('jodit-css');
     }
 
     $atts = shortcode_atts( [ 'id' => 0, 'startdatetime' => '' ], $atts );

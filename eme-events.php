@@ -7257,7 +7257,7 @@ function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_page_title_format_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_page_title_format_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_page_title_format', $event['event_page_title_format'], 0, 0, 'eme_event_page_title_format' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_page_title_format', $event['event_page_title_format'], 1, 0, 'eme_event_page_title_format' ); ?>
     </div>
 </div>
 <?php
@@ -7291,7 +7291,7 @@ function eme_meta_box_div_event_single_event_format( $event, $templates_array ) 
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_single_event_format_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_single_event_format_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_single_event_format', $event['event_single_event_format'], 1, 1, 'eme_single_event_format' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_single_event_format', $event['event_single_event_format'], 1, 0, 'eme_single_event_format' ); ?>
 <?php
     if ( current_user_can( 'unfiltered_html' ) ) {
         echo "<div class='eme_notice_unfiltered_html'>";
@@ -7349,7 +7349,7 @@ function eme_meta_box_div_event_contactperson_ipn_email( $event, $templates_arra
     <img src="<?php echo EME_PLUGIN_URL; ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_ipn_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="eme_prop_contactperson_registration_ipn_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_ipn_email_body', $event['event_properties']['contactperson_registration_ipn_email_body'], $use_html_editor, 1, 'eme_contactperson_ipn_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_ipn_email_body', $event['event_properties']['contactperson_registration_ipn_email_body'], $use_html_editor, 0, 'eme_contactperson_ipn_email_body' ); ?>
     </div>
 </div>
 <?php
@@ -7393,7 +7393,7 @@ function eme_meta_box_div_event_registration_recorded_ok_html( $event, $template
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_recorded_ok_html_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_recorded_ok_html_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_recorded_ok_html', $event['event_registration_recorded_ok_html'], 1, 1, 'eme_registration_recorded_ok_html' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_registration_recorded_ok_html', $event['event_registration_recorded_ok_html'], 1, 1, 'eme_registration_recorded_ok_html' ); ?>
     </div>
 </div>
 <?php
@@ -7457,7 +7457,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_respondent_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_respondent_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_respondent_email_body', $event['event_respondent_email_body'], $use_html_editor, 1, 'eme_respondent_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_respondent_email_body', $event['event_respondent_email_body'], $use_html_editor, 0, 'eme_respondent_email_body' ); ?>
     </div>
 </div>
 <br>
@@ -7505,7 +7505,7 @@ function eme_meta_box_div_event_registration_approved_email( $event, $templates_
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_contactperson_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_contactperson_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_contactperson_email_body', $event['event_contactperson_email_body'], $use_html_editor, 1, 'eme_contactperson_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_contactperson_email_body', $event['event_contactperson_email_body'], $use_html_editor, 0, 'eme_contactperson_email_body' ); ?>
     </div>
 </div>
 <br>
@@ -7600,7 +7600,7 @@ function eme_meta_box_div_event_registration_userpending_email( $event, $templat
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_userpending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_userpending_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'eme_prop_event_registration_userpending_email_body', $event['event_properties']['event_registration_userpending_email_body'], $use_html_editor, 1, 'eme_registration_userpending_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'eme_prop_event_registration_userpending_email_body', $event['event_properties']['event_registration_userpending_email_body'], $use_html_editor, 0, 'eme_registration_userpending_email_body' ); ?>
     </div>
 </div>
 <?php
@@ -7659,7 +7659,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_pending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_pending_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_pending_email_body', $event['event_registration_pending_email_body'], $use_html_editor, 1, 'eme_registration_pending_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_registration_pending_email_body', $event['event_registration_pending_email_body'], $use_html_editor, 0, 'eme_registration_pending_email_body' ); ?>
     </div>
 </div>
 <br>
@@ -7707,7 +7707,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_pending_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="eme_prop_contactperson_registration_pending_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_pending_email_body', $event['event_properties']['contactperson_registration_pending_email_body'], $use_html_editor, 1, 'eme_contactperson_pending_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_pending_email_body', $event['event_properties']['contactperson_registration_pending_email_body'], $use_html_editor, 0, 'eme_contactperson_pending_email_body' ); ?>
     </div>
 </div>
 <br>
@@ -7796,7 +7796,7 @@ function eme_meta_box_div_event_registration_updated_email( $event, $templates_a
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_updated_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_updated_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_updated_email_body', $event['event_registration_updated_email_body'], $use_html_editor, 1, 'eme_registration_updated_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_registration_updated_email_body', $event['event_registration_updated_email_body'], $use_html_editor, 0, 'eme_registration_updated_email_body' ); ?>
     </div>
 </div>
 <?php
@@ -7847,7 +7847,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_pending_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_pending_reminder_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_pending_reminder_email_body', $event['event_properties']['event_registration_pending_reminder_email_body'], $use_html_editor, 1, 'eme_registration_pending_reminder_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_registration_pending_reminder_email_body', $event['event_properties']['event_registration_pending_reminder_email_body'], $use_html_editor, 0, 'eme_registration_pending_reminder_email_body' ); ?>
     </div>
     <br>
 </div>
@@ -7888,7 +7888,7 @@ function eme_meta_box_div_event_registration_reminder_email( $event, $templates_
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_reminder_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_reminder_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_reminder_email_body', $event['event_properties']['event_registration_reminder_email_body'], $use_html_editor, 1, 'eme_registration_reminder_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_registration_reminder_email_body', $event['event_properties']['event_registration_reminder_email_body'], $use_html_editor, 0, 'eme_registration_reminder_email_body' ); ?>
     </div>
 </div>
 <?php
@@ -7939,7 +7939,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_cancelled_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_cancelled_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_cancelled_email_body', $event['event_registration_cancelled_email_body'], $use_html_editor, 1, 'eme_registration_cancelled_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_registration_cancelled_email_body', $event['event_registration_cancelled_email_body'], $use_html_editor, 0, 'eme_registration_cancelled_email_body' ); ?>
     </div>
 </div>
 <br>
@@ -7987,7 +7987,7 @@ function eme_meta_box_div_event_registration_cancelled_email( $event, $templates
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_cancelled_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="eme_prop_contactperson_registration_cancelled_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_cancelled_email_body', $event['event_properties']['contactperson_registration_cancelled_email_body'], $use_html_editor, 1, 'eme_contactperson_cancelled_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_cancelled_email_body', $event['event_properties']['contactperson_registration_cancelled_email_body'], $use_html_editor, 0, 'eme_contactperson_cancelled_email_body' ); ?>
     </div>
 </div>
 <?php
@@ -8043,7 +8043,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_paid_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_paid_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_paid_email_body', $event['event_registration_paid_email_body'], $use_html_editor, 1, 'eme_registration_paid_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_registration_paid_email_body', $event['event_registration_paid_email_body'], $use_html_editor, 0, 'eme_registration_paid_email_body' ); ?>
     </div>
 </div>
 <br >
@@ -8091,7 +8091,7 @@ function eme_meta_box_div_event_registration_paid_email( $event, $templates_arra
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_prop_contactperson_registration_paid_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="eme_prop_contactperson_registration_paid_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_paid_email_body', $event['event_properties']['contactperson_registration_paid_email_body'], $use_html_editor, 1, 'eme_contactperson_paid_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'eme_prop_contactperson_registration_paid_email_body', $event['event_properties']['contactperson_registration_paid_email_body'], $use_html_editor, 0, 'eme_contactperson_paid_email_body' ); ?>
     </div>
 </div>
 <br>
@@ -8180,7 +8180,7 @@ function eme_meta_box_div_event_registration_trashed_email( $event, $templates_a
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_trashed_email_body_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_trashed_email_body_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_trashed_email_body', $event['event_registration_trashed_email_body'], $use_html_editor, 1, 'eme_registration_trashed_email_body' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_registration_trashed_email_body', $event['event_registration_trashed_email_body'], $use_html_editor, 0, 'eme_registration_trashed_email_body' ); ?>
     </div>
 </div>
 <?php
@@ -8208,7 +8208,7 @@ function eme_meta_box_div_event_registration_form_format( $event, $templates_arr
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_registration_form_format_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_registration_form_format_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_registration_form_format', $event['event_registration_form_format'], 1, 1, 'eme_registration_form_format' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_registration_form_format', $event['event_registration_form_format'], 1, 0, 'eme_registration_form_format' ); ?>
     </div>
 </div>
 <?php
@@ -8237,7 +8237,7 @@ function eme_meta_box_div_event_cancel_form_format( $event, $templates_array ) {
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_cancel_form_format_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_cancel_form_format_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_cancel_form_format', $event['event_cancel_form_format'], 1, 1, 'eme_cancel_form_format' ); ?> 
+    <?php eme_wysiwyg_textarea( 'event_cancel_form_format', $event['event_cancel_form_format'], 1, 0, 'eme_cancel_form_format' ); ?>
     </div>
 </div>
 <?php
@@ -8583,7 +8583,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
                 <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="attendance_unauth_scan_format_div" style="cursor: pointer; vertical-align: middle; ">
                 <br>
                 <div id="attendance_unauth_scan_format_div" <?php echo $showhide_style_unauth; ?>>
-                <?php eme_wysiwyg_textarea( 'eme_prop_attendance_unauth_scan_format', $event['event_properties']['attendance_unauth_scan_format'], 1, 1 ); ?> 
+                <?php eme_wysiwyg_textarea( 'eme_prop_attendance_unauth_scan_format', $event['event_properties']['attendance_unauth_scan_format'], 1, 0 ); ?>
                 </div>
                 </div>
                 <div id='span_attendance_auth_scan_format'>
@@ -8598,7 +8598,7 @@ function eme_meta_box_div_attendance_info( $event, $templates_array, $pdf_templa
                 <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="attendance_auth_scan_format_div" style="cursor: pointer; vertical-align: middle; ">
                 <br>
                 <div id="attendance_auth_scan_format_div" <?php echo $showhide_style_auth; ?>>
-                <?php eme_wysiwyg_textarea( 'eme_prop_attendance_auth_scan_format', $event['event_properties']['attendance_auth_scan_format'], 1, 1 ); ?> 
+                <?php eme_wysiwyg_textarea( 'eme_prop_attendance_auth_scan_format', $event['event_properties']['attendance_auth_scan_format'], 1, 0 ); ?>
                 </div>
                 </div>
 
@@ -9488,9 +9488,6 @@ function eme_admin_enqueue_js() {
             'translate_ftimeformat'                => EME_WP_TIME_FORMAT,
             'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
             'translate_map_is_active'              => get_option( 'eme_map_is_active' ) ? 'true' : 'false',
-            'translate_insertfrommedia'            => __('Insert from Media Library', 'events-made-easy' ),
-            'translate_preview'                    => __('Preview', 'events-made-easy' ),
-            'translate_insertnbsp'                 => __('Insert non-breaking space', 'events-made-easy' ),
             'translate_htmleditor'                 => get_option( 'eme_htmleditor' ),
         ];
         wp_localize_script( 'eme-admin', 'emeadmin', $translation_array );
@@ -9503,8 +9500,16 @@ function eme_admin_enqueue_js() {
         }
 
         if (get_option( 'eme_htmleditor' ) == 'jodit') {
-	    wp_enqueue_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION, true);
-    	    wp_enqueue_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
+            $translation_array = [
+                'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
+                'translate_flanguage'       => $language,
+                'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
+                'translate_preview'         => __('Preview', 'events-made-easy' ),
+                'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
+            ];
+            wp_localize_script( 'eme-jodit', 'emejodit', $translation_array );
+            wp_enqueue_script('eme-jodit');
+            wp_enqueue_style('jodit-css');
         }
     }
     if ( $plugin_page == 'eme-new_event' || ( in_array( $plugin_page, [ 'eme-locations', 'eme-manager' ] ) && isset( $_REQUEST['eme_admin_action'] ) ) ) {

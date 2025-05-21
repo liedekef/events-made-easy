@@ -301,8 +301,9 @@ function eme_admin_register_scripts() {
     wp_register_script( 'eme-formfields', EME_PLUGIN_URL . 'js/eme_admin_fields.js', [ 'jquery' ], EME_VERSION );
 
     // jodit stuff
-    wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
-    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', ['purify'], EME_VERSION, true);
+    //wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
+    //wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', ['purify'], EME_VERSION, true);
+    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION, true);
     wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
     wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
 
@@ -441,8 +442,9 @@ function eme_register_scripts() {
     wp_localize_script( 'eme-fs-location', 'emefs', $translation_array );
 
     // jodit stuff
-    wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
-    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', ['purify'], EME_VERSION, true);
+    //wp_register_script('purify', EME_PLUGIN_URL . 'js/dompurify/purify.min.js', [], EME_VERSION, true);
+    //wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', ['purify'], EME_VERSION, true);
+    wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION, true);
     wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
     wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
     $translation_array = [

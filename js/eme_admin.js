@@ -50,20 +50,6 @@ function activateTab(target) {
 }
 
 jQuery(document).ready( function($) {
-    if (typeof getQueryParams === 'undefined') {
-        function getQueryParams(qs) {
-            qs = qs.split('+').join(' ');
-            let params = {},
-                tokens,
-                re = /[?&]?([^=]+)=([^&]*)/g;
-
-            while (tokens = re.exec(qs)) {
-                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-            }
-            return params;
-        }
-    }
-    let $_GET = getQueryParams(document.location.search);
     $('.eme-tab').on('click', function(e) {
         let target = $(this).data('tab');
         activateTab(target);

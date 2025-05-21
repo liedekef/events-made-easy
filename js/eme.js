@@ -2,6 +2,19 @@ function eme_htmlDecode(value){
     return jQuery('<div/>').html(value).text(); 
 }
 
+function eme_getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
+    let params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+    return params;
+}
+const $_GET = eme_getQueryParams(document.location.search);
+
 function eme_tog(v){return v?'addClass':'removeClass';}
 
 // this function is being called in multiple js files, so needs to be global
@@ -43,20 +56,6 @@ var eme_CaptchaCallback = function() {
 */
 
 jQuery(document).ready( function($) {
-    if (typeof getQueryParams === 'undefined') {
-        function getQueryParams(qs) {
-            qs = qs.split('+').join(' ');
-            let params = {},
-                tokens,
-                re = /[?&]?([^=]+)=([^&]*)/g;
-
-            while (tokens = re.exec(qs)) {
-                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-            }
-            return params;
-        }
-    }
-
     function loadCalendar(tableDiv, fullcalendar, htmltable, htmldiv, showlong_events, month, year, cat_chosen, author_chosen, contact_person_chosen, location_chosen, not_cat_chosen,template_chosen,holiday_chosen,weekdays,language) {
         if (fullcalendar === undefined) {
             fullcalendar = 0;
@@ -234,7 +233,6 @@ jQuery(document).ready( function($) {
         alldata = new FormData($('#'+form_id)[0]);
         alldata.append('action','eme_add_bookings');
         // we add the following 4 params to the request too, so we can check in the backend if it comes from an invite
-        let $_GET = getQueryParams(document.location.search);
         if (typeof $_GET['eme_invite']!=='undefined') {
             alldata.append('eme_invite',$_GET['eme_invite']);
         }

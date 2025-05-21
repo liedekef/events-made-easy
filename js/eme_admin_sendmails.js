@@ -1,18 +1,4 @@
 jQuery(document).ready( function($) {
-    if (typeof getQueryParams === 'undefined') {
-        function getQueryParams(qs) {
-            qs = qs.split('+').join(' ');
-            let params = {},
-                tokens,
-                re = /[?&]?([^=]+)=([^&]*)/g;
-
-            while (tokens = re.exec(qs)) {
-                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-            }
-            return params;
-        }
-    }
-
     // for autocomplete to work, the element needs to exist, otherwise JS errors occur
     // we check for that using length
     if ($('input[name=chooseperson]').length) {
@@ -466,7 +452,6 @@ jQuery(document).ready( function($) {
     });
 
     //Prepare jtable plugin
-    let $_GET = getQueryParams(document.location.search);
     if ($('#MailingReportTableContainer').length) {
         $('#MailingReportTableContainer').jtable({
             title: ememails.translate_mailingreport,

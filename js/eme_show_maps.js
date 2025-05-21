@@ -50,7 +50,6 @@ jQuery(document).ready(function($) {
 
             center_lat = min_latitude + (max_latitude - min_latitude)/2;
             center_lon = min_longitude + (max_longitude - min_longitude)/2;
-            //console.log("center: " + center_lat + " - " + center_lon) + min_longitude;
 
             lat_interval = max_latitude - min_latitude;
 

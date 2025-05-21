@@ -1,19 +1,4 @@
 jQuery(document).ready(function ($) { 
-
-    if (typeof getQueryParams === 'undefined') {
-        function getQueryParams(qs) {
-            qs = qs.split('+').join(' ');
-            let params = {},
-                tokens,
-                re = /[?&]?([^=]+)=([^&]*)/g;
-
-            while (tokens = re.exec(qs)) {
-                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-            }
-            return params;
-        }
-    }
-
     function eme_dynamic_people_data_json(form_id) {
         if ($('div#eme_dynpersondata').length) {
             let alldata = new FormData($('#'+form_id)[0]);
@@ -235,7 +220,6 @@ jQuery(document).ready(function ($) {
             }
         });
 
-        let $_GET = getQueryParams(document.location.search);
         //Prepare jtable plugin
         $('#PeopleTableContainer').jtable({
             title: emepeople.translate_people,

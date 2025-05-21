@@ -1,18 +1,4 @@
 jQuery(document).ready( function($) {
-    if (typeof getQueryParams === 'undefined') {
-        function getQueryParams(qs) {
-            qs = qs.split('+').join(' ');
-            let params = {},
-                tokens,
-                re = /[?&]?([^=]+)=([^&]*)/g;
-
-            while (tokens = re.exec(qs)) {
-                params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
-            }
-            return params;
-        }
-    }
-
     function updateIntervalDescriptor () { 
         $('.interval-desc').hide();
         // for specific months, we just hide and return
@@ -586,7 +572,6 @@ jQuery(document).ready( function($) {
         });
 
         //Prepare jtable plugin
-        let $_GET = getQueryParams(document.location.search);
         $('#EventsTableContainer').jtable({
             title: emeevents.translate_events,
             paging: true,
@@ -745,7 +730,6 @@ jQuery(document).ready( function($) {
                 sorting: false
             }
         }
-        let $_GET = getQueryParams(document.location.search);
         //Prepare jtable plugin
         $('#RecurrencesTableContainer').jtable({
             title: emeevents.translate_recurrences,

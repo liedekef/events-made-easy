@@ -971,11 +971,11 @@ jQuery(document).ready( function($) {
 		    }
 	    };
 	    Jodit.defaultOptions.controls.insertFromMediaLibrary = {
-            template: () => `
+		    template: () => `
                             <span style="display: flex; align-items: center;">
                                 <span style="font-size: 1.1em;">🎵 🖼️ 📎</span>
                         </span>
-            `,
+	    		`,
 		    exec: function (editor) {
 			    const frame = wp.media({
 				    multiple: true
@@ -1004,9 +1004,9 @@ jQuery(document).ready( function($) {
 				    formData.append('action', 'eme_jodit_preview_render');
 				    formData.append('html', html);
 				    formData.append('screen_id', pagenow);
-                    if ($_GET['tab']) {
-                        formData.append('eme_tab', $_GET['tab']);
-                    }
+				    if ($_GET['tab']) {
+					    formData.append('eme_tab', $_GET['tab']);
+				    }
 				    formData.append('eme_admin_nonce', emeadmin.translate_adminnonce);
 
 				    const response = await fetch(ajaxurl, {
@@ -1029,7 +1029,7 @@ jQuery(document).ready( function($) {
 
 	    $('.eme-editor').each(function () {
 		    const $textarea = $(this);
-		    const $emeeditor = new Jodit($textarea[0], {
+		    const editor = new Jodit($textarea[0], {
 			    height: 300,
 			    toolbarSticky: false,
 			    toolbarAdaptive: false,
@@ -1061,11 +1061,104 @@ jQuery(document).ready( function($) {
 			    ]
 		    });
 
-		    $emeeditor.events.on('focus', function () {
-			    $emeeditor.options.enter = 'p';
+		    // Get the font buttons
+		    const fontSizeButton = editor.toolbar.buttons.find(btn =>
+			    btn.name === 'fontsize'
+		    );
+		    const fontButton = editor.toolbar.buttons.find(btn =>
+			    btn.name === 'font'
+		    );
+		    const fontParagraphButton = editor.toolbar.buttons.find(btn =>
+			    btn.name === 'paragraph'
+		    );
+
+		    // Function to find matching font from the list
+		    function findMatchingFont(computedFont, fontList) {
+			    const defaultFontFamily = window.getComputedStyle(editor.editor).fontFamily;
+			    if (computedFont == defaultFontFamily) {
+				    return '';
+			    }
+
+			    // Split into individual font families
+			    const computedFonts = computedFont.split(',');
+
+			    // Check each font in the computed style against our list
+			    for (const computedSingleFont of computedFonts) {
+				    for (const [fontValue, fontDisplay] of Object.entries(fontList)) {
+					    if (fontValue.includes(computedSingleFont)) {
+						    return fontDisplay+' '; // Return the display name
+					    }
+				    }
+			    }
+			    return ''; // No match found
+		    }
+
+		    function findMatchingTagName(element, controlList) {
+			    const tagName = element.tagName.toLowerCase().trim();
+			    for (const [value, text] of Object.entries(controlList)) {
+				    if (value.toLowerCase().trim() === tagName) {
+					    return text+ ' ';
+				    }
+			    }
+			    return '';
+		    }
+
+		    // Function to update button text
+		    function updateFontButtons() {
+			    let current = editor.s.current();
+
+			    if (!current) return;
+
+			    // If it's a TextNode, get its parent element
+			    if (current.nodeType === Node.TEXT_NODE) {
+				    current = current.parentElement;
+			    }
+			    if (!(current instanceof Element)) return;
+
+			    // Ensure it's an Element before using getComputedStyle
+			    const computedStyle = window.getComputedStyle(current);
+			    if (fontButton?.control?.list) {
+				    const computedFont = computedStyle.fontFamily;
+				    const matchedFont = findMatchingFont(computedFont, fontButton.control.list);
+				    // Update button text if found, otherwise show "Font"
+				    fontButton.text.textContent = matchedFont;
+			    }
+			    if (fontSizeButton) {
+				    const computedSize = computedStyle.fontSize;
+				    const defaultSize = window.getComputedStyle(editor.editor).fontSize;
+				    fontSizeButton.text.textContent = computedSize === defaultSize ? '' : computedSize+' ';
+			    }
+			    // Update Paragraph/Heading button
+			    if (fontParagraphButton?.control?.list) {
+				    let currentElement = current;
+				    let displayText = ''; // Default
+				    let maxDepth = 10; // Prevent infinite loops
+
+				    // Walk up the DOM tree to find matching element
+				    while (maxDepth-- > 0 && currentElement && currentElement !== editor.editor) {
+					    const match = findMatchingTagName(currentElement, fontParagraphButton.control.list);
+					    if (match) {
+						    if (currentElement?.tagName?.toLowerCase().trim() == 'p') {
+							    displayText = '';
+						    } else {
+							    displayText = match;
+						    }
+						    break;
+					    }
+					    currentElement = currentElement.parentElement;
+				    }
+				    fontParagraphButton.text.textContent = displayText;
+			    }
+		    }
+
+		    // Listen to selection changes
+		    editor.events.on('afterUpdateToolbar', updateFontButtons);
+
+		    editor.events.on('focus', function () {
+			    editor.options.enter = 'p';
 		    });
 		    // when the “Link” popup opens…
-		    $emeeditor.events.on('afterOpenPopup.link', popup => {
+		    editor.events.on('afterOpenPopup.link', popup => {
 			    const popupEl = popup.container;    // <-- the real DOM element
 			    // find the URL input
 			    const urlField = popupEl.querySelector('input[data-ref="url_input"]');
@@ -1094,7 +1187,7 @@ jQuery(document).ready( function($) {
 		    });
 
 		    // Optional: Store editor if needed elsewhere
-		    $textarea.data('joditEditor', $emeeditor);
+		    $textarea.data('joditEditor', editor);
 	    });
     }
 });

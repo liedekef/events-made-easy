@@ -2273,8 +2273,8 @@ function eme_send_mails_ajax_actions( $action ) {
         if ( $action == 'previeweventmail' ) {
             // let's add attachments too
             $attachment_ids_arr = [];
-            if ( isset( $conditions['eme_generic_attach_ids'] ) ) {
-                $attachment_ids = $conditions['eme_generic_attach_ids'];
+            if ( isset( $conditions['eme_eventmail_attach_ids'] ) ) {
+                $attachment_ids = $conditions['eme_eventmail_attach_ids'];
                 if ( ! empty( $attachment_ids ) ) {
                     $attachment_ids_arr = explode( ',', $attachment_ids );
                 }

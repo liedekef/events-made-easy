@@ -246,4 +246,26 @@ jQuery(document).ready( function($) {
             }
         });
     });
+
+    $('span[data-default]').each(function () {
+        const $el = $(this);
+        const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
+        const targetid = $el.data('targetid');
+        //
+        // If a Jodit instance is associated
+        if ($('#'+targetid).data('joditEditor')) {
+            const editorInstance = $('#'+targetid).data('joditEditor');
+            editorInstance.events.on('focus', function () {
+                if (editorInstance.value.trim() === '' || editorInstance.value.trim() === '<p><br></p>') {
+                    editorInstance.value = defaultValue;
+                }
+            });
+
+            editorInstance.events.on('blur', function () {
+                if (editorInstance.value.trim().replace(/<br\s*\/?>/gi, '<br>') === defaultValue || editorInstance.value.trim() === '<p>'+defaultValue+'</p>') {
+                    editorInstance.value = '';
+                }
+            });
+        }
+    });
 });

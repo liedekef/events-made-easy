@@ -375,60 +375,43 @@ jQuery(document).ready( function($) {
     // is empty: display default value on focus, and if the value hasn't changed from the default: empty it on blur
 
     function applyDefaultOnFocusBlur() {
-        let joditEditors = [];
-        if (emeevents.translate_htmleditor=='jodit') {
-            joditEditors = Jodit.instances;
-        }
         $('input[data-default]').each(function () {
             const $el = $(this);
             const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
-		// Fallback for plain textarea
-                $el.on('focus', function () {
-                    if ($el.val().trim() === '') {
-                        $el.val(defaultValue);
-                    }
-                });
+            // Fallback for plain textarea
+            $el.on('focus', function () {
+                if ($el.val().trim() === '') {
+                    $el.val(defaultValue);
+                }
+            });
 
-                $el.on('blur', function () {
-                    if ($el.val().trim() === defaultValue) {
-                        $el.val('');
-                    }
-                });
+            $el.on('blur', function () {
+                if ($el.val().trim() === defaultValue) {
+                    $el.val('');
+                }
+            });
         }); 
-	// the span-default is for regular textarea and jodit
+        // the span-default is for regular textarea and jodit
         $('span[data-default]').each(function () {
             const $el = $(this);
             const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
-	    const targetid = $el.data('targetid');
-            // If a Jodit instance is associated
-            if (joditEditors[targetid]) {
-                const editorInstance = joditEditors[targetid];
-                editorInstance.events.on('focus', function () {
-                    if (editorInstance.value.trim() === '' || editorInstance.value.trim() === '<p><br></p>') {
-                        editorInstance.value = defaultValue;
-                    }
-                });
+            const targetid = $el.data('targetid');
+            const target = $('#'+targetid);
+            if (emeevents.translate_htmleditor=='jodit' && target.hasClass('eme-editor')) {
+                return; // logic for preppolating defaults in jodit is in eme_jodit.js
+            }
+            target.on('focus', function () {
+                if (target.val().trim() === '') {
+                    target.val(defaultValue);
+                }
+            });
 
-                editorInstance.events.on('blur', function () {
-                    if (editorInstance.value.trim().replace(/<br\s*\/?>/gi, '<br>') === defaultValue || editorInstance.value.trim() === '<p>'+defaultValue+'</p>') {
-                        editorInstance.value = '';
-                    }
-                });
-            } else {
-	        const target = $('#'+targetid);
-                target.on('focus', function () {
-                    if (target.val().trim() === '') {
-                        target.val(defaultValue);
-                    }
-                });
-
-                target.on('blur', function () {
-                    if (target.val().trim() === defaultValue) {
-                        target.val('');
-                    }
-                });
-	    }
-	});
+            target.on('blur', function () {
+                if (target.val().trim() === defaultValue) {
+                    target.val('');
+                }
+            });
+        });
     }
     applyDefaultOnFocusBlur();
 

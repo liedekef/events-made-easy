@@ -1454,11 +1454,11 @@ function eme_replace_cancelformfields_placeholders( $event ) {
     // the 2 placeholders that can contain extra text are treated separately first
     // the question mark is used for non greedy (minimal) matching
     // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.+\}/s', $format ) ) {
+    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
         if ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '$1', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
         } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
         }
     }
 
@@ -1600,11 +1600,11 @@ function eme_replace_cancel_payment_placeholders( $format, $person, $booking_ids
     // the 2 placeholders that can contain extra text are treated separately first
     // the question mark is used for non greedy (minimal) matching
     // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.+\}/s', $format ) ) {
+    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
         if ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '$1', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
         } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
         }
     }
 
@@ -1755,11 +1755,11 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
     // the 2 placeholders that can contain extra text are treated separately first
     // the question mark is used for non greedy (minimal) matching
     // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.+\}/s', $format ) ) {
+    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
         if ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '$1', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
         } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
         }
     }
 
@@ -2784,14 +2784,14 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
     // the 2 placeholders that can contain extra text are treated separately first
     // the question mark is used for non greedy (minimal) matching
     // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.+\}/s', $format ) ) {
+    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
         // only show the captcha when booking via the frontend, not the admin backend
         if ( $is_multibooking ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
         } elseif ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '$1', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
         } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
         }
     }
 
@@ -3759,12 +3759,12 @@ function eme_replace_membership_formfields_placeholders( $form_id, $membership, 
     // the placeholders that can contain extra text are treated separately first
     // the question mark is used for non greedy (minimal) matching
     // the s modifier makes . match newlines as well as all other characters (by default it excludes them)
-    if ( preg_match( '/#_CAPTCHAHTML\{.+\}/s', $format ) ) {
+    if ( preg_match( '/#_CAPTCHAHTML\{.*\}/s', $format ) ) {
         // only show the captcha when booking via the frontend, not the admin backend
         if ( !empty($selected_captcha) ) {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '$1', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '$1', $format );
         } else {
-            $format = preg_replace( '/#_CAPTCHAHTML\{(.+?)\}/s', '', $format );
+            $format = preg_replace( '/#_CAPTCHAHTML\{(.*?)\}/s', '', $format );
         }
     }
 

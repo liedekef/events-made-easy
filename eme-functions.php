@@ -4051,36 +4051,37 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
     $data_default = '';
     if (!empty($data_default_optionname)) {
 	    $data_default = 'data-default="'.esc_attr(eme_nl2br_save_html(get_option($data_default_optionname))).'"';
+        ?>
+        <span style="display: hidden;" <?php echo $data_default; ?> data-targetid="<?php echo $editor_id; ?>">
+        <?php
 	    // adding defaults in tinymce is difficult so we force the plain editor
             if ($html_editor == 'tinymce') {
 		    $show_full = 0;
 	    }
     }
+
     if ( $show_wp_editor ) {
-        if ( $show_full || $html_editor == 'jodit' ) {
-            if ($html_editor == 'tinymce') {
-                $eme_editor_settings = eme_get_editor_settings($name);
+        switch ( $html_editor ) {
+            case 'summernote':
                 ?>
-                <span style="display: hidden;" <?php echo $data_default; ?> data-targetid="<?php echo $editor_id; ?>">
-                <?php
-                wp_editor( $value, $editor_id, $eme_editor_settings );
-            }
-            if ($html_editor == 'jodit') {
-                ?>
-                <span style="display: hidden;" <?php echo $data_default; ?> data-targetid="<?php echo $editor_id; ?>">
                 <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" <?php echo $data_default; ?>><?php echo eme_esc_html( $value ); ?></textarea>
                 <?php
-	        }
-        } else { // the case where show_full=0 and html_editor=tinymce
-            $eme_editor_settings = eme_get_editor_settings($name, false );
-            ?>
-            <span style="display: hidden;" <?php echo $data_default; ?> data-targetid="<?php echo $editor_id; ?>">
-            <?php
-            wp_editor( $value, $editor_id, $eme_editor_settings );
+                break;
+            case 'jodit':
+                ?>
+                <textarea class="eme-editor" name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" <?php echo $data_default; ?>><?php echo eme_esc_html( $value ); ?></textarea>
+                <?php
+                break;
+            default: // the original tinymce goes here
+                if ( $show_full ) {
+                    $eme_editor_settings = eme_get_editor_settings($name);
+                } else {
+                    $eme_editor_settings = eme_get_editor_settings($name, false );
+                }
+                wp_editor( $value, $editor_id, $eme_editor_settings );
         }
     } else { 
         ?>
-        <span style="display: hidden;" <?php echo $data_default; ?> data-targetid="<?php echo $editor_id; ?>">
         <textarea name="<?php echo $name; ?>" id="<?php echo $editor_id; ?>" rows="6" style="width: 95%"><?php echo eme_esc_html( $value ); ?></textarea>
         <?php
     }

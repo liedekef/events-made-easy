@@ -594,7 +594,7 @@ function eme_add_options( $reset = 0 ) {
         'eme_check_free_waiting'                          => 0,
         'eme_multisite_active'                            => 0,
         'eme_rememberme'                                  => 0,
-        'eme_htmleditor'                                  => 'jodit',
+        'eme_htmleditor'                                  => 'tinymce',
         'eme_fs' => [
             'auto_publish' => EME_EVENT_STATUS_PUBLIC,
             'guest_submit' => false,
@@ -3188,8 +3188,9 @@ case 'other':
                     __( 'HTML Editor', 'events-made-easy' ),
                     'eme_htmleditor',
                     [
-                        'jodit'     => __( 'Jodit', 'events-made-easy' ),
-                        'tinymce'   => __( 'TinyMCE', 'events-made-easy' ),
+                        'tinymce'    => __( 'TinyMCE', 'events-made-easy' ),
+                        'jodit'      => __( 'Jodit', 'events-made-easy' ),
+                        //'summernote' => __( 'Summernote', 'events-made-easy' ),
                     ],
                     __( 'The HTML editor used by the plugin.', 'events-made-easy' )
     );

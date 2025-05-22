@@ -9511,6 +9511,21 @@ function eme_admin_enqueue_js() {
             wp_enqueue_script('eme-jodit');
             wp_enqueue_style('jodit-css');
         }
+
+        if (get_option( 'eme_htmleditor' ) == 'summernote') {
+            $translation_array = [
+                'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
+                'translate_flanguage'       => $language,
+                'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
+                'translate_preview'         => __('Preview', 'events-made-easy' ),
+                'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
+            ];
+            wp_localize_script( 'eme-summernote', 'emesummernote', $translation_array );
+            wp_enqueue_script('eme-summernote');
+            wp_enqueue_style('summernote-css');
+            wp_enqueue_script('summernote-table-js');
+            wp_enqueue_style('summernote-table-css');
+        }
     }
     if ( $plugin_page == 'eme-new_event' || ( in_array( $plugin_page, [ 'eme-locations', 'eme-manager' ] ) && isset( $_REQUEST['eme_admin_action'] ) ) ) {
         // we need this to have the "postbox" javascript loaded, so closing/opening works for those divs

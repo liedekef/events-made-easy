@@ -307,6 +307,13 @@ function eme_admin_register_scripts() {
     wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
     wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
 
+    // summernote stuff
+    wp_register_script('summernote-js', EME_PLUGIN_URL. 'js/summernote/summernote-lite.js', ['jquery'], EME_VERSION, true);
+    wp_register_style('summernote-css', EME_PLUGIN_URL. 'js/summernote/summernote-lite.css');
+    wp_register_script('summernote-table-js', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.js', ['summernote-js'], EME_VERSION, true);
+    wp_register_style('summernote-table-css', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.css');
+    wp_register_script('eme-summernote', EME_PLUGIN_URL . 'js/eme_summernote.js', ['summernote-js','summernote-table-js'], EME_VERSION, true);
+
     $locale_code     = determine_locale();
     $locale_code     = preg_replace( '/_/', '-', $locale_code );
     $locale_file     = $eme_plugin_dir . "js/jtable/localization/jquery.jtable.$locale_code.js";
@@ -447,14 +454,13 @@ function eme_register_scripts() {
     wp_register_script('jodit-js', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.js', [], EME_VERSION, true);
     wp_register_style('jodit-css', EME_PLUGIN_URL . 'js/jodit/jodit.fat.min.css', [], EME_VERSION);
     wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
-    $translation_array = [
-        'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-        'translate_flanguage'       => $language,
-        'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
-        'translate_preview'         => __('Preview', 'events-made-easy' ),
-        'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
-    ];
-    wp_localize_script( 'eme-jodit', 'emejodit', $translation_array );
+
+    // summernote stuff
+    wp_register_script('summernote-js', EME_PLUGIN_URL. 'js/summernote/summernote-lite.js', ['jquery'], EME_VERSION, true);
+    wp_register_style('summernote-css', EME_PLUGIN_URL. 'js/summernote/summernote-lite.css');
+    wp_register_script('summernote-table-js', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.js', ['summernote-js'], EME_VERSION, true);
+    wp_register_style('summernote-table-css', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.css');
+    wp_register_script('eme-summernote', EME_PLUGIN_URL . 'js/eme_summernote.js', ['summernote-js','summernote-table-js'], EME_VERSION, true);
 
     if ( get_option( 'eme_recaptcha_for_forms' ) ) {
         // using explicit rendering of the captcha would allow to capture the widget id and reset it if needed, but we won't use that ...

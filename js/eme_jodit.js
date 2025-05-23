@@ -114,6 +114,7 @@ jQuery(document).ready( function($) {
                 formData.append('action', 'eme_jodit_preview_render');
                 //formData.append('html', DOMPurify.sanitize(editor.value)); // Sanitize output
                 formData.append('html', editor.value); // Sanitize output
+                formData.append('editor_id', editor.id);
                 formData.append('screen_id', pagenow);
                 if ($_GET['tab']) formData.append('eme_tab', $_GET['tab']);
                 formData.append('eme_admin_nonce', emejodit.translate_adminnonce);

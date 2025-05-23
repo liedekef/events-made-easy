@@ -2882,8 +2882,8 @@ case 'payments':
     $gateway = 'sumup';
     $notification_link = add_query_arg( [ 'eme_eventAction' => "{$gateway}_notification" ], $events_page_link );
     eme_options_input_text( __( 'SumUp Merchant Code', 'events-made-easy' ), 'eme_sumup_merchant_code', __( 'SumUp Merchant Code', 'events-made-easy' ) );
-    eme_options_input_text( __( 'SumUp App ID', 'events-made-easy' ), 'eme_sumup_app_id', __( 'SumUp App ID', 'events-made-easy' ) );
-    eme_options_input_text( __( 'SumUp App Secret', 'events-made-easy' ), 'eme_sumup_app_secret', __( 'SumUp App Secret', 'events-made-easy' ) );
+    eme_options_input_text( __( 'SumUp App ID', 'events-made-easy' ), 'eme_sumup_app_id', __( 'SumUp App ID', 'events-made-easy' ) . '<br><b>' . __( 'Contact SumUp to make sure your created application has the rights needed to create and process checkout payments.', 'events-made-easy' ) . '</b>') ;
+    eme_options_input_text( __( 'SumUp App Secret', 'events-made-easy' ), 'eme_sumup_app_secret', __( 'SumUp App Secret', 'events-made-easy' ) . '<br><b>' . __( 'Contact SumUp to make sure your created application has the rights needed to create and process checkout payments.', 'events-made-easy' ) . '</b>' );
     eme_options_input_text( __( 'Extra charge', 'events-made-easy' ), 'eme_' . $gateway . '_cost', __( 'Extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Extra charge 2', 'events-made-easy' ), 'eme_' . $gateway . '_cost2', __( 'Second extra charge added to the price. Can either be an absolute number or a percentage. E.g. 2 or 5%', 'events-made-easy' ) );
     eme_options_input_text( __( 'Payment button label', 'events-made-easy' ), 'eme_' . $gateway . '_button_label', __( 'The text shown inside the payment button', 'events-made-easy' ) );

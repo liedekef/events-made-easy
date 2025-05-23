@@ -759,10 +759,19 @@ function eme_jodit_preview_render() {
     //$rendered = apply_filters('the_content', $content);
     $rendered = eme_kses_maybe_unfiltered($content);
 
-    if ( ! empty( $_POST['screen_id'] ) && $_POST['screen_id'] == "events-made-easy_page_eme-emails" ) {
+    if ( ! empty( $_POST['screen_id'] ) && $_POST['screen_id'] == 'events-made-easy_page_eme-emails' ) {
         $rendered = eme_replaceiframe($rendered);
     }
-    if ( ! empty( $_POST['screen_id'] ) && $_POST['screen_id'] == "events-made-easy_page_eme-options" ) {
+    if ( ! empty( $_POST['screen_id'] ) && $_POST['screen_id'] == 'events-made-easy_page_eme-options' ) {
+        if (! empty( $_POST['eme_tab'] ) && $_POST['eme_tab'] == 'rsvp') {
+            $new_booking = eme_new_booking();
+            $new_event = eme_new_event();
+	    if (! empty( $_POST['editor_id']) && $_POST['editor_id'] == 'eme_registration_form_format' ) {
+		    $new_booking = eme_new_booking();
+		    $new_event = eme_new_event();
+		    $rendered = eme_replace_rsvp_formfields_placeholders( '', $new_event, $new_booking, $rendered );
+	    }
+        }
         if (! empty( $_POST['eme_tab'] ) && $_POST['eme_tab'] == 'emefs') {
             $rendered = eme_event_fs_form($rendered);
         }

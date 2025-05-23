@@ -1629,6 +1629,7 @@ function eme_multibook_seats( $events, $send_mail, $format, $is_multibooking = 1
             if ( ! empty( $booker['wp_id'] ) && ! eme_is_empty_string( $booker['phone'] ) ) {
                 eme_update_user_phone( $booker['wp_id'], $booker['phone'] );
             }
+	    // the booking status is decided in eme_db_insert_booking , maybe that should be moved to here ...
             $booking_id = eme_db_insert_booking( $event, $booker, $t_info['tmp_booking'] );
             if ( $booking_id ) {
                 // now upload the wanted files. If uploading fails, show that and delete the booking
@@ -2009,9 +2010,6 @@ function eme_get_event_ids_by_booker_id( $person_id ) {
     return $wpdb->get_col( $sql );
 }
 
-function eme_record_booking( $event, $booker, $booking ) {
-    return eme_db_insert_booking( $event, $booker, $booking );
-}
 function eme_db_insert_booking( $event, $booker, $booking ) {
     global $wpdb, $plugin_page;
     $eme_is_admin_request = eme_is_admin_request();

@@ -831,15 +831,9 @@ jQuery(document).ready( function($) {
     $('[name=eme-fs-form]').on('submit', function(event) {
         event.preventDefault();
         let form_id=$(this).attr('id');
-	if (emebasic.translate_htmleditor=="tinemce" && emebasic.translate_fs_wysiwyg=="true") {
-            let editor = tinymce.get('event_notes');
-            if ( editor !== null) {
-                editor.save();
-            }
-            let editor2 = tinymce.get('location_description');
-            if ( editor2 !== null) {
-                editor.save();
-            }
+        if (emebasic.translate_htmleditor=="tinemce" && emebasic.translate_fs_wysiwyg=="true") {
+            tinymce.get('event_notes')?.save();
+            tinymce.get('location_description')?.save();
         }
         eme_genericform_json(form_id,'fs','eme_frontend_submit');
     });

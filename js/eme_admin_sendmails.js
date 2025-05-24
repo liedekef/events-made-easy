@@ -123,10 +123,7 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
         if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
-            let editor = tinymce.get('event_mail_message');
-            if ( editor !== null) {
-                editor.save();
-            }
+            tinymce.get('event_mail_message')?.save();
         }
 
         let form_id = $(this.form).attr('id');
@@ -162,10 +159,7 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
         if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
-            let editor = tinymce.get('event_mail_message');
-            if ( editor !== null) {
-                editor.save();
-            }
+            tinymce.get('generic_mail_message')?.save();
         }
         let form_id = $(this.form).attr('id');
         let alldata = new FormData($('#'+form_id)[0]);
@@ -201,10 +195,7 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
         if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
-            let editor = tinymce.get('event_mail_message');
-            if ( editor !== null) {
-                editor.save();
-            }
+            tinymce.get('event_mail_message')?.save();
         }
         let form_id = $(this.form).attr('id');
         let alldata = new FormData($('#'+form_id)[0]);
@@ -227,10 +218,7 @@ jQuery(document).ready( function($) {
         e.preventDefault();
         // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
         if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
-            let editor = tinymce.get('event_mail_message');
-            if ( editor !== null) {
-                editor.save();
-            }
+            tinymce.get('generic_mail_message')?.save();
         }
         let form_id = $(this.form).attr('id');
         let alldata = new FormData($('#'+form_id)[0]);
@@ -297,11 +285,7 @@ jQuery(document).ready( function($) {
                 if (ememails.translate_htmleditor=='tinymce') {
 	            $('textarea#event_mail_message').val(data.htmlmessage);
                     if (ememails.translate_htmlmail=='yes') {
-                        let editor = tinymce.get('event_mail_message');
-                        if ( editor !== null) {
-                            editor.setContent(data.htmlmessage);
-                            editor.save();
-                        }
+                        tinymce.get('event_mail_message')?.save();
                     }
                 }
 
@@ -345,11 +329,7 @@ jQuery(document).ready( function($) {
                 if (ememails.translate_htmleditor=='tinymce') {
                     $('textarea#generic_mail_message').val(data.htmlmessage);
                     if (ememails.translate_htmlmail=='yes') {
-                        let editor = tinymce.get('generic_mail_message');
-                        if ( editor !== null) {
-                            editor.setContent(data.htmlmessage);
-                            editor.save();
-                        }
+                        tinymce.get('generic_mail_message')?.save();
                     }
                 }
 

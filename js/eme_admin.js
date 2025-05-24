@@ -68,32 +68,45 @@ const EMEAdmin = (function($) {
             return true;
         },
 
-        printTable: function(containerSelector, options = {}) {
+        printTable: function(containerSelector) {
             const $table = $(containerSelector).find('table:first');
             if ($table.length === 0) {
                 console.warn('No table found in the container:', containerSelector);
                 return false;
             }
 
+            // Clone table and get HTML
             const tableHtml = $table.clone().wrap('<div>').parent().html();
 
-            const defaultOptions = {
-                printMode: 'iframe', // 'popup' or 'iframe'
-                pageTitle: document.title,
-                extraStyles: '', // extra custom CSS
-                closeDelay: 1000 // milliseconds to wait before trying to close
-            };
-
-            const opts = $.extend({}, defaultOptions, options);
-            const fullHtml = `
+            const printHtml = `
         <html>
         <head>
-            <title>${opts.pageTitle}</title>
+            <title>${document.title}</title>
             <style>
-                body { font-family: sans-serif; padding: 10px; }
-                table { width: 100%; border-collapse: collapse; }
-                table, th, td { border: 1px solid black; }
-                ${opts.extraStyles}
+                body { 
+                    margin: 0; 
+                    padding: 20px; 
+                    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 1em 0;
+                    font-size: 0.9em;
+                    page-break-inside: auto;
+                }
+                th {
+                    background-color: #f5f5f5;
+                    text-align: left;
+                }
+                th, td {
+                    padding: 8px 12px;
+                    border: 1px solid #ddd;
+                }
+                tr {
+                    page-break-inside: avoid;
+                    page-break-after: auto;
+                }
             </style>
             <base href="${window.location.href}">
         </head>
@@ -109,40 +122,36 @@ const EMEAdmin = (function($) {
         </html>
     `;
 
-            if (opts.printMode === 'popup') {
-                const printWindow = window.open('', '_blank', 'width=800,height=600');
-                if (!printWindow) {
-                    alert('Popup blocked! Please allow popups for this site.');
-                    return false;
-                }
+            // Create and configure iframe
+            const iframe = document.createElement('iframe');
+            iframe.style.position = 'fixed';
+            iframe.style.right = '0';
+            iframe.style.bottom = '0';
+            iframe.style.width = '0';
+            iframe.style.height = '0';
+            iframe.style.border = '0';
 
-                printWindow.document.open();
-                printWindow.document.write(fullHtml);
-                printWindow.document.close();
-            } else if (opts.printMode === 'iframe') {
-                const iframe = document.createElement('iframe');
-                iframe.style.position = 'fixed';
-                iframe.style.right = '0';
-                iframe.style.bottom = '0';
-                iframe.style.width = '0';
-                iframe.style.height = '0';
-                iframe.style.border = '0';
+            document.body.appendChild(iframe);
 
-                document.body.appendChild(iframe);
+            try {
                 const iframeWindow = iframe.contentWindow || iframe;
                 const iframeDoc = iframeWindow.document;
                 iframeDoc.open();
-                iframeDoc.write(fullHtml);
+                iframeDoc.write(printHtml);
                 iframeDoc.close();
-                // a timeout so the iframe doesn't get removed too fast so the print dialog has time to popup
+
+                // Remove iframe after printing
                 setTimeout(() => {
                     document.body.removeChild(iframe);
-                }, opts.closeDelay);
+                }, 1000); // 1 second delay
+            } catch (e) {
+                console.error('Print failed:', e);
+                document.body.removeChild(iframe);
+                return false;
             }
 
             return true;
         }
-
     };
 
     // Tab management

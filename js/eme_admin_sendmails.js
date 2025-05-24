@@ -126,18 +126,18 @@ jQuery(document).ready( function($) {
             tinymce.get('event_mail_message')?.save();
         }
 
-        let form_id = $(this.form).attr('id');
-        let alldata = new FormData($('#'+form_id)[0]);
-        alldata.append('action', 'eme_eventmail');
-        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
+        let $form = $(this.form);
+        let $alldata = new FormData($form[0]);
+        $alldata.append('action', 'eme_eventmail');
+        $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
         $('#eventmailButton').text(ememails.translate_pleasewait);
         $('#eventmailButton').prop('disabled', true);
-        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
+        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
             .done(function(data){
                 $('div#eventmail-message').html(data.htmlmessage);
                 $('div#eventmail-message').show();
                 if (data.Result=='OK') {
-                    $('#'+form_id).trigger('reset');
+                    $form.trigger('reset');
                     // the form reset doesn't reset select2 fields ...
                     // so we call it ourselves
                     $('#event_ids').val(null).trigger("change");
@@ -161,18 +161,18 @@ jQuery(document).ready( function($) {
         if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
             tinymce.get('generic_mail_message')?.save();
         }
-        let form_id = $(this.form).attr('id');
-        let alldata = new FormData($('#'+form_id)[0]);
-        alldata.append('action', 'eme_genericmail');
-        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
+        let $form = $(this.form);
+        let $alldata = new FormData($form[0]);
+        $alldata.append('action', 'eme_genericmail');
+        $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
         $('#genericmailButton').text(ememails.translate_pleasewait);
         $('#genericmailButton').prop('disabled', true);
-        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
+        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
             .done(function(data){
                 $('div#genericmail-message').html(data.htmlmessage);
                 $('div#genericmail-message').show();
                 if (data.Result=='OK') {
-                    $('#'+form_id).trigger('reset');
+                    $form.trigger('reset');
                     // the form reset doesn't reset select2 fields ...
                     // so we call it ourselves
                     $("#eme_genericmail_send_persons").val(null).trigger("change");
@@ -197,11 +197,11 @@ jQuery(document).ready( function($) {
         if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
             tinymce.get('event_mail_message')?.save();
         }
-        let form_id = $(this.form).attr('id');
-        let alldata = new FormData($('#'+form_id)[0]);
-        alldata.append('action', 'eme_previeweventmail');
-        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
-        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
+        let $form = $(this.form);
+        let $alldata = new FormData($form[0]);
+        $alldata.append('action', 'eme_previeweventmail');
+        $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
+        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
             .done(function(data){
                 $('div#previeweventmail-message').html(data.htmlmessage);
                 $('div#previeweventmail-message').show();
@@ -220,11 +220,11 @@ jQuery(document).ready( function($) {
         if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
             tinymce.get('generic_mail_message')?.save();
         }
-        let form_id = $(this.form).attr('id');
-        let alldata = new FormData($('#'+form_id)[0]);
-        alldata.append('action', 'eme_previewmail');
-        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
-        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
+        let $form = $(this.form);
+        let $alldata = new FormData($form[0]);
+        $alldata.append('action', 'eme_previewmail');
+        $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
+        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
             .done(function(data){
                 $('div#previewmail-message').html(data.htmlmessage);
                 $('div#previewmail-message').show();
@@ -240,18 +240,18 @@ jQuery(document).ready( function($) {
 
     $('#testmailButton').on("click",function (e) {
         e.preventDefault();
-        let form_id = $(this.form).attr('id');
-        let alldata = new FormData($('#'+form_id)[0]);
-        alldata.append('action', 'eme_testmail');
-        alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
+        let $form = $(this.form);
+        let $alldata = new FormData($form[0]);
+        $alldata.append('action', 'eme_testmail');
+        $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
         $('#testmailButton').text(ememails.translate_pleasewait);
         $('#testmailButton').prop('disabled', true);
-        $.ajax({url: ajaxurl, data: alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
+        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
             .done(function(data){
                 $('div#testmail-message').html(data.htmlmessage);
                 $('div#testmail-message').show();
                 if (data.Result=='OK') {
-                    $('#'+form_id).trigger('reset');
+                    $form.trigger('reset');
                 }
                 $('#testmailButton').text(ememails.translate_sendmail);
                 $('#testmailButton').prop('disabled', false);

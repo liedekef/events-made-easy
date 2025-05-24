@@ -223,13 +223,13 @@ jQuery(document).ready(function ($) {
                     {
                         text: emersvp.translate_csv,
                         click: function () {
-                            jtable_csv('#BookingsTableContainer','bookings');
+                            EMEAdmin.utils.jtable_csv('#BookingsTableContainer','bookings');
                         }
                     },
                     {
                         text: emersvp.translate_print,
                         click: function () {
-                            $('#BookingsTableContainer').find('table:first').printElement();
+                            EMEAdmin.utils.printTable('#BookingsTableContainer');
                         }
                     }
                 ]
@@ -477,12 +477,12 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.eventinfo)+"</strong>")
+                                    .html("<strong>"+EME.utils.htmlDecode(item.eventinfo)+"</strong>")
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.event_id) {
-                                            $('input[name=transferto_id]').val(eme_htmlDecode(item.event_id));
-                                            inputField.val(eme_htmlDecode(item.eventinfo)+"  ").attr('readonly', true).addClass('clearable x');
+                                            $('input[name=transferto_id]').val(EME.utils.htmlDecode(item.event_id));
+                                            inputField.val(EME.utils.htmlDecode(item.eventinfo)+"  ").attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

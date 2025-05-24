@@ -23,12 +23,12 @@ jQuery(document).ready( function($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+'</strong><br /><small>'+EME.utils.htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
-                                            $('input[name=send_previewmailto_id]').val(eme_htmlDecode(item.person_id));
-                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
+                                            $('input[name=send_previewmailto_id]').val(EME.utils.htmlDecode(item.person_id));
+                                            inputField.val(EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );
@@ -82,12 +82,12 @@ jQuery(document).ready( function($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+'</strong><br /><small>'+EME.utils.htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
-                                            $('input[name=send_previeweventmailto_id]').val(eme_htmlDecode(item.person_id));
-                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
+                                            $('input[name=send_previeweventmailto_id]').val(EME.utils.htmlDecode(item.person_id));
+                                            inputField.val(EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

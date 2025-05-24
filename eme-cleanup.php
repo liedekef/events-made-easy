@@ -292,7 +292,7 @@ function eme_cleanup_form( $message = '' ) {
 	<option value="week"><?php esc_html_e( 'Week(s)', 'events-made-easy' ); ?></option>
 	<option value="month"><?php esc_html_e( 'Month(s)', 'events-made-easy' ); ?></option>
 	</select>
-	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
+	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return EMEAdmin.utils.areyousure('<?php echo $areyousure; ?>');">
 	</form>
 
 <br><br>
@@ -303,7 +303,7 @@ function eme_cleanup_form( $message = '' ) {
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_unpaid'>
 	<input type="number" id="eme_number" name="eme_number" size="6" maxlength="6" min="5" max="999999" step="1">
 	<?php esc_html_e( 'minutes', 'events-made-easy' ); ?>
-	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
+	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return EMEAdmin.utils.areyousure('<?php echo $areyousure; ?>');">
 	</form>
 
 <br><br>
@@ -314,7 +314,7 @@ function eme_cleanup_form( $message = '' ) {
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_unconfirmed'>
 	<input type="number" id="eme_number" name="eme_number" size="6" maxlength="6" min="5" max="999999" step="1">
 	<?php esc_html_e( 'minutes', 'events-made-easy' ); ?>
-	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
+	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return EMEAdmin.utils.areyousure('<?php echo $areyousure; ?>');">
 	</form>
 
 <br><br>
@@ -323,7 +323,7 @@ function eme_cleanup_form( $message = '' ) {
 	<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_people'>
-	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
+	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return EMEAdmin.utils.areyousure('<?php echo $areyousure; ?>');">
 	<br><?php esc_html_e( 'Tip: If you want to avoid certain people from being trashed through automatic cleanup, put them in a group.', 'events-made-easy' ); ?>
 	</form>
 
@@ -339,7 +339,7 @@ function eme_cleanup_form( $message = '' ) {
 	<option value="week"><?php esc_html_e( 'Week(s)', 'events-made-easy' ); ?></option>
 	<option value="month"><?php esc_html_e( 'Month(s)', 'events-made-easy' ); ?></option>
 	</select>
-	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
+	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return EMEAdmin.utils.areyousure('<?php echo $areyousure; ?>');">
 	</form>
    
 <br><br>
@@ -354,7 +354,7 @@ function eme_cleanup_form( $message = '' ) {
 	<option value="week"><?php esc_html_e( 'Week(s)', 'events-made-easy' ); ?></option>
 	<option value="month"><?php esc_html_e( 'Month(s)', 'events-made-easy' ); ?></option>
 	</select>
-	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
+	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return EMEAdmin.utils.areyousure('<?php echo $areyousure; ?>');">
 	</form>
    
 <br><br>
@@ -364,7 +364,7 @@ function eme_cleanup_form( $message = '' ) {
 	<input type='hidden' name='page' value='eme-cleanup'>
 	<input type='hidden' name='eme_admin_action' value='eme_cleanup_all_event_related_data'>
 	<input id="other_data" type="checkbox" value="1" name="other_data"> <?php esc_html_e( 'Also delete defined categories, templates, holidays, discounts, states, countries and custom form fields', 'events-made-easy' ); ?><br>
-	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
+	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return EMEAdmin.utils.areyousure('<?php echo $areyousure; ?>');">
 	</form>
 <br><br>
 
@@ -383,7 +383,7 @@ function eme_cleanup_form( $message = '' ) {
 		<?php esc_html_e( 'Empty the mail queue', 'events-made-easy' ); ?>
 		<?php echo wp_nonce_field( 'eme_admin', 'eme_admin_nonce', false, false ); ?>
 	<input type='hidden' name='eme_admin_action' value='eme_empty_queue'>
-	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return areyousure('<?php echo $areyousure; ?>');">
+	<input type="submit" value="<?php esc_attr_e( 'Apply', 'events-made-easy' ); ?>" name="doaction" id="eme_doaction" class="button-primary action" onclick="return EMEAdmin.utils.areyousure('<?php echo $areyousure; ?>');">
 	</form>
 <br><br>
 		<?php

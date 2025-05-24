@@ -98,13 +98,13 @@ jQuery(document).ready(function ($) {
                 items: [{
                     text: emelocations.translate_csv,
                     click: function () {
-                        jtable_csv('#LocationsTableContainer','locations');
+                        EMEAdmin.utils.jtable_csv('#LocationsTableContainer','locations');
                     }
                 },
                     {
                         text: emelocations.translate_print,
                         click: function () {
-                            $('#LocationsTableContainer').find('table:first').printElement();
+                            EMEAdmin.utils.printTable('#LocationsTableContainer');
                         }
                     }
                 ]
@@ -162,7 +162,7 @@ jQuery(document).ready(function ($) {
             title=emelocations.translate_editlocationstring;
             title=title.replace(/%s/g, locationame);
         }
-        jQuery(document).prop('title', eme_htmlDecode(title));
+        jQuery(document).prop('title', EME.utils.htmlDecode(title));
     }
     if ($('input[name=location_name]').length) {
         changeLocationAdminPageTitle();
@@ -192,12 +192,12 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>#"+eme_htmlDecode(item.location_id)+' '+eme_htmlDecode(item.name)+'</strong><br /><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+'</small>')
+                                    .html("<strong>#"+EME.utils.htmlDecode(item.location_id)+' '+EME.utils.htmlDecode(item.name)+'</strong><br /><small>'+EME.utils.htmlDecode(item.address1)+' - '+EME.utils.htmlDecode(item.city)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
-                                            $('input[name=transferto_id]').val(eme_htmlDecode(item.person_id));
-                                            inputField.val(eme_htmlDecode(item.name)+'  ').attr('readonly', true).addClass('clearable x');
+                                            $('input[name=transferto_id]').val(EME.utils.htmlDecode(item.person_id));
+                                            inputField.val(EME.utils.htmlDecode(item.name)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );
@@ -326,7 +326,7 @@ jQuery(document).ready(function ($) {
                 $.each(validator.invalid, function(key, value) {
                     // get the closest tabname
                     let tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
-                    activateTab(tabname);
+                    EMEAdmin.tabs.activate(tabname);
                     // break the loop, we only want to switch to the first tab with the error
                     return false;
                 });

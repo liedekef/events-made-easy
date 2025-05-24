@@ -280,7 +280,6 @@ function eme_admin_register_scripts() {
             wp_register_script( 'eme-select2-locale', $locale_file_url, [ 'eme-select2' ], EME_VERSION );
         }
     }
-    wp_register_script( 'eme-print', EME_PLUGIN_URL . 'js/jquery.printelement.js', [ 'jquery' ], EME_VERSION );
     wp_register_script( 'eme-sortable', EME_PLUGIN_URL . 'js/sortable/sortable.min.js', [ 'jquery' ], EME_VERSION );
     wp_register_script( 'eme-jquery-validate', EME_PLUGIN_URL . 'js/jquery-validate/jquery.validate.min.js', [ 'jquery' ], EME_VERSION );
     wp_register_script( 'eme-jquery-jtable', EME_PLUGIN_URL . 'js/jtable/jquery.jtable.min.js', [ ], EME_VERSION );
@@ -290,7 +289,7 @@ function eme_admin_register_scripts() {
     } else {
         wp_register_script( 'eme-basic', EME_PLUGIN_URL . 'js/eme.js', [ 'jquery', 'eme-select2' ], EME_VERSION );
     }
-    wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jquery-validate', 'eme-sortable', 'eme-print' ], EME_VERSION );
+    wp_register_script( 'eme-admin', EME_PLUGIN_URL . 'js/eme_admin.js', [ 'jquery', 'eme-jquery-jtable', 'eme-jquery-validate', 'eme-sortable' ], EME_VERSION );
 
     wp_register_style( 'eme-leaflet-css', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.css', [], EME_VERSION );
     wp_register_script( 'eme-leaflet-maps', EME_PLUGIN_URL . 'js/leaflet-1.9.4/leaflet.js', [ 'jquery' ], EME_VERSION, true );

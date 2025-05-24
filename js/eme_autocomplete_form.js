@@ -37,7 +37,7 @@ jQuery(document).ready( function($) {
                         $.each(data, function(index, item) {
                             suggestions.append(
                                 $("<div class='eme-autocomplete-suggestion'></div>")
-                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br /><small>" + eme_htmlDecode(item.email) + ' - ' + eme_htmlDecode(item.phone) + "</small>")
+                                .html("<strong>" + EME.utils.htmlDecode(item.lastname) + ' ' + EME.utils.htmlDecode(item.firstname) + "</strong><br /><small>" + EME.utils.htmlDecode(item.email) + ' - ' + EME.utils.htmlDecode(item.phone) + "</small>")
                                 .on("click", function(e) {
                                     e.preventDefault();
                                     $('input[name=lastname]').val(item.lastname).attr('readonly', true);
@@ -89,13 +89,13 @@ jQuery(document).ready( function($) {
                         $.each(data, function(index, item) {
                             suggestions.append(
                                 $("<div class='eme-autocomplete-suggestion'></div>")
-                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br /><small>" + eme_htmlDecode(item.email) + "</small>")
+                                .html("<strong>" + EME.utils.htmlDecode(item.lastname) + ' ' + EME.utils.htmlDecode(item.firstname) + "</strong><br /><small>" + EME.utils.htmlDecode(item.email) + "</small>")
                                 .on("click", function(e) {
                                     e.preventDefault();
-                                    $('input[name=task_lastname]').val(eme_htmlDecode(item.lastname)).attr('readonly', true);
-                                    $('input[name=task_firstname]').val(eme_htmlDecode(item.firstname)).attr('readonly', true);
-                                    $('input[name=task_email]').val(eme_htmlDecode(item.email)).attr('readonly', true);
-                                    $('input[name=task_phone]').val(eme_htmlDecode(item.phone)).attr('readonly', true);
+                                    $('input[name=task_lastname]').val(EME.utils.htmlDecode(item.lastname)).attr('readonly', true);
+                                    $('input[name=task_firstname]').val(EME.utils.htmlDecode(item.firstname)).attr('readonly', true);
+                                    $('input[name=task_email]').val(EME.utils.htmlDecode(item.email)).attr('readonly', true);
+                                    $('input[name=task_phone]').val(EME.utils.htmlDecode(item.phone)).attr('readonly', true);
                                 })
                             );
                         });

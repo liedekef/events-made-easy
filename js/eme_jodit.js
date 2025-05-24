@@ -23,7 +23,7 @@ jQuery(document).ready( function($) {
     };
 
     // Debounced to avoid performance issues (e.g., during rapid selection changes)
-    const updateFontButtons = eme_debounce((editor) => {
+    const updateFontButtons = EME.utils.debounce((editor) => {
         let current = editor.s.current();
         if (!current) return;
 

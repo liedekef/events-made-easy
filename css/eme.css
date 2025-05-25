@@ -676,8 +676,9 @@ details.eme_accordion > div, details.eme_accordion > p {
     background: #ddd;
 }
 
-div#div_import {
-    padding-bottom: 5px;
+div#eme_div_import {
+    padding: 5px;
+    border: 1px solid grey;
 }
 
 #bulkactions {

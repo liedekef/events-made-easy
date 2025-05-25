@@ -5245,9 +5245,9 @@ function eme_registration_seats_form_table( $pending = 0 ) {
         <div id="bookings-message" style="display: none;"></div>
         <span class="eme_import_form_img">
         <?php esc_html_e( 'Click on the icon to show the import form to import payments', 'events-made-easy' ); ?>
-        <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="div_import" style="cursor: pointer; vertical-align: middle; ">
+        <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="eme_div_import" style="cursor: pointer; vertical-align: middle; ">
         </span>
-        <div id='div_import' style='display:none;'>
+        <div id='eme_div_import' style='display:none;'>
         <form id='payment-import' method='post' enctype='multipart/form-data' action='#'>
         <?php echo $nonce_field; ?>
         <input type="file" name="eme_csv">

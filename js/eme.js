@@ -372,8 +372,7 @@ jQuery(document).ready( function($) {
                             firstDay: parseInt(emebasic.translate_firstDayOfWeek),
                             altFieldDateFormat: 'Y-m-d',
                             dateFormat: emebasic.translate_fdateformat
-                        });
-                        $.each($('.eme_formfield_fdate.dynamicfield'), function() {
+                        }).each(function() {
                             if ($(this).data('date') && $(this).data('date') != '0000-00-00') {
                                 $(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
                                 // to avoid it being done multiple times
@@ -400,8 +399,7 @@ jQuery(document).ready( function($) {
                             altFieldDateFormat: 'Y-m-d H:i:00',
                             dateFormat: emebasic.translate_fdateformat,
                             timeFormat: emebasic.translate_ftimeformat
-                        });
-                        $.each($('.eme_formfield_fdatetime.dynamicfield'), function() {
+                        }).each(function() {
                             if ($(this).data('date') && $(this).data('date') != '0000-00-00 00:00:00' ) {
                                 $(this).fdatepicker().data('fdatepicker').selectDate($(this).data('date'));
                                 // to avoid it being done multiple times
@@ -425,8 +423,7 @@ jQuery(document).ready( function($) {
                     if ($('.eme_formfield_timepicker.dynamicfield').length) {
                         $('.eme_formfield_timepicker.dynamicfield').timepicker({
                             timeFormat: emebasic.translate_ftimeformat
-                        });
-                        $.each($('.eme_formfield_timepicker'), function() {
+                        }).each(function() {
                             if ($(this).data('timeFormat')) {
                                 $(this).timepicker('option', { 'timeFormat': $(this).data('timeFormat') });
                                 // to avoid it being done multiple times
@@ -445,6 +442,7 @@ jQuery(document).ready( function($) {
             eme_dynamic_bookingprice_json(form_id);
         }
     }
+
     function eme_dynamic_memberprice_json(form_id) {
         $('#'+form_id).find(':submit').hide();
         let alldata = new FormData($('#'+form_id)[0]);

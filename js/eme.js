@@ -253,8 +253,8 @@ const EME = (function($) {
             const $submit = $form.find(':submit');
             const $memberLoadingGif = $form.find('#member_loading_gif');
 
-            $submit.hide();
             $memberLoadingGif.show();
+            $submit.hide();
 
             const formData = new FormData($form[0]);
             formData.append('action', 'eme_add_member');
@@ -338,11 +338,11 @@ const EME = (function($) {
         updateDynamicData: function(formId, elementId, action) {
             const $form = $('#' + formId);
             const $submit = $form.find(':submit');
-            $submit.hide();
 
             const $dyndata = $form.find(`div#${elementId}`);
             if (!$dyndata.length) return;
 
+            $submit.hide();
             $dyndata.html(`<img src="${emebasic.translate_plugin_url}images/spinner.gif">`);
 
             const formData = new FormData($form[0]);
@@ -441,12 +441,13 @@ const EME = (function($) {
                 'lang': language
             }, data => {
                 $(`#${tableDiv}`).replaceWith(data);
-                this.bindCalendarNavigation(tableDiv);
+		// replaceWith removes all event handlers, so we need to re-add them
+                this.bindCalendarNavigation();
             });
         },
 
-        bindCalendarNavigation: function(tableDiv) {
-            $(`#${tableDiv}`).on('click', 'a.eme-cal-prev-month, a.eme-cal-next-month', function(e) {
+        bindCalendarNavigation: function() {
+            $('a.eme-cal-prev-month, a.eme-cal-next-month').on('click', function(e) {
                 e.preventDefault();
                 const $this = $(this);
                 $this.html(`<img src="${emebasic.translate_plugin_url}images/spinner.gif">`);
@@ -870,29 +871,7 @@ const EME = (function($) {
             this.setupClearableInputs();
 
             // Initialize calendar navigation
-            $('a.eme-cal-prev-month, a.eme-cal-next-month').on('click', function(e) {
-                e.preventDefault();
-                const $this = $(this);
-                $this.html(`<img src="${emebasic.translate_plugin_url}images/spinner.gif">`);
-                calendar.load(
-                    $this.data('calendar_divid'),
-                    $this.data('full'),
-                    $this.data('htmltable'),
-                    $this.data('htmldiv'),
-                    $this.data('long_events'),
-                    $this.data('month'),
-                    $this.data('year'),
-                    $this.data('category'),
-                    $this.data('author'),
-                    $this.data('contact_person'),
-                    $this.data('location_id'),
-                    $this.data('notcategory'),
-                    $this.data('template_id'),
-                    $this.data('holiday_id'),
-                    $this.data('weekdays'),
-                    $this.data('language')
-                );
-            });
+	    calendar.bindCalendarNavigation();
 
             // Center payment form if present
             if ($('#eme-payment-form').length) {

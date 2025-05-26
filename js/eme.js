@@ -51,7 +51,7 @@ const EME = (function($) {
                 paymentHandling = false
             } = options;
             
-	    const $form = $('#' + formId);
+            const $form = $('#' + formId);
             const $submit = $form.find(':submit');
 
             const $successMsg = $(`div#eme-${formName}-message-ok-${formId}`);

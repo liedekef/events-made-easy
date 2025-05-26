@@ -223,13 +223,13 @@ jQuery(document).ready(function ($) {
                     {
                         text: emersvp.translate_csv,
                         click: function () {
-                            EMEAdmin.utils.jtable_csv('#BookingsTableContainer','bookings');
+                            eme_jtable_csv('#BookingsTableContainer','bookings');
                         }
                     },
                     {
                         text: emersvp.translate_print,
                         click: function () {
-                            EMEAdmin.utils.printTable('#BookingsTableContainer');
+                            eme_printTable('#BookingsTableContainer');
                         }
                     }
                 ]

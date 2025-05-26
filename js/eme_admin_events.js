@@ -428,7 +428,7 @@ jQuery(document).ready( function($) {
                 $.each(validator.invalid, function(key, value) {
                     // get the closest tabname
                     let tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
-                    EMEAdmin.tabs.activate(tabname);
+                    eme_activateTab(tabname);
                     // break the loop, we only want to switch to the first tab with the error
                     return false;
                 });
@@ -568,13 +568,13 @@ jQuery(document).ready( function($) {
                 items: [{
                     text: emeevents.translate_csv,
                     click: function () {
-                        EMEAdmin.utils.jtable_csv('#EventsTableContainer','events');
+                        eme_jtable_csv('#EventsTableContainer','events');
                     }
                 },
                     {
                         text: emeevents.translate_print,
                         click: function () {
-                            EMEAdmin.utils.printTable('#EventsTableContainer');
+                            eme_printTable('#EventsTableContainer');
                         }
                     }
                 ]
@@ -727,13 +727,13 @@ jQuery(document).ready( function($) {
                 items: [{
                     text: emeevents.translate_csv,
                     click: function () {
-                        EMEAdmin.utils.jtable_csv('#RecurrencesTableContainer','recurrences');
+                        eme_jtable_csv('#RecurrencesTableContainer','recurrences');
                     }
                 },
                     {
                         text: emeevents.translate_print,
                         click: function () {
-                            EMEAdmin.utils.printTable('#RecurrencesTableContainer');
+                            eme_printTable('#RecurrencesTableContainer');
                         }
                     }]
             },

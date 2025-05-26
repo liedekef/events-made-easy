@@ -98,13 +98,13 @@ jQuery(document).ready(function ($) {
                 items: [{
                     text: emelocations.translate_csv,
                     click: function () {
-                        EMEAdmin.utils.jtable_csv('#LocationsTableContainer','locations');
+                        eme_jtable_csv('#LocationsTableContainer','locations');
                     }
                 },
                     {
                         text: emelocations.translate_print,
                         click: function () {
-                            EMEAdmin.utils.printTable('#LocationsTableContainer');
+                            eme_printTable('#LocationsTableContainer');
                         }
                     }
                 ]
@@ -326,7 +326,7 @@ jQuery(document).ready(function ($) {
                 $.each(validator.invalid, function(key, value) {
                     // get the closest tabname
                     let tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
-                    EMEAdmin.tabs.activate(tabname);
+                    eme_activateTab(tabname);
                     // break the loop, we only want to switch to the first tab with the error
                     return false;
                 });

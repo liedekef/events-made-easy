@@ -234,13 +234,13 @@ jQuery(document).ready(function ($) {
                 items: [{
                     text: emepeople.translate_csv,
                     click: function () {
-                        EMEAdmin.utils.jtable_csv('#PeopleTableContainer','people');
+                        eme_jtable_csv('#PeopleTableContainer','people');
                     }
                 },
                     {
                         text: emepeople.translate_print,
                         click: function () {
-                            EMEAdmin.utils.printTable('#PeopleTableContainer');
+                            eme_printTable('#PeopleTableContainer');
                         }
                     }
                 ]

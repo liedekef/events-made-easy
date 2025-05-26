@@ -174,13 +174,13 @@ jQuery(document).ready(function ($) {
                 items: [{
                     text: ememembers.translate_csv,
                     click: function () {
-                        EMEAdmin.utils.jtable_csv('#MembersTableContainer','members');
+                        eme_jtable_csv('#MembersTableContainer','members');
                     }
                 },
                     {
                         text: ememembers.translate_print,
                         click: function () {
-                            EMEAdmin.utils.printTable('#MembersTableContainer');
+                            eme_printTable('#MembersTableContainer');
                         }
                     }
                 ]
@@ -554,7 +554,7 @@ jQuery(document).ready(function ($) {
                 $.each(validator.invalid, function(key, value) {
                     // get the closest tabname
                     let tabname=$('[name="'+key+'"]').closest('.eme-tab-content').attr('id');
-                    EMEAdmin.tabs.activate(tabname);
+                    eme_activateTab(tabname);
                     // break the loop, we only want to switch to the first tab with the error
                     return false;
                 });

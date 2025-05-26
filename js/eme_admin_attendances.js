@@ -49,13 +49,13 @@ jQuery(document).ready( function($) {
                 items: [{
                     text: emeattendances.translate_csv,
                     click: function () {
-                        EMEAdmin.utils.jtable_csv('#AttendancesTableContainer','attendences');
+                        eme_jtable_csv('#AttendancesTableContainer','attendences');
                     }
                 },
                     {
                         text: emeattendances.translate_print,
                         click: function () {
-                            EMEAdmin.utils.printTable('#AttendancesTableContainer');
+                            eme_printTable('#AttendancesTableContainer');
                         }
                     }
                 ]

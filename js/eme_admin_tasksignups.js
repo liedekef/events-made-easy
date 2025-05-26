@@ -12,13 +12,13 @@ jQuery(document).ready( function($) {
             items: [{
                 text: emetasks.translate_csv,
                 click: function () {
-                    EMEAdmin.utils.jtable_csv('#TaskSignupsTableContainer','task_signups');
+                    eme_jtable_csv('#TaskSignupsTableContainer','task_signups');
                 }
             },
                 {
                     text: emetasks.translate_print,
                     click: function () {
-                        EMEAdmin.utils.printTable('#TaskSignupsTableContainer');
+                        eme_printTable('#TaskSignupsTableContainer');
                     }
                 }
             ]

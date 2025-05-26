@@ -4,9 +4,10 @@ const EME = (function($) {
     const utils = {
         debounce: function(func, wait = 300) {
             let timeout;
-            return (...args) => {
+            return function(...args) { // Use a regular function (not arrow) to preserve `this`
+                const context = this; // Capture `this` from the caller
                 clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), wait);
+                timeout = setTimeout(() => func.apply(context, args), wait);
             };
         },
 
@@ -25,18 +26,6 @@ const EME = (function($) {
 
         toggleClass: function(v) {
             return v ? 'addClass' : 'removeClass';
-        },
-
-        // Cache DOM elements for a form
-        cacheFormElements: function(formId) {
-            const $form = $('#' + formId);
-            return {
-                $form: $form,
-                $submit: $form.find(':submit'),
-                $loadingGif: $form.find('#loading_gif'),
-                $memberLoadingGif: $form.find('#member_loading_gif'),
-                $rsvpLoadingGif: $form.find('#rsvp_add_loading_gif')
-            };
         },
 
         // Standard AJAX settings
@@ -62,7 +51,9 @@ const EME = (function($) {
                 paymentHandling = false
             } = options;
             
-            const { $form, $submit } = this.cacheFormElements(formId);
+	    const $form = $('#' + formId);
+            const $submit = $form.find(':submit');
+
             const $successMsg = $(`div#eme-${formName}-message-ok-${formId}`);
             const $errorMsg = $(`div#eme-${formName}-message-error-${formId}`);
 
@@ -226,7 +217,9 @@ const EME = (function($) {
     const forms = {
         // Generic form handler
         handleGenericForm: function(formId, formName, ajaxAction) {
-            const { $form, $submit, $loadingGif } = utils.cacheFormElements(formId);
+            const $form = $('#' + formId);
+            const $submit = $form.find(':submit');
+            const $loadingGif = $form.find('#loading_gif');
             $loadingGif.show();
             $submit.hide();
 
@@ -256,7 +249,10 @@ const EME = (function($) {
 
         // Member form handler
         handleMemberForm: function(formId) {
-            const { $form, $submit, $memberLoadingGif } = utils.cacheFormElements(formId);
+            const $form = $('#' + formId);
+            const $submit = $form.find(':submit');
+            const $memberLoadingGif = $form.find('#member_loading_gif');
+
             $submit.hide();
             $memberLoadingGif.show();
 
@@ -285,7 +281,10 @@ const EME = (function($) {
 
         // Booking form handler
         handleBookingForm: function(formId) {
-            const { $form, $submit, $rsvpLoadingGif } = utils.cacheFormElements(formId);
+            const $form = $('#' + formId);
+            const $submit = $form.find(':submit');
+            const $rsvpLoadingGif = $form.find('#rsvp_add_loading_gif');
+
             $rsvpLoadingGif.show();
             $submit.hide();
 
@@ -337,7 +336,8 @@ const EME = (function($) {
 
         // Dynamic data handlers
         updateDynamicData: function(formId, elementId, action) {
-            const { $form, $submit } = utils.cacheFormElements(formId);
+            const $form = $('#' + formId);
+            const $submit = $form.find(':submit');
             $submit.hide();
 
             const $dyndata = $form.find(`div#${elementId}`);
@@ -362,7 +362,8 @@ const EME = (function($) {
         },
 
         updateDynamicPrices: function(formId) {
-            const { $form, $submit } = utils.cacheFormElements(formId);
+            const $form = $('#' + formId);
+            const $submit = $form.find(':submit');
             $submit.hide();
 
             const formData = new FormData($form[0]);
@@ -379,10 +380,9 @@ const EME = (function($) {
                 const $span = $form.find(`span#${span.id}`);
                 if ($span.length) {
                     $span.html(`<img src="${emebasic.translate_plugin_url}images/spinner.gif">`);
-                    const spanData = new FormData(formData);
-                    spanData.append('action', span.action);
+                    formData.append('action', span.action);
 
-                    $.ajax(utils.ajaxSettings(spanData))
+                    $.ajax(utils.ajaxSettings(formData))
                         .done(data => {
                             $submit.show();
                             $span.html(data.total);

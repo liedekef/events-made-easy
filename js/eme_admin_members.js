@@ -588,12 +588,12 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+' ('+EME.utils.htmlDecode(item.person_id)+')</strong><br /><small>'+EME.utils.htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.person_id)+')</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
-                                            $('input[name=transferto_personid]').val(EME.utils.htmlDecode(item.person_id));
-                                            inputField.val(EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+' ('+EME.utils.htmlDecode(item.person_id)+')  ').attr('readonly', true).addClass('clearable x');
+                                            $('input[name=transferto_personid]').val(eme_htmlDecode(item.person_id));
+                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.person_id)+')  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );
@@ -648,12 +648,12 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+' ('+EME.utils.htmlDecode(item.member_id)+')</strong><br /><small>'+EME.utils.htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.member_id)+')</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
-                                            $('input[name=related_member_id]').val(EME.utils.htmlDecode(item.person_id));
-                                            inputField.val(EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+' ('+EME.utils.htmlDecode(item.member_id)+'  ').attr('readonly', true).addClass('clearable x');
+                                            $('input[name=related_member_id]').val(eme_htmlDecode(item.person_id));
+                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.member_id)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );
@@ -707,17 +707,17 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+'</strong><br /><small>'+EME.utils.htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
                                             $('.personal_info').hide();
-                                            $('input[name=lastname]').val(EME.utils.htmlDecode(item.lastname)).attr('readonly', true).show();
-                                            $('input[name=firstname]').val(EME.utils.htmlDecode(item.firstname)).attr('readonly', true).show();
-                                            $('input[name=email]').val(EME.utils.htmlDecode(item.email)).attr('readonly', true).show();
-                                            $('input[name=person_id]').val(EME.utils.htmlDecode(item.person_id));
-                                            $('input[name=wp_id]').val(EME.utils.htmlDecode(item.wp_id)).trigger('input');
-                                            inputField.val(EME.utils.htmlDecode(item.lastname)+' '+EME.utils.htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
+                                            $('input[name=lastname]').val(eme_htmlDecode(item.lastname)).attr('readonly', true).show();
+                                            $('input[name=firstname]').val(eme_htmlDecode(item.firstname)).attr('readonly', true).show();
+                                            $('input[name=email]').val(eme_htmlDecode(item.email)).attr('readonly', true).show();
+                                            $('input[name=person_id]').val(eme_htmlDecode(item.person_id));
+                                            $('input[name=wp_id]').val(eme_htmlDecode(item.wp_id)).trigger('input');
+                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

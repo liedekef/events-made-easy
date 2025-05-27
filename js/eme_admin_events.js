@@ -161,24 +161,24 @@ jQuery(document).ready( function($) {
                                 $.each(data, function(index, item) {
                                     suggestions.append(
                                         $("<div class='eme-autocomplete-suggestion'></div>")
-                                        .html("<strong>"+EME.utils.htmlDecode(item.name)+'</strong><br /><small>'+EME.utils.htmlDecode(item.address1)+' - '+EME.utils.htmlDecode(item.city)+ '</small>')
+                                        .html("<strong>"+eme_htmlDecode(item.name)+'</strong><br /><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+ '</small>')
                                         .on("click", function(e) {
                                             // we stop bubbling events, so other "onchange" events won't trigger anymore (like the one in eme_edit_maps for the name change, which might cause a wrong display depending on who wins :-)
                                             e.preventDefault();
-                                            $('input#location_id').val(EME.utils.htmlDecode(item.location_id)).attr("readonly", true);
-                                            $('input#location_name').val(EME.utils.htmlDecode(item.name)).attr("readonly", true);
-                                            $('input#location_address1').val(EME.utils.htmlDecode(item.address1)).attr("readonly", true);
-                                            $('input#location_address2').val(EME.utils.htmlDecode(item.address2)).attr("readonly", true);
-                                            $('input#location_city').val(EME.utils.htmlDecode(item.city)).attr("readonly", true);
-                                            $('input#location_state').val(EME.utils.htmlDecode(item.state)).attr("readonly", true);
-                                            $('input#location_zip').val(EME.utils.htmlDecode(item.zip)).attr("readonly", true);
-                                            $('input#location_country').val(EME.utils.htmlDecode(item.country)).attr("readonly", true);
-                                            $('input#location_latitude').val(EME.utils.htmlDecode(item.latitude)).attr("readonly", true);
-                                            $('input#location_longitude').val(EME.utils.htmlDecode(item.longitude)).attr("readonly", true);
-                                            $('input#location_url').val(EME.utils.htmlDecode(item.location_url)).attr("readonly", true);
-                                            $('input#eme_loc_prop_map_icon').val(EME.utils.htmlDecode(item.map_icon)).attr("readonly", true);
-                                            $('input#eme_loc_prop_max_capacity').val(EME.utils.htmlDecode(item.max_capacity)).attr("readonly", true);
-                                            $('input#eme_loc_prop_online_only').val(EME.utils.htmlDecode(item.online_only)).attr("disabled", true);
+                                            $('input#location_id').val(eme_htmlDecode(item.location_id)).attr("readonly", true);
+                                            $('input#location_name').val(eme_htmlDecode(item.name)).attr("readonly", true);
+                                            $('input#location_address1').val(eme_htmlDecode(item.address1)).attr("readonly", true);
+                                            $('input#location_address2').val(eme_htmlDecode(item.address2)).attr("readonly", true);
+                                            $('input#location_city').val(eme_htmlDecode(item.city)).attr("readonly", true);
+                                            $('input#location_state').val(eme_htmlDecode(item.state)).attr("readonly", true);
+                                            $('input#location_zip').val(eme_htmlDecode(item.zip)).attr("readonly", true);
+                                            $('input#location_country').val(eme_htmlDecode(item.country)).attr("readonly", true);
+                                            $('input#location_latitude').val(eme_htmlDecode(item.latitude)).attr("readonly", true);
+                                            $('input#location_longitude').val(eme_htmlDecode(item.longitude)).attr("readonly", true);
+                                            $('input#location_url').val(eme_htmlDecode(item.location_url)).attr("readonly", true);
+                                            $('input#eme_loc_prop_map_icon').val(eme_htmlDecode(item.map_icon)).attr("readonly", true);
+                                            $('input#eme_loc_prop_max_capacity').val(eme_htmlDecode(item.max_capacity)).attr("readonly", true);
+                                            $('input#eme_loc_prop_online_only').val(eme_htmlDecode(item.online_only)).attr("disabled", true);
                                             $('#img_edit_location').show();
                                             if (typeof L !== 'undefined' && emeevents.translate_map_is_active==="true") {
                                                 eme_displayAddress(0);
@@ -845,7 +845,7 @@ jQuery(document).ready( function($) {
             title=emeevents.translate_editeventstring;
             title=title.replace(/%s/g, eventname);
         }
-        jQuery(document).prop('title', EME.utils.htmlDecode(title));
+        jQuery(document).prop('title', eme_htmlDecode(title));
     }
     if ($('input[name=event_name]').length) {
         changeEventAdminPageTitle();

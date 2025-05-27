@@ -108,7 +108,7 @@ jQuery(document).ready(function($) {
                 }
 
                 let point = L.latLng(parseFloat(item.location_latitude), parseFloat(item.location_longitude));
-                let balloon_content = "<div class='eme-location-balloon'>"+EME.utils.htmlDecode(item.location_balloon)+"</div>";
+                let balloon_content = "<div class='eme-location-balloon'>"+eme_htmlDecode(item.location_balloon)+"</div>";
                 let marker = L.marker(point,{icon: myIcon});
                 marker.bindPopup(balloon_content, { maxWidth: 1600 });
                 if (marker_clustering == 'true' ) {

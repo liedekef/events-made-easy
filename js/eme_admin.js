@@ -52,16 +52,16 @@ function eme_activateTab(target) {
 jQuery(document).ready( function($) {
     $('.eme-tab').on('click', function(e) {
         let target = $(this).data('tab');
-        activateTab(target);
+        eme_activateTab(target);
     });
 
     if ($('.eme-tabs').length) {
         // Activate tab based on data
         const preferredtab = $('.eme-tabs').data('showtab');
         if (preferredtab) {
-            activateTab(preferredtab);
+            eme_activateTab(preferredtab);
         } else {
-            activateTab($('.eme-tab').first().data('tab')); // Default tab
+            eme_activateTab($('.eme-tab').first().data('tab')); // Default tab
         }
     }
 

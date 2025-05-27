@@ -162,7 +162,7 @@ jQuery(document).ready(function ($) {
             title=emelocations.translate_editlocationstring;
             title=title.replace(/%s/g, locationame);
         }
-        jQuery(document).prop('title', EME.utils.htmlDecode(title));
+        jQuery(document).prop('title', eme_htmlDecode(title));
     }
     if ($('input[name=location_name]').length) {
         changeLocationAdminPageTitle();
@@ -192,12 +192,12 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>#"+EME.utils.htmlDecode(item.location_id)+' '+EME.utils.htmlDecode(item.name)+'</strong><br /><small>'+EME.utils.htmlDecode(item.address1)+' - '+EME.utils.htmlDecode(item.city)+'</small>')
+                                    .html("<strong>#"+eme_htmlDecode(item.location_id)+' '+eme_htmlDecode(item.name)+'</strong><br /><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
-                                            $('input[name=transferto_id]').val(EME.utils.htmlDecode(item.person_id));
-                                            inputField.val(EME.utils.htmlDecode(item.name)+'  ').attr('readonly', true).addClass('clearable x');
+                                            $('input[name=transferto_id]').val(eme_htmlDecode(item.person_id));
+                                            inputField.val(eme_htmlDecode(item.name)+'  ').attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

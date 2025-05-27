@@ -477,12 +477,12 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+EME.utils.htmlDecode(item.eventinfo)+"</strong>")
+                                    .html("<strong>"+eme_htmlDecode(item.eventinfo)+"</strong>")
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.event_id) {
-                                            $('input[name=transferto_id]').val(EME.utils.htmlDecode(item.event_id));
-                                            inputField.val(EME.utils.htmlDecode(item.eventinfo)+"  ").attr('readonly', true).addClass('clearable x');
+                                            $('input[name=transferto_id]').val(eme_htmlDecode(item.event_id));
+                                            inputField.val(eme_htmlDecode(item.eventinfo)+"  ").attr('readonly', true).addClass('clearable x');
                                         }
                                     })
                                 );

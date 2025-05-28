@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: '服务器请求错误。',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: '服务器请求错误。',
         loadingMessage: '加载中...',
         noDataAvailable: '没有数据！',
         addNewRecord: '+ 新建',
@@ -29,6 +28,8 @@
         ascending: '升序',
         descending: '降序',
         sortingInfoNone: '未应用排序',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

@@ -5,8 +5,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Ошибка связи с сервером.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Ошибка связи с сервером.',
         loadingMessage: 'Загрузка...',
         noDataAvailable: 'Данные отсутствуют',
         addNewRecord: 'Добавить',
@@ -29,7 +28,9 @@
         sortingInfoPrefix: 'Сортировка применена: ',
         ascending: 'По возрастанию',
         descending: 'По убыванию',
-        sortingInfoNone: 'Сортировка не применена'
+        sortingInfoNone: 'Сортировка не применена',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

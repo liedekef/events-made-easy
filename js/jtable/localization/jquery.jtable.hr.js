@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Greška prilikom komunikacije sa serverom.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Greška prilikom komunikacije sa serverom.',
         loadingMessage: 'Učitavanje zapisa...',
         noDataAvailable: 'Nema dostupnih podataka',
         addNewRecord: 'Dodaj zapis',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'Sortiranje primijenjeno: ',
         ascending: 'Uzlazno',
         descending: 'Silazno',
-        sortingInfoNone: 'Nema sortiranja'
+        sortingInfoNone: 'Nema sortiranja',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

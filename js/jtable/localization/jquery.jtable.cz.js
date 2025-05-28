@@ -4,8 +4,7 @@ Author: Jakub Stajner
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Chyba připojení k serveru.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Chyba připojení k serveru.',
         loadingMessage: 'Načítám...',
         noDataAvailable: 'Žádné záznamy',
         addNewRecord: 'Přidat nový záznam',
@@ -28,7 +27,9 @@ Author: Jakub Stajner
         sortingInfoPrefix: 'Řazení použito: ',
         ascending: 'Vzestupně',
         descending: 'Sestupně',
-        sortingInfoNone: 'Žádné řazení použito'
+        sortingInfoNone: 'Žádné řazení použito',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

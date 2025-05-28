@@ -45,21 +45,8 @@ jQuery(document).ready( function($) {
                     title: emeattendances.translate_name
                 },
             },
-            toolbar: {
-                items: [{
-                    text: emeattendances.translate_csv,
-                    click: function () {
-                        eme_jtable_csv('#AttendancesTableContainer','attendences');
-                    }
-                },
-                    {
-                        text: emeattendances.translate_print,
-                        click: function () {
-                            eme_printTable('#AttendancesTableContainer');
-                        }
-                    }
-                ]
-            },
+            csvExport: true,
+            printTable: true,
             sortingInfoSelector: '#attendancestablesortingInfo',
             messages: {
                 'sortingInfoNone': ''

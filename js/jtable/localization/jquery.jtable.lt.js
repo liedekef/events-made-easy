@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Klaida bandant susisiekti su serveriu.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Klaida bandant susisiekti su serveriu.',
         loadingMessage: 'Informacija kraunama...',
         noDataAvailable: 'Nėra duomenų!',
         addNewRecord: '+ Pridėti naują',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'Rūšiavimas taikomas: ',
         ascending: 'Didėjimo tvarka',
         descending: 'Mažėjimo tvarka',
-        sortingInfoNone: 'Rūšiavimas nėra taikomas'
+        sortingInfoNone: 'Rūšiavimas nėra taikomas',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Bei der Verbindung mit dem Server ist ein Fehler aufgetreten.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Bei der Verbindung mit dem Server ist ein Fehler aufgetreten.',
         loadingMessage: 'Wird geladen...',
         noDataAvailable: 'Keine Einträge',
         addNewRecord: 'Neuen Eintrag hinzufügen',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'Sortierung angewendet: ',
         ascending: 'Aufsteigend',
         descending: 'Absteigend',
-        sortingInfoNone: 'Keine Sortierung angewendet'
+        sortingInfoNone: 'Keine Sortierung angewendet',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

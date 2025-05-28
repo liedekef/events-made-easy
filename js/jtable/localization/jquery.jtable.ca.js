@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Ha hagut un error en la comunicació amb el servidor.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Ha hagut un error en la comunicació amb el servidor.',
         loadingMessage: 'Carregant registres...',
         noDataAvailable: 'No hi ha dades disponibles',
         addNewRecord: 'Crea un nou registre',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'S\'ha aplicat l\'ordenació: ',
         ascending: 'Ascendent',
         descending: 'Descendent',
-        sortingInfoNone: 'No s\'ha aplicat cap ordenació'
+        sortingInfoNone: 'No s\'ha aplicat cap ordenació',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'সার্ভারে যোগাযোগ ত্রুটি',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'সার্ভারে যোগাযোগ ত্রুটি',
         loadingMessage: 'বার্তা বোঝাই করা হচ্ছে',
         noDataAvailable: 'কোন তথ্য পাওযা যাচ্ছে না',
         addNewRecord: 'নতুন তথ্য যোগ করুন',
@@ -29,6 +28,8 @@
         ascending: 'আরোহী',
         descending: 'অবরোহী',
         sortingInfoNone: 'কোনো সর্ট প্রয়োগ করা হয়নি',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

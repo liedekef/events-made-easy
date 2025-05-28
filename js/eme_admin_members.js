@@ -170,21 +170,8 @@ jQuery(document).ready(function ($) {
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-            toolbar: {
-                items: [{
-                    text: ememembers.translate_csv,
-                    click: function () {
-                        eme_jtable_csv('#MembersTableContainer','members');
-                    }
-                },
-                    {
-                        text: ememembers.translate_print,
-                        click: function () {
-                            eme_printTable('#MembersTableContainer');
-                        }
-                    }
-                ]
-            },
+            csvExport: true,
+            printTable: true,
             actions: {
                 listAction: ajaxurl
             },

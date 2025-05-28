@@ -120,7 +120,7 @@ jQuery(document).ready(function ($) {
                 title: emersvp.translate_edit,
                 sorting: false,
                 visibility: 'fixed',
-                listClass: 'jtable-command-column-header eme-jtable-center',
+                listClass: 'jtable-command-column jtable-command-column-header eme-jtable-center',
                 width: '1%',
             }
         }
@@ -166,6 +166,8 @@ jQuery(document).ready(function ($) {
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
+            csvExport: true,
+            printTable: true,
             toolbar: {
                 items: [
                     {
@@ -218,18 +220,6 @@ jQuery(document).ready(function ($) {
                                     $('.eme_jtable_button_for_approved_only .jtable-toolbar-item-text').text(emersvp.translate_markpaid);
                                 }, 'json');
                             }
-                        }
-                    },
-                    {
-                        text: emersvp.translate_csv,
-                        click: function () {
-                            eme_jtable_csv('#BookingsTableContainer','bookings');
-                        }
-                    },
-                    {
-                        text: emersvp.translate_print,
-                        click: function () {
-                            eme_printTable('#BookingsTableContainer');
                         }
                     }
                 ]

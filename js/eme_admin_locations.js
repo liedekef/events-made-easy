@@ -94,21 +94,8 @@ jQuery(document).ready(function ($) {
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-            toolbar: {
-                items: [{
-                    text: emelocations.translate_csv,
-                    click: function () {
-                        eme_jtable_csv('#LocationsTableContainer','locations');
-                    }
-                },
-                    {
-                        text: emelocations.translate_print,
-                        click: function () {
-                            eme_printTable('#LocationsTableContainer');
-                        }
-                    }
-                ]
-            },
+            csvExport: true,
+            printTable: true,
             actions: {
                 listAction: ajaxurl
             },

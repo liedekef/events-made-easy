@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Sunucu ile iletişim kurulurken bir hata oluştu.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Sunucu ile iletişim kurulurken bir hata oluştu.',
         loadingMessage: 'Kayıtlar yükleniyor...',
         noDataAvailable: 'Hiç kayıt bulunmamaktadır!',
         addNewRecord: 'Yeni kayıt ekle',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'Sıralama uygulandı: ',
         ascending: 'Artan',
         descending: 'Azalan',
-        sortingInfoNone: 'Sıralama uygulanmadı'
+        sortingInfoNone: 'Sıralama uygulanmadı',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

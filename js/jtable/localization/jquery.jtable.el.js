@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-$.extend(true, jTable.prototype.options.messages, {
-    serverCommunicationError: 'Παρουσιάστηκε σφάλμα στην προσπάθεια σύνδεσης στο διακομιστή.',
+$.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Παρουσιάστηκε σφάλμα στην προσπάθεια σύνδεσης στο διακομιστή.',
     loadingMessage: 'φορτώνονται οι εγγραφές...',
     noDataAvailable: 'Δεν υπάρχουν δεδομένα',
     addNewRecord: 'Νέα εγγραφή',
@@ -28,6 +27,8 @@ $.extend(true, jTable.prototype.options.messages, {
     sortingInfoPrefix: 'Εφαρμόστηκε ταξινόμηση: ',
     ascending: 'Αύξουσα',
     descending: 'Φθίνουσα',
-    sortingInfoNone: 'Δεν εφαρμόστηκε ταξινόμηση'
+    sortingInfoNone: 'Δεν εφαρμόστηκε ταξινόμηση',
+        csvExport: 'CSV',
+        printTable: 'Print'
 });
 })(jQuery);

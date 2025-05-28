@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable 1.0.52 (edited by Franky Van Liedekerke)
+jTable 1.0.53 (edited by Franky Van Liedekerke)
 https://www.e-dynamics.be
 
 ---------------------------------------------------------------------------
@@ -1057,10 +1057,14 @@ THE SOFTWARE.
         _addToolBarItem: function (item) {
 
             // Check if item is valid
-            if ((item == undefined) || (item.text == undefined && item.icon == undefined)) {
+            if (item == undefined || item.text == undefined) {
                 this._logWarn('Can not add tool bar item since it is not valid!');
                 this._logWarn(item);
                 return null;
+            }
+
+            if (item.icon == undefined) {
+                item.icon = false;
             }
 
             let $toolBarItem = $('<span></span>')
@@ -1086,9 +1090,11 @@ THE SOFTWARE.
                 let $icon = $('<span class="jtable-toolbar-item-icon"></span>').appendTo($toolBarItem);
                 if (item.icon === true) {
                     // do nothing
-                } else if ($.type(item.icon === 'string')) {
+                } else if ($.type(item.icon) === 'string') {
                     $icon.css('background', 'url("' + item.icon + '")');
                 }
+            } else if (item.emojiIcon && $.type(item.emojiIcon) === 'string') {
+                let $icon = $('<span class="jtable-toolbar-item-icon">'+item.emojiIcon+'</span>').appendTo($toolBarItem);
             }
 
             // text property
@@ -2056,6 +2062,306 @@ THE SOFTWARE.
 
 
 /************************************************************************
+ * CSV toolbar extension for jTable                                    *
+ *************************************************************************/
+(function ($) {
+
+    // Reference to base object members
+    let base = {
+        _create: jTable.prototype._create
+    };
+
+    // extension members
+    $.extend(true, jTable.prototype, {
+
+        /************************************************************************
+         * DEFAULT OPTIONS / EVENTS                                              *
+         *************************************************************************/
+        options: {
+            csvName: '',
+            csvDelimiter: ';',
+
+            // Localization
+            messages: {
+                csvExport: 'CSV'
+            }
+        },
+
+        /************************************************************************
+         * CONSTRUCTOR AND INITIALIZING METHODS                                  *
+         *************************************************************************/
+
+        /* Overrides base method to do create-specific constructions.
+         *************************************************************************/
+        _create: function () {
+            base._create.apply(this, arguments);
+
+            if (!this.options.csvExport) {
+                return;
+            }
+
+            this._csvExportAction();
+        },
+
+        /* Creates and prepares add new record dialog div
+         *************************************************************************/
+        _csvExportAction: function () {
+            let self = this;
+
+            if (self.options.csvExportButton) {
+                // If user supplied a button, bind the click event to show dialog form
+                self.options.csvTableButton.on("click", function (e) {
+                    e.preventDefault();
+                    self._csvExportTable();
+                });
+            } else {
+                // If user did not supply a button, create a 'add record button' toolbar item.
+                self._addToolBarItem({
+                    icon: false,
+                    cssClass: 'jtable-toolbar-item-csv-table',
+                    text: self.options.messages.csvExport,
+                    click: function () {
+                        self._csvExportTable();
+                    }
+                });
+            }
+        },
+
+        _csvExportTable: function () {
+            let self = this;
+
+            const newTable = self._$table.clone();
+            const csvName = self.options.csvName || self.options.title || document.title;
+
+            let csvData = [];
+
+            //header
+            // th - remove attributes and header divs from jTable
+            // newTable.find('th').each(function () {
+            let tmpRow = []; // construct header available array
+            $.each(newTable.find('th'),function () {
+                if ($(this).hasClass('jtable-command-column')) {
+                    return;
+                }
+                if ($(this).css('display') != 'none') {
+                    let val = $(this).find('.jtable-column-header-text').text();
+                    tmpRow[tmpRow.length] = self._formatCSV(val);
+                }
+            });
+            csvData[csvData.length] = tmpRow.join(self.options.csvDelimiter);
+
+            // tr - remove attributes
+            //newTable.find('tr').each(function () {
+            $.each(newTable.find('tr'),function () {
+                let tmpRow = [];
+                $.each($(this).find('td'),function() {
+                    if ($(this).hasClass('jtable-command-column')) {
+                        return;
+                    }
+                    if ($(this).css('display') != 'none') {
+                        if ($(this).find('img').length || $(this).find('button').length) {
+                            $(this).html('');
+                        }
+                        // we take the html and replace br
+                        let val = $(this).html();
+                        let regexp = new RegExp(/\<br ?\/?\>/g);
+                        val = val.replace(regexp, '\n');
+                        $(this).html(val);
+                        tmpRow[tmpRow.length] = self._formatCSV($(this).text());
+                    }
+                });
+                if (tmpRow.length>0) {
+                    csvData[csvData.length] = tmpRow.join(self.options.csvDelimiter);
+                }
+            });
+
+            // we create a link and click on it.
+            // window.open-call to 'data:' fails on some browsers due to security limitations with the
+            //    error: "Not allowed to navigate top frame to data URL 'data:text/csv;charset=utf8...."
+            let mydata = csvData.join('\r\n');
+            let blob = new Blob([mydata], { type: 'text/csv;charset=utf-8' });
+            let link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = csvName+'_data.csv'; // Specify the file name
+            link.click();
+            link.remove();
+        },
+
+        /************************************************************************
+         * PRIVATE METHODS                                                       *
+         *************************************************************************/
+
+        /* format CSV
+         *************************************************************************/
+        _formatCSV: function (inputLine) {
+            // double " according to rfc4180
+            let regexp = new RegExp(/["]/g);
+            let output = inputLine.replace(regexp, '""');
+            //HTML
+            regexp = new RegExp(/\<[^\<]+\>/g);
+            output = output.replace(regexp, "");
+            output = output.replace(/&nbsp;/gi,' '); //replace &nbsp;
+            if (output == "") return '';
+            return '"' + output.trim() + '"';
+        }
+
+    });
+
+})(jQuery);
+
+
+/************************************************************************
+ * PRINT toolbar extension for jTable                                    *
+ *************************************************************************/
+(function ($) {
+
+    // Reference to base object members
+    let base = {
+        _create: jTable.prototype._create
+    };
+
+    // extension members
+    $.extend(true, jTable.prototype, {
+
+        /************************************************************************
+         * DEFAULT OPTIONS / EVENTS                                              *
+         *************************************************************************/
+        options: {
+            printMode: 'iframe', // 'popup' or 'iframe'
+            printExtraStyles: '', // extra custom CSS
+ 
+            // Localization
+            messages: {
+                printTable: 'Print'
+            }
+        },
+
+        /************************************************************************
+         * CONSTRUCTOR AND INITIALIZING METHODS                                  *
+         *************************************************************************/
+
+        /* Overrides base method to do create-specific constructions.
+         *************************************************************************/
+        _create: function () {
+            base._create.apply(this, arguments);
+
+            if (!this.options.printTable) {
+                return;
+            }
+
+            this._printTableAction();
+        },
+
+        /* Creates and prepares add new record dialog div
+         *************************************************************************/
+        _printTableAction: function () {
+            let self = this;
+
+            if (self.options.printTableButton) {
+                // If user supplied a button, bind the click event to show dialog form
+                self.options.printTableButton.on("click", function (e) {
+                    e.preventDefault();
+                    self._printTable();
+                });
+            } else {
+                // If user did not supply a button, create a 'add record button' toolbar item.
+                self._addToolBarItem({
+                    icon: false,
+                    emojiIcon: '🖨️',
+                    cssClass: 'jtable-toolbar-item-print-table',
+                    text: self.options.messages.printTable,
+                    click: function () {
+                        self._printTable();
+                    }
+                });
+            }
+        },
+
+        _printTable: function () {
+            let self = this;
+
+            const tableHtml = self._$table.clone().wrap('<div>').parent().html();
+            const printTitle = self.options.title || document.title;
+            const fullHtml = `
+<html>
+<head>
+    <title>${printTitle}</title>
+    <style>
+        body { font-family: sans-serif; padding: 10px; }
+        table { width: 100%; border-collapse: collapse; }
+        table, th, td { border: 1px solid black; }
+        ${self.options.printExtraStyles}
+    </style>
+    <base href="${window.location.href}">
+</head>
+<body>
+    ${tableHtml}
+    <script>
+        window.onload = function() {
+            window.focus();
+            window.print();
+        };
+    </script>
+</body>
+</html>
+`;
+
+            if (self.options.printMode === 'popup') {
+                const printWindow = window.open('', '_blank', 'width=800,height=600');
+                if (!printWindow) {
+                    alert('Popup blocked! Please allow popups for this site.');
+                    return false;
+                }
+
+                printWindow.document.open();
+                printWindow.document.write(fullHtml);
+                printWindow.document.close();
+
+                setTimeout(() => {
+                    try {
+                        printWindow.close();
+                    } catch (e) {
+                        console.warn('Could not close print window:', e);
+                    }
+                }, 1000);
+
+            } else if (self.options.printMode === 'iframe') {
+                const iframe = document.createElement('iframe');
+                iframe.style.position = 'fixed';
+                iframe.style.right = '0';
+                iframe.style.bottom = '0';
+                iframe.style.width = '0';
+                iframe.style.height = '0';
+                iframe.style.border = '0';
+                iframe.src = 'about:blank';
+
+                document.body.appendChild(iframe);
+
+                try {
+                    const iframeWindow = iframe.contentWindow || iframe;
+                    const iframeDoc = iframeWindow.document;
+
+                    iframeDoc.open();
+                    iframeDoc.write(fullHtml);
+                    iframeDoc.close();
+
+                    setTimeout(() => {
+                        document.body.removeChild(iframe);
+                    }, 100);
+                } catch (e) {
+                    console.error('Print failed:', e);
+                    document.body.removeChild(iframe);
+                    return false;
+                }
+            }
+        }
+
+    });
+
+})(jQuery);
+
+
+/************************************************************************
  * CREATE RECORD extension for jTable                                    *
  *************************************************************************/
 (function ($) {
@@ -2163,7 +2469,7 @@ THE SOFTWARE.
             let self = this;
 
             let $saveButton = self._$addRecordDialog.find('#AddRecordDialogSaveButton');
-            let $addRecordForm = self._$addRecordDialog.find('form');
+            let $addRecordForm = self._$addRecordDialog.find('form').first();
 
             if (self._$mainContainer.trigger("formSubmitting", { form: $addRecordForm, formType: 'create' }) != false) {
                 self._setEnabledOfDialogButton($saveButton, false, self.options.messages.saving);
@@ -2330,14 +2636,14 @@ THE SOFTWARE.
             });
 
             // Remove any existing form
-            self._$addRecordDialog.find('form:first').remove();
+            self._$addRecordDialog.find('form').first().remove();
 
             // Make sure people can click on the save button
             let $saveButton = self._$addRecordDialog.find('#AddRecordDialogSaveButton');
             self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
 
             // Show the form
-            self._$addRecordDialog.find('#addRecordDialogTitle:first').after($addRecordForm);
+            self._$addRecordDialog.find('#addRecordDialogTitle').first().after($addRecordForm);
             self._$addRecordDialog[0].showModal();
             self._$mainContainer.trigger("formCreated", { form: $addRecordForm, formType: 'create' });
         },
@@ -2478,7 +2784,7 @@ THE SOFTWARE.
                 .appendTo(self._$mainContainer)
                 .on('close', function () {
                     // the close event is called upon close-call or pressing escape
-                    let $editRecordForm = self._$editRecordDialog.find('form:first');
+                    let $editRecordForm = self._$editRecordDialog.find('form').first();
                     self._$mainContainer.trigger("formClosed", { form: $editRecordForm, formType: 'edit', row: self._$editingRow });
                     $editRecordForm.remove();
                 });
@@ -2514,7 +2820,7 @@ THE SOFTWARE.
             }
 
             let $saveButton = self._$editRecordDialog.find('#EditRecordDialogSaveButton');
-            let $editRecordForm = self._$editRecordDialog.find('form');
+            let $editRecordForm = self._$editRecordDialog.find('form').first();
             if (self._$mainContainer.trigger("formSubmitting", { form: $editRecordForm, formType: 'edit', row: self._$editingRow }) != false) {
                 self._setEnabledOfDialogButton($saveButton, false, self.options.messages.saving);
                 self._saveEditRecordForm($editRecordForm, $saveButton);
@@ -2730,14 +3036,14 @@ THE SOFTWARE.
             // Store the row being edited
             self._$editingRow = $tableRow;
             // Remove any existing form
-            self._$editRecordDialog.find('form:first').remove();
+            self._$editRecordDialog.find('form').first().remove();
  
             // Make sure people can click on the save button
             let $saveButton = self._$editRecordDialog.find('#EditRecordDialogSaveButton');
             self._setEnabledOfDialogButton($saveButton, true, self.options.messages.save);
 
             // Show the form
-            self._$editRecordDialog.find('#editRecordDialogTitle:first').after($editRecordForm);
+            self._$editRecordDialog.find('#editRecordDialogTitle').first().after($editRecordForm);
             self._$editRecordDialog[0].showModal();
             self._$mainContainer.trigger("formCreated", { form: $editRecordForm, formType: 'edit', record: record, row: $tableRow });
         },

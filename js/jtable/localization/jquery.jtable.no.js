@@ -4,8 +4,7 @@ Author: Tobias Flatin
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'En feil oppsto i kommunikasjonen med serveren.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'En feil oppsto i kommunikasjonen med serveren.',
         loadingMessage: 'Laster...',
         noDataAvailable: 'Ingen data',
         addNewRecord: 'Legg til ny post',
@@ -28,7 +27,9 @@ Author: Tobias Flatin
         sortingInfoPrefix: 'Sortering anvendt: ',
         ascending: 'Stigende',
         descending: 'Synkende',
-        sortingInfoNone: 'Ingen sortering anvendt'
+        sortingInfoNone: 'Ingen sortering anvendt',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

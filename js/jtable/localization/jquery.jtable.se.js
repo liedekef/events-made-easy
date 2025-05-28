@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Ett fel uppstod i kommunikationen med servern.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Ett fel uppstod i kommunikationen med servern.',
         loadingMessage: 'Laddar...',
         noDataAvailable: 'Data saknas',
         addNewRecord: 'Lägg till ny post',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'Sortering tillämpad: ',
         ascending: 'Stigande',
         descending: 'Fallande',
-        sortingInfoNone: 'Ingen sortering tillämpad'
+        sortingInfoNone: 'Ingen sortering tillämpad',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

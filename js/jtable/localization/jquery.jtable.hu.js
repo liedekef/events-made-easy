@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Adatbázis hiba',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Adatbázis hiba',
         loadingMessage: 'Adatok betöltése...',
         noDataAvailable: 'Nincs elérhető adat!',
         addNewRecord: '+ Új hozzáadása',
@@ -29,6 +28,8 @@
         ascending: 'Növekvő',
         descending: 'Csökkenő',
         sortingInfoNone: 'Nincs rendezés alkalmazva',
+        csvExport: 'CSV',
+        printTable: 'Print'
 });
 
 })(jQuery);

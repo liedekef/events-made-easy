@@ -564,21 +564,8 @@ jQuery(document).ready( function($) {
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-            toolbar: {
-                items: [{
-                    text: emeevents.translate_csv,
-                    click: function () {
-                        eme_jtable_csv('#EventsTableContainer','events');
-                    }
-                },
-                    {
-                        text: emeevents.translate_print,
-                        click: function () {
-                            eme_printTable('#EventsTableContainer');
-                        }
-                    }
-                ]
-            },
+            csvExport: true,
+            printTable: true,
             actions: {
                 listAction: ajaxurl
             },
@@ -723,20 +710,8 @@ jQuery(document).ready( function($) {
             selecting: true, // Enable selecting
             multiselect: true, // Allow multiple selecting
             selectingCheckboxes: true, // Show checkboxes on first column
-            toolbar: {
-                items: [{
-                    text: emeevents.translate_csv,
-                    click: function () {
-                        eme_jtable_csv('#RecurrencesTableContainer','recurrences');
-                    }
-                },
-                    {
-                        text: emeevents.translate_print,
-                        click: function () {
-                            eme_printTable('#RecurrencesTableContainer');
-                        }
-                    }]
-            },
+            csvExport: true,
+            printTable: true,
             actions: {
                 listAction: ajaxurl
             },

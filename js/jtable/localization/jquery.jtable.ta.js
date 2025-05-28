@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'வழங்கியுடன் தொடர்பை ஏற்படுத்துவதில் பிழை ',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'வழங்கியுடன் தொடர்பை ஏற்படுத்துவதில் பிழை ',
         loadingMessage: 'தரவுகள் ஏற்கப்படுகின்றன',
         noDataAvailable: 'எந்தவொரு தகவலும் இல்லை',
         addNewRecord: 'சேர்க்க',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'வரிசைப்படுத்தல் பயன்படுத்தப்பட்டது: ',
         ascending: 'ஏறுவரிசை',
         descending: 'இறங்குவரிசை',
-        sortingInfoNone: 'வரிசைப்படுத்தல் பயன்படுத்தப்படவில்லை'
+        sortingInfoNone: 'வரிசைப்படுத்தல் பயன்படுத்தப்படவில்லை',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

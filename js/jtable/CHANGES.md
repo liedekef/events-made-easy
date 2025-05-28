@@ -1,3 +1,6 @@
+= 1.0.53 (2025/05/28) =
+* Added options for CSV export and print table
+
 = 1.0.52 (2025/04/27) =
 * Uniform function naming for edit/add record
 

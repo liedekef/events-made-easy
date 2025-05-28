@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Eroare la comunicarea cu serverul.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Eroare la comunicarea cu serverul.',
         loadingMessage: '&Icirc;nc&atilde;rcare date...',
         noDataAvailable: 'Nu exist&atilde; &icirc;nregistr&atilde;ri !',
         addNewRecord: 'Adauga',
@@ -29,6 +28,8 @@
         ascending: 'Crescător',
         descending: 'Descrescător',
         sortingInfoNone: 'Nicio sortare aplicată',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

@@ -8,21 +8,8 @@ jQuery(document).ready( function($) {
         selecting: true, // Enable selecting
         multiselect: true, // Allow multiple selecting
         selectingCheckboxes: true, // Show checkboxes on first column
-        toolbar: {
-            items: [{
-                text: emetasks.translate_csv,
-                click: function () {
-                    eme_jtable_csv('#TaskSignupsTableContainer','task_signups');
-                }
-            },
-                {
-                    text: emetasks.translate_print,
-                    click: function () {
-                        eme_printTable('#TaskSignupsTableContainer');
-                    }
-                }
-            ]
-        },
+        csvExport: true,
+        printTable: true,
         deleteConfirmation: function(data) {
             data.deleteConfirmMessage = emetasks.translate_pressdeletetoremove;
         },

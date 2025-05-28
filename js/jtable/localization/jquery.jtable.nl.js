@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Fout bij het communiceren met de server',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Fout bij het communiceren met de server',
         loadingMessage: 'Laden...',
         noDataAvailable: 'Geen gegevens beschikbaar!',
         addNewRecord: '+ Toevoegen',
@@ -29,6 +28,8 @@
         ascending: 'Oplopend',
         descending: 'Aflopend',
         sortingInfoNone: 'Geen sortering toegepast',
+        csvExport: 'CSV',
+        printTable: 'Print'
 });
 
 })(jQuery);

@@ -5,8 +5,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Gagal terhubung ke server.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Gagal terhubung ke server.',
         loadingMessage: 'Proses membaca data...',
         noDataAvailable: 'Data tidak tersedia',
         addNewRecord: 'Tambah Data Baru',
@@ -29,7 +28,9 @@
         sortingInfoPrefix: 'Pengurutan diterapkan: ',
         ascending: 'Naik',
         descending: 'Turun',
-        sortingInfoNone: 'Tidak ada pengurutan yang diterapkan'
+        sortingInfoNone: 'Tidak ada pengurutan yang diterapkan',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Wystąpił błąd komunikacji z serwerem.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Wystąpił błąd komunikacji z serwerem.',
         loadingMessage: 'Ładowanie...',
         noDataAvailable: 'Brak rekordów!',
         addNewRecord: '+ Dodaj nowy wpis',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'Sortowanie zastosowane: ',
         ascending: 'Rosnąco',
         descending: 'Malejąco',
-        sortingInfoNone: 'Brak sortowania'
+        sortingInfoNone: 'Brak sortowania',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

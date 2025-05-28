@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Erro durante comunicação com o servidor.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Erro durante comunicação com o servidor.',
         loadingMessage: 'Carregando registros...',
         noDataAvailable: 'Nenhum dado disponível!',
         addNewRecord: 'Adicionar novo registro',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'Ordenação aplicada: ',
         ascending: 'Ascendente',
         descending: 'Descendente',
-        sortingInfoNone: 'Nenhuma ordenação aplicada'
+        sortingInfoNone: 'Nenhuma ordenação aplicada',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

@@ -3,8 +3,7 @@
     Author: Lê Hoàng Hiếu
 */
 (function ($) {
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Có lỗi khi giao tiếp với máy chủ.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Có lỗi khi giao tiếp với máy chủ.',
         loadingMessage: 'Đang tải dữ liệu...',
         noDataAvailable: 'Không có dữ liệu!',
         addNewRecord: '+ Thêm dữ liệu',
@@ -27,6 +26,8 @@
         sortingInfoPrefix: 'Sắp xếp được áp dụng: ',
         ascending: 'Tăng dần',
         descending: 'Giảm dần',
-        sortingInfoNone: 'Không có sắp xếp nào được áp dụng'
+        sortingInfoNone: 'Không có sắp xếp nào được áp dụng',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 })(jQuery);

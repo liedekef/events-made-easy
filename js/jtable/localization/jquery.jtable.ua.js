@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Помилка зв’язку з сервером.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Помилка зв’язку з сервером.',
         loadingMessage: 'Завантаження...',
         noDataAvailable: 'Дані відсутні',
         addNewRecord: 'Додати',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'Сортування застосовано: ',
         ascending: 'За зростанням',
         descending: 'За спаданням',
-        sortingInfoNone: 'Сортування не застосовано'
+        sortingInfoNone: 'Сортування не застосовано',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

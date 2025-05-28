@@ -4,8 +4,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'خطا در برقراری ارتباط با سرور!',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'خطا در برقراری ارتباط با سرور!',
         loadingMessage: 'بارگزاری اطلاعات ...',
         noDataAvailable: 'هیچ داده ای موجود نیست!!',
         addNewRecord: 'رکورد جدید',
@@ -28,7 +27,9 @@
         sortingInfoPrefix: 'ﻡﺮﺘﺑ<200c>ﺳﺍﺰﯾ ﺎﻌﻣﺎﻟ ﺵﺩ: ',
         ascending: 'ﺺﻋﻭﺪﯾ',
         descending: 'ﻥﺯﻮﻠﯾ',
-        sortingInfoNone: 'ﻪﯿﭼ ﻡﺮﺘﺑ<200c>ﺳﺍﺰﯾ ﺎﻌﻣﺎﻟ ﻦﺷﺪﻫ ﺎﺴﺗ'
+        sortingInfoNone: 'ﻪﯿﭼ ﻡﺮﺘﺑ<200c>ﺳﺍﺰﯾ ﺎﻌﻣﺎﻟ ﻦﺷﺪﻫ ﺎﺴﺗ',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

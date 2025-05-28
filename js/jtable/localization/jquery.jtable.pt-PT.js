@@ -3,8 +3,7 @@
 */
 (function ($) {
 
-    $.extend(true, jTable.prototype.options.messages, {
-        serverCommunicationError: 'Erro na ligação ao servidor.',
+    $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Erro na ligação ao servidor.',
         loadingMessage: 'A ler dados ...',
         noDataAvailable: 'Não existem dados!',
         addNewRecord: 'Novo',
@@ -27,7 +26,9 @@
         sortingInfoPrefix: 'Ordenação aplicada: ',
         ascending: 'Ascendente',
         descending: 'Descendente',
-        sortingInfoNone: 'Nenhuma ordenação aplicada'
+        sortingInfoNone: 'Nenhuma ordenação aplicada',
+        csvExport: 'CSV',
+        printTable: 'Print'
     });
 
 })(jQuery);

@@ -162,7 +162,7 @@ jQuery(document).ready( function($) {
                 'align', 'outdent', 'indent',
                 '|', 'ul', 'ol',
                 '|', 'table', 'symbols',
-                '|', 'link', 'image', 'video', 'insertFromMediaLibrary',
+                '|', 'link', 'image', 'insertFromMediaLibrary',
                 '|', 'hr', 'insertNbsp', 'eraser',
                 '---', 'preview',
             ],

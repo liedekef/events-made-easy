@@ -29,7 +29,7 @@
         descending: 'Azalan',
         sortingInfoNone: 'Sıralama uygulanmadı',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

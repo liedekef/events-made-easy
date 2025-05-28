@@ -29,7 +29,7 @@
         descending: 'Aflopend',
         sortingInfoNone: 'Geen sortering toegepast',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
 });
 
 })(jQuery);

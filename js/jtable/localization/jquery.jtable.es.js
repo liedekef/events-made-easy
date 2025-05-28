@@ -29,7 +29,7 @@
         descending: 'Descendente',
         sortingInfoNone: 'No se aplicó ningún orden',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

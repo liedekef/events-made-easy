@@ -29,7 +29,7 @@
         descending: 'Mažėjimo tvarka',
         sortingInfoNone: 'Rūšiavimas nėra taikomas',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

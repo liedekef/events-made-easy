@@ -31,7 +31,7 @@
         descending: 'ﺖﻧﺍﺰﻠﻳ',
         sortingInfoNone: 'ﻞﻣ ﻲﺘﻣ ﺖﻄﺒﻴﻗ ﺄﻳ ﻑﺭﺯ',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

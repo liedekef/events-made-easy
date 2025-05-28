@@ -29,7 +29,7 @@
         descending: 'Malejąco',
         sortingInfoNone: 'Brak sortowania',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

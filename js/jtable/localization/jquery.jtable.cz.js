@@ -29,7 +29,7 @@ Author: Jakub Stajner
         descending: 'Sestupně',
         sortingInfoNone: 'Žádné řazení použito',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

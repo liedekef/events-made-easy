@@ -307,11 +307,11 @@ function eme_admin_register_scripts() {
     wp_register_script('eme-jodit', EME_PLUGIN_URL . 'js/eme_jodit.js', ['jodit-js'], EME_VERSION, true);
 
     // summernote stuff
-    wp_register_script('summernote-js', EME_PLUGIN_URL. 'js/summernote/summernote-lite.js', ['jquery'], EME_VERSION, true);
-    wp_register_style('summernote-css', EME_PLUGIN_URL. 'js/summernote/summernote-lite.css');
-    wp_register_script('summernote-table-js', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.js', ['summernote-js'], EME_VERSION, true);
-    wp_register_style('summernote-table-css', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.css');
-    wp_register_script('eme-summernote', EME_PLUGIN_URL . 'js/eme_summernote.js', ['summernote-js','summernote-table-js'], EME_VERSION, true);
+    //wp_register_script('summernote-js', EME_PLUGIN_URL. 'js/summernote/summernote-lite.js', ['jquery'], EME_VERSION, true);
+    //wp_register_style('summernote-css', EME_PLUGIN_URL. 'js/summernote/summernote-lite.css');
+    //wp_register_script('summernote-table-js', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.js', ['summernote-js'], EME_VERSION, true);
+    //wp_register_style('summernote-table-css', EME_PLUGIN_URL. 'js/summernote/plugin/table/summernote-ext-table.css');
+    //wp_register_script('eme-summernote', EME_PLUGIN_URL . 'js/eme_summernote.js', ['summernote-js','summernote-table-js'], EME_VERSION, true);
 
     $locale_code     = determine_locale();
     $locale_code     = preg_replace( '/_/', '-', $locale_code );

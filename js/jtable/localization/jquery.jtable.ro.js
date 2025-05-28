@@ -29,7 +29,7 @@
         descending: 'Descrescător',
         sortingInfoNone: 'Nicio sortare aplicată',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

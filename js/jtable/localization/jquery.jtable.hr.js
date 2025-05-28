@@ -29,7 +29,7 @@
         descending: 'Silazno',
         sortingInfoNone: 'Nema sortiranja',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

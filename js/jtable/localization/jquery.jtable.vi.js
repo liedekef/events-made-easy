@@ -28,6 +28,6 @@
         descending: 'Giảm dần',
         sortingInfoNone: 'Không có sắp xếp nào được áp dụng',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 })(jQuery);

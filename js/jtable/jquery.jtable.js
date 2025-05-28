@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable 1.0.53 (edited by Franky Van Liedekerke)
+jTable 1.0.54 (edited by Franky Van Liedekerke)
 https://www.e-dynamics.be
 
 ---------------------------------------------------------------------------
@@ -1093,8 +1093,6 @@ THE SOFTWARE.
                 } else if ($.type(item.icon) === 'string') {
                     $icon.css('background', 'url("' + item.icon + '")');
                 }
-            } else if (item.emojiIcon && $.type(item.emojiIcon) === 'string') {
-                let $icon = $('<span class="jtable-toolbar-item-icon">'+item.emojiIcon+'</span>').appendTo($toolBarItem);
             }
 
             // text property
@@ -2232,7 +2230,7 @@ THE SOFTWARE.
  
             // Localization
             messages: {
-                printTable: 'Print'
+                printTable: '🖨️ Print'
             }
         },
 
@@ -2267,7 +2265,6 @@ THE SOFTWARE.
                 // If user did not supply a button, create a 'add record button' toolbar item.
                 self._addToolBarItem({
                     icon: false,
-                    emojiIcon: '🖨️',
                     cssClass: 'jtable-toolbar-item-print-table',
                     text: self.options.messages.printTable,
                     click: function () {
@@ -2290,6 +2287,7 @@ THE SOFTWARE.
         body { font-family: sans-serif; padding: 10px; }
         table { width: 100%; border-collapse: collapse; }
         table, th, td { border: 1px solid black; }
+	.jtable-command-column { display: none; }
         ${self.options.printExtraStyles}
     </style>
     <base href="${window.location.href}">

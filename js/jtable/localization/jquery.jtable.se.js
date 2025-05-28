@@ -29,7 +29,7 @@
         descending: 'Fallande',
         sortingInfoNone: 'Ingen sortering tillämpad',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

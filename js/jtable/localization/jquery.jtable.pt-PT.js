@@ -28,7 +28,7 @@
         descending: 'Descendente',
         sortingInfoNone: 'Nenhuma ordenação aplicada',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

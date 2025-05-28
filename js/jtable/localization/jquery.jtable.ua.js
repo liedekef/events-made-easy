@@ -29,7 +29,7 @@
         descending: 'За спаданням',
         sortingInfoNone: 'Сортування не застосовано',
         csvExport: 'CSV',
-        printTable: 'Print'
+        printTable: '🖨️  Print'
     });
 
 })(jQuery);

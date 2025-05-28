@@ -70,9 +70,6 @@ THE SOFTWARE.
             },
 
             toolbar: {
-                hoverAnimation: true,
-                hoverAnimationDuration: 60,
-                hoverAnimationEasing: undefined,
                 items: []
             },
 
@@ -1117,19 +1114,11 @@ THE SOFTWARE.
                 });
             }
 
-            // set hover animation parameters
-            let hoverAnimationDuration = undefined;
-            let hoverAnimationEasing = undefined;
-            if (this.options.toolbar.hoverAnimation) {
-                hoverAnimationDuration = this.options.toolbar.hoverAnimationDuration;
-                hoverAnimationEasing = this.options.toolbar.hoverAnimationEasing;
-            }
-
             // change class on hover
             $toolBarItem.hover(function () {
-                $toolBarItem.addClass('jtable-toolbar-item-hover', hoverAnimationDuration, hoverAnimationEasing);
+                $toolBarItem.addClass('jtable-toolbar-item-hover');
             }, function () {
-                $toolBarItem.removeClass('jtable-toolbar-item-hover', hoverAnimationDuration, hoverAnimationEasing);
+                $toolBarItem.removeClass('jtable-toolbar-item-hover');
             });
 
             return $toolBarItem;

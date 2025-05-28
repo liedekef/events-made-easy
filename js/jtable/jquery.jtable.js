@@ -1,6 +1,6 @@
 ﻿/* 
 
-jTable 1.0.54 (edited by Franky Van Liedekerke)
+jTable 1.0.55 (edited by Franky Van Liedekerke)
 https://www.e-dynamics.be
 
 ---------------------------------------------------------------------------
@@ -1072,6 +1072,12 @@ THE SOFTWARE.
                 .appendTo(this._$toolbarDiv);
 
             this._jqueryuiThemeAddClass($toolBarItem, 'ui-widget ui-state-default ui-corner-all', 'ui-state-hover');
+
+            // id property
+            if (item.id) {
+                $toolBarItem
+                    .attr('id', item.id);
+            }
 
             // cssClass property
             if (item.cssClass) {

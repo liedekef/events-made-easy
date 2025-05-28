@@ -5,7 +5,7 @@ jQuery(document).ready( function($) {
         for (const computedSingleFont of computedFonts) {
             for (const [fontValue, fontDisplay] of Object.entries(fontList)) {
                 if (fontValue.includes(computedSingleFont)) {
-                    return fontDisplay + ' ';
+                    return fontDisplay + ' \u00A0';
                 }
             }
         }
@@ -16,7 +16,7 @@ jQuery(document).ready( function($) {
         const tagName = element.tagName.toLowerCase().trim();
         for (const [value, text] of Object.entries(controlList)) {
             if (value.toLowerCase().trim() === tagName) {
-                return text + ' ';
+                return text + ' \u00A0';
             }
         }
         return '';
@@ -55,7 +55,7 @@ jQuery(document).ready( function($) {
                 //fontSizeButton.state.active = false;
                 fontSizeButton.text.textContent = '';
             } else {
-                fontSizeButton.text.textContent = computedSize + ' ';
+                fontSizeButton.text.textContent = computedSize + ' \u00A0';
             }
         }
 

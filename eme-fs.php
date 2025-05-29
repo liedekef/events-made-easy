@@ -200,6 +200,9 @@ function eme_add_event_form_shortcode( $atts ) {
         $translation_array = [
             'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
             'translate_flanguage'       => eme_detect_lang(),
+            'translate_insertimage'     => __('Insert image', 'events-made-easy' ),
+            'translate_insert'          => __('Insert', 'events-made-easy' ),
+            'translate_cancel'          => __('Cancel', 'events-made-easy' ),
             'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
             'translate_preview'         => __('Preview', 'events-made-easy' ),
             'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),

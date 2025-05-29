@@ -87,19 +87,169 @@ jQuery(document).ready( function($) {
         exec: (editor) => editor.selection.insertHTML('&nbsp;'),
     };
 
+    Jodit.defaultOptions.controls.insertFromMediaLibrary2 = {
+        template: () => '<span style="display: flex; align-items: center;"><span style="font-size: 1.1em;">🎵 🖼️ 📎</span></span>',
+        exec: (editor) => {
+            const escapeHtml = (text) => $('<div>').text(text).html();
+            // Store original handler per editor instance
+            if (!editor.mediaHandlers) {
+                editor.mediaHandlers = {
+                    originalSend: wp.media.editor.send.attachment,
+                    cleanup: function() {
+                        wp.media.editor.send.attachment = editor.mediaHandlers.originalSend;
+                        $(document).off('click', editor.mediaHandlers.closeHandler);
+                    }
+                }
+            }
+
+            // Override the default WordPress media insertion handler
+            wp.media.editor.send.attachment = function(props, file) {
+                let html;
+
+                // Handle images (WordPress already applies selected size to file.url)
+                if (file.type === 'image') {
+                    html = `<img src="${file.url}" alt="${escapeHtml(file.alt) || ''}" width="${file.width || ''}" height="${file.height || ''}" />`;
+                } 
+                // Handle audio/video
+                else if (file.type === 'audio') {
+                    html = `<audio controls src="${file.url}"></audio>`;
+                } 
+                else if (file.type === 'video') {
+                    html = `<video controls width="640" height="360" src="${file.url}"></video>`;
+                } 
+                // Handle documents/other files
+                else {
+                    html = `<a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.filename)}</a>`;
+                }
+
+                // Insert into Jodit
+                editor.selection.insertHTML(html);
+            };
+
+            // Open the CLASSIC WordPress media modal
+            wp.media.editor.open(editor.id);
+
+            // Restore original send.attachment when modal closes
+            $(document).on('click', '.media-modal-close, .media-modal-backdrop', editor.mediaHandlers.cleanup);
+        },
+	    tooltip: emejodit.translate_insertfrommedia,
+    };
+
     Jodit.defaultOptions.controls.insertFromMediaLibrary = {
         template: () => '<span style="display: flex; align-items: center;"><span style="font-size: 1.1em;">🎵 🖼️ 📎</span></span>',
         exec: (editor) => {
-            const frame = wp.media({ multiple: true });
+            const escapeHtml = (text) => $('<div>').text(text).html();
+
+            const frame = wp.media({ multiple: true, library: { type: '' } });
+
             frame.on('select', () => {
-                const selection = frame.state().get('selection');
-                selection.each((attachment) => {
-                    const file = attachment.toJSON();
-                    const img = file.sizes?.medium || file;
-                    editor.selection.insertHTML(`<img src="${img.url}" width="${img.width}" height="${img.height}" alt="${file.alt || ''}"/>`);
-                });
+                const selection = frame.state().get('selection').toArray();
+                const files = selection.map((attachment) => attachment.toJSON());
+
+                const processNext = () => {
+                    if (files.length === 0) return;
+
+                    const file = files.shift();
+
+                    // Non-image logic
+                    if (file.type !== 'image') {
+                        if (file.type === 'audio') {
+                            editor.selection.insertHTML(`<audio controls src="${file.url}"></audio>`);
+                        } else if (file.type === 'video') {
+                            editor.selection.insertHTML(`<video controls width="640" height="360" src="${file.url}"></video>`);
+                        } else {
+                            editor.selection.insertHTML(`<a href="${file.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(file.filename)}</a>`);
+                        }
+                        processNext();
+                        return;
+                    }
+
+                    // Image with size selector
+                    const sizes = file.sizes || {};
+                    const hasFull = sizes.hasOwnProperty('full');
+                    const sizeKeys = Object.keys(sizes);
+
+                    if (sizeKeys.length === 0 || sizeKeys.length === 1) {
+                        const size = sizes.medium || sizes[sizeKeys[0]] || null;
+                        const url = size ? size.url : file.url;
+                        const width = size ? size.width : file.width;
+                        const height = size ? size.height : file.height;
+
+                        editor.selection.insertHTML(`<img src="${url}" width="${width}" height="${height}" alt="${escapeHtml(file.alt || '')}"/>`);
+                        processNext();
+                        return;
+                    }
+
+                    // Build dialog content
+                    let sizeOptions = '';
+                    for (let size in sizes) {
+                        const s = sizes[size];
+                        const selected = size === 'medium' ? 'selected' : '';
+                        sizeOptions += `<option value="${s.url}" data-width="${s.width}" data-height="${s.height}" ${selected}>${size} (${s.width}x${s.height})</option>`;
+                    }
+
+                    if (!hasFull) {
+                        const selected = !sizes.medium ? 'selected' : '';
+                        sizeOptions += `<option value="${file.url}" data-width="${file.width}" data-height="${file.height}" ${selected}>full (${file.width}x${file.height})</option>`;
+                    }
+
+                    const dialogContent = document.createElement('div');
+                    dialogContent.style.padding = '12px';
+                    dialogContent.style.margin = '0';
+                    dialogContent.style.boxSizing = 'border-box';
+                    dialogContent.style.fontSize = '14px';  // Optional: makes form elements cleaner
+
+                    dialogContent.innerHTML = `
+                    <label style="display: block; margin-bottom: 10px;">
+                        Choose size for image: <strong>${escapeHtml(file.filename)}</strong><br>
+                        <select style="maxwidth: 90%; margin-top: 5px;">
+                            ${sizeOptions}
+                        </select>
+                    </label>
+                    <div style="text-align: right; margin-top: 10px;">
+                        <button type="button" class="jodit-button jodit-button_primary eme-dialog-insert">${emejodit.translate_insert}</button>
+                        <button type="button" class="jodit-button jodit-button_secondary eme-dialog-cancel" style="margin-left: 8px;">${emejodit.translate_cancel}</button>
+                    </div>
+                `;
+
+                    const select = dialogContent.querySelector('select');
+                    const insertBtn = dialogContent.querySelector('.eme-dialog-insert');
+                    const cancelBtn = dialogContent.querySelector('.eme-dialog-cancel');
+
+                    // Show Jodit dialog
+                    const dialog = editor.dlg({
+                        buttons: [], // use custom buttons
+                        resizable: false,
+                        draggable: true,
+                    });
+                    dialog.setHeader(emejodit.translate_insertimage);
+                    dialog.setContent(dialogContent);
+                    dialog.setSize('300px','');
+                    dialog.open();
+
+                    select.focus();
+
+                    insertBtn.addEventListener('click', () => {
+                        const selectedOption = select.options[select.selectedIndex];
+                        const url = selectedOption.value;
+                        const width = selectedOption.dataset.width;
+                        const height = selectedOption.dataset.height;
+
+                        editor.selection.insertHTML(`<img src="${url}" width="${width}" height="${height}" alt="${escapeHtml(file.alt || '')}"/>`);
+                        dialog.close();
+                        processNext();
+                    });
+
+                    cancelBtn.addEventListener('click', () => {
+                        dialog.close();
+                        processNext();
+                    });
+                };
+
+                processNext();
                 frame.off('select');
             });
+
             frame.open();
         },
         tooltip: emejodit.translate_insertfrommedia,
@@ -186,7 +336,7 @@ jQuery(document).ready( function($) {
                 } else if (/^(https?:\/\/)/i.test(contentval)) {
                     urlField.value = contentval;
                 } else {
-                    urlField.value = 'https://' + contentval;
+                    urlField.value = 'https://'; // default: let's give a good start
                 }
             }
         });

@@ -2329,10 +2329,6 @@ function eme_replace_generic_placeholders( $format, $target = 'html' ) {
     return $format;
 }
 
-function eme_replace_placeholders( $format, $event, $target = 'html', $lang = '', $do_shortcode = 1 ) {
-    return eme_replace_event_placeholders( $format, $event, $target, $lang, $do_shortcode );
-}
-
 function eme_replace_event_placeholders( $format, $event, $target = 'html', $lang = '', $do_shortcode = 1, $recursion_level = 0 ) {
     $orig_target  = $target;
     if ( $target == 'htmlmail' || $target == 'html_nohtml2br' ) {
@@ -3189,35 +3185,36 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 $replacement = intval( $event[ $field ] );
 
             } elseif ( preg_match( '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)$/', $result, $matches ) ) {
-                if ( $matches[2] == 'START' ) {
-                    $eme_date_obj = new ExpressiveDate( $event['event_start'], EME_TIMEZONE );
-                } else {
-                    $eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
-                }
-                $diff = $eme_date_obj_now->diff( $eme_date_obj )->format( '%r1:%y:%m:%a:%h:%i:%s' );
-                [$pos_neg, $years, $months, $days, $hours, $mins, $secs] = explode( ':', $diff );
-                if ( $matches[1] == 'TILL' && $pos_neg < 0 ) {
-                    $replacement = 0;
-                } elseif ( $matches[1] == 'FROM' && $pos_neg > 0 ) {
-                    $replacement = 0;
-                } else {
-                    // let's produce a nice string but not add something like "0 years 0 months" to it
-                    $replacement = sprintf( _n( '%d second', '%d seconds', $secs, 'events-made-easy' ), $secs );
-                    if ( $years || $months || $days || $hours || $mins ) {
-                        $replacement = sprintf( _n( '%d minute', '%d minutes', $mins, 'events-made-easy' ), $mins ) . ' ' . $replacement;
+                $date_key = ($matches[2] === 'START') ? 'event_start' : 'event_end';
+                $eme_date_obj = new ExpressiveDate($event[$date_key], EME_TIMEZONE);
+
+                $diff = $eme_date_obj_now->diff($eme_date_obj);
+                $is_future = $diff->invert === 0;
+
+                $replacement = 0; // default: 0, will get replaced if there is a valid difference
+                if (($matches[1] === 'TILL' && $is_future) || ($matches[1] === 'FROM' && !$is_future)) {
+                    $parts = [];
+
+                    if ($diff->y > 0) {
+                        $parts[] = sprintf(_n('%d year', '%d years', $diff->y, 'events-made-easy'), $diff->y);
                     }
-                    if ( $years || $months || $days || $hours ) {
-                        $replacement = sprintf( _n( '%d hour', '%d hours', $hours, 'events-made-easy' ), $hours ) . ' ' . $replacement;
+                    if ($diff->m > 0) {
+                        $parts[] = sprintf(_n('%d month', '%d months', $diff->m, 'events-made-easy'), $diff->m);
                     }
-                    if ( $years || $months || $days ) {
-                        $replacement = sprintf( _n( '%d day', '%d days', $days, 'events-made-easy' ), $days ) . ' ' . $replacement;
+                    if ($diff->d > 0) {
+                        $parts[] = sprintf(_n('%d day', '%d days', $diff->d, 'events-made-easy'), $diff->d);
                     }
-                    if ( $years || $months ) {
-                        $replacement = sprintf( _n( '%d month', '%d months', $months, 'events-made-easy' ), $months ) . ' ' . $replacement;
+                    if ($diff->h > 0) {
+                        $parts[] = sprintf(_n('%d hour', '%d hours', $diff->h, 'events-made-easy'), $diff->h);
                     }
-                    if ( $years ) {
-                        $replacement = sprintf( _n( '%d year', '%d years', $years, 'events-made-easy' ), $years ) . ' ' . $replacement;
+                    if ($diff->i > 0) {
+                        $parts[] = sprintf(_n('%d minute', '%d minutes', $diff->i, 'events-made-easy'), $diff->i);
                     }
+                    if ($diff->s > 0 || empty($parts)) {
+                        $parts[] = sprintf(_n('%d second', '%d seconds', $diff->s, 'events-made-easy'), $diff->s);
+                    }
+
+                    $replacement = implode(' ', $parts);
                 }
             } elseif ( preg_match( '/#_DATETIMEDIFF_(TILL|FROM)_(START|END)\{(.+?)\}$/', $result, $matches ) ) {
                 if ( $matches[2] == 'START' ) {
@@ -3268,6 +3265,34 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
             } elseif ( preg_match( '/#_HOURS_TILL_END$/', $result ) ) {
                 $eme_date_obj = new ExpressiveDate( $event['event_end'], EME_TIMEZONE );
                 $replacement  = round( $eme_date_obj_now->getDifferenceInHours( $eme_date_obj ) );
+
+            } elseif ( preg_match( '/#_DISCOUNT_VALID_(TILL|FROM)\{(\d+)\}\{(.+?)\}$/', $result, $matches ) ) {
+                $discount_id = intval($matches[2]);
+                $valid_discount = 0;
+                if ( !empty( $event['event_properties']['rsvp_discountgroup'] ) ) {
+                    $configured_discount_group = eme_get_discountgroup( $event['event_properties']['rsvp_discountgroup'] );
+                    if ( $configured_discount_group ) {
+                        $discount_ids  = eme_get_discountids_by_group( $configured_discount_group );
+                        if ( in_array($discount_id, $discount_ids) {
+                            $valid_discount = 1;
+                        }
+                    }
+                } elseif (!empty( $event['event_properties']['rsvp_discount'] ) ) {
+                    $configured_discount = eme_get_discount( $event['event_properties']['rsvp_discount'] );
+                    if ( $configured_discount && $configured_discount['id'] == $discount_id ) {
+                            $valid_discount = 1;
+                    }
+                }
+
+                if ( $valid_discount ) {
+                    $discount = eme_get_discount( $discount_id );
+                    if ( $matches[1] == 'TILL' ) {
+                        $eme_date_obj = new ExpressiveDate( $discount['valid_to'], EME_TIMEZONE );
+                    } else {
+                        $eme_date_obj = new ExpressiveDate( $discount['valid_from'], EME_TIMEZONE );
+                    }
+                    $replacement = $eme_date_obj_now->diff( $eme_date_obj )->format( $matches[3] );
+                }
 
             } elseif ( preg_match( '/#_PRICE$/', $result ) ) {
                 $field = 'price';

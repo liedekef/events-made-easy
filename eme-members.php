@@ -2940,13 +2940,13 @@ function eme_render_members_searchfields( $limit_to_group = 0, $group_to_edit = 
     if ( ! empty( $group_to_edit ) ) {
         $edit_group   = 1;
         $id_prefix = "edit_";
-        $search_terms = eme_unserialize( $group_to_edit['search_terms'] );
+        $search_terms = $group_to_edit['search_terms'];
     } else {
         $edit_group = 0;
         $id_prefix = "";
         if ($limit_to_group) {
             $tmp_group = eme_get_group($limit_to_group);
-            $search_terms = eme_unserialize( $tmp_group['search_terms'] );
+            $search_terms = $tmp_group['search_terms'];
         }
     }
 

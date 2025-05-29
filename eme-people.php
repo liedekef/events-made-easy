@@ -3180,14 +3180,22 @@ function eme_get_group_by_name( $name ) {
     global $wpdb;
     $groups_table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
     $sql          = $wpdb->prepare( "SELECT * FROM $groups_table WHERE name = %s LIMIT 1", $name );
-    return $wpdb->get_row( $sql, ARRAY_A );
+    $res          = $wpdb->get_row( $sql, ARRAY_A );
+    if ( $res !== false && ! empty( $res ) && ! empty( $res['search_terms'] ) ) {
+        $res['search_terms'] = eme_unserialize( $res['search_terms'] );
+    }
+    return $res;
 }
 
 function eme_get_group_by_email( $email ) {
     global $wpdb;
     $groups_table = EME_DB_PREFIX . EME_GROUPS_TBNAME;
     $sql          = $wpdb->prepare( "SELECT * FROM $groups_table WHERE email = %s LIMIT 1", $email );
-    return $wpdb->get_row( $sql, ARRAY_A );
+    $res          = $wpdb->get_row( $sql, ARRAY_A );
+    if ( $res !== false && ! empty( $res ) && ! empty( $res['search_terms'] ) ) {
+        $res['search_terms'] = eme_unserialize( $res['search_terms'] );
+    }
+    return $res;
 }
 
 function eme_get_group_name( $group_id ) {
@@ -3551,11 +3559,12 @@ function eme_get_groups_person_emails( $group_ids, $massmail_only=1 ) {
     $dynamic_groups = $wpdb->get_results( $sql, ARRAY_A );
     foreach ( $dynamic_groups as $dynamic_group ) {
         if ( ! empty( $dynamic_group['search_terms'] ) ) {
+            $search_terms = eme_unserialize( $dynamic_group['search_terms'] );
             if ( $dynamic_group['type'] == 'dynamic_members' ) {
-                $sql = eme_get_sql_members_searchfields( search_terms: $dynamic_group['search_terms'], emails_only: 1, where_arr: [$massmail_sql] );
+                $sql = eme_get_sql_members_searchfields( search_terms: $search_terms, emails_only: 1, where_arr: [$massmail_sql] );
             }
             if ( $dynamic_group['type'] == 'dynamic_people' ) {
-                $sql = eme_get_sql_people_searchfields( search_terms: $dynamic_group['search_terms'], emails_only: 1, where_arr: [$massmail_sql] );
+                $sql = eme_get_sql_people_searchfields( search_terms: $search_terms, emails_only: 1, where_arr: [$massmail_sql] );
             }
         } else {
             $sql = 'SELECT people.lastname, people.firstname, people.email ' . $dynamic_group['stored_sql'] . "  $and_massmail_sql";

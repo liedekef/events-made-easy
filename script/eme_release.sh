@@ -13,11 +13,18 @@ scriptdir=$(dirname $scriptpath)
 basedir=$(dirname $scriptdir)
 cd $basedir
 
-# first create a minimal zip of the previous release
-cd $basedir/..
-#zip -r $plugin-minimal.zip $plugin -x '*.git*' "$plugin/langs/*.po" "$plugin/langs/pot_gen*" "$plugin/langs/*.pot" "$plugin/langs/gettextize.sh*" "$plugin/screenshot*" -x "$plugin/dist*" -x "$plugin/changelog.txt" -x "$plugin/script*" -x "$plugin/dompdf*" -x "$plugin/payment_gateways*"
-#mv $plugin-minimal.zip $plugin/dist
+# do a syntax check
+for file in *.php; do
+    echo "Checking: $file"
+    if ! php -l "$file" > /dev/null; then
+        echo "Syntax error in file: $file"
+        has_error=1
+    fi
+done
 
+if [ $has_error -eq 1 ]; then
+    exit "Some PHP files have syntax errors."
+fi
 
 # If wanted, automate language file updates
 cd $basedir/langs

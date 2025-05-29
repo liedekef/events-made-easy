@@ -3273,7 +3273,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                     $configured_discount_group = eme_get_discountgroup( $event['event_properties']['rsvp_discountgroup'] );
                     if ( $configured_discount_group ) {
                         $discount_ids  = eme_get_discountids_by_group( $configured_discount_group );
-                        if ( in_array($discount_id, $discount_ids) {
+                        if ( in_array($discount_id, $discount_ids) ) {
                             $valid_discount = 1;
                         }
                     }

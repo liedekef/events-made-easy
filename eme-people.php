@@ -5037,7 +5037,7 @@ function eme_ajax_people_list( ) {
     $jTableResult = [];
     $limit        = eme_get_datatables_limit();
     $orderby      = eme_get_datatables_orderby();
-    $search_terms = eme_sanitize_request($_POST);
+    $search_terms = eme_unserialize(eme_sanitize_request($_POST));
     $count_sql    = eme_get_sql_people_searchfields( $search_terms, 1 );
     $sql          = eme_get_sql_people_searchfields( $search_terms );
     $recordCount  = $wpdb->get_var( $count_sql );

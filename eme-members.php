@@ -6626,7 +6626,7 @@ function eme_ajax_members_list( ) {
         wp_die();
     }
 
-    $search_terms = eme_sanitize_request($_POST);
+    $search_terms = eme_unserialize(eme_sanitize_request($_POST));
     $count_sql = eme_get_sql_members_searchfields( $search_terms, 1 );
     $sql       = eme_get_sql_members_searchfields( $search_terms);
 

@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				'|', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript',
 				'|', 'paragraph', 'fontsize', 'font', 'lineHeight',
 				'|', 'brush',
-				'---', 'source', 'fullsize',
+				'---', 'fullsize',
 				'\n',
 				'align', 'outdent', 'indent',
 				'|', 'ul', 'ol',

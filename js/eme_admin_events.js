@@ -397,9 +397,6 @@ jQuery(document).ready( function($) {
             const defaultValue = $el.data('default').replace(/<br\s*\/?>/gi, '<br>');
             const targetid = $el.data('targetid');
             const target = $('#'+targetid);
-            if (emeevents.translate_htmleditor=='jodit' && target.hasClass('eme-editor')) {
-                return; // logic for preppolating defaults in jodit is in eme_jodit.js
-            }
             target.on('focus', function () {
                 if (target.val().trim() === '') {
                     target.val(defaultValue);

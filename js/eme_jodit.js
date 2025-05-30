@@ -298,14 +298,15 @@ document.addEventListener('DOMContentLoaded', function () {
 		const visualBtn = document.createElement('button');
 		const textBtn = document.createElement('button');
 		visualBtn.type = 'button'; // this prevents form submit
-		visualBtn.textContent = 'Visual';
+		visualBtn.textContent = emejodit.translate_visual;
 		textBtn.type = 'button'; // this prevents form submit
-		textBtn.textContent = 'Code';
+		textBtn.textContent = emejodit.translate_code;
 		visualBtn.classList.add('active');
 		tabBar.append(visualBtn, textBtn);
 
 		const joditParentDiv = document.createElement('div');
 		const joditDiv = document.createElement('div');
+		joditDiv.id = `joditdiv_${textarea.id}`; // this allows us to use editor.id with a predictable name in the preview code
 		joditParentDiv.append(joditDiv);
 
 		textarea.style.display = 'none';
@@ -372,8 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 		editor.value = initialValue;
 
-		visualBtn.addEventListener('click', (event) => {
-			event.preventDefault(); // just to be sure (type button already prevents is, but it doesn't hurt)
+		visualBtn.addEventListener('click', () => {
 			visualBtn.classList.add('active');
 			textBtn.classList.remove('active');
 			editor.value = textarea.value;
@@ -381,8 +381,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			textarea.style.display = 'none';
 		});
 
-		textBtn.addEventListener('click', (event) => {
-			event.preventDefault(); // just to be sure (type button already prevents is, but it doesn't hurt)
+		textBtn.addEventListener('click', () => {
 			textBtn.classList.add('active');
 			visualBtn.classList.remove('active');
 			textarea.value = editor.value;
@@ -397,7 +396,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 		}
 
-		textarea.dataset.joditEditor = editor;
+		textarea._joditInstance = editor; // store jodit instance on the dom
 	};
 
 	// ===== Initialize Editors (Loop) =====
@@ -461,10 +460,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	document.querySelectorAll('span[data-default]').forEach(el => {
 		const defaultValue = el.dataset.default.replace(/<br\s*\/?>(?!<\/p>)/gi, '<br>');
 		const targetId = el.dataset.targetid;
-		const target = document.getElementById(targetId);
+		const target = document.getElementById(targetId); // the textarea
+		const editorInstance = Jodit.instances[`joditdiv_${targetId}`]; // the jodit editor
 
-		if (target && target.dataset.joditEditor) {
-			const editorInstance = target.dataset.joditEditor;
+		//if (target && target._joditInstance) {
+		if (target && editorInstance ) {
 			editorInstance.events.on('focus', function () {
 				if (editorInstance.value.trim() === '' || editorInstance.value.trim() === '<p><br></p>') {
 					editorInstance.value = defaultValue;
@@ -478,5 +478,4 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 		}
 	});
-
 });

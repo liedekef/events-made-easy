@@ -9533,6 +9533,8 @@ function eme_admin_enqueue_js() {
                 'translate_cancel'          => __('Cancel', 'events-made-easy' ),
                 'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
                 'translate_preview'         => __('Preview', 'events-made-easy' ),
+                'translate_visual'          => __('Visual', 'events-made-easy' ),
+                'translate_code'            => __('Code', 'events-made-easy' ),
                 'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
             ];
             wp_localize_script( 'eme-jodit', 'emejodit', $translation_array );

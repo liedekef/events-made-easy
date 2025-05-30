@@ -713,3 +713,24 @@ div#eme_div_import {
 .eme_fs_wysiwig_editor_width {
     width: 95%;
 }
+
+.eme-editor-tabs button {
+  background: #f0f0f1;
+  border: 1px solid #ccc;
+  border-bottom: none;
+  padding: 6px 12px;
+  font-size: 13px;
+  margin-right: 2px;
+  cursor: pointer;
+  color: #555;
+  position: relative;
+  top: 1px;
+}
+
+.eme-editor-tabs button.active {
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+  color: #000;
+  font-weight: 600;
+}
+

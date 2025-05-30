@@ -702,6 +702,7 @@ div#eme_div_import {
 
 .eme-wsnobreak {
     white-space: nowrap;
+    width: 20%;
 }
 
 .eme-copy-button {

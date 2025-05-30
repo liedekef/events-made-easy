@@ -2808,7 +2808,7 @@ function eme_emails_page() {
         <td><?php echo eme_ui_multiselect( $person_ids, 'eme_eventmail_send_persons', $mygroups, 5, '', 0, 'eme_select2_people_class', $aria_label ); ?></td>
         </tr>
         <tr id="eme_groups_row">
-        <td width='20%' class="eme-wsnobreak">
+        <td class="eme-wsnobreak">
 <?php
     $label      = eme_esc_html( 'Send to a number of groups', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
@@ -2817,7 +2817,7 @@ function eme_emails_page() {
         </td>
         <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_eventmail_send_groups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class', $aria_label ); ?></td>
         </tr>
-    <tr id="eme_members_row1"><td width='20%' class="eme-wsnobreak">
+    <tr id="eme_members_row1"><td class="eme-wsnobreak">
 <?php
     $label      = eme_esc_html( 'Send to a number of members', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
@@ -2825,7 +2825,7 @@ function eme_emails_page() {
 ?>
     </td>
     <td><?php echo eme_ui_multiselect( $member_ids, 'eme_eventmail_send_members', $mymembergroups, 5, '', 0, 'eme_select2_members_class', $aria_label ); ?></td></tr>
-    <tr id="eme_members_row2"><td width='20%' class="eme-wsnobreak">
+    <tr id="eme_members_row2"><td class="eme-wsnobreak">
 <?php
     $label      = eme_esc_html( 'Send to a number of member groups', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
@@ -2833,7 +2833,7 @@ function eme_emails_page() {
 ?>
     </td>
     <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_eventmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class', $aria_label ); ?></td></tr>
-    <tr id="eme_members_row3"><td width='20%' class="eme-wsnobreak">
+    <tr id="eme_members_row3"><td class="eme-wsnobreak">
 <?php
     $label      = eme_esc_html( 'Send to active members belonging to', 'events-made-easy' );
     $aria_label = 'aria-label="' . $label . '"';
@@ -2969,7 +2969,7 @@ function eme_emails_page() {
 ?>
         </div>
         <div id='div_eme_send_groups'><table class='widefat'>
-        <tr><td width='20%' class="eme-wsnobreak">
+        <tr><td class="eme-wsnobreak">
 <?php
         $label      = eme_esc_html( 'Send to a number of people', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
@@ -2977,7 +2977,7 @@ function eme_emails_page() {
 ?>
         </td>
                 <td><?php echo eme_ui_multiselect( $person_ids, 'eme_genericmail_send_persons', $mygroups, 5, '', 0, 'eme_select2_people_class', $aria_label ); ?></td></tr>
-        <tr><td width='20%' class="eme-wsnobreak">
+        <tr><td class="eme-wsnobreak">
 <?php
         $label      = eme_esc_html( 'Send to a number of groups', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
@@ -2985,7 +2985,7 @@ function eme_emails_page() {
 ?>
         </td>
         <td><?php echo eme_ui_multiselect_key_value( $persongroup_ids, 'eme_genericmail_send_peoplegroups', $peoplegroups, 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class', $aria_label ); ?></td></tr>
-        <tr><td width='20%' class="eme-wsnobreak">
+        <tr><td class="eme-wsnobreak">
 <?php
         $label      = eme_esc_html( 'Send to a number of members', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
@@ -2993,7 +2993,7 @@ function eme_emails_page() {
 ?>
         </td>
         <td><?php echo eme_ui_multiselect( $member_ids, 'eme_send_members', $mymembergroups, 5, '', 0, 'eme_select2_members_class', $aria_label ); ?></td></tr>
-        <tr><td width='20%' class="eme-wsnobreak">
+        <tr><td class="eme-wsnobreak">
 <?php
         $label      = eme_esc_html( 'Send to a number of member groups', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
@@ -3001,7 +3001,7 @@ function eme_emails_page() {
 ?>
         </td>
         <td><?php echo eme_ui_multiselect_key_value( $membergroup_ids, 'eme_genericmail_send_membergroups', $membergroups, 'group_id', 'name', 5, '', 0, 'eme_select2_groups_class', $aria_label ); ?></td></tr>
-        <tr><td width='20%' class="eme-wsnobreak">
+        <tr><td class="eme-wsnobreak">
 <?php
         $label      = eme_esc_html( 'Send to active members belonging to', 'events-made-easy' );
         $aria_label = 'aria-label="' . $label . '"';
@@ -3185,7 +3185,6 @@ function eme_mails_div() {
     </select>
     <button id="MailsActionsButton" class="button-secondary action"><?php esc_html_e( 'Apply', 'events-made-easy' ); ?></button>
     <?php eme_rightclickhint(); ?>
-    </span>
     </form>
     </div>
 	<div id="MailsTableContainer"></div>

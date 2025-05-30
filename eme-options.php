@@ -615,7 +615,7 @@ function eme_add_options( $reset = 0 ) {
             'contact_person' => 0,
             'form_format' => '<h2>Event Information</h2>
             <div class="input">
-            <label for="event_name">Event Name</label><br />
+            <label for="event_name">Event Name</label><br>
             #_FIELD{event_name}
             </div>
             <div class="input select">
@@ -649,17 +649,17 @@ function eme_add_options( $reset = 0 ) {
             </fieldset>
             </fieldset>
             <div class="input">
-            <label for="event_description">Description</label><br />
+            <label for="event_description">Description</label><br>
             #REQ_FIELD{event_notes}
             </div>
 
             <div class="input">
-            <label for="event_contactperson_email_body">Contact E-mail body</label><br />
+            <label for="event_contactperson_email_body">Contact E-mail body</label><br>
             #_FIELD{event_contactperson_email_body}{textarea}
             </div>
 
             <div class="input">
-            <label for="event_url">Event External URL</label><br />
+            <label for="event_url">Event External URL</label><br>
             #_FIELD{event_url}
             </div>
             <h3>Location Information</h3>

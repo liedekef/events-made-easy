@@ -8676,11 +8676,11 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </p>
     <p id='p_approve_settings' style="background-color: lightgrey; padding: 5px;">
     <b><?php esc_html_e('Extra approval settings (also check out the mail templates)','events-made-easy'); ?></b>
-        <br />
+        <br>
         <?php echo eme_ui_checkbox_binary( $event['event_properties']['auto_approve'], 'eme_prop_auto_approve', __( 'Auto-approve booking upon payment', 'events-made-easy' ) ); ?>
-        <br />
+        <br>
         <?php echo eme_ui_checkbox_binary( $event['event_properties']['ignore_pending'], 'eme_prop_ignore_pending', __( 'Consider pending bookings as available seats for new bookings', 'events-made-easy' ) . '<br>' . __( 'In case online payments are possible, pending bookings younger than 5 minutes will count as occupied too, to be able to allow people to finish online payments.', 'events-made-easy' ) ); ?>
-        <br />
+        <br>
         <input id="eme_prop_rsvp_pending_reminder_days" name='eme_prop_rsvp_pending_reminder_days' type='text' value="<?php echo eme_esc_html( $eme_prop_rsvp_pending_reminder_days ); ?>">
         <label for="eme_prop_rsvp_pending_reminder_days"><?php esc_html_e( 'Set the number of days before reminder emails will be sent for pending bookings (counting from the start date of the event). If you want to send out multiple reminders, seperate the days here by commas. Leave empty for no reminder emails.', 'events-made-easy' ); ?></label>
     </p>
@@ -8769,7 +8769,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     <tr id='row_take_attendance'>
         <td><label for='eme_prop_take_attendance'><?php esc_html_e( 'Attendance-only event?', 'events-made-easy' ); ?></label></td>
         <td><?php echo eme_ui_checkbox_binary( $event['event_properties']['take_attendance'], 'eme_prop_take_attendance', __( 'Only take attendance (0 or 1 seat) for this event', 'events-made-easy' ) ); ?>
-            <span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox.', 'events-made-easy' ); ?></span><br />
+            <span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to 0, then the field to choose the number of seats to book will be turned into a checkbox.', 'events-made-easy' ); ?></span><br>
             <span class="eme_smaller"><br><?php esc_html_e( 'If this option is set and the setting "Min number of seats to book" is set to a value greater than 0, then the field to choose the number of seats to book will be hidden and the number of seats booked will be forced to 1.', 'events-made-easy' ); ?></span>
         </td>
     </tr>

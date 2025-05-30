@@ -736,7 +736,7 @@ jQuery(document).ready( function($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#booking_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#booking_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_booking_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_booking_attach_ids').val().split(',');
                 } else {
@@ -774,7 +774,7 @@ jQuery(document).ready( function($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#pending_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#pending_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_pending_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_pending_attach_ids').val().split(',');
                 } else {
@@ -812,7 +812,7 @@ jQuery(document).ready( function($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#paid_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#paid_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_paid_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_paid_attach_ids').val().split(',');
                 } else {
@@ -850,7 +850,7 @@ jQuery(document).ready( function($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#subscribe_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#subscribe_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_subscribe_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_subscribe_attach_ids').val().split(',');
                 } else {
@@ -889,7 +889,7 @@ jQuery(document).ready( function($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#fs_ipn_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#fs_ipn_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_fs_ipn_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_fs_ipn_attach_ids').val().split(',');
                 } else {

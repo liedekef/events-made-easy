@@ -37,7 +37,7 @@ jQuery(document).ready( function($) {
                         $.each(data, function(index, item) {
                             suggestions.append(
                                 $("<div class='eme-autocomplete-suggestion'></div>")
-                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br /><small>" + eme_htmlDecode(item.email) + ' - ' + eme_htmlDecode(item.phone) + "</small>")
+                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br><small>" + eme_htmlDecode(item.email) + ' - ' + eme_htmlDecode(item.phone) + "</small>")
                                 .on("click", function(e) {
                                     e.preventDefault();
                                     $('input[name=lastname]').val(item.lastname).attr('readonly', true);
@@ -89,7 +89,7 @@ jQuery(document).ready( function($) {
                         $.each(data, function(index, item) {
                             suggestions.append(
                                 $("<div class='eme-autocomplete-suggestion'></div>")
-                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br /><small>" + eme_htmlDecode(item.email) + "</small>")
+                                .html("<strong>" + eme_htmlDecode(item.lastname) + ' ' + eme_htmlDecode(item.firstname) + "</strong><br><small>" + eme_htmlDecode(item.email) + "</small>")
                                 .on("click", function(e) {
                                     e.preventDefault();
                                     $('input[name=task_lastname]').val(eme_htmlDecode(item.lastname)).attr('readonly', true);

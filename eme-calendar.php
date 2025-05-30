@@ -417,7 +417,7 @@ function eme_get_calendar( $category=0, $notcategory=0, $full=0, $month='', $yea
 						}
 						$cells[ $day_key ] = "<span class='$eme_holiday_class' title='$holiday_title'>$event_day</span>";
 						if ( $full ) {
-							$cells[ $day_key ] .= "<br /><span class='$class'>$holiday_text</span><br>";
+							$cells[ $day_key ] .= "<br><span class='$class'>$holiday_text</span><br>";
 						}
 					}
 				}

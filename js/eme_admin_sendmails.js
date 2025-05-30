@@ -23,7 +23,7 @@ jQuery(document).ready( function($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br><small>'+eme_htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
@@ -82,7 +82,7 @@ jQuery(document).ready( function($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br><small>'+eme_htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
@@ -903,7 +903,7 @@ jQuery(document).ready( function($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#eventmail_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#eventmail_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_eventmail_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_eventmail_attach_ids').val().split(',');
                 } else {
@@ -942,7 +942,7 @@ jQuery(document).ready( function($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#generic_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#generic_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_generic_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_generic_attach_ids').val().split(',');
                 } else {
@@ -985,10 +985,10 @@ jQuery(document).ready( function($) {
                     $('#eventmail-specificdates').text("");
                     $('#eventmailButton').text(ememails.translate_sendmail);
                 } else {
-                    $('#eventmail-specificdates').html('<br />'+ememails.translate_selecteddates+'<br />');
+                    $('#eventmail-specificdates').html('<br>'+ememails.translate_selecteddates+'<br>');
                     $.each(date, function( index, value ) {
                         date_formatted = inst.formatDate(ememails.translate_fdatetimeformat,value);
-                        $('#eventmail-specificdates').append(date_formatted+'<br />');
+                        $('#eventmail-specificdates').append(date_formatted+'<br>');
                     });
                     $('#eventmailButton').text(ememails.translate_planmail);
                 }
@@ -1013,10 +1013,10 @@ jQuery(document).ready( function($) {
                     $('#genericmail-specificdates').text("");
                     $('#genericmailButton').text(ememails.translate_sendmail);
                 } else {
-                    $('#genericmail-specificdates').html('<br />'+ememails.translate_selecteddates+'<br />');
+                    $('#genericmail-specificdates').html('<br>'+ememails.translate_selecteddates+'<br>');
                     $.each(date, function( index, value ) {
                         date_formatted = inst.formatDate(ememails.translate_fdatetimeformat,value);
-                        $('#genericmail-specificdates').append(date_formatted+'<br />');
+                        $('#genericmail-specificdates').append(date_formatted+'<br>');
                     });
                     $('#genericmailButton').text(ememails.translate_planmail);
                 }

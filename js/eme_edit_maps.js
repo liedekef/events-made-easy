@@ -101,7 +101,7 @@ function loadMap(loc_name, address1, address2, city, state, zip, country, map_ic
                     myIcon = new L.Icon.Default();
                 }
                 let marker = L.marker([data[0].lat, data[0].lon], {icon: myIcon}).addTo(map);
-                let pop_content='<div class=\"eme-location-balloon\"><strong>' + loc_name +'</strong><p>' + address1 + ' ' + address2 + '<br />' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
+                let pop_content='<div class=\"eme-location-balloon\"><strong>' + loc_name +'</strong><p>' + address1 + ' ' + address2 + '<br>' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
                 marker.bindPopup(pop_content).openPopup();
                 jQuery('input#location_latitude').val(data[0].lat);
                 jQuery('input#location_longitude').val(data[0].lon);
@@ -158,7 +158,7 @@ function loadMapLatLong(loc_name, address1, address2, city, state, zip, country,
             myIcon = new L.Icon.Default();
         }
         let marker = L.marker(latlng, {icon: myIcon}).addTo(map);
-        let pop_content='<div class=\"eme-location-balloon\"><strong>' + loc_name +'</strong><p>' + address1 + ' ' + address2 + '<br />' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
+        let pop_content='<div class=\"eme-location-balloon\"><strong>' + loc_name +'</strong><p>' + address1 + ' ' + address2 + '<br>' + city + ' ' + state + ' ' + zip + ' ' + country + '</p></div>';
         marker.bindPopup(pop_content).openPopup();
     } else {
         loadMap(loc_name, address1, address2, city, state, zip, country, map_icon);

@@ -575,7 +575,7 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.person_id)+')</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.person_id)+')</strong><br><small>'+eme_htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
@@ -635,7 +635,7 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.member_id)+')</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+' ('+eme_htmlDecode(item.member_id)+')</strong><br><small>'+eme_htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
@@ -694,7 +694,7 @@ jQuery(document).ready(function ($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br /><small>'+eme_htmlDecode(item.email)+'</small>')
+                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br><small>'+eme_htmlDecode(item.email)+'</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         if (item.person_id) {
@@ -800,7 +800,7 @@ jQuery(document).ready(function ($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#newmember_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#newmember_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_newmember_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_newmember_attach_ids').val().split(',');
                 } else {
@@ -840,7 +840,7 @@ jQuery(document).ready(function ($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#extended_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#extended_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_extended_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_extended_attach_ids').val().split(',');
                 } else {
@@ -879,7 +879,7 @@ jQuery(document).ready(function ($) {
             // let attachment = custom_uploader.state().get('selection').first().toJSON();
             selection.map( function(attach) {
                 attachment = attach.toJSON();
-                $('#paid_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br />");
+                $('#paid_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
                 if ($('#eme_paid_attach_ids').val() != '') {
                     tmp_ids_arr=$('#eme_paid_attach_ids').val().split(',');
                 } else {

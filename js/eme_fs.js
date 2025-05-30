@@ -17,7 +17,7 @@ jQuery(document).ready(function($) {
                             $.each(data, function(index, item) {
                                 suggestions.append(
                                     $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.name)+'</strong><br /><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+ '</small>')
+                                    .html("<strong>"+eme_htmlDecode(item.name)+'</strong><br><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+ '</small>')
                                     .on("click", function(e) {
                                         e.preventDefault();
                                         $('input#location_id').val(eme_htmlDecode(item.location_id)).attr("readonly", true);

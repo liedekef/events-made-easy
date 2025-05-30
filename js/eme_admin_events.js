@@ -161,7 +161,7 @@ jQuery(document).ready( function($) {
                                 $.each(data, function(index, item) {
                                     suggestions.append(
                                         $("<div class='eme-autocomplete-suggestion'></div>")
-                                        .html("<strong>"+eme_htmlDecode(item.name)+'</strong><br /><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+ '</small>')
+                                        .html("<strong>"+eme_htmlDecode(item.name)+'</strong><br><small>'+eme_htmlDecode(item.address1)+' - '+eme_htmlDecode(item.city)+ '</small>')
                                         .on("click", function(e) {
                                             // we stop bubbling events, so other "onchange" events won't trigger anymore (like the one in eme_edit_maps for the name change, which might cause a wrong display depending on who wins :-)
                                             e.preventDefault();
@@ -343,10 +343,10 @@ jQuery(document).ready( function($) {
                     //	   $('#localized-rec-end-date').fdatepicker().data('fdatepicker').selectDate(date);
                     //}
                 } else {
-                    $('#recurrence-dates-specificdates').html('<br />'+emeevents.translate_selecteddates+'<br />');
+                    $('#recurrence-dates-specificdates').html('<br>'+emeevents.translate_selecteddates+'<br>');
                     $.each(date, function( index, value ) {
                         date_formatted = inst.formatDate(emeevents.translate_fdateformat,value);
-                        $('#recurrence-dates-specificdates').append(date_formatted+'<br />');
+                        $('#recurrence-dates-specificdates').append(date_formatted+'<br>');
                     });
                 }
             }

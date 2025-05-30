@@ -298,9 +298,9 @@ document.addEventListener('DOMContentLoaded', function () {
 		const visualBtn = document.createElement('button');
 		const textBtn = document.createElement('button');
 		visualBtn.type = 'button'; // this prevents form submit
-		visualBtn.textContent = emejodit.translate_visual;
+		visualBtn.textContent = 'Visual';
 		textBtn.type = 'button'; // this prevents form submit
-		textBtn.textContent = emejodit.translate_code;
+		textBtn.textContent = 'Code';
 		visualBtn.classList.add('active');
 		tabBar.append(visualBtn, textBtn);
 
@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				'|', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript',
 				'|', 'paragraph', 'fontsize', 'font', 'lineHeight',
 				'|', 'brush',
-				'---', 'fullsize',
+				'---', 'source', 'fullsize',
 				'\n',
 				'align', 'outdent', 'indent',
 				'|', 'ul', 'ol',
@@ -372,6 +372,14 @@ document.addEventListener('DOMContentLoaded', function () {
 			}
 		});
 		editor.value = initialValue;
+		// if jodit dom changes the content: show the code by default
+		if (editor.value != initialValue ) {
+			textBtn.classList.add('active');
+                        visualBtn.classList.remove('active');
+                        textarea.value = initialValue;
+                        textarea.style.display = 'block';
+                        joditParentDiv.style.display = 'none';
+		}
 
 		visualBtn.addEventListener('click', () => {
 			visualBtn.classList.add('active');

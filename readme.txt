@@ -105,6 +105,7 @@ See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/)
 * Use newer mollie api code implementation
 * Fix mollie refund (description is now a required parameter there)
 * Eventmail preview didn't include the attachment (the actual mailing does)
+* #_DISCOUNT_VALID_TILL{discountid}{interval format} #_DISCOUNT_VALID_FROM{discountid}{interval format} have been added to the placeholders for events
 
 = 2.5.62 (2025/05/05) =
 * Typo for payments in membership payments

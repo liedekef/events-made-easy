@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 		editor.value = initialValue;
 		// if jodit dom changes the content: show the code by default
-		if (editor.value != initialValue ) {
+		if (editor.value.replace(/<br\s*\/?>/gi, '<br>') != initialValue.replace(/<br\s*\/?>/gi, '<br>') ) {
 			textBtn.classList.add('active');
                         visualBtn.classList.remove('active');
                         textarea.value = initialValue;

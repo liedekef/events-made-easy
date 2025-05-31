@@ -197,33 +197,12 @@ function eme_add_event_form_shortcode( $atts ) {
     if (get_option( 'eme_htmleditor' ) == 'jodit') {
         // WordPress media library
         wp_enqueue_media();
-        $translation_array = [
-            'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-            'translate_flanguage'       => eme_detect_lang(),
-            'translate_insertimage'     => __('Insert image', 'events-made-easy' ),
-            'translate_insert'          => __('Insert', 'events-made-easy' ),
-            'translate_cancel'          => __('Cancel', 'events-made-easy' ),
-            'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
-            'translate_preview'         => __('Preview', 'events-made-easy' ),
-            'translate_visual'          => __('Visual', 'events-made-easy' ),
-            'translate_code'            => __('Code', 'events-made-easy' ),
-            'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
-        ];
-        wp_localize_script( 'eme-jodit', 'emejodit', $translation_array );
         wp_enqueue_script('eme-jodit');
         wp_enqueue_style('jodit-css');
     }
 
     if (get_option( 'eme_htmleditor' ) == 'summernote') {
         wp_enqueue_media();
-        $translation_array = [
-            'translate_adminnonce'      => wp_create_nonce( 'eme_admin' ),
-            'translate_flanguage'       => eme_detect_lang(),
-            'translate_insertfrommedia' => __('Insert from Media Library', 'events-made-easy' ),
-            'translate_preview'         => __('Preview', 'events-made-easy' ),
-            'translate_insertnbsp'      => __('Insert non-breaking space', 'events-made-easy' ),
-        ];
-        wp_localize_script( 'eme-summernote', 'emesummernote', $translation_array );
         wp_enqueue_script('eme-summernote');
         wp_enqueue_style('summernote-css');
         wp_enqueue_script('summernote-table-js');

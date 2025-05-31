@@ -39,14 +39,6 @@ function eme_activateTab(target) {
             jQuery('#MailsLoadRecordsButton').trigger('click');
         }, 100); // Adjust the delay as necessary
     }
-
-    if (emeadmin.translate_htmleditor=='jodit') {
-	    setTimeout(function() {
-		    Object.values(Jodit.instances).forEach(function(editor) {
-			    editor.events.fire('resize');
-		    });
-	    }, 100); // Adjust the delay as necessary
-    }
 }
 
 jQuery(document).ready( function($) {

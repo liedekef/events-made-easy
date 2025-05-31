@@ -290,14 +290,15 @@ jQuery(document).ready( function($) {
                 }
 
                 if (ememails.translate_htmleditor=='jodit') {
-		    const $textarea = $('textarea#event_mail_message');
-		    const editorInstance = $textarea.data('joditEditor');
+                    const $textarea = $('textarea#event_mail_message');
+                    //const editorInstance = $textarea.data('joditEditor');
+                    const editorInstance = Jodit.instances['joditdiv_event_mail_message'];
 
-		    if (editorInstance) {
-			    editorInstance.value = data.htmlmessage; // sets new HTML content
-		    } else {
-			    // fallback in case editor not yet initialized
-			    $textarea.val(data.htmlmessage);
+                    if (editorInstance) {
+                        editorInstance.value = data.htmlmessage; // sets new HTML content
+                    } else {
+                        // fallback in case editor not yet initialized
+                        $textarea.val(data.htmlmessage);
                     }
                 }
             }, 'json');
@@ -334,14 +335,14 @@ jQuery(document).ready( function($) {
                 }
 
                 if (ememails.translate_htmleditor=='jodit') {
-		    const $textarea = $('textarea#generic_mail_message');
-		    const editorInstance = $textarea.data('joditEditor');
+                    const $textarea = $('textarea#generic_mail_message');
+                    const editorInstance = Jodit.instances['joditdiv_generic_mail_message'];
 
-		    if (editorInstance) {
-			    editorInstance.value = data.htmlmessage; // sets new HTML content
-		    } else {
-			    // fallback in case editor not yet initialized
-			    $textarea.val(data.htmlmessage);
+                    if (editorInstance) {
+                        editorInstance.value = data.htmlmessage; // sets new HTML content
+                    } else {
+                        // fallback in case editor not yet initialized
+                        $textarea.val(data.htmlmessage);
                     }
                 }
             }, 'json');

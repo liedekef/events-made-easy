@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		wrapper.append(tabBar, joditParentDiv, textarea);
 
 		const editor = new Jodit(joditDiv, {
-			height: 300,
+			height: 'auto',
 			toolbarSticky: false,
 			toolbarAdaptive: false,
 			showCharsCounter: false,
@@ -404,7 +404,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 		}
 
-		textarea._joditInstance = editor; // store jodit instance on the dom
+		// textarea._joditInstance = editor; // store jodit instance on the dom (works, but we use Jodit.instances)
 	};
 
 	// ===== Initialize Editors (Loop) =====
@@ -416,7 +416,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		const allowUpload = textarea.dataset.allowupload === 'yes';
 
 		const editor = new Jodit(textarea, {
-			height: 300,
+			height: 'auto',
 			toolbarSticky: false,
 			toolbarAdaptive: false,
 			language: emejodit.translate_flanguage,
@@ -486,4 +486,41 @@ document.addEventListener('DOMContentLoaded', function () {
 			});
 		}
 	});
+
+
+    /*
+    // not doing this now, but if it ever becomes a problem we can trigger resize if an editor becomes visible
+    
+    const isVisible = el => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    const previouslyVisible = new WeakMap();
+
+    const checkAndResizeEditors = () => {
+        Object.values(Jodit.instances).forEach(editor => {
+            const container = editor.container;
+            const wasVisible = previouslyVisible.get(container);
+            const nowVisible = isVisible(container);
+
+            if (!wasVisible && nowVisible) {
+                editor.events.fire('resize');
+            }
+
+            previouslyVisible.set(container, nowVisible);
+        });
+    };
+
+    // Observe DOM mutations that might affect visibility
+    const observer = new MutationObserver(() => {
+        checkAndResizeEditors();
+    });
+
+    observer.observe(document.body, {
+        attributes: true,
+        childList: true,
+        subtree: true
+    });
+
+    // Also run initially in case some editors are visible already
+    checkAndResizeEditors();
+
+    */
 });

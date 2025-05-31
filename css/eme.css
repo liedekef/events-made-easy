@@ -735,3 +735,7 @@ div#eme_div_import {
   font-weight: 600;
 }
 
+.jodit-container {
+  max-height: 80vh; /* Optional: Limit to 80% of viewport height */
+  overflow: auto;
+}

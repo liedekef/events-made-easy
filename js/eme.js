@@ -7,8 +7,10 @@ function eme_debounce(func, wait = 300) {
     };
 }
 
-function eme_htmlDecode(value){ 
-    return jQuery('<div/>').html(value).text(); 
+function eme_htmlDecode(inputStr){ 
+    var textarea = document.createElement('textarea');
+    textarea.innerHTML = inputStr;
+    return textarea.value;
 }
 
 function eme_getQueryParams(qs) {

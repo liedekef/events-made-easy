@@ -338,7 +338,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				'|', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript',
 				'|', 'paragraph', 'fontsize', 'font', 'lineHeight',
 				'|', 'brush',
-				'---', 'source', 'fullsize',
+				'---', 'fullsize',
 				'\n',
 				'align', 'outdent', 'indent',
 				'|', 'ul', 'ol',
@@ -373,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 		editor.value = initialValue;
 		// if jodit dom changes the content: show the code by default
-		if (editor.value.replace(/<br\s*\/?>/gi, '<br>') != initialValue.replace(/<br\s*\/?>/gi, '<br>') ) {
+		if (eme_htmlDecode(editor.value.replace(/<br\s*\/?>/gi, '<br>')) != initialValue.replace(/<br\s*\/?>/gi, '<br>') ) {
 			textBtn.classList.add('active');
                         visualBtn.classList.remove('active');
                         textarea.value = initialValue;
@@ -479,7 +479,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				}
 			});
 			editorInstance.events.on('blur', function () {
-				const val = editorInstance.value.trim().replace(/<br\s*\/?>(?!<\/p>)/gi, '<br>');
+				const val = eme_htmlDecode(editorInstance.value).trim().replace(/<br\s*\/?>(?!<\/p>)/gi, '<br>');
 				if (val === defaultValue || val === '<p>' + defaultValue + '</p>') {
 					editorInstance.value = '';
 				}

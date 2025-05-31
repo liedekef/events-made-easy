@@ -302,6 +302,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		textBtn.type = 'button'; // this prevents form submit
 		textBtn.textContent = 'Code';
 		visualBtn.classList.add('active');
+        visualBtn.setAttribute('aria-pressed', 'true');
+        textBtn.setAttribute('aria-pressed', 'false');
 		tabBar.append(visualBtn, textBtn);
 
 		const joditParentDiv = document.createElement('div');
@@ -374,16 +376,20 @@ document.addEventListener('DOMContentLoaded', function () {
 		editor.value = initialValue;
 		// if jodit dom changes the content: show the code by default
 		if (eme_htmlDecode(editor.value.replace(/<br\s*\/?>/gi, '<br>')) != initialValue.replace(/<br\s*\/?>/gi, '<br>') ) {
-			textBtn.classList.add('active');
-                        visualBtn.classList.remove('active');
-                        textarea.value = initialValue;
-                        textarea.style.display = 'block';
-                        joditParentDiv.style.display = 'none';
+            textBtn.classList.add('active');
+            visualBtn.classList.remove('active');
+            visualBtn.setAttribute('aria-pressed', 'false');
+            textBtn.setAttribute('aria-pressed', 'true');
+            textarea.value = initialValue;
+            textarea.style.display = 'block';
+            joditParentDiv.style.display = 'none';
 		}
 
 		visualBtn.addEventListener('click', () => {
 			visualBtn.classList.add('active');
 			textBtn.classList.remove('active');
+            visualBtn.setAttribute('aria-pressed', 'true');
+            textBtn.setAttribute('aria-pressed', 'false');
 			editor.value = textarea.value;
 			joditParentDiv.style.display = 'block';
 			textarea.style.display = 'none';
@@ -391,6 +397,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		textBtn.addEventListener('click', () => {
 			textBtn.classList.add('active');
+            visualBtn.setAttribute('aria-pressed', 'false');
+            textBtn.setAttribute('aria-pressed', 'true');
 			visualBtn.classList.remove('active');
 			textarea.value = editor.value;
 			textarea.style.display = 'block';

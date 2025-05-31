@@ -715,6 +715,9 @@ div#eme_div_import {
     width: 95%;
 }
 
+.eme-editor-wrapper textarea {
+  border: 1px solid #ccc;
+}
 .eme-editor-tabs button {
   background: #f0f0f1;
   border: 1px solid #ccc;
@@ -731,8 +734,7 @@ div#eme_div_import {
 .eme-editor-tabs button.active {
   background: #fff;
   border-bottom: 1px solid #ccc;
-  color: #000;
-  font-weight: 600;
+  font-weight: bold;
 }
 
 .jodit-wysiwyg {

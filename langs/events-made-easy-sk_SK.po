@@ -15,7 +15,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:715
+#: eme-actions.php:738
 #: eme-gdpr.php:520
 #: events-manager.php:350
 msgid "Events Made Easy"
@@ -82,8 +82,8 @@ msgstr "v mene %s"
 #: eme-mailer.php:1942
 #: eme-mailer.php:2016
 #: eme-mailer.php:3153
-#: eme-mailer.php:3198
-#: eme-mailer.php:3253
+#: eme-mailer.php:3197
+#: eme-mailer.php:3252
 #: eme-members.php:6507
 #: eme-members.php:6624
 #: eme-members.php:6765
@@ -180,31 +180,31 @@ msgstr "Nastavenia emailov"
 msgid "Yes, I'm sure"
 msgstr "Áno, som si istý"
 
-#: eme-actions.php:530
+#: eme-actions.php:553
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Táto stránka zodpovedá stránke <strong>Events Made Easy</strong>. Jej obsah bude prepísaný pomocou <strong>Events Made Easy</strong>. Ak chcete zobraziť svoj obsah, môžete priradiť inú stránku pre <strong>Events Made Easy</strong> v časti <a href='%s'>Nastavenia</a>. "
 
-#: eme-actions.php:554
+#: eme-actions.php:577
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr "<p>Ahojte, <strong>%s</strong>, vitajte v <strong>Events Made Easy</strong>! Dúfame, že sa vám tu bude páčiť.</p><p>Teraz je čas vložiť zoznamy podujatí prostredníctvom <a href='%s' title='Stránka widgetov'>widgetov</a>, <a href='%s' title='Dokumentácia značiek šablón'>značiek šablón</a> alebo <a href='%4$s' title='Dokumentácia skrátených kódov'>skrátených kódov </a>.</p><p>Mimochodom, prezreli ste si <a href='%5$s' title='Zmeniť nastavenia'>stránku nastavení</a>? Na tomto mieste si upravujete spôsob, akým sa podujatia a miesta zobrazujú.</p><p>Čo? Už vás nebaví vidieť túto radu? Chápem vás, <a href=\"%6$s\" title=\"Nezobrazovať túto radu znova\">kliknite sem</a> a toto sa už znova nezobrazí!</p>"
 
-#: eme-actions.php:562
+#: eme-actions.php:585
 msgid "Events Made Easy has been installed or upgraded"
 msgstr "Events Made Easy bol nainštalovaný alebo aktualizovaný"
 
-#: eme-actions.php:563
+#: eme-actions.php:586
 msgid "Please donate to the development of Events Made Easy"
 msgstr "Prispejte prosím na vývoj pluginu Events Made Easy"
 
-#: eme-actions.php:565
+#: eme-actions.php:588
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Ak považujete <strong>Events Made Easy</strong> užitočné pre vás, zvážte poskytnutie malého daru, ktorý by prispel k môjmu investovanému času a ďalšiemu rozvoju. Ďakujeme za vašu láskavú podporu!"
 
-#: eme-actions.php:573
+#: eme-actions.php:596
 msgid "Dismiss"
 msgstr "Zamietnuť"
 
-#: eme-actions.php:720
+#: eme-actions.php:743
 msgid "List of next 10 events"
 msgstr "Zoznam nasledujúcich 10 podujatí"
 
@@ -300,7 +300,7 @@ msgstr "Filtrovať podľa dátumu ukončenia"
 msgid "Filter attendances"
 msgstr "Filtrovať podľa účasti"
 
-#: eme-functions.php:4273
+#: eme-functions.php:4276
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Pomôcka: kliknite pravým tlačidlom myši na záhlavie stĺpcov pre zobrazenie a skrytie stĺpcov"
 
@@ -612,8 +612,8 @@ msgstr "Mesiacov"
 #: eme-holidays.php:101
 #: eme-locations.php:904
 #: eme-mailer.php:3186
-#: eme-mailer.php:3242
-#: eme-mailer.php:3275
+#: eme-mailer.php:3241
+#: eme-mailer.php:3274
 #: eme-members.php:2909
 #: eme-members.php:3304
 #: eme-people.php:1862
@@ -899,8 +899,8 @@ msgstr "Jazyk by mal zodpovedať jednému z jazykov WordPress, ktoré chcete pod
 #: eme-holidays.php:98
 #: eme-locations.php:896
 #: eme-mailer.php:3181
-#: eme-mailer.php:3238
-#: eme-mailer.php:3272
+#: eme-mailer.php:3237
+#: eme-mailer.php:3271
 #: eme-members.php:2868
 #: eme-members.php:3298
 #: eme-people.php:1812
@@ -964,12 +964,12 @@ msgstr "Názov štátu"
 msgid "The name of the state"
 msgstr "Názov štátu"
 
+#: eme-actions.php:465
 #: eme-countries.php:506
 #: eme-discounts.php:1541
 #: eme-events.php:9537
 #: eme-events.php:9728
 #: eme-events.php:9753
-#: eme-fs.php:209
 msgid "Code"
 msgstr "Kód"
 
@@ -1556,7 +1556,7 @@ msgstr "Pevná na miesto"
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:642
+#: eme-fs.php:621
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1597,7 +1597,7 @@ msgstr "Áno"
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:641
+#: eme-fs.php:620
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1699,7 +1699,7 @@ msgid "Edit Recurrence"
 msgstr "Upraviť opakovanie"
 
 #: eme-events.php:660
-#: eme-fs.php:787
+#: eme-fs.php:766
 msgid "Database insert failed!"
 msgstr "Zlyhalo pridanie do databázy!"
 
@@ -2227,7 +2227,7 @@ msgstr "Zobraziť/skryť extra filtre"
 
 #: eme-events.php:6092
 #: eme-events.php:6635
-#: eme-fs.php:625
+#: eme-fs.php:604
 msgid "Event Status"
 msgstr "Stav podujatia"
 
@@ -5788,11 +5788,11 @@ msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
 
 #: eme-fs.php:188
-#: eme-fs.php:870
+#: eme-fs.php:849
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Je nám ľúto, ale nie je povolené pridávať nové podujatia."
 
-#: eme-fs.php:240
+#: eme-fs.php:219
 #: eme-gdpr.php:124
 #: eme-gdpr.php:198
 #: eme-gdpr.php:314
@@ -5806,36 +5806,36 @@ msgstr "Je nám ľúto, ale nie je povolené pridávať nové podujatia."
 msgid "Javascript is required for this form to work properly"
 msgstr "Na správne fungovanie tohto formulára je potrebný Javascript"
 
-#: eme-fs.php:400
+#: eme-fs.php:379
 msgid "Create event"
 msgstr "Vytvoriť podujatie"
 
-#: eme-fs.php:652
+#: eme-fs.php:631
 #: eme-options.php:601
 msgid "New event succesfully created."
 msgstr "Nové podujatie bolo úspešne vytvorené."
 
-#: eme-fs.php:672
+#: eme-fs.php:651
 msgid "Please enter a name for the event"
 msgstr "Zadajte prosím názov podujatia"
 
-#: eme-fs.php:676
+#: eme-fs.php:655
 msgid "Please enter an event description"
 msgstr "Zadajte prosím popis podujatia"
 
-#: eme-fs.php:679
+#: eme-fs.php:658
 msgid "Please enter a location description"
 msgstr "Zadajte prosím popis miesta podujatia"
 
-#: eme-fs.php:682
+#: eme-fs.php:661
 msgid "Enter the event's start date"
 msgstr "Zadajte dátum začiatku podujatia"
 
-#: eme-fs.php:713
+#: eme-fs.php:692
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase začiatku"
 
-#: eme-fs.php:847
+#: eme-fs.php:826
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -5850,7 +5850,7 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte vlastníka stránok."
 
-#: eme-fs.php:857
+#: eme-fs.php:836
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225
@@ -6179,19 +6179,19 @@ msgstr "Pri nahrávaní súborov sa vyskytli chyby"
 msgid "No such record"
 msgstr "Taký záznam neexistuje"
 
-#: eme-functions.php:4211
+#: eme-functions.php:4214
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4213
+#: eme-functions.php:4216
 msgid "hCaptcha"
 msgstr "hCaptcha"
 
-#: eme-functions.php:4215
+#: eme-functions.php:4218
 msgid "Cloudflare Turnstile"
 msgstr "Cloudflare Turnstile"
 
-#: eme-functions.php:4219
+#: eme-functions.php:4222
 msgid "Basic EME Captcha"
 msgstr "Základná EME Captcha"
 
@@ -6622,8 +6622,8 @@ msgstr "Predmet"
 msgid "Queued on"
 msgstr "V poradí"
 
+#: eme-actions.php:461
 #: eme-events.php:9533
-#: eme-fs.php:205
 #: eme-mailer.php:1661
 #: eme-mailer.php:1671
 #: eme-mailer.php:1675
@@ -6707,8 +6707,8 @@ msgid "Person name"
 msgstr "Meno osoby"
 
 #: eme-mailer.php:2707
-#: eme-mailer.php:3231
-#: eme-mailer.php:3266
+#: eme-mailer.php:3230
+#: eme-mailer.php:3265
 msgid "Filter"
 msgstr "Filtrovať"
 
@@ -6947,12 +6947,12 @@ msgid "members"
 msgstr "členov"
 
 #: eme-mailer.php:3164
-#: eme-mailer.php:3214
+#: eme-mailer.php:3213
 msgid "If you want to archive old mailings and clean up old emails automatically, check the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME"
 msgstr "Ak chcete automaticky archivovať staré mailingy a vyčistiť staré e-maily, označte možnosť \"Automaticky archivovať staré mailingy a odstraňovať staré e-maily\" v nastaveniach GDPR v EME"
 
 #: eme-mailer.php:3166
-#: eme-mailer.php:3216
+#: eme-mailer.php:3215
 msgid "Every %d days, old mailings will be archived and old emails will be cleaned up (see the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME)"
 msgstr "Každých %d dní sa archivujú staré mailingy a staré maily sa vyčistia (pozri možnosť \"Automaticky archivovať staré mailingy a odstraňovať staré maily\" v nastaveniach GDPR v EME)."
 
@@ -6976,24 +6976,24 @@ msgstr "Vložte príjemcu"
 msgid "Send Email"
 msgstr "Poslať email"
 
-#: eme-mailer.php:3204
+#: eme-mailer.php:3203
 msgid "Mailings overview"
 msgstr "Prehľad mailingov"
 
-#: eme-mailer.php:3207
+#: eme-mailer.php:3206
 msgid "Here you can find an overview of all planned, ongoing or completed mailings. For an overview of all emails, check the \"Sent emails\" tab."
 msgstr "Tu nájdete prehľad všetkých plánovaných, prebiehajúcich alebo dokončených mailingoch. Prehľad všetkých e-mailov nájdete na karte \"Odoslané e-maily\"."
 
-#: eme-mailer.php:3223
+#: eme-mailer.php:3222
 msgid "Email queueing is not activated, so sent emails will only be visible in the \"Sent emails\" tab"
 msgstr "Emailové poradie nie je aktivované, takže odoslané emaily budú viditeľné len na karte \"Odoslané emaily\""
 
-#: eme-mailer.php:3240
-#: eme-mailer.php:3273
+#: eme-mailer.php:3239
+#: eme-mailer.php:3272
 msgid "Delete selected mailings"
 msgstr "Vymazať vybrané mailingy"
 
-#: eme-mailer.php:3239
+#: eme-mailer.php:3238
 msgid "Archive selected mailings"
 msgstr "Archivovať vybrané mailingy"
 
@@ -7048,7 +7048,7 @@ msgstr "%d odoslaných emailov, %d emailov zlyhalo"
 msgid "Retry failed emails"
 msgstr "Opakovať neúspešné e-maily"
 
-#: eme-mailer.php:3260
+#: eme-mailer.php:3259
 msgid "Here you can find an overview of all archived mailings"
 msgstr "Tu nájdete prehľad všetkých archivovaných mailingov"
 
@@ -13989,8 +13989,8 @@ msgstr ""
 msgid "Change the \"username\" by your user and the \"password\" by an application password generated in your WP user settings."
 msgstr ""
 
-#: eme-mailer.php:3229
-#: eme-mailer.php:3264
+#: eme-mailer.php:3228
+#: eme-mailer.php:3263
 msgid "Enter the search text (leave empty to show all)"
 msgstr ""
 
@@ -14059,7 +14059,7 @@ msgid "Mails"
 msgstr ""
 
 #: eme-events.php:10020
-#: eme-mailer.php:3258
+#: eme-mailer.php:3257
 msgid "Archived mailings"
 msgstr ""
 
@@ -14178,7 +14178,7 @@ msgstr ""
 msgid "Please check the Friendly Captcha box"
 msgstr ""
 
-#: eme-functions.php:4217
+#: eme-functions.php:4220
 msgid "Friendly Captcha"
 msgstr ""
 
@@ -14244,7 +14244,7 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-#: eme-functions.php:4277
+#: eme-functions.php:4280
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr ""
 
@@ -14320,7 +14320,7 @@ msgstr ""
 msgid "Refunding is possible if funds are available on the account."
 msgstr ""
 
-#: eme-functions.php:4279
+#: eme-functions.php:4282
 msgid "All selected columns are used for sorting"
 msgstr ""
 
@@ -14423,36 +14423,36 @@ msgstr ""
 msgid "Use membership feature?"
 msgstr ""
 
+#: eme-actions.php:459
 #: eme-events.php:9531
-#: eme-fs.php:203
 msgid "Insert image"
 msgstr ""
 
+#: eme-actions.php:460
 #: eme-events.php:9532
-#: eme-fs.php:204
 msgid "Insert"
 msgstr ""
 
+#: eme-actions.php:462
+#: eme-actions.php:480
 #: eme-events.php:9534
-#: eme-fs.php:206
-#: eme-fs.php:222
 msgid "Insert from Media Library"
 msgstr ""
 
+#: eme-actions.php:463
+#: eme-actions.php:481
 #: eme-events.php:9535
-#: eme-fs.php:207
-#: eme-fs.php:223
 msgid "Preview"
 msgstr ""
 
+#: eme-actions.php:464
 #: eme-events.php:9536
-#: eme-fs.php:208
 msgid "Visual"
 msgstr ""
 
+#: eme-actions.php:466
+#: eme-actions.php:482
 #: eme-events.php:9538
-#: eme-fs.php:210
-#: eme-fs.php:224
 msgid "Insert non-breaking space"
 msgstr ""
 

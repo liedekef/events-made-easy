@@ -4,7 +4,7 @@ Donate link: https://www.e-dynamics.be/wordpress
 Tags: events, memberships, locations, bookings, calendars, maps, payment gateways, drip content
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 2.5.62
+Stable tag: 2.6.0
 Requires PHP: 8.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
@@ -99,9 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.5.63 (2025//) =
+= 2.6.0 (2025/06/01) =
 * Integrate jodit as editor
-* Small small sumup and braintree fixes
+* Small sumup and braintree fixes
 * Use newer mollie api code implementation
 * Fix mollie refund (description is now a required parameter there)
 * Eventmail preview didn't include the attachment (the actual mailing does)

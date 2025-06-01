@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /*
 Plugin Name: Events Made Easy
-Version: 2.5.62
+Version: 2.6.0
 Plugin URI: https://www.e-dynamics.be/wordpress
 Update URI: https://github.com/liedekef/events-made-easy/
 Description: Manage and display events and memberships. Also includes recurring events; locations; widgets; maps; RSVP; ICAL and RSS feeds; Paypal, 2Checkout and others.
@@ -73,7 +73,7 @@ if ( ! class_exists( 'ExpressiveDate' ) ) {
 }
 
 // Setting constants, no calls to "__" here!!!
-define( 'EME_VERSION', '2.5.62' );
+define( 'EME_VERSION', '2.6.0' );
 define( 'EME_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 define( 'DEFAULT_CAP_ADD_EVENT', 'edit_posts' );
 define( 'DEFAULT_CAP_AUTHOR_EVENT', 'publish_posts' );

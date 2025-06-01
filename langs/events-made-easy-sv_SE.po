@@ -54,8 +54,8 @@ msgstr ""
 #: eme-mailer.php:1942
 #: eme-mailer.php:2016
 #: eme-mailer.php:3153
-#: eme-mailer.php:3198
-#: eme-mailer.php:3253
+#: eme-mailer.php:3197
+#: eme-mailer.php:3252
 #: eme-members.php:6507
 #: eme-members.php:6624
 #: eme-members.php:6765
@@ -152,15 +152,15 @@ msgstr "Alternativ för e-postutskick"
 msgid "Yes, I'm sure"
 msgstr "Ja, jag är säker"
 
-#: eme-actions.php:530
+#: eme-actions.php:553
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Denna sida motsvarar <strong>Events Made Easy</strong> eventsida. Dess innehåll kommer att skrivas över av <strong>Events Made Easy</strong>. Om du vill visa ditt innehåll kan du tilldela en annan sida för <strong>Events Made Easy</strong> i <a href='%s'>Inställningarna</a>."
 
-#: eme-actions.php:554
+#: eme-actions.php:577
 msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
 msgstr ""
 
-#: eme-actions.php:565
+#: eme-actions.php:588
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
 msgstr "Om du finner <strong>Events Made Easy</strong> användbart, vänligen fundera på att ge ett litet bidrag för den tid jag investerat och för att möjliggöra fortsatt utveckling. Tack för ditt stöd!"
 
@@ -256,7 +256,7 @@ msgstr "Filtrera efter slutdatum"
 msgid "Filter attendances"
 msgstr ""
 
-#: eme-functions.php:4273
+#: eme-functions.php:4276
 msgid "Hint: right-click on the column headers to show/hide columns"
 msgstr "Tips: högerklicka på kolumnrubrikerna för att visa/dölja kolumner"
 
@@ -571,8 +571,8 @@ msgstr "Månad(er)"
 #: eme-holidays.php:101
 #: eme-locations.php:904
 #: eme-mailer.php:3186
-#: eme-mailer.php:3242
-#: eme-mailer.php:3275
+#: eme-mailer.php:3241
+#: eme-mailer.php:3274
 #: eme-members.php:2909
 #: eme-members.php:3304
 #: eme-people.php:1862
@@ -855,8 +855,8 @@ msgstr ""
 #: eme-holidays.php:98
 #: eme-locations.php:896
 #: eme-mailer.php:3181
-#: eme-mailer.php:3238
-#: eme-mailer.php:3272
+#: eme-mailer.php:3237
+#: eme-mailer.php:3271
 #: eme-members.php:2868
 #: eme-members.php:3298
 #: eme-people.php:1812
@@ -920,12 +920,12 @@ msgstr "Namn på stat"
 msgid "The name of the state"
 msgstr "Namnet på staten"
 
+#: eme-actions.php:465
 #: eme-countries.php:506
 #: eme-discounts.php:1541
 #: eme-events.php:9537
 #: eme-events.php:9728
 #: eme-events.php:9753
-#: eme-fs.php:209
 msgid "Code"
 msgstr "Kod"
 
@@ -1516,7 +1516,7 @@ msgstr "Fast per plats"
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:642
+#: eme-fs.php:621
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1557,7 +1557,7 @@ msgstr "Ja"
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:641
+#: eme-fs.php:620
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1659,7 +1659,7 @@ msgid "Edit Recurrence"
 msgstr "Redigera återkommande"
 
 #: eme-events.php:660
-#: eme-fs.php:787
+#: eme-fs.php:766
 msgid "Database insert failed!"
 msgstr "Inlägg i databasen misslyckades!"
 
@@ -2170,7 +2170,7 @@ msgstr "Visa/dölj extra filter"
 
 #: eme-events.php:6092
 #: eme-events.php:6635
-#: eme-fs.php:625
+#: eme-fs.php:604
 msgid "Event Status"
 msgstr "Eventstatus"
 
@@ -5968,7 +5968,7 @@ msgstr "Fel påträffades vid uppladdning av filer"
 msgid "No such record"
 msgstr "Ingen sådan post"
 
-#: eme-fs.php:847
+#: eme-fs.php:826
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -5983,7 +5983,7 @@ msgstr "Ingen sådan post"
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bot upptäckt. Om du anser att du får detta meddelande felaktig, vänligen kontakta webbplatsinnehavaren."
 
-#: eme-fs.php:857
+#: eme-fs.php:836
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225
@@ -6007,7 +6007,7 @@ msgstr "Upptäckte ett försök att manipulera formuläret. Om du anser att du f
 msgid "Thank you for your request, an email will be sent with further info."
 msgstr ""
 
-#: eme-fs.php:240
+#: eme-fs.php:219
 #: eme-gdpr.php:124
 #: eme-gdpr.php:198
 #: eme-gdpr.php:314
@@ -6098,7 +6098,7 @@ msgstr "EME använder som option en cookie att lagra klientdatum och tid för at
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:715
+#: eme-actions.php:738
 #: eme-gdpr.php:520
 #: events-manager.php:350
 msgid "Events Made Easy"
@@ -6452,8 +6452,8 @@ msgstr "Ärenderad"
 msgid "Queued on"
 msgstr ""
 
+#: eme-actions.php:461
 #: eme-events.php:9533
-#: eme-fs.php:205
 #: eme-mailer.php:1661
 #: eme-mailer.php:1671
 #: eme-mailer.php:1675
@@ -6537,8 +6537,8 @@ msgid "Person name"
 msgstr "Persons namn"
 
 #: eme-mailer.php:2707
-#: eme-mailer.php:3231
-#: eme-mailer.php:3266
+#: eme-mailer.php:3230
+#: eme-mailer.php:3265
 msgid "Filter"
 msgstr "Filter"
 
@@ -6773,12 +6773,12 @@ msgid "members"
 msgstr "medlemmar"
 
 #: eme-mailer.php:3164
-#: eme-mailer.php:3214
+#: eme-mailer.php:3213
 msgid "If you want to archive old mailings and clean up old emails automatically, check the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME"
 msgstr ""
 
 #: eme-mailer.php:3166
-#: eme-mailer.php:3216
+#: eme-mailer.php:3215
 msgid "Every %d days, old mailings will be archived and old emails will be cleaned up (see the option \"Automatically archive old mailings and remove old emails\" in the GDPR Settings of EME)"
 msgstr ""
 
@@ -6802,24 +6802,24 @@ msgstr "Ange mottagare"
 msgid "Send Email"
 msgstr ""
 
-#: eme-mailer.php:3204
+#: eme-mailer.php:3203
 msgid "Mailings overview"
 msgstr "Översikt e-postutskick"
 
-#: eme-mailer.php:3207
+#: eme-mailer.php:3206
 msgid "Here you can find an overview of all planned, ongoing or completed mailings. For an overview of all emails, check the \"Sent emails\" tab."
 msgstr ""
 
-#: eme-mailer.php:3223
+#: eme-mailer.php:3222
 msgid "Email queueing is not activated, so sent emails will only be visible in the \"Sent emails\" tab"
 msgstr ""
 
-#: eme-mailer.php:3240
-#: eme-mailer.php:3273
+#: eme-mailer.php:3239
+#: eme-mailer.php:3272
 msgid "Delete selected mailings"
 msgstr ""
 
-#: eme-mailer.php:3239
+#: eme-mailer.php:3238
 msgid "Archive selected mailings"
 msgstr ""
 
@@ -6875,7 +6875,7 @@ msgstr ""
 msgid "Retry failed emails"
 msgstr "Tillägg misslyckades:"
 
-#: eme-mailer.php:3260
+#: eme-mailer.php:3259
 msgid "Here you can find an overview of all archived mailings"
 msgstr "Här finner du en översikt över alla arkiverade utskick"
 
@@ -7274,15 +7274,15 @@ msgstr ""
 msgid "Allow active members to pay for a renewal only if the membership end date is less than the mentioned number of days away. This prevents people from payment many times in a row. Enter 0 or nothing to disable this (the default)."
 msgstr ""
 
-#: eme-functions.php:4211
+#: eme-functions.php:4214
 msgid "Google reCAPTCHA"
 msgstr "Google reCAPTCHA"
 
-#: eme-functions.php:4213
+#: eme-functions.php:4216
 msgid "hCaptcha"
 msgstr ""
 
-#: eme-functions.php:4215
+#: eme-functions.php:4218
 msgid "Cloudflare Turnstile"
 msgstr ""
 
@@ -13540,15 +13540,15 @@ msgstr ""
 msgid "If the number of spaces for a task is 0, the task description will be treated as a section header for the next set of tasks."
 msgstr ""
 
-#: eme-actions.php:562
+#: eme-actions.php:585
 msgid "Events Made Easy has been installed or upgraded"
 msgstr ""
 
-#: eme-actions.php:563
+#: eme-actions.php:586
 msgid "Please donate to the development of Events Made Easy"
 msgstr ""
 
-#: eme-actions.php:573
+#: eme-actions.php:596
 msgid "Dismiss"
 msgstr ""
 
@@ -13576,7 +13576,7 @@ msgstr ""
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr ""
 
-#: eme-actions.php:720
+#: eme-actions.php:743
 msgid "List of next 10 events"
 msgstr ""
 
@@ -13645,36 +13645,36 @@ msgid "Check this option if you want to allow image upload in the frontend wysiw
 msgstr ""
 
 #: eme-fs.php:188
-#: eme-fs.php:870
+#: eme-fs.php:849
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr ""
 
-#: eme-fs.php:400
+#: eme-fs.php:379
 msgid "Create event"
 msgstr ""
 
-#: eme-fs.php:652
+#: eme-fs.php:631
 #: eme-options.php:601
 msgid "New event succesfully created."
 msgstr ""
 
-#: eme-fs.php:672
+#: eme-fs.php:651
 msgid "Please enter a name for the event"
 msgstr ""
 
-#: eme-fs.php:676
+#: eme-fs.php:655
 msgid "Please enter an event description"
 msgstr ""
 
-#: eme-fs.php:679
+#: eme-fs.php:658
 msgid "Please enter a location description"
 msgstr ""
 
-#: eme-fs.php:682
+#: eme-fs.php:661
 msgid "Enter the event's start date"
 msgstr ""
 
-#: eme-fs.php:713
+#: eme-fs.php:692
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 
@@ -13753,7 +13753,7 @@ msgstr ""
 msgid "Frontend Draft (unpaid)"
 msgstr ""
 
-#: eme-functions.php:4219
+#: eme-functions.php:4222
 msgid "Basic EME Captcha"
 msgstr ""
 
@@ -14052,8 +14052,8 @@ msgstr ""
 msgid "Change the \"username\" by your user and the \"password\" by an application password generated in your WP user settings."
 msgstr ""
 
-#: eme-mailer.php:3229
-#: eme-mailer.php:3264
+#: eme-mailer.php:3228
+#: eme-mailer.php:3263
 msgid "Enter the search text (leave empty to show all)"
 msgstr ""
 
@@ -14122,7 +14122,7 @@ msgid "Mails"
 msgstr ""
 
 #: eme-events.php:10020
-#: eme-mailer.php:3258
+#: eme-mailer.php:3257
 msgid "Archived mailings"
 msgstr ""
 
@@ -14241,7 +14241,7 @@ msgstr ""
 msgid "Please check the Friendly Captcha box"
 msgstr ""
 
-#: eme-functions.php:4217
+#: eme-functions.php:4220
 msgid "Friendly Captcha"
 msgstr ""
 
@@ -14306,7 +14306,7 @@ msgid_plural "%d persons already signed up for this task"
 msgstr[0] ""
 msgstr[1] ""
 
-#: eme-functions.php:4277
+#: eme-functions.php:4280
 msgid "Use Ctrl-click to sort on multiple columns"
 msgstr ""
 
@@ -14382,7 +14382,7 @@ msgstr ""
 msgid "Refunding is possible if funds are available on the account."
 msgstr ""
 
-#: eme-functions.php:4279
+#: eme-functions.php:4282
 msgid "All selected columns are used for sorting"
 msgstr ""
 
@@ -14485,36 +14485,36 @@ msgstr ""
 msgid "Use membership feature?"
 msgstr ""
 
+#: eme-actions.php:459
 #: eme-events.php:9531
-#: eme-fs.php:203
 msgid "Insert image"
 msgstr ""
 
+#: eme-actions.php:460
 #: eme-events.php:9532
-#: eme-fs.php:204
 msgid "Insert"
 msgstr ""
 
+#: eme-actions.php:462
+#: eme-actions.php:480
 #: eme-events.php:9534
-#: eme-fs.php:206
-#: eme-fs.php:222
 msgid "Insert from Media Library"
 msgstr ""
 
+#: eme-actions.php:463
+#: eme-actions.php:481
 #: eme-events.php:9535
-#: eme-fs.php:207
-#: eme-fs.php:223
 msgid "Preview"
 msgstr ""
 
+#: eme-actions.php:464
 #: eme-events.php:9536
-#: eme-fs.php:208
 msgid "Visual"
 msgstr ""
 
+#: eme-actions.php:466
+#: eme-actions.php:482
 #: eme-events.php:9538
-#: eme-fs.php:210
-#: eme-fs.php:224
 msgid "Insert non-breaking space"
 msgstr ""
 

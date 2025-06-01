@@ -2651,7 +2651,7 @@ function eme_nl2br_save_html( $string ) {
     $string = preg_replace('/\s+(<\/td>)/i', '$1', $string);      // before closing </td>
 
     // if br is found, replace it by BREAK
-    $string = preg_replace( "/\n?<br\W*?\/?>\n?/", 'BREAK', $string );
+    $string = preg_replace( '/\n*<br\W*?\/?>\n*/', 'BREAK', $string );
 
     $lines      = explode( "\n", $string );
     $last_index = count( $lines ) - 1;
@@ -4049,8 +4049,11 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
     $html_editor = get_option('eme_htmleditor');
     $editor_id =  preg_replace( '/\[|\]/', '_', $name);
     $data_default = '';
+    if ( $show_wp_editor ) {
+        $value = eme_nl2br_save_html( $value);
+    }
     if (!empty($data_default_optionname)) {
-	    $data_default = 'data-default="'.esc_attr(eme_nl2br_save_html(get_option($data_default_optionname))).'"';
+	    $data_default = 'data-default="'.esc_attr(get_option($data_default_optionname)).'"';
         ?>
         <span style="display: hidden;" <?php echo $data_default; ?> data-targetid="<?php echo $editor_id; ?>">
         <?php

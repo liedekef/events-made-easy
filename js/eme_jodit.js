@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // ===== Editor-Specific Events (Inside Loop) =====
         //editor.events.on('processHTML', (html) => DOMPurify.sanitize(html));
         editor.events.on('afterUpdateToolbar', () => updateFontButtons(editor));
-        editor.events.on('focus', () => (editor.options.enter = 'p'));
+        //editor.events.on('focus', () => (editor.options.enter = 'p'));
 
         // Link Popup Logic
         editor.events.on('afterOpenPopup.link', (popup) => {
@@ -452,7 +452,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // ===== Editor-Specific Events (Inside Loop) =====
         editor.events.on('afterUpdateToolbar', () => updateFontButtons(editor));
-        editor.events.on('focus', () => (editor.options.enter = 'p'));
 
         // Link Popup Logic
         editor.events.on('afterOpenPopup.link', (popup) => {

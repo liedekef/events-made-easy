@@ -780,7 +780,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             if ( $force_single == 1 ) {
                 $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class, $field_attributes . ' ' . $disabled );
             } else {
-                $html = eme_ui_multiselect( $entered_val, $field_name, $my_arr, 5, '', $required, $class . ' eme_select2_width50_class', $field_attributes . ' ' . $disabled );
+                $html = eme_ui_multiselect( $entered_val, $field_name, $my_arr, 5, '', $required, $class . ' eme_select2', $field_attributes . ' ' . $disabled );
             }
             break;
         case 'textarea':

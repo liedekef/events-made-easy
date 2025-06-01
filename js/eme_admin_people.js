@@ -9,8 +9,11 @@ jQuery(document).ready(function ($) {
                 .done(function(data){
                     $('div#eme_dynpersondata').html(data.Result);
                     // make sure to init select2 for dynamic added fields
+                    if ($('.eme_select2.dynamicfield').length) {
+                        $('.eme_select2.dynamicfield').select2({dropdownAutoWidth: true, width: 'style'});
+                    }
                     if ($('.eme_select2_width50_class.dynamicfield').length) {
-                        $('.eme_select2_width50_class.dynamicfield').select2({width: '50%'});
+                        $('.eme_select2_width50_class.dynamicfield').select2({dropdownAutoWidth: true, width: '50%'});
                     }
                     if ($('.eme_formfield_fdate.dynamicfield').length) {
                         $('.eme_formfield_fdate.dynamicfield').fdatepicker({ 

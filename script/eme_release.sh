@@ -13,6 +13,7 @@ scriptdir=$(dirname $scriptpath)
 basedir=$(dirname $scriptdir)
 cd $basedir
 
+has_error=0
 # do a syntax check
 for file in *.php; do
     echo "Checking: $file"

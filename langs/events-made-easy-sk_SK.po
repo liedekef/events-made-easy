@@ -1556,7 +1556,7 @@ msgstr "Pevná na miesto"
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:621
+#: eme-fs.php:624
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1597,7 +1597,7 @@ msgstr "Áno"
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:620
+#: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1699,7 +1699,7 @@ msgid "Edit Recurrence"
 msgstr "Upraviť opakovanie"
 
 #: eme-events.php:660
-#: eme-fs.php:766
+#: eme-fs.php:769
 msgid "Database insert failed!"
 msgstr "Zlyhalo pridanie do databázy!"
 
@@ -2227,7 +2227,7 @@ msgstr "Zobraziť/skryť extra filtre"
 
 #: eme-events.php:6092
 #: eme-events.php:6635
-#: eme-fs.php:604
+#: eme-fs.php:607
 msgid "Event Status"
 msgstr "Stav podujatia"
 
@@ -5788,7 +5788,7 @@ msgid "Records deleted!"
 msgstr "Záznamy vymazané!"
 
 #: eme-fs.php:188
-#: eme-fs.php:849
+#: eme-fs.php:852
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Je nám ľúto, ale nie je povolené pridávať nové podujatia."
 
@@ -5806,36 +5806,36 @@ msgstr "Je nám ľúto, ale nie je povolené pridávať nové podujatia."
 msgid "Javascript is required for this form to work properly"
 msgstr "Na správne fungovanie tohto formulára je potrebný Javascript"
 
-#: eme-fs.php:379
+#: eme-fs.php:382
 msgid "Create event"
 msgstr "Vytvoriť podujatie"
 
-#: eme-fs.php:631
+#: eme-fs.php:634
 #: eme-options.php:601
 msgid "New event succesfully created."
 msgstr "Nové podujatie bolo úspešne vytvorené."
 
-#: eme-fs.php:651
+#: eme-fs.php:654
 msgid "Please enter a name for the event"
 msgstr "Zadajte prosím názov podujatia"
 
-#: eme-fs.php:655
+#: eme-fs.php:658
 msgid "Please enter an event description"
 msgstr "Zadajte prosím popis podujatia"
 
-#: eme-fs.php:658
+#: eme-fs.php:661
 msgid "Please enter a location description"
 msgstr "Zadajte prosím popis miesta podujatia"
 
-#: eme-fs.php:661
+#: eme-fs.php:664
 msgid "Enter the event's start date"
 msgstr "Zadajte dátum začiatku podujatia"
 
-#: eme-fs.php:692
+#: eme-fs.php:695
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase začiatku"
 
-#: eme-fs.php:826
+#: eme-fs.php:829
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -5850,7 +5850,7 @@ msgstr "Dátum/čas ukončenia musí nastať <strong>po</strong> dátume/čase z
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bola zistený robot. Ak sa domnievate, že ste túto správu dostali omylom, kontaktujte vlastníka stránok."
 
-#: eme-fs.php:836
+#: eme-fs.php:839
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225

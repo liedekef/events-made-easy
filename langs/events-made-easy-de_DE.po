@@ -1509,7 +1509,7 @@ msgstr "Fest pro Platz"
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:621
+#: eme-fs.php:624
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1550,7 +1550,7 @@ msgstr "Ja"
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:620
+#: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1652,7 +1652,7 @@ msgid "Edit Recurrence"
 msgstr "Veranstaltungsserie bearbeiten"
 
 #: eme-events.php:660
-#: eme-fs.php:766
+#: eme-fs.php:769
 msgid "Database insert failed!"
 msgstr "Eintrag in die Datenbank fehlgeschlagen!"
 
@@ -2162,7 +2162,7 @@ msgstr "Zusätzliche Filter ein-/ausblenden"
 
 #: eme-events.php:6092
 #: eme-events.php:6635
-#: eme-fs.php:604
+#: eme-fs.php:607
 msgid "Event Status"
 msgstr "Veranstaltungsstatus"
 
@@ -5952,7 +5952,7 @@ msgstr "Fehler beim Hochladen von Dateien aufgetreten"
 msgid "No such record"
 msgstr "Kein solcher Eintrag"
 
-#: eme-fs.php:826
+#: eme-fs.php:829
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -5967,7 +5967,7 @@ msgstr "Kein solcher Eintrag"
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr "Bot erkannt. Falls Du der Meinung bist, dass diese Nachricht fälschlicherweise angezeigt wird, kontaktiere bitte den Seitenbetreiber."
 
-#: eme-fs.php:836
+#: eme-fs.php:839
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225
@@ -13603,36 +13603,36 @@ msgid "Check this option if you want to allow image upload in the frontend wysiw
 msgstr "Diese Option aktivieren, wenn Sie den Bild-Upload im Frontend-WYSIWYG-Editor für die Ereignisnotizen erlauben möchten."
 
 #: eme-fs.php:188
-#: eme-fs.php:849
+#: eme-fs.php:852
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr "Entschuldigung, aber Sie dürfen keine neuen Ereignisse einreichen."
 
-#: eme-fs.php:379
+#: eme-fs.php:382
 msgid "Create event"
 msgstr "Ereignis erstellen"
 
-#: eme-fs.php:631
+#: eme-fs.php:634
 #: eme-options.php:601
 msgid "New event succesfully created."
 msgstr "Neues Ereignis erfolgreich erstellt."
 
-#: eme-fs.php:651
+#: eme-fs.php:654
 msgid "Please enter a name for the event"
 msgstr "Bitte geben Sie einen Namen für das Ereignis ein"
 
-#: eme-fs.php:655
+#: eme-fs.php:658
 msgid "Please enter an event description"
 msgstr "Bitte geben Sie eine Ereignisbeschreibung ein"
 
-#: eme-fs.php:658
+#: eme-fs.php:661
 msgid "Please enter a location description"
 msgstr "Bitte geben Sie eine Standortbeschreibung ein"
 
-#: eme-fs.php:661
+#: eme-fs.php:664
 msgid "Enter the event's start date"
 msgstr "Geben Sie das Startdatum des Ereignisses ein"
 
-#: eme-fs.php:692
+#: eme-fs.php:695
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr "Das Enddatum/-zeit muss <strong>nach</strong> dem Startdatum/-zeit liegen"
 

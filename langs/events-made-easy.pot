@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Events Made Easy plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Events Made Easy 2.5.62\n"
+"Project-Id-Version: Events Made Easy 2.6.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/events-made-easy\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-06-01T16:27:08+00:00\n"
+"POT-Creation-Date: 2025-06-02T16:09:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0-alpha-1b3a27a\n"
 "X-Domain: events-made-easy\n"
@@ -1598,7 +1598,7 @@ msgstr ""
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:621
+#: eme-fs.php:624
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1639,7 +1639,7 @@ msgstr ""
 #: eme-formfields.php:5124
 #: eme-formfields.php:5125
 #: eme-formfields.php:5126
-#: eme-fs.php:620
+#: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
 #: eme-gdpr.php:542
@@ -1749,7 +1749,7 @@ msgid "Edit Recurrence"
 msgstr ""
 
 #: eme-events.php:660
-#: eme-fs.php:766
+#: eme-fs.php:769
 msgid "Database insert failed!"
 msgstr ""
 
@@ -2271,7 +2271,7 @@ msgstr ""
 
 #: eme-events.php:6092
 #: eme-events.php:6635
-#: eme-fs.php:604
+#: eme-fs.php:607
 msgid "Event Status"
 msgstr ""
 
@@ -6077,7 +6077,7 @@ msgid "Records deleted!"
 msgstr ""
 
 #: eme-fs.php:188
-#: eme-fs.php:849
+#: eme-fs.php:852
 msgid "Sorry, but you're not allowed to submit new events."
 msgstr ""
 
@@ -6095,36 +6095,36 @@ msgstr ""
 msgid "Javascript is required for this form to work properly"
 msgstr ""
 
-#: eme-fs.php:379
+#: eme-fs.php:382
 msgid "Create event"
 msgstr ""
 
-#: eme-fs.php:631
+#: eme-fs.php:634
 #: eme-options.php:601
 msgid "New event succesfully created."
 msgstr ""
 
-#: eme-fs.php:651
+#: eme-fs.php:654
 msgid "Please enter a name for the event"
 msgstr ""
 
-#: eme-fs.php:655
+#: eme-fs.php:658
 msgid "Please enter an event description"
 msgstr ""
 
-#: eme-fs.php:658
+#: eme-fs.php:661
 msgid "Please enter a location description"
 msgstr ""
 
-#: eme-fs.php:661
+#: eme-fs.php:664
 msgid "Enter the event's start date"
 msgstr ""
 
-#: eme-fs.php:692
+#: eme-fs.php:695
 msgid "The end date/time must occur <strong>after</strong> the start date/time"
 msgstr ""
 
-#: eme-fs.php:826
+#: eme-fs.php:829
 #: eme-gdpr.php:52
 #: eme-gdpr.php:141
 #: eme-gdpr.php:215
@@ -6139,7 +6139,7 @@ msgstr ""
 msgid "Bot detected. If you believe you've received this message in error please contact the site owner."
 msgstr ""
 
-#: eme-fs.php:836
+#: eme-fs.php:839
 #: eme-gdpr.php:62
 #: eme-gdpr.php:151
 #: eme-gdpr.php:225

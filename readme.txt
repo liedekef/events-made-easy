@@ -99,6 +99,9 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.6.1 (2025/06/02) =
+* Fix frontend submit
+
 = 2.6.0 (2025/06/01) =
 * Integrate jodit as editor
 * Small sumup and braintree fixes

@@ -2597,7 +2597,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                 } else {
                     $replacement = eme_add_booking_form( $event['event_id'] );
                 }
-            } elseif ( preg_match( '/^#_ADDBOOKINGFORM_IF_LOGGED_IN/', $result ) ) {
+            } elseif ( preg_match( '/#_ADDBOOKINGFORM_IF_LOGGED_IN/', $result ) ) {
                 if ( is_user_logged_in() ) {
                     if ( $target == 'rss' || $target == 'text' ) {
                         $replacement = '';
@@ -2605,7 +2605,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                         $replacement = eme_add_booking_form( $event['event_id'] );
                     }
                 }
-            } elseif ( preg_match( '/^#_ADDBOOKINGFORM_IF_USER_HAS_CAP\{(.+?)\}$/', $result, $matches ) ) {
+            } elseif ( preg_match( '/#_ADDBOOKINGFORM_IF_USER_HAS_CAP\{(.+?)\}$/', $result, $matches ) ) {
                 $caps = $matches[1];
                 if ( is_user_logged_in() && $target == 'html' ) {
                     $caps_arr  = explode( ',', $caps );
@@ -2620,7 +2620,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                         $replacement = eme_add_booking_form( $event['event_id'] );
                     }
                 }
-            } elseif ( preg_match( '/^#_ADDBOOKINGFORM_IF_USER_HAS_ROLE\{(.+?)\}$/', $result, $matches ) ) {
+            } elseif ( preg_match( '/#_ADDBOOKINGFORM_IF_USER_HAS_ROLE\{(.+?)\}$/', $result, $matches ) ) {
                 $roles = $matches[1];
                 if ( is_user_logged_in() && $target == 'html' ) {
                     $wp_user   = wp_get_current_user();
@@ -2636,7 +2636,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                         $replacement = eme_add_booking_form( $event['event_id'] );
                     }
                 }
-            } elseif ( preg_match( '/^#_ADDBOOKINGFORM_IF_USER_IN_GROUP\{(.+?)\}$/', $result, $matches ) ) {
+            } elseif ( preg_match( '/#_ADDBOOKINGFORM_IF_USER_IN_GROUP\{(.+?)\}$/', $result, $matches ) ) {
                 $groups = $matches[1];
                 if ( is_user_logged_in() && $target == 'html' ) {
                     $wp_id      = get_current_user_id();
@@ -2655,7 +2655,7 @@ function eme_replace_event_placeholders( $format, $event, $target = 'html', $lan
                         $replacement = eme_add_booking_form( $event['event_id'] );
                     }
                 }
-            } elseif ( preg_match( '/^#_ADDBOOKINGFORM_IF_USER_IS_MEMBER_OF\{(.+?)\}$/', $result, $matches ) ) {
+            } elseif ( preg_match( '/#_ADDBOOKINGFORM_IF_USER_IS_MEMBER_OF\{(.+?)\}$/', $result, $matches ) ) {
                 $memberships = $matches[1];
                 if ( is_user_logged_in() && $target == 'html' ) {
                     $wp_id           = get_current_user_id();

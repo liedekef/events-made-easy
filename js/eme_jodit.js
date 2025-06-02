@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', function () {
     // ===== Reusable Functions (Outside Loop) =====
+    function simplifyHtml(html) {
+        return eme_htmlDecode(html.replace(/"/g, "'").replace(/ \/>/g, '>'));
+    }
+
     const findMatchingFont = (computedFont, fontList) => {
         const computedFonts = computedFont.split(',');
         for (const computedSingleFont of computedFonts) {
@@ -375,7 +379,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
         editor.value = initialValue;
         // if jodit dom changes the content: show the code by default
-        if (eme_htmlDecode(editor.value.replace(/<br\s*\/?>/gi, '<br>')) != initialValue.replace(/<br\s*\/?>/gi, '<br>') ) {
+        if (simplifyHtml(editor.value) != simplifyHtml(initialValue) ) {
             textBtn.classList.add('active');
             visualBtn.classList.remove('active');
             visualBtn.setAttribute('aria-pressed', 'false');
@@ -473,7 +477,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     document.querySelectorAll('span[data-default]').forEach(el => {
-        const defaultValue = el.dataset.default.replace(/<br\s*\/?>(?!<\/p>)/gi, '<br>');
+        const defaultValue = el.dataset.default;
         const targetId = el.dataset.targetid;
         const target = document.getElementById(targetId); // the textarea
         const editorInstance = Jodit.instances[`joditdiv_${targetId}`]; // the jodit editor
@@ -486,8 +490,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
             editorInstance.events.on('blur', function () {
-                const val = eme_htmlDecode(editorInstance.value).trim().replace(/<br\s*\/?>(?!<\/p>)/gi, '<br>');
-                if (val === defaultValue || val === '<p>' + defaultValue + '</p>') {
+                const val = simplifyHtml(editorInstance.value).trim();
+                const defval = simplifyHtml(defaultValue);
+                if (val === defval || val === '<p>' + defval + '</p>') {
                     editorInstance.value = '';
                 }
             });

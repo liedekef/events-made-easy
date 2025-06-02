@@ -377,6 +377,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
         });
+        editor.events.on('blur', function () {
+            textarea.value = visualBtn.classList.contains('active') ? editor.value : textarea.value;
+        });
+
         editor.value = initialValue;
         // if jodit dom changes the content: show the code by default
         if (simplifyHtml(editor.value) != simplifyHtml(initialValue) ) {
@@ -408,13 +412,6 @@ document.addEventListener('DOMContentLoaded', function () {
             textarea.style.display = 'block';
             joditParentDiv.style.display = 'none';
         });
-
-        const form = textarea.closest('form');
-        if (form) {
-            form.addEventListener('submit', () => {
-                textarea.value = visualBtn.classList.contains('active') ? editor.value : textarea.value;
-            });
-        }
 
         // textarea._joditInstance = editor; // store jodit instance on the dom (works, but we use Jodit.instances)
     };
@@ -487,6 +484,7 @@ document.addEventListener('DOMContentLoaded', function () {
             editorInstance.events.on('focus', function () {
                 if (editorInstance.value.trim() === '' || editorInstance.value.trim() === '<p><br></p>') {
                     editorInstance.value = defaultValue;
+                    target.value = defaultValue;
                 }
             });
             editorInstance.events.on('blur', function () {
@@ -494,6 +492,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const defval = simplifyHtml(defaultValue);
                 if (val === defval || val === '<p>' + defval + '</p>') {
                     editorInstance.value = '';
+                    target.value = '';
                 }
             });
         }

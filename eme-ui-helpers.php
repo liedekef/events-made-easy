@@ -359,8 +359,14 @@ function eme_ui_select( $option_value, $name, $list, $add_empty_first = '', $req
 		if ( empty( $t_value ) && $t_value !== '0' ) {
 			$t_value = '&nbsp;';
 		}
-		"$t_key" === "$option_value" ? $selected = "selected='selected' " : $selected = '';
-		$val                                    .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+        if ( $t_key == 'BEGINOPTGROUP' ) {
+            $val .= "<optgroup label='" . eme_esc_html( $t_value ) . "'>";
+        } elseif ( $t_key == 'ENDOPTGROUP' ) {
+            $val .= "</optgroup>";
+        } else {
+            "$t_key" === "$option_value" ? $selected = "selected='selected' " : $selected = '';
+            $val .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+        }
 	}
 	$val .= ' </select>';
 	return $val;
@@ -486,7 +492,13 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
 		} else {
 			"$t_key" == $option_value ? $selected = "selected='selected' " : $selected = '';
 		}
-		$val .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+        if ( $t_key == 'BEGINOPTGROUP' ) {
+            $val .= "<optgroup label='" . eme_esc_html( $t_value ) . "'>";
+        } elseif ( $t_key == 'ENDOPTGROUP' ) {
+            $val .= "</optgroup>";
+        } else {
+            $val .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
+        }
 	}
 	$val .= ' </select>';
 	return $val;

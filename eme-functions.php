@@ -1855,7 +1855,17 @@ function eme_unique_nbr( $my_nbr ) {
 
 function eme_array_has_dupes($my_arr) {
     if (!empty($my_arr) && is_array($my_arr)) {
-        return count($my_arr) !== count(array_unique($my_arr));
+        // Filter out "BEGINOPTGROUP" and "ENDOPTGROUP" values
+        $filtered_arr = array_filter($my_arr, function($value) {
+            return $value !== "BEGINOPTGROUP" && $value !== "ENDOPTGROUP";
+        });
+
+        // If after filtering we have no values left, there can't be duplicates
+        if (empty($filtered_arr)) {
+            return false;
+        }
+
+        return count($filtered_arr) !== count(array_unique($filtered_arr));
     } else {
         return false;
     }

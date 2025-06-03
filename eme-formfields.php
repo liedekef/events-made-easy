@@ -87,6 +87,11 @@ function eme_formfields_page() {
                     eme_formfields_edit_layout( $field_id, $message, $formfield );
                     return;
                 }
+                if (eme_array_has_dupes($field_values_arr) || eme_array_has_dupes($admin_values_arr)) {
+                    $message = "<div id='message' class='eme-message-error'>".__( 'Error: the field values need to be unique for this type of field.', 'events-made-easy' )."</div>";
+                    eme_formfields_edit_layout( $field_id, $message, $formfield );
+                    return;
+                }
                 if (! empty( $field_tags_arr ) && count( $field_values_arr ) != count( $field_tags_arr ) ) {
                     $message = "<div id='message' class='eme-message-error'>".__( 'Error: if you specify field tags, there need to be exact the same amount of tags as values.', 'events-made-easy' )."</div>";
                     eme_formfields_edit_layout( $field_id, $message, $formfield );

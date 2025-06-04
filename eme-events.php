@@ -9685,6 +9685,7 @@ function eme_admin_enqueue_js() {
             'translate_formfields'                 => __( 'Custom Fields', 'events-made-easy' ),
             'translate_id'                         => __( 'ID', 'events-made-easy' ),
             'translate_name'                       => __( 'Name', 'events-made-easy' ),
+            'translate_copy'                       => __( 'Copy', 'events-made-easy' ),
             'translate_type'                       => __( 'Type', 'events-made-easy' ),
             'translate_extracharge'                => __( 'Extra charge', 'events-made-easy' ),
             'translate_searchable'                 => __( 'Searchable', 'events-made-easy' ),

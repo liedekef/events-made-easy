@@ -38,6 +38,12 @@ jQuery(document).ready( function($) {
                     title: emeformfields.translate_name,
                     visibility: 'fixed',
                 },
+                copy: {
+                    title: emeformfields.translate_copy,
+                    sorting: false,
+                    width: '2%',
+                    listClass: 'eme-jtable-center'
+                },
                 field_type: {
                     title: emeformfields.translate_type
                 },

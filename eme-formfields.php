@@ -45,6 +45,19 @@ function eme_formfields_page() {
         return;
     }
 
+    if ( isset( $_GET['eme_admin_action'] ) && $_GET['eme_admin_action'] == 'copy_formfield' ) {
+        $field_id = intval( $_GET['field_id'] );
+        $formfield = eme_get_formfield( $field_id );
+        if ( empty( $formfield ) ) {
+            eme_formfields_edit_layout();
+            return;
+        }
+        unset( $formfield['field_id'] );
+        $formfield['field_name'] .= __( ' (Copy)', 'events-made-easy' );
+        eme_formfields_edit_layout( 0, '', $formfield );
+        return;
+    }
+
     // Insert/Update/Delete Record
     $formfields_table  = EME_DB_PREFIX . EME_FORMFIELDS_TBNAME;
     $validation_result = '';
@@ -755,7 +768,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
                 ];
                 $my_arr[] = $new_el;
             }
-            $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class, $field_attributes . ' ' . $disabled );
+            $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class . ' eme_select2', $field_attributes . ' ' . $disabled );
             break;
         case 'dropdown_multi':
             # dropdown, multiselect
@@ -773,7 +786,7 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
             }
             // force_single can be 1 (only possible case is in the filterform for now)
             if ( $force_single == 1 ) {
-                $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class, $field_attributes . ' ' . $disabled );
+                $html = eme_ui_select( $entered_val, $field_name, $my_arr, '', $required, $class . ' eme_select2', $field_attributes . ' ' . $disabled );
             } else {
                 $html = eme_ui_multiselect( $entered_val, $field_name, $my_arr, 5, '', $required, $class . ' eme_select2', $field_attributes . ' ' . $disabled );
             }
@@ -5109,17 +5122,21 @@ function eme_ajax_formfields_list() {
         $sql         = "SELECT * FROM $table $where $orderby $limit";
         $rows        = $wpdb->get_results( $sql, ARRAY_A );
         $res         = [];
-        foreach ( $rows as $key => $row ) {
-            if ( empty( $row['field_name'] ) ) {
+        foreach ( $rows as $key => $formfield ) {
+            if ( empty( $formfield['field_name'] ) ) {
                 $row['field_name'] = __( 'No name', 'events-made-easy' );
             }
-            $rows[ $key ]['field_type']     = eme_get_fieldtype( $row['field_type'] );
-            $rows[ $key ]['field_required'] = ( $row['field_required'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-            $rows[ $key ]['field_purpose']  = eme_get_fieldpurpose( $row['field_purpose'] );
-            $rows[ $key ]['extra_charge']   = ( $row['extra_charge'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-            $rows[ $key ]['searchable']     = ( $row['searchable'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-            $rows[ $key ]['used']           = in_array( $row['field_id'], $used_formfield_ids ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
-            $rows[ $key ]['field_name']     = "<a href='" . admin_url( 'admin.php?page=eme-formfields&amp;eme_admin_action=edit_formfield&amp;field_id=' . $row['field_id'] ) . "'>" . $row['field_name'] . '</a>';
+            $rows[ $key ]['field_type']     = eme_get_fieldtype( $formfield['field_type'] );
+            $rows[ $key ]['field_required'] = ( $formfield['field_required'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+            $rows[ $key ]['field_purpose']  = eme_get_fieldpurpose( $formfield['field_purpose'] );
+            $rows[ $key ]['extra_charge']   = ( $formfield['extra_charge'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+            $rows[ $key ]['searchable']     = ( $formfield['searchable'] == 1 ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+            $rows[ $key ]['used']           = in_array( $formfield['field_id'], $used_formfield_ids ) ? __( 'Yes', 'events-made-easy' ) : __( 'No', 'events-made-easy' );
+            $rows[ $key ]['field_name']     = "<a href='" . admin_url( 'admin.php?page=eme-formfields&amp;eme_admin_action=edit_formfield&amp;field_id=' . $formfield['field_id'] ) . "'>" . $formfield['field_name'] . '</a>';
+
+            $copy_link='window.location.href="'.admin_url( 'admin.php?page=eme-formfields&amp;eme_admin_action=copy_formfield&amp;field_id=' . $formfield['field_id'] ).'";';
+            $rows[ $key ][ 'copy'] = "<button onclick='$copy_link' title='" . __( 'Copy', 'events-made-easy' ) . "' class='jtable-command-button eme-copy-button'><span>copy</span></a>";
+
         }
         $jTableResult['Result']           = 'OK';
         $jTableResult['Records']          = $rows;
@@ -5170,4 +5187,3 @@ function eme_ajax_manage_formfields() {
     }
     wp_die();
 }
-

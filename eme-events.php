@@ -10422,9 +10422,9 @@ function eme_ajax_events_list() {
             $event_url              = eme_event_url( $event );
             if ( ! $view_trash ) {
                 if ( $event['event_status'] == EME_EVENT_STATUS_DRAFT ) {
-                    $record['event_status'] .= "<br> <a href='$event_url'>" . __( 'Preview event', 'events-made-easy' ) . '</a>';
+                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank'>" . __( 'Preview event', 'events-made-easy' ) . '</a>';
                 } else {
-                    $record['event_status'] .= "<br> <a href='$event_url'>" . __( 'View event', 'events-made-easy' ) . '</a>';
+                    $record['event_status'] .= "<br> <a href='$event_url' target='_blank'>" . __( 'View event', 'events-made-easy' ) . '</a>';
                 }
             }
         }

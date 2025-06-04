@@ -35,10 +35,20 @@
     margin-bottom: 5px;
     field-sizing: content;
     max-width: 100%;
+    line-height: normal;
 }
 
 .select2-selection--multiple ul li {
     line-height: initial !important;
+}
+
+.select2-results__message {
+  padding: 8px 12px;
+  color: #666;
+  font-size: 0.9em;
+  background-color: #f8f9fa;
+  border-top: 1px solid #ddd;
+  font-style: italic;
 }
 
 .eme_admin_button_middle {

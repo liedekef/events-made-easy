@@ -363,7 +363,24 @@ jQuery(document).ready( function($) {
                     $('#'+form_id).find('div#eme_dyndata').html(data.Result);
                     // make sure to init select2 for dynamic added fields
                     if ($('.eme_select2.dynamicfield').length) {
-                        $('.eme_select2.dynamicfield').select2({dropdownAutoWidth: true, width: '50%'});
+                        $('.eme_select2.dynamicfield').select2({
+                            dropdownAutoWidth: true,
+                            width: 'style',
+                            templateSelection: function (data) {
+                                if (!data.id) return data.text; // Placeholder, etc.
+
+                                const $option = $(data.element); // Original <option>
+                                const $select = $option.parent(); // Parent <select>
+                                const $optgroup = $option.closest('optgroup');
+
+                                if ($optgroup.length) {
+                                    const groupLabel = $optgroup.attr('label');
+                                    return groupLabel + ' > ' + data.text;
+                                }
+
+                                return data.text;
+                            }
+                        });
                     }
                     if ($('.eme_select2_width50_class.dynamicfield').length) {
                         $('.eme_select2_width50_class.dynamicfield').select2({dropdownAutoWidth: true, width: '50%'});
@@ -501,7 +518,24 @@ jQuery(document).ready( function($) {
                     $('#'+form_id).find('div#eme_dyndata_family').html(data.Result);
                     // make sure to init select2 for dynamic added fields
                     if ($('.eme_select2.dynamicfield').length) {
-                        $('.eme_select2.dynamicfield').select2({dropdownAutoWidth: true, width: '50%'});
+                        $('.eme_select2.dynamicfield').select2({
+                            dropdownAutoWidth: true,
+                            width: 'style',
+                            templateSelection: function (data) {
+                                if (!data.id) return data.text; // Placeholder, etc.
+
+                                const $option = $(data.element); // Original <option>
+                                const $select = $option.parent(); // Parent <select>
+                                const $optgroup = $option.closest('optgroup');
+
+                                if ($optgroup.length) {
+                                    const groupLabel = $optgroup.attr('label');
+                                    return groupLabel + ' > ' + data.text;
+                                }
+
+                                return data.text;
+                            }
+                        });
                     }
                     if ($('.eme_select2_width50_class.dynamicfield').length) {
                         $('.eme_select2_width50_class.dynamicfield').select2({dropdownAutoWidth: true, width: '50%'});
@@ -599,7 +633,24 @@ jQuery(document).ready( function($) {
                     $('#'+form_id).find('div#eme_dyndata').html(data.Result);
                     // make sure to init select2 for dynamic added fields
                     if ($('.eme_select2.dynamicfield').length) {
-                        $('.eme_select2.dynamicfield').select2({dropdownAutoWidth: true, width: '50%'});
+                        $('.eme_select2.dynamicfield').select2({
+                            dropdownAutoWidth: true,
+                            width: 'style',
+                            templateSelection: function (data) {
+                                if (!data.id) return data.text; // Placeholder, etc.
+
+                                const $option = $(data.element); // Original <option>
+                                const $select = $option.parent(); // Parent <select>
+                                const $optgroup = $option.closest('optgroup');
+
+                                if ($optgroup.length) {
+                                    const groupLabel = $optgroup.attr('label');
+                                    return groupLabel + ' > ' + data.text;
+                                }
+
+                                return data.text;
+                            }
+                        });
                     }
                     if ($('.eme_select2_width50_class.dynamicfield').length) {
                         $('.eme_select2_width50_class.dynamicfield').select2({dropdownAutoWidth: true, width: '50%'});
@@ -1062,7 +1113,24 @@ jQuery(document).ready( function($) {
         });
     }
     if ($('.eme_select2').length) {
-        $('.eme_select2').select2({dropdownAutoWidth: true, width: 'style'});
+        $('.eme_select2').select2({
+            dropdownAutoWidth: true,
+            width: 'style',
+            templateSelection: function (data) {
+                if (!data.id) return data.text; // Placeholder, etc.
+
+                const $option = $(data.element); // Original <option>
+                const $select = $option.parent(); // Parent <select>
+                const $optgroup = $option.closest('optgroup');
+
+                if ($optgroup.length) {
+                    const groupLabel = $optgroup.attr('label');
+                    return groupLabel + ' > ' + data.text;
+                }
+
+                return data.text;
+            }
+        });
     }
     if ($('.eme_select2_width50_class').length) {
         $('.eme_select2_width50_class').select2({dropdownAutoWidth: true, width: '50%'});

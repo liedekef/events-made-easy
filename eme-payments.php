@@ -2938,16 +2938,34 @@ function eme_charge_mollie() {
     // Mollie needs the price in EUR and 2 decimals
     try {
         $mollie->setApiKey( $api_key );
-        $mollie_payment = $mollie->send(
-            new \Mollie\Api\Http\Requests\CreatePaymentRequest(
-                description: $description,
-                amount: new \Mollie\Api\Http\Data\Money(currency: $cur, value: sprintf( '%01.2f', $price )),
-                redirectUrl: $return_link,
-                cancelUrl: $cancel_link,
-                webhookUrl: $notification_link,
-                metadata: ['payment_id' => $payment_id]
-            )
-        );
+        if (version_compare(MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
+            $mollie_payment = $mollie->send(
+                new \Mollie\Api\Http\Requests\CreatePaymentRequest(
+                    description: $description,
+                    amount: new \Mollie\Api\Http\Data\Money(currency: $cur, value: sprintf( '%01.2f', $price )),
+                    redirectUrl: $return_link,
+                    cancelUrl: $cancel_link,
+                    webhookUrl: $notification_link,
+                    metadata: ['payment_id' => $payment_id]
+                )
+            );
+        } else {
+            $mollie_payment = $mollie->payments->create(
+                [
+                    'amount'      => [
+                        'currency' => $cur,
+                        'value'    => sprintf( '%01.2f', $price ),
+                    ],
+                    'description' => $description,
+                    'redirectUrl' => $return_link,
+                    'webhookUrl'  => $notification_link,
+                    'cancelUrl'   => $cancel_link,
+                    'metadata'    => [
+                        'payment_id' => $payment_id,
+                    ],
+                ]
+            );
+        }
         $url = $mollie_payment->getCheckoutUrl();
     } catch ( \Mollie\Api\Exceptions\ApiException $e ) {
         $url = '';
@@ -2983,11 +3001,15 @@ function eme_notification_mollie( $mollie_payment_id = 0 ) {
     }
     try {
         $mollie->setApiKey( $api_key );
-        $mollie_payment = $mollie->send(
-            new \Mollie\Api\Http\Requests\GetPaymentRequest(
-                id: $mollie_payment_id
-            )
-        );
+        if (version_compare(MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
+            $mollie_payment = $mollie->send(
+                new \Mollie\Api\Http\Requests\GetPaymentRequest(
+                    id: $mollie_payment_id
+                )
+            );
+        } else {
+            $mollie_payment = $mollie->payments->get( $mollie_payment_id );
+        }
     } catch ( Exception $e ) {
         return;
     }
@@ -3156,11 +3178,15 @@ function eme_refund_booking_mollie( $booking ) {
     $mollie = new \Mollie\Api\MollieApiClient();
     try {
         $mollie->setApiKey( $api_key );
-        $mollie_payment = $mollie->send(
-            new \Mollie\Api\Http\Requests\GetPaymentRequest(
-                id: $booking['pg_pid']
-            )
-        );
+        if (version_compare(MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
+            $mollie_payment = $mollie->send(
+                new \Mollie\Api\Http\Requests\GetPaymentRequest(
+                    id: $booking['pg_pid']
+                )
+            );
+        } else {
+            $mollie_payment = $mollie->payments->get( $booking['pg_pid'] );
+        }
     } catch ( Exception $e ) {
         return false;
     }
@@ -3173,13 +3199,28 @@ function eme_refund_booking_mollie( $booking ) {
         $cur = $event['currency'];
         if ( $mollie_payment->canBeRefunded() && $mollie_payment->amountRemaining->currency === $cur && $mollie_payment->amountRemaining->value >= $price ) {
             try {
-                $refund = $mollie->send(
-                    new \Mollie\Api\Http\Requests\CreatePaymentRefundRequest(
-                        paymentId: $mollie_payment->id,
-                        description: __('Booking cancelled and refunded','events-made-easy'),
-                        amount: new \Mollie\Api\Http\Data\Money(currency: $cur, value: $price )
-                    )
-                );
+                if (version_compare(MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
+                    // V3: Use request objects and ->send()
+                    $refund = $mollie->send(
+                        new \Mollie\Api\Http\Requests\CreatePaymentRefundRequest(
+                            paymentId: $mollie_payment->id,
+                            description: __('Booking cancelled and refunded', 'events-made-easy'),
+                            amount: new \Mollie\Api\Http\Data\Money(
+                                currency: $cur,
+                                value: sprintf('%01.2f', $price)
+                            )
+                        )
+                    );
+                } else {
+                    // V2: Use legacy array-style
+                    $refund = $mollie->payments->refund($mollie_payment->id, [
+                        'amount' => [
+                            'currency' => $cur,
+                            'value'    => sprintf('%01.2f', $price),
+                        ],
+                        'description' => __('Booking cancelled and refunded', 'events-made-easy'),
+                    ]);
+                }
                 return true;
             } catch ( Exception $e ) {
                 return false;

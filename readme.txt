@@ -99,10 +99,12 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.6.2 (2025/06/) =
+* allow BEGINOPTGROUP and ENDOPTGROUP for dropdown fields
+
 = 2.6.1 (2025/06/02) =
 * Fix frontend submit
 * Update Braintree API to 6.26.0
-* allow BEGINOPTGROUP and ENDOPTGROUP for dropdown fields
 
 = 2.6.0 (2025/06/01) =
 * Integrate jodit as editor

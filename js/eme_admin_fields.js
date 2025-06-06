@@ -1,4 +1,61 @@
 jQuery(document).ready( function($) {
+    const multiValueTypes = [
+        'dropdown',
+        'dropdown_multi',
+        'radiobox',
+        'radiobox_vertical',
+        'checkbox',
+        'checkbox_vertical'
+    ];
+
+    // List of field IDs
+    const fields = [
+        'field_values',
+        'field_tags',
+        'admin_values',
+        'admin_tags'
+    ];
+
+    function formatToTextarea(value) {
+        let converted = value.replace(/^\|\|/, '\n').replace(/\|\|/g, '\n');
+        if (value.startsWith('||')) {
+            converted = '\n' + converted;
+        }
+        return converted;
+    }
+
+    function formatToInput(value) {
+        return value.replace(/\r\n|\r|\n/g, '||');
+    }
+
+    function updateAllFields() {
+        const selectedType = $('#field_type').val();
+        const isMulti = multiValueTypes.includes(selectedType);
+
+        fields.forEach(function (fieldId) {
+            const field = $('#' + fieldId);
+            const container = $('#' + fieldId + '_container');
+            const value = field.val() || '';
+
+            if (isMulti) {
+                const textareaVal = formatToTextarea(value);
+                container.html(
+                    `<textarea name="${fieldId}" id="${fieldId}" rows="5" cols="40">${textareaVal}</textarea>`
+                );
+            } else {
+                const inputVal = formatToInput(value);
+                container.html(
+                    `<input type="text" name="${fieldId}" id="${fieldId}" size="40" value="${inputVal}" />`
+                );
+            }
+        });
+    }
+
+    // Trigger update when dropdown changes
+    $('#field_type').change(updateAllFields);
+
+    // Initial setup on page load
+    updateAllFields();
 
     if ($('#FormfieldsTableContainer').length) {
         $('#FormfieldsTableContainer').jtable({

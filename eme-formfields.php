@@ -378,31 +378,17 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             <tr id='tr_field_values' class='form-field'>
            <th scope='row' style='vertical-align:top'><label for='field_values'>" . __( 'Field values', 'events-made-easy' ) . '</label></th>';
 
-    if ( eme_is_multifield( $formfield['field_type'] ) ) {
-        $value = str_replace( '||', "\n", eme_esc_html( $formfield['field_values'] ) );
-        // for textarea, an initial newline gets removed by browsers when visualizing/submit
-        //    but sometimes we need/want an empty first line as first dropdown value, so we add an initial newline
-        $layout .= "<td><textarea name='field_values' id='field_values'>\n$value</textarea>";
-    } else {
-        $layout .= "<td><input name='field_values' id='field_values' type='text' value='" . eme_esc_html( $formfield['field_values'] ) . "' size='40'>";
-    }
+    $layout .= "<td><div id='field_values_container'><input name='field_values' id='field_values' type='text' value='" . eme_esc_html( $formfield['field_values'] ) . "' size='40'></div>";
     $layout .= '
-                  <br>' . __( 'Enter here the default value a field should have, or for multivalue field types enter the list of values.', 'events-made-easy' ) . '
-                  <br>' . __( 'For multivalue field types (like Drop Down), either use "||" to separate the different values (e.g.: a1||a2||a3), put one value per line (only possible when editing the custom field), or use a combination of both notations.', 'events-made-easy' ) . ' ' . __( 'If you want to start your custom dropdown field with an empty value, start with "||" (for example: "||a1||a2||a3") or start with an empty line (only possible when editing the custom field).', 'events-made-easy' ) . '
-                  <br>' . __( "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' you can optionally mention the string 'NOW', which will make sure the field uses the current date and/or time the moment it is shown.", 'events-made-easy' ) . '
+                  <br>' . __( 'Enter here the default value a field should have, or enter the list of values for fields that support multiple values.', 'events-made-easy' ) . '
+                  <br>' . __( 'For fields that support multiple values (like Dropdown or Checkbox), enter one value per line. To include an empty first option (e.g., for a blank default in a dropdown), start with an empty line at the top.', 'events-made-easy' ) . '
+                  <br>' . __( "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' you can optionally enter the word 'NOW' to automatically use the current date and/or time when the field is displayed.", 'events-made-easy' ) . '
                   <br>' . __( "For the type 'File' you can optionally enter a maximum upload size in MB.", 'events-made-easy' ) . "
                </td>
             </tr>
             <tr id='tr_field_tags' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='field_tags'>" . __( 'Field tags', 'events-made-easy' ) . '</label></th>';
-    if ( eme_is_multifield( $formfield['field_type'] ) ) {
-        $value = str_replace( '||', "\n", eme_esc_html( $formfield['field_tags'] ) );
-        // for textarea, an initial newline gets removed by browsers when visualizing/submit
-        //    but sometimes we need/want an empty first line as first dropdown value, so we add an initial newline
-        $layout .= "<td><textarea name='field_tags' id='field_tags'>\n$value</textarea>";
-    } else {
-        $layout .= "<td><input name='field_tags' id='field_tags' type='text' value='" . eme_esc_html( $formfield['field_tags'] ) . "' size='40'>";
-    }
+    $layout .= "<td><div id='field_tags_container'><input name='field_tags' id='field_tags' type='text' value='" . eme_esc_html( $formfield['field_tags'] ) . "' size='40'></div>";
     $layout .= '
           <br>' . __( 'This option determines the "visible" value people will see for the field.', 'events-made-easy' ) . '
           <br>' . __( 'For multivalue fields, you can here enter the "visible" tag people will see per value (so, if "Field values" contain e.g. "a1||a2||a3", you can use here e.g. "Text a1||Text a2||Text a3").', 'events-made-easy' ) . '
@@ -411,14 +397,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             </tr>
             <tr id='tr_admin_values' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='admin_values'>" . __( 'Admin Field values', 'events-made-easy' ) . '</label></th>';
-    if ( eme_is_multifield( $formfield['field_type'] ) ) {
-        $value = str_replace( '||', "\n", eme_esc_html( $formfield['admin_values'] ) );
-        // for textarea, an initial newline gets removed by browsers when visualizing/submit
-        //    but sometimes we need/want an empty first line as first dropdown value, so we add an initial newline
-        $layout .= "<td><textarea name='admin_values' id='admin_values'>\n$value</textarea>";
-    } else {
-        $layout .= "<td><input name='admin_values' id='admin_values' type='text' value='" . eme_esc_html( $formfield['admin_values'] ) . "' size='40'>";
-    }
+    $layout .= "<td><div id='admin_values_container'><input name='admin_values' id='admin_values' type='text' value='" . eme_esc_html( $formfield['admin_values'] ) . "' size='40'></div>";
     $layout .= '
                   <br>' . __( 'If you want a bigger number of choices for e.g. dropdown fields in the admin interface, enter the possible values here', 'events-made-easy' ) . '
                   <br>' . __( "For the type 'File' you can optionally enter a maximum upload size in MB.", 'events-made-easy' ) . "
@@ -426,14 +405,7 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
             </tr>
             <tr id='tr_admin_tags' class='form-field'>
                <th scope='row' style='vertical-align:top'><label for='admin_tags'>" . __( 'Admin Field tags', 'events-made-easy' ) . '</label></th>';
-    if ( eme_is_multifield( $formfield['field_type'] ) ) {
-        $value = str_replace( '||', "\n", eme_esc_html( $formfield['admin_tags'] ) );
-        // for textarea, an initial newline gets removed by browsers when visualizing/submit
-        //    but sometimes we need/want an empty first line as first dropdown value, so we add an initial newline
-        $layout .= "<td><textarea name='admin_tags' id='admin_tags'>\n$value</textarea>";
-    } else {
-        $layout .= "<td><input name='admin_tags' id='admin_tags' type='text' value='" . eme_esc_html( $formfield['admin_tags'] ) . "' size='40'>";
-    }
+    $layout .= "<td><div id='admin_tags_container'><input name='admin_tags' id='admin_tags' type='text' value='" . eme_esc_html( $formfield['admin_tags'] ) . "' size='40'></div>";
     $layout .= '
                   <br>' . __( 'If you want a bigger number of choices for e.g. dropdown fields in the admin interface, enter the possible tags here', 'events-made-easy' ) . "
                </td>

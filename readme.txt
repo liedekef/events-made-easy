@@ -99,8 +99,10 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
-= 2.6.2 (2025/06/) =
+= 2.6.2 (2025/06/06) =
 * allow BEGINOPTGROUP and ENDOPTGROUP for dropdown fields
+* Update Mollie API to 3.1.0
+* Be able to work with other Mollie libs from plugins that haven't updated yet
 
 = 2.6.1 (2025/06/02) =
 * Fix frontend submit

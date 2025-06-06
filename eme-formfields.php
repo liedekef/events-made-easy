@@ -380,7 +380,8 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
 
     if ( eme_is_multifield( $formfield['field_type'] ) ) {
         $value = str_replace( '||', "\n", eme_esc_html( $formfield['field_values'] ) );
-        // textarea should always start with a newline, but this causes an empty first line to be removed, so we add an extra newline
+        // for textarea, an initial newline gets removed by browsers when visualizing/submit
+        //    but sometimes we need/want an empty first line as first dropdown value, so we add an initial newline
         $layout .= "<td><textarea name='field_values' id='field_values'>\n$value</textarea>";
     } else {
         $layout .= "<td><input name='field_values' id='field_values' type='text' value='" . eme_esc_html( $formfield['field_values'] ) . "' size='40'>";
@@ -396,7 +397,8 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                <th scope='row' style='vertical-align:top'><label for='field_tags'>" . __( 'Field tags', 'events-made-easy' ) . '</label></th>';
     if ( eme_is_multifield( $formfield['field_type'] ) ) {
         $value = str_replace( '||', "\n", eme_esc_html( $formfield['field_tags'] ) );
-        // textarea should always start with a newline, but this causes an empty first line to be removed, so we add an extra newline
+        // for textarea, an initial newline gets removed by browsers when visualizing/submit
+        //    but sometimes we need/want an empty first line as first dropdown value, so we add an initial newline
         $layout .= "<td><textarea name='field_tags' id='field_tags'>\n$value</textarea>";
     } else {
         $layout .= "<td><input name='field_tags' id='field_tags' type='text' value='" . eme_esc_html( $formfield['field_tags'] ) . "' size='40'>";
@@ -411,7 +413,8 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                <th scope='row' style='vertical-align:top'><label for='admin_values'>" . __( 'Admin Field values', 'events-made-easy' ) . '</label></th>';
     if ( eme_is_multifield( $formfield['field_type'] ) ) {
         $value = str_replace( '||', "\n", eme_esc_html( $formfield['admin_values'] ) );
-        // textarea should always start with a newline, but this causes an empty first line to be removed, so we add an extra newline
+        // for textarea, an initial newline gets removed by browsers when visualizing/submit
+        //    but sometimes we need/want an empty first line as first dropdown value, so we add an initial newline
         $layout .= "<td><textarea name='admin_values' id='admin_values'>\n$value</textarea>";
     } else {
         $layout .= "<td><input name='admin_values' id='admin_values' type='text' value='" . eme_esc_html( $formfield['admin_values'] ) . "' size='40'>";
@@ -425,7 +428,8 @@ function eme_formfields_edit_layout( $field_id = 0, $message = '', $t_formfield 
                <th scope='row' style='vertical-align:top'><label for='admin_tags'>" . __( 'Admin Field tags', 'events-made-easy' ) . '</label></th>';
     if ( eme_is_multifield( $formfield['field_type'] ) ) {
         $value = str_replace( '||', "\n", eme_esc_html( $formfield['admin_tags'] ) );
-        // textarea should always start with a newline, but this causes an empty first line to be removed, so we add an extra newline
+        // for textarea, an initial newline gets removed by browsers when visualizing/submit
+        //    but sometimes we need/want an empty first line as first dropdown value, so we add an initial newline
         $layout .= "<td><textarea name='admin_tags' id='admin_tags'>\n$value</textarea>";
     } else {
         $layout .= "<td><input name='admin_tags' id='admin_tags' type='text' value='" . eme_esc_html( $formfield['admin_tags'] ) . "' size='40'>";

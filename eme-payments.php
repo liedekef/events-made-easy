@@ -2938,7 +2938,7 @@ function eme_charge_mollie() {
     // Mollie needs the price in EUR and 2 decimals
     try {
         $mollie->setApiKey( $api_key );
-        if (version_compare(MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
+        if (version_compare(\Mollie\Api\MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
             $mollie_payment = $mollie->send(
                 new \Mollie\Api\Http\Requests\CreatePaymentRequest(
                     description: $description,
@@ -3001,7 +3001,7 @@ function eme_notification_mollie( $mollie_payment_id = 0 ) {
     }
     try {
         $mollie->setApiKey( $api_key );
-        if (version_compare(MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
+        if (version_compare(\Mollie\Api\MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
             $mollie_payment = $mollie->send(
                 new \Mollie\Api\Http\Requests\GetPaymentRequest(
                     id: $mollie_payment_id
@@ -3178,7 +3178,7 @@ function eme_refund_booking_mollie( $booking ) {
     $mollie = new \Mollie\Api\MollieApiClient();
     try {
         $mollie->setApiKey( $api_key );
-        if (version_compare(MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
+        if (version_compare(\Mollie\Api\MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
             $mollie_payment = $mollie->send(
                 new \Mollie\Api\Http\Requests\GetPaymentRequest(
                     id: $booking['pg_pid']
@@ -3199,7 +3199,7 @@ function eme_refund_booking_mollie( $booking ) {
         $cur = $event['currency'];
         if ( $mollie_payment->canBeRefunded() && $mollie_payment->amountRemaining->currency === $cur && $mollie_payment->amountRemaining->value >= $price ) {
             try {
-                if (version_compare(MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
+                if (version_compare(\Mollie\Api\MollieApiClient::CLIENT_VERSION, '3.0.0', '>=')) {
                     // V3: Use request objects and ->send()
                     $refund = $mollie->send(
                         new \Mollie\Api\Http\Requests\CreatePaymentRefundRequest(

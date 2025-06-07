@@ -212,25 +212,6 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // --- Row Selector Logic for Bulk Actions ---
-    $(document).on('click', 'input.select-all', function() {
-        $('input.row-selector').prop('checked', this.checked)
-    });
-    let lastChecked = null;
-    $(document).on('click', 'input.row-selector', function(e) {
-        if(!lastChecked) {
-            lastChecked = this;
-        } else {
-            if (e.shiftKey) {
-                const start = $("input.row-selector").index(this);
-                const end = $("input.row-selector").index(lastChecked);
-                $("input.row-selector").slice(Math.min(start,end), Math.max(start,end)+ 1).prop('checked', lastChecked.checked);
-            }
-            lastChecked = this;
-        }
-        $("input.select-all").prop("checked", $("input.row-selector").length==$(".row-selector:checked").length);
-    });
-
     // --- Admin Notice Dismissal ---
     $('div[data-dismissible] button.notice-dismiss').on("click",function (event) {
         event.preventDefault();

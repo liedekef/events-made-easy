@@ -28,7 +28,6 @@ const $_GET = eme_getQueryParams(document.location.search);
 
 function eme_tog(v) { return v ? 'addClass' : 'removeClass'; }
 
-// Used in multiple JS files
 function eme_lastname_clearable() {
     const $ln = jQuery('input[name=lastname]');
     const fields = ['firstname', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'email', 'phone'];
@@ -36,87 +35,121 @@ function eme_lastname_clearable() {
         $ln.attr('readonly', false).removeClass('clearable');
         fields.forEach(f => jQuery(`input[name=${f}]`).val('').attr('readonly', false));
         jQuery('input[name=wp_id], input[name=person_id]').val('');
-        jQuery('input[name=wp_id]').trigger('input');
+        jQuery('input[name=wp_id]').trigger('input'); // TODO: verify if this is still needed
     }
     if ($ln.val() != '') {
         $ln.addClass('clearable x');
     }
 }
 
-// --- Unified AJAX Handler for Booking/Member/Generic forms ---
-function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams = {}) {
-    const $form = jQuery('#' + form_id);
-    $form.find(':submit').hide();
-    if (loadingSel) $form.find(loadingSel).show();
-    let alldata = new FormData($form[0]);
-    alldata.append('action', action);
-    Object.entries(extraParams).forEach(([k, v]) => alldata.append(k, v));
-    jQuery.ajax({
-        url: emebasic.translate_ajax_url,
-        data: alldata,
-        cache: false,
-        contentType: false,
-        processData: false,
-        type: 'POST',
-        dataType: 'json'
-    }).done(function (data) {
-        if (loadingSel) $form.find(loadingSel).hide();
-        $form.find(':submit').show();
-        if (data.Result === "OK" || data.Result === "REDIRECT_IMM") {
-            if (okSel) jQuery(okSel).html(data.htmlmessage).show();
-            if (errSel) jQuery(errSel).hide();
-            if (data.keep_form == 1) {
-                $form.trigger('reset');
-                eme_refresh_captcha(form_id);
+jQuery(document).ready(function ($) {
+    $('.eme-showifjs').show();
+
+    // --- Unified AJAX Handler for Booking/Member/Generic forms ---
+    function eme_ajax_form(form_id, action, okSel, errSel, loadingSel, extraParams = {}) {
+        const $form = $('#' + form_id);
+        $form.find(':submit').hide();
+        if (loadingSel) $form.find(loadingSel).show();
+        let alldata = new FormData($form[0]);
+        alldata.append('action', action);
+        Object.entries(extraParams).forEach(([k, v]) => alldata.append(k, v));
+        jQuery.ajax({
+            url: emebasic.translate_ajax_url,
+            data: alldata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: 'json'
+        }).done(function (data) {
+            if (loadingSel) $form.find(loadingSel).hide();
+            $form.find(':submit').show();
+            if (data.Result === "OK" || data.Result === "REDIRECT_IMM") {
+                if (okSel) $(okSel).html(data.htmlmessage).show();
+                if (errSel) $(errSel).hide();
+                if (data.keep_form == 1) {
+                    $form.trigger('reset');
+                    eme_refresh_captcha(form_id);
+                } else {
+                    $form.closest('[id^=div_eme-]').hide();
+                }
+                if (data.paymentform) $(`#div_eme-payment-form-${form_id}`).html(data.paymentform).show();
+                if (data.paymentredirect) setTimeout(() => window.location.href = data.paymentredirect, parseInt(data.waitperiod));
+                eme_scrollToMsg(okSel);
             } else {
-                $form.closest('[id^=div_eme-]').hide();
+                if (errSel) $(errSel).html(data.htmlmessage).show();
+                if (okSel) $(okSel).hide();
+                eme_scrollToMsg(errSel);
             }
-            if (data.paymentform) jQuery(`#div_eme-payment-form-${form_id}`).html(data.paymentform).show();
-            if (data.paymentredirect) setTimeout(() => window.location.href = data.paymentredirect, parseInt(data.waitperiod));
-            eme_scrollToMsg(okSel);
-        } else {
-            if (errSel) jQuery(errSel).html(data.htmlmessage).show();
-            if (okSel) jQuery(okSel).hide();
+        }).fail(function (xhr, textStatus, error) {
+            if (errSel) $(errSel).html(emebasic.translate_error + (xhr?.responseText ? '<br>' + xhr.responseText : '')).show();
+            if (okSel) $(okSel).hide();
+            if (loadingSel) $form.find(loadingSel).hide();
+            $form.find(':submit').show();
             eme_scrollToMsg(errSel);
+        });
+    }
+
+    function eme_refresh_captcha(form_id) {
+        const $captcha = $(`#${form_id}`).find('#eme_captcha_img');
+        if ($captcha.length) {
+            let src = $captcha.attr('src').replace(/&ts=.*/, '');
+            $captcha.attr('src', src + '&ts=' + Date.now());
         }
-    }).fail(function (xhr, textStatus, error) {
-        if (errSel) jQuery(errSel).html(emebasic.translate_error + (xhr?.responseText ? '<br>' + xhr.responseText : '')).show();
-        if (okSel) jQuery(okSel).hide();
-        if (loadingSel) $form.find(loadingSel).hide();
-        $form.find(':submit').show();
-        eme_scrollToMsg(errSel);
-    });
-}
-
-function eme_refresh_captcha(form_id) {
-    const $captcha = jQuery(`#${form_id}`).find('#eme_captcha_img');
-    if ($captcha.length) {
-        let src = $captcha.attr('src').replace(/&ts=.*/, '');
-        $captcha.attr('src', src + '&ts=' + Date.now());
     }
-}
 
-function eme_scrollToMsg(sel) {
-    const $msg = jQuery(sel);
-    if ($msg.length) {
-        jQuery(document).scrollTop($msg.offset().top - jQuery(window).height() / 2 + $msg.height() / 2);
+    function eme_scrollToMsg(sel) {
+        const $msg = $(sel);
+        if ($msg.length) {
+            $(document).scrollTop($msg.offset().top - $(window).height() / 2 + $msg.height() / 2);
+        }
     }
-}
 
-// --- Unified Dynamic Data/Price AJAX ---
-function eme_dynamic_price_json(form_id, isBooking = true) {
-    const $form = jQuery('#' + form_id);
-    $form.find(':submit').hide();
-    let alldata = new FormData($form[0]);
-    const priceSpans = isBooking
-        ? [{ sel: 'span#eme_calc_bookingprice', action: 'eme_calc_bookingprice' }, { sel: 'span#eme_calc_bookingprice_detail', action: 'eme_calc_bookingprice_detail' }]
-        : [{ sel: 'span#eme_calc_memberprice', action: 'eme_calc_memberprice' }, { sel: 'span#eme_calc_memberprice_detail', action: 'eme_calc_memberprice_detail' }];
-    let found = false;
-    priceSpans.forEach(({ sel, action }) => {
-        const $span = $form.find(sel);
-        if ($span.length) {
-            found = true;
-            $span.html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
+    // --- Unified Dynamic Data/Price AJAX ---
+    function eme_dynamic_price_json(form_id, isBooking = true) {
+        const $form = $('#' + form_id);
+        $form.find(':submit').hide();
+        let alldata = new FormData($form[0]);
+        const priceSpans = isBooking
+            ? [{ sel: 'span#eme_calc_bookingprice', action: 'eme_calc_bookingprice' }, { sel: 'span#eme_calc_bookingprice_detail', action: 'eme_calc_bookingprice_detail' }]
+            : [{ sel: 'span#eme_calc_memberprice', action: 'eme_calc_memberprice' }, { sel: 'span#eme_calc_memberprice_detail', action: 'eme_calc_memberprice_detail' }];
+        let found = false;
+        priceSpans.forEach(({ sel, action }) => {
+            const $span = $form.find(sel);
+            if ($span.length) {
+                found = true;
+                $span.html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
+                alldata.set('action', action);
+                alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
+                jQuery.ajax({
+                    url: emebasic.translate_ajax_url,
+                    data: alldata,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    type: 'POST',
+                    dataType: 'json'
+                }).done(data => {
+                    $form.find(':submit').show();
+                    $span.html(data.total);
+                }).fail(() => {
+                    $form.find(':submit').show();
+                    $span.html('Invalid reply');
+                });
+            }
+        });
+        if (!found) $form.find(':submit').show();
+    }
+
+    function eme_dynamic_data_json(form_id, isBooking = true) {
+        const $form = $('#' + form_id);
+        $form.find(':submit').hide();
+        let alldata = new FormData($form[0]);
+        const dataDivSel = 'div#eme_dyndata';
+        const action = isBooking ? 'eme_dyndata_rsvp' : 'eme_dyndata_member';
+        const $dataDiv = $form.find(dataDivSel);
+        if ($dataDiv.length) {
+            $dataDiv.html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
             alldata.set('action', action);
             alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
             jQuery.ajax({
@@ -129,254 +162,220 @@ function eme_dynamic_price_json(form_id, isBooking = true) {
                 dataType: 'json'
             }).done(data => {
                 $form.find(':submit').show();
-                $span.html(data.total);
-            }).fail(() => {
+                $dataDiv.html(data.Result);
+                eme_init_widgets(true);
+                eme_dynamic_price_json(form_id, isBooking);
+            }).fail(() => $form.find(':submit').show());
+        } else {
+            eme_dynamic_price_json(form_id, isBooking);
+        }
+    }
+
+    function eme_dynamic_familymemberdata_json(form_id) {
+        const $form = $('#' + form_id);
+        $form.find(':submit').hide();
+        let alldata = new FormData($form[0]);
+        const $dataDiv = $form.find('div#eme_dyndata_family');
+        if ($dataDiv.length) {
+            $dataDiv.html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
+            alldata.set('action', 'eme_dyndata_familymember');
+            alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
+            jQuery.ajax({
+                url: emebasic.translate_ajax_url,
+                data: alldata,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: 'json'
+            }).done(data => {
                 $form.find(':submit').show();
-                $span.html('Invalid reply');
+                $dataDiv.html(data.Result);
+                eme_init_widgets(true);
+            }).fail(() => $form.find(':submit').show());
+        } else {
+            $form.find(':submit').show();
+        }
+    }
+
+    // --- Widget Initialization ---
+    function eme_init_widgets(dynamicOnly = false) {
+        const dynamicSelector = dynamicOnly ? '.dynamicfield' : '';
+
+        if ($('.eme_formfield_fdatetime' + dynamicSelector).length) {
+            $('.eme_formfield_fdatetime' + dynamicSelector).fdatepicker({
+                todayButton: new Date(),
+                clearButton: true,
+                closeButton: true,
+                fieldSizing: true,
+                timepicker: true,
+                minutesStep: parseInt(emebasic.translate_minutesStep),
+                language: emebasic.translate_flanguage,
+                firstDay: parseInt(emebasic.translate_firstDayOfWeek),
+                altFieldDateFormat: 'Y-m-d H:i:00',
+                multipleDatesSeparator: ", ",
+                dateFormat: emebasic.translate_fdateformat,
+                timeFormat: emebasic.translate_ftimeformat
+            }).each(function () {
+                const $this = $(this);
+                if ($this.data('date') && $this.data('date') != '0000-00-00 00:00:00') {
+                    $this.fdatepicker().data('fdatepicker').selectDate($this.data('date'));
+                    $this.removeData('date').removeAttr('date');
+                }
+                if ($this.data('dateFormat')) {
+                    $this.fdatepicker().data('fdatepicker').update('dateFormat', $this.data('dateFormat'));
+                    $this.removeData('dateFormat').removeAttr('dateFormat');
+                }
+                if ($this.data('timeFormat')) {
+                    $this.fdatepicker().data('fdatepicker').update('timeFormat', $this.data('timeFormat'));
+                    $this.removeData('timeFormat').removeAttr('timeFormat');
+                }
             });
         }
-    });
-    if (!found) $form.find(':submit').show();
-}
 
-function eme_dynamic_data_json(form_id, isBooking = true) {
-    const $form = jQuery('#' + form_id);
-    $form.find(':submit').hide();
-    let alldata = new FormData($form[0]);
-    const dataDivSel = 'div#eme_dyndata';
-    const action = isBooking ? 'eme_dyndata_rsvp' : 'eme_dyndata_member';
-    const $dataDiv = $form.find(dataDivSel);
-    if ($dataDiv.length) {
-        $dataDiv.html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
-        alldata.set('action', action);
-        alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
-        jQuery.ajax({
-            url: emebasic.translate_ajax_url,
-            data: alldata,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            dataType: 'json'
-        }).done(data => {
-            $form.find(':submit').show();
-            $dataDiv.html(data.Result);
-            eme_init_widgets(true);
-            eme_dynamic_price_json(form_id, isBooking);
-        }).fail(() => $form.find(':submit').show());
-    } else {
-        eme_dynamic_price_json(form_id, isBooking);
-    }
-}
+        if ($('.eme_formfield_fdate' + dynamicSelector).length) {
+            $('.eme_formfield_fdate' + dynamicSelector).fdatepicker({
+                todayButton: new Date(),
+                clearButton: true,
+                closeButton: true,
+                autoClose: true,
+                fieldSizing: true,
+                language: emebasic.translate_flanguage,
+                firstDay: parseInt(emebasic.translate_firstDayOfWeek),
+                altFieldDateFormat: 'Y-m-d',
+                multipleDatesSeparator: ", ",
+                dateFormat: emebasic.translate_fdateformat
+            }).each(function () {
+                const $this = $(this);
+                if ($this.data('date') && $this.data('date') != '0000-00-00') {
+                    $this.fdatepicker().data('fdatepicker').selectDate($this.data('date'));
+                    $this.removeData('date').removeAttr('date');
+                }
+                if ($this.data('dateFormat')) {
+                    $this.fdatepicker().data('fdatepicker').update('dateFormat', $this.data('dateFormat'));
+                    $this.removeData('dateFormat').removeAttr('dateFormat');
+                }
+            });
+        }
 
-function eme_dynamic_familymemberdata_json(form_id) {
-    const $form = jQuery('#' + form_id);
-    $form.find(':submit').hide();
-    let alldata = new FormData($form[0]);
-    const $dataDiv = $form.find('div#eme_dyndata_family');
-    if ($dataDiv.length) {
-        $dataDiv.html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
-        alldata.set('action', 'eme_dyndata_familymember');
-        alldata.set('eme_frontend_nonce', emebasic.translate_frontendnonce);
-        jQuery.ajax({
-            url: emebasic.translate_ajax_url,
-            data: alldata,
-            cache: false,
-            contentType: false,
-            processData: false,
-            type: 'POST',
-            dataType: 'json'
-        }).done(data => {
-            $form.find(':submit').show();
-            $dataDiv.html(data.Result);
-            eme_init_widgets(true);
-        }).fail(() => $form.find(':submit').show());
-    } else {
-        $form.find(':submit').show();
-    }
-}
+        if ($('.eme_formfield_ftime' + dynamicSelector).length) {
+            $('.eme_formfield_ftime' + dynamicSelector).fdatepicker({
+                timepicker: true,
+                onlyTimepicker: true,
+                clearButton: true,
+                closeButton: true,
+                minutesStep: parseInt(emebasic.translate_minutesStep),
+                language: emebasic.translate_flanguage,
+                altFieldDateFormat: 'H:i:00',
+                timeFormat: emebasic.translate_ftimeformat
+            }).each(function () {
+                const $this = $(this);
+                if ($this.data('date') && $this.data('date') != '00:00:00') {
+                    $this.fdatepicker().data('fdatepicker').selectDate($this.data('date'));
+                    $this.removeData('date').removeAttr('date');
+                }
+                if ($this.data('timeFormat')) {
+                    $this.fdatepicker().data('fdatepicker').update('timeFormat', $this.data('timeFormat'));
+                    $this.removeData('timeFormat').removeAttr('timeFormat');
+                }
+            });
+        }
 
-// --- Widget Initialization ---
-function eme_init_widgets(dynamicOnly = false) {
-    const dynamicSelector = dynamicOnly ? '.dynamicfield' : '';
+        if ($('.eme_formfield_timepicker' + dynamicSelector).length) {
+            $('.eme_formfield_timepicker' + dynamicSelector).timepicker({
+                timeFormat: emebasic.translate_ftimeformat
+            }).each(function () {
+                const $this = $(this);
+                if ($this.data('timeFormat')) {
+                    $this.timepicker('option', { 'timeFormat': $this.data('timeFormat') });
+                    $this.removeData('timeFormat').removeAttr('timeFormat');
+                }
+            });
+        }
 
-    if (jQuery('.eme_formfield_fdatetime' + dynamicSelector).length) {
-        jQuery('.eme_formfield_fdatetime' + dynamicSelector).fdatepicker({
-            todayButton: new Date(),
-            clearButton: true,
-            closeButton: true,
-            fieldSizing: true,
-            timepicker: true,
-            minutesStep: parseInt(emebasic.translate_minutesStep),
-            language: emebasic.translate_flanguage,
-            firstDay: parseInt(emebasic.translate_firstDayOfWeek),
-            altFieldDateFormat: 'Y-m-d H:i:00',
-            multipleDatesSeparator: ", ",
-            dateFormat: emebasic.translate_fdateformat,
-            timeFormat: emebasic.translate_ftimeformat
-        }).each(function () {
-            const $this = jQuery(this);
-            if ($this.data('date') && $this.data('date') != '0000-00-00 00:00:00') {
-                $this.fdatepicker().data('fdatepicker').selectDate($this.data('date'));
-                $this.removeData('date').removeAttr('date');
-            }
-            if ($this.data('dateFormat')) {
-                $this.fdatepicker().data('fdatepicker').update('dateFormat', $this.data('dateFormat'));
-                $this.removeData('dateFormat').removeAttr('dateFormat');
-            }
-            if ($this.data('timeFormat')) {
-                $this.fdatepicker().data('fdatepicker').update('timeFormat', $this.data('timeFormat'));
-                $this.removeData('timeFormat').removeAttr('timeFormat');
-            }
-        });
-    }
+        if ($('.eme_select2' + dynamicSelector).length) {
+            $('.eme_select2' + dynamicSelector).select2({
+                dropdownAutoWidth: true,
+                width: 'style',
+                templateSelection: function (data) {
+                    if (!data.id) return data.text;
+                    const $option = $(data.element), $optgroup = $option.closest('optgroup');
+                    if ($optgroup.length) return $optgroup.attr('label') + ' > ' + data.text;
+                    return data.text;
+                }
+            });
+        }
 
-    if (jQuery('.eme_formfield_fdate' + dynamicSelector).length) {
-        jQuery('.eme_formfield_fdate' + dynamicSelector).fdatepicker({
-            todayButton: new Date(),
-            clearButton: true,
-            closeButton: true,
-            autoClose: true,
-            fieldSizing: true,
-            language: emebasic.translate_flanguage,
-            firstDay: parseInt(emebasic.translate_firstDayOfWeek),
-            altFieldDateFormat: 'Y-m-d',
-            multipleDatesSeparator: ", ",
-            dateFormat: emebasic.translate_fdateformat
-        }).each(function () {
-            const $this = jQuery(this);
-            if ($this.data('date') && $this.data('date') != '0000-00-00') {
-                $this.fdatepicker().data('fdatepicker').selectDate($this.data('date'));
-                $this.removeData('date').removeAttr('date');
-            }
-            if ($this.data('dateFormat')) {
-                $this.fdatepicker().data('fdatepicker').update('dateFormat', $this.data('dateFormat'));
-                $this.removeData('dateFormat').removeAttr('dateFormat');
-            }
-        });
-    }
+        if ($('.eme_select2_width50_class' + dynamicSelector).length) {
+            $('.eme_select2_width50_class' + dynamicSelector).select2({ dropdownAutoWidth: true, width: '50%' });
+        }
 
-    if (jQuery('.eme_formfield_ftime' + dynamicSelector).length) {
-        jQuery('.eme_formfield_ftime' + dynamicSelector).fdatepicker({
-            timepicker: true,
-            onlyTimepicker: true,
-            clearButton: true,
-            closeButton: true,
-            minutesStep: parseInt(emebasic.translate_minutesStep),
-            language: emebasic.translate_flanguage,
-            altFieldDateFormat: 'H:i:00',
-            timeFormat: emebasic.translate_ftimeformat
-        }).each(function () {
-            const $this = jQuery(this);
-            if ($this.data('date') && $this.data('date') != '00:00:00') {
-                $this.fdatepicker().data('fdatepicker').selectDate($this.data('date'));
-                $this.removeData('date').removeAttr('date');
-            }
-            if ($this.data('timeFormat')) {
-                $this.fdatepicker().data('fdatepicker').update('timeFormat', $this.data('timeFormat'));
-                $this.removeData('timeFormat').removeAttr('timeFormat');
-            }
-        });
-    }
-
-    if (jQuery('.eme_formfield_timepicker' + dynamicSelector).length) {
-        jQuery('.eme_formfield_timepicker' + dynamicSelector).timepicker({
-            timeFormat: emebasic.translate_ftimeformat
-        }).each(function () {
-            const $this = jQuery(this);
-            if ($this.data('timeFormat')) {
-                $this.timepicker('option', { 'timeFormat': $this.data('timeFormat') });
-                $this.removeData('timeFormat').removeAttr('timeFormat');
-            }
-        });
-    }
-
-    if (jQuery('.eme_select2' + dynamicSelector).length) {
-        jQuery('.eme_select2' + dynamicSelector).select2({
-            dropdownAutoWidth: true,
-            width: 'style',
-            templateSelection: function (data) {
-                if (!data.id) return data.text;
-                const $option = jQuery(data.element), $optgroup = $option.closest('optgroup');
-                if ($optgroup.length) return $optgroup.attr('label') + ' > ' + data.text;
-                return data.text;
-            }
-        });
-    }
-
-    if (jQuery('.eme_select2_width50_class' + dynamicSelector).length) {
-        jQuery('.eme_select2_width50_class' + dynamicSelector).select2({ dropdownAutoWidth: true, width: '50%' });
-    }
-
-    if (jQuery('.eme_select2_country_class' + dynamicSelector).length) {
-        jQuery('.eme_select2_country_class' + dynamicSelector).select2({
-            width: '100%',
-            ajax: {
-                url: emebasic.translate_ajax_url,
-                type: 'POST',
-                dataType: 'json',
-                delay: 500,
-                data: params => ({
-                    q: params.term,
-                    page: params.page || 1,
-                    pagesize: 30,
-                    action: 'eme_select_country',
-                    eme_frontend_nonce: emebasic.translate_frontendnonce
-                }),
-                processResults: (data, params) => ({
-                    results: data.Records,
-                    pagination: { more: (params.page * 30) < data.TotalRecordCount }
-                }),
-                cache: true
-            },
-            allowClear: true,
-            placeholder: emebasic.translate_selectcountry
-        }).on('change', function () {
-            let statefield = jQuery(this).closest("form").find('[name=state_code]');
-            if (statefield.length) statefield.val(null).trigger('change');
-        });
-    }
-
-    if (jQuery('.eme_select2_state_class' + dynamicSelector).length) {
-        jQuery('.eme_select2_state_class' + dynamicSelector).select2({
-            width: '100%',
-            ajax: {
-                url: emebasic.translate_ajax_url,
-                type: 'POST',
-                dataType: 'json',
-                delay: 500,
-                data: function (params) {
-                    return {
+        if ($('.eme_select2_country_class' + dynamicSelector).length) {
+            $('.eme_select2_country_class' + dynamicSelector).select2({
+                width: '100%',
+                ajax: {
+                    url: emebasic.translate_ajax_url,
+                    type: 'POST',
+                    dataType: 'json',
+                    delay: 500,
+                    data: params => ({
                         q: params.term,
                         page: params.page || 1,
                         pagesize: 30,
-                        country_code: jQuery(this).closest("form").find('[name=country_code]').val(),
-                        action: 'eme_select_state',
+                        action: 'eme_select_country',
                         eme_frontend_nonce: emebasic.translate_frontendnonce
-                    };
+                    }),
+                    processResults: (data, params) => ({
+                        results: data.Records,
+                        pagination: { more: (params.page * 30) < data.TotalRecordCount }
+                    }),
+                    cache: true
                 },
-                processResults: (data, params) => ({
-                    results: data.Records,
-                    pagination: { more: (params.page * 30) < data.TotalRecordCount }
-                }),
-                cache: true
-            },
-            allowClear: true,
-            placeholder: emebasic.translate_selectstate
-        });
-    }
+                allowClear: true,
+                placeholder: emebasic.translate_selectcountry
+            }).on('change', function () {
+                let statefield = $(this).closest("form").find('[name=state_code]');
+                if (statefield.length) statefield.val(null).trigger('change');
+            });
+        }
 
-    if (jQuery('.eme_select2_filter' + dynamicSelector).length) {
-        jQuery('.eme_select2_filter' + dynamicSelector).select2();
-    }
+        if ($('.eme_select2_state_class' + dynamicSelector).length) {
+            $('.eme_select2_state_class' + dynamicSelector).select2({
+                width: '100%',
+                ajax: {
+                    url: emebasic.translate_ajax_url,
+                    type: 'POST',
+                    dataType: 'json',
+                    delay: 500,
+                    data: function (params) {
+                        return {
+                            q: params.term,
+                            page: params.page || 1,
+                            pagesize: 30,
+                            country_code: $(this).closest("form").find('[name=country_code]').val(),
+                            action: 'eme_select_state',
+                            eme_frontend_nonce: emebasic.translate_frontendnonce
+                        };
+                    },
+                    processResults: (data, params) => ({
+                        results: data.Records,
+                        pagination: { more: (params.page * 30) < data.TotalRecordCount }
+                    }),
+                    cache: true
+                },
+                allowClear: true,
+                placeholder: emebasic.translate_selectstate
+            });
+        }
 
-    if (jQuery('.eme_select2_fitcontent' + dynamicSelector).length) {
-        jQuery('.eme_select2_fitcontent' + dynamicSelector).select2({ dropdownAutoWidth: true, width: 'fit-content' });
-    }
-}
+        if ($('.eme_select2_filter' + dynamicSelector).length) {
+            $('.eme_select2_filter' + dynamicSelector).select2();
+        }
 
-jQuery(document).ready(function ($) {
-    $('.eme-showifjs').show();
+        if ($('.eme_select2_fitcontent' + dynamicSelector).length) {
+            $('.eme_select2_fitcontent' + dynamicSelector).select2({ dropdownAutoWidth: true, width: 'fit-content' });
+        }
+    }
 
     // Calendar navigation
     function loadCalendar(
@@ -562,47 +561,47 @@ jQuery(document).ready(function ($) {
                 }
             }
         });
-	    $('select[required].select2-hidden-accessible').each(function() {
-		    console.log("checking step1");
-		    if ($(this).is(":visible") && $(this).closest("form").attr('id') == parent_form_id) {
-			    const $select = $(this);
-			    const $select2Container = $select.next('.select2-container');
-			    const isMultiSelect = $select.prop('multiple');
-			    let isEmpty = false;
+        $('select[required].select2-hidden-accessible').each(function() {
+            console.log("checking step1");
+            if ($(this).is(":visible") && $(this).closest("form").attr('id') == parent_form_id) {
+                const $select = $(this);
+                const $select2Container = $select.next('.select2-container');
+                const isMultiSelect = $select.prop('multiple');
+                let isEmpty = false;
 
-			    // Check if field is empty
-			    if (isMultiSelect) {
-				    isEmpty = $select.val() === null || $select.val().length === 0;
-			    } else {
-				    isEmpty = !$select.val();
-			    }
+                // Check if field is empty
+                if (isMultiSelect) {
+                    isEmpty = $select.val() === null || $select.val().length === 0;
+                } else {
+                    isEmpty = !$select.val();
+                }
 
-			    if (isEmpty) {
-				    // Add error class to the visible Select2 element
-				    if (isMultiSelect) {
-					    $select2Container.find('.select2-selection--multiple').addClass('eme_required');
-				    } else {
-					    $select2Container.find('.select2-selection--single').addClass('eme_required');
-				    }
+                if (isEmpty) {
+                    // Add error class to the visible Select2 element
+                    if (isMultiSelect) {
+                        $select2Container.find('.select2-selection--multiple').addClass('eme_required');
+                    } else {
+                        $select2Container.find('.select2-selection--single').addClass('eme_required');
+                    }
 
 
-				    scrollToInvalid($select2Container);
+                    scrollToInvalid($select2Container);
 
-				    // Focus the Select2 dropdown
-				    $select2Container.find('.select2-selection').focus();
+                    // Focus the Select2 dropdown
+                    $select2Container.find('.select2-selection').focus();
 
-				    valid = false;
-			    } else {
-				    // Remove error class
-				    if (isMultiSelect) {
-					    $select2Container.find('.select2-selection--multiple').removeClass('eme_required');
-				    } else {
-					    $select2Container.find('.select2-selection--single').removeClass('eme_required');
-				    }
-			    }
+                    valid = false;
+                } else {
+                    // Remove error class
+                    if (isMultiSelect) {
+                        $select2Container.find('.select2-selection--multiple').removeClass('eme_required');
+                    } else {
+                        $select2Container.find('.select2-selection--single').removeClass('eme_required');
+                    }
+                }
 
-		    }
-	    });
+            }
+        });
 
         if (!valid) return false;
     });

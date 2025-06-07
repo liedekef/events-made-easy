@@ -479,19 +479,22 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
 			$val .= "<option value=''>" . eme_esc_html( $add_empty_first ) . '</option>';
 		}
 	}
-	foreach ( $list as $key => $value ) {
-		if ( is_array( $value ) ) {
-			$t_key   = $value[0];
-			$t_value = eme_esc_html( $value[1] );
-		} else {
-			$t_key   = $key;
-			$t_value = eme_esc_html( $value );
-		}
-		if ( is_array( $option_value ) ) {
-			in_array( $t_key, $option_value ) ? $selected = "selected='selected' " : $selected = '';
-		} else {
-			"$t_key" == $option_value ? $selected = "selected='selected' " : $selected = '';
-		}
+    foreach ( $list as $key => $value ) {
+        $selected = '';
+        if ( is_array( $value ) ) {
+            $t_key   = $value[0];
+            $t_value = eme_esc_html( $value[1] );
+        } else {
+            $t_key   = $key;
+            $t_value = eme_esc_html( $value );
+        }
+        if ( ! empty( $t_key ) ) {
+            if ( is_array( $option_value ) ) {
+                if (in_array( $t_key, $option_value )) $selected = "selected='selected' ";
+            } else {
+                if ("$t_key" == $option_value) $selected = "selected='selected' ";
+            }
+        }
         if ( $t_key == 'BEGINOPTGROUP' ) {
             $val .= "<optgroup label='" . eme_esc_html( $t_value ) . "'>";
         } elseif ( $t_key == 'ENDOPTGROUP' ) {
@@ -499,8 +502,8 @@ function eme_ui_multiselect( $option_value, $name, $list, $size = 5, $add_empty_
         } else {
             $val .= "<option value='" . eme_esc_html( $t_key ) . "' $selected>$t_value</option>";
         }
-	}
-	$val .= ' </select>';
+    }
+    $val .= ' </select>';
 	return $val;
 }
 
@@ -536,13 +539,16 @@ function eme_ui_multiselect_key_value( $option_value, $name, $list, $key, $value
 		}
 	}
 	foreach ( $list as $line ) {
+        $selected = '';
 		$t_key   = $line[ $key ];
 		$t_value = eme_esc_html( $line[ $value ] );
-		if ( is_array( $option_value ) ) {
-			in_array( $t_key, $option_value ) ? $selected = "selected='selected' " : $selected = '';
-		} else {
-			"$t_key" == $option_value ? $selected = "selected='selected' " : $selected = '';
-		}
+        if ( ! empty( $t_key ) ) {
+            if ( is_array( $option_value ) ) {
+                if (in_array( $t_key, $option_value )) $selected = "selected='selected' ";
+            } else {
+                if ("$t_key" == $option_value) $selected = "selected='selected' ";
+            }
+        }
 		if ( empty( $t_value ) ) {
 			$t_value = '&nbsp;';
 		}

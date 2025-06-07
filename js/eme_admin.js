@@ -1,11 +1,3 @@
-function eme_areyousure(message) {
-    if (!confirm(message)) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
 function eme_activateTab(target) {
     jQuery('.eme-tab').removeClass('active');
     jQuery('.eme-tab-content').removeClass('active');
@@ -15,8 +7,11 @@ function eme_activateTab(target) {
 
     if (target == "tab-locationdetails" && emeadmin.translate_map_is_active === 'true') {
         // do this only when the tab is active, so leaflet knows the visible width and height of the map
-        eme_SelectdisplayAddress();
-        eme_displayAddress(0);
+        // Delay the display to ensure the tab content is fully rendered
+        setTimeout(function() {
+            eme_SelectdisplayAddress();
+            eme_displayAddress(0);
+        }, 100); // Adjust the delay as necessary
     }
     if (target == "tab-mailings" ) {
         // do this only when the tab is active, to avoid doing mail lookups if not needed

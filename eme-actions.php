@@ -574,13 +574,13 @@ function eme_admin_notices() {
             }
         }
         if ( empty($eme_hello_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) { ?>
-        <div class="notice-updated" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6\$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), $current_user->display_name, admin_url( 'widgets.php' ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', admin_url( 'admin.php?page=eme-options' ), add_query_arg( [ 'eme_notice_ignore' => 'hello' ], remove_query_arg( 'eme_notice_ignore' ) ) ); ?></div>
+        <div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;"><?php echo sprintf( __( "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>", 'events-made-easy' ), $current_user->display_name, admin_url( 'widgets.php' ), '//www.e-dynamics.be/wordpress/#template-tags', '//www.e-dynamics.be/wordpress/#shortcodes', admin_url( 'admin.php?page=eme-options' ) ); ?></div>
 <?php
         }
 
         if ( empty($eme_donate_notice_ignore) && !empty($plugin_page) && preg_match( '/^eme-/', $plugin_page ) ) {
 ?>
-<div class="notice-updated" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;">
+<div class="notice-updated notice" style="padding: 10px 10px 10px 10px; border: 1px solid #ddd; background-color:#FFFFE0;">
     <div>
     <h3><?php esc_html_e( 'Events Made Easy has been installed or upgraded', 'events-made-easy' ); ?></h3>
     <h3><?php esc_html_e( 'Please donate to the development of Events Made Easy', 'events-made-easy' ); ?></h3>
@@ -593,7 +593,7 @@ PayPal: <a href="https://www.paypal.com/donate/?business=SMGDS4GLCYWNG&no_recurr
 Github: <a href="https://github.com/sponsors/liedekef">Github sponsoring</a>
     <br><br>
 <?php
-            echo sprintf( '<a href="%s" title="%s">%s</a>', add_query_arg( [ 'eme_notice_ignore' => 'donate' ], remove_query_arg( 'eme_notice_ignore' ) ), __("Dismiss",'events-made-easy'), __("Dismiss",'events-made-easy') );
+            echo sprintf( '<a href="#" class="eme-dismiss-notice" data-notice="donate" title="%s">%s</a>', __("Dismiss",'events-made-easy'), __("Dismiss",'events-made-easy') );
 ?>
     </div>
 </div>
@@ -611,20 +611,27 @@ add_action( 'personal_options_update', 'eme_update_user_profile' );
 // hook after user profile is updated
 add_action( 'profile_update', 'eme_after_profile_update', 10, 2 );
 
-add_action( 'wp_ajax_eme_dismiss_admin_notice', 'eme_dismiss_admin_notice' );
-function eme_dismiss_admin_notice() {
-    $option_name        = eme_sanitize_request( $_POST['option_name'] );
-    $dismissible_length = eme_sanitize_request( $_POST['dismissible_length'] );
-
-    if ( 'forever' != $dismissible_length ) {
-        $dismissible_length = strtotime( absint( $dismissible_length ) . ' days' );
-    }
-
+add_action('wp_ajax_eme_dismiss_notice', 'eme_handle_dismiss_notice');
+function eme_handle_dismiss_notice() {
     check_ajax_referer( 'eme_admin', 'eme_admin_nonce' );
-    if ( current_user_can( get_option( 'eme_cap_list_events' ) ) ) {
-        update_option( $option_name, $dismissible_length );
+
+    if (!isset($_POST['notice'])) {
+        wp_send_json_error();
     }
-    wp_die();
+
+    $current_user = wp_get_current_user();
+    $user_id = $current_user->ID;
+    $eme_date_obj = new ExpressiveDate('now', EME_TIMEZONE);
+
+    $notice = sanitize_text_field($_POST['notice']);
+
+    if ($notice === 'hello') {
+        update_user_meta($user_id, 'eme_hello_notice_ignore', $eme_date_obj->format('Ymd'));
+    } elseif ($notice === 'donate') {
+        update_user_meta($user_id, 'eme_donate_notice_ignore', EME_VERSION . $eme_date_obj->format('Ymd'));
+    }
+
+    wp_send_json_success();
 }
 
 add_action( 'wp_ajax_eme_del_upload', 'eme_del_upload_ajax' );

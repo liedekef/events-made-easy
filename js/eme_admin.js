@@ -212,20 +212,20 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // --- Admin Notice Dismissal ---
-    $('div[data-dismissible] button.notice-dismiss').on("click",function (event) {
-        event.preventDefault();
-        let $el = $('div[data-dismissible]');
-        let attr_value = $el.attr('data-dismissible').split('-');
-        let dismissible_length = attr_value.pop();
-        let option_name = attr_value.join('-');
-        let ajaxdata = {
-            'action': 'eme_dismiss_admin_notice',
-            'option_name': option_name,
-            'dismissible_length': dismissible_length,
-            'eme_admin_nonce': emeadmin.translate_adminnonce
-        };
-        $.post(ajaxurl, ajaxdata);
+    $(document).on('click', '.eme-dismiss-notice', function(e) {
+        e.preventDefault();
+        var notice = $(this).data('notice');
+        var noticeDiv = $(this).closest('.notice');
+        
+        $.post(ajaxurl, {
+            action: 'eme_dismiss_notice',
+            notice: notice,
+            eme_admin_nonce: emeadmin.translate_adminnonce
+        }, function(response) {
+            if (response.success) {
+                noticeDiv.fadeOut();
+            }
+        });
     });
 
     // --- Attribute metabox add/remove ---

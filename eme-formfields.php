@@ -659,12 +659,13 @@ function eme_get_formfield_html( $formfield, $field_name, $entered_val, $require
         // fields can have a different value for front/backend for multi-fields
         if ( ! empty( $formfield['admin_values'] ) ) {
             $field_values = $formfield['admin_values'];
+            if ( ! empty( $formfield['admin_tags'] ) ) {
+                $field_tags = $formfield['admin_tags'];
+            } else {
+                $field_tags = $formfield['admin_values'];
+            }
         } else {
             $field_values = $formfield['field_values'];
-        }
-        if ( ! empty( $formfield['admin_tags'] ) ) {
-            $field_tags = $formfield['admin_tags'];
-        } else {
             $field_tags = $formfield['field_tags'];
         }
     } else {

@@ -282,23 +282,17 @@ jQuery(document).ready( function($) {
                 template_id: $('select#event_message_template').val(),
             },
             function(data){
-                if (ememails.translate_htmleditor=='tinymce') {
-	            $('textarea#event_mail_message').val(data.htmlmessage);
-                    if (ememails.translate_htmlmail=='yes') {
-                        tinymce.get('event_mail_message')?.save();
+                $('textarea#event_mail_message').val(data.htmlmessage);
+                if (ememails.translate_htmlmail=='yes') {
+                    if (ememails.translate_htmleditor=='tinymce') {
+                        tinymce.get('event_mail_message')?.setContent(data.htmlmessage);
                     }
-                }
 
-                if (ememails.translate_htmleditor=='jodit') {
-                    const $textarea = $('textarea#event_mail_message');
-                    //const editorInstance = $textarea.data('joditEditor');
-                    const editorInstance = Jodit.instances['joditdiv_event_mail_message'];
-
-                    if (editorInstance) {
-                        editorInstance.value = data.htmlmessage; // sets new HTML content
-                    } else {
-                        // fallback in case editor not yet initialized
-                        $textarea.val(data.htmlmessage);
+                    if (ememails.translate_htmleditor=='jodit') {
+                        const editorInstance = Jodit.instances['joditdiv_event_mail_message'];
+                        if (editorInstance) {
+                            editorInstance.value = data.htmlmessage;
+                        }
                     }
                 }
             }, 'json');
@@ -327,22 +321,17 @@ jQuery(document).ready( function($) {
                 template_id: $('select#generic_message_template').val(),
             },
             function(data){
-                if (ememails.translate_htmleditor=='tinymce') {
-                    $('textarea#generic_mail_message').val(data.htmlmessage);
-                    if (ememails.translate_htmlmail=='yes') {
-                        tinymce.get('generic_mail_message')?.save();
+                $('textarea#generic_mail_message').val(data.htmlmessage);
+                if (ememails.translate_htmlmail=='yes') {
+                    if (ememails.translate_htmleditor=='tinymce') {
+                        tinymce.get('generic_mail_message')?.setContent(data.htmlmessage);
                     }
-                }
 
-                if (ememails.translate_htmleditor=='jodit') {
-                    const $textarea = $('textarea#generic_mail_message');
-                    const editorInstance = Jodit.instances['joditdiv_generic_mail_message'];
-
-                    if (editorInstance) {
-                        editorInstance.value = data.htmlmessage; // sets new HTML content
-                    } else {
-                        // fallback in case editor not yet initialized
-                        $textarea.val(data.htmlmessage);
+                    if (ememails.translate_htmleditor=='jodit') {
+                        const editorInstance = Jodit.instances['joditdiv_generic_mail_message'];
+                        if (editorInstance) {
+                            editorInstance.value = data.htmlmessage;
+                        }
                     }
                 }
             }, 'json');

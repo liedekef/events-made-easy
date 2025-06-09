@@ -32,7 +32,7 @@ function eme_lastname_clearable() {
     const $ln = jQuery('input[name=lastname]');
     const fields = ['firstname', 'address1', 'address2', 'city', 'state', 'zip', 'country', 'email', 'phone'];
     if ($ln.val() == '') {
-        $ln.attr('readonly', false).removeClass('clearable');
+        $ln.attr('readonly', false).removeClass('clearable x');
         fields.forEach(f => jQuery(`input[name=${f}]`).val('').attr('readonly', false));
         jQuery('input[name=wp_id], input[name=person_id]').val('');
         jQuery('input[name=wp_id]').trigger('input'); // TODO: verify if this is still needed

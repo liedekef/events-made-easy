@@ -59,7 +59,8 @@ jQuery(document).ready(function($) {
             // If manual input: clear hidden field
             $(inputSelector).on("keyup", function() {
                 $(hiddenIdSelector).val('');
-            }).change(function() {
+            });
+            $(inputSelector).on("change", function() {
                 if ($(this).val() === '') {
                     $(hiddenIdSelector).val('');
                     $(this).attr('readonly', false).removeClass('clearable x');

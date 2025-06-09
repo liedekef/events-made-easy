@@ -199,7 +199,6 @@ jQuery(document).ready(function($) {
         if (preferredtab) {
             eme_activateTab(preferredtab);
         } else if ($_GET['page'] && $_GET['page']=='eme-emails') {
-		console.log("eee");
             eme_activateTab('tab-genericmails');
         } else {
             eme_activateTab($('.eme-tab').first().data('tab'));

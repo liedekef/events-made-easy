@@ -487,8 +487,8 @@ jQuery(document).ready(function ($) {
             const form_id = $(this).attr('id');
             if (isFS && emebasic.translate_htmleditor === "tinemce" && emebasic.translate_fs_wysiwyg === "true") {
                 if (typeof tinymce !== "undefined") {
-                    if (tinymce.get('event_notes')) tinymce.get('event_notes').save();
-                    if (tinymce.get('location_description')) tinymce.get('location_description').save();
+                    tinymce.get('event_notes')?.save();
+                    tinymce.get('location_description')?.save();
                 }
             }
             eme_ajax_form(form_id, action, ok + form_id, err + form_id, loading);

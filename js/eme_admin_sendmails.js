@@ -1,344 +1,271 @@
-jQuery(document).ready( function($) {
-    // for autocomplete to work, the element needs to exist, otherwise JS errors occur
-    // we check for that using length
-    if ($('input[name=chooseperson]').length) {
-        let emeadmin_chooseperson_timeout; // Declare a variable to hold the timeout ID
-        $("input[name=chooseperson]").on("input", function(e) {
-            clearTimeout(emeadmin_chooseperson_timeout); // Clear the previous timeout
-            let suggestions;
-            let inputField = $(this);
-            let inputValue = inputField.val();
-            $(".eme-autocomplete-suggestions").remove();
-            if (inputValue.length >= 2) {
-                emeadmin_chooseperson_timeout = setTimeout(function() {
-                    $.post(ajaxurl,
-                        { 
-                            'lastname': inputValue,
-                            'eme_admin_nonce': ememails.translate_adminnonce,
-                            'action': 'eme_autocomplete_people',
-                            'eme_searchlimit': 'people'
-                        },
-                        function(data) {
-                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
-                            $.each(data, function(index, item) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br><small>'+eme_htmlDecode(item.email)+'</small>')
-                                    .on("click", function(e) {
-                                        e.preventDefault();
-                                        if (item.person_id) {
-                                            $('input[name=send_previewmailto_id]').val(eme_htmlDecode(item.person_id));
-                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
-                                        }
-                                    })
-                                );
-                            });
-                            if (!data.length) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+ememails.translate_nomatchperson+'</strong>')
-                                );
-                            }
-                            $('.eme-autocomplete-suggestions').remove();
-                            inputField.after(suggestions);
-                        }, "json");
-                }, 500); // Delay of 0.5 second
-            }
-        });
-        $(document).on("click", function() {
-            $(".eme-autocomplete-suggestions").remove();
-        });
+// Refactored for clarity and to leverage utilities from eme.js and eme_admin.js
+// Assumes eme.js and eme_admin.js are loaded before this file
 
-        // if manual input: set the hidden field empty again
-        $('input[name=chooseperson]').on("keyup",function() {
-            $('input[name=send_previewmailto_id]').val('');
-        }).change(function() {
-            if ($(this).val()=='') {
-                $('input[name=send_previewmailto_id]').val('');
-                $(this).attr('readonly', false).removeClass('clearable');
+jQuery(document).ready(function($) {
+    // --- Person Autocomplete Handler ---
+    function setupAutocomplete(inputSelector, hiddenIdSelector, noMatchText) {
+        if ($(inputSelector).length) {
+            let autocompleteTimeout;
+            $(inputSelector).on("input", function() {
+                clearTimeout(autocompleteTimeout);
+                $(".eme-autocomplete-suggestions").remove();
+                let $input = $(this);
+                let value = $input.val();
+                if (value.length >= 2) {
+                    autocompleteTimeout = setTimeout(function() {
+                        $.post(
+                            ajaxurl,
+                            {
+                                'lastname': value,
+                                'eme_admin_nonce': ememails.translate_adminnonce,
+                                'action': 'eme_autocomplete_people',
+                                'eme_searchlimit': 'people'
+                            },
+                            function(data) {
+                                let $suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
+                                if (data.length) {
+                                    $.each(data, function(_, item) {
+                                        $("<div class='eme-autocomplete-suggestion'></div>")
+                                            .html("<strong>" + eme_htmlDecode(item.lastname) + " " + eme_htmlDecode(item.firstname) +
+                                                  "</strong><br><small>" + eme_htmlDecode(item.email) + "</small>")
+                                            .on("click", function(e) {
+                                                e.preventDefault();
+                                                if (item.person_id) {
+                                                    $(hiddenIdSelector).val(eme_htmlDecode(item.person_id));
+                                                    $input.val(eme_htmlDecode(item.lastname) + " " + eme_htmlDecode(item.firstname) + "  ")
+                                                        .attr('readonly', true).addClass('clearable x');
+                                                }
+                                            })
+                                            .appendTo($suggestions);
+                                    });
+                                } else {
+                                    $("<div class='eme-autocomplete-suggestion'></div>")
+                                        .html("<strong>" + noMatchText + "</strong>")
+                                        .appendTo($suggestions);
+                                }
+                                $(".eme-autocomplete-suggestions").remove();
+                                $input.after($suggestions);
+                            },
+                            "json"
+                        );
+                    }, 500);
+                }
+            });
+
+            $(document).on("click", function() {
+                $(".eme-autocomplete-suggestions").remove();
+            });
+
+            // If manual input: clear hidden field
+            $(inputSelector).on("keyup", function() {
+                $(hiddenIdSelector).val('');
+            }).change(function() {
+                if ($(this).val() === '') {
+                    $(hiddenIdSelector).val('');
+                    $(this).attr('readonly', false).removeClass('clearable');
+                }
+            });
+        }
+    }
+
+    setupAutocomplete('input[name=chooseperson]', 'input[name=send_previewmailto_id]', ememails.translate_nomatchperson);
+    setupAutocomplete('input[name=eventmail_chooseperson]', 'input[name=send_previeweventmailto_id]', ememails.translate_nomatchperson);
+
+    // --- Mail Form Submission Handlers ---
+    function ajaxMailButtonHandler(buttonSelector, action, formSelector, messageDivSelector, resetSelect2Selectors = [], extraReset = null) {
+        $(buttonSelector).on("click", function(e) {
+            e.preventDefault();
+
+            // Save HTML message if using WYSIWYG
+            if (ememails.translate_htmleditor === 'tinymce' && ememails.translate_htmlmail === 'yes') {
+                let editorField = $(formSelector + " textarea").attr('id');
+                if (editorField && tinymce.get(editorField)) {
+                    tinymce.get(editorField).save();
+                }
             }
+
+            let $form = $(this.form);
+            let formData = new FormData($form[0]);
+            formData.append('action', action);
+            formData.append('eme_admin_nonce', ememails.translate_adminnonce);
+
+            $(buttonSelector).text(ememails.translate_pleasewait).prop('disabled', true);
+
+            $.ajax({
+                url: ajaxurl,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: 'json'
+            })
+            .done(function(data) {
+                $(messageDivSelector).html(data.htmlmessage).show();
+                if (data.Result === 'OK') {
+                    $form.trigger('reset');
+                    resetSelect2Selectors.forEach(sel => $(sel).val(null).trigger("change"));
+                    if (typeof extraReset === "function") extraReset();
+                    $(messageDivSelector).delay(5000).fadeOut('slow');
+                }
+                $(buttonSelector).text(ememails.translate_sendmail).prop('disabled', false);
+            });
+            return false;
         });
     }
 
-    if ($('input[name=eventmail_chooseperson]').length) {
-        let emeadmin_eventmailchooseperson_timeout; // Declare a variable to hold the timeout ID
-        $("input[name=eventmail_chooseperson]").on("input", function(e) {
-            clearTimeout(emeadmin_eventmailchooseperson_timeout); // Clear the previous timeout
-            let suggestions;
-            let inputField = $(this);
-            let inputValue = inputField.val();
-            $(".eme-autocomplete-suggestions").remove();
-            if (inputValue.length >= 2) {
-                emeadmin_eventmailchooseperson_timeout = setTimeout(function() {
-                    $.post(ajaxurl,
-                        { 
-                            'lastname': inputValue,
-                            'eme_admin_nonce': ememails.translate_adminnonce,
-                            'action': 'eme_autocomplete_people',
-                            'eme_searchlimit': 'people'
-                        },
-                        function(data) {
-                            suggestions = $("<div class='eme-autocomplete-suggestions'></div>");
-                            $.each(data, function(index, item) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'</strong><br><small>'+eme_htmlDecode(item.email)+'</small>')
-                                    .on("click", function(e) {
-                                        e.preventDefault();
-                                        if (item.person_id) {
-                                            $('input[name=send_previeweventmailto_id]').val(eme_htmlDecode(item.person_id));
-                                            inputField.val(eme_htmlDecode(item.lastname)+' '+eme_htmlDecode(item.firstname)+'  ').attr('readonly', true).addClass('clearable x');
-                                        }
-                                    })
-                                );
-                            });
-                            if (!data.length) {
-                                suggestions.append(
-                                    $("<div class='eme-autocomplete-suggestion'></div>")
-                                    .html("<strong>"+ememails.translate_nomatchperson+'</strong>')
-                                );
-                            }
-                            $('.eme-autocomplete-suggestions').remove();
-                            inputField.after(suggestions);
-                        }, "json");
-                }, 500); // Delay of 0.5 second
-            }
-        });
-        $(document).on("click", function() {
-            $(".eme-autocomplete-suggestions").remove();
-        });
+    ajaxMailButtonHandler(
+        '#eventmailButton', 'eme_eventmail', 
+        '#eventmailButton', 'div#eventmail-message',
+        [
+            '#event_ids', "#eme_eventmail_send_persons", "#eme_eventmail_send_groups",
+            "#eme_eventmail_send_members", "#eme_eventmail_send_membergroups", "#eme_eventmail_send_memberships", "#eme_mail_type"
+        ]
+    );
+    ajaxMailButtonHandler(
+        '#genericmailButton', 'eme_genericmail',
+        '#genericmailButton', 'div#genericmail-message',
+        [
+            "#eme_genericmail_send_persons", "#eme_genericmail_send_peoplegroups", "#eme_genericmail_send_members",
+            "#eme_genericmail_send_membergroups", "#eme_send_memberships"
+        ],
+        function() { $('input#eme_send_all_people').trigger('change'); }
+    );
 
-        // if manual input: set the hidden field empty again
-        $('input[name=eventmail_chooseperson]').on("keyup",function() {
-            $('input[name=send_previeweventmailto_id]').val('');
-        }).change(function() {
-            if ($(this).val()=='') {
-                $('input[name=send_previeweventmailto_id]').val('');
-                $(this).attr('readonly', false).removeClass('clearable');
+    // --- Mail Preview Handlers ---
+    function mailPreviewHandler(buttonSelector, action, messageDivSelector, inputSelectors) {
+        $(buttonSelector).on("click", function(e) {
+            e.preventDefault();
+
+            // Save HTML message if using WYSIWYG
+            if (ememails.translate_htmleditor === 'tinymce' && ememails.translate_htmlmail === 'yes') {
+                let editorField = $(this.form).find("textarea").attr('id');
+                if (editorField && tinymce.get(editorField)) tinymce.get(editorField).save();
             }
+
+            let $form = $(this.form);
+            let $alldata = new FormData($form[0]);
+            $alldata.append('action', action);
+            $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
+
+            $.ajax({
+                url: ajaxurl,
+                data: $alldata,
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: 'POST',
+                dataType: 'json'
+            })
+            .done(function(data) {
+                $(messageDivSelector).html(data.htmlmessage).show().delay(5000).fadeOut('slow');
+                if (data.Result === 'OK') {
+                    inputSelectors.forEach(sel => {
+                        $(sel).val('');
+                        if (sel.indexOf('chooseperson') > -1) $(sel).attr('readonly', false);
+                    });
+                }
+            });
+            return false;
         });
     }
+    mailPreviewHandler('#previeweventmailButton', 'eme_previeweventmail', 'div#previeweventmail-message', [
+        'input[name=eventmail_chooseperson]', 'input[name=send_previeweventmailto_id]'
+    ]);
+    mailPreviewHandler('#previewmailButton', 'eme_previewmail', 'div#previewmail-message', [
+        'input[name=chooseperson]', 'input[name=send_previewmailto_id]'
+    ]);
 
-    $('#eventmailButton').on("click",function (e) {
-        e.preventDefault();
-        // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-        if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
-            tinymce.get('event_mail_message')?.save();
-        }
-
-        let $form = $(this.form);
-        let $alldata = new FormData($form[0]);
-        $alldata.append('action', 'eme_eventmail');
-        $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
-        $('#eventmailButton').text(ememails.translate_pleasewait);
-        $('#eventmailButton').prop('disabled', true);
-        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
-            .done(function(data){
-                $('div#eventmail-message').html(data.htmlmessage);
-                $('div#eventmail-message').show();
-                if (data.Result=='OK') {
-                    $form.trigger('reset');
-                    // the form reset doesn't reset select2 fields ...
-                    // so we call it ourselves
-                    $('#event_ids').val(null).trigger("change");
-                    $("#eme_eventmail_send_persons").val(null).trigger("change");
-                    $("#eme_eventmail_send_groups").val(null).trigger("change");
-                    $("#eme_eventmail_send_members").val(null).trigger("change");
-                    $("#eme_eventmail_send_membergroups").val(null).trigger("change");
-                    $("#eme_eventmail_send_memberships").val(null).trigger("change");
-                    $("#eme_mail_type").val(null).trigger("change");
-                    $('div#eventmail-message').delay(5000).fadeOut('slow');
-                }
-                $('#eventmailButton').text(ememails.translate_sendmail);
-                $('#eventmailButton').prop('disabled', false);
-            });
-        return false;
-    });
-
-    $('#genericmailButton').on("click",function (e) {
-        e.preventDefault();
-        // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-        if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
-            tinymce.get('generic_mail_message')?.save();
-        }
-        let $form = $(this.form);
-        let $alldata = new FormData($form[0]);
-        $alldata.append('action', 'eme_genericmail');
-        $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
-        $('#genericmailButton').text(ememails.translate_pleasewait);
-        $('#genericmailButton').prop('disabled', true);
-        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
-            .done(function(data){
-                $('div#genericmail-message').html(data.htmlmessage);
-                $('div#genericmail-message').show();
-                if (data.Result=='OK') {
-                    $form.trigger('reset');
-                    // the form reset doesn't reset select2 fields ...
-                    // so we call it ourselves
-                    $("#eme_genericmail_send_persons").val(null).trigger("change");
-                    $("#eme_genericmail_send_peoplegroups").val(null).trigger("change");
-                    $("#eme_genericmail_send_members").val(null).trigger("change");
-                    $("#eme_genericmail_send_membergroups").val(null).trigger("change");
-                    $("#eme_send_memberships").val(null).trigger("change");
-                    // the form reset doesn't reset other show/hide stuff apparently ...
-                    // so we call it ourselves
-                    $('input#eme_send_all_people').trigger('change');
-                    $('div#genericmail-message').delay(5000).fadeOut('slow');
-                }
-                $('#genericmailButton').text(ememails.translate_sendmail);
-                $('#genericmailButton').prop('disabled', false);
-            });
-        return false;
-    });
-
-    $('#previeweventmailButton').on("click",function (e) {
-        e.preventDefault();
-        // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-        if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
-            tinymce.get('event_mail_message')?.save();
-        }
-        let $form = $(this.form);
-        let $alldata = new FormData($form[0]);
-        $alldata.append('action', 'eme_previeweventmail');
-        $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
-        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
-            .done(function(data){
-                $('div#previeweventmail-message').html(data.htmlmessage);
-                $('div#previeweventmail-message').show();
-                $('div#previeweventmail-message').delay(5000).fadeOut('slow');
-                if (data.Result=='OK') {
-                    $('input[name=eventmail_chooseperson]').val('');
-                    $('input[name=send_previeweventmailto_id]').val('');
-                    $('input[name=eventmail_chooseperson]').attr('readonly', false);
-                }
-            });
-        return false;
-    });
-    $('#previewmailButton').on("click",function (e) {
-        e.preventDefault();
-        // if we want html mail, we need to save the html message first, otherwise the mail content is not ok via ajax submit
-        if (ememails.translate_htmleditor=='tinymce' && ememails.translate_htmlmail=='yes') {
-            tinymce.get('generic_mail_message')?.save();
-        }
-        let $form = $(this.form);
-        let $alldata = new FormData($form[0]);
-        $alldata.append('action', 'eme_previewmail');
-        $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
-        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
-            .done(function(data){
-                $('div#previewmail-message').html(data.htmlmessage);
-                $('div#previewmail-message').show();
-                $('div#previewmail-message').delay(5000).fadeOut('slow');
-                if (data.Result=='OK') {
-                    $('input[name=chooseperson]').val('');
-                    $('input[name=send_previewmailto_id]').val('');
-                    $('input[name=chooseperson]').attr('readonly', false);
-                }
-            });
-        return false;
-    });
-
-    $('#testmailButton').on("click",function (e) {
+    // --- Testmail Handler ---
+    $('#testmailButton').on("click", function(e) {
         e.preventDefault();
         let $form = $(this.form);
         let $alldata = new FormData($form[0]);
         $alldata.append('action', 'eme_testmail');
         $alldata.append('eme_admin_nonce', ememails.translate_adminnonce);
-        $('#testmailButton').text(ememails.translate_pleasewait);
-        $('#testmailButton').prop('disabled', true);
-        $.ajax({url: ajaxurl, data: $alldata, cache: false, contentType: false, processData: false, type: 'POST', dataType: 'json'})
-            .done(function(data){
-                $('div#testmail-message').html(data.htmlmessage);
-                $('div#testmail-message').show();
-                if (data.Result=='OK') {
-                    $form.trigger('reset');
-                }
-                $('#testmailButton').text(ememails.translate_sendmail);
-                $('#testmailButton').prop('disabled', false);
-            });
+        $('#testmailButton').text(ememails.translate_pleasewait).prop('disabled', true);
+        $.ajax({
+            url: ajaxurl,
+            data: $alldata,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'POST',
+            dataType: 'json'
+        })
+        .done(function(data) {
+            $('div#testmail-message').html(data.htmlmessage).show();
+            if (data.Result === 'OK') $form.trigger('reset');
+            $('#testmailButton').text(ememails.translate_sendmail).prop('disabled', false);
+        });
         return false;
     });
 
-    // show selected template in form
-    $('select#event_subject_template').on("change",function (e) {
-        e.preventDefault();
-        $.post(ajaxurl,
-            { action: 'eme_get_template',
-                'eme_admin_nonce': ememails.translate_adminnonce,
-                template_id: $('select#event_subject_template').val(),
-            },
-            function(data){
-                $('input#event_mail_subject').val(data.htmlmessage);
-            }, 'json');
-
-    });
-
-    // show selected template in form
-    $('select#event_message_template').on("change",function (e) {
-        e.preventDefault();
-        $.post(ajaxurl,
-            { action: 'eme_get_template',
-                'eme_admin_nonce': ememails.translate_adminnonce,
-                template_id: $('select#event_message_template').val(),
-            },
-            function(data){
-                $('textarea#event_mail_message').val(data.htmlmessage);
-                if (ememails.translate_htmlmail=='yes') {
-                    if (ememails.translate_htmleditor=='tinymce') {
-                        tinymce.get('event_mail_message')?.setContent(data.htmlmessage);
-                    }
-
-                    if (ememails.translate_htmleditor=='jodit') {
-                        const editorInstance = Jodit.instances['joditdiv_event_mail_message'];
-                        if (editorInstance) {
-                            editorInstance.value = data.htmlmessage;
-                        }
-                    }
+    // --- Template Select Handlers (Generic for future editors) ---
+    function setEditorContent(targetSelector, editorType, editorTarget, value) {
+        // Always set the textarea value to keep it in sync for AJAX submits
+        $(targetSelector).val(value);
+        switch (editorType) {
+            case 'tinymce':
+                if (typeof tinymce !== "undefined" && tinymce.get(editorTarget)) {
+                    tinymce.get(editorTarget).setContent(value);
                 }
-            }, 'json');
-
-    });
-
-    // show selected template in form
-    //$('select#generic_subject_template').change(function (e) {
-    //       e.preventDefault();
-    //	  $.post(ajaxurl,
-    //		  { action: 'eme_get_template',
-    //		   'eme_admin_nonce': ememails.translate_adminnonce,
-    //		    template_id: $('select#generic_subject_template').val(),
-    //		  },
-    //		  function(data){
-    //		      $('input#generic_mail_subject').val(data.htmlmessage);
-    //		  }, "json");
-    //  });
-
-    // show selected template in form
-    $('select#generic_message_template').on("change",function (e) {
-        e.preventDefault();
-        $.post(ajaxurl,
-            { action: 'eme_get_template',
-                'eme_admin_nonce': ememails.translate_adminnonce,
-                template_id: $('select#generic_message_template').val(),
-            },
-            function(data){
-                $('textarea#generic_mail_message').val(data.htmlmessage);
-                if (ememails.translate_htmlmail=='yes') {
-                    if (ememails.translate_htmleditor=='tinymce') {
-                        tinymce.get('generic_mail_message')?.setContent(data.htmlmessage);
-                    }
-
-                    if (ememails.translate_htmleditor=='jodit') {
-                        const editorInstance = Jodit.instances['joditdiv_generic_mail_message'];
-                        if (editorInstance) {
-                            editorInstance.value = data.htmlmessage;
-                        }
-                    }
+                break;
+            case 'jodit':
+                if (typeof Jodit !== "undefined" && Jodit.instances[editorTarget]) {
+                    Jodit.instances[editorTarget].value = value;
                 }
-            }, 'json');
+                break;
+                // Add future editors here
+        }
+    }
 
+    function templateSelectHandler({
+        selectSelector,
+        targetSelector,
+        editorType,
+        editorTarget
+    }) {
+        $(selectSelector).on("change", function(e) {
+            e.preventDefault();
+            $.post(
+                ajaxurl,
+                {
+                    action: 'eme_get_template',
+                    'eme_admin_nonce': ememails.translate_adminnonce,
+                    template_id: $(selectSelector).val()
+                },
+                function(data) {
+                    setEditorContent(targetSelector, editorType, editorTarget, data.htmlmessage);
+                },
+                'json'
+            );
+        });
+    }
+
+    templateSelectHandler({
+        selectSelector: 'select#event_subject_template',
+        targetSelector: 'input#event_mail_subject'
     });
 
-    function updateShowSendGroups () {
+    templateSelectHandler({
+        selectSelector: 'select#event_message_template',
+        targetSelector: 'textarea#event_mail_message',
+        editorType: ememails.translate_htmlmail === 'yes' ? ememails.translate_htmleditor : undefined,
+        editorTarget: (ememails.translate_htmleditor === 'tinymce') ? 'event_mail_message' :
+                      (ememails.translate_htmleditor === 'jodit') ? 'joditdiv_event_mail_message' : undefined
+    });
+
+    templateSelectHandler({
+        selectSelector: 'select#generic_message_template',
+        targetSelector: 'textarea#generic_mail_message',
+        editorType: ememails.translate_htmlmail === 'yes' ? ememails.translate_htmleditor : undefined,
+        editorTarget: (ememails.translate_htmleditor === 'tinymce') ? 'generic_mail_message' :
+                      (ememails.translate_htmleditor === 'jodit') ? 'joditdiv_generic_mail_message' : undefined
+    });
+
+    // --- Show/Hide Groups and Mail Types ---
+    function updateShowSendGroups() {
         if ($('input#eme_send_all_people').prop('checked')) {
             $('div#div_eme_send_groups').hide();
             $('div#div_eme_send_all_people').show();
@@ -347,79 +274,122 @@ jQuery(document).ready( function($) {
             $('div#div_eme_send_all_people').hide();
         }
     }
-    $('input#eme_send_all_people').on("change",updateShowSendGroups);
+    $('input#eme_send_all_people').on("change", updateShowSendGroups);
     updateShowSendGroups();
 
-    function updateShowMailTypes () {
-        if ($('select[name=eme_mail_type]').val() == 'attendees' || $('select[name=eme_mail_type]').val() == 'bookings') {
-            $('tr#eme_pending_approved_row').show();
-            $('tr#eme_only_unpaid_row').show();
-            if ($('select[name=eme_mail_type]').val() == 'attendees') {
-                $('span#span_unpaid_attendees').show();
-                $('span#span_unpaid_bookings').hide();
-            } else {
-                $('span#span_unpaid_attendees').hide();
-                $('span#span_unpaid_bookings').show();
-            }
+    function updateShowMailTypes() {
+        let mailType = $('select[name=eme_mail_type]').val();
+        if (mailType === 'attendees' || mailType === 'bookings') {
+            $('tr#eme_pending_approved_row, tr#eme_only_unpaid_row').show();
+            $('span#span_unpaid_attendees').toggle(mailType === 'attendees');
+            $('span#span_unpaid_bookings').toggle(mailType === 'bookings');
             $('tr#eme_exclude_registered_row').hide();
             $('tr#eme_rsvp_status_row').show();
         } else {
-            $('tr#eme_pending_approved_row').hide();
-            $('tr#eme_only_unpaid_row').hide();
-            if ($('select[name=eme_mail_type]').val() != '') {
-                $('tr#eme_exclude_registered_row').show();
-            } else {
-                $('tr#eme_exclude_registered_row').hide();
-            }
+            $('tr#eme_pending_approved_row, tr#eme_only_unpaid_row').hide();
+            $('tr#eme_exclude_registered_row').toggle(mailType !== '');
             $('tr#eme_rsvp_status_row').hide();
         }
-        if ($('select[name=eme_mail_type]').val() == 'people_and_groups') {
-            $('tr#eme_people_row').show();
-            $('tr#eme_groups_row').show();
-            $('tr#eme_members_row1').show();
-            $('tr#eme_members_row2').show();
-            $('tr#eme_members_row3').show();
+        if (mailType === 'people_and_groups') {
+            $('tr#eme_people_row, tr#eme_groups_row, tr#eme_members_row1, tr#eme_members_row2, tr#eme_members_row3').show();
         } else {
-            $('tr#eme_people_row').hide();
-            $('tr#eme_groups_row').hide();
-            $('tr#eme_members_row1').hide();
-            $('tr#eme_members_row2').hide();
-            $('tr#eme_members_row3').hide();
+            $('tr#eme_people_row, tr#eme_groups_row, tr#eme_members_row1, tr#eme_members_row2, tr#eme_members_row3').hide();
         }
     }
-    $('select[name=eme_mail_type]').on("change",updateShowMailTypes);
+    $('select[name=eme_mail_type]').on("change", updateShowMailTypes);
     updateShowMailTypes();
 
+    // --- Select2 Initialization (events) ---
     $('.eme_select2_events_class').select2({
         ajax: {
-            url: ajaxurl+'?action=eme_events_select2',
+            url: ajaxurl + '?action=eme_events_select2',
             dataType: 'json',
             delay: 500,
-            data: function (params) {
-                let search_all=0;
-                if ($('#eventsearch_all').is(':checked')) {
-                    search_all=1;
-                }
+            data: function(params) {
                 return {
-                    q: params.term, // search term
-                    search_all: search_all,
+                    q: params.term,
+                    search_all: $('#eventsearch_all').is(':checked') ? 1 : 0,
                     eme_admin_nonce: ememails.translate_adminnonce
                 };
             },
-            processResults: function (data, params) {
-                // parse the results into the format expected by Select2
-                // since we are using custom formatting functions we do not need to
-                // alter the remote JSON data, except to indicate that infinite
-                // scrolling can be used
-                return {
-                    results: data.Records,
-                };
+            processResults: function(data) {
+                return { results: data.Records };
             },
             cache: true
         },
         placeholder: ememails.translate_selectevents,
         width: '90%'
     });
+
+    // --- Attachment UI for Event and Generic Mails ---
+    function initAttachmentUI(buttonSelector, linksSelector, idsSelector, removeBtnSelector) {
+        $(buttonSelector).on("click", function(e) {
+            e.preventDefault();
+            let custom_uploader = wp.media({
+                title: ememails.translate_addattachments,
+                button: { text: ememails.translate_addattachments },
+                multiple: true
+            }).on('select', function() {
+                let selection = custom_uploader.state().get('selection');
+                selection.map(function(attach) {
+                    let attachment = attach.toJSON();
+                    $(linksSelector).append("<a target='_blank' href='" + attachment.url + "'>" + attachment.title + "</a><br>");
+                    let currentVal = $(idsSelector).val() || '';
+                    let idsArr = currentVal ? currentVal.split(',') : [];
+                    idsArr.push(attachment.id);
+                    $(idsSelector).val(idsArr.join(','));
+                    $(removeBtnSelector).show();
+                });
+            }).open();
+        });
+        if ($(idsSelector).val() !== '') {
+            $(removeBtnSelector).show();
+        } else {
+            $(removeBtnSelector).hide();
+        }
+        $(removeBtnSelector).on("click", function(e) {
+            e.preventDefault();
+            $(linksSelector).html('');
+            $(idsSelector).val('');
+            $(removeBtnSelector).hide();
+        });
+    }
+    initAttachmentUI('#eventmail_attach_button', '#eventmail_attach_links', '#eme_eventmail_attach_ids', '#eventmail_remove_attach_button');
+    initAttachmentUI('#generic_attach_button', '#generic_attach_links', '#eme_generic_attach_ids', '#generic_remove_attach_button');
+
+    // --- Start Date Pickers with fdatepicker ---
+    function setupFDatepicker(dateSelector, specificDatesDiv, buttonSelector, planText) {
+        if ($(dateSelector).length) {
+            $(dateSelector).fdatepicker({
+                todayButton: new Date(),
+                clearButton: true,
+                fieldSizing: true,
+                timepicker: true,
+                minutesStep: parseInt(ememails.translate_minutesStep),
+                language: ememails.translate_flanguage,
+                firstDay: parseInt(ememails.translate_firstDayOfWeek),
+                altFieldDateFormat: 'Y-m-d H:i:00',
+                multipleDatesSeparator: ', ',
+                dateFormat: ememails.translate_fdateformat,
+                timeFormat: ememails.translate_ftimeformat,
+                onSelect: function(formattedDate, date, inst) {
+                    if (!Array.isArray(date)) {
+                        $(specificDatesDiv).text("");
+                        $(buttonSelector).text(ememails.translate_sendmail);
+                    } else {
+                        $(specificDatesDiv).html('<br>' + ememails.translate_selecteddates + '<br>');
+                        $.each(date, function(_, value) {
+                            let dateFormatted = inst.formatDate(ememails.translate_fdatetimeformat, value);
+                            $(specificDatesDiv).append(dateFormatted + '<br>');
+                        });
+                        $(buttonSelector).text(planText);
+                    }
+                }
+            });
+        }
+    }
+    setupFDatepicker('#eventmail_startdate', '#eventmail-specificdates', '#eventmailButton', ememails.translate_planmail);
+    setupFDatepicker('#genericmail_startdate', '#genericmail-specificdates', '#genericmailButton', ememails.translate_planmail);
 
     //Prepare jtable plugin
     if ($('#MailingReportTableContainer').length) {
@@ -876,141 +846,6 @@ jQuery(document).ready( function($) {
             $('#ArchivedMailingsTableContainer').jtable('load');
             // return false to make sure the real form doesn't submit
             return false;
-        });
-    }
-
-    $('#eventmail_attach_button').on("click",function(e) {
-        e.preventDefault();
-        let custom_uploader = wp.media({
-            title: ememails.translate_addattachments,
-            button: {
-                text: ememails.translate_addattachments
-            },
-            multiple: true  // Set this to true to allow multiple files to be selected
-        }).on('select', function() {
-            let selection = custom_uploader.state().get('selection');
-            // using map is not really needed, but this way we can reuse the code if multiple=true
-            // let attachment = custom_uploader.state().get('selection').first().toJSON();
-            selection.map( function(attach) {
-                attachment = attach.toJSON();
-                $('#eventmail_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
-                if ($('#eme_eventmail_attach_ids').val() != '') {
-                    tmp_ids_arr=$('#eme_eventmail_attach_ids').val().split(',');
-                } else {
-                    tmp_ids_arr=[];
-                }
-                tmp_ids_arr.push(attachment.id);
-                tmp_ids_val=tmp_ids_arr.join(',');
-                $('#eme_eventmail_attach_ids').val(tmp_ids_val);
-                $('#eventmail_remove_attach_button').show();
-            });
-        }).open();
-    });
-    if ($('#eme_eventmail_attach_ids').val() != '') {
-        $('#eventmail_remove_attach_button').show();
-    } else {
-        $('#eventmail_remove_attach_button').hide();
-    }
-    $('#eventmail_remove_attach_button').on("click",function(e) {
-        e.preventDefault();
-        $('#eventmail_attach_links').html('');
-        $('#eme_eventmail_attach_ids').val('');
-        $('#eventmail_remove_attach_button').hide();
-    });
-
-    $('#generic_attach_button').on("click",function(e) {
-        e.preventDefault();
-        let custom_uploader = wp.media({
-            title: ememails.translate_addattachments,
-            button: {
-                text: ememails.translate_addattachments
-            },
-            multiple: true  // Set this to true to allow multiple files to be selected
-        }).on('select', function() {
-            let selection = custom_uploader.state().get('selection');
-            // using map is not really needed, but this way we can reuse the code if multiple=true
-            // let attachment = custom_uploader.state().get('selection').first().toJSON();
-            selection.map( function(attach) {
-                attachment = attach.toJSON();
-                $('#generic_attach_links').append("<a target='_blank' href='"+attachment.url+"'>"+attachment.title+"</a><br>");
-                if ($('#eme_generic_attach_ids').val() != '') {
-                    tmp_ids_arr=$('#eme_generic_attach_ids').val().split(',');
-                } else {
-                    tmp_ids_arr=[];
-                }
-                tmp_ids_arr.push(attachment.id);
-                tmp_ids_val=tmp_ids_arr.join(',');
-                $('#eme_generic_attach_ids').val(tmp_ids_val);
-                $('#generic_remove_attach_button').show();
-            });
-        }).open();
-    });
-    if ($('#eme_generic_attach_ids').val() != '') {
-        $('#generic_remove_attach_button').show();
-    } else {
-        $('#generic_remove_attach_button').hide();
-    }
-    $('#generic_remove_attach_button').on("click",function(e) {
-        e.preventDefault();
-        $('#generic_attach_links').html('');
-        $('#eme_generic_attach_ids').val('');
-        $('#generic_remove_attach_button').hide();
-    });
-
-    if ($('#eventmail_startdate').length) {
-        $('#eventmail_startdate').fdatepicker({
-            todayButton: new Date(),
-            clearButton: true,
-            fieldSizing: true,
-            timepicker: true,
-            minutesStep: parseInt(ememails.translate_minutesStep),
-            language: ememails.translate_flanguage,
-            firstDay: parseInt(ememails.translate_firstDayOfWeek),
-            altFieldDateFormat: 'Y-m-d H:i:00',
-            multipleDatesSeparator: ', ',
-            dateFormat: ememails.translate_fdateformat,
-            timeFormat: ememails.translate_ftimeformat,
-            onSelect: function(formattedDate,date,inst) {
-                if (!Array.isArray(date)) {
-                    $('#eventmail-specificdates').text("");
-                    $('#eventmailButton').text(ememails.translate_sendmail);
-                } else {
-                    $('#eventmail-specificdates').html('<br>'+ememails.translate_selecteddates+'<br>');
-                    $.each(date, function( index, value ) {
-                        date_formatted = inst.formatDate(ememails.translate_fdatetimeformat,value);
-                        $('#eventmail-specificdates').append(date_formatted+'<br>');
-                    });
-                    $('#eventmailButton').text(ememails.translate_planmail);
-                }
-            }
-        });
-    }
-    if ($('#genericmail_startdate').length) {
-        $('#genericmail_startdate').fdatepicker({
-            todayButton: new Date(),
-            clearButton: true,
-            fieldSizing: true,
-            timepicker: true,
-            minutesStep: parseInt(ememails.translate_minutesStep),
-            language: ememails.translate_flanguage,
-            firstDay: parseInt(ememails.translate_firstDayOfWeek),
-            altFieldDateFormat: 'Y-m-d H:i:00',
-            multipleDatesSeparator: ', ',
-            dateFormat: ememails.translate_fdateformat,
-            timeFormat: ememails.translate_ftimeformat,
-            onSelect: function(formattedDate,date,inst) {
-                if (!Array.isArray(date)) {
-                    $('#genericmail-specificdates').text("");
-                    $('#genericmailButton').text(ememails.translate_sendmail);
-                } else {
-                    $('#genericmail-specificdates').html('<br>'+ememails.translate_selecteddates+'<br>');
-                    $.each(date, function( index, value ) {
-                        date_formatted = inst.formatDate(ememails.translate_fdatetimeformat,value);
-                        $('#genericmail-specificdates').append(date_formatted+'<br>');
-                    });
-                    $('#genericmailButton').text(ememails.translate_planmail);
-                }
-            }
         });
     }
 });

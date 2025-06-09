@@ -32,12 +32,12 @@ msgstr "au nom de %s"
 #: eme-events.php:10160
 #: eme-events.php:10554
 #: eme-events.php:10814
-#: eme-formfields.php:5067
-#: eme-formfields.php:5122
-#: eme-formfields.php:5133
+#: eme-formfields.php:5068
+#: eme-formfields.php:5123
 #: eme-formfields.php:5134
-#: eme-formfields.php:5156
+#: eme-formfields.php:5135
 #: eme-formfields.php:5157
+#: eme-formfields.php:5158
 #: eme-functions.php:3408
 #: eme-functions.php:3429
 #: eme-functions.php:3430
@@ -155,10 +155,6 @@ msgstr "Oui, je suis sûr"
 #: eme-actions.php:553
 msgid "This page corresponds to <strong>Events Made Easy</strong> events page. Its content will be overriden by <strong>Events Made Easy</strong>. If you want to display your content, you can can assign another page to <strong>Events Made Easy</strong> in the <a href='%s'>Settings</a>. "
 msgstr "Cette page correspond à la page des évènements <strong>Events Made Easy</strong>. Son contenu sera précisé par<strong>Events Made Easy</strong>. Si vous souhaitez afficher votre contenu, vous pouvez affecter une autre page à <strong>Events Made Easy</strong> dans les <a href='%s'>Réglages</a>. "
-
-#: eme-actions.php:577
-msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href=\"%6$s\" title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
-msgstr "<p>Hey, <strong>%s</strong>, Bienvenue à <strong>Events Made Easy</strong>! Nous espérons que vous l'aimerez ici.</p><p>Maintenant il est temps d’insérer des listes d’évènements à travers<a href='%s' title=' Page des widgets'>widgets</a>, <a href='%s' title='Documentation sur les marqueurs de modèles'>marqueurs de modèle</a> ou <a href='%s' title='Documentation des codes courts'>codes courts</a>.</p><p>Au fait, avez-vous jeté un coup d’œil aux <a href='%s' title='Changer les paramètres'> Pages des paramètres</a> ? C'est là que vous personnalisez la manière dont les évènements et les emplacements sont affichés.</p><p>Quoi ? Fatigué de voir ce conseil ? Je vous entends, <a href=\"%s\" title=\"Ne plus afficher ce conseil\">cliquez ici</a> et vous ne le verrez plus !</p>"
 
 #: eme-actions.php:588
 msgid "If you find <strong>Events Made Easy</strong> useful to you, please consider making a small donation to help contribute to my time invested and to further development. Thanks for your kind support!"
@@ -315,7 +311,7 @@ msgstr "Pas de modèle defini"
 
 #: eme-attributes.php:123
 #: eme-attributes.php:143
-#: eme-formfields.php:4971
+#: eme-formfields.php:4972
 #: eme-tasks.php:804
 #: eme-todos.php:221
 msgid "Remove"
@@ -403,7 +399,7 @@ msgstr "Nom"
 
 #: eme-categories.php:573
 #: eme-events.php:10270
-#: eme-formfields.php:5103
+#: eme-formfields.php:5104
 #: eme-holidays.php:293
 #: eme-locations.php:2987
 #: eme-members.php:6543
@@ -1495,19 +1491,19 @@ msgstr "Fixe par siège"
 
 #: eme-discounts.php:1611
 #: eme-discounts.php:1612
-#: eme-formfields.php:1307
-#: eme-formfields.php:1318
-#: eme-formfields.php:3050
-#: eme-formfields.php:3063
-#: eme-formfields.php:3991
-#: eme-formfields.php:4002
-#: eme-formfields.php:4629
-#: eme-formfields.php:4639
-#: eme-formfields.php:4649
-#: eme-formfields.php:5106
-#: eme-formfields.php:5108
+#: eme-formfields.php:1308
+#: eme-formfields.php:1319
+#: eme-formfields.php:3051
+#: eme-formfields.php:3064
+#: eme-formfields.php:3992
+#: eme-formfields.php:4003
+#: eme-formfields.php:4630
+#: eme-formfields.php:4640
+#: eme-formfields.php:4650
+#: eme-formfields.php:5107
 #: eme-formfields.php:5109
 #: eme-formfields.php:5110
+#: eme-formfields.php:5111
 #: eme-fs.php:624
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -1536,19 +1532,19 @@ msgstr "Oui"
 
 #: eme-discounts.php:1611
 #: eme-discounts.php:1612
-#: eme-formfields.php:1308
-#: eme-formfields.php:1319
-#: eme-formfields.php:3051
-#: eme-formfields.php:3064
-#: eme-formfields.php:3992
-#: eme-formfields.php:4003
-#: eme-formfields.php:4630
-#: eme-formfields.php:4640
-#: eme-formfields.php:4650
-#: eme-formfields.php:5106
-#: eme-formfields.php:5108
+#: eme-formfields.php:1309
+#: eme-formfields.php:1320
+#: eme-formfields.php:3052
+#: eme-formfields.php:3065
+#: eme-formfields.php:3993
+#: eme-formfields.php:4004
+#: eme-formfields.php:4631
+#: eme-formfields.php:4641
+#: eme-formfields.php:4651
+#: eme-formfields.php:5107
 #: eme-formfields.php:5109
 #: eme-formfields.php:5110
+#: eme-formfields.php:5111
 #: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -3881,7 +3877,7 @@ msgstr "Prix de l’évènement"
 #: eme-events.php:9677
 #: eme-events.php:9688
 #: eme-events.php:9774
-#: eme-formfields.php:5114
+#: eme-formfields.php:5115
 msgid "Copy"
 msgstr "Copier"
 
@@ -4034,9 +4030,9 @@ msgstr "Date de fin de la tâche"
 
 #: eme-events.php:9644
 #: eme-events.php:9944
-#: eme-formfields.php:1199
-#: eme-formfields.php:2025
-#: eme-formfields.php:3218
+#: eme-formfields.php:1200
+#: eme-formfields.php:2026
+#: eme-formfields.php:3219
 #: eme-options.php:39
 #: eme-people.php:1081
 #: eme-people.php:1408
@@ -4070,7 +4066,7 @@ msgid "Records deleted"
 msgstr "Enregistrements supprimés"
 
 #: eme-events.php:9665
-#: eme-formfields.php:4912
+#: eme-formfields.php:4913
 #: eme-options.php:1571
 #: events-manager.php:360
 msgid "Templates"
@@ -4196,11 +4192,11 @@ msgstr "Modifier l’emplacement '%s'."
 #: eme-events.php:9778
 #: eme-events.php:9812
 #: eme-events.php:9876
-#: eme-formfields.php:1260
-#: eme-formfields.php:1857
-#: eme-formfields.php:2943
-#: eme-formfields.php:3911
-#: eme-formfields.php:4558
+#: eme-formfields.php:1261
+#: eme-formfields.php:1858
+#: eme-formfields.php:2944
+#: eme-formfields.php:3912
+#: eme-formfields.php:4559
 #: eme-gdpr.php:431
 #: eme-gdpr.php:570
 #: eme-locations.php:568
@@ -4213,11 +4209,11 @@ msgstr "Ville"
 #: eme-events.php:9779
 #: eme-events.php:9813
 #: eme-events.php:9877
-#: eme-formfields.php:1270
-#: eme-formfields.php:1879
-#: eme-formfields.php:2955
-#: eme-formfields.php:3921
-#: eme-formfields.php:4574
+#: eme-formfields.php:1271
+#: eme-formfields.php:1880
+#: eme-formfields.php:2956
+#: eme-formfields.php:3922
+#: eme-formfields.php:4575
 #: eme-gdpr.php:432
 #: eme-gdpr.php:574
 #: eme-locations.php:576
@@ -4267,14 +4263,14 @@ msgstr "Groupes"
 
 #: eme-events.php:9808
 #: eme-events.php:9868
-#: eme-formfields.php:1152
-#: eme-formfields.php:1479
-#: eme-formfields.php:1795
-#: eme-formfields.php:2855
-#: eme-formfields.php:3449
-#: eme-formfields.php:3835
-#: eme-formfields.php:4309
-#: eme-formfields.php:4492
+#: eme-formfields.php:1153
+#: eme-formfields.php:1480
+#: eme-formfields.php:1796
+#: eme-formfields.php:2856
+#: eme-formfields.php:3450
+#: eme-formfields.php:3836
+#: eme-formfields.php:4310
+#: eme-formfields.php:4493
 #: eme-gdpr.php:247
 #: eme-gdpr.php:426
 #: eme-gdpr.php:550
@@ -4295,15 +4291,15 @@ msgstr "Nom de famille"
 
 #: eme-events.php:9809
 #: eme-events.php:9869
-#: eme-formfields.php:1168
-#: eme-formfields.php:1491
-#: eme-formfields.php:1811
-#: eme-formfields.php:2882
-#: eme-formfields.php:3129
-#: eme-formfields.php:3465
-#: eme-formfields.php:3859
-#: eme-formfields.php:4323
-#: eme-formfields.php:4507
+#: eme-formfields.php:1169
+#: eme-formfields.php:1492
+#: eme-formfields.php:1812
+#: eme-formfields.php:2883
+#: eme-formfields.php:3130
+#: eme-formfields.php:3466
+#: eme-formfields.php:3860
+#: eme-formfields.php:4324
+#: eme-formfields.php:4508
 #: eme-gdpr.php:247
 #: eme-gdpr.php:427
 #: eme-gdpr.php:554
@@ -4326,14 +4322,14 @@ msgstr "Prénom"
 #: eme-events.php:9816
 #: eme-events.php:9870
 #: eme-events.php:10012
-#: eme-formfields.php:1177
-#: eme-formfields.php:1500
-#: eme-formfields.php:1924
-#: eme-formfields.php:3006
-#: eme-formfields.php:3496
-#: eme-formfields.php:3969
-#: eme-formfields.php:4336
-#: eme-formfields.php:4603
+#: eme-formfields.php:1178
+#: eme-formfields.php:1501
+#: eme-formfields.php:1925
+#: eme-formfields.php:3007
+#: eme-formfields.php:3497
+#: eme-formfields.php:3970
+#: eme-formfields.php:4337
+#: eme-formfields.php:4604
 #: eme-gdpr.php:128
 #: eme-gdpr.php:202
 #: eme-gdpr.php:318
@@ -4356,14 +4352,14 @@ msgid "Email"
 msgstr "E-mail"
 
 #: eme-events.php:9817
-#: eme-formfields.php:1190
-#: eme-formfields.php:2007
-#: eme-formfields.php:2016
-#: eme-formfields.php:3025
-#: eme-formfields.php:3037
-#: eme-formfields.php:3481
-#: eme-formfields.php:3980
-#: eme-formfields.php:4617
+#: eme-formfields.php:1191
+#: eme-formfields.php:2008
+#: eme-formfields.php:2017
+#: eme-formfields.php:3026
+#: eme-formfields.php:3038
+#: eme-formfields.php:3482
+#: eme-formfields.php:3981
+#: eme-formfields.php:4618
 #: eme-gdpr.php:435
 #: eme-gdpr.php:586
 #: eme-options.php:37
@@ -4968,7 +4964,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Incluez ce champ dans l'exportation CSV pour les réservations."
 
 #: eme-formfields.php:353
-#: eme-formfields.php:4911
+#: eme-formfields.php:4912
 msgid "Field condition"
 msgstr "Condition du champ"
 
@@ -5289,8 +5285,8 @@ msgid "Checkbox (vertical)"
 msgstr "Case à cocher (verticale)"
 
 #: eme-formfields.php:585
-#: eme-formfields.php:1995
-#: eme-formfields.php:3131
+#: eme-formfields.php:1996
+#: eme-formfields.php:3132
 msgid "Password"
 msgstr "Mot de passe"
 
@@ -5366,112 +5362,112 @@ msgstr "Tel (HTML5)"
 msgid "Url (HTML5)"
 msgstr "Url (HTML5)"
 
-#: eme-formfields.php:712
+#: eme-formfields.php:713
 msgid "This is a hidden field, but in the backend it is shown as text so an admin can see its value and optionally change it"
 msgstr "C’est un champ caché, mais dans l’interface d’administration, il est affiché sous forme de texte afin qu’un administrateur puisse voir sa valeur et éventuellement la modifier"
 
-#: eme-formfields.php:1156
-#: eme-formfields.php:2859
+#: eme-formfields.php:1157
+#: eme-formfields.php:2860
 msgid "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Notification : puisque vous êtes connecté en tant que personne ayant le droit de modifier ou de créer cet évènement, le champ 'Nom de famille' est également un champ à complétion automatique vous permettant de sélectionner des personnes existantes si vous le souhaitez. Ou effacez simplement le champ et commencez à taper."
 
-#: eme-formfields.php:1207
-#: eme-formfields.php:1958
-#: eme-formfields.php:3088
-#: eme-formfields.php:4023
-#: eme-formfields.php:4382
+#: eme-formfields.php:1208
+#: eme-formfields.php:1959
+#: eme-formfields.php:3089
+#: eme-formfields.php:4024
+#: eme-formfields.php:4383
 msgid "Remember me?"
 msgstr "Souviens-toi de moi ?"
 
-#: eme-formfields.php:1218
-#: eme-formfields.php:1820
-#: eme-formfields.php:2893
-#: eme-formfields.php:3553
-#: eme-formfields.php:3870
-#: eme-formfields.php:4521
+#: eme-formfields.php:1219
+#: eme-formfields.php:1821
+#: eme-formfields.php:2894
+#: eme-formfields.php:3554
+#: eme-formfields.php:3871
+#: eme-formfields.php:4522
 #: eme-people.php:1048
 #: eme-people.php:2387
 #: eme-rsvp.php:1462
 msgid "Date of birth"
 msgstr "Date de naissance"
 
-#: eme-formfields.php:1230
-#: eme-formfields.php:1830
-#: eme-formfields.php:2907
-#: eme-formfields.php:3537
-#: eme-formfields.php:3881
-#: eme-formfields.php:4532
+#: eme-formfields.php:1231
+#: eme-formfields.php:1831
+#: eme-formfields.php:2908
+#: eme-formfields.php:3538
+#: eme-formfields.php:3882
+#: eme-formfields.php:4533
 #: eme-people.php:1049
 #: eme-people.php:2401
 #: eme-rsvp.php:1465
 msgid "Place of birth"
 msgstr "Lieu de naissance"
 
-#: eme-formfields.php:1345
-#: eme-formfields.php:4400
+#: eme-formfields.php:1346
+#: eme-formfields.php:4401
 msgid "Subscribe"
 msgstr "Souscrire"
 
-#: eme-formfields.php:1378
-#: eme-formfields.php:1562
+#: eme-formfields.php:1379
+#: eme-formfields.php:1563
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_EMAIL placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Il faut au minimum les espaces réservés #_LASTNAME et #_EMAIL."
 
-#: eme-formfields.php:1512
+#: eme-formfields.php:1513
 msgid "Cancel reason"
 msgstr "Raison de l’annulation"
 
-#: eme-formfields.php:1671
+#: eme-formfields.php:1672
 msgid "Not all required fields are present in the form. We need at least #_CANCEL_PAYMENT_LINE and #_SUBMIT (or similar) placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Nous avons besoin au moins des espaces réservés #_CANCEL_PAYMENT_LINE et de #_SUBMIT (ou similaire)."
 
-#: eme-formfields.php:1971
-#: eme-formfields.php:3103
-#: eme-formfields.php:4036
+#: eme-formfields.php:1972
+#: eme-formfields.php:3104
+#: eme-formfields.php:4037
 msgid "Group is not public"
 msgstr "Le groupe n’est pas public"
 
-#: eme-formfields.php:1986
-#: eme-formfields.php:3118
-#: eme-formfields.php:4051
+#: eme-formfields.php:1987
+#: eme-formfields.php:3119
+#: eme-formfields.php:4052
 msgid "Group does not exist"
 msgstr "Le groupe n’existe pas"
 
-#: eme-formfields.php:3193
+#: eme-formfields.php:3194
 msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings."
 msgstr "En utilisant #_SEATS {xx}, vous utilisez plusieurs catégories de places dans votre modèle de RSVP, mais vous n'avez pas défini de prix pour chaque catégorie dans les paramètres de RSVP de votre évènement. Veuillez corriger les paramètres d'évènement RSVP."
 
-#: eme-formfields.php:3319
-#: eme-formfields.php:4067
+#: eme-formfields.php:3320
+#: eme-formfields.php:4068
 msgid "Discount code"
 msgstr "Code de remise"
 
-#: eme-formfields.php:3325
-#: eme-formfields.php:4073
+#: eme-formfields.php:3326
+#: eme-formfields.php:4074
 msgid "Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:"
 msgstr "Saisissez une nouvelle valeur de remise fixe si vous le souhaitez ou laissez comme telle pour conserver la valeur calculée %s selon les remises appliquées suivantes :"
 
-#: eme-formfields.php:3327
-#: eme-formfields.php:4075
+#: eme-formfields.php:3328
+#: eme-formfields.php:4076
 msgid "Enter a fixed discount value if wanted"
 msgstr "Entrez une valeur de remise fixe si vous le souhaitez"
 
-#: eme-formfields.php:3332
-#: eme-formfields.php:4080
+#: eme-formfields.php:3333
+#: eme-formfields.php:4081
 #: eme-people.php:1178
 #: eme-people.php:1478
 msgid "Discountgroup %s"
 msgstr "Groupe de remises %s"
 
-#: eme-formfields.php:3334
-#: eme-formfields.php:4082
+#: eme-formfields.php:3335
+#: eme-formfields.php:4083
 #: eme-people.php:1180
 #: eme-people.php:1480
 msgid "Applied discount group %d no longer exists"
 msgstr "Groupe de remise appliqué %d n’existe plus"
 
-#: eme-formfields.php:3344
-#: eme-formfields.php:4092
+#: eme-formfields.php:3345
+#: eme-formfields.php:4093
 #: eme-members.php:5283
 #: eme-people.php:1190
 #: eme-people.php:1490
@@ -5479,162 +5475,162 @@ msgstr "Groupe de remise appliqué %d n’existe plus"
 msgid "Applied discount %d no longer exists"
 msgstr "Remise appliquée %d n'existe plus"
 
-#: eme-formfields.php:3348
-#: eme-formfields.php:4096
+#: eme-formfields.php:3349
+#: eme-formfields.php:4097
 msgid "Only one discount field can be used in the admin backend, the others are not rendered"
 msgstr "Un seul des champs de réduction peut être utilisé dans l'interface d'administration, les autres ne le seront pas"
 
-#: eme-formfields.php:3354
+#: eme-formfields.php:3355
 msgid "Update booking"
 msgstr "Mise à jour de la réservation"
 
-#: eme-formfields.php:3402
+#: eme-formfields.php:3403
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Il est nécessaire d'avoir au moins #_LASTNAME, #_EMAIL, #_SEATS et #_SUBMIT (ou similaires)."
 
-#: eme-formfields.php:3405
+#: eme-formfields.php:3406
 msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
 msgstr "Comme c'est un évènement multiprix, assurez-vous que vous avez modifié le paramètre « formulaire de réservation » pour l'évènement afin d'inclure #_SEAT{xx} siège(s) réservé(s) pour chaque prix."
 
-#: eme-formfields.php:3408
+#: eme-formfields.php:3409
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr "Vérifiez que l'espace réservé #_PASSWORD est présent dans le formulaire."
 
-#: eme-formfields.php:3610
+#: eme-formfields.php:3611
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Nous avons besoin d’au moins les espaces réservés #_LASTNAME et #_FIRSTNAME."
 
-#: eme-formfields.php:3839
+#: eme-formfields.php:3840
 msgid "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Notification : puisque vous êtes connecté en tant que personne ayant le droit de gérer des membres et des adhésions, le champ 'Nom de famille' est également un champ à complétion automatique vous permettant de sélectionner des personnes existantes si vous le souhaitez. Ou effacez simplement le champ et commencez à taper."
 
-#: eme-formfields.php:4127
+#: eme-formfields.php:4128
 msgid "In the backend you can't add or edit family member info, use the frontend form for that."
 msgstr "Dans l’interface d’administration, vous ne pouvez pas ajouter ou modifier les informations relatives aux membres de la famille, utilisez le formulaire du site public pour cela."
 
-#: eme-formfields.php:4192
+#: eme-formfields.php:4193
 msgid "Update member"
 msgstr "Mise à jour du membre"
 
-#: eme-formfields.php:4197
+#: eme-formfields.php:4198
 msgid "Become member"
 msgstr "Devenir membre"
 
-#: eme-formfields.php:4229
-#: eme-formfields.php:4747
+#: eme-formfields.php:4230
+#: eme-formfields.php:4748
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Il faut au moins les champs #_LASTNAME, #_FIRSTNAME, #_EMAIL et #_SUBMIT (ou similaire)."
 
-#: eme-formfields.php:4250
+#: eme-formfields.php:4251
 #: eme-tasks.php:460
 #: eme-templates.php:43
 msgid "All"
 msgstr "Tous"
 
-#: eme-formfields.php:4255
-#: eme-formfields.php:4351
+#: eme-formfields.php:4256
+#: eme-formfields.php:4352
 msgid "Newsletter concerning new events"
 msgstr "Lettre d’information sur les évènements à venir"
 
-#: eme-formfields.php:4313
-#: eme-formfields.php:4496
+#: eme-formfields.php:4314
+#: eme-formfields.php:4497
 msgid "You can change your last name in your WP profile."
 msgstr "Vous pouvez modifier votre nom de famille dans votre profil WP."
 
-#: eme-formfields.php:4327
-#: eme-formfields.php:4511
+#: eme-formfields.php:4328
+#: eme-formfields.php:4512
 msgid "You can change your first name in your WP profile."
 msgstr "Vous pouvez modifier votre prénom dans votre profil WP."
 
-#: eme-formfields.php:4340
-#: eme-formfields.php:4607
+#: eme-formfields.php:4341
+#: eme-formfields.php:4608
 msgid "You can change your email in your WP profile."
 msgstr "Vous pouvez modifier votre e-mail dans votre profil WP."
 
-#: eme-formfields.php:4398
+#: eme-formfields.php:4399
 msgid "Unsubscribe"
 msgstr "Se désabonner"
 
-#: eme-formfields.php:4423
+#: eme-formfields.php:4424
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Tous les champs obligatoires ne sont pas présents dans le formulaire. Il faut au moins les champs #_EMAIL et #_SUBMIT (ou similaires)."
 
-#: eme-formfields.php:4718
+#: eme-formfields.php:4719
 msgid "Save personal info"
 msgstr "Enregistrer les informations personnelles"
 
-#: eme-formfields.php:4905
+#: eme-formfields.php:4906
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Afficher dynamiquement les champs en fonction d’un certain nombre de conditions"
 
-#: eme-formfields.php:4910
+#: eme-formfields.php:4911
 msgid "Index"
 msgstr "Index"
 
-#: eme-formfields.php:4956
+#: eme-formfields.php:4957
 msgid "Field"
 msgstr "Champ"
 
-#: eme-formfields.php:4957
+#: eme-formfields.php:4958
 msgid "Condition"
 msgstr "Condition"
 
-#: eme-formfields.php:4958
+#: eme-formfields.php:4959
 msgid "Condition value"
 msgstr "Valeur de la condition"
 
-#: eme-formfields.php:4913
+#: eme-formfields.php:4914
 msgid "Repeat"
 msgstr "Répéter"
 
-#: eme-formfields.php:4943
+#: eme-formfields.php:4944
 #: eme-tasks.php:767
 #: eme-todos.php:203
 msgid "Reorder"
 msgstr "Réorganiser"
 
-#: eme-formfields.php:4962
+#: eme-formfields.php:4963
 msgid "Header template"
 msgstr "Modèle d’en-tête"
 
-#: eme-formfields.php:4963
+#: eme-formfields.php:4964
 msgid "Template"
 msgstr "Modèle"
 
-#: eme-formfields.php:4964
+#: eme-formfields.php:4965
 msgid "Footer template"
 msgstr "Modèle de pied de page"
 
-#: eme-formfields.php:4971
+#: eme-formfields.php:4972
 msgid "Add new condition"
 msgstr "Ajouter une nouvelle condition"
 
-#: eme-formfields.php:4974
+#: eme-formfields.php:4975
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Avertissement : des réponses ont déjà été saisies sur la base de cette condition, modifier ou supprimer cette condition peut entraîner des effets secondaires indésirables."
 
-#: eme-formfields.php:4985
+#: eme-formfields.php:4986
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Cela affichera en outre le modèle sélectionné dans le formulaire si la condition est remplie."
 
-#: eme-formfields.php:4987
+#: eme-formfields.php:4988
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "Le paramètre « Champ » doit être rempli avec tous les espaces réservés valides autorisés dans le formulaire."
 
-#: eme-formfields.php:4989
+#: eme-formfields.php:4990
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "Le modèle sélectionné sera affiché plusieurs fois si l’option de répétition est utilisée (en fonction du nombre de fois où le champ est différent de la valeur de la condition. Ceci n’est pas utilisé pour le sélecteur de condition « égal à »)."
 
-#: eme-formfields.php:4991
+#: eme-formfields.php:4992
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "Le modèle sélectionné peut contenir du HTML et des espaces réservés pour les champs de formulaire personnalisés (aucun autre espace réservé n’est autorisé)."
 
-#: eme-formfields.php:4992
+#: eme-formfields.php:4993
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Utilisez l’espace réservé #_DYNAMICDATA pour afficher un formulaire dynamique dans le formulaire de réservation."
 
-#: eme-formfields.php:5143
-#: eme-formfields.php:5153
+#: eme-formfields.php:5144
+#: eme-formfields.php:5154
 #: eme-functions.php:3426
 msgid "Records deleted!"
 msgstr "Enregistrements supprimés !"
@@ -6072,7 +6068,7 @@ msgstr "EME utilise éventuellement un cookie pour stocker la date et l'heure du
 
 #. Plugin Name of the plugin
 #: events-manager.php
-#: eme-actions.php:738
+#: eme-actions.php:745
 #: eme-gdpr.php:520
 #: events-manager.php:350
 msgid "Events Made Easy"
@@ -13505,7 +13501,7 @@ msgstr "Corps de l’e-mail à la personne de contact d’un membre effacé"
 msgid "The body of the mail sent to the contactperson just before a member is deleted."
 msgstr "Le corps de l’e-mail envoyé à la personne de contact juste avant la suppression d'un membre."
 
-#: eme-actions.php:743
+#: eme-actions.php:750
 msgid "List of next 10 events"
 msgstr "Liste des 10 prochains évènements"
 
@@ -14471,3 +14467,7 @@ msgstr "Pour les champs qui acceptent plusieurs valeurs (comme les listes dérou
 #: eme-formfields.php:385
 msgid "For the types 'Date (Javascript)', 'Datetime (Javascript)' and 'Time (Javascript)' you can optionally enter the word 'NOW' to automatically use the current date and/or time when the field is displayed."
 msgstr "Pour les types 'Date (Javascript)', 'Datetime (Javascript)' et 'Time (Javascript)', vous pouvez entrer le mot 'NOW' pour utiliser automatiquement la date et/ou l’heure actuelles lors de l’affichage du champ."
+
+#: eme-actions.php:577
+msgid "<p>Hey, <strong>%s</strong>, welcome to <strong>Events Made Easy</strong>! We hope you like it around here.</p><p>Now it's time to insert events lists through <a href='%s' title='Widgets page'>widgets</a>, <a href='%s' title='Template tags documentation'>template tags</a> or <a href='%s' title='Shortcodes documentation'>shortcodes</a>.</p><p>By the way, have you taken a look at the <a href='%s' title='Change settings'>Settings page</a>? That's where you customize the way events and locations are displayed.</p><p>What? Tired of seeing this advice? I hear you, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Don't show this advice again\">click here</a> and you won't see this again!</p>"
+msgstr "<p>Salut, <strong>%s</strong>, bienvenue sur <strong>Events Made Easy</strong> ! Nous espérons que vous vous y plaisez.</p><p>Il est maintenant temps d'insérer des listes d'événements via des <a href='%s' title='Page des widgets'>widgets</a>, des <a href='%s' title='Documentation des balises de modèle'>balises de modèle</a> ou des <a href='%s' title='Documentation des shortcodes'>shortcodes</a>.</p><p>Au fait, avez-vous jeté un coup d'œil à la <a href='%s' title='Modifier les paramètres'>page des paramètres</a> ? C'est là que vous personnalisez l'affichage des événements et des lieux.</p><p>Quoi ? Fatigué de voir ce conseil ? Je vous comprends, <a href='#' class='eme-dismiss-notice' data-notice='hello' title=\"Ne plus afficher ce conseil\">cliquez ici</a> et vous ne le verrez plus !</p>"

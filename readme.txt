@@ -99,6 +99,13 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.6.3 (2025/06/) =
+* JS code refactoring, including minor fixes
+* Mercadopago API update to 3.5.0
+* Mail template selection was not working for tinymce in html modus, fixed
+* Admin notices now get dismissed via ajax
+* Long unseen bug in custom field dropdowns if the admin fields were different than the frontend ones but the admin tags were empty
+
 = 2.6.2 (2025/06/06) =
 * allow BEGINOPTGROUP and ENDOPTGROUP for dropdown fields
 * Update Mollie API to 3.1.0

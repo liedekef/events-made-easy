@@ -62,7 +62,7 @@ jQuery(document).ready(function($) {
             }).change(function() {
                 if ($(this).val() === '') {
                     $(hiddenIdSelector).val('');
-                    $(this).attr('readonly', false).removeClass('clearable');
+                    $(this).attr('readonly', false).removeClass('clearable x');
                 }
             });
         }
@@ -162,7 +162,8 @@ jQuery(document).ready(function($) {
                 if (data.Result === 'OK') {
                     inputSelectors.forEach(sel => {
                         $(sel).val('');
-                        if (sel.indexOf('chooseperson') > -1) $(sel).attr('readonly', false);
+                        // the next line matches the visible elements name=chooseperson and name=eventmail_chooseperson
+                        if (sel.indexOf('chooseperson') > -1) $(sel).attr('readonly', false).removeClass('clearable x');
                     });
                 }
             });

@@ -372,6 +372,11 @@ div.jtable-main-container table.jtable tbody > tr > td .jtable-edit-command-butt
   width: 16px;
   height: 16px;
 }
+div.jtable-main-container table.jtable tbody > tr > td .jtable-clone-command-button {
+  background: url('../clone.png') no-repeat;
+  width: 16px;
+  height: 16px;
+}
 div.jtable-main-container table.jtable tbody > tr > td .jtable-delete-command-button {
   background: url('../delete.png') no-repeat;
   width: 16px;

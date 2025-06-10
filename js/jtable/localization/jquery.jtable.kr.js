@@ -29,7 +29,8 @@
         descending: '내림차순',
         sortingInfoNone: '정렬이 적용되지 않음',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

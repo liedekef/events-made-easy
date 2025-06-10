@@ -29,7 +29,8 @@
         descending: '降序',
         sortingInfoNone: '未应用排序',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

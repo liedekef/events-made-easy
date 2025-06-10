@@ -29,6 +29,7 @@ $.extend(true, jTable.prototype.options.messages, {serverCommunicationError: 'Π
     descending: 'Φθίνουσα',
     sortingInfoNone: 'Δεν εφαρμόστηκε ταξινόμηση',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
 });
 })(jQuery);

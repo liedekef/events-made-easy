@@ -30,7 +30,8 @@
         descending: 'Turun',
         sortingInfoNone: 'Tidak ada pengurutan yang diterapkan',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

@@ -29,7 +29,8 @@
         descending: 'இறங்குவரிசை',
         sortingInfoNone: 'வரிசைப்படுத்தல் பயன்படுத்தப்படவில்லை',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

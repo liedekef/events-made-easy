@@ -29,7 +29,8 @@
         descending: 'Descendent',
         sortingInfoNone: 'No s\'ha aplicat cap ordenació',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

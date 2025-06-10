@@ -29,7 +29,8 @@
         descending: 'ﻥﺯﻮﻠﯾ',
         sortingInfoNone: 'ﻪﯿﭼ ﻡﺮﺘﺑ<200c>ﺳﺍﺰﯾ ﺎﻌﻣﺎﻟ ﻦﺷﺪﻫ ﺎﺴﺗ',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

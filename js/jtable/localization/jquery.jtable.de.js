@@ -29,7 +29,8 @@
         descending: 'Absteigend',
         sortingInfoNone: 'Keine Sortierung angewendet',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

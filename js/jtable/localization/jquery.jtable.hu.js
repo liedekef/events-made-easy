@@ -29,7 +29,8 @@
         descending: 'Csökkenő',
         sortingInfoNone: 'Nincs rendezés alkalmazva',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
 });
 
 })(jQuery);

@@ -29,7 +29,8 @@
         descending: 'Aflopend',
         sortingInfoNone: 'Geen sortering toegepast',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
 });
 
 })(jQuery);

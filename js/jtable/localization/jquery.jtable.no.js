@@ -29,7 +29,8 @@ Author: Tobias Flatin
         descending: 'Synkende',
         sortingInfoNone: 'Ingen sortering anvendt',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

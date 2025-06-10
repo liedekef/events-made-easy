@@ -29,7 +29,8 @@
         descending: 'অবরোহী',
         sortingInfoNone: 'কোনো সর্ট প্রয়োগ করা হয়নি',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

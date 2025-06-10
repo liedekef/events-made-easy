@@ -30,7 +30,8 @@
         descending: 'По убыванию',
         sortingInfoNone: 'Сортировка не применена',
         csvExport: 'CSV',
-        printTable: '🖨️  Print'
+        printTable: '🖨️  Print',
+        cloneRecord: 'Clone Record'
     });
 
 })(jQuery);

@@ -73,16 +73,13 @@ jQuery(document).ready(function($) {
     setupAutocomplete('input[name=eventmail_chooseperson]', 'input[name=send_previeweventmailto_id]', ememails.translate_nomatchperson);
 
     // --- Mail Form Submission Handlers ---
-    function ajaxMailButtonHandler(buttonSelector, action, formSelector, messageDivSelector, resetSelect2Selectors = [], extraReset = null) {
+    function ajaxMailButtonHandler(buttonSelector, action, editorTarget, messageDivSelector, resetSelect2Selectors = [], extraReset = null) {
         $(buttonSelector).on("click", function(e) {
             e.preventDefault();
 
             // Save HTML message if using WYSIWYG
             if (ememails.translate_htmleditor === 'tinymce' && ememails.translate_htmlmail === 'yes') {
-                let editorField = $(formSelector + " textarea").attr('id');
-                if (editorField && tinymce.get(editorField)) {
-                    tinymce.get(editorField).save();
-                }
+                    tinymce.get(editorTarget)?.save();
             }
 
             let $form = $(this.form);
@@ -117,7 +114,7 @@ jQuery(document).ready(function($) {
 
     ajaxMailButtonHandler(
         '#eventmailButton', 'eme_eventmail', 
-        '#eventmailButton', 'div#eventmail-message',
+        'event_mail_message', 'div#eventmail-message',
         [
             '#event_ids', "#eme_eventmail_send_persons", "#eme_eventmail_send_groups",
             "#eme_eventmail_send_members", "#eme_eventmail_send_membergroups", "#eme_eventmail_send_memberships", "#eme_mail_type"
@@ -125,7 +122,7 @@ jQuery(document).ready(function($) {
     );
     ajaxMailButtonHandler(
         '#genericmailButton', 'eme_genericmail',
-        '#genericmailButton', 'div#genericmail-message',
+        'generic_mail_message', 'div#genericmail-message',
         [
             "#eme_genericmail_send_persons", "#eme_genericmail_send_peoplegroups", "#eme_genericmail_send_members",
             "#eme_genericmail_send_membergroups", "#eme_send_memberships"

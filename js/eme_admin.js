@@ -394,7 +394,7 @@ jQuery(document).ready(function($) {
 
     // --- Select2 Initialization ---
     $('.eme_select2_members_class').select2({
-        width: 'style',
+        width: '100%',
         ajax: {
             url: ajaxurl,
             dataType: 'json',
@@ -417,7 +417,7 @@ jQuery(document).ready(function($) {
         placeholder: emeadmin.translate_selectmembers
     });
     $('.eme_select2_people_class').select2({
-        width: 'style',
+        width: '100%',
         ajax: {
             url: ajaxurl,
             dataType: 'json',
@@ -439,10 +439,10 @@ jQuery(document).ready(function($) {
         },
         placeholder: emeadmin.translate_selectpersons
     });
-    $('.eme_select2_groups_class').select2({ placeholder: emeadmin.translate_selectgroups, dropdownAutoWidth: true, width: 'style' });
-    $('.eme_select2_people_groups_class').select2({ placeholder: emeadmin.translate_anygroup, dropdownAutoWidth: true, width: 'style' });
-    $('.eme_select2_memberstatus_class').select2({ placeholder: emeadmin.translate_selectmemberstatus, dropdownAutoWidth: true, width: 'style' });
-    $('.eme_select2_memberships_class').select2({ placeholder: emeadmin.translate_selectmemberships, dropdownAutoWidth: true, width: 'style' });
+    $('.eme_select2_groups_class').select2({ placeholder: emeadmin.translate_selectgroups, dropdownAutoWidth: true, width: '100%' });
+    $('.eme_select2_people_groups_class').select2({ placeholder: emeadmin.translate_anygroup, dropdownAutoWidth: true, width: '100%' });
+    $('.eme_select2_memberstatus_class').select2({ placeholder: emeadmin.translate_selectmemberstatus, dropdownAutoWidth: true, width: '100%' });
+    $('.eme_select2_memberships_class').select2({ placeholder: emeadmin.translate_selectmemberships, dropdownAutoWidth: true, width: '100%' });
     $('.eme_select2_discounts_class').select2({
         width: '100%', allowClear: true, placeholder: emeadmin.translate_selectdiscount,
         ajax: {

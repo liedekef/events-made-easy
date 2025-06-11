@@ -8708,7 +8708,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_price'>
         <td><label for='price'><?php esc_html_e( 'Price: ', 'events-made-easy' ); ?></label></td>
-        <td><input id="price" type="text" name="price" size='8' title="<?php esc_html_e( 'For multiprice events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['price'] ); ?>">
+        <td><input id="price" type="text" size="8" name="price" style="field-sizing: content; min-width: 100px; max-width: 500px;" title="<?php esc_html_e( 'For multiprice events, separate the values by \'||\'', 'events-made-easy' ); ?>" value="<?php echo eme_esc_html( $event['price'] ); ?>">
             <select id="currency" name="currency">
 <?php
     foreach ( $currency_array as $key => $value ) {
@@ -8733,7 +8733,7 @@ function eme_meta_box_div_event_rsvp( $event, $pdf_templates_array ) {
     </tr>
     <tr id='row_multiprice_desc'>
         <td><label for='eme_prop_multiprice_desc'><?php esc_html_e( 'Price Categories descriptions', 'events-made-easy' ); ?> :</label></td>
-        <td><textarea name="eme_prop_multiprice_desc" id="eme_prop_multiprice_desc" rows="6" ><?php echo str_replace( '||', "\n", eme_esc_html( $event['event_properties']['multiprice_desc'] ) ); ?></textarea><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for each price category (one price description per line).', 'events-made-easy' ); ?></p></td>
+        <td><textarea name="eme_prop_multiprice_desc" id="eme_prop_multiprice_desc" rows="6" col="40" style="field-sizing: content; min-width: 100px; max-width: 500px; max-height: 200px; resize: both;" ><?php echo str_replace( '||', "\n", eme_esc_html( $event['event_properties']['multiprice_desc'] ) ); ?></textarea><p class="eme_smaller"><?php esc_html_e( 'Add an optional description for each price category (one price description per line).', 'events-made-easy' ); ?></p></td>
     </tr>
     <tr id='row_vat'>
         <td><label for='eme_prop_vat_pct'><?php esc_html_e( 'VAT percentage: ', 'events-made-easy' ); ?></label></td>

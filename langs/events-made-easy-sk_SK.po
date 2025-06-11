@@ -60,12 +60,12 @@ msgstr "v mene %s"
 #: eme-events.php:10160
 #: eme-events.php:10554
 #: eme-events.php:10814
-#: eme-formfields.php:5068
-#: eme-formfields.php:5123
-#: eme-formfields.php:5134
-#: eme-formfields.php:5135
-#: eme-formfields.php:5157
-#: eme-formfields.php:5158
+#: eme-formfields.php:5047
+#: eme-formfields.php:5102
+#: eme-formfields.php:5113
+#: eme-formfields.php:5114
+#: eme-formfields.php:5136
+#: eme-formfields.php:5137
 #: eme-functions.php:3408
 #: eme-functions.php:3429
 #: eme-functions.php:3430
@@ -355,7 +355,7 @@ msgstr "Nie je definované v šablónach"
 
 #: eme-attributes.php:123
 #: eme-attributes.php:143
-#: eme-formfields.php:4972
+#: eme-formfields.php:4951
 #: eme-tasks.php:804
 #: eme-todos.php:221
 msgid "Remove"
@@ -443,7 +443,7 @@ msgstr "Názov"
 
 #: eme-categories.php:573
 #: eme-events.php:10270
-#: eme-formfields.php:5104
+#: eme-formfields.php:5083
 #: eme-holidays.php:293
 #: eme-locations.php:2987
 #: eme-members.php:6543
@@ -1541,17 +1541,17 @@ msgstr "Pevná na miesto"
 #: eme-discounts.php:1612
 #: eme-formfields.php:1308
 #: eme-formfields.php:1319
-#: eme-formfields.php:3051
-#: eme-formfields.php:3064
-#: eme-formfields.php:3992
-#: eme-formfields.php:4003
-#: eme-formfields.php:4630
-#: eme-formfields.php:4640
-#: eme-formfields.php:4650
-#: eme-formfields.php:5107
-#: eme-formfields.php:5109
-#: eme-formfields.php:5110
-#: eme-formfields.php:5111
+#: eme-formfields.php:3030
+#: eme-formfields.php:3043
+#: eme-formfields.php:3971
+#: eme-formfields.php:3982
+#: eme-formfields.php:4609
+#: eme-formfields.php:4619
+#: eme-formfields.php:4629
+#: eme-formfields.php:5086
+#: eme-formfields.php:5088
+#: eme-formfields.php:5089
+#: eme-formfields.php:5090
 #: eme-fs.php:624
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -1582,17 +1582,17 @@ msgstr "Áno"
 #: eme-discounts.php:1612
 #: eme-formfields.php:1309
 #: eme-formfields.php:1320
-#: eme-formfields.php:3052
-#: eme-formfields.php:3065
-#: eme-formfields.php:3993
-#: eme-formfields.php:4004
-#: eme-formfields.php:4631
-#: eme-formfields.php:4641
-#: eme-formfields.php:4651
-#: eme-formfields.php:5107
-#: eme-formfields.php:5109
-#: eme-formfields.php:5110
-#: eme-formfields.php:5111
+#: eme-formfields.php:3031
+#: eme-formfields.php:3044
+#: eme-formfields.php:3972
+#: eme-formfields.php:3983
+#: eme-formfields.php:4610
+#: eme-formfields.php:4620
+#: eme-formfields.php:4630
+#: eme-formfields.php:5086
+#: eme-formfields.php:5088
+#: eme-formfields.php:5089
+#: eme-formfields.php:5090
 #: eme-fs.php:623
 #: eme-gdpr.php:422
 #: eme-gdpr.php:423
@@ -4078,7 +4078,7 @@ msgstr "Cena podujatia"
 #: eme-events.php:9677
 #: eme-events.php:9688
 #: eme-events.php:9774
-#: eme-formfields.php:5115
+#: eme-formfields.php:5094
 msgid "Copy"
 msgstr "Kopírovať"
 
@@ -4232,8 +4232,8 @@ msgstr "Dátum ukončenia úlohy"
 #: eme-events.php:9644
 #: eme-events.php:9944
 #: eme-formfields.php:1200
-#: eme-formfields.php:2026
-#: eme-formfields.php:3219
+#: eme-formfields.php:2017
+#: eme-formfields.php:3198
 #: eme-options.php:39
 #: eme-people.php:1081
 #: eme-people.php:1408
@@ -4271,7 +4271,7 @@ msgid "Signup date"
 msgstr "Dátum prihlásenia"
 
 #: eme-events.php:9665
-#: eme-formfields.php:4913
+#: eme-formfields.php:4892
 #: eme-options.php:1571
 #: events-manager.php:360
 msgid "Templates"
@@ -4404,9 +4404,9 @@ msgstr "Zobraziť"
 #: eme-events.php:9876
 #: eme-formfields.php:1261
 #: eme-formfields.php:1858
-#: eme-formfields.php:2944
-#: eme-formfields.php:3912
-#: eme-formfields.php:4559
+#: eme-formfields.php:2935
+#: eme-formfields.php:3891
+#: eme-formfields.php:4538
 #: eme-gdpr.php:431
 #: eme-gdpr.php:570
 #: eme-locations.php:568
@@ -4421,9 +4421,9 @@ msgstr "Mesto"
 #: eme-events.php:9877
 #: eme-formfields.php:1271
 #: eme-formfields.php:1880
-#: eme-formfields.php:2956
-#: eme-formfields.php:3922
-#: eme-formfields.php:4575
+#: eme-formfields.php:2947
+#: eme-formfields.php:3901
+#: eme-formfields.php:4554
 #: eme-gdpr.php:432
 #: eme-gdpr.php:574
 #: eme-locations.php:576
@@ -4476,11 +4476,11 @@ msgstr "Skupiny"
 #: eme-formfields.php:1153
 #: eme-formfields.php:1480
 #: eme-formfields.php:1796
-#: eme-formfields.php:2856
-#: eme-formfields.php:3450
-#: eme-formfields.php:3836
-#: eme-formfields.php:4310
-#: eme-formfields.php:4493
+#: eme-formfields.php:2847
+#: eme-formfields.php:3429
+#: eme-formfields.php:3815
+#: eme-formfields.php:4289
+#: eme-formfields.php:4472
 #: eme-gdpr.php:247
 #: eme-gdpr.php:426
 #: eme-gdpr.php:550
@@ -4504,12 +4504,12 @@ msgstr "Priezvisko"
 #: eme-formfields.php:1169
 #: eme-formfields.php:1492
 #: eme-formfields.php:1812
-#: eme-formfields.php:2883
-#: eme-formfields.php:3130
-#: eme-formfields.php:3466
-#: eme-formfields.php:3860
-#: eme-formfields.php:4324
-#: eme-formfields.php:4508
+#: eme-formfields.php:2874
+#: eme-formfields.php:3109
+#: eme-formfields.php:3445
+#: eme-formfields.php:3839
+#: eme-formfields.php:4303
+#: eme-formfields.php:4487
 #: eme-gdpr.php:247
 #: eme-gdpr.php:427
 #: eme-gdpr.php:554
@@ -4535,11 +4535,11 @@ msgstr "Krstné meno"
 #: eme-formfields.php:1178
 #: eme-formfields.php:1501
 #: eme-formfields.php:1925
-#: eme-formfields.php:3007
-#: eme-formfields.php:3497
-#: eme-formfields.php:3970
-#: eme-formfields.php:4337
-#: eme-formfields.php:4604
+#: eme-formfields.php:2998
+#: eme-formfields.php:3476
+#: eme-formfields.php:3949
+#: eme-formfields.php:4316
+#: eme-formfields.php:4583
 #: eme-gdpr.php:128
 #: eme-gdpr.php:202
 #: eme-gdpr.php:318
@@ -4564,12 +4564,10 @@ msgstr "Email"
 #: eme-events.php:9817
 #: eme-formfields.php:1191
 #: eme-formfields.php:2008
-#: eme-formfields.php:2017
-#: eme-formfields.php:3026
-#: eme-formfields.php:3038
-#: eme-formfields.php:3482
-#: eme-formfields.php:3981
-#: eme-formfields.php:4618
+#: eme-formfields.php:3017
+#: eme-formfields.php:3461
+#: eme-formfields.php:3960
+#: eme-formfields.php:4597
 #: eme-gdpr.php:435
 #: eme-gdpr.php:586
 #: eme-options.php:37
@@ -5095,7 +5093,7 @@ msgid "Include this field in the CSV export for bookings."
 msgstr "Zahrnúť toto pole do CSV exportu rezervácií."
 
 #: eme-formfields.php:353
-#: eme-formfields.php:4912
+#: eme-formfields.php:4891
 msgid "Field condition"
 msgstr "Podmienka poľa"
 
@@ -5417,7 +5415,7 @@ msgstr "Prepínač (zvislý)"
 
 #: eme-formfields.php:585
 #: eme-formfields.php:1996
-#: eme-formfields.php:3132
+#: eme-formfields.php:3111
 msgid "Password"
 msgstr "Heslo"
 
@@ -5498,24 +5496,24 @@ msgid "This is a hidden field, but in the backend it is shown as text so an admi
 msgstr "Toto pole je skryté, ale v administrácii sa zobrazuje ako text, takže administrátor môže vidieť jeho hodnotu a prípadne ju zmeniť"
 
 #: eme-formfields.php:1157
-#: eme-formfields.php:2860
+#: eme-formfields.php:2851
 msgid "Notice: since you're logged in as a person with the right to edit or author this event, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Upozornenie: Keďže ste prihlásený ako osoba s právom upravovať alebo autorizovať toto podujatie, pole „Priezvisko“ je tiež poľom automatického dopĺňania, takže podľa potreby môžete vybrať existujúcich ľudí. Alebo len vymažte pole a začnite písať."
 
 #: eme-formfields.php:1208
 #: eme-formfields.php:1959
-#: eme-formfields.php:3089
-#: eme-formfields.php:4024
-#: eme-formfields.php:4383
+#: eme-formfields.php:3068
+#: eme-formfields.php:4003
+#: eme-formfields.php:4362
 msgid "Remember me?"
 msgstr "Zapamätať si ma?"
 
 #: eme-formfields.php:1219
 #: eme-formfields.php:1821
-#: eme-formfields.php:2894
-#: eme-formfields.php:3554
-#: eme-formfields.php:3871
-#: eme-formfields.php:4522
+#: eme-formfields.php:2885
+#: eme-formfields.php:3533
+#: eme-formfields.php:3850
+#: eme-formfields.php:4501
 #: eme-people.php:1048
 #: eme-people.php:2387
 #: eme-rsvp.php:1462
@@ -5524,10 +5522,10 @@ msgstr "Deň narodenia"
 
 #: eme-formfields.php:1231
 #: eme-formfields.php:1831
-#: eme-formfields.php:2908
-#: eme-formfields.php:3538
-#: eme-formfields.php:3882
-#: eme-formfields.php:4533
+#: eme-formfields.php:2899
+#: eme-formfields.php:3517
+#: eme-formfields.php:3861
+#: eme-formfields.php:4512
 #: eme-people.php:1049
 #: eme-people.php:2401
 #: eme-rsvp.php:1465
@@ -5535,7 +5533,7 @@ msgid "Place of birth"
 msgstr "Miesto narodenia"
 
 #: eme-formfields.php:1346
-#: eme-formfields.php:4401
+#: eme-formfields.php:4380
 msgid "Subscribe"
 msgstr "Prihlásenie"
 
@@ -5553,52 +5551,52 @@ msgid "Not all required fields are present in the form. We need at least #_CANCE
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_CANCEL_PAYMENT_LINE a #_SUBMIT (alebo podobné) zástupné výrazy."
 
 #: eme-formfields.php:1972
-#: eme-formfields.php:3104
-#: eme-formfields.php:4037
+#: eme-formfields.php:3083
+#: eme-formfields.php:4016
 msgid "Group is not public"
 msgstr "Skupina nie je verejná"
 
 #: eme-formfields.php:1987
-#: eme-formfields.php:3119
-#: eme-formfields.php:4052
+#: eme-formfields.php:3098
+#: eme-formfields.php:4031
 msgid "Group does not exist"
 msgstr "Skupina neexistuje"
 
-#: eme-formfields.php:3194
+#: eme-formfields.php:3173
 msgid "By using #_SEATS{xx}, you are using multiple seat categories in your RSVP template, but you have not defined a price for each category in your event RSVP settings. Please correct the event RSVP settings."
 msgstr "Použitím #_SEATS{xx} používate vo svojej rezervačnej šablóne viacero kategórií miest, ale nastaveniach rezervácie podujatia ste nedefinovali cenu pre každú kategóriu. Prosím opravte nastavenia rezervácie podujatia."
 
-#: eme-formfields.php:3320
-#: eme-formfields.php:4068
+#: eme-formfields.php:3299
+#: eme-formfields.php:4047
 msgid "Discount code"
 msgstr "Zľavový kód"
 
-#: eme-formfields.php:3326
-#: eme-formfields.php:4074
+#: eme-formfields.php:3305
+#: eme-formfields.php:4053
 msgid "Enter a new fixed discount value if wanted, or leave as is to keep the calculated value %s based on the following applied discounts:"
 msgstr "Ak chcete, zadajte novú pevnú hodnotu zľavy alebo ponechajte vypočítanú hodnotu %s na základe nasledujúcich uplatnených zliav:"
 
-#: eme-formfields.php:3328
-#: eme-formfields.php:4076
+#: eme-formfields.php:3307
+#: eme-formfields.php:4055
 msgid "Enter a fixed discount value if wanted"
 msgstr "Ak chcete, zadajte pevnú hodnotu zľavy"
 
-#: eme-formfields.php:3333
-#: eme-formfields.php:4081
+#: eme-formfields.php:3312
+#: eme-formfields.php:4060
 #: eme-people.php:1178
 #: eme-people.php:1478
 msgid "Discountgroup %s"
 msgstr "Skupina zľavy %s"
 
-#: eme-formfields.php:3335
-#: eme-formfields.php:4083
+#: eme-formfields.php:3314
+#: eme-formfields.php:4062
 #: eme-people.php:1180
 #: eme-people.php:1480
 msgid "Applied discount group %d no longer exists"
 msgstr "Použitá skupina zliav %d už neexistuje"
 
-#: eme-formfields.php:3345
-#: eme-formfields.php:4093
+#: eme-formfields.php:3324
+#: eme-formfields.php:4072
 #: eme-members.php:5283
 #: eme-people.php:1190
 #: eme-people.php:1490
@@ -5606,162 +5604,162 @@ msgstr "Použitá skupina zliav %d už neexistuje"
 msgid "Applied discount %d no longer exists"
 msgstr "Použitá zľava %d už neexistuje"
 
-#: eme-formfields.php:3349
-#: eme-formfields.php:4097
+#: eme-formfields.php:3328
+#: eme-formfields.php:4076
 msgid "Only one discount field can be used in the admin backend, the others are not rendered"
 msgstr "V backende administrátora je možné použiť iba jedno pole zľavy, ostatné nie sú zobrazené"
 
-#: eme-formfields.php:3355
+#: eme-formfields.php:3334
 msgid "Update booking"
 msgstr "Aktualizovať rezerváciu"
 
-#: eme-formfields.php:3403
+#: eme-formfields.php:3382
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_EMAIL, #_SEATS and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_LASTNAME, #_EMAIL, #_SEATS a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: eme-formfields.php:3406
+#: eme-formfields.php:3385
 msgid "Since this is a multiprice event, make sure you changed the setting 'Booking Form' for the event to include #_SEAT{xx} placeholders for each price."
 msgstr "Keďže ide o podujatie s rôznymi cenami, nezabudnite zmeniť nastavenie „Rezervačný formulár“ pre podujatie tak, aby zahŕňalo zástupné výrazy #_SEAT{xx} pre každú cenu."
 
-#: eme-formfields.php:3409
+#: eme-formfields.php:3388
 msgid "Check that the placeholder #_PASSWORD is present in the form."
 msgstr "Skontrolujte, či je vo formulári prítomný zástupný výraz #_PASSWORD."
 
-#: eme-formfields.php:3611
+#: eme-formfields.php:3590
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME and #_FIRSTNAME placeholders."
 msgstr "Vo formulári sa nenachádzajú všetky povinné polia. Potrebujeme aspoň #_LASTNAME a #_FIRSTNAME zástupné výrazy."
 
-#: eme-formfields.php:3840
+#: eme-formfields.php:3819
 msgid "Notice: since you're logged in as a person with the right to manage members and memberships, the 'Last name' field is also an autocomplete field so you can select existing people if desired. Or just clear the field and start typing."
 msgstr "Upozornenie: Keďže ste prihlásený ako osoba s právom spravovať členov a členstvá, pole „Priezvisko“ je tiež poľom automatického dopĺňania, takže podľa potreby môžete vybrať existujúcich ľudí. Alebo len vymažte pole a začnite písať."
 
-#: eme-formfields.php:4128
+#: eme-formfields.php:4107
 msgid "In the backend you can't add or edit family member info, use the frontend form for that."
 msgstr "V administrátorskej časti nemôžete pridávať ani upravovať informácie o členoch rodiny, na to použite formulár vo frontende."
 
-#: eme-formfields.php:4193
+#: eme-formfields.php:4172
 msgid "Update member"
 msgstr "Aktualizovať člena"
 
-#: eme-formfields.php:4198
+#: eme-formfields.php:4177
 msgid "Become member"
 msgstr "Stať sa členom"
 
-#: eme-formfields.php:4230
-#: eme-formfields.php:4748
+#: eme-formfields.php:4209
+#: eme-formfields.php:4727
 msgid "Not all required fields are present in the form. We need at least #_LASTNAME, #_FIRSTNAME, #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_LASTNAME, #_FIRSTNAME, #_EMAIL a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: eme-formfields.php:4251
+#: eme-formfields.php:4230
 #: eme-tasks.php:460
 #: eme-templates.php:43
 msgid "All"
 msgstr "Všetky"
 
-#: eme-formfields.php:4256
-#: eme-formfields.php:4352
+#: eme-formfields.php:4235
+#: eme-formfields.php:4331
 msgid "Newsletter concerning new events"
 msgstr "Informačné novinky o nových podujatiach"
 
-#: eme-formfields.php:4314
-#: eme-formfields.php:4497
+#: eme-formfields.php:4293
+#: eme-formfields.php:4476
 msgid "You can change your last name in your WP profile."
 msgstr "Svoje priezvisko si môžete zmeniť vo svojom WP profile."
 
-#: eme-formfields.php:4328
-#: eme-formfields.php:4512
+#: eme-formfields.php:4307
+#: eme-formfields.php:4491
 msgid "You can change your first name in your WP profile."
 msgstr "Svoje meno si môžete zmeniť vo svojom WP profile."
 
-#: eme-formfields.php:4341
-#: eme-formfields.php:4608
+#: eme-formfields.php:4320
+#: eme-formfields.php:4587
 msgid "You can change your email in your WP profile."
 msgstr "Svoj e-mail môžete zmeniť vo svojom WP profile."
 
-#: eme-formfields.php:4399
+#: eme-formfields.php:4378
 msgid "Unsubscribe"
 msgstr "Odhlásenie"
 
-#: eme-formfields.php:4424
+#: eme-formfields.php:4403
 msgid "Not all required fields are present in the form. We need at least #_EMAIL and #_SUBMIT (or similar) placeholders."
 msgstr "Vo formulári nie sú uvedené všetky povinné polia. Potrebujeme aspoň #_EMAIL a #_SUBMIT (alebo podobné) zástupné výrazy."
 
-#: eme-formfields.php:4719
+#: eme-formfields.php:4698
 msgid "Save personal info"
 msgstr "Uložiť osobné údaje"
 
-#: eme-formfields.php:4906
+#: eme-formfields.php:4885
 msgid "Dynamically show fields based on a number of conditions"
 msgstr "Dynamicky zobrazovať polia na základe viacerých podmienok"
 
-#: eme-formfields.php:4911
+#: eme-formfields.php:4890
 msgid "Index"
 msgstr "Index"
 
-#: eme-formfields.php:4957
+#: eme-formfields.php:4936
 msgid "Field"
 msgstr "Pole"
 
-#: eme-formfields.php:4958
+#: eme-formfields.php:4937
 msgid "Condition"
 msgstr "Podmienka"
 
-#: eme-formfields.php:4959
+#: eme-formfields.php:4938
 msgid "Condition value"
 msgstr "Hodnota podmienky"
 
-#: eme-formfields.php:4914
+#: eme-formfields.php:4893
 msgid "Repeat"
 msgstr "Opakovať"
 
-#: eme-formfields.php:4944
+#: eme-formfields.php:4923
 #: eme-tasks.php:767
 #: eme-todos.php:203
 msgid "Reorder"
 msgstr "Zmeniť poradie"
 
-#: eme-formfields.php:4963
+#: eme-formfields.php:4942
 msgid "Header template"
 msgstr "Šablóna hlavičky"
 
-#: eme-formfields.php:4964
+#: eme-formfields.php:4943
 msgid "Template"
 msgstr "Šablóna"
 
-#: eme-formfields.php:4965
+#: eme-formfields.php:4944
 msgid "Footer template"
 msgstr "Šablóna pätičky"
 
-#: eme-formfields.php:4972
+#: eme-formfields.php:4951
 msgid "Add new condition"
 msgstr "Pridať novú podmienku"
 
-#: eme-formfields.php:4975
+#: eme-formfields.php:4954
 msgid "Warning: there are already answers entered based on this condition, changing or removing this condition might lead to unwanted side effects."
 msgstr "Varovanie: Na základe tejto podmienky sú už zadané odpovede, zmena alebo odstránenie tejto podmienky by mohli viesť k nežiaducim vedľajším účinkom."
 
-#: eme-formfields.php:4986
+#: eme-formfields.php:4965
 msgid "This will additionally show the selected template in the form if the condition is met."
 msgstr "Ak je splnená podmienka, vo formulári sa navyše zobrazí vybratá šablóna."
 
-#: eme-formfields.php:4988
+#: eme-formfields.php:4967
 msgid "The 'Field' parameter is to be filled out with any valid placeholder allowed in the form."
 msgstr "Parameter „Pole“ sa vyplní akýmkoľvek platným zástupným výrazom povoleným vo formulári."
 
-#: eme-formfields.php:4990
+#: eme-formfields.php:4969
 msgid "The selected template will be shown several times if the repeat option is used (based on the number of times the field is different from the condition value. This is not used for the 'equal to' condition selector."
 msgstr "Vybraná šablóna sa zobrazí niekoľkokrát, ak sa použije možnosť opakovania (na základe toho, koľkokrát sa pole líši od hodnoty podmienky. Toto sa nepoužije pri výbere podmienky „rovnaké ako“)."
 
-#: eme-formfields.php:4992
+#: eme-formfields.php:4971
 msgid "The selected template can contain html and also have placeholders for custom form fields (no other placeholders allowed)."
 msgstr "Vybraná šablóna môže obsahovať html a tiež mať zástupné výrazy pre vlastné polia formulárov (nie sú povolené žiadne iné zástupné výrazy)."
 
-#: eme-formfields.php:4993
+#: eme-formfields.php:4972
 msgid "Use the placeholder #_DYNAMICDATA to show the dynamic forms in your form."
 msgstr "Použite zástupný výraz #_DYNAMICDATA na zobrazenie dynamických formulárov vo vašom formulári."
 
-#: eme-formfields.php:5144
-#: eme-formfields.php:5154
+#: eme-formfields.php:5123
+#: eme-formfields.php:5133
 #: eme-functions.php:3426
 msgid "Records deleted!"
 msgstr "Záznamy vymazané!"

@@ -1999,19 +1999,10 @@ function eme_replace_extra_multibooking_formfields_placeholders( $form_id, $form
                 $replacement = "<input required='required' type='text' name='$fieldname' value='' class='eme_passwordfield' autocomplete='off' placeholder='$placeholder_text'>";
                 $required    = 1;
             }
-        } elseif ( preg_match( '/#_PHONE(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
+        } elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
+            if ( isset( $matches[2] ) ) {
                 // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
-                $placeholder_text = eme_trans_esc_html( $placeholder_text );
-            } else {
-                $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
-            }
-            $replacement = "<input $required_att type='text' name='phone' id='phone' value='$bookerPhone' placeholder='$placeholder_text'>";
-        } elseif ( preg_match( '/#_HTML5_PHONE(\{.+?\})?$/', $result, $matches ) ) {
-            if ( isset( $matches[1] ) ) {
-                // remove { and } (first and last char of second match)
-                $placeholder_text = substr( $matches[1], 1, -1 );
+                $placeholder_text = substr( $matches[2], 1, -1 );
                 $placeholder_text = eme_trans_esc_html( $placeholder_text );
             } else {
                 $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
@@ -3015,24 +3006,12 @@ function eme_replace_rsvp_formfields_placeholders( $form_id, $event, $booking, $
                 // #_EMAIL is always required
                 $required = 1;
             }
-        } elseif ( preg_match( '/#_PHONE(\{.+?\})?$/', $result, $matches ) ) {
+        } elseif ( preg_match( '/#_(PHONE|HTML5_PHONE)(\{.+?\})?$/', $result, $matches ) ) {
             if ( ! $is_multibooking ) {
                 $fieldname = 'phone';
-                if ( isset( $matches[1] ) ) {
+                if ( isset( $matches[2] ) ) {
                     // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
-                    $placeholder_text = eme_trans_esc_html( $placeholder_text );
-                } else {
-                    $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );
-                }
-                $replacement = "<input $required_att type='text' name='$fieldname' value='$bookerPhone' $readonly $dynamic_field_class placeholder='$placeholder_text'>";
-            }
-        } elseif ( preg_match( '/#_HTML5_PHONE(\{.+?\})?$/', $result, $matches ) ) {
-            if ( ! $is_multibooking ) {
-                $fieldname = 'phone';
-                if ( isset( $matches[1] ) ) {
-                    // remove { and } (first and last char of second match)
-                    $placeholder_text = substr( $matches[1], 1, -1 );
+                    $placeholder_text = substr( $matches[2], 1, -1 );
                     $placeholder_text = eme_trans_esc_html( $placeholder_text );
                 } else {
                     $placeholder_text = esc_html__( 'Phone number', 'events-made-easy' );

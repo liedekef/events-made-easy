@@ -7643,8 +7643,7 @@ function eme_meta_box_div_event_registration_pending_email( $event, $templates_a
     } elseif ( ! get_option( 'eme_rsvp_mail_notify_pending' ) ) {
         print "<div class='info eme-message-admin'><p>" . __( 'RSVP notifications are not activated for pending bookings, so these emails will not be sent. Go in the Email settings to activate this if wanted.', 'events-made-easy' ) . '</p></div>';
     }
-    echo "<img style='vertical-align: middle;' src='" . esc_url(EME_PLUGIN_URL) . "images/warning.png' alt='warning'>";
-    esc_html_e( 'When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time.', 'events-made-easy' );
+    print "<div class='info eme-message-admin'><p>" . __( 'When this mail is not yet sent (in the queue) and the booking is approved or paid during that time and a mail is planned for that action, this mail gets removed from the queue so people do not get 2 emails at the same time.', 'events-made-easy' ) . '</p></div>';
 ?>
 
 <div>

@@ -4063,12 +4063,14 @@ function eme_wysiwyg_textarea( $name, $value, $show_wp_editor = 0, $show_full = 
         $value = eme_nl2br_save_html( $value);
     }
     if (!empty($data_default_optionname)) {
-	    $data_default = 'data-default="'.esc_attr(get_option($data_default_optionname)).'"';
+        // for the default we convert newlines to breaks intelligently, as we do later on too
+        // this way the html editor can show the layout as intended
+	    $data_default = 'data-default="'.esc_attr(eme_nl2br_save_html(get_option($data_default_optionname))).'"';
         ?>
         <span style="display: hidden;" <?php echo $data_default; ?> data-targetid="<?php echo $editor_id; ?>">
         <?php
 	    // adding defaults in tinymce is difficult so we force the plain editor
-            if ($html_editor == 'tinymce') {
+        if ($html_editor == 'tinymce') {
 		    $show_full = 0;
 	    }
     }

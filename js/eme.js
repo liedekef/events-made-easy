@@ -407,7 +407,7 @@ jQuery(document).ready(function ($) {
             // Re-attach event handlers after DOM replacement
             $('a.eme-cal-prev-month, a.eme-cal-next-month').on('click', function (e) {
                 e.preventDefault();
-                addSpinner($(this));
+                $(this).html('<img src="' + emebasic.translate_plugin_url + 'images/spinner.gif">');
                 loadCalendar(
                     $(this).data('calendar_divid'),
                     $(this).data('full'),

@@ -99,6 +99,12 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.6.5 (2025/06/12) =
+* Calendar fixes due to refactor issues
+
+= 2.6.4 (2025/06/11) =
+* fix some select2 widths and sending via tinymce
+
 = 2.6.3 (2025/06/10) =
 * JS code refactoring, including minor fixes
 * Mercadopago API update to 3.5.0

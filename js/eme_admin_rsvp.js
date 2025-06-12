@@ -120,7 +120,7 @@ jQuery(document).ready(function ($) {
                 title: emersvp.translate_edit,
                 sorting: false,
                 visibility: 'fixed',
-                listClass: 'jtable-command-column eme-jtable-center',
+                listClassEntry: 'jtable-command-column eme-jtable-center',
                 listClassHeader: 'jtable-command-column-header eme-jtable-center',
                 width: '1%',
             }

@@ -993,6 +993,7 @@ function eme_import_csv_people() {
 
 function eme_csv_booking_report( $event_id ) {
     $event = eme_get_event( $event_id );
+    $pgs   = eme_payment_gateways();
     if ( empty( $event ) ) {
         return;
     }
@@ -1077,6 +1078,7 @@ function eme_csv_booking_report( $event_id ) {
     $line[] = __( 'Total price', 'events-made-easy' );
     $line[] = __( 'Discount', 'events-made-easy' );
     $line[] = __( 'Discount info', 'events-made-easy' );
+    $line[] = __( 'Payment Gateway', 'events-made-easy' );
     $line[] = __( 'Unique nbr', 'events-made-easy' );
     $line[] = __( 'Attendance count', 'events-made-easy' );
     $line[] = __( 'Comment', 'events-made-easy' );
@@ -1201,6 +1203,15 @@ function eme_csv_booking_report( $event_id ) {
                 $discount_name = '';
             }
             $line[]  = $discount_name;
+        } else {
+            $line[]  = '';
+        }
+        if ( ! empty( $booking['pg'] ) ) {
+            if ( isset( $pgs[ $booking['pg'] ] ) ) {
+                $line[] = eme_esc_html( $pgs[ $booking['pg'] ] );
+            } else {
+                $line[]  = '';
+            }
         } else {
             $line[]  = '';
         }

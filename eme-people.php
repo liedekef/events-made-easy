@@ -1074,8 +1074,9 @@ function eme_csv_booking_report( $event_id ) {
     $line[] = __( 'Received', 'events-made-easy' );
     $line[] = __( 'Remaining', 'events-made-easy' );
     $line[] = __( 'Booking date', 'events-made-easy' );
-    $line[] = __( 'Discount', 'events-made-easy' );
     $line[] = __( 'Total price', 'events-made-easy' );
+    $line[] = __( 'Discount', 'events-made-easy' );
+    $line[] = __( 'Discount info', 'events-made-easy' );
     $line[] = __( 'Unique nbr', 'events-made-easy' );
     $line[] = __( 'Attendance count', 'events-made-easy' );
     $line[] = __( 'Comment', 'events-made-easy' );
@@ -1170,34 +1171,39 @@ function eme_csv_booking_report( $event_id ) {
             $line[] = eme_localized_price( $booking['remaining'], $event['currency'] );
         }
 
-        $line[]         = $localized_booking_datetime;
-        $discount_names = [];
-        if ( $booking['dgroupid'] ) {
-            $dgroup = eme_get_discountgroup( $booking['dgroupid'] );
-            if ( $dgroup && isset( $dgroup['name'] ) ) {
-                $discount_names[] = sprintf( __( 'Discountgroup %s', 'events-made-easy' ), $dgroup['name'] );
-            } else {
-                $discount_name[] = sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] );
-            }
-        }
-        if ( ! empty( $booking['discountids'] ) ) {
-            $discount_ids = explode( ',', $booking['discountids'] );
-            foreach ( $discount_ids as $discount_id ) {
-                $discount = eme_get_discount( $discount_id );
-                if ( $discount && isset( $discount['name'] ) ) {
-                    $discount_names[] = $discount['name'];
+        $line[] = $localized_booking_datetime;
+        $line[] = eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'], 'text' );
+        $line[] = eme_localized_price( $booking['discount'], $event['currency'], 'text' );
+        if ( $booking['discount'] ) {
+            $discount_names = [];
+            if ( $booking['dgroupid'] ) {
+                $dgroup = eme_get_discountgroup( $booking['dgroupid'] );
+                if ( $dgroup && isset( $dgroup['name'] ) ) {
+                    $discount_names[] = sprintf( __( 'Discountgroup %s', 'events-made-easy' ), $dgroup['name'] );
                 } else {
-                    $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
+                    $discount_name[] = sprintf( __( 'Applied discount group %d no longer exists', 'events-made-easy' ), $booking['dgroupid'] );
                 }
             }
-        }
-        if ( ! empty( $discount_names ) ) {
-            $discount_name = ' (' . join( ',', $discount_names ) . ')';
+            if ( ! empty( $booking['discountids'] ) ) {
+                $discount_ids = explode( ',', $booking['discountids'] );
+                foreach ( $discount_ids as $discount_id ) {
+                    $discount = eme_get_discount( $discount_id );
+                    if ( $discount && isset( $discount['name'] ) ) {
+                        $discount_names[] = $discount['name'];
+                    } else {
+                        $discount_names[] = sprintf( __( 'Applied discount %d no longer exists', 'events-made-easy' ), $discount_id );
+                    }
+                }
+            }
+            if ( ! empty( $discount_names ) ) {
+                $discount_name = ' (' . join( ',', $discount_names ) . ')';
+            } else {
+                $discount_name = '';
+            }
+            $line[]  = $discount_name;
         } else {
-            $discount_name = '';
+            $line[]  = '';
         }
-        $line[]  = eme_localized_price( $booking['discount'], $event['currency'], 'text' ) . $discount_name;
-        $line[]  = eme_localized_price( eme_get_total_booking_price( $booking ), $event['currency'], 'text' );
         $line[]  = eme_unique_nbr_formatted( $booking['unique_nbr'] );
         $line[]  = intval( $booking['attend_count'] );
         $line[]  = $booking['booking_comment'];

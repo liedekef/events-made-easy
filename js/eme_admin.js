@@ -17,7 +17,7 @@ function eme_activateTab(target) {
         // do this only when the tab is active, to avoid doing mail lookups if not needed
         // Delay the trigger to ensure the tab content is fully rendered
         setTimeout(function() {
-            jQuery('#MailingsTableContainer').jtable('recalcColumnWidths');
+            jQuery('#MailingsTableContainer').jtable('recalcColumnWidthsOnce');
             jQuery('#MailingsLoadRecordsButton').trigger('click');
         }, 100); // Adjust the delay as necessary
     }
@@ -25,7 +25,7 @@ function eme_activateTab(target) {
         // do this only when the tab is active, to avoid doing mail lookups if not needed
         // Delay the trigger to ensure the tab content is fully rendered
         setTimeout(function() {
-            jQuery('#ArchivedMailingsTableContainer').jtable('recalcColumnWidths');
+            jQuery('#ArchivedMailingsTableContainer').jtable('recalcColumnWidthsOnce');
             jQuery('#ArchivedMailingsLoadRecordsButton').trigger('click');
         }, 100); // Adjust the delay as necessary
     }
@@ -33,7 +33,7 @@ function eme_activateTab(target) {
         // do this only when the tab is active, to avoid doing mail lookups if not needed
         // Delay the trigger to ensure the tab content is fully rendered
         setTimeout(function() {
-            jQuery('#MailsTableContainer').jtable('recalcColumnWidths');
+            jQuery('#MailsTableContainer').jtable('recalcColumnWidthsOnce');
             jQuery('#MailsLoadRecordsButton').trigger('click');
         }, 100); // Adjust the delay as necessary
     }

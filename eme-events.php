@@ -1589,6 +1589,9 @@ function eme_html_title( $data ) {
                         $res = $data;
                     } else {
                         $stored_html_title_format = get_option( 'eme_event_html_title_format' );
+                        if (empty($stored_html_title_format)) {
+                            $stored_html_title_format = get_option( 'eme_event_page_title_format' );
+                        }
                         $html_title               = eme_sanitize_request( eme_replace_event_placeholders( $stored_html_title_format, $event ) );
                     }
                 } else {
@@ -1604,6 +1607,9 @@ function eme_html_title( $data ) {
                 $res = $data;
             } else {
                 $stored_html_title_format = get_option( 'eme_event_html_title_format' );
+                if (empty($stored_html_title_format)) {
+                    $stored_html_title_format = get_option( 'eme_event_page_title_format' );
+                }
                 // no html tags or anything weird in the title: we sanitize it, so it already removes all problems
                 $res = eme_sanitize_request( eme_replace_event_placeholders( $stored_html_title_format, $event ) );
             }
@@ -1614,6 +1620,9 @@ function eme_html_title( $data ) {
                 $res = $data;
             } else {
                 $stored_html_title_format = get_option( 'eme_location_html_title_format' );
+                if (empty($stored_html_title_format)) {
+                    $stored_html_title_format = get_option( 'eme_location_page_title_format' );
+                }
                 // no html tags or anything weird in the title: we sanitize it, so it already removes all problems
                 $res = eme_sanitize_request( eme_replace_locations_placeholders( $stored_html_title_format, $location ) );
             }
@@ -7282,7 +7291,7 @@ function eme_meta_box_div_event_page_title_format( $event, $templates_array ) {
     <img src="<?php echo esc_url(EME_PLUGIN_URL); ?>images/showhide.png" class="showhidebutton" alt="show/hide" data-showhide="event_page_title_format_div" style="cursor: pointer; vertical-align: middle; ">
     <br>
     <div id="event_page_title_format_div" <?php echo $showhide_style; ?>>
-    <?php eme_wysiwyg_textarea( 'event_page_title_format', $event['event_page_title_format'], 1, 0, 'eme_event_page_title_format' ); ?>
+    <input type="text" maxlength="250" style="width: 100%;" name="event_page_title_format" id="event_page_title_format" value="<?php echo eme_esc_html( $event['event_page_title_format']); ?>" data-default="<?php echo esc_attr(get_option('eme_event_page_title_format')); ?>">
     </div>
 </div>
 <?php

@@ -99,6 +99,11 @@ Events list and calendars can be added to your blogs through widgets, shortcodes
 See the FAQ section at the [Official site](https://www.e-dynamics.be/wordpress/).
 
 == Changelog ==
+= 2.6.6 (2025/06/16) =
+* Fix some select2 styling
+* Small select2 and jtable updates
+* CSV export now includes better discount info
+
 = 2.6.5 (2025/06/12) =
 * Calendar fixes due to refactor issues
 

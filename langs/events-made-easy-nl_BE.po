@@ -14452,32 +14452,32 @@ msgstr "<p>Hallo, <strong>%s</strong>, welkom bij <strong>Events Made Easy</stro
 
 #: eme-options.php:1713
 msgid "The format of the page title when viewing a single event. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Het formaat van de paginatitel bij het bekijken van een enkel evenement. Volg de vorige opmaakinstructies."
 
 #: eme-options.php:1714
 msgid "The format of the page html title when viewing a single event. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Het formaat van de HTML-paginatitel bij het bekijken van een enkel evenement. Volg de vorige opmaakinstructies."
 
 #: eme-options.php:1714
 msgid "If empty (the default), the value of \"Single event page title format\" will be used."
-msgstr ""
+msgstr "Indien leeg (standaard), wordt de waarde van \"Single event page title format\" gebruikt."
 
 #: eme-options.php:1761
 msgid "The format of the page title when viewing a single location. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Het formaat van de paginatitel bij het bekijken van een enkele locatie. Volg de vorige opmaakinstructies."
 
 #: eme-options.php:1762
 msgid "The format of the page html title when viewing a single location. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Het formaat van de HTML-paginatitel bij het bekijken van een enkele locatie. Volg de vorige opmaakinstructies."
 
 #: eme-options.php:1762
 msgid "If empty (the default), the value of \"Single location page title format\" will be used."
-msgstr ""
+msgstr "Indien leeg (standaard), wordt de waarde van \"Opmaak titel van de pagina waarop één locatie verschijnt\" gebruikt."
 
 #: eme-people.php:1080
 msgid "Discount info"
-msgstr ""
+msgstr "Korting info"
 
 #: eme-people.php:1081
 msgid "Payment Gateway"
-msgstr ""
+msgstr "Betalingsgateway"

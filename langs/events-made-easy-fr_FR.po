@@ -14454,32 +14454,32 @@ msgstr "<p>Salut, <strong>%s</strong>, bienvenue sur <strong>Events Made Easy</s
 
 #: eme-options.php:1713
 msgid "The format of the page title when viewing a single event. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Le format du titre de la page lors de l'affichage d'un événement unique. Suivez les instructions de formatage précédentes."
 
 #: eme-options.php:1714
 msgid "The format of the page html title when viewing a single event. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Le format du titre HTML de la page lors de l'affichage d'un événement unique. Suivez les instructions de formatage précédentes."
 
 #: eme-options.php:1714
 msgid "If empty (the default), the value of \"Single event page title format\" will be used."
-msgstr ""
+msgstr "Si vide (par défaut), la valeur de \"Single event page title format\" sera utilisée."
 
 #: eme-options.php:1761
 msgid "The format of the page title when viewing a single location. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Le format du titre de la page lors de l'affichage d'un lieu unique. Suivez les instructions de formatage précédentes."
 
 #: eme-options.php:1762
 msgid "The format of the page html title when viewing a single location. Follow the previous formatting instructions."
-msgstr ""
+msgstr "Le format du titre HTML de la page lors de l'affichage d'un lieu unique. Suivez les instructions de formatage précédentes."
 
 #: eme-options.php:1762
 msgid "If empty (the default), the value of \"Single location page title format\" will be used."
-msgstr ""
+msgstr "Si vide (par défaut), la valeur de \"Format du titre pour la page d'un lieu\" sera utilisée."
 
 #: eme-people.php:1080
 msgid "Discount info"
-msgstr ""
+msgstr "Informations de réduction"
 
 #: eme-people.php:1081
 msgid "Payment Gateway"
-msgstr ""
+msgstr "Passerelle de paiement"

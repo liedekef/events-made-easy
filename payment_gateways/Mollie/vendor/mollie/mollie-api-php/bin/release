@@ -139,6 +139,7 @@ echo "🚀 Creating GitHub release..."
 # Generate release from current HEAD with better error handling
 RELEASE_OUTPUT=$(gh release create "v$VERSION" \
   --target "$(git rev-parse HEAD)" \
+  --latest \
   --generate-notes 2>&1)
 
 if [ $? -eq 0 ]; then

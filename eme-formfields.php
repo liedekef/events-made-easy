@@ -454,12 +454,6 @@ function eme_check_used_formfield( $field_id ) {
     $table  = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
     $query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
     $count  = $wpdb->get_var( $query );
-    $table  = EME_DB_PREFIX . EME_EVENTS_CF_TBNAME;
-    $query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
-    $count += $wpdb->get_var( $query );
-    $table  = EME_DB_PREFIX . EME_LOCATIONS_CF_TBNAME;
-    $query  = $wpdb->prepare( "SELECT COUNT(*) FROM $table WHERE field_id=%d", $field_id );
-    $count += $wpdb->get_var( $query );
     return $count;
 }
 
@@ -536,12 +530,6 @@ function eme_delete_formfields( $ids_arr ) {
         if ( $validation_result !== false ) {
             $answers_table = EME_DB_PREFIX . EME_ANSWERS_TBNAME;
             $wpdb->query( "DELETE FROM $answers_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-            $events_customfields_table = EME_DB_PREFIX . EME_EVENTS_CF_TBNAME;
-            $wpdb->query( "DELETE FROM $events_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-            $locations_customfields_table = EME_DB_PREFIX . EME_LOCATIONS_CF_TBNAME;
-            $wpdb->query( "DELETE FROM $locations_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-            $memberships_customfields_table = EME_DB_PREFIX . EME_MEMBERSHIPS_CF_TBNAME;
-            $wpdb->query( "DELETE FROM $memberships_customfields_table WHERE field_id IN ($ids_list)" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
             return true;
         } else {
             return false;

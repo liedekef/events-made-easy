@@ -8,10 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 // and doesn't need to include the main file
 define( 'EME_DB_VERSION', 414 ); // increase this if the db schema changes or the options change
 define( 'EME_EVENTS_TBNAME', 'eme_events' );
-define( 'EME_EVENTS_CF_TBNAME', 'eme_events_cf' );
 define( 'EME_RECURRENCE_TBNAME', 'eme_recurrence' );
 define( 'EME_LOCATIONS_TBNAME', 'eme_locations' );
-define( 'EME_LOCATIONS_CF_TBNAME', 'eme_locations_cf' );
 define( 'EME_BOOKINGS_TBNAME', 'eme_bookings' );
 define( 'EME_PEOPLE_TBNAME', 'eme_people' );
 define( 'EME_GROUPS_TBNAME', 'eme_groups' );
@@ -29,7 +27,6 @@ define( 'EME_MQUEUE_TBNAME', 'eme_mqueue' );
 define( 'EME_MAILINGS_TBNAME', 'eme_mailings' );
 define( 'EME_MEMBERS_TBNAME', 'eme_members' );
 define( 'EME_MEMBERSHIPS_TBNAME', 'eme_memberships' );
-define( 'EME_MEMBERSHIPS_CF_TBNAME', 'eme_memberships_cf' );
 define( 'EME_COUNTRIES_TBNAME', 'eme_countries' );
 define( 'EME_STATES_TBNAME', 'eme_states' );
 define( 'EME_ATTENDANCES_TBNAME', 'eme_attendances' );
@@ -218,7 +215,7 @@ function _eme_uninstall( $force_drop = 0 ) {
 	if ( $drop_data || $force_drop ) {
 		// during uninstall, we only take the prefix per blog (not based on the settings "is_multisite() && get_option( 'eme_multisite_active' )" in the function  eme_get_db_prefix)
 		$db_prefix = $wpdb->prefix;
-        $tables = [ EME_EVENTS_TBNAME, EME_EVENTS_CF_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_LOCATIONS_CF_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME, EME_USERGROUPS_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_CF_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_ATTENDANCES_TBNAME, EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME, EME_FIELDTYPES_TBNAME, EME_DISCOUNTS_TBNAME, EME_DISCOUNTGROUPS_TBNAME, EME_MQUEUE_TBNAME, EME_MAILINGS_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME ];
+        $tables = [ EME_EVENTS_TBNAME, EME_BOOKINGS_TBNAME, EME_LOCATIONS_TBNAME, EME_RECURRENCE_TBNAME, EME_ANSWERS_TBNAME, EME_PAYMENTS_TBNAME, EME_PEOPLE_TBNAME, EME_GROUPS_TBNAME, EME_USERGROUPS_TBNAME, EME_MEMBERS_TBNAME, EME_MEMBERSHIPS_TBNAME, EME_ATTENDANCES_TBNAME, EME_CATEGORIES_TBNAME, EME_HOLIDAYS_TBNAME, EME_TEMPLATES_TBNAME, EME_FORMFIELDS_TBNAME, EME_COUNTRIES_TBNAME, EME_STATES_TBNAME, EME_FIELDTYPES_TBNAME, EME_DISCOUNTS_TBNAME, EME_DISCOUNTGROUPS_TBNAME, EME_MQUEUE_TBNAME, EME_MAILINGS_TBNAME, EME_TODOS_TBNAME, EME_TASKS_TBNAME, EME_TASK_SIGNUPS_TBNAME ];
 
         foreach ( $tables as $table ) {
             eme_drop_table( $db_prefix . $table );
@@ -1148,17 +1145,18 @@ function eme_create_answers_table( $charset, $collate, $db_version, $db_prefix )
 			eme_maybe_drop_column( $table_name, 'member_id' );
 			$wpdb->query( "UPDATE $table_name SET related_id=booking_id,type='booking' WHERE booking_id>0" );
 			eme_maybe_drop_column( $table_name, 'booking_id' );
-			$cf_table_name = $db_prefix . EME_MEMBERSHIPS_CF_TBNAME;
+            // code to move CF-tables into the generic answer table
+			$cf_table_name = $db_prefix . 'eme_memberships_cf';
 			if ( eme_table_exists( $cf_table_name ) ) {
 				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`membership_id`,`answer`,'membership' FROM $cf_table_name" );
 				eme_drop_table( $cf_table_name );
 			}
-			$cf_table_name = $db_prefix . EME_EVENTS_CF_TBNAME;
+			$cf_table_name = $db_prefix . 'eme_events_cf';
 			if ( eme_table_exists( $cf_table_name ) ) {
 				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`event_id`,`answer`,'event' FROM $cf_table_name" );
 				eme_drop_table( $cf_table_name );
 			}
-			$cf_table_name = $db_prefix . EME_LOCATIONS_CF_TBNAME;
+			$cf_table_name = $db_prefix . 'eme_locations_cf';
 			if ( eme_table_exists( $cf_table_name ) ) {
 				$wpdb->query( "INSERT INTO $table_name(`field_id`,`related_id`,`answer`,`type`) SELECT `field_id`,`location_id`,`answer`,'location' FROM $cf_table_name" );
 				eme_drop_table( $cf_table_name );

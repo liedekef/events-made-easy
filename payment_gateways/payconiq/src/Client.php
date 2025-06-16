@@ -34,8 +34,8 @@ class Client {
     public function __construct( $apiKey = null, $environment = self::ENVIRONMENT_PROD ) {
         $this->apiKey = $apiKey;
         // Define the transition date and time (21 Sept 2025, 04:00 CET as the safe switch time)
-        $transitionDate = new DateTime('2025-09-21 04:00:00', new DateTimeZone('Europe/Brussels'));
-        $currentDate = new DateTime('now', new DateTimeZone('Europe/Brussels'));
+        $transitionDate = new \DateTime('2025-09-21 04:00:00', new \DateTimeZone('Europe/Brussels'));
+        $currentDate = new \DateTime('now', new \DateTimeZone('Europe/Brussels'));
 
         if ($currentDate >= $transitionDate) {
             // Use new endpoints after transition
